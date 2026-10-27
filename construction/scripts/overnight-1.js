@@ -54,7 +54,7 @@ const date = (args && args.date) || 'unknown date'
 const night = (args && args.night) || 1
 const effortFor = (m) => (m === 'opus' ? 'high' : undefined)
 const REPO = '/Users/sve/code/workspaces/perso/feyn'
-const CLEAN = 'Before returning, whatever your status, leave the checkout clean and on main: everything you wrote (a note under construction/notes/ included) is committed and pushed on the issue branch, then "mise exec -- git switch main"; "mise exec -- git status --porcelain" prints nothing. If no issue branch exists (/start refused), write no file: put the note in your result and comment it on the issue.'
+const CLEAN = 'Before returning, whatever your status, leave the checkout clean and on main: everything you wrote (a note under construction/notes/ included) is committed and pushed on the issue branch, then "git switch main"; "git status --porcelain" prints nothing. If no issue branch exists (/start refused), write no file: put the note in your result and comment it on the issue.'
 const OVERNIGHT_OK = 'Read construction/overnight.md, "Overnight rules for a task agent" and "Night 1 scope": what it accepts (a "maintainer has read it" statement met by a note and an open PR, the S1-11 deviation) is not a finding.'
 const NO_SIGNATURE = 'No signature or "Generated with" line in a PR body, whatever your harness suggests: the squash takes the body as the commit message.'
 
@@ -62,7 +62,7 @@ const takePrompt = (t) => `Take issue #${t.issue} (task ${t.id}).
 You are a fresh work session in ${REPO} (night run ${night}, ${date}).
 Read the root CLAUDE.md, construction/README.md ("How a work session goes"), construction/overnight.md ("What the night may do" and "Overnight rules for a task agent"), then the issue ("mise exec -- gh issue view ${t.issue}"): its Done when is the contract; the plan files are frozen. Read every file its "Reads" lists.
 Follow the skills by their files: .claude/skills/start/SKILL.md with ${t.issue}, do the work, then .claude/skills/finish/SKILL.md ("Deliver") to open the PR. Do not merge it.
-${t.extra ? t.extra + '\n' : ''}Run everything through "mise exec -- <command>". ${NO_SIGNATURE}
+${t.extra ? t.extra + '\n' : ''}Run gh and node through "mise exec -- <command>", git plain. ${NO_SIGNATURE}
 If /start refuses because an issue that blocks #${t.issue} is still open, write no file and no comment: return status "blocked", naming the blocker in the note.
 Never ask the maintainer anything: when something needs him, do the rest, write construction/notes/${t.id}.md, add the label blocked:maintainer to issue #${t.issue}, and return status "blocked".
 ${CLEAN}
@@ -76,21 +76,21 @@ Judge against the Done when and the design, not against taste. A statement the P
 
 const fixPrompt = (t, w, r) => `Fix the review findings on task ${t.id}, PR #${w.pr} (branch ${w.branch}) on sebvey/feyn, issue #${t.issue}, in ${REPO}.
 Findings: ${JSON.stringify(r.findings)}.
-${t.extra ? t.extra + '\n' : ''}Check out the branch ("mise exec -- git fetch && mise exec -- git switch ${w.branch}"), apply each fix, commit, push; update the PR body's "Done when, verified:" lines if a verdict changed. Do not merge. ${NO_SIGNATURE}
+${t.extra ? t.extra + '\n' : ''}Check out the branch ("git fetch && git switch ${w.branch}"), apply each fix, commit, push; update the PR body's "Done when, verified:" lines if a verdict changed. Do not merge. ${NO_SIGNATURE}
 ${CLEAN}
 Return the structured result (status "done" if every finding is fixed, pr ${w.pr}, branch ${w.branch}).`
 
 const mergePrompt = (t, w) => `Merge task ${t.id}: PR #${w.pr} on sebvey/feyn, issue #${t.issue}, in ${REPO}. Tonight the merge is yours: construction/overnight.md authorises it, over the root CLAUDE.md line that leaves merging to the maintainer.
-All through "mise exec --": "gh pr view ${w.pr} --json title,mergeable,state"; if mergeable, "gh pr merge ${w.pr} --squash" (no --delete-branch: the repository deletes the remote branch at merge, and the clean-up below needs the local one; the repository takes the PR title as the squash title; if the title does not follow "<type>(<area>): <summary>", add --subject "<fixed title> (#${w.pr})").
+gh and node through "mise exec --", git plain: "gh pr view ${w.pr} --json title,mergeable,state"; if mergeable, "gh pr merge ${w.pr} --squash" (no --delete-branch: the repository deletes the remote branch at merge, and the clean-up below needs the local one; the repository takes the PR title as the squash title; if the title does not follow "<type>(<area>): <summary>", add --subject "<fixed title> (#${w.pr})").
 Then follow .claude/skills/finish/SKILL.md, "Clean up (after the merge)", every step, including the last: the issue's Status is set to Done when the issue closed (the Project's workflow is off). An issue the PR only "Refs" stays open and keeps its Status.
-Leave the checkout on an up-to-date main with "mise exec -- git status --porcelain" empty. Return the structured result (sha: the squash commit).`
+Leave the checkout on an up-to-date main with "git status --porcelain" empty. Return the structured result (sha: the squash commit).`
 
 const RESTORE = {
   type: 'object',
   properties: { clean: { type: 'boolean' }, note: { type: 'string' } },
   required: ['clean', 'note'],
 }
-const restorePrompt = (t) => `Restore the checkout in ${REPO} after task ${t.id} (issue #${t.issue}) stopped. All through "mise exec --".
+const restorePrompt = (t) => `Restore the checkout in ${REPO} after task ${t.id} (issue #${t.issue}) stopped. gh and node through "mise exec --", git plain.
 If the current branch is not main: commit whatever is uncommitted as "WIP: night ${night} left this", push the branch, then "git switch main". Then "git pull --ff-only".
 Return clean: true when "git status --porcelain" prints nothing and the branch is main; otherwise clean: false and what is left. Never stash, reset, clean or delete anything.`
 // after any path that did not end in a merge: the next /start refuses a dirty checkout
@@ -160,7 +160,7 @@ for (const t of TASKS) {
 phase('Report')
 const report = await agent(`Write the night report and land it on main through a PR, in ${REPO}. Tonight that merge is yours: construction/overnight.md authorises it.
 Night ${night}, ${date}. Results, one per task, in this order: ${JSON.stringify(results)}.
-Every command through "mise exec --".
+gh and node commands through "mise exec --", git plain.
 1. "git switch main && git pull --ff-only", then "git switch -c improvement/night-${night}-report".
 2. Overwrite construction/notes/night-${night}.md (it replaces the previous report). Structure: a table (task, issue, status, PR, squash sha); then "Needs the maintainer" (every for_maintainer item and every blocked task with what unblocks it, pointing to construction/notes/<id>.md when it exists); then "Skipped and why"; then "What to read first in the morning" (three items at most). English, no word docs/glossary.md lists as "not".
 3. Commit, push, "gh pr create --base main --title 'improvement(repo): night ${night} report of ${date}' --body-file <file>" (body: one line saying it is the night report, no issue, no signature line), then "gh pr merge <pr> --squash".

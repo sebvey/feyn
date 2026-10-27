@@ -28,8 +28,8 @@ where a reserved term exists.
 
 ## Commands
 
-Run tools through `mise exec -- <command>` (git, gh, node): the shell has no environment of
-its own. Never `git config user.email`.
+`git` plain (the session carries the workspace identity); `gh` and `node` through
+`mise exec -- <command>` (the session PATH can be stale). Never `git config user.email` nor `git -c user.email=`.
 
 ## Working with the maintainer
 

@@ -22,7 +22,7 @@ glossary, skills and closed issues.
 2. The agent reads, in this order: the root `CLAUDE.md`, this file, `design/README.md`, the
    design files the task lists, the task itself (in `plan/stage-N.md` or the issue).
 3. The agent works on a branch `<type>/<task-id>-<slug>` (by hand before `/start` exists, with
-   `/start` afterwards), commits through `mise exec -- git …`, and delivers a PR (by hand
+   `/start` afterwards), commits with `git`, and delivers a PR (by hand
    before `/finish`, with `/finish` afterwards). Squash merge; the title is
    `<type>(<area>): <summary>`.
 4. Done means the task's **Done when** holds, verified, not "the code is written". The agent

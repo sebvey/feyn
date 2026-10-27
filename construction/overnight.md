@@ -63,10 +63,8 @@ Each line is a behaviour found, with its mark ([docs/contributing.md](../docs/co
   `main`'s HEAD; `/finish after-merge` does not remove it (Claude Code, observed 2026-10-27, #115).
 - A worktree with no change at the end of the agent's turn is removed (Claude Code, inferred 2026-10-27, #27).
 - `git switch main` fails in a worktree (Claude Code, observed 2026-10-27, #115). `/start` there
-  runs `gh issue develop <n> --name <branch> --base main` without `--checkout`, then
+  runs `mise exec -- gh issue develop <n> --name <branch> --base main` without `--checkout`, then
   `git fetch origin <branch>` and `git switch -c <branch> --track origin/<branch>`.
-- `mise exec -- git` is refused in an agent worktree; plain `git` works with the right identity,
-  never `git config` nor `git -c user.email=` (Claude Code, observed 2026-10-27, #115).
 - `git push` can fail to resolve github.com from the sandbox while `gh` works; retry the push
   outside the sandbox (Claude Code, observed 2026-10-27, #27).
 - A subagent cannot ask the maintainer, so work needing their acceptance runs in two phases:
@@ -99,7 +97,7 @@ construction/scripts/overnight-1.js with args
 Those eight are done and merged; nothing of them is to be redone. About 25 agents are
 expected; that scale is intended. Do not ask me anything. When the workflow returns, check
 that construction/notes/night-1.md is on main (the report PR is merged) and that
-"mise exec -- git status --porcelain" prints nothing; do not edit or commit anything
+"git status --porcelain" prints nothing; do not edit or commit anything
 yourself; then stop.
 ```
 
@@ -167,7 +165,7 @@ they are in every sub-issue's body, not in the script.
 ## Launch (night 2)
 
 Same setup as night 1 (new session in `feyn/`, Opus, bypass). First check the conditions above
-(`gh issue view <n> --json state` on #93 and #22, the links of #18, #23 and #100 as described, and
+(`mise exec -- gh issue view <n> --json state` on #93 and #22, the links of #18, #23 and #100 as described, and
 `main` clean).
 Paste:
 
@@ -178,7 +176,7 @@ construction/scripts/overnight-2.js with args
 Add to accepted the ids of tasks I did by hand (S1-05, S1-09, S1-10, S1-11, S1-12, or a
 sub-task S1-10.<nn>). About 90 agents are expected; that scale is intended. Do not ask me
 anything. When the workflow returns, check that construction/notes/night-2.md is on main (the
-report PR is merged) and that "mise exec -- git status --porcelain" prints nothing; do not edit
+report PR is merged) and that "git status --porcelain" prints nothing; do not edit
 or commit anything yourself; then stop.
 ```
 

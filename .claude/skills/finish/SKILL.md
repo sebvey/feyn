@@ -19,7 +19,7 @@ branch without an issue number: stop and say so.
    the branch. One that does not hold: fix it, or say in the PR which one and why. The Done
    when is not edited after `/start`; a change to it amends the open PR's body as well.
 2. **Checks.** Run the ones that exist for what the branch touches
-   (`mise exec -- git diff --name-only main...HEAD`):
+   (`git diff --name-only main...HEAD`):
    - a course `courses/<id>/`: the check runner of the spec it declares
      (`specs/<name>/checks/check-course courses/<id>`);
    - `site/` or a course: `astro check` and the site build, from `site/`;
@@ -28,8 +28,8 @@ branch without an issue number: stop and say so.
    No check exists yet for the area: say so in the PR. A failing check is fixed before the PR
    opens; one that cannot be fixed here is named in the PR, at the top.
 3. **Commit and push.** Nothing left uncommitted that belongs to the issue
-   (`mise exec -- git status --porcelain`), then
-   `mise exec -- git push -u origin <branch>`.
+   (`git status --porcelain`), then
+   `git push -u origin <branch>`.
 4. **Title**: `<type>(<area>): <summary>`, which becomes the squash commit on `main`.
    `<type>` is the `type:` label, `<area>` the `area:` label, both without their prefix
    (`course(course:parcours-po): write the cases of concept 9`). Summary: imperative,
@@ -48,7 +48,7 @@ branch without an issue number: stop and say so.
      Done when, verified:
      - met: `finish/SKILL.md` step 5 names the three verdict words (file read).
      - not met: the issue lists the PR (`closedByPullRequestsReferences` is empty).
-     - deviation: a test issue shows the PR (none made; `gh issue develop --help` read).
+     - deviation: a test issue shows the PR (none made; `mise exec -- gh issue develop --help` read).
      ```
    - what is not verified, and the checks that do not exist yet;
    - decisions written (`/decide`), issues opened on the way.
@@ -69,7 +69,7 @@ branch without an issue number: stop and say so.
 7. **Ask for review**: reply with the PR URL, the title, one line on what the reviewer should
    look at first, and the merge command, which names the subject (on a one-commit PR, GitHub
    takes the commit message, not the PR title):
-   `gh pr merge <pr> --squash --delete-branch --subject "<title> (#<pr>)"`
+   `mise exec -- gh pr merge <pr> --squash --delete-branch --subject "<title> (#<pr>)"`
    (GitHub, observed 2026-10-27, #115). Stop there.
    A draft PR: name the question instead of the merge command. The maintainer answers with a
    comment and removes `blocked:maintainer` (on the issue and the PR). Then apply the answer,
@@ -108,18 +108,18 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
 
 1. `mise exec -- gh pr view <branch> --json state,mergedAt,title` shows `MERGED`; otherwise
    stop: nothing to clean.
-2. `mise exec -- git switch main`, `mise exec -- git pull --ff-only`.
+2. `git switch main`, `git pull --ff-only`.
 3. **Confirm** that `main` holds the branch's version of every file it touched (`main` may
    have moved on with other merges, so compare those files only):
-   `mise exec -- git diff main <branch> -- $(mise exec -- git diff --name-only $(mise exec -- git merge-base main <branch>) <branch>)`
+   `git diff main <branch> -- $(git diff --name-only $(git merge-base main <branch>) <branch>)`
    must print nothing. Read the result before going on; anything printed: stop and show it.
-4. **Delete**: `mise exec -- git branch -D <branch>` (already gone if the merge ran in this
+4. **Delete**: `git branch -D <branch>` (already gone if the merge ran in this
    checkout: nothing to do). The remote branch goes with the merge
-   (`gh pr merge --squash --delete-branch`); if it is still there
-   (`mise exec -- git ls-remote --heads origin <branch>`), tell the maintainer. Never delete a
+   (`mise exec -- gh pr merge --squash --delete-branch`); if it is still there
+   (`git ls-remote --heads origin <branch>`), tell the maintainer. Never delete a
    remote branch yourself.
 5. Check the squash commit carries the PR title
-   (`mise exec -- git log main -1 --format=%s --grep "(#<pr>)"`); if not, tell the
+   (`git log main -1 --format=%s --grep "(#<pr>)"`); if not, tell the
    maintainer (`main` is never rewritten).
 6. Check the issue with the PR (`mise exec -- gh issue view <n> --json url,state,projectItems`).
    - `Closes` PR: the issue must be closed; if not, say so (the PR body lost its

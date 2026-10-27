@@ -67,6 +67,6 @@ From [decision.md](decision.md), at `<folder>/<slug>.md`:
 A decision it supersedes: change that file's `status` to `superseded-by: <slug>` in the same
 commit.
 
-Commit it on the current issue branch (`mise exec -- git add <file>`,
-`mise exec -- git commit -m "decide <slug>"`); on `main`, stop and propose `/ticket` first:
+Commit it on the current issue branch (`git add <file>`,
+`git commit -m "decide <slug>"`); on `main`, stop and propose `/ticket` first:
 a decision lands through a PR like the rest. Reply with the path and the counterfactual.

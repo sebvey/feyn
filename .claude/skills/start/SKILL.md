@@ -21,7 +21,7 @@ Refuse, saying why in one line, and change nothing, when:
 - an issue that blocks it is still open
   ([project.md](../ticket/project.md), "Dependencies"): name each open blocker and stop;
 - the issue is closed, or its Status is Done;
-- its Status is already In progress: look for its branch (`mise exec -- git branch --list "*/<n>-*"`)
+- its Status is already In progress: look for its branch (`git branch --list "*/<n>-*"`)
   and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
   instead. In progress with no branch and no PR is a Status that drifted: say so and go on;
 - it has no `type:` label, or no Done when: propose the fix (`/ticket <n>` shows what is
@@ -29,9 +29,9 @@ Refuse, saying why in one line, and change nothing, when:
 
 ## 2. Start from an up-to-date main
 
-1. `mise exec -- git status --porcelain` must be empty. Uncommitted work belongs to someone:
+1. `git status --porcelain` must be empty. Uncommitted work belongs to someone:
    say what is there and stop; never stash, restore or clean it.
-2. `mise exec -- git switch main`, then `mise exec -- git pull --ff-only`. A pull that is not
+2. `git switch main`, then `git pull --ff-only`. A pull that is not
    a fast-forward means `main` diverged locally: stop and say so.
 
 ## 3. Create the branch
@@ -48,7 +48,7 @@ branch closes the issue at the merge even when it says `Refs` (GitHub, observed 
 `/finish` unlinks the branch first for a `Refs` PR.
 
 A branch of that name that already exists (`mise exec -- gh issue develop --list <n>` shows
-the linked ones, `mise exec -- git branch --list "*/<n>-*"` the local ones): switch to it and
+the linked ones, `git branch --list "*/<n>-*"` the local ones): switch to it and
 say so, do not create a second one.
 
 ## 4. Mark it in progress
@@ -71,4 +71,4 @@ Reply with:
   Done when statement will be verified (a command to run, a file to read). One line per item.
 
 Then read the files the issue lists and begin. Commits on the branch are free-form
-(`mise exec -- git commit`); only the PR title survives the squash.
+(`git commit`); only the PR title survives the squash.

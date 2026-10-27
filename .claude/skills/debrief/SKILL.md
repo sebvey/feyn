@@ -13,7 +13,7 @@ the only memory of the session: what is not in them is lost. The maintainer rere
 
 ## 1. The branch
 
-`mise exec -- git status --short --branch` (its first line). On `<type>/<n>-<slug>` (made by
+`git status --short --branch` (its first line). On `<type>/<n>-<slug>` (made by
 `/start`): every commit goes there. On `main`, or on a branch without an issue number: ask the maintainer which
 branch, and create it as `/start` does; never commit on `main`. `<n>` is the issue that
 started the session.
@@ -73,9 +73,9 @@ when no issue started it.
 
 ## 8. Commit
 
-`mise exec -- git add docs/contributing.md construction/notes/<file>` and the files edited at
+`git add docs/contributing.md construction/notes/<file>` and the files edited at
 step 6 (the decisions are
-already committed by `/decide`), then `mise exec -- git commit -m "debrief <topic>"`. Never
+already committed by `/decide`), then `git commit -m "debrief <topic>"`. Never
 on `main`, never a merge, never a push: the PR is `/finish`'s.
 
 ## 9. Reply
