@@ -1,6 +1,6 @@
 ---
 name: start
-description: Take GitHub issue n on feyn - refuse if a maintainer decision is awaited, create the branch <type>/<n>-<slug> from an up-to-date main, set state:wip, restate the Done when and lay out the plan. Use for "/start <n>", "take issue 12", "let's do #12".
+description: Take GitHub issue n on feyn - refuse if a maintainer decision is awaited, create the branch <type>/<n>-<slug> from an up-to-date main, linked to the issue, set state:wip, restate the Done when and lay out the plan. Use for "/start <n>", "take issue 12", "let's do #12".
 argument-hint: "<issue number>"
 ---
 
@@ -36,9 +36,15 @@ Name: `<type>/<n>-<slug>`, where `<type>` is the issue's `type:` label without i
 (`bug`, `course`, `improvement`, `decision`) and `<slug>` is three to five words of the title,
 lowercase, joined by hyphens (`course/42-concept-9-cases`).
 
-`mise exec -- git switch -c <type>/<n>-<slug>`
+`mise exec -- gh issue develop <n> --name <type>/<n>-<slug> --base main --checkout`
 
-A branch of that name that already exists: switch to it and say so, do not create a second one.
+This creates the branch on GitHub, linked to the issue, and checks it out: the issue's
+Development section then lists the branch, and the PR opened from it, whether the PR says
+`Closes` or `Refs`.
+
+A branch of that name that already exists (`mise exec -- gh issue develop --list <n>` shows
+the linked ones, `mise exec -- git branch --list "*/<n>-*"` the local ones): switch to it and
+say so, do not create a second one.
 
 ## 4. Mark it in progress
 
@@ -51,7 +57,8 @@ A branch of that name that already exists: switch to it and say so, do not creat
 Reply with:
 - the branch name;
 - the **Done when**, copied as written: it is the contract `/finish` and the review hold the
-  work to. The body has it as a `### Done when` section or a `- **Done when**:` bullet;
+  work to. The body has it as a `### Done when` section or a `- **Done when**:` bullet. It is
+  not edited after `/start`; a change to it amends the open PR's body as well;
 - the files the issue says to read, then the plan: what changes, in which files, and how each
   Done when statement will be verified (a command to run, a file to read). One line per item.
 
