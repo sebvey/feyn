@@ -16,7 +16,8 @@ branch without an issue number: stop and say so.
 
 1. **Done when.** Reread the issue's Done when
    (`mise exec -- gh issue view <n> --json title,labels,body`) and check each statement against
-   the branch. One that does not hold: fix it, or say in the PR which one and why.
+   the branch. One that does not hold: fix it, or say in the PR which one and why. The Done
+   when is not edited after `/start`; a change to it amends the open PR's body as well.
 2. **Checks.** Run the ones that exist for what the branch touches
    (`mise exec -- git diff --name-only main...HEAD`):
    - a course `courses/<id>/`: the check runner of the spec it declares
@@ -36,10 +37,25 @@ branch without an issue number: stop and say so.
 5. **Body**, short (it will be read, keep it under 30 lines):
    - `Closes #<n>` on the first line;
    - what changes, as bullets, describing the diff and nothing else;
-   - each Done when statement and how it was verified (command run, file read);
+   - a `Done when, verified:` section, one line per statement of the issue's Done when, that
+     starts with a verdict word, `met`, `not met` or `deviation`, then the statement and the
+     proof (command run, file read):
+
+     ```
+     Done when, verified:
+     - met: `finish/SKILL.md` step 5 names the three verdict words (file read).
+     - not met: the issue lists the branch (`gh issue develop --list 12` prints nothing).
+     - deviation: a test issue shows the PR (none made; `gh issue develop --help` read).
+     ```
    - what is not verified, and the checks that do not exist yet;
    - decisions written (`/decide`), issues opened on the way.
 6. **Open it**: `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`.
+   Then check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
+   lists the PR when it says `Closes #<n>`, and `mise exec -- gh issue develop --list <n>`
+   lists the branch. GitHub can take a few seconds to list the PR: rerun once. PR still missing
+   on a `Closes` PR: fix the body
+   (`mise exec -- gh pr edit <pr> --body-file <file>`); branch missing (not made by `/start`):
+   say so in the reply, the issue's Development section will not show it.
 7. **Ask for review**: reply with the PR URL, the title, one line on what the reviewer should
    look at first, and the merge command, which names the subject (on a one-commit PR, GitHub
    takes the commit message, not the PR title):
