@@ -8,4 +8,4 @@ feyn is a monorepo of courses taught by a Claude Code teacher and published as a
 
 1. Every change starts from an issue (Observation, To do, Done when).
 2. Work on a branch and open a pull request; nothing lands on `main` without one.
-3. Details will be in `docs/contributing.md` (to come).
+3. The whole flow, the labels and the maintainer's part are in [docs/contributing.md](docs/contributing.md).
