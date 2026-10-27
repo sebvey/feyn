@@ -47,8 +47,9 @@ Rules for every session:
 
 Tasks marked `parallel=yes` may run at the same time as other tasks of the same stage, each in
 its own worktree, on the branch named by the task. Two sessions never touch the same files;
-when a task lists a file another running task also lists, it waits. The stage files say what
-each task depends on (`depends=`).
+when a task lists a file another running task also lists, it waits. What a task depends on is
+its issue's blocked-by links (`depends=` in the stage files was their source); `/start` refuses
+an issue with an open blocker.
 
 ## Model policy
 
@@ -75,8 +76,9 @@ model the classroom will run on.
 ```
 
 The metadata line is parsed by `scripts/plan-to-issues`: `area` and `type` become labels
-(`area:…`, `type:…`), the stage file gives the milestone, `depends` goes into the issue body,
-the first line of the heading is the issue title. `parallel` is informational.
+(`area:…`, `type:…`), the stage file gives the milestone, `depends` becomes blocked-by links
+(decision `blocked-by-links-for-dependencies`), the first line of the heading is the issue
+title. `parallel` is informational.
 
 Ids: `S<stage>-<nn>`; sub-tasks of a run (the 20 concept migrations) are `S1-10.<nn>` and
 become sub-issues.

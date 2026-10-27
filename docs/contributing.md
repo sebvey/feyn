@@ -17,12 +17,13 @@ at the end of stage 4. Why: decision `monorepo-feyn`.
 GitHub Issues is the only backlog; nothing is tracked in a local file. An issue has three
 sections: Observation (what was seen, where), To do, Done when (statements a reviewer can
 verify by reading a file or running a command). `/ticket <observation>` writes it with its
-labels and puts it in the Project; `/ticket <n>` summarises one. Why: decision
-`issue-defines-pr-verifies`.
+labels, sets its blocked-by links and puts it in the Project; `/ticket <n>` summarises one, its
+links included. Why: decisions `issue-defines-pr-verifies`, `blocked-by-links-for-dependencies`.
 
 ## An issue becomes a branch
 
-`/start <n>` takes the issue: it refuses one that carries `blocked:maintainer`, creates
+`/start <n>` takes the issue: it refuses one that carries `blocked:maintainer` or has an open
+blocker (decision `blocked-by-links-for-dependencies`), creates
 `<type>/<n>-<slug>` from an up-to-date `main`, sets its Status to In progress, and restates
 the Done when as the contract the work is held to. It creates the branch with
 `gh issue develop`, so the issue's Development section lists the branch and any PR opened from
