@@ -15,7 +15,7 @@ at a time.
 ## What the night may do without the maintainer
 
 Authorised by the maintainer on 2026-10-27, for nights 1 and 2 (night 2's extension is under
-"Night 2 scope" and **to be confirmed by the maintainer**), as the list below and nothing more:
+"Night 2 scope", confirmed on 2026-10-27), as the list below and nothing more:
 - create the public repositories `sebvey/feyn` and `sebvey/feyn-site`, push to them;
 - create labels, milestones and issues on `feyn`; open, review and squash-merge PRs on `feyn`;
 - create the deploy key on `feyn-site` and the secret on `feyn` (the `gh` token has the `repo`
@@ -132,7 +132,7 @@ The conditions at launch are expressed through the links only:
 A task already In progress with a branch is resumed, not refused; one already closed is done.
 
 Night 2 needs, on top of the list under "What the night may do", for the plan the maintainer
-set on 2026-10-27 (**to be confirmed by the maintainer**): creating the 20 sub-issues of #23
+set on 2026-10-27 (confirmed by the maintainer on 2026-10-27): creating the 20 sub-issues of #23
 and their blocked-by links (labels, milestone, Project, parent); working in worktrees under
 `.claude/worktrees/` and removing those of this night's merged branches (never forced); merging
 PRs (squash); commenting on issues; reopening an issue GitHub closed at a merge (#94
