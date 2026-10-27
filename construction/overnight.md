@@ -20,8 +20,15 @@ Authorised by the maintainer on 2026-10-27, for night 1, as the list below and n
   scope, which is enough);
 - open and merge one PR on each frozen repository (`sebvey/feyn-o0o`, local clone
   `parcours-po`, and `sebvey/parcours-po-website`) that adds the freeze line to the README;
+- push the issue branches `gh issue develop` creates (`/start`), and set the Status of the
+  issues in the Project (In progress, Done);
+- open and squash-merge the night's report PR;
 - nothing else outward: no archive, no deletion, no force-push, no push to the old
   repositories beyond that PR.
+
+For the night, this list overrides the root `CLAUDE.md` line that leaves merging, remote
+branches and the Project to the maintainer: the orchestrator's merge agents merge, the task
+agents push their branches and set the Status.
 
 ## Overnight rules for a task agent
 
@@ -38,6 +45,10 @@ In addition to `README.md` ("How a work session goes"):
   being written and the PR being open; say so in the PR body.
 - Before S0-07 (issues exist), tick the task in `plan/stage-N.md` in the same PR. From S0-07
   on, `/start` and `/finish` are the flow.
+- Whatever the status, leave the checkout clean and on `main`: a note written for a blocked
+  task is committed and pushed on the issue branch. The next task's `/start` refuses a dirty
+  tree.
+- No signature line in a PR body (`/finish` step 5).
 - Return raw facts, not a message: status, PR number, branch, what was verified, what the
   maintainer must do.
 
@@ -47,6 +58,11 @@ Stage 0 complete (S0-01 to S0-07), then the stage 1 tasks that need no maintaine
 first: S1-01 (the distillation table, left for validation), S1-02 (the concept 9 prototype),
 S1-03 (`SPEC.md` draft), then S1-06, S1-07, S1-08, S1-11. The night stops there: S1-04 needs
 the validated table, S1-09 and S1-10 should not build on a spec the maintainer has not read.
+
+The relaunch runs S1-07 before S1-06 (the templates must pass the checks S1-07 writes). S1-11
+cannot run taught-check on the migrated course before S1-10: its PR says `Refs #24`, reports
+that statement as a deviation, and issue #24 stays open. The report lands on `main` through
+its own PR, merged by the night.
 
 ## Launch (night 1)
 
@@ -60,19 +76,22 @@ Relaunch night run 1 of the feyn construction. Use a workflow: run the script
 construction/scripts/overnight-1.js with args
 {"date": "<today>", "night": 1, "accepted": ["S0-01", "S0-02", "S0-03", "S0-04", "S0-05", "S0-06", "S0-07", "S1-01"]}.
 Those eight are done and merged; nothing of them is to be redone. About 25 agents are
-expected; that scale is intended. Do not ask me anything. When the workflow returns, make
-sure construction/notes/night-1.md exists (overwrite the previous report), then stop.
+expected; that scale is intended. Do not ask me anything. When the workflow returns, check
+that construction/notes/night-1.md is on main (the report PR is merged) and that
+"mise exec -- git status --porcelain" prints nothing; do not edit or commit anything
+yourself; then stop.
 ```
 
-4. Go to bed. The run writes `construction/notes/night-1.md` at the end.
+4. Go to bed. The run writes `construction/notes/night-1.md` at the end and merges it through
+   a PR.
 
 ## Morning checklist (after night 1)
 
 1. Read `construction/notes/night-1.md`: tasks done, blocked, failed; PRs merged; what needs
    you.
 2. `git log --oneline main` on `feyn`: one squash commit per task; skim the ones you care about.
-3. Validate the distillation table (`construction/notes/S1-01-distillation.md`): comment on the
-   S1-01 issue, remove `blocked:maintainer`.
+3. The distillation table (`construction/notes/S1-01-distillation.md`) is already validated:
+   issue #14 is closed. Nothing to do.
 4. Read `construction/notes/S1-02-prototype.md` and `specs/linear-course/SPEC.md`; file issues
    for what you want changed.
 5. Check `https://sebvey.github.io/feyn-site/` serves the placeholder.
@@ -85,7 +104,7 @@ arguments; a phase whose gate is false is skipped and the run continues with the
 
 | Gate | Means | Unlocks |
 |---|---|---|
-| `distillationValidated` | you have read `construction/notes/S1-01-distillation.md`, corrected what you wanted, and removed `blocked:maintainer` from the S1-01 issue | S1-04 (protocol), then S1-05 (language pack) and S1-14 (spec and course decisions) in parallel |
+| `distillationValidated` | you have read `construction/notes/S1-01-distillation.md`, corrected what you wanted, and closed the S1-01 issue (#14, done on 2026-10-27) | S1-04 (protocol), then S1-05 (language pack) and S1-14 (spec and course decisions) in parallel |
 | `specRead` | you have read `specs/linear-course/SPEC.md` and `construction/notes/S1-02-prototype.md`, and filed issues for what you want changed (or there is nothing) | S1-09 (migrate-concept workflow), then S1-10: the 20 concept migrations in parallel worktrees, each reviewed against the old files, merged serially; then S1-12: taught-check (the ported agent workflow, run as a child), two independent course reviews, fixes |
 
 Not in night 2, by design: S1-13 (the old-teacher guard needs a fresh test, which an agent inside
