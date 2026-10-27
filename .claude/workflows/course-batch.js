@@ -111,7 +111,7 @@ phase('Scope')
 const scout = await agent(`${ROLE}
 
 Read ${COURSE}course.yaml (it names the spec: field spec) and the spec's SPEC.md and templates.\
-${A.issue ? ` Read issue #${A.issue} ("mise exec -- gh issue view ${A.issue}") and its parent.` : ''}\
+${A.issue ? ` Read issue #${A.issue} ("gh issue view ${A.issue}") and its parent.` : ''}\
 ${A.concepts ? ` The batch is the concepts ${A.concepts.join(', ')}.` : ' The batch is the concepts the issue asks to write.'}
 
 Return the scope of the batch: its concepts in course order, with for each its concept folder, \
@@ -124,7 +124,7 @@ if (!scout || !scout.concepts.length) throw new Error('Empty scope: no concept f
 for (const c of scout.concepts) c.dir = c.dir.replace(/^courses\/[^/]+\//, '').replace(/\/?$/, '/')
 log(`Batch: ${scout.concepts.map(c => c.id).join(', ')}; intermediate products in ${WORK}`)
 
-const CHECK_CMD = id => `mise exec -- ${scout.spec_dir}checks/check-course ${COURSE.replace(/\/$/, '')} --concept ${id}`
+const CHECK_CMD = id => `${scout.spec_dir}checks/check-course ${COURSE.replace(/\/$/, '')} --concept ${id}`
 
 const context = c => `Context of the batch (read these files on disk):
 ${scout.shared_files.map(f => `- ${f}`).join('\n')}

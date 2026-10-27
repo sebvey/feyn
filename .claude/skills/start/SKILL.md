@@ -11,7 +11,7 @@ Status; the work itself comes after.
 
 ## 1. Read the issue
 
-`mise exec -- gh issue view <n> --json number,title,url,state,labels,body,comments,projectItems`
+`gh issue view <n> --json number,title,url,state,labels,body,comments,projectItems`
 
 The Status is the `status.name` of the `feyn` item in `projectItems` ([project.md](../ticket/project.md)).
 
@@ -21,17 +21,17 @@ Refuse, saying why in one line, and change nothing, when:
 - an issue that blocks it is still open
   ([project.md](../ticket/project.md), "Dependencies"): name each open blocker and stop;
 - the issue is closed, or its Status is Done;
-- its Status is already In progress: look for its branch (`mise exec -- git branch --list "*/<n>-*"`)
-  and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
+- its Status is already In progress: look for its branch (`git branch --list "*/<n>-*"`)
+  and its PR (`gh pr list --search "<n> in:body"`), and propose to resume them
   instead. In progress with no branch and no PR is a Status that drifted: say so and go on;
 - it has no `type:` label, or no Done when: propose the fix (`/ticket <n>` shows what is
   missing) and stop.
 
 ## 2. Start from an up-to-date main
 
-1. `mise exec -- git status --porcelain` must be empty. Uncommitted work belongs to someone:
+1. `git status --porcelain` must be empty. Uncommitted work belongs to someone:
    say what is there and stop; never stash, restore or clean it.
-2. `mise exec -- git switch main`, then `mise exec -- git pull --ff-only`. A pull that is not
+2. `git switch main`, then `git pull --ff-only`. A pull that is not
    a fast-forward means `main` diverged locally: stop and say so.
 
 ## 3. Create the branch
@@ -40,25 +40,25 @@ Name: `<type>/<n>-<slug>`, where `<type>` is the issue's `type:` label without i
 (`bug`, `course`, `improvement`, `decision`) and `<slug>` is three to five words of the title,
 lowercase, joined by hyphens (`course/42-concept-9-cases`).
 
-`mise exec -- gh issue develop <n> --name <type>/<n>-<slug> --base main --checkout`
+`gh issue develop <n> --name <type>/<n>-<slug> --base main --checkout`
 
 This creates the branch on GitHub, linked to the issue, and checks it out: the issue's
 Development section then lists the branch, and the PR opened from it. A PR from a linked
 branch closes the issue at the merge even when it says `Refs` (GitHub, observed 2026-10-27, #24).
 `/finish` unlinks the branch first for a `Refs` PR.
 
-A branch of that name that already exists (`mise exec -- gh issue develop --list <n>` shows
-the linked ones, `mise exec -- git branch --list "*/<n>-*"` the local ones): switch to it and
+A branch of that name that already exists (`gh issue develop --list <n>` shows
+the linked ones, `git branch --list "*/<n>-*"` the local ones): switch to it and
 say so, do not create a second one.
 
 ## 4. Mark it in progress
 
 Set the Status to In progress ([project.md](../ticket/project.md)):
 
-`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "In progress"`
+`gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "In progress"`
 
 An issue that is not in the Project yet (`projectItems` empty) is added first:
-`mise exec -- gh project item-add 4 --owner sebvey --url <issue url>`.
+`gh project item-add 4 --owner sebvey --url <issue url>`.
 
 ## 5. Restate and plan
 
@@ -71,4 +71,4 @@ Reply with:
   Done when statement will be verified (a command to run, a file to read). One line per item.
 
 Then read the files the issue lists and begin. Commits on the branch are free-form
-(`mise exec -- git commit`); only the PR title survives the squash.
+(`git commit`); only the PR title survives the squash.

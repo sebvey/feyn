@@ -38,6 +38,6 @@ Read the report, then every file it changed (never trust the summary).
 
 ## 3. Finish
 
-Run `mise exec -- specs/<name>/checks/check-course courses/<id>` on the whole course, then
+Run `specs/<name>/checks/check-course courses/<id>` on the whole course, then
 `taught-check` ([taught-check](../taught-check/SKILL.md)) from the first concept touched, and
 `/finish`.

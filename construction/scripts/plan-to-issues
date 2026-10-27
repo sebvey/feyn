@@ -13,8 +13,7 @@
 // `S<n>-<nn>.<mm>`), never by the full title: a title edited after creation still matches, and
 // the frozen plan files need no edit. Two issues with the same task id make the script stop,
 // naming both, before anything is created. Tasks `S<n>-<nn>.<mm>` become
-// sub-issues of `S<n>-<nn>`. No dependency; runs `gh`
-// (use `mise exec -- plan-to-issues ...` so that gh has its credentials).
+// sub-issues of `S<n>-<nn>`. No dependency; runs `gh`.
 'use strict';
 const { execFileSync } = require('node:child_process');
 const fs = require('node:fs');

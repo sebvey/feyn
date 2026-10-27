@@ -1,7 +1,7 @@
 # Checks of `linear-course`
 
 Scripts that verify a course against `SPEC.md` (section 10). **Dependency-free Node**
-(CommonJS, no `npm install`; Node 20 or later, run under `mise exec` like every tool here): the course's YAML,
+(CommonJS, no `npm install`; Node 20 or later): the course's YAML,
 Markdown and SVG are read by the small readers in `lib/` (`yaml.js`, `md.js`, `xml.js`), which
 cover the subset the spec uses. Chosen once, for every check: a shell version would need a
 YAML parser too, and the checks must run the same on a laptop and in CI.
@@ -9,9 +9,9 @@ YAML parser too, and the checks must run the same on a laptop and in CI.
 ## Run
 
 ```
-mise exec -- specs/linear-course/checks/check-course courses/<id>
-mise exec -- specs/linear-course/checks/check-course courses/<id> --only svg-contract
-mise exec -- specs/linear-course/checks/check-course courses/<id> --only concept-folder,sources --concept 9
+specs/linear-course/checks/check-course courses/<id>
+specs/linear-course/checks/check-course courses/<id> --only svg-contract
+specs/linear-course/checks/check-course courses/<id> --only concept-folder,sources --concept 9
 ```
 
 One line per passing check (`<id>: ok`), one line per failure
@@ -55,7 +55,7 @@ rouge », « aucune »). Ids and paths in the cell are checked.
 ## Tests
 
 ```
-mise exec -- specs/linear-course/checks/test-fixtures
+specs/linear-course/checks/test-fixtures
 ```
 
 - `fixtures/valid/`: a minimal valid course (four concepts, one annex, one diagram); every

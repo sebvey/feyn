@@ -3,7 +3,7 @@
 // Smoke run of the templates (task S1-06): builds a course from them with every placeholder
 // filled with a dummy value, then runs check-course on it. Two runs: with a diagram, and
 // without (the `diagrams` key and the image line deleted, as the concept template says).
-//   mise exec -- specs/linear-course/templates/smoke-test [--keep]
+//   specs/linear-course/templates/smoke-test [--keep]
 // The learner/ templates have no check: they are only scanned for unreplaced placeholders.
 const fs = require('fs');
 const os = require('os');

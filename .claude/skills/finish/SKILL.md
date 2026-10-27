@@ -15,11 +15,11 @@ branch without an issue number: stop and say so.
 ## Deliver
 
 1. **Done when.** Reread the issue's Done when
-   (`mise exec -- gh issue view <n> --json title,labels,body`) and check each statement against
+   (`gh issue view <n> --json title,labels,body`) and check each statement against
    the branch. One that does not hold: fix it, or say in the PR which one and why. The Done
    when is not edited after `/start`; a change to it amends the open PR's body as well.
 2. **Checks.** Run the ones that exist for what the branch touches
-   (`mise exec -- git diff --name-only main...HEAD`):
+   (`git diff --name-only main...HEAD`):
    - a course `courses/<id>/`: the check runner of the spec it declares
      (`specs/<name>/checks/check-course courses/<id>`);
    - `site/` or a course: `astro check` and the site build, from `site/`;
@@ -28,8 +28,8 @@ branch without an issue number: stop and say so.
    No check exists yet for the area: say so in the PR. A failing check is fixed before the PR
    opens; one that cannot be fixed here is named in the PR, at the top.
 3. **Commit and push.** Nothing left uncommitted that belongs to the issue
-   (`mise exec -- git status --porcelain`), then
-   `mise exec -- git push -u origin <branch>`.
+   (`git status --porcelain`), then
+   `git push -u origin <branch>`.
 4. **Title**: `<type>(<area>): <summary>`, which becomes the squash commit on `main`.
    `<type>` is the `type:` label, `<area>` the `area:` label, both without their prefix
    (`course(course:parcours-po): write the cases of concept 9`). Summary: imperative,
@@ -57,15 +57,15 @@ branch without an issue number: stop and say so.
 6. **Open it**:
    - a `Refs #<n>` PR first unlinks the branch
      ([below](#a-refs-pr-and-the-development-link)); a `Closes #<n>` PR skips that;
-   - `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`; with a
+   - `gh pr create --base main --title "<title>" --body-file <file>`; with a
      decision awaited, add `--draft --label blocked:maintainer` and put the same label on
-     the issue (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`), so the PR
+     the issue (`gh issue edit <n> --add-label blocked:maintainer`), so the PR
      cannot be merged by mistake;
-   - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
+   - check the issue shows it: `gh issue view <n> --json closedByPullRequestsReferences`
      lists the PR when it says `Closes #<n>` (a `Refs` PR: it lists nothing). The branch is
      not checked: GitHub drops the issue's linked branch once a PR from it opens
      (GitHub, inferred 2026-10-27, #108). GitHub can take a few seconds to list the PR:
-     rerun once. PR still missing on a `Closes` PR: fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
+     rerun once. PR still missing on a `Closes` PR: fix the body (`gh pr edit <pr> --body-file <file>`).
 7. **Ask for review**: reply with the PR URL, the title, one line on what the reviewer should
    look at first, and the merge command, which names the subject (on a one-commit PR, GitHub
    takes the commit message, not the PR title):
@@ -73,7 +73,7 @@ branch without an issue number: stop and say so.
    (GitHub, observed 2026-10-27, #115). Stop there.
    A draft PR: name the question instead of the merge command. The maintainer answers with a
    comment and removes `blocked:maintainer` (on the issue and the PR). Then apply the answer,
-   remove the section from the body, `mise exec -- gh pr ready <pr>`, and ask for review
+   remove the section from the body, `gh pr ready <pr>`, and ask for review
    again. Never remove the labels yourself; if the label is still on, the answer is not
    given: stop.
 
@@ -86,12 +86,12 @@ So when the body starts with `Refs #<n>`, remove the link **before** opening the
 (`gh issue develop` has no unlink):
 
 1. Get the link's id:
-   `mise exec -- gh api graphql -f query='query{repository(owner:"sebvey",name:"feyn"){issue(number:<n>){linkedBranches(first:10){nodes{id ref{name}}}}}}'`
+   `gh api graphql -f query='query{repository(owner:"sebvey",name:"feyn"){issue(number:<n>){linkedBranches(first:10){nodes{id ref{name}}}}}}'`
    and take the node whose `ref.name` is the branch.
 2. Remove it (this deletes the link, not the branch):
-   `mise exec -- gh api graphql -f query='mutation{deleteLinkedBranch(input:{linkedBranchId:"<id>"}){clientMutationId}}'`
+   `gh api graphql -f query='mutation{deleteLinkedBranch(input:{linkedBranchId:"<id>"}){clientMutationId}}'`
    (GitHub, tested 2026-10-27, #109).
-3. Open the PR, then check `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
+3. Open the PR, then check `gh issue view <n> --json closedByPullRequestsReferences`
    lists nothing (GitHub, tested 2026-10-27, #109). If it lists the PR, the link survived: the maintainer removes it in the
    web interface (PR page, Development in the sidebar, the issue's entry, unlink), or the
    body is edited to `Closes #<n>` if it is in fact the last step. Say so in the reply, and
@@ -106,29 +106,29 @@ unlink, and Clean up reopens the issue.
 Squash makes a new commit on `main`, so git does not see the branch as merged and
 `git branch -d` refuses it. Two separate moves: confirm, then delete.
 
-1. `mise exec -- gh pr view <branch> --json state,mergedAt,title` shows `MERGED`; otherwise
+1. `gh pr view <branch> --json state,mergedAt,title` shows `MERGED`; otherwise
    stop: nothing to clean.
-2. `mise exec -- git switch main`, `mise exec -- git pull --ff-only`.
+2. `git switch main`, `git pull --ff-only`.
 3. **Confirm** that `main` holds the branch's version of every file it touched (`main` may
    have moved on with other merges, so compare those files only):
-   `mise exec -- git diff main <branch> -- $(mise exec -- git diff --name-only $(mise exec -- git merge-base main <branch>) <branch>)`
+   `git diff main <branch> -- $(git diff --name-only $(git merge-base main <branch>) <branch>)`
    must print nothing. Read the result before going on; anything printed: stop and show it.
-4. **Delete**: `mise exec -- git branch -D <branch>` (already gone if the merge ran in this
+4. **Delete**: `git branch -D <branch>` (already gone if the merge ran in this
    checkout: nothing to do). The remote branch goes with the merge
    (`gh pr merge --squash --delete-branch`); if it is still there
-   (`mise exec -- git ls-remote --heads origin <branch>`), tell the maintainer. Never delete a
+   (`git ls-remote --heads origin <branch>`), tell the maintainer. Never delete a
    remote branch yourself.
 5. Check the squash commit carries the PR title
-   (`mise exec -- git log main -1 --format=%s --grep "(#<pr>)"`); if not, tell the
+   (`git log main -1 --format=%s --grep "(#<pr>)"`); if not, tell the
    maintainer (`main` is never rewritten).
-6. Check the issue with the PR (`mise exec -- gh issue view <n> --json url,state,projectItems`).
+6. Check the issue with the PR (`gh issue view <n> --json url,state,projectItems`).
    - `Closes` PR: the issue must be closed; if not, say so (the PR body lost its
      `Closes #<n>`). Then check its Status is Done: the Project's workflow sets it when it is
      on; if it did not, set it ([project.md](../ticket/project.md)):
-     `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Done`.
+     `gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Done`.
    - `Refs` PR: the issue must still be open, Status unchanged (In progress). If it closed
      anyway (the link survived), reopen it
-     (`mise exec -- gh issue reopen <n> --comment "Reopened: PR #<pr> only referenced it (Refs), the Development link closed it at the merge."`),
+     (`gh issue reopen <n> --comment "Reopened: PR #<pr> only referenced it (Refs), the Development link closed it at the merge."`),
      set its Status back to In progress, and tell the maintainer which step of "Deliver"
      missed it.
    - Either way, if the issue or the PR still carries `blocked:maintainer`, tell the
