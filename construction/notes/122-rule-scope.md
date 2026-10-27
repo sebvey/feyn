@@ -1,6 +1,9 @@
 # 122: one testable behaviour per protocol rule
 
-Issue #122, study, 2026-10-28. Nothing else is edited: applying the decision is a separate issue.
+Issue #122, study, 2026-10-28. Nothing else is edited: applying the decision is issue #125.
+Ruled 2026-10-28 (part 6): rules are named by slug, not numbered (decision
+`rules-named-by-slug`); where parts 3 and 4 name a split's parts by letter ("3.5a") or speak of
+letters, read "two slugs".
 
 ## 1. Context
 
@@ -217,67 +220,80 @@ it, or a part that only says « Puis » with nothing before it in its own rule.
 ## 5. Recommendation
 
 **Writing rule**, a third bullet under "Writing rules" in the header of `PROTOCOL.md`, after
-« A rule stands alone », with the date of the maintainer's decision added to the line above:
+« A rule stands alone », with the date of the maintainer's decision added to the line above. Accepted on 2026-10-28
+(question 1), its last sentence set by the ruling of question 2:
 
 > - A rule says one behaviour, one a test checks on its own. Several keys, items or branches of
 >   one act, a bound written into the act, a reading named as the source of the act, or a
->   sentence or fixed phrase said before the first tool call (rule 4.9's form) stay in one rule.
+>   sentence or fixed phrase said before the first tool call (the waiting-sentence rule's form) stay in one rule.
 >   Two acts a test would report apart are two rules: at different moments, or one in the text
 >   and one in the tool calls or in `learner/`; a whole message sent with no tool call is a
 >   behaviour beside what the message says. A clause that recalls a behaviour another rule owns
->   may stay; tests cite the owner. A rule split in two keeps its number with a letter (`3.5a`,
->   `3.5b`): the number still names the whole.
+>   may stay; tests cite the owner. A rule is named by its slug; a rule split in two gets two
+>   slugs.
 
 **Split now**, eleven rules into twenty-two, each part keeping its rule's words, plus at most the
 trigger it needs to stand alone:
 
-| Rule | New rules | Rows touched |
+| Rule | Two rules, one slug each | Rows touched |
 |---|---|---|
-| 1.3 | 1.3a « Le premier message d'accueil part sans appel d'outil. », with the « Pourquoi »; 1.3b « Le premier message d'accueil présente le cours en deux lignes : ... » | Used in `course.domain_count` 1.3b; inherited 1.3 |
-| 1.11 | 1.11a « Reprise : d'abord « {phrases.resume_opening} », sans appel d'outil. »; 1.11b « Après la phrase d'ouverture de la reprise, ne lis que ... », the message of 1.12 and « Ne repose pas les questions d'accueil » (a reminder of 1.2) | Used in `phrases.resume_opening` 1.11a, `memory_headings.next_step` 1.11b; inherited 1.11 (the new sentence is 1.11a) |
-| 3.2 | 3.2a « La correction de la réponse précédente peut ouvrir le message ; il n'enseigne toujours qu'un sous-concept. » (the second clause a reminder of 3.1); 3.2b « Ne demande jamais « {phrases.banned_check} ». » | Used in `phrases.banned_check` 3.2b; inherited 3.2 |
-| 3.5 | 3.5a « Une question par message, partout, accueil compris. »; 3.5b « Plusieurs questions à poser : annonce leur nombre ... » | Used in `phrases.questions_announce` 3.5b; « (règle 3.5) » in 1.5 becomes 3.5b; inherited 3.5 |
-| 4.10 | 4.10a « En session de cours, ne tiens pas de liste de tâches ... », with the « Pourquoi » and the reason; 4.10b « En session de cours, ne finis pas un tour par un récapitulatif. » | inherited 4.10 |
-| 5.5 | 5.5a « Plusieurs acteurs de même rôle cités ensemble : leurs noms, puis le rôle une fois. »; 5.5b « Le rôle entre parenthèses d'un acteur est celui du fil rouge, jamais le rôle qu'une question teste. » | inherited 5.5 |
-| 7.4 | 7.4a « Un cas de creusage réussi se clôt comme un sous-concept validé. »; 7.4b « Après deux cas de creusage réussis, le concept est creusé : propose ... » | inherited 7.4 |
-| 8.2 | 8.2a « Pendant la session, garde l'état dans la conversation. N'écris dans `learner/` qu'aux points de sauvegarde. »; 8.2b « À un point de sauvegarde, chaque fichier de `learner/` modifié s'écrit en une seule écriture. » | inherited 8.2 |
-| 8.5 | 8.5a « À la fin de l'accueil, dans les trois fichiers de `learner/`, ... », the nickname, the template comment and the journal's first line (a reminder of 8.4b); 8.5b « À la fin de l'accueil, dans la liste de `learner/apprenant.md`, ... », the profile lines | Used in `headings.onboarding` and `memory.profile_line` 8.5b; inherited 8.5 |
-| 8.7 | 8.7a « Une observation contredite se corrige ou se supprime. »; 8.7b « Une notion pas encore enseignée que l'apprenant ignore n'est pas une vigilance : ... » | Used in `memory_headings.next_step` 8.7b; inherited 8.7 |
-| 8.9 | 8.9a « Relis un fichier de `learner/` juste avant d'y écrire, si tu ne l'as pas lu dans la session. »; 8.9b « Écris un fichier de `learner/` avec l'outil d'écriture, sans commande shell. » | inherited 8.9 (its two sources go one to each) |
+| 1.3 | first: « Le premier message d'accueil part sans appel d'outil. », with the « Pourquoi »; second: « Le premier message d'accueil présente le cours en deux lignes : ... » | Used in `course.domain_count` (second); inherited 1.3 |
+| 1.11 | first: « Reprise : d'abord « {phrases.resume_opening} », sans appel d'outil. »; second: « Après la phrase d'ouverture de la reprise, ne lis que ... », the message of 1.12 and « Ne repose pas les questions d'accueil » (a reminder of 1.2) | Used in `phrases.resume_opening` (first), `memory_headings.next_step` (second); inherited 1.11 (the new sentence is the first) |
+| 3.2 | first: « La correction de la réponse précédente peut ouvrir le message ; il n'enseigne toujours qu'un sous-concept. » (the second clause a reminder of 3.1); second: « Ne demande jamais « {phrases.banned_check} ». » | Used in `phrases.banned_check` (second); inherited 3.2 |
+| 3.5 | first: « Une question par message, partout, accueil compris. »; second: « Plusieurs questions à poser : annonce leur nombre ... » | Used in `phrases.questions_announce` (second); « (règle 3.5) » in 1.5 cites the second slug; inherited 3.5 |
+| 4.10 | first: « En session de cours, ne tiens pas de liste de tâches ... », with the « Pourquoi » and the reason; second: « En session de cours, ne finis pas un tour par un récapitulatif. » | inherited 4.10 |
+| 5.5 | first: « Plusieurs acteurs de même rôle cités ensemble : leurs noms, puis le rôle une fois. »; second: « Le rôle entre parenthèses d'un acteur est celui du fil rouge, jamais le rôle qu'une question teste. » | inherited 5.5 |
+| 7.4 | first: « Un cas de creusage réussi se clôt comme un sous-concept validé. »; second: « Après deux cas de creusage réussis, le concept est creusé : propose ... » | inherited 7.4 |
+| 8.2 | first: « Pendant la session, garde l'état dans la conversation. N'écris dans `learner/` qu'aux points de sauvegarde. »; second: « À un point de sauvegarde, chaque fichier de `learner/` modifié s'écrit en une seule écriture. » | inherited 8.2 |
+| 8.5 | first: « À la fin de l'accueil, dans les trois fichiers de `learner/`, ... », the nickname, the template comment and the journal's first line (a reminder of 8.4b); second: « À la fin de l'accueil, dans la liste de `learner/apprenant.md`, ... », the profile lines | Used in `headings.onboarding` and `memory.profile_line` (second); inherited 8.5 |
+| 8.7 | first: « Une observation contredite se corrige ou se supprime. »; second: « Une notion pas encore enseignée que l'apprenant ignore n'est pas une vigilance : ... » | Used in `memory_headings.next_step` (second); inherited 8.7 |
+| 8.9 | first: « Relis un fichier de `learner/` juste avant d'y écrire, si tu ne l'as pas lu dans la session. »; second: « Écris un fichier de `learner/` avec l'outil d'écriture, sans commande shell. » | inherited 8.9 (its two sources go one to each) |
 
-Optional, since the number still names the whole: `SPEC.md` section 6 and the decision
-`onboarding-in-plan` may cite 8.5b instead of 8.5. `construction/notes/` is not edited.
+Every reference then cites the slugs (decision `rules-named-by-slug`): the cross-references
+inside `PROTOCOL.md`, `SPEC.md` section 6, the decisions `onboarding-in-plan` and
+`svg-only-diagrams`, the two tables. `construction/notes/` is not edited.
 
 **Kept whole.** The twelve rules or rows with two behaviours kept above (1.5, 1.7, 1.9, 3.18,
 5.3, 7.3, 7.5, 7.6, 7.8, 7.14, 8.1, 8.4a): in all but 8.4a the second behaviour restates a rule
 that owns it, which the test cites instead; 8.4a's pending question is the content 9.2 points
-to, and a new row would reletter the table (question 7). The chains of part 3 stay in order;
+to, and a new row would part the content from its moment (question 7). The chains of part 3 stay in order;
 3.14 and 3.17 must stay whole, as must 1.9 and family 9 for their « Puis ».
 
 ## 6. Questions for the maintainer
 
+Answered by the maintainer on 2026-10-28 (comment on issue #122): « D'accord pour tout, sauf un
+point : le pourquoi de la numérotation des règles ». Questions 1 and 3 to 7 as recommended;
+question 2 replaced by slugs (decision `rules-named-by-slug`). Applied by issue #125.
+
+
 1. **The writing rule.** (a) adopt the bullet of part 5 as worded; (b) adopt its first sentence
    only, the counting left to the editor; (c) no rule, tests cite a rule and its clause.
-   Recommendation: (a), so the next editor counts as this study did.
+   Recommendation: (a), so the next editor counts as this study did. **Answered: (a).**
 2. **Numbering a split.** (a) letters, the number naming the whole (as 8.4a to 8.4h);
    (b) the next free number at the end of the family (1.18), which breaks the chains' order;
    (c) renumber the families now, free of tests today but touching `SPEC.md`, two decisions and
-   every table row. Recommendation: (a).
+   every table row. Recommendation: (a). **Answered: none of them.** « J'aime pas du tout
+   l'idée des numérotation avec lettres pour le nouveau découpage. » « le slug, c'est
+   brilliant. » Every rule gets a stable slug and loses its number; every reference cites the
+   slug; order and sections become free; a removed rule's slug is never reused; a check
+   verifies that every cited slug exists and none is duplicated; a split rule gets two slugs.
 3. **Which rules.** (a) the eleven of part 5; (b) only the three the issue or a « Pourquoi » line
    singles out the split part of (8.5 named by the issue; 1.3 and 4.10, whose « Pourquoi » is on
-   one part); (c) none. Recommendation: (a).
+   one part); (c) none. Recommendation: (a). **Answered: (a).**
 4. **Restating clauses** (in the twelve rules kept, and the reminders left in 1.11b, 3.2a and
    8.5a). (a) leave them, tests cite the owner; (b) add the owner's number where the clause does
    not cite it yet; (c) remove them. Recommendation: (a): no text change before the fresh tests,
-   and a reminder may help the teacher.
+   and a reminder may help the teacher. **Answered: (a).**
 5. **When.** (a) now, by an applying issue that blocks S2-04 (#33) and lands before #29 tags
    `linear-course/v1.0.0` (no version bump); (b) after S2-05, before S2-09, a MINOR with a
    CHANGELOG entry; (c) never. Recommendation: (a), the only moment where a split costs one file;
    if #29 lands first, the same applying issue adds a MINOR and its CHANGELOG entry.
+   **Answered: (a):** #125 blocks #33 and #29.
 6. **Rules that already break « A rule stands alone ».** 1.9, 2.3 and 9.2 open on « Puis »; 6.4
    says « cette affirmation »; 1.9 and 3.18 say « Le message » for a message another rule names.
    (a) fix them in the applying issue; (b) a separate issue; (c) leave them. Recommendation: (a),
-   one pass on the same file before tests cite it.
+   one pass on the same file before tests cite it. **Answered: (a).**
 7. **Row 8.4a** (where we are, and at the stop only the pending question). (a) keep it whole;
    (b) add a row 8.4i for the pending question, out of the table's order; (c) reletter the
    table. Recommendation: (a): 9.2 already owns the moment, the row only the content.
+   **Answered: (a).**
