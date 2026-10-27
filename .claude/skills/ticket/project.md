@@ -26,3 +26,16 @@ merge); the skills do not count on them: they add the issue and set the Status t
   `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "<Status>"`.
   The same by ids, for a script:
   `mise exec -- gh project item-edit --project-id PVT_kwHOADOnU84Bo8V6 --id <item id> --field-id PVTSSF_lAHOADOnU84Bo8V6zhnaHqI --single-select-option-id <option id>`.
+
+## Dependencies
+
+A dependency between issues is a blocked-by link, nothing else (decision
+`blocked-by-links-for-dependencies`): issue n is blocked by issue b when n cannot start before b
+is closed. Two issues that only edit the same file are not linked.
+
+- **Read** what blocks n, and what n blocks:
+  `mise exec -- gh api repos/sebvey/feyn/issues/<n>/dependencies/blocked_by --jq '.[] | [.number, .state, .title] | @tsv'`
+  and the same with `blocking`.
+- **Set** "n is blocked by b": the link takes b's database id, not its number:
+  `mise exec -- gh api -X POST repos/sebvey/feyn/issues/<n>/dependencies/blocked_by -F issue_id=$(mise exec -- gh api repos/sebvey/feyn/issues/<b> --jq .id)`.
+- **Remove** it: `mise exec -- gh api -X DELETE repos/sebvey/feyn/issues/<n>/dependencies/blocked_by/<database id of b>`.

@@ -18,6 +18,8 @@ The Status is the `status.name` of the `feyn` item in `projectItems` ([project.m
 Refuse, saying why in one line, and change nothing, when:
 - the issue carries `blocked:maintainer`: name what the maintainer must decide (the body or
   the last comment says it) and stop. Only the maintainer removes that label;
+- an issue that blocks it is still open
+  ([project.md](../ticket/project.md), "Dependencies"): name each open blocker and stop;
 - the issue is closed, or its Status is Done;
 - its Status is already In progress: look for its branch (`mise exec -- git branch --list "*/<n>-*"`)
   and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
