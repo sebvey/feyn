@@ -102,6 +102,7 @@ with `/finish` in the new repository.
   squash PR whose title follows the convention and whose issue is closed; `/decide` refuses a
   decision without counterfactual and writes one with it; the four skills are each under 80
   lines.
+- [x] Done on 2026-10-27 (night 1).
 
 ### S0-06 Create the feyn-site artifact repository and its Pages
 `area=site type=improvement model=sonnet depends=S0-02 parallel=yes`

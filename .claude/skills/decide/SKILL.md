@@ -46,8 +46,10 @@ The most local area the decision binds:
 Slug: two to five words, lowercase, hyphens, naming the choice, not the problem
 (`classroom-as-build`, not `classroom-problem`). Never a number, never "adr".
 
-Before writing, list every decision: `ls docs/decisions specs/*/decisions courses/*/decisions teacher/decisions site/decisions`,
-and grep their first lines for the decision's key words. A neighbour on the same point: show
+Before writing, list every decision and grep them for the decision's key words:
+`find . -path '*/decisions/*.md' -not -path './construction/*' -not -path '*/node_modules/*'`,
+then `grep -ril --include='*.md' "<key word>" docs specs courses teacher site | grep /decisions/`
+(quoted globs: zsh stops on a pattern that matches nothing). A neighbour on the same point: show
 it, and ask whether the new one supersedes it, amends it (edit that file instead), or is
 distinct (say why in one line). Same slug already taken: the same decision exists; stop.
 

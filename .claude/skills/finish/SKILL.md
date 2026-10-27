@@ -40,8 +40,10 @@ branch without an issue number: stop and say so.
    - what is not verified, and the checks that do not exist yet;
    - decisions written (`/decide`), issues opened on the way.
 6. **Open it**: `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`.
-7. **Ask for review**: reply with the PR URL, the title, and one line on what the reviewer
-   should look at first. Stop there.
+7. **Ask for review**: reply with the PR URL, the title, one line on what the reviewer should
+   look at first, and the merge command, which names the subject (on a one-commit PR, GitHub
+   takes the commit message, not the PR title):
+   `gh pr merge <pr> --squash --delete-branch --subject "<title> (#<pr>)"`. Stop there.
 
 ## Clean up (after the merge)
 
@@ -55,9 +57,14 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
    have moved on with other merges, so compare those files only):
    `mise exec -- git diff main <branch> -- $(mise exec -- git diff --name-only $(mise exec -- git merge-base main <branch>) <branch>)`
    must print nothing. Read the result before going on; anything printed: stop and show it.
-4. **Delete**: `mise exec -- git branch -D <branch>`. The remote branch goes with the merge
+4. **Delete**: `mise exec -- git branch -D <branch>` (already gone if the merge ran in this
+   checkout: nothing to do). The remote branch goes with the merge
    (`gh pr merge --squash --delete-branch`); if it is still there
    (`mise exec -- git ls-remote --heads origin <branch>`), tell the maintainer. Never delete a
    remote branch yourself.
-5. Check the issue closed with the PR (`mise exec -- gh issue view <n> --json state`); if not,
-   say so (the PR body lost its `Closes #<n>`).
+5. Check the squash commit carries the PR title
+   (`mise exec -- git log main -1 --format=%s --grep "(#<pr>)"`); if not, tell the
+   maintainer (`main` is never rewritten).
+6. Check the issue closed with the PR (`mise exec -- gh issue view <n> --json state`); if not,
+   say so (the PR body lost its `Closes #<n>`). Then drop its state label:
+   `mise exec -- gh issue edit <n> --remove-label state:wip`.
