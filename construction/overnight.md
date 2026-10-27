@@ -63,7 +63,7 @@ Each line is a behaviour found, with its mark ([docs/contributing.md](../docs/co
   `main`'s HEAD; `/finish after-merge` does not remove it (Claude Code, observed 2026-10-27, #115).
 - A worktree with no change at the end of the agent's turn is removed (Claude Code, inferred 2026-10-27, #27).
 - `git switch main` fails in a worktree (Claude Code, observed 2026-10-27, #115). `/start` there
-  runs `gh issue develop <n> --name <branch> --base main` without `--checkout`, then
+  runs `mise exec -- gh issue develop <n> --name <branch> --base main` without `--checkout`, then
   `git fetch origin <branch>` and `git switch -c <branch> --track origin/<branch>`.
 - `git push` can fail to resolve github.com from the sandbox while `gh` works; retry the push
   outside the sandbox (Claude Code, observed 2026-10-27, #27).

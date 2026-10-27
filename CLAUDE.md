@@ -28,7 +28,8 @@ where a reserved term exists.
 
 ## Commands
 
-Never `git config user.email`.
+`git` plain (the session carries the workspace identity); `gh` and `node` through
+`mise exec -- <command>` (the session PATH can be stale). Never `git config user.email`.
 
 ## Working with the maintainer
 

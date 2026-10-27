@@ -13,7 +13,7 @@ The argument decides the mode: a number (`12`, `#12`) reads; anything else creat
 
 ## Read an issue
 
-1. `gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences,projectItems`.
+1. `mise exec -- gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences,projectItems`.
 2. Answer in at most ten lines: the title; the observation in one sentence; the To do as a
    short list; the Done when as written; the Status (from `projectItems`); the labels (type,
    area, `blocked:maintainer`); what blocks it and what it blocks, open ones first
@@ -28,9 +28,9 @@ bullets (`- **Observation**: …`); read both.
 
 1. **Say it back.** Restate the observation in two lines: what was seen, where (paths, issue,
    PR, session). An observation with no place is not an issue yet: ask where it was seen.
-2. **Look for a twin.** `gh issue list --state open --search "<two or three key words>"`.
+2. **Look for a twin.** `mise exec -- gh issue list --state open --search "<two or three key words>"`.
    An open issue on the same point: add a comment to it instead
-   (`gh issue comment <n> --body-file <file>`) and stop.
+   (`mise exec -- gh issue comment <n> --body-file <file>`) and stop.
 3. **Pick the Status and the labels.**
    - Status `Backlog`, unless the maintainer said the work is decided (`Ready`). No
      state label: the Status replaced them ([project.md](project.md)).
@@ -49,7 +49,7 @@ bullets (`- **Observation**: …`); read both.
 
      Paths in two areas: the area that carries the intent; if none does, propose two issues.
      A label missing on GitHub is created, since the tree says it exists:
-     `gh label create area:<area> --color 0075ca --description "Area: <area>"`.
+     `mise exec -- gh label create area:<area> --color 0075ca --description "Area: <area>"`.
 4. **Find the links.** Which open issues must close before this one can start (it is blocked
    by them), and which open issues cannot start before this one closes (it blocks them): those
    the observation names, and those whose work it changes (a file, a key, a format they rely
@@ -62,12 +62,12 @@ bullets (`- **Observation**: …`); read both.
 6. **Title**: imperative, like a commit summary, under 70 characters ("Fix the caption check
    on nested groups"), no issue prefix.
 7. **Create** it:
-   `gh issue create --title "<title>" --body-file <file> --label type:<type> --label area:<area>`
+   `mise exec -- gh issue create --title "<title>" --body-file <file> --label type:<type> --label area:<area>`
    (add `--milestone <name>` when the maintainer names one). It prints the issue URL.
 8. **Put it in the Project** ([project.md](project.md)): add it
-   (`gh project item-add 4 --owner sebvey --url <issue url>`; an issue the
+   (`mise exec -- gh project item-add 4 --owner sebvey --url <issue url>`; an issue the
    Project's workflow already added is not added twice), then set its Status
-   (`gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Backlog`,
+   (`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Backlog`,
    or `Ready`).
 9. **Set the links** found at step 4 ([project.md](project.md), "Dependencies").
 10. Reply with the issue number, its URL, its Status, its labels and its links, in one line.

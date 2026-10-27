@@ -11,7 +11,7 @@ Status; the work itself comes after.
 
 ## 1. Read the issue
 
-`gh issue view <n> --json number,title,url,state,labels,body,comments,projectItems`
+`mise exec -- gh issue view <n> --json number,title,url,state,labels,body,comments,projectItems`
 
 The Status is the `status.name` of the `feyn` item in `projectItems` ([project.md](../ticket/project.md)).
 
@@ -22,7 +22,7 @@ Refuse, saying why in one line, and change nothing, when:
   ([project.md](../ticket/project.md), "Dependencies"): name each open blocker and stop;
 - the issue is closed, or its Status is Done;
 - its Status is already In progress: look for its branch (`git branch --list "*/<n>-*"`)
-  and its PR (`gh pr list --search "<n> in:body"`), and propose to resume them
+  and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
   instead. In progress with no branch and no PR is a Status that drifted: say so and go on;
 - it has no `type:` label, or no Done when: propose the fix (`/ticket <n>` shows what is
   missing) and stop.
@@ -40,14 +40,14 @@ Name: `<type>/<n>-<slug>`, where `<type>` is the issue's `type:` label without i
 (`bug`, `course`, `improvement`, `decision`) and `<slug>` is three to five words of the title,
 lowercase, joined by hyphens (`course/42-concept-9-cases`).
 
-`gh issue develop <n> --name <type>/<n>-<slug> --base main --checkout`
+`mise exec -- gh issue develop <n> --name <type>/<n>-<slug> --base main --checkout`
 
 This creates the branch on GitHub, linked to the issue, and checks it out: the issue's
 Development section then lists the branch, and the PR opened from it. A PR from a linked
 branch closes the issue at the merge even when it says `Refs` (GitHub, observed 2026-10-27, #24).
 `/finish` unlinks the branch first for a `Refs` PR.
 
-A branch of that name that already exists (`gh issue develop --list <n>` shows
+A branch of that name that already exists (`mise exec -- gh issue develop --list <n>` shows
 the linked ones, `git branch --list "*/<n>-*"` the local ones): switch to it and
 say so, do not create a second one.
 
@@ -55,10 +55,10 @@ say so, do not create a second one.
 
 Set the Status to In progress ([project.md](../ticket/project.md)):
 
-`gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "In progress"`
+`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "In progress"`
 
 An issue that is not in the Project yet (`projectItems` empty) is added first:
-`gh project item-add 4 --owner sebvey --url <issue url>`.
+`mise exec -- gh project item-add 4 --owner sebvey --url <issue url>`.
 
 ## 5. Restate and plan
 

@@ -21,7 +21,7 @@ one concept, one first-level sub-concept with two leaves, two cases: repeat the 
 ## Smoke run
 
 ```
-specs/linear-course/templates/smoke-test
+mise exec -- specs/linear-course/templates/smoke-test
 ```
 
 Builds a course from the templates with every placeholder filled by a dummy value (the table

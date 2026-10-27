@@ -53,7 +53,7 @@ A behaviour of GitHub or Claude Code found in the session (a refusal, a side eff
 the tool did not do) goes to its point of use, the skill step or document that depends on it,
 in one line with its mark `(<tool>, <status> <date>, #<n>)` ([docs/contributing.md](../../../docs/contributing.md),
 "Tool behaviours"). When no skill or document makes that move, comment on issue #115
-(`gh issue comment 115 --body-file <file>`), with the same mark. A line the session
+(`mise exec -- gh issue comment 115 --body-file <file>`), with the same mark. A line the session
 disproves is corrected or removed. Nothing found: write nothing.
 
 ## 7. The session note
@@ -68,7 +68,7 @@ argument or the session). Ten lines, or a small table, as in
 - a last line for issues opened or commented outside the table.
 
 The note dies with `construction/` at stage 4. After that, it becomes a comment on the issue
-that started the session (`gh issue comment <n> --body-file <file>`), or nothing
+that started the session (`mise exec -- gh issue comment <n> --body-file <file>`), or nothing
 when no issue started it.
 
 ## 8. Commit
