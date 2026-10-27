@@ -371,7 +371,7 @@ concepts:
   - number: "A2"
     slug: sans-sprint
     title: "Travailler sans sprint"
-    objective: "pour l'apprenant dont l'équipe travaille en flux continu, sans sprint : dire ce qui ne change pas, et ce que deviennent le Sprint Planning et la DoR, l'objectif de sprint, la revue de sprint et la prévision"
+    objective: "pour une équipe en flux continu, sans sprint : dire ce qui ne change pas, et ce que deviennent le Sprint Planning et la DoR, l'objectif de sprint, la revue de sprint et la prévision"
     prerequisites: []
     dir: concepts/A2-sans-sprint
     subconcepts:
