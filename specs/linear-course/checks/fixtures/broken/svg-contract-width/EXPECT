@@ -1,0 +1,2 @@
+check: svg-contract
+message: must not have a width attribute

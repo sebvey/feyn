@@ -1,0 +1,65 @@
+#!/usr/bin/env node
+'use strict';
+// Runs check-course on the fixtures and on the concept 9 prototype, and says whether every
+// run gave the expected result:
+//   fixtures/valid                 passes every check
+//   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>", optional "lang-dir: <path>":
+//                                  that check fails, with a line containing the fragment
+//   fixtures/prototype             course-level files wrapped around the concept 9 prototype
+//                                  (courses/parcours-po/concepts/09-decoupage-vertical): passes
+//                                  every check with --concept 9
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+const here = __dirname;
+const runner = path.join(here, 'check-course');
+const fx = path.join(here, 'fixtures');
+const repo = path.resolve(here, '..', '..', '..');
+let bad = 0;
+
+function run(dir, extra) {
+  const r = spawnSync(process.execPath, [runner, dir, ...extra], { encoding: 'utf8' });
+  return { code: r.status, lines: r.stdout.split('\n').filter(Boolean), err: r.stderr };
+}
+function report(name, ok, detail) {
+  console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}${ok ? '' : ': ' + detail}`);
+  if (!ok) bad++;
+}
+
+// valid
+{
+  const r = run(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang')]);
+  report('valid passes every check', r.code === 0, r.lines.filter((l) => !l.endsWith(': ok')).join(' | ') || r.err);
+}
+
+// broken
+for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
+  const d = path.join(fx, 'broken', name);
+  const ex = Object.fromEntries(fs.readFileSync(path.join(d, 'EXPECT'), 'utf8').split('\n').filter(Boolean).map((l) => [l.slice(0, l.indexOf(':')), l.slice(l.indexOf(':') + 1).trim()]));
+  const lang = ex['lang-dir'] ? path.resolve(d, ex['lang-dir']) : path.join(fx, 'lang');
+  const r = run(d, ['--lang-dir', lang, '--only', ex.check]);
+  const hit = r.lines.filter((l) => l.startsWith(ex.check + ': fail: '));
+  report(`broken/${name} fails ${ex.check}`, r.code === 1 && hit.some((l) => l.includes(ex.message)), `expected "${ex.message}", got ${r.lines.join(' | ') || r.err}`);
+  // and only that check: the other checks do not mind the defect
+  const others = ex.check === 'language-pack-keys' ? [] : run(d, ['--lang-dir', lang]).lines.filter((l) => l.includes(': fail: ') && !l.startsWith(ex.check + ': '));
+  if (others.length) report(`broken/${name} breaks nothing else`, false, others.slice(0, 2).join(' | '));
+}
+
+// the prototype
+{
+  const proto = path.join(repo, 'courses', 'parcours-po', 'concepts', '09-decoupage-vertical');
+  if (!fs.existsSync(proto)) report('prototype passes', false, `${proto} does not exist`);
+  else {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'check-course-'));
+    const course = path.join(tmp, 'parcours-po');
+    fs.cpSync(path.join(fx, 'prototype'), course, { recursive: true });
+    fs.cpSync(proto, path.join(course, 'concepts', '09-decoupage-vertical'), { recursive: true });
+    const r = run(course, ['--lang-dir', path.join(fx, 'lang'), '--concept', '9']);
+    report('prototype (concept 9) passes every check', r.code === 0, r.lines.filter((l) => !l.endsWith(': ok')).join(' | ') || r.err);
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+}
+console.log(bad ? `${bad} unexpected result(s)` : 'all as expected');
+process.exit(bad ? 1 : 0);
