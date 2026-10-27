@@ -23,7 +23,7 @@ started the session.
 Reread the conversation and list, one line each: the **choices** made (what is decided), the
 **work** left (something to build or fix), the **open questions** (asked, not answered), and
 the **questions answered** (asked and settled). Show the list to the maintainer before writing;
-he may drop or rephrase a line.
+they may drop or rephrase a line.
 
 ## 3. Decisions
 
