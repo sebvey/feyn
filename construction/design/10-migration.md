@@ -20,13 +20,13 @@ rest). **Nothing is frozen until announced.**
 | the reader text of the site's MDX (becomes the body of `concept.md`), the structured `ecoles` and `sources` of the frontmatter | the `alignement` stamps, `src/data/*.ts`, `check-alignment.mjs` |
 | the SVGs, extracted from the 23 Astro components | the Astro diagram components |
 | the two agent workflows, the test scenario, the two-tests rule, the session diagnosis | the monolithic maintenance skill, `maintainer/backlog/`, `maintainer/site/`, `maintainer/scripts/build-map.sh` |
-| the marrow of the ADRs (below) | the 65 ADR files, the course `CHANGELOG.md`, the site `CHANGELOG.md` |
+| the marrow of the ADRs (below) | the 72 ADR files, the course `CHANGELOG.md`, the site `CHANGELOG.md` |
 | the templates (concept, domain, sources, learner), adapted to the new shape | learner memory (`learner/seb`), the `learner/*` branches, the `learner/` CI check |
 | T-023 and T-050h, rewritten as issues | the 111 other tickets; T-034, T-050d, T-050i, T-052, T-056 are absorbed by the refactoring |
 
 ## Decision distillation
 
-One pass, once, by a subagent (Sonnet is enough) that reads the 65 ADRs and classifies each in
+One pass, once, by a subagent (Sonnet is enough) that reads the 72 ADRs and classifies each in
 a four-column table:
 
 1. **teacher behaviour rule**: becomes a numbered rule of the spec's protocol, normative,

@@ -52,7 +52,7 @@ Slugs make the groups independent without a prefix.
 - The `/decide` skill applies all this: it refuses a decision without a counterfactual, picks
   the folder, checks for a neighbouring slug.
 
-## The 65 current ADRs
+## The 72 current ADRs
 
 No file carries over. Their marrow is extracted by a distillation pass (see `10-migration.md`).
 The five to eight architecture decisions still valid are **rewritten** in the format above, in
