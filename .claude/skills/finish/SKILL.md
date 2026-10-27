@@ -48,7 +48,7 @@ branch without an issue number: stop and say so.
      Done when, verified:
      - met: `finish/SKILL.md` step 5 names the three verdict words (file read).
      - not met: the issue lists the PR (`closedByPullRequestsReferences` is empty).
-     - deviation: a test issue shows the PR (none made; `gh issue develop --help` read).
+     - deviation: a test issue shows the PR (none made; `mise exec -- gh issue develop --help` read).
      ```
    - what is not verified, and the checks that do not exist yet;
    - decisions written (`/decide`), issues opened on the way.
@@ -69,7 +69,7 @@ branch without an issue number: stop and say so.
 7. **Ask for review**: reply with the PR URL, the title, one line on what the reviewer should
    look at first, and the merge command, which names the subject (on a one-commit PR, GitHub
    takes the commit message, not the PR title):
-   `gh pr merge <pr> --squash --delete-branch --subject "<title> (#<pr>)"`
+   `mise exec -- gh pr merge <pr> --squash --delete-branch --subject "<title> (#<pr>)"`
    (GitHub, observed 2026-10-27, #115). Stop there.
    A draft PR: name the question instead of the merge command. The maintainer answers with a
    comment and removes `blocked:maintainer` (on the issue and the PR). Then apply the answer,
@@ -115,7 +115,7 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
    must print nothing. Read the result before going on; anything printed: stop and show it.
 4. **Delete**: `git branch -D <branch>` (already gone if the merge ran in this
    checkout: nothing to do). The remote branch goes with the merge
-   (`gh pr merge --squash --delete-branch`); if it is still there
+   (`mise exec -- gh pr merge --squash --delete-branch`); if it is still there
    (`git ls-remote --heads origin <branch>`), tell the maintainer. Never delete a
    remote branch yourself.
 5. Check the squash commit carries the PR title

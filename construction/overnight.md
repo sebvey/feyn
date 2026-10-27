@@ -165,7 +165,7 @@ they are in every sub-issue's body, not in the script.
 ## Launch (night 2)
 
 Same setup as night 1 (new session in `feyn/`, Opus, bypass). First check the conditions above
-(`gh issue view <n> --json state` on #93 and #22, the links of #18, #23 and #100 as described, and
+(`mise exec -- gh issue view <n> --json state` on #93 and #22, the links of #18, #23 and #100 as described, and
 `main` clean).
 Paste:
 
