@@ -18,7 +18,7 @@ the POC's couplings cost more than they return:
 - Learner memory lives on `learner/<nickname>` branches of the course repository, with a CI
   check to keep `main` clean: a patch.
 - The maintenance process is a 250-line monolithic skill, a backlog in local folders (113
-  tickets), 65 ADRs; readable by one maintainer, not by contributors.
+  tickets), 72 ADRs; readable by one maintainer, not by contributors.
 
 ## What we scale
 
@@ -59,5 +59,5 @@ In the maintainer's order of importance:
 - A Claude Code or Cowork plugin for the teacher: the classroom makes it unnecessary for now
   (ticket T-034 absorbed).
 - Mermaid as a diagram format (see `04-diagrams.md`).
-- Carrying over git history, the 113 tickets, the 65 ADR files, the changelog, learner memory
+- Carrying over git history, the 113 tickets, the 72 ADR files, the changelog, learner memory
   (see `10-migration.md`).
