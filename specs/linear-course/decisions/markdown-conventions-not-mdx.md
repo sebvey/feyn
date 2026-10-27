@@ -14,9 +14,9 @@ Course Markdown is plain CommonMark with YAML frontmatter: no HTML, no MDX, no r
 `SPEC.md` 4.5 (sub-concept headings, concept references, stance markers, storyline blockquote,
 diagram images, pitfalls, quick test), enforced by the `conventions` check; the teacher reads
 the same file as ordinary Markdown. A new construct gets a natural Markdown form, added to 4.5
-and its check, and a site plugin; a directive stays a last resort for a construct with no
-natural form, and none of today's needs one. This replaces the MDX bodies of
-`parcours-po-website` and their nine components. This decision binds the course side; how the
+and its check, and a site plugin; a directive would need this decision and the `conventions`
+check to change, and none of today's constructs needs one. This replaces the MDX bodies of
+`parcours-po-website` and their nine constructs. This decision binds the course side; how the
 site maps each convention is the site's decision `markdown-conventions-mapped-by-plugins`.
 
 ## Options ruled out

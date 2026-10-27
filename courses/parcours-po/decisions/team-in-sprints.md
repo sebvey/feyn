@@ -30,5 +30,5 @@ annex. This carries over the old decisions 018, 031 and 033 of `parcours-po`.
 
 ## Consequences
 
-- A learner without sprints who stumbles on one of the landmarks signals that A2 needs content
+- A learner without sprints who stumbles on one of the landmarks signals that A2 needs a case
   for it.

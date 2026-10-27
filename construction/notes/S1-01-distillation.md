@@ -4,7 +4,8 @@ Source: `parcours-po` at `course-v2.5.0-3-g851a602`, folders `maintainer/adr/` (
 template) and `maintainer/site/adr/` (8 files). Columns: `protocol rule`, `process rule`,
 `architecture decision`, `POC`. Target: a rule family of the protocol (families of
 `design/03-spec-linear-course.md`), a skill or workflow, or a decision slug with its folder.
-Status of the pass: **awaiting maintainer validation** (nothing below is written anywhere else).
+Status of the pass: validated by the maintainer; the `architecture decision` rows were settled by
+PR #112 (#27).
 
 ## Summary
 
@@ -67,7 +68,7 @@ Status of the pass: **awaiting maintainer validation** (nothing below is written
 | 028 | The length limit is stated by intent | A message is read at a glance, about fifteen lines; split, never cram | protocol rule | the shape of a message |
 | 029 | The maintenance agent decides alone; the maintainer validates by reading the PR | The PR is the single checkpoint; findings triaged critically | process rule | `/finish`, `/triage` (S4-03) |
 | 030 | A change to the teacher's behaviour is proposed before it is applied | Content autonomous; behaviour waits for the maintainer | process rule | `/decide` (teacher behaviour decisions) |
-| 031 | For a learner without sprints, the annex A2 question validates the sub-concept | A2 replaces the bank question and validates | POC | none: course content (A2 `teaching.md`); check at migration of A2 |
+| 031 | For a learner without sprints, the annex A2 question validates the sub-concept | A2 replaces the bank question and validates | POC | none: course content (A2 `teaching.md`); check at migration of A2; and `team-in-sprints` |
 | 032 | The teacher no longer writes to the maintainer folder | Improvise or say a source is missing, write nothing outside learner memory | protocol rule | learner memory |
 | 033 | Outside the four A2 sub-concepts the sprint is a landmark the teacher transposes | Use the team's own cycle as the landmark | architecture decision | covered by `team-in-sprints` |
 | 034 | The first message leaves without a tool call (welcome) or after one read (resume) | Fast first message; only the progress file is read first | protocol rule | session start |

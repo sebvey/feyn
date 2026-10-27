@@ -13,11 +13,12 @@ marker defeats, publishing expected answers, and every fix to the example bank w
 A concept's visibility is carried by its files (`SPEC.md` section 4): `concept.md`,
 `sources.md` and the diagrams are reader-facing, the site builds them and the teacher reads
 them; `teaching.md` is teacher-only, the teacher reads it and the site never builds it. The
-reader text, the example bank and the teaching notes never share a file. This replaces the
+reader text and the teaching notes (example bank included) never share a file. This replaces the
 single concept file of `parcours-po`, where the bank sat beside the reader text under one
 alignment stamp. One filter inside a file exists, and only one: the site builds the
 « Affirmations » rows of `sources.md` whose section is in `concept.md`, and the « Références »
-they cite; rows whose section is in `teaching.md` are teacher-only (`SPEC.md` 4.4, issue #98).
+they cite; rows whose section is in `teaching.md` are teacher-only; « Non vérifié » is not built (`SPEC.md`
+4.4, issue #98).
 
 ## Options ruled out
 

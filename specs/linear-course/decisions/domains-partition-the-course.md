@@ -16,8 +16,8 @@ to exactly one domain, a domain's concepts are consecutive, and the domains foll
 order; annexes belong to no domain (`SPEC.md` section 3, check `course-yaml`). A domain is a
 unit of reading and presentation, not of competence: a concept that relies on another domain
 says so as a prerequisite, not as a membership. Domain numbers and their concepts are course
-identifiers, so changing them is a course MAJOR (`SPEC.md` section 8). This replaces the
-overlapping « objectifs » of `parcours-po` before its 2.0.0.
+identifiers, so changing them is a course MAJOR (`SPEC.md` sections 3
+and 8). This replaces the overlapping « objectifs » of `parcours-po` before its 2.0.0.
 
 ## Options ruled out
 
