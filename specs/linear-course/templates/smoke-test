@@ -111,9 +111,10 @@ const DUMMY = {
   'nickname': 'Alex',
   "answer, in the learner's words": 'analyste',
   "the teacher's posture, who the teacher is for the learner": 'praticienne expérimentée qui forme l\'apprenant',
-  'label of question 1': 'Rôle',
+  'question label 1': 'Rôle',
   'onboarding question 1, after the nickname': 'son rôle aujourd\'hui',
-  'label of question 2': 'Avant le cours',
+  'question label 2': 'Avant le cours',
+  'question label': 'Rôle',
   'onboarding question 2': 'ce qu\'il connaît déjà du sujet',
   'the first step: the concept to open with, its first message': 'Concept 0, premier message.',
 };

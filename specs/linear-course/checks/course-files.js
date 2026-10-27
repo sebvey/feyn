@@ -7,7 +7,7 @@ const { fail } = require('./lib/course');
 
 const SEMVER = /^(\d+)\.(\d+)\.(\d+), \d{4}-\d{2}-\d{2}$/;
 
-// « Accueil »: a posture paragraph, then a numbered list of questions "<n>. **<label>** : <question>"
+// « Accueil »: a posture paragraph, then a numbered list of questions "<n>. **<question label>** : <question>"
 function onboarding(secs, title) {
   const found = secs.filter((s) => s.title === title);
   if (!found.length) return [fail('plan.md', 1, `plan.md has no « ${title} » section: mandatory (the teacher's posture, then the onboarding questions)`)];
@@ -25,10 +25,10 @@ function onboarding(secs, title) {
     if (!l.t.trim()) { blank = true; continue; }
     const m = /^\d+\. \*\*([^*]+)\*\* : \S/.exec(l.t);
     if (m) {
-      if (labels.has(m[1])) out.push(fail('plan.md', l.n, `onboarding label « ${m[1]} » is used twice: labels are distinct`));
+      if (labels.has(m[1])) out.push(fail('plan.md', l.n, `question label « ${m[1]} » is used twice: question labels are distinct`));
       labels.add(m[1]);
       blank = false;
-    } else if (/^\d+\. /.test(l.t)) out.push(fail('plan.md', l.n, 'an onboarding question is "<n>. **<label>** : <question>"'));
+    } else if (/^\d+\. /.test(l.t)) out.push(fail('plan.md', l.n, 'an onboarding question is "<n>. **<question label>** : <question>"'));
     else if (blank || !/^\s/.test(l.t)) out.push(fail('plan.md', l.n, `the numbered list of questions ends « ${title} »: nothing after it`));
   }
   return out;

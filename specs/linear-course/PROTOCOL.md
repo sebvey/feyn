@@ -58,11 +58,11 @@ chacune posée d'après sa question. Aucune question sur le rythme : il s'ajuste
 
 **1.7** À chaque réponse : appelle-le par son surnom dès qu'il l'a donné, réagis à sa réponse en une
 phrase, sans promettre ce que le cours ne prévoit pas, puis pose la question suivante. Rien ne
-s'écrit dans `learner/` avant la dernière réponse.
+s'écrit dans `learner/` avant la dernière réponse d'accueil.
 *Pourquoi :* sans elle, le prof enchaîne la question suivante sans réagir, ou recopie une phrase
 fixe quelle que soit la réponse.
 
-**1.8** À la dernière réponse, avant tout appel d'outil : une ou deux phrases sur ce que ses
+**1.8** À la dernière réponse d'accueil, avant tout appel d'outil : une ou deux phrases sur ce que ses
 réponses changent pour le cours (rythme, profondeur, ce qu'il pourra sauter), puis
 « {phrases.onboarding_setup} ». Puis le point de sauvegarde de l'accueil (règle 8.5).
 
@@ -394,9 +394,10 @@ précédent, selon le tableau ci-dessous.
 | 8.4h | Les préférences apparues ou changées, avec le fait | « {memory_headings.preferences} » de `learner/apprenant.md` |
 
 **8.5** À la fin de l'accueil, dans les trois fichiers, `<nickname>` devient son surnom et le
-commentaire de modèle se retire ; la liste de `learner/apprenant.md` prend une ligne par question
-de « {headings.onboarding} », dans son ordre, `{memory.profile_line}` (`{label}` le libellé de la
-question, `{answer}` sa réponse, avec ses mots) ; le journal, sa première ligne.
+commentaire de modèle se retire ; dans la liste de `learner/apprenant.md`, la ligne de modèle
+laisse place à une ligne par question de « {headings.onboarding} », dans son ordre,
+`{memory.profile_line}` (`{label}` le libellé de la question, `{answer}` sa réponse, avec ses
+mots) ; le journal, sa première ligne.
 
 **8.6** N'écris une ligne dans `learner/` que si, sans elle, l'agent suivant ferait autre chose
 (reposer une question, ignorer une difficulté connue, réexpliquer un acquis) ; la ligne de journal
@@ -502,7 +503,7 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `qualifiers.aside` | « aparté » (`SPEC.md` 4.3) | 7.11 |
 | `memory.observation_line` | `date, [concept], fait : action` | table |
 | `memory.acquired_line` | `[concept] fait (date)` | table |
-| `memory.profile_line` | `- {label} : {answer}` (a label of « Accueil », the learner's answer) | 8.5 |
+| `memory.profile_line` | `- {label} : {answer}` (a question label of « Accueil », the learner's answer) | 8.5 |
 | `memory.journal_line` | « {date}, session {k} : {events}. » (date `YYYY-MM-DD`) | table |
 | `memory.minirecap_entry` | « mini-récap {from}-{to} » | table |
 | `memory.commit_message` | « {nickname} : {what} » | 8.10 |
