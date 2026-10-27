@@ -8,7 +8,8 @@
 // body = the bullets, labels `area:<area>` and `type:<type>`, milestone `stage-N` (from the file
 // name); `depends` becomes blocked-by links (decision blocked-by-links-for-dependencies), set once
 // every issue of the run exists. Idempotent: a task whose title already exists (any state) is
-// skipped, links included. Tasks `S<n>-<nn>.<mm>` become sub-issues of `S<n>-<nn>`. No dependency; runs `gh`
+// not created again, and only its missing links are set. Tasks `S<n>-<nn>.<mm>` become
+// sub-issues of `S<n>-<nn>`. No dependency; runs `gh`
 // (use `mise exec -- plan-to-issues ...` so that gh has its credentials).
 'use strict';
 const { execFileSync } = require('node:child_process');
@@ -91,6 +92,7 @@ for (const file of files) {
     if (found) {
       console.log(`skip    #${found.number}  ${t.title}`);
       skipped++;
+      toLink.push(t);
       continue;
     }
     const sub = t.parentId ? `  (sub-issue of ${t.parentId})` : '';
@@ -119,17 +121,27 @@ for (const file of files) {
 const byId = (id) => [...existing.values()].find((i) => i.title.split(/\s+/)[0] === id);
 let linked = 0;
 for (const t of toLink) {
+  const number = existing.get(t.title).number;
+  let have = [];
+  if (t.depends.length && number !== 'new') {
+    try {
+      have = JSON.parse(gh(['api', `repos/${repo}/issues/${number}/dependencies/blocked_by`])).map((i) => i.number);
+    } catch (e) {
+      if (!dry) throw e;
+    }
+  }
   for (const d of t.depends) {
     const blocker = byId(d);
     if (!blocker) {
       console.error(`warning: ${t.id} is blocked by ${d}, which has no issue; not linked`);
       continue;
     }
+    if (have.includes(blocker.number)) continue;
     console.log(`${dry ? 'would link' : 'link'}    ${t.id} blocked by ${d} (#${blocker.number})`);
     linked++;
     if (dry) continue;
     const blockerId = JSON.parse(gh(['api', `repos/${repo}/issues/${blocker.number}`])).id;
-    gh(['api', '-X', 'POST', `repos/${repo}/issues/${existing.get(t.title).number}/dependencies/blocked_by`, '-F', `issue_id=${blockerId}`]);
+    gh(['api', '-X', 'POST', `repos/${repo}/issues/${number}/dependencies/blocked_by`, '-F', `issue_id=${blockerId}`]);
   }
 }
 console.log(`${dry ? 'dry run: ' : ''}${created} to create/created, ${skipped} skipped, ${linked} links`);

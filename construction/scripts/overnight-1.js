@@ -63,7 +63,7 @@ You are a fresh work session in ${REPO} (night run ${night}, ${date}).
 Read the root CLAUDE.md, construction/README.md ("How a work session goes"), construction/overnight.md ("What the night may do" and "Overnight rules for a task agent"), then the issue ("mise exec -- gh issue view ${t.issue}"): its Done when is the contract; the plan files are frozen. Read every file its "Reads" lists.
 Follow the skills by their files: .claude/skills/start/SKILL.md with ${t.issue}, do the work, then .claude/skills/finish/SKILL.md ("Deliver") to open the PR. Do not merge it.
 ${t.extra ? t.extra + '\n' : ''}Run everything through "mise exec -- <command>". ${NO_SIGNATURE}
-If /start refuses because an issue that blocks #${t.issue} is still open, change nothing and return status "blocked", naming the blocker in the note.
+If /start refuses because an issue that blocks #${t.issue} is still open, write no file and no comment: return status "blocked", naming the blocker in the note.
 Never ask the maintainer anything: when something needs him, do the rest, write construction/notes/${t.id}.md, add the label blocked:maintainer to issue #${t.issue}, and return status "blocked".
 ${CLEAN}
 Return the structured result only.`

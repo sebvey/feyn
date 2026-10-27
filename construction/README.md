@@ -77,7 +77,8 @@ model the classroom will run on.
 
 The metadata line is parsed by `scripts/plan-to-issues`: `area` and `type` become labels
 (`area:…`, `type:…`), the stage file gives the milestone, `depends` becomes blocked-by links
-(decision `blocked-by-links-for-dependencies`), the first line of the heading is the issue title. `parallel` is informational.
+(decision `blocked-by-links-for-dependencies`), the first line of the heading is the issue
+title. `parallel` is informational.
 
 Ids: `S<stage>-<nn>`; sub-tasks of a run (the 20 concept migrations) are `S1-10.<nn>` and
 become sub-issues.

@@ -12,12 +12,12 @@ night script would run a task whose new blocker is written nowhere in its `depen
 
 A dependency between issues is a GitHub blocked-by link, and nothing else: one issue is blocked
 by another when it cannot start before the other is closed. `/ticket` asks for the links when it
-creates an issue and shows them when it reads one; `/start` refuses an issue with an open blocker;
-the night scripts and `plan-to-issues` read or set the links. This replaces the « Depends on: »
-line of the issue body and the `depends:` lists of the night scripts. Two issues that only edit
-the same file are not linked: they land one after the other, which the PR review sees. A block
-that waits on the maintainer stays the label `blocked:maintainer` (decision
-`blocked-is-a-label-not-a-state`).
+creates an issue and shows them when it reads one; `/start` refuses an issue with an open
+blocker; `plan-to-issues` sets the links; the night scripts rely on `/start`'s refusal. This
+replaces the « Depends on: » line of the issue body and the `depends:` lists of the night
+scripts. Two issues that only edit the same file are not linked: they land one after the other,
+which the PR review sees. A block that waits on the maintainer stays the label
+`blocked:maintainer` (decision `blocked-is-a-label-not-a-state`).
 
 ## Options ruled out
 
@@ -28,4 +28,5 @@ that waits on the maintainer stays the label `blocked:maintainer` (decision
 ## Consequences
 
 - On 2026-10-27 every « Depends on: » line of the open issues became a link (46 links), plus #87
-  blocking #18 and #30. The Relationships panel of an issue shows its links.
+  blocking #18 and #30, and the « Depends on: » lines were removed from the issue bodies. The
+  Relationships panel of an issue shows its links.

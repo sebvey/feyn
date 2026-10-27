@@ -1,6 +1,6 @@
 ---
 name: start
-description: Take GitHub issue n on feyn - refuse if a maintainer decision is awaited, create the branch <type>/<n>-<slug> from an up-to-date main, linked to the issue, set its Status to In progress, restate the Done when and lay out the plan. Use for "/start <n>", "take issue 12", "let's do #12".
+description: Take GitHub issue n on feyn - refuse if a maintainer decision is awaited or an issue that blocks it is still open, create the branch <type>/<n>-<slug> from an up-to-date main, linked to the issue, set its Status to In progress, restate the Done when and lay out the plan. Use for "/start <n>", "take issue 12", "let's do #12".
 argument-hint: "<issue number>"
 ---
 
