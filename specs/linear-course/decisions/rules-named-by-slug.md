@@ -29,6 +29,6 @@ how the teacher teaches.
 
 ## Consequences
 
-- The applying issue gives every rule its slug, splits the eleven rules of
-  `construction/notes/122-rule-scope.md`, and lands before the `linear-course/v1.0.0` tag.
+- Issue #125 gives every rule its slug, splits the eleven rules the study of issue #122 named,
+  and lands before the `linear-course/v1.0.0` tag.
 - A test or a document never cites a rule by its position.
