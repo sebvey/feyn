@@ -1,0 +1,20 @@
+name: site-ping
+on:
+  workflow_dispatch:
+  push:
+    branches: [improvement/S0-06-feyn-site]
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push a timestamp file to gh-pages with the deploy key
+        env:
+          KEY: ${{ secrets.FEYN_SITE_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh && printf '%s\n' "$KEY" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git clone --branch gh-pages --depth 1 git@github.com:sebvey/feyn-site.git site
+          cd site
+          date -u +%FT%TZ > ping.txt
+          git config user.name site-ping && git config user.email site-ping@users.noreply.github.com
+          git add ping.txt && git commit -m "site-ping" && git push origin gh-pages
