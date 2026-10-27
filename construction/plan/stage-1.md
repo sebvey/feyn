@@ -1,3 +1,5 @@
+Issues created on 2026-10-27; this file is no longer updated.
+
 # Stage 1: the spec and the course
 
 Milestone `stage-1`. Design: `design/03-spec-linear-course.md`, `design/04-diagrams.md`,

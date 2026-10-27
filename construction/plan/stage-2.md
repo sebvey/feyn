@@ -1,3 +1,5 @@
+Issues created on 2026-10-27; this file is no longer updated.
+
 # Stage 2: the teacher and the classroom
 
 Milestone `stage-2`. Design: `design/05-teacher-classroom.md`, `design/04-diagrams.md`,
