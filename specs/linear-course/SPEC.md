@@ -216,12 +216,12 @@ the order of the table; « Ce qui marche » comes last.
 
 `sources.md` traces the source of every verifiable claim of the concept folder (definition,
 consensus, school and its author, date, figure, quotation), cases included. The teacher reads
-it when the learner asks where a claim comes from; the site builds only the « Affirmations »
-rows whose section is in `concept.md` and the « Références » they cite, the rows whose section is
-in `teaching.md` being teacher-only (« Non vérifié » is not built: its items carry no section to
-filter on). Storyline facts
-are invented and have no source. `concept.md` and `teaching.md` cite no reference: references
-live in the frontmatter `refs` and here (`sources`).
+it when the learner asks where a claim comes from. The site builds only the « Affirmations »
+rows whose section is in `concept.md` and the « Références » they cite; the rows whose section is
+in `teaching.md` are teacher-only. A row whose section (the parenthesis of column 1) names no
+section of `concept.md` is not built. « Non vérifié » is not built: its items carry no section to
+filter on. Storyline facts are invented and have no source. `concept.md` and `teaching.md` cite
+no reference: references live in the frontmatter `refs` and here (`sources`).
 
 In this order (`concept-folder`):
 
