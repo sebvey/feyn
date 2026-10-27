@@ -14,7 +14,8 @@ at a time.
 
 ## What the night may do without the maintainer
 
-Authorised by the maintainer on 2026-10-27, for night 1, as the list below and nothing more:
+Authorised by the maintainer on 2026-10-27, for nights 1 and 2 (night 2's extension is under
+"Night 2 scope" and **to be confirmed by the maintainer**), as the list below and nothing more:
 - create the public repositories `sebvey/feyn` and `sebvey/feyn-site`, push to them;
 - create labels, milestones and issues on `feyn`; open, review and squash-merge PRs on `feyn`;
 - create the deploy key on `feyn-site` and the secret on `feyn` (the `gh` token has the `repo`
@@ -116,19 +117,29 @@ counts as done (ids as in the table below); they are not run again.
 
 S1-14 (#27) is not in the list: it runs in the daytime. S1-13 and S1-15 are daytime tasks too.
 
-What `/start` refuses is not the night's problem, but these must be true at launch for the night
-to be useful (the launch text of #93 and #22 says merged; #100 and the rest are checked here):
-- #93 and #22 are merged; #87 and #88 are merged (they edit `PROTOCOL.md`, which S1-05 reads);
-- #97 and #98 are merged (they block #22);
-- #100 is merged (it blocks #23: the `concept-folder` check compares « Objectif » with
-  `course.yaml` word for word, and A2 goes last so that it sees the fix);
-- neither `blocked:maintainer` nor an open blocker remains on #18, #22, #23, #24, #25.
+The conditions at launch are expressed through the links only:
+- #93 and #22 are merged. If #22 is already merged, S1-09 is recorded done (its issue is
+  closed, `/start` refuses it, the script counts a closed issue as done); the same holds for
+  any task or sub-issue already closed.
+- S1-05 (#18) is taken by the night, and the migration needs `lang/fr.yaml`: #23 and each
+  sub-issue are blocked by #18 (the night links each sub-issue it creates; the link on #23 is
+  the maintainer's). #18's own blockers (#87, #88 as the maintainer links them) must be merged,
+  else #18 returns `blocked`.
+- #100 blocks the A2 sub-issue only, not #23; A2 goes last. An open blocker on #23 makes the
+  night skip the whole migration.
+- No `blocked:maintainer` on #18, #22, #23, #24, #25.
 
-On top of the list under "What the night may do", night 2 needs, for the plan the maintainer
-set on 2026-10-27: creating the 20 sub-issues of #23 (labels, milestone, Project, parent and
-blocked-by links); running agents in worktrees under `.claude/worktrees/` and removing those of
-merged branches; closing #23, #24 and #25 when their Done when holds, with a comment saying
-what was checked. Nothing else outward.
+A task already In progress with a branch is resumed, not refused; one already closed is done.
+
+Night 2 needs, on top of the list under "What the night may do", for the plan the maintainer
+set on 2026-10-27 (**to be confirmed by the maintainer**): creating the 20 sub-issues of #23
+and their blocked-by links (labels, milestone, Project, parent); working in worktrees under
+`.claude/worktrees/` and removing those of this night's merged branches (never forced); merging
+PRs (squash); commenting on issues; reopening an issue GitHub closed at a merge (#94
+workaround, S1-12); adding `blocked:maintainer` to the issue of a task that needs the
+maintainer; closing #23 (through a PR that adds a line to the course's `CHANGELOG.md`), #24
+and #25 when their Done when holds. Nothing else outward; the night changes no existing link
+and removes no label.
 
 The migration's rules are the maintainer's rulings on #23 (sub-headings of the site become
 bold-led paragraphs, reported as "moved"; objectives 10 and 14 as they are; A2 through #100);
@@ -137,7 +148,8 @@ they are in every sub-issue's body, not in the script.
 ## Launch (night 2)
 
 Same setup as night 1 (new session in `feyn/`, Opus, bypass). First check the conditions above
-(`gh issue view <n> --json state` on #93, #22, #87, #88, #97, #98, #100, and `main` clean).
+(`gh issue view <n> --json state` on #93 and #22, the links of #18, #23 and #100 as described, and
+`main` clean).
 Paste:
 
 ```

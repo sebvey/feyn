@@ -24,7 +24,8 @@ const UMBRELLA = { id: 'S1-10', issue: 23 }        // sub-issues, one per concep
 const TAUGHT = { id: 'S1-11', issue: 24 }          // closed by the run on the migrated course
 const REVIEWED = { id: 'S1-12', issue: 25, model: 'sonnet' }
 const WORKFLOW_ISSUE = 22                         // S1-09, blocks every sub-issue
-const BLOCKER_OF_A2 = 100                         // the A2 objective: must be merged before A2 migrates
+const LANG_ISSUE = 18                             // S1-05, lang/fr.yaml: the migration needs it
+const BLOCKER_OF_A2 = 100                        // the A2 objective: must be merged before A2 migrates
 
 // concept folder names (courses/parcours-po/concepts/<dir>), old files share the name
 const CONCEPTS = ['00-scrum', '01-produit-et-po', '02-objectif-produit-resultat', '03-backlog-produit',
@@ -44,6 +45,7 @@ const WORK = {
     verified: { type: 'string', description: 'what of the Done when was verified, and how' },
     for_maintainer: { type: 'array', items: { type: 'string' }, description: 'what only the maintainer can do, if anything' },
     note: { type: 'string', description: 'one paragraph: what was done, what was not, why' },
+    already_closed: { type: 'boolean', description: 'true when /start refused because the issue was already closed: nothing to do' },
   },
   required: ['status', 'pr', 'branch', 'verified', 'for_maintainer', 'note'],
 }
@@ -75,7 +77,8 @@ const SUBS = {
     note: { type: 'string' },
     subissues: { type: 'array', items: { type: 'object', properties: {
       concept: { type: 'string', description: 'the concept folder name, as in the list given' },
-      issue: { type: 'integer' } }, required: ['concept', 'issue'] } },
+      issue: { type: 'integer' },
+      state: { type: 'string', enum: ['OPEN', 'CLOSED'] } }, required: ['concept', 'issue', 'state'] } },
   },
   required: ['blocked', 'note', 'subissues'],
 }
@@ -95,6 +98,13 @@ const FINDINGS = {
   required: ['findings', 'summary'],
 }
 
+// a JSON value cut for a prompt: say it in the log when something is lost
+const cut = (what, v, n) => {
+  const s = JSON.stringify(v) || ''
+  if (s.length > n) log(`${what}: ${s.length} characters cut to ${n} in the prompt`)
+  return s.slice(0, n)
+}
+
 const date = (args && args.date) || 'unknown date'
 const night = (args && args.night) || 2
 const effortFor = (m) => (m === 'opus' ? 'high' : undefined)
@@ -103,7 +113,7 @@ const PDX = '/Users/sve/code/workspaces/perso/pdx'   // the frozen old repositor
 const OLD = `${PDX}/parcours-po`
 const SITE = `${PDX}/parcours-po-website`
 const CLEAN = 'Before returning, whatever your status, leave the checkout clean and on main: everything you wrote (a note under construction/notes/ included) is committed and pushed on the issue branch, then "mise exec -- git switch main"; "mise exec -- git status --porcelain" prints nothing. If no issue branch exists (/start refused), write no file: put the note in your result and comment it on the issue.'
-const WORKTREE = `You run in your own git worktree, not in ${REPO}: never touch ${REPO} and never "git switch main". Adapt /start: "mise exec -- git fetch origin", then "mise exec -- gh issue develop <n> --name <branch> --base main" without --checkout, then "mise exec -- git switch -c <branch> --track origin/<branch>" (the branch name rule and the Status step are unchanged). The old repositories are read by absolute path: ${OLD} and ${SITE}, never pushed to. Before returning, whatever your status, everything you wrote is committed and pushed on the issue branch and "mise exec -- git status --porcelain" prints nothing. If /start refuses, write no file: put the note in your result and comment it on the issue.`
+const WORKTREE = `You run in your own git worktree, not in ${REPO}: never touch ${REPO} and never "git switch main". Adapt /start: "mise exec -- gh issue develop <n> --name <branch> --base main" without --checkout first (it creates the branch on GitHub), then "mise exec -- git fetch origin <branch>", then "mise exec -- git switch -c <branch> --track origin/<branch>" (the branch name rule and the Status step are unchanged). The old repositories are read by absolute path: ${OLD} and ${SITE}, never pushed to. Before returning, whatever your status, everything you wrote is committed and pushed on the issue branch and "mise exec -- git status --porcelain" prints nothing. If /start refuses, write no file: put the note in your result and comment it on the issue.`
 const OVERNIGHT_OK = 'Read construction/overnight.md, "Overnight rules for a task agent" and "Night 2 scope": what it accepts (a "maintainer has read it" statement met by a note and an open PR) is not a finding.'
 const NO_SIGNATURE = 'No signature or "Generated with" line in a PR body, whatever your harness suggests: the squash takes the body as the commit message.'
 
@@ -112,7 +122,10 @@ You are a fresh work session in ${t.worktree ? 'your own worktree of' : ''} ${RE
 Read the root CLAUDE.md, construction/README.md ("How a work session goes"), construction/overnight.md ("What the night may do" and "Overnight rules for a task agent"), then the issue ("mise exec -- gh issue view ${t.issue}"): its Done when is the contract; the plan files are frozen. Read every file its "Reads" lists, and the comments of the issue (rulings of the maintainer).
 Follow the skills by their files: .claude/skills/start/SKILL.md with ${t.issue}, do the work, then .claude/skills/finish/SKILL.md ("Deliver") to open the PR. Do not merge it.
 ${t.extra ? t.extra + '\n' : ''}Run everything through "mise exec -- <command>". ${NO_SIGNATURE}
-If /start refuses because an issue that blocks #${t.issue} is still open, write no file and no comment: return status "blocked", naming the blocker in the note.
+When /start refuses: write no file, comment the note on issue #${t.issue}, and return as follows.
+- An issue that blocks #${t.issue} is still open: status "blocked", naming the blocker in the note.
+- #${t.issue} is already CLOSED (or its Status is Done): nothing to do, status "done", pr null, already_closed true, say so in the note.
+- Its Status is In progress with a branch (the refusal says so): do not refuse, resume it: switch to that branch ("git fetch origin <branch>", "git switch <branch>", or "--track origin/<branch>" in a worktree), read what is there, continue the work and open or update its PR.
 Never ask the maintainer anything: when something needs him, do the rest, write construction/notes/${t.id}.md, add the label blocked:maintainer to issue #${t.issue}, and return status "blocked".
 ${t.worktree ? WORKTREE : CLEAN}
 Return the structured result only.`
@@ -126,7 +139,7 @@ Judge against the Done when, not against taste. A statement the PR body marks "d
 const fixPrompt = (t, w, r) => `Fix the review findings on task ${t.id}, PR #${w.pr} (branch ${w.branch}) on sebvey/feyn, issue #${t.issue}.
 Findings: ${JSON.stringify(r.findings)}.
 ${t.extra ? t.extra + '\n' : ''}${t.worktree
-    ? `The branch is checked out in a worktree: run "mise exec -- git worktree list" from ${REPO} (read only), go to the path of ${w.branch}, work there, and never touch ${REPO}'s own checkout.`
+    ? `You run in a fresh worktree, not in ${REPO}: never touch ${REPO}'s own checkout. "mise exec -- git fetch origin ${w.branch}", then "mise exec -- git switch --track origin/${w.branch}". If git refuses because the branch is checked out in the author's worktree, "mise exec -- git switch --detach origin/${w.branch}" instead, commit there, and push with "mise exec -- git push origin HEAD:${w.branch}" (never force).`
     : `You are in ${REPO}: check out the branch ("mise exec -- git fetch origin && mise exec -- git switch ${w.branch}").`}
 Apply each fix, commit, push; update the PR body's "Done when, verified:" lines if a verdict changed. Do not merge. ${NO_SIGNATURE}
 ${t.worktree ? 'Leave the worktree clean, everything pushed.' : CLEAN}
@@ -161,6 +174,9 @@ const restore = async (t, phaseName) => {
 async function deliver(t, phaseName) {
   const work0 = await agent(takePrompt(t), { label: `${t.id} work`, phase: phaseName, model: t.model, effort: effortFor(t.model), schema: WORK, isolation: t.worktree ? 'worktree' : undefined })
   if (!work0) return { id: t.id, issue: t.issue, status: 'failed', reason: 'agent died' }
+  if (work0.status === 'done' && !work0.pr && work0.already_closed) {
+    return { id: t.id, issue: t.issue, status: 'done', pr: null, work: work0, reason: 'issue already closed' }
+  }
   if (work0.status !== 'done' || !work0.pr) {
     return { id: t.id, issue: t.issue, status: work0.status === 'done' ? 'failed' : work0.status, pr: work0.pr, work: work0, reason: work0.pr ? undefined : 'no PR' }
   }
@@ -168,7 +184,7 @@ async function deliver(t, phaseName) {
   let review = await agent(reviewPrompt(t, work), { label: `${t.id} review`, phase: phaseName, model: 'opus', schema: REVIEW })
   if (review && review.verdict === 'changes') {
     log(`${t.id}: review asks for ${review.findings.length} change(s), fixing once`)
-    const fixed = await agent(fixPrompt(t, work, review), { label: `${t.id} fix`, phase: phaseName, model: t.model, schema: WORK })
+    const fixed = await agent(fixPrompt(t, work, review), { label: `${t.id} fix`, phase: phaseName, model: t.model, schema: WORK, isolation: t.worktree ? 'worktree' : undefined })
     if (fixed && fixed.status === 'done') {
       work = { ...work, note: fixed.note, verified: fixed.verified, for_maintainer: [...work.for_maintainer, ...fixed.for_maintainer] }
       review = await agent(reviewPrompt(t, work), { label: `${t.id} re-review`, phase: phaseName, model: 'opus', schema: REVIEW })
@@ -208,6 +224,15 @@ async function runSerial(t, phaseName) {
   return true
 }
 
+// merge a reviewed delivery in the main checkout and record it; a failed merge restores the checkout.
+// false when the night must stop
+async function mergeAndRecord(r, phaseName) {
+  const m = await mergeReviewed(r, phaseName)
+  record(m)
+  if (r.status === 'reviewed' && m.status !== 'done') return await restore({ id: r.id, issue: r.issue }, phaseName)
+  return true
+}
+
 // ---- Wave 3 ----------------------------------------------------------------------------
 phase('Wave 3')
 for (const t of SERIAL['Wave 3']) {
@@ -225,13 +250,13 @@ if (stopped) {
 } else {
   const prep = await agent(`Prepare the migration of the 20 concepts in ${REPO} (night run ${night}, ${date}). Every command through "mise exec --". Read the root CLAUDE.md, .claude/skills/ticket/SKILL.md and .claude/skills/ticket/project.md.
 1. Read umbrella issue #${UMBRELLA.issue} ("gh issue view ${UMBRELLA.issue} --comments", and its blockers: "gh api repos/sebvey/feyn/issues/${UMBRELLA.issue}/dependencies/blocked_by"). If a blocker is still open, create nothing and return blocked true, naming it.
-2. List the sub-issues it already has ("gh api repos/sebvey/feyn/issues/${UMBRELLA.issue}/sub_issues"). Create the missing ones, one per concept of this list, in this order: ${JSON.stringify(CONCEPTS)}; never create a second one for a concept. Each is created as /ticket creates an issue (title "S1-10.<nn> Migrate concept <folder name>", labels type:course and area:course:parcours-po, milestone stage-1, added to the Project with Status Ready), linked as a sub-issue of #${UMBRELLA.issue} (POST repos/sebvey/feyn/issues/${UMBRELLA.issue}/sub_issues with sub_issue_id = the database id of the new issue), and linked blocked-by #${WORKFLOW_ISSUE} (the migrate-concept workflow) through the blocked-by link of project.md; the sub-issue of A2-sans-sprint is also blocked by #${BLOCKER_OF_A2} (its objective).
+2. List the sub-issues it already has ("gh api repos/sebvey/feyn/issues/${UMBRELLA.issue}/sub_issues"). Create the missing ones, one per concept of this list, in this order: ${JSON.stringify(CONCEPTS)}; never create a second one for a concept. Each is created as /ticket creates an issue (title "S1-10.<nn> Migrate concept <folder name>", labels type:course and area:course:parcours-po, milestone stage-1, added to the Project with Status Ready), linked as a sub-issue of #${UMBRELLA.issue} (POST repos/sebvey/feyn/issues/${UMBRELLA.issue}/sub_issues with sub_issue_id = the database id of the new issue), and linked blocked-by #${WORKFLOW_ISSUE} (the migrate-concept workflow) and #${LANG_ISSUE} (the language pack, lang/fr.yaml) through the blocked-by link of project.md; the sub-issue of A2-sans-sprint is also blocked by #${BLOCKER_OF_A2} (its objective). Only the sub-issue of A2 is blocked by #${BLOCKER_OF_A2}: never add or remove a link on the umbrella or on an existing issue, and never change a label.
 3. Body of each sub-issue (sections "### Reads", "### Observation", "### To do", "### Done when"):
    - Reads: the umbrella #${UMBRELLA.issue} and its comments, .claude/workflows/migrate-concept.js (read its header first), specs/linear-course/SPEC.md, courses/parcours-po/course.yaml (the concept's entry), construction/notes/S1-02-prototype.md, construction/notes/S1-08.md; the old files ${OLD}/course/concepts/<folder>.md, ${OLD}/course/sources/<folder>.md (as they exist) and ${SITE}/src/content/concepts/fr/<folder>.mdx, and the Astro diagram components the MDX uses.
    - Observation: the concept <folder> exists only in the old layout (the old concept file, its sources and the site's MDX); the folder courses/parcours-po/concepts/<folder>/ must hold the same course in the new layout.
    - To do: run the migrate-concept workflow on this concept (args { course: "parcours-po", concept, from, site }, as its header says; if the Workflow tool is not available to you, follow its stages yourself, in order); read the report construction/notes/S1-10-<nn>-report.md (<nn> is the concept's number or annex letter), fix what it flags in the output, never in the old files; apply the maintainer's ruling of the umbrella: each reader sub-heading of the site that course.yaml does not list becomes a paragraph of the leaf's reader text, led by its title in bold, and the report lists it as "moved", not "lost"; touch only this concept's folder and its report. Concept 09-decoupage-vertical already exists from the S1-02 prototype: the workflow's output replaces it if they differ, and the PR says what differed.
    - Done when: courses/parcours-po/concepts/<folder>/ holds the concept folder as SPEC.md defines it; the concept checks of check-course pass on it; the report exists and has no "lost" or "invented" entry (or each one is listed in the PR with its reason); the site's sub-headings are reported as "moved"; no file outside the folder and the report changed.
-4. Return the list of sub-issues (concept folder name, issue number) for all 20, those that existed included.`,
+4. Return the list of sub-issues (concept folder name, issue number, state OPEN or CLOSED) for all 20, those that existed included.`,
     { label: 'S1-10 sub-issues', phase: 'Migration', model: 'sonnet', schema: SUBS })
   if (!prep || prep.blocked || prep.subissues.length < CONCEPTS.length) {
     log(`S1-10: ${prep ? (prep.blocked ? 'blocked' : 'sub-issues incomplete') : 'agent died'}: ${prep ? prep.note : ''}`)
@@ -244,20 +269,34 @@ if (stopped) {
       extra: `This is sub-issue ${subId(c)}: migrate concept ${c}. Branch name: course/${byConcept[c]}-migrate-${c.slice(3)}-concept (type course; shorten the slug as /start says). Old files by absolute path: ${OLD}/course/concepts/${c}.md, ${OLD}/course/sources/${c}.md (as they exist), ${SITE}/src/content/concepts/fr/${c}.mdx. Touch only courses/parcours-po/concepts/${c}/ and construction/notes/S1-10-${nn(c)}-report.md.`,
       reviewExtra: `This is a migration: compare old and new yourself, section by section, against ${OLD}/course/concepts/${c}.md, ${OLD}/course/sources/${c}.md (as it exists) and ${SITE}/src/content/concepts/fr/${c}.mdx. Anything lost or invented is a finding; a site sub-heading that course.yaml does not list must be a paragraph led by its title in bold (maintainer's ruling, comment on #${UMBRELLA.issue}). Check the SVGs against the drawing contract, and that only the concept's folder and its report changed.`,
     })
-    // the first 19 in parallel worktrees; A2 after them (its objective, issue BLOCKER_OF_A2, must be merged: /start refuses otherwise)
-    const first = CONCEPTS.filter((c) => !c.startsWith('A2'))
+    // sub-issues already closed (or accepted by the maintainer) are done; the others are delivered
+    for (const s of subissues) {
+      const c = s.concept
+      if (s.state === 'CLOSED' && !done.has(subId(c))) {
+        log(`${subId(c)}: issue #${s.issue} already closed, counted as done`)
+        results.push({ id: subId(c), issue: s.issue, status: 'done', note: 'issue already closed' })
+        done.add(subId(c))
+      }
+    }
+    // the 19 others in parallel worktrees, then A2: its sub-issue alone is blocked by BLOCKER_OF_A2
+    // (the umbrella is not), so /start refuses A2 until that issue is merged; A2 goes last to give it time
+    const first = CONCEPTS.filter((c) => !c.startsWith('A2') && !done.has(subId(c)))
     const delivered = await pipeline(first, (c) => deliver(task(c), 'Migration'))
-    for (const r of delivered.filter(Boolean)) record(await mergeReviewed(r, 'Migration'))   // merges are serial: one checkout
+    for (const r of delivered.filter(Boolean)) {
+      if (!(await mergeAndRecord(r, 'Migration'))) break   // merges are serial: one checkout
+    }
     const a2 = CONCEPTS.find((c) => c.startsWith('A2'))
-    record(await mergeReviewed(await deliver(task(a2), 'Migration'), 'Migration'))
-    const cleanup = await agent(`In ${REPO}, every command through "mise exec --": "git worktree prune"; list the worktrees with "git worktree list"; for every worktree under .claude/worktrees whose branch has a merged PR ("gh pr list --state merged --head <branch>"), "git worktree remove --force <path>" then "git branch -D <branch>"; leave the others. Then "git switch main && git pull --ff-only". Return what you removed and what you left.`,
+    if (!stopped && !done.has(subId(a2))) await mergeAndRecord(await deliver(task(a2), 'Migration'), 'Migration')
+    const nightBranches = results.filter((r) => r.id.startsWith('S1-10.') && r.work && r.work.branch).map((r) => r.work.branch)
+    const cleanup = await agent(`In ${REPO}, every command through "mise exec --": "git worktree prune"; list the worktrees with "git worktree list". Only these branches, made tonight, are concerned: ${JSON.stringify(nightBranches)}. For each one that has a merged PR ("gh pr list --state merged --head <branch>") and a worktree: if "git -C <path> status --porcelain" prints nothing, "git worktree remove <path>" (never --force) then "git branch -D <branch>"; if it prints anything, leave the worktree and say so. Touch no other worktree. Then "git switch main && git pull --ff-only". Return what you removed and what you left.`,
       { label: 'worktree cleanup', phase: 'Migration', model: 'sonnet', effort: 'low' })
     log(`cleanup: ${String(cleanup).slice(0, 200)}`)
     const merged = CONCEPTS.filter((c) => done.has(subId(c)))
-    const close = await agent(`Close umbrella issue #${UMBRELLA.issue} (S1-10) if it holds, in ${REPO} on an up-to-date main ("mise exec -- git switch main && git pull --ff-only"). Every command through "mise exec --".
+    const close = stopped ? null : await agent(`Close umbrella issue #${UMBRELLA.issue} (S1-10) if it holds, in ${REPO} on an up-to-date main ("mise exec -- git switch main && git pull --ff-only"). Every command through "mise exec --".
 Its Done when: 20 PRs merged; check-course passes on the whole course; every report is empty of "lost" and "invented", or the exceptions are listed in the umbrella issue.
-Merged tonight: ${merged.length} of ${CONCEPTS.length} (${JSON.stringify(merged.map(subId))}). Not merged: ${JSON.stringify(CONCEPTS.filter((c) => !done.has(subId(c))).map(subId))}.
-Run "specs/linear-course/checks/check-course courses/parcours-po" on main (read the script's usage), read the 20 reports construction/notes/S1-10-<nn>-report.md, and list the "lost" and "invented" entries with their reason. Comment the verdict on #${UMBRELLA.issue}. When 20 are merged, the check passes and every entry is explained, close the issue ("gh issue close ${UMBRELLA.issue}") and set its Status to Done (.claude/skills/ticket/project.md); otherwise leave it open and say what is missing. Return closed and one paragraph.`,
+Done tonight or before: ${merged.length} of ${CONCEPTS.length} (${JSON.stringify(merged.map(subId))}). Not done: ${JSON.stringify(CONCEPTS.filter((c) => !done.has(subId(c))).map(subId))}.
+Run "specs/linear-course/checks/check-course courses/parcours-po" on main (read the script's usage), read the 20 reports construction/notes/S1-10-<nn>-report.md, and list the "lost" and "invented" entries with their reason. Comment the verdict on #${UMBRELLA.issue}.
+If 20 are done, the check passes and every entry is explained: deliver the closing through a PR, as .claude/skills/start/SKILL.md and .claude/skills/finish/SKILL.md ("Deliver") say for #${UMBRELLA.issue} (branch from main, Status In progress): add one line to the « Non publié » section of courses/parcours-po/CHANGELOG.md, in the file's format (« - CATÉGORIE, concept ou fichier : ce qui change », French, no em-dash, no arrow), saying that the 20 concepts are migrated to the new layout; PR body starting "Closes #${UMBRELLA.issue}", no signature line; then merge it (squash) and follow "Clean up (after the merge)"; the Status is Done. Tonight that merge is yours (construction/overnight.md). Otherwise change nothing, leave the issue open and say what is missing. Return closed (true only once merged and the issue closed) and one paragraph.`,
       { label: 'S1-10 close', phase: 'Migration', model: 'sonnet', schema: CLOSE })
     results.push({ id: UMBRELLA.id, issue: UMBRELLA.issue, status: close && close.closed ? 'done' : 'blocked', note: close ? close.note : 'close agent died' })
     if (close && close.closed) done.add(UMBRELLA.id)
@@ -283,8 +322,8 @@ if (stopped || !done.has(UMBRELLA.id)) {
   log('Taught-check skipped: the migration is not complete')
 } else {
   taught = await runTaughtCheck('S1-11 taught-check', 'Taught-check')
-  const text = JSON.stringify(taught) || ''
-  const close = await agent(`Close issue #${TAUGHT.issue} (S1-11) in ${REPO}, every command through "mise exec --". Its Done when: "taught-check runs on the migrated course (after S1-10) and produces its inventory". The workflow ran just now on courses/parcours-po and returned (truncated): ${text.slice(0, 6000)}.
+  const text = cut('S1-11 taught-check', taught, 6000)
+  const close = await agent(`Close issue #${TAUGHT.issue} (S1-11) in ${REPO}, every command through "mise exec --". Its Done when: "taught-check runs on the migrated course (after S1-10) and produces its inventory". The workflow ran just now on courses/parcours-po and returned: ${text}.
 If that result holds an inventory (a non-empty list of what the learner receives, unit by unit), comment on #${TAUGHT.issue} that the run happened on the migrated course, with the number of inventory units and of findings, then close it ("gh issue close ${TAUGHT.issue}") and set its Status to Done (.claude/skills/ticket/project.md). If there is no inventory, comment that and leave the issue open. The findings are not triaged here: S1-12 handles them. Return closed and one paragraph.`,
     { label: 'S1-11 close', phase: 'Taught-check', model: 'sonnet', effort: 'low', schema: CLOSE })
   results.push({ id: TAUGHT.id, issue: TAUGHT.issue, status: close && close.closed ? 'done' : 'blocked', note: close ? close.note : 'close agent died' })
@@ -298,7 +337,7 @@ if (stopped || !done.has(UMBRELLA.id) || !done.has(TAUGHT.id)) {
 } else {
   const reviewers = await parallel([0, 1].map((i) => () => agent(`Reviewer ${i + 1} of 2, independent: you do not see the other. In ${REPO} (up to date main), read specs/linear-course/SPEC.md and the protocol, then courses/parcours-po/ in full. Report every place the course breaks the spec or contradicts itself (where: file and line, problem, fix). Angle: ${i === 0 ? 'structure and conventions, check by check, and the match between course.yaml, plan.md and the concept folders' : 'teaching content: cases that contradict the reader text, storyline facts that drift, stances mislabelled, things lost from the old course'}. Modify nothing. Return the findings.`,
     { label: `course review ${i + 1}`, phase: 'Review', model: 'opus', effort: 'high', schema: FINDINGS })))
-  const merged = await agent(`Third reviewer: merge two independent reviews of courses/parcours-po in ${REPO}. Read only. Reviews: ${JSON.stringify(reviewers.filter(Boolean)).slice(0, 14000)}. Verify each finding against the files (drop one that does not hold, say so in the summary), merge duplicates, keep the concrete fix of each. Return the merged findings.`,
+  const merged = await agent(`Third reviewer: merge two independent reviews of courses/parcours-po in ${REPO}. Read only. Reviews: ${cut('course reviews', reviewers.filter(Boolean), 14000)}. Verify each finding against the files (drop one that does not hold, say so in the summary), merge duplicates, keep the concrete fix of each. Return the merged findings.`,
     { label: 'course review merge', phase: 'Review', model: 'opus', effort: 'high', schema: FINDINGS })
   const reviewFindings = merged ? merged.findings : reviewers.filter(Boolean).flatMap((r) => r.findings)
   const taughtFindings = taught && Array.isArray(taught.findings) ? taught.findings
@@ -308,18 +347,20 @@ if (stopped || !done.has(UMBRELLA.id) || !done.has(TAUGHT.id)) {
   if (reviewFindings.length || taughtFindings.length) {
     const t = {
       ...REVIEWED,
-      extra: `Inputs of this task, produced by the night: the taught-check findings ${JSON.stringify(taughtFindings).slice(0, 8000)}; the merged findings of two independent reviews ${JSON.stringify(reviewFindings).slice(0, 8000)}. Each finding becomes a fix in the PR (a finding that does not change what a concept teaches, as .claude/skills/taught-check/SKILL.md says) or an issue (type:course, milestone stage-1, through /ticket) when the fix changes what is taught or needs the maintainer; never a silent edit; never an edit in ${OLD} or ${SITE}. The PR lists each finding as fixed or filed (with the issue number).`,
+      extra: `Inputs of this task, produced by the night: the taught-check findings ${cut('taught-check findings', taughtFindings, 8000)}; the merged findings of two independent reviews ${cut('review findings', reviewFindings, 8000)}. Each finding becomes a fix in the PR (a finding that does not change what a concept teaches, as .claude/skills/taught-check/SKILL.md says) or an issue (type:course, milestone stage-1, through /ticket) when the fix changes what is taught or needs the maintainer; never a silent edit; never an edit in ${OLD} or ${SITE}. The PR lists each finding as fixed or filed (with the issue number).`,
       reviewExtra: 'Each finding of the inputs (in the PR body) must be fixed in the diff or filed as an issue; a finding left unmentioned is a finding of yours.',
     }
     await runSerial(t, 'Review')
   } else {
     log('S1-12: no finding, no PR')
   }
-  if (!stopped) {
+  // the second run judges the fixes: it needs S1-12's PR merged, or no PR at all (no finding)
+  const had = reviewFindings.length > 0 || taughtFindings.length > 0
+  if (!stopped && (!had || done.has(REVIEWED.id))) {
     const second = await runTaughtCheck('S1-12 second taught-check', 'Review')
-    const text = JSON.stringify(second) || ''
+    const text = cut('S1-12 second taught-check', second, 6000)
     const close = await agent(`Close issue #${REVIEWED.issue} (S1-12) in ${REPO} on an up-to-date main ("mise exec -- git switch main && git pull --ff-only"), every command through "mise exec --". Its Done when: "taught-check reports no finding (or every finding is fixed and a second run is clean); the review's findings are all fixed or filed."
-Tonight: the first taught-check had ${taughtFindings.length} finding(s); the two-reviewer review had ${reviewFindings.length} finding(s); the S1-12 PR status: ${JSON.stringify(results.find((r) => r.id === REVIEWED.id) || 'no PR (no finding)')}. The second taught-check returned (truncated): ${text.slice(0, 6000)}.
+Tonight: the first taught-check had ${taughtFindings.length} finding(s); the two-reviewer review had ${reviewFindings.length} finding(s); the S1-12 PR status: ${cut('S1-12 status', results.find((r) => r.id === REVIEWED.id) || 'no PR (no finding)', 3000)}. The second taught-check returned: ${text}.
 If the second run holds no finding, and every review finding is fixed in a merged PR or filed as an issue (check the PR body and "gh issue list --search"), comment the verdict on #${REVIEWED.issue}, make sure it is closed ("gh issue close ${REVIEWED.issue}") and its Status is Done (.claude/skills/ticket/project.md). Otherwise comment what remains, and leave it open: if GitHub closed it at the merge of a PR because of the linked branch (issue #94), reopen it ("gh issue reopen ${REVIEWED.issue}") and set its Status back to In progress. Return closed and one paragraph.`,
       { label: 'S1-12 close', phase: 'Review', model: 'sonnet', schema: CLOSE })
     const prior = results.find((r) => r.id === REVIEWED.id)
@@ -335,7 +376,7 @@ for (const id of [...SERIAL['Wave 3'].map((t) => t.id), UMBRELLA.id, ...CONCEPTS
 // ---- Report ----------------------------------------------------------------------------
 phase('Report')
 const report = await agent(`Write the night report and land it on main through a PR, in ${REPO}. Tonight that merge is yours: construction/overnight.md authorises it.
-Night ${night}, ${date}. Results, one per task, in this order: ${JSON.stringify(results).slice(0, 30000)}.
+Night ${night}, ${date}. Results, one per task, in this order: ${cut('results', results, 30000)}.
 Every command through "mise exec --".
 1. "git switch main && git pull --ff-only", then "git switch -c improvement/night-${night}-report".
 2. Create construction/notes/night-${night}.md. Structure: a table (task, issue, status, PR, squash sha), the 20 concept migrations as one line each; then "Needs the maintainer" (every for_maintainer item and every blocked task with what unblocks it, pointing to construction/notes/<id>.md when it exists); then "Skipped and why"; then "What to read first in the morning" (three items at most), and a reminder that S1-13 (the old-teacher guard) and S1-15 (the Fable review) are daytime tasks. English, no word docs/glossary.md lists as "not".
