@@ -35,7 +35,9 @@ branch without an issue number: stop and say so.
    (`course(course:parcours-po): write the cases of concept 9`). Summary: imperative,
    lowercase, no final period, under 72 characters for the whole title.
 5. **Body**, short (it will be read, keep it under 30 lines):
-   - `Closes #<n>` on the first line;
+   - when the branch leaves a decision to the maintainer, an `Awaiting the maintainer`
+     section first, before `Closes #<n>`: the question, the options, the recommendation;
+   - `Closes #<n>` on the first line (the first line after that section, if there is one);
    - what changes, as bullets, describing the diff and nothing else;
    - a `Done when, verified:` section, one line per statement of the issue's Done when, that
      starts with a verdict word, `met`, `not met` or `deviation`, then the statement and the
@@ -54,7 +56,10 @@ branch without an issue number: stop and say so.
 6. **Open it**:
    - a `Refs #<n>` PR first unlinks the branch
      ([below](#a-refs-pr-and-the-development-link)); a `Closes #<n>` PR skips that;
-   - `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`;
+   - `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`; with a
+     decision awaited, add `--draft --label blocked:maintainer` and put the same label on
+     the issue (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`), so the PR
+     cannot be merged by mistake;
    - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
      lists the PR when it says `Closes #<n>`, and `mise exec -- gh issue develop --list <n>`
      lists the branch; for a `Refs` PR both must list nothing. GitHub can take a few seconds
@@ -65,6 +70,9 @@ branch without an issue number: stop and say so.
    look at first, and the merge command, which names the subject (on a one-commit PR, GitHub
    takes the commit message, not the PR title):
    `gh pr merge <pr> --squash --delete-branch --subject "<title> (#<pr>)"`. Stop there.
+   A draft PR: name the question instead of the merge command. After the maintainer answers,
+   apply the answer, remove the section from the body, `mise exec -- gh pr ready <pr>`, and
+   ask for review again; the labels stay, only the maintainer removes them.
 
 ### A Refs PR and the Development link
 

@@ -38,7 +38,10 @@ then "Done when, verified:", one line per statement with its verdict (`met`, `no
 `deviation`) and its proof. The PR never redefines the Done when; the issue wins, and the PR
 says why it deviates. A `Refs` PR first unlinks the branch from the issue (a linked branch
 closes the issue at the merge whatever the body says). Once the PR is open, `/finish` checks
-that the issue lists it and the branch (a `Refs` PR: neither). Nothing lands on `main`
+that the issue lists it and the branch (a `Refs` PR: neither). A branch that leaves a decision to the maintainer opens as a draft PR
+with `blocked:maintainer` on the PR and its issue, and an "Awaiting the maintainer" section
+above `Closes #n`; the agent applies the answer, removes the section and marks the PR ready,
+and only the maintainer removes the label. Nothing lands on `main`
 without a PR, the author never merges their own, and `main` is never force-pushed. After the
 merge, `/finish after-merge` confirms the change landed, checks the issue's Status is Done
 (and sets it if the Project did not; a `Refs` issue stays open and In progress), and deletes
@@ -52,8 +55,8 @@ the local branch. Why: decision `issue-defines-pr-verifies`.
   `/ticket` Backlog or Ready, `/start` In progress, `/finish after-merge` Done if the Project's
   own workflow did not. There are no state labels. Why: decision
   `project-status-not-state-labels`.
-- `blocked:maintainer`: a decision of the maintainer is awaited; on top of the Status, never
-  instead of it; only the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
+- `blocked:maintainer`: a decision of the maintainer is awaited; on an issue and on its draft
+  PR; on top of the Status, never instead of it; only the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
 - `type:bug`, `type:course`, `type:improvement`, `type:decision`; `area:*` derived from the
   tree (`spec:<name>`, `course:<id>`, `teacher`, `site`, `agentic`, `repo`).
 - Milestones: one per stage of the construction, then one per release of a course or a spec;
@@ -63,7 +66,7 @@ the local branch. Why: decision `issue-defines-pr-verifies`.
 
 In the web interface, the Project's Board view, one column per Status. First what waits for
 the maintainer: the filter `label:blocked:maintainer` in the Board view (or the same search in the
-issue list). Then the In progress column (what moves on its own), then Ready (what can be
+issue list, which also lists the draft PRs). Then the In progress column (what moves on its own), then Ready (what can be
 taken). An unblock is a comment on the issue that says what was validated, then the label
 removed: the comment is the trace a fresh agent reads. Why: decisions
 `blocked-is-a-label-not-a-state`, `project-status-not-state-labels`.
