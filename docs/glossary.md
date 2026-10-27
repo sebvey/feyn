@@ -65,7 +65,9 @@ the English terms below are how we talk about them in code, docs and issues.
 |---|---|---|
 | **area** | the part of the repo an issue or PR belongs to, derived from the tree: `spec:<name>`, `course:<id>`, `teacher`, `site`, `agentic`, `repo` | "domain" (course vocabulary), "component", "module", "scope" |
 | **issue** | a GitHub issue, the only ticket; sections **Observation**, **To do**, **Done when** | "ticket", "task", "story" |
-| **label** | three kinds, always qualified: **state** (`proposed`, `todo`, `wip`), **area**, **type** (`bug`, `course`, `improvement`, `decision`) | |
+| **label** | always qualified: **type** (`type:bug`, `type:course`, `type:improvement`, `type:decision`), **area** (`area:<area>`), and `blocked:maintainer` (a maintainer decision is awaited). No state label: where an issue stands is its **Status** | |
+| **Project** | the GitHub Project "feyn" (number 4) that holds every issue with its Status: what the maintainer looks at in the web interface (its **Board view** is GitHub's layout with one column per Status) and what the agent lists (`gh project item-list`) | "board" for the Project itself, "kanban", "dashboard" |
+| **Status** | the Project's field that says where an issue stands: **Backlog** (proposed, to triage), **Ready** (decided, free to take), **In progress** (a branch exists), **Done** (closed by a PR). It replaces the state labels. Written with a capital when it names the field; the lowercase `status` key of a decision's frontmatter is a different, allowed key | "state" for where the work stands (an issue's `state` is GitHub's open or closed) |
 | **stage** | one of the refactoring's milestones (stage 0 to 4) | "lot", "phase", "sprint", "iteration" |
 | **batch** | a set of concepts written in one `course-batch` agent workflow run (ex `course-lot`) | "lot", "chunk" |
 | **decision** | a recorded decision: one file by slug in a `decisions/` folder, with its counterfactual. "ADR" is the known synonym in conversation, never in paths | "ADR" in file names, "RFC", "design doc" |

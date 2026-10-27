@@ -1,13 +1,13 @@
 name: Issue
 description: "An issue on feyn: Observation, To do, Done when."
 title: "Imperative summary of the work"
-labels: ["state:proposed"]
 body:
   - type: markdown
     attributes:
       value: |
         Title: imperative, like a commit summary. Add the `type:` and `area:` labels after
-        creating the issue (the area follows the paths the observation names).
+        creating the issue (the area follows the paths the observation names), and the issue
+        to the Project with the Status Backlog.
   - type: textarea
     id: reads
     attributes:

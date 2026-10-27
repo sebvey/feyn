@@ -9,12 +9,13 @@ Without this, an agent would add a `state:blocked` label, and when the maintaine
 an issue, nobody would know whether it goes back to `state:todo` or to `state:wip`; or it
 would filter `state:wip` and take a blocked issue as if it were moving.
 
-`blocked:maintainer` is a label on top of the state, never a state. The `state:*` label says
-where the work stands (`proposed`, `todo`, `wip`, one at a time, none once the issue is
-closed); `blocked:maintainer` says who holds the next move, and can sit on any state. Only the
-maintainer removes it; `/start` refuses an issue that carries it. The maintainer's morning is
-three searches: `label:blocked:maintainer` (what waits for them), `is:open label:state:wip
--label:blocked:maintainer` (what moves on its own), `label:state:todo` (what can be taken).
+`blocked:maintainer` is a label on top of the Status, never a Status. The Status of the
+issue in the Project says where the work stands (Backlog, Ready, In progress, Done, one at a
+time; decision `project-status-not-state-labels`); `blocked:maintainer` says who holds the next
+move, and can sit on any Status. Only the maintainer removes it; `/start` refuses an issue that
+carries it. The maintainer's morning is the Project's Board view: the filter
+`label:blocked:maintainer` first (what waits for them), then the In progress column (what moves
+on its own), then Ready (what can be taken).
 
 ## Options ruled out
 

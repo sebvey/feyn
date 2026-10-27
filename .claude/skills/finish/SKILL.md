@@ -81,6 +81,8 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
 5. Check the squash commit carries the PR title
    (`mise exec -- git log main -1 --format=%s --grep "(#<pr>)"`); if not, tell the
    maintainer (`main` is never rewritten).
-6. Check the issue closed with the PR (`mise exec -- gh issue view <n> --json state`); if not,
-   say so (the PR body lost its `Closes #<n>`). Then drop its state label:
-   `mise exec -- gh issue edit <n> --remove-label state:wip`.
+6. Check the issue closed with the PR (`mise exec -- gh issue view <n> --json url,state,projectItems`);
+   if not, say so (the PR body lost its `Closes #<n>`). Then check its Status is Done: the
+   Project's workflow sets it when it is on; if it did not, set it
+   ([project.md](../ticket/project.md)):
+   `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Done`.
