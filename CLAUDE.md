@@ -31,6 +31,14 @@ where a reserved term exists.
 Run tools through `mise exec -- <command>` (git, gh, node): the shell has no environment of
 its own. Never `git config user.email`.
 
+## Working with the maintainer
+
+- For an action the maintainer does themself (merging, labels, repository settings, remote
+  branches, Project), give the path in the GitHub web interface; a command only when the
+  interface cannot do it.
+- Never ask the maintainer to run a command you can run.
+- Answer in the language of the conversation; the repository stays in English.
+
 ## Skills
 
 `/ticket` creates or reads an issue. `/start <n>` takes an issue. `/finish` opens the PR.
