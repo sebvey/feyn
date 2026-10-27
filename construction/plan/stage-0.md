@@ -22,6 +22,7 @@ with `/finish` in the new repository.
 - **Done when**: the course tag and the site version are named in the announcement; both
   READMEs carry the freeze line on `main`; the deployed site is aligned (`check-alignment`
   green).
+- [x] Done on 2026-10-27 (night 1).
 
 ### S0-02 Initialise the feyn repository and its skeleton
 `area=repo type=improvement model=sonnet depends=- parallel=no`
@@ -39,6 +40,7 @@ with `/finish` in the new repository.
 - **Done when**: `mise exec -- gh repo view sebvey/feyn` shows the repository, public, with
   `main` pushed; the tree matches the design; `CLAUDE.md` is under 60 lines including the
   Construction section.
+- [x] Done on 2026-10-27 (night 1).
 
 ### S0-03 Write the repository glossary and the cross-cutting decisions
 `area=repo type=decision model=opus depends=S0-02 parallel=yes`
