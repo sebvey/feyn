@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(mise exec -- git status:*)",
+      "Bash(mise exec -- git log:*)",
+      "Bash(mise exec -- git diff:*)",
+      "Bash(mise exec -- git branch --list:*)",
+      "Bash(mise exec -- gh issue view:*)",
+      "Bash(mise exec -- gh issue list:*)",
+      "Bash(mise exec -- gh pr view:*)",
+      "Bash(mise exec -- gh pr list:*)",
+      "Bash(specs/linear-course/checks/check-course:*)",
+      "Bash(mise exec -- specs/linear-course/checks/check-course:*)",
+      "Bash(mise exec -- git add:*)",
+      "Bash(mise exec -- git commit:*)",
+      "Bash(mise exec -- git switch -c:*)",
+      "Bash(mise exec -- gh issue create:*)",
+      "Bash(mise exec -- gh issue edit:*)",
+      "Bash(mise exec -- gh pr create:*)"
+    ]
+  }
+}

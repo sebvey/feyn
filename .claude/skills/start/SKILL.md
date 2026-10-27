@@ -1,0 +1,59 @@
+---
+name: start
+description: Take GitHub issue n on feyn - refuse if a maintainer decision is awaited, create the branch <type>/<n>-<slug> from an up-to-date main, set state:wip, restate the Done when and lay out the plan. Use for "/start <n>", "take issue 12", "let's do #12".
+argument-hint: "<issue number>"
+---
+
+# /start <n>
+
+One job: put issue n in progress on its own branch. It writes nothing but the branch and the
+label; the work itself comes after.
+
+## 1. Read the issue
+
+`mise exec -- gh issue view <n> --json number,title,state,labels,body,comments`
+
+Refuse, saying why in one line, and change nothing, when:
+- the issue carries `blocked:maintainer`: name what the maintainer must decide (the body or
+  the last comment says it) and stop. Only the maintainer removes that label;
+- the issue is closed;
+- it already carries `state:wip`: look for its branch (`mise exec -- git branch --list "*/<n>-*"`)
+  and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
+  instead;
+- it has no `type:` label, or no Done when: propose the fix (`/ticket <n>` shows what is
+  missing) and stop.
+
+## 2. Start from an up-to-date main
+
+1. `mise exec -- git status --porcelain` must be empty. Uncommitted work belongs to someone:
+   say what is there and stop; never stash, restore or clean it.
+2. `mise exec -- git switch main`, then `mise exec -- git pull --ff-only`. A pull that is not
+   a fast-forward means `main` diverged locally: stop and say so.
+
+## 3. Create the branch
+
+Name: `<type>/<n>-<slug>`, where `<type>` is the issue's `type:` label without its prefix
+(`bug`, `course`, `improvement`, `decision`) and `<slug>` is three to five words of the title,
+lowercase, joined by hyphens (`course/42-concept-9-cases`).
+
+`mise exec -- git switch -c <type>/<n>-<slug>`
+
+A branch of that name that already exists: switch to it and say so, do not create a second one.
+
+## 4. Mark it in progress
+
+`mise exec -- gh issue edit <n> --add-label state:wip --remove-label state:todo --remove-label state:proposed`
+
+(`gh` ignores a label the issue does not carry.)
+
+## 5. Restate and plan
+
+Reply with:
+- the branch name;
+- the **Done when**, copied as written: it is the contract `/finish` and the review hold the
+  work to. The body has it as a `### Done when` section or a `- **Done when**:` bullet;
+- the files the issue says to read, then the plan: what changes, in which files, and how each
+  Done when statement will be verified (a command to run, a file to read). One line per item.
+
+Then read the files the issue lists and begin. Commits on the branch are free-form
+(`mise exec -- git commit`); only the PR title survives the squash.
