@@ -1,0 +1,385 @@
+id: parcours-po
+spec: linear-course@1
+language: fr
+title: "Parcours PO"
+audience: "Un développeur ou un profil data (data engineer, analyste), à l'aise avec la technique et débutant en gestion de produit, qui devient Product Owner d'un produit data et veut de bonnes bases pour tenir le rôle dans une équipe Scrum ou proche."
+storyline: storyline.md
+glossary: glossary.md
+annexes: [A1, A2]
+domains:
+  - number: 1
+    slug: frame
+    title: "Le cadre"
+    objective: "Décrire un produit data par le problème, les utilisateurs et la valeur, son objectif produit et le résultat visé, et dire qui tranche quoi entre PO et Developers."
+    duration_min: 90
+    file: domains/1-frame.md
+    concepts: [0, 1, 2]
+  - number: 2
+    slug: backlog-and-story
+    title: "Le backlog et la story"
+    objective: "Tenir un backlog ordonné, et écrire et juger une story : acteur, besoin, raison, critères d'acceptation qu'un testeur tranche sans poser de question, règles métier qu'ils illustrent."
+    duration_min: 120
+    file: domains/2-backlog-and-story.md
+    concepts: [3, 4, 5, 6, 7, 8]
+  - number: 3
+    slug: slicing-and-framing
+    title: "Découper et cadrer la story"
+    objective: "Découper un besoin data en tranches verticales qui servent seules, avec hors périmètre et dépendances écrits, et dire quand une story est prête et quand elle est finie."
+    duration_min: 55
+    file: domains/3-slicing-and-framing.md
+    concepts: [9, 10, 11]
+  - number: 4
+    slug: data
+    title: "Les données"
+    objective: "Définir un indicateur sans ambiguïté et placer les exigences de qualité et d'accès aux données au bon endroit."
+    duration_min: 25
+    file: domains/4-data.md
+    concepts: [12]
+  - number: 5
+    slug: deciding
+    title: "Décider"
+    objective: "Ordonner un backlog entre des demandes concurrentes en argumentant, et défendre cet ordre devant les parties prenantes."
+    duration_min: 40
+    file: domains/5-deciding.md
+    concepts: [13, 14]
+  - number: 6
+    slug: leading
+    title: "Conduire"
+    objective: "Conduire une story de l'idée à l'incrément (refinement, Sprint Planning et objectif de sprint, revue de sprint), tracer une première version utile et répondre à « pour quand ? »."
+    duration_min: 50
+    file: domains/6-leading.md
+    concepts: [15, 16]
+  - number: 7
+    slug: exploring
+    title: "Explorer"
+    objective: "Séparer ce qu'on sait de ce qu'on suppose, proposer une exploration bornée avant de s'engager, et accepter un résultat incertain."
+    duration_min: 25
+    file: domains/7-exploring.md
+    concepts: [17]
+concepts:
+  - number: "0"
+    slug: scrum
+    title: "Scrum en bref et l'incrément"
+    objective: "situer les trois responsabilités de Scrum (Product Owner, Scrum Master, Developers), le sprint et ses quatre événements, les trois artefacts et leurs engagements ; distinguer le sprint, une durée, de l'incrément, le produit dans un nouvel état utilisable"
+    prerequisites: []
+    dir: concepts/00-scrum
+    subconcepts:
+      - id: 0a
+        title: "Le cadre"
+        children:
+          - id: 0a1
+            title: "Trois responsabilités"
+            messages: 4
+          - id: 0a2
+            title: "Le sprint et ses quatre événements"
+            messages: 5
+          - id: 0a3
+            title: "Trois artefacts, trois engagements"
+      - id: 0b
+        title: "Sprint et incrément"
+  - number: "1"
+    slug: produit-et-po
+    title: "Le produit et le rôle du PO"
+    objective: "décrire un produit par le problème qu'il résout, ses utilisateurs et la valeur qu'ils en tirent, et dire qui tranche quoi entre le PO, les Developers et les parties prenantes"
+    prerequisites: [0]
+    dir: concepts/01-produit-et-po
+    subconcepts:
+      - id: 1a
+        title: "Le produit : problème, utilisateurs, valeur"
+      - id: 1b
+        title: "Qui tranche quoi"
+  - number: "2"
+    slug: objectif-produit-resultat
+    title: "Objectif produit et résultat"
+    objective: "distinguer un livrable (ce que l'équipe produit) d'un résultat (ce qui change chez l'utilisateur) ; formuler un objectif produit qui vise un résultat ; choisir la mesure qui dit si on s'approche de ce résultat"
+    prerequisites: [1]
+    dir: concepts/02-objectif-produit-resultat
+    subconcepts:
+      - id: 2a
+        title: "Livrable et résultat"
+      - id: 2b
+        title: "L'objectif produit"
+      - id: 2c
+        title: "Choisir une mesure de résultat"
+  - number: "3"
+    slug: backlog-produit
+    title: "Le backlog produit"
+    objective: "dire ce qu'est un backlog produit (une liste ordonnée, émergente, seule source de travail de l'équipe) et ce qu'il n'est pas (un cahier des charges découpé, une liste à dépiler, le découpage technique de la solution)"
+    prerequisites: [2]
+    dir: concepts/03-backlog-produit
+    subconcepts:
+      - id: 3a
+        title: "Une liste ordonnée, émergente"
+        children:
+          - id: 3a1
+            title: "Ordonnée"
+          - id: 3a2
+            title: "Émergente"
+      - id: 3b
+        title: "Ce qu'il n'est pas"
+  - number: "4"
+    slug: hierarchie
+    title: "Hiérarchie du backlog"
+    objective: "classer un besoin en epic, feature, story ou tâche ; trancher entre feature et story en comptant les « je veux » ; choisir peu de niveaux, en sachant qu'aucun guide n'en impose"
+    prerequisites: [3]
+    dir: concepts/04-hierarchie
+    subconcepts:
+      - id: 4a
+        title: "Les niveaux, qu'aucun guide n'impose"
+        children:
+          - id: 4a1
+            title: "Les quatre mots"
+          - id: 4a2
+            title: "Les niveaux de l'outil"
+          - id: 4a3
+            title: "Le niveau de trop"
+      - id: 4b
+        title: "Feature ou story : compter les « je veux »"
+  - number: "5"
+    slug: user-story
+    title: "La user story"
+    objective: "écrire une story qui dit qui a le besoin, ce qu'il veut faire et pourquoi, sans imposer de solution ; savoir que la phrase seule ne suffit pas (les 3C) ; faire remonter un « afin de » faible jusqu'à la décision ou au gain que l'utilisateur reconnaît"
+    prerequisites: [4]
+    dir: concepts/05-user-story
+    subconcepts:
+      - id: 5a
+        title: "Les trois parties et les 3C"
+        children:
+          - id: 5a1
+            title: "Les trois parties"
+          - id: 5a2
+            title: "Les 3C"
+      - id: 5b
+        title: "Le « afin de » et les « pourquoi ? » successifs"
+  - number: "6"
+    slug: roles-personas
+    title: "Rôles et personas"
+    objective: "choisir l'acteur d'une story : le rôle qui fait l'action du « je veux » et y gagne lui-même ce que dit le « afin de », pas celui qui construit ni celui qui en parle ; le vérifier auprès des utilisateurs ; savoir ce qu'un persona apporte, et qu'il reste un choix d'école"
+    prerequisites: [5]
+    dir: concepts/06-roles-personas
+    subconcepts:
+      - id: 6a
+        title: "L'acteur de la story"
+      - id: 6b
+        title: "Le persona (choix d'école)"
+  - number: "7"
+    slug: invest
+    title: "INVEST"
+    objective: "juger une story avec les six critères d'INVEST ; quand plusieurs lettres restent douteuses, trouver le mot flou dont elles dépendent et le faire préciser par l'utilisateur concerné ; distinguer, pour le N, la solution (négociable) de la contrainte (qui va dans un critère d'acceptation)"
+    prerequisites: [5, 6]
+    dir: concepts/07-invest
+    subconcepts:
+      - id: 7a
+        title: "Les six lettres et le mot flou"
+        children:
+          - id: 7a1
+            title: "Les six lettres"
+          - id: 7a2
+            title: "Le mot flou"
+      - id: 7b
+        title: "N : le besoin, pas la solution"
+  - number: "8"
+    slug: criteres-regles
+    title: "Critères d'acceptation et règles métier"
+    objective: "écrire des critères d'acceptation qu'un testeur tranche sans poser de question, en Given/When/Then, avec une variable à la fois ; les séparer des règles métier qu'ils illustrent ; repérer une règle non fixée et la faire fixer au lieu de l'inventer"
+    prerequisites: [7]
+    dir: concepts/08-criteres-regles
+    subconcepts:
+      - id: 8a
+        title: "Critère ou règle métier"
+        children:
+          - id: 8a1
+            title: "Critère ou règle"
+          - id: 8a2
+            title: "La règle non fixée"
+      - id: 8b
+        title: "Given/When/Then, une variable à la fois"
+        children:
+          - id: 8b1
+            title: "La forme"
+          - id: 8b2
+            title: "Une variable à la fois"
+  - number: "9"
+    slug: decoupage-vertical
+    title: "Découpage en tranches verticales"
+    objective: "découper un besoin data en tranches verticales, qui traversent les couches du produit et servent seules à l'utilisateur ; reconnaître une tranche horizontale (une couche seule) ; découper une story trop grosse avec un patron, attribué à son catalogue"
+    prerequisites: [8]
+    dir: concepts/09-decoupage-vertical
+    subconcepts:
+      - id: 9a
+        title: "La tranche verticale"
+        children:
+          - id: 9a1
+            title: "La tranche qui sert seule"
+          - id: 9a2
+            title: "Où s'arrête le vertical"
+      - id: 9b
+        title: "Les patrons de découpage"
+        children:
+          - id: 9b1
+            title: "Couche ou tranche"
+          - id: 9b2
+            title: "Les patrons et leur catalogue"
+  - number: "10"
+    slug: hors-perimetre-dependances
+    title: "Hors périmètre et dépendances"
+    objective: "écrire le hors périmètre d'une story et dire ce que devient la demande qui en sort ; traiter une dépendance, entre deux stories de l'équipe ou envers une autre équipe : l'écrire, puis ordonner, ou s'accorder avec le PO de l'autre équipe"
+    prerequisites: [9]
+    dir: concepts/10-hors-perimetre-dependances
+    subconcepts:
+      - id: 10a
+        title: "Le hors périmètre"
+        children:
+          - id: 10a1
+            title: "L'écrire"
+          - id: 10a2
+            title: "La retrouver à la revue"
+      - id: 10b
+        title: "Les dépendances"
+        children:
+          - id: 10b1
+            title: "Dans l'équipe : fusionner ou ordonner"
+          - id: 10b2
+            title: "Envers une autre équipe"
+  - number: "11"
+    slug: dor-dod
+    title: "Definition of Done, Definition of Ready"
+    objective: "distinguer la Definition of Done (DoD), la Definition of Ready (DoR) et un critère d'acceptation ; ranger une exigence au bon endroit ; décider si une story est prête à entrer dans un sprint, et dire quoi faire quand elle ne l'est pas"
+    prerequisites: [0, 8, 10]
+    dir: concepts/11-dor-dod
+    subconcepts:
+      - id: 11a
+        title: "La Definition of Done"
+      - id: 11b
+        title: "La Definition of Ready"
+  - number: "12"
+    slug: donnees-produit
+    title: "Les données du produit"
+    objective: "faire écrire la définition d'un indicateur qui ne laisse pas deux lectures ; exprimer une exigence de qualité des données en règle mesurable et la ranger au bon endroit ; savoir quelles données demander, pour quelle finalité, quand l'accès touche des données personnelles"
+    prerequisites: [2, 8, 11]
+    dir: concepts/12-donnees-produit
+    subconcepts:
+      - id: 12a
+        title: "Définir un indicateur"
+        children:
+          - id: 12a1
+            title: "Les cinq cases"
+          - id: 12a2
+            title: "Ce qui manque, et qui le fixe"
+      - id: 12b
+        title: "La qualité des données"
+      - id: 12c
+        title: "Accès et données personnelles"
+  - number: "13"
+    slug: ordonner-backlog
+    title: "Ordonner le backlog"
+    objective: "ordonner des demandes concurrentes en pesant valeur, coût, risque et dépendances, rapportés à l'objectif produit, et argumenter l'ordre ; raisonner en coût du retard quand le temps compte ; classer avec MoSCoW pour une échéance, sans le confondre avec l'ordre du backlog"
+    prerequisites: [2, 10, 11]
+    dir: concepts/13-ordonner-backlog
+    subconcepts:
+      - id: 13a
+        title: "Ordonner, c'est décider"
+        children:
+          - id: 13a1
+            title: "Les quatre critères"
+          - id: 13a2
+            title: "Ce qui est prêt"
+      - id: 13b
+        title: "Valeur et coût du retard"
+      - id: 13c
+        title: "MoSCoW pour une échéance"
+  - number: "14"
+    slug: parties-prenantes
+    title: "Les parties prenantes"
+    objective: "identifier les parties prenantes du produit, fournisseurs de données compris ; dire « pas maintenant » à l'une d'elles avec l'objectif produit et l'ordre du backlog ; escalader un obstacle au bon niveau, dans le bon ordre, et seulement un obstacle"
+    prerequisites: [1, 12, 13]
+    dir: concepts/14-parties-prenantes
+    subconcepts:
+      - id: 14a
+        title: "Qui sont-elles"
+      - id: 14b
+        title: "Arbitrer et dire non avec l'objectif produit"
+      - id: 14c
+        title: "Escalader un obstacle"
+  - number: "15"
+    slug: vie-story
+    title: "La vie d'une story : refinement, planning, revue"
+    objective: "préparer une story au refinement en faisant préciser ses mots flous par l'utilisateur concerné ; la faire choisir au Sprint Planning avec un objectif de sprint qui dit pourquoi le sprint a de la valeur ; la faire inspecter en revue de sprint et adapter le backlog à ce qu'on y apprend"
+    prerequisites: [11, 12, 13]
+    dir: concepts/15-vie-story
+    subconcepts:
+      - id: 15a
+        title: "Le refinement"
+        children:
+          - id: 15a1
+            title: "Le mot flou se précise avec l'utilisateur concerné"
+          - id: 15a2
+            title: "Pas de story « définir X »"
+      - id: 15b
+        title: "Sprint Planning et objectif de sprint"
+      - id: 15c
+        title: "La revue de sprint"
+  - number: "16"
+    slug: story-map
+    title: "Story map et première version"
+    objective: "ranger les stories d'un backlog selon le parcours de l'utilisateur, en story map ; tracer une première version utile qui traverse ce parcours, avec son résultat visé et sa mesure ; répondre à « pour quand ? » par la prévision des Developers, en fourchette, sans en faire une promesse"
+    prerequisites: [9, 13, 14, 15]
+    dir: concepts/16-story-map
+    subconcepts:
+      - id: 16a
+        title: "La carte"
+      - id: 16b
+        title: "La tranche de version"
+        children:
+          - id: 16b1
+            title: "La première version utile"
+          - id: 16b2
+            title: "Les deux sens de MVP"
+      - id: 16c
+        title: "Pour quand ?"
+  - number: "17"
+    slug: hypotheses-exploration
+    title: "Hypothèses et exploration"
+    objective: "séparer ce qu'on sait de ce qu'on suppose, et dire si une supposition porte sur la valeur ou sur la faisabilité ; faire décider une exploration bornée avant qu'elle commence (question, durée, ce qu'on fera selon la réponse) ; accepter un résultat incertain par un critère sur un niveau atteint, que l'utilisateur concerné fixe après l'exploration"
+    prerequisites: [2, 9, 12, 16]
+    dir: concepts/17-hypotheses-exploration
+    subconcepts:
+      - id: 17a
+        title: "Savoir ou supposer"
+      - id: 17b
+        title: "Explorer à moindre coût"
+        children:
+          - id: 17b1
+            title: "Décider l'exploration avant"
+          - id: 17b2
+            title: "Choisir la façon d'explorer"
+      - id: 17c
+        title: "Accepter un résultat incertain"
+  - number: "A1"
+    slug: outil-backlog
+    title: "Structurer le backlog dans un outil"
+    objective: "dire ce qu'un PO règle dans l'outil du backlog, et pourquoi : les niveaux (et le niveau de trop), le lien qui note une dépendance, y compris envers une autre équipe, et les états d'un élément, où « fait » veut dire DoD remplie"
+    prerequisites: []
+    dir: concepts/A1-outil-backlog
+    subconcepts:
+      - id: A1a
+        title: "Les niveaux dans l'outil"
+      - id: A1b
+        title: "Les liens de dépendance"
+      - id: A1c
+        title: "Les états"
+  - number: "A2"
+    slug: sans-sprint
+    title: "Travailler sans sprint"
+    objective: "pour l'apprenant dont l'équipe travaille en flux continu, sans sprint : dire ce qui ne change pas, et ce que deviennent le Sprint Planning et la DoR, l'objectif de sprint, la revue de sprint et la prévision"
+    prerequisites: []
+    dir: concepts/A2-sans-sprint
+    subconcepts:
+      - id: A2a
+        title: "Tirer l'élément, la DoR au début du flux"
+      - id: A2b
+        title: "Sans objectif de sprint, ce qui donne la direction"
+      - id: A2c
+        title: "Sans revue de sprint, inspecter ce qui est livré"
+      - id: A2d
+        title: "Prévoir en flux"
