@@ -49,6 +49,8 @@ branch without an issue number: stop and say so.
      ```
    - what is not verified, and the checks that do not exist yet;
    - decisions written (`/decide`), issues opened on the way.
+   - no signature or generated-by line: the squash takes the body as the commit message
+     on `main`; the `Co-Authored-By` trailer on the commits is enough.
 6. **Open it**: `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`.
    Then check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
    lists the PR when it says `Closes #<n>`, and `mise exec -- gh issue develop --list <n>`

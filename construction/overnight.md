@@ -56,11 +56,12 @@ the validated table, S1-09 and S1-10 should not build on a spec the maintainer h
 3. Paste:
 
 ```
-Night run 1 of the feyn construction. Use a workflow: run the script
-construction/scripts/overnight-1.js with args {"date": "<today>", "night": 1}.
-About 45 agents are expected over the night; that scale is intended. Do not ask me
-anything. When the workflow returns, make sure construction/notes/night-1.md exists
-(write it from the result if the script could not), then stop.
+Relaunch night run 1 of the feyn construction. Use a workflow: run the script
+construction/scripts/overnight-1.js with args
+{"date": "<today>", "night": 1, "accepted": ["S0-01", "S0-02", "S0-03", "S0-04", "S0-05", "S0-06", "S0-07", "S1-01"]}.
+Those eight are done and merged; nothing of them is to be redone. About 25 agents are
+expected; that scale is intended. Do not ask me anything. When the workflow returns, make
+sure construction/notes/night-1.md exists (overwrite the previous report), then stop.
 ```
 
 4. Go to bed. The run writes `construction/notes/night-1.md` at the end.
@@ -101,9 +102,10 @@ intended. Do not ask me anything. When the workflow returns, make sure
 construction/notes/night-2.md exists, then stop.
 ```
 
-Night 1 may be relaunched with `"accepted": ["S0-01"]` in its args when a task was verified
-by its review but held for a detail (that was night 1's first run: the freeze was done, the
-announcement line was in the report). An accepted task is counted done without running again.
+`accepted` lists the tasks the maintainer counts as done: they are not run again and their
+dependants may start. After the first run of night 1 (2026-10-27), stage 0 and S1-01 are done
+and merged, so the launch text above lists the eight; six tasks remain for the relaunch
+(S1-02, S1-03, S1-06, S1-07, S1-08, S1-11).
 
 If night 1 left tasks blocked (see `night-1.md`), unblock them first or accept that night 2
 skips what depends on them.
