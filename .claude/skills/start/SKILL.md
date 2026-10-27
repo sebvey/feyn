@@ -44,8 +44,8 @@ lowercase, joined by hyphens (`course/42-concept-9-cases`).
 
 This creates the branch on GitHub, linked to the issue, and checks it out: the issue's
 Development section then lists the branch, and the PR opened from it. A PR from a linked
-branch closes the issue at the merge even when it says `Refs`: `/finish` unlinks the branch
-first for a `Refs` PR.
+branch closes the issue at the merge even when it says `Refs` (GitHub, observed 2026-10-27, #24).
+`/finish` unlinks the branch first for a `Refs` PR.
 
 A branch of that name that already exists (`mise exec -- gh issue develop --list <n>` shows
 the linked ones, `mise exec -- git branch --list "*/<n>-*"` the local ones): switch to it and

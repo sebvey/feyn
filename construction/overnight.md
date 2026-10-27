@@ -54,6 +54,25 @@ In addition to `README.md` ("How a work session goes"):
 - Return raw facts, not a message: status, PR number, branch, what was verified, what the
   maintainer must do.
 
+## Agents in worktrees
+
+What an agent working in a worktree (a subagent with `isolation: "worktree"`, night 2) meets.
+Each line is a behaviour found, with its mark ([docs/contributing.md](../docs/contributing.md),
+"Tool behaviours"):
+- The worktree is `.claude/worktrees/agent-<id>`, on a branch `worktree-agent-<id>` cut from
+  `main`'s HEAD; `/finish after-merge` does not remove it (Claude Code, observed 2026-10-27, #115).
+- A worktree with no change at the end of the agent's turn is removed (Claude Code, inferred 2026-10-27, #27).
+- `git switch main` fails in a worktree (Claude Code, observed 2026-10-27, #115). `/start` there
+  runs `gh issue develop <n> --name <branch> --base main` without `--checkout`, then
+  `git fetch origin <branch>` and `git switch -c <branch> --track origin/<branch>`.
+- `mise exec -- git` is refused in an agent worktree; plain `git` works with the right identity,
+  never `git config` nor `git -c user.email=` (Claude Code, observed 2026-10-27, #115).
+- `git push` can fail to resolve github.com from the sandbox while `gh` works; retry the push
+  outside the sandbox (Claude Code, observed 2026-10-27, #27).
+- A subagent cannot ask the maintainer, so work needing their acceptance runs in two phases:
+  the agent delivers what does not depend on it, the maintainer answers, then the work resumes
+  (Claude Code, observed 2026-10-27, #27).
+
 ## Night 1 scope
 
 Stage 0 complete (S0-01 to S0-07), then the stage 1 tasks that need no maintainer validation

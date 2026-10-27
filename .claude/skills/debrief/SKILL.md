@@ -47,7 +47,16 @@ Edit the paragraphs whose practice the session changed, in place: keep the reade
 "Why: decision `<slug>`." ending, adding the slugs written at step 3. A new paragraph only for
 a new step of the flow. Nothing changed: say so, write nothing.
 
-## 6. The session note
+## 6. Tool behaviours
+
+A behaviour of GitHub or Claude Code found in the session (a refusal, a side effect, something
+the tool did not do) goes to its point of use, the skill step or document that depends on it,
+in one line with its mark `(<tool>, <status> <date>, #<n>)` ([docs/contributing.md](../../../docs/contributing.md),
+"Tool behaviours"). When no skill or document makes that move, comment on issue #115
+(`mise exec -- gh issue comment 115 --body-file <file>`), with the same mark. A line the session
+disproves is corrected or removed. Nothing found: write nothing.
+
+## 7. The session note
 
 `construction/notes/<date>-<topic>.md` (date `YYYY-MM-DD`, topic two or three words, from the
 argument or the session). Ten lines, or a small table, as in
@@ -62,13 +71,13 @@ The note dies with `construction/` at stage 4. After that, it becomes a comment 
 that started the session (`mise exec -- gh issue comment <n> --body-file <file>`), or nothing
 when no issue started it.
 
-## 7. Commit
+## 8. Commit
 
 `mise exec -- git add docs/contributing.md construction/notes/<file>` (the decisions are
 already committed by `/decide`), then `mise exec -- git commit -m "debrief <topic>"`. Never
 on `main`, never a merge, never a push: the PR is `/finish`'s.
 
-## 8. Reply
+## 9. Reply
 
 For the maintainer to reread, one line each:
 - **Written**: each decision (path), each issue (number, title), the issues commented, the

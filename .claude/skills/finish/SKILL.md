@@ -63,13 +63,14 @@ branch without an issue number: stop and say so.
      cannot be merged by mistake;
    - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
      lists the PR when it says `Closes #<n>` (a `Refs` PR: it lists nothing). The branch is
-     not checked: GitHub drops the issue's linked branch once a PR from it opens. GitHub can
-     take a few seconds to list the PR: rerun once. PR still missing on a `Closes` PR: fix
+     not checked: GitHub drops the issue's linked branch once a PR from it opens (GitHub, inferred 2026-10-27, #108).
+     GitHub can take a few seconds to list the PR: rerun once. PR still missing on a `Closes` PR: fix
      the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
 7. **Ask for review**: reply with the PR URL, the title, one line on what the reviewer should
    look at first, and the merge command, which names the subject (on a one-commit PR, GitHub
    takes the commit message, not the PR title):
-   `gh pr merge <pr> --squash --delete-branch --subject "<title> (#<pr>)"`. Stop there.
+   `gh pr merge <pr> --squash --delete-branch --subject "<title> (#<pr>)"`
+   (GitHub, observed 2026-10-27, #115). Stop there.
    A draft PR: name the question instead of the merge command. The maintainer answers with a
    comment and removes `blocked:maintainer` (on the issue and the PR). Then apply the answer,
    remove the section from the body, `mise exec -- gh pr ready <pr>`, and ask for review
@@ -80,14 +81,16 @@ branch without an issue number: stop and say so.
 
 The link `/start` makes (`gh issue develop`) ties the branch to the issue, and GitHub treats a
 PR opened from a linked branch as closing that issue, whatever its body says: issue #24 closed
-at the merge of PR #84, which said `Refs #24`. So when the body starts with `Refs #<n>`, remove
-the link **before** opening the PR (`gh issue develop` has no unlink):
+at the merge of PR #84, which said `Refs #24` (GitHub, observed 2026-10-27, #24).
+So when the body starts with `Refs #<n>`, remove the link **before** opening the PR
+(`gh issue develop` has no unlink):
 
 1. Get the link's id:
    `mise exec -- gh api graphql -f query='query{repository(owner:"sebvey",name:"feyn"){issue(number:<n>){linkedBranches(first:10){nodes{id ref{name}}}}}}'`
    and take the node whose `ref.name` is the branch.
 2. Remove it (this deletes the link, not the branch):
-   `mise exec -- gh api graphql -f query='mutation{deleteLinkedBranch(input:{linkedBranchId:"<id>"}){clientMutationId}}'`.
+   `mise exec -- gh api graphql -f query='mutation{deleteLinkedBranch(input:{linkedBranchId:"<id>"}){clientMutationId}}'`
+   (GitHub, tested 2026-10-27, #109).
 3. Open the PR, then check `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
    lists nothing. If it lists the PR, the link survived: the maintainer removes it in the
    web interface (PR page, Development in the sidebar, the issue's entry, unlink), or the
