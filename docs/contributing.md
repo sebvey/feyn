@@ -36,10 +36,12 @@ and opens the PR with the title `<type>(<area>): <summary>`, which becomes the s
 `main`. The body starts with `Closes #n` (or `Refs #n` when the PR is one step of the issue),
 then "Done when, verified:", one line per statement with its verdict (`met`, `not met`,
 `deviation`) and its proof. The PR never redefines the Done when; the issue wins, and the PR
-says why it deviates. Once the PR is open, `/finish` checks that the issue lists it and the
-branch. Nothing lands on `main` without a PR, the author never merges their own, and `main`
-is never force-pushed. After the merge, `/finish after-merge` confirms the change
-landed, checks the issue's Status is Done (and sets it if the Project did not), and deletes
+says why it deviates. A `Refs` PR first unlinks the branch from the issue (a linked branch
+closes the issue at the merge whatever the body says). Once the PR is open, `/finish` checks
+that the issue lists it and the branch (a `Refs` PR: neither). Nothing lands on `main`
+without a PR, the author never merges their own, and `main` is never force-pushed. After the
+merge, `/finish after-merge` confirms the change landed, checks the issue's Status is Done
+(and sets it if the Project did not; a `Refs` issue stays open and In progress), and deletes
 the local branch. Why: decision `issue-defines-pr-verifies`.
 
 ## Status, labels and milestones
