@@ -43,9 +43,10 @@ One script per id, `checks/<id>.js`, exporting `run(ctx)`; `check-course` loads 
 | `language-pack-keys` | `language-pack-keys.js` | every key of section 9 exists in the course's pack (9) |
 
 `language-pack-keys` checks the keys of section 9. The keys `PROTOCOL.md` uses are listed in its
-"Keys and parameters" section; S1-05 adds them to the check with the real pack. The pack is read as a map of the groups of section 9
-(`headings`, `case_fields`, `markers`, `references`, `source_types`, `typography.banned`,
-`checks.anaphora`); S1-05 writes the real pack and may add groups beside them.
+"Keys and parameters" section; S1-05 adds them to the check with the real pack. The pack is read as
+a map of the groups of section 9 (`headings`, `case_fields`, `markers`, `references`,
+`source_types`, `typography.banned`, `checks.anaphora`); S1-05 writes the real pack and may add
+groups beside them.
 
 A claim of `sources.md` has a source when its source cell is not empty: a reference id
 (`[S1]`), a `concepts/NN-slug/sources.md` path, or a word that says there is none (« fil

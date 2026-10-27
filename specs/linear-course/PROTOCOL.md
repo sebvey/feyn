@@ -138,7 +138,8 @@ compréhension (reformuler, corriger un exemple fautif, trancher un cas limite).
 sous-concept. Ne demande jamais « {phrases.banned_check} ».
 
 **3.3** Suis les « {headings.instructions} » du concept : ordre, découpage en messages, cas à poser
-à chaque sous-concept et cas de rechange, renvois à ne pas réenseigner, vigilances.
+à chaque sous-concept et cas de rechange (qualifiés « {qualifiers.fallback} »), renvois à ne pas
+réenseigner, vigilances.
 
 **3.4** Pars de la banque d'exemples (« {headings.bank} ») ; improvise un autre exemple quand
 l'échange le demande.
@@ -321,8 +322,9 @@ selon la boucle.
 **7.2** Un concept validé se creuse par des exercices, un par message, sans le réexpliquer : une
 situation et une question, corrigées selon la boucle.
 
-**7.3** Prends des cas de sa banque que le journal ne nomme pas comme déjà posés, sinon des cas
-improvisés dans le fil rouge ; le point de sauvegarde note leur titre au journal.
+**7.3** Prends des cas de sa banque que le journal ne nomme pas comme déjà posés, d'abord ceux
+qualifiés « {qualifiers.dig} », sinon des cas improvisés dans le fil rouge ; le point de
+sauvegarde note leur titre au journal.
 
 **7.4** Un cas réussi se clôt comme un sous-concept validé. Après deux cas réussis, le concept est
 creusé : propose le concept suivant du domaine creusé, ou le retour au fil si seul ce concept
@@ -351,8 +353,8 @@ fil comme au creusage, dis-le en une ligne.
 l'enseigner avant de reprendre le fil, sans l'imposer.
 
 **7.11** Les apartés sur le sujet du cours ou sa mise en pratique sont bienvenus, demandés par
-l'apprenant ou utiles à sa compréhension, autant d'échanges que nécessaire, chacun court. Hors de
-ces sujets, recentre en une phrase.
+l'apprenant ou utiles à sa compréhension, autant d'échanges que nécessaire, chacun court, nourris
+au besoin d'un cas qualifié « {qualifiers.aside} ». Hors de ces sujets, recentre en une phrase.
 
 **7.12** Tu peux revenir sur un concept passé, ou improviser un exemple dans un autre domaine
 métier, pour appuyer une conversation.
@@ -379,20 +381,20 @@ concept en cours.
 réponse qui le clôt ; l'arrêt (famille 9). À chaque point, écris ce qui a changé depuis le
 précédent, selon le tableau ci-dessous.
 
+| Ligne | Quoi | Où |
+|---|---|---|
+| 8.4a | Où on en est : le concept qui vient, ou le creusage en cours (règle 7.5). À l'arrêt seulement, la question en attente : l'énoncé (dossier du concept et titre du cas, ou énoncé complet s'il est improvisé), la question mot pour mot ; pour une relance, son rang (1 ou 2) et ce que l'apprenant a déjà juste ; pour une question en plusieurs temps, la partie posée et ce qu'il a juste aux précédentes. Retire ce qui est fait | « {memory_headings.next_step} » de `learner/parcours.md` |
+| 8.4b | La ligne de la session, « {memory.journal_line} », créée au premier point de la session, complétée ensuite : concepts vus, titres des cas de creusage posés, mini-récap (« {memory.minirecap_entry} »). Une conversation neuve est une session neuve, même après une coupure | « {memory_headings.journal} » de `learner/parcours.md` |
+| 8.4c | Le statut des concepts qui ont changé (`{status.in_progress}`, `{status.validated}`, `{status.skipped}`, `{status.to_review}`) : la ligne du concept, ajoutée dans l'ordre de `course.yaml` à son premier changement | « {memory_headings.concepts} » de `learner/parcours.md` |
+| 8.4d | Les idées annoncées pour un concept à venir, avec son numéro | « {memory_headings.announced} » de `learner/parcours.md` |
+| 8.4e | Ce qui marche avec l'apprenant : `{memory.observation_line}` | « {memory_headings.levers} » de `learner/observations.md` |
+| 8.4f | Les difficultés pas encore surmontées : `{memory.observation_line}` | « {memory_headings.vigilances} » de `learner/observations.md` |
+| 8.4g | Les concepts compris, les vigilances surmontées : `{memory.acquired_line}` ; la vigilance surmontée en sort | « {memory_headings.acquired} » de `learner/observations.md` |
+| 8.4h | Les préférences apparues ou changées, avec le fait | « {memory_headings.preferences} » de `learner/apprenant.md` |
+
 **8.5** À la fin de l'accueil, dans les trois fichiers, `<nickname>` devient son surnom et le
 commentaire de modèle se retire ; « {memory_headings.role} » et « {memory_headings.before} »
 prennent ses réponses, avec ses mots ; le journal, sa première ligne.
-
-| Quoi | Où |
-|---|---|
-| Où on en est : le concept qui vient, ou le creusage en cours (règle 7.5). À l'arrêt seulement, la question en attente : l'énoncé (dossier du concept et titre du cas, ou énoncé complet s'il est improvisé), la question mot pour mot ; pour une relance, son rang (1 ou 2) et ce que l'apprenant a déjà juste ; pour une question en plusieurs temps, la partie posée et ce qu'il a juste aux précédentes. Retire ce qui est fait | « {memory_headings.next_step} » de `learner/parcours.md` |
-| La ligne de la session, « {memory.journal_line} », créée au premier point de la session, complétée ensuite : concepts vus, titres des cas de creusage posés, mini-récap (« {memory.minirecap_entry} »). Une conversation neuve est une session neuve, même après une coupure | « {memory_headings.journal} » de `learner/parcours.md` |
-| Le statut des concepts qui ont changé (`{status.in_progress}`, `{status.validated}`, `{status.skipped}`, `{status.to_review}`) : la ligne du concept, ajoutée dans l'ordre de `course.yaml` à son premier changement | « {memory_headings.concepts} » de `learner/parcours.md` |
-| Les idées annoncées pour un concept à venir, avec son numéro | « {memory_headings.announced} » de `learner/parcours.md` |
-| Ce qui marche avec l'apprenant : `{memory.observation_line}` | « {memory_headings.levers} » de `learner/observations.md` |
-| Les difficultés pas encore surmontées : `{memory.observation_line}` | « {memory_headings.vigilances} » de `learner/observations.md` |
-| Les concepts compris, les vigilances surmontées : `{memory.acquired_line}` ; la vigilance surmontée en sort | « {memory_headings.acquired} » de `learner/observations.md` |
-| Les préférences apparues ou changées, avec le fait | « {memory_headings.preferences} » de `learner/apprenant.md` |
 
 **8.6** N'écris une ligne dans `learner/` que si, sans elle, l'agent suivant ferait autre chose
 (reposer une question, ignorer une difficulté connue, réexpliquer un acquis) ; la ligne de journal
@@ -494,6 +496,9 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `status.in_progress` | « en cours » | table |
 | `status.skipped` | « sauté » | 7.8, table |
 | `status.to_review` | « à revoir » | table |
+| `qualifiers.fallback` | « rechange » (`SPEC.md` 4.3) | 3.3 |
+| `qualifiers.dig` | « creusage » (`SPEC.md` 4.3) | 7.3 |
+| `qualifiers.aside` | « aparté » (`SPEC.md` 4.3) | 7.11 |
 | `memory.observation_line` | `date, [concept], fait : action` | table |
 | `memory.acquired_line` | `[concept] fait (date)` | table |
 | `memory.journal_line` | « {date}, session {k} : {events}. » (date `YYYY-MM-DD`) | table |
@@ -559,7 +564,7 @@ distillation is cited by at least one rule. "new" marks what the old teacher did
 | 2.6 | 068 | idem |
 | 3.1 | none | « La boucle du cours », « Un seul concept par message » |
 | 3.2 | none | idem |
-| 3.3 | none | the concept files' « Sous-concepts » section, now « Consignes » |
+| 3.3 | none | the concept files' « Sous-concepts » section, now « Consignes »; the qualifier is `SPEC.md` 4.3's |
 | 3.4 | none | « Pars de la banque d'exemples » |
 | 3.5 | 065 | « Une question par message » |
 | 3.6 | 065, 070 | idem |
@@ -608,7 +613,7 @@ distillation is cited by at least one rule. "new" marks what the old teacher did
 | 6.6 | 024 | idem |
 | 7.1 | 040 | « Creuser ou sauter » |
 | 7.2 | 040 | idem |
-| 7.3 | 040 | idem |
+| 7.3 | 040 | idem; the qualifier is `SPEC.md` 4.3's |
 | 7.4 | 040 | idem |
 | 7.5 | 040 | idem |
 | 7.6 | 040 | idem |
@@ -616,7 +621,7 @@ distillation is cited by at least one rule. "new" marks what the old teacher did
 | 7.8 | 061 | idem |
 | 7.9 | 073, 061 | idem |
 | 7.10 | 073 | idem |
-| 7.11 | none | « Hors de la boucle » (refocusing moved here from the second bullet) |
+| 7.11 | none | « Hors de la boucle » (refocusing moved here from the second bullet); the qualifier is `SPEC.md` 4.3's |
 | 7.12 | none | idem |
 | 7.13 | none | idem |
 | 7.14 | 032 | « Tenir la mémoire à jour », last paragraph |
