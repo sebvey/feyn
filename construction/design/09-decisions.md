@@ -16,7 +16,7 @@ written only in a "grilling session", one writer at a time. Worth taking from it
   `two-versioned-objects.md`. The slug is the identifier; we cite "decision
   classroom-as-build".
 - Frontmatter: `date`, `issue` (originating GitHub issue number, if any), `status`
-  (`accepted` | `superseded-by: <slug>`), `scope` (the component).
+  (`accepted` | `superseded-by: <slug>`), `area` (the area it binds).
 - First line of the body: the **counterfactual** ("Without this, an agent would…"). Then the
   decision in one paragraph. Optional sections only when they add: options ruled out,
   consequences.
