@@ -1,0 +1,132 @@
+id: parcours-po
+spec: linear-course@1
+language: fr
+title: "Parcours PO (enveloppe de test)"
+audience: "Un enveloppe de test autour du concept 9."
+storyline: storyline.md
+glossary: glossary.md
+domains:
+  - number: 1
+    slug: enveloppe
+    title: "Enveloppe de test"
+    objective: "Porter le concept 9."
+    duration_min: 30
+    file: domains/1-enveloppe.md
+    concepts: [0, 1, 3, 4, 5, 7, 8, 9, 15, 17]
+concepts:
+  - number: 0
+    slug: scrum
+    title: "Scrum"
+    objective: "un objectif de remplissage"
+    prerequisites: []
+    dir: concepts/00-scrum
+    subconcepts:
+      - id: 0a
+        title: "Le cadre"
+  - number: 1
+    slug: produit-et-po
+    title: "Le produit et son PO"
+    objective: "un objectif de remplissage"
+    prerequisites: []
+    dir: concepts/01-produit-et-po
+    subconcepts:
+      - id: 1a
+        title: "Le PO"
+  - number: 3
+    slug: backlog-produit
+    title: "Le backlog produit"
+    objective: "un objectif de remplissage"
+    prerequisites: []
+    dir: concepts/03-backlog-produit
+    subconcepts:
+      - id: 3a
+        title: "Le backlog"
+      - id: 3b
+        title: "Le travail technique"
+  - number: 4
+    slug: hierarchie
+    title: "La hiérarchie des besoins"
+    objective: "un objectif de remplissage"
+    prerequisites: []
+    dir: concepts/04-hierarchie
+    subconcepts:
+      - id: 4a
+        title: "Les niveaux"
+  - number: 5
+    slug: user-story
+    title: "La user story"
+    objective: "un objectif de remplissage"
+    prerequisites: []
+    dir: concepts/05-user-story
+    subconcepts:
+      - id: 5a
+        title: "Le format"
+  - number: 7
+    slug: invest
+    title: "INVEST"
+    objective: "un objectif de remplissage"
+    prerequisites: []
+    dir: concepts/07-invest
+    subconcepts:
+      - id: 7a
+        title: "Les critères"
+      - id: 7b
+        title: "La forme"
+  - number: 8
+    slug: criteres-regles
+    title: "Critères et règles"
+    objective: "un objectif de remplissage"
+    prerequisites: []
+    dir: concepts/08-criteres-regles
+    subconcepts:
+      - id: 8a
+        title: "Les critères"
+        children:
+          - id: 8a1
+            title: "Un critère"
+          - id: 8a2
+            title: "Une règle"
+  - number: 9
+    slug: decoupage-vertical
+    title: "Découpage en tranches verticales"
+    objective: "découper un besoin data en tranches verticales, qui traversent les couches du produit et servent seules à l'utilisateur ; reconnaître une tranche horizontale (une couche seule) ; découper une story trop grosse avec un patron, attribué à son catalogue"
+    prerequisites: [8]
+    dir: concepts/09-decoupage-vertical
+    subconcepts:
+      - id: 9a
+        title: "La tranche verticale"
+        children:
+          - id: 9a1
+            title: "La tranche qui sert seule"
+          - id: 9a2
+            title: "Où s'arrête le vertical"
+      - id: 9b
+        title: "Les patrons de découpage"
+        children:
+          - id: 9b1
+            title: "Couche ou tranche"
+          - id: 9b2
+            title: "Les patrons et leur catalogue"
+  - number: 15
+    slug: vie-story
+    title: "La vie d'une story"
+    objective: "un objectif de remplissage"
+    prerequisites: []
+    dir: concepts/15-vie-story
+    subconcepts:
+      - id: 15a
+        title: "Les étapes"
+  - number: 17
+    slug: hypotheses-exploration
+    title: "Hypothèses et exploration"
+    objective: "un objectif de remplissage"
+    prerequisites: []
+    dir: concepts/17-hypotheses-exploration
+    subconcepts:
+      - id: 17a
+        title: "Les hypothèses"
+      - id: 17b
+        title: "L'exploration"
+        children:
+          - id: 17b1
+            title: "Une exploration bornée"

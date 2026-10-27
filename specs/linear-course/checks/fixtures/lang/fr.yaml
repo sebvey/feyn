@@ -1,0 +1,48 @@
+# The pack the check fixtures use: the keys of SPEC.md section 9, with the French values.
+# The course's own pack is specs/linear-course/lang/fr.yaml (task S1-05).
+headings:
+  objective: "Objectif"
+  essentials: "L'essentiel"
+  stances: "Consensus et choix d'école"
+  pitfalls: "Pièges"
+  quick_test: "Le test rapide"
+  instructions: "Consignes"
+  storyline_facts: "Faits du fil rouge utilisés"
+  bank: "Banque d'exemples"
+  drawing: "Schéma"
+  claims: "Affirmations"
+  references: "Références"
+  unverified: "Non vérifié"
+  problem: "Le problème"
+  concept_thread: "Le fil des concepts"
+  from_to: "D'où l'on vient, où l'on va"
+  crossing_case: "Un cas qui traverse le domaine"
+  audience: "Public cible"
+  avoid: "Termes à éviter"
+  unreleased: "Non publié"
+case_fields:
+  usage: "Usage"
+  explanation: "Explication"
+  reserve: "Réserve, sur demande"
+  situation: "Situation"
+  question: "Question"
+  expected_answer: "Réponse attendue"
+  common_mistakes: "Erreurs fréquentes"
+  what_works: "Ce qui marche"
+markers:
+  storyline: "Fil rouge"
+  consensus: "consensus"
+  school: "école"
+  course: "cours"
+references:
+  concept: "concept"
+  concepts: "concepts"
+  and: "et"
+source_types:
+  primary: "primaire"
+  secondary: "secondaire"
+  marketing: "marketing"
+typography:
+  banned: ["—", "→", "←", "⇒", "⇐", "↔", "➜", "➔"]
+checks:
+  anaphora: ["Il", "Elle", "Ils", "Elles", "Ce", "Cet", "Cette", "Ces", "Puis", "Celui", "Celle", "Ceux", "Celles", "Cela", "Ça"]

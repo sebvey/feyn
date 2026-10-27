@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" role="img" aria-labelledby="couches-titre couches-desc" fill="currentColor" font-family="sans-serif">
+  <title id="couches-titre">Trois couches empilées</title>
+  <desc id="couches-desc">Trois rectangles empilés : restitution, transformation, ingestion.</desc>
+  <g id="1a-couches" class="secondary">
+    <rect x="10" y="10" width="180" height="24" fill="#ff0000" fill-opacity="0.3" stroke="currentColor"/>
+    <rect x="10" y="38" width="180" height="24" fill-opacity="0.2" stroke="currentColor"/>
+    <rect x="10" y="66" width="180" height="24" fill-opacity="0.1" stroke="currentColor"/>
+  </g>
+  <g id="1a-noms" class="primary" font-size="12">
+    <text x="20" y="26">Restitution</text>
+    <text x="20" y="54">Transformation</text>
+    <text x="20" y="82">Ingestion</text>
+  </g>
+</svg>

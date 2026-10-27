@@ -1,0 +1,2 @@
+check: course-yaml
+message: prerequisite 2 does not come earlier

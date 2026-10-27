@@ -1,0 +1,58 @@
+#!/usr/bin/env node
+'use strict';
+// check-course <course-dir> [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>] [--list]
+const path = require('path');
+const { load } = require('./lib/course');
+
+const CHECKS = ['course-yaml', 'concept-folder', 'conventions', 'svg-contract', 'sources', 'course-files',
+  'glossary-order', 'domain-first-sentence', 'typography', 'language-pack-keys'];
+
+function usage(code) {
+  const out = code ? console.error : console.log;
+  out('usage: check-course <course-dir> [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>]');
+  out('       check-course --list');
+  out(`checks: ${CHECKS.join(', ')}`);
+  process.exit(code);
+}
+
+const args = process.argv.slice(2);
+let dir = null;
+const only = [];
+const opts = {};
+for (let i = 0; i < args.length; i++) {
+  const a = args[i];
+  if (a === '--help' || a === '-h') usage(0);
+  else if (a === '--list') { console.log(CHECKS.join('\n')); process.exit(0); }
+  else if (a === '--only') only.push(...String(args[++i] || '').split(',').filter(Boolean));
+  else if (a.startsWith('--only=')) only.push(...a.slice(7).split(',').filter(Boolean));
+  else if (a === '--concept') opts.concept = args[++i];
+  else if (a.startsWith('--concept=')) opts.concept = a.slice(10);
+  else if (a === '--lang-dir') opts.langDir = path.resolve(args[++i] || '');
+  else if (a.startsWith('--lang-dir=')) opts.langDir = path.resolve(a.slice(11));
+  else if (a.startsWith('-')) { console.error(`unknown option ${a}`); usage(2); }
+  else if (dir === null) dir = a;
+  else usage(2);
+}
+if (dir === null) usage(2);
+for (const id of only) if (!CHECKS.includes(id)) { console.error(`unknown check id "${id}" (known: ${CHECKS.join(', ')})`); process.exit(2); }
+
+const fs = require('fs');
+if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) { console.error(`not a directory: ${dir}`); process.exit(2); }
+
+const ctx = load(dir, opts);
+const run = only.length ? CHECKS.filter((id) => only.includes(id)) : CHECKS;
+let failed = 0;
+for (const id of run) {
+  let failures;
+  try {
+    failures = require('./' + id).run(ctx);
+  } catch (e) {
+    failures = [{ file: 'check-course', line: 1, message: `the check crashed: ${e.stack.split('\n').slice(0, 3).join(' | ')}` }];
+  }
+  if (!failures.length) console.log(`${id}: ok`);
+  else {
+    failed++;
+    for (const f of failures) console.log(`${id}: fail: ${f.file}:${f.line} ${f.message}`);
+  }
+}
+process.exit(failed ? 1 : 0);
