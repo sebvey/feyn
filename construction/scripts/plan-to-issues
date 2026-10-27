@@ -7,8 +7,12 @@
 // depends=... parallel=...` in backticks, then the bullets. Issue: title = heading text,
 // body = the bullets, labels `area:<area>` and `type:<type>`, milestone `stage-N` (from the file
 // name); `depends` becomes blocked-by links (decision blocked-by-links-for-dependencies), set once
-// every issue of the run exists. Idempotent: a task whose title already exists (any state) is
-// not created again, and only its missing links are set. Tasks `S<n>-<nn>.<mm>` become
+// every issue of the run exists. Idempotent: a task whose id already
+// has an issue (any state) is not created again, and only its missing links are set.
+// An existing issue is recognised by its task id, the first word of its title (`S<n>-<nn>` or
+// `S<n>-<nn>.<mm>`), never by the full title: a title edited after creation still matches, and
+// the frozen plan files need no edit. Two issues with the same task id make the script stop,
+// naming both, before anything is created. Tasks `S<n>-<nn>.<mm>` become
 // sub-issues of `S<n>-<nn>`. No dependency; runs `gh`
 // (use `mise exec -- plan-to-issues ...` so that gh has its credentials).
 'use strict';
@@ -68,11 +72,33 @@ function parse(file) {
   return tasks;
 }
 
+const TASK_ID = /^S\d+-\d+(\.\d+)?$/;
+const taskIdOf = (title) => title.split(/\s+/)[0];
+
+// Existing issues by task id. Throws when two issues share one (nothing has been created yet).
+function indexByTaskId(issues) {
+  const byTaskId = new Map();
+  for (const i of issues) {
+    const id = taskIdOf(i.title);
+    if (!TASK_ID.test(id)) continue;
+    const other = byTaskId.get(id);
+    if (other) {
+      throw new Error(`two issues carry the task id ${id}: #${other.number} "${other.title}" and #${i.number} "${i.title}"; fix one title, nothing was created`);
+    }
+    byTaskId.set(id, i);
+  }
+  return byTaskId;
+}
+
 let existing = new Map();
 try {
   const out = gh(['issue', 'list', '-R', repo, '--state', 'all', '--limit', '1000', '--json', 'number,title,id']);
-  for (const i of JSON.parse(out)) existing.set(i.title, i);
+  existing = indexByTaskId(JSON.parse(out));
 } catch (e) {
+  if (e.message.startsWith('two issues')) {
+    console.error(`plan-to-issues: ${e.message}`);
+    process.exit(1);
+  }
   if (!dry) throw e;
   console.error('(dry run: could not list existing issues, assuming none)');
 }
@@ -85,10 +111,8 @@ for (const file of files) {
   // Parents first, so that a sub-issue finds its parent in the same run.
   tasks.sort((a, b) => Number(!!a.parentId) - Number(!!b.parentId));
   for (const t of tasks) {
-    const found = existing.get(t.title);
-    const parent = t.parentId
-      ? [...existing.values()].find((i) => i.title.split(/\s+/)[0] === t.parentId)
-      : null;
+    const found = existing.get(t.id);
+    const parent = t.parentId ? existing.get(t.parentId) : null;
     if (found) {
       console.log(`skip    #${found.number}  ${t.title}`);
       skipped++;
@@ -100,7 +124,7 @@ for (const file of files) {
     created++;
     toLink.push(t);
     if (dry) {
-      existing.set(t.title, { number: 'new', title: t.title });
+      existing.set(t.id, { number: 'new', title: t.title });
       continue;
     }
     const url = gh(
@@ -109,7 +133,7 @@ for (const file of files) {
     ).trim();
     const number = Number(url.split('/').pop());
     const node = JSON.parse(gh(['api', `repos/${repo}/issues/${number}`]));
-    existing.set(t.title, { number, title: t.title, id: node.id });
+    existing.set(t.id, { number, title: t.title, id: node.id });
     if (parent) {
       gh(['api', '-X', 'POST', `repos/${repo}/issues/${parent.number}/sub_issues`, '-F', `sub_issue_id=${node.id}`]);
     } else if (t.parentId) {
@@ -118,10 +142,10 @@ for (const file of files) {
   }
 }
 // Blocked-by links, once every issue of the run exists: a blocker may come later in the files.
-const byId = (id) => [...existing.values()].find((i) => i.title.split(/\s+/)[0] === id);
+const byId = (id) => existing.get(id);
 let linked = 0;
 for (const t of toLink) {
-  const number = existing.get(t.title).number;
+  const number = existing.get(t.id).number;
   let have = [];
   if (t.depends.length && number !== 'new') {
     try {
