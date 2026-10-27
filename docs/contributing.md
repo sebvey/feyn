@@ -73,6 +73,17 @@ its own), then Ready (what can be taken). An unblock is a comment on the issue t
 removed: the comment is the trace a fresh agent reads. Why: decisions
 `blocked-is-a-label-not-a-state`, `project-status-not-state-labels`.
 
+## Tool behaviours
+
+The flow relies on how GitHub and Claude Code behave, and these are found in sessions, then
+lost. A behaviour the flow relies on is written at its point of use (the skill step or document
+that depends on it), in one line ending with a mark `(<tool>, <status> <date>, #<n>)`: `<tool>`
+is `GitHub` or `Claude Code`; `<status>` is `tested` (provoked on purpose), `observed` (seen
+happen), `inferred` (deduced from other facts) or `documented` (stated by the tool's
+documentation); `<date>` is `YYYY-MM-DD`; `#<n>` is the issue or PR that holds the proof. The line goes with its step. A
+line the tool disproves is corrected or removed. `grep -rn '(GitHub,\|(Claude Code,' .claude docs construction`
+lists them all. There is no separate reference file: it would be read at the wrong moment.
+
 ## Decisions and vocabulary
 
 A choice that spans several files or is costly to undo becomes a decision file, counterfactual
