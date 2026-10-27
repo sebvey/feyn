@@ -58,9 +58,9 @@ branch without an issue number: stop and say so.
    - a `Refs #<n>` PR first unlinks the branch
      ([below](#a-refs-pr-and-the-development-link)); a `Closes #<n>` PR skips that;
    - `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`; with a
-     decision awaited, add `--draft --label blocked:maintainer` and put the same label on
-     the issue (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`), so the PR
-     cannot be merged by mistake;
+     decision awaited, add `--draft` (no label on the PR: the draft already keeps it from
+     being merged) and put `blocked:maintainer` on the issue
+     (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`);
    - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
      lists the PR when it says `Closes #<n>` (a `Refs` PR: it lists nothing). The branch is
      not checked: GitHub drops the issue's linked branch once a PR from it opens
@@ -72,9 +72,9 @@ branch without an issue number: stop and say so.
    `mise exec -- gh pr merge <pr> --squash --delete-branch --subject "<title> (#<pr>)"`
    (GitHub, observed 2026-10-27, #115). Stop there.
    A draft PR: name the question instead of the merge command. The maintainer answers with a
-   comment and removes `blocked:maintainer` (on the issue and the PR). Then apply the answer,
+   comment and removes `blocked:maintainer` from the issue: one removal. Then apply the answer,
    remove the section from the body, `mise exec -- gh pr ready <pr>`, and ask for review
-   again. Never remove the labels yourself; if the label is still on, the answer is not
+   again. Never remove the label yourself; if it is still on the issue, the answer is not
    given: stop.
 
 ### A Refs PR and the Development link
@@ -131,5 +131,5 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      (`mise exec -- gh issue reopen <n> --comment "Reopened: PR #<pr> only referenced it (Refs), the Development link closed it at the merge."`),
      set its Status back to In progress, and tell the maintainer which step of "Deliver"
      missed it.
-   - Either way, if the issue or the PR still carries `blocked:maintainer`, tell the
+   - Either way, if the issue still carries `blocked:maintainer`, tell the
      maintainer.
