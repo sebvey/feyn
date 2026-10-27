@@ -54,6 +54,7 @@ with `/finish` in the new repository.
   `public-repo-for-now`, `reserved-vocabulary`. Each under 40 lines.
 - **Done when**: the eight files exist; every decision opens with "Without this, …"; no banned
   word of the glossary appears in `docs/` or `README.md` (grep).
+- [x] Done on 2026-10-27 (night 1).
 
 ### S0-04 Issue template, labels, milestones and the plan-to-issues script
 `area=agentic type=improvement model=sonnet depends=S0-02 parallel=yes`
