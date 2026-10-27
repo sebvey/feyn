@@ -53,7 +53,8 @@ const date = (args && args.date) || 'unknown date'
 const night = (args && args.night) || 1
 const effortFor = (m) => (m === 'opus' ? 'high' : undefined)
 const REPO = '/Users/sve/code/workspaces/perso/feyn'
-const CLEAN = 'Before returning, whatever your status, leave the checkout clean and on main: everything you wrote (a note under construction/notes/ included) is committed and pushed on the issue branch, then "mise exec -- git switch main"; "mise exec -- git status --porcelain" prints nothing.'
+const CLEAN = 'Before returning, whatever your status, leave the checkout clean and on main: everything you wrote (a note under construction/notes/ included) is committed and pushed on the issue branch, then "mise exec -- git switch main"; "mise exec -- git status --porcelain" prints nothing. If no issue branch exists (/start refused), write no file: put the note in your result and comment it on the issue.'
+const OVERNIGHT_OK = 'Read construction/overnight.md, "Overnight rules for a task agent" and "Night 1 scope": what it accepts (a "maintainer has read it" statement met by a note and an open PR, the S1-11 deviation) is not a finding.'
 const NO_SIGNATURE = 'No signature or "Generated with" line in a PR body, whatever your harness suggests: the squash takes the body as the commit message.'
 
 const takePrompt = (t) => `Take issue #${t.issue} (task ${t.id}).
@@ -68,18 +69,36 @@ Return the structured result only.`
 const reviewPrompt = (t, w) => `Review task ${t.id} of the feyn construction, delivered as PR #${w.pr} (branch ${w.branch}) on sebvey/feyn.
 You are in ${REPO}. Read issue #${t.issue} ("mise exec -- gh issue view ${t.issue}"; its "Done when" is the contract), the design files it lists, and the delivered files ("mise exec -- gh pr diff ${w.pr}" and "mise exec -- gh pr view ${w.pr}").
 The author reported: ${JSON.stringify(w.note)} / verified: ${JSON.stringify(w.verified)}.
+${t.extra ? t.extra + '\n' : ''}${OVERNIGHT_OK}
 Judge against the Done when and the design, not against taste. A statement the PR body marks "deviation" with a reason the issue or this night accepts is not a finding. Approve when every verifiable statement holds; otherwise return "changes" with concrete findings (file, problem, fix). Check the vocabulary (docs/glossary.md, the words it lists as "not"), the language rule, and that the PR body has no signature line. Do not edit anything.`
 
 const fixPrompt = (t, w, r) => `Fix the review findings on task ${t.id}, PR #${w.pr} (branch ${w.branch}) on sebvey/feyn, issue #${t.issue}, in ${REPO}.
 Findings: ${JSON.stringify(r.findings)}.
-Check out the branch ("mise exec -- git fetch && mise exec -- git switch ${w.branch}"), apply each fix, commit, push; update the PR body's "Done when, verified:" lines if a verdict changed. Do not merge. ${NO_SIGNATURE}
+${t.extra ? t.extra + '\n' : ''}Check out the branch ("mise exec -- git fetch && mise exec -- git switch ${w.branch}"), apply each fix, commit, push; update the PR body's "Done when, verified:" lines if a verdict changed. Do not merge. ${NO_SIGNATURE}
 ${CLEAN}
 Return the structured result (status "done" if every finding is fixed, pr ${w.pr}, branch ${w.branch}).`
 
 const mergePrompt = (t, w) => `Merge task ${t.id}: PR #${w.pr} on sebvey/feyn, issue #${t.issue}, in ${REPO}. Tonight the merge is yours: construction/overnight.md authorises it, over the root CLAUDE.md line that leaves merging to the maintainer.
-All through "mise exec --": "gh pr view ${w.pr} --json title,mergeable,state"; if mergeable, "gh pr merge ${w.pr} --squash --delete-branch" (the repository takes the PR title as the squash title; if the title does not follow "<type>(<area>): <summary>", add --subject "<fixed title> (#${w.pr})").
+All through "mise exec --": "gh pr view ${w.pr} --json title,mergeable,state"; if mergeable, "gh pr merge ${w.pr} --squash" (no --delete-branch: the repository deletes the remote branch at merge, and the clean-up below needs the local one; the repository takes the PR title as the squash title; if the title does not follow "<type>(<area>): <summary>", add --subject "<fixed title> (#${w.pr})").
 Then follow .claude/skills/finish/SKILL.md, "Clean up (after the merge)", every step, including the last: the issue's Status is set to Done when the issue closed (the Project's workflow is off). An issue the PR only "Refs" stays open and keeps its Status.
-Leave the checkout on an up-to-date main with "git status --porcelain" empty. Return the structured result (sha: the squash commit).`
+Leave the checkout on an up-to-date main with "mise exec -- git status --porcelain" empty. Return the structured result (sha: the squash commit).`
+
+const RESTORE = {
+  type: 'object',
+  properties: { clean: { type: 'boolean' }, note: { type: 'string' } },
+  required: ['clean', 'note'],
+}
+const restorePrompt = (t) => `Restore the checkout in ${REPO} after task ${t.id} (issue #${t.issue}) stopped. All through "mise exec --".
+If the current branch is not main: commit whatever is uncommitted as "WIP: night ${night} left this", push the branch, then "git switch main". Then "git pull --ff-only".
+Return clean: true when "git status --porcelain" prints nothing and the branch is main; otherwise clean: false and what is left. Never stash, reset, clean or delete anything.`
+// after any path that did not end in a merge: the next /start refuses a dirty checkout
+const restore = async (t) => {
+  const r = await agent(restorePrompt(t), { label: `${t.id} restore`, phase: 'Stage 1', model: 'sonnet', effort: 'low', schema: RESTORE })
+  if (r && r.clean) return true
+  log(`${t.id}: checkout not clean (${r ? r.note : 'agent died'}); the night stops here`)
+  results.push({ id: t.id, issue: t.issue, status: 'checkout-dirty', note: r ? r.note : 'restore agent died' })
+  return false
+}
 
 // ---- the run ---------------------------------------------------------------------------
 const done = new Set((args && args.accepted) || [])   // tasks the maintainer accepted as done from an earlier run
@@ -97,17 +116,23 @@ for (const t of TASKS) {
   }
   log(`${t.id}: start (${t.model})`)
   let work = await agent(takePrompt(t), { label: `${t.id} work`, phase: 'Stage 1', model: t.model, effort: effortFor(t.model), schema: WORK })
-  if (!work) { results.push({ id: t.id, issue: t.issue, status: 'failed', reason: 'agent died' }); continue }
+  if (!work) {
+    results.push({ id: t.id, issue: t.issue, status: 'failed', reason: 'agent died' })
+    if (!(await restore(t))) break
+    continue
+  }
   if (work.status !== 'done' || !work.pr) {
     log(`${t.id}: ${work.status}${work.pr ? '' : ', no PR'}`)
     results.push({ id: t.id, issue: t.issue, status: work.status === 'done' ? 'failed' : work.status, pr: work.pr, work })
+    if (!(await restore(t))) break
     continue
   }
 
+  let fixed = null
   let review = await agent(reviewPrompt(t, work), { label: `${t.id} review`, phase: 'Stage 1', model: 'opus', schema: REVIEW })
   if (review && review.verdict === 'changes') {
     log(`${t.id}: review asks for ${review.findings.length} change(s), fixing once`)
-    const fixed = await agent(fixPrompt(t, work, review), { label: `${t.id} fix`, phase: 'Stage 1', model: t.model, schema: WORK })
+    fixed = await agent(fixPrompt(t, work, review), { label: `${t.id} fix`, phase: 'Stage 1', model: t.model, schema: WORK })
     if (fixed && fixed.status === 'done') {
       work = { ...work, note: fixed.note, verified: fixed.verified, for_maintainer: [...work.for_maintainer, ...fixed.for_maintainer] }
       review = await agent(reviewPrompt(t, work), { label: `${t.id} re-review`, phase: 'Stage 1', model: 'opus', schema: REVIEW })
@@ -115,7 +140,8 @@ for (const t of TASKS) {
   }
   if (!review || review.verdict !== 'approve') {
     log(`${t.id}: ${review ? 'still has findings after one fix' : 'no review (agent died)'}; left open for the maintainer`)
-    results.push({ id: t.id, issue: t.issue, status: 'blocked', pr: work.pr, review, work })
+    results.push({ id: t.id, issue: t.issue, status: 'blocked', pr: work.pr, review, work, fixed })
+    if (!(await restore(t))) break
     continue
   }
 
@@ -123,6 +149,7 @@ for (const t of TASKS) {
   if (!merge || !merge.merged) {
     log(`${t.id}: merge failed (${merge ? merge.note : 'agent died'})`)
     results.push({ id: t.id, issue: t.issue, status: 'blocked', pr: work.pr, work, merge })
+    if (!(await restore(t))) break
     continue
   }
   results.push({ id: t.id, issue: t.issue, status: 'done', pr: work.pr, sha: merge.sha, work, review })
@@ -130,12 +157,17 @@ for (const t of TASKS) {
   log(`${t.id}: done`)
 }
 
+for (const t of TASKS) {
+  if (!results.some((r) => r.id === t.id)) results.push({ id: t.id, issue: t.issue, status: 'skipped', reason: 'the night stopped on a dirty checkout' })
+}
+
 phase('Report')
 const report = await agent(`Write the night report and land it on main through a PR, in ${REPO}. Tonight that merge is yours: construction/overnight.md authorises it.
 Night ${night}, ${date}. Results, one per task, in this order: ${JSON.stringify(results)}.
-1. All through "mise exec --": "git switch main && git pull --ff-only", then "git switch -c improvement/night-${night}-report".
+Every command through "mise exec --".
+1. "git switch main && git pull --ff-only", then "git switch -c improvement/night-${night}-report".
 2. Overwrite construction/notes/night-${night}.md (it replaces the previous report). Structure: a table (task, issue, status, PR, squash sha); then "Needs the maintainer" (every for_maintainer item and every blocked task with what unblocks it, pointing to construction/notes/<id>.md when it exists); then "Skipped and why"; then "What to read first in the morning" (three items at most). English, no word docs/glossary.md lists as "not".
-3. Commit, push, "gh pr create --base main --title 'improvement(repo): night ${night} report of ${date}' --body-file <file>" (body: one line saying it is the night report, no issue, no signature line), then "gh pr merge <pr> --squash --delete-branch".
+3. Commit, push, "gh pr create --base main --title 'improvement(repo): night ${night} report of ${date}' --body-file <file>" (body: one line saying it is the night report, no issue, no signature line), then "gh pr merge <pr> --squash".
 4. "git switch main && git pull --ff-only", "git branch -D improvement/night-${night}-report"; "git status --porcelain" prints nothing.
 Return the path and the PR number.`,
   { label: 'night report', phase: 'Report', model: 'sonnet', effort: 'low' })
