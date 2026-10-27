@@ -1,0 +1,178 @@
+#!/usr/bin/env node
+'use strict';
+// Smoke run of the templates (task S1-06): builds a course from them with every placeholder
+// filled with a dummy value, then runs check-course on it. Two runs: with a diagram, and
+// without (the `diagrams` key and the image line deleted, as the concept template says).
+//   mise exec -- specs/linear-course/templates/smoke-test [--keep]
+// The learner/ templates have no check: they are only scanned for unreplaced placeholders.
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+const here = __dirname;
+const spec = path.resolve(here, '..');
+const lang = fs.existsSync(path.join(spec, 'lang', 'fr.yaml')) ? path.join(spec, 'lang') : path.join(spec, 'checks', 'fixtures', 'lang');
+
+// placeholder -> dummy value (the French words are course text)
+const DUMMY = {
+  'course-id': 'smoke',
+  'course title': 'Un cours de test',
+  'one line under the title': 'Pour la fumée',
+  'one sentence for the site home and previews': 'Une personne qui découvre un sujet.',
+  'domain-slug': 'bases',
+  'domain title': 'Les bases',
+  'what the learner can do at the end of the domain, one sentence': 'Nommer les rôles.',
+  'domain minutes': '20',
+  'n': '0',
+  'NN': '00',
+  'concept-slug': 'roles',
+  'concept title': 'Les rôles',
+  'concept objective': "nommer les rôles de l'équipe",
+  'concept minutes': '10',
+  'title of a': 'Les deux rôles',
+  'title of a1': 'Le premier rôle',
+  'title of a2': 'Le second rôle',
+  'the full audience prose: who the learner is, what they know, what they do with the course': 'Une personne qui découvre un sujet.',
+  'stance of the course': 'une équipe en sprints',
+  'a stance the teacher must hold throughout, and why': 'Une équipe travaille en sprints.',
+  "the course's own writing rules, for whoever writes or changes a concept": 'Une idée par phrase.',
+  'one sentence for the site': 'Un concept de test.',
+  'what is accepted': 'Une affirmation acceptée.',
+  'the text or author it belongs to': 'Le Scrum Guide 2020',
+  "a school of thought's choice": 'Un choix discuté.',
+  'author or current': 'Un auteur',
+  "the course's own choice": 'Un choix du cours.',
+  'a neighbouring notion not to confuse with this concept': 'Une notion voisine.',
+  'diagram-stem': 'schema',
+  'one line: SVG title and image alt': 'Un schéma de test',
+  'what the diagram shows, as the teacher says it': 'Un rectangle étiqueté.',
+  'concept objective, capitalised, with a final period': "Nommer les rôles de l'équipe.",
+  'the definition and why it matters, a few lines': 'Un rôle dit ce que fait une personne.',
+  'text or author': 'Scrum Guide 2020',
+  'what is accepted': 'Une affirmation acceptée.',
+  'what practitioners discuss': 'Un point discuté.',
+  "the course's own position": 'Une position du cours.',
+  'promise of a: what the learner will be able to say after it, in one sentence': 'Deux rôles suffisent pour commencer.',
+  'reader text of a1: the explanation as a site reader reads it': 'Le premier rôle décide de l\'ordre du travail.',
+  'a storyline fact that illustrates a1': 'Régis veut une carte.',
+  'reader text of a2': 'Le second rôle fait le travail.',
+  'a pitfall': 'Un piège',
+  'another pitfall': 'Un autre piège',
+  'why it happens and how to spot it': 'Une explication.',
+  'one question that checks in ten seconds that the concept is applied': 'Qui décide de l\'ordre ?',
+  'the note: what a right answer looks like': 'Une réponse juste nomme le premier rôle.',
+  'case title for a1': 'Le cas du premier rôle',
+  'case title for a2': 'Le cas du second rôle',
+  "the order of teaching and the split into messages, the cross-references not to re-teach, the\nconcept's own vigilance points": 'Un message par sous-concept.',
+  'the storyline facts the cases use, and what the storyline leaves unfixed': 'Régis veut une carte des stations.',
+  'when to pose the case, for a case outside the normal order': 'Après le premier cas.',
+  'what the teacher says before the case': 'Voici un cas.',
+  'what the teacher gives only if the learner asks': 'Un détail.',
+  'actors and storyline facts': 'Régis regarde une carte.',
+  'the question': 'Qui décide ?',
+  'the right answer, with its nuances': 'Le premier rôle.',
+  'frequent answers and how to correct them, follow-ups inline': 'Une confusion : redemander.',
+  'frequent answers and how to correct them': 'Une confusion : redemander.',
+  'a wording or follow-up that worked': 'Demander ce qu\'il voit.',
+  'the drawing instruction behind the concept\'s diagrams: metaphor, what it shows': 'Un rectangle étiqueté.',
+  'a paragraph that sums up the sources of the concept (optional)': 'Les sources du concept.',
+  'the claim in a few words': 'Une affirmation acceptée',
+  'section': 'Consensus et choix d\'école',
+  'what the source says, a short quotation when useful': '« le texte »',
+  'another claim': 'Un choix discuté',
+  'what the source says': 'le texte',
+  'author, title, date': 'Un auteur, Un titre, 2020',
+  'URL': 'https://example.org/',
+  'YYYY-MM-DD': '2026-10-27',
+  'a claim that no consulted source confirms, and why; or "Rien."': 'Rien.',
+  'what the concept brings and why it comes at this place': 'Les rôles disent qui fait quoi.',
+  'what the sub-concept brings (only in a domain of one concept: delete this paragraph otherwise)': 'Deux rôles suffisent.',
+  'the difficulty met without the domain\'s concepts: what is done wrong, what it costs': 'Sans rôles, personne ne décide.',
+  'what the previous domain gives this one, and what this one gives the next': 'Le cours commence ici.',
+  'a storyline situation where each concept of the domain serves, in order, without giving the answer': 'Régis veut une carte : qui décide ?',
+  'an introduction (optional)': 'Un terme par notion.',
+  'course term': 'Rôle',
+  'english term': 'role',
+  'definition': 'Ce que fait une personne dans l\'équipe',
+  'term to avoid': 'Truc',
+  'what to say instead': 'Le terme exact',
+  'why': 'Trop vague',
+  'title of the storyline': 'Fil rouge',
+  'who the actors are, what they do, the setting: the facts the cases will draw on': 'Régis, régulateur, veut une carte.',
+  'a part of the storyline': 'La carte',
+  'facts of this part; say what the storyline leaves unfixed': 'La carte montre les stations.',
+  'where': 'tout le cours',
+  'what': 'premier jet',
+  'title of the diagram': 'Un schéma de test',
+  'what the drawing shows, for screen readers': 'Un rectangle étiqueté.',
+  'element': 'cadre',
+  'label': 'Rôle',
+  'nickname': 'Alex',
+  'current role, and whether the learner owns a product': 'analyste',
+  "what the learner knows of the course's subject, in their own words": 'peu de chose',
+  'the first step: the concept to open with, its first message': 'Concept 0, premier message.',
+};
+// the instructions' placeholders that appear twice with different dummies per file are keyed above once
+const files = {
+  yaml: ['course.yaml'],
+  md: ['plan.md', 'glossary.md', 'storyline.md', 'CHANGELOG.md'],
+  learner: ['learner/apprenant.md', 'learner/observations.md', 'learner/parcours.md'],
+};
+
+function stripHeader(name, text) {
+  if (name.endsWith('.yaml')) return text.replace(/^(#.*\n)+/, '');
+  return text.replace(/^<!--[\s\S]*?-->\n/, '');
+}
+function fill(name, text) {
+  text = stripHeader(name, text);
+  if (name.endsWith('.svg')) text = text.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  const keys = Object.keys(DUMMY).sort((a, b) => b.length - a.length);
+  for (const k of keys) text = text.split('<' + k + '>').join(DUMMY[k]);
+  return text;
+}
+function leftovers(name, text) {
+  const body = name.endsWith('.yaml') ? text.replace(/^\s*#.*$/gm, '') : text;
+  return (body.match(/<[^>\n]*[A-Za-z][^>\n]*>/g) || []).filter((m) => !/^<\/?(rect|text|g|title|desc|svg)\b/.test(m));
+}
+
+let bad = 0;
+const keep = process.argv.includes('--keep');
+const list = process.argv.includes('--list');
+function build(withDiagram) {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'templates-smoke-'));
+  const course = path.join(tmp, 'smoke');
+  const put = (rel, text, srcName) => {
+    const left = leftovers(srcName, text);
+    if (left.length) { console.log(`FAIL ${srcName}: unreplaced placeholder ${left.slice(0, 3).join(' ')}`); bad++; }
+    fs.mkdirSync(path.dirname(path.join(course, rel)), { recursive: true });
+    fs.writeFileSync(path.join(course, rel), text);
+  };
+  const read = (n) => fs.readFileSync(path.join(here, n), 'utf8');
+  const out = (n) => fill(n, read(n));
+  for (const n of [...files.yaml, ...files.md]) put(n, out(n), n);
+  put('domains/1-bases.md', out('domain.md'), 'domain.md');
+  const dir = 'concepts/00-roles/';
+  for (const n of ['teaching.md', 'sources.md']) put(dir + n, out(n), n);
+  let concept = out('concept.md');
+  if (withDiagram) put(dir + 'schema.svg', out('diagram.svg'), 'diagram.svg');
+  else concept = concept.replace(/^diagrams:\n(  .*\n)+/m, '').replace(/^!\[.*\]\(.*\)\n\n/m, '');
+  put(dir + 'concept.md', concept, 'concept.md');
+  for (const n of files.learner) { const left = leftovers(n, out(n)); if (left.length) { console.log(`FAIL ${n}: unreplaced placeholder ${left[0]}`); bad++; } }
+  return { tmp, course };
+}
+for (const withDiagram of [true, false]) {
+  const { tmp, course } = build(withDiagram);
+  const r = spawnSync(process.execPath, [path.join(spec, 'checks', 'check-course'), course, '--lang-dir', lang], { encoding: 'utf8' });
+  const notOk = r.stdout.split('\n').filter((l) => l && !l.endsWith(': ok'));
+  const ok = r.status === 0 && !notOk.length;
+  console.log(`${ok ? 'ok  ' : 'FAIL'} templates ${withDiagram ? 'with' : 'without'} a diagram pass every check${ok ? '' : ': ' + (notOk.join(' | ') || r.stderr)}`);
+  if (!ok) bad++;
+  if (keep) console.log('kept: ' + tmp); else fs.rmSync(tmp, { recursive: true, force: true });
+}
+if (list) {
+  const seen = new Set();
+  for (const n of fs.readdirSync(here, { recursive: true })) if (/\.(md|yaml|svg)$/.test(n)) for (const m of fs.readFileSync(path.join(here, n), 'utf8').matchAll(/(?:<|&lt;)([^<>\n&]+?)(?:>|&gt;)/g)) seen.add(m[1]);
+  console.log([...seen].filter((k) => !(k in DUMMY)).join('\n'));
+}
+process.exit(bad ? 1 : 0);

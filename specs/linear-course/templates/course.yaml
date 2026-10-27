@@ -1,0 +1,46 @@
+# Template of courses/<id>/course.yaml (SPEC.md section 3). Copy it to the course folder.
+#
+# How to use: replace every <placeholder>; delete these header lines; keep the comments that
+# help, they are YAML and harmless. Repeat the domain block per domain and the concept block
+# per concept, in course order. Concept `<n>` is 0, 1, 2... for a concept, A1, A2... for an
+# annex (an annex is also listed in `annexes`); `<NN>` is the number on two digits (09), an
+# annex keeps its number (A1). `language` must name an existing language pack.
+# A leaf sub-concept (no `children`) is one teacher message; `messages: 2` makes it two.
+# Identifiers (numbers, sub-concept ids, titles of cases, dir and file names) are cited by
+# learner memory and site addresses: changing one is a course MAJOR (SPEC.md section 8).
+id: <course-id>
+spec: linear-course@1
+language: fr
+title: "<course title>"
+subtitle: "<one line under the title>"
+audience: "<one sentence for the site home and previews>"
+# site:
+#   icon: <path of an SVG, relative to the course folder>
+#   color: "<#rrggbb>"
+storyline: storyline.md
+glossary: glossary.md
+# annexes: [A1]
+domains:
+  - number: 1
+    slug: <domain-slug>
+    title: "<domain title>"
+    objective: "<what the learner can do at the end of the domain, one sentence>"
+    duration_min: <domain minutes>
+    file: domains/1-<domain-slug>.md
+    concepts: [<n>]
+concepts:
+  - number: <n>
+    slug: <concept-slug>
+    title: "<concept title>"
+    objective: "<concept objective>"
+    prerequisites: []
+    duration_min: <concept minutes>
+    dir: concepts/<NN>-<concept-slug>
+    subconcepts:
+      - id: <n>a
+        title: "<title of a>"
+        children:
+          - id: <n>a1
+            title: "<title of a1>"
+          - id: <n>a2
+            title: "<title of a2>"
