@@ -1,3 +1,5 @@
+Issues created on 2026-10-27; this file is no longer updated.
+
 # Stage 3: the site
 
 Milestone `stage-3`. Design: `design/06-site.md`, `design/03-spec-linear-course.md` ("Reader

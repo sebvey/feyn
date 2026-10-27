@@ -1,3 +1,5 @@
+Issues created on 2026-10-27; this file is no longer updated.
+
 # Stage 4: the rest of the agentic layer
 
 Milestone `stage-4`. Design: `design/08-agentic.md`, `design/02-monorepo.md` ("How much lives
