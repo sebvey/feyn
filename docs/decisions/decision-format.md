@@ -2,7 +2,7 @@
 date: 2026-10-27
 issue: null
 status: accepted
-scope: repo
+area: repo
 ---
 
 Without this, an agent would number decisions in sequence, so two agents on two independent
@@ -12,7 +12,7 @@ without it.
 A decision is one Markdown file named by its slug (`two-versioned-objects.md`); the slug is its
 identifier, cited as "decision two-versioned-objects". Its frontmatter holds `date`, `issue`
 (the originating issue number, or `null`), `status` (`accepted` or `superseded-by: <slug>`) and
-`scope` (the area it binds). After the frontmatter, the first line is the **counterfactual**,
+`area` (the area it binds). After the frontmatter, the first line is the **counterfactual**,
 "Without this, an agent would…"; then the decision in one paragraph. Optional headings,
 only when they add: options ruled out, consequences. No index: `ls` and the frontmatter
 suffice.

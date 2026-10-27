@@ -2,7 +2,7 @@
 date: 2026-10-27
 issue: null
 status: accepted
-scope: repo
+area: repo
 ---
 
 Without this, an agent would name a thing with the first generic word at hand, the word would

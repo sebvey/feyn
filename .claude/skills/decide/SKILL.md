@@ -57,7 +57,7 @@ distinct (say why in one line). Same slug already taken: the same decision exist
 
 From [decision.md](decision.md), at `<folder>/<slug>.md`:
 - `date`: today; `issue`: the issue number the decision comes from, or `null`;
-  `status: accepted`; `scope`: the area it binds (`repo`, `site`, `teacher`, `spec:<name>`,
+  `status: accepted`; `area`: the area it binds (`repo`, `site`, `teacher`, `spec:<name>`,
   `course:<id>`);
 - first line of the body: the counterfactual, as accepted;
 - then the decision in one paragraph: what is decided, where it applies, what it replaces;

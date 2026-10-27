@@ -2,7 +2,7 @@
 date: YYYY-MM-DD
 issue: null
 status: accepted
-scope: repo
+area: repo
 ---
 
 Without this, an agent would <a concrete wrong act>, so <what it breaks>.

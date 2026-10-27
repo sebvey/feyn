@@ -2,7 +2,7 @@
 date: 2026-10-27
 issue: null
 status: accepted
-scope: repo
+area: repo
 ---
 
 Without this, an agent would give the site, the teacher or the scripts a version of their own,
