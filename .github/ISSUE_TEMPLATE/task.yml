@@ -1,5 +1,5 @@
-name: Task
-description: A unit of work on feyn, in the shape of the plan tasks (Observation, To do, Done when).
+name: Issue
+description: "An issue on feyn: Observation, To do, Done when."
 title: "Imperative summary of the work"
 labels: ["state:proposed"]
 body:
