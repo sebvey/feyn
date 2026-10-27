@@ -45,6 +45,7 @@ const WORK = {
     verified: { type: 'string', description: 'what of the Done when was verified, and how' },
     for_maintainer: { type: 'array', items: { type: 'string' }, description: 'what only the maintainer can do, if anything' },
     note: { type: 'string', description: 'one paragraph: what was done, what was not, why' },
+    worktree_path: { type: ['string', 'null'], description: 'a fix agent in a worktree: the absolute path of the worktree it worked in (pwd); null otherwise' },
     already_closed: { type: 'boolean', description: 'true when /start refused because the issue was already closed: nothing to do' },
   },
   required: ['status', 'pr', 'branch', 'verified', 'for_maintainer', 'note'],
@@ -141,7 +142,7 @@ Findings: ${JSON.stringify(r.findings)}.
 ${t.extra ? t.extra + '\n' : ''}${t.worktree
     ? `You run in a fresh worktree, not in ${REPO}: never touch ${REPO}'s own checkout. "mise exec -- git fetch origin ${w.branch}", then "mise exec -- git switch --track origin/${w.branch}". If git refuses because the branch is checked out in the author's worktree, "mise exec -- git switch --detach origin/${w.branch}" instead, commit there, and push with "mise exec -- git push origin HEAD:${w.branch}" (never force).`
     : `You are in ${REPO}: check out the branch ("mise exec -- git fetch origin && mise exec -- git switch ${w.branch}").`}
-Apply each fix, commit, push; update the PR body's "Done when, verified:" lines if a verdict changed. Do not merge. ${NO_SIGNATURE}
+${t.worktree ? 'Return the absolute path of your worktree ("pwd") as worktree_path. ' : ''}Apply each fix, commit, push; update the PR body's "Done when, verified:" lines if a verdict changed. Do not merge. ${NO_SIGNATURE}
 ${t.worktree ? 'Leave the worktree clean, everything pushed.' : CLEAN}
 Return the structured result (status "done" if every finding is fixed, pr ${w.pr}, branch ${w.branch}).`
 
@@ -186,7 +187,7 @@ async function deliver(t, phaseName) {
     log(`${t.id}: review asks for ${review.findings.length} change(s), fixing once`)
     const fixed = await agent(fixPrompt(t, work, review), { label: `${t.id} fix`, phase: phaseName, model: t.model, schema: WORK, isolation: t.worktree ? 'worktree' : undefined })
     if (fixed && fixed.status === 'done') {
-      work = { ...work, note: fixed.note, verified: fixed.verified, for_maintainer: [...work.for_maintainer, ...fixed.for_maintainer] }
+      work = { ...work, note: fixed.note, verified: fixed.verified, for_maintainer: [...work.for_maintainer, ...fixed.for_maintainer], fix_worktree: fixed.worktree_path || undefined }
       review = await agent(reviewPrompt(t, work), { label: `${t.id} re-review`, phase: phaseName, model: 'opus', schema: REVIEW })
     }
   }
@@ -282,13 +283,21 @@ if (stopped) {
     // (the umbrella is not), so /start refuses A2 until that issue is merged; A2 goes last to give it time
     const first = CONCEPTS.filter((c) => !c.startsWith('A2') && !done.has(subId(c)))
     const delivered = await pipeline(first, (c) => deliver(task(c), 'Migration'))
-    for (const r of delivered.filter(Boolean)) {
-      if (!(await mergeAndRecord(r, 'Migration'))) break   // merges are serial: one checkout
+    const toMerge = delivered.filter(Boolean)
+    for (let i = 0; i < toMerge.length; i++) {
+      if (await mergeAndRecord(toMerge[i], 'Migration')) continue   // merges are serial: one checkout
+      // the checkout could not be restored: the PRs not merged yet are listed, not lost
+      for (const r of toMerge.slice(i + 1)) {
+        results.push({ id: r.id, issue: r.issue, status: 'skipped', pr: r.pr || null, reason: r.status === 'reviewed' ? 'reviewed but not merged: the night stopped on a dirty checkout' : `${r.status}; the night stopped on a dirty checkout` })
+      }
+      break
     }
     const a2 = CONCEPTS.find((c) => c.startsWith('A2'))
     if (!stopped && !done.has(subId(a2))) await mergeAndRecord(await deliver(task(a2), 'Migration'), 'Migration')
-    const nightBranches = results.filter((r) => r.id.startsWith('S1-10.') && r.work && r.work.branch).map((r) => r.work.branch)
-    const cleanup = await agent(`In ${REPO}, every command through "mise exec --": "git worktree prune"; list the worktrees with "git worktree list". Only these branches, made tonight, are concerned: ${JSON.stringify(nightBranches)}. For each one that has a merged PR ("gh pr list --state merged --head <branch>") and a worktree: if "git -C <path> status --porcelain" prints nothing, "git worktree remove <path>" (never --force) then "git branch -D <branch>"; if it prints anything, leave the worktree and say so. Touch no other worktree. Then "git switch main && git pull --ff-only". Return what you removed and what you left.`,
+    const nightRuns = results.filter((r) => r.id.startsWith('S1-10.') && r.work && r.work.branch)
+    const nightBranches = nightRuns.map((r) => r.work.branch)
+    const fixPaths = nightRuns.map((r) => r.work.fix_worktree).filter(Boolean)   // worktrees of fix agents (possibly detached HEAD)
+    const cleanup = stopped ? 'skipped: dirty checkout' : await agent(`In ${REPO}, every command through "mise exec --": "git worktree prune"; list the worktrees with "git worktree list". Only these branches, made tonight, are concerned: ${JSON.stringify(nightBranches)}; and these worktrees of fix agents, which may sit on a detached HEAD: ${JSON.stringify(fixPaths)}. For each branch that has a merged PR ("gh pr list --state merged --head <branch>") and a worktree, and for each listed fix worktree whose branch has a merged PR: if "git -C <path> status --porcelain" prints nothing, "git worktree remove <path>" (never --force), and "git branch -D <branch>" once none of its worktrees is left; if it prints anything, leave the worktree and say so. Touch no other worktree. Then "git switch main && git pull --ff-only". Return what you removed and what you left.`,
       { label: 'worktree cleanup', phase: 'Migration', model: 'sonnet', effort: 'low' })
     log(`cleanup: ${String(cleanup).slice(0, 200)}`)
     const merged = CONCEPTS.filter((c) => done.has(subId(c)))
@@ -298,7 +307,7 @@ Done tonight or before: ${merged.length} of ${CONCEPTS.length} (${JSON.stringify
 Run "specs/linear-course/checks/check-course courses/parcours-po" on main (read the script's usage), read the 20 reports construction/notes/S1-10-<nn>-report.md, and list the "lost" and "invented" entries with their reason. Comment the verdict on #${UMBRELLA.issue}.
 If 20 are done, the check passes and every entry is explained: deliver the closing through a PR, as .claude/skills/start/SKILL.md and .claude/skills/finish/SKILL.md ("Deliver") say for #${UMBRELLA.issue} (branch from main, Status In progress): add one line to the « Non publié » section of courses/parcours-po/CHANGELOG.md, in the file's format (« - CATÉGORIE, concept ou fichier : ce qui change », French, no em-dash, no arrow), saying that the 20 concepts are migrated to the new layout; PR body starting "Closes #${UMBRELLA.issue}", no signature line; then merge it (squash) and follow "Clean up (after the merge)"; the Status is Done. Tonight that merge is yours (construction/overnight.md). Otherwise change nothing, leave the issue open and say what is missing. Return closed (true only once merged and the issue closed) and one paragraph.`,
       { label: 'S1-10 close', phase: 'Migration', model: 'sonnet', schema: CLOSE })
-    results.push({ id: UMBRELLA.id, issue: UMBRELLA.issue, status: close && close.closed ? 'done' : 'blocked', note: close ? close.note : 'close agent died' })
+    results.push({ id: UMBRELLA.id, issue: UMBRELLA.issue, status: close && close.closed ? 'done' : 'blocked', note: close ? close.note : (stopped ? 'the night stopped on a dirty checkout before the close step' : 'close agent died') })
     if (close && close.closed) done.add(UMBRELLA.id)
     else log('S1-10: not complete; taught-check and the review are skipped')
   }
@@ -318,7 +327,9 @@ const runTaughtCheck = async (label, phaseName) => {
 // ---- Taught-check: S1-11 closes on the run on the migrated course ----------------------
 phase('Taught-check')
 let taught = null
-if (stopped || !done.has(UMBRELLA.id)) {
+if (done.has(TAUGHT.id)) {
+  log('S1-11: done already (accepted or closed), not run again; S1-12 starts without the first run\'s findings')
+} else if (stopped || !done.has(UMBRELLA.id)) {
   log('Taught-check skipped: the migration is not complete')
 } else {
   taught = await runTaughtCheck('S1-11 taught-check', 'Taught-check')
@@ -332,7 +343,9 @@ If that result holds an inventory (a non-empty list of what the learner receives
 
 // ---- Review: S1-12 ---------------------------------------------------------------------
 phase('Review')
-if (stopped || !done.has(UMBRELLA.id) || !done.has(TAUGHT.id)) {
+if (done.has(REVIEWED.id)) {
+  log('S1-12: done already (accepted or closed), not run again')
+} else if (stopped || !done.has(UMBRELLA.id) || !done.has(TAUGHT.id)) {
   log('Review skipped: the migration or the taught-check run is not complete')
 } else {
   const reviewers = await parallel([0, 1].map((i) => () => agent(`Reviewer ${i + 1} of 2, independent: you do not see the other. In ${REPO} (up to date main), read specs/linear-course/SPEC.md and the protocol, then courses/parcours-po/ in full. Report every place the course breaks the spec or contradicts itself (where: file and line, problem, fix). Angle: ${i === 0 ? 'structure and conventions, check by check, and the match between course.yaml, plan.md and the concept folders' : 'teaching content: cases that contradict the reader text, storyline facts that drift, stances mislabelled, things lost from the old course'}. Modify nothing. Return the findings.`,
@@ -364,8 +377,14 @@ Tonight: the first taught-check had ${taughtFindings.length} finding(s); the two
 If the second run holds no finding, and every review finding is fixed in a merged PR or filed as an issue (check the PR body and "gh issue list --search"), comment the verdict on #${REVIEWED.issue}, make sure it is closed ("gh issue close ${REVIEWED.issue}") and its Status is Done (.claude/skills/ticket/project.md). Otherwise comment what remains, and leave it open: if GitHub closed it at the merge of a PR because of the linked branch (issue #94), reopen it ("gh issue reopen ${REVIEWED.issue}") and set its Status back to In progress. Return closed and one paragraph.`,
       { label: 'S1-12 close', phase: 'Review', model: 'sonnet', schema: CLOSE })
     const prior = results.find((r) => r.id === REVIEWED.id)
-    if (prior) prior.close = close
-    else results.push({ id: REVIEWED.id, issue: REVIEWED.issue, status: close && close.closed ? 'done' : 'blocked', note: close ? close.note : 'close agent died' })
+    if (prior) {
+      prior.close = close
+      if (!(close && close.closed)) {   // the close agent reopened #25 (or it died): the merged PR does not make S1-12 done
+        prior.status = 'blocked'
+        prior.note = close ? close.note : 'close agent died'
+        done.delete(REVIEWED.id)
+      }
+    } else results.push({ id: REVIEWED.id, issue: REVIEWED.issue, status: close && close.closed ? 'done' : 'blocked', note: close ? close.note : 'close agent died' })
   }
 }
 
