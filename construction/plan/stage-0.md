@@ -75,6 +75,7 @@ with `/finish` in the new repository.
 - **Done when**: `plan-to-issues --dry-run plan/stage-0.md` lists the seven tasks with their
   labels; a real run on `stage-0.md` creates them, and S0-01 to S0-04 are closed by hand as
   done; a second run creates nothing.
+- [x] Done on 2026-10-27 (night 1).
 
 ### S0-05 Command skills /ticket, /start, /finish, /decide, and permissions
 `area=agentic type=improvement model=opus depends=S0-04 parallel=no`

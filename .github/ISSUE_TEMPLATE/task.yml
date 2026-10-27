@@ -1,0 +1,39 @@
+name: Issue
+description: "An issue on feyn: Observation, To do, Done when."
+title: "Imperative summary of the work"
+labels: ["state:proposed"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Title: imperative, like a commit summary. Add the `type:` and `area:` labels after
+        creating the issue (the area follows the paths the observation names).
+  - type: textarea
+    id: reads
+    attributes:
+      label: Reads
+      description: Design files, specs and sources the work needs, one per line.
+      placeholder: "design/08-agentic.md (\"GitHub Issues\")"
+    validations:
+      required: false
+  - type: textarea
+    id: observation
+    attributes:
+      label: Observation
+      description: What exists, what is missing, where.
+    validations:
+      required: true
+  - type: textarea
+    id: todo
+    attributes:
+      label: To do
+      description: The work, as steps when the order matters.
+    validations:
+      required: true
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when
+      description: Verifiable statements.
+    validations:
+      required: true
