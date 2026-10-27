@@ -1,6 +1,6 @@
 <!--
 Template of a learner's progress (ported from the old course/templates/learner/parcours.md).
-Learner memory, not course content; no check reads it. Replace every <placeholder>, delete this
+Learner memory, not course material; no check reads it. Replace every <placeholder>, delete this
 comment (from the opening to the closing mark, marks included).
 -->
 # Parcours de <nickname>
