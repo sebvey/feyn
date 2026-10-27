@@ -9,14 +9,15 @@ export const meta = {
 
 // ---- the night's task list (serial; see construction/overnight.md) ----------------------
 // Stage 0 and S1-01 are done: the launch passes them in `accepted`.
-// S1-07 runs before S1-06: the templates must pass the checks S1-07 writes.
+// The order follows the blocked-by links; /start refuses an issue with an open blocker
+// (decision blocked-by-links-for-dependencies), and the task then returns "blocked".
 const TASKS = [
-  { id: 'S1-02', issue: 15, model: 'opus', depends: ['S0-07'] },
-  { id: 'S1-03', issue: 16, model: 'opus', depends: ['S1-02'] },
-  { id: 'S1-07', issue: 20, model: 'sonnet', depends: ['S1-03'] },
-  { id: 'S1-06', issue: 19, model: 'sonnet', depends: ['S1-03', 'S1-07'] },
-  { id: 'S1-08', issue: 21, model: 'sonnet', depends: ['S1-03', 'S1-07'] },
-  { id: 'S1-11', issue: 24, model: 'sonnet', depends: ['S1-03'],
+  { id: 'S1-02', issue: 15, model: 'opus' },
+  { id: 'S1-03', issue: 16, model: 'opus' },
+  { id: 'S1-07', issue: 20, model: 'sonnet' },
+  { id: 'S1-06', issue: 19, model: 'sonnet' },
+  { id: 'S1-08', issue: 21, model: 'sonnet' },
+  { id: 'S1-11', issue: 24, model: 'sonnet',
     extra: 'S1-10 (the migrated course) does not exist yet, so the Done when statement "taught-check runs on the migrated course" cannot hold tonight: the PR body says "Refs #24" (not "Closes"), reports that statement as "deviation" (to be run after S1-10), and the issue stays open.' },
 ]
 
@@ -62,6 +63,7 @@ You are a fresh work session in ${REPO} (night run ${night}, ${date}).
 Read the root CLAUDE.md, construction/README.md ("How a work session goes"), construction/overnight.md ("What the night may do" and "Overnight rules for a task agent"), then the issue ("mise exec -- gh issue view ${t.issue}"): its Done when is the contract; the plan files are frozen. Read every file its "Reads" lists.
 Follow the skills by their files: .claude/skills/start/SKILL.md with ${t.issue}, do the work, then .claude/skills/finish/SKILL.md ("Deliver") to open the PR. Do not merge it.
 ${t.extra ? t.extra + '\n' : ''}Run everything through "mise exec -- <command>". ${NO_SIGNATURE}
+If /start refuses because an issue that blocks #${t.issue} is still open, change nothing and return status "blocked", naming the blocker in the note.
 Never ask the maintainer anything: when something needs him, do the rest, write construction/notes/${t.id}.md, add the label blocked:maintainer to issue #${t.issue}, and return status "blocked".
 ${CLEAN}
 Return the structured result only.`
@@ -108,12 +110,6 @@ for (const id of done) { log(`${id}: accepted by the maintainer, not run again`)
 phase('Stage 1')
 for (const t of TASKS) {
   if (done.has(t.id)) continue
-  const missing = t.depends.filter((d) => !done.has(d))
-  if (missing.length) {
-    log(`${t.id}: skipped, waiting on ${missing.join(', ')}`)
-    results.push({ id: t.id, issue: t.issue, status: 'skipped', reason: `depends on ${missing.join(', ')}` })
-    continue
-  }
   log(`${t.id}: start (${t.model})`)
   let work = await agent(takePrompt(t), { label: `${t.id} work`, phase: 'Stage 1', model: t.model, effort: effortFor(t.model), schema: WORK })
   if (!work) {
