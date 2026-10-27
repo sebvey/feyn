@@ -52,7 +52,8 @@ branch without an issue number: stop and say so.
 6. **Open it**: `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`.
    Then check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
    lists the PR when it says `Closes #<n>`, and `mise exec -- gh issue develop --list <n>`
-   lists the branch. PR missing on a `Closes` PR: fix the body
+   lists the branch. GitHub can take a few seconds to list the PR: rerun once. PR still missing
+   on a `Closes` PR: fix the body
    (`mise exec -- gh pr edit <pr> --body-file <file>`); branch missing (not made by `/start`):
    say so in the reply, the issue's Development section will not show it.
 7. **Ask for review**: reply with the PR URL, the title, one line on what the reviewer should
