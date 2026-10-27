@@ -118,6 +118,7 @@ with `/finish` in the new repository.
 - **Done when**: `https://sebvey.github.io/feyn-site/` serves the placeholder; the secret exists
   on `feyn`; a dry CI workflow `site-ping` (manual) that pushes a timestamp file to `gh-pages`
   with the key succeeds once and is removed.
+- [x] Done on 2026-10-27 (night 1).
 
 ### S0-07 Create the stage 1 to 4 issues and run the first one through the flow
 `area=agentic type=improvement model=sonnet depends=S0-04,S0-05 parallel=no`
