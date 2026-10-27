@@ -50,7 +50,7 @@ const SCOUT_SCHEMA = {
         properties: {
           id: { type: 'string', description: 'concept number as in course.yaml (0, 12, A1)' },
           title: { type: 'string' },
-          dir: { type: 'string', description: 'concept folder, from course.yaml dir, under the course folder, ends with /' },
+          dir: { type: 'string', description: 'concept folder, relative to the course folder, as course.yaml dir writes it' },
           existing: { type: 'boolean', description: 'the concept folder already holds files to start from' },
           course_entry: { type: 'string', description: 'the concept entry of course.yaml: objective, prerequisites, sub-concept tree, copied' },
           inputs: { type: 'array', items: { type: 'string' }, description: 'inputs of this concept: files and sections (observations, improvements, sources already verified)' },
@@ -120,6 +120,8 @@ for word. A concept folder holds concept.md, teaching.md, sources.md (SPEC.md se
   { label: 'scope', schema: SCOUT_SCHEMA, model: 'sonnet', effort: 'low' })
 
 if (!scout || !scout.concepts.length) throw new Error('Empty scope: no concept found for the batch')
+// the prompts glue c.dir onto COURSE: relative to the course folder, ending with /
+for (const c of scout.concepts) c.dir = c.dir.replace(/^courses\/[^/]+\//, '').replace(/\/?$/, '/')
 log(`Batch: ${scout.concepts.map(c => c.id).join(', ')}; intermediate products in ${WORK}`)
 
 const CHECK_CMD = id => `mise exec -- ${scout.spec_dir}checks/check-course ${COURSE.replace(/\/$/, '')} --concept ${id}`
@@ -158,10 +160,10 @@ const fixPrompt = (c, findings) => `${ROLE}
 
 ${context(c)}
 
-You are the writer of the concept folder ${COURSE}${c.dir}. The reviewers' findings:
+You are the writer of the concept folder ${COURSE}${c.dir}. ${findings.length ? `The reviewers' findings:
 ${JSON.stringify(findings, null, 1)}
 
-For each finding: check it against the files (real defect or false positive). Fix the real defects in concept.md, teaching.md and, if needed, sources.md. Dismiss false positives and say why. A finding that needs a new storyline fact, a new glossary term or a coordinator choice: do not settle it, put it in "open" and add it to ${WORK}${c.id}-needs.md. Then run "${CHECK_CMD(c.id)}" and return its output; fix what it reports about the files you wrote.`
+For each finding: check it against the files (real defect or false positive). Fix the real defects in concept.md, teaching.md and, if needed, sources.md. Dismiss false positives and say why. A finding that needs a new storyline fact, a new glossary term or a coordinator choice: do not settle it, put it in "open" and add it to ${WORK}${c.id}-needs.md. Then run` : 'The reviewers found nothing. Run'} "${CHECK_CMD(c.id)}" and return its output; fix what it reports about the files you wrote.`
 
 // --- Pipeline per concept --------------------------------------------------------------
 
@@ -191,8 +193,8 @@ Writing step. sources.md of ${COURSE}${c.dir} has just been written (summary: ${
   },
 
   async (state, c) => {
+    // runs even without findings: the fix agent runs the checks
     const all = [...(state.round1.substance || []), ...(state.round1.form || [])]
-    if (!all.length) return { ...state, fix1: null }
     const fix1 = await agent(fixPrompt(c, all), { label: `fixes:${c.id}`, phase: 'Fixes', schema: FIX_SCHEMA })
     return { ...state, fix1 }
   },
