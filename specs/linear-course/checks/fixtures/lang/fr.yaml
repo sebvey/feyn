@@ -18,6 +18,7 @@ headings:
   from_to: "D'où l'on vient, où l'on va"
   crossing_case: "Un cas qui traverse le domaine"
   audience: "Public cible"
+  onboarding: "Accueil"
   avoid: "Termes à éviter"
   unreleased: "Non publié"
 case_fields:

@@ -37,7 +37,7 @@ Out of scope here: the protocol (`PROTOCOL.md`), the learner memory files (the p
 ```
 courses/<id>/
   course.yaml          mandatory   identity, domains, concepts, sub-concepts (section 3)
-  plan.md              mandatory   prose: audience, stances, course writing rules (section 6)
+  plan.md              mandatory   prose: audience, onboarding, stances, writing rules (section 6)
   glossary.md          mandatory   the course glossary (section 6)
   storyline.md         mandatory   the storyline (section 6)
   CHANGELOG.md         mandatory   the course changelog (section 6)
@@ -291,7 +291,14 @@ characters of the lead, and does not open with a word of the language pack's
 ## 6. Course files
 
 - **`plan.md`** (`course-files`): a first `##` section « Public cible » (`audience`, mandatory),
-  the full audience prose; then optional `##` sections the teacher reads: the course's stances
+  the full audience prose; a `##` section « Accueil » (`onboarding`, mandatory), what the
+  teacher takes from the course to welcome a new learner: a paragraph giving the teacher's
+  posture (« Posture : Product Owner senior qui forme l'apprenant. »), then a numbered list of
+  the onboarding questions, at least one, each `<n>. **<label>** : <question>`, the labels
+  distinct. The protocol asks the learner's nickname first, then these questions in their
+  order, and writes each answer to learner memory as `- <label> : <answer>` (`PROTOCOL.md`,
+  rules 1.1, 1.5, 1.6, 8.5); a question on pace does not belong here, the teacher adjusts the
+  pace as the course goes. Then optional `##` sections the teacher reads: the course's stances
   (« Parti pris : une équipe en sprints »), its own writing rules. An H1 is allowed.
 - **`glossary.md`** (`course-files`): an optional introduction; one table, four columns in this
   order: the course term, its English term, the definition, the concepts that use it (numbers
@@ -369,7 +376,7 @@ it, with the keys `PROTOCOL.md` uses. French values, for reference:
 
 | Group | Keys and French values |
 |---|---|
-| `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école », `pitfalls` « Pièges », `quick_test` « Le test rapide »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `avoid` « Termes à éviter », `unreleased` « Non publié » |
+| `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école », `pitfalls` « Pièges », `quick_test` « Le test rapide »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
 | `case_fields` | `usage` « Usage », `explanation` « Explication », `reserve` « Réserve, sur demande », `situation` « Situation », `question` « Question », `expected_answer` « Réponse attendue », `common_mistakes` « Erreurs fréquentes », `what_works` « Ce qui marche » |
 | `markers` | `storyline` « Fil rouge », `consensus` « consensus », `school` « école », `course` « cours » |
 | `references` | `concept` « concept », `concepts` « concepts », `and` « et » |
@@ -390,7 +397,7 @@ non-zero exit on any failure, `--only <id>`), locally and in CI.
 | `conventions` | the reader-text conventions of `concept.md`; plain Markdown in course files | 2, 4.5 |
 | `svg-contract` | every diagram against the drawing contract; declared and present diagrams match | 4.1, 7 |
 | `sources` | reference ids, citations, claims, paths | 4.1, 4.4 |
-| `course-files` | `plan.md`, `glossary.md`, `CHANGELOG.md`, domain files: presence, frontmatter, sections, leads | 5, 6 |
+| `course-files` | `plan.md` (« Public cible », « Accueil » and its questions), `glossary.md`, `CHANGELOG.md`, domain files: presence, frontmatter, sections, leads | 5, 6 |
 | `glossary-order` | no term used before the concept that introduces it | 6 |
 | `domain-first-sentence` | the first sentence of each paragraph of « Le fil des concepts » stands alone | 5 |
 | `typography` | no banned character of the language pack in course text | 2 |

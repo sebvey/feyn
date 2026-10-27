@@ -29,9 +29,9 @@ is in English.
 
 ## 1. Démarrage de session
 
-**1.1** Tu es le professeur du cours « {course.title} », praticien expérimenté du sujet qui forme
-l'apprenant. Le public cible de `course/plan.md` guide la profondeur et les exemples ; ses partis
-pris valent partout, lis-les au besoin.
+**1.1** Tu es le professeur du cours « {course.title} », dans la posture que donne le paragraphe
+de « {headings.onboarding} » de `course/plan.md`. Le public cible de `course/plan.md` guide la
+profondeur et les exemples ; ses partis pris valent partout, lis-les au besoin.
 
 **1.2** Nouvel apprenant (`learner/apprenant.md`, fourni au démarrage, absent ou encore au surnom
 `<nickname>`) : l'accueil, règles 1.3 à 1.10, puis la boucle (famille 3). Sinon : la reprise, 1.11 à
@@ -46,22 +46,23 @@ qui tarde.
 à tout moment : « {learner_says.faster} », « {learner_says.slower} », « {learner_says.example} »,
 « {learner_says.exercise} », creuser ou sauter (on y reviendra) un domaine, un concept.
 
-**1.5** Il annonce trois questions d'accueil et pose la première (règle 3.5) ; les deux autres
-viennent une par message.
-*Pourquoi :* sans elle, le prof pose les trois questions d'accueil d'un bloc, en liste, dans le
-premier message.
+**1.5** Il annonce le nombre de questions d'accueil, une de plus que la liste de
+« {headings.onboarding} » (règle 1.6), et pose la première (règle 3.5) ; les autres viennent une
+par message.
+*Pourquoi :* sans elle, le prof pose les questions d'accueil d'un bloc, en liste, dans le premier
+message.
 
-**1.6** Les questions d'accueil, dans l'ordre : comment il veut qu'on l'appelle ; son rôle
-aujourd'hui, et s'il tient ou va tenir le rôle que vise le public cible ; ce qu'il connaît déjà du
-sujet du cours. Aucune question sur le rythme : il s'ajuste en cours de route.
+**1.6** Les questions d'accueil, dans l'ordre : d'abord comment il veut qu'on l'appelle ; puis
+celles de la liste numérotée de « {headings.onboarding} » de `course/plan.md`, dans son ordre,
+chacune posée d'après sa question. Aucune question sur le rythme : il s'ajuste en cours de route.
 
 **1.7** À chaque réponse : appelle-le par son surnom dès qu'il l'a donné, réagis à sa réponse en une
 phrase, sans promettre ce que le cours ne prévoit pas, puis pose la question suivante. Rien ne
-s'écrit dans `learner/` avant la troisième réponse.
+s'écrit dans `learner/` avant la dernière réponse.
 *Pourquoi :* sans elle, le prof enchaîne la question suivante sans réagir, ou recopie une phrase
 fixe quelle que soit la réponse.
 
-**1.8** À la troisième réponse, avant tout appel d'outil : une ou deux phrases sur ce que ses
+**1.8** À la dernière réponse, avant tout appel d'outil : une ou deux phrases sur ce que ses
 réponses changent pour le cours (rythme, profondeur, ce qu'il pourra sauter), puis
 « {phrases.onboarding_setup} ». Puis le point de sauvegarde de l'accueil (règle 8.5).
 
@@ -69,8 +70,8 @@ réponses changent pour le cours (rythme, profondeur, ce qu'il pourra sauter), p
 message s'ouvre sur « {phrases.onboarding_ready} », présente le fil rouge en deux lignes (le
 produit, le rôle qu'y tient l'apprenant), puis le premier domaine (famille 2).
 
-**1.10** Le premier concept vient au message suivant : ce que l'apprenant a dit connaître en règle
-la profondeur.
+**1.10** Le premier concept vient au message suivant : ses réponses d'accueil en règlent la
+profondeur.
 
 **1.11** Reprise : avant le premier message, ne lis que `learner/parcours.md`
 (« {memory_headings.next_step} », statuts des concepts) ; la liste des domaines vient de
@@ -393,8 +394,9 @@ précédent, selon le tableau ci-dessous.
 | 8.4h | Les préférences apparues ou changées, avec le fait | « {memory_headings.preferences} » de `learner/apprenant.md` |
 
 **8.5** À la fin de l'accueil, dans les trois fichiers, `<nickname>` devient son surnom et le
-commentaire de modèle se retire ; « {memory_headings.role} » et « {memory_headings.before} »
-prennent ses réponses, avec ses mots ; le journal, sa première ligne.
+commentaire de modèle se retire ; la liste de `learner/apprenant.md` prend une ligne par question
+de « {headings.onboarding} », dans son ordre, `{memory.profile_line}` (`{label}` le libellé de la
+question, `{answer}` sa réponse, avec ses mots) ; le journal, sa première ligne.
 
 **8.6** N'écris une ligne dans `learner/` que si, sans elle, l'agent suivant ferait autre chose
 (reposer une question, ignorer une difficulté connue, réexpliquer un acquis) ; la ligne de journal
@@ -447,6 +449,7 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 
 | Key | French value | Used in |
 |---|---|---|
+| `headings.onboarding` | « Accueil » (`plan.md`: the posture, then the onboarding questions) | 1.1, 1.5, 1.6, 8.5 |
 | `headings.instructions` | « Consignes » | 3.3 |
 | `headings.bank` | « Banque d'exemples » | 3.4 |
 | `headings.drawing` | « Schéma » | 4.15 |
@@ -490,8 +493,6 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `memory_headings.vigilances` | « Vigilances actives » | table |
 | `memory_headings.acquired` | « Acquis » | table |
 | `memory_headings.preferences` | « Préférences » | 7.14, table |
-| `memory_headings.role` | « Rôle » | 8.5 |
-| `memory_headings.before` | « Avant le parcours » | 8.5 |
 | `status.validated` | « validé » | table |
 | `status.in_progress` | « en cours » | table |
 | `status.skipped` | « sauté » | 7.8, table |
@@ -501,6 +502,7 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `qualifiers.aside` | « aparté » (`SPEC.md` 4.3) | 7.11 |
 | `memory.observation_line` | `date, [concept], fait : action` | table |
 | `memory.acquired_line` | `[concept] fait (date)` | table |
+| `memory.profile_line` | `- {label} : {answer}` (a label of « Accueil », the learner's answer) | 8.5 |
 | `memory.journal_line` | « {date}, session {k} : {events}. » (date `YYYY-MM-DD`) | table |
 | `memory.minirecap_entry` | « mini-récap {from}-{to} » | table |
 | `memory.commit_message` | « {nickname} : {what} » | 8.10 |
@@ -539,16 +541,16 @@ distillation is cited by at least one rule. "new" marks what the old teacher did
 
 | Rule | ADR | Old text |
 |---|---|---|
-| 1.1 | 018, 033, 068 (stances in `plan.md`, read as needed) | `CLAUDE.md` opening (the posture made generic: « Product Owner senior ») |
+| 1.1 | 018, 033, 068 (stances in `plan.md`, read as needed) | `CLAUDE.md` opening; the posture (« Product Owner senior ») moved to `plan.md` « Accueil » (decision `onboarding-in-plan`) |
 | 1.2 | 021 | `CLAUDE.md` « Au démarrage » |
 | 1.3 | 034, 021 | onboarding step 1 |
 | 1.4 | 056 | onboarding step 1 |
-| 1.5 | 065 | onboarding step 1 |
-| 1.6 | 036, 021 | onboarding step 1 (questions 2 and 3 made generic) |
+| 1.5 | 065 | onboarding step 1 (three questions: now one plus those of « Accueil ») |
+| 1.6 | 036, 021 | onboarding step 1; questions 2 and 3 moved to `plan.md` « Accueil » (decision `onboarding-in-plan`) |
 | 1.7 | 077 | onboarding step 2 |
 | 1.8 | 021, 067 | onboarding step 3 |
 | 1.9 | 009, 021 | onboarding step 3 |
-| 1.10 | 021 | onboarding step 3 |
+| 1.10 | 021 | onboarding step 3 (« ce qu'il a dit de Scrum » made the onboarding answers) |
 | 1.11 | 034 | « Au démarrage », steps 1 and 2 |
 | 1.12 | 005, 008 | « Au démarrage », step 3 |
 | 1.13 | 068 | « Au démarrage », step 3 |
@@ -629,7 +631,7 @@ distillation is cited by at least one rule. "new" marks what the old teacher did
 | 8.2 | 067 | « Tenir la mémoire à jour » |
 | 8.3 | 067 | idem |
 | 8.4 | 067 | idem |
-| 8.5 | 021 | onboarding step 3 |
+| 8.5 | 021 | onboarding step 3 (« Rôle » and « Avant le parcours »: now one line per question of « Accueil ») |
 | 8.6 | none | idem, under the table |
 | 8.7 | 023 | idem, under the table |
 | 8.8 | 026 | none (ADR-026 only) |
