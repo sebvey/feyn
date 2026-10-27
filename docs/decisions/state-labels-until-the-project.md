@@ -1,7 +1,7 @@
 ---
 date: 2026-10-27
 issue: 63
-status: accepted
+status: superseded-by: project-status-not-state-labels
 area: repo
 ---
 

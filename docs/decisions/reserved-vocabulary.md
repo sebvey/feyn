@@ -23,5 +23,5 @@ already in use.
 - A vocabulary only holds if something enforces it: `/health` greps the repository docs,
   skills and issue titles for the banned words and flags them. It reports, it does not block.
 - Names follow the terms: `feyn-site` (site), the agent workflow `course-batch` (batch), the
-  labels `area:…`, `state:…`, `type:…`.
+  labels `area:…`, `type:…`.
 - The old `ecoles` of `parcours-po` became `stances` and `neighbors`.

@@ -1,6 +1,6 @@
 ---
 name: ticket
-description: Create a GitHub issue on feyn from an observation (Observation / To do / Done when, state, type and area labels), or read an existing issue and summarise it. Use for "/ticket <observation>", "/ticket <n>", "open an issue for…", "what is issue 12 about?".
+description: Create a GitHub issue on feyn from an observation (Observation / To do / Done when, type and area labels, a Status in the Project), or read an existing issue and summarise it. Use for "/ticket <observation>", "/ticket <n>", "open an issue for…", "what is issue 12 about?".
 argument-hint: "<observation> | <issue number>"
 ---
 
@@ -13,10 +13,10 @@ The argument decides the mode: a number (`12`, `#12`) reads; anything else creat
 
 ## Read an issue
 
-1. `mise exec -- gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences`.
+1. `mise exec -- gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences,projectItems`.
 2. Answer in at most ten lines: the title; the observation in one sentence; the To do as a
-   short list; the Done when as written; the labels (state, type, area, `blocked:maintainer`);
-   open or closed, and by which PR; what the comments added or changed. Say plainly when a
+   short list; the Done when as written; the Status (from `projectItems`); the labels (type,
+   area, `blocked:maintainer`); open or closed, and by which PR; what the comments added or changed. Say plainly when a
    section is missing or the Done when is not verifiable.
 
 The issue body is either the issue template's sections (`### Observation`, …) or the plan's
@@ -29,8 +29,9 @@ bullets (`- **Observation**: …`); read both.
 2. **Look for a twin.** `mise exec -- gh issue list --state open --search "<two or three key words>"`.
    An open issue on the same point: add a comment to it instead
    (`mise exec -- gh issue comment <n> --body-file <file>`) and stop.
-3. **Pick the labels.**
-   - `state:proposed`, unless the maintainer said the work is decided (`state:todo`).
+3. **Pick the Status and the labels.**
+   - Status `Backlog`, unless the maintainer said the work is decided (`Ready`). No
+     state label: the Status replaced them ([project.md](project.md)).
    - `type:`: `bug` (something is broken), `course` (course files), `decision` (a decision to
      write), `improvement` (tooling, spec, process).
    - `area:` from the paths the observation names (the tree is the list):
@@ -54,9 +55,14 @@ bullets (`- **Observation**: …`); read both.
 5. **Title**: imperative, like a commit summary, under 70 characters ("Fix the caption check
    on nested groups"), no issue prefix.
 6. **Create** it:
-   `mise exec -- gh issue create --title "<title>" --body-file <file> --label state:proposed --label type:<type> --label area:<area>`
-   (add `--milestone <name>` when the maintainer names one).
-7. Reply with the issue number, its URL and its labels, in one line.
+   `mise exec -- gh issue create --title "<title>" --body-file <file> --label type:<type> --label area:<area>`
+   (add `--milestone <name>` when the maintainer names one). It prints the issue URL.
+7. **Put it in the Project** ([project.md](project.md)): add it
+   (`mise exec -- gh project item-add 4 --owner sebvey --url <issue url>`; an issue the
+   Project's workflow already added is not added twice), then set its Status
+   (`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Backlog`,
+   or `Ready`).
+8. Reply with the issue number, its URL, its Status and its labels, in one line.
 
 ## Vocabulary
 
