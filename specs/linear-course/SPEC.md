@@ -6,6 +6,11 @@ with it. The four parts of the spec are the **structure** and its **reader-text 
 (this file), the **drawing contract** (this file), the **checks** (this file, scripts in
 `checks/`) and the **protocol** (`PROTOCOL.md`).
 
+**Language exception.** The rules of `PROTOCOL.md` are written in French, a bounded exception
+to the language policy (`docs/decisions/language-policy.md`): the old teacher was instructed and
+corrected in French. Task S2-09 (issue #38) closes it: it translates the rules to English, rule
+by rule, and removes this paragraph.
+
 "Mandatory" means a check fails without it; "optional" means it may be absent, and when present
 it follows the rule given. Every rule names the check that enforces it, in backquotes; a rule
 with no check id is enforced by review.
