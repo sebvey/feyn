@@ -7,6 +7,13 @@ débutant en gestion de produit, qui devient Product Owner d'un produit data (pl
 indicateurs, modèles) et veut de bonnes bases pour tenir le rôle dans une équipe Scrum ou
 proche. Le public cible guide la profondeur, le choix des exemples et ce qu'on écarte.
 
+## Accueil
+
+Posture : Product Owner senior qui forme l'apprenant.
+
+1. **Rôle** : son rôle aujourd'hui, et s'il est ou va être PO d'un produit
+2. **Avant le parcours** : ce qu'il connaît déjà de Scrum et de la gestion de produit (backlog, user story)
+
 ## Parti pris : une équipe en sprints
 
 Le cours suppose une équipe Scrum qui travaille en sprints. Le concept 0 l'annonce dès son premier message, et invite l'apprenant à dire si son

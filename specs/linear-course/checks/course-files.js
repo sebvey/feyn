@@ -1,11 +1,38 @@
 'use strict';
 // plan.md, glossary.md, CHANGELOG.md and the domain files: presence, frontmatter, sections,
-// leads (SPEC.md sections 5 and 6).
+// leads (SPEC.md sections 5 and 6); « Accueil » of plan.md and its questions.
 const yaml = require('./lib/yaml');
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
 
 const SEMVER = /^(\d+)\.(\d+)\.(\d+), \d{4}-\d{2}-\d{2}$/;
+
+// « Accueil »: a posture paragraph, then a numbered list of questions "<n>. **<question label>** : <question>"
+function onboarding(secs, title) {
+  const found = secs.filter((s) => s.title === title);
+  if (!found.length) return [fail('plan.md', 1, `plan.md has no « ${title} » section: mandatory (the teacher's posture, then the onboarding questions)`)];
+  if (found.length > 1) return [fail('plan.md', found[1].line, `« ${title} » appears twice in plan.md`)];
+  const s = found[0];
+  const out = [];
+  const lines = s.lines.filter((l) => !l.code);
+  const first = lines.findIndex((l) => /^\d+\. /.test(l.t));
+  const posture = (first < 0 ? lines : lines.slice(0, first)).some((l) => l.t.trim());
+  if (!posture) out.push(fail('plan.md', s.line, `« ${title} » opens with a paragraph giving the teacher's posture`));
+  if (first < 0) { out.push(fail('plan.md', s.line, `« ${title} » has no numbered list of onboarding questions`)); return out; }
+  const labels = new Set();
+  let blank = false;
+  for (const l of lines.slice(first)) {
+    if (!l.t.trim()) { blank = true; continue; }
+    const m = /^\d+\. \*\*([^*]+)\*\* : \S/.exec(l.t);
+    if (m) {
+      if (labels.has(m[1])) out.push(fail('plan.md', l.n, `question label « ${m[1]} » is used twice: question labels are distinct`));
+      labels.add(m[1]);
+      blank = false;
+    } else if (/^\d+\. /.test(l.t)) out.push(fail('plan.md', l.n, 'an onboarding question is "<n>. **<question label>** : <question>"'));
+    else if (blank || !/^\s/.test(l.t)) out.push(fail('plan.md', l.n, `the numbered list of questions ends « ${title} »: nothing after it`));
+  }
+  return out;
+}
 
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
@@ -20,6 +47,7 @@ function run(ctx) {
     const secs = mdlib.sections(ctx.md('plan.md').body, 2).sections;
     if (!secs.length || secs[0].title !== H('audience')) out.push(fail('plan.md', secs.length ? secs[0].line : 1, `the first ## section of plan.md is « ${H('audience')} »`));
     else if (!secs[0].lines.some((l) => l.t.trim())) out.push(fail('plan.md', secs[0].line, `« ${H('audience')} » is empty`));
+    out.push(...onboarding(secs, H('onboarding')));
   }
   if (!ctx.exists('storyline.md')) out.push(fail('storyline.md', 1, 'mandatory file is missing'));
 

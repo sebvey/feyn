@@ -109,8 +109,13 @@ const DUMMY = {
   'element': 'cadre',
   'label': 'Rôle',
   'nickname': 'Alex',
-  'current role, and whether the learner owns a product': 'analyste',
-  "what the learner knows of the course's subject, in their own words": 'peu de chose',
+  "answer, in the learner's words": 'analyste',
+  "the teacher's posture, who the teacher is for the learner": 'praticienne expérimentée qui forme l\'apprenant',
+  'question label 1': 'Rôle',
+  'onboarding question 1, after the nickname': 'son rôle aujourd\'hui',
+  'question label 2': 'Avant le cours',
+  'question label': 'Rôle',
+  'onboarding question 2': 'ce qu\'il connaît déjà du sujet',
   'the first step: the concept to open with, its first message': 'Concept 0, premier message.',
 };
 // the instructions' placeholders that appear twice with different dummies per file are keyed above once
