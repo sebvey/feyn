@@ -1,0 +1,18 @@
+<!--
+  Template of a diagram (SPEC.md section 7). Copy it to the concept folder as <stem>.svg,
+  replace every placeholder (written &lt;like this&gt; because the file is XML), delete this comment.
+  Rules: no width or height on the root; fill and stroke are currentColor or none (shades by
+  fill-opacity, stroke-opacity, opacity); only the classes primary, secondary, muted; no style
+  attribute, no style element; words are text elements, at least one; title is the root's
+  first child and equals the frontmatter title; every drawn child of the root is a g whose id
+  is <sub-concept>-<element>; no script, no on* attribute, no image, no external href;
+  32 KB at most.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" fill="currentColor" role="img" aria-labelledby="&lt;diagram-stem&gt;-titre &lt;diagram-stem&gt;-desc" font-family="sans-serif">
+  <title id="&lt;diagram-stem&gt;-titre">&lt;title of the diagram&gt;</title>
+  <desc id="&lt;diagram-stem&gt;-desc">&lt;what the drawing shows, for screen readers&gt;</desc>
+  <g id="&lt;n&gt;a1-&lt;element&gt;">
+    <rect class="primary" x="40" y="40" width="320" height="50" fill="none" stroke="currentColor"/>
+    <text x="200" y="70" text-anchor="middle">&lt;label&gt;</text>
+  </g>
+</svg>
