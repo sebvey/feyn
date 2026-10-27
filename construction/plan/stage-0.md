@@ -131,3 +131,4 @@ with `/finish` in the new repository.
   `/finish` (S1-01 is a read-only pass, which makes it the right first run).
 - **Done when**: every task of stages 1 to 4 is an open issue with the right labels and
   milestone; S1-01 is closed by a merged PR; stage 0's done-when holds.
+- [x] Done on 2026-10-27 (night 1, then the maintainer: S1-01 validated and merged as PR #58; the flow run by hand on #14, #59 and #63).
