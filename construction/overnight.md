@@ -8,8 +8,9 @@ agent** against the task's Done when, fixed once if needed, then **squash-merged
 The session's own context stays empty: it only receives the final report.
 
 Tasks run **serially** in night 1 (one task at a time, in the single checkout): slower than
-worktrees, but no branch races and no stale-checkout bugs on the first night. Night 2 (the 20
-concept migrations) will use worktrees.
+worktrees, but no branch races and no stale-checkout bugs on the first night. Night 2 runs
+the 20 concept migrations in parallel worktrees (one agent per sub-issue) and merges them one
+at a time.
 
 ## What the night may do without the maintainer
 
@@ -95,39 +96,63 @@ yourself; then stop.
 4. Read `construction/notes/S1-02-prototype.md` and `specs/linear-course/SPEC.md`; file issues
    for what you want changed.
 5. Check `https://sebvey.github.io/feyn-site/` serves the placeholder.
-6. Launch night 2 (below) with the gates set truthfully.
+6. Launch night 2 (below) once its conditions hold.
 
-## Night 2
+## Night 2 scope
 
-Script: `scripts/overnight-2.js`. Two **gates** are the maintainer's and are passed as
-arguments; a phase whose gate is false is skipped and the run continues with the rest:
+Script: `scripts/overnight-2.js`. It holds no gate and no list of dependencies: the blocked-by
+links on GitHub are the single source (decision `blocked-by-links-for-dependencies`), and
+`/start`'s refusal is the only check. A task `/start` refuses returns `blocked`, writes nothing,
+and the night goes on with the next one that can run. `accepted` lists the tasks the maintainer
+counts as done (ids as in the table below); they are not run again.
 
-| Gate | Means | Unlocks |
-|---|---|---|
-| `distillationValidated` | you have read `construction/notes/S1-01-distillation.md`, corrected what you wanted, and closed the S1-01 issue (#14, done on 2026-10-27) | S1-04 (protocol), then S1-05 (language pack) and S1-14 (spec and course decisions) in parallel |
-| `specRead` | you have read `specs/linear-course/SPEC.md` and `construction/notes/S1-02-prototype.md`, and filed issues for what you want changed (or there is nothing) | S1-09 (migrate-concept workflow), then S1-10: the 20 concept migrations in parallel worktrees, each reviewed against the old files, merged serially; then S1-12: taught-check (the ported agent workflow, run as a child), two independent course reviews, fixes |
+| Phase | Task | Issue | How |
+|---|---|---|---|
+| Wave 3 | S1-05 French language pack | #18 | main checkout, one task at a time, sonnet |
+| Wave 3 | S1-09 migrate-concept workflow | #22 | same, opus |
+| Migration | S1-10 20 concept migrations | #23 | one sub-issue per concept (`S1-10.<nn>`), created by the night if missing; 19 in parallel worktrees, then A2; each reviewed (opus, against the old files), fixed once, merged one at a time; then the umbrella is closed if `check-course` passes on the whole course |
+| Taught-check | S1-11 run on the migrated course | #24 | the `taught-check` workflow on `parcours-po`; the issue closes once the run produced its inventory |
+| Review | S1-12 full review | #25 | two independent reviewers (opus), a third merges their findings; one PR fixes or files every finding (and the taught-check's); a second taught-check run decides whether #25 closes |
 
-Not in night 2, by design: S1-13 (the old-teacher guard needs a fresh test, which an agent inside
-a workflow cannot run) and S1-15 (the Fable review). Both are daytime sessions, after night 2.
+S1-14 (#27) is not in the list: it runs in the daytime. S1-13 and S1-15 are daytime tasks too.
 
-Launch, same setup as night 1 (new session in `feyn/`, Opus, bypass), paste:
+What `/start` refuses is not the night's problem, but these must be true at launch for the night
+to be useful (the launch text of #93 and #22 says merged; #100 and the rest are checked here):
+- #93 and #22 are merged; #87 and #88 are merged (they edit `PROTOCOL.md`, which S1-05 reads);
+- #97 and #98 are merged (they block #22);
+- #100 is merged (it blocks #23: the `concept-folder` check compares « Objectif » with
+  `course.yaml` word for word, and A2 goes last so that it sees the fix);
+- neither `blocked:maintainer` nor an open blocker remains on #18, #22, #23, #24, #25.
+
+On top of the list under "What the night may do", night 2 needs, for the plan the maintainer
+set on 2026-10-27: creating the 20 sub-issues of #23 (labels, milestone, Project, parent and
+blocked-by links); running agents in worktrees under `.claude/worktrees/` and removing those of
+merged branches; closing #23, #24 and #25 when their Done when holds, with a comment saying
+what was checked. Nothing else outward.
+
+The migration's rules are the maintainer's rulings on #23 (sub-headings of the site become
+bold-led paragraphs, reported as "moved"; objectives 10 and 14 as they are; A2 through #100);
+they are in every sub-issue's body, not in the script.
+
+## Launch (night 2)
+
+Same setup as night 1 (new session in `feyn/`, Opus, bypass). First check the conditions above
+(`gh issue view <n> --json state` on #93, #22, #87, #88, #97, #98, #100, and `main` clean).
+Paste:
 
 ```
 Night run 2 of the feyn construction. Use a workflow: run the script
 construction/scripts/overnight-2.js with args
-{"date": "<today>", "night": 2, "gates": {"distillationValidated": true, "specRead": true}}.
-Set a gate to false if I have not done it. About 90 agents are expected; that scale is
-intended. Do not ask me anything. When the workflow returns, make sure
-construction/notes/night-2.md exists, then stop.
+{"date": "<today>", "night": 2, "accepted": []}.
+Add to accepted the ids of tasks I did by hand (S1-05, S1-09, S1-10, S1-11, S1-12, or a
+sub-task S1-10.<nn>). About 90 agents are expected; that scale is intended. Do not ask me
+anything. When the workflow returns, check that construction/notes/night-2.md is on main (the
+report PR is merged) and that "mise exec -- git status --porcelain" prints nothing; do not edit
+or commit anything yourself; then stop.
 ```
 
-`accepted` lists the tasks the maintainer counts as done: they are not run again and their
-dependants may start. After the first run of night 1 (2026-10-27), stage 0 and S1-01 are done
-and merged, so the launch text above lists the eight; six tasks remain for the relaunch
-(S1-02, S1-03, S1-06, S1-07, S1-08, S1-11).
-
-If night 1 left tasks blocked (see `night-1.md`), unblock them first or accept that night 2
-skips what depends on them.
+If night 1 or an earlier part of night 2 left tasks blocked (see the report), unblock them first
+or accept that what depends on them is skipped.
 
 ## After night 2 (daytime)
 
