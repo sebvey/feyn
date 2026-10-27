@@ -127,7 +127,7 @@ memory and site addresses cite them. Changing one is a course MAJOR (section 8).
 concepts/09-decoupage-vertical/
   concept.md         mandatory   reader-facing: built by the site, read by the teacher
   teaching.md        mandatory   teacher-only: teaching notes and example bank; never built
-  sources.md         mandatory   reader-facing: claims, references, unverified
+  sources.md         mandatory   reader-facing, filtered by the site (4.4)
   <stem>.svg         optional    reader-facing: one file per diagram (section 7)
 ```
 
@@ -216,9 +216,12 @@ the order of the table; « Ce qui marche » comes last.
 
 `sources.md` traces the source of every verifiable claim of the concept folder (definition,
 consensus, school and its author, date, figure, quotation), cases included. The teacher reads
-it when the learner asks where a claim comes from; the site builds it as is. Storyline facts
-are invented and have no source. `concept.md` and `teaching.md` cite no reference: references
-live in the frontmatter `refs` and here (`sources`).
+it when the learner asks where a claim comes from. The site builds only the « Affirmations »
+rows whose section is in `concept.md` and the « Références » they cite; the rows whose section is
+in `teaching.md` are teacher-only. A row whose section (the parenthesis of column 1) names no
+section of `concept.md` is not built. « Non vérifié » is not built: its items carry no section to
+filter on. Storyline facts are invented and have no source. `concept.md` and `teaching.md` cite
+no reference: references live in the frontmatter `refs` and here (`sources`).
 
 In this order (`concept-folder`):
 
