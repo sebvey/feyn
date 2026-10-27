@@ -57,8 +57,8 @@ the local branch. Why: decision `issue-defines-pr-verifies`.
   own workflow did not. There are no state labels. Why: decision
   `project-status-not-state-labels`.
 - `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is
-  a draft, which keeps it from being merged); on top of the Status, never instead of it; only the maintainer removes it. Why:
-  decision `blocked-is-a-label-not-a-state`.
+  a draft, which keeps it from being merged); on top of the Status, never instead of it; only
+  the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
 - `type:bug`, `type:course`, `type:improvement`, `type:decision`; `area:*` derived from the
   tree (`spec:<name>`, `course:<id>`, `teacher`, `site`, `agentic`, `repo`).
 - Milestones: one per stage of the construction, then one per release of a course or a spec;
@@ -69,8 +69,9 @@ the local branch. Why: decision `issue-defines-pr-verifies`.
 In the web interface, the Project's Board view, one column per Status. First what waits for
 the maintainer: the filter `label:blocked:maintainer` in the Board view (or the same search in
 the issue list); the PR list shows the draft PRs. Then the In progress column (what moves on
-its own), then Ready (what can be taken). An unblock is a comment on the issue that says what was validated, then the label
-removed: the comment is the trace a fresh agent reads. Why: decisions
+its own), then Ready (what can be taken). An unblock is a comment on the issue that says what
+was validated, then the label removed: the comment is the trace a fresh agent reads. Why:
+decisions
 `blocked-is-a-label-not-a-state`, `project-status-not-state-labels`.
 
 ## Tool behaviours
