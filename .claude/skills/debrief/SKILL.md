@@ -73,7 +73,8 @@ when no issue started it.
 
 ## 8. Commit
 
-`mise exec -- git add docs/contributing.md construction/notes/<file>` (the decisions are
+`mise exec -- git add docs/contributing.md construction/notes/<file>` and the files edited at
+step 6 (the decisions are
 already committed by `/decide`), then `mise exec -- git commit -m "debrief <topic>"`. Never
 on `main`, never a merge, never a push: the PR is `/finish`'s.
 
@@ -81,7 +82,8 @@ on `main`, never a merge, never a push: the PR is `/finish`'s.
 
 For the maintainer to reread, one line each:
 - **Written**: each decision (path), each issue (number, title), the issues commented, the
-  contributing.md sections edited, the note (path), the commits;
+  contributing.md sections edited, the tool-behaviour marks moved to their point of use (file,
+  line) or commented on #115, the note (path), the commits;
 - **Refused**: each choice `/decide` refused and why, each line of step 2 that went nowhere
   and why;
 - what the maintainer still has to do (read `docs/contributing.md` cold, `/finish`).

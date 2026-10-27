@@ -80,10 +80,9 @@ lost. A behaviour the flow relies on is written at its point of use (the skill s
 that depends on it), in one line ending with a mark `(<tool>, <status> <date>, #<n>)`: `<tool>`
 is `GitHub` or `Claude Code`; `<status>` is `tested` (provoked on purpose), `observed` (seen
 happen), `inferred` (deduced from other facts) or `documented` (stated by the tool's
-documentation); `#<n>` is the issue or PR that holds the proof. The line goes with its step. A
+documentation); `<date>` is `YYYY-MM-DD`; `#<n>` is the issue or PR that holds the proof. The line goes with its step. A
 line the tool disproves is corrected or removed. `grep -rn '(GitHub,\|(Claude Code,' .claude docs construction`
 lists them all. There is no separate reference file: it would be read at the wrong moment.
-Where the layer holding the skills ends up is open (issue #115).
 
 ## Decisions and vocabulary
 

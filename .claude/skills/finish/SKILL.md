@@ -63,9 +63,9 @@ branch without an issue number: stop and say so.
      cannot be merged by mistake;
    - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
      lists the PR when it says `Closes #<n>` (a `Refs` PR: it lists nothing). The branch is
-     not checked: GitHub drops the issue's linked branch once a PR from it opens (GitHub, inferred 2026-10-27, #108).
-     GitHub can take a few seconds to list the PR: rerun once. PR still missing on a `Closes` PR: fix
-     the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
+     not checked: GitHub drops the issue's linked branch once a PR from it opens
+     (GitHub, inferred 2026-10-27, #108). GitHub can take a few seconds to list the PR:
+     rerun once. PR still missing on a `Closes` PR: fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
 7. **Ask for review**: reply with the PR URL, the title, one line on what the reviewer should
    look at first, and the merge command, which names the subject (on a one-commit PR, GitHub
    takes the commit message, not the PR title):
@@ -92,7 +92,7 @@ So when the body starts with `Refs #<n>`, remove the link **before** opening the
    `mise exec -- gh api graphql -f query='mutation{deleteLinkedBranch(input:{linkedBranchId:"<id>"}){clientMutationId}}'`
    (GitHub, tested 2026-10-27, #109).
 3. Open the PR, then check `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
-   lists nothing. If it lists the PR, the link survived: the maintainer removes it in the
+   lists nothing (GitHub, tested 2026-10-27, #109). If it lists the PR, the link survived: the maintainer removes it in the
    web interface (PR page, Development in the sidebar, the issue's entry, unlink), or the
    body is edited to `Closes #<n>` if it is in fact the last step. Say so in the reply, and
    that Clean up will reopen the issue otherwise.
