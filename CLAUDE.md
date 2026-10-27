@@ -34,7 +34,8 @@ its own. Never `git config user.email`.
 ## Skills
 
 `/ticket` creates or reads an issue. `/start <n>` takes an issue. `/finish` opens the PR.
-`/decide` writes a decision. Load the one that matches the request.
+`/decide` writes a decision. `/debrief` distils a reflection session. Load the one that matches
+the request.
 
 ## Non-negotiable rules
 
