@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 290" fill="currentColor" role="img" aria-labelledby="sprint-planning-trois-questions-titre sprint-planning-trois-questions-desc" font-family="system-ui, sans-serif" font-size="14">
+  <title id="sprint-planning-trois-questions-titre">Les trois questions du Sprint Planning</title>
+  <desc id="sprint-planning-trois-questions-desc">Dans un cadre Sprint Planning, trois questions se suivent de haut en bas : pourquoi, qui donne l'objectif de sprint, puis quoi, les éléments, puis comment, les tâches. La première est la plus marquée.</desc>
+  <g id="15b-cadre-sprint-planning" class="muted">
+    <rect x="20" y="16" width="560" height="262" rx="4" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="36" y="42" fill="currentColor" font-weight="bold">Sprint Planning</text>
+  </g>
+  <g id="15b-question-pourquoi" class="primary">
+    <rect x="36" y="58" width="528" height="58" rx="3" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="3"/>
+    <text x="54" y="93" fill="currentColor" font-weight="bold">Pourquoi</text>
+    <text x="230" y="93" fill="currentColor" font-weight="bold">l'objectif de sprint</text>
+  </g>
+  <g id="15b-question-quoi" class="muted">
+    <path d="M300 116 V138" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <path d="M295 131 L300 141 L305 131 Z" fill="currentColor" fill-opacity="0.5"/>
+    <rect x="36" y="142" width="528" height="48" rx="3" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="54" y="172" fill="currentColor">Quoi</text>
+    <text x="230" y="172" fill="currentColor">les éléments</text>
+  </g>
+  <g id="15b-question-comment" class="muted">
+    <path d="M300 190 V212" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <path d="M295 205 L300 215 L305 205 Z" fill="currentColor" fill-opacity="0.5"/>
+    <rect x="36" y="216" width="528" height="48" rx="3" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="54" y="246" fill="currentColor">Comment</text>
+    <text x="230" y="246" fill="currentColor">les tâches</text>
+  </g>
+</svg>
