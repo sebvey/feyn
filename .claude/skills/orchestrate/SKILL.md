@@ -11,6 +11,15 @@ That work session is the orchestrator: it briefs, checks and relays; a contribut
 does the work, a fresh agent reviews it, the maintainer merges. Every PR is reviewed by a fresh
 agent before it reaches the maintainer (decision `fresh-agent-review-before-maintainer`).
 
+## Progress
+
+While the cycle runs, each message to the maintainer holds at most three lines: what just
+finished (one fact: a count, a verdict, a PR number), what runs now, and what is awaited from
+the maintainer, if anything (asked by the maintainer on 2026-10-28, #184). No report per agent,
+no announcement of a review before it exists, no repeat of the previous message. Findings,
+counts and before/after go in the PR or the issue, and the message links them. The full report
+comes once, at the hand-over (step 5).
+
 ## 1. Before spawning
 
 - Read each issue (`mise exec -- gh issue view <n>`): the refusals of `/start` step 1 apply here
@@ -85,7 +94,9 @@ reviewer `isolation: "worktree"` too (the brief has it check out the PR head det
 clean its worktree with steps 6.1, 6.2 and 6.4 only: it holds no issue branch, so no
 `/finish after-merge` for it. A PR whose evidence is an agent-workflow run: give the reviewer
 the run ids `wf_<id>` and their transcript directory, and for a blind run the deleted paths
-and the worktree.
+and the worktree. A `migrate-concept` PR (the S1-10 sub-issues): add the
+[migration variant](#migration-variant) to the brief; with no prototype of the concept, the run
+ids given are "none" (the PR still cites its run id).
 
 ## 4. Corrections pass, decision awaited
 
@@ -240,4 +251,29 @@ Report, nothing else:
   what fixes it.
 - Non-blocking findings: same format, one line each.
 - What you could not check, and why.
+```
+
+### Migration variant
+
+Appended to the reviewer brief for a PR that delivers a `migrate-concept` run (rule D on #23,
+2026-10-28: the comparison with the old course is dropped; what counts is the quality of the
+new concept):
+
+```
+This PR migrates concept <n> into <concept folder>. Judge the new concept, not its likeness to
+the old one:
+- against specs/linear-course/SPEC.md: the reader text of concept.md, the frontmatter, the
+  three files of section 4, and each diagram under section 7.2 (open the SVGs and the
+  renderings of the report);
+- against specs/linear-course/PROTOCOL.md: what the teacher reads in teaching.md and
+  sources.md;
+- under rules A to C of #23: glossary-order failures listed under Checks, not fixed (A); the
+  citation line of « Consignes » in its one form, no teaching content added (B); each orphan
+  reference tied to the claim it supports or removed, the PR saying which (C);
+- read the old concept once (<old concept file>, <site page>), as the only guard against a
+  passage lost: name a lost passage as a finding, never a rewording that keeps the meaning.
+This replaces the brief's bullet on evidence from an agent-workflow run: read the run's
+transcripts only when a hand migration of this concept existed before the run (a prototype in
+construction/notes/), to check that no agent of the run read it. With no prototype, the
+transcripts are not read.
 ```
