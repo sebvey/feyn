@@ -13,8 +13,8 @@ agent before it reaches the maintainer (decision `fresh-agent-review-before-main
 
 ## 1. Before spawning
 
-- Read each issue (`mise exec -- gh issue view <n>`): the refusals of `/start` apply here first
-  (`blocked:maintainer`, an open blocker, no Done when): name it and stop for that issue.
+- Read each issue (`mise exec -- gh issue view <n>`): the refusals of `/start` step 1 apply here
+  first: name the reason and stop for that issue.
 - Several numbers: one contributor agent per issue, in parallel, only when their To do touch
   distinct files. Two issues that share a file run one after the other (the second after the
   first is merged).
@@ -33,15 +33,16 @@ clean-up need it. Wait for its reply; never do its work in parallel.
 
 Its reply gives the branch, the PR, the files changed, the checks and what it was unsure of.
 Check it before going on: the PR exists (`mise exec -- gh pr view <pr> --json title,isDraft,body`),
-its title follows `<type>(<area>): <summary>`, the body starts with `Closes #<n>` (or the
-awaiting section), no signature line.
+its title follows `<type>(<area>): <summary>`, the body starts with `Closes #<n>` or `Refs #<n>`
+(or the awaiting section), no signature line.
 
 ## 3. Independent review
 
 A new `Agent` (never the contributor, never resumed from it), `opus`, with the
 [reviewer brief](#reviewer-brief). It reads the PR, not the contributor's reply. A PR that
 touches a course or `site/` needs its checks rerun: give the reviewer `isolation: "worktree"`
-too, and clean its worktree as in step 6.
+too (the brief has it check out the PR head detached), and clean its worktree with steps 6.1,
+6.2 and 6.4 only: it holds no issue branch, so no `/finish after-merge` for it.
 
 ## 4. Corrections pass, decision awaited
 
@@ -123,17 +124,19 @@ corrections pass: review findings may come back to you.
 ## Reviewer brief
 
 ```
-You review PR #<pr> on feyn, which claims to deliver issue #<n>. You are not its contributor:
-trust nothing in the PR body or in any summary; recount and recheck every claim yourself.
+You review PR #<pr> (branch <branch>) on feyn, which claims to deliver issue #<n>. You are
+not its contributor: trust nothing in the PR body or in any summary; recount and recheck every claim yourself.
 Read CLAUDE.md, the issue (`mise exec -- gh issue view <n>`) and the files it lists, then the
 PR (`mise exec -- gh pr view <pr>`, `mise exec -- gh pr diff <pr>`); read a file at the PR's
-head with `git fetch` and `git show origin/<branch>:<path>`. Change nothing, push nothing,
+head with `git fetch` and `git show origin/<branch>:<path>`. To rerun checks in a worktree,
+`git fetch` then `git switch --detach origin/<branch>` (the branch itself is checked out in
+the contributor's worktree, so `git switch <branch>` fails). Change nothing, push nothing,
 comment nothing.
 
 The yardstick is the issue's Done when, statement by statement, not the PR's own verdicts.
 Recheck yourself:
 - each "Done when, verified" line: rerun its command, reread its file; a count, recount it;
-- the checks /finish requires for what the PR touches (`git diff --name-only`), rerun them;
+- the checks /finish requires for what the PR touches (`mise exec -- gh pr diff <pr> --name-only`), rerun them;
 - reserved terms of docs/glossary.md and the words it bans; the rules of CLAUDE.md
   (language, no em-dashes in French, title `<type>(<area>): <summary>`, `Closes #<n>`, no
   signature line);
