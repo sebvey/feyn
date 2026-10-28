@@ -61,7 +61,7 @@ Key of the inventory: none. Key drawn: none.
 #### ecran-liens.svg
 
 - Title: Un écran d'outil de backlog : les liens de dépendance entre deux équipes
-- Caption: Liens : une story est bloquée par un élément de l'autre équipe, et les deux PO s'accordent d'abord.
+- Caption: Liens : le lien d'une story vers un élément de l'autre équipe ne remplace pas l'accord des deux PO.
 - Sub-concept: A1b
 - Idea: « Liens : une story est bloquée par un élément de l'autre équipe, et les deux PO s'accordent d'abord. » (MDX « L'essentiel », Figure legende)
 
@@ -73,7 +73,7 @@ Key of the inventory: none. Key drawn: none.
 | E4 | une story de la première équipe, bloquée | « Une story », « bloquée » (clé) | subject | blocked (pointillé) |
 | E5 | un élément de l'équipe B, qui bloque la story | « Un élément » | subject | none |
 | E6 | le lien de dépendance de la story vers l'élément de l'autre équipe | « is blocked by » | subject | none |
-| E7 | l'accord entre les deux PO, la conversation que le lien ne remplace pas | « les deux PO s'accordent d'abord » | contrast | none |
+| E7 | l'accord entre les deux PO, la conversation que le lien ne remplace pas | « accord des deux PO » | contrast | none |
 
 Relations:
 - E4 est dans E2 ; E5 est dans E3
@@ -86,7 +86,7 @@ Key of the inventory: none. Key drawn: none.
 #### ecran-etats.svg
 
 - Title: Un écran d'outil de backlog : les états, où « fait » veut dire DoD remplie
-- Caption: États (cas inventé : Idée, Cadrée, Réalisation, Terminée) : « Cadrée » est un repère, « Terminée » veut dire DoD remplie.
+- Caption: États (cas inventé : Idée, Cadrée, Réalisation, Terminée) : « Terminée » veut dire DoD remplie.
 - Sub-concept: A1c
 - Idea: « États (cas inventé) : « Cadrée » est un repère, « Terminée » veut dire DoD remplie. » (MDX « L'essentiel », Figure legende)
 
@@ -94,7 +94,7 @@ Key of the inventory: none. Key drawn: none.
 |---|---|---|---|---|
 | E1 | titre de la bande des états | « États » | text | none |
 | E2 | premier état du tableau (cas inventé) | « Idée » | context | none |
-| E3 | deuxième état du tableau, un repère qui suit la DoR, pas une barrière | « Cadrée », « repère : la DoR » | contrast | none |
+| E3 | deuxième état du tableau, un repère qui suit la DoR, pas une barrière | « Cadrée », « repère : la DoR » | contrast (trait plein, opacité 0.7) | none |
 | E4 | troisième état du tableau | « Réalisation » | context | none |
 | E5 | dernier état du tableau, qui veut dire DoD remplie | « Terminée », « DoD remplie » | subject | done (« « Terminée » veut dire DoD remplie ») |
 
@@ -124,6 +124,7 @@ Corrections made in the output, never in the frozen source:
 - teaching.md « Schéma » rewritten for the three new drawings (lead line, file names, no sub-concept without a diagram, so no metaphor kept as text). Its run version described the single old drawing and its « légende ».
 - sources.md: « (A1c, renvoi 11a, 0b) », « consigne » and « raison de régler l'outil » no longer stand in the first column as sections; « consigne du lot (T-018g) » and « consigne du lot » became « choix du cours »; bare file names in Références (`04-hierarchie.md`, `10-hors-perimetre-dependances.md`, `11-dor-dod.md`) became their `concepts/.../sources.md` paths; row « Piège de vocabulaire : Azure DevOps... » takes Nature `cours` (its verification says « constat du cours »).
 - Rule C: no orphan reference (S1 to S14 are all cited), so none attached or removed. Rule A: `glossary-order` passes on this concept, none left for #166. No « interne » reference type, no « Voir « Sous-concepts » » pointer to delete. Rule B: « Consignes » ends with no citation line (the three cases are cited in the sub-concept lines).
+- Fresh review (3 blocking findings, fixed): the agreement bubble is now the noun phrase « accord des deux PO » (« d'abord » left to the story's order, no longer in the SVG); « Cadrée » is solid, `secondary` at 0.7, so the dashed form means only « bloquée » (with its key); the states caption keeps the four names and carries the DoD idea alone (« Cadrée » stays a label); the links caption is one idea (the link does not replace the PO agreement). Also: « Schéma » lead says the diagrams are shown only on request; `sources.md` first-column qualifiers are sections (« Banque d'exemples » for the bank rows), the « Definition of Done » column row has no Nature (its fact is [S11]), the session pointer names `concepts/04-hierarchie/sources.md` [S8]; the writer instruction « Ne pas affirmer que Jira interdit… » left Pièges (it stays in « Non vérifié » and « Consignes »); a `> Task` continuation line in `teaching.md` was reflowed.
 - The PNGs of the new diagrams were rendered again with `construction/scripts/diagram-renderings/render.mjs` (one colour); `old-1.png` is the run's.
 
 ## Writing choices

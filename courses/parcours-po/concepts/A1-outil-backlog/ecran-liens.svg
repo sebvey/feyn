@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 330" fill="currentColor" role="img" aria-labelledby="ecran-liens-titre ecran-liens-desc" font-family="system-ui, sans-serif">
   <title id="ecran-liens-titre">Un écran d'outil de backlog : les liens de dépendance entre deux équipes</title>
-  <desc id="ecran-liens-desc">Deux backlogs côte à côte, celui d'une équipe et celui de l'autre équipe. Une story du premier, bloquée, est reliée par un lien is blocked by à un élément du second. Au-dessus, entre les deux, les deux PO s'accordent d'abord.</desc>
+  <desc id="ecran-liens-desc">Deux backlogs côte à côte, celui d'une équipe et celui de l'autre équipe. Une story du premier, bloquée, est reliée par un lien is blocked by à un élément du second. Au-dessus, entre les deux, l'accord des deux PO.</desc>
   <g id="A1b-bande-liens" class="muted">
     <text x="20" y="30" font-size="18" font-weight="bold">Liens</text>
   </g>
   <g id="A1b-accord-po" class="secondary">
     <path d="M150 78 H130 V120 M450 78 H470 V120" fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
     <rect x="150" y="58" width="300" height="40" rx="20" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
-    <text x="300" y="83" class="muted" font-size="14" text-anchor="middle">les deux PO s'accordent d'abord</text>
+    <text x="300" y="83" class="muted" font-size="14" text-anchor="middle">accord des deux PO</text>
   </g>
   <g id="A1b-backlog-a" class="muted">
     <rect x="20" y="120" width="220" height="150" rx="8" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>

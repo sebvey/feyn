@@ -37,11 +37,11 @@ diagrams:
     subconcept: A1a
   - file: ecran-liens.svg
     title: "Un écran d'outil de backlog : les liens de dépendance entre deux équipes"
-    caption: "Liens : une story est bloquée par un élément de l'autre équipe, et les deux PO s'accordent d'abord."
+    caption: "Liens : le lien d'une story vers un élément de l'autre équipe ne remplace pas l'accord des deux PO."
     subconcept: A1b
   - file: ecran-etats.svg
     title: "Un écran d'outil de backlog : les états, où « fait » veut dire DoD remplie"
-    caption: "États (cas inventé : Idée, Cadrée, Réalisation, Terminée) : « Cadrée » est un repère, « Terminée » veut dire DoD remplie."
+    caption: "États (cas inventé : Idée, Cadrée, Réalisation, Terminée) : « Terminée » veut dire DoD remplie."
     subconcept: A1c
 ---
 
@@ -92,7 +92,7 @@ Ensuite, un état « prêt » reste un repère, pas une barrière (concept 11b) 
 ## Pièges
 
 - **Copier les niveaux par défaut sans les choisir** (par exemple un niveau intermédiaire hérité du processus) : l'équipe choisit les siens, peu suffisent (concept 4).
-- **Se croire coincé par un niveau que l'outil ne retire pas** : l'équipe peut cesser de l'employer et ne pas l'afficher. Ne pas affirmer que Jira interdit de retirer l'epic.
+- **Se croire coincé par un niveau que l'outil ne retire pas** : l'équipe peut cesser de l'employer et ne pas l'afficher.
 - **Chercher un lien « dépend de »** : il s'appelle « blocks / is blocked by » (Jira), « Predecessor / Successor » (Azure DevOps) ou « blocked / blocking » (Linear).
 - **Prendre le lien pour l'accord**, ou créer soi-même l'élément dans le backlog d'une autre équipe : chaque PO inscrit et ordonne dans le sien ; on le convainc (concept 10b2).
 - **Un « fait » qui ne veut pas dire DoD remplie** : l'outil juge terminé d'après sa propre règle (sa colonne la plus à droite, sa catégorie d'état), pas d'après la DoD.

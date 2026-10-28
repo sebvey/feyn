@@ -40,8 +40,8 @@ situation d'exercice (« dans cet exercice, … »), sans le fixer.
 
 ### Coincés avec le niveau Feature ? (A1a)
 - **Explication** : les niveaux viennent de l'outil, pas de Scrum (concept 4a2). Jira a par
-  défaut Epic > Story > Subtask ; Azure DevOps, en processus Agile, Epic > Feature > User Story
-  > Task. Un niveau de trop (4a3) ne se retire pas toujours : dans Azure DevOps, un niveau
+  défaut Epic > Story > Subtask ; Azure DevOps, en processus Agile, Epic > Feature >
+  User Story > Task. Un niveau de trop (4a3) ne se retire pas toujours : dans Azure DevOps, un niveau
   hérité ne se supprime pas, mais chaque équipe choisit les niveaux qu'elle affiche, et le type
   peut être désactivé (réglage du processus, qui touche tous les projets qui l'emploient). Dans
   Jira, un niveau entre Epic et Story (Feature, par exemple) a été ajouté ou renommé chez
@@ -143,7 +143,8 @@ situation d'exercice (« dans cet exercice, … »), sans le fixer.
 
 ## Schéma
 
-Un schéma par sous-concept, tous dessinés sur un écran d'outil inventé pour l'illustration.
+Un schéma par sous-concept, tous dessinés sur un écran d'outil inventé pour l'illustration, à
+montrer seulement à la demande de l'apprenant.
 
 **A1a, les niveaux (ecran-niveaux.svg).** Un écran d'outil stylisé : une bande « Niveaux », puis
 l'arbre Epic, Feature, User Story, Task, chaque ligne sous la précédente et plus étroite. La
@@ -151,9 +152,9 @@ ligne Epic, seule marquée, est légendée « le niveau de trop » (exemple inve
 
 **A1b, les liens (ecran-liens.svg).** Deux backlogs côte à côte, « Une équipe » et « L'autre
 équipe ». Une story du premier, en pointillé parce que bloquée, est reliée à un élément de
-l'autre par une flèche « is blocked by ». Au-dessus, entre les deux, une bulle discrète : « les
-deux PO s'accordent d'abord ».
+l'autre par une flèche « is blocked by ». Au-dessus, entre les deux, une bulle discrète :
+« accord des deux PO ».
 
 **A1c, les états (ecran-etats.svg).** Quatre cases de tableau (cas inventé), de gauche à
-droite : Idée, Cadrée, Réalisation, Terminée. « Cadrée » est en pointillé, légendée « repère : la
-DoR ». « Terminée », seule marquée, est légendée « DoD remplie ».
+droite : Idée, Cadrée, Réalisation, Terminée. « Cadrée », au trait plein discret, est légendée
+« repère : la DoR ». « Terminée », seule marquée, est légendée « DoD remplie ».
