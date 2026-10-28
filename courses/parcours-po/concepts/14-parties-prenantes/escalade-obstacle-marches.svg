@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 440" fill="currentColor" role="img" aria-labelledby="escalade-obstacle-marches-titre escalade-obstacle-marches-desc" font-family="system-ui, sans-serif" font-size="14">
+  <title id="escalade-obstacle-marches-titre">L'escalade d'un obstacle, en trois marches et un palier</title>
+  <desc id="escalade-obstacle-marches-desc">Un escalier de trois marches numérotées puis d'un palier : la personne concernée, le Scrum Master, le sponsor, puis l'instance où se tranchent les désaccords entre services. À côté, un désaccord sur l'ordre de son propre backlog, barré d'une croix : le PO le tranche.</desc>
+  <g id="14c-marche-personne" class="primary">
+    <rect x="20" y="290" width="130" height="130" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2.5"/>
+    <text x="30" y="312" font-weight="bold">1</text>
+    <text x="30" y="334" font-weight="bold">La personne</text>
+    <text x="30" y="352" font-weight="bold">concernée</text>
+    <text x="30" y="378" class="muted">pas encore</text>
+    <text x="30" y="396" class="muted">une escalade</text>
+  </g>
+  <g id="14c-marche-scrum-master" class="primary">
+    <rect x="160" y="230" width="130" height="190" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.7" stroke-width="2.5"/>
+    <text x="170" y="252" font-weight="bold">2</text>
+    <text x="170" y="274" font-weight="bold">Le Scrum Master</text>
+    <text x="170" y="300" class="muted">fait lever</text>
+    <text x="170" y="318" class="muted">les obstacles</text>
+  </g>
+  <g id="14c-marche-sponsor" class="primary">
+    <rect x="300" y="170" width="130" height="250" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.4" stroke-width="2.5"/>
+    <text x="310" y="192" font-weight="bold">3</text>
+    <text x="310" y="214" font-weight="bold">Le sponsor</text>
+    <text x="310" y="240" class="muted">porte plus haut</text>
+    <text x="310" y="258" class="muted">les obstacles</text>
+  </g>
+  <g id="14c-palier-instance" class="muted">
+    <rect x="440" y="110" width="130" height="310" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="450" y="134">L'instance où se</text>
+    <text x="450" y="152">tranchent les</text>
+    <text x="450" y="170">désaccords</text>
+    <text x="450" y="188">entre services</text>
+  </g>
+  <g id="14c-desaccord-ordre" class="secondary">
+    <rect x="20" y="20" width="280" height="110" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <line x1="232" y1="42" x2="282" y2="108" stroke="currentColor" stroke-opacity="0.7" stroke-width="3"/>
+    <line x1="282" y1="42" x2="232" y2="108" stroke="currentColor" stroke-opacity="0.7" stroke-width="3"/>
+    <text x="32" y="52" class="muted">Désaccord sur l'ordre</text>
+    <text x="32" y="72" class="muted">de son propre backlog</text>
+    <text x="32" y="108" class="muted" font-weight="bold">le PO tranche</text>
+  </g>
+</svg>
