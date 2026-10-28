@@ -96,7 +96,7 @@ function checkConcept(ctx, c, out) {
     const top = mdlib.sections(cm.body, 2);
     // the stances live in the frontmatter only: the old body section is named, then left out of the order
     for (const s of top.sections.filter((x) => x.title === H('stances'))) {
-      out.push(fail(cf, s.line, `section « ${H('stances')} » does not exist: the stances live in the frontmatter stances and neighbors only`));
+      out.push(fail(cf, s.line, `section « ${H('stances')} » is not a \`concept.md\` section: the stances and neighbours live in the frontmatter stances and neighbors only`));
     }
     top.sections = top.sections.filter((x) => x.title !== H('stances'));
     const exp = [

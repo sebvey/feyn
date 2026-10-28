@@ -618,7 +618,7 @@ distillation is cited by at least one rule. "new" marks what the old teacher did
 | 5.4 | 060 | idem |
 | 5.5 | 060 | idem |
 | 5.6 | 009 | `CLAUDE.md` opening |
-| 6.1 | 016 | consensus bullet (the course's own choice, third stance of `SPEC.md` 4.1: new) |
+| 6.1 | 016 | consensus bullet (the course's own choice, third stance of `SPEC.md` 4.1: new); the hint « à présenter comme tels » from the old concept files' « Consensus et choix d'école » section (#97) |
 | 6.2 | 016 | sources bullet |
 | 6.3 | 027, 016 | idem |
 | 6.4 | 027 | idem |

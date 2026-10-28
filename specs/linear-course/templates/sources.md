@@ -7,7 +7,8 @@ How to use: copy to the concept folder, replace every <placeholder>, delete this
 (from the opening to the closing mark, marks included: no HTML in course Markdown).
 - No H1. Optional introduction, then « Affirmations », « Références », « Non vérifié » in
   this order.
-- Claims: four columns. The claim in a few words with its section in parentheses; the source
+- Claims: four columns. The claim in a few words with its section in parentheses (a claim of
+  the frontmatter stances or neighbors names « Consensus et choix d'école »); the source
   (ids `[S1]`, or the path `concepts/NN-slug/sources.md` of another concept where it was
   verified, or a word that says there is none); what was verified; the nature (a stance marker
   word: consensus, école, cours; or empty).

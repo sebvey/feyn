@@ -147,7 +147,7 @@ heading, in the order given, and no other `##` section exists (`concept-folder`)
 | `neighbors` | optional | neighbouring notions not to confuse with this concept: a list of items |
 | `diagrams` | optional | the concept's diagrams, a list (below) |
 
-`stances` and `neighbors` are the one place for the concept's stances: the body has no stances
+`stances` and `neighbors` are the one place for the concept's stances and neighbours: the body has no stances
 section (`concept-folder`), and the site renders them from the frontmatter, under the heading
 `headings.stances`. The reader text may still mark a claim with a stance marker (section 4.5).
 
@@ -217,12 +217,11 @@ the order of the table; « Ce qui marche » comes last.
 
 `sources.md` traces the source of every verifiable claim of the concept folder (definition,
 consensus, school and its author, date, figure, quotation), cases included. The teacher reads
-it when the learner asks where a claim comes from. The site builds only the « Affirmations »
-rows whose section is in `concept.md` and the « Références » they cite; the rows whose section is
-in `teaching.md` are teacher-only. A claim of the frontmatter `stances` or `neighbors` names
-`headings.stances` (« Consensus et choix d'école ») as its section, and is built with them. A row
-whose section (the parenthesis of column 1) names neither a section of `concept.md` nor
-`headings.stances` is not built. « Non vérifié » is not built: its items carry no section to
+it when the learner asks where a claim comes from. A claim of the frontmatter `stances` or
+`neighbors` names `headings.stances` (« Consensus et choix d'école ») as its section (the
+parenthesis of column 1). The site builds only the « Affirmations » rows whose section is in
+`concept.md` or is `headings.stances`, and the « Références » they cite; the other rows (a
+section of `teaching.md`) are teacher-only. « Non vérifié » is not built: its items carry no section to
 filter on. Storyline facts are invented and have no source. `concept.md` and `teaching.md` cite
 no reference: references live in the frontmatter `refs` and here (`sources`).
 
