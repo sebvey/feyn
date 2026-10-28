@@ -140,4 +140,4 @@ Failing the run:
 - glossary-order: the two failures (« Critère d'acceptation », « Dépendance ») stay, by rule A (fixed once for all concepts by #166).
 - `->` at frozen sources line 69: none in the output; `typography: ok`.
 - Fresh review, SVG (SPEC 7.2): the origin band (second idea, E12 of the inventory) dropped and the viewBox shortened to 495; I, N, V boxes unfilled with a weaker stroke, E, S, T keep the dashes and the fill, so the subject is the most marked; arrowheads redrawn clear of the « rapidement » box. PNG regenerated. « Schéma » of `teaching.md`: the banner sentence removed.
-- Fresh review,  pitfalls: the duplicated « avant le sprint » sentence merged; « exemple inventé » made « cas inventé ».
+- Fresh review, `concept.md` pitfalls: the duplicated « avant le sprint » sentence merged; « exemple inventé » made « cas inventé ».
