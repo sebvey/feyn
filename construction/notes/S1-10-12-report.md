@@ -1,6 +1,6 @@
 # Migration report: concept 12
 
-Workflow `migrate-concept`, course `parcours-po`, concept folder `concepts/12-donnees-produit/`. Paths in the course folder are relative to it; the old files are named from their repository folder (`parcours-po`, `parcours-po-website`).
+Workflow `migrate-concept` (run `wf_d348c0e3-b92`), course `parcours-po`, concept folder `concepts/12-donnees-produit/`. Paths in the course folder are relative to it; the old files are named from their repository folder (`parcours-po`, `parcours-po-website`).
 Old files: `parcours-po/course/concepts/12-donnees-produit.md` (CF), `parcours-po/course/sources/12-donnees-produit.md` (SF), `parcours-po-website/src/content/concepts/fr/12-donnees-produit.mdx` (MDX), `parcours-po-website/src/components/schemas/Schema12.astro` (ASTRO).
 
 ## Summary
@@ -42,15 +42,15 @@ Corrections after the run (contributor, SPEC.md 7.2): the run drew each panel wi
 
 - Title: Définir un indicateur : la fiche à cinq cases (exemple inventé pour l'illustration)
 - Caption: 12a : sur la fiche d'un indicateur à cinq cases, la case qu'on ne peut pas remplir reste à faire fixer.
-- Sub-concept: 12a
-- Drawn: the fiche « Nouveaux abonnés » (subject, `primary`), five cases in order; four solid, « règle de calcul » dashed with « un renouvellement compte-t-il ? » (state: to be fixed); a key « à faire fixer ». The two output views and their note are dropped (another idea: the definition holds wherever the indicator is published, kept in the reader text); the case values are dropped (not in concept.md).
+- Sub-concept: 12a2
+- Drawn: the fiche « Nouveaux abonnés » and four solid cases (context, `muted`), five cases in order; the subject, « règle de calcul », « règle de calcul » dashed with « un renouvellement compte-t-il ? » (`primary`, the only full-weight element; state: to be fixed); a key « à faire fixer ». The two output views and their note are dropped (another idea: the definition holds wherever the indicator is published, kept in the reader text); the case values are dropped (not in concept.md).
 
 #### recu-mal-jamais-recu.svg
 
 - Title: Distinguer ce qui se corrige de ce qui manque
 - Caption: 12b : ce que la source n'envoie jamais est une limite de la source, et non un défaut que la plateforme corrige.
 - Sub-concept: 12b
-- Drawn: the platform (context, `muted`); a « relevé en double » entering it (contrast, `secondary`, low opacity, « reçu mal : se corrige (unicité) »); « donnée que la source n'envoie pas » outside, dashed, stopped by a bar, `primary` opacity 1, with « jamais reçu : limite de la source » (subject). « s'écrit et se montre » is dropped (prescription: reader text). The caption changed so that the diagram has one idea, its subject.
+- Drawn: the platform (context, `muted`); a « relevé en double » entering it (contrast, `secondary`, low opacity, « reçu mal : se corrige (unicité) »); « donnée que la source n'envoie pas » outside, dashed, stopped by a bar at the platform's edge, `primary` opacity 1, with « jamais reçu : limite de la source » (subject). « s'écrit et se montre » is dropped (prescription: reader text). The caption changed so that the diagram has one idea, its subject.
 
 #### colonnes-finalite.svg
 
@@ -99,3 +99,5 @@ The run itself failed on four `sources` failures, fixed in the output under the 
 - sources.md reference S10, type « interne (définition du cours) »: written « primaire (interne : définition du cours) » (ruling on « interne »).
 - concept.md stances cited S1 (twice) and S13 was cited by no claim: the stances carry the ids of the site's MDX, whose list of references is numbered from S1 = Kimball, while sources.md keeps the numbering of the old sources file (S2 = Kimball, « Pas de S1 »). All stance refs were mapped to the sources.md ids (S1 to S2, S2 to S3, S3 to S4, S4 to S5, S5 to S6, S6 to S7, S7 to S8, S8 to S9, S9 to S11); S1 was Kimball, hence S2. The MDX claim « une donnée pseudonymisée qu'on peut rattacher à une personne reste personnelle » cites its S11 (the 2025 judgment, S13 here): S13 is attached to that claim, in the « Pseudonymisée » stance and in its row of sources.md (rule C).
 - teaching.md: the first line of « Faits du fil rouge utilisés » capitalised; the « Schéma » section describes the new drawings; the cross-reference rows of sources.md name a section of the concept.
+
+Fresh review of PR #195 (2 blocking, fixed): fiche redrawn with the context `muted` and only the open case `primary`, declared 12a2; « Schéma » no longer says the diagrams are shown after the answer; 12b arrow and bar aligned with the text; sources.md section names, typos, empty S10 link, and the neighbors row (indicator is an output) restored.

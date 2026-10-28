@@ -34,7 +34,7 @@ diagrams:
   - file: fiche-cinq-cases.svg
     title: "Définir un indicateur : la fiche à cinq cases (exemple inventé pour l'illustration)"
     caption: "12a : sur la fiche d'un indicateur à cinq cases, la case qu'on ne peut pas remplir reste à faire fixer."
-    subconcept: 12a
+    subconcept: 12a2
   - file: recu-mal-jamais-recu.svg
     title: "Distinguer ce qui se corrige de ce qui manque"
     caption: "12b : ce que la source n'envoie jamais est une limite de la source, et non un défaut que la plateforme corrige."

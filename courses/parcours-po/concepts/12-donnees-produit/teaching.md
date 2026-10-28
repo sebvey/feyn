@@ -280,13 +280,12 @@ faits du fil rouge. Le prof ne demande jamais à l'apprenant de fixer une règle
 
 ## Schéma
 
-Trois schémas, un par sous-concept, chacun montré dans la correction, jamais avant la réponse.
-Les cas sont inventés pour l'illustration (à dire sur le schéma : « cas inventé ») : ils ne
-fixent aucun fait du fil rouge.
-1. **12a** : la fiche de l'indicateur « Nouveaux abonnés » (cas inventé), un cadre plein qui
+Trois schémas, un par sous-concept. Les cas sont inventés pour l'illustration : ils ne fixent
+aucun fait du fil rouge.
+1. **12a2** : la fiche de l'indicateur « Nouveaux abonnés » (cas inventé), un cadre discret qui
    contient cinq cases dans l'ordre : règle de calcul, grain, période, source, fraîcheur. Quatre
-   cases sont pleines ; la règle de calcul est en pointillé et porte la question « un
-   renouvellement compte-t-il ? ». Une clé nomme le pointillé : « à faire fixer ».
+   cases sont discrètes ; la règle de calcul, en pointillé et seule au trait plein, porte la
+   question « un renouvellement compte-t-il ? ». Une clé nomme le pointillé : « à faire fixer ».
 2. **12b** : la plateforme, un cadre à droite. Un relevé en double entre dans le cadre, en trait
    discret, avec « reçu mal : se corrige (unicité) ». Une donnée que la source n'envoie pas reste
    dehors, en pointillé, arrêtée par une barre au bord du cadre, avec « jamais reçu : limite de

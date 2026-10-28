@@ -7,7 +7,7 @@
     <text x="266" y="72">ce qu'elle reçoit</text>
   </g>
   <g id="12b-doublon" class="secondary">
-    <line x1="200" y1="125" x2="330" y2="125" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <line x1="252" y1="125" x2="330" y2="125" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
     <path d="M330 118 L342 125 L330 132 Z" fill="currentColor" fill-opacity="0.6" stroke="none"/>
     <rect x="344" y="98" width="220" height="54" rx="6" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
     <text x="454" y="131" text-anchor="middle" class="muted">relevé en double</text>
@@ -20,8 +20,8 @@
     <rect x="344" y="240" width="220" height="62" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="7 5"/>
     <text x="454" y="266" text-anchor="middle" font-weight="bold">donnée que la source</text>
     <text x="454" y="288" text-anchor="middle" font-weight="bold">n'envoie pas</text>
-    <line x1="454" y1="240" x2="454" y2="206" stroke="currentColor" stroke-width="2.5" stroke-dasharray="6 5"/>
-    <line x1="424" y1="198" x2="484" y2="198" stroke="currentColor" stroke-width="4"/>
+    <line x1="454" y1="240" x2="454" y2="190" stroke="currentColor" stroke-width="2.5" stroke-dasharray="6 5"/>
+    <line x1="424" y1="180" x2="484" y2="180" stroke="currentColor" stroke-width="4"/>
   </g>
   <g id="12b-verdict-donnee" class="muted">
     <text x="20" y="262">jamais reçu :</text>
