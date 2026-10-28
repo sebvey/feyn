@@ -33,8 +33,8 @@ stances:
       refs: ["S10"]
 diagrams:
   - file: regle-exemples-question.svg
-    title: "Une règle métier, deux exemples où un seul fait change, une règle non fixée"
-    caption: "Une règle, deux exemples, une question. Les exemples en Given/When/Then illustrent la règle ; d'un exemple à l'autre, un seul fait change (souligné). Une règle non fixée reste une question, sans exemple dessous. Cas d'illustration inventé pour la page."
+    title: "Une règle métier, deux exemples, une règle non fixée"
+    caption: "Une règle métier est illustrée par des exemples en Given/When/Then, et une règle non fixée reste une question, sans exemple dessous."
     subconcept: 8a
 ---
 
@@ -46,7 +46,7 @@ diagrams:
 
 Un **critère d'acceptation**, propre à une story, dit quand elle est faite : un testeur tranche OK ou KO sans poser de question (le T d'INVEST, concept 7). Une **règle métier** est vraie hors de la story, et d'autres stories s'en servent. Les critères sont souvent des exemples qui illustrent une règle, écrits en **Given/When/Then** (contexte, événement, résultat observable), **une variable à la fois**. Un critère ne fixe pas une règle restée ouverte (concept 8a2).
 
-![Une règle métier, deux exemples où un seul fait change, une règle non fixée](regle-exemples-question.svg)
+![Une règle métier, deux exemples, une règle non fixée](regle-exemples-question.svg)
 
 ## 8a Critère ou règle métier
 
@@ -80,7 +80,7 @@ Un critère devient vite flou par quatre défauts. Un **When absent** : on ne sa
 
 ### 8b2 Une variable à la fois
 
-D'un exemple à l'autre, **ne changer qu'un fait du Given** [cours] : si le Then change, on sait quelle règle joue ; si un test échoue, on sait quoi corriger. Deux exemples qui diffèrent par deux faits à la fois ne disent plus lequel est en cause. Sur le schéma, les deux exemples ne diffèrent que par la location en cours.
+D'un exemple à l'autre, **ne changer qu'un fait du Given** [cours] : si le Then change, on sait quelle règle joue ; si un test échoue, on sait quoi corriger. Deux exemples qui diffèrent par deux faits à la fois ne disent plus lequel est en cause. Ainsi, pour la règle « un abonné loue un seul vélo à la fois », les deux exemples ne diffèrent que par la location en cours.
 
 Il faut aussi que chaque Then reste fidèle aux règles fixées : un Then qui exclut un cas que la règle admet invente une règle en douce. Exemple inventé : « l'abonné suspendu ne peut pas louer », alors qu'aucune règle ne le dit. On relit donc chaque Then contre les règles du domaine, comme on le fait pour un critère qui s'appuie sur une règle non fixée.
 
@@ -90,7 +90,7 @@ Il faut aussi que chaque Then reste fidèle aux règles fixées : un Then qui ex
 - **Fixer une règle non fixée dans un critère** (cas inventé : une durée maximale de location, non fixée) : le critère décide en douce. Le PO ne l'invente pas et ne la tranche pas à la place de l'utilisateur concerné ; il la fait fixer avant que la story parte (concept 7a2 ; DoR, concept 11).
 - **Inventer une règle dans le Then** (cas inventé : « l'abonné suspendu ne peut pas louer », si aucune règle ne le dit) : relire chaque Then contre les règles fixées.
 - **Un mot flou** (« récent », « rapidement ») : le testeur doit encore poser une question. Écrire la valeur fixée (cas inventé : « chargée en moins de 3 secondes »). Un mot dont la règle n'est pas fixée (« location trop longue ») relève du piège précédent.
-- **Un Then vague ou un When absent ou mal placé** : sans événement ni résultat observable, on ne sait pas quoi vérifier ni quand. Un Then vague (« l'utilisateur est informé ») : écrire ce que le testeur vérifie (un nombre, son âge).
+- **Un Then vague ou un When absent ou mal placé** : sans événement ni résultat observable, on ne sait pas quoi vérifier ni quand. Écrire l'événement, et ce que le testeur vérifie (un nombre, son âge) au lieu de « l'utilisateur est informé ».
 - **Le moyen au lieu du résultat** (« la page est servie depuis un cache ») : le Then vérifie l'âge des données que l'utilisateur lit, pas la fréquence de rafraîchissement.
 - **La solution dans le critère** (« il reçoit un export CSV ») : on fige ce que l'équipe pouvait négocier (concept 7b).
 - **Reformuler une contrainte plus large qu'elle n'est** (« hors ligne » pour « sans réseau pendant le trajet », exemple inventé) : la reprendre telle qu'elle est posée.

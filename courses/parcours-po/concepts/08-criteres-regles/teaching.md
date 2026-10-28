@@ -19,7 +19,7 @@
 
 ## Faits du fil rouge utilisés
 
-la story d'Abba (« En tant qu'abonné, je veux savoir avant de
+La story d'Abba (« En tant qu'abonné, je veux savoir avant de
 partir s'il reste un vélo à ma station, afin de ne pas me déplacer pour rien. ») ; Abba n'a
 qu'un téléphone basique, sans l'appli ; règles fixées : un vélo disponible est un vélo à quai et
 louable, la station d'un abonné est celle qu'il a choisie comme favorite, fraîcheur visée de
@@ -131,7 +131,7 @@ rouge. Le prof ne demande jamais à l'apprenant de fixer une règle (un seuil, u
 - **Ce qui marche** : « qu'est-ce que le testeur regarde pour dire OK ? ». Si un défaut reste
   après la réponse, dire ce qui est corrigé et relancer sur celui-là seul.
 
-### Fraîcheur : que vérifie le Then ? (8b1)
+### Fraîcheur : que vérifie le Then ? (8b1, rechange)
 
 - **Explication** : le Then vérifie un résultat observable par l'utilisateur, pas un moyen
   choisi par l'équipe.
@@ -184,9 +184,9 @@ rouge. Le prof ne demande jamais à l'apprenant de fixer une règle (un seuil, u
 
 ## Schéma
 
-Deux colonnes, sur un cas inventé pour l'illustration. À gauche, la règle métier sur une
-carte bleue (« un abonné loue un seul vélo à la fois »). À droite, les exemples en Given/When/Then sur
-des cartes vertes, reliés par un trait à la règle qu'ils illustrent ; dans chaque paire
-d'exemples, le seul fait qui change est surligné. En bas, une carte rouge « durée maximale d'une
-location : à faire fixer avant le sprint », sans exemple dessous. Légende : « couleurs de
-l'Example Mapping (Matt Wynne) : règles en bleu, exemples en vert, questions en rouge ».
+Un seul dessin, sur un cas inventé pour l'illustration. En haut, la règle métier « un abonné loue
+un seul vélo à la fois ». Dessous, reliés à elle par un trait, deux exemples en Given/When/Then :
+l'un pour un abonné sans location en cours (la location est acceptée), l'autre pour un abonné
+avec une location en cours (elle est refusée). En bas, une carte en pointillé « durée maximale
+d'une location : règle non fixée, à faire fixer avant le sprint », sans exemple dessous. Légende :
+« Règles, exemples, questions : l'Example Mapping de Matt Wynne ».

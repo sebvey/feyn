@@ -7,7 +7,7 @@ Old files: `parcours-po/course/concepts/08-criteres-regles.md` (CF), `parcours-p
 
 | checks | target existed | old diagrams | new diagrams | captions of more than one sentence |
 |---|---|---|---|---|
-| fail | no | 1 | 1 | 1 |
+| fail | no | 1 | 1 | 0 (1 before the fixes) |
 
 Result: **failed**. checks is read in code from the output below, which the check agent returns; target existed is read in code from the listing below, which the scope agent returns. The new concept is not compared with the old one (rule D on #23): the fresh-agent review judges it against SPEC.md and PROTOCOL.md.
 
@@ -40,8 +40,8 @@ Its sentences, where the inventory sends them (M11):
 
 #### regle-exemples-question.svg
 
-- Title: Une règle métier, deux exemples où un seul fait change, une règle non fixée
-- Caption: Une règle, deux exemples, une question. Les exemples en Given/When/Then illustrent la règle ; d'un exemple à l'autre, un seul fait change (souligné). Une règle non fixée reste une question, sans exemple dessous. Cas d'illustration inventé pour la page. (**4 sentences**: SPEC.md 7.2, principle 1)
+- Title: Une règle métier, deux exemples, une règle non fixée
+- Caption: Une règle métier est illustrée par des exemples en Given/When/Then, et une règle non fixée reste une question, sans exemple dessous. (1 sentence; the review reduced the diagram to 8a, dropped the one-variable note, and moved the invented-case sentence to sources.md)
 - Sub-concept: 8a
 - Idea: « Les critères sont souvent des exemples qui illustrent une règle, écrits en **Given/When/Then** (contexte, événement, résultat observable), **une variable à la fois**. Un critère ne fixe pas une règle restée ouverte. » (MDX and CF « L'essentiel » (Figure legende: « Les exemples en Given/When/Then illustrent la règle ; d'un exemple à l'autre, un seul fait change (souligné). Une règle non fixée reste une question, sans exemple dessous. »))
 
@@ -73,8 +73,8 @@ Renderings in `S1-10-08-report/`, beside this report.
 
 - M9 citation line: none added. The old « Sous-concepts » cites all five cases by their titles in « » (Trier les phrases de la story d'Abba, Le seuil des stations presque vides, Le critère d'Abba à corriger, Fraîcheur : que vérifie le Then ?, Les vélos disponibles d'Étienne), so « Consignes » is the old section verbatim.
 - M9: « Faits du fil rouge utilisés » is the old bank lead paragraph with its lead words « Faits du fil rouge utilisés : » dropped. The rest is verbatim, so the paragraph now starts in lowercase (« la story d'Abba … »). The bank has no other lead text.
-- M13 banned character: in teaching.md, « B1, ... retiré du service: 5 disponibles ; B2, ... signalé en panne: 6 disponibles » became ': 5 disponibles' and ': 6 disponibles' (ASCII: is banned by the French pack).
-- M13 banned character: in sources.md, the two rows 'Test rapide : « ... »: règle' and ': critère' became ': règle' and ': critère'.
+- M13 banned character: in teaching.md, « B1, ... retiré du service: 5 disponibles ; B2, ... signalé en panne: 6 disponibles » became ': 5 disponibles' and ': 6 disponibles' (the arrows of the old text, banned by the French pack, replaced by a colon).
+- M13 banned character: in sources.md, the two rows 'Test rapide : « ... »: règle' and ': critère' became ': règle' and ': critère' (the arrows of the old text replaced by a colon).
 - M10 structure: the old sub-tables (### Consensus et choix d'école, ### 8a, ### 8b, ### Renvois sans enseignement) are merged into the single « Affirmations » table that SPEC 4.4 requires. Rows keep their old order, and the ### headings are dropped.
 - M10 Nature, claim stated by an MDX affirmations item, so its kind: Scrum Guide row consensus; 'story porte des critères' consensus; critère et condition de satisfaction école; PO écrit les critères école (both rows map to the same MDX item, kind ecole); G/W/T créée par North et Matts école; BDD école; G/W/T sans outil école; Gherkin école; Specification by Example école; critère = condition vérifiable cours; T d'INVEST école; règle métier cours; critères = exemples école; Example Mapping école; both test-rapide rows cours (one MDX item 'Test de séparation' holds both questions); contrainte d'usage cours; règle non fixée cours; Given/When/Then définition école; Then vague cours and Critère sans When cours (both map to the MDX item 'Un When absent, un Then vague ou un mot flou'); variable à la fois cours; mot flou cours; solution dans le Then cours; G/W/T non obligatoire cours; DoD/DoR cours.
 - M10 Nature, no MDX item states the claim, so the matching ecoles item: row 'Le Then d'un critère de fraîcheur vérifie l'âge…' cours (matches the ecoles.cours item 'Le Then vérifie un résultat observable…', a general item, so the match is an inference); row 'La story attend tant qu'une règle n'est pas fixée' cours (the MDX affirmation on the règle non fixée states it); row 'Les 3C : la confirmation est le critère' consensus (ecoles.consensus item 2).
@@ -98,7 +98,7 @@ Renderings in `S1-10-08-report/`, beside this report.
 - M8: the blockquote is the CF quick-test text (Règle / Critère / un seul fait change). The paragraph is the Reflexe note "Formulation du cours, sans source externe." CF adds nothing beyond the blockquote.
 - M5/M6: the FilRouge becomes a blockquote opening "**Fil rouge :**". The three Pastilles of 8a1, 8b1 and 8b2 are kept where they stood: [cours], [école], [cours], [cours]. The MDX had no <h4> outside course.yaml.
 - M6/M11: the Figure in L'essentiel becomes one image line, placed after the essentials paragraph. Its alt text is the diagram title, and the frontmatter diagrams entry is verbatim as given.
-- M13: no banned character (em-dash, arrow) and no typographic apostrophe found, so no replacement was made.
+- M13: apart from the arrows replaced above, no banned character (em-dash) and no typographic apostrophe found.
 
 ## Checks
 
@@ -124,8 +124,10 @@ Failing the run:
 - sources: fail: concepts/08-criteres-regles/sources.md:64 reference S12: type "interne (observation de session, un seul apprenant : base faible)" must be one or more of primaire, secondaire, marketing, separated by commas
 - glossary-order: fail: concepts/08-criteres-regles/concept.md:63 uses the term "Definition of Ready", introduced by concept 11 (glossary.md:58), which comes later
 
-## Contributor corrections
+## Fixes after the run
 
 - sources.md S11 and S12 types rewritten "primaire (interne : <old remark>)" (ruling on #23, until #140 and #141). `sources` now passes.
 - `glossary-order` remains on "Definition of Ready" (concept.md:63): rule A, fixed by #166.
 - No arrow or em-dash survives (`typography` ok); no orphan reference; "Consignes" cites all five cases already (rule B, no line added).
+- Review of PR #189: the diagram is now for 8a only (rule, two examples, the unfixed rule as a question), one-sentence caption, the 8b2 note and its underlines dropped, group ids all `8a-*`, viewBox 600x500. The question card is `secondary` (contrast, as the inventory says). The sentence "Cas d'illustration inventé pour la page." moved to a row of sources.md.
+- concept.md: the sentence pointing to the drawing reworded; Pièges "Un Then vague" merged. teaching.md: « Schéma » rewritten for the new drawing, « Faits du fil rouge utilisés » capitalised, the fallback case headed "(8b1, rechange)". PNG regenerated.
