@@ -86,7 +86,7 @@ Une dépendance qui reste s'écrit, et le PO ordonne : l'élément dont l'autre 
 
 Une dépendance envers une autre équipe ne se règle pas dans son seul backlog. Livrer sa part et tenir la story pour faite ne suffit pas, si l'utilisateur n'est pas servi. Le PO écrit la dépendance dans son backlog, demande à l'autre PO de l'écrire dans le sien, et s'accorde avec lui sur l'ordre dans les deux backlogs, pour que les deux parts arrivent à temps. Chaque PO ordonne seul son backlog : pour changer la place d'un élément chez l'autre, on le convainc.
 
-Le Scrum Guide ne traite pas deux produits qui ont chacun leur PO : plusieurs équipes sur un même produit partagent le PO et le backlog. S'accorder entre PO est donc un choix du cours [cours]. Si l'accord ne se fait pas, ou si la dépendance bloque, c'est une escalade (concept 14), et elle vient après avoir parlé à l'autre PO. Dans l'outil, la dépendance se note souvent par un lien entre les deux éléments (annexe A1), ce qui est un choix d'école [école].
+Le Scrum Guide ne traite pas deux produits qui ont chacun leur PO : plusieurs équipes sur un même produit partagent le PO et le backlog. S'accorder entre PO est donc un choix du cours [cours]. Si l'accord ne se fait pas, ou si la dépendance bloque, on porte le blocage au niveau qui peut le lever (concept 14), après avoir parlé à l'autre PO. Dans l'outil, la dépendance se note souvent par un lien entre les deux éléments (annexe A1), ce qui est un choix d'école [école].
 
 ## Pièges
 
@@ -96,7 +96,7 @@ Le Scrum Guide ne traite pas deux produits qui ont chacun leur PO : plusieurs é
 - **Fusionner deux stories pour supprimer une dépendance saine** : on retarde la valeur de la première. La fusion se défend si la story fusionnée reste petite.
 - **Accepter deux stories dont aucune n'a de valeur seule** : ce sont souvent des tranches horizontales, à redécouper en tranches verticales (concept 9). Cas inventé : « préparer les relevés », puis « afficher les relevés ».
 - **Livrer sa part d'une dépendance envers une autre équipe et s'arrêter là** : l'utilisateur n'est pas servi ; s'accorder avec le PO de l'autre équipe.
-- **Ordonner le backlog d'une autre équipe à sa place**, ou escalader avant de lui parler : on convainc son PO ; l'escalade vient ensuite (concept 14).
+- **Ordonner le backlog d'une autre équipe à sa place**, ou porter le blocage plus haut avant de lui parler : on convainc son PO ; on ne va plus haut qu'ensuite (concept 14).
 - **Croire que le Scrum Guide prescrit une rubrique « Hors périmètre » ou un outil de suivi des dépendances** : il n'en parle pas ; ce sont des choix d'école.
 
 ## Le test rapide

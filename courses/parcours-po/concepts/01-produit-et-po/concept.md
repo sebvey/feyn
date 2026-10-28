@@ -77,10 +77,10 @@ Le concept 0 a situé les trois responsabilités de l'équipe Scrum ; voici qui 
 - **Décrire le produit par sa technique** (l'architecture, les composants, la fréquence de mise à jour) : la phrase ne dit ni pour qui ni ce qui change. Signe : un abonné ne comprendrait pas à quoi sert la plateforme.
 - **Oublier la valeur** : dire ce que le produit affiche ou calcule, sans dire ce qui change pour une personne nommée : et alors ?
 - **Oublier les consommateurs de données** : un consommateur de données est un utilisateur, pas seulement un destinataire de rapports.
-- **Trancher seul un fait métier**, comme ce dont un utilisateur a besoin ou le temps qu'il gagnerait : il se demande à l'acteur concerné. Le PO ordonne le backlog ; les faits du métier, il les obtient des utilisateurs.
+- **Trancher seul un fait métier**, comme ce dont un utilisateur a besoin ou le temps qu'il gagnerait : il se demande à la personne concernée. Le PO ordonne le backlog ; les faits du métier, il les obtient des utilisateurs.
 - **Garder la casquette de développeur** : choisir la technique ou estimer à la place des Developers. Le comment et le coût sont à eux.
 - **Croire que le PO fixe seul le contenu du sprint** : il propose, les Developers choisissent avec lui.
-- **Partager le rôle** : un comité qui vote l'ordre, ou deux PO qui se le partagent. Déléguer le travail est permis, pas la responsabilité.
+- **Partager la responsabilité de PO** : un comité qui vote l'ordre, ou deux PO qui se la partagent. Déléguer le travail est permis, pas la responsabilité.
 
 ## Le test rapide
 
