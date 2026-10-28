@@ -219,3 +219,4 @@ Made in the output only, under the rulings of #23 (2026-10-27, 2026-10-28 A, B, 
 - ruling A: `glossary-order` not fixed: concept.md:88 « Définition d'un indicateur » (concept 12) and concept.md:52 « État » (concept A1). Left to the last sub-issue of #23 (#166).
 
 Checks after the fixes (`--only course-yaml,concept-folder,conventions,svg-contract,sources,glossary-order,typography --concept 2`): all ok except `glossary-order`, with the two failures above.
+- Superseded: the CF row for « Sous-concepts » (« a line « Poser … » citing the cases by title added to each item ») and the first M9 writing choice above describe the « Poser … » lines that were removed (I1 to I3); the citation line above replaces them.
