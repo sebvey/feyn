@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 570" fill="currentColor" role="img" aria-labelledby="backlog-produit-colonne-ordonnee-titre backlog-produit-colonne-ordonnee-desc" font-family="sans-serif">
+  <title id="backlog-produit-colonne-ordonnee-titre">Le backlog produit : une colonne ordonnée, précise en haut et vague en bas</title>
+  <desc id="backlog-produit-colonne-ordonnee-desc">
+    Une colonne verticale de six cartes numérotées de 1 à 6. En haut, de petites cartes nettes, légendées précis ;
+    plus bas, des cartes de plus en plus grosses et en pointillés, la dernière légendée vague.
+    Légende : le haut précis, le bas vague, choix d'école (DEEP).
+    Au-dessus de la colonne, un drapeau Objectif produit, relié à la colonne par la mention : justifie l'ordre.
+    À gauche, quatre demandes en vrac (Étienne, Maud, Charlotte, Pia) entrent dans la colonne ;
+    sur la flèche d'entrée : le PO décide de leur place.
+    En haut à droite, la première carte sort vers le Sprint Planning : prêt à être choisi.
+    À droite, quatre flèches courbes : ajouter, préciser et découper, réordonner, retirer.
+    En marge, deux vignettes barrées d'une croix : un classeur, cahier des charges figé, et une pile, à dépiler.
+  </desc>
+  <g id="3a1-objectif-produit">
+    <defs>
+      <marker id="backlog-produit-colonne-ordonnee-fleche" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path class="secondary" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity="0.8"/>
+      </marker>
+    </defs>
+    <rect class="muted" x="190" y="6" width="190" height="38" rx="6" fill="currentColor" fill-opacity="0.15" stroke="none"/>
+    <rect class="primary" x="190" y="6" width="190" height="38" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="3.5"/>
+    <text class="primary" x="285" y="31" text-anchor="middle" font-size="19" font-weight="700" fill="currentColor" fill-opacity="1">Objectif produit</text>
+    <path class="secondary" d="M285 46 V86" fill="none" stroke="currentColor" stroke-opacity="0.8" stroke-width="2.2" marker-end="url(#backlog-produit-colonne-ordonnee-fleche)"/>
+    <text class="secondary" x="297" y="72" font-size="17" font-style="italic" fill="currentColor" fill-opacity="0.8">justifie l'ordre</text>
+  </g>
+  <g id="3a2-colonne">
+    <path class="primary" fill-rule="evenodd" fill="currentColor" fill-opacity="0.85" d="M206 90 H364 A6 6 0 0 1 370 96 V116 A6 6 0 0 1 364 122 H206 A6 6 0 0 1 200 116 V96 A6 6 0 0 1 206 90 Z M239 95 H331 V119 H239 Z"/>
+    <text x="285" y="112" text-anchor="middle" font-size="18" font-weight="700">1  précis</text>
+    <path class="primary" fill-rule="evenodd" fill="currentColor" fill-opacity="0.85" d="M206 130 H364 A6 6 0 0 1 370 136 V156 A6 6 0 0 1 364 162 H206 A6 6 0 0 1 200 156 V136 A6 6 0 0 1 206 130 Z M276 135 H294 V159 H276 Z"/>
+    <text x="285" y="152" text-anchor="middle" font-size="18" font-weight="700">2</text>
+    <path class="primary" fill-rule="evenodd" fill="currentColor" fill-opacity="0.85" d="M206 170 H364 A6 6 0 0 1 370 176 V204 A6 6 0 0 1 364 210 H206 A6 6 0 0 1 200 204 V176 A6 6 0 0 1 206 170 Z M276 178 H294 V202 H276 Z"/>
+    <text x="285" y="196" text-anchor="middle" font-size="18" font-weight="700">3</text>
+    <rect class="muted" x="200" y="218" width="170" height="54" rx="6" fill="currentColor" fill-opacity="0.15" stroke="none" opacity="0.95"/>
+    <rect class="secondary" x="200" y="218" width="170" height="54" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2" stroke-dasharray="7 5" opacity="0.95"/>
+    <text class="primary" x="285" y="251" text-anchor="middle" font-size="18" font-weight="600" fill="currentColor" fill-opacity="1">4</text>
+    <rect class="muted" x="200" y="280" width="170" height="70" rx="6" fill="currentColor" fill-opacity="0.15" stroke="none" opacity="0.8"/>
+    <rect class="secondary" x="200" y="280" width="170" height="70" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2" stroke-dasharray="7 5" opacity="0.8"/>
+    <text class="primary" x="285" y="321" text-anchor="middle" font-size="18" font-weight="600" fill="currentColor" fill-opacity="1">5</text>
+    <rect class="muted" x="200" y="358" width="170" height="86" rx="6" fill="currentColor" fill-opacity="0.15" stroke="none" opacity="0.65"/>
+    <rect class="secondary" x="200" y="358" width="170" height="86" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2" stroke-dasharray="7 5" opacity="0.65"/>
+    <text class="primary" x="285" y="407" text-anchor="middle" font-size="18" font-weight="600" fill="currentColor" fill-opacity="1">6  vague</text>
+  </g>
+  <g id="3a2-sprint-planning">
+    <path class="secondary" d="M372 106 H416" fill="none" stroke="currentColor" stroke-opacity="0.8" stroke-width="2.2" marker-end="url(#backlog-produit-colonne-ordonnee-fleche)"/>
+    <rect class="muted" x="420" y="82" width="172" height="50" rx="6" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text class="primary" x="506" y="104" text-anchor="middle" font-size="16.5" font-weight="700" fill="currentColor" fill-opacity="1">Sprint Planning</text>
+    <text class="primary" x="506" y="124" text-anchor="middle" font-size="16.5" fill="currentColor" fill-opacity="1">prêt à être choisi</text>
+  </g>
+  <g id="3a1-demandes">
+    <text class="primary" x="8" y="102" font-size="17" font-weight="700" fill="currentColor" fill-opacity="1">Demandes en vrac</text>
+    <rect class="muted" x="8" y="112" width="118" height="30" rx="15" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text class="primary" x="67" y="133" text-anchor="middle" font-size="17" font-weight="600" fill="currentColor" fill-opacity="1">Étienne</text>
+    <rect class="muted" x="8" y="150" width="118" height="30" rx="15" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text class="primary" x="67" y="171" text-anchor="middle" font-size="17" font-weight="600" fill="currentColor" fill-opacity="1">Maud</text>
+    <rect class="muted" x="8" y="188" width="118" height="30" rx="15" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text class="primary" x="67" y="209" text-anchor="middle" font-size="17" font-weight="600" fill="currentColor" fill-opacity="1">Charlotte</text>
+    <rect class="muted" x="8" y="226" width="118" height="30" rx="15" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text class="primary" x="67" y="247" text-anchor="middle" font-size="17" font-weight="600" fill="currentColor" fill-opacity="1">Pia</text>
+    <path class="secondary" d="M130 112 H136 V256 H130" fill="none" stroke="currentColor" stroke-opacity="0.8" stroke-width="2.2"/>
+    <path class="secondary" d="M136 184 H196" fill="none" stroke="currentColor" stroke-opacity="0.8" stroke-width="2.2" marker-end="url(#backlog-produit-colonne-ordonnee-fleche)"/>
+    <text class="secondary" x="8" y="290" font-size="17" font-style="italic" fill="currentColor" fill-opacity="0.8">le PO décide</text>
+    <text class="secondary" x="8" y="312" font-size="17" font-style="italic" fill="currentColor" fill-opacity="0.8">de leur place</text>
+  </g>
+  <g id="3a2-mouvements">
+    <path class="secondary" d="M436 204 Q410 182 382 198" fill="none" stroke="currentColor" stroke-opacity="0.8" stroke-width="2.2" marker-end="url(#backlog-produit-colonne-ordonnee-fleche)"/>
+    <text class="primary" x="452" y="206" font-size="18" font-weight="600" fill="currentColor" fill-opacity="1">ajouter</text>
+    <path class="secondary" d="M380 244 C424 244 424 280 382 280" fill="none" stroke="currentColor" stroke-opacity="0.8" stroke-width="2.2" marker-end="url(#backlog-produit-colonne-ordonnee-fleche)"/>
+    <text class="primary" x="452" y="258" font-size="18" font-weight="600" fill="currentColor" fill-opacity="1">préciser</text>
+    <text class="primary" x="452" y="278" font-size="18" font-weight="600" fill="currentColor" fill-opacity="1">et découper</text>
+    <path class="secondary" d="M380 318 C424 318 424 354 382 354" fill="none" stroke="currentColor" stroke-opacity="0.8" stroke-width="2.2" marker-end="url(#backlog-produit-colonne-ordonnee-fleche)" marker-start="url(#backlog-produit-colonne-ordonnee-fleche)"/>
+    <text class="primary" x="452" y="342" font-size="18" font-weight="600" fill="currentColor" fill-opacity="1">réordonner</text>
+    <path class="secondary" d="M382 398 Q410 376 436 394" fill="none" stroke="currentColor" stroke-opacity="0.8" stroke-width="2.2" marker-end="url(#backlog-produit-colonne-ordonnee-fleche)"/>
+    <text class="primary" x="452" y="406" font-size="18" font-weight="600" fill="currentColor" fill-opacity="1">retirer</text>
+  </g>
+  <g id="3a2-legende">
+    <text class="secondary" x="300" y="472" text-anchor="middle" font-size="17.5" fill="currentColor" fill-opacity="0.8">le haut précis, le bas vague : <tspan class="primary" font-weight="700" fill="currentColor" fill-opacity="1">choix d'école (DEEP)</tspan></text>
+  </g>
+  <g id="3b-cahier-des-charges" transform="translate(14 490)">
+    <rect class="muted" x="0" y="0" width="44" height="58" rx="3" fill="currentColor" fill-opacity="0.35" stroke="none"/>
+    <rect class="secondary" x="0" y="0" width="44" height="58" rx="3" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <rect class="secondary" x="0" y="0" width="9" height="58" rx="3" fill="currentColor" fill-opacity="0.6" stroke="none"/>
+    <path class="secondary" d="M18 14 H38 M18 26 H38 M18 38 H38" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2"/>
+    <path class="primary" d="M-6 -4 L50 62 M50 -4 L-6 62" fill="none" stroke="currentColor" stroke-opacity="1" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/>
+    <text class="primary" x="62" y="26" font-size="17" fill="currentColor" fill-opacity="1">cahier des charges</text>
+    <text class="primary" x="62" y="48" font-size="17" fill="currentColor" fill-opacity="1">figé</text>
+  </g>
+  <g id="3b-liste-a-depiler" transform="translate(318 490)">
+    <rect class="muted" x="6" y="40" width="46" height="14" rx="2" fill="currentColor" fill-opacity="0.35" stroke="none"/>
+    <rect class="secondary" x="6" y="40" width="46" height="14" rx="2" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <rect class="muted" x="3" y="26" width="46" height="14" rx="2" fill="currentColor" fill-opacity="0.35" stroke="none"/>
+    <rect class="secondary" x="3" y="26" width="46" height="14" rx="2" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <rect class="muted" x="0" y="12" width="46" height="14" rx="2" fill="currentColor" fill-opacity="0.35" stroke="none"/>
+    <rect class="secondary" x="0" y="12" width="46" height="14" rx="2" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <path class="primary" d="M-6 6 L56 62 M56 6 L-6 62" fill="none" stroke="currentColor" stroke-opacity="1" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/>
+    <text class="primary" x="72" y="40" font-size="17" fill="currentColor" fill-opacity="1">à dépiler</text>
+  </g>
+</svg>
