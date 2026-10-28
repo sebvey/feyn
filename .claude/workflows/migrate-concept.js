@@ -148,7 +148,8 @@ same pair; the report lists the mapping once, and the losses do not repeat it. A
 component sets on an individual element or class beyond its token's colour (a class .ribbon at 0.7 \
 and .ribbon.thin at 0.45 on the same token, a rect with opacity="0.5") is kept as that element's \
 opacity attribute (SPEC.md section 7 allows it), on top of its token's pair: never folded into the \
-pair, never dropped (a contrast ink, drawn as a gap, has no element to keep it on: a loss); the \
+pair, never dropped (a contrast ink, drawn as a gap, has no element to keep it on: a loss; the \
+opacity of a hatch's lines, .hatch-line, goes on the dashed outline that replaces the hatch); the \
 report lists each kept element opacity under the writing choices (maintainer's ruling of 2026-10-28). Shapes the old \
 drawings told apart by colour get distinct opacities (for three colours, for example 0.85, 0.6, 0.4), \
 not only distinct classes; a contrast ink drawn over a shape (the cut lines across a slice) gets no \
@@ -490,8 +491,10 @@ stroke), never another pair; do not decide a mapping of your own. A token this d
 the mapping lacks: stop and return it in tokens, without inventing a pair.
 An opacity the component sets on an individual element or class beyond its token's colour (a class \
 at 0.7 and another at 0.45 on the same token, opacity="0.5" on a rect): keep it as that element's \
-opacity attribute, on top of the token's pair; never fold it into the pair, never drop it. Return \
-each one in element_opacities.
+opacity attribute, on top of the token's pair; never fold it into the pair, never drop it. The \
+opacity of a hatch's lines (.hatch-line) goes on the dashed outline that replaces the hatch, as that \
+outline's opacity. A contrast ink drawn as a gap has no element left: its opacity is a loss. Return \
+each one kept in element_opacities, naming the element that carries it in the SVG.
 Return its frontmatter entry, its group ids, the old colour tokens it draws with, the element \
 opacities kept, and the losses (not the mapping: the report lists it once).`,
       { label: `diagram:${d.stem}`, phase: 'Write', schema: DIAGRAM_SCHEMA })))
@@ -655,30 +658,42 @@ const plain = s => String(s ?? '').replace(/\s*(->|=>|\u2192)\s*/g, ': ')
 const cell = s => plain(s).replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ')
 const count = v => oldSweep.rows.filter(r => r.verdict === v).length
 // The report is merged into the repository and read after the run's dest (a contributor worktree) is
-// gone (#170). Guaranteed: the rendered report holds no absolute path. Applied to the whole rendered
-// text, agent texts included (rows, choices, check output, listing): an absolute path under args.dest
-// becomes relative to the course folder (concepts/NN-slug/...); under args.from or args.site, it is
-// named from its repository folder (parcours-po/course/..., parcours-po-website/src/...); any other
-// one under courses/ or a repository folder becomes relative to the repository root (courses/...,
-// specs/...); anything else becomes "<absolute path>". A path under courses/<course>/ is then written
-// relative to the course folder. An absolute path left after that stops the run.
+// gone (#170). Guaranteed: the rendered report holds no absolute path; one left stops the run. On the
+// whole rendered text, agent texts included (rows, choices, check output, listing):
+// 1. the run's own absolute args are replaced as literal text, wherever they stand: args.dest/ by
+//    nothing (paths relative to the course folder, concepts/NN-slug/...), args.dest itself by
+//    courses/<course>; args.from and args.site by their repository folder (parcours-po/course/...);
+//    args.langDir by its specs/... tail;
+// 2. any other absolute path (after any non-word character, under a usual root or a root of the run's
+//    own absolute args): under courses/ or a repository folder, relative to the repository root
+//    (courses/..., specs/...), the old repositories by their folder; anything else "<absolute path>";
+// 3. a path under courses/<course>/, and a relative args.dest, from or site, as in 1.
 const lastPart = p => p.replace(/\/$/, '').split('/').pop()
-const ABS_PATH = '(^|[\\s`\'"(\\[«])(\\/(?:Users|private|tmp|home|var|Volumes|opt|root)\\/[^\\s`\'"()\\[\\]|<>»,;]*)'
-const absPrefixes = [[FROM, `${lastPart(FROM)}/`], [SITE, `${lastPart(SITE)}/`], [DEST, '']].filter(([p]) => p.startsWith('/')).sort((a, b) => b[0].length - a[0].length)
+const absArgs = [DEST, FROM, SITE, A.langDir ? String(A.langDir) : ''].filter(p => p.startsWith('/'))
+const ROOTS = [...new Set(['Users', 'private', 'tmp', 'home', 'var', 'Volumes', 'opt', 'root', 'workspace', 'workspaces', 'mnt', 'srv', ...absArgs.map(p => p.split('/')[1]).filter(Boolean)])]
+  .map(r => r.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+const ABS_PATH = `(^|[^\\w./~-])(\\/(?:${ROOTS.join('|')})(?:\\/[^\\s\`'"()\\[\\]{}|<>»,;*]*)?)`
+const literal = [
+  [DEST, ''], [DEST.replace(/\/$/, ''), `courses/${A.course}`],
+  [FROM, `${lastPart(FROM)}/`], [FROM.replace(/\/$/, ''), lastPart(FROM)],
+  [SITE, `${lastPart(SITE)}/`], [SITE.replace(/\/$/, ''), lastPart(SITE)],
+  ...(A.langDir ? [[String(A.langDir), String(A.langDir).match(/\/(specs\/.*)$/)?.[1] ?? '<langDir>']] : []),
+]
+const absLiteral = literal.filter(([p]) => p.startsWith('/')).sort((a, b) => b[0].length - a[0].length)
+// relative args: the folder itself (no slash) is left as written (the check command names it)
+const relLiteral = [...literal.filter(([p]) => p.endsWith('/')), [`courses/${A.course}/`, '']]
+  .filter(([p]) => !p.startsWith('/')).sort((a, b) => b[0].length - a[0].length)
 function toRel(p) {
-  if (DEST.startsWith('/') && p === DEST.replace(/\/$/, '')) return DEST.match(/(courses\/[^/]+)\/$/)?.[1] ?? '<dest>'
-  for (const [abs, shown] of absPrefixes) if (p.startsWith(abs)) return shown + p.slice(abs.length)
   let m = p.match(/\/(courses\/.*)$/)
   if (m) return m[1]
   for (const repo of [lastPart(SITE), lastPart(FROM)]) { const i = p.indexOf(`/${repo}/`); if (i >= 0) return p.slice(i + 1) }
   m = p.match(/\/((?:specs|construction|docs|site|teacher|\.claude)\/.*)$/)
   return m ? m[1] : '<absolute path>'
 }
-const relShown = [[FROM, `${lastPart(FROM)}/`], [SITE, `${lastPart(SITE)}/`], [DEST, ''], [`courses/${A.course}/`, '']]
-  .filter(([p]) => !p.startsWith('/')).sort((a, b) => b[0].length - a[0].length)
 function relPaths(text) {
-  let t = text.replace(new RegExp(ABS_PATH, 'g'), (all, pre, p) => pre + toRel(p))
-  for (const [from, to] of relShown) t = t.split(from).join(to)
+  let t = absLiteral.reduce((acc, [abs, shown]) => acc.split(abs).join(shown), text)
+  t = t.replace(new RegExp(ABS_PATH, 'g'), (all, pre, p) => pre + toRel(p))
+  t = relLiteral.reduce((acc, [rel, shown]) => acc.split(rel).join(shown), t)
   const left = t.match(new RegExp(ABS_PATH))
   if (left) throw new Error(`The report still holds an absolute path: ${left[2]}`)
   return t

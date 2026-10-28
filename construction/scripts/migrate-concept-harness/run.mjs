@@ -57,11 +57,11 @@ function makeAgent(o) {
       const stem = L.slice(8)
       return { file: `${stem}.svg`, title: 't', caption: 'c', subconcept: '9a', groups: [`9a-${stem}`],
         tokens: o.tokens?.[stem] ?? (stem === 'gateau' ? ['--sch-s1', '--sch-s2', '--sch-text', '--sch-grey', '--sch-s-ink'] : ['--sch-s1', '--sch-s2', '--sch-text']),
-        element_opacities: o.elementOpacities?.[stem] ?? (stem === 'gateau' ? [{ element: '.hatch-line, group 9a-hatch', opacity: 0.55 }] : []),
+        element_opacities: o.elementOpacities?.[stem] ?? (stem === 'gateau' ? [{ element: '.hatch-line, now the dashed outline of group 9a-couche-entiere', opacity: 0.55 }] : []),
         losses: [`halo dropped in ${TGT}/${stem}.svg`] }
     }
     if (L === 'teaching+sources') return { files: [`${TGT}/teaching.md`, `${TGT}/sources.md`], choices: [`M10: \`course/plan.md\` became \`plan.md\` in ${TGT}/sources.md intro`] }
-    if (L === 'concept') return { files: [`${TGT}/concept.md`], choices: ['M4: merged', 'M3: read /Users/someone/elsewhere/notes.md'] }
+    if (L === 'concept') return { files: [`${TGT}/concept.md`], choices: ['M4: merged', 'M3: read /Users/someone/elsewhere/notes.md', 'M3: odd contexts path:/Users/me/x, *\/Users/me/x*, {/Users/a}', `M3: course folder path:${TGT.slice(0, -DIR.length - 1)}, the target *${TGT}*`] }
     if (L === 'checks') return { output: CHECKS.map(c => `${c}: ok`).join('\n'), fixes: [`${TGT}/concept.md: heading`], left: [] }
     if (L === 'old-to-new') return { rows: [{ source: 'SF', item: 'intro', where: `${TGT}/sources.md intro`, verdict: 'moved', rule: 'M10', detail: 'course/plan.md: plan.md' }] }
     if (L === 'new-to-old') return { rows: [] }
@@ -88,7 +88,7 @@ async function scenario(name, o, expect) {
   return problems.length ? 1 : 0
 }
 
-const noAbs = r => (r && /(^|[\s`'"(])\/(abs|Users|private|tmp)\//.test(r) ? ['report holds an absolute path'] : [])
+const noAbs = r => (r && /(^|[^\w./~-])\/(Users|private|tmp|workspace)\b/.test(r) ? ['report holds an absolute path'] : [])
 let fails = 0
 fails += await scenario('two diagrams, target absent (GNU ls): one mapping, relative paths', { dump: 'report-two-diagrams' }, ({ error, report, calls }) => [
   ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
@@ -102,7 +102,7 @@ fails += await scenario('two diagrams, target absent (GNU ls): one mapping, rela
   ...(report && report.includes('check-course courses/parcours-po --only') ? [] : ['check command wrong']),
   ...(calls.some(c => c.label === 'empty-target') ? ['emptied an absent folder'] : []),
   ...(calls.filter(c => c.label.startsWith('diagram:')).every(c => c.prompt.includes("keep it as that element's") && c.prompt.includes('element_opacities')) ? [] : ['a writer lacks the element-opacity rule']),
-  ...(report && report.includes('- gateau.svg: element opacity 0.55 kept on .hatch-line, group 9a-hatch (M11)') ? [] : ['kept element opacity not in the writing choices']),
+  ...(report && report.includes('- gateau.svg: element opacity 0.55 kept on .hatch-line, now the dashed outline of group 9a-couche-entiere (M11)') ? [] : ['kept element opacity not in the writing choices']),
 ])
 fails += await scenario('element opacity out of range: stops', { elementOpacities: { gateau: [{ element: '.bar', opacity: 75 }] } }, ({ error }) => (error && /element opacity 75 on \.bar/.test(error) ? [] : ['not stopped']))
 fails += await scenario('target absent (macOS ls)', { listing: ABSENT_MAC }, ({ error, report }) => [...(error ? [`threw: ${error}`] : []), ...noAbs(report)])
@@ -127,6 +127,14 @@ fails += await scenario('no diagram: no colour agent', { diagrams: [] }, ({ erro
 fails += await scenario('relative dest, agents give absolute paths: none left, none mangled', { args: { dest: 'courses/parcours-po' }, listing: `ls: cannot access 'courses/parcours-po/${DIR}': No such file or directory`, agentRoot: '/private/tmp/feyn/' }, ({ error, report }) => [
   ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
   ...(report && report.includes('| concepts/09-decoupage-vertical/sources.md intro |') ? [] : ['course-folder path wrong']),
+  ...(report && report.includes('course folder path:courses/parcours-po, the target *concepts/09-decoupage-vertical*') ? [] : ['dest in odd contexts not rewritten']),
   ...(report && !report.includes('feyn/concepts') && report.includes('<absolute path>') ? [] : ['mangled, or the outside path not replaced'])])
+fails += await scenario('absolute dest under /Users, paths in odd contexts: none left', {}, ({ error, report }) => [
+  ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
+  ...(report && report.includes('path:<absolute path>, *<absolute path>*, {<absolute path>}') ? [] : ['odd-context paths not replaced']),
+  ...(report && report.includes('course folder path:courses/parcours-po, the target *concepts/09-decoupage-vertical*') ? [] : ['dest not rewritten as literal text'])])
+fails += await scenario('dest under /workspace: none left', { args: { dest: '/workspace/feyn/courses/parcours-po' }, listing: `ls: cannot access '/workspace/feyn/courses/parcours-po/${DIR}': No such file or directory`, agentRoot: '/workspace/feyn/' }, ({ error, report }) => [
+  ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
+  ...(report && report.includes('| concepts/09-decoupage-vertical/sources.md intro |') && report.includes('check-course courses/parcours-po --only') ? [] : ['paths under /workspace not rewritten'])])
 console.log(fails ? `${fails} scenario(s) failed` : 'all scenarios pass')
 process.exit(fails ? 1 : 0)
