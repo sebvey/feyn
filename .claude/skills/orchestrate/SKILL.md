@@ -28,11 +28,25 @@ agent before it reaches the maintainer (decision `fresh-agent-review-before-main
   observed 2026-10-28, #130). The contributor makes the run possible and stops on a draft with
   an `Awaiting the orchestrator` section (exact script path and arguments): the second use of a
   draft, an awaited orchestrator run. Ask the maintainer for an explicit go-ahead in the
-  work session, then run it. Its agents run in the work session's working directory, so a run
-  that must not see a file runs from a copy of the repo without it (Claude Code, observed
-  2026-10-28, #130). The run and its reruns after fixes come before step 3: the reviewer
-  needs their transcripts. Resume the contributor with the result: it applies it, removes the
-  section and runs `mise exec -- gh pr ready <pr>`; check it.
+  work session, then run it. The run and its reruns after fixes come before step 3: the
+  reviewer needs their transcripts. Resume the contributor with the result: it applies it,
+  removes the section and runs `mise exec -- gh pr ready <pr>`; check it.
+  - **The worktree.** A contributor that stops with no file change loses its worktree at the
+    end of its turn (Claude Code, observed 2026-10-28, #171). Once it pushed its branch:
+    `git worktree add -q <main checkout>/.claude/worktrees/<name> -B <branch> origin/<branch>`,
+    `git -C <path> branch --set-upstream-to=origin/<branch>`, and resume it with that path.
+  - **A blind run** (a run that must not see a file). Its agents run in the work session's
+    working directory (Claude Code, observed 2026-10-28, #130); a copy of the repository
+    outside it cannot hold the work session: a `cd` there is reset, and `change_directory`
+    did not move the next run (Claude Code, observed 2026-10-28, #171). In the run's
+    worktree, delete the file (and the construction notes the workflow does not allow), then
+    `cd <worktree>`: the work session's primary working directory moves there
+    (Claude Code, observed 2026-10-28, #171). Run; then read `git -C <worktree> status
+    --porcelain`, restore only the deleted paths the run did not rewrite (the construction
+    notes), and `cd <main checkout>`. The reviewer searches its transcripts (step 3).
+  - **No other `cd`.** A `cd` into a worktree moves the work session even for one command, and
+    a run launched then runs its agents there (Claude Code, observed 2026-10-28, #171): while
+    a run is launched or running, absolute paths and `git -C <path>`.
 
 ## 2. The contributor agent
 
@@ -55,7 +69,8 @@ checks to rerun (any check or fixture runner: a course, `site/`, `specs/*/checks
 reviewer `isolation: "worktree"` too (the brief has it check out the PR head detached), and
 clean its worktree with steps 6.1, 6.2 and 6.4 only: it holds no issue branch, so no
 `/finish after-merge` for it. A PR whose evidence is an agent-workflow run: give the reviewer
-the run ids `wf_<id>` and their transcript directory.
+the run ids `wf_<id>` and their transcript directory, and for a blind run the deleted paths
+and the worktree.
 
 ## 4. Corrections pass, decision awaited
 
@@ -98,8 +113,8 @@ From the main checkout, on `main`:
 1. The worktree: `git worktree list --porcelain` gives its path
    (`.claude/worktrees/agent-<id>`), on a branch `worktree-agent-<id>` cut from `main`'s HEAD;
    `/finish after-merge` does not remove it (Claude Code, observed 2026-10-27, #115). A
-   worktree with no change at the end of the agent's turn is removed (Claude Code, inferred
-   2026-10-27, #27). It is locked while its agent runs
+   worktree with no change at the end of the agent's turn is removed
+   (Claude Code, observed 2026-10-28, #171). It is locked while its agent runs
    (`locked claude agent agent-<id>`) (Claude Code, observed 2026-10-28, #128) and unlocked
    once the agent has finished (Claude Code, observed 2026-10-28, #130). Still locked: stop the
    agent (`TaskStop`), then, if needed, `git worktree unlock <path>`.
@@ -110,6 +125,11 @@ From the main checkout, on `main`:
    `/finish after-merge` sets it only when that Project workflow is off.
 4. `git branch -D worktree-agent-<id>`, the branch the worktree was created on.
    `git worktree list` and `git branch --list 'worktree-agent-*'` show nothing of it left.
+
+A worktree you created (step 1, `.claude/worktrees/<name>`): steps 2 and 3 the same way. It
+holds the issue branch, so there is no `worktree-agent-*` branch for it; but the lost
+worktree of its contributor leaves its `worktree-agent-<id>` branch behind
+(Claude Code, observed 2026-10-28, #171): delete that one with step 4.
 
 ## Contributor brief
 
@@ -149,7 +169,10 @@ are resumed with the answer and the work resumes (Claude Code, observed 2026-10-
 You have no Workflow tool. A Done when that needs a run: make it runnable, open a draft with
 an "Awaiting the orchestrator" section at the top (exact script path and arguments), and stop.
 The orchestrator runs it and resumes you with the result: apply it, remove the section, run
-`mise exec -- gh pr ready <pr>`.
+`mise exec -- gh pr ready <pr>`. Your worktree is removed when you stop with no file change:
+the orchestrator creates one on your branch and resumes you with its absolute path. From then
+on, never `cd`: absolute paths for every file, `git -C <path>` for every git command,
+including those of /finish (`git -C <path> status --porcelain`, `git -C <path> push`).
 
 Run the checks that exist (as /finish says). When done, reply with: branch name, PR URL, files
 changed, checks run and their results, and anything you were unsure of. Stay available for a
@@ -178,7 +201,11 @@ Recheck yourself:
 - evidence from an agent-workflow run
   (<run ids wf_<id> and transcript directory, or "none">): read the run's transcripts and check what its agents actually read and did, not only what
   they output. The directory moves with the work session's working directory (Claude Code,
-  observed 2026-10-28, #130); not found: `find ~/.claude/projects -type d -name 'wf_<id>*'`;
+  observed 2026-10-28, #130); not found: `find ~/.claude/projects -type d -name 'wf_<id>*'`.
+  A blind run (<the deleted paths and the worktree, or "none">): each agent's `"cwd"` is that
+  worktree, and no tool call reads a deleted path or the main checkout's copy of it, or runs
+  `git` (the workflow's agents are told not to use git: a `git` call can reach the deleted
+  file through history);
 - reserved terms of docs/glossary.md and the words it bans; the rules of CLAUDE.md
   (language, no em-dashes in French, title `<type>(<area>): <summary>`, `Closes #<n>`, no
   signature line);
