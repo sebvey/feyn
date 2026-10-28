@@ -30,7 +30,8 @@ export const meta = {
 // diagrams (from the inventory: each caption the legende's sentences of its idea that go to the caption,
 // the legende checked whole; then read back from concept.md as written and compared), an inventory free of
 // the old drawing's forms (OLD_FORM) and of states no word says, a key entry a drawing agent declares and
-// the comparison leaves unjudged flagged invented, a caption of more than one sentence flagged, the checks
+// the comparison leaves unjudged flagged invented, a state whose words the comparison did not find flagged
+// invented, an old <title> it gave no row flagged lost, a caption of more than one sentence flagged, the checks
 // verdict, the citation line
 // of M9 counted by design (from its exact form, ruling B on #23), a missing item naming the target
 // ignored, the repository root (from an absolute dest, else pwd; the agents get the spec and the glossary
@@ -226,7 +227,11 @@ style or any other form alone; nothing of how the old diagram is drawn (no colou
 size, font, shape or layout). Each sentence of the legende goes, verbatim and in order, to one idea and \
 to one place (maintainer's answer of 2026-10-28 on PR #182): the caption when it carries the idea; the \
 title when it only names the diagram (« Le gâteau en couches. »); the labels when it only tells how to \
-read it (« En bas, l'ingestion des données ; en haut, la restitution… »). One SVG per idea, drawn from \
+read it (« En bas, l'ingestion des données ; en haut, la restitution, ce que voit l'utilisateur. »): each \
+of its parts becomes a label of the element it reads, its words in the inventory's labels (« l'ingestion \
+des données », « la restitution, ce que voit l'utilisateur »), so that the drawing writes them. A state \
+quotes its words (state_words), which the comparison finds in the old diagram's <text> or <desc>, CF, MDX \
+or concept.md. One SVG per idea, drawn from \
 its inventory and the concept text (concept.md) only, never from the old component: its composition, \
 geometry and classes are its own. ${DRAW_RULES} Stem: ${STEM_RULE}. Frontmatter diagrams: one entry per \
 SVG, set from the inventory: file, title (the old <title>, verbatim, or, when a legende sentence goes to \
@@ -238,7 +243,10 @@ Figure, or for a Figure in « L'essentiel », the first-level sub-concept it dra
 its idea's). The comparison is on information, never on forms, colours or layout: every element, \
 relation and label of the inventory is in a new diagram, every <text> of the old component is in the \
 inventory, every sentence of the legende is where the inventory sends it (kept in a caption verbatim; \
-moved in a title or in the labels; lost otherwise); an element, a label, a key word or a caption \
+moved in a title that carries it, or in the labels when every part of it is in the SVG's text; lost \
+otherwise, each part drawn nowhere a lost row quoting it), the old <title> is carried (a row of its \
+own, also when a legende sentence replaces it), every state's words are found in the old texts or \
+concept.md (a state whose words are nowhere is invented); an element, a label, a key word or a caption \
 sentence that neither the inventory nor the concept text carries is invented, and each key entry of a \
 new SVG gets its row (kept, moved or invented). A group id, the <desc>, and the title of a split \
 diagram written from the old title's and the concept's words are not invented when they follow this \
@@ -353,7 +361,7 @@ const DIAGRAM_COMPARE_SCHEMA = {
   properties: {
     rows: {
       type: 'array',
-      description: 'one row per element and per relation of the inventory, per <text> of the old component the inventory lacks, per sentence of the legende',
+      description: 'one row per element and per relation of the inventory, per <text> of the old component the inventory lacks, per sentence of the legende (and per part of a labels sentence drawn nowhere), one for the old <title>',
       items: {
         type: 'object',
         properties: {
@@ -363,6 +371,20 @@ const DIAGRAM_COMPARE_SCHEMA = {
           detail: { type: 'string', description: 'for moved: what changed (a label reworded, another diagram, a role, a legende sentence in a title or in labels); for lost: what is missing, quoted' },
         },
         required: ['item', 'where', 'verdict', 'detail'],
+      },
+    },
+    states: {
+      type: 'array',
+      description: 'one row per element of the inventory that has a state, none when no element has one',
+      items: {
+        type: 'object',
+        properties: {
+          element: { type: 'string', description: 'the element id (E1)' },
+          words: { type: 'string', description: 'its state_words, verbatim' },
+          found: { type: 'boolean', description: 'the words are in the old component\'s <text> or <desc>, CF, MDX or concept.md' },
+          detail: { type: 'string', description: 'where they are, quoted with the place, or where you looked' },
+        },
+        required: ['element', 'words', 'found', 'detail'],
       },
     },
     keys: {
@@ -389,7 +411,7 @@ const DIAGRAM_COMPARE_SCHEMA = {
       },
     },
   },
-  required: ['rows', 'keys', 'invented'],
+  required: ['rows', 'states', 'keys', 'invented'],
 }
 
 // a command run by an agent: the renderings, the frontmatter diagrams of concept.md as written
@@ -629,8 +651,12 @@ The Figure legende: « ${d.legende} ».
 - caption_sentences: the legende split into its sentences, verbatim and in order, each given to the idea \
 it serves and to one place (rule M11): to: caption when it carries the idea; title when it only names \
 the diagram (« Le gâteau en couches. »); labels when it only tells how to read it (« En bas, \
-l'ingestion des données ; en haut, la restitution… »: what it says is in the elements' labels). A \
-caption keeps one sentence per idea when it can (SPEC.md 7.2, principle 1).
+l'ingestion des données ; en haut, la restitution, ce que voit l'utilisateur. »). A labels sentence is \
+split into its parts, and each part becomes a label of the element it reads, its words verbatim in that \
+element's labels (« l'ingestion des données » on the ingestion layer, « la restitution, ce que voit \
+l'utilisateur » on the restitution layer): the drawing writes the labels and nothing else of the \
+sentence, so a word left out of the labels is lost. A caption keeps one sentence per idea when it can \
+(SPEC.md 7.2, principle 1).
 - ideas: an idea is one thing the diagram teaches, stated by a sentence of the legende or of the concept \
 text (its justification, verbatim, and where it stands). Two ideas only when the diagram teaches two \
 things that one caption cannot say in one sentence (SPEC.md 7.2, principle 1); in doubt, one idea. Per \
@@ -810,13 +836,14 @@ What it shows, its inventory: ${JSON.stringify({ idea: i.justification, elements
 The roles are those of SPEC.md 7.2: subject; series (the subject in levels, in the order of the \
 relations); contrast; context; text. A state: done, not done, uncertain, refused; its words are the \
 element's state_words.${i.reading.length ? `
-These sentences of the old legende tell how to read the diagram: what they say is in your labels, in \
-their words and the inventory's, never written as a sentence: ${i.reading.map(r => `« ${r} »`).join(' ')}` : ''}
+These sentences of the old legende tell how to read the diagram: their parts are labels of the \
+inventory, each drawn verbatim, never written as a sentence: ${i.reading.map(r => `« ${r} »`).join(' ')}` : ''}
 
 ${DRAW_RULES} The concept's other diagrams are drawn at the same time${stems.length > 1 ? ` (${stems.filter(s => s !== i.stem).join(', ')})` : ''}: \
 build each group's element part from words of your own idea, so that no id repeats theirs.
-Check the file is well-formed (xmllint --noout). Return the file, its group ids and the words of each \
-key entry you drew.`
+Check the file is well-formed with xmllint --noout, and with nothing else: no browser, no preview \
+pane, no screenshot, no rendering tool. Return the file, its group ids and the words of each key entry \
+you drew.`
 const drawn = await parallel(ideas.map((i, k) => () => agent(drawPrompt(i, k), { label: `draw:${i.stem}`, phase: 'Write', schema: DRAW_SCHEMA })))
 ideas.forEach((i, k) => {
   const r = drawn?.[k]
@@ -911,11 +938,20 @@ and state carried), moved (carried with a change: a label reworded, in another o
 role or a state changed), lost (in no new diagram: quote what is missing);
 - per <text> of the old component that the inventory lacks: lost, the item « not in the inventory: \
 <the text> »;
-- per sentence of the legende, at the place its inventory gives it (caption_sentences, to): to the \
-caption, kept when the caption of its idea in the frontmatter holds it verbatim; to the title, moved \
-when that title carries it; to the labels, moved when the labels of that idea's SVG say what it says \
-(name the groups); otherwise, or reworded in a caption, moved with what changed, or lost when its \
-information is nowhere.
+- per sentence of the legende, at the place its inventory gives it (caption_sentences, to), as M11 \
+says: to the caption, kept when the caption of its idea in the frontmatter holds it verbatim; to the \
+title, moved when that title carries it; to the labels, split into its parts (each thing it names and \
+what it says of it: « l'ingestion des données », « la restitution, ce que voit l'utilisateur »), moved \
+only when the words of every part are in the text of that idea's SVG (name the groups); lost otherwise. \
+A part drawn nowhere is one more row of its own, lost, quoting it (« ce que voit l'utilisateur »), \
+even when the rest of its sentence is moved: never moved with a part missing;
+- for the old <title> of the component${d.variant ? ' (of the variant)' : ''}, verbatim, one row whose item \
+starts with « old <title> »: kept when a new title holds it; moved when the new titles, captions or \
+labels carry its information (say where, also when a legende sentence replaced it as title); lost for \
+each part of it carried nowhere, quoted.
+Under states, one row per element of the inventory that has a state: its id, its state_words, and \
+where you found those words verbatim (the old component's <text> or <desc>, CF, MDX or \
+${TARGET}concept.md, quoted with its place), or found false when they are in none of them.
 Under keys, one row per key entry (a sample and its words) of each new SVG, read in the SVG itself: \
 kept when its words are those of a key entry of the inventory; moved when they are words of the \
 inventory elsewhere (a label, an element's state_words) or of ${TARGET}concept.md, quoted; invented \
@@ -974,10 +1010,20 @@ newSweep.rows = newSweep.rows.filter(r => !/\.svg\b/.test(r.file))
 if (dropped) log(`${dropped} sweep row(s) on the diagrams dropped: the diagram comparison judges them (M11)`)
 // A key entry (review of PR #182): one row each, kept or moved joining the ASTRO rows, invented the invented
 // ones; a key entry a drawing agent said it drew and the comparison gave no row is flagged invented, so that
-// the verification decides it rather than nobody.
+// the verification decides it rather than nobody. Likewise (second review of PR #182): a state whose words
+// the comparison did not find in the old texts or concept.md, or did not look for, is flagged invented; an
+// old <title> given no row is flagged lost (a legende sentence that replaces it as title dropped it silently).
 const lastPath = f => String(f ?? '').split('/').pop()
 compared.forEach((c, n) => {
   for (const r of c.rows) oldSweep.rows.push({ source: 'ASTRO', item: r.item, where: r.where, verdict: r.verdict, rule: 'M11', detail: r.detail })
+  if (!c.rows.some(r => /<title>/.test(r.item))) oldSweep.rows.push({ source: 'ASTRO', item: `old <title> of ${scope.diagrams[n].component}${scope.diagrams[n].variant ? ` (${scope.diagrams[n].variant})` : ''}`, where: 'none', verdict: 'lost', rule: 'M11', detail: 'the diagram comparison gave the old <title> no row' })
+  for (const i of ideas.filter(i => i.diagram === n)) {
+    for (const e of i.elements.filter(e => e.state)) {
+      const row = (c.states || []).find(r => [e.id, `${i.stem} ${e.id}`].includes(String(r.element).trim()) && ws(r.words) === ws(e.state_words))
+      if (row?.found) oldSweep.rows.push({ source: 'ASTRO', item: `state « ${e.state_words} » of ${i.stem} ${e.id}`, where: row.detail, verdict: 'kept', rule: 'M11', detail: `${e.state}: its words quoted` })
+      else newSweep.rows.push({ file: `${i.stem}.svg`, section: 'diagram state', text: `« ${e.state_words} » (state ${e.state} of ${e.id})`, detail: row ? `the comparison found these words nowhere: ${row.detail}` : 'a state the diagram comparison gave no row: its words not checked' })
+    }
+  }
   for (const k of c.keys || []) {
     if (k.verdict === 'invented') newSweep.rows.push({ file: lastPath(k.file), section: 'diagram key', text: `« ${k.words} »`, detail: k.detail })
     else oldSweep.rows.push({ source: 'ASTRO', item: `key « ${k.words} » of ${lastPath(k.file)}`, where: lastPath(k.file), verdict: k.verdict, rule: 'M11', detail: k.detail })
@@ -1037,10 +1083,12 @@ change of sourcing (an id added, removed or replaced in a source cell or a refs 
 replaced) is refuted only when it is the orphan case of M10: the reference is cited by no other source \
 cell of the new sources.md, and the row's verification text names it as support, not as a contrast or \
 a nuance not retained; or when it is an old path M10 rewrites or a pointer it drops.
-${scope.diagrams.length ? `A row on a diagram (source ASTRO, section diagram or diagram key) is judged on information, never \
-on forms, colours or layout (M11): for a lost one, search the texts and the groups of the new SVGs; for an \
-invented one, the inventories and the concept text: a key word is refuted only when they carry its words, \
-never because it names a distinction of form. The inventories: ${JSON.stringify(inventories)}
+${scope.diagrams.length ? `A row on a diagram (source ASTRO, section diagram, diagram key or diagram state) is judged on \
+information, never on forms, colours or layout (M11): for a lost one, search the texts of the new SVGs (a \
+part of a legende sentence is refuted only when its words are drawn) and the new titles; for an invented \
+one, the inventories and the concept text: a key word is refuted only when they carry its words, never \
+because it names a distinction of form; a state's words only when the old component's <text> or <desc>, \
+CF, MDX or concept.md holds them. The inventories: ${JSON.stringify(inventories)}
 ` : ''}
 Lost: ${JSON.stringify(lostRows)}
 Invented: ${JSON.stringify(inventedRows)}`,
@@ -1143,7 +1191,8 @@ function renderReport() {
   out.push('', '## Diagrams (M11)', '')
   if (!scope.diagrams.length) out.push('No diagram.')
   else {
-    out.push('Each old diagram was inventoried (what it shows, by idea), drawn anew from its inventory and concept.md alone under SPEC.md 7.2, and compared on information (the ASTRO rows above). Renderings: the old diagram from the frozen site\'s build, the new one in one colour.', '')
+    const oldWay = renderings?.page === 'found' ? 'the old diagram from the frozen site\'s build' : renderings?.page === 'absent' || renderings?.page === 'none' ? 'no site build, so the old diagram is its component\'s source, quoted when it came back whole' : 'the old diagram not rendered'
+    out.push(`Each old diagram was inventoried (what it shows, by idea), drawn anew from its inventory and concept.md alone under SPEC.md 7.2, and compared on information (the ASTRO rows above). Renderings: ${oldWay}; the new one in one colour.`, '')
     // an old figure of the build: the one whose caption is the legende; else, as many figures as diagrams, by order
     // else, with no site build, the component's source, quoted below the table once per component (#181)
     const shown = new Set()

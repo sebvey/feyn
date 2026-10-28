@@ -92,7 +92,13 @@ function makeAgent(o) {
     if (L.startsWith('draw:')) { const stem = L.slice(5); return { file: o.drawnFile?.[stem] ?? `${stem}.svg`, groups: [`9a-${stem}`], key: o.drawnKey?.[stem] ?? [] } }
     if (L.startsWith('compare-diagram:')) {
       const n = Number(L.split(':')[1]) - 1
-      return o.compared?.[n] ?? { rows: [{ item: 'E1 « Ingestion »', where: `${TGT}/${n ? 'part-recoupee' : 'gateau'}.svg 9a-couches`, verdict: 'kept', detail: '' }], keys: [], invented: [] }
+      const stem = n ? 'part-recoupee' : 'gateau'
+      const c = structuredClone(o.compared?.[n] ?? { rows: [{ item: 'E1 « Ingestion »', where: `${TGT}/${stem}.svg 9a-couches`, verdict: 'kept', detail: '' }], keys: [], invented: [] })
+      if (o.bareCompare) return c
+      // as a comparison does by default: the old <title> has its row, every state its quote found
+      if (!c.rows.some(r => r.item.includes('<title>'))) c.rows.push({ item: 'old <title>', where: `${TGT}/${stem}.svg <title>`, verdict: 'kept', detail: '' })
+      if (!c.states) c.states = n ? [] : [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX, the Figure legende' }]
+      return c
     }
     // the frontmatter diagrams of concept.md as written: by default, the entries the concept writer was given
     if (L === 'frontmatter') {
@@ -154,7 +160,7 @@ fails += await scenario('two diagrams, target absent (GNU ls): inventory, blind 
   ...(drawers(calls).map(c => c.label).join() === 'draw:gateau,draw:part-recoupee' ? [] : ['not one drawing per idea']),
   ...(calls.filter(c => c.label.startsWith('compare-diagram:')).length === 2 ? [] : ['not one comparison per old diagram']),
   ...(report && (report.match(/## Diagrams \(M11\)/g) || []).length === 1 && !/## Colour table/.test(report) ? [] : ['diagrams section not shown once']),
-  ...(report && report.includes('| ![old diagram 1](S1-10-09-report/old-1.png) | ![gateau.svg](S1-10-09-report/gateau.png) |') && report.includes('| ![old diagram 2](S1-10-09-report/old-2.png) | ![part-recoupee.svg](S1-10-09-report/part-recoupee.png) |') ? [] : ['renderings not side by side']),
+  ...(report && report.includes('| ![old diagram 1](S1-10-09-report/old-1.png) | ![gateau.svg](S1-10-09-report/gateau.png) |') && report.includes('| ![old diagram 2](S1-10-09-report/old-2.png) | ![part-recoupee.svg](S1-10-09-report/part-recoupee.png) |') && report.includes('Renderings: the old diagram from the frozen site\'s build;') ? [] : ['renderings not side by side']),
   ...(report && report.includes('| E4 | la couche prise en entier | « couche entière » | contrast | refused (« ne sert pas seule ») |') && report.includes('Key of the inventory: E4 « tranche horizontale : ne sert pas seule ». Key drawn: none.') ? [] : ['inventory not in the report']),
   ...(report && report.includes('- « Le gâteau en couches. »: title of gateau.svg\n- « En bas, l’ingestion ; en haut, la restitution. »: labels of gateau.svg\n- « Une couche') && !report.includes('Captions of more than one sentence') ? [] : ['legende sentences not shown with their place, or a caption flagged']),
   ...(report && report.includes('### `parcours-po-website/src/components/schemas/Gateau.astro`') ? [] : ['old component not named relative']),
@@ -272,7 +278,7 @@ fails += await scenario('legende sentences to the title and the labels: out of t
   const cmp = calls.find(c => c.label === 'compare-diagram:1')?.prompt ?? ''
   return [...threw(error),
     ...(draw.includes('tell how to read the diagram') && draw.includes('« En bas, l\'ingestion ; en haut, la restitution. »') && !draw.includes('« Le gâteau en couches. »') ? [] : ['drawer not given the reading sentence alone']),
-    ...(cmp.includes('to the title, moved') && cmp.includes('to the labels, moved') && cmp.includes('"to":"labels"') ? [] : ['comparison not told where each sentence goes']),
+    ...(cmp.includes('to the title, moved') && cmp.includes('moved only when the words of every part are in the text of that idea') && cmp.includes('never moved with a part missing') && cmp.includes('"to":"labels"') ? [] : ['comparison not told where each sentence goes']),
     ...(result?.long_captions?.length === 0 ? [] : ['a caption flagged'])]
 })
 {
@@ -291,6 +297,42 @@ fails += await scenario('legende sentences to the title and the labels: out of t
     ...(error && /still gives to a title a sentence that title does not carry/.test(error) ? [] : ['not stopped']),
     ...(drawers(calls).length ? ['drew anyway'] : [])])
 }
+// second review of PR #182: a reading sentence half drawn (« ce que voit l'utilisateur » drawn nowhere in the
+// rerun wf_5508e4e1-d75, counted moved) gives a lost row for the missing part, verified, failing the run
+{
+  const READING = "« En bas, l'ingestion ; en haut, la restitution. »"
+  const half = [{ rows: [
+    { item: `Legende sentence ${READING}`, where: `${TGT}/gateau.svg 9a-couches`, verdict: 'moved', detail: 'to the labels: « Ingestion », « Restitution »' },
+    { item: "part « ce que voit l'utilisateur »", where: 'none', verdict: 'lost', detail: 'drawn nowhere' }], keys: [], invented: [] }]
+  fails += await scenario('a reading sentence half drawn: the missing part lost, verified, failing the run', { compared: half }, ({ error, calls, report }) => [
+    ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
+    ...(report && report.includes("| part « ce que voit l'utilisateur » | none | lost (L1) | M11 |") ? [] : ['lost row not in the report']),
+    ...(calls.find(c => c.label === 'verify')?.prompt.includes("part « ce que voit l'utilisateur »") ? [] : ['not verified']),
+    ...(calls.find(c => c.label === 'inventory:1')?.prompt.includes('each part becomes a label of the element it reads, its words verbatim in that element\'s labels') ? [] : ['inventory not told to make its parts labels'])])
+  fails += await scenario('a reading sentence half drawn, accept: passes, accepted', { compared: half, args: { accept: true } }, ({ error, report }) => [
+    ...threw(error),
+    ...(report && report.includes('Result: **passed, accepted**') ? [] : ['not passed, accepted'])])
+}
+// second review of PR #182: a state's words are found in the old texts, else invented; the old <title> has its row
+fails += await scenario('a state whose words are nowhere: invented, verified', { compared: [{ rows: [], states: [{ element: 'E4', words: 'ne sert pas seule', found: false, detail: 'not in Gateau.astro, CF, MDX or concept.md' }], keys: [], invented: [] }] }, ({ error, report }) => [
+  ...(error && /0 lost, 1 invented/.test(error) ? [] : ['not failed on 1 invented']),
+  ...(report && report.includes('| I1 | gateau.svg | diagram state | « ne sert pas seule » (state refused of E4) | the comparison found these words nowhere') ? [] : ['state row not in the report'])])
+fails += await scenario('a state the comparison gives no row: flagged invented', { compared: [{ rows: [], states: [], keys: [], invented: [] }] }, ({ error, report }) => [
+  ...(error && /1 invented/.test(error) ? [] : ['not failed on 1 invented']),
+  ...(report && report.includes('a state the diagram comparison gave no row: its words not checked') ? [] : ['not flagged'])])
+fails += await scenario('a state whose words are found: a kept row', {}, ({ error, report, calls }) => [
+  ...threw(error),
+  ...(report && report.includes('| state « ne sert pas seule » of gateau E4 | MDX, the Figure legende | kept | M11 |') ? [] : ['no kept state row']),
+  ...(calls.find(c => c.label === 'compare-diagram:1')?.prompt.includes('Under states, one row per element of the inventory that has a state') ? [] : ['comparison not asked for states'])])
+fails += await scenario('the old <title> given no row: flagged lost', { bareCompare: true, compared: [
+  { rows: [], states: [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX' }], keys: [], invented: [] },
+  { rows: [{ item: 'old <title> « Une part trop grosse recoupée en parts verticales plus fines »', where: 'part-recoupee.svg <title>', verdict: 'moved', detail: '« plus fines » in the caption' }], states: [], keys: [], invented: [] }] }, ({ error, report, calls }) => [
+  ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
+  ...(report && report.includes('| old <title> of parcours-po-website/src/components/schemas/Gateau.astro | none | lost (L1) | M11 | the diagram comparison gave the old <title> no row |') ? [] : ['title row not flagged']),
+  ...(calls.find(c => c.label === 'compare-diagram:2')?.prompt.includes('one row whose item starts with « old <title> »') ? [] : ['comparison not asked for the old <title>'])])
+fails += await scenario('drawing agents told to check with xmllint only', {}, ({ error, calls }) => [
+  ...threw(error),
+  ...(drawers(calls).every(c => c.prompt.includes('with xmllint --noout, and with nothing else: no browser, no preview pane, no screenshot')) ? [] : ['drawer not told'])])
 // review of PR #182: the frontmatter diagrams of concept.md as written are the entries set in code
 fails += await scenario('frontmatter diagrams as set, in another order: drawn', { frontmatter: fm => [...fm].reverse() }, ({ error, calls }) => [
   ...threw(error),
@@ -316,7 +358,8 @@ fails += await scenario('renderings: the command, PNGs beside the report', { arg
   ...(report && report.includes('![gateau.svg](181-concept-9-report/gateau.png)') && report.includes('Renderings in `181-concept-9-report/`, beside this report.') ? [] : ['links not relative to the report'])])
 fails += await scenario('renderings: no site build, the old component\'s source named', { renderOut: JSON.stringify({ page: 'absent', old: [], new: [{ svg: 'gateau.svg', png: 'gateau.png' }, { svg: 'part-recoupee.svg', png: null }], errors: [] }) }, ({ error, report }) => [
   ...threw(error), ...noAbs(report),
-  ...(report && report.includes('| no site build: source `parcours-po-website/src/components/schemas/Gateau.astro` | ![gateau.svg](S1-10-09-report/gateau.png) |') && report.includes('| part-recoupee.svg: not rendered |') ? [] : ['no-build row wrong'])])
+  ...(report && report.includes('| no site build: source `parcours-po-website/src/components/schemas/Gateau.astro` | ![gateau.svg](S1-10-09-report/gateau.png) |') && report.includes('| part-recoupee.svg: not rendered |') ? [] : ['no-build row wrong']),
+  ...(report && report.includes('Renderings: no site build, so the old diagram is its component\'s source') && !report.includes('from the frozen site\'s build') ? [] : ['renderings sentence names a build'])])
 const SRC_GATEAU = '---\nconst { p } = Astro.props\n---\n<svg viewBox="0 0 10 10" role="img"><text>Ingestion</text></svg>\n<!-- `code` -->\n'
 const srcLine = (c, source, bytes = Buffer.byteLength(source, 'utf8')) => JSON.stringify({ component: c, source, bytes })
 fails += await scenario('renderings: no site build, the old component\'s source quoted; a source cut short, named only', { renderOut: [
@@ -366,7 +409,7 @@ fails += await scenario('ruling-B line: counted by design, not invented', { inve
   ...threw(error),
   ...(calls.some(c => c.label === 'verify') ? ['sent to verification'] : []),
   ...(report && report.includes(`| teaching.md « Consignes », citation line | by design | M9 | ruling B on #23: ${LINE_B} |`) ? [] : ['no by-design row']),
-  ...(report && /\| 2 \| 1 \| 1 \| 0 \| 0 \| 0 \| pass \|/.test(report) && report.includes('## Invented\n\nNone.') ? [] : ['counts wrong']),
+  ...(report && /\| 5 \| 1 \| 1 \| 0 \| 0 \| 0 \| pass \|/.test(report) && report.includes('## Invented\n\nNone.') ? [] : ['counts wrong']),
   ...(calls.find(c => c.label === 'teaching+sources')?.prompt.includes('Cas de la banque : pour <id>, « <title> », « <title> » et « <title> » ; pour') ? [] : ['writer lacks the form'])])
 fails += await scenario('ruling-B line in another form, a second line, « Poser »: invented', { invented: [
   { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a1, « Le compteur », puis « Les tâches de Dana ».', detail: 'x' },
