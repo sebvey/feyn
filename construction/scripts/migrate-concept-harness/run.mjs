@@ -28,13 +28,6 @@ const EMPTY = LD + 'total 0\ndrwxr-xr-x 2 sve staff 64 Oct 28 14:21 .\ndrwxr-xr-
 const OTHER = `drwxr-xr-x 2 sve staff 64 Oct 28 14:21 ${DEST}/concepts\n` + 'total 0\ndrwxr-xr-x 2 sve staff 64 Oct 28 14:21 .\ndrwxr-xr-x 5 sve staff 160 Oct 28 14:21 ..'
 const FULL = LD + `total 8\ndrwxr-xr-x  4 sve staff 128 Oct 28 14:21 .\ndrwxr-xr-x  5 sve staff 160 Oct 28 14:21 ..\n-rw-r--r--@ 1 sve staff 12998 Oct 28 14:21 concept.md\ndrwxr-xr-x  2 sve staff 64 Oct 28 14:21 old dir`
 
-const goodMapping = [
-  { token: '--sch-s1', class: 'primary', opacity: 0.85, draws: 'slice 1 (Gateau), slice a (PartRecoupee)' },
-  { token: '--sch-s2', class: 'primary', opacity: 0.6, draws: 'slice 2, slice c' },
-  { token: '--sch-text', class: 'primary', opacity: 1, draws: 'all text' },
-  { token: '--sch-grey', class: 'muted', opacity: 0.35, draws: 'hatch background' },
-  { token: '--sch-s-ink', class: 'none', opacity: 0, draws: 'cut lines' },
-]
 
 function makeAgent(o) {
   const calls = []
@@ -43,7 +36,7 @@ function makeAgent(o) {
     calls.push({ label: opts.label, prompt })
     const L = opts.label
     if (L === 'scope') return {
-      spec: 'linear-course', dir: DIR, course_entry: 'number: 9 ...',
+      spec: 'linear-course', dir: o.dir ?? DIR, course_entry: 'number: 9 ...',
       concept_file: `${FROM}/course/concepts/09-decoupage-vertical.md`, sources_file: `${FROM}/course/sources/09-decoupage-vertical.md`,
       mdx_file: `${SITE}/src/content/concepts/fr/09-decoupage-vertical.mdx`,
       diagrams: o.diagrams ?? [
@@ -56,7 +49,6 @@ function makeAgent(o) {
       root_listing: o.rootListing ?? (() => { const m = /run the one command "ls -ld (.*?)specs"* and return/.exec(prompt); const r = !m ? '?' : m[1].startsWith('"$(pwd)/') ? `${o.cwd ?? (o.agentRoot ? o.agentRoot.replace(/\/$/, '') : ROOT)}/` : m[1]; return `drwxr-xr-x 9 sve staff 288 Oct 28 14:21 ${r}specs` })(),
     }
     if (L === 'empty-target') return o.emptied ?? { empty: true, listing: '' }
-    if (L === 'colours') return { mapping: o.mapping ?? goodMapping, unused: ['--sch-text-soft'] }
     if (L.startsWith('diagram:')) {
       const stem = L.slice(8)
       return { file: `${stem}.svg`, title: 't', caption: 'c', subconcept: '9a', groups: [`9a-${stem}`],
@@ -96,12 +88,13 @@ async function scenario(name, o, expect) {
 
 const noAbs = r => (r && /(^|[^\w./~-])\/(Users|private|tmp|workspace)\b/.test(r) ? ['report holds an absolute path'] : [])
 let fails = 0
-fails += await scenario('two diagrams, target absent (GNU ls): one mapping, relative paths', { dump: 'report-two-diagrams' }, ({ error, report, calls }) => [
+fails += await scenario('two diagrams, target absent (GNU ls): the fixed table, no colour agent, relative paths', { dump: 'report-two-diagrams' }, ({ error, report, calls }) => [
   ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
-  ...(calls.filter(c => c.label === 'colours').length === 1 ? [] : ['colours not called once']),
-  ...(calls.filter(c => c.label.startsWith('diagram:')).every(c => c.prompt.includes('--sch-s2: class primary, opacity 0.6')) ? [] : ['a writer lacks the mapping']),
-  ...(report && (report.match(/## Colour mapping/g) || []).length === 1 ? [] : ['mapping not shown once']),
-  ...(report && report.includes('| `--sch-s1` | primary | 0.85 |') && report.includes('gateau.svg, part-recoupee.svg') ? [] : ['mapping table wrong']),
+  ...(calls.some(c => c.label === 'colours') ? ['a colour agent was called'] : []),
+  ...(calls.filter(c => c.label.startsWith('diagram:')).every(c => c.prompt.includes('--sch-s2: contrast, class secondary, opacity 0.7') && c.prompt.includes('--sch-text: text, class muted, opacity 1') && c.prompt.includes('Read SPEC.md section 7.2 whole')) ? [] : ['a writer lacks the table or the style']),
+  ...(report && (report.match(/## Colour table/g) || []).length === 1 ? [] : ['table not shown once']),
+  ...(report && report.includes('| `--sch-s1` | focus | primary | 1 |') && report.includes('| gateau.svg, part-recoupee.svg |') && /\| `--sch-band` \| light fill \| muted \| 0\.12 \| [^|]+ \| none \|/.test(report) ? [] : ['table wrong']),
+  ...(report && (report.match(/^\| `--sch-/gm) || []).length === 10 ? [] : ['table not whole']),
   ...(report && report.includes('| no | no |') ? [] : ['target existed not "no"']),
   ...(report && report.includes('no such folder') && report.includes("ls: cannot access 'concepts/09") ? [] : ['listing section wrong']),
   ...(report && report.includes('concept folder `concepts/09-decoupage-vertical/`') && report.includes('`parcours-po/course/concepts/09') ? [] : ['header paths wrong']),
@@ -123,13 +116,23 @@ fails += await scenario('emptying agent says empty but lists a file: stops', { l
 fails += await scenario('listing unreadable: stops', { listing: 'the folder holds files' }, ({ error }) => (error && /reads as neither/.test(error) ? [] : ['not stopped']))
 fails += await scenario('listing of another existing folder: stops', { listing: OTHER }, ({ error }) => (error && /reads as neither/.test(error) ? [] : ['not stopped']))
 fails += await scenario('error naming another path: stops', { listing: `ls: cannot access '${DEST}/concepts': No such file or directory` }, ({ error }) => (error && /reads as neither/.test(error) ? [] : ['not stopped']))
-fails += await scenario('mapping gives one pair twice: stops', { mapping: [...goodMapping, { token: '--sch-s3', class: 'primary', opacity: 0.6, draws: 'x' }] }, ({ error }) => (error && /share the pair primary 0.6/.test(error) ? [] : ['not stopped']))
-fails += await scenario('mapping maps a token twice: stops', { mapping: [...goodMapping, { ...goodMapping[0] , opacity: 0.5 }] }, ({ error }) => (error && /mapped twice/.test(error) ? [] : ['not stopped']))
-fails += await scenario('class none with an opacity: stops', { mapping: [...goodMapping.slice(0, 4), { token: '--sch-s-ink', class: 'none', opacity: 0.6, draws: 'x' }] }, ({ error }) => (error && /class none/.test(error) ? [] : ['not stopped']))
-fails += await scenario('a writer draws with an unmapped token: stops', { tokens: { 'part-recoupee': ['--sch-s1', '--sch-band'] } }, ({ error }) => (error && /--sch-band.*lacks/.test(error) ? [] : ['not stopped']))
-fails += await scenario('no diagram: no colour agent', { diagrams: [] }, ({ error, report, calls }) => [
+fails += await scenario('a writer draws with a token the table lacks: stops', { tokens: { 'part-recoupee': ['--sch-s1', '--sch-halo'] } }, ({ error }) => (error && /part-recoupee\.svg draws with --sch-halo, which the colour table of the course lacks/.test(error) ? [] : ['not stopped']))
+fails += await scenario('var(--sch-bg, var(--sch-band)): drawn as --sch-band', { tokens: { 'part-recoupee': ['--sch-s1', '--sch-bg'] } }, ({ error, report }) => [
+  ...(error ? [`threw: ${error}`] : []),
+  ...(report && /\| `--sch-band` \| light fill \| muted \| 0\.12 \| [^|]+ \| part-recoupee\.svg \|/.test(report) ? [] : ['--sch-bg not read as --sch-band'])])
+{
+  // one table for every concept: the writers of concept 2 and of concept 9 get the same table
+  const tableOf = calls => calls.filter(c => c.label.startsWith('diagram:')).map(c => c.prompt.split('The colour table of the course, fixed for every concept (M11): ')[1]?.split('. Draw each')[0])
+  let t9, t2
+  fails += await scenario('concept 9: its writers\' table', {}, ({ error, calls }) => { t9 = tableOf(calls); return error ? [`threw: ${error}`] : [] })
+  fails += await scenario('concept 2: its writers\' table', { args: { concept: '2', report: 'construction/notes/S1-10-02-report.md' }, dir: 'concepts/02-objectif-produit-resultat', listing: ABSENT_GNU.replaceAll('09-decoupage-vertical', '02-objectif-produit-resultat') }, ({ error, calls }) => { t2 = tableOf(calls); return error ? [`threw: ${error}`] : [] })
+  const same = t9.length && t2.length && [...t9, ...t2].every(t => t && t === t9[0]) && t9[0].includes('--sch-text: text, class muted, opacity 1')
+  console.log(`${same ? 'ok  ' : 'FAIL'} one colour table for every concept${same ? '' : ': the writers of concepts 2 and 9 got different tables'}`)
+  if (!same) fails++
+}
+fails += await scenario('no diagram: no colour agent, no table', { diagrams: [] }, ({ error, report, calls }) => [
   ...(error ? [`threw: ${error}`] : []), ...(calls.some(c => c.label === 'colours') ? ['colours called'] : []),
-  ...(report && report.includes('## Colour mapping (M11)\n\nNo diagram.') ? [] : ['no-diagram line missing'])])
+  ...(report && report.includes('## Colour table (M11)\n\nNo diagram.') ? [] : ['no-diagram line missing'])])
 fails += await scenario('relative dest, agents give absolute paths: none left, none mangled', { args: { dest: 'courses/parcours-po' }, listing: `ls: cannot access 'courses/parcours-po/${DIR}': No such file or directory`, agentRoot: '/private/tmp/feyn/' }, ({ error, report }) => [
   ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
   ...(report && report.includes('| concepts/09-decoupage-vertical/sources.md intro |') ? [] : ['course-folder path wrong']),
@@ -143,16 +146,13 @@ fails += await scenario('dest under /workspace: none left', { args: { dest: '/wo
   ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
   ...(report && report.includes('| concepts/09-decoupage-vertical/sources.md intro |') && report.includes('check-course courses/parcours-po --only') ? [] : ['paths under /workspace not rewritten'])])
 // #178: a label ink on a fill, the ruling-B line, an absent target named under missing, absolute spec paths
-const labelMapping = [...goodMapping.slice(0, 4), { token: '--sch-s-ink', class: 'plain', opacity: 1, draws: 'the label on the flag' }]
-const writers = calls => calls.filter(c => ['colours', 'teaching+sources', 'concept'].includes(c.label) || c.label.startsWith('diagram:'))
-fails += await scenario('label ink on a fill: plain pair, window form in every writer', { mapping: labelMapping }, ({ error, report, calls }) => [
+const writers = calls => calls.filter(c => ['teaching+sources', 'concept'].includes(c.label) || c.label.startsWith('diagram:'))
+fails += await scenario('contrast ink: label on a fill or cut, by SPEC.md 7.2, in every writer', {}, ({ error, report, calls }) => [
   ...(error ? [`threw: ${error}`] : []),
-  ...(calls.find(c => c.label === 'colours')?.prompt.includes('class plain (opacity 1), the label drawn in a window of the fill, never class none') ? [] : ['colour agent not told']),
-  ...(calls.filter(c => c.label.startsWith('diagram:')).every(c => c.prompt.includes('--sch-s-ink: plain: a label in a window of its fill') && c.prompt.includes('fill-rule="evenodd"') && c.prompt.includes('Never a filter, a mask')) ? [] : ['a writer lacks the window form']),
-  ...(writers(calls).every(c => c.prompt.includes('A contrast ink drawn on a fill as a label') || c.label === 'colours') ? [] : ['M11 lacks the label clause']),
-  ...(calls.find(c => c.label === 'checks')?.prompt.includes('the window form of M11, never an outline in place of a fill') ? [] : ['checks agent not told']),
-  ...(report && report.includes('| `--sch-s-ink` | plain (no class, a label in a window) | 1 |') ? [] : ['mapping table wrong'])])
-fails += await scenario('label ink with an opacity other than 1: stops', { mapping: [...goodMapping.slice(0, 4), { token: '--sch-s-ink', class: 'plain', opacity: 0.8, draws: 'x' }] }, ({ error }) => (error && /class plain .* opacity 0.8, expected 1/.test(error) ? [] : ['not stopped']))
+  ...(calls.filter(c => c.label.startsWith('diagram:')).every(c => c.prompt.includes('--sch-s-ink: the contrast ink, no pair: drawn on a fill as a label') && c.prompt.includes('fill-rule="evenodd"') && c.prompt.includes('Never a filter, a mask')) ? [] : ['a writer lacks the window form']),
+  ...(writers(calls).every(c => c.prompt.includes('the form label on a fill (the label in a window of the fill') && c.prompt.includes('the form cut (a gap)') && c.prompt.includes('style of SPEC.md section 7')) ? [] : ['M11 lacks the contrast-ink clause or the pointer to SPEC.md 7.2']),
+  ...(calls.find(c => c.label === 'checks')?.prompt.includes('the form label on a fill of SPEC.md 7.2, never an outline in place of a fill') ? [] : ['checks agent not told']),
+  ...(report && report.includes('| `--sch-s-ink` | label on a fill or cut | none | none |') ? [] : ['table row wrong'])])
 const TEACH = `${TGT}/teaching.md`
 const LINE_B = 'Cas de la banque : pour 9a1, « Le compteur de relevés ingérés », « Les tâches de Dana » et « Trois « afin de » à juger » ; pour 9b2, « « Quel patron ? » ».'
 fails += await scenario('ruling-B line: counted by design, not invented', { invented: [{ file: TEACH, section: 'Consignes', text: `« ${LINE_B} »`, detail: 'no old text' }] }, ({ error, report, calls }) => [
@@ -175,7 +175,7 @@ fails += await scenario('a missing old file under concepts/: stops', { missing: 
 fails += await scenario('one item naming the target and a missing input: stops', { missing: [`target folder ${TGT} does not exist; ${FROM}/course/sources/09-decoupage-vertical.md not found`] }, ({ error }) => (error && /Inputs missing: target folder .*sources\/09-decoupage-vertical\.md not found$/.test(error) ? [] : ['not stopped']))
 fails += await scenario('spec paths absolute in the writers\' inputs', {}, ({ error, calls }) => [
   ...(error ? [`threw: ${error}`] : []),
-  ...(writers(calls).length === 5 ? [] : ['writers not all called']),
+  ...(writers(calls).length === 4 ? [] : ['writers not all called']),
   ...writers(calls).flatMap(c => [`${ROOT}/specs/linear-course/SPEC.md`, `${ROOT}/specs/linear-course/templates/`, `${ROOT}/docs/glossary.md`, `${ROOT}/construction/notes/S1-08.md`]
     .filter(p => !c.prompt.includes(p)).map(p => `${c.label} lacks ${p}`)),
   ...writers(calls).filter(c => /(^|[^\w/])(specs\/linear-course\/|docs\/glossary\.md|construction\/notes\/S1-08\.md)/.test(c.prompt)).map(c => `${c.label} has a relative spec path`)])

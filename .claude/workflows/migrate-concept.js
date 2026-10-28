@@ -4,7 +4,7 @@ export const meta = {
   whenToUse: 'Stage 1 only (S1-10): the maintainer asks to migrate concept N of a course from the frozen repositories. args: { course: "<course id>", concept: "<number as in course.yaml: 9, A1>", from?: "<frozen course repo, default ../pdx/parcours-po>", site?: "<frozen site repo, default ../pdx/parcours-po-website>", dest?: "<course folder written into, default courses/<course>>", report?: "<report path, default construction/notes/S1-10-<NN>-report.md>", langDir?: "<language pack dir passed to check-course>", overwrite?: true, accept?: true }. dest is a full course folder (course.yaml, plan.md, glossary.md, domains/…), a copy when not courses/<course>; overwrite empties the target concept folder first. The defaults of from and site are relative to the working directory: a run from a worktree or a copy passes absolute paths.',
   phases: [
     { title: 'Scope', detail: 'finds the old files, the course.yaml entry, the target folder and its listing' },
-    { title: 'Write', detail: 'one colour mapping for the concept, the diagrams, concept.md, teaching.md and sources.md' },
+    { title: 'Write', detail: 'the diagrams (by the fixed colour table), concept.md, teaching.md and sources.md' },
     { title: 'Checks', detail: 'check-course on the concept, form fixes only' },
     { title: 'Compare', detail: 'old to new and new to old, flagged rows verified, report written' },
   ],
@@ -14,16 +14,16 @@ export const meta = {
 // Astro diagram components) becomes one concept folder of SPEC.md section 4, by the closed list of
 // mapping rules MAP below (taken from the S1-02 prototype and the rulings on #97, #98 and #23).
 // Steps: Scope locates the old files and lists the target (ls -la), and refuses a target whose listing
-// shows files (args.overwrite empties it); Write, blind to any other copy of the concept (BLIND), has a
-// colour agent decide one class-and-opacity pair per old colour token for all the diagrams of the
-// concept (M11, ruling on #23), converts the diagrams with that one mapping, then the Markdown; Checks runs
+// shows files (args.overwrite empties it); Write, blind to any other copy of the concept (BLIND), converts
+// the diagrams with the one colour table of the course (COLOUR_TABLE, M11, decision one-diagram-style),
+// then the Markdown; Checks runs
 // check-course --only the per-concept checks --concept N, fixes form only; Compare sweeps old to new
 // (kept, moved, lost, by design) and new to old (invented), verifies every lost or invented row, writes
 // the report in the fixed format of renderReport(). Fails on a check failing for this concept, or a
 // confirmed lost or invented row without args.accept. Old repos read only; paths: cwd-relative or absolute.
 // Decided in code, not on an agent's word: the target path, the SVG stems, whether the target holds
-// files (read from the listing, which the report shows), the colour mapping's form (one pair per token,
-// no pair twice, every token a diagram uses mapped), the checks verdict, the citation line of M9 counted
+// files (read from the listing, which the report shows), the colour table (fixed here, its form checked
+// at load, every token a diagram draws with in it), the checks verdict, the citation line of M9 counted
 // by design (from its exact form, ruling B on #23), a missing item naming the target ignored, the
 // repository root (from an absolute dest, else pwd; the agents get the spec and the glossary under it,
 // #178), the report. The report names
@@ -70,6 +70,50 @@ construction/notes/ (a hand migration or an earlier report of this concept lives
 ${ROOT}construction/notes/S1-08.md, which rule M1 names, may be read), not git \
 history, and not the target folder beyond the files you write yourself. The target folder is empty when \
 the Write step starts: write your files from the inputs and the rules alone.`
+
+// The colour table (M11, #181): one ink of SPEC.md section 7.2 per old colour token, fixed for the course,
+// the same in every concept (decision one-diagram-style). Not decided per concept: in wave 2 of S1-10 a
+// colour agent per concept drew --sch-text muted in concept 2, primary in 3 and 4, secondary in 5.
+// INKS restates the inks of SPEC.md 7.2 (class, opacity); --sch-s-ink, the old contrast ink, has no
+// ink of its own: it takes the form label on a fill or cut of SPEC.md 7.2 by what it draws.
+const INKS = {
+  focus: ['primary', 1], contrast: ['secondary', 0.7], 'light contrast': ['secondary', 0.4],
+  text: ['muted', 1], 'soft text': ['muted', 0.75], line: ['muted', 0.6], outline: ['muted', 0.45],
+  'grey fill': ['muted', 0.25], 'light fill': ['muted', 0.12],
+}
+const CONTRAST_INK = 'label on a fill or cut'
+const COLOUR_TABLE = [
+  { token: '--sch-s1', ink: 'focus', draws: 'the darkest blue: the element taught (a flag, the epic, the precise cards, slice 1, the « afin de » block, a focus outline or arrow)' },
+  { token: '--sch-s2', ink: 'contrast', draws: 'the middle blue: the second element (the Résultat frame, the features, the conversation bubble, slice 2, the other dots)' },
+  { token: '--sch-s3', ink: 'light contrast', draws: 'the light blue: a third element (slice 3, the stories, the retrospective) and the light fill of nodes' },
+  { token: '--sch-text', ink: 'text', draws: 'the main text, and the strokes drawn in it (a cross, a strike, a time line, a dashed curve)' },
+  { token: '--sch-text-soft', ink: 'soft text', draws: 'notes, legends, column heads, arrows and their heads' },
+  { token: '--sch-grey-line', ink: 'line', draws: 'links, axes, ticks, dashed outlines, hatch lines, small marks (a lock, a knob)' },
+  { token: '--sch-band-line', ink: 'outline', draws: 'the outline of boxes and cards, separators' },
+  { token: '--sch-grey', ink: 'grey fill', draws: 'the fill of a hatch, of a shape set aside (blocked, in doubt); a halo (a loss)' },
+  { token: '--sch-band', ink: 'light fill', draws: 'the fill of boxes and cards; also var(--sch-bg, var(--sch-band)), --sch-bg being undefined' },
+  { token: '--sch-s-ink', ink: CONTRAST_INK, draws: 'light words or marks on a dark shape: a label on a fill in a window, a line or mark across a shape a cut (a gap)' },
+]
+// --sch-bg is defined by no old stylesheet: var(--sch-bg, var(--sch-band)) draws --sch-band (Schema17)
+const TOKEN_ALIAS = { '--sch-bg': '--sch-band' }
+{
+  const TOKEN = /^--sch-[a-z0-9]+(-[a-z0-9]+)*$/
+  const seen = new Set(), pairs = new Map()
+  for (const r of COLOUR_TABLE) {
+    if (!TOKEN.test(r.token) || seen.has(r.token)) throw new Error(`COLOUR_TABLE: ${r.token} malformed or twice`)
+    seen.add(r.token)
+    if (r.ink === CONTRAST_INK) continue
+    if (!INKS[r.ink]) throw new Error(`COLOUR_TABLE: ${r.token} has the ink "${r.ink}", which SPEC.md 7.2 lacks`)
+    const pair = INKS[r.ink].join(' ')
+    if (pairs.has(pair)) throw new Error(`COLOUR_TABLE: ${pairs.get(pair)} and ${r.token} share the pair ${pair}`)
+    pairs.set(pair, r.token)
+  }
+}
+const inkText = r => r.ink === CONTRAST_INK
+  ? `${r.token}: the contrast ink, no pair: drawn on a fill as a label (a <text>), the form label on a fill (the label in a window of the fill, fill="currentColor", no class, no opacity attribute); drawn over a shape as a line, a mark or a shape, the form cut (a gap)`
+  : `${r.token}: ${r.ink}, class ${INKS[r.ink][0]}, opacity ${INKS[r.ink][1]}`
+const TABLE_TEXT = COLOUR_TABLE.map(inkText).join('; ')
+const tableToken = t => TOKEN_ALIAS[t] || t
 
 // The mapping, a closed list: every old item has its rule, and the comparison cites the rule ids.
 const mapRules = () => `Mapping rules (old file to new folder). Old files: CF the concept file, SF the sources \
@@ -160,43 +204,31 @@ d'école » section of the concept stays: the site shows the frontmatter stances
 (old text, new text), counted moved. The MDX sources texts (the reader paraphrase): by design, only \
 their kind is used.
 M11 Diagrams. One ASTRO component (one variant per distinct prop value used in MDX, e.g. p="a") \
-becomes one SVG under the drawing contract (SPEC.md section 7). Stem: a named component gives its name in \
+becomes one SVG under the drawing contract and in the style of SPEC.md section 7 (7.1 the contract; \
+7.2 the style: the meaning of the classes, the inks, the common forms, the measures). Stem: a named component gives its name in \
 lowercase words joined by hyphens (Escalier: escalier, CoutDuRetard: cout-du-retard); a numbered one \
 (Schema13, SchemaA1, Schema16Prevision, any variant) gives two to four words of its <title>, lowercase \
 ASCII without accents, joined by hyphens; stems are unique in the concept. Same viewBox and geometry; JS loops and conditions \
 written out; <title> kept (it is the frontmatter title and the image alt) and <desc> kept, ids \
 prefixed with the stem; colour tokens (--sch-*), <style> and patterns become currentColor with \
-fill-opacity / stroke-opacity and the classes primary, secondary, muted, the losses (a second colour, \
-a hatch, a halo) recorded. The drawings must stay readable in one colour. The colour mapping is \
-decided once per concept, for all its diagrams, never per drawing (ruling on #23): each colour token \
-of the old drawings (each --sch-* that an element of any component of the concept draws with) gets \
-one pair of class and opacity, the same pair in every diagram of the concept, two tokens never the \
-same pair; the report lists the mapping once, and the losses do not repeat it. An opacity the old \
-component sets on an individual element or class beyond its token's colour (a class .ribbon at 0.7 \
-and .ribbon.thin at 0.45 on the same token, a rect with opacity="0.5") is kept as that element's \
-opacity attribute (SPEC.md section 7 allows it), on top of its token's pair: never folded into the \
-pair, never dropped (a contrast ink, drawn as a gap, has no element to keep it on: a loss; the \
-opacity of a hatch's lines, .hatch-line, goes on the dashed outline that replaces the hatch); the \
-report lists each kept element opacity under the writing choices (maintainer's ruling of 2026-10-28). Shapes the old \
-drawings told apart by colour get distinct opacities (for three colours, for example 0.85, 0.6, 0.4), \
-not only distinct classes; a contrast ink drawn over a shape as a line, a mark or a shape (the cut lines \
-across a slice, a disc on a card) gets no pair (class none) and becomes a gap, the shape \
-drawn as segments with a small gap between them, never a line of another class over it. A contrast ink \
-drawn on a fill as a label (a <text>: light words on a dark card) is not a gap: its token gets the \
-pair plain (no class, opacity 1), and the label is drawn in a window of the fill (maintainer's ruling \
-of 2026-10-28 on #23): the filled shape becomes one <path> with fill-rule="evenodd" and the shape's \
-fill pair, its outline (rounded corners as arcs) then a rectangle around the label, a few units larger \
-than the text, so the fill stays as a border 6 units wide or more all round (a flag 170 by 38 at \
-412,46: a window 146 by 22 at 424,55); when 6 units do not fit (a long label on a narrow card), \
-the border is as wide as fits, at least 2 units; a disc keeps a circular window (a circle as the \
-second subpath); the label keeps its place, size and weight, with \
-fill="currentColor", no class and no opacity attribute. One window per label, its lines included. \
-Never an outline in place of the fill, a filter, a mask or knocked-out text (flood-color is \
-forbidden, and the label must stay a <text>). The losses, one line each: the label is no longer a \
-second ink on the fill, and a border under 6 units. A token that draws both labels and shapes or \
-marks takes plain: its shapes and marks over a shape stay gaps. A hatch becomes a muted fill \
-under a dashed outline; a legend swatch is drawn as the element it stands for (same fill, same \
-outline). Groups "<sub-concept>-<element>", never a bare sub-concept id, the sub-concept being the \
+fill-opacity / stroke-opacity and the classes primary, secondary, muted, by the colour table of the \
+course below, the losses (a second colour, a hatch, a halo) recorded. The colour table is fixed, the \
+same for every concept and every diagram (decision one-diagram-style): each old token draws with its \
+ink, never another pair, and no writer decides a mapping of its own; a token the table lacks stops \
+the run. The colour table: ${TABLE_TEXT}. The report shows the table once, and the losses do not \
+repeat it. An opacity the old component sets on an individual element or class beyond its token's \
+colour (a class .ribbon at 0.7 and .ribbon.thin at 0.45 on the same token, a rect with opacity="0.5") \
+is an element opacity (SPEC.md 7.2): kept as that element's opacity attribute, on top of its ink; \
+never folded into the ink, never dropped (a contrast ink drawn as a cut has no element to keep it on: \
+a loss; the opacity of a hatch's lines, .hatch-line, goes on the dashed outline that replaces the \
+hatch); the report lists each kept element opacity under the writing choices (maintainer's ruling \
+of 2026-10-28). The contrast ink --sch-s-ink takes the forms of SPEC.md 7.2 by what it draws: a label \
+on a fill (a <text>: light words on a dark card) is drawn in a window of the fill, the form label on a \
+fill (maintainer's ruling of 2026-10-28 on #23); a line, a mark or a shape over a shape (the cut lines \
+across a slice, a tick on a disc) is a cut, a gap. A token that draws both keeps both: its labels in \
+windows, its lines and marks as gaps. The losses, one line each: a label no longer a second ink on its \
+fill, a border under 6 units, a hatch, a halo. A hatch, a legend swatch, a dash: the forms of SPEC.md \
+7.2. Groups "<sub-concept>-<element>", never a bare sub-concept id, the sub-concept being the \
 leaf the part illustrates (2c1-etapes, not 2c-etapes): the leaf whose reader text explains what that \
 part shows, which may differ from the diagram's subconcept (labels naming the techniques a later leaf \
 teaches take that later leaf). Frontmatter \
@@ -244,28 +276,6 @@ const SCOPE_SCHEMA = {
   required: ['spec', 'dir', 'course_entry', 'concept_file', 'sources_file', 'mdx_file', 'diagrams', 'unlisted_h4', 'target_listing', 'cwd', 'root_listing', 'missing'],
 }
 
-const COLOURS_SCHEMA = {
-  type: 'object',
-  properties: {
-    mapping: {
-      type: 'array',
-      description: 'one item per colour token that an element of any of the components draws with',
-      items: {
-        type: 'object',
-        properties: {
-          token: { type: 'string', description: 'the old colour token, as written (--sch-s2)' },
-          class: { type: 'string', enum: ['primary', 'secondary', 'muted', 'plain', 'none'], description: 'plain only for a contrast ink drawn on a fill as a label (text), drawn in a window of the fill; none only for a contrast ink drawn over a shape as a line, a mark or a shape, which becomes a gap (M11)' },
-          opacity: { type: 'number', description: 'the one opacity of the token, used as fill-opacity or stroke-opacity; 1 for class plain, 0 for class none' },
-          draws: { type: 'string', description: 'what the token draws, in which component, short' },
-        },
-        required: ['token', 'class', 'opacity', 'draws'],
-      },
-    },
-    unused: { type: 'array', items: { type: 'string' }, description: 'tokens a component declares but no element draws with' },
-  },
-  required: ['mapping', 'unused'],
-}
-
 const DIAGRAM_SCHEMA = {
   type: 'object',
   properties: {
@@ -274,7 +284,7 @@ const DIAGRAM_SCHEMA = {
     caption: { type: 'string' },
     subconcept: { type: 'string' },
     groups: { type: 'array', items: { type: 'string' }, description: 'the group ids of the SVG' },
-    tokens: { type: 'array', items: { type: 'string' }, description: 'the old colour tokens (--sch-*) this drawing draws with' },
+    tokens: { type: 'array', items: { type: 'string' }, description: 'the old colour tokens (--sch-*) this drawing draws with: for var(--a, var(--b)) with --a undefined in the old stylesheet, --b' },
     element_opacities: {
       type: 'array',
       description: 'each opacity the old component set on an element or class beyond its token, kept as the element opacity attribute (M11)',
@@ -287,7 +297,7 @@ const DIAGRAM_SCHEMA = {
         required: ['element', 'opacity'],
       },
     },
-    losses: { type: 'array', items: { type: 'string' }, description: 'what the drawing contract could not carry (a second colour, a hatch, a halo), one line each; not the colour mapping' },
+    losses: { type: 'array', items: { type: 'string' }, description: 'what the drawing contract could not carry (a second colour, a hatch, a halo), one line each; not the colour table' },
   },
   required: ['file', 'title', 'caption', 'subconcept', 'groups', 'tokens', 'element_opacities', 'losses'],
 }
@@ -505,56 +515,9 @@ const CHECK_CMD = `mise exec -- ${ROOT}${SPEC_DIR}checks/check-course ${DEST.rep
 
 // --- Write -----------------------------------------------------------------------------
 
-// One colour mapping per concept (M11, ruling on #23 of 2026-10-28): one agent decides it from all the
-// components before any diagram is written, and every diagram writer receives it. Not the first
-// writer's mapping handed to the next ones: that would write the diagrams one after the other, and the
-// first writer, reading one component, cannot map a token only another component draws with.
-// Its form is checked here: tokens unique, one pair each, no pair twice, every token a writer uses mapped.
-const TOKEN = /^--sch-[a-z0-9]+(-[a-z0-9]+)*$/
-async function decideColours() {
-  if (!scope.diagrams.length) return { mapping: [], unused: [] }
-  const c = await agent(`${ROLE} ${BLIND}
-
-${INPUTS}
-
-Decide the colour mapping of rule M11 for all the diagrams of this concept at once: the components \
-${[...new Set(scope.diagrams.map(d => d.component))].join(', ')}, every variant the MDX uses \
-(${scope.diagrams.map(d => `${d.component.split('/').pop()}${d.variant ? ` ${d.variant}` : ''}`).join(', ')}). \
-Read each component whole (its <style>, its patterns, every element). List every colour token (--sch-*) \
-that an element draws with, in any component, and give each one pair of class and opacity, by M11: the \
-same pair in every diagram, two tokens never the same pair, distinct opacities for shapes the old \
-drawings tell apart by colour (also across components: a token is one ink everywhere). A contrast \
-ink (a light ink drawn on a dark shape, such as --sch-s-ink) is one of two cases: drawn on a fill as \
-a label (a <text>), class plain (opacity 1), the label drawn in a window of the fill, never class \
-none, even when the token also draws shapes or marks; drawn over a shape only as a line, a mark or a \
-shape (cut lines, a disc, \
-a tick), class none (opacity 0), a gap. List apart the tokens \
-declared but drawn by no element. An opacity a component sets on one element or class beyond its \
-token is not part of the pair: the writers keep it on the element. Write no file.`,
-    { label: 'colours', phase: 'Write', schema: COLOURS_SCHEMA })
-  if (!c) throw new Error('The colour mapping agent returned nothing: rerun the workflow (resume) to retry it')
-  const seen = new Set(), pairs = new Map()
-  for (const m of c.mapping) {
-    if (!TOKEN.test(m.token)) throw new Error(`Colour mapping: "${m.token}" is not a --sch-* token`)
-    if (seen.has(m.token)) throw new Error(`Colour mapping: ${m.token} mapped twice`)
-    seen.add(m.token)
-    if (m.class === 'none') { if (m.opacity !== 0) throw new Error(`Colour mapping: ${m.token} is class none with opacity ${m.opacity}, expected 0`); continue }
-    if (m.class === 'plain' && m.opacity !== 1) throw new Error(`Colour mapping: ${m.token} is class plain (a label in a window, no class) with opacity ${m.opacity}, expected 1`)
-    if (!(m.opacity > 0 && m.opacity <= 1)) throw new Error(`Colour mapping: ${m.token} has opacity ${m.opacity}, expected above 0 and at most 1`)
-    const pair = `${m.class} ${m.opacity}`
-    if (pairs.has(pair)) throw new Error(`Colour mapping: ${pairs.get(pair)} and ${m.token} share the pair ${pair}`)
-    pairs.set(pair, m.token)
-  }
-  return c
-}
-
 phase('Write')
-// Decided before the parallel writers, not inside them: the runtime's parallel() turns a thunk that
-// throws into null, so a refusal of the mapping would lose its reason there (review of PR #173).
-const colours = await decideColours()
 const [drawnDiagrams, teachingAndSources] = await parallel([
   async () => {
-    const MAPPING = colours.mapping.map(m => `${m.token}: ${m.class === 'none' ? 'class none, a gap (no ink)' : m.class === 'plain' ? 'plain: a label in a window of its fill, fill="currentColor", no class, no opacity attribute (its shapes and marks over a shape, if any, are gaps)' : `class ${m.class}, opacity ${m.opacity}`}`).join('; ')
     const drawn = await parallel(scope.diagrams.map(d => () => agent(`${ROLE} ${BLIND}
 
 ${INPUTS}
@@ -563,16 +526,18 @@ Convert one diagram by rule M11: the component ${d.component}${d.variant ? `, va
 into ${TARGET}${d.stem}.svg. Its Figure legende: « ${d.legende} ». It stands in: ${d.place}. Follow the \
 drawing contract of SPEC.md section 7 to the letter; \
 check the file is well-formed (xmllint --noout). Write only that file.
-The colour mapping of the concept, decided once for all its diagrams (M11): ${MAPPING}. Draw each \
-element of a token with that token's class and opacity (fill-opacity for a fill, stroke-opacity for a \
-stroke), never another pair; do not decide a mapping of your own. A token this drawing draws with that \
-the mapping lacks: stop and return it in tokens, without inventing a pair.
-A label in a token of the pair plain stands on a fill: draw that fill as one <path> with \
-fill-rule="evenodd" and the fill's own pair, its outline then a rectangle around the label (a circle \
-on a disc), the fill left as a border 6 units wide or more all round, or as wide as fits and at \
-least 2 units where 6 do not fit (a loss to record); the label inside, at its place, size and \
-weight, fill="currentColor", no class, no opacity attribute (M11). Never a filter, a mask, \
-knocked-out text, or an outline in place of the fill. Record the loss in losses.
+Read SPEC.md section 7.2 whole (the classes, the inks, the common forms, the measures): the style of \
+every diagram of the course.
+The colour table of the course, fixed for every concept (M11): ${TABLE_TEXT}. Draw each element of a \
+token with that token's class and opacity (fill-opacity for a fill, stroke-opacity for a stroke), \
+never another pair; do not decide a mapping of your own. A token this drawing draws with that the \
+table lacks: stop and return it in tokens, without inventing a pair.
+A label in --sch-s-ink stands on a fill: the form label on a fill of SPEC.md 7.2, the fill one <path> \
+with fill-rule="evenodd" and the fill's own ink, its outline then a rectangle around the label (a \
+circle on a disc), the fill left as a border 6 units wide or more all round, or as wide as fits and \
+at least 2 units where 6 do not fit (a loss to record); the label inside, at its place, size and \
+weight, fill="currentColor", no class, no opacity attribute. Never a filter, a mask, knocked-out \
+text, or an outline in place of the fill. Record the loss in losses.
 An opacity the component sets on an individual element or class beyond its token's colour (a class \
 at 0.7 and another at 0.45 on the same token, opacity="0.5" on a rect): keep it as that element's \
 opacity attribute, on top of the token's pair; never fold it into the pair, never drop it. The \
@@ -580,7 +545,7 @@ opacity of a hatch's lines (.hatch-line) goes on the dashed outline that replace
 outline's opacity. A contrast ink drawn as a gap has no element left: its opacity is a loss. Return \
 each one kept in element_opacities, naming the element that carries it in the SVG.
 Return its frontmatter entry, its group ids, the old colour tokens it draws with, the element \
-opacities kept, and the losses (not the mapping: the report lists it once).`,
+opacities kept, and the losses (not the colour table: the report lists it once).`,
       { label: `diagram:${d.stem}`, phase: 'Write', schema: DIAGRAM_SCHEMA })))
     return drawn
   },
@@ -599,10 +564,11 @@ those two files. Return the files and every choice a rule left you (the citation
 const diagramEntries = (drawnDiagrams || []).filter(Boolean)
 if (diagramEntries.length < scope.diagrams.length) throw new Error(`${scope.diagrams.length - diagramEntries.length} diagram(s) not converted: see the workflow log`)
 diagramEntries.forEach((e, i) => { if (e.file !== `${stems[i]}.svg`) throw new Error(`Diagram ${stems[i]} returned the file ${e.file}`) })
-const mappedTokens = new Set(colours.mapping.map(m => m.token))
+const tableTokens = new Set(COLOUR_TABLE.map(r => r.token))
 for (const e of diagramEntries) {
-  const unmapped = e.tokens.filter(t => !mappedTokens.has(t))
-  if (unmapped.length) throw new Error(`${e.file} draws with ${unmapped.join(', ')}, which the colour mapping of the concept lacks: the colour agent missed it, see the workflow log`)
+  e.tokens = [...new Set(e.tokens.map(tableToken))]
+  const unmapped = e.tokens.filter(t => !tableTokens.has(t))
+  if (unmapped.length) throw new Error(`${e.file} draws with ${unmapped.join(', ')}, which the colour table of the course lacks (COLOUR_TABLE, M11): give the token an ink of SPEC.md 7.2 in the table through an issue, then rerun`)
   // element opacities are kept as the element's opacity attribute (M11, maintainer's ruling of 2026-10-28)
   for (const o of e.element_opacities) if (!(o.opacity > 0 && o.opacity <= 1)) throw new Error(`${e.file}: element opacity ${o.opacity} on ${o.element}, expected above 0 and at most 1`)
 }
@@ -636,7 +602,7 @@ Run "${CHECK_CMD}". For each failure in a file of ${TARGET}: fix it when the fix
 a label, a list shape, a frontmatter key, an id, an SVG attribute, a quote character, a wrapped line, \
 the orphan reference of rule M10 added to the source column of the one row that names it as support, \
 and no other source-column change; a filter, mask or colour attribute the contract forbids around a \
-label: the window form of M11, never an outline in place of a fill); \
+label: the form label on a fill of SPEC.md 7.2, never an outline in place of a fill); \
 leave it when the fix would change what the text says, and say why. Rerun after fixing, at most three \
 runs in all. A failure in a file outside ${TARGET} is not yours: leave it. Return the last output \
 verbatim, every line: the verdict is read from it.`,
@@ -683,7 +649,7 @@ it as support. Any other change of sourcing is invented (an id added or replaced
 replaced) or lost (an id removed). An old path M10 rewrites to its path in the course folder, and a \
 pointer with no new path that M10 drops from the intro or « Non vérifié », are not a change of \
 sourcing: they are moved, the detail giving the old and the new text.
-${colours.mapping.length ? `The colour mapping of the diagrams, decided once for the concept (M11): ${colours.mapping.map(m => `${m.token}: ${m.class === 'none' ? 'none (a gap)' : m.class === 'plain' ? 'plain (a label in a window of its fill, no class)' : `${m.class} ${m.opacity}`}`).join('; ')}.` : ''}`
+${diagramEntries.length ? `The colours of the diagrams follow the colour table of the course (M11): ${TABLE_TEXT}.` : ''}`
 
 const [oldSweep, newSweep] = await parallel([
   () => agent(`${COMPARE}
@@ -841,13 +807,15 @@ function renderReport() {
   out.push('', '## Refuted by the verification', '')
   if (!refuted.length) out.push('None.')
   else { out.push('| Id | Flagged | Found |', '|---|---|---|'); for (const r of refuted) out.push(`| ${r.id} | ${cell(r.item || r.text)} | ${cell(verdictOf(r.id).reason)} |`) }
-  out.push('', '## Colour mapping (M11)', '')
-  if (!colours.mapping.length) out.push('No diagram.')
+  out.push('', '## Colour table (M11)', '')
+  if (!diagramEntries.length) out.push('No diagram.')
   else {
-    out.push('One pair of class and opacity per old colour token, decided once for all the diagrams of the concept.', '')
-    out.push('| Token | Class | Opacity | Draws | Diagrams |', '|---|---|---|---|---|')
-    for (const m of colours.mapping) out.push(`| \`${m.token}\` | ${m.class === 'plain' ? 'plain (no class, a label in a window)' : m.class} | ${m.class === 'none' ? 'none (a gap)' : m.opacity} | ${cell(m.draws)} | ${diagramEntries.filter(d => d.tokens.includes(m.token)).map(d => d.file).join(', ') || 'none'} |`)
-    if (colours.unused.length) out.push('', `Declared but drawn by no element: ${colours.unused.map(t => `\`${t}\``).join(', ')}.`)
+    out.push('The colour table of the course, fixed in the workflow, the same for every concept: one ink of SPEC.md 7.2 per old colour token.', '')
+    out.push('| Token | Ink | Class | Opacity | Draws (old site) | Diagrams |', '|---|---|---|---|---|---|')
+    for (const r of COLOUR_TABLE) {
+      const contrast = r.ink === CONTRAST_INK
+      out.push(`| \`${r.token}\` | ${r.ink} | ${contrast ? 'none' : INKS[r.ink][0]} | ${contrast ? 'none' : INKS[r.ink][1]} | ${cell(r.draws)} | ${diagramEntries.filter(d => d.tokens.includes(r.token)).map(d => d.file).join(', ') || 'none'} |`)
+    }
   }
   out.push('', '## Writing choices', '')
   const choices = [...teachingAndSources.choices, ...conceptWritten.choices, ...diagramEntries.flatMap(d => d.element_opacities.map(o => `${d.file}: element opacity ${o.opacity} kept on ${o.element} (M11)`)), ...diagramEntries.flatMap(d => d.losses.map(l => `${d.file}: ${l} (M11)`))]
