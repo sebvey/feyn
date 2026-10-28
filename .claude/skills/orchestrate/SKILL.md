@@ -91,7 +91,10 @@ goes back to it.
 From the main checkout, on `main`:
 
 1. The worktree: `git worktree list --porcelain` gives its path
-   (`.claude/worktrees/agent-<id>`). It is locked while its agent runs
+   (`.claude/worktrees/agent-<id>`), on a branch `worktree-agent-<id>` cut from `main`'s HEAD;
+   `/finish after-merge` does not remove it (Claude Code, observed 2026-10-27, #115). A
+   worktree with no change at the end of the agent's turn is removed (Claude Code, inferred
+   2026-10-27, #27). It is locked while its agent runs
    (`locked claude agent agent-<id>`) (Claude Code, observed 2026-10-28, #128) and unlocked
    once the agent has finished (Claude Code, observed 2026-10-28, #130). Still locked: stop the
    agent (`TaskStop`), then, if needed, `git worktree unlock <path>`.
@@ -112,14 +115,17 @@ issue (`mise exec -- gh issue view <n>`), then its "Reads" files.
 
 ## How to run the cycle (you are in a worktree)
 Follow `.claude/skills/start/SKILL.md` for #<n>, adapted to a worktree:
-- Do NOT `git switch main` (main is checked out in the main checkout). `git fetch`, and base
-  your branch on `origin/main`.
+- Do NOT `git switch main` (main is checked out in the main checkout): it fails in a worktree
+  (Claude Code, observed 2026-10-27, #115). `git fetch`, and base your branch on `origin/main`.
 - `mise exec -- gh issue develop <n> --name <type>/<n>-<slug> --base main` WITHOUT
-  `--checkout`, then `git fetch` and `git switch -c <branch> --track origin/<branch>`.
+  `--checkout`, then `git fetch` and `git switch -c <branch> --track origin/<branch>`
+  (Claude Code, observed 2026-10-27, #115).
 - Before any commit, run `git config --show-origin user.email` and check it shows the
   workspace identity (not empty). Never `git config user.email` nor `git -c user.email=`.
   `git` plain; `gh` and `node` through `mise exec --`.
 - Set the issue's Status to In progress as /start says.
+- `git push` can fail to resolve github.com from the sandbox while `gh` works; retry the push
+  outside the sandbox (Claude Code, observed 2026-10-27, #27).
 Then do the work, then follow `.claude/skills/finish/SKILL.md` to push and open the PR. Do NOT
 merge. No signature or generated-by line in the PR body (the squash uses it as the commit
 message).
@@ -132,7 +138,9 @@ reserved terms, counterfactuals the maintainer accepted (verbatim, with the date
 A choice the issue does not settle, or a /decide decision whose counterfactual the maintainer
 has not accepted: open the PR as a draft, put `blocked:maintainer` on the issue only (not the
 PR), write an "Awaiting the maintainer" section at the top of the body (question, options,
-recommendation), and stop. You will be resumed with the answer.
+recommendation), and stop. You cannot ask the maintainer, so work needing their acceptance
+runs in two phases: you deliver what does not depend on it, the maintainer answers, then you
+are resumed with the answer and the work resumes (Claude Code, observed 2026-10-27, #27).
 
 ## An agent-workflow run
 You have no Workflow tool. A Done when that needs a run: make it runnable, open a draft with
