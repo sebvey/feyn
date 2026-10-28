@@ -1,6 +1,6 @@
 # Migration report: concept 9
 
-Workflow `migrate-concept`, course `parcours-po`, concept folder `courses/parcours-po/concepts/09-decoupage-vertical/`.
+Workflow `migrate-concept`, course `parcours-po`, concept folder `courses/parcours-po/concepts/09-decoupage-vertical/` (in the run copy).
 Old files: `../pdx/parcours-po/course/concepts/09-decoupage-vertical.md` (CF), `../pdx/parcours-po/course/sources/09-decoupage-vertical.md` (SF), `../pdx/parcours-po-website/src/content/concepts/fr/09-decoupage-vertical.mdx` (MDX), `../pdx/parcours-po-website/src/components/schemas/Gateau.astro`, `../pdx/parcours-po-website/src/components/schemas/PartRecoupee.astro` (ASTRO).
 
 ## Summary
@@ -108,9 +108,9 @@ None.
 - M10 Nature: row « Que chaque story soit une tranche verticale ; ... » given cours from MDX item « Chaque story est une tranche verticale. » (kind cours).
 - M10 Nature: row « Tranche est une façon de découper, pas un niveau ... au niveau du sprint, une tranche est une story » given cours from MDX item « Le principe vaut à plusieurs niveaux ; au niveau du sprint, une tranche est une story » (kind cours).
 - M10 Nature: rows whose matching MDX item has no kind left empty (site's choice): métaphore du gâteau, origine des mots, couche seule ne sert pas seule, vertical s'arrête à la story, PO juge sur critères, walking skeleton définition, exemples du fil rouge, Developers estiment la taille.
-- M10 Nature: row Lawrence Defer Performance has no MDX sources item; matched to the ecoles.ecole item « Richard Lawrence : neuf patrons (2009) » -> école.
-- M10 Nature: row « Les patrons SPIDR et Lawrence se recoupent ... sans se confondre » has no MDX sources item stating it; matched to ecoles.ecole item « Entre les catalogues » -> école.
-- M10 Nature: row « tranche qui traverse toutes les couches sans servir seule (compteur) ; proche d'un walking skeleton » has no MDX sources item; its closest ecoles match is the voisines walking skeleton item (not a stance) -> empty.
+- M10 Nature: row Lawrence Defer Performance has no MDX sources item; matched to the ecoles.ecole item « Richard Lawrence : neuf patrons (2009) »: école.
+- M10 Nature: row « Les patrons SPIDR et Lawrence se recoupent ... sans se confondre » has no MDX sources item stating it; matched to ecoles.ecole item « Entre les catalogues »: école.
+- M10 Nature: row « tranche qui traverse toutes les couches sans servir seule (compteur) ; proche d'un walking skeleton » has no MDX sources item; its closest ecoles match is the voisines walking skeleton item (not a stance): empty.
 - M10 Nature: rows with no MDX sources item and no ecoles stance match left empty: story qui ne nomme pas l'écran, mot flou règle non fixée, spike livre une réponse pas une fonction (course deduction; not the SPIDR ecole claim), tâches au Sprint Planning, walking skeleton daté années 1990 (voisines, not a stance).
 - M10 Nature: row « Le test rapide » given cours from MDX item « Le réflexe : ... » (kind cours); row « Couches d'un produit data » cours; row « Schéma 9b, cas inventé » cours from MDX « Rattacher le morceau ... » (kind cours).
 - M10 orphan: [S5b] was cited by no source cell; row « SPIDR, P et I » names it as support in its verification column (« l'affiche [S5b] ajoute ... »); source cell [S5] became « [S5], [S5b] » (moved, detail: orphan [S5b] added). No other orphan.

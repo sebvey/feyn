@@ -17,13 +17,16 @@ export const meta = {
 // blind to any other copy of the concept (BLIND), converts the diagrams, then the Markdown; Checks runs
 // check-course --only the per-concept checks --concept N, fixes form only; Compare sweeps old to new
 // (kept, moved, lost, by design) and new to old (invented), verifies every lost or invented row, writes
-// the report in the fixed format of renderReport(). Fails on a check failing in the concept folder, or a
+// the report in the fixed format of renderReport(). Fails on a check failing for this concept, or a
 // confirmed lost or invented row without args.accept. Old repos read only; paths: cwd-relative or absolute.
+// Decided in code, not on an agent's word: the target path, the SVG stems, the checks verdict, the report.
 
 const A = args || {}
 if (!A.course) throw new Error('args.course missing: the course id (courses/<id>/)')
 if (A.concept === undefined || A.concept === null || A.concept === '') throw new Error('args.concept missing: the concept number as course.yaml writes it (9, A1)')
-const CONCEPT = String(A.concept)
+// "09" and 9 are concept 9; an annex keeps its letter (A1)
+const CONCEPT = /^\d+$/.test(String(A.concept)) ? String(Number(A.concept)) : String(A.concept)
+if (!/^(\d+|A\d+)$/.test(CONCEPT)) throw new Error(`args.concept ${A.concept}: a number (9) or an annex (A1)`)
 const NN = /^\d$/.test(CONCEPT) ? `0${CONCEPT}` : CONCEPT
 const FROM = (A.from || '../pdx/parcours-po').replace(/\/?$/, '/')
 const SITE = (A.site || '../pdx/parcours-po-website').replace(/\/?$/, '/')
@@ -122,7 +125,7 @@ a hatch, a halo) recorded. The drawing must stay readable in one colour: map eac
 the old drawing (each --sch-* it uses) to one pair of class and opacity, two tokens never to the same \
 pair, and list the mapping in the losses; shapes the old drawing told apart by colour get distinct opacities (for three colours, for example 0.85, 0.6, 0.4), not only distinct \
 classes; a contrast ink drawn over a shape (the cut lines across a slice) becomes a gap, the shape \
-drawn as segments 2 units apart, never a line of another class over it; a hatch becomes a muted fill \
+drawn as segments with a small gap between them, never a line of another class over it; a hatch becomes a muted fill \
 under a dashed outline; a legend swatch is drawn as the element it stands for (same fill, same \
 outline). Groups "<sub-concept>-<element>", never a bare sub-concept id, the sub-concept being the \
 leaf the part illustrates (2c1-etapes, not 2c-etapes): the leaf whose reader text explains what that \
@@ -213,13 +216,11 @@ const WRITE_SCHEMA = {
 const CHECKS_SCHEMA = {
   type: 'object',
   properties: {
-    passed: { type: 'boolean', description: 'the last run printed no failure line naming a file of the target concept folder (failures elsewhere in the course do not count)' },
-    output: { type: 'string', description: 'the output of the last run, verbatim' },
+    output: { type: 'string', description: 'the output of the last run, verbatim, every line' },
     fixes: { type: 'array', items: { type: 'string' }, description: 'form fixes applied, one line each: file, what, which failure' },
     left: { type: 'array', items: { type: 'string' }, description: 'failures in the target folder not fixed because the fix would change what the text says, with why' },
-    outside: { type: 'array', items: { type: 'string' }, description: 'failure lines naming a file outside the target folder (typography and course-yaml look at the whole course), verbatim' },
   },
-  required: ['passed', 'output', 'fixes', 'left', 'outside'],
+  required: ['output', 'fixes', 'left'],
 }
 
 const ROW = {
@@ -305,8 +306,14 @@ if (scope.missing.length) throw new Error(`Inputs missing: ${scope.missing.join(
 if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(scope.spec)) throw new Error(`Unexpected spec name: ${scope.spec}`)
 // built here, not taken from an agent: the checks and the spec are the ones of the run's working directory
 const SPEC_DIR = `specs/${scope.spec}/`
-const DIR = scope.dir.replace(/^courses\/[^/]+\//, '').replace(/\/?$/, '/')
+const DIR = String(scope.dir).replace(/^courses\/[^/]+\//, '').replace(/\/?$/, '/')
+// the target is emptied below: its path is checked here, never trusted from the scope agent
+if (!new RegExp(`^concepts/${NN}-[a-z0-9]+(-[a-z0-9]+)*/$`).test(DIR)) throw new Error(`Refused concept dir "${scope.dir}": expected concepts/${NN}-<slug>`)
 const TARGET = `${DEST}${DIR}`
+if (TARGET === DEST || !TARGET.startsWith(`${DEST}concepts/`) || TARGET.length <= `${DEST}concepts/`.length) throw new Error(`Refused target ${TARGET}: not strictly under ${DEST}concepts/`)
+const stems = scope.diagrams.map(d => d.stem)
+for (const st of stems) if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(st)) throw new Error(`Refused SVG stem "${st}": lowercase ASCII words joined by hyphens`)
+if (new Set(stems).size !== stems.length) throw new Error(`SVG stems not unique: ${stems.join(', ')}`)
 // target_exists is the scope agent's word: the report records it
 if (scope.target_exists && !A.overwrite) throw new Error(`${TARGET} already holds files: pass args.overwrite to replace them, or args.dest to write elsewhere`)
 if (scope.target_exists) {
@@ -327,6 +334,7 @@ const INPUTS = `Inputs (read them on disk):
 - ASTRO, the diagram components: ${[...new Set(scope.diagrams.map(d => d.component))].join(', ') || '(none)'}
 - the course.yaml entry: ${scope.course_entry}
 - the spec: ${SPEC_DIR}SPEC.md (sections 4 and 7), the templates in ${SPEC_DIR}templates/
+- the repository glossary: docs/glossary.md
 Target concept folder: ${TARGET}
 
 ${MAP}`
@@ -359,6 +367,7 @@ every choice a rule left you.`,
 
 const diagramEntries = (diagrams || []).filter(Boolean)
 if (diagramEntries.length < scope.diagrams.length) throw new Error(`${scope.diagrams.length - diagramEntries.length} diagram(s) not converted: see the workflow log`)
+diagramEntries.forEach((e, i) => { if (e.file !== `${stems[i]}.svg`) throw new Error(`Diagram ${stems[i]} returned the file ${e.file}`) })
 if (!teachingAndSources) throw new Error('teaching.md and sources.md not written: see the workflow log')
 
 const conceptWritten = await agent(`${ROLE} ${BLIND}
@@ -390,11 +399,28 @@ a label, a list shape, a frontmatter key, an id, an SVG attribute, a quote chara
 the orphan reference of rule M10 added to the source column of the one row that names it as support, \
 and no other source-column change); \
 leave it when the fix would change what the text says, and say why. Rerun after fixing, at most three \
-runs in all. A failure in a file outside ${TARGET} (typography and course-yaml read the whole course) is not yours: \
-leave it, list it in outside; it does not fail this concept. Return the last output.`,
+runs in all. A failure in a file outside ${TARGET} is not yours: leave it. Return the last output \
+verbatim, every line: the verdict is read from it.`,
   { label: 'checks', phase: 'Checks', schema: CHECKS_SCHEMA, model: 'sonnet' })
 if (!checks) throw new Error('Checks agent returned nothing')
-log(`Checks: ${checks.passed ? 'pass' : 'fail'}${checks.fixes.length ? `, ${checks.fixes.length} form fix(es)` : ''}`)
+// The verdict is read from the output, line by line ("<id>: ok" or "<id>: fail: <file>:<line> <message>").
+// A per-concept check that fails fails the run, whatever the file (a broken language pack is reported
+// against course.yaml). A course-yaml or typography failure is excused only when it names neither this
+// concept nor the language pack; a check with no line at all fails the run.
+const PER_CONCEPT = ['concept-folder', 'conventions', 'svg-contract', 'sources', 'glossary-order']
+const checkLines = checks.output.split('\n').map(l => l.trim()).filter(Boolean)
+const blocking = [], excused = []
+for (const id of CONCEPT_CHECKS.split(',')) {
+  const mine = checkLines.filter(l => l.startsWith(`${id}: `))
+  if (!mine.length) { blocking.push(`${id}: no line in the output`); continue }
+  for (const l of mine.filter(l => l.startsWith(`${id}: fail`))) {
+    const namesThis = l.includes(DIR.replace(/\/$/, '')) || new RegExp(`\\bconcepts? ${CONCEPT}\\b`).test(l) || /language pack|lang\//.test(l)
+    if (PER_CONCEPT.includes(id) || namesThis) blocking.push(l)
+    else excused.push(l)
+  }
+}
+const checksPassed = !blocking.length
+log(`Checks: ${checksPassed ? 'pass' : 'fail'}${checks.fixes.length ? `, ${checks.fixes.length} form fix(es)` : ''}${excused.length ? `, ${excused.length} failure(s) outside the concept excused` : ''}`)
 
 // --- Compare ---------------------------------------------------------------------------
 
@@ -473,9 +499,10 @@ const inventedLeft = inventedRows.filter(confirmed)
 
 // --- Report ----------------------------------------------------------------------------
 
-const cell = s => String(s ?? '').replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ')
+const plain = s => String(s ?? '').replace(/\s*(->|=>|\u2192)\s*/g, ': ')
+const cell = s => plain(s).replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ')
 const count = v => oldSweep.rows.filter(r => r.verdict === v).length
-const failed = !checks.passed || ((lostLeft.length || inventedLeft.length) && !A.accept)
+const failed = !checksPassed || ((lostLeft.length || inventedLeft.length) && !A.accept)
 
 function renderReport() {
   const out = []
@@ -485,8 +512,8 @@ function renderReport() {
   out.push('## Summary', '')
   out.push('| kept | moved | by design | lost | invented | refuted | checks | target existed | accepted |')
   out.push('|---|---|---|---|---|---|---|---|---|')
-  out.push(`| ${count('kept')} | ${count('moved')} | ${count('by design')} | ${lostLeft.length} | ${inventedLeft.length} | ${lostRows.length + inventedRows.length - lostLeft.length - inventedLeft.length} | ${checks.passed ? 'pass' : 'fail'} | ${scope.target_exists ? 'yes, emptied' : 'no'} | ${A.accept ? 'yes' : 'no'} |`, '')
-  out.push(`Result: **${failed ? 'failed' : (lostLeft.length || inventedLeft.length) ? 'passed, accepted' : 'passed'}**. lost and invented count the rows confirmed by the verification; the rows it refuted (refuted) are listed at the end and count in no other column. checks is the check agent's reading of the output below; target existed is the scope agent's.`, '')
+  out.push(`| ${count('kept')} | ${count('moved')} | ${count('by design')} | ${lostLeft.length} | ${inventedLeft.length} | ${lostRows.length + inventedRows.length - lostLeft.length - inventedLeft.length} | ${checksPassed ? 'pass' : 'fail'} | ${scope.target_exists ? 'yes, emptied' : 'no'} | ${A.accept ? 'yes' : 'no'} |`, '')
+  out.push(`Result: **${failed ? 'failed' : (lostLeft.length || inventedLeft.length) ? 'passed, accepted' : 'passed'}**. lost and invented count the rows confirmed by the verification; the rows it refuted (refuted) are listed at the end and count in no other column. checks is read in code from the output below, which the check agent returns; target existed is the scope agent's word.`, '')
   for (const src of ['CF', 'SF', 'MDX', 'ASTRO']) {
     const rows = oldSweep.rows.filter(r => r.source === src)
     if (!rows.length) continue
@@ -511,12 +538,13 @@ function renderReport() {
   else { out.push('| Id | Flagged | Found |', '|---|---|---|'); for (const r of refuted) out.push(`| ${r.id} | ${cell(r.item || r.text)} | ${cell(verdictOf(r.id).reason)} |`) }
   out.push('', '## Writing choices', '')
   const choices = [...teachingAndSources.choices, ...conceptWritten.choices, ...diagramEntries.flatMap(d => d.losses.map(l => `${d.file}: ${l} (M11)`))]
-  out.push(...(choices.length ? choices.map(c => `- ${c}`) : ['None.']))
+  out.push(...(choices.length ? choices.map(c => `- ${plain(c)}`) : ['None.']))
   out.push('', '## Checks', '')
   out.push(`\`${CHECK_CMD}\``, '', '```', checks.output.trim(), '```')
   if (checks.fixes.length) out.push('', 'Form fixes:', ...checks.fixes.map(f => `- ${f}`))
   if (checks.left.length) out.push('', 'Left:', ...checks.left.map(f => `- ${f}`))
-  if (checks.outside.length) out.push('', 'Outside the concept folder (not counted):', ...checks.outside.map(f => `- ${f}`))
+  if (blocking.length) out.push('', 'Failing the run:', ...blocking.map(f => `- ${f}`))
+  if (excused.length) out.push('', 'Outside the concept, excused (names neither this concept nor the language pack):', ...excused.map(f => `- ${f}`))
   out.push('')
   return out.join('\n')
 }
@@ -529,9 +557,11 @@ whether it is written and its size.
 ${report}
 -----END REPORT-----`,
   { label: 'report', phase: 'Compare', schema: WRITTEN_SCHEMA, model: 'sonnet', effort: 'low' })
-if (!written || !written.written || !written.bytes) throw new Error(`The report ${REPORT} was not written: the run's result is in the workflow log`)
+const utf8Length = str => { let n = 0; for (const ch of str) { const c = ch.codePointAt(0); n += c < 0x80 ? 1 : c < 0x800 ? 2 : c < 0x10000 ? 3 : 4 } return n }
+// one byte of slack: a final newline added or dropped by the writing tool
+if (!written || !written.written || Math.abs(written.bytes - utf8Length(report)) > 1) throw new Error(`The report ${REPORT} was not written as rendered (${written ? written.bytes : 'no'} bytes, ${utf8Length(report)} expected): the run's result is in the workflow log`)
 
-const summary = { concept: CONCEPT, folder: TARGET, report: REPORT, checks: checks.passed ? 'pass' : 'fail', kept: count('kept'), moved: count('moved'), by_design: count('by design'), lost: lostLeft.length, invented: inventedLeft.length, target_existed: scope.target_exists, accepted: !!A.accept }
+const summary = { concept: CONCEPT, folder: TARGET, report: REPORT, checks: checksPassed ? 'pass' : 'fail', kept: count('kept'), moved: count('moved'), by_design: count('by design'), lost: lostLeft.length, invented: inventedLeft.length, target_existed: scope.target_exists, accepted: !!A.accept }
 log(`Report: ${REPORT}; ${JSON.stringify(summary)}`)
-if (failed) throw new Error(`migrate-concept failed for concept ${CONCEPT}: ${!checks.passed ? 'checks fail; ' : ''}${lostLeft.length} lost, ${inventedLeft.length} invented${A.accept ? ' (accepted)' : ''}. Report: ${REPORT}`)
+if (failed) throw new Error(`migrate-concept failed for concept ${CONCEPT}: ${!checksPassed ? 'checks fail; ' : ''}${lostLeft.length} lost, ${inventedLeft.length} invented${A.accept ? ' (accepted)' : ''}. Report: ${REPORT}`)
 return summary
