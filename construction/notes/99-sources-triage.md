@@ -29,17 +29,18 @@ Five tests, in order, per claim (the decision has the full wording):
    of the course has nature `cours`.
 3. Only `teaching.md` states it: if the learner must know it, it is a gap of the course (add it
    to `concept.md`, then test 2); a teaching device (a deduction, an invented example) has
-   nature `cours` and its row stays teacher-only. Concept 9 showed a third case the agreed wording
-   left implicit: a sourced claim the teacher gives only on demand (row 22, « Réserve, sur
-   demande ») keeps its sources and stays teacher-only. The decision states it.
+   nature `cours` and its row stays teacher-only. A sourced claim the teacher gives only on
+   demand (row 22, « Réserve, sur demande ») keeps its sources and stays teacher-only
+   (maintainer's choice, 2026-10-28).
 4. No source settles it and the course does not state it: « Non vérifié », written as a
    guardrail.
 5. The trace of a removed claim: dropped; git history is the trace.
 
-Two consequences used in the triage: a row's parenthesis names sections of one file only (a
-`concept.md` section for a test 2 row, a `teaching.md` section or case title for a test 3 row),
-so a case title never reaches the site; and a claim the course states as a fact that no source
-settles fits no test: it is sourced, rewritten into a guardrail, or removed (none in concept 9).
+Two more rules, agreed by the maintainer on 2026-10-28 and used in the triage: a row's
+parenthesis names sections of one file only (a `concept.md` section for a test 2 row, a
+`teaching.md` section or case title for a test 3 row), so a case title never reaches the site;
+and a claim the course states as a fact that no source settles is sourced, rewritten into a
+guardrail, or removed (none in concept 9).
 
 ## 3. « Non vérifié »
 
@@ -56,37 +57,40 @@ settles fits no test: it is sourced, rewritten into a guardrail, or removed (non
 
 ## 4. Counts
 
-The issue says 39 claims, the orchestrator's brief 38: there are **39** « Affirmations » rows
-(the S1-02 prototype note and the S1-09 report say 39 too). The issue's comment says 11
+There are **39** « Affirmations » rows, as the issue says (an earlier count said 38; the S1-02
+prototype note and the S1-09 report say 39 too). The issue's comment says 11
 « Non vérifié » entries: there are **10** bullets. Rows are numbered here from 1 (« Le Scrum
 Guide ne parle ni de tranche verticale… ») to 39, in file order.
 
 | Outcome | Rows | Entries |
 |---|---|---|
-| stays | 20 (19 by test 2, 1 by test 3: row 22) | 7 (test 4), 2 of them to reword as instructions |
-| re-sectioned (test 2) | 16 | |
-| nature becomes cours (test 3) | 2 | |
+| stays | 17 (test 2) | 7 (test 4), 2 of them to reword as instructions |
+| re-sectioned | 21 (20 by test 2, 1 by test 3: row 22) | |
+| nature becomes cours (test 3) | 0 | |
 | leaves the file (test 1) | 1 | |
 | moves to `concept.md` (test 3, gap) | 0 | |
 | dropped | 0 | 3 (1 by test 2, 2 by test 5) |
 | **total** | **39** | **10** |
 
 Concept 9 has no test 3 gap: every claim the learner must know is already in `concept.md`, and
-the teacher-only rows are teaching devices or a reserve. Row 12 (« Le PO juge la story sur ses
-critères ») looked teacher-only by its section (« Les tâches de Dana »), but 9a2 states it: it
-is re-sectioned, not a gap.
+the one teacher-only row (22) is a reserve. Rows 28 and 35 looked like teaching devices (a case's
+application), but the reader text states their principle, and the tests apply in order: test 2,
+with the case material as verification (maintainer's choice, 2026-10-28). Row 12 (« Le PO juge
+la story sur ses critères ») looked teacher-only by its section (« Les tâches de Dana »), but
+9a2 states it: it is re-sectioned, not a gap.
 
 ## 5. « Affirmations », row by row
 
 "Re-sectioned": the reader text states the claim, and the parenthesis names something that is
-not its `concept.md` section (a case, a case field, a `teaching.md` section, an old heading).
+not its `concept.md` section (a case, a case field, a `teaching.md` section, an old heading, a
+cross-reference). Row 22, test 3, is re-sectioned the other way: to its case title.
 
 | # | Claim (first words) | Parenthesis today | Test | Outcome | What changes |
 |---|---|---|---|---|---|
 | 1 | Le Scrum Guide ne parle ni de tranche verticale… | Consensus et choix d'école | 2 | stays | |
-| 2 | Découper un élément en éléments plus petits… | Consensus et choix d'école, renvoi au concept 4 | 2 | stays | |
+| 2 | Découper un élément en éléments plus petits… | Consensus et choix d'école, renvoi au concept 4 | 2 | re-sectioned | the cross-reference goes: (Consensus et choix d'école) |
 | 3 | L'incrément doit être utilisable | Consensus, appui | 2 | re-sectioned | « Consensus, appui » is no heading: (Consensus et choix d'école) |
-| 4 | Que chaque story soit une tranche verticale… | Consensus et choix d'école, Choix du cours | 2 | stays | `stances.course` |
+| 4 | Que chaque story soit une tranche verticale… | Consensus et choix d'école, Choix du cours | 2 | re-sectioned | « Choix du cours » is the old MDX heading: (Consensus et choix d'école), `stances.course` |
 | 5 | Découper par valeur plutôt que par couche… | Consensus et choix d'école | 2 | stays | |
 | 6 | La métaphore du gâteau en couches… | Consensus et choix d'école, 9a | 2 | stays | |
 | 7 | Origine des mots : les couches s'empilent… | 9a | 2 | stays | |
@@ -100,24 +104,24 @@ not its `concept.md` section (a case, a case field, a `teaching.md` section, an 
 | 15 | SPIDR, D (Data)… | 9b | 2 | stays | |
 | 16 | SPIDR, R (Rules)… | 9b | 2 | stays | |
 | 17 | SPIDR, P et I… | 9b, si l'échange y mène | 2 | re-sectioned | 9b2 states P and I outright; the teaching hint goes: (9b2) |
-| 18 | SPIDR, S (Spike)… | 9b2, Explication, renvoi au concept 17 | 2 | re-sectioned | case field removed: (9b2, Consensus et choix d'école); see 7 |
+| 18 | SPIDR, S (Spike)… | 9b2, Explication, renvoi au concept 17 | 2 | re-sectioned | case field removed: (9b2, Consensus et choix d'école); see 8 |
 | 19 | Patrons de Richard Lawrence : neuf patrons… | 9b | 2 | stays | |
 | 20 | Ces patrons sont aujourd'hui publiés par Humanizing Work… | Consensus et choix d'école | 2 | stays | |
 | 21 | Lawrence, Simple/Complex… | 9b2, Explication | 2 | re-sectioned | (9b2, Consensus et choix d'école) |
-| 22 | Lawrence, Defer Performance… | 9b2, Réserve sur demande… | 3 | stays | teacher-only: only the reserve of case 9b2 gives it; section the case « Prévoir les stations à risque : quel patron ? » |
+| 22 | Lawrence, Defer Performance… | 9b2, Réserve sur demande… | 3 | re-sectioned | teacher-only: only the reserve of case 9b2 gives it; « 9b2 » would let the site build it: (« Prévoir les stations à risque : quel patron ? ») |
 | 23 | Lawrence, Variations in Data… | 9b2, Explication | 2 | re-sectioned | (9b2, Consensus et choix d'école) |
 | 24 | Lawrence, Business Rule Variations… | 9b2, Réserve | 2 | re-sectioned | 9b2 and the stances (« Entre les catalogues ») state it: (9b2, Consensus et choix d'école) |
 | 25 | Choisir le découpage qui permet de reporter… | 9b, conseil attribué au guide de Lawrence et Green | 2 | re-sectioned | only the stances state it, not 9b: (Consensus et choix d'école) |
 | 26 | Wake, « Twenty Ways to Split Stories »… | Consensus et choix d'école | 2 | stays | |
-| 27 | Le walking skeleton (Alistair Cockburn)… | Consensus et choix d'école | 2 | stays | `neighbors`; see 7 |
-| 28 | Une tranche qui traverse toutes les couches sans servir seule… | Pièges, banque « Le compteur de relevés ingérés » | 3 | nature becomes cours | the principle is rows 9 and 27; what is proper to this row is the case's application (« Exemple du cours »): section the case only, teacher-only |
+| 27 | Le walking skeleton (Alistair Cockburn)… | Consensus et choix d'école | 2 | stays | `neighbors`; see 8 |
+| 28 | Une tranche qui traverse toutes les couches sans servir seule… | Pièges, banque « Le compteur de relevés ingérés » | 2 | re-sectioned | 9a1 (« sert l'équipe, pas lui ») and Pièges (the walking skeleton) state the principle; the case is verification: (9a1, Pièges) |
 | 29 | Une story qui ne nomme pas l'écran… | Pièges, banque « Redécouper » | 2 | re-sectioned | Pièges states it: (Pièges) |
-| 30 | Un mot flou dans la tranche… | Pièges, banque | 2 | re-sectioned | (Pièges); « fil rouge » leaves the source cell and the storyline part leaves the verification (test 1); see 6 |
+| 30 | Un mot flou dans la tranche… | Pièges, banque | 2 | re-sectioned | (Pièges); « fil rouge » leaves the source cell and the storyline part leaves the verification (test 1); see 7 |
 | 31 | Le test rapide… | Le test rapide | 2 | stays | already `cours` |
-| 32 | Couches d'un produit data… | Schéma, 9a | 2 | re-sectioned | « Schéma » is `teaching.md`, L'essentiel and `stances.course` state it: (L'essentiel, Consensus et choix d'école); source « aucune » becomes « cours » (#141); see 6 |
-| 33 | Exemples du fil rouge… | (none) | 1 | leaves the file | see 6 |
-| 34 | Schéma 9b, cas inventé (vue des vélos en panne d'Étienne)… | Schéma 9b | 2 | re-sectioned | 9b1 and 9b2 state it (« Ce rattachement est l'application du cours [cours] »): (9b1, 9b2) |
-| 35 | Le spike livre une réponse… | 9b2, erreurs fréquentes | 3 | nature becomes cours | the first half is row 18; the rest is a deduction of the case (« déduction du cours »): section the case « Prévoir les stations à risque : quel patron ? », teacher-only. Today « 9b2 » would let the site build it |
+| 32 | Couches d'un produit data… | Schéma, 9a | 2 | re-sectioned | « Schéma » is `teaching.md`, L'essentiel and `stances.course` state it: (L'essentiel, Consensus et choix d'école); source « aucune » becomes « cours » (#141); see 7 |
+| 33 | Exemples du fil rouge… | banque | 1 | leaves the file | see 7 |
+| 34 | Schéma 9b, cas inventé (vue des vélos en panne d'Étienne)… | none (the claim opens on « Schéma 9b ») | 2 | re-sectioned | 9b1 and 9b2 state it (« Ce rattachement est l'application du cours [cours] »): (9b1, 9b2) |
+| 35 | Le spike livre une réponse… | 9b2, erreurs fréquentes | 2 | re-sectioned | 9b2 states the principle (« sans livrer de fonction »); the case's application is verification: (9b2) |
 | 36 | Les Developers estiment la taille… | 9b1 | 2 | stays | |
 | 37 | Les tâches se découpent au Sprint Planning… | « Les tâches de Dana » ; Sprint Planning nommé avec renvoi au concept 15 | 2 | re-sectioned | 9a2 states it: (9a2) |
 | 38 | Walking skeleton daté « années 1990 » | Consensus et choix d'école | 2 | stays | `neighbors` author |
@@ -193,7 +197,7 @@ Found while reading each row against `concept.md`; outside the rule, left to the
 - **`migrate-concept`** (`.claude/workflows/migrate-concept.js`, rule M10): copies the old
   sources file faithfully, by design; the maintainer kept it so (option a).
 
-Follow-up C is therefore opened: #142, "Make the concept-writing tools apply the sources rule".
+So #142 is opened, "Make the concept-writing tools apply the sources rule".
 
 ## 10. Application and follow-ups
 
