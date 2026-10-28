@@ -1,6 +1,6 @@
 # Migration report: concept 10
 
-Workflow `migrate-concept`, course `parcours-po`, concept folder `concepts/10-hors-perimetre-dependances/`. Paths in the course folder are relative to it; the old files are named from their repository folder (`parcours-po`, `parcours-po-website`).
+Workflow `migrate-concept` (run `wf_409f303c-4a2`), course `parcours-po`, concept folder `concepts/10-hors-perimetre-dependances/`. Paths in the course folder are relative to it; the old files are named from their repository folder (`parcours-po`, `parcours-po-website`).
 Old files: `parcours-po/course/concepts/10-hors-perimetre-dependances.md` (CF), `parcours-po/course/sources/10-hors-perimetre-dependances.md` (SF), `parcours-po-website/src/content/concepts/fr/10-hors-perimetre-dependances.mdx` (MDX), `components/schemas/Schema10.astro` (ASTRO).
 
 ## Summary
@@ -26,21 +26,22 @@ Each old diagram was inventoried (what it shows, by idea), drawn anew from its i
 
 ### `components/schemas/Schema10.astro`
 
-Figure legende, in « L'essentiel »: « En haut, le hors périmètre : au bord de la story, ce qu’on pourrait croire inclus ; chaque ligne devient une demande au backlog. En bas, les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s’accordent sur l’ordre, et on n’escalade que si cela bloque. Les cas sont inventés pour l’illustration. »
+Figure legende, in « L'essentiel »: « Le hors périmètre : au bord de la story, ce qu’on pourrait croire inclus ; chaque ligne devient une demande au backlog. En bas, les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s’accordent sur l’ordre, et on n’escalade que si cela bloque. Les cas sont inventés pour l’illustration. »
 
 Split by idea: 2 diagrams.
 
 Its sentences, where the inventory sends them (M11):
-- « En haut, le hors périmètre : au bord de la story, ce qu'on pourrait croire inclus ; chaque ligne devient une demande au backlog. »: caption of hors-perimetre.svg
-- « En bas, les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s'accordent sur l'ordre, et on n'escalade que si cela bloque. »: caption of dependances.svg
+- « Le hors périmètre : au bord de la story, ce qu'on pourrait croire inclus ; chaque ligne devient une demande au backlog. »: caption of hors-perimetre.svg
+- « Les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s'accordent sur l'ordre, et on n'escalade que si cela bloque. »: caption of dependances.svg
 - « Les cas sont inventés pour l'illustration. »: labels of hors-perimetre.svg
 
 #### hors-perimetre.svg
 
 - Title: Le hors périmètre d'une story
-- Caption: En haut, le hors périmètre : au bord de la story, ce qu'on pourrait croire inclus ; chaque ligne devient une demande au backlog.
+- Caption: Le hors périmètre : au bord de la story, ce qu'on pourrait croire inclus ; chaque ligne devient une demande au backlog (cas inventé pour l'illustration).
 - Sub-concept: 10a
-- Idea: « En haut, le hors périmètre : au bord de la story, ce qu’on pourrait croire inclus ; chaque ligne devient une demande au backlog. » (MDX « L'essentiel », legende de la Figure)
+- Review fix: the three note sentences of the diagram were removed (7.2 principle 6); their content moved to the caption.
+- Idea: « Le hors périmètre : au bord de la story, ce qu’on pourrait croire inclus ; chaque ligne devient une demande au backlog. » (MDX « L'essentiel », legende de la Figure)
 
 | Id | Element | Labels | Role | State |
 |---|---|---|---|---|
@@ -50,9 +51,6 @@ Its sentences, where the inventory sends them (M11):
 | E4 | une ligne du hors périmètre, au bord de la story : l'envoi par courriel | « envoi par courriel » | subject | none |
 | E5 | une ligne du hors périmètre, au bord de la story : l'historique antérieur | « historique antérieur » | subject | none |
 | E6 | le backlog, où chaque ligne devient une demande que le PO ordonne | « backlog », « à ordonner par le PO » | context | none |
-| E7 | note : où se tiennent les lignes | « Au bord de la story : ce qu'on pourrait croire inclus. » | text | none |
-| E8 | note : le statut d'une ligne | « Chaque ligne reste une demande, pas un refus. » | text | none |
-| E9 | note : les cas sont inventés | « Les cas sont inventés pour l'illustration. » | text | none |
 
 Relations:
 - E3, E4 et E5 se tiennent au bord de E2, à l'extérieur : ce qu'on pourrait croire inclus dans la story
@@ -63,9 +61,9 @@ Key of the inventory: none. Key drawn: none.
 #### dependances.svg
 
 - Title: Les dépendances dans une équipe et entre deux équipes
-- Caption: En bas, les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s'accordent sur l'ordre, et on n'escalade que si cela bloque.
+- Caption: Les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s'accordent sur l'ordre, et on n'escalade que si cela bloque (cas inventés pour l'illustration).
 - Sub-concept: 10b
-- Idea: « En bas, les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s’accordent sur l’ordre, et on n’escalade que si cela bloque. » (MDX « L'essentiel », legende de la Figure)
+- Idea: « Les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s’accordent sur l’ordre, et on n’escalade que si cela bloque. » (MDX « L'essentiel », legende de la Figure)
 
 | Id | Element | Labels | Role | State |
 |---|---|---|---|---|

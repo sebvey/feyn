@@ -34,11 +34,11 @@ neighbors:
 diagrams:
   - file: "hors-perimetre.svg"
     title: "Le hors périmètre d'une story"
-    caption: "En haut, le hors périmètre : au bord de la story, ce qu'on pourrait croire inclus ; chaque ligne devient une demande au backlog."
+    caption: "Le hors périmètre : au bord de la story, ce qu'on pourrait croire inclus ; chaque ligne devient une demande au backlog (cas inventé pour l'illustration)."
     subconcept: "10a"
   - file: "dependances.svg"
     title: "Les dépendances dans une équipe et entre deux équipes"
-    caption: "En bas, les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s'accordent sur l'ordre, et on n'escalade que si cela bloque."
+    caption: "Les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s'accordent sur l'ordre, et on n'escalade que si cela bloque (cas inventés pour l'illustration)."
     subconcept: "10b"
 ---
 

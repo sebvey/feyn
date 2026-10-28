@@ -10,8 +10,8 @@
      stories de Charlotte ? ») ;
    - **10b2** envers une autre équipe : s'accorder avec le PO de cette équipe (« Le canal
      d'Abba dépend de l'équipe appli ») ; si l'accord ne se fait pas, escalade : renvoi au
-     concept 14, sans l'enseigner. L'accès à la table des locations, dépendance envers la DSI, est l'exemple du
-     concept 11b.
+     concept 14, sans l'enseigner. L'accès à la table des locations, dépendance envers la DSI,
+     est l'exemple du concept 11b.
 
 Déjà enseigné, à rappeler sans le réenseigner : V et I d'INVEST, les Developers estiment la
 taille (concept 7) ; une story tient dans un sprint (concept 4) ; le PO ordonne seul le backlog
@@ -23,9 +23,8 @@ avant le sprint et revue de sprint en détail (15).
 
 ## Faits du fil rouge utilisés
 
-la story de tournée (concept 6) ; Théo confirme ou infirme sur
-place une panne signalée ; un vélo signalé en panne reste louable, son blocage à la location a
-été mis hors périmètre de la story de tournée et Maud le réclame ; un vélo n'est plus louable
+La story de tournée (concept 6) ; Théo confirme ou infirme sur place une panne signalée ;
+un vélo signalé en panne reste louable, son blocage à la location a été mis hors périmètre de la story de tournée et Maud le réclame ; un vélo n'est plus louable
 quand un technicien l'a retiré du service après constat ; les signalements par téléphone ne sont
 pas saisis dans l'appli ; Charlotte veut le nombre de locations par quartier sur le mois, puis la
 comparaison au même mois de l'an dernier ; l'accès à la table des locations n'est pas obtenu

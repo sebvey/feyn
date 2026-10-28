@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 375" fill="currentColor" role="img" aria-labelledby="hors-perimetre-titre hors-perimetre-desc" font-family="system-ui, sans-serif" font-size="14">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 290" fill="currentColor" role="img" aria-labelledby="hors-perimetre-titre hors-perimetre-desc" font-family="system-ui, sans-serif" font-size="14">
   <title id="hors-perimetre-titre">Le hors périmètre d'une story</title>
   <desc id="hors-perimetre-desc">Une story à gauche ; sur son bord, à l'extérieur, trois lignes du hors périmètre en tirets : l'export en fichier, l'envoi par courriel, l'historique antérieur. Chaque ligne a une flèche vers le backlog, à droite.</desc>
   <g id="10a-titre" class="muted">
@@ -30,10 +30,5 @@
     <rect x="450" y="70" width="130" height="190" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5" stroke-width="2"/>
     <text x="464" y="100">backlog</text>
     <text x="464" y="150"><tspan x="464" dy="0">à ordonner</tspan><tspan x="464" dy="20">par le PO</tspan></text>
-  </g>
-  <g id="10a-notes" class="muted">
-    <text x="20" y="305">Au bord de la story : ce qu'on pourrait croire inclus.</text>
-    <text x="20" y="330">Chaque ligne reste une demande, pas un refus.</text>
-    <text x="20" y="355">Les cas sont inventés pour l'illustration.</text>
   </g>
 </svg>
