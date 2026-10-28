@@ -1,6 +1,6 @@
 # Migration report: concept 15
 
-Workflow `migrate-concept`, course `parcours-po`, concept folder `concepts/15-vie-story/`. Paths in the course folder are relative to it; the old files are named from their repository folder (`parcours-po`, `parcours-po-website`).
+Workflow `migrate-concept` (run `wf_3c4422d9-8f7`), course `parcours-po`, concept folder `concepts/15-vie-story/`. Paths in the course folder are relative to it; the old files are named from their repository folder (`parcours-po`, `parcours-po-website`).
 Old files: `parcours-po/course/concepts/15-vie-story.md` (CF), `parcours-po/course/sources/15-vie-story.md` (SF), `parcours-po-website/src/content/concepts/fr/15-vie-story.mdx` (MDX), `parcours-po-website/src/components/schemas/Schema15.astro` (ASTRO).
 
 ## Summary
@@ -33,7 +33,7 @@ The run drew one diagram from the old `Schema15.astro` (a frise of the three tem
 - Sub-concept: 15b (every group id is `15b-...`)
 - Roles: subject `primary` (« Pourquoi », « l'objectif de sprint »: thick outline, denser fill, bold); context `muted` (the frame « Sprint Planning », « Quoi » and « les éléments », « Comment » and « les tâches », the arrows). No contrast, no state, no key. No teaching sentence inside the drawing; every word comes from `concept.md` or the caption.
 - Placement: the image moved from « L'essentiel » to the 15b section, after the three topics; « L'essentiel » keeps its text.
-- Dropped with the old drawing: the refinement band, the revue and the tool states (the caption of the old drawing carried three ideas). « Schéma » of `teaching.md` describes the new drawing.
+- Dropped with the old drawing: the refinement band, the revue and the tool states (the caption of the old drawing carried three ideas). « Schéma » of `teaching.md` is one paragraph per sub-concept: 15b describes the new drawing, 15a and 15c keep the old frise as text the teacher follows (review finding: they declare no diagram, `requested-diagram-shown`).
 
 | Old | New |
 |---|---|
@@ -44,7 +44,7 @@ Renderings in `S1-10-15-report/`, beside this report.
 ## Writing choices
 
 - M9 citation line (ruling B): the old Sous-concepts cites 6 of 8 cases by title but writes two with straight inner quotes, so they do not match their headings. Added: `Cas de la banque : pour 15a2, « La story « définir le seuil » » ; pour 15c, « Tout est en « Fait » ».` (ids 15a2 and 15c, qualifiers dropped; bank order).
-- M9: the lead paragraph of the old Banque d'exemples became « Faits du fil rouge utilisés » with the lead words 'Faits du fil rouge utilisés : ' dropped. No other lead text stays at the top of the bank. Consignes, the cases and Schéma are verbatim.
+- M9: the lead paragraph of the old Banque d'exemples became « Faits du fil rouge utilisés » with the lead words 'Faits du fil rouge utilisés : ' dropped. No other lead text stays at the top of the bank. Consignes and the cases are verbatim.
 - M10 form: the old sources file split its claims into sub-tables under ### headings (15a, 15b, 15c, Piège, Renvois, Ajouts). SPEC 4.4 wants one table, so I merged them into one Affirmations table, same rows in the same order, and dropped the ### sub-headings (rule M10 'same rows, same order' plus SPEC 4.4). Header is the new four-column one.
 - M10 path rewrite: the intro `course/sources/00-scrum.md` became `concepts/00-scrum/sources.md`, and `course/sources/11-dor-dod.md` became `concepts/11-dor-dod/sources.md`.
 - M10 path rewrite: in Source and verification cells, every `course/sources/NN-slug.md` became `concepts/NN-slug/sources.md` (04-hierarchie, 07-invest, 08-criteres-regles, 09-decoupage-vertical, 10-hors-perimetre-dependances, 11-dor-dod, 12-donnees-produit, 13-ordonner-backlog, 14-parties-prenantes, 00-scrum). The range cell `course/sources/00-scrum.md` à `14-parties-prenantes.md` became `concepts/00-scrum/sources.md` à `concepts/14-parties-prenantes/sources.md`.

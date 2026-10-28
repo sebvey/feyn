@@ -15,7 +15,8 @@
    fixe l'objectif, les Developers choisissent avec le PO et font leur plan (« L'objectif de
    sprint de Diego »). En rechange, ou pour « exercice » : « La liste pour le blocage entre-t-elle
    au sprint ? » (ce qui entre : la DoR, concept 11b) ; « La story qui ne passe pas » (l'objectif
-   reste quand une story ne passe pas). Ne pas enseigner l'estimation ni la vélocité. 15b
+   reste quand une story ne passe pas). Ne pas enseigner l'estimation ni la vélocité. L'objectif
+   de sprint facultatif (Cohn, choix d'école) : à dire seulement si l'échange y mène. 15b
    suppose des sprints : à l'apprenant qui travaille sans sprint, proposer l'annexe A2b.
 3. **15c revue de sprint** : l'incrément inspecté, ce qui a changé, le backlog adapté ; une
    demande née de la revue entre au backlog et s'ordonne (« La revue avec Étienne et Maud »).
@@ -40,26 +41,24 @@ Cas de la banque : pour 15a2, « La story « définir le seuil » » ; pour 15c,
 
 ## Faits du fil rouge utilisés
 
-Théo, technicien de maintenance, prépare sa tournée de réparation
-à partir des vélos signalés et confirme ou infirme sur place une panne signalée ; un vélo
-signalé en panne reste louable ; un vélo n'est plus louable quand un technicien l'a retiré du
-service après constat ; les signalements sont saisis par l'abonné dans l'appli, ceux par
-téléphone n'y sont pas ; Étienne suit plusieurs vues, dont les vélos en panne ; Maud veut le
-nombre de vélos en panne par semaine et fixe chaque semaine le nombre de techniciens en
-tournée ; le blocage d'un vélo signalé se fait dans le système de location (DSI), la plateforme
-peut lui fournir la liste des vélos signalés, la story de blocage dépend de la DSI ; la règle
-« vélo disponible » (à quai et louable) ; le seuil « presque vide » n'est pas fixé (3 vélos
-cité, pas décidé) ; la vue des stations vides sert à Étienne à envoyer les régulateurs plus tôt
-vers les stations qui se vident ; DoD de l'équipe vélos (heure de la dernière mise à jour,
-définition écrite de chaque indicateur publié) et DoR (critères écrits, règles métier fixées,
-dépendances identifiées, accès obtenu) ; Developers : Dana, Diego (data engineers), Anna
+Théo, technicien de maintenance, prépare sa tournée de réparation à partir des vélos signalés et
+confirme ou infirme sur place une panne signalée ; un vélo signalé en panne reste louable ; un
+vélo n'est plus louable quand un technicien l'a retiré du service après constat ; les signalements
+sont saisis par l'abonné dans l'appli, ceux par téléphone n'y sont pas ; Étienne suit plusieurs
+vues, dont les vélos en panne ; Maud veut le nombre de vélos en panne par semaine et fixe chaque
+semaine le nombre de techniciens en tournée ; le blocage d'un vélo signalé se fait dans le système
+de location (DSI), la plateforme peut lui fournir la liste des vélos signalés, la story de blocage
+dépend de la DSI ; la règle « vélo disponible » (à quai et louable) ; le seuil « presque vide »
+n'est pas fixé (3 vélos cité, pas décidé) ; la vue des stations vides sert à Étienne à envoyer les
+régulateurs plus tôt vers les stations qui se vident ; DoD de l'équipe vélos (heure de la dernière
+mise à jour, définition écrite de chaque indicateur publié) et DoR (critères écrits, règles métier
+fixées, dépendances identifiées, accès obtenu) ; Developers : Dana, Diego (data engineers), Anna
 (analyste) ; sprints de deux semaines. Les répliques de l'équipe, d'Étienne et de Maud, les
-brouillons de stories et d'objectifs, le contenu des sprints et une part de pannes infirmées
-sont des propositions d'exercice : ils ne deviennent pas des faits du fil rouge. Restent non
-fixés, et aucun exemple ne les fixe : le sens de « en panne » pour chaque utilisateur, le seuil
-« presque vide », la règle de blocage (dès le signalement ou non). Le prof ne demande jamais à
-l'apprenant de fixer une règle ni de faire le travail des Developers (estimer, planifier les
-tâches).
+brouillons de stories et d'objectifs, le contenu des sprints et une part de pannes infirmées sont
+des propositions d'exercice : ils ne deviennent pas des faits du fil rouge. Restent non fixés, et
+aucun exemple ne les fixe : le sens de « en panne » pour chaque utilisateur, le seuil « presque
+vide », la règle de blocage (dès le signalement ou non). Le prof ne demande jamais à l'apprenant
+de fixer une règle ni de faire le travail des Developers (estimer, planifier les tâches).
 
 ## Banque d'exemples
 
@@ -307,4 +306,22 @@ tâches).
 
 ## Schéma
 
-Un cadre « Sprint Planning », avec trois questions empilées de haut en bas, reliées par des flèches dans l'ordre : pourquoi, quoi, comment. « Pourquoi » (l'objectif de sprint) est la plus marquée : cadre épais, fond plus soutenu, texte en gras. « Quoi » (les éléments) et « comment » (les tâches) sont plus discrètes. Le dessin ne montre ni le refinement ni la revue de sprint, et ne donne aucune explication : tout se dit à voix haute.
+Le schéma est une frise du sprint, de gauche à droite, que les messages se partagent.
+
+**15a, le refinement.** Au-dessus, sur toute la longueur de la frise, une bande continue
+« refinement » (pas une boîte : activité continue), où une bulle relie une story du haut du
+backlog à l'utilisateur concerné (un mot flou, cas inventé : « rapide ? »).
+
+**15b, le Sprint Planning** (le dessin déclaré, `sprint-planning-trois-questions.svg`). Un cadre
+« Sprint Planning » avec trois questions empilées de haut en bas, reliées par des flèches dans
+l'ordre : pourquoi, quoi, comment. « Pourquoi » (l'objectif de sprint) est la plus marquée : cadre
+épais, fond plus soutenu, texte en gras. « Quoi » (les éléments) et « comment » (les tâches)
+sont plus discrètes.
+
+**15c, la revue de sprint.** À la fin de la frise, la table « revue de sprint », où l'équipe et
+les parties prenantes entourent l'incrément ; une flèche repart vers le backlog avec une nouvelle
+carte (« nouvelle demande »). En marge, grisée, une rangée de colonnes d'outil « à faire, en
+cours, fait », légendée « états de l'outil, pas la vie de la story ».
+
+Légende de la frise : « préciser avec l'utilisateur, choisir pour un pourquoi, inspecter pour
+adapter ».
