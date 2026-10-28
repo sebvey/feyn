@@ -32,8 +32,9 @@ bullets (`- **Observation**: …`); read both.
    An open issue on the same point: add a comment to it instead
    (`mise exec -- gh issue comment <n> --body-file <file>`) and stop.
 3. **Pick the Status and the labels.**
-   - Status `Backlog`, unless the maintainer said the work is decided (`Ready`). No
-     state label: the Status replaced them ([project.md](project.md)).
+   - Status `Backlog` (a Project workflow sets it), unless the maintainer said the work is
+     decided (`Ready`, set at step 8). No state label: the Status replaced them
+     ([project.md](project.md)).
    - `type:`: `bug` (something is broken), `course` (course files), `decision` (a decision to
      write), `improvement` (tooling, spec, process).
    - `area:` from the paths the observation names (the tree is the list):
@@ -64,11 +65,10 @@ bullets (`- **Observation**: …`); read both.
 7. **Create** it:
    `mise exec -- gh issue create --title "<title>" --body-file <file> --label type:<type> --label area:<area>`
    (add `--milestone <name>` when the maintainer names one). It prints the issue URL.
-8. **Put it in the Project** ([project.md](project.md)): add it
-   (`mise exec -- gh project item-add 4 --owner sebvey --url <issue url>`; an issue the
-   Project's workflow already added is not added twice), then set its Status
-   (`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Backlog`,
-   or `Ready`).
+8. **Ready, when decided.** The Project workflows add the issue and set Backlog
+   ([project.md](project.md)); nothing to do for a Backlog issue. When the maintainer said the
+   work is decided, set its Status to Ready as [project.md](project.md), "Commands", says
+   under "Set a Status on a new item".
 9. **Set the links** found at step 4 ([project.md](project.md), "Dependencies").
 10. Reply with the issue number, its URL, its Status, its labels and its links, in one line.
 

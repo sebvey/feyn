@@ -77,17 +77,15 @@ branch without an issue number: stop and say so.
    No signature or generated-by line: the squash takes the body as the commit message on
    `main`; the `Co-Authored-By` trailer on the commits is enough.
 6. **Open it**:
-   - a `Refs #<n>` PR first unlinks the branch
-     ([below](#a-refs-pr-and-the-development-link)); a `Closes #<n>` PR skips that;
    - `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`; with a
      decision awaited, add `--draft` (no label on the PR: the draft already keeps it from
      being merged) and put `blocked:maintainer` on the issue
      (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`);
    - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
-     lists the PR when it says `Closes #<n>` (a `Refs` PR: it lists nothing). The branch is
-     not checked: GitHub drops the issue's linked branch once a PR from it opens
-     (GitHub, inferred 2026-10-27, #108). GitHub can take a few seconds to list the PR:
-     rerun once. PR still missing on a `Closes` PR: fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
+     lists the PR when it says `Closes #<n>`; a `Refs` PR: it lists nothing, since the branch
+     is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
+     list the PR: rerun once. PR still missing on a `Closes` PR, or listed on a `Refs` PR (a
+     closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
 7. **Ask for review**: reply with the PR URL, the title, what the reviewer should look at
    first (the PR's Review first, in one line), and the merge command:
    `mise exec -- gh pr merge <pr> --squash --delete-branch`.
@@ -99,30 +97,6 @@ branch without an issue number: stop and say so.
    remove the section from the body, `mise exec -- gh pr ready <pr>`, and ask for review
    again. Never remove the label yourself; if it is still on the issue, the answer is not
    given: stop.
-
-### A Refs PR and the Development link
-
-The link `/start` makes (`gh issue develop`) ties the branch to the issue, and GitHub treats a
-PR opened from a linked branch as closing that issue, whatever its body says: issue #24 closed
-at the merge of PR #84, which said `Refs #24` (GitHub, observed 2026-10-27, #24).
-So when the body starts with `Refs #<n>`, remove the link **before** opening the PR
-(`gh issue develop` has no unlink):
-
-1. Get the link's id:
-   `mise exec -- gh api graphql -f query='query{repository(owner:"sebvey",name:"feyn"){issue(number:<n>){linkedBranches(first:10){nodes{id ref{name}}}}}}'`
-   and take the node whose `ref.name` is the branch.
-2. Remove it (this deletes the link, not the branch):
-   `mise exec -- gh api graphql -f query='mutation{deleteLinkedBranch(input:{linkedBranchId:"<id>"}){clientMutationId}}'`
-   (GitHub, tested 2026-10-27, #109).
-3. Open the PR, then check `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
-   lists nothing (GitHub, tested 2026-10-27, #109). If it lists the PR, the link survived: the maintainer removes it in the
-   web interface (PR page, Development in the sidebar, the issue's entry, unlink), or the
-   body is edited to `Closes #<n>` if it is in fact the last step. Say so in the reply, and
-   that Clean up will reopen the issue otherwise.
-
-The issue's Development section then shows neither the branch nor the PR; the PR's `Refs`
-line and the issue's timeline are the trace. The check of step 3 is what catches a failed
-unlink, and Clean up reopens the issue.
 
 ## Clean up (after the merge)
 
@@ -146,13 +120,17 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
    maintainer (`main` is never rewritten).
 6. Check the issue with the PR (`mise exec -- gh issue view <n> --json url,state,projectItems`).
    - `Closes` PR: the issue must be closed; if not, say so (the PR body lost its
-     `Closes #<n>`). Then check its Status is Done: the Project's workflow sets it when it is
-     on; if it did not, set it ([project.md](../ticket/project.md)):
-     `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Done`.
+     `Closes #<n>`). Its Status is Done when the Project workflow "Item closed" is on: read
+     the Project workflows ([project.md](../ticket/project.md), "The Project workflows").
+     On: the Status should read Done; not yet, rerun the Status read once after a few
+     seconds; still not Done, say so and leave it (the Project workflow is what failed, the
+     maintainer looks). Off: set Done yourself ([project.md](../ticket/project.md), "Commands").
+     The query fails: the state is unknown, report it and set nothing. `projectItems` empty:
+     the issue was never in the Project, tell the maintainer.
    - `Refs` PR: the issue must still be open, Status unchanged (In progress). If it closed
-     anyway (the link survived), reopen it
-     (`mise exec -- gh issue reopen <n> --comment "Reopened: PR #<pr> only referenced it (Refs), the Development link closed it at the merge."`),
-     set its Status back to In progress, and tell the maintainer which step of "Deliver"
-     missed it.
+     anyway (a closing keyword in the body), reopen it
+     (`mise exec -- gh issue reopen <n> --comment "Reopened: PR #<pr> only referenced it (Refs)."`),
+     set its Status back to In progress ([project.md](../ticket/project.md), "Commands"),
+     and tell the maintainer which step of "Deliver" missed it.
    - Either way, if the issue still carries `blocked:maintainer`, tell the
      maintainer.

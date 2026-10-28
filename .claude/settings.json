@@ -18,9 +18,9 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git switch -c:*)",
+      "Bash(git ls-remote:*)",
       "Bash(mise exec -- gh issue create:*)",
       "Bash(mise exec -- gh issue edit:*)",
-      "Bash(mise exec -- gh issue develop:*)",
       "Bash(mise exec -- gh project item-add:*)",
       "Bash(mise exec -- gh project item-edit:*)",
       "Bash(mise exec -- gh pr create:*)"

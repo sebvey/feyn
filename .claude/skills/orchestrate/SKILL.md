@@ -106,8 +106,8 @@ From the main checkout, on `main`:
 2. `git -C <path> status --porcelain` must print nothing; anything printed: stop and show it.
    Then `git worktree remove <path>`. The issue branch is no longer checked out anywhere.
 3. `/finish after-merge` for the issue branch: it confirms the change landed, the Status, and
-   deletes the local branch. It may have to set Done itself: the Project's workflow did not
-   (GitHub, observed 2026-10-28, #130).
+   deletes the local branch. The Project workflow "Item closed" sets Done;
+   `/finish after-merge` sets it only when that Project workflow is off.
 4. `git branch -D worktree-agent-<id>`, the branch the worktree was created on.
    `git worktree list` and `git branch --list 'worktree-agent-*'` show nothing of it left.
 
@@ -121,10 +121,8 @@ issue (`mise exec -- gh issue view <n>`), then its "Reads" files.
 ## How to run the cycle (you are in a worktree)
 Follow `.claude/skills/start/SKILL.md` for #<n>, adapted to a worktree:
 - Do NOT `git switch main` (main is checked out in the main checkout): it fails in a worktree
-  (Claude Code, observed 2026-10-27, #115). `git fetch`, and base your branch on `origin/main`.
-- `mise exec -- gh issue develop <n> --name <type>/<n>-<slug> --base main` WITHOUT
-  `--checkout`, then `git fetch` and `git switch -c <branch> --track origin/<branch>`
-  (Claude Code, observed 2026-10-27, #115).
+  (Claude Code, observed 2026-10-27, #115). `git fetch`, then
+  `git switch -c <type>/<n>-<slug> origin/main` and `git push -u origin <type>/<n>-<slug>`.
 - Before any commit, run `git config --show-origin user.email` and check it shows the
   workspace identity (not empty). Never `git config user.email` nor `git -c user.email=`.
   `git` plain; `gh` and `node` through `mise exec --`.
