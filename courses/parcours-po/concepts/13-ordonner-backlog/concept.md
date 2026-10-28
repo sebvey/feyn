@@ -42,7 +42,7 @@ neighbors:
 diagrams:
   - file: ordonner-une-place.svg
     title: "Quatre demandes en colonne, dont une pas prête"
-    caption: "Quatre demandes en colonne, une place chacune : celle qui n'est pas prête est en pointillé."
+    caption: "Quatre demandes en colonne, une place chacune, dont une pas prête."
     subconcept: 13a2
   - file: formes-cout-retard.svg
     title: "Deux formes de coût du retard dans le temps"
@@ -119,7 +119,7 @@ DSDM recommande de ne pas dépasser environ 60 % de l'effort en Must : au-delà,
 
 ![MoSCoW pour une échéance, et le backlog qui reste ordonné](moscow-echeance-backlog-ordonne.svg)
 
-MoSCoW ne remplace pas l'ordre : quatre catégories laissent des ex aequo, alors que chaque élément du backlog a besoin d'une place unique. Un Must n'a de sens que face à une échéance. Pour le reste du backlog, il faut toujours un ordre.
+MoSCoW ne remplace pas l'ordre : quatre catégories laissent des ex aequo, alors que chaque élément du backlog a besoin d'une place unique. Un Must n'a de sens que face à une échéance. Pour le reste du backlog, il faut toujours un ordre. Ce qui est classé Won't reste au backlog, à sa place dans l'ordre [cours].
 
 ## Pièges
 

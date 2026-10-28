@@ -226,21 +226,27 @@ du fil rouge.
 
 ## Schéma
 
+Les schémas déclarés, un par sous-concept qui en a un, et la métaphore pour ceux qui n'en ont pas. Tu ne montres un schéma que si l'apprenant le demande.
+
 **13a1, les quatre critères (aucun schéma déclaré : la métaphore reste pour toi).** Une colonne
 de quatre cartes, une par place, pas de cartes côte à côte. À droite de chaque carte, quatre
 pastilles : valeur (face à l'objectif produit, en haut du panneau comme un cap), coût (« estimé
 par les Developers »), risque (deux moitiés : « pour le produit », « pour les utilisateurs,
 qualifié par qui en répond »), dépendances. Légende : « une place par carte, un pourquoi par
 place ».
-**13a2, une colonne de quatre demandes, dont une pas prête.** Quatre cartes empilées, « place 1 »
-à « place 4 », une demande par place. La carte de la place 2 est en pointillé, marquée « pas
-prête » : c'est la seule qui ressort.
-**13b, deux formes de coût du retard.** Un graphique sans graduation, le temps en abscisse et le
-coût du retard en ordonnée. Une droite qui monte dès le départ, « coût qui grandit dès
-aujourd'hui » ; une courbe presque plate qui monte de plus en plus vite jusqu'à un trait vertical
-« échéance », puis retombe, « coût lié à une échéance ». La clé nomme les deux traits.
-**13c, MoSCoW et le backlog.** À gauche, une boîte « une échéance » avec quatre bacs empilés,
-Must (« le minimum utilisable »), Should (« important, pas vital »), Could (« souhaitable »),
-Won't (« pas cette fois ») ; à droite, « backlog ordonné », une colonne de cinq cartes, « place 1 »
-à « place 5 ». Le plafond d'environ 60 % de l'effort en Must (DSDM) et le Won't qui reste dans
-le backlog ne sont pas dessinés : tu les dis si l'apprenant le demande.
+
+**13a2, `ordonner-une-place.svg`.** Quatre cartes empilées, « place 1 » à « place 4 », une demande
+par place. La carte de la place 2, marquée « pas prête », est la seule qui ressort.
+
+**13b, `formes-cout-retard.svg`.** Un graphique sans graduation, le temps en abscisse et le coût
+du retard en ordonnée. Une droite qui monte dès le départ, « coût qui grandit dès aujourd'hui » ;
+une courbe presque plate qui monte de plus en plus vite jusqu'à un trait vertical « échéance »,
+puis retombe, « coût lié à une échéance ». La clé nomme les deux traits. Si l'apprenant le
+demande avant d'avoir répondu à la partie 1 de « Le blocage et le bilan au conseil », ne le
+montre pas avant sa réponse : le schéma la donnerait.
+
+**13c, `moscow-echeance-backlog-ordonne.svg`.** À gauche, une boîte « une échéance » avec quatre
+bacs empilés, Must (« le minimum utilisable »), Should (« important, pas vital »), Could
+(« souhaitable »), Won't (« pas cette fois ») ; à droite, « backlog ordonné », une colonne de
+cinq cartes, « place 1 » à « place 5 », le Won't relié à la place 5. Le plafond d'environ 60 % de
+l'effort en Must (DSDM) n'est pas dessiné : tu le dis si l'apprenant le demande.

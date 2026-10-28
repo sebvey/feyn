@@ -7,7 +7,7 @@
   </g>
   <g id="13a2-carte-place-2" class="primary">
     <rect x="120" y="96" width="360" height="56" rx="4" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="3" stroke-dasharray="8 5"/>
-    <text x="140" y="130" fill="currentColor" font-weight="bold">place 2</text>
+    <text x="140" y="130" class="muted" fill="currentColor">place 2</text>
     <text x="460" y="130" text-anchor="end" fill="currentColor" font-weight="bold">pas prête</text>
   </g>
   <g id="13a2-carte-place-3" class="muted">
