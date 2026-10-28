@@ -22,7 +22,7 @@ Result: **failed**. lost and invented count the rows confirmed by the verificati
 | « Sous-concepts » | teaching.md « Consignes » | moved | M9 | renamed « Consignes », text verbatim (diff empty). Remark: teaching.md adds after it a line « Cas de la banque : pour 1a, ... ; pour 1b, ... » that no old file has (an addition, not a loss) |
 | « Banque d'exemples » (7 cases, all fields) | teaching.md « Banque d'exemples » | kept | M9 | same ### headings and every field verbatim (diff empty); CF has no lead paragraph, so no « Faits du fil rouge utilisés » section is due |
 | « Pièges » (section) | concept.md « Pièges » | moved | M7 | merged with MDX <Erreurs>: MDX order and sentences; CF sentences added in their items: « Signe : un abonné ne comprendrait pas à quoi sert la plateforme. » (technique), « Le PO ordonne le backlog ; les faits du métier, il les obtient des utilisateurs. » (fait métier), « un comité qui vote l'ordre, ou deux PO qui se le partagent » (partager le rôle; CF « la responsabilité reste à un seul PO » rendered by MDX's counterpart « pas la responsabilité ») |
-| Pièges: « Oublier la valeur » | concept.md « Pièges » item 2 | lost (L1) | M7 | new item is the MDX sentence only; CF's probing cue « et alors ? » (« une phrase qui dit ce que le produit affiche ou calcule, et alors ? ») is in no new file for this pitfall |
+| Pièges: « Oublier la valeur » | concept.md « Pièges » item 2 | lost (L1) | M7 | new item is the MDX sentence only; CF's follow-up « et alors ? » (« une phrase qui dit ce que le produit affiche ou calcule, et alors ? ») is in no new file for this pitfall |
 | « Le test rapide » | concept.md « Le test rapide » | moved | M8 | CF question (with its bold and « (PO) », « (Developers) ») as one blockquote, then the <Reflexe> note as one paragraph |
 | « Schéma » | teaching.md « Schéma » | kept | M9 | verbatim (diff empty) |
 
@@ -72,7 +72,7 @@ Result: **failed**. lost and invented count the rows confirmed by the verificati
 
 | Id | Source | Old item | Missing | Verification |
 |---|---|---|---|---|
-| L1 | CF | Pièges: « Oublier la valeur » | new item is the MDX sentence only; CF's probing cue « et alors ? » (« une phrase qui dit ce que le produit affiche ou calcule, et alors ? ») is in no new file for this pitfall | CF line 227-228 pitfall: « une phrase qui dit ce que le produit affiche ou calcule, et alors ? Tant que la phrase ne dit pas ce qui change pour une personne nommée, la valeur manque. » New concept.md « Pièges » item 2 (line 78) is the MDX sentence verbatim (MDX line 172), with no « et alors ? » cue; the rest of the CF meaning (what changes for a named person) is in it. The other pitfalls got their CF-only additions (item 1 « Signe : … », items 4 and 7), but this one did not. grep « et alors » over the new folder finds it only in teaching.md: line 50, Consignes 1a, for a value given as a deliverable, and the case « Et alors ? », lines 78-92. Both are copied from other CF parts (CF lines 85 and 113-127), not from this pitfall, so the reader-facing probing cue of M7 item 2 is missing. It is a small loss. |
+| L1 | CF | Pièges: « Oublier la valeur » | new item is the MDX sentence only; CF's follow-up « et alors ? » (« une phrase qui dit ce que le produit affiche ou calcule, et alors ? ») is in no new file for this pitfall | CF line 227-228 pitfall: « une phrase qui dit ce que le produit affiche ou calcule, et alors ? Tant que la phrase ne dit pas ce qui change pour une personne nommée, la valeur manque. » New concept.md « Pièges » item 2 (line 78) is the MDX sentence verbatim (MDX line 172), with no « et alors ? » cue; the rest of the CF meaning (what changes for a named person) is in it. The other pitfalls got their CF-only additions (item 1 « Signe : … », items 4 and 7), but this one did not. grep « et alors » over the new folder finds it only in teaching.md: line 50, Consignes 1a, for a value given as a deliverable, and the case « Et alors ? », lines 78-92. Both are copied from other CF parts (CF lines 85 and 113-127), not from this pitfall, so the reader-facing follow-up of M7 item 2 is missing. It is a small loss. |
 
 ## Invented
 
@@ -151,6 +151,8 @@ Failing the run:
 
 ## Fixes after the run
 
-- L1 (lost, « et alors ? »): `concept.md` « Pièges », « Oublier la valeur » now ends « ... sans dire ce qui change pour une personne nommée : et alors ? », the MDX sentence kept and the CF probing cue restored.
+- L1 (lost, « et alors ? »): `concept.md` « Pièges », « Oublier la valeur » now ends « ... sans dire ce qui change pour une personne nommée : et alors ? », the MDX sentence kept and the CF follow-up restored.
 - `glossary-order` (4 failures above): not fixed, by the maintainer's ruling A of 2026-10-28 on #23; the last sub-issue of #23 fixes them.
 - The « Cas de la banque » line of `teaching.md` (writing choice M9): allowed by ruling B; it cites the seven case titles of the bank exactly as their `###` headings.
+- `sources.md`, rows « Plusieurs équipes sur un même produit partagent le même PO » and « Au Sprint Planning, le PO propose… »: `Nature` set to `consensus` (the orchestrator's ruling after the review: both quote the Scrum Guide directly; the second has the same basis as « Le PO dit pourquoi »).
+- The new-to-old sweep did not flag the « Cas de la banque » line the writer added to `teaching.md` (ruling B covers it): a sweep can miss an added sentence.
