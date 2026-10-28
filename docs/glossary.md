@@ -82,6 +82,7 @@ the English terms below are how we talk about them in code, docs and issues.
 | **skill** | a Claude Code skill; a **command skill** is invoked as `/name`, a **support skill** is loaded by other skills | "command", "prompt", "recipe" |
 | **agent workflow** | a Claude Code multi-agent script in `.claude/workflows/` | |
 | **CI workflow** | a GitHub Actions file in `.github/workflows/` | "pipeline", "action" |
+| **Project workflow** | a built-in automation of the Project ("Auto-add to project", "Item added to project", "Item closed"), turned on in the web interface; `.claude/skills/ticket/project.md` lists which are on | "automation", "workflow" alone |
 | **template** | always qualified: **course templates** (`specs/<name>/templates/`, model files of a course), **teacher template** (`teacher/CLAUDE.template.md`), **issue template**, **PR body template** (`.claude/skills/finish/pr-body.md`) | "template" alone, "boilerplate", "scaffold" |
 | **channel** | where a build is served from: **prod** (a course tag), **next** (`main`), **preview** (a PR) | "environment", "stage", "env" |
 | **release** | tagging a course version (`<id>/vX.Y.Z`) and deploying prod; done by `/publish` | "deploy" alone, "ship" |

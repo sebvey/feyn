@@ -67,11 +67,8 @@ bullets (`- **Observation**: …`); read both.
    (add `--milestone <name>` when the maintainer names one). It prints the issue URL.
 8. **Ready, when decided.** The Project workflows add the issue and set Backlog
    ([project.md](project.md)); nothing to do for a Backlog issue. When the maintainer said the
-   work is decided, set its Status to Ready ([project.md](project.md), "Commands") once
-   `mise exec -- gh issue view <n> --json projectItems` shows it in Backlog: set earlier, the
-   Project workflow's Backlog would overwrite it (GitHub, inferred 2026-10-28, #71). It takes
-   a few seconds; still no item after a rerun: add it (same place), wait again until it shows
-   Backlog, then set Ready.
+   work is decided, set its Status to Ready as [project.md](project.md), "Commands", says
+   under "Set a Status on a new item".
 9. **Set the links** found at step 4 ([project.md](project.md), "Dependencies").
 10. Reply with the issue number, its URL, its Status, its labels and its links, in one line.
 

@@ -17,7 +17,7 @@ at the end of stage 4. Why: decision `monorepo-feyn`.
 GitHub Issues is the only backlog; nothing is tracked in a local file. An issue has three
 sections: Observation (what was seen, where), To do, Done when (statements a reviewer can
 verify by reading a file or running a command). `/ticket <observation>` writes it with its
-labels and sets its blocked-by links; the Project's workflows add it to the Project in Backlog,
+labels and sets its blocked-by links; the Project workflows add it to the Project in Backlog,
 and `/ticket` sets Ready when the maintainer decided the work; `/ticket <n>` summarises one, its
 links included. Why: decisions `issue-defines-pr-verifies`, `blocked-by-links-for-dependencies`.
 
@@ -49,8 +49,8 @@ and removes the label from the issue; only then does the agent apply the answer,
 section and mark the PR ready. Nothing lands on `main` without a PR, the author never merges
 their own, and `main` is never force-pushed. After the
 merge, `/finish after-merge` confirms the change landed, checks the issue's Status is Done
-(the Project's workflow sets it; `/finish` sets it only when that workflow is off; a `Refs`
-issue stays open and In progress), and deletes
+(the Project workflow "Item closed" sets it; `/finish` sets it only when that Project workflow
+is off; a `Refs` issue stays open and In progress), and deletes
 the local branch. `/orchestrate <n>` runs this whole cycle from one work session: a
 contributor agent per issue in its own worktree, a review by a fresh agent before the PR
 reaches the maintainer, then the clean-up of the worktree after the merge. Why: decisions
@@ -61,8 +61,8 @@ reaches the maintainer, then the clean-up of the worktree after the merge. Why: 
 - Every issue is an item of the Project (the GitHub Project "feyn", number 4), and its Status
   says where it stands: Backlog (proposed, to triage), Ready (decided, free to take),
   In progress (a branch exists), Done (closed; the close reason stays on GitHub). One at a
-  time. The Project's workflows add every open issue, set Backlog when it is added and Done
-  when it closes; the skills set the rest: `/ticket` Ready when the maintainer decided,
+  time. The Project workflows add the open issues created or updated while they are on, set
+  Backlog when one is added and Done when it closes; the skills set the rest: `/ticket` Ready when the maintainer decided,
   `/start` In progress. `.claude/skills/ticket/project.md` says who sets each Status. There
   are no state labels. Why: decision `project-status-not-state-labels`.
 - `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is

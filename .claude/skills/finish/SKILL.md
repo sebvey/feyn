@@ -125,10 +125,12 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      On: the Status should read Done; not yet, rerun the Status read once after a few
      seconds; still not Done, say so and leave it (the Project workflow is what failed, the
      maintainer looks). Off: set Done yourself ([project.md](../ticket/project.md), "Commands").
+     The query fails: the state is unknown, report it and set nothing. `projectItems` empty:
+     the issue was never in the Project, tell the maintainer.
    - `Refs` PR: the issue must still be open, Status unchanged (In progress). If it closed
      anyway (a closing keyword in the body), reopen it
      (`mise exec -- gh issue reopen <n> --comment "Reopened: PR #<pr> only referenced it (Refs)."`),
-     set its Status back to In progress ([project.md](../ticket/project.md), "Commands"), and tell the maintainer which step of "Deliver"
-     missed it.
+     set its Status back to In progress ([project.md](../ticket/project.md), "Commands"),
+     and tell the maintainer which step of "Deliver" missed it.
    - Either way, if the issue still carries `blocked:maintainer`, tell the
      maintainer.

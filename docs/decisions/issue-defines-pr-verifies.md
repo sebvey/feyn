@@ -20,8 +20,8 @@ disagree, the issue wins and the PR says why it deviates. The Done when is not e
 `/start`; a change to it amends the open PR's body as well.
 
 `Closes #n` when the PR ends the issue; `Refs #n` when the PR is one step of it (the issue
-stays open and its Development section shows nothing; never link the PR there by hand: a
-linked PR closes its issue at the merge (GitHub, documented 2026-10-28, #71)).
+stays open and its Development section shows nothing; never link the PR there by hand). A
+linked PR closes its issue at the merge (GitHub, documented 2026-10-28, #71).
 
 ## Consequences
 

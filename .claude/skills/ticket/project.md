@@ -15,10 +15,10 @@ Project id `PVT_kwHOADOnU84Bo8V6`, Status field id `PVTSSF_lAHOADOnU84Bo8V6zhnaH
 
 ## The Project workflows
 
-The Project workflows (GitHub's built-in automations of the Project) carry the moves no skill needs to make (decision
-`project-status-not-state-labels`):
-- "Auto-add to project" adds every open issue of `sebvey/feyn` (filter `is:issue is:open`),
-  never a pull request;
+The Project workflows (GitHub's built-in automations of the Project) carry the moves no
+skill needs to make (decision `project-status-not-state-labels`):
+- "Auto-add to project" adds the open issues of `sebvey/feyn` created or updated while it is
+  on (filter `is:issue is:open`), never a pull request;
 - "Item added to project" sets Backlog;
 - "Item closed" sets Done, on issues only.
 
@@ -45,6 +45,12 @@ interface (Project feyn, menu ⋯, Workflows) (GitHub, observed 2026-10-28, #71)
   `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "<Status>"`.
   The same by ids, for a script:
   `mise exec -- gh project item-edit --project-id PVT_kwHOADOnU84Bo8V6 --id <item id> --field-id PVTSSF_lAHOADOnU84Bo8V6zhnaHqI --single-select-option-id <option id>`.
+- **Set a Status on a new item** (`/ticket` Ready, `/start` In progress on an issue just
+  added): wait for Backlog first, since "Item added to project" would overwrite a Status set
+  earlier (GitHub, inferred 2026-10-28, #71). Read the Status up to 3 times, a few seconds
+  apart (no item yet: add it, once). Backlog: set the Status. Still not Backlog: read the
+  Project workflows ([above](#the-project-workflows)); "Item added to project" off, set the
+  Status; on, or the query fails, tell the maintainer and stop.
 
 ## Dependencies
 

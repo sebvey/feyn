@@ -14,7 +14,7 @@ Where an issue stands is the Status of its item in the Project (the GitHub Proje
 number 4, owner `sebvey`): Backlog (proposed, to triage), Ready (decided, free to take),
 In progress (a branch exists), Done (closed; the close reason stays on GitHub). It replaces the
 three state labels, which are deleted. The Project's built-in workflows carry what GitHub sees
-happen: "Auto-add to project" adds every open issue, "Item added to project" sets Backlog,
+happen: "Auto-add to project" adds new and updated open issues, "Item added to project" sets Backlog,
 "Item closed" sets Done. The skills set what only they know: `/ticket` sets Ready when the
 maintainer said the work is decided; `/start` refuses an issue in Done, or in In progress with
 a branch, and sets In progress; `/finish after-merge` reads the workflows and sets Done only
