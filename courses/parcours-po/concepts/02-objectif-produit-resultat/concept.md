@@ -85,7 +85,7 @@ Le tri se fait avec une question : cette mesure peut-elle monter alors que le r�
 - **l'usage seul** (consultations, connexions) : un signal utile, pas une preuve, car on peut consulter un livrable sans changer ce que l'on fait ;
 - **le comptage brut qui monte avec la taille du réseau ou du nombre d'abonnés** : il faut le ramener à une base avant de le lire. Eric Ries parle de mesures de vanité : flatteuses, inutiles pour décider [école].
 
-Une mesure seule ne suffit pas à conclure : on la croise avec d'autres sources (entretiens, observation) [école]. L'exploration rigoureuse d'une hypothèse vient au concept 17. Enfin, la façon de définir un indicateur se travaille au concept 12, car une mesure mal définie trompe sans que personne le veuille.
+Une mesure seule ne suffit pas à conclure : on la croise avec d'autres sources (entretiens, observation) [école]. L'exploration rigoureuse d'une hypothèse vient au concept 17. Enfin, la définition d'un indicateur se travaille au concept 12, car une mesure mal définie trompe sans que personne le veuille.
 
 ## Pièges
 
@@ -94,7 +94,7 @@ Une mesure seule ne suffit pas à conclure : on la croise avec d'autres sources 
 - **Un objectif qui décrit le livrable ou un moyen**, ou qui est si vaste (une vision) qu'aucune mesure ne dit si l'équipe s'en approche. Le premier ne dit pas ce qui change pour qui. Le besoin d'un utilisateur est un fait à lui demander ; la technique revient aux Developers.
 - **Deux objectifs à la fois**, souvent sous la forme « X et Y » : un seul à la fois.
 - **Prendre l'usage du livrable pour le résultat** (consultations, connexions), ou se contenter d'un comptage brut sans le ramener à une base (par utilisateur, par période). L'usage est utile comme signal, insuffisant comme preuve ; un comptage brut monte avec la taille de la base d'utilisateurs (cas inventé : le nombre total de visites d'un site).
-- **Oublier qu'une mesure qui devient la cible cesse d'être une bonne mesure** (loi de Goodhart) : un service d'assistance jugé sur le nombre de tickets ouverts (exemple inventé) pourrait le faire baisser en décourageant les demandes, sans qu'un client soit mieux aidé. Une mesure mal définie trompe aussi, sans que personne le veuille (cas inventé : « client actif » compté avec ou sans achat récent). La façon de définir un indicateur se travaille au concept 12. Croiser la mesure avec d'autres sources.
+- **Oublier qu'une mesure qui devient la cible cesse d'être une bonne mesure** (loi de Goodhart) : un service d'assistance jugé sur le nombre de tickets ouverts (exemple inventé) pourrait le faire baisser en décourageant les demandes, sans qu'un client soit mieux aidé. Une mesure mal définie trompe aussi, sans que personne le veuille (cas inventé : « client actif » compté avec ou sans achat récent). La définition d'un indicateur se travaille au concept 12. Croiser la mesure avec d'autres sources.
 - **Inventer la cible chiffrée ou la définition des heures de pointe** à la place des parties prenantes.
 - **Croire l'objectif produit gravé** : pour Scrum.org, c'est une hypothèse qu'on reformule quand on apprend (choix d'école).
 

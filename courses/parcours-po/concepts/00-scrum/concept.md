@@ -39,7 +39,7 @@ durée, de l'incrément, le produit dans un nouvel état utilisable.
 
 Scrum est un cadre de travail léger, défini par le Scrum Guide (Schwaber et Sutherland, 2020). Une équipe y tient trois **responsabilités** (Product Owner, Scrum Master, Developers), travaille en **sprints** d'un mois au plus, sans pause entre eux, qui contiennent quatre **événements**, et s'appuie sur trois **artefacts**, chacun avec son **engagement**. Un point à ne pas rater : le sprint est une **durée** ; l'**incrément** est le produit dans un nouvel état utilisable, qui remplit la DoD et peut être livré avant la fin du sprint. Qui les confond « livre un sprint » et attend sa fin pour livrer.
 
-Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du cours vaut aussi sans sprint ; seuls quatre sous-concepts font exception, et l'annexe A2 en donne l'équivalent : concepts 11b, 15b, 15c et 16c.
+Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du cours vaut aussi sans sprint ; seuls quatre sous-concepts font exception, avec leur équivalent en flux continu dans l'annexe A2 : concepts 11b, 15b, 15c et 16c.
 
 ![Un sprint est une durée, un incrément est un état du produit](sprint-duree-increment-etat.svg)
 

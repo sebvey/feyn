@@ -57,7 +57,7 @@ Une **user story** (story) exprime **un besoin précis** d'un utilisateur, vu de
 
 Une story dit **qui** a le besoin (l'utilisateur, désigné par son rôle, c'est-à-dire sa catégorie d'utilisateurs ; le choix de l'acteur est au concept 6), **quoi** (ce qu'il veut faire ou savoir) et **pourquoi** (sa raison), le plus souvent sous la forme « En tant que *qui*, je veux *quoi*, afin de *pourquoi* ». Le « je veux » décrit ce que l'utilisateur veut, pas la façon dont l'équipe le construit : un écran, un export ou un graphique sont des solutions, c'est-à-dire le comment des Developers.
 
-Une story porte un seul « je veux ». S'il y en a plusieurs, ce n'est plus une story : c'est une feature ou un epic (concept 4), ou un parcours, dont le concept 16 range les stories sous ses étapes.
+Une story porte un seul « je veux ». S'il y en a plusieurs, ce n'est plus une story : c'est une feature ou un epic (concept 4), ou un parcours, que le concept 16 range en story map.
 
 Le Scrum Guide ne parle pas de story et n'impose aucun format. L'idée vient d'Extreme Programming (XP), où Kent Beck a introduit le terme. Le format « en tant que / je veux / afin de » est un choix d'école [école] : un modèle de Rachel Davies, chez Connextra à Londres, au début des années 2000. Il est devenu le plus courant, sans être obligatoire ; Mike Cohn, qui le recommande, le dit lui-même.
 
@@ -94,7 +94,7 @@ Il faut aussi savoir s'arrêter. Trop haut, la raison devient l'objectif produit
 
 ## Pièges
 
-- **Prendre la story pour le parcours de l'utilisateur** : piège probable de qui n'a jamais lu de story. Une story est un besoin, pas une suite d'actions. Si la phrase enchaîne plusieurs actions, c'est un parcours, dont le concept 16 range les stories sous ses étapes.
+- **Prendre la story pour le parcours de l'utilisateur** : piège probable de qui n'a jamais lu de story. Une story est un besoin, pas une suite d'actions. Si la phrase enchaîne plusieurs actions, c'est un parcours, que le concept 16 range en story map.
 - **Mettre une solution dans le « je veux »** (« je veux un export CSV de… », « un graphique dans la vue ») : écrire le besoin, l'équipe proposera la solution (le concept 7 y revient : besoin ou solution).
 - **Un « afin de » circulaire ou de confort** : demander « pourquoi ? » à l'utilisateur, jusqu'à une décision ou un gain qu'il reconnaît.
 - **Un « afin de » trop haut** (l'objectif produit, « améliorer le service ») : il vaut pour toutes les stories et n'aide plus à ordonner.
