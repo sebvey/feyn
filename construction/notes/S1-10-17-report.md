@@ -1,6 +1,6 @@
 # Migration report: concept 17
 
-Workflow `migrate-concept`, course `parcours-po`, concept folder `concepts/17-hypotheses-exploration/`. Paths in the course folder are relative to it; the old files are named from their repository folder (`parcours-po`, `parcours-po-website`).
+Workflow `migrate-concept` (run `wf_b706b066-642`), course `parcours-po`, concept folder `concepts/17-hypotheses-exploration/`. Paths in the course folder are relative to it; the old files are named from their repository folder (`parcours-po`, `parcours-po-website`).
 Old files: `parcours-po/course/concepts/17-hypotheses-exploration.md` (CF), `parcours-po/course/sources/17-hypotheses-exploration.md` (SF), `parcours-po-website/src/content/concepts/fr/17-hypotheses-exploration.mdx` (MDX), `parcours-po-website/src/components/schemas/Schema17.astro` (ASTRO).
 
 ## Summary
@@ -48,16 +48,15 @@ Its sentences, where the inventory sends them (M11):
 | E2 | l'exploration bornée, menée par les Developers, dont l'étendue représente la durée | « les Developers explorent » | subject | none |
 | E3 | la durée de l'exploration, qui borne le coût, fixée avant le début | « durée fixée avant » | context | none |
 | E4 | la réponse, ce que livre l'exploration | « une réponse » | context | none |
-| E5 | la décision si la réponse est oui | « décision si oui » | context | none |
-| E6 | la décision si la réponse est non | « décision si non » | context | none |
+| E5 | la décision, dite d'avance, à laquelle mène la réponse | « décision dite d'avance » | context | none |
 
 Relations:
 - E1 entre dans E2 : la question est posée avant l'exploration, du PO vers les Developers
 - E3 borne E2 : la largeur de E2 est la durée, fixée avant
 - E2 mène à E4 : l'exploration produit une réponse
-- E4 mène à E5 si la réponse est oui, et à E6 si elle est non, dans cet ordre de lecture : E5 puis E6
+- E4 mène à E5
 
-Self-check changes (SPEC.md 7.2): the « rappel » band (« décidé avant : … ») is removed, being a teaching sentence; « pas une fonction » is removed from the answer box and the answer is `muted`, so that the exploration is the only marked element; « si oui : on construit » and « si non : on revoit » become « décision si oui » and « décision si non » (words of the caption and of concept.md).
+Self-check changes (SPEC.md 7.2): the « rappel » band is removed (a teaching sentence); « pas une fonction » is removed from the answer box; the answer and the decision are `muted`, so the exploration is the only marked element; the two branches « si oui » / « si non » are replaced by one box « décision dite d'avance », since « si non » is in neither concept.md nor the caption.
 
 Key of the inventory: none. Key drawn: none.
 
@@ -72,13 +71,15 @@ Key of the inventory: none. Key drawn: none.
 |---|---|---|---|---|
 | E1 | le temps, qui va de l'avant vers l'après de l'exploration | none | context | none |
 | E2 | l'exploration, une période sur le temps, entre les deux seuils | « exploration » | context | none |
-| E3 | le seuil qui juge l'exploration (ce qui compte comme « oui »), placé avant l'exploration | « seuil qui juge l'exploration, », « fixé avant » | subject | none |
-| E4 | le niveau exigé de la fonction livrée, placé après l'exploration, quand elle a montré ce qu'on peut atteindre | « niveau exigé de la fonction livrée, », « fixé après » | contrast | none |
+| E3 | le seuil qui juge l'exploration (ce qui compte comme « oui »), placé avant l'exploration | « seuil qui juge l'exploration, », « fixé avant » | contrast | none |
+| E4 | le niveau exigé de la fonction livrée, placé après l'exploration, quand elle a montré ce qu'on peut atteindre | « niveau exigé de la fonction livrée, », « fixé après » | subject | none |
 
 Relations:
 - Dans l'ordre du temps : E3, puis E2, puis E4 (E3 fixé avant l'exploration, E4 fixé après)
 - E3 et E4 sont deux seuils distincts, à ne pas mêler
 - E1 porte E3, E2 et E4 dans cet ordre
+
+Self-check changes (SPEC.md 7.2): the diagram is declared 17c, whose sentence closes on the level fixed after, so the level (E4) is the subject (`primary`, solid) and the threshold fixed before (E3) the contrast (`secondary`, paler); each label sits next to its bar; the exploration label no longer sits on the axis.
 
 Key of the inventory: none. Key drawn: none.
 
@@ -92,23 +93,23 @@ Renderings in `S1-10-17-report/`, beside this report.
 ## Writing choices
 
 - M9 citation line: none written. The old « Sous-concepts » cites all 7 bank cases by title in « » (« Prévoir les stations à risque : on sait ou on suppose ? », « De quoi dépend la story de Régis ? », « On verra ce qu'Anna trouve », « Régis ira-t-il plus tôt ? », « Le critère à 90 % », « Les chiffres d'Anna », « Presque vide d'après l'historique »), so « Consignes » is the old text verbatim.
-- M9: the lead paragraph of « Banque d'exemples » became « Faits du fil rouge utilisés » with its lead words « Faits du fil rouge utilisés : » dropped; no other lead text, so nothing stays at the top of the bank. « Schéma » copied verbatim (paragraph on diagrams is Schéma only; CF « Pièges » and « Le test rapide » are not in these two files).
+- M9: the lead paragraph of « Banque d'exemples » became « Faits du fil rouge utilisés » with its lead words « Faits du fil rouge utilisés : » dropped; no other lead text, so nothing stays at the top of the bank. « Schéma » rewritten in this PR: the two new drawings, plus the 17a panel and the 17c balance, which have no declared diagram.
 - M10 path rewrite: `course/plan.md`: `plan.md` (intro).
 - M10 path rewrite: `course/glossary.md`: `glossary.md` (row « Hypothèse » and row « Prévision a deux sens »).
 - M10 path rewrite: `course/fil-rouge-velos.md`: `storyline.md` (7 places: source cells and the verification cell of the SMS row).
 - M10 path rewrite: `course/sources/NN-slug.md`: `concepts/NN-slug/sources.md` for 00-scrum, 02-objectif-produit-resultat, 07-invest, 08-criteres-regles, 09-decoupage-vertical, 12-donnees-produit, 13-ordonner-backlog (each in its source cell).
-- M10 path rewrite: `course/concepts/05-user-story.md`: `concepts/05-user-story/concept.md`; `course/concepts/09-decoupage-vertical.md`: `concepts/09-decoupage-vertical/concept.md`.
+- M10 path rewrite: `course/concepts/05-user-story.md`: `concepts/05-user-story/sources.md` (cross-reference rows, in the Source column).
 - M10 pointer dropped in the intro: old text « , les consignes du lot (T-018g) et les promesses des concepts », new text « et les promesses des concepts » (task id, no new path).
 - M10 pointer dropped in « Non vérifié », Découverte continue: « vient d'une source secondaire (cadrage T-018a, §8) ; le livre n'a pas été lu »: « vient d'une source secondaire ; le livre n'a pas été lu ».
 - M10 pointer dropped in « Non vérifié », Origine du terme MVP: « par des sources secondaires (cadrage T-018a, §8), non vérifiée ici »: « par des sources secondaires, non vérifiée ici ».
-- M10 kept as is: `T-018g` in the source cell of the row « Restent non fixés », and « déjà cité au cadrage T-018a, §8 » in the « Références » rows S3 and S10 (source cell / Références stay unchanged). URLs containing « course/ » (Google crash-course) untouched. No old decision number (ADR) in the file, so no decision path.
+- M10 task ids: `T-018g` (row « Restent non fixés ») and « cadrage T-018a, §8 » (Références S3 and S10) removed by the review of the PR; they are internal ids, reader-facing text keeps what they refer to.
 - M10 orphan: none. All references S1 to S14 are cited by a source cell, so no « orphan [Sx] added ».
 - M13 replacement: em-dash in the CRISP-DM quotation of the row « Un critère sur un niveau atteint » (« in technical terms—for example »): « in technical terms, for example » (comma, smallest change). The en-dash in the S8 quotation (« proving anything – like ») is not a banned character and stays. No typographic apostrophe in either file.
 - M10 Nature, from an MDX sources.affirmations item (kind): rows 1-3 consensus; « Hypothèse » cours; « Le lien non établi » cours; Cagan four risks, Cagan PM/roles/early (the MDX item merges these two claims) école; « Le cours retient deux risques » cours; spike origin, spike delivers an answer, time-boxed cost, business-question use, backlog placement école; Torres decide-before école; PO pose la question cours; prototypes école; maquette école; « oui » de l'utilisateur cours; prototype 17b2 not morceau c cours; analyse d'historique cours; découverte continue école; MVP Ries école; niveau atteint, niveau mesuré sur données mises de côté, pesée des deux erreurs consensus; utilisateur concerné cours; niveau fixé après cours; deux seuils cours; story qui exige une prévision sûre cours; deux sens de « prévision » cours; « Restent non fixés » empty (the MDX item has no kind).
 - M10 Nature choice: row « Une exploration s'ordonne au backlog : le facteur apprentissage de Cohn (renvoi 13) » has no MDX item of its own; the Cohn claim is stated in the verification text of the MDX item « Une exploration peut figurer au backlog… », so I took that item's kind: école. Writing choice.
 - M10 Nature choice: row « Une prévision n'est jamais sûre (17c) » has no MDX item stating exactly it; I took consensus (the MDX item on empirisme / « ce qui va arriver est inconnu », and the matching stances consensus item, agree). Writing choice.
 - M10 Nature left empty (no MDX item states the claim, and no stances item matches it): « L'objectif produit vu comme une hypothèse, pour Scrum.org » (no Scrum.org item in the MDX ecoles); « Pour ranger une supposition, se demander ce qui arrive si elle est fausse »; « Situation 17 : la tendance... » (bank); « Le seuil « presque vide » relève de la même logique »; « La pluie compte-t-elle ? La météo n'est pas collectée ». Writing choice for each.
-- M10 header and section names: « Affirmations » header set to « Affirmation (section de `concept.md` ou de `teaching.md`) | Source | Ce qui a été vérifié | Nature »; the section names of the claim cells (« Sous-concepts », « Consensus et choix d'école ») were left unchanged in the cell text, as the rule says only the row's section name « Sous-concepts » becomes « Consignes ». Not applied: rows 31 (« 17a, Sous-concepts ») and 56 (« Sous-concepts ») still read « Sous-concepts » in their parenthesis; M10 says to rename it to « Consignes », so this is a miss to fix on review if the check flags it.
+- M10 header and section names: « Affirmations » header set to « Affirmation (section de `concept.md` ou de `teaching.md`) | Source | Ce qui a été vérifié | Nature »; « Sous-concepts » in the section names is now « Consignes » (fixed in this PR).
 - M1 objective merge: not applicable to these two files (course.yaml and concept.md carry it).
 - M1: Objectif is the course.yaml objective verbatim, capital S, final period; no clause of CF or MDX objectif is left out, so nothing to report
 - M3: school item 'exploration bornée' gets CF's '(concept 7)' after the business-question clause (CF precise reference carried)
@@ -127,11 +128,11 @@ Renderings in `S1-10-17-report/`, beside this report.
 - M8: quick test question is CF's, without its enclosing « » (the blockquote marks the quotation; my choice); the paragraph is the Reflexe note 'Formulation du cours, sans équivalent dans les sources.' followed by CF's sentence 'Si l'apprenant n'en trouve aucune...'
 - M13: no banned character present, no replacement; no typographic apostrophe found; no em-dash or arrow replaced
 - Frontmatter: item key 'auteur' written 'author', 'texte' 'text'; diagrams entries verbatim, order of body; 'ecoles.voisines' written as neighbors
-- Self-check of the PR (SPEC.md 7.2, 4.4): captions reduced to one sentence of one idea; exploration-bornee.svg lost its recap band and its second marked box; its sub-concept is 17b1 (it draws only 17b1); `sources.md` first columns now name sections of `concept.md` or `teaching.md` (« Sous-concepts » is « Consignes », « banque » is « Banque d'exemples », « renvoi … » and « Choix du cours » are replaced), cross-reference rows point to `sources.md` paths; the « Schéma » section of `teaching.md` describes the two new drawings. The misses of the M10 note on « Sous-concepts » are fixed.
+- Corrections of the PR (SPEC.md 7.2 self-check, then the fresh review): captions of one sentence and one idea; `exploration-bornee.svg` reduced to the exploration as subject, declared 17b1; `deux-seuils.svg` declared 17c with the level fixed after as subject; `sources.md` section names, `sources.md` paths for cross-references, empty Nature cells filled where the row's text names it, the CRISP-DM cut marked « […] »; « Pièges » items 2, 3 and 8 reworded; « Schéma » of `teaching.md` keeps the 17a panel and the balance of 17c.
 
 ## Checks
 
-`mise exec -- specs/linear-course/checks/check-course courses/parcours-po --only course-yaml,concept-folder,conventions,svg-contract,sources,glossary-order,typography --concept 17`
+`mise exec -- node specs/linear-course/checks/check-course courses/parcours-po --concept 17`, run after the corrections of the PR:
 
 ```
 course-yaml: ok
@@ -139,6 +140,9 @@ concept-folder: ok
 conventions: ok
 svg-contract: ok
 sources: ok
+course-files: ok
 glossary-order: ok
+domain-first-sentence: ok
 typography: ok
+language-pack-keys: ok
 ```

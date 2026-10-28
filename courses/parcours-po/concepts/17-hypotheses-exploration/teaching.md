@@ -283,13 +283,19 @@ l'apprenant de fixer un seuil ou un niveau, ni de dire si une hypothèse est vra
 
 ## Schéma
 
-Deux schémas, un par idée.
-1. **Une exploration bornée (17b1)** : à gauche, « le PO pose la question » avec une flèche vers
-   une grande boîte, « les Developers explorent », la plus marquée du dessin. Sous la boîte, une
-   accolade de la même largeur et « durée fixée avant ». À droite de la boîte, une flèche vers
-   « une réponse », puis une bifurcation vers deux boîtes, « décision si oui » et « décision si
-   non ». Seule la boîte d'exploration est marquée ; le reste est en retrait.
-2. **Deux seuils dans l'ordre du temps (17c)** : une flèche du temps, avec au milieu un rectangle
-   « exploration ». Avant lui, une barre marquée et son étiquette « seuil qui juge l'exploration,
-   fixé avant ». Après lui, une barre plus pâle et son étiquette « niveau exigé de la fonction
-   livrée, fixé après ». Le seuil fixé avant est le plus marqué.
+**17a, savoir ou supposer (aucun schéma déclaré).** Deux colonnes, « on sait » et « on suppose » ;
+la colonne de droite coupée en deux bacs, « valeur » (l'utilisateur s'en servira-t-il ? cela sert-il
+l'objectif produit ?) et « faisabilité » (peut-on le construire ? avec quelles données ?). Des
+affirmations posées en cartes (cas inventé : « la livraison arrive toujours le mardi »). Légende :
+« qui l'a vérifié ? ».
+**17b1, l'exploration bornée (exploration-bornee.svg).** À gauche, « le PO pose la question » avec
+une flèche vers une grande boîte, « les Developers explorent », seule marquée du dessin. Sous la
+boîte, une accolade de la même largeur, « durée fixée avant ». À droite, une flèche vers « une
+réponse », puis vers « décision dite d'avance ». Légende : « une réponse, pas une fonction ».
+**17c, accepter un résultat incertain (deux-seuils.svg, puis une balance sans schéma déclaré).**
+Une flèche du temps, avec au milieu un rectangle « exploration ». Avant lui, une barre pâle,
+« seuil qui juge l'exploration, fixé avant ». Après lui, une barre pleine, la plus marquée,
+« niveau exigé de la fonction livrée, fixé après ». Puis, pour les deux erreurs : une balance ;
+sur un plateau, « fausse alerte », sur l'autre, « cas manqué » ; sous la balance, l'utilisateur
+concerné qui fixe le niveau. Légende : « l'exploration montre ce qu'on peut atteindre,
+l'utilisateur fixe ce qu'il exige ».

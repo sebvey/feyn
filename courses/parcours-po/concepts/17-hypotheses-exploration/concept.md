@@ -115,13 +115,13 @@ Deux seuils sont donc à ne pas mêler : celui qui juge l'exploration, fixé ava
 ## Pièges
 
 - **Prendre une phrase répétée pour un fait** (« tout le monde sait que… ») : demander qui l'a vérifié.
-- **Ne voir que la faisabilité** : vérifier que le modèle marche ne dit pas que l'utilisateur s'en servira. Un profil data vérifie volontiers que le modèle marche, plus rarement que l'utilisateur s'en servira.
-- **Trancher une hypothèse soi-même**, ou mener l'exploration à la place des Developers : le PO pose la question, il ne fixe pas seul la durée. Le PO la fait vérifier ; il ne dit pas si elle est vraie. Les Developers explorent et disent le temps qu'il leur faut.
+- **Ne voir que la faisabilité** : un profil data vérifie volontiers que le modèle marche, plus rarement que l'utilisateur s'en servira.
+- **Trancher une hypothèse soi-même**, ou mener l'exploration à la place des Developers : le PO pose la question, il ne fixe pas seul la durée. Le PO fait vérifier une hypothèse ; il ne dit pas si elle est vraie. Les Developers explorent et disent le temps qu'il leur faut.
 - **Explorer sans question ni décision**, ou attendre une fonction d'une exploration : elle livre une réponse ; la fonction est une autre story. Sans question ni décision, elle n'a pas de fin, et rien ne change à son terme.
 - **Croire qu'un « oui » de l'utilisateur vérifie la valeur** : on observe ce qu'il fait.
 - **Fixer le niveau d'une prévision avant l'exploration**, ou le fixer soi-même : il se fixe après, par l'utilisateur concerné.
 - **Exiger qu'une prévision ne se trompe pas**, ou ne compter qu'une sorte d'erreur : il faut les fausses alertes et les cas manqués.
-- **Croire que l'exploration fixe une règle**, ou mêler le seuil qui juge l'exploration et le niveau exigé de la fonction : elle l'éclaire, l'utilisateur concerné la fixe. Ce qui compte comme « oui » pour l'exploration, dit avant par l'utilisateur concerné (17b1) ; le niveau exigé de la fonction, fixé après (17c). Le PO ne chiffre ni l'un ni l'autre.
+- **Croire qu'une donnée ou une exploration fixe une règle métier**, ou mêler le seuil qui juge l'exploration et le niveau exigé de la fonction : elle l'éclaire, l'utilisateur concerné la fixe. Ce qui compte comme « oui » pour l'exploration est dit avant par l'utilisateur concerné (17b1), le niveau exigé de la fonction est fixé après (17c). Le PO ne chiffre ni l'un ni l'autre.
 - **Confondre la prévision des stations à risque** (concept 9) **avec la prévision des Developers** (concept 16c).
 
 ## Le test rapide
