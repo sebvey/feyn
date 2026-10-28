@@ -11,7 +11,7 @@ Old files: `parcours-po/course/concepts/11-dor-dod.md` (CF), `parcours-po/course
 
 Result: **failed**. checks is read in code from the output below, which the check agent returns; target existed is read in code from the listing below, which the scope agent returns. The new concept is not compared with the old one (rule D on #23): the fresh-agent review judges it against SPEC.md and PROTOCOL.md.
 
-Captions of more than one sentence (SPEC.md 7.2, principle 1: a caption that needs two sentences means two diagrams): sprint-piece-deux-portes.svg (3 sentences). Flagged for the review, not refused.
+Captions of more than one sentence (SPEC.md 7.2, principle 1: a caption that needs two sentences means two diagrams): sprint-piece-deux-portes.svg (3 sentences as the run wrote it). Flagged for the review; the contributor rewrote it as one sentence (fresh-agent review, PR #190).
 
 ## Target before the run
 
@@ -41,7 +41,7 @@ Its sentences, where the inventory sends them (M11):
 #### sprint-piece-deux-portes.svg
 
 - Title: Le sprint comme une pièce à deux portes
-- Caption: À l'entrée, la DoR (choix d'école) : une story bloquée (« critères à écrire », cas inventé) y reste au backlog. À la sortie, la DoD : une seule, la même pour toutes les cartes ; une carte qui ne la remplit pas retourne au backlog. Chaque carte garde ses propres critères d'acceptation. (**3 sentences**: SPEC.md 7.2, principle 1)
+- Caption: Le sprint entre deux portes : à l'entrée la DoR (choix d'école), où une story aux critères à écrire (cas inventé) reste au backlog ; à la sortie une seule DoD, qui renvoie au backlog la carte qui ne la remplit pas. (one sentence after the review; the run's caption had 3)
 - Sub-concept: 11a
 - Idea: « Le sprint comme une pièce à deux portes. » (MDX, « L'essentiel » (legende de la Figure))
 

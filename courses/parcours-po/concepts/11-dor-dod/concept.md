@@ -33,6 +33,8 @@ stances:
       refs: []
     - text: "L'image du « mini cahier des charges » pour une DoR trop stricte. Cohn parle de stage-gate et de cascade, pas de cahier des charges."
       refs: ["S6"]
+    - text: "La DoR se décide en équipe : le PO la propose, il ne la fixe pas seul."
+      refs: ["S6"]
 neighbors:
   - author: "« Prêt à être choisi » (Scrum Guide)"
     text: "Le critère du Guide est qu'un élément soit faisable en un sprint, pas une liste de conditions. La DoR en est une version écrite par l'équipe, qui peut aller plus loin."
@@ -40,7 +42,7 @@ neighbors:
 diagrams:
   - file: "sprint-piece-deux-portes.svg"
     title: "Le sprint comme une pièce à deux portes"
-    caption: "À l'entrée, la DoR (choix d'école) : une story bloquée (« critères à écrire », cas inventé) y reste au backlog. À la sortie, la DoD : une seule, la même pour toutes les cartes ; une carte qui ne la remplit pas retourne au backlog. Chaque carte garde ses propres critères d'acceptation."
+    caption: "Le sprint entre deux portes : à l'entrée la DoR (choix d'école), où une story aux critères à écrire (cas inventé) reste au backlog ; à la sortie une seule DoD, qui renvoie au backlog la carte qui ne la remplit pas."
     subconcept: "11a"
 ---
 
@@ -70,13 +72,13 @@ Un test du cours [cours] aide à ranger une exigence : « vaut-il pour toute sto
 
 *Une liste d'entrée dans le sprint, qui est un choix d'école : utile comme repère, dangereuse comme barrière.*
 
-**Ce que dit le Guide, et ce que la DoR ajoute.** Le Scrum Guide ne parle pas de DoR. Il dit seulement qu'un élément que l'équipe peut finir en un sprint est **prêt à être choisi** au Sprint Planning, et qu'il le devient en général après avoir été précisé, l'équipe peut encore le préciser pendant le Sprint Planning (concept 15). La DoR est une liste écrite par l'équipe pour cela [école] : une pratique née chez des praticiens vers 2008-2009, dont le premier auteur est discuté. Mike Cohn en cite des conditions typiques : critères d'acceptation identifiés, taille qui tient dans un sprint, dépendances externes levées.
+**Ce que dit le Guide, et ce que la DoR ajoute.** Le Scrum Guide ne parle pas de DoR. Il dit seulement qu'un élément que l'équipe peut finir en un sprint est **prêt à être choisi** au Sprint Planning, et qu'il le devient en général après avoir été précisé ; l'équipe peut encore le préciser pendant le Sprint Planning (concept 15). La DoR est une liste écrite par l'équipe pour cela [école] : une pratique née chez des praticiens vers 2008-2009, dont le premier auteur est discuté. Mike Cohn en cite des conditions typiques : critères d'acceptation identifiés, taille qui tient dans un sprint, dépendances externes levées.
 
 La DoR suppose des sprints : sans sprint, voir annexe A2.
 
 **Prête ou pas, et le risque de la barrière.** Au Sprint Planning, le PO propose et les Developers choisissent (concept 15b). Une story dont une condition d'entrée manque n'est pas prête : on ne la prend pas sur la simple confiance qu'elle le deviendra en cours de sprint. Le PO propose à la place une story prête, et il fait avancer ce qui bloque, par exemple une dépendance envers une autre équipe (concept 10b). Si cela bloque sprint après sprint, c'est une escalade (concept 14).
 
-Mais une DoR trop stricte devient une barrière à franchir avant chaque sprint : pour Cohn, un retour au cycle en cascade, d'où son conseil de préférer des repères à des règles. Il admet une exception : certaines dépendances envers une autre équipe ou un fournisseur. Le cours [cours] parle d'un « mini cahier des charges » quand tout doit être spécifié avant le sprint, alors que la conversation continue pendant. La DoR se décide en équipe (Cohn parle de critères établis par l'équipe) : le PO la propose, il ne la fixe pas seul, lecture du cours.
+Mais une DoR trop stricte devient une barrière à franchir avant chaque sprint : pour Cohn, un retour au cycle en cascade, d'où son conseil de préférer des repères à des règles. Il admet une exception : certaines dépendances envers une autre équipe ou un fournisseur. Le cours [cours] parle d'un « mini cahier des charges » quand tout doit être spécifié avant le sprint, alors que la conversation continue pendant. La DoR se décide en équipe (Cohn parle de critères établis par l'équipe) : le PO la propose, il ne la fixe pas seul [cours].
 
 ## Pièges
 
@@ -93,7 +95,9 @@ Mais une DoR trop stricte devient une barrière à franchir avant chaque sprint 
 ## Le test rapide
 
 > « Vaut-il pour toute story (du même type de travail), sans être recopié ? » : DoD.
+>
 > « Propre à cette story ? » : critère d'acceptation.
+>
 > « Faut-il l'avoir avant de commencer ? » : DoR.
 
 Formulation du cours, d'après le test de Cohn pour séparer la DoD des critères.

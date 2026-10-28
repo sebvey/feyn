@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 390" fill="currentColor" role="img" aria-labelledby="sprint-piece-deux-portes-titre sprint-piece-deux-portes-desc" font-family="system-ui, sans-serif" font-size="14">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 345" fill="currentColor" role="img" aria-labelledby="sprint-piece-deux-portes-titre sprint-piece-deux-portes-desc" font-family="system-ui, sans-serif" font-size="14">
   <title id="sprint-piece-deux-portes-titre">Le sprint comme une pièce à deux portes</title>
-  <desc id="sprint-piece-deux-portes-desc">Le backlog, le sprint et l'incrément se suivent de gauche à droite. La DoR est la porte d'entrée du sprint, la DoD sa porte de sortie. La story A traverse les deux portes. La story B reste au backlog devant la DoR. La story C, refusée à la DoD, retourne au backlog.</desc>
+  <desc id="sprint-piece-deux-portes-desc">Le backlog, le sprint et l'incrément se suivent de gauche à droite. La DoR est la porte d'entrée du sprint, la DoD sa porte de sortie. La story A traverse les deux portes. La story B, aux critères à écrire, reste au backlog, arrêtée devant la DoR. La story C, refusée à la DoD, retourne au backlog.</desc>
 
   <g id="11a-piece-backlog" class="muted">
     <rect x="10" y="50" width="150" height="210" rx="6" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
@@ -12,20 +12,22 @@
     <text x="515" y="40" text-anchor="middle" fill="currentColor">incrément</text>
   </g>
 
-  <g id="11a-piece-sprint" class="primary">
-    <rect x="210" y="50" width="180" height="210" rx="6" fill="none" stroke="currentColor" stroke-width="3"/>
-    <text x="300" y="40" text-anchor="middle" font-weight="bold" fill="currentColor">le sprint</text>
+  <g id="11a-piece-sprint" class="muted">
+    <rect x="210" y="50" width="180" height="210" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="300" y="40" text-anchor="middle" fill="currentColor">le sprint</text>
   </g>
 
   <g id="11b-piece-dor" class="primary">
     <rect x="180" y="125" width="10" height="135" fill="currentColor"/>
-    <text x="185" y="38" text-anchor="middle" font-weight="bold" fill="currentColor">DoR</text>
+    <text x="185" y="92" text-anchor="middle" font-weight="bold" fill="currentColor">DoR</text>
     <text x="185" y="280" text-anchor="middle" fill="currentColor" class="muted">choix d'école</text>
+    <line x1="172" y1="186" x2="198" y2="212" stroke="currentColor" stroke-width="3"/>
+    <line x1="198" y1="186" x2="172" y2="212" stroke="currentColor" stroke-width="3"/>
   </g>
 
   <g id="11a-piece-dod" class="primary">
     <rect x="410" y="125" width="10" height="135" fill="currentColor"/>
-    <text x="415" y="38" text-anchor="middle" font-weight="bold" fill="currentColor">DoD</text>
+    <text x="415" y="92" text-anchor="middle" font-weight="bold" fill="currentColor">DoD</text>
   </g>
 
   <g id="11a-piece-story-a-backlog" class="muted">
@@ -35,7 +37,7 @@
   </g>
 
   <g id="11b-piece-story-b" class="muted">
-    <rect x="20" y="170" width="130" height="52" rx="4" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5"/>
+    <rect x="20" y="170" width="130" height="52" rx="4" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-dasharray="5 3"/>
     <text x="30" y="192" fill="currentColor">story B</text>
     <text x="30" y="212" fill="currentColor">critères à écrire</text>
   </g>
@@ -74,13 +76,4 @@
     <text x="95" y="328" fill="currentColor">story C refusée : retour au backlog</text>
   </g>
 
-  <g id="11a-piece-note-dod" class="muted">
-    <text x="470" y="290" text-anchor="middle" fill="currentColor">une seule DoD,</text>
-    <text x="470" y="309" text-anchor="middle" fill="currentColor">la même pour</text>
-    <text x="470" y="328" text-anchor="middle" fill="currentColor">toutes les cartes</text>
-  </g>
-
-  <g id="11b-piece-note-lecture" class="muted">
-    <text x="300" y="372" text-anchor="middle" fill="currentColor">DoR : quand une story peut commencer. DoD : quand elle est terminée.</text>
-  </g>
 </svg>

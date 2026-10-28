@@ -17,7 +17,7 @@
 
 ## Faits du fil rouge utilisés
 
-les vues d'Étienne (stations vides, vélos en panne, locations du
+Les vues d'Étienne (stations vides, vélos en panne, locations du
 jour) ; chaque vue d'Étienne affiche l'heure de la dernière mise à jour (DoD de l'équipe) ;
 relevés en double, défaut connu des relevés des stations, que la DoD fait détecter par un test
 automatique avant publication ; chaque indicateur publié a sa définition écrite (DoD, ajoutée
@@ -28,7 +28,7 @@ identifiées, accès aux données obtenu ; accès à la table des locations dema
 (Sid), pas encore obtenu, la DSI demandant de justifier chaque colonne ; les locations
 rendues à la même station au bout de quelques minutes : les compter ou non n'est pas fixé
 pour les indicateurs ; la vue des locations du jour, pas encore construite, montrera toutes
-les locations, courtes comprises ;
+les locations, courtes comprises.
 Developers : Dana, Diego (data engineers), Anna (analyste) ; sprints de deux semaines. Les
 autres exigences proposées (l'exigence 2 de « DoD ou critère », les ajouts de Diego à la DoR),
 les répliques des Developers et d'Étienne, et les nombres de vélos sont des

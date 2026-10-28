@@ -8,7 +8,7 @@ attribuée, sans certitude, à Richard Kronfält (2008) [S5]. Le risque d'une Do
 l'avis de Mike Cohn [S6]. Les faits du fil rouge (vues d'Étienne, heure de la dernière mise à
 jour, relevés en double, DoR de l'équipe vélos, table des locations et DSI, locations très
 courtes, vélo disponible) sont inventés : ils n'ont pas de source. Les sections entre
-parenthèses sont celles du fichier du concept.
+parenthèses sont celles de `concept.md` ou de `teaching.md`.
 
 ## Affirmations
 
@@ -50,7 +50,7 @@ parenthèses sont celles du fichier du concept.
 | DoR de l'équipe vélos : critères d'acceptation écrits, règles métier fixées, dépendances identifiées, accès aux données obtenu (11b) | `storyline.md` | Fait fixé du fil rouge, inventé | |
 | Story d'Étienne « voir les locations du jour par station » ; accès à la table des locations demandé à la DSI, pas encore obtenu (11b) | `storyline.md` | Faits du fil rouge, inventés (sources de données : « Accès demandé, pas encore obtenu (concept 11b) » ; acteur Sid, DSI) | |
 | Réponse attendue : la story n'est pas prête ; proposer une story prête à la place ; faire avancer l'accès pour le sprint suivant (11b) | [S1], [S6] | Le PO propose, les Developers choisissent [S1]. Ne pas prendre une story dont la dépendance externe n'est pas levée : cohérent avec l'exception de Cohn [S6]. Faire avancer l'accès : escalade, concept 14 (renvoi) | |
-| 11b suppose des sprints ; l'annexe A2 se propose à l'apprenant qui travaille sans sprint (11b) | `decisions/team-in-sprints.md` ; `plan.md` (Parti pris) | Décision interne du cours (T-021), sans source externe ; A2 est écrite par le lot 6 (T-018g), sous-concept A2a | cours |
+| 11b suppose des sprints ; l'annexe A2 se propose à l'apprenant qui travaille sans sprint (11b) | `decisions/team-in-sprints.md` ; `plan.md` (Parti pris) | Décision interne du cours, sans source externe ; A2 est écrite par un lot ultérieur, sous-concept A2a | cours |
 | La DoD nommée au concept 0 (0a3) comme engagement de l'incrément ; la revue de sprint (concept 0) | `concepts/00-scrum/sources.md` | Déjà vérifié au concept 0 | |
 | Critère d'acceptation ou règle métier ; la règle non fixée que le PO fait fixer (concepts 8 et 8a2) | `concepts/08-criteres-regles/sources.md` | Déjà vérifié au concept 8 | |
 | Dépendances envers une autre équipe ou la DSI (concept 10b) | `concepts/10-hors-perimetre-dependances/sources.md` | Produit par le même lot (T-018e) | |
@@ -66,7 +66,7 @@ parenthèses sont celles du fichier du concept.
 | S4 | Jakobsen, Sutherland, « Scrum and CMMI – Going from Good to Great: are you ready-ready to be done-done? », Agile 2009, Chicago | http://jeffsutherland.org/scrum/JakobsenScrumCMMIGoingfromGoodtoGreatAgile2009.pdf | primaire | 2026-10-22 |
 | S5 | Scrum Patterns Group (Coplien et al.), « Definition of Ready », *A Scrum Book* (site scrumbook.org) ; cite Kronfält, « Ready-ready: the Definition of Ready for User Stories going into Sprint Planning », blog, octobre 2008 | https://scrumbook.org/value-stream/product-backlog/definition-of-ready.html | secondaire (le billet de Kronfält n'a pas été lu) | 2026-10-22 |
 | S6 | Mountain Goat Software (Cohn), « Definition of Ready: What It Is and Why It's Dangerous », mise à jour du 28 juin 2023 (sans signature ; site et voix de Cohn) | https://www.mountaingoatsoftware.com/blog/the-dangers-of-a-definition-of-ready | primaire (site de l'auteur, qui vend aussi ses formations) | 2026-10-22 |
-| S8 | Observations d'une session, un apprenant ([c11] : DoD ou critère réussi 3/3 ; [général] : a relevé la formulation « DoD au niveau de l'incrément » du prof, réponses justes sans justifier) ; amélioration de session (`11-dor-dod.md`, historique git) | (dépôt) | primaire (interne : un seul apprenant, base faible) | 2026-10-22 |
+| S8 | Observations d'une session, un apprenant ([c11] : DoD ou critère réussi 3/3 ; [général] : a relevé la formulation « DoD au niveau de l'incrément » du prof, réponses justes sans justifier) ; amélioration de session (`11-dor-dod.md`, historique git) | (dépôt) | primaire (interne : un seul apprenant : base faible) | 2026-10-22 |
 | S9 | Ambler, « Definition of Done (DoD) for a Data Warehouse Team », *Agile Data* (sans date ; site © 2002-2026) | https://agiledata.org/essays/definition-of-done.html | primaire (site de l'auteur, qui vend sa méthode) | 2026-10-22 |
 | S10 | Glossaire du cours, lignes « Definition of Done (DoD) » et « Definition of Ready (DoR) » | `glossary.md` | primaire (interne : définition du cours) | 2026-10-22 |
 
