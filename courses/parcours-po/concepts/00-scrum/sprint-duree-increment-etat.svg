@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 620" fill="currentColor" role="img" aria-labelledby="sprint-duree-increment-etat-titre sprint-duree-increment-etat-desc" font-family="sans-serif">
+  <title id="sprint-duree-increment-etat-titre">Un sprint est une durée, un incrément est un état du produit</title>
+  <desc id="sprint-duree-increment-etat-desc">
+    En haut, un escalier de quatre marches qui montent de gauche à droite : chaque marche est un incrément, ajouté aux précédents.
+    Les marches tombent à des moments variés : une dans le premier sprint, deux dans le deuxième, une dans le troisième.
+    Sous l'escalier, une frise de trois sprints de même longueur, collés les uns aux autres, sans pause entre eux : le sprint est une durée.
+    Plus bas, un sprint détaillé : le Sprint Planning ouvre le sprint, le Daily Scrum a lieu chaque jour, puis la revue de sprint, puis la rétrospective qui clôt le sprint.
+    En bas, un tableau de trois lignes qui associe chaque artefact à son engagement :
+    le backlog produit à l'objectif produit, le backlog de sprint à l'objectif de sprint, l'incrément à la Definition of Done.
+  </desc>
+  <g id="0b-escalier">
+    <text x="30" y="40" class="muted" font-size="17">Chaque marche est un incrément,</text>
+    <text x="30" y="62" class="muted" font-size="17">ajouté aux précédents</text>
+    <rect x="60" y="162" width="510" height="34" class="primary" fill-opacity="0.4" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5"/>
+    <text x="68" y="154" class="primary" font-size="19" font-weight="700">1</text>
+    <rect x="232" y="128" width="338" height="68" class="primary" fill-opacity="0.6" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5"/>
+    <text x="240" y="120" class="primary" font-size="19" font-weight="700">2</text>
+    <rect x="318" y="94" width="252" height="102" class="primary" fill-opacity="0.85" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5"/>
+    <text x="326" y="86" class="primary" font-size="19" font-weight="700">3</text>
+    <rect x="456" y="60" width="114" height="136" class="primary" fill-opacity="0.85" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5"/>
+    <text x="464" y="52" class="primary" font-size="19" font-weight="700">4</text>
+  </g>
+  <g id="0b-frise">
+    <rect x="30" y="204" width="180" height="46" class="secondary" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="120" y="233" text-anchor="middle" class="primary" font-size="19" font-weight="600">sprint</text>
+    <rect x="210" y="204" width="180" height="46" class="secondary" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="300" y="233" text-anchor="middle" class="primary" font-size="19" font-weight="600">sprint</text>
+    <rect x="390" y="204" width="180" height="46" class="secondary" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="480" y="233" text-anchor="middle" class="primary" font-size="19" font-weight="600">sprint</text>
+    <text x="30" y="276" class="muted" font-size="16">Sprint : une durée, le suivant commence aussitôt.</text>
+  </g>
+  <g id="0a2-evenements">
+    <text x="30" y="318" class="primary" font-size="18" font-weight="650">Dans un sprint, quatre événements</text>
+    <rect x="30" y="352" width="540" height="40" class="secondary" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <rect x="30" y="352" width="80" height="40" class="primary" fill-opacity="0.85"/>
+    <line x1="126" x2="126" y1="360" y2="384" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="154" x2="154" y1="360" y2="384" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="182" x2="182" y1="360" y2="384" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="210" x2="210" y1="360" y2="384" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="238" x2="238" y1="360" y2="384" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="266" x2="266" y1="360" y2="384" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="294" x2="294" y1="360" y2="384" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="322" x2="322" y1="360" y2="384" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="350" x2="350" y1="360" y2="384" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="378" x2="378" y1="360" y2="384" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round"/>
+    <rect x="400" y="352" width="90" height="40" class="primary" fill-opacity="0.6"/>
+    <rect x="490" y="352" width="80" height="40" class="primary" fill-opacity="0.4"/>
+    <text x="255" y="340" text-anchor="middle" class="primary" font-size="17" font-weight="600">Daily Scrum, chaque jour</text>
+    <text x="445" y="340" text-anchor="middle" class="primary" font-size="17" font-weight="600">Revue</text>
+    <text x="30" y="416" class="primary" font-size="17" font-weight="600">Sprint Planning</text>
+    <text x="30" y="436" class="muted" font-size="16">ouvre le sprint</text>
+    <text x="570" y="416" text-anchor="end" class="primary" font-size="17" font-weight="600">Rétrospective</text>
+    <text x="570" y="436" text-anchor="end" class="muted" font-size="16">clôt le sprint</text>
+  </g>
+  <g id="0a3-artefacts">
+    <defs>
+      <marker id="sprint-duree-increment-etat-fleche" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" class="muted" fill="currentColor" fill-opacity="0.5"/>
+      </marker>
+    </defs>
+    <text x="30" y="472" class="muted" font-size="16">artefact</text>
+    <text x="324" y="472" class="muted" font-size="16">engagement</text>
+    <rect x="30" y="480" width="230" height="38" rx="6" class="secondary" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="145" y="505" text-anchor="middle" class="primary" font-size="18">Backlog produit</text>
+    <line x1="264" x2="318" y1="499" y2="499" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="2.5" marker-end="url(#sprint-duree-increment-etat-fleche)"/>
+    <rect x="324" y="480" width="246" height="38" rx="6" class="secondary" fill-opacity="0.15"/>
+    <rect x="324" y="480" width="246" height="38" rx="6" class="primary" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="2.5"/>
+    <text x="447" y="505" text-anchor="middle" class="primary" font-size="18" font-weight="650">Objectif produit</text>
+    <rect x="30" y="524" width="230" height="38" rx="6" class="secondary" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="145" y="549" text-anchor="middle" class="primary" font-size="18">Backlog de sprint</text>
+    <line x1="264" x2="318" y1="543" y2="543" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="2.5" marker-end="url(#sprint-duree-increment-etat-fleche)"/>
+    <rect x="324" y="524" width="246" height="38" rx="6" class="secondary" fill-opacity="0.15"/>
+    <rect x="324" y="524" width="246" height="38" rx="6" class="primary" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="2.5"/>
+    <text x="447" y="549" text-anchor="middle" class="primary" font-size="18" font-weight="650">Objectif de sprint</text>
+    <rect x="30" y="568" width="230" height="38" rx="6" class="secondary" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="145" y="593" text-anchor="middle" class="primary" font-size="18">Incrément</text>
+    <line x1="264" x2="318" y1="587" y2="587" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="2.5" marker-end="url(#sprint-duree-increment-etat-fleche)"/>
+    <rect x="324" y="568" width="246" height="38" rx="6" class="secondary" fill-opacity="0.15"/>
+    <rect x="324" y="568" width="246" height="38" rx="6" class="primary" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="2.5"/>
+    <text x="447" y="593" text-anchor="middle" class="primary" font-size="18" font-weight="650">Definition of Done</text>
+  </g>
+</svg>
