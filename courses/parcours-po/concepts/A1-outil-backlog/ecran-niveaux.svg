@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" fill="currentColor" role="img" aria-labelledby="ecran-niveaux-titre ecran-niveaux-desc" font-family="system-ui, sans-serif">
+  <title id="ecran-niveaux-titre">Un écran d'outil stylisé (exemple inventé pour l'illustration) : les niveaux</title>
+  <desc id="ecran-niveaux-desc">Un écran avec une bande Niveaux, puis un arbre à quatre niveaux, Epic, Feature, User Story, Task, chacun sous le précédent. La ligne Epic, seule marquée, est le niveau de trop.</desc>
+  <g id="A1a-cadre-ecran" class="muted">
+    <rect x="20" y="20" width="560" height="320" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <line x1="20" y1="68" x2="580" y2="68" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+  </g>
+  <g id="A1a-bande-titre" class="muted">
+    <text x="40" y="52" font-size="18" font-weight="bold">Niveaux</text>
+  </g>
+  <g id="A1a-liaisons-arbre" class="muted">
+    <path d="M56 136 V174 H80" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <path d="M96 196 V234 H120" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <path d="M136 256 V294 H160" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+  </g>
+  <g id="A1a-ligne-epic" class="primary">
+    <rect x="40" y="84" width="520" height="52" rx="4" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2.5"/>
+    <text x="56" y="116" font-size="16" font-weight="bold">Epic</text>
+    <text x="250" y="116" font-size="16" font-weight="bold">le niveau de trop</text>
+  </g>
+  <g id="A1a-ligne-feature" class="muted">
+    <rect x="80" y="152" width="480" height="44" rx="4" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="96" y="180" font-size="16">Feature</text>
+  </g>
+  <g id="A1a-ligne-story" class="muted">
+    <rect x="120" y="212" width="440" height="44" rx="4" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="136" y="240" font-size="16">User Story</text>
+  </g>
+  <g id="A1a-ligne-task" class="muted">
+    <rect x="160" y="272" width="400" height="44" rx="4" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="176" y="300" font-size="16">Task</text>
+  </g>
+</svg>
