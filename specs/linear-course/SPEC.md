@@ -304,8 +304,8 @@ characters of the lead, and does not open with a word of the language pack's
   The protocol asks the learner's nickname first, then these questions in their order, and
   says where the answers go (`PROTOCOL.md`, rules `teacher-posture-from-plan`,
   `onboarding-questions-announced`, `onboarding-questions-order` and `onboarding-profile-written`);
-  a question on pace does
-  not belong here, the teacher adjusts the pace as the course goes. Then optional `##` sections the teacher reads: the course's stances
+  a question on pace does not belong here, the teacher adjusts the pace as the course goes. Then
+  optional `##` sections the teacher reads: the course's stances
   (« Parti pris : une équipe en sprints »), its own writing rules. An H1 is allowed.
 - **`glossary.md`** (`course-files`): an optional introduction; one table, four columns in this
   order: the course term, its English term, the definition, the concepts that use it (numbers

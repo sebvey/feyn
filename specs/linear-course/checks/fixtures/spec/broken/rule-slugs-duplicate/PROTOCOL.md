@@ -7,7 +7,9 @@ in rule `second-rule`.
 
 **first-rule** Le premier message part sans appel d'outil.
 
-**first-rule** Le premier message présente le cours ; puis la règle `first-rule` vaut encore.
+**second-rule** Le premier message présente le cours ; puis la règle `first-rule` vaut encore.
+
+**first-rule** Le premier message nomme le cours.
 
 ## 2. Mémoire
 

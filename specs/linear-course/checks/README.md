@@ -1,6 +1,7 @@
 # Checks of `linear-course`
 
-Scripts that verify a course against `SPEC.md` (section 10). **Dependency-free Node**
+Scripts that verify a course against `SPEC.md` (section 10), run by `check-course`, and the spec's
+own files (`PROTOCOL.md`, `SPEC.md`, `decisions/`), run by `check-spec`. **Dependency-free Node**
 (CommonJS, no `npm install`; Node 20 or later, run under `mise exec` like every tool here): the course's YAML,
 Markdown and SVG are read by the small readers in `lib/` (`yaml.js`, `md.js`, `xml.js`), which
 cover the subset the spec uses. Chosen once, for every check: a shell version would need a

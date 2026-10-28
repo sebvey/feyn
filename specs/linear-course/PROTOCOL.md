@@ -39,7 +39,8 @@ is in English.
   pronoun whose noun is in another rule, no « ci-dessus ».
 - A rule says one behaviour, one a test checks on its own. Several keys, items or branches of
   one act, a bound written into the act, a reading named as the source of the act, or a
-  sentence or fixed phrase said before the first tool call (the waiting-sentence rule's form) stay in one rule.
+  sentence or fixed phrase said before the first tool call (the waiting-sentence rule's form)
+  stay in one rule.
   Two acts a test would report apart are two rules: at different moments, or one in the text
   and one in the tool calls or in `learner/`; a whole message sent with no tool call is a
   behaviour beside what the message says. A clause that recalls a behaviour another rule owns
