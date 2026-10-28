@@ -70,7 +70,7 @@ Renderings in `S1-10-15-report/`, beside this report.
 - M7 last item: CF's '« Fait » ne dit rien s'il ne veut pas dire DoD remplie (annexe A1)' appended. The MDX final period inside the bold became ' : ' after it.
 - M8: CF has no separate question, so the three MDX Reflexe tests are the blockquote. The Reflexe note is the paragraph. CF adds nothing to it beyond punctuation.
 - M5: 15a has children, so its section holds the promise and the ### 15a1 and 15a2 sections. 15b and 15c have no children, so their reader text follows the promise. MDX has no h4 outside course.yaml.
-- M6: the Figure in L'essentiel became ![La frise d'un sprint](vie-story-preciser-choisir.svg) after the paragraph. The FilRouge became a blockquote '**Fil rouge :** Rappel de concept 7a2 : ...'. The MDX renvoi to A2 stays 'annexe A2', where CF said A2b and A2c.
+- M6: the Figure was first placed in L'essentiel (later redrawn and moved to the 15b section, see Diagrams). The FilRouge became a blockquote '**Fil rouge :** Rappel de concept 7a2 : ...'. The MDX renvoi to A2 stays 'annexe A2', where CF said A2b and A2c.
 - M13: no banned character (em-dash, arrow) and no typographic apostrophe in the source texts, so no replacement was needed.
 
 ## Checks
