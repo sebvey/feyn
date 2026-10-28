@@ -14,8 +14,8 @@ How to use: copy to the concept folder, replace every <placeholder>, delete this
   sections.
 - Frontmatter: `stances` (three keys, each a list, possibly empty), `neighbors` (optional).
   An item has `text` (bold and italics only), `author` (expected on consensus and school) and
-  `refs` (ids of sources.md, possibly empty). The body's « Consensus et choix d'école » must
-  not contradict them.
+  `refs` (ids of sources.md, possibly empty). They are the one place for the stances: the
+  body has no stances section, and the site renders them from the frontmatter.
 - A diagram is optional: to have none, delete the `diagrams` key and the image line below. To
   have one: draw it from diagram.svg, declare it in `diagrams` (all four keys), and put the
   image alone in its paragraph, once; the alt text is the declared `title`.
@@ -55,12 +55,6 @@ diagrams:
 <the definition and why it matters, a few lines>
 
 ![<one line: SVG title and image alt>](<diagram-stem>.svg)
-
-## Consensus et choix d'école
-
-- **Consensus** (<text or author>) : <what is accepted>. [consensus]
-- **Choix d'école** (<author or current>) : <what practitioners discuss>. [école]
-- **Choix du cours** : <the course's own position>. [cours]
 
 ## <n>a <title of a>
 

@@ -16,8 +16,8 @@ them; `teaching.md` is teacher-only, the teacher reads it and the site never bui
 reader text and the teaching notes (example bank included) never share a file. This replaces the
 single concept file of `parcours-po`, where the bank sat beside the reader text under one
 alignment stamp. One filter inside a file exists, and only one: the site builds the
-« Affirmations » rows of `sources.md` whose section is in `concept.md`, and the « Références »
-they cite; rows whose section is in `teaching.md` are teacher-only; « Non vérifié » is not built (`SPEC.md`
+« Affirmations » rows of `sources.md` whose section is in `concept.md` or is `headings.stances`
+(the frontmatter stances, issue #97), and the « Références » they cite; rows whose section is in `teaching.md` are teacher-only; « Non vérifié » is not built (`SPEC.md`
 4.4, issue #98).
 
 ## Options ruled out

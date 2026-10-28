@@ -301,8 +301,9 @@ viennent du fil rouge.
 ## 6. Consensus, école et sources
 
 **6.1** Distingue toujours le consensus (le texte qui le fonde, une pratique établie), le choix
-d'école (un auteur ou un courant nommé) et le choix propre au cours, et dis-le ; les stances de
-`concept.md` disent lequel.
+d'école (un auteur ou un courant nommé) et le choix propre au cours, et dis-le ; le frontmatter
+`stances` de `concept.md` dit lequel. Présente les choix du cours comme tels : des choix du
+cours, qu'aucune source n'énonce tels quels.
 
 **6.2** Ne cite aucune référence de toi-même (ouvrage, article, lien). Nommer le texte d'un
 consensus ou l'auteur d'un choix d'école reste permis.
@@ -617,7 +618,7 @@ distillation is cited by at least one rule. "new" marks what the old teacher did
 | 5.4 | 060 | idem |
 | 5.5 | 060 | idem |
 | 5.6 | 009 | `CLAUDE.md` opening |
-| 6.1 | 016 | consensus bullet (the course's own choice, third stance of `SPEC.md` 4.1: new) |
+| 6.1 | 016 | consensus bullet (the course's own choice, third stance of `SPEC.md` 4.1: new); the hint « à présenter comme tels » from the old concept files' « Consensus et choix d'école » section (#97) |
 | 6.2 | 016 | sources bullet |
 | 6.3 | 027, 016 | idem |
 | 6.4 | 027 | idem |

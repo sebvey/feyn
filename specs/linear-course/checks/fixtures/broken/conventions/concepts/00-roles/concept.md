@@ -19,11 +19,6 @@ Nommer les rôles de l'équipe.
 
 Un rôle est ce que fait une personne. Voir le concept 1.
 
-## Consensus et choix d'école
-
-- **Consensus** (Scrum Guide 2020) : une affirmation acceptée.
-- **Choix du cours** : un choix du cours. [cours]
-
 ## 0a Les deux rôles
 
 Deux rôles suffisent pour commencer.

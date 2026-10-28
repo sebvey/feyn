@@ -16,11 +16,6 @@ Retrouver un mot du cours.
 
 Le lexique rassemble les mots du cours.
 
-## Consensus et choix d'école
-
-- **Consensus** (Scrum Guide 2020) : une affirmation acceptée.
-- **Choix du cours** : un choix du cours. [cours]
-
 ## A1a Les mots
 
 *Chaque mot a sa définition.*

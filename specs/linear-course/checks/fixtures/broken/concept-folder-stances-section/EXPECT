@@ -1,0 +1,2 @@
+check: concept-folder
+message: is not a `concept.md` section

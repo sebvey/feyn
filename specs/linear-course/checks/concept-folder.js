@@ -94,10 +94,14 @@ function checkConcept(ctx, c, out) {
 
     // body sections
     const top = mdlib.sections(cm.body, 2);
+    // the stances live in the frontmatter only: the old body section is named, then left out of the order
+    for (const s of top.sections.filter((x) => x.title === H('stances'))) {
+      out.push(fail(cf, s.line, `section « ${H('stances')} » is not a \`concept.md\` section: the stances and neighbours live in the frontmatter stances and neighbors only`));
+    }
+    top.sections = top.sections.filter((x) => x.title !== H('stances'));
     const exp = [
       { text: H('objective'), mandatory: true, match: (t) => t === H('objective') },
       { text: H('essentials'), mandatory: true, match: (t) => t === H('essentials') },
-      { text: H('stances'), mandatory: true, match: (t) => t === H('stances') },
     ];
     for (const s of c.subs.filter((x) => x.level === 1)) {
       exp.push({ text: `${s.id} <title>`, mandatory: true, match: (t) => t === s.id || t.startsWith(s.id + ' ') });

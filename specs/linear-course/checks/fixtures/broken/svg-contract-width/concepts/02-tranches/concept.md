@@ -19,11 +19,6 @@ Découper un besoin en tranches.
 
 Une tranche traverse toutes les couches.
 
-## Consensus et choix d'école
-
-- **Consensus** (Scrum Guide 2020) : une affirmation acceptée.
-- **Choix du cours** : un choix du cours. [cours]
-
 ## 2a Une tranche
 
 *Une tranche sert seule.*

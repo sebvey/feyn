@@ -26,11 +26,6 @@ Un produit s'empile en couches, de la collecte à la restitution.
 
 ![Trois couches empilées](couches.svg)
 
-## Consensus et choix d'école
-
-- **Consensus** (Scrum Guide 2020) : une affirmation acceptée.
-- **Choix du cours** : un choix du cours. [cours]
-
 ## 1a Les couches nommées
 
 *Trois couches suffisent pour un premier produit.*
