@@ -81,7 +81,7 @@ Une **liste à dépiler** se traite dans l'ordre d'arrivée, ou dans un ordre fi
 
 ## Pièges
 
-- **Prendre le backlog pour la liste des tâches techniques** : c'est le réflexe probable d'un profil technique, le plus probable d'un développeur ou d'un profil data. Signe : un utilisateur ne comprend aucun élément. Le plan est dans le backlog de sprint ; au backlog produit, un travail technique porte ce qu'il améliore, et le PO l'ordonne (il n'est pas exclu).
+- **Prendre le backlog pour la liste des tâches techniques** : c'est le réflexe le plus probable d'un développeur ou d'un profil data. Signe : un utilisateur ne comprend aucun élément. Le plan est dans le backlog de sprint ; au backlog produit, un travail technique porte ce qu'il améliore, et le PO l'ordonne (il n'est pas exclu).
 - **Le remplir au début, puis le figer** : comme un cahier des charges, alors qu'on n'en connaît qu'une partie ; le reste émerge. Le faire valider, puis interdire d'y toucher : il change à chaque chose apprise, à la revue de sprint notamment.
 - **Le dépiler** : le traiter dans l'ordre d'arrivée, ou dans un ordre fixé une fois pour toutes, jusqu'au dernier élément. L'ordre change, et certains éléments ne seront jamais faits.
 - **Des priorités au lieu d'un ordre** (haute, moyenne, basse) : des ex aequo qui ne disent pas quoi faire ensuite. Le cours dit « ordonner », pas « prioriser ».
