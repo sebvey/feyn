@@ -181,8 +181,20 @@ fails += await scenario('inventory naming the old drawing twice: stops before an
 {
   const reworded = structuredClone(INV_GATEAU); reworded.caption_sentences[2].sentence = 'Une couche entière ne sert à rien.'
   fails += await scenario('legende sentences reworded: stops', { inventories: [reworded] }, ({ error }) => (error && /are not the legende, verbatim and in order/.test(error) ? [] : ['not stopped']))
+  // #198 (concept 13, wf_798fe9c8-807): a sentence given to an idea name that is no stem of the inventory
   const stray = structuredClone(INV_GATEAU); stray.caption_sentences[0].idea = 'gateau-bis'
-  fails += await scenario('a sentence given to no idea: stops', { inventories: [stray] }, ({ error }) => (error && /goes to "gateau-bis", none of its ideas/.test(error) ? [] : ['not stopped']))
+  const inventoryAgents = calls => calls.filter(c => /^inventory(-again)?:/.test(c.label)).map(c => c.label).sort().join()
+  fails += await scenario('a sentence given to no idea: asked once more with the stems, then drawn', { inventories: [stray], inventoriesAgain: [INV_GATEAU] }, ({ error, calls, logs }) => [
+    ...threw(error),
+    ...(inventoryAgents(calls) === 'inventory-again:1,inventory:1,inventory:2' ? [] : [`inventory agents not one retry of the first: ${inventoryAgents(calls)}`]),
+    ...(calls.some(c => c.label === 'inventory-again:1' && c.prompt.includes('Your first inventory gives a sentence to an idea that is not one of its ideas: « Le gâteau en couches. » to "gateau-bis" (its ideas: "gateau")') && c.prompt.includes('each sentence to an idea by the stem of one of the ideas you return, copied exactly')) ? [] : ['not asked again with the stems']),
+    ...(logs.some(l => l.startsWith('Inventory 1 gives a sentence to an idea that is not one of its ideas')) ? [] : ['not logged']),
+    ...(calls.find(c => c.label === 'inventory:1')?.prompt.includes('Its idea is the stem of one of the ideas you return, copied exactly') ? [] : ['inventory prompt lacks the rule']),
+    ...(drawers(calls).map(c => c.label).join() === 'draw:gateau,draw:part-recoupee' ? [] : ['not drawn'])])
+  fails += await scenario('a sentence given to no idea, twice: stops with its own message, no third inventory', { inventories: [stray], inventoriesAgain: [stray] }, ({ error, calls }) => [
+    ...(error && /^A sentence of the legende of .*Gateau\.astro goes to "gateau-bis", none of its ideas \(gateau\)$/.test(error) ? [] : ['not stopped with the message of the last guard']),
+    ...(inventoryAgents(calls) === 'inventory-again:1,inventory:1,inventory:2' ? [] : [`inventory agents not one retry of the first: ${inventoryAgents(calls)}`]),
+    ...(drawers(calls).length || calls.some(c => c.label === 'concept') ? ['drew or wrote anyway'] : [])])
   const twin = structuredClone(INV_PART); twin.ideas[0].stem = 'gateau'; twin.caption_sentences[0].idea = 'gateau'
   fails += await scenario('two ideas of the concept with one stem: stops', { inventories: [INV_GATEAU, twin] }, ({ error }) => (error && /SVG stems not unique: gateau, gateau/.test(error) ? [] : ['not stopped']))
   const bad = structuredClone(INV_PART); bad.ideas[0].stem = 'Part_Recoupée'; bad.caption_sentences[0].idea = 'Part_Recoupée'

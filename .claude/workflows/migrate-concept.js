@@ -298,7 +298,7 @@ const INVENTORY_SCHEMA = {
         type: 'object',
         properties: {
           sentence: { type: 'string' },
-          idea: { type: 'string', description: 'the stem of its idea' },
+          idea: { type: 'string', description: 'the stem of its idea: the stem of one of the ideas returned, copied exactly' },
           to: { type: 'string', enum: CAPTION_TO, description: 'caption: it carries the idea; title: it only names the diagram; labels: it only tells how to read it (M11)' },
         },
         required: ['sentence', 'idea', 'to'],
@@ -542,7 +542,8 @@ history). Modify no file.
 
 The Figure legende: « ${d.legende} ».
 - caption_sentences: the legende split into its sentences, verbatim and in order, each given to the idea \
-it serves and to one place (rule M11): to: caption when it carries the idea; title when it only names \
+it serves and to one place (rule M11). Its idea is the stem of one of the ideas you return, copied \
+exactly: never another name for it. to: caption when it carries the idea; title when it only names \
 the diagram (« Le gâteau en couches. »); labels when it only tells how to read it (« En bas, \
 l'ingestion des données ; en haut, la restitution, ce que voit l'utilisateur. »). A labels sentence is \
 split into its parts, and each part becomes a label of the element it reads, its words verbatim in that \
@@ -572,15 +573,16 @@ first to the last) is a relation.
 Never write how the old diagram is drawn: no colour, colour variable, opacity, coordinate, size, font, \
 shape, line style or place on the drawing (not "the blue column on the left", not "dashed"); a state is \
 named as a state (not done, refused), never by its old form. The script refuses an inventory that names a \
-colour value or variable, markup, a presentation attribute or a coordinate, a state with no words, or a \
-sentence going to a title that does not carry it.
+colour value or variable, markup, a presentation attribute or a coordinate, a state with no words, a \
+sentence going to a title that does not carry it, or a sentence going to an idea that is none of its ideas.
 
 ${MAP}`
 
 const norm = s => String(s ?? '').replace(/[’‘]/g, "'").replace(/[\s  ]+/g, ' ').trim()
 // What makes an inventory refused (M11), read in code: a form of the old drawing (OLD_FORM); a state no
 // word says (review of PR #182: dashed outlines became « not done », then a key « pas fait »); a legende
-// sentence given to a title that does not carry it. Each fault is one phrase after "the inventory".
+// sentence given to a title that does not carry it; a sentence given to an idea that is none of its ideas
+// (#198). Each fault is one phrase after "the inventory".
 const carries = (title, sentence) => norm(title).toLowerCase().includes(norm(sentence).replace(/[.!?…]+$/, '').trim().toLowerCase())
 function inventoryFaults(inv) {
   const out = []
@@ -588,7 +590,12 @@ function inventoryFaults(inv) {
   if (forms.length) out.push(`names how the old diagram is drawn: ${forms.join(', ')}`)
   const unsaid = (inv.ideas || []).flatMap(i => (i.elements || []).filter(e => e.state && !String(e.state_words ?? '').trim()).map(e => `${i.stem} ${e.id} (${e.state})`))
   if (unsaid.length) out.push(`gives a state that no word says: ${unsaid.join(', ')}`)
-  // a sentence given to no idea is refused below, with its own message
+  // #198: a sentence given to an idea name that is no stem of the inventory (concept 13: twice in one run);
+  // the fault names the stems so the second inventory can copy them. Still there after it: refused below,
+  // with its own message
+  const own = (inv.ideas || []).map(i => i.stem)
+  const stray = (inv.caption_sentences || []).filter(s => !own.includes(s.idea)).map(s => `« ${s.sentence} » to "${s.idea}"`)
+  if (stray.length) out.push(`gives a sentence to an idea that is not one of its ideas: ${stray.join(', ')} (its ideas: ${own.map(s => `"${s}"`).join(', ') || 'none'})`)
   const titleOf = s => (inv.ideas || []).find(i => i.stem === s.idea)?.title
   const untitled = (inv.caption_sentences || []).filter(s => s.to === 'title' && titleOf(s) !== undefined && !carries(titleOf(s), s.sentence)).map(s => `« ${s.sentence} »`)
   if (untitled.length) out.push(`gives to a title a sentence that title does not carry: ${untitled.join(', ')}`)
@@ -605,7 +612,8 @@ const [taken, teachingAndSources] = await parallel([
     return agent(`${inventoryPrompt(d)}
 
 Your first inventory ${faults.join('; it ')}. Return it again with none of that: what the diagram shows \
-only, a state only where words say it, a sentence to a title only when that title carries it.`, { ...opts, label: `inventory-again:${n + 1}` })
+only, a state only where words say it, a sentence to a title only when that title carries it, each \
+sentence to an idea by the stem of one of the ideas you return, copied exactly.`, { ...opts, label: `inventory-again:${n + 1}` })
   })),
   () => agent(`${ROLE} ${BLIND}
 
@@ -629,11 +637,12 @@ const inventories = scope.diagrams.map((d, n) => {
   const inv = taken?.[n]
   const name = `${d.component}${d.variant ? ` (${d.variant})` : ''}`
   if (!inv) throw new Error(`No inventory of ${name}: see the workflow log`)
-  const faults = inventoryFaults(inv)
-  if (faults.length) throw new Error(`The inventory of ${name} still ${faults.join('; it still ')}: its drawing would not be blind to the old one's forms, or its caption not set. Rerun the workflow (resume) to retry it`)
   if (!inv.ideas.length) throw new Error(`The inventory of ${name} holds no idea`)
+  // the last guard of a sentence to an unknown idea, before the faults, so that it keeps its own message
   const own = inv.ideas.map(i => i.stem)
   for (const s of inv.caption_sentences) if (!own.includes(s.idea)) throw new Error(`A sentence of the legende of ${name} goes to "${s.idea}", none of its ideas (${own.join(', ')})`)
+  const faults = inventoryFaults(inv)
+  if (faults.length) throw new Error(`The inventory of ${name} still ${faults.join('; it still ')}: its drawing would not be blind to the old one's forms, or its caption not set. Rerun the workflow (resume) to retry it`)
   if (norm(inv.caption_sentences.map(s => s.sentence).join(' ')) !== norm(d.legende)) throw new Error(`The sentences of the legende of ${name} are not the legende, verbatim and in order: « ${d.legende} »`)
   return inv
 })
