@@ -1,2 +1,2 @@
 check: typography
-message: banned character
+message: banned string "—" (U+2014)

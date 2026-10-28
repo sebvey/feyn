@@ -517,7 +517,7 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `headings.bank` | « Banque d'exemples » | `examples-from-bank` |
 | `headings.drawing` | « Schéma » | `requested-diagram-shown` |
 | `headings.unverified` | « Non vérifié » | `unverified-part-told` |
-| `typography.banned` | the banned characters (French: em-dash, arrows) | `course-language-typography` |
+| `typography.banned` | the banned characters (French: em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 
 **Language pack, groups the protocol adds**
 
@@ -573,7 +573,7 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `memory.commit_validated` | « concept {n} validé » | `commit-after-save-point` |
 | `memory.commit_stop` | « arrêt » | `commit-after-save-point` |
 | `memory.onboarding` | « accueil » (commit and first journal line) | `commit-after-save-point` |
-| `typography.rules` | the typography the teacher writes by: space before « : », « ; », « ? », « ! »; quotes « ». It does not repeat the ban: `typography.banned` holds the banned characters (em-dash, every arrow) | `course-language-typography` |
+| `typography.rules` | the typography the teacher writes by: space before « : », « ; », « ? », « ! »; quotes « ». It does not repeat the ban: `typography.banned` holds the banned characters (em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 
 The headings, statuses and line formats of the `memory_headings`, `status` and `memory` groups are
 those of `templates/learner/`: a pack and the learner templates of its language change together.

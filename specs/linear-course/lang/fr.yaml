@@ -126,10 +126,10 @@ memory:
   onboarding: "accueil"
 
 # `rules`: what the teacher does, as a clause of a sentence (no final period). `banned`: the
-# characters course text never uses, the em-dash and every arrow, the ASCII `->` included.
+# characters course text never uses, the em-dash and the arrows (the ASCII `->`, `<-` and `=>` included).
 typography:
   rules: "espace avant « : », « ; », « ? » et « ! » ; guillemets « »"
-  banned: ["—", "→", "←", "↔", "⇒", "⇐", "⇔", "➜", "➔", "->"]
+  banned: ["—", "→", "←", "↔", "↑", "↓", "↕", "↗", "↘", "↖", "↙", "↦", "↳", "↪", "⇒", "⇐", "⇔", "⇨", "⟶", "⟵", "⟷", "⟹", "⟸", "⟺", "➜", "➔", "➝", "➞", "➡", "⬅", "⬆", "⬇", "->", "<-", "=>"]
 
 # Words a domain paragraph's first sentence does not open with (`domain-first-sentence`).
 checks:
@@ -187,8 +187,8 @@ site:
     previous: "Précédent"
     next: "Suivant"
     sections: "Sections du concept"
-    neighbours: "Pages voisines"
-    neighbours_shortcut: "Pages voisines, raccourci"
+    adjacent_pages: "Pages voisines"
+    adjacent_pages_shortcut: "Pages voisines, raccourci"
     read: "Lire le concept {n} : {title}"
     open_sources: "Ouvrir l'onglet Sources du {kind} {n}"  # {kind}: « concept » or « annexe »
     section_link: "Lien vers la section {title}"
@@ -212,7 +212,7 @@ site:
     consensus_intro: "Ce que disent les textes de référence et ce que les praticiens font en général."
     school_intro: "Des positions défendables, chacune à son auteur : on les pose côte à côte, on ne les fond pas."
     course_intro: "Ce que ce cours décide, sans source externe : à prendre comme tel."
-    neighbour: "Notion voisine, à ne pas confondre"
+    neighbors: "Notion voisine, à ne pas confondre"
   # components/Sources.astro
   sources_tab:
     claims: "Affirmations et ce qui a été vérifié"
@@ -262,6 +262,8 @@ site:
     consensus: "Consensus"
     school: "Choix d'école"
     course: "Choix du cours"
+    legend_school: "Une position défendable, portée par un auteur ou une école, à côté d'autres : le lecteur voit qui la défend."
+    legend_course: "Un choix que le cours fait lui-même, sans source externe qui l'impose."
     section_title: "{title} ({n})"
     intro_consensus: "Groupées par texte de référence ou par pratique."
     intro_school: "Rangées par auteur ou par école, posées côte à côte."
@@ -289,6 +291,7 @@ site:
     status_none: "Aucun terme"
     status_one: "{n} terme sur {total}"
     status_many: "{n} termes sur {total}"
+    avoid_note: "Des mots courants qui brouillent une notion. Le cours leur préfère un terme plus précis."
     avoid_tag: "À éviter"
     say_instead: "Dire plutôt"
     why: "Pourquoi"

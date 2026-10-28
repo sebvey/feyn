@@ -1,8 +1,8 @@
 # Labels of the old site (issue #18)
 
-Inventory of every visible label of the frozen site `parcours-po-website` (`src/layouts`, `src/components`, `src/pages`, with `src/i18n/ui.ts`, `src/data/domaines.ts` and `src/lib` where they hold a label), and where each goes. A label is the text of a control, a heading, a tab, an `aria-label` or `title`, a note or an empty state; the running prose of a page and the course's own data are not labels (last section). The apostrophes are straight in the pack: the site's typography pass (`typo-fr.ts`) curls them, as it did on the old site.
+Inventory of every visible label of the frozen site `parcours-po-website` (`src/layouts`, `src/components`, `src/pages`, with `src/i18n/ui.ts`, `src/data/domaines.ts` and `src/lib` where they hold a label), and where each goes. A label is the text of a control, a heading, a tab, an `aria-label` or `title`, a note or an empty state; the running prose of a page and the course's own text are not labels (last section). The apostrophes are straight in the pack: the site's typography pass (`typo-fr.ts`) curls them, as it did on the old site.
 
-## In the pack (`site.*` of `specs/linear-course/lang/fr.yaml`)
+## In the pack: `site.*` of `specs/linear-course/lang/fr.yaml`
 
 | Pack key | French value | Old site file |
 |---|---|---|
@@ -45,8 +45,8 @@ Inventory of every visible label of the frozen site `parcours-po-website` (`src/
 | `site.concept.previous` | Précédent | components/{ConceptsDepliables,Renvoi,Position,Sous,Voisins}.astro, pages/concepts/[num].astro |
 | `site.concept.next` | Suivant | components/{ConceptsDepliables,Renvoi,Position,Sous,Voisins}.astro, pages/concepts/[num].astro |
 | `site.concept.sections` | Sections du concept | components/{ConceptsDepliables,Renvoi,Position,Sous,Voisins}.astro, pages/concepts/[num].astro |
-| `site.concept.neighbours` | Pages voisines | components/{ConceptsDepliables,Renvoi,Position,Sous,Voisins}.astro, pages/concepts/[num].astro |
-| `site.concept.neighbours_shortcut` | Pages voisines, raccourci | components/{ConceptsDepliables,Renvoi,Position,Sous,Voisins}.astro, pages/concepts/[num].astro |
+| `site.concept.adjacent_pages` | Pages voisines | components/{ConceptsDepliables,Renvoi,Position,Sous,Voisins}.astro, pages/concepts/[num].astro |
+| `site.concept.adjacent_pages_shortcut` | Pages voisines, raccourci | components/{ConceptsDepliables,Renvoi,Position,Sous,Voisins}.astro, pages/concepts/[num].astro |
 | `site.concept.read` | Lire le concept {n} : {title} | components/{ConceptsDepliables,Renvoi,Position,Sous,Voisins}.astro, pages/concepts/[num].astro |
 | `site.concept.open_sources` | Ouvrir l'onglet Sources du {kind} {n} | components/{ConceptsDepliables,Renvoi,Position,Sous,Voisins}.astro, pages/concepts/[num].astro |
 | `site.concept.section_link` | Lien vers la section {title} | components/{ConceptsDepliables,Renvoi,Position,Sous,Voisins}.astro, pages/concepts/[num].astro |
@@ -65,7 +65,7 @@ Inventory of every visible label of the frozen site `parcours-po-website` (`src/
 | `site.stances_tab.consensus_intro` | Ce que disent les textes de référence et ce que les praticiens font en général. | components/Ecoles.astro |
 | `site.stances_tab.school_intro` | Des positions défendables, chacune à son auteur : on les pose côte à côte, on ne les fond pas. | components/Ecoles.astro |
 | `site.stances_tab.course_intro` | Ce que ce cours décide, sans source externe : à prendre comme tel. | components/Ecoles.astro |
-| `site.stances_tab.neighbour` | Notion voisine, à ne pas confondre | components/Ecoles.astro |
+| `site.stances_tab.neighbors` | Notion voisine, à ne pas confondre | components/Ecoles.astro |
 | `site.sources_tab.claims` | Affirmations et ce qui a été vérifié | components/Sources.astro |
 | `site.sources_tab.claims_note` | Pour chaque affirmation de la page : la source qui la porte et ce que la lecture de cette source a permis de vérifier. Quand une phrase est une formulation du cours, elle est signalée comme telle. | components/Sources.astro |
 | `site.sources_tab.references` | Références | components/Sources.astro |
@@ -104,6 +104,8 @@ Inventory of every visible label of the frozen site `parcours-po-website` (`src/
 | `site.stances_page.consensus` | Consensus | pages/ecoles.astro, components/Position.astro |
 | `site.stances_page.school` | Choix d'école | pages/ecoles.astro, components/Position.astro |
 | `site.stances_page.course` | Choix du cours | pages/ecoles.astro, components/Position.astro |
+| `site.stances_page.legend_school` | Une position défendable, portée par un auteur ou une école, à côté d'autres : le lecteur voit qui la défend. | pages/ecoles.astro, components/Position.astro |
+| `site.stances_page.legend_course` | Un choix que le cours fait lui-même, sans source externe qui l'impose. | pages/ecoles.astro, components/Position.astro |
 | `site.stances_page.section_title` | {title} ({n}) | pages/ecoles.astro, components/Position.astro |
 | `site.stances_page.intro_consensus` | Groupées par texte de référence ou par pratique. | pages/ecoles.astro, components/Position.astro |
 | `site.stances_page.intro_school` | Rangées par auteur ou par école, posées côte à côte. | pages/ecoles.astro, components/Position.astro |
@@ -129,6 +131,7 @@ Inventory of every visible label of the frozen site `parcours-po-website` (`src/
 | `site.glossary_page.status_none` | Aucun terme | pages/glossaire.astro |
 | `site.glossary_page.status_one` | {n} terme sur {total} | pages/glossaire.astro |
 | `site.glossary_page.status_many` | {n} termes sur {total} | pages/glossaire.astro |
+| `site.glossary_page.avoid_note` | Des mots courants qui brouillent une notion. Le cours leur préfère un terme plus précis. | pages/glossaire.astro |
 | `site.glossary_page.avoid_tag` | À éviter | pages/glossaire.astro |
 | `site.glossary_page.say_instead` | Dire plutôt | pages/glossaire.astro |
 | `site.glossary_page.why` | Pourquoi | pages/glossaire.astro |
@@ -160,23 +163,24 @@ Inventory of every visible label of the frozen site `parcours-po-website` (`src/
 | `site.search.needs_js` | La recherche demande JavaScript. | pages/recherche.astro |
 | `site.search.unavailable` | La recherche est construite avec le site : elle est disponible après `npm run build`, puis `npm run preview`. | pages/recherche.astro |
 
-153 labels.
+156 labels.
 
-## Elsewhere in the pack
+## In the pack, outside `site`
 
-Labels the old site shows that the pack holds outside `site`, because the protocol or the spec already names them:
+Labels the old site shows that the pack holds in a group the protocol or the spec already names. The first six are counted; the last three are the same string as a `site` key (or not a label), so not counted again.
 
-| Pack key | Label | Old site file |
-|---|---|---|
-| `headings.avoid` | « Termes à éviter » (glossary page heading and table of contents entry) | pages/glossaire.astro |
-| `headings.unverified` | « Non vérifié » (sources tab and sources page) | components/Sources.astro, pages/sources.astro |
-| `headings.references` | « Références » (sources tab) | components/Sources.astro |
-| `headings.stances` | « Consensus et choix d'école »: the site's tab is `site.tabs.stances` « Consensus ou école » | SPEC.md 4.3 |
-| `source_types.primary`, `.secondary`, `.marketing` | « primaire », « secondaire », « marketing » (legend of the sources page) | pages/sources.astro |
-| `phrases.domain_title` | « Domaine {n} : {title} » (page titles, previous / next cards, domain links) | lib/lecture.ts, pages/domaines/[n].astro |
-| `phrases.concept_title` | « Concept {n} : {title} » (concept page title) | pages/concepts/[num].astro |
+| Pack key | Label | Old site file | Counted |
+|---|---|---|---|
+| `headings.avoid` | « Termes à éviter » (glossary page heading and table of contents entry) | pages/glossaire.astro | 1 |
+| `source_types.primary`, `.secondary`, `.marketing` | « primaire », « secondaire », « marketing » (legend of the sources page) | pages/sources.astro | 3 |
+| `phrases.domain_title` | « Domaine {n} : {title} » (page titles, previous / next cards, domain links) | lib/lecture.ts, pages/domaines/[n].astro | 1 |
+| `phrases.concept_title` | « Concept {n} : {title} » (concept page title) | pages/concepts/[num].astro | 1 |
+| `headings.unverified` | « Non vérifié »: same as `site.sources_tab.unverified` | components/Sources.astro | 0 |
+| `headings.references` | « Références »: same as `site.sources_tab.references` | components/Sources.astro | 0 |
+| `headings.stances` | not a label of the old site: the tab is `site.tabs.stances` | SPEC.md 4.3 | 0 |
 
-7 entries (not added to the count below: each is a label already counted by its own key or a duplicate of a `site` one).
+6 labels.
+
 ## Not in the pack: the course's own text (32 labels)
 
 These are visible on the old site but belong to the course (its identity, its storyline, its sources) or to pages the new site does not carry. They come from `course.yaml` and the course files, not from the language.
@@ -193,11 +197,11 @@ These are visible on the old site but belong to the course (its identity, its st
 | About page headings (4): « Un cours donné par un agent », « Comment ce site est fait », « Versions », « Licence » | `pages/a-propos.astro` | not carried: the page is the old site's documentation |
 | « Page déplacée », « Cette page est devenue Domaines. » | `components/Redirection.astro` | not carried: redirect pages of old addresses |
 
-Total: 153 labels in the pack + 32 of the course or not carried = **185 labels**.
+Total: 162 labels in the pack (156 in `site`, 6 outside) + 32 of the course or not carried = **194 labels**.
 
 ## Left out on purpose
 
-- Running prose of pages (the home page's lead and the four "doors" descriptions, the "Comment lire une page" paragraphs, the About page, the lead of the domains, glossary and stances pages, the page meta descriptions): page content, not labels.
+- Running prose of pages (the home page's lead and the four "doors" descriptions, the "Comment lire une page" paragraphs, the About page, the lead of the domains, glossary and stances pages, the page meta descriptions): page text, not labels.
 - The two `noindex` developer pages `pages/dev/{composants,sommaire-compact}.astro`.
 - Decorative glyphs (`←`, `→`, `≈`, `×`, `#`), all `aria-hidden`, and the licence address: not language. The site draws its arrows as icons; the pack bans them in course text only.
-- The data files (`data/domaines.ts`, `data/fil-rouge.ts`, `data/glossaire.ts`): the course's content.
+- The data files (`data/domaines.ts`, `data/fil-rouge.ts`, `data/glossaire.ts`): the course's own text.
