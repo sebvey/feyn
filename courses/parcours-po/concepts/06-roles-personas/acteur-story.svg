@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" fill="currentColor" role="img" aria-labelledby="acteur-story-titre acteur-story-desc" font-family="system-ui, sans-serif" font-size="14">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 370" fill="currentColor" role="img" aria-labelledby="acteur-story-titre acteur-story-desc" font-family="system-ui, sans-serif" font-size="14">
   <title id="acteur-story-titre">Deux flèches vers l'acteur de la story</title>
   <desc id="acteur-story-desc">Trois blocs de la phrase de la story : la case « En tant que » vide, le « je veux » et le « afin de ». Une flèche « agit » et une flèche « y gagne » arrivent sur le régulateur, dont le rôle s'écrit dans la case. L'agent d'accueil n'a aucune flèche.</desc>
   <g id="6a-case-en-tant-que" class="muted">
@@ -22,27 +22,30 @@
     <rect x="400" y="170" width="180" height="60" rx="6" fill="none" stroke="currentColor" stroke-width="3"/>
     <text x="490" y="206" text-anchor="middle" fill="currentColor">le régulateur</text>
   </g>
-  <g id="6a-role-accueil" class="muted">
-    <rect x="400" y="290" width="180" height="60" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <g id="6a-role-accueil" class="secondary">
+    <rect x="400" y="290" width="180" height="60" rx="6" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.5"/>
     <text x="490" y="316" text-anchor="middle" fill="currentColor">l'agent d'accueil</text>
     <text x="490" y="338" text-anchor="middle" fill="currentColor">aucune flèche</text>
   </g>
   <g id="6a-fleche-agit" class="primary">
     <path d="M270 172 L388 184" fill="none" stroke="currentColor" stroke-width="2.5"/>
     <polygon points="398,185 385.6,188.8 386.6,178.8" fill="currentColor"/>
+  </g>
+  <g id="6a-fleche-agit-texte" class="muted">
     <text x="318" y="164" fill="currentColor">agit</text>
   </g>
   <g id="6a-fleche-gagne" class="primary">
     <path d="M270 292 L388 227" fill="none" stroke="currentColor" stroke-width="2.5"/>
     <polygon points="398,222 389.9,232.2 385.1,223.4" fill="currentColor"/>
+  </g>
+  <g id="6a-fleche-gagne-texte" class="muted">
     <text x="306" y="300" fill="currentColor">y gagne</text>
   </g>
   <g id="6a-fleche-role" class="primary">
     <path d="M490 170 V55 H284" fill="none" stroke="currentColor" stroke-width="2.5"/>
     <polygon points="272,55 284,50 284,60" fill="currentColor"/>
-    <text x="290" y="44" fill="currentColor">son rôle s'écrit ici</text>
   </g>
-  <g id="6a-note-regle" class="muted">
-    <text x="20" y="392" fill="currentColor">Deux flèches sur le même rôle : c'est l'acteur.</text>
+  <g id="6a-fleche-role-texte" class="muted">
+    <text x="290" y="44" fill="currentColor">son rôle s'écrit ici</text>
   </g>
 </svg>

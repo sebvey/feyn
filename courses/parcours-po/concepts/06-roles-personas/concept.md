@@ -28,7 +28,7 @@ neighbors:
 diagrams:
   - file: acteur-story.svg
     title: "Deux flèches vers l'acteur de la story"
-    caption: "L'acteur d'une story. La case « En tant que » est vide ; du « je veux » part une flèche vers celui qui agit, du « afin de » une flèche vers celui qui y gagne. Les deux arrivent sur le même rôle, qui s'écrit dans la case. Un autre rôle, l'agent d'accueil, n'a aucune flèche : il n'est pas l'acteur de cette story."
+    caption: "Du « je veux » et du « afin de », deux flèches arrivent sur le même rôle, le régulateur, qui s'écrit dans la case « En tant que » : c'est l'acteur ; l'agent d'accueil n'en reçoit aucune."
     subconcept: 6a
 ---
 
@@ -63,7 +63,7 @@ Dans la phrase, on écrit le rôle, jamais le prénom d'une personne : la story 
 
 *Un persona aide à se représenter un rôle, à condition de venir d'utilisateurs réels.*
 
-Un persona est un **portrait fictif et réaliste d'un rôle** : un prénom, des objectifs, des comportements. C'est un choix d'école [école] d'Alan Cooper, venu du design d'interaction, absent du Scrum Guide et discuté entre praticiens (on leur reproche des preuves surtout anecdotiques et un risque de stéréotype). Aucune équipe n'est obligée d'en avoir.
+Un persona est un **portrait fictif et réaliste d'un rôle** : un prénom, des objectifs, des comportements. C'est un choix d'école d'Alan Cooper [école], venu du design d'interaction, absent du Scrum Guide et discuté entre praticiens (on leur reproche des preuves surtout anecdotiques et un risque de stéréotype). Aucune équipe n'est obligée d'en avoir.
 
 Il se construit **à partir d'utilisateurs réels** interrogés, pas de l'imagination de l'équipe : le persona est fictif par son prénom, pas par ses traits. Chaque trait doit pouvoir répondre à la question « d'où vient-il ? ». Un portrait tiré des seules hypothèses de l'équipe (un proto-persona) n'en est pas un. C'est ce qui sépare un persona d'un utilisateur réel : on interroge un technicien en chair et en os ; un persona, lui, résume des utilisateurs réels.
 
@@ -73,7 +73,7 @@ Le persona sert à la **conversation** et aux **exemples** : il rend le rôle co
 
 - **Un rôle qui se contente de construire** : l'acteur agit et y gagne, il ne se limite pas à fabriquer le livrable. Un consommateur de données reste un utilisateur (choix du cours, concept 1).
 - **La valeur d'un autre rôle dans le « afin de »** (un responsable qui écrit « … afin que mes équipes gagnent du temps », exemple inventé) : le « afin de » dit le gain de l'acteur ; sinon, on change d'acteur ou on cherche sa propre raison (concept 5).
-- **Deviner l'acteur** : le PO le vérifie auprès des utilisateurs. Il ne choisit pas l'acteur sur le papier (qui fait l'action, qui y gagne).
+- **Deviner l'acteur** : le PO le vérifie auprès des utilisateurs (qui fait l'action, qui y gagne). Il ne choisit pas l'acteur sur le papier.
 - **Prendre celui qui demande pour l'acteur** : la demande vient souvent d'un responsable, le besoin est parfois celui de son équipe.
 - **« En tant qu'utilisateur » par défaut** : il fait manquer des stories quand les rôles ont des raisons différentes. Il suffit quand tous ont le même besoin pour la même raison.
 - **Un prénom à la place du rôle** (« en tant que Julie », exemple inventé) : la story sert un rôle ; la personne nommée est celle qu'on interroge.

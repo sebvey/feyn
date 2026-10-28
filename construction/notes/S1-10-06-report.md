@@ -7,11 +7,11 @@ Old files: `parcours-po/course/concepts/06-roles-personas.md` (CF), `parcours-po
 
 | checks | target existed | old diagrams | new diagrams | captions of more than one sentence |
 |---|---|---|---|---|
-| pass | no | 1 | 1 | 1 |
+| pass | no | 1 | 1 | 0 |
 
 Result: **passed**. checks is read in code from the output below, which the check agent returns; target existed is read in code from the listing below, which the scope agent returns. The new concept is not compared with the old one (rule D on #23): the fresh-agent review judges it against SPEC.md and PROTOCOL.md.
 
-Captions of more than one sentence (SPEC.md 7.2, principle 1: a caption that needs two sentences means two diagrams): acteur-story.svg (4 sentences). Flagged for the review, not refused.
+Captions of more than one sentence: none (the review's fix: the caption is now one sentence).
 
 ## Target before the run
 
@@ -41,7 +41,7 @@ Its sentences, where the inventory sends them (M11):
 #### acteur-story.svg
 
 - Title: Deux flèches vers l'acteur de la story
-- Caption: L'acteur d'une story. La case « En tant que » est vide ; du « je veux » part une flèche vers celui qui agit, du « afin de » une flèche vers celui qui y gagne. Les deux arrivent sur le même rôle, qui s'écrit dans la case. Un autre rôle, l'agent d'accueil, n'a aucune flèche : il n'est pas l'acteur de cette story. (**4 sentences**: SPEC.md 7.2, principle 1)
+- Caption: Du « je veux » et du « afin de », deux flèches arrivent sur le même rôle, le régulateur, qui s'écrit dans la case « En tant que » : c'est l'acteur ; l'agent d'accueil n'en reçoit aucune.
 - Sub-concept: 6a
 - Idea: « Les deux arrivent sur le même rôle, qui s'écrit dans la case. » (MDX « L'essentiel » (Figure legende))
 
@@ -52,7 +52,6 @@ Its sentences, where the inventory sends them (M11):
 | E3 | le bloc « afin de » de la phrase de la story, qui dit le gain | « afin de », « y aller avant qu'elles soient vides » | context | none |
 | E4 | le rôle qui fait l'action du « je veux » et y gagne ce que dit le « afin de » : l'acteur de la story | « le régulateur » | subject | none |
 | E5 | un autre rôle, qui n'a aucune flèche et n'est pas l'acteur de cette story | « l'agent d'accueil », « aucune flèche » | contrast | none |
-| E6 | la note qui donne la règle de lecture : deux flèches sur le même rôle désignent l'acteur | « Deux flèches sur le même rôle : c'est l'acteur. » | text | none |
 
 Relations:
 - E2 vers E4 : une flèche, celui qui agit, légendée « agit »

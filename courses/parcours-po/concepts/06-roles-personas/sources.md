@@ -4,7 +4,7 @@ choix de l'acteur relève donc de recommandations d'auteur (rôles utilisateurs,
 « usage-centered design »), de choix du cours ou de choix d'école (personas, Cooper), pas du consensus Scrum. Les
 faits du fil rouge (Théo, Maud, Abba, tournée de réparation, un tiers des abonnés avec un
 téléphone basique) sont inventés : ils n'ont pas de source. Les sections entre parenthèses sont
-celles du modèle de fichier de concept.
+celles de `concept.md` ou de `teaching.md`.
 
 ## Affirmations
 
@@ -33,9 +33,9 @@ celles du modèle de fichier de concept.
 | Un persona est fictif par son identité, pas par ses traits : lui prêter un besoin qu'aucun utilisateur n'a exprimé, c'est inventer un utilisateur ; un utilisateur réel (Théo) n'est pas un persona (6b, banque « Abba, on lui fait dire ce qu'on veut ? », Pièges) | [S6], [S7] en partie | Déduit de la définition (« hypothetical archetypes », Cooper [S6] ; construit à partir d'entretiens ou d'enquêtes, Wikipédia [S7], qui distingue le « proto-persona » fait d'hypothèses de l'équipe). La formulation est celle du cours | école |
 | Le trait qu'Anna veut ajouter (« une disponibilité vieille d'une heure ») : demander d'où vient chaque trait, le vérifier auprès d'abonnés sans l'appli (banque « Le trait qu'Anna veut ajouter », ajoutée après le test du lot) | [S7] en partie | Même appui que la ligne précédente (persona construit à partir d'entretiens ou d'enquêtes). Le trait est une proposition d'exercice, pas un fait du fil rouge ; la fraîcheur visée (moins de 15 minutes) est un fait fixé du fil rouge | école |
 | Une story peut garder un rôle (« en tant qu'abonné ») même quand l'équipe a un persona (6b, renvoi aux concepts 7 et 8) | aucune | Choix du cours : le persona aide à se représenter le rôle ; il ne remplace pas le rôle dans la phrase. Écrire la story au nom du persona (« En tant qu'Abba… ») est une pratique répandue que Cohn décrirait dans son livre (non lu) : voir « Non vérifié » | cours |
-| Les consommateurs de données sont des utilisateurs (renvoi au concept 1) | sources 01 [S2] | Dehghani, déjà vérifié au concept 1 ; choix du cours appuyé sur un choix d'école, à nommer comme tel | cours |
-| Les trois parties de la story, les 3C, la solution hors du « je veux », le chiffre précis hors de la phrase (renvoi au concept 5) | sources 05 | Cohn, Jeffries, déjà vérifiés au concept 5 |  |
-| Un « je veux » par story (renvoi au concept 4) | sources 04 | Déjà traité au concept 4 |  |
+| Les consommateurs de données sont des utilisateurs (Pièges) | `concepts/01-produit-et-po/sources.md` [S2] | Dehghani, déjà vérifié au concept 1 ; choix du cours appuyé sur un choix d'école, à nommer comme tel | cours |
+| Les trois parties de la story, les 3C, la solution hors du « je veux », le chiffre précis hors de la phrase (Pièges) | `concepts/05-user-story/sources.md` | Cohn, Jeffries, déjà vérifiés au concept 5 |  |
+| Un « je veux » par story (6a) | `concepts/04-hierarchie/sources.md` | Déjà traité au concept 4 |  |
 ## Références
 
 | Réf. | Source (auteur, titre, date) | Lien | Type | Consultée le |
