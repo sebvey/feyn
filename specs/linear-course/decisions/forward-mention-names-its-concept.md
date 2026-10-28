@@ -23,5 +23,12 @@ term is held to it. This amends the Order rule, which refused every earlier use.
 - Rewording the mention with a vaguer term (#203): the course then teaches a wrong word.
 - Excusing the term for the whole concept once it is mentioned with its concept: a later use
   with no announcement would pass unseen.
-- Any word that names a later concept (« l'annexe A2 »): only the concept reference of
-  section 4.5 is read, the form the site links.
+- Counting an annex named by its own word (« l'annexe A2 », « annexe A2d »): not ruled on by
+  the maintainer; only the concept reference of section 4.5 counts here, and the annex word is
+  left to a follow-up decision.
+
+## Known limits
+
+- A « ? » or « ! » before a closing « » » ends the sentence.
+- An abbreviation's period (« p. ex. ») ends the sentence.
+- Sub-concept ids are matched in lower case only (`concept 14b`, not `concept 14B`).

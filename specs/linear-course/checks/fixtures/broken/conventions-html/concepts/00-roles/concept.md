@@ -33,8 +33,8 @@ Le premier rôle décide. Le concept 1 en dépend. [cours]
 
 Le second rôle <b>fait</b>.
 
-Il travaille dans une couche, que le concept 1
-nomme ; une tranche (concepts 1 et 2a) les traverse.
+Il travaille dans une couche, que nomme le
+concept 1 ; une tranche (concepts 1 et 2a) les traverse.
 
 ## 0b La règle
 
