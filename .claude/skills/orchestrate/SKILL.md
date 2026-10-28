@@ -24,11 +24,15 @@ agent before it reaches the maintainer (decision `fresh-agent-review-before-main
 - A decision the issue asks for: did the maintainer accept its counterfactual in this
   conversation? Then the brief gives it verbatim, with the date. Otherwise the contributor
   takes the decision-awaited path (step 4).
-- A Done when that needs an agent-workflow run: a subagent has no Workflow tool. The
-  contributor makes the run possible and stops on a draft with an `Awaiting the orchestrator`
-  section (exact script path and arguments). Ask the maintainer for an explicit go-ahead in
-  the conversation, run it, and resume the contributor with the result; reruns after fixes are
-  part of that validation.
+- A Done when that needs an agent-workflow run: a subagent has no Workflow tool (Claude Code,
+  observed 2026-10-28, #130). The contributor makes the run possible and stops on a draft with
+  an `Awaiting the orchestrator` section (exact script path and arguments): the second use of a
+  draft, an awaited orchestrator run. Ask the maintainer for an explicit go-ahead in the
+  conversation, then run it. Its agents work in the conversation's working directory, so a run
+  that must not see a file runs from a copy of the repo without it (Claude Code, observed
+  2026-10-28, #130). The run and its reruns after fixes come before step 3: the reviewer
+  needs their transcripts. Resume the contributor with the result: it applies it, removes the
+  section and runs `mise exec -- gh pr ready <pr>`; check it.
 
 ## 2. The contributor agent
 
@@ -46,8 +50,10 @@ its title follows `<type>(<area>): <summary>`, the body starts with `Closes #<n>
 A new `Agent` (never the contributor, never resumed from it), `opus`, with the
 [reviewer brief](#reviewer-brief). It reads the PR, not the contributor's reply. A PR with
 checks to rerun (any check or fixture runner: a course, `site/`, `specs/*/checks/`): give the
-reviewer `isolation: "worktree"` too (the brief has it check out the PR head detached), and clean its worktree with steps 6.1,
-6.2 and 6.4 only: it holds no issue branch, so no `/finish after-merge` for it.
+reviewer `isolation: "worktree"` too (the brief has it check out the PR head detached), and
+clean its worktree with steps 6.1, 6.2 and 6.4 only: it holds no issue branch, so no
+`/finish after-merge` for it. A PR whose evidence is an agent-workflow run: give the reviewer
+the run ids `wf_<id>` and their transcript directory.
 
 ## 4. Corrections pass, decision awaited
 
@@ -56,20 +62,21 @@ reviewer `isolation: "worktree"` too (the brief has it check out the PR head det
   updates the PR body. Then check each fixed point yourself in the diff
   (`mise exec -- gh pr diff <pr>`), never on its word, and recheck the sensitive points: a
   counterfactual, a Done when verdict, a command that touches `main` or a remote branch, the
-  title. A correction that rewrote more than the findings named gets a second review (step 3).
+  title. A second review (step 3) whenever the change adds or edits a decision or a check, or
+  goes beyond the findings or the answer.
 - **Decision awaited.** The contributor that leaves a decision to the maintainer opens a draft
   PR, puts `blocked:maintainer` on the issue only, writes an `Awaiting the maintainer` section
   at the top of the body, and stops (`/finish`, step 6). A decision through `/decide` takes
-  this path unless the maintainer accepted its counterfactual beforehand. Relay the question,
+  this path unless the maintainer accepted its counterfactual in the conversation (step 1).
+  Relay the question,
   the options and the recommendation to the maintainer. The maintainer answers with a comment
   on the issue and removes the label; check it is gone
   (`mise exec -- gh issue view <n> --json labels`), then resume the contributor with
   `SendMessage` and the answer: it applies it, removes the section, runs
   `mise exec -- gh pr ready <pr>`. Check the applied answer yourself.
 - **A decision after the hand-over.** The maintainer can refuse or settle a choice while the
-  PR awaits the merge: relay it to the contributor the same way, the maintainer's words quoted,
-  and review again if the change goes beyond the answer. A `/decide` decision whose
-  counterfactual the maintainer accepted in the conversation needs no draft.
+  PR awaits the merge: relay it to the contributor with `SendMessage`, the maintainer's words
+  quoted; the second-review rule above applies.
 
 ## 5. Hand-over to the maintainer
 
@@ -86,13 +93,13 @@ From the main checkout, on `main`:
 1. The worktree: `git worktree list --porcelain` gives its path
    (`.claude/worktrees/agent-<id>`). It is locked while its agent runs
    (`locked claude agent agent-<id>`) (Claude Code, observed 2026-10-28, #128) and unlocked
-   once the agent has finished (Claude Code, observed 2026-10-28, #125). Still locked: stop the
+   once the agent has finished (Claude Code, observed 2026-10-28, #130). Still locked: stop the
    agent (`TaskStop`), then, if needed, `git worktree unlock <path>`.
 2. `git -C <path> status --porcelain` must print nothing; anything printed: stop and show it.
    Then `git worktree remove <path>`. The issue branch is no longer checked out anywhere.
 3. `/finish after-merge` for the issue branch: it confirms the change landed, the Status, and
    deletes the local branch. It may have to set Done itself: the Project's workflow did not
-   (GitHub, observed 2026-10-28, #125).
+   (GitHub, observed 2026-10-28, #130).
 4. `git branch -D worktree-agent-<id>`, the branch the worktree was created on.
    `git worktree list` and `git branch --list 'worktree-agent-*'` show nothing of it left.
 
@@ -130,7 +137,8 @@ recommendation), and stop. You will be resumed with the answer.
 ## An agent-workflow run
 You have no Workflow tool. A Done when that needs a run: make it runnable, open a draft with
 an "Awaiting the orchestrator" section at the top (exact script path and arguments), and stop.
-You will be resumed with the result.
+The orchestrator runs it and resumes you with the result: apply it, remove the section, run
+`mise exec -- gh pr ready <pr>`.
 
 Run the checks that exist (as /finish says). When done, reply with: branch name, PR URL, files
 changed, checks run and their results, and anything you were unsure of. Stay available for a
@@ -142,8 +150,8 @@ corrections pass: review findings may come back to you.
 ```
 You review PR #<pr> (branch <branch>) on feyn, which claims to deliver issue #<n>. You are
 not its contributor: trust nothing in the PR body or in any summary; recount and recheck
-every claim yourself. Read CLAUDE.md, the issue (`mise exec -- gh issue view <n>`) and the files it lists, then the
-PR (`mise exec -- gh pr view <pr>`, `mise exec -- gh pr diff <pr>`); read a file at the PR's
+every claim yourself. Read CLAUDE.md, the issue (`mise exec -- gh issue view <n>`) and the
+files it lists, then the PR (`mise exec -- gh pr view <pr>`, `mise exec -- gh pr diff <pr>`); read a file at the PR's
 head with `git fetch` and `git show origin/<branch>:<path>`. To rerun checks in a worktree,
 `git fetch` then `git switch --detach origin/<branch>` (the branch itself is checked out in
 the contributor's worktree, so `git switch <branch>` fails). Change nothing, push nothing,
@@ -154,9 +162,10 @@ Recheck yourself:
 - each "Done when, verified" line: rerun its command, reread its file; a count, recount it;
 - the checks /finish requires for what the PR touches
   (`mise exec -- gh pr diff <pr> --name-only`), rerun them;
-- evidence from an agent-workflow run: read the run's transcripts
-  (`~/.claude/projects/<project>/<session>/subagents/workflows/wf_*/`) and check what its
-  agents actually read and did, not only what they output;
+- evidence from an agent-workflow run
+  (<run ids wf_<id> and transcript directory, or "none">): read the run's transcripts and check what its agents actually read and did, not only what
+  they output. The directory moves with the conversation's working directory (Claude Code,
+  observed 2026-10-28, #130); not found: `find ~/.claude/projects -type d -name 'wf_<id>*'`;
 - reserved terms of docs/glossary.md and the words it bans; the rules of CLAUDE.md
   (language, no em-dashes in French, title `<type>(<area>): <summary>`, `Closes #<n>`, no
   signature line);
