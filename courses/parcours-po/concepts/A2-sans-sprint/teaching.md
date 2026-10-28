@@ -168,15 +168,14 @@ propositions d'exercice, pas des faits du fil rouge : l'équipe vélos reste en 
 
 ## Schéma
 
-Un seul dessin pour l'annexe, celui de A2a ; A2b, A2c et A2d n'en déclarent pas, leur image
-reste du texte pour l'enseignant, ci-dessous.
+Un seul dessin pour l'annexe, celui de A2a. A2b n'a pas d'image ; A2c et A2d n'en déclarent
+pas, leur image reste du texte pour l'enseignant, ci-dessous.
 
 **A2a, le tableau de flux (tableau-de-flux.svg).** De gauche à droite : le backlog, ordonné par
 le PO, avec deux cartes « prêt » et une carte « pas prêt » en pointillé ; une ligne verticale
-« début du flux : DoR » ; la colonne « En cours », « limite : 3 places », dont deux places
+« début du flux : DoR » ; la colonne « En cours », « limite », dont deux places
 occupées et une « place libre ». Une flèche tire la première carte prête vers la place libre ; la
-carte pas prête (cas inventé) reste dans le backlog, avant la ligne. L'image à dire de vive
-voix : on tire quand une place se libère ; la DoR garde le début du flux, la DoD la fin.
+carte pas prête (cas inventé) reste dans le backlog, avant la ligne.
 
 **A2c, la fin du flux (texte, pas de dessin).** À droite de « En cours », une colonne
 « Fini (DoD) », qui mène à l'incrément livré : un élément fini peut partir sans attendre de

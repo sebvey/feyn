@@ -46,15 +46,15 @@ En flux continu, il n'y a pas de sprint : l'équipe commence un élément quand 
 
 Une équipe qui garde ses sprints et y ajoute des pratiques de flux fait du Kanban dans Scrum : le sprint reste, et le reste du cours s'applique tel quel. Cette annexe concerne seulement le flux sans sprint.
 
-![Un tableau de flux : on tire un élément quand une place se libère](tableau-de-flux.svg)
-
 ## A2a Tirer l'élément, la DoR au début du flux
 
 *Sans Sprint Planning, une place libre sous la limite déclenche le prochain élément.*
 
 Sans sprint, aucun Sprint Planning ne choisit le travail de deux semaines. L'équipe fixe combien d'éléments peuvent être en cours à la fois, c'est-à-dire commencés et pas finis, et en commence un nouveau quand le nombre repasse sous cette limite. Le *Kanban Guide* lui fait écrire sa Definition of Workflow, qui dit entre autres où commence un élément, où il finit, et à quelle règle il franchit chaque passage.
 
-La Definition of Ready (DoR), que l'équipe écrit, liste les conditions qu'un élément remplit avant qu'on le commence [école] : elle est absente du Scrum Guide. C'est elle qui sert de règle pour franchir le début du flux [cours]. Kanban University appelle ce moment le point d'engagement [école]. Le PO a ordonné le backlog, les Developers tirent l'élément suivant [cours]. Pour la DoR elle-même, voir concept 11b.
+La Definition of Ready (DoR), que l'équipe écrit, liste les conditions qu'un élément remplit avant qu'on le commence [école] : elle est absente du Scrum Guide. C'est elle qui sert de règle pour franchir le début du flux, et la DoD pour en sortir [cours]. Kanban University appelle ce moment le point d'engagement [école]. Le PO a ordonné le backlog, les Developers tirent l'élément suivant [cours]. Pour la DoR elle-même, voir concept 11b.
+
+![Un tableau de flux : on tire un élément quand une place se libère](tableau-de-flux.svg)
 
 ## A2b Sans objectif de sprint, ce qui donne la direction
 
@@ -76,7 +76,7 @@ Ce qui reste nécessaire : inspecter ce qui est livré avec les parties prenante
 
 *Sans prévision par sprint, le temps de cycle donne une durée et une probabilité, pas une promesse.*
 
-Parmi les quatre mesures que le *Kanban Guide* fait suivre (travail en cours, débit, âge d'un élément, temps de cycle), le temps de cycle va du début d'un élément à sa fin. Sur son historique, l'équipe en tire une prévision en deux parties, une durée et une probabilité : c'est son attente de niveau de service. Le débit est l'une des mesures suivies, pas la base de cette prévision. Le guide donne cet exemple : « 85 % des éléments sont finis en huit jours ou moins ».
+Parmi les quatre mesures que le *Kanban Guide* fait suivre (travail en cours, débit, âge d'un élément, temps de cycle), le temps de cycle va du début d'un élément à sa fin. Sur son historique, l'équipe en tire une prévision en deux parties, une durée et une probabilité : c'est son attente de niveau de service. Le débit, le nombre d'éléments finis par unité de temps, est l'une des mesures suivies, pas la base de cette prévision. Le guide donne cet exemple : « 85 % des éléments sont finis en huit jours ou moins ».
 
 Deux précisions. La durée se compte à partir du début d'un élément, pas de la demande ni d'aujourd'hui : un élément qui n'a pas commencé n'a pas encore de temps de cycle. Et la probabilité dit qu'une part des éléments prend plus longtemps : ce n'est pas une promesse. La prévision vient des Developers et de leurs mesures, pas d'une date que le PO invente [cours] ; elle se revoit à mesure qu'on avance. C'est le même principe que pour une prévision en sprints (concept 16c).
 
