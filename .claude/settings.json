@@ -20,7 +20,6 @@
       "Bash(git switch -c:*)",
       "Bash(mise exec -- gh issue create:*)",
       "Bash(mise exec -- gh issue edit:*)",
-      "Bash(mise exec -- gh issue develop:*)",
       "Bash(mise exec -- gh project item-add:*)",
       "Bash(mise exec -- gh project item-edit:*)",
       "Bash(mise exec -- gh pr create:*)"

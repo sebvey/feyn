@@ -20,7 +20,8 @@ disagree, the issue wins and the PR says why it deviates. The Done when is not e
 `/start`; a change to it amends the open PR's body as well.
 
 `Closes #n` when the PR ends the issue; `Refs #n` when the PR is one step of it (the issue
-stays open and its Development section shows nothing: link the PR by hand if needed).
+stays open and its Development section shows nothing; never link the PR there by hand: a
+linked PR closes its issue at the merge, decision `no-branch-link`).
 
 ## Consequences
 
@@ -28,4 +29,6 @@ stays open and its Development section shows nothing: link the PR by hand if nee
   issue's statements, not to proof lines the contributor chose.
 - Amended 2026-10-28 (#123): the PR gave each statement with its verdict and proof; it now
   gives the counts and a line per `not met` or `deviation`.
+- Amended 2026-10-28 (#71): a `Refs` PR could be linked by hand in the issue's Development
+  section; a linked PR closes its issue at the merge (GitHub, documented 2026-10-28, #71).
 - Issue #61 makes `/finish` write the verdicts and link the PR to its issue and branch.

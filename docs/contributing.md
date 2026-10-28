@@ -17,7 +17,8 @@ at the end of stage 4. Why: decision `monorepo-feyn`.
 GitHub Issues is the only backlog; nothing is tracked in a local file. An issue has three
 sections: Observation (what was seen, where), To do, Done when (statements a reviewer can
 verify by reading a file or running a command). `/ticket <observation>` writes it with its
-labels, sets its blocked-by links and puts it in the Project; `/ticket <n>` summarises one, its
+labels and sets its blocked-by links; the Project's workflows add it to the Project in Backlog,
+and `/ticket` sets Ready when the maintainer decided the work; `/ticket <n>` summarises one, its
 links included. Why: decisions `issue-defines-pr-verifies`, `blocked-by-links-for-dependencies`.
 
 ## An issue becomes a branch
@@ -25,9 +26,10 @@ links included. Why: decisions `issue-defines-pr-verifies`, `blocked-by-links-fo
 `/start <n>` takes the issue: it refuses one that carries `blocked:maintainer` or has an open
 blocker (decision `blocked-by-links-for-dependencies`), creates
 `<type>/<n>-<slug>` from an up-to-date `main`, sets its Status to In progress, and restates
-the Done when as the contract the work is held to. It creates the branch with
-`gh issue develop`, so the issue's Development section lists the branch and any PR opened from
-it. One branch per issue; commits on it are free-form, only the PR title survives the squash. Why: decision `three-channels`.
+the Done when as the contract the work is held to. It creates the branch with git, not linked
+to the issue: the PR's `Closes #n` links them. One branch per issue; commits on it are
+free-form, only the PR title survives the squash. Why: decisions `three-channels`,
+`no-branch-link`.
 
 ## A branch becomes a pull request
 
@@ -39,9 +41,7 @@ limits of `/finish` step 5, so that the maintainer gets back into the subject fr
 alone. Checks counts the Done when verdicts (`met`, `not met`, `deviation`) without restating
 the statements, and says why for each `not met` or `deviation`; on a PR that goes through
 `/orchestrate`, the fresh-agent reviewer reruns every statement. The PR
-never redefines the Done when; the issue wins, and the PR says why it deviates. A `Refs` PR
-first unlinks the branch from the issue (a linked branch closes the issue at the merge
-whatever the body says). Once the PR is open, `/finish` checks that the issue lists it (a
+never redefines the Done when; the issue wins, and the PR says why it deviates. Once the PR is open, `/finish` checks that the issue lists it (a
 `Refs` PR: it lists nothing). A branch that leaves a decision to
 the maintainer opens as a draft PR, with `blocked:maintainer` on its issue only, and an
 "Awaiting the maintainer" section above `Closes #n`. The maintainer answers with a comment
@@ -49,7 +49,8 @@ and removes the label from the issue; only then does the agent apply the answer,
 section and mark the PR ready. Nothing lands on `main` without a PR, the author never merges
 their own, and `main` is never force-pushed. After the
 merge, `/finish after-merge` confirms the change landed, checks the issue's Status is Done
-(and sets it if the Project did not; a `Refs` issue stays open and In progress), and deletes
+(the Project's workflow sets it; `/finish` sets it only when that workflow is off; a `Refs`
+issue stays open and In progress), and deletes
 the local branch. `/orchestrate <n>` runs this whole cycle from one work session: a
 contributor agent per issue in its own worktree, a review by a fresh agent before the PR
 reaches the maintainer, then the clean-up of the worktree after the merge. Why: decisions
@@ -59,10 +60,11 @@ reaches the maintainer, then the clean-up of the worktree after the merge. Why: 
 
 - Every issue is an item of the Project (the GitHub Project "feyn", number 4), and its Status
   says where it stands: Backlog (proposed, to triage), Ready (decided, free to take),
-  In progress (a branch exists), Done (closed by a PR). One at a time. The skills set it:
-  `/ticket` Backlog or Ready, `/start` In progress, `/finish after-merge` Done if the Project's
-  own workflow did not. There are no state labels. Why: decision
-  `project-status-not-state-labels`.
+  In progress (a branch exists), Done (closed; the close reason stays on GitHub). One at a
+  time. The Project's workflows add every open issue, set Backlog when it is added and Done
+  when it closes; the skills set the rest: `/ticket` Ready when the maintainer decided,
+  `/start` In progress. `.claude/skills/ticket/project.md` says who sets each Status. There
+  are no state labels. Why: decision `project-status-not-state-labels`.
 - `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is
   a draft, which keeps it from being merged); on top of the Status, never instead of it; only
   the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.

@@ -1,6 +1,6 @@
 ---
 name: start
-description: Take GitHub issue n on feyn - refuse if a maintainer decision is awaited or an issue that blocks it is still open, create the branch <type>/<n>-<slug> from an up-to-date main, linked to the issue, set its Status to In progress, restate the Done when and lay out the plan. Use for "/start <n>", "take issue 12", "let's do #12".
+description: Take GitHub issue n on feyn - refuse if a maintainer decision is awaited or an issue that blocks it is still open, create the branch <type>/<n>-<slug> from an up-to-date main, set its Status to In progress, restate the Done when and lay out the plan. Use for "/start <n>", "take issue 12", "let's do #12".
 argument-hint: "<issue number>"
 ---
 
@@ -40,25 +40,20 @@ Name: `<type>/<n>-<slug>`, where `<type>` is the issue's `type:` label without i
 (`bug`, `course`, `improvement`, `decision`) and `<slug>` is three to five words of the title,
 lowercase, joined by hyphens (`course/42-concept-9-cases`).
 
-`mise exec -- gh issue develop <n> --name <type>/<n>-<slug> --base main --checkout`
+`git switch -c <type>/<n>-<slug> origin/main`, then `git push -u origin <type>/<n>-<slug>`.
 
-This creates the branch on GitHub, linked to the issue, and checks it out: the issue's
-Development section then lists the branch, and the PR opened from it. A PR from a linked
-branch closes the issue at the merge even when it says `Refs` (GitHub, observed 2026-10-27, #24).
-`/finish` unlinks the branch first for a `Refs` PR.
+The branch is not linked to the issue: the PR's `Closes #<n>` links them, and a `Refs #<n>`
+PR leaves the issue open (decision `no-branch-link`).
 
-A branch of that name that already exists (`mise exec -- gh issue develop --list <n>` shows
-the linked ones, `git branch --list "*/<n>-*"` the local ones): switch to it and
-say so, do not create a second one.
+A branch for the issue that already exists (`git branch --list "*/<n>-*"` the local ones,
+`git ls-remote --heads origin "*/<n>-*"` the remote ones): switch to it and say so, do not
+create a second one.
 
 ## 4. Mark it in progress
 
-Set the Status to In progress ([project.md](../ticket/project.md)):
-
-`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "In progress"`
-
-An issue that is not in the Project yet (`projectItems` empty) is added first:
-`mise exec -- gh project item-add 4 --owner sebvey --url <issue url>`.
+Set the Status to In progress ([project.md](../ticket/project.md), "Commands"): no workflow
+fires on a branch. An issue not in the Project yet (`projectItems` empty) is added first, same
+place.
 
 ## 5. Restate and plan
 
