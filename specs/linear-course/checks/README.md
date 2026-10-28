@@ -38,7 +38,7 @@ One script per id, `checks/<id>.js`, exporting `run(ctx)`; `check-course` loads 
 | `svg-contract` | `svg-contract.js` | every diagram against the drawing contract; declared and present diagrams (4.1, 7.1) |
 | `sources` | `sources.js` | reference ids, citations, claims, paths (4.1, 4.4) |
 | `course-files` | `course-files.js` | `plan.md` (« Public cible », « Accueil »), `glossary.md`, `CHANGELOG.md`, domain files (5, 6) |
-| `glossary-order` | `glossary-order.js` | no `concept.md` uses a term before the concept that introduces it (6) |
+| `glossary-order` | `glossary-order.js` | no `concept.md` uses a term before the concept that introduces it, except in a sentence that names that concept (6) |
 | `domain-first-sentence` | `domain-first-sentence.js` | first sentence of each paragraph of « Le fil des concepts » stands alone (5) |
 | `typography` | `typography.js` | no banned character of the language pack in course text (2) |
 | `language-pack-keys` | `language-pack-keys.js` | every key of section 9 and of `PROTOCOL.md` exists in the course's pack (9) |

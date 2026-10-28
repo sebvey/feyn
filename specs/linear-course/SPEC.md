@@ -314,7 +314,16 @@ characters of the lead, and does not open with a word of the language pack's
   allowed. The site reads the first table as is.
   **Order** (`glossary-order`): the `concept.md` of a concept does not use a term (the term
   cell, without its parenthesis, whole word, case ignored) introduced by a concept that comes
-  later in course order.
+  later in course order, except in a **forward mention**: a use whose sentence names the
+  introducing concept (decision `forward-mention-names-its-concept`). The introducing concept is
+  the first of the « Concept » cell. The sentence names it by a concept reference (section 4.5:
+  `concept 12`, `(concept 13)`, `concepts 6 et 7`, `concept A1`) whose list holds its number or
+  the id of one of its sub-concepts (`concept 14b`); another concept named, or a word other than
+  `references.concept` and `references.concepts` (« l'annexe A2 »), does not name it. A
+  sentence is read in the body of `concept.md` (the frontmatter and fenced code are not read):
+  it ends at `.`, `!` or `?` followed by a blank or by the end of its block, and never crosses a
+  block, a block being a paragraph, a heading, one list item with its continuation lines, or one
+  table cell. Every use of the term in the concept is held to it, not only the first.
 - **`storyline.md`**: the storyline, free prose in the course language, read by the teacher and
   shown by the site. The cases take their actors and facts from it, without contradicting it
   (review).
@@ -442,7 +451,7 @@ non-zero exit on any failure, `--only <id>`), locally and in CI.
 | `svg-contract` | every diagram against the drawing contract; declared and present diagrams match | 4.1, 7.1 |
 | `sources` | reference ids, citations, claims, paths | 4.1, 4.4 |
 | `course-files` | `plan.md` (« Public cible », « Accueil » and its questions), `glossary.md`, `CHANGELOG.md`, domain files: presence, frontmatter, sections, leads | 5, 6 |
-| `glossary-order` | no term used before the concept that introduces it | 6 |
+| `glossary-order` | no term used before the concept that introduces it, except in a sentence that names that concept | 6 |
 | `domain-first-sentence` | the first sentence of each paragraph of « Le fil des concepts » stands alone | 5 |
 | `typography` | no banned character of the language pack in course text | 2 |
 | `language-pack-keys` | every key of section 9 and of `PROTOCOL.md` exists in the course's language pack | 9 |

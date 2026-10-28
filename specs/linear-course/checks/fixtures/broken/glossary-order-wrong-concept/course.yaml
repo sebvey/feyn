@@ -1,0 +1,73 @@
+id: glossary-order-wrong-concept
+spec: linear-course@1
+language: fr
+title: "Un cours minimal"
+subtitle: "Pour les checks"
+audience: "Une personne qui découvre la livraison d'un produit en équipe."
+storyline: storyline.md
+glossary: glossary.md
+annexes: [A1]
+domains:
+  - number: 1
+    slug: bases
+    title: "Les bases"
+    objective: "Nommer les rôles et les couches."
+    duration_min: 20
+    file: domains/1-bases.md
+    concepts: [0, 1]
+  - number: 2
+    slug: decoupage
+    title: "Le découpage"
+    objective: "Découper un besoin."
+    duration_min: 10
+    file: domains/2-decoupage.md
+    concepts: [2]
+concepts:
+  - number: 0
+    slug: roles
+    title: "Les rôles"
+    objective: "nommer les rôles de l'équipe"
+    prerequisites: []
+    duration_min: 10
+    dir: concepts/00-roles
+    subconcepts:
+      - id: 0a
+        title: "Les deux rôles"
+        children:
+          - id: 0a1
+            title: "Le premier rôle"
+          - id: 0a2
+            title: "Le second rôle"
+      - id: 0b
+        title: "La règle"
+        messages: 2
+  - number: 1
+    slug: couches
+    title: "Les couches"
+    objective: "nommer les couches d'un produit"
+    prerequisites: [0]
+    duration_min: 10
+    dir: concepts/01-couches
+    subconcepts:
+      - id: 1a
+        title: "Les trois couches"
+  - number: 2
+    slug: tranches
+    title: "Les tranches"
+    objective: "découper un besoin en tranches"
+    prerequisites: [1]
+    duration_min: 10
+    dir: concepts/02-tranches
+    subconcepts:
+      - id: 2a
+        title: "Une tranche"
+  - number: A1
+    slug: lexique
+    title: "Le lexique"
+    objective: "retrouver un mot du cours"
+    prerequisites: []
+    duration_min: 10
+    dir: concepts/A1-lexique
+    subconcepts:
+      - id: A1a
+        title: "Les mots"
