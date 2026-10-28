@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 530" fill="currentColor" font-family="system-ui, sans-serif" role="img" aria-labelledby="six-lettres-invest-titre six-lettres-invest-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 495" fill="currentColor" font-family="system-ui, sans-serif" role="img" aria-labelledby="six-lettres-invest-titre six-lettres-invest-desc">
   <title id="six-lettres-invest-titre">Les six lettres d'INVEST</title>
   <desc id="six-lettres-invest-desc">Six lettres en rang, I, N, V cochées, E, S, T marquées d'un point d'interrogation. Les trois lettres douteuses pointent vers un seul mot de la phrase d'une story, rapidement. L'utilisateur concerné précise le mot avant le sprint, alors E, S et T se tranchent.</desc>
 
   <g id="7a1-lettres-tenues" class="secondary" text-anchor="middle">
-    <rect x="14" y="10" width="92" height="156" rx="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
-    <rect x="110" y="10" width="92" height="156" rx="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
-    <rect x="206" y="10" width="92" height="156" rx="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2"/>
+    <rect x="14" y="10" width="92" height="156" rx="6" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity="0.6"/>
+    <rect x="110" y="10" width="92" height="156" rx="6" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity="0.6"/>
+    <rect x="206" y="10" width="92" height="156" rx="6" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity="0.6"/>
     <g class="muted">
       <text x="60" y="54" font-size="32" font-weight="bold">I</text>
       <text x="60" y="82" font-size="14">Independent</text>
@@ -26,9 +26,9 @@
   </g>
 
   <g id="7a1-lettres-douteuses" class="primary" text-anchor="middle">
-    <rect x="302" y="10" width="92" height="156" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="7 5"/>
-    <rect x="398" y="10" width="92" height="156" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="7 5"/>
-    <rect x="494" y="10" width="92" height="156" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <rect x="302" y="10" width="92" height="156" rx="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <rect x="398" y="10" width="92" height="156" rx="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <rect x="494" y="10" width="92" height="156" rx="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="2.5" stroke-dasharray="7 5"/>
     <text x="348" y="54" font-size="32" font-weight="bold">E</text>
     <text x="348" y="82" font-size="14">Estimable</text>
     <text x="444" y="54" font-size="32" font-weight="bold">S</text>
@@ -49,12 +49,12 @@
   </g>
 
   <g id="7a2-fleches-vers-le-mot" class="primary" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity="0.6">
-    <path d="M348 170 L432 270"/>
-    <path d="M444 170 L446 270"/>
-    <path d="M540 170 L462 270"/>
-    <path d="M425 258 L432 272 L443 262" stroke-linejoin="round"/>
-    <path d="M440 257 L446 272 L452 257" stroke-linejoin="round"/>
-    <path d="M472 260 L462 272 L477 270" stroke-linejoin="round"/>
+    <path d="M348 170 L432 268"/>
+    <path d="M444 170 L446 268"/>
+    <path d="M540 170 L462 268"/>
+    <path d="M420.5 262 L432 268 L428.1 255.6" stroke-linejoin="round"/>
+    <path d="M441 256 L446 268 L451 256" stroke-linejoin="round"/>
+    <path d="M473.4 261.7 L462 268 L465.6 255.5" stroke-linejoin="round"/>
   </g>
 
   <g id="7a2-phrase-exemple" class="muted" font-size="16">
@@ -81,10 +81,5 @@
   <g id="7a2-resultat-tranche" class="muted">
     <path d="M300 432 L300 456 M293 448 L300 458 L307 448" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity="0.6" stroke-linejoin="round"/>
     <text x="300" y="482" text-anchor="middle" font-size="16">alors E, S et T se tranchent</text>
-  </g>
-
-  <g id="7a1-rappel-origine" class="muted">
-    <rect x="14" y="496" width="572" height="28" rx="4" fill="currentColor" fill-opacity="0.1"/>
-    <text x="300" y="515" text-anchor="middle" font-size="14">INVEST, Wake, 2003 : un aide-mémoire, absent du Scrum Guide</text>
   </g>
 </svg>

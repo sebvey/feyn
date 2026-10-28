@@ -189,5 +189,4 @@ rapidement … »). Le mot « rapidement » est surligné dans la phrase ; trois
 vers les cases E, S et T, en rouge, comme trois branches sur une même racine ; I, N, V en vert.
 Deuxième état, à droite : « rapidement » précisé par l'utilisateur concerné, avant le sprint ;
 alors seulement les trois cases passent au vert. Légende : « plusieurs
-lettres en rouge : cherche le mot dont elles dépendent ». En bandeau : « INVEST, Wake 2003 :
-un aide-mémoire, absent du Scrum Guide ».
+lettres en rouge : cherche le mot dont elles dépendent ».

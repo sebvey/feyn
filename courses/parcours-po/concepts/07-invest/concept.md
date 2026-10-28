@@ -79,11 +79,11 @@ Exemple inventé pour l'illustration : un régulateur consulte une vue depuis sa
 ## Pièges
 
 - **Cocher E et S « OK » sans pouvoir le vérifier** : si plusieurs lettres dépendent d'un même mot flou, c'est ce mot qu'il faut creuser, puis faire préciser par l'utilisateur concerné.
-- **Fixer soi-même le mot flou**, ou le laisser fixer par les Developers : l'utilisateur concerné le précise, avant le sprint. Le PO le fait préciser par l'utilisateur avant le sprint (concept 15) ; la story attend.
+- **Fixer soi-même le mot flou**, ou le laisser fixer par les Developers : l'utilisateur concerné le précise, avant le sprint. Le PO le lui fait préciser (concept 15) ; la story attend.
 - **Juger E et S à la place des Developers** : ce sont eux qui estiment la taille.
 - **Donner S en jours** comme si c'était la grille : chez Wake, c'est au plus quelques semaines-personnes ; quelques jours-personnes, c'est le choix de certaines équipes ; le repère du cours est le sprint.
 - **Écrire la solution dans la story ou dans le critère** (« un export CSV chaque matin ») : l'équipe ne peut plus proposer mieux. Écrire le besoin ; la contrainte réelle va dans un critère.
-- **Croire que négociable veut dire tout ouvert** : la contrainte d'usage ne se négocie pas (par exemple, se lire sur un petit écran, exemple inventé).
+- **Croire que négociable veut dire tout ouvert** : la contrainte d'usage ne se négocie pas (par exemple, se lire sur un petit écran, cas inventé).
 - **Rejeter une story parce qu'elle dépend d'une autre équipe** : I se tient autant que possible ; la dépendance s'écrit et se traite (concept 10).
 - **Prendre INVEST pour une règle de Scrum** : c'est un aide-mémoire de Wake, absent du Scrum Guide.
 

@@ -57,7 +57,6 @@ Its sentences, where the inventory sends them (M11):
 | E9 | note sur le mot flou | « un seul mot non fixé, trois lettres douteuses » | text | none |
 | E10 | l'étape qui suit : l'utilisateur concerné précise le mot, avant le sprint | « l'utilisateur concerné précise le mot, avant le sprint » | subject | none |
 | E11 | le résultat de la précision : E, S et T se tranchent | « alors E, S et T se tranchent » | text | none |
-| E12 | bandeau de rappel sur l'origine d'INVEST | « INVEST, Wake, 2003 : un aide-mémoire, absent du Scrum Guide » | text | none |
 
 Relations:
 - E1, E2, E3, E4, E5, E6 : les six lettres d'INVEST, dans cet ordre (I, N, V, E, S, T)
@@ -67,7 +66,6 @@ Relations:
 - E9 dit ce que montrent E8 et E4, E5, E6 : un seul mot non fixé, trois lettres douteuses
 - E7 puis E10, dans cet ordre : une fois le mot précisé, avant le sprint
 - E10 mène à E11 : après la précision, E4, E5 et E6 se tranchent
-- E12 est le rappel qui accompagne l'ensemble
 
 Key of the inventory: none. Key drawn: none.
 
@@ -136,8 +134,10 @@ Failing the run:
 - glossary-order: fail: concepts/07-invest/concept.md:38 uses the term "Critère d'acceptation", introduced by concept 8 (glossary.md:46), which comes later
 - glossary-order: fail: concepts/07-invest/concept.md:52 uses the term "Dépendance", introduced by concept 10 (glossary.md:56), which comes later
 
-## After the run (contributor, rule C and rule A of #23)
+## Fixes after the run
 
 - sources: reference S5 (North, « Introducing BDD ») removed from « Références »: the frozen sources file (`parcours-po/course/sources/07-invest.md`) and the MDX tie it to no claim. Re-run: `sources: ok`.
 - glossary-order: the two failures (« Critère d'acceptation », « Dépendance ») stay, by rule A (fixed once for all concepts by #166).
 - `->` at frozen sources line 69: none in the output; `typography: ok`.
+- Fresh review, SVG (SPEC 7.2): the origin band (second idea, E12 of the inventory) dropped and the viewBox shortened to 495; I, N, V boxes unfilled with a weaker stroke, E, S, T keep the dashes and the fill, so the subject is the most marked; arrowheads redrawn clear of the « rapidement » box. PNG regenerated. « Schéma » of `teaching.md`: the banner sentence removed.
+- Fresh review,  pitfalls: the duplicated « avant le sprint » sentence merged; « exemple inventé » made « cas inventé ».
