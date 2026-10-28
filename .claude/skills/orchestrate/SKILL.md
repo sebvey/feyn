@@ -24,6 +24,11 @@ agent before it reaches the maintainer (decision `fresh-agent-review-before-main
 - A decision the issue asks for: did the maintainer accept its counterfactual in this
   conversation? Then the brief gives it verbatim, with the date. Otherwise the contributor
   takes the decision-awaited path (step 4).
+- A Done when that needs an agent-workflow run: a subagent has no Workflow tool. The
+  contributor makes the run possible and stops on a draft with an `Awaiting the orchestrator`
+  section (exact script path and arguments). Ask the maintainer for an explicit go-ahead in
+  the conversation, run it, and resume the contributor with the result; reruns after fixes are
+  part of that validation.
 
 ## 2. The contributor agent
 
@@ -39,9 +44,9 @@ its title follows `<type>(<area>): <summary>`, the body starts with `Closes #<n>
 ## 3. Independent review
 
 A new `Agent` (never the contributor, never resumed from it), `opus`, with the
-[reviewer brief](#reviewer-brief). It reads the PR, not the contributor's reply. A PR that
-touches a course or `site/` needs its checks rerun: give the reviewer `isolation: "worktree"`
-too (the brief has it check out the PR head detached), and clean its worktree with steps 6.1,
+[reviewer brief](#reviewer-brief). It reads the PR, not the contributor's reply. A PR with
+checks to rerun (any check or fixture runner: a course, `site/`, `specs/*/checks/`): give the
+reviewer `isolation: "worktree"` too (the brief has it check out the PR head detached), and clean its worktree with steps 6.1,
 6.2 and 6.4 only: it holds no issue branch, so no `/finish after-merge` for it.
 
 ## 4. Corrections pass, decision awaited
@@ -61,6 +66,10 @@ too (the brief has it check out the PR head detached), and clean its worktree wi
   (`mise exec -- gh issue view <n> --json labels`), then resume the contributor with
   `SendMessage` and the answer: it applies it, removes the section, runs
   `mise exec -- gh pr ready <pr>`. Check the applied answer yourself.
+- **A decision after the hand-over.** The maintainer can refuse or settle a choice while the
+  PR awaits the merge: relay it to the contributor the same way, the maintainer's words quoted,
+  and review again if the change goes beyond the answer. A `/decide` decision whose
+  counterfactual the maintainer accepted in the conversation needs no draft.
 
 ## 5. Hand-over to the maintainer
 
@@ -75,13 +84,15 @@ goes back to it.
 From the main checkout, on `main`:
 
 1. The worktree: `git worktree list --porcelain` gives its path
-   (`.claude/worktrees/agent-<id>`). It stays locked while its agent runs
-   (`locked claude agent agent-<id>`) (Claude Code, observed 2026-10-28, #128): stop the agent
-   first (`TaskStop`). Still locked once the agent is stopped: `git worktree unlock <path>`.
+   (`.claude/worktrees/agent-<id>`). It is locked while its agent runs
+   (`locked claude agent agent-<id>`) (Claude Code, observed 2026-10-28, #128) and unlocked
+   once the agent has finished (Claude Code, observed 2026-10-28, #125). Still locked: stop the
+   agent (`TaskStop`), then, if needed, `git worktree unlock <path>`.
 2. `git -C <path> status --porcelain` must print nothing; anything printed: stop and show it.
    Then `git worktree remove <path>`. The issue branch is no longer checked out anywhere.
 3. `/finish after-merge` for the issue branch: it confirms the change landed, the Status, and
-   deletes the local branch.
+   deletes the local branch. It may have to set Done itself: the Project's workflow did not
+   (GitHub, observed 2026-10-28, #125).
 4. `git branch -D worktree-agent-<id>`, the branch the worktree was created on.
    `git worktree list` and `git branch --list 'worktree-agent-*'` show nothing of it left.
 
@@ -116,6 +127,11 @@ has not accepted: open the PR as a draft, put `blocked:maintainer` on the issue 
 PR), write an "Awaiting the maintainer" section at the top of the body (question, options,
 recommendation), and stop. You will be resumed with the answer.
 
+## An agent-workflow run
+You have no Workflow tool. A Done when that needs a run: make it runnable, open a draft with
+an "Awaiting the orchestrator" section at the top (exact script path and arguments), and stop.
+You will be resumed with the result.
+
 Run the checks that exist (as /finish says). When done, reply with: branch name, PR URL, files
 changed, checks run and their results, and anything you were unsure of. Stay available for a
 corrections pass: review findings may come back to you.
@@ -125,8 +141,8 @@ corrections pass: review findings may come back to you.
 
 ```
 You review PR #<pr> (branch <branch>) on feyn, which claims to deliver issue #<n>. You are
-not its contributor: trust nothing in the PR body or in any summary; recount and recheck every claim yourself.
-Read CLAUDE.md, the issue (`mise exec -- gh issue view <n>`) and the files it lists, then the
+not its contributor: trust nothing in the PR body or in any summary; recount and recheck
+every claim yourself. Read CLAUDE.md, the issue (`mise exec -- gh issue view <n>`) and the files it lists, then the
 PR (`mise exec -- gh pr view <pr>`, `mise exec -- gh pr diff <pr>`); read a file at the PR's
 head with `git fetch` and `git show origin/<branch>:<path>`. To rerun checks in a worktree,
 `git fetch` then `git switch --detach origin/<branch>` (the branch itself is checked out in
@@ -136,7 +152,11 @@ comment nothing.
 The yardstick is the issue's Done when, statement by statement, not the PR's own verdicts.
 Recheck yourself:
 - each "Done when, verified" line: rerun its command, reread its file; a count, recount it;
-- the checks /finish requires for what the PR touches (`mise exec -- gh pr diff <pr> --name-only`), rerun them;
+- the checks /finish requires for what the PR touches
+  (`mise exec -- gh pr diff <pr> --name-only`), rerun them;
+- evidence from an agent-workflow run: read the run's transcripts
+  (`~/.claude/projects/<project>/<session>/subagents/workflows/wf_*/`) and check what its
+  agents actually read and did, not only what they output;
 - reserved terms of docs/glossary.md and the words it bans; the rules of CLAUDE.md
   (language, no em-dashes in French, title `<type>(<area>): <summary>`, `Closes #<n>`, no
   signature line);
