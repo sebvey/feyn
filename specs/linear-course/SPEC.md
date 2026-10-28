@@ -360,66 +360,34 @@ Nothing checks that the drawing says what its caption says: a review does.
 
 ### 7.2 Style
 
-Every diagram of a course is drawn in one style, whoever writes it (a migration, `course-batch`,
-a contributor): the same notion takes the same class and opacity from one concept to the next
-(decision `one-diagram-style`). No script checks it: a review does.
+Every diagram of a course is drawn in one style, whoever draws it (a migration, `course-batch`,
+a contributor): the same role takes the same class from one concept to the next (decision
+`one-diagram-style`). It is written for the diagrams to draw, not for compatibility with older
+ones: six principles. No script checks it: a review does.
 
-**The classes.** Each means one thing in every diagram:
-- `primary`: what the diagram teaches, its focus;
-- `secondary`: the contrast, a second element set against the first;
-- `muted`: the context and the ordinary text.
+Each class means one thing in every diagram: **`primary`** what the diagram teaches, its focus;
+**`secondary`** the contrast, a second element set against the first; **`muted`** the context
+and the ordinary text.
 
-A diagram with no contrast draws no `secondary`.
-
-**The inks.** A diagram draws with these pairs of class and opacity only (`fill-opacity` on a
-fill, `stroke-opacity` on a stroke); two inks never share a pair, so the drawing stays readable
-in one colour:
-
-| Ink | Class | Opacity | Draws |
-|---|---|---|---|
-| focus | `primary` | 1 | the element taught: its fill, outline, line or mark |
-| contrast | `secondary` | 0.7 | the element set against the focus |
-| light contrast | `secondary` | 0.4 | a third element after the focus and the contrast; the light fill of a contrast shape |
-| text | `muted` | 1 | the ordinary text, and the strokes drawn in it (a cross, a strike, a time line) |
-| soft text | `muted` | 0.75 | notes, legends, column heads, arrows and their heads |
-| line | `muted` | 0.6 | links, axes, ticks, dashed outlines, the outline of a hatch |
-| outline | `muted` | 0.45 | the outline of a box or a card, a separator |
-| grey fill | `muted` | 0.25 | the fill of a hatch, of a shape set aside (blocked, in doubt, out of scope) |
-| light fill | `muted` | 0.12 | the fill of a box or a card that carries text |
-| label on a fill | none | none | a label on a filled shape, in a window of the fill (below): `fill="currentColor"`, no class, no opacity attribute |
-
-Shapes a diagram tells apart only by colour take distinct inks: a series of three is focus,
-contrast, light contrast.
-
-**The common forms.**
-- **Element opacity**: an element's own `opacity` (a thin ribbon fainter than the thick one, a
-  faded card) stays its `opacity` attribute, on top of its ink; never folded into the ink's pair.
-- **Label on a fill** (a light word on a dark card): the filled shape is one `<path>` with
-  `fill-rule="evenodd"` and the shape's ink, its outline (rounded corners as arcs) then a
-  rectangle around the label, a few units larger than the text (a circle on a disc), so the fill
-  stays as a border 6 units wide or more all round (a flag 170 by 38 at 412,46: a window 146 by
-  22 at 424,55); where 6 units do not fit (a long label on a narrow card), as wide as fits and at
-  least 2 units. The label keeps its place, size and weight, in the ink label on a fill. One
-  window per label, its lines included. Never an outline in place of the fill, a filter, a mask
-  or knocked-out text.
-- **Cut** (a line, a mark or a shape across a filled shape, such as the cuts across a slice or a
-  tick on a disc): a gap, the shape drawn as segments with a small gap between them; never a line
-  of another ink over it.
-- **Hatch**: a grey fill under a dashed outline in the line ink.
-- **Dashes**: `7 5` for a dashed outline (a shape absent, open or out of scope), `6 4` or
-  `5 4` for a dashed link; dotted, `2 6` or `3 6` with `stroke-linecap="round"`.
-- **Legend swatch**: drawn as the element it stands for (same inks, same outline).
-
-**The measures**, for a `viewBox` 600 units wide (the usual width; scale them for another):
-
-| Measure | Usual values |
-|---|---|
-| stroke width | 1.5 the outline of a box or a card; 2 to 2.5 a link, an axis, an arrow, a dashed outline; 3 to 3.5 the focus outline or line; 4 to 5 at most, a heavy mark (a tick, a main curve) |
-| text size | 16 to 18 a label or a line of text; 19 to 22 a heading; 14.5 to 15.5 a note |
-| text weight | 600 to 700 a label or a heading; normal the body of a text and a note |
-| font | `font-family="system-ui, sans-serif"` on the root |
-| corner radius | 8 a card or a box; 6 a small box or a chip; 5 or less a tag |
-| arrow head | a `<marker>` with a `viewBox` of 10 by 10 |
+1. **One idea per diagram.** A diagram shows what its caption says; a caption that needs two
+   sentences means two diagrams.
+2. **Roles.** A diagram has a subject, at most one contrast, a context and text. A series is the
+   subject in levels; a state (done, not done, refused) is said by form.
+3. **Rendering of the roles.**
+   - subject: `primary`, opacity 1;
+   - series: `primary` at falling opacity (1, 0.7, 0.4);
+   - contrast: `secondary`;
+   - context: `muted`, a low opacity for fills, a middle one for lines;
+   - text: `muted`, opacity 1; `primary` only when the word is the subject;
+   - state: solid for done, dashed for not done or uncertain, struck for refused.
+4. **Readable in one colour.** Opacity and form carry every distinction, never the hue alone.
+   Text is always legible: never knocked out of a fill, never on a fill darker than itself.
+5. **Composition.** The `viewBox` is 600 units wide by default. The diagram reads left to right
+   or top to bottom; it holds few elements, with space between them. Its text is in the
+   course's words, never under 14 units.
+6. **Text the diagram holds.** Its labels, and a key (a sample and a word) when a distinction of
+   form or opacity must be named. No teaching sentence: that is the `caption`. No decoration,
+   icon or gradient.
 
 ## 8. Versions
 

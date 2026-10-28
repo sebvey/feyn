@@ -12,25 +12,27 @@ colour became `muted` in concept 2, `primary` in concepts 3 and 4, `secondary` i
 
 Every diagram of a course is drawn in one style, `SPEC.md` section 7.2: one meaning per class
 (`primary` what the diagram teaches, its focus; `secondary` the contrast, a second element set
-against the first; `muted` the context and the ordinary text), one list of inks (a pair of class
-and opacity per role: focus, contrast, text, line, outline, fills), the common forms (a label on
-a fill in a window, a cut as a gap, a hatch, an element's own opacity kept on top of its ink) and
-the usual measures (stroke widths, text sizes, corner radii). It binds every writer of a diagram,
-and a review checks it: the drawing contract of section 7.1 stays the only part a script checks.
-The migration of `parcours-po` follows it through one colour table, old token to ink, fixed in
-`migrate-concept` for every concept; it replaces the colour mapping that an agent decided per
-concept (#23, #173). The meaning of the classes and the counterfactual were accepted by the
-maintainer on 2026-10-28 (work session, « Je valide le sens des trois classes »,
-« Contrefactuel validé »).
+against the first; `muted` the context and the ordinary text) and six principles (one idea per
+diagram; the roles subject, contrast, context, text; their rendering in class, opacity and form;
+readable in one colour; the composition; the text a diagram holds). The style is written for the
+diagrams to draw, not for compatibility with older ones: it holds principles, not a table of
+colours. It binds every writer of a diagram, and a review checks it; the drawing contract of
+section 7.1 stays the only part a script checks. A migrated diagram is drawn anew under it from
+an inventory of what the old one shows, not transcribed (`migrate-concept`, M11). The meaning of
+the classes and this counterfactual were accepted by the maintainer on 2026-10-28 (work session,
+« Je valide le sens des trois classes », « Contrefactuel validé »).
 
 ## Options ruled out
 
 - One colour mapping per concept, decided by an agent: the wave-2 drift above.
-- The old site's tokens kept as classes: the contract allows three classes, so the site and the
-  desktop panel can re-tint a diagram without knowing ten tokens.
+- One fixed table from the old site's colour tokens to classes and opacities (first draft of
+  #181, PR #182): the old site drew one hue at three strengths, now for a series, now for a
+  contrast, so no table maps its tokens one to one, and per-diagram exceptions would write its
+  accidents into the spec.
 
 ## Consequences
 
-- The diagrams of concepts 0 to 5 and 9, migrated before this, are realigned on the style (#180);
-  `course-batch` follows it for new diagrams (#142).
-- A token the colour table lacks stops a migration: the table grows through an issue, never in a run.
+- The diagrams of concepts 0 to 5 and 9, migrated before this, are redrawn under the style (#180);
+  `course-batch` follows it for new diagrams.
+- A drawing no longer keeps the old composition: the review judges whether it carries the same
+  information, and the maintainer validates each before and after (#180).
