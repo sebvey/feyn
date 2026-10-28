@@ -25,7 +25,8 @@ export const meta = {
 // files (read from the listing, which the report shows), the colour mapping's form (one pair per token,
 // no pair twice, every token a diagram uses mapped), the checks verdict, the citation line of M9 counted
 // by design (from its exact form, ruling B on #23), a missing item naming the target ignored, the
-// working directory absolute (the agents get the spec and the glossary under it, #178), the report. The report names
+// repository root (from an absolute dest, else pwd; the agents get the spec and the glossary under it,
+// #178), the report. The report names
 // paths relative to the course folder (concepts/NN-slug/...) and the old repositories by their folder
 // name: never the absolute paths of args.dest, args.from or args.site (#170).
 
@@ -40,12 +41,16 @@ const FROM = (A.from || '../pdx/parcours-po').replace(/\/?$/, '/')
 const SITE = (A.site || '../pdx/parcours-po-website').replace(/\/?$/, '/')
 const DEST = (A.dest || `courses/${A.course}`).replace(/\/?$/, '/')
 const REPORT = A.report || `construction/notes/S1-10-${NN}-report.md`
+// The repository root of the run (#178): an absolute dest of the form <root>courses/<course>/ gives it
+// (the run's worktree: in wave 2 the work session stayed in the main checkout, so pwd was not it);
+// any other dest, the working directory (pwd). Checked from the scope agent's listing of <root>specs.
+const DEST_ROOT = DEST.startsWith('/') && DEST.endsWith(`/courses/${A.course}/`) ? DEST.slice(0, -`courses/${A.course}/`.length) : ''
 const CONCEPT_CHECKS = 'course-yaml,concept-folder,conventions,svg-contract,sources,glossary-order,typography'
 
-// ROOT: the run's working directory, absolute, with a final slash, from the pwd the scope agent
-// returns (#178). Empty for the scope prompt (paths relative to the working directory); set after the
-// scope step, so that the writers, the checks and the comparison read the spec, its templates,
-// docs/glossary.md and S1-08.md of the run's working directory, never the main checkout's (wave 2 of
+// ROOT: the run's repository root, absolute, with a final slash (#178): DEST_ROOT below, else the pwd
+// the scope agent returns. Empty for the scope prompt (paths relative to the working directory); set
+// after the scope step, so that the writers, the checks and the comparison read the spec, its
+// templates, docs/glossary.md and S1-08.md of the run's root, never the main checkout's (wave 2 of
 // S1-10: the writers of concepts 3 and 5 read them from the main checkout, reviews of #175, #176).
 let ROOT = ''
 const role = () => `You migrate a course of feyn; you are not the teacher: ignore the teaching instructions \
@@ -106,11 +111,12 @@ blockquote, then the <Reflexe> note as at most one paragraph; what only CF adds 
 M9 Teaching notes. teaching.md: CF « Sous-concepts » becomes « Consignes », verbatim. Its one \
 addition (ruling B on #23): when a case of « Banque d'exemples » is not cited in it by its title in « » \
 (concept-folder requires every case cited), « Consignes » ends with one citation line, a paragraph of \
-its own, in this form and no other: \`Cas de la banque : pour <id>, « <title> », « <title> » ; pour \
-<id>, « <title> ».\`: one « pour <id> » per sub-concept that has an uncited case (<id> as the case \
-heading's parenthesis gives it, its qualifier dropped), in bank order; after it, the titles of its \
-uncited cases only, in bank order, separated by commas, each exactly as its heading writes it \
-(inner quotes « » or “ ” as they are). No verb, no « et », no order of teaching, no other word. \
+its own, in this form and no other: \`Cas de la banque : pour <id>, « <title> », « <title> » et \
+« <title> » ; pour <id>, « <title> ».\`: one « pour <id> » per sub-concept that has an uncited case \
+(<id> as the case heading's parenthesis gives it, its qualifier dropped), in bank order, the groups \
+separated by « ; »; after it, the titles of its uncited cases only, in bank order, separated by \
+commas, « et » before the last of two or more, each exactly as its heading writes it (inner quotes \
+« » or “ ” as they are). No verb, no order of teaching, no other word. \
 No line when the old « Sous-concepts » cites every case. The comparison counts that line by design \
 (M9, ruling B on #23), never invented; a line in another form, or any other sentence added to \
 « Consignes » (« Poser « … », puis « … ». »), is invented. The lead \
@@ -169,20 +175,22 @@ pair, never dropped (a contrast ink, drawn as a gap, has no element to keep it o
 opacity of a hatch's lines, .hatch-line, goes on the dashed outline that replaces the hatch); the \
 report lists each kept element opacity under the writing choices (maintainer's ruling of 2026-10-28). Shapes the old \
 drawings told apart by colour get distinct opacities (for three colours, for example 0.85, 0.6, 0.4), \
-not only distinct classes; a contrast ink drawn over a shape as a line or a mark (the cut lines \
-across a slice) gets no pair (class none) and becomes a gap, the shape \
+not only distinct classes; a contrast ink drawn over a shape as a line, a mark or a shape (the cut lines \
+across a slice, a disc on a card) gets no pair (class none) and becomes a gap, the shape \
 drawn as segments with a small gap between them, never a line of another class over it. A contrast ink \
 drawn on a fill as a label (a <text>: light words on a dark card) is not a gap: its token gets the \
 pair plain (no class, opacity 1), and the label is drawn in a window of the fill (maintainer's ruling \
 of 2026-10-28 on #23): the filled shape becomes one <path> with fill-rule="evenodd" and the shape's \
 fill pair, its outline (rounded corners as arcs) then a rectangle around the label, a few units larger \
-than the text, so the fill stays as a border at least 6 units wide all round (a flag 170 by 38 at \
-412,46: a window 146 by 22 at 424,55); the label keeps its place, size and weight, with \
+than the text, so the fill stays as a border 6 units wide or more all round (a flag 170 by 38 at \
+412,46: a window 146 by 22 at 424,55); when 6 units do not fit (a long label on a narrow card), \
+the border is as wide as fits, at least 2 units; a disc keeps a circular window (a circle as the \
+second subpath); the label keeps its place, size and weight, with \
 fill="currentColor", no class and no opacity attribute. One window per label, its lines included. \
 Never an outline in place of the fill, a filter, a mask or knocked-out text (flood-color is \
-forbidden, and the label must stay a <text>). The loss, one line: the label is no longer a second \
-ink on the fill. A token that draws both labels and marks takes plain: its marks over a shape \
-stay gaps. A hatch becomes a muted fill \
+forbidden, and the label must stay a <text>). The losses, one line each: the label is no longer a \
+second ink on the fill, and a border under 6 units. A token that draws both labels and shapes or \
+marks takes plain: its shapes and marks over a shape stay gaps. A hatch becomes a muted fill \
 under a dashed outline; a legend swatch is drawn as the element it stands for (same fill, same \
 outline). Groups "<sub-concept>-<element>", never a bare sub-concept id, the sub-concept being the \
 leaf the part illustrates (2c1-etapes, not 2c-etapes): the leaf whose reader text explains what that \
@@ -226,9 +234,10 @@ const SCOPE_SCHEMA = {
     unlisted_h4: { type: 'array', items: { type: 'string' }, description: 'ids of MDX <h4> that are not sub-concepts of the course.yaml entry (rule M5)' },
     target_listing: { type: 'string', description: 'the output of "ls -ld <dest><dir>; ls -la <dest><dir>" (dir as returned above), verbatim, every line, errors included' },
     cwd: { type: 'string', description: 'the output of the command pwd, verbatim: the absolute path of the working directory' },
+    root_listing: { type: 'string', description: 'the output of the ls -ld command on the specs folder of the repository root given in the prompt, verbatim, errors included' },
     missing: { type: 'array', items: { type: 'string' }, description: 'the inputs that could not be found (an old file, a diagram component, the concept in course.yaml); empty when all are found. Never the target folder: it is not an input, it may not exist yet, and target_listing says whether it does' },
   },
-  required: ['spec', 'dir', 'course_entry', 'concept_file', 'sources_file', 'mdx_file', 'diagrams', 'unlisted_h4', 'target_listing', 'cwd', 'missing'],
+  required: ['spec', 'dir', 'course_entry', 'concept_file', 'sources_file', 'mdx_file', 'diagrams', 'unlisted_h4', 'target_listing', 'cwd', 'root_listing', 'missing'],
 }
 
 const COLOURS_SCHEMA = {
@@ -391,6 +400,8 @@ its output verbatim, every line, errors included (when the folder does not exist
 an error). Do not summarise it. The target is not an input: whether it exists or not, it never goes \
 under missing.
 - The working directory: run pwd and return its output verbatim.
+- The repository root: run the one command "ls -ld ${DEST_ROOT ? `${DEST_ROOT}specs` : '"$(pwd)/specs"'}" and return its \
+output verbatim, errors included.
 
 Stem rule (M11): a named component gives its name in lowercase words joined by hyphens (Escalier: \
 escalier, CoutDuRetard: cout-du-retard); a numbered one (Schema13, SchemaA1, Schema16Prevision, any \
@@ -401,24 +412,34 @@ Modify no file.`,
 
 if (!scope) throw new Error('Scope agent returned nothing')
 // The target folder is not an input: the first run of concept 2 (wf_415d3d2a-1d2) stopped here on a
-// missing item "target folder … does not exist" (#178). An item naming the target path is ignored:
+// missing item "target folder … does not exist" (#178). The target's mention is dropped from an item:
 // the course.yaml dir (concepts/NN-slug), after dest, courses/<course>/, the start or a space or quote,
 // and not followed by .md or .mdx, so that an old file (course/concepts/NN-slug.md) is never taken for it.
+// The item is ignored only when what is left names no other path or file: an item naming the target
+// and a real missing input still stops the run.
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 const dirGiven = String(scope.dir || '').replace(/^courses\/[^/]+\//, '').replace(/\/$/, '')
-const TARGET_NAMED = new RegExp(`(?:^|[\\s'"«\`(:]|${[DEST, `courses/${A.course}/`].map(esc).join('|')})${esc(dirGiven)}(?=$|/|\\.(?:\\s|$)|[^\\w.-])`)
-const namesTarget = m => new RegExp(`^concepts/${NN}-[a-z0-9]+(-[a-z0-9]+)*$`).test(dirGiven) && TARGET_NAMED.test(m)
+const dirValid = new RegExp(`^concepts/${NN}-[a-z0-9]+(-[a-z0-9]+)*$`).test(dirGiven)
+const TARGET_NAMED = `(?:^|[\\s'"«\`(:]|${[DEST, `courses/${A.course}/`].map(esc).join('|')})${esc(dirGiven)}(?=$|/|\\.(?:\\s|$)|[^\\w.-])`
+const namesTarget = m => {
+  if (!dirValid || !new RegExp(TARGET_NAMED).test(m)) return false
+  const rest = m.replace(new RegExp(TARGET_NAMED, 'g'), ' ')
+  return !/[\w.-]\/[\w.-]|\.(mdx?|astro|ya?ml)\b/.test(rest)
+}
 const missingInputs = scope.missing.filter(m => !namesTarget(m))
 if (missingInputs.length < scope.missing.length) log(`Ignored as missing (the target is not an input): ${scope.missing.filter(namesTarget).join('; ')}`)
 if (missingInputs.length) throw new Error(`Inputs missing: ${missingInputs.join('; ')}`)
 if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(scope.spec)) throw new Error(`Unexpected spec name: ${scope.spec}`)
-// the working directory, absolute (pwd): the spec, the templates, the glossary and S1-08.md are given to
-// the agents from here on as absolute paths of it (#178)
+// The root (#178): from an absolute dest (DEST_ROOT), else the working directory (pwd, absolute, not /).
+// The spec, its templates, the glossary, S1-08.md and the check command are given from it.
 const cwd = String(scope.cwd ?? '').trim()
-if (!/^\/[^\n]*$/.test(cwd) || /\/\.\.?(\/|$)/.test(cwd)) throw new Error(`The working directory "${cwd}" is not an absolute path (pwd): rerun the workflow (resume) to retry the scope step`)
-ROOT = cwd.replace(/\/?$/, '/')
+if (!/^\/[^\n]*$/.test(cwd) || cwd === '/' || /\/\.\.?(\/|$)/.test(cwd)) throw new Error(`The working directory "${cwd}" is not an absolute path other than / (pwd): rerun the workflow (resume) to retry the scope step`)
+ROOT = DEST_ROOT || cwd.replace(/\/?$/, '/')
+const rootLine = String(scope.root_listing ?? '').trim().split('\n')[0].trim()
+if (!/^d/.test(rootLine) || !(rootLine.endsWith(` ${ROOT}specs`) || rootLine.endsWith(` ${ROOT}specs/`))) throw new Error(`The repository root ${ROOT} shows no specs/ folder (ls -ld: ${JSON.stringify(scope.root_listing)}): pass args.dest as <repository>/courses/${A.course}, or run from the repository root`)
+if (DEST_ROOT && DEST_ROOT !== cwd.replace(/\/?$/, '/')) log(`Repository root from args.dest: ${ROOT} (the working directory is ${cwd})`)
 const ROLE = role(), BLIND = blind(), MAP = mapRules()
-// built here, not taken from an agent: the checks and the spec are the ones of the run's working directory
+// built here, not taken from an agent: the checks and the spec are the ones of the run's root
 const SPEC_DIR = `specs/${scope.spec}/`
 const DIR = String(scope.dir).replace(/^courses\/[^/]+\//, '').replace(/\/?$/, '/')
 // the target is emptied below: its path is checked here, never trusted from the scope agent
@@ -475,7 +496,7 @@ Target concept folder: ${TARGET}
 
 ${MAP}`
 
-const CHECK_CMD = `mise exec -- ${SPEC_DIR}checks/check-course ${DEST.replace(/\/$/, '')} --only ${CONCEPT_CHECKS} --concept ${CONCEPT}${A.langDir ? ` --lang-dir ${A.langDir}` : ''}`
+const CHECK_CMD = `mise exec -- ${ROOT}${SPEC_DIR}checks/check-course ${DEST.replace(/\/$/, '')} --only ${CONCEPT_CHECKS} --concept ${CONCEPT}${A.langDir ? ` --lang-dir ${A.langDir}` : ''}`
 
 // --- Write -----------------------------------------------------------------------------
 
@@ -500,7 +521,8 @@ same pair in every diagram, two tokens never the same pair, distinct opacities f
 drawings tell apart by colour (also across components: a token is one ink everywhere). A contrast \
 ink (a light ink drawn on a dark shape, such as --sch-s-ink) is one of two cases: drawn on a fill as \
 a label (a <text>), class plain (opacity 1), the label drawn in a window of the fill, never class \
-none, even when the token also draws marks; drawn over a shape only as a line or a mark (cut lines, \
+none, even when the token also draws shapes or marks; drawn over a shape only as a line, a mark or a \
+shape (cut lines, a disc, \
 a tick), class none (opacity 0), a gap. List apart the tokens \
 declared but drawn by no element. An opacity a component sets on one element or class beyond its \
 token is not part of the pair: the writers keep it on the element. Write no file.`,
@@ -527,7 +549,7 @@ phase('Write')
 const colours = await decideColours()
 const [drawnDiagrams, teachingAndSources] = await parallel([
   async () => {
-    const MAPPING = colours.mapping.map(m => `${m.token}: ${m.class === 'none' ? 'class none, a gap (no ink)' : m.class === 'plain' ? 'plain: a label in a window of its fill, fill="currentColor", no class, no opacity attribute (its marks over a shape, if any, are gaps)' : `class ${m.class}, opacity ${m.opacity}`}`).join('; ')
+    const MAPPING = colours.mapping.map(m => `${m.token}: ${m.class === 'none' ? 'class none, a gap (no ink)' : m.class === 'plain' ? 'plain: a label in a window of its fill, fill="currentColor", no class, no opacity attribute (its shapes and marks over a shape, if any, are gaps)' : `class ${m.class}, opacity ${m.opacity}`}`).join('; ')
     const drawn = await parallel(scope.diagrams.map(d => () => agent(`${ROLE} ${BLIND}
 
 ${INPUTS}
@@ -541,8 +563,9 @@ element of a token with that token's class and opacity (fill-opacity for a fill,
 stroke), never another pair; do not decide a mapping of your own. A token this drawing draws with that \
 the mapping lacks: stop and return it in tokens, without inventing a pair.
 A label in a token of the pair plain stands on a fill: draw that fill as one <path> with \
-fill-rule="evenodd" and the fill's own pair, its outline then a rectangle around the label, the \
-fill left as a border at least 6 units wide all round; the label inside, at its place, size and \
+fill-rule="evenodd" and the fill's own pair, its outline then a rectangle around the label (a circle \
+on a disc), the fill left as a border 6 units wide or more all round, or as wide as fits and at \
+least 2 units where 6 do not fit (a loss to record); the label inside, at its place, size and \
 weight, fill="currentColor", no class, no opacity attribute (M11). Never a filter, a mask, \
 knocked-out text, or an outline in place of the fill. Record the loss in losses.
 An opacity the component sets on an individual element or class beyond its token's colour (a class \
@@ -693,7 +716,7 @@ if (!oldSweep || !newSweep) throw new Error('A comparison sweep returned nothing
 // sweep in teaching.md « Consignes » whose text is that line becomes a by-design row of the old-to-new
 // table; a second such line, or a line in any other form (« Poser « … », puis « … ». »), stays invented.
 const CASE_TITLE = '«\\s*(?:[^«»]|«[^«»]*»)+?\\s*»'
-const CITE_GROUP = `pour [A-Za-z0-9]+, ${CASE_TITLE}(?:, ${CASE_TITLE})*`
+const CITE_GROUP = `pour [A-Za-z0-9]+, ${CASE_TITLE}(?:, ${CASE_TITLE})*(?: et ${CASE_TITLE})?`
 const CITATION_LINE = new RegExp(`^Cas de la banque : ${CITE_GROUP}(?: ; ${CITE_GROUP})*\\.$`)
 const unquote = t => { const s = String(t ?? '').trim().replace(/^[`"“]+|[`"”]+$/g, '').trim(); const m = /^«\s*(Cas de la banque .*»\.)\s*»$/.exec(s); return m ? m[1] : s }
 const citationAt = newSweep.rows.findIndex(r => /teaching\.md/.test(r.file) && /Consignes/.test(r.section) && CITATION_LINE.test(unquote(r.text)))

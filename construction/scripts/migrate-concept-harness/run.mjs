@@ -52,6 +52,8 @@ function makeAgent(o) {
       ],
       unlisted_h4: [], target_listing: o.listing ?? ABSENT_GNU, missing: o.missing ?? [],
       cwd: o.cwd ?? (o.agentRoot ? o.agentRoot.replace(/\/$/, '') : ROOT),
+      // ls -ld of the root's specs folder the prompt names ("$(pwd)/specs" when dest is relative)
+      root_listing: o.rootListing ?? (() => { const m = /run the one command "ls -ld (.*?)specs"* and return/.exec(prompt); const r = !m ? '?' : m[1].startsWith('"$(pwd)/') ? `${o.cwd ?? (o.agentRoot ? o.agentRoot.replace(/\/$/, '') : ROOT)}/` : m[1]; return `drwxr-xr-x 9 sve staff 288 Oct 28 14:21 ${r}specs` })(),
     }
     if (L === 'empty-target') return o.emptied ?? { empty: true, listing: '' }
     if (L === 'colours') return { mapping: o.mapping ?? goodMapping, unused: ['--sch-text-soft'] }
@@ -151,23 +153,25 @@ fails += await scenario('label ink on a fill: plain pair, window form in every w
   ...(report && report.includes('| `--sch-s-ink` | plain (no class, a label in a window) | 1 |') ? [] : ['mapping table wrong'])])
 fails += await scenario('label ink with an opacity other than 1: stops', { mapping: [...goodMapping.slice(0, 4), { token: '--sch-s-ink', class: 'plain', opacity: 0.8, draws: 'x' }] }, ({ error }) => (error && /class plain .* opacity 0.8, expected 1/.test(error) ? [] : ['not stopped']))
 const TEACH = `${TGT}/teaching.md`
-const LINE_B = 'Cas de la banque : pour 9a1, « Le compteur de relevés ingérés », « Trois « afin de » à juger » ; pour 9b2, « « Quel patron ? » ».'
+const LINE_B = 'Cas de la banque : pour 9a1, « Le compteur de relevés ingérés », « Les tâches de Dana » et « Trois « afin de » à juger » ; pour 9b2, « « Quel patron ? » ».'
 fails += await scenario('ruling-B line: counted by design, not invented', { invented: [{ file: TEACH, section: 'Consignes', text: `« ${LINE_B} »`, detail: 'no old text' }] }, ({ error, report, calls }) => [
   ...(error ? [`threw: ${error}`] : []),
   ...(calls.some(c => c.label === 'verify') ? ['sent to verification'] : []),
   ...(report && report.includes(`| teaching.md « Consignes », citation line | by design | M9 | ruling B on #23: ${LINE_B} |`) ? [] : ['no by-design row']),
   ...(report && /\| 1 \| 1 \| 0 \| 0 \| 0 \| pass \|/.test(report) && report.includes('## Invented\n\nNone.') ? [] : ['counts wrong']),
-  ...(calls.find(c => c.label === 'teaching+sources')?.prompt.includes('Cas de la banque : pour <id>, « <title> », « <title> » ; pour') ? [] : ['writer lacks the form'])])
+  ...(calls.find(c => c.label === 'teaching+sources')?.prompt.includes('Cas de la banque : pour <id>, « <title> », « <title> » et « <title> » ; pour') ? [] : ['writer lacks the form'])])
 fails += await scenario('ruling-B line in another form, a second line, « Poser »: invented', { invented: [
-  { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a1, « Le compteur » et « Les tâches de Dana ».', detail: 'x' },
+  { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a1, « Le compteur », puis « Les tâches de Dana ».', detail: 'x' },
   { file: TEACH, section: 'Consignes', text: 'Poser « Le compteur », puis « Les tâches de Dana ».', detail: 'x' },
   { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a1, « Le compteur ».', detail: 'x' },
-  { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a2, « Les tâches de Dana ».', detail: 'x' }] }, ({ error, report }) => [
-  ...(error && /3 invented/.test(error) ? [] : ['not failed on 3 invented']),
-  ...(report && report.includes('et « Les tâches de Dana »') && report.includes('Poser « Le compteur »') && report.includes('| I3 | ') && report.includes('ruling B on #23: Cas de la banque : pour 9a1, « Le compteur ».') ? [] : ['wrong rows'])])
+  { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a2, « Les tâches de Dana ».', detail: 'x' },
+  { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a2, « A » et « B » et « C ».', detail: 'x' }] }, ({ error, report }) => [
+  ...(error && /4 invented/.test(error) ? [] : ['not failed on 4 invented']),
+  ...(report && report.includes(', puis « Les tâches de Dana »') && report.includes('Poser « Le compteur »') && report.includes('« A » et « B » et « C »') && report.includes('| I4 | ') && report.includes('ruling B on #23: Cas de la banque : pour 9a1, « Le compteur ».') ? [] : ['wrong rows'])])
 for (const [name, item] of [['absolute', `target folder ${TGT} does not exist`], ['course-relative', `target courses/parcours-po/${DIR}: No such file or directory.`], ['bare dir', `the target folder ${DIR} does not exist yet`]])
   fails += await scenario(`absent target named under missing (${name}): ignored`, { missing: [item] }, ({ error }) => (error ? [`threw: ${error}`] : []))
 fails += await scenario('a missing old file under concepts/: stops', { missing: [`target folder ${TGT} does not exist`, `${FROM}/course/concepts/09-decoupage-vertical.md`] }, ({ error }) => (error && /Inputs missing: \/Users\/me\/pdx\/parcours-po\/course\/concepts\/09-decoupage-vertical\.md$/.test(error) ? [] : ['not stopped on the old file alone']))
+fails += await scenario('one item naming the target and a missing input: stops', { missing: [`target folder ${TGT} does not exist; ${FROM}/course/sources/09-decoupage-vertical.md not found`] }, ({ error }) => (error && /Inputs missing: target folder .*sources\/09-decoupage-vertical\.md not found$/.test(error) ? [] : ['not stopped']))
 fails += await scenario('spec paths absolute in the writers\' inputs', {}, ({ error, calls }) => [
   ...(error ? [`threw: ${error}`] : []),
   ...(writers(calls).length === 5 ? [] : ['writers not all called']),
@@ -175,5 +179,17 @@ fails += await scenario('spec paths absolute in the writers\' inputs', {}, ({ er
     .filter(p => !c.prompt.includes(p)).map(p => `${c.label} lacks ${p}`)),
   ...writers(calls).filter(c => /(^|[^\w/])(specs\/linear-course\/|docs\/glossary\.md|construction\/notes\/S1-08\.md)/.test(c.prompt)).map(c => `${c.label} has a relative spec path`)])
 fails += await scenario('working directory not absolute: stops', { cwd: 'feyn' }, ({ error }) => (error && /not an absolute path/.test(error) ? [] : ['not stopped']))
+fails += await scenario('working directory /: stops', { cwd: '/' }, ({ error }) => (error && /not an absolute path other than \//.test(error) ? [] : ['not stopped']))
+// wave 2: the work session stayed in the main checkout, dest was the worktree's course folder
+fails += await scenario('pwd not dest\'s root: the root is dest\'s, checks included', { cwd: '/Users/me/main' }, ({ error, report, calls }) => [
+  ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
+  ...writers(calls).filter(c => !c.prompt.includes(`${ROOT}/specs/linear-course/SPEC.md`) || c.prompt.includes('/Users/me/main')).map(c => `${c.label} not on dest's root`),
+  ...(calls.find(c => c.label === 'checks')?.prompt.includes(`mise exec -- ${ROOT}/specs/linear-course/checks/check-course ${DEST} --only`) ? [] : ['check command not on dest\'s root']),
+  ...(calls.find(c => c.label === 'scope')?.prompt.includes(`ls -ld ${ROOT}/specs"`) ? [] : ['scope not asked to list dest\'s root'])])
+fails += await scenario('relative dest: the root is pwd', { args: { dest: 'courses/parcours-po' }, listing: `ls: cannot access 'courses/parcours-po/${DIR}': No such file or directory`, cwd: '/Users/me/main' }, ({ error, calls }) => [
+  ...(error ? [`threw: ${error}`] : []),
+  ...(calls.find(c => c.label === 'checks')?.prompt.includes('mise exec -- /Users/me/main/specs/linear-course/checks/check-course courses/parcours-po --only') ? [] : ['check command not on pwd']),
+  ...(writers(calls).every(c => c.prompt.includes('/Users/me/main/docs/glossary.md')) ? [] : ['writers not on pwd'])])
+fails += await scenario('root without specs/: stops', { rootListing: `ls: ${ROOT}/specs: No such file or directory` }, ({ error }) => (error && /shows no specs\/ folder/.test(error) ? [] : ['not stopped']))
 console.log(fails ? `${fails} scenario(s) failed` : 'all scenarios pass')
 process.exit(fails ? 1 : 0)

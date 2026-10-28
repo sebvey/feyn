@@ -37,17 +37,19 @@ agent before it reaches the maintainer (decision `fresh-agent-review-before-main
     `git -C <path> branch --set-upstream-to=origin/<branch>`, and resume it with that path.
   - **A two-phase migration** (a run whose output a contributor then fixes and delivers, as the
     S1-10 sub-issues): the orchestrator creates the branch and the worktree itself before the
-    run: `git push origin origin/main:refs/heads/<branch>`, `git fetch origin <branch>`,
+    run: `git fetch origin`, `git push origin origin/main:refs/heads/<branch>`,
+    `git fetch origin <branch>`,
     `git worktree add <main checkout>/.claude/worktrees/<name> -B <branch> origin/<branch>`,
     `git -C <path> branch --set-upstream-to=origin/<branch>`; sets the Status to In progress
-    (`/start` step 4); runs in that worktree. After the run, the contributor is spawned without
-    `isolation`: its current directory is the main checkout, which its brief forbids it to touch;
-    it works in the worktree's absolute path, with `git -C <path>` and
-    `gh pr create --head <branch>`; its brief's "How to run the cycle" names the worktree and
-    the branch in place of `/start`. A contributor spawned with
-    `isolation: "worktree"` cannot write nor run git in another worktree: Edit, `git -C` and
-    `cd` to it are refused (Claude Code, observed 2026-10-28, #178). Other issues keep the
-    path above, where the contributor runs `/start` first.
+    (`/start` step 4); runs with absolute `dest` and `report` paths into that worktree, no `cd`
+    (the workflow takes its spec root from an absolute `dest`). After the run, the contributor
+    is spawned without `isolation`: its current directory is the main checkout, which its brief
+    forbids it to touch; it works with absolute paths, `git -C <path>` and
+    `gh pr create --head <branch>`, and its brief marks the steps of `/start` already done. A
+    contributor spawned with `isolation: "worktree"` cannot write nor run git in another
+    worktree: Edit, `git -C` and `cd` to it are refused
+    (Claude Code, observed 2026-10-28, #178). Other issues keep the path above, where the
+    contributor runs `/start` first.
   - **A blind run** (a run that must not see a file). Its agents run in the work session's
     working directory (Claude Code, observed 2026-10-28, #130); a copy of the repository
     outside it cannot hold the work session: a `cd` there is reset, and `change_directory`
@@ -142,7 +144,9 @@ From the main checkout, on `main`:
 A worktree you created (step 1, `.claude/worktrees/<name>`): steps 2 and 3 the same way. It
 holds the issue branch, so there is no `worktree-agent-*` branch for it; but the lost
 worktree of its contributor leaves its `worktree-agent-<id>` branch behind
-(Claude Code, observed 2026-10-28, #171): delete that one with step 4.
+(Claude Code, observed 2026-10-28, #171): delete that one with step 4. A contributor spawned
+without `isolation` (a two-phase migration) has no worktree of its own: no
+`worktree-agent-*` branch to delete.
 
 ## Contributor brief
 
@@ -162,6 +166,9 @@ Follow `.claude/skills/start/SKILL.md` for #<n>, adapted to a worktree:
 - Set the issue's Status to In progress as /start says.
 - `git push` can fail to resolve github.com from the sandbox while `gh` works; retry the push
   outside the sandbox (Claude Code, observed 2026-10-27, #27).
+(Two-phase migration, spawned without isolation: your current directory is the main checkout:
+never edit, commit or switch there. The branch, the worktree <path> and the Status are done:
+skip their steps above. Absolute paths, `git -C <path>`, `gh pr create --head <branch>`.)
 Then do the work, then follow `.claude/skills/finish/SKILL.md` to push and open the PR. Do NOT
 merge. No signature or generated-by line in the PR body (the squash uses it as the commit
 message).
