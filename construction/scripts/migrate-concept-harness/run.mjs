@@ -31,30 +31,33 @@ const FULL = LD + `total 8\ndrwxr-xr-x  4 sve staff 128 Oct 28 14:21 .\ndrwxr-xr
 // the two old diagrams of concept 9, their legendes, and the inventories the stand-in agents return
 const LEG_GATEAU = "Le gâteau en couches. En bas, l'ingestion ; en haut, la restitution. Une couche prise en entier ne sert pas seule ; chaque part verticale sert seule."
 const LEG_PART = 'Une part trop grosse, recoupée.'
-const el = (id, what, labels, role, state = '') => ({ id, what, labels, role, state })
+const el = (id, what, labels, role, state = '', state_words = '') => ({ id, what, labels, role, state, state_words })
+// the maintainer's answer of 2026-10-28 on PR #182: the naming sentence to the title, the reading one to
+// the labels, the caption only the sentence that carries the idea
+const LEG_GATEAU_IDEA = 'Une couche prise en entier ne sert pas seule ; chaque part verticale sert seule.'
 const INV_GATEAU = {
   caption_sentences: [
-    { sentence: 'Le gâteau en couches.', idea: 'gateau' },
-    { sentence: 'En bas, l’ingestion ; en haut, la restitution.', idea: 'gateau' },
-    { sentence: 'Une couche prise en entier ne sert pas seule ; chaque part verticale sert seule.', idea: 'gateau' }],
+    { sentence: 'Le gâteau en couches.', idea: 'gateau', to: 'title' },
+    { sentence: 'En bas, l’ingestion ; en haut, la restitution.', idea: 'gateau', to: 'labels' },
+    { sentence: LEG_GATEAU_IDEA, idea: 'gateau', to: 'caption' }],
   ideas: [{ stem: 'gateau', title: 'Le gâteau en couches : une tranche horizontale contre trois tranches verticales', subconcept: '9a',
     justification: 'Une couche prise en entier ne sert pas seule ; chaque part verticale sert seule.', stands_in: 'the legende',
     elements: [el('E1', 'les couches, de l’ingestion à la restitution', ['Ingestion', 'Restitution'], 'context'),
       el('E2', 'une part verticale, au premier niveau', ['tranche 1'], 'series'), el('E3', 'une part verticale, au deuxième niveau', ['tranche 2'], 'series'),
-      el('E4', 'la couche prise en entier', ['couche entière'], 'contrast', 'refused')],
+      el('E4', 'la couche prise en entier', ['couche entière'], 'contrast', 'refused', 'ne sert pas seule')],
     relations: ['E2 et E3 traversent E1, de l’ingestion à la restitution'], key: [{ sample: 'E4', words: 'tranche horizontale : ne sert pas seule' }] }],
 }
 const INV_PART = {
-  caption_sentences: [{ sentence: LEG_PART, idea: 'part-recoupee' }],
+  caption_sentences: [{ sentence: LEG_PART, idea: 'part-recoupee', to: 'caption' }],
   ideas: [{ stem: 'part-recoupee', title: 'Une part trop grosse recoupée en parts verticales plus fines', subconcept: '9b1',
     justification: LEG_PART, stands_in: 'the legende', elements: [el('E1', 'la part trop grosse', ['trop gros pour un sprint'], 'subject')], relations: [], key: [] }],
 }
 // concept 9's Gateau split in two ideas
 const INV_SPLIT = {
   caption_sentences: [
-    { sentence: 'Le gâteau en couches.', idea: 'gateau-couches' },
-    { sentence: "En bas, l'ingestion ; en haut, la restitution.", idea: 'gateau-couches' },
-    { sentence: 'Une couche prise en entier ne sert pas seule ; chaque part verticale sert seule.', idea: 'gateau-tranches' }],
+    { sentence: 'Le gâteau en couches.', idea: 'gateau-couches', to: 'caption' },
+    { sentence: "En bas, l'ingestion ; en haut, la restitution.", idea: 'gateau-couches', to: 'caption' },
+    { sentence: LEG_GATEAU_IDEA, idea: 'gateau-tranches', to: 'caption' }],
   ideas: [
     { ...INV_GATEAU.ideas[0], stem: 'gateau-couches', title: 'Les couches du gâteau', justification: "En bas, l'ingestion ; en haut, la restitution.", elements: [INV_GATEAU.ideas[0].elements[0]], relations: [], key: [] },
     { ...INV_GATEAU.ideas[0], stem: 'gateau-tranches', title: 'Une tranche horizontale contre des tranches verticales', subconcept: '9a1' }],
@@ -86,10 +89,17 @@ function makeAgent(o) {
       const given = again ? o.inventoriesAgain?.[n] : o.inventories?.[n]
       return structuredClone(given ?? (o.inventories?.[n] && again ? o.inventories[n] : [INV_GATEAU, INV_PART][n]))
     }
-    if (L.startsWith('draw:')) { const stem = L.slice(5); return { file: o.drawnFile?.[stem] ?? `${stem}.svg`, groups: [`9a-${stem}`] } }
+    if (L.startsWith('draw:')) { const stem = L.slice(5); return { file: o.drawnFile?.[stem] ?? `${stem}.svg`, groups: [`9a-${stem}`], key: o.drawnKey?.[stem] ?? [] } }
     if (L.startsWith('compare-diagram:')) {
       const n = Number(L.split(':')[1]) - 1
-      return o.compared?.[n] ?? { rows: [{ item: 'E1 « Ingestion »', where: `${TGT}/${n ? 'part-recoupee' : 'gateau'}.svg 9a-couches`, verdict: 'kept', detail: '' }], invented: [] }
+      return o.compared?.[n] ?? { rows: [{ item: 'E1 « Ingestion »', where: `${TGT}/${n ? 'part-recoupee' : 'gateau'}.svg 9a-couches`, verdict: 'kept', detail: '' }], keys: [], invented: [] }
+    }
+    // the frontmatter diagrams of concept.md as written: by default, the entries the concept writer was given
+    if (L === 'frontmatter') {
+      if (o.frontmatterOut !== undefined) return { output: o.frontmatterOut }
+      const m = /Their frontmatter entries, verbatim: (\[.*?\])\.\n/.exec(calls.find(c => c.label === 'concept')?.prompt ?? '')
+      const fm = m ? JSON.parse(m[1]) : null
+      return { output: `mise WARN a stale tool\n${JSON.stringify(o.frontmatter ? o.frontmatter(fm) : fm)}` }
     }
     if (L === 'renderings') {
       if (o.renderOut !== undefined) return { output: o.renderOut }
@@ -145,7 +155,8 @@ fails += await scenario('two diagrams, target absent (GNU ls): inventory, blind 
   ...(calls.filter(c => c.label.startsWith('compare-diagram:')).length === 2 ? [] : ['not one comparison per old diagram']),
   ...(report && (report.match(/## Diagrams \(M11\)/g) || []).length === 1 && !/## Colour table/.test(report) ? [] : ['diagrams section not shown once']),
   ...(report && report.includes('| ![old diagram 1](S1-10-09-report/old-1.png) | ![gateau.svg](S1-10-09-report/gateau.png) |') && report.includes('| ![old diagram 2](S1-10-09-report/old-2.png) | ![part-recoupee.svg](S1-10-09-report/part-recoupee.png) |') ? [] : ['renderings not side by side']),
-  ...(report && report.includes('| E4 | la couche prise en entier | « couche entière » | contrast | refused |') && report.includes('Key: E4 « tranche horizontale : ne sert pas seule ».') ? [] : ['inventory not in the report']),
+  ...(report && report.includes('| E4 | la couche prise en entier | « couche entière » | contrast | refused (« ne sert pas seule ») |') && report.includes('Key of the inventory: E4 « tranche horizontale : ne sert pas seule ». Key drawn: none.') ? [] : ['inventory not in the report']),
+  ...(report && report.includes('- « Le gâteau en couches. »: title of gateau.svg\n- « En bas, l’ingestion ; en haut, la restitution. »: labels of gateau.svg\n- « Une couche') && !report.includes('Captions of more than one sentence') ? [] : ['legende sentences not shown with their place, or a caption flagged']),
   ...(report && report.includes('### `parcours-po-website/src/components/schemas/Gateau.astro`') ? [] : ['old component not named relative']),
   ...(report && report.includes('| `parcours-po-website/src/components/schemas/Gateau.astro` |') ? ['component path in a table'] : []),
   ...(report && report.includes('| E1 « Ingestion » | concepts/09-decoupage-vertical/gateau.svg 9a-couches | kept | M11 |') ? [] : ['comparison rows not under ASTRO']),
@@ -155,12 +166,12 @@ fails += await scenario('two diagrams, target absent (GNU ls): inventory, blind 
   ...(report && report.includes('check-course courses/parcours-po --only') ? [] : ['check command wrong']),
   ...(calls.some(c => c.label === 'empty-target') ? ['emptied an absent folder'] : []),
 ])
-fails += await scenario('inventory: captions from the legende\'s sentences, straight apostrophe, set in code for concept.md', {}, ({ error, calls, result }) => {
+fails += await scenario('inventory: captions from the legende\'s sentences to the caption, set in code for concept.md', {}, ({ error, calls, result }) => {
   const inv = calls.find(c => c.label === 'inventory:1')?.prompt ?? ''
   const concept = calls.find(c => c.label === 'concept')?.prompt ?? ''
   return [...threw(error),
     ...([`${SITE}/src/components/schemas/Gateau.astro`, `${FROM}/course/concepts/09-decoupage-vertical.md`, `${SITE}/src/content/concepts/fr/09-decoupage-vertical.mdx`, `${ROOT}/specs/linear-course/SPEC.md section 7.2`, 'never how it is drawn', `« ${LEG_GATEAU} »`, 'in doubt, one idea'].filter(p => !inv.includes(p)).map(p => `inventory prompt lacks ${p}`)),
-    ...(concept.includes(JSON.stringify({ file: 'gateau.svg', title: INV_GATEAU.ideas[0].title, caption: LEG_GATEAU, subconcept: '9a' })) ? [] : ['concept.md not given the caption made of the legende\'s sentences']),
+    ...(concept.includes(JSON.stringify({ file: 'gateau.svg', title: INV_GATEAU.ideas[0].title, caption: LEG_GATEAU_IDEA, subconcept: '9a' })) ? [] : ['concept.md not given the caption made of the legende\'s sentences to the caption']),
     ...(concept.includes(`whose legende is « ${LEG_PART} »: part-recoupee.svg`) ? [] : ['Figure-to-images line missing']),
     ...(result?.diagrams?.join() === 'gateau.svg,part-recoupee.svg' ? [] : ['summary lacks the diagrams'])]
 })
@@ -168,11 +179,11 @@ const LEAKY = structuredClone(INV_GATEAU)
 LEAKY.ideas[0].elements[1].what = 'une part verticale en var(--sch-s1), fill-opacity 0.7'
 fails += await scenario('inventory naming the old drawing: asked once more, then drawn', { inventories: [LEAKY], inventoriesAgain: [INV_GATEAU] }, ({ error, calls, logs }) => [
   ...threw(error),
-  ...(calls.some(c => c.label === 'inventory-again:1' && c.prompt.includes('Your first inventory named how the old diagram is drawn: --sch-s1')) ? [] : ['not asked again with the forms named']),
+  ...(calls.some(c => c.label === 'inventory-again:1' && c.prompt.includes('Your first inventory names how the old diagram is drawn: --sch-s1')) ? [] : ['not asked again with the forms named']),
   ...(logs.some(l => /^Inventory 1 names how the old diagram is drawn/.test(l)) ? [] : ['not logged']),
   ...(drawers(calls).every(c => !/sch-|fill-opacity/.test(c.prompt)) ? [] : ['a form reached the drawing'])])
 fails += await scenario('inventory naming the old drawing twice: stops before any drawing', { inventories: [LEAKY], inventoriesAgain: [LEAKY] }, ({ error, calls }) => [
-  ...(error && /Gateau\.astro still names how the old diagram is drawn \(.*--sch-s1/.test(error) ? [] : ['not stopped']),
+  ...(error && /Gateau\.astro still names how the old diagram is drawn: .*--sch-s1/.test(error) ? [] : ['not stopped']),
   ...(drawers(calls).length || calls.some(c => c.label === 'concept') ? ['drew or wrote anyway'] : [])])
 {
   const reworded = structuredClone(INV_GATEAU); reworded.caption_sentences[2].sentence = 'Une couche entière ne sert à rien.'
@@ -218,6 +229,78 @@ fails += await scenario('comparison: an element lost and a label invented fail t
   ...(error && /1 lost, 1 invented/.test(error) ? [] : ['not failed on 1 lost, 1 invented']),
   ...(calls.find(c => c.label === 'verify')?.prompt.includes('"source":"ASTRO","item":"E4 « couche entière »"') && calls.find(c => c.label === 'verify')?.prompt.includes('The inventories: [') ? [] : ['diagram rows or inventories not sent to verification']),
   ...(report && report.includes('| E4 « couche entière » | none | lost (L1) | M11 |') && report.includes('| I1 | gateau.svg | diagram | « tranche 4 » |') ? [] : ['rows not in the report'])])
+// review of PR #182, B1: a key naming a distinction of form earns no exemption; its words come from the
+// inventory or concept.md, else it is invented (PartRecoupee's « pas fait », from dashed outlines alone)
+const PART_SVG = `${TGT}/part-recoupee.svg`
+fails += await scenario('a drawn key with other words: an invented row, verified, failing the run', {
+  drawnKey: { 'part-recoupee': ['pas fait'] },
+  compared: [undefined, { rows: [{ item: 'E1 « trop gros pour un sprint »', where: `${PART_SVG} 9b1-besoin`, verdict: 'kept', detail: '' }], keys: [{ file: PART_SVG, words: 'pas fait', verdict: 'invented', detail: 'neither the inventory nor concept.md says « pas fait »' }], invented: [] }],
+}, ({ error, calls, report }) => {
+  const cmp = calls.find(c => c.label === 'compare-diagram:2')?.prompt ?? ''
+  const draw = calls.find(c => c.label === 'draw:part-recoupee')?.prompt ?? ''
+  return [
+    ...(error && /0 lost, 1 invented/.test(error) ? [] : ['not failed on 1 invented']),
+    ...(report && report.includes('| I1 | part-recoupee.svg | diagram key | « pas fait » |') && report.includes('Key drawn: « pas fait ».') ? [] : ['key row not in the report']),
+    ...(calls.find(c => c.label === 'verify')?.prompt.includes('"section":"diagram key","text":"« pas fait »"') ? [] : ['key row not verified']),
+    ...(cmp.includes('A key entry earns no exemption') && cmp.includes('{"part-recoupee.svg":["pas fait"]}') && !/A key naming a distinction of form or opacity[^.]*not invented/.test(cmp) ? [] : ['comparison prompt keeps the exemption, or lacks the drawn keys']),
+    ...(['never words of your own', 'nothing is more marked than the', 'never `secondary`'].filter(t => !draw.includes(t)).map(t => `drawer lacks: ${t}`))]
+})
+fails += await scenario('a drawn key the comparison gives no row: flagged invented', { drawnKey: { 'part-recoupee': ['pas fait'] } }, ({ error, report }) => [
+  ...(error && /1 invented/.test(error) ? [] : ['not failed on 1 invented']),
+  ...(report && report.includes('| I1 | part-recoupee.svg | diagram key | « pas fait » | a key entry the drawing agent drew, given no row by the diagram comparison |') ? [] : ['not flagged'])])
+fails += await scenario('a drawn key in the inventory\'s words: kept, the run passes', {
+  drawnKey: { gateau: ['tranche horizontale : ne sert pas seule'] },
+  compared: [{ rows: [], keys: [{ file: `${TGT}/gateau.svg`, words: 'tranche horizontale : ne sert pas seule', verdict: 'kept', detail: 'key E4 of the inventory' }], invented: [] }],
+}, ({ error, report }) => [
+  ...threw(error),
+  ...(report && report.includes('| key « tranche horizontale : ne sert pas seule » of gateau.svg | gateau.svg | kept | M11 | key E4 of the inventory |') ? [] : ['kept key row missing'])])
+{
+  const unsaid = structuredClone(INV_PART); unsaid.ideas[0].elements[0].state = 'not done'
+  fails += await scenario('a state no word says: asked once more, then drawn', { inventories: [INV_GATEAU, unsaid], inventoriesAgain: [undefined, INV_PART] }, ({ error, calls, logs }) => [
+    ...threw(error),
+    ...(calls.some(c => c.label === 'inventory-again:2' && c.prompt.includes('Your first inventory gives a state that no word says: part-recoupee E1 (not done)')) ? [] : ['not asked again']),
+    ...(logs.some(l => l.startsWith('Inventory 2 gives a state that no word says')) ? [] : ['not logged']),
+    ...(calls.find(c => c.label === 'inventory:1')?.prompt.includes('never from a line style, a fill or any other form alone') ? [] : ['inventory prompt lacks the rule'])])
+  fails += await scenario('a state no word says, twice: stops before any drawing', { inventories: [INV_GATEAU, unsaid], inventoriesAgain: [undefined, unsaid] }, ({ error, calls }) => [
+    ...(error && /PartRecoupee\.astro still gives a state that no word says: part-recoupee E1/.test(error) ? [] : ['not stopped']),
+    ...(drawers(calls).length ? ['drew anyway'] : [])])
+}
+// review of PR #182, B2: a caption keeps the sentence of its idea; naming and reading sentences go to the
+// title and the labels, the comparison counts them moved; a caption of more than one sentence is flagged
+fails += await scenario('legende sentences to the title and the labels: out of the caption, given to the drawer and the comparison', {}, ({ error, calls, result }) => {
+  const draw = calls.find(c => c.label === 'draw:gateau')?.prompt ?? ''
+  const cmp = calls.find(c => c.label === 'compare-diagram:1')?.prompt ?? ''
+  return [...threw(error),
+    ...(draw.includes('tell how to read the diagram') && draw.includes('« En bas, l\'ingestion ; en haut, la restitution. »') && !draw.includes('« Le gâteau en couches. »') ? [] : ['drawer not given the reading sentence alone']),
+    ...(cmp.includes('to the title, moved') && cmp.includes('to the labels, moved') && cmp.includes('"to":"labels"') ? [] : ['comparison not told where each sentence goes']),
+    ...(result?.long_captions?.length === 0 ? [] : ['a caption flagged'])]
+})
+{
+  const whole = structuredClone(INV_GATEAU); whole.caption_sentences.forEach(c => { c.to = 'caption' })
+  fails += await scenario('a caption of three sentences: flagged in the report, not refused', { inventories: [whole] }, ({ error, report, result, logs }) => [
+    ...threw(error),
+    ...(report && report.includes('Captions of more than one sentence (SPEC.md 7.2, principle 1: a caption that needs two sentences means two diagrams): gateau.svg (3 sentences).') && report.includes('(**3 sentences**: SPEC.md 7.2, principle 1)') ? [] : ['not flagged in the report']),
+    ...(result?.long_captions?.join() === 'gateau.svg' && logs.some(l => l.startsWith('Captions of more than one sentence')) ? [] : ['not in the summary or the log'])])
+  const lumped = structuredClone(INV_PART); lumped.caption_sentences[0].sentence = LEG_PART
+  fails += await scenario('a caption of one sentence given whole: not flagged', { inventories: [INV_GATEAU, lumped] }, ({ error, result }) => [...threw(error), ...(result?.long_captions?.length ? ['flagged'] : [])])
+  const untitled = structuredClone(INV_GATEAU); untitled.ideas[0].title = 'Une tranche horizontale contre trois tranches verticales'
+  fails += await scenario('a sentence to a title that does not carry it: asked once more', { inventories: [untitled], inventoriesAgain: [INV_GATEAU] }, ({ error, calls }) => [
+    ...threw(error),
+    ...(calls.some(c => c.label === 'inventory-again:1' && c.prompt.includes('gives to a title a sentence that title does not carry: « Le gâteau en couches. »')) ? [] : ['not asked again'])])
+  fails += await scenario('a sentence to a title that does not carry it, twice: stops', { inventories: [untitled], inventoriesAgain: [untitled] }, ({ error, calls }) => [
+    ...(error && /still gives to a title a sentence that title does not carry/.test(error) ? [] : ['not stopped']),
+    ...(drawers(calls).length ? ['drew anyway'] : [])])
+}
+// review of PR #182: the frontmatter diagrams of concept.md as written are the entries set in code
+fails += await scenario('frontmatter diagrams as set, in another order: drawn', { frontmatter: fm => [...fm].reverse() }, ({ error, calls }) => [
+  ...threw(error),
+  ...(calls.find(c => c.label === 'frontmatter')?.prompt.includes(`${ROOT}/specs/linear-course/checks/lib/md.js ${TGT}/concept.md`) ? [] : ['frontmatter command wrong']),
+  ...(calls.map(c => c.label).indexOf('frontmatter') < calls.map(c => c.label).indexOf('draw:gateau') ? [] : ['not read before the drawing'])])
+fails += await scenario('frontmatter caption reworded: stops before any drawing', { frontmatter: fm => fm.map(e => e.file === 'gateau.svg' ? { ...e, caption: `${e.caption} Et plus.` } : e) }, ({ error, calls }) => [
+  ...(error && /are not the entries set from the inventories \(M11\): gateau\.svg caption:/.test(error) ? [] : ['not stopped']),
+  ...(drawers(calls).length ? ['drew anyway'] : [])])
+fails += await scenario('frontmatter with an entry missing and one more key: stops', { frontmatter: fm => [{ ...fm[0], alt: 'x' }] }, ({ error }) => (error && /gateau\.svg: keys alt; part-recoupee\.svg: no entry/.test(error) ? [] : ['not stopped']))
+fails += await scenario('frontmatter unreadable: stops', { frontmatterOut: 'node: command not found' }, ({ error }) => (error && /could not be read/.test(error) ? [] : ['not stopped']))
 fails += await scenario('the sweeps\' rows on the diagrams: dropped, the comparison judges them', {
   oldRows: [{ source: 'ASTRO', item: 'Gateau.astro', where: 'gateau.svg', verdict: 'lost', rule: 'M11', detail: 'the blue ramp' }],
   invented: [{ file: `${TGT}/gateau.svg`, section: 'svg', text: 'a new layout', detail: 'not the old geometry' }],
@@ -229,11 +312,19 @@ fails += await scenario('the sweeps\' rows on the diagrams: dropped, the compari
   ...(calls.find(c => c.label === 'old-to-new')?.prompt.includes('The ASTRO components and the Figure legendes are the diagram comparison\'s') && calls.find(c => c.label === 'new-to-old')?.prompt.includes('The SVGs and the frontmatter diagrams entries are') ? [] : ['sweeps not told'])])
 fails += await scenario('renderings: the command, PNGs beside the report', { args: { report: '/Users/me/wt/construction/notes/181-concept-9-report.md' } }, ({ error, calls, report }) => [
   ...threw(error), ...noAbs(report),
-  ...(calls.find(c => c.label === 'renderings')?.prompt.includes(`mise exec -- node ${ROOT}/construction/scripts/diagram-renderings/render.mjs --out /Users/me/wt/construction/notes/181-concept-9-report/ --page ${SITE}/dist/concepts/09/index.html --svg ${TGT}/gateau.svg --svg ${TGT}/part-recoupee.svg`) ? [] : ['render command wrong']),
+  ...(calls.find(c => c.label === 'renderings')?.prompt.includes(`mise exec -- node ${ROOT}/construction/scripts/diagram-renderings/render.mjs --out /Users/me/wt/construction/notes/181-concept-9-report/ --page ${SITE}/dist/concepts/09/index.html --component ${SITE}/src/components/schemas/Gateau.astro --component ${SITE}/src/components/schemas/PartRecoupee.astro --svg ${TGT}/gateau.svg --svg ${TGT}/part-recoupee.svg`) ? [] : ['render command wrong']),
   ...(report && report.includes('![gateau.svg](181-concept-9-report/gateau.png)') && report.includes('Renderings in `181-concept-9-report/`, beside this report.') ? [] : ['links not relative to the report'])])
 fails += await scenario('renderings: no site build, the old component\'s source named', { renderOut: JSON.stringify({ page: 'absent', old: [], new: [{ svg: 'gateau.svg', png: 'gateau.png' }, { svg: 'part-recoupee.svg', png: null }], errors: [] }) }, ({ error, report }) => [
   ...threw(error), ...noAbs(report),
   ...(report && report.includes('| no site build: source `parcours-po-website/src/components/schemas/Gateau.astro` | ![gateau.svg](S1-10-09-report/gateau.png) |') && report.includes('| part-recoupee.svg: not rendered |') ? [] : ['no-build row wrong'])])
+const SRC_GATEAU = '---\nconst { p } = Astro.props\n---\n<svg viewBox="0 0 10 10" role="img"><text>Ingestion</text></svg>\n<!-- `code` -->\n'
+const srcLine = (c, source, bytes = Buffer.byteLength(source, 'utf8')) => JSON.stringify({ component: c, source, bytes })
+fails += await scenario('renderings: no site build, the old component\'s source quoted; a source cut short, named only', { renderOut: [
+  srcLine(`${SITE}/src/components/schemas/Gateau.astro`, SRC_GATEAU), srcLine(`${SITE}/src/components/schemas/PartRecoupee.astro`, '<svg>cut', 900),
+  JSON.stringify({ page: 'absent', old: [], new: [{ svg: 'gateau.svg', png: 'gateau.png' }, { svg: 'part-recoupee.svg', png: 'part-recoupee.png' }], errors: [] })].join('\n') }, ({ error, report }) => [
+  ...threw(error), ...noAbs(report),
+  ...(report && report.includes('| no site build: its source below | ![gateau.svg](S1-10-09-report/gateau.png) |') && report.includes('Source of `parcours-po-website/src/components/schemas/Gateau.astro`, as the old rendering:\n\n```astro\n---\nconst { p } = Astro.props') && report.includes('<!-- `code` -->\n```\n') ? [] : ['source not quoted']),
+  ...(report && report.includes('| no site build: source `parcours-po-website/src/components/schemas/PartRecoupee.astro` |') && report.includes('the source of parcours-po-website/src/components/schemas/PartRecoupee.astro came back cut (8 bytes, 900 measured): not quoted') ? [] : ['cut source not named only'])])
 fails += await scenario('renderings: no JSON, the report says so, the run goes on', { renderOut: 'qlmanage: command not found' }, ({ error, report }) => [
   ...threw(error),
   ...(report && report.includes('| not rendered: source `parcours-po-website/src/components/schemas/Gateau.astro` | gateau.svg: not rendered |') && report.includes('errors: the render command printed no JSON: qlmanage: command not found') ? [] : ['failure not reported'])])

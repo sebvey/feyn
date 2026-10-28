@@ -3,8 +3,8 @@
 Version 1.0.0, draft: binding from the tag `linear-course/v1.0.0`. The pedagogical protocol is
 not in this file: it is `PROTOCOL.md`, beside it, because this file would exceed about 400 lines
 with it. The four parts of the spec are the **structure** and its **reader-text conventions**
-(this file), the **drawing contract** (this file), the **checks** (this file, scripts in
-`checks/`) and the **protocol** (`PROTOCOL.md`).
+(this file), the **diagrams**, their drawing contract and style (this file), the **checks** (this
+file, scripts in `checks/`) and the **protocol** (`PROTOCOL.md`).
 
 **Language exception.** The rules of `PROTOCOL.md` are written in French, a bounded exception
 to the language policy (`docs/decisions/language-policy.md`): the old teacher was instructed and
@@ -323,15 +323,15 @@ characters of the lead, and does not open with a word of the language pack's
   `## X.Y.Z, YYYY-MM-DD`. An entry is one line `- MAJOR|MINOR|PATCH, <where> : <what>`. A last
   free paragraph is allowed (the line that links the course to its history before 0.1.0).
 
-## 7. The drawing contract
+## 7. Diagrams
 
 A **diagram** is one SVG in the concept folder, declared in `diagrams` (section 4.1). It serves
 both builds: the site shows it (inline or as an image), the teacher sends it to the desktop
 panel and says its caption; in the terminal, the teacher says the caption and gives the site
-link. Section 7.1 is the contract, every rule of it `svg-contract`; section 7.2 is the style
-every diagram of a course shares, for the writers and the reviews.
+link. Section 7.1 is the drawing contract, every rule of it `svg-contract`; section 7.2 is the
+style every diagram of a course shares, for the writers and the reviews.
 
-### 7.1 Contract
+### 7.1 Drawing contract
 
 - **File**: `<stem>.svg`, the stem lowercase ASCII words joined by hyphens; well-formed XML;
   32 KB at most.
@@ -380,6 +380,9 @@ and the ordinary text.
    - context: `muted`, a low opacity for fills, a middle one for lines;
    - text: `muted`, opacity 1; `primary` only when the word is the subject;
    - state: solid for done, dashed for not done or uncertain, struck for refused.
+
+   In one colour, nothing is more marked than the subject; the contrast differs from the subject
+   by opacity or form, not by hue alone.
 4. **Readable in one colour.** Opacity and form carry every distinction, never the hue alone.
    Text is always legible: never knocked out of a fill, never on a fill darker than itself.
 5. **Composition.** The `viewBox` is 600 units wide by default. The diagram reads left to right

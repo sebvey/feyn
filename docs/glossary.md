@@ -44,7 +44,7 @@ the English terms below are how we talk about them in code, docs and issues.
 | **neighbors** | the neighbouring notions not to confuse with the concept (« notions voisines »); a frontmatter key of their own, not a stance | "related", "see also" |
 | **sources** | `sources.md`: **claims**, **references**, **unverified** | "bibliography", "citations" |
 | **diagram** | an SVG of a concept under the **drawing contract**, with its **caption** | "schema" (data), "figure", "image", "illustration", "schéma" |
-| **drawing contract** | the SVG rules of the spec (viewBox, currentColor, three classes, `<text>`, named groups) | "style guide" |
+| **drawing contract** | the SVG rules of the spec, `SPEC.md` 7.1 (viewBox, currentColor, three classes, `<text>`, named groups); the style of 7.2 is not part of it | "style guide" |
 | **pitfalls**, **essentials**, **quick test** | the « Pièges », « L'essentiel », « Le test rapide » sections | |
 | **course glossary** | `courses/<id>/glossary.md`, course material | this file |
 

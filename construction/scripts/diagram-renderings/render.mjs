@@ -1,21 +1,24 @@
 // Renders the diagrams of one migrated concept as PNGs, for the report of migrate-concept (#181): the old
 // diagrams from the frozen site's build (each <figure> holding a diagram, with the page's stylesheets, in
 // the light theme), the new SVGs as they are (currentColor: one colour). macOS only: qlmanage draws them.
-//   mise exec -- node construction/scripts/diagram-renderings/render.mjs --out <dir> [--page <site>dist/concepts/NN/index.html] [--svg <file.svg>]...
-// Writes <dir>/old-<n>.png (n: the figure's order on the page) and <dir>/<stem>.png. Prints one JSON line:
-// { page: "found" | "absent" | "none", old: [{ n, caption, png }], new: [{ svg, png }], errors: [] }, the PNGs
-// named relative to <dir>. A failure to render is listed in errors, never fatal: the report says it.
+//   mise exec -- node construction/scripts/diagram-renderings/render.mjs --out <dir> [--page <site>dist/concepts/NN/index.html] [--component <file.astro>]... [--svg <file.svg>]...
+// Writes <dir>/old-<n>.png (n: the figure's order on the page) and <dir>/<stem>.png. With no site build
+// (the page absent or not given), the old diagram is its source, as #181 asks: one JSON line per
+// --component, { component, source, bytes }, bytes its UTF-8 size, so that the report quotes only a source
+// copied whole. Then, last, one JSON line: { page: "found" | "absent" | "none", old: [{ n, caption, png }],
+// new: [{ svg, png }], errors: [] }, the PNGs named relative to <dir>. A failure to render is listed in
+// errors, never fatal: the report says it.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, mkdtempSync, renameSync, rmSync } from 'node:fs'
 import { join, dirname, basename, resolve } from 'node:path'
 import { tmpdir } from 'node:os'
 import { spawnSync } from 'node:child_process'
 
 const argv = process.argv.slice(2)
-const opt = { svg: [] }
+const opt = { svg: [], component: [] }
 for (let k = 0; k < argv.length; k += 2) {
   const [key, val] = [argv[k], argv[k + 1]]
-  if (!val || !['--out', '--page', '--svg'].includes(key)) { console.error(`usage: render.mjs --out <dir> [--page <index.html>] [--svg <file.svg>]...; got ${key}`); process.exit(2) }
-  if (key === '--svg') opt.svg.push(val); else opt[key.slice(2)] = val
+  if (!val || !['--out', '--page', '--component', '--svg'].includes(key)) { console.error(`usage: render.mjs --out <dir> [--page <index.html>] [--component <file.astro>]... [--svg <file.svg>]...; got ${key}`); process.exit(2) }
+  if (key === '--svg' || key === '--component') opt[key.slice(2)].push(val); else opt[key.slice(2)] = val
 }
 if (!opt.out) { console.error('--out missing'); process.exit(2) }
 mkdirSync(opt.out, { recursive: true })
@@ -47,6 +50,13 @@ if (opt.page && existsSync(opt.page)) {
     const caption = text((/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/.exec(fig) || [, ''])[1])
     result.old.push({ n: k + 1, caption, png: thumbnail(file, `old-${k + 1}.png`) })
   })
+}
+if (result.page !== 'found') {
+  for (const c of opt.component) {
+    if (!existsSync(c)) { result.errors.push(`${basename(c)}: no such component`); continue }
+    const source = readFileSync(c, 'utf8')
+    console.log(JSON.stringify({ component: c, source, bytes: Buffer.byteLength(source, 'utf8') }))
+  }
 }
 for (const svg of opt.svg) {
   if (!existsSync(svg)) { result.errors.push(`${basename(svg)}: no such file`); continue }
