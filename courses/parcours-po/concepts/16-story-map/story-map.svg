@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 310" fill="currentColor" role="img" aria-labelledby="story-map-titre story-map-desc" font-family="system-ui, sans-serif" font-size="14">
+  <title id="story-map-titre">Une story map : le parcours de l'utilisateur en haut, les stories dessous, la première version en travers</title>
+  <desc id="story-map-desc">Quatre activités côte à côte, de gauche à droite : préparer la tournée, se rendre sur place, confirmer la panne, réparer ou retirer le vélo. Sous chacune, des stories, l'indispensable en haut. Une ligne en travers délimite la première version ; sous la troisième activité, la première version a un trou à explorer.</desc>
+
+  <g id="16b1-colonne-vertebrale">
+    <text class="muted" x="50" y="20">colonne vertébrale</text>
+    <line class="muted" x1="50" y1="30" x2="578" y2="30" stroke="currentColor" stroke-width="2" stroke-opacity="0.5"/>
+    <path class="muted" d="M588 30 L576 25 L576 35 Z" fill="currentColor" fill-opacity="0.5"/>
+  </g>
+  <g id="16b1-activite-tournee">
+    <rect class="muted" x="50" y="42" width="130" height="44" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5"/>
+    <text class="muted" x="115" y="60" text-anchor="middle"><tspan x="115" dy="0">préparer</tspan><tspan x="115" dy="16">la tournée</tspan></text>
+  </g>
+  <g id="16b1-activite-route">
+    <rect class="muted" x="186" y="42" width="130" height="44" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5"/>
+    <text class="muted" x="251" y="60" text-anchor="middle"><tspan x="251" dy="0">se rendre</tspan><tspan x="251" dy="16">sur place</tspan></text>
+  </g>
+  <g id="16b1-activite-panne">
+    <rect class="muted" x="322" y="42" width="130" height="44" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5"/>
+    <text class="muted" x="387" y="60" text-anchor="middle"><tspan x="387" dy="0">confirmer</tspan><tspan x="387" dy="16">la panne</tspan></text>
+  </g>
+  <g id="16b1-activite-reparation">
+    <rect class="muted" x="458" y="42" width="130" height="44" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5"/>
+    <text class="muted" x="523" y="60" text-anchor="middle"><tspan x="523" dy="0">réparer ou</tspan><tspan x="523" dy="16">retirer le vélo</tspan></text>
+  </g>
+  <g id="16b1-axe-necessite">
+    <line class="muted" x1="36" y1="98" x2="36" y2="284" stroke="currentColor" stroke-width="2" stroke-opacity="0.5"/>
+    <path class="muted" d="M36 294 L31 282 L41 282 Z" fill="currentColor" fill-opacity="0.5"/>
+    <text class="muted" x="14" y="98" transform="rotate(90 14 98)">l'indispensable</text>
+  </g>
+
+  <g id="16b1-premiere-version">
+    <rect class="primary" x="50" y="98" width="130" height="42" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2"/>
+    <text class="muted" x="115" y="124" text-anchor="middle">story</text>
+    <rect class="primary" x="186" y="98" width="130" height="42" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2"/>
+    <text class="muted" x="251" y="124" text-anchor="middle">story</text>
+    <rect class="primary" x="458" y="98" width="130" height="42" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2"/>
+    <text class="muted" x="523" y="124" text-anchor="middle">story</text>
+    <rect class="primary" x="322" y="98" width="130" height="42" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+    <text class="muted" x="387" y="124" text-anchor="middle">trou à explorer</text>
+    <line class="primary" x1="44" y1="168" x2="594" y2="168" stroke="currentColor" stroke-width="4"/>
+    <text class="primary" x="588" y="159" text-anchor="end">première version</text>
+  </g>
+  <g id="16b1-deuxieme-niveau">
+    <rect class="primary" x="50" y="182" width="130" height="42" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2" stroke-opacity="0.7"/>
+    <text class="muted" x="115" y="208" text-anchor="middle">story</text>
+    <rect class="primary" x="186" y="182" width="130" height="42" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2" stroke-opacity="0.7"/>
+    <text class="muted" x="251" y="208" text-anchor="middle">story</text>
+    <rect class="primary" x="322" y="182" width="130" height="42" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2" stroke-opacity="0.7"/>
+    <text class="muted" x="387" y="208" text-anchor="middle">story</text>
+    <rect class="primary" x="458" y="182" width="130" height="42" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2" stroke-opacity="0.7"/>
+    <text class="muted" x="523" y="208" text-anchor="middle">story</text>
+  </g>
+
+  <g id="16b1-troisieme-niveau">
+    <rect class="primary" x="50" y="236" width="130" height="42" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="2" stroke-opacity="0.4"/>
+    <text class="muted" x="115" y="262" text-anchor="middle">story</text>
+    <rect class="primary" x="186" y="236" width="130" height="42" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="2" stroke-opacity="0.4"/>
+    <text class="muted" x="251" y="262" text-anchor="middle">story</text>
+    <rect class="primary" x="322" y="236" width="130" height="42" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="2" stroke-opacity="0.4"/>
+    <text class="muted" x="387" y="262" text-anchor="middle">story</text>
+    <rect class="primary" x="458" y="236" width="130" height="42" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="2" stroke-opacity="0.4"/>
+    <text class="muted" x="523" y="262" text-anchor="middle">story</text>
+  </g>
+
+</svg>

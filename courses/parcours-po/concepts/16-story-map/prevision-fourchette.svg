@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" fill="currentColor" role="img" aria-labelledby="prevision-fourchette-titre prevision-fourchette-desc" font-family="system-ui, sans-serif" font-size="14">
+  <title id="prevision-fourchette-titre">Une prévision en fourchette que l'ordre du backlog et une dépendance peuvent déplacer</title>
+  <desc id="prevision-fourchette-desc">Sur un axe en sprints, une fourchette : la prévision des Developers. L'ordre du backlog et une dépendance, chacun avec une flèche vers elle, peuvent la déplacer.</desc>
+  <g id="16c-temps">
+    <path class="muted" d="M40 140 L548 140" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="2"/>
+    <path class="muted" d="M548 134 L558 140 L548 146 Z" fill="currentColor" fill-opacity="0.5" stroke="none"/>
+    <text class="muted" x="560" y="168" text-anchor="end" fill="currentColor">sprints</text>
+  </g>
+  <g id="16c-fourchette">
+    <rect class="primary" x="200" y="100" width="220" height="40" fill="currentColor" fill-opacity="0.25" stroke="none"/>
+    <path class="primary" d="M200 90 L200 150 M420 90 L420 150" fill="none" stroke="currentColor" stroke-width="3"/>
+    <text class="primary" x="310" y="68" text-anchor="middle" fill="currentColor">prévision des Developers</text>
+    <text class="primary" x="310" y="125" text-anchor="middle" fill="currentColor">fourchette</text>
+  </g>
+  <g id="16c-ordre-backlog">
+    <rect class="secondary" x="70" y="214" width="200" height="40" fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="2"/>
+    <text class="muted" x="170" y="239" text-anchor="middle" fill="currentColor">l'ordre du backlog</text>
+    <path class="secondary" d="M170 212 L250 152" fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="2"/>
+    <path class="secondary" d="M254 148 L241 150 L248 160 Z" fill="currentColor" fill-opacity="0.7" stroke="none"/>
+  </g>
+  <g id="16c-dependance">
+    <rect class="secondary" x="330" y="214" width="200" height="40" fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="2"/>
+    <text class="muted" x="430" y="239" text-anchor="middle" fill="currentColor">une dépendance</text>
+    <path class="secondary" d="M430 212 L372 152" fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="2"/>
+    <path class="secondary" d="M368 148 L381 151 L373 160 Z" fill="currentColor" fill-opacity="0.7" stroke="none"/>
+  </g>
+</svg>
