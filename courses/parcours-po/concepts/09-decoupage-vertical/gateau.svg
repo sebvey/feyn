@@ -1,62 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 440" role="img" aria-labelledby="gateau-titre gateau-desc" fill="currentColor" font-family="system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 440" fill="currentColor" role="img" aria-labelledby="gateau-titre gateau-desc" font-family="sans-serif">
   <title id="gateau-titre">Le gâteau en couches : une tranche horizontale contre trois tranches verticales</title>
-  <desc id="gateau-desc">Un gâteau de quatre couches empilées. De bas en haut : ingestion, transformation, données prêtes, restitution. La couche de transformation, prise en entier, est grisée et légendée : tranche horizontale, ne sert pas seule. Trois parts verticales, tranche 1, tranche 2 et tranche 3, traversent les quatre couches de haut en bas. Légende : une tranche verticale contient un peu de chaque couche et sert seule.</desc>
-
+  <desc id="gateau-desc">
+    Un gâteau de quatre couches empilées. De bas en haut : ingestion, transformation, données prêtes, restitution.
+    La couche de transformation, prise en entier, est grisée et légendée : tranche horizontale, ne sert pas seule.
+    Trois parts verticales, tranche 1, tranche 2 et tranche 3, traversent les quatre couches de haut en bas.
+    Légende : une tranche verticale contient un peu de chaque couche et sert seule.
+  </desc>
   <g id="9a1-couches">
-    <g class="secondary" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5">
-      <rect x="158" y="78" width="432" height="240"/>
-      <path d="M158 138 H590 M158 198 H590 M158 258 H590" fill="none"/>
-    </g>
-    <g font-size="19" font-weight="600" text-anchor="end">
-      <text x="148" y="115">Restitution</text>
-      <text x="148" y="175">Données prêtes</text>
-      <text x="148" y="235">Transformation</text>
-      <text x="148" y="295">Ingestion</text>
-    </g>
+    <rect class="muted" x="158" y="78" width="432" height="60" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text class="primary" x="148" y="115" text-anchor="end" font-size="19" font-weight="600" fill="currentColor" fill-opacity="1">Restitution</text>
+    <rect class="muted" x="158" y="138" width="432" height="60" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text class="primary" x="148" y="175" text-anchor="end" font-size="19" font-weight="600" fill="currentColor" fill-opacity="1">Données prêtes</text>
+    <rect class="muted" x="158" y="198" width="432" height="60" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text class="primary" x="148" y="235" text-anchor="end" font-size="19" font-weight="600" fill="currentColor" fill-opacity="1">Transformation</text>
+    <rect class="muted" x="158" y="258" width="432" height="60" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text class="primary" x="148" y="295" text-anchor="end" font-size="19" font-weight="600" fill="currentColor" fill-opacity="1">Ingestion</text>
   </g>
-
-  <g id="9a1-tranche-horizontale" class="muted">
-    <rect x="158" y="198" width="432" height="60" fill-opacity="0.25"/>
+  <g id="9a1-couche-entiere-fond">
+    <rect class="muted" x="158" y="198" width="432" height="60" fill="currentColor" fill-opacity="0.35" stroke="none"/>
   </g>
-
-  <g id="9a1-tranches-verticales">
-    <g id="9a1-tranche-1" class="primary" fill-opacity="0.85">
-      <rect x="172" y="70" width="92" height="67" rx="4"/>
-      <rect x="172" y="139" width="92" height="58" rx="2"/>
-      <rect x="172" y="199" width="92" height="58" rx="2"/>
-      <rect x="172" y="259" width="92" height="67" rx="4"/>
-    </g>
-    <g id="9a1-tranche-2" class="primary" fill-opacity="0.6">
-      <rect x="276" y="70" width="92" height="67" rx="4"/>
-      <rect x="276" y="139" width="92" height="58" rx="2"/>
-      <rect x="276" y="199" width="92" height="58" rx="2"/>
-      <rect x="276" y="259" width="92" height="67" rx="4"/>
-    </g>
-    <g id="9a1-tranche-3" class="primary" fill-opacity="0.4">
-      <rect x="380" y="70" width="92" height="67" rx="4"/>
-      <rect x="380" y="139" width="92" height="58" rx="2"/>
-      <rect x="380" y="199" width="92" height="58" rx="2"/>
-      <rect x="380" y="259" width="92" height="67" rx="4"/>
-    </g>
-    <g font-size="18" font-weight="650" text-anchor="middle">
-      <text x="218" y="58">tranche 1</text>
-      <text x="322" y="58">tranche 2</text>
-      <text x="426" y="58">tranche 3</text>
-    </g>
+  <g id="9a1-tranche-1">
+    <path class="primary" d="M172 137 V76 A6 6 0 0 1 178 70 H258 A6 6 0 0 1 264 76 V137 Z" fill="currentColor" fill-opacity="0.85"/>
+    <rect class="primary" x="172" y="139" width="92" height="58" fill="currentColor" fill-opacity="0.85"/>
+    <rect class="primary" x="172" y="199" width="92" height="58" fill="currentColor" fill-opacity="0.85"/>
+    <path class="primary" d="M172 259 H264 V320 A6 6 0 0 1 258 326 H178 A6 6 0 0 1 172 320 Z" fill="currentColor" fill-opacity="0.85"/>
+    <text class="primary" x="218" y="58" text-anchor="middle" font-size="18" font-weight="650" fill="currentColor" fill-opacity="1">tranche 1</text>
   </g>
-
+  <g id="9a1-tranche-2">
+    <path class="primary" d="M276 137 V76 A6 6 0 0 1 282 70 H362 A6 6 0 0 1 368 76 V137 Z" fill="currentColor" fill-opacity="0.6"/>
+    <rect class="primary" x="276" y="139" width="92" height="58" fill="currentColor" fill-opacity="0.6"/>
+    <rect class="primary" x="276" y="199" width="92" height="58" fill="currentColor" fill-opacity="0.6"/>
+    <path class="primary" d="M276 259 H368 V320 A6 6 0 0 1 362 326 H282 A6 6 0 0 1 276 320 Z" fill="currentColor" fill-opacity="0.6"/>
+    <text class="primary" x="322" y="58" text-anchor="middle" font-size="18" font-weight="650" fill="currentColor" fill-opacity="1">tranche 2</text>
+  </g>
+  <g id="9a1-tranche-3">
+    <path class="primary" d="M380 137 V76 A6 6 0 0 1 386 70 H466 A6 6 0 0 1 472 76 V137 Z" fill="currentColor" fill-opacity="0.4"/>
+    <rect class="primary" x="380" y="139" width="92" height="58" fill="currentColor" fill-opacity="0.4"/>
+    <rect class="primary" x="380" y="199" width="92" height="58" fill="currentColor" fill-opacity="0.4"/>
+    <path class="primary" d="M380 259 H472 V320 A6 6 0 0 1 466 326 H386 A6 6 0 0 1 380 320 Z" fill="currentColor" fill-opacity="0.4"/>
+    <text class="primary" x="426" y="58" text-anchor="middle" font-size="18" font-weight="650" fill="currentColor" fill-opacity="1">tranche 3</text>
+  </g>
   <g id="9a1-couche-entiere">
-    <rect class="muted" x="158" y="198" width="432" height="60" fill="none" stroke="currentColor" stroke-opacity="0.8" stroke-width="2.5" stroke-dasharray="7 5"/>
-    <text x="532" y="234" text-anchor="middle" font-size="16" font-weight="600">couche entière</text>
+    <rect class="muted" x="158" y="198" width="432" height="60" fill="none" stroke="currentColor" stroke-opacity="0.9" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <text class="primary" x="532" y="234" text-anchor="middle" font-size="16" font-weight="600" fill="currentColor" fill-opacity="1">couche entière</text>
   </g>
-
-  <g id="9a1-legende" transform="translate(22 346)" font-size="18.5">
-    <g class="muted">
-      <rect width="34" height="22" fill-opacity="0.25"/>
-      <rect width="34" height="22" fill="none" stroke="currentColor" stroke-opacity="0.8" stroke-width="2" stroke-dasharray="5 3"/>
-    </g>
-    <text x="48" y="17"><tspan font-weight="650">tranche horizontale</tspan><tspan fill-opacity="0.8"> : ne sert pas seule</tspan></text>
-    <rect class="primary" y="40" width="34" height="22" rx="4" fill-opacity="0.85"/>
-    <text x="48" y="57"><tspan font-weight="650">tranche verticale</tspan><tspan fill-opacity="0.8"> : un peu de chaque couche, sert seule</tspan></text>
+  <g id="9a1-legende" transform="translate(22 346)">
+    <rect class="muted" width="34" height="22" fill="currentColor" fill-opacity="0.35" stroke="currentColor" stroke-opacity="0.9" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <text class="secondary" x="48" y="17" font-size="18.5" fill="currentColor" fill-opacity="0.8"><tspan class="primary" font-weight="650" fill="currentColor" fill-opacity="1">tranche horizontale</tspan> : ne sert pas seule</text>
+    <rect class="primary" y="40" width="34" height="22" rx="4" fill="currentColor" fill-opacity="0.85"/>
+    <text class="secondary" x="48" y="57" font-size="18.5" fill="currentColor" fill-opacity="0.8"><tspan class="primary" font-weight="650" fill="currentColor" fill-opacity="1">tranche verticale</tspan> : un peu de chaque couche, sert seule</text>
   </g>
 </svg>
