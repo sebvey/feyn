@@ -28,8 +28,8 @@ where a reserved term exists.
 
 ## Commands
 
-`git` plain (the session carries the workspace identity); `gh` and `node` through
-`mise exec -- <command>` (the session PATH can be stale). Never `git config user.email` nor `git -c user.email=`.
+`git` plain (the work session carries the workspace identity); `gh` and `node` through
+`mise exec -- <command>` (the work session's PATH can be stale). Never `git config user.email` nor `git -c user.email=`.
 
 ## Working with the maintainer
 
@@ -58,4 +58,4 @@ the request.
 This section is removed at stage 4. Until then, read `construction/README.md` first: it says
 how a work session goes. The design is in `construction/design/`, the plan in
 `construction/plan/`. A task never edits the design; it writes `construction/notes/<task-id>.md`.
-A session starts with "Take S<n>-<nn>".
+A work session starts with "Take S<n>-<nn>".

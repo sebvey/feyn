@@ -5,7 +5,7 @@
 
 ### Observation
 
-<!-- What exists, what is missing, where: paths, line numbers, the issue, PR or session where it
+<!-- What exists, what is missing, where: paths, line numbers, the issue, PR or work session where it
      was seen. Facts only, no solution. -->
 
 ### To do

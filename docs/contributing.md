@@ -46,7 +46,7 @@ section and mark the PR ready. Nothing lands on `main` without a PR, the author 
 their own, and `main` is never force-pushed. After the
 merge, `/finish after-merge` confirms the change landed, checks the issue's Status is Done
 (and sets it if the Project did not; a `Refs` issue stays open and In progress), and deletes
-the local branch. `/orchestrate <n>` runs this whole cycle from the main conversation: a
+the local branch. `/orchestrate <n>` runs this whole cycle from one work session: a
 contributor agent per issue in its own worktree, a review by a fresh agent before the PR
 reaches the maintainer, then the clean-up of the worktree after the merge. Why: decisions
 `issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`.
@@ -79,7 +79,7 @@ decisions
 
 ## Tool behaviours
 
-The flow relies on how GitHub and Claude Code behave, and these are found in sessions, then
+The flow relies on how GitHub and Claude Code behave, and these are found in work sessions, then
 lost. A behaviour the flow relies on is written at its point of use (the skill step or document
 that depends on it), in one line ending with a mark `(<tool>, <status> <date>, #<n>)`: `<tool>`
 is `GitHub` or `Claude Code`; `<status>` is `tested` (provoked on purpose), `observed` (seen

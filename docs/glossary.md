@@ -52,9 +52,9 @@ the English terms below are how we talk about them in code, docs and issues.
 
 | Term | Means | Not |
 |---|---|---|
-| **protocol** | the pedagogical protocol: the testable teaching rules of a spec, each named by a slug | "the loop", "pedagogy", "rules", "behaviour" |
+| **protocol** | the pedagogical protocol: the testable teaching rules of a spec, each named by a slug, set in families and **groups** of rules, each group named by a slug too (`onboarding`) | "the loop", "pedagogy", "rules", "behaviour" |
 | **language pack** | `lang/<code>.yaml`: literal phrases, typography, site labels of one language | "i18n", "locale", "strings" |
-| **session** | one conversation between the teacher and a learner; **resume** = the first message of a session with an existing learner; **onboarding** = a new learner | |
+| **teaching session** | always qualified (the other sense is a **work session**): one conversation between the teacher and a learner; **resume** = the first message of a teaching session with an existing learner; **onboarding** = a new learner | "session" alone, "course session" |
 | **save point** | a moment where the teacher writes and commits learner memory | "checkpoint", "sync" |
 | **mini-recap** | the five-line recap every 3 or 4 validated concepts | "summary" |
 | **course.lock** | the classroom's record: course id, ref, course sha, tooling sha, channel, `site_url`, date | "manifest" |
@@ -68,8 +68,9 @@ the English terms below are how we talk about them in code, docs and issues.
 | **label** | always qualified: **type** (`type:bug`, `type:course`, `type:improvement`, `type:decision`), **area** (`area:<area>`), and `blocked:maintainer` (a maintainer decision is awaited; on the issue only). No state label: where an issue stands is its **Status** | |
 | **Project** | the GitHub Project "feyn" (number 4) that holds every issue with its Status: what the maintainer looks at in the web interface (its **Board view** is GitHub's layout with one column per Status) and what the agent lists (`gh project item-list`) | "board" for the Project itself, "kanban", "dashboard" |
 | **Status** | the Project's field that says where an issue stands: **Backlog** (proposed, to triage), **Ready** (decided, free to take), **In progress** (a branch exists), **Done** (closed by a PR). It replaces the state labels. Written with a capital when it names the field; the lowercase `status` key of a decision's frontmatter is a different, allowed key | "state" for where the work stands (an issue's `state` is GitHub's open or closed) |
-| **draft** | a PR that cannot be merged until it is marked ready (`gh pr ready`); `/finish` opens one when a maintainer decision is awaited (the issue, not the PR, carries `blocked:maintainer`) | "WIP" |
+| **draft** | a PR that cannot be merged until it is marked ready (`gh pr ready`); `/finish` opens one when a maintainer decision is awaited (the issue, not the PR, carries `blocked:maintainer`), and a contributor opens one when an orchestrator's agent-workflow run is awaited (`/orchestrate`, step 1) | "WIP" |
 | **blocked** | two senses, never mixed. "Blocked by #n": a blocked-by link between issues (decision `blocked-by-links-for-dependencies`), lifted when the blocking issue closes. `blocked:maintainer`: a maintainer decision is awaited, on the issue only, lifted when the maintainer removes the label | "on hold" |
+| **work session** | always qualified (the other sense is a **teaching session**): one Claude Code conversation on the feyn repository: a **reflection session** (with the maintainer, distilled by `/debrief`), an orchestration (`/orchestrate`), a construction task. A reflection session or a construction task leaves a **session note** in `construction/notes/` | "session" alone |
 | **stage** | one of the refactoring's milestones (stage 0 to 4) | "lot", "phase", "sprint", "iteration" |
 | **batch** | a set of concepts written in one `course-batch` agent workflow run (ex `course-lot`) | "lot", "chunk" |
 | **decision** | a recorded decision: one file by slug in a `decisions/` folder, with its counterfactual. "ADR" is the known synonym in conversation, never in paths | "ADR" in file names, "RFC", "design doc" |

@@ -1,13 +1,13 @@
 ---
 name: orchestrate
-description: Run the issue cycle on feyn from the main conversation - a contributor subagent per issue in its own worktree (/start, the work, /finish without merging), an independent review by a fresh agent against the Done when, a corrections pass, the hand-over to the maintainer, then the clean-up after the merge (worktree and worktree-agent branch). Use for "/orchestrate <n>", "run issue 12 through agents", "take 12 and 14 in parallel".
+description: Run the issue cycle on feyn from one work session - a contributor subagent per issue in its own worktree (/start, the work, /finish without merging), an independent review by a fresh agent against the Done when, a corrections pass, the hand-over to the maintainer, then the clean-up after the merge (worktree and worktree-agent branch). Use for "/orchestrate <n>", "run issue 12 through agents", "take 12 and 14 in parallel".
 argument-hint: "<issue number> [<issue number>…]"
 ---
 
 # /orchestrate <n> [<n>…]
 
-One job: drive issue n from Ready to merged without doing the work in the main conversation.
-The main conversation is the orchestrator: it briefs, checks and relays; a contributor agent
+One job: drive issue n from Ready to merged without doing the issue's changes in the work session that runs it.
+That work session is the orchestrator: it briefs, checks and relays; a contributor agent
 does the work, a fresh agent reviews it, the maintainer merges. Every PR is reviewed by a fresh
 agent before it reaches the maintainer (decision `fresh-agent-review-before-maintainer`).
 
@@ -22,13 +22,13 @@ agent before it reaches the maintainer (decision `fresh-agent-review-before-main
   course material, a To do that leaves choices); `sonnet` for execution from a clear contract
   (the To do gives the exact change). The reviewer is always `opus`.
 - A decision the issue asks for: did the maintainer accept its counterfactual in this
-  conversation? Then the brief gives it verbatim, with the date. Otherwise the contributor
+  work session? Then the brief gives it verbatim, with the date. Otherwise the contributor
   takes the decision-awaited path (step 4).
 - A Done when that needs an agent-workflow run: a subagent has no Workflow tool (Claude Code,
   observed 2026-10-28, #130). The contributor makes the run possible and stops on a draft with
   an `Awaiting the orchestrator` section (exact script path and arguments): the second use of a
   draft, an awaited orchestrator run. Ask the maintainer for an explicit go-ahead in the
-  conversation, then run it. Its agents work in the conversation's working directory, so a run
+  work session, then run it. Its agents run in the work session's working directory, so a run
   that must not see a file runs from a copy of the repo without it (Claude Code, observed
   2026-10-28, #130). The run and its reruns after fixes come before step 3: the reviewer
   needs their transcripts. Resume the contributor with the result: it applies it, removes the
@@ -67,7 +67,7 @@ the run ids `wf_<id>` and their transcript directory.
 - **Decision awaited.** The contributor that leaves a decision to the maintainer opens a draft
   PR, puts `blocked:maintainer` on the issue only, writes an `Awaiting the maintainer` section
   at the top of the body, and stops (`/finish`, step 6). A decision through `/decide` takes
-  this path unless the maintainer accepted its counterfactual in the conversation (step 1).
+  this path unless the maintainer accepted its counterfactual in the work session (step 1).
   Relay the question,
   the options and the recommendation to the maintainer. The maintainer answers with a comment
   on the issue and removes the label; check it is gone
@@ -164,7 +164,7 @@ Recheck yourself:
   (`mise exec -- gh pr diff <pr> --name-only`), rerun them;
 - evidence from an agent-workflow run
   (<run ids wf_<id> and transcript directory, or "none">): read the run's transcripts and check what its agents actually read and did, not only what
-  they output. The directory moves with the conversation's working directory (Claude Code,
+  they output. The directory moves with the work session's working directory (Claude Code,
   observed 2026-10-28, #130); not found: `find ~/.claude/projects -type d -name 'wf_<id>*'`;
 - reserved terms of docs/glossary.md and the words it bans; the rules of CLAUDE.md
   (language, no em-dashes in French, title `<type>(<area>): <summary>`, `Closes #<n>`, no

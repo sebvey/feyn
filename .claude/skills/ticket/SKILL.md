@@ -27,7 +27,7 @@ bullets (`- **Observation**: …`); read both.
 ## Create an issue
 
 1. **Say it back.** Restate the observation in two lines: what was seen, where (paths, issue,
-   PR, session). An observation with no place is not an issue yet: ask where it was seen.
+   PR, work session). An observation with no place is not an issue yet: ask where it was seen.
 2. **Look for a twin.** `mise exec -- gh issue list --state open --search "<two or three key words>"`.
    An open issue on the same point: add a comment to it instead
    (`mise exec -- gh issue comment <n> --body-file <file>`) and stop.
