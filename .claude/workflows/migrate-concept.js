@@ -955,7 +955,7 @@ const written = await agent(`Write the file ${REPORT} with exactly the content b
 excluded), byte for byte, creating its folder if needed. Do not use git. Then run this one command and \
 return the two numbers it prints: bytes, the file's size, and trimmed_bytes, its size without its trailing \
 whitespace.
-mise exec -- node -e 'const t = require("fs").readFileSync(process.argv[1], "utf8"); console.log(Buffer.byteLength(t), Buffer.byteLength(t.trimEnd()))' ${REPORT}
+mise exec -- node -e 'const t = require("fs").readFileSync(process.argv[1], "utf8"); console.log(Buffer.byteLength(t), Buffer.byteLength(t.trimEnd()))' "${REPORT}"
 -----BEGIN REPORT-----
 ${report}
 -----END REPORT-----`,
