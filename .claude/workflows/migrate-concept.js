@@ -144,7 +144,12 @@ a hatch, a halo) recorded. The drawings must stay readable in one colour. The co
 decided once per concept, for all its diagrams, never per drawing (ruling on #23): each colour token \
 of the old drawings (each --sch-* that an element of any component of the concept draws with) gets \
 one pair of class and opacity, the same pair in every diagram of the concept, two tokens never the \
-same pair; the report lists the mapping once, and the losses do not repeat it. Shapes the old \
+same pair; the report lists the mapping once, and the losses do not repeat it. An opacity the old \
+component sets on an individual element or class beyond its token's colour (a class .ribbon at 0.7 \
+and .ribbon.thin at 0.45 on the same token, a rect with opacity="0.5") is kept as that element's \
+opacity attribute (SPEC.md section 7 allows it), on top of its token's pair: never folded into the \
+pair, never dropped (a contrast ink, drawn as a gap, has no element to keep it on: a loss); the \
+report lists each kept element opacity under the writing choices (maintainer's ruling of 2026-10-28). Shapes the old \
 drawings told apart by colour get distinct opacities (for three colours, for example 0.85, 0.6, 0.4), \
 not only distinct classes; a contrast ink drawn over a shape (the cut lines across a slice) gets no \
 pair (class none) and becomes a gap, the shape \
@@ -227,9 +232,21 @@ const DIAGRAM_SCHEMA = {
     subconcept: { type: 'string' },
     groups: { type: 'array', items: { type: 'string' }, description: 'the group ids of the SVG' },
     tokens: { type: 'array', items: { type: 'string' }, description: 'the old colour tokens (--sch-*) this drawing draws with' },
+    element_opacities: {
+      type: 'array',
+      description: 'each opacity the old component set on an element or class beyond its token, kept as the element opacity attribute (M11)',
+      items: {
+        type: 'object',
+        properties: {
+          element: { type: 'string', description: 'the old element or class (.ribbon.thin, the rect of the legend), and its group or id in the SVG' },
+          opacity: { type: 'number', description: 'the opacity kept, as the old component set it' },
+        },
+        required: ['element', 'opacity'],
+      },
+    },
     losses: { type: 'array', items: { type: 'string' }, description: 'what the drawing contract could not carry (a second colour, a hatch, a halo), one line each; not the colour mapping' },
   },
-  required: ['file', 'title', 'caption', 'subconcept', 'groups', 'tokens', 'losses'],
+  required: ['file', 'title', 'caption', 'subconcept', 'groups', 'tokens', 'element_opacities', 'losses'],
 }
 
 const EMPTY_SCHEMA = {
@@ -434,7 +451,8 @@ that an element draws with, in any component, and give each one pair of class an
 same pair in every diagram, two tokens never the same pair, distinct opacities for shapes the old \
 drawings tell apart by colour (also across components: a token is one ink everywhere), class none \
 (opacity 0) only for a contrast ink drawn over a shape, which becomes a gap. List apart the tokens \
-declared but drawn by no element. Write no file.`,
+declared but drawn by no element. An opacity a component sets on one element or class beyond its \
+token is not part of the pair: the writers keep it on the element. Write no file.`,
     { label: 'colours', phase: 'Write', schema: COLOURS_SCHEMA })
   if (!c) throw new Error('The colour mapping agent returned nothing: rerun the workflow (resume) to retry it')
   const seen = new Set(), pairs = new Map()
@@ -470,8 +488,12 @@ The colour mapping of the concept, decided once for all its diagrams (M11): ${MA
 element of a token with that token's class and opacity (fill-opacity for a fill, stroke-opacity for a \
 stroke), never another pair; do not decide a mapping of your own. A token this drawing draws with that \
 the mapping lacks: stop and return it in tokens, without inventing a pair.
-Return its frontmatter entry, its group ids, the old colour tokens it draws with, and the losses (not \
-the mapping: the report lists it once).`,
+An opacity the component sets on an individual element or class beyond its token's colour (a class \
+at 0.7 and another at 0.45 on the same token, opacity="0.5" on a rect): keep it as that element's \
+opacity attribute, on top of the token's pair; never fold it into the pair, never drop it. Return \
+each one in element_opacities.
+Return its frontmatter entry, its group ids, the old colour tokens it draws with, the element \
+opacities kept, and the losses (not the mapping: the report lists it once).`,
       { label: `diagram:${d.stem}`, phase: 'Write', schema: DIAGRAM_SCHEMA })))
     return drawn
   },
@@ -492,6 +514,8 @@ const mappedTokens = new Set(colours.mapping.map(m => m.token))
 for (const e of diagramEntries) {
   const unmapped = e.tokens.filter(t => !mappedTokens.has(t))
   if (unmapped.length) throw new Error(`${e.file} draws with ${unmapped.join(', ')}, which the colour mapping of the concept lacks: the colour agent missed it, see the workflow log`)
+  // element opacities are kept as the element's opacity attribute (M11, maintainer's ruling of 2026-10-28)
+  for (const o of e.element_opacities) if (!(o.opacity > 0 && o.opacity <= 1)) throw new Error(`${e.file}: element opacity ${o.opacity} on ${o.element}, expected above 0 and at most 1`)
 }
 if (!teachingAndSources) throw new Error('teaching.md and sources.md not written: see the workflow log')
 
@@ -704,7 +728,7 @@ function renderReport() {
     if (colours.unused.length) out.push('', `Declared but drawn by no element: ${colours.unused.map(t => `\`${t}\``).join(', ')}.`)
   }
   out.push('', '## Writing choices', '')
-  const choices = [...teachingAndSources.choices, ...conceptWritten.choices, ...diagramEntries.flatMap(d => d.losses.map(l => `${d.file}: ${l} (M11)`))]
+  const choices = [...teachingAndSources.choices, ...conceptWritten.choices, ...diagramEntries.flatMap(d => d.element_opacities.map(o => `${d.file}: element opacity ${o.opacity} kept on ${o.element} (M11)`)), ...diagramEntries.flatMap(d => d.losses.map(l => `${d.file}: ${l} (M11)`))]
   out.push(...(choices.length ? choices.map(c => `- ${plain(c)}`) : ['None.']))
   out.push('', '## Checks', '')
   out.push(`\`${CHECK_CMD}\``, '', '```', checks.output.trim(), '```')

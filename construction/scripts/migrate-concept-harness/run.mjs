@@ -57,6 +57,7 @@ function makeAgent(o) {
       const stem = L.slice(8)
       return { file: `${stem}.svg`, title: 't', caption: 'c', subconcept: '9a', groups: [`9a-${stem}`],
         tokens: o.tokens?.[stem] ?? (stem === 'gateau' ? ['--sch-s1', '--sch-s2', '--sch-text', '--sch-grey', '--sch-s-ink'] : ['--sch-s1', '--sch-s2', '--sch-text']),
+        element_opacities: o.elementOpacities?.[stem] ?? (stem === 'gateau' ? [{ element: '.hatch-line, group 9a-hatch', opacity: 0.55 }] : []),
         losses: [`halo dropped in ${TGT}/${stem}.svg`] }
     }
     if (L === 'teaching+sources') return { files: [`${TGT}/teaching.md`, `${TGT}/sources.md`], choices: [`M10: \`course/plan.md\` became \`plan.md\` in ${TGT}/sources.md intro`] }
@@ -100,7 +101,10 @@ fails += await scenario('two diagrams, target absent (GNU ls): one mapping, rela
   ...(report && report.includes('concept folder `concepts/09-decoupage-vertical/`') && report.includes('`parcours-po/course/concepts/09') ? [] : ['header paths wrong']),
   ...(report && report.includes('check-course courses/parcours-po --only') ? [] : ['check command wrong']),
   ...(calls.some(c => c.label === 'empty-target') ? ['emptied an absent folder'] : []),
+  ...(calls.filter(c => c.label.startsWith('diagram:')).every(c => c.prompt.includes("keep it as that element's") && c.prompt.includes('element_opacities')) ? [] : ['a writer lacks the element-opacity rule']),
+  ...(report && report.includes('- gateau.svg: element opacity 0.55 kept on .hatch-line, group 9a-hatch (M11)') ? [] : ['kept element opacity not in the writing choices']),
 ])
+fails += await scenario('element opacity out of range: stops', { elementOpacities: { gateau: [{ element: '.bar', opacity: 75 }] } }, ({ error }) => (error && /element opacity 75 on \.bar/.test(error) ? [] : ['not stopped']))
 fails += await scenario('target absent (macOS ls)', { listing: ABSENT_MAC }, ({ error, report }) => [...(error ? [`threw: ${error}`] : []), ...noAbs(report)])
 fails += await scenario('target an empty folder: no refusal, no emptying', { listing: EMPTY }, ({ error, report, calls }) => [
   ...(error ? [`threw: ${error}`] : []), ...(calls.some(c => c.label === 'empty-target') ? ['emptied'] : []),
