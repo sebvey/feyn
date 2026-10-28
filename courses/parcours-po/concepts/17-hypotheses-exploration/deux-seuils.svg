@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" fill="currentColor" role="img" aria-labelledby="deux-seuils-titre deux-seuils-desc" font-family="system-ui, sans-serif" font-size="16">
+  <title id="deux-seuils-titre">Deux seuils dans l'ordre du temps</title>
+  <desc id="deux-seuils-desc">Sur une flèche du temps, un seuil placé avant la période d'exploration, puis l'exploration, puis un second seuil placé après elle.</desc>
+  <g id="17c-axe-temps" class="muted">
+    <line x1="20" y1="130" x2="560" y2="130" stroke="currentColor" stroke-opacity="0.5" stroke-width="2" fill="none"/>
+    <path d="M580 130 L558 120 L558 140 Z" fill="currentColor" fill-opacity="0.5" stroke="none"/>
+  </g>
+  <g id="17b1-periode-exploration" class="muted">
+    <rect x="210" y="95" width="180" height="70" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="2"/>
+    <text x="300" y="156" text-anchor="middle" fill="currentColor">exploration</text>
+  </g>
+  <g id="17b1-seuil-avant" class="primary">
+    <rect x="106" y="90" width="8" height="80" fill="currentColor" stroke="none"/>
+    <text x="20" y="46" fill="currentColor">seuil qui juge l'exploration,</text>
+    <text x="20" y="68" fill="currentColor">fixé avant</text>
+  </g>
+  <g id="17c-seuil-apres" class="secondary">
+    <rect x="486" y="90" width="8" height="80" fill="currentColor" fill-opacity="0.35" stroke="currentColor" stroke-opacity="0.7" stroke-width="2"/>
+    <text class="muted" x="580" y="206" text-anchor="end" fill="currentColor">niveau exigé de la fonction livrée,</text>
+    <text class="muted" x="580" y="228" text-anchor="end" fill="currentColor">fixé après</text>
+  </g>
+</svg>
