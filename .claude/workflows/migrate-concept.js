@@ -90,10 +90,14 @@ M10 Sources. sources.md from SF: frontmatter and H1 dropped (M1); the intro para
 Nature: when an MDX sources.affirmations item states the same claim, its kind (cours, école, \
 consensus; MDX ecole is written école), and empty when that item has no kind (the absence is the \
 site's choice); only when no MDX item states the claim, the stance of the MDX ecoles item the claim \
-matches (consensus, ecole, cours), else empty. A reference id that a row names only in its \
-verification column (« l'affiche [S5b] ajoute … ») is added to its source column, after the ids \
-already there: the row cites it, and the sources check wants every reference cited in a source cell; \
-counted moved. A row's section name « Sous-concepts » becomes « Consignes », « Consensus et choix d'école » \
+matches (consensus, ecole, cours), else empty. Source column: copied as it is, never an id added, \
+removed or replaced, never « aucune » or another no-source word replaced, with one exception, the \
+orphan: a reference of « Références » that no source cell of the file cites (the sources check fails \
+on it) and that exactly one row names in its verification column as what supports the claim \
+(« l'affiche [S5b] ajoute … ») is added to that row's source column, after the ids already there; \
+counted moved, detail "orphan [Sx] added". An id the verification column names as a contrast, a source \
+that does not say it, a nuance not retained or a neighbouring idea is not support: it stays out. An \
+orphan with no such row is left, and the run fails on it. A row's section name « Sous-concepts » becomes « Consignes », « Consensus et choix d'école » \
 stays (headings.stances); paths course/sources/NN-slug.md become concepts/NN-slug/sources.md; rows \
 whose section is in teaching.md stay (the site filters them, ruling on #98). « Références » and \
 « Non vérifié »: unchanged. The MDX sources texts (the reader paraphrase): by design, only their kind \
@@ -344,7 +348,8 @@ ${MAP}
 
 Run "${CHECK_CMD}". For each failure in a file of ${TARGET}: fix it when the fix is form only (a heading, \
 a label, a list shape, a frontmatter key, an id, an SVG attribute, a quote character, a wrapped line, \
-a reference id the row already names elsewhere added to its source column); \
+the orphan reference of rule M10 added to the source column of the one row that names it as support, \
+and no other source-column change); \
 leave it when the fix would change what the text says, and say why. Rerun after fixing, at most three \
 runs in all. A failure in a file outside ${TARGET} is not yours: leave it. Return the last output.`,
   { label: 'checks', phase: 'Checks', schema: CHECKS_SCHEMA, model: 'sonnet' })
@@ -364,7 +369,13 @@ The course.yaml entry: ${scope.course_entry}
 ${MAP}
 
 The comparison is semantic: line breaks, Markdown form and the conversions the rules name do not count; \
-a sentence, a clause, a precision, a reference, a figure, a nuance, a case field does.`
+a sentence, a clause, a precision, a reference, a figure, a nuance, a case field does.
+Sourcing counts too. A source cell of « Affirmations » (column 2) or a frontmatter refs list that \
+differs from its old one by an id added, removed or replaced, or by a no-source word (« aucune ») \
+replaced, is a change of sourcing: it is never moved by default. It is moved only when it is the orphan \
+case of M10, and the row's detail then names the orphan and quotes the verification text that names \
+it as support. Any other change of sourcing is invented (an id added or replaced, a no-source word \
+replaced) or lost (an id removed).`
 
 const [oldSweep, newSweep] = await parallel([
   () => agent(`${COMPARE}
@@ -386,7 +397,10 @@ sentences, list items, case fields, table rows, SVG texts). For each, find the o
 it. Report only what is invented: a sentence, a clause, a precision, a reference, a figure or a claim \
 that no old file carries, or a rewording that says more or less than the old text. Text that a rule \
 produces (a heading from course.yaml, the Nature column of M10, "[cours]" for a pastille, an SVG id) is \
-not invented when it follows the rule. Return an empty list when nothing is invented.`,
+not invented when it follows the rule. Compare every source cell of sources.md and every refs list \
+of the frontmatter with the old one, id by id, and report each added or replaced id, and each \
+replaced no-source word, that is not the orphan case of M10. Return an empty list when nothing is \
+invented.`,
     { label: 'new-to-old', phase: 'Compare', schema: NEW_SWEEP_SCHEMA }),
 ])
 if (!oldSweep || !newSweep) throw new Error('A comparison sweep returned nothing: rerun the workflow (resume) to retry it')
@@ -400,7 +414,11 @@ if (lostRows.length || inventedRows.length) {
 Two sweeps flagged these rows. Try to refute each one: for a lost row, search every new file for the \
 quoted text, in any wording that keeps the meaning; for an invented row, search every old file \
 (CF, SF, MDX frontmatter and body, ASTRO) for what carries it, and check whether a rule produces it. \
-confirmed: true only when your search finds nothing; say where you looked or what you found.
+confirmed: true only when your search finds nothing; say where you looked or what you found. A \
+change of sourcing (an id added, removed or replaced in a source cell or a refs list, a no-source word \
+replaced) is refuted only when it is the orphan case of M10: the reference is cited by no other source \
+cell of the new sources.md, and the row's verification text names it as support, not as a contrast or \
+a nuance not retained.
 
 Lost: ${JSON.stringify(lostRows)}
 Invented: ${JSON.stringify(inventedRows)}`,
