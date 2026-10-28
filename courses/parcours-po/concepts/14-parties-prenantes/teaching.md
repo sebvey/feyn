@@ -126,17 +126,17 @@ ils ne deviennent pas des faits du fil rouge.
   réponse promet, cache l'ordre, ou s'abrite derrière « c'est moi qui décide ».
 - **Erreurs fréquentes** :
   - promettre à Charlotte et à Pia le même sprint, ou « un peu de chaque » : la poire coupée en
-    deux ne sert ni l'une ni l'autre ; demander « que livres-tu à chacune à la fin ? » ;
+    deux ne sert ni l'une ni l'autre ; demander « que livres-tu à chacune à la fin ? ». Si la
+    relance échoue, réexpliquer : prendre Étienne, qui veut la vue des locations du jour au
+    prochain sprint alors que l'accès manque. Lui dire oui, c'est promettre ce que l'équipe ne
+    peut pas livrer ; « pas maintenant, voici pourquoi et voici sa place » lui laisse de quoi
+    agir. Puis reposer la question sur Charlotte ;
   - « c'est moi qui décide, point » : juste sur le fond (1b), mais sans le pourquoi Charlotte n'a
     rien pour te convaincre ; demander « pourquoi ? », comme elle le ferait ;
   - « non » sans la suite : demander « et alors, que deviennent ses stories ? » ;
   - fixer soi-même l'échéance (« le bilan est dans deux mois ») : la date se demande à Charlotte ;
   - renvoyer Charlotte vers Odile pour qu'elle tranche : l'ordre est au PO (1b) ; pourquoi ce
-    n'est pas une escalade, on le voit en 14c ;
-  - réponse « oui aux deux » (réexplication) : prendre Étienne, qui veut la vue des
-    locations du jour au prochain sprint alors que l'accès manque. Lui dire oui, c'est promettre ce
-    que l'équipe ne peut pas livrer ; « pas maintenant, voici pourquoi et voici sa place » lui
-    laisse de quoi agir. Puis reposer la question sur Charlotte.
+    n'est pas une escalade, on le voit en 14c.
 - **Ce qui marche** : faire écrire la réponse au discours direct ; si elle est elliptique
   (« je lui explique l'ordre »), faire préciser avant de corriger : « que lui dis-tu, mot pour
   mot ? ». Puis la relire avec trois cases : pas maintenant, pourquoi, où est sa demande.
@@ -231,12 +231,12 @@ ils ne deviennent pas des faits du fil rouge.
   Odile d'elle-même, c'est son droit ; le PO montre alors son pourquoi (rechange 14b).
 - **Erreurs fréquentes** :
   - « oui, le sponsor porte plus haut les obstacles qui dépassent le PO » : un obstacle, pas
-    l'ordre de son backlog ; demander « qu'est-ce qui bloque l'équipe, ici ? » ;
+    l'ordre de son backlog ; demander « qu'est-ce qui bloque l'équipe, ici ? ». Si la relance
+    échoue, réexpliquer : Maud et Étienne se disputent la tête du backlog. Appeler Odile, c'est
+    lui demander d'ordonner à ta place ; rien ne bloque l'équipe, donc le PO tranche et
+    explique. Puis reposer la question sur Diego ;
   - faire voter Pia et Charlotte : pas de vote, le PO est une seule personne, pas un comité
-    (concepts 0a1 et 1b) ;
-  - réponse « elle tranchera » (réexplication) : Maud et Étienne se disputent la tête
-    du backlog. Appeler Odile, c'est lui demander d'ordonner à ta place ; rien ne bloque l'équipe,
-    donc le PO tranche et explique. Puis reposer la question sur Diego.
+    (concepts 0a1 et 1b).
 - **Ce qui marche** : le test rapide, obstacle ou désaccord, posé à voix haute.
 
 ### Pia refuse le canal d'Abba (14c, en rechange)
@@ -286,10 +286,12 @@ relié par un pointillé ».
 à la troisième ; une flèche mène à la réponse, seule marquée du dessin, en trois cases :
 « pas maintenant », « pourquoi » (l'objectif produit, ce qui est prêt), « où est la demande »,
 cette dernière renvoyant à la place de la demande. Légende : « dire non à une partie prenante :
-sa demande reste visible dans le backlog, à sa place, et la réponse tient en trois cases ».
+sa demande reste visible dans le backlog, à sa place, et la réponse tient en trois cases : pas
+maintenant, pourquoi, où est la demande ».
 
 **14c, l'escalade (escalade-obstacle-marches.svg).** Un escalier à trois marches, de plus en
 plus pâles : la personne concernée (« pas encore une escalade »), le Scrum Master, le sponsor,
 puis un palier, l'instance où se tranchent les désaccords entre services. À côté, un désaccord
 sur l'ordre de son propre backlog, barré d'une croix : le PO tranche. Légende : « l'escalade
-porte sur l'obstacle, jamais sur l'ordre ».
+porte sur l'obstacle, jamais sur l'ordre : trois marches pour l'un, et pour un désaccord sur
+l'ordre de son propre backlog, que le PO tranche, aucune ».
