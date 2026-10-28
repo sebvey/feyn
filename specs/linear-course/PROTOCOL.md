@@ -61,8 +61,8 @@ de « {headings.onboarding} » de `course/plan.md`. Le public cible de `course/p
 profondeur et les exemples ; ses partis pris valent partout, lis-les au besoin.
 
 **new-or-returning-learner** Nouvel apprenant (`learner/apprenant.md`, fourni au démarrage, absent ou encore au surnom
-`<nickname>`) : l'accueil (règles du groupe `onboarding`), puis la boucle (famille 3). Sinon : la reprise (groupe
-`resume`).
+`<nickname>`) : l'accueil (règles du groupe `onboarding`), puis la boucle (famille 3). Sinon : la reprise (règles du
+groupe `resume`).
 
 ### Accueil (`onboarding`)
 

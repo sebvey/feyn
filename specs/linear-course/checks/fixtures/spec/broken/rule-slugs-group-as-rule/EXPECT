@@ -1,0 +1,2 @@
+check: rule-slugs
+message: cites rule "onboarding", which is a group

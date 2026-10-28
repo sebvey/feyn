@@ -13,7 +13,11 @@
 //     « to », « et », « à »: each must be a rule;
 //   - everywhere, the code spans that follow « group », « groups », « groupe » or « groupes »: each
 //     must be a group.
-// A rule named or cited by its old number (`**1.2**`, « règle 1.2 », « rules 1.1, 1.5 ») fails too.
+//   - in a rule family too, the code spans after « règle(s) » must be rules.
+// A rule named or cited by its old number (`**1.2**`, « règle 1.2 », « rules 1.1, 1.5 ») fails too,
+// and so does a range, « `a` à `b` » or « `a` to `b` », in PROTOCOL.md or SPEC.md (decision
+// rule-groups-replace-ranges). decisions/ are not read for ranges: they record history and quote
+// the ranges they replaced.
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
 
@@ -61,6 +65,17 @@ function numberCitations(lines) {
   return out;
 }
 
+// « `a` à `b` », « `a` to `b` »: a set of rules cited by a range
+function rangeCitations(lines) {
+  const out = [];
+  for (const p of paragraphs(lines)) {
+    for (const m of p.text.matchAll(/`([^`]+)`\s+(?:à|to)\s+`([^`]+)`/g)) {
+      if (GROUP_SLUG.test(m[1]) && GROUP_SLUG.test(m[2])) out.push({ text: m[0], line: p.lineAt(m.index) });
+    }
+  }
+  return out;
+}
+
 function run(ctx) {
   const text = ctx.read(PROTOCOL);
   if (text === null) return [fail(PROTOCOL, 1, 'PROTOCOL.md is missing')];
@@ -98,6 +113,7 @@ function run(ctx) {
         if (cell) define(cell[1], r.line, 'rule');
       }
     }
+    for (const k of keywordCitations(s.lines, RULE_WORD)) for (const c of k.items) cites.push({ file: PROTOCOL, slug: c, line: k.line, kind: 'rule' });
     for (const k of keywordCitations(s.lines, GROUP_WORD)) for (const c of k.items) cites.push({ file: PROTOCOL, slug: c, line: k.line, kind: 'group' });
     for (const n of numberCitations(s.lines)) out.push(fail(PROTOCOL, n.line, `rule cited by its number "${n.number}": cite its slug`));
   }
@@ -144,10 +160,17 @@ function run(ctx) {
     if (c.kind === 'group') {
       if (!d) out.push(fail(c.file, c.line, `cites group "${c.slug}", which PROTOCOL.md does not define`));
       else if (d.kind !== 'group') out.push(fail(c.file, c.line, `cites group "${c.slug}", which is a rule`));
-    } else if (NUMBER.test(c.slug)) out.push(fail(c.file, c.line, `rule cited by its number "${c.slug}": cite its slug`));
+    } else if (d && d.kind === 'group' && c.kind === 'rule') out.push(fail(c.file, c.line, `cites rule "${c.slug}", which is a group: cite it after « groupe » or « group »`));
+    else if (NUMBER.test(c.slug)) out.push(fail(c.file, c.line, `rule cited by its number "${c.slug}": cite its slug`));
     else if (!SLUG.test(c.slug)) out.push(fail(c.file, c.line, `rule cited as "${c.slug}", which is not a slug`));
     else if (!d) out.push(fail(c.file, c.line, `cites rule "${c.slug}", which PROTOCOL.md does not define`));
-    else if (c.kind === 'rule' && d.kind !== 'rule') out.push(fail(c.file, c.line, `cites rule "${c.slug}", which is a group: cite it as a group`));
+  }
+
+  // ranges, in PROTOCOL.md and SPEC.md
+  const ranged = [{ file: PROTOCOL, lines: body }];
+  if (spec !== null) ranged.push({ file: 'SPEC.md', lines: mdlib.split(spec).body });
+  for (const r of ranged) {
+    for (const g of rangeCitations(r.lines)) out.push(fail(r.file, g.line, `cites a range "${g.text}": cite the rules one by one, or the group that holds them`));
   }
   return out;
 }

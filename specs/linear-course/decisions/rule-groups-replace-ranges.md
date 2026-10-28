@@ -31,3 +31,5 @@ This replaces the two ranges of the rule `new-or-returning-learner` (« règles
 ## Consequences
 
 - Moving a rule under another heading changes its group; a test that cites a group follows it.
+- A rule inserted under a heading joins its group, as a move does; the diff shows it under the
+  heading.
