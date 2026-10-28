@@ -29,10 +29,10 @@ export const meta = {
 // diagrams (from the inventory: each caption the legende's sentences of its idea that go to the caption,
 // the legende checked whole; then read back from concept.md as written and compared), an inventory free of
 // the old drawing's forms (OLD_FORM) and of states no word says, a caption of more than one sentence
-// flagged, the checks verdict, a missing item naming the target ignored, the repository root (from an absolute dest, else pwd; the agents get the spec and the glossary
-// under it, #178), the report. The report names paths relative to the course folder (concepts/NN-slug/...)
-// and the old repositories by their folder name: never the absolute paths of args.dest, args.from or
-// args.site (#170).
+// flagged, the checks verdict, a missing item naming the target ignored, the repository root (from an
+// absolute dest, else pwd; the agents get the spec and the glossary under it, #178), the report. The
+// report names paths relative to the course folder (concepts/NN-slug/...) and the old repositories by
+// their folder name: never the absolute paths of args.dest, args.from or args.site (#170).
 
 const A = args || {}
 if (!A.course) throw new Error('args.course missing: the course id (courses/<id>/)')

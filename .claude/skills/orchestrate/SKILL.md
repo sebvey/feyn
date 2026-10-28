@@ -95,7 +95,8 @@ clean its worktree with steps 6.1, 6.2 and 6.4 only: it holds no issue branch, s
 `/finish after-merge` for it. A PR whose evidence is an agent-workflow run: give the reviewer
 the run ids `wf_<id>` and their transcript directory, and for a blind run the deleted paths
 and the worktree. A `migrate-concept` PR (the S1-10 sub-issues): add the
-[migration variant](#migration-variant) to the brief.
+[migration variant](#migration-variant) to the brief; with no prototype of the concept, the run
+ids given are "none" (the PR still cites its run id).
 
 ## 4. Corrections pass, decision awaited
 
@@ -271,7 +272,8 @@ the old one:
   reference tied to the claim it supports or removed, the PR saying which (C);
 - read the old concept once (<old concept file>, <site page>), as the only guard against a
   passage lost: name a lost passage as a finding, never a rewording that keeps the meaning.
-Read the run's transcripts only when a hand migration of this concept existed before the run
-(a prototype in construction/notes/): then check that no agent of the run read it. With no
-prototype, the transcripts are not read.
+This replaces the brief's bullet on evidence from an agent-workflow run: read the run's
+transcripts only when a hand migration of this concept existed before the run (a prototype in
+construction/notes/), to check that no agent of the run read it. With no prototype, the
+transcripts are not read.
 ```
