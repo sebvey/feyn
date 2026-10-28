@@ -87,9 +87,13 @@ fields as SPEC.md 4.3 lists them (labels « **<label>** : »). CF « Schéma »:
 M10 Sources. sources.md from SF: frontmatter and H1 dropped (M1); the intro paragraph kept; \
 « Affirmations »: same rows, same order, texts unchanged, the header « Affirmation (section de \
 \`concept.md\` ou de \`teaching.md\`) | Source | Ce qui a été vérifié | Nature », a fourth column \
-Nature: the kind of the MDX sources.affirmations item that states the same claim (cours, école, \
-consensus; MDX ecole is written école), else the stance of the MDX ecoles item the claim matches (consensus, ecole, cours), \
-else empty; a row's section name « Sous-concepts » becomes « Consignes », « Consensus et choix d'école » \
+Nature: when an MDX sources.affirmations item states the same claim, its kind (cours, école, \
+consensus; MDX ecole is written école), and empty when that item has no kind (the absence is the \
+site's choice); only when no MDX item states the claim, the stance of the MDX ecoles item the claim \
+matches (consensus, ecole, cours), else empty. A reference id that a row names only in its \
+verification column (« l'affiche [S5b] ajoute … ») is added to its source column, after the ids \
+already there: the row cites it, and the sources check wants every reference cited in a source cell; \
+counted moved. A row's section name « Sous-concepts » becomes « Consignes », « Consensus et choix d'école » \
 stays (headings.stances); paths course/sources/NN-slug.md become concepts/NN-slug/sources.md; rows \
 whose section is in teaching.md stay (the site filters them, ruling on #98). « Références » and \
 « Non vérifié »: unchanged. The MDX sources texts (the reader paraphrase): by design, only their kind \
@@ -102,7 +106,13 @@ ASCII without accents, joined by hyphens; stems are unique in the concept. Same 
 written out; <title> kept (it is the frontmatter title and the image alt) and <desc> kept, ids \
 prefixed with the stem; colour tokens (--sch-*), <style> and patterns become currentColor with \
 fill-opacity / stroke-opacity and the classes primary, secondary, muted, the losses (a second colour, \
-a hatch, a halo) recorded; groups "<sub-concept>-<element>", never a bare sub-concept id. Frontmatter \
+a hatch, a halo) recorded. The drawing must stay readable in one colour: shapes the old drawing told \
+apart by colour get distinct opacities (three slice colours: 0.85, 0.6, 0.4), not only distinct \
+classes; a contrast ink drawn over a shape (the cut lines across a slice) becomes a gap, the shape \
+drawn as segments 2 units apart, never a line of another class over it; a hatch becomes a muted fill \
+under a dashed outline; a legend swatch is drawn as the element it stands for (same fill, same \
+outline). Groups "<sub-concept>-<element>", never a bare sub-concept id, the sub-concept being the \
+leaf the part illustrates (9a1-couches, not 9a-couches). Frontmatter \
 diagrams entry: file, title (the <title>), caption (the Figure legende), subconcept (the sub-concept \
 the diagram illustrates: the one whose section holds it, or for a diagram in « L'essentiel », the \
 first-level sub-concept it draws).
@@ -110,7 +120,9 @@ M12 By design, nowhere: MDX alignement, import lines, Astro frontmatter code onc
 CF teacher hint of M3, the H1s and frontmatters of M1, the MDX sources texts of M10.
 M13 Form. Plain CommonMark under SPEC.md 4.5, no HTML, no MDX, no directive. Banned characters of the \
 language pack (French: em-dash, arrows) replaced by the smallest change (comma, colon, a word); each \
-replacement is moved. Nothing else is reworded: a text the rules do not touch is copied as it is.`
+replacement is moved. The course writes the straight apostrophe: a typographic one (’) becomes ' in \
+every file, SVG text included (form, not counted). Nothing else is reworded: a text the rules do not \
+touch is copied as it is.`
 
 const SCOPE_SCHEMA = {
   type: 'object',
@@ -331,7 +343,8 @@ and ${scope.mdx_file} by the rules below.
 ${MAP}
 
 Run "${CHECK_CMD}". For each failure in a file of ${TARGET}: fix it when the fix is form only (a heading, \
-a label, a list shape, a frontmatter key, an id, an SVG attribute, a quote character, a wrapped line); \
+a label, a list shape, a frontmatter key, an id, an SVG attribute, a quote character, a wrapped line, \
+a reference id the row already names elsewhere added to its source column); \
 leave it when the fix would change what the text says, and say why. Rerun after fixing, at most three \
 runs in all. A failure in a file outside ${TARGET} is not yours: leave it. Return the last output.`,
   { label: 'checks', phase: 'Checks', schema: CHECKS_SCHEMA, model: 'sonnet' })
