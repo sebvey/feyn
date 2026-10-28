@@ -147,6 +147,10 @@ heading, in the order given, and no other `##` section exists (`concept-folder`)
 | `neighbors` | optional | neighbouring notions not to confuse with this concept: a list of items |
 | `diagrams` | optional | the concept's diagrams, a list (below) |
 
+`stances` and `neighbors` are the one place for the concept's stances: the body has no stances
+section (`concept-folder`), and the site renders them from the frontmatter, under the heading
+`headings.stances`. The reader text may still mark a claim with a stance marker (section 4.5).
+
 An **item**: `text` (mandatory, inline Markdown: bold and italics only), `author` (optional;
 expected on consensus and school items: the text or author the claim belongs to), `refs`
 (mandatory, possibly empty: reference ids of `sources.md`, `sources`).
@@ -164,14 +168,11 @@ In this order (`concept-folder`):
    breaks, a capital first letter and a final period (`concept-folder`).
 2. « L'essentiel » (`essentials`), mandatory: the definition and why it matters, a few lines;
    may hold a diagram image.
-3. « Consensus et choix d'école » (`stances`), mandatory: the stances as prose, bullets led by
-   the stance in bold. It says nothing the frontmatter `stances` and `neighbors` contradict
-   (review).
-4. The sub-concept sections, mandatory: one per first-level sub-concept, in `course.yaml` order,
+3. The sub-concept sections, mandatory: one per first-level sub-concept, in `course.yaml` order,
    and inside each, one per second-level sub-concept (`concept-folder`; form in section 4.5).
    A leaf section holds the leaf's **reader text**: the explanation as a site reader reads it.
-5. « Pièges » (`pitfalls`), mandatory: the pitfalls of the whole concept.
-6. « Le test rapide » (`quick_test`), mandatory: the quick test of the whole concept.
+4. « Pièges » (`pitfalls`), mandatory: the pitfalls of the whole concept.
+5. « Le test rapide » (`quick_test`), mandatory: the quick test of the whole concept.
 
 ### 4.3 `teaching.md`
 
@@ -218,8 +219,10 @@ the order of the table; « Ce qui marche » comes last.
 consensus, school and its author, date, figure, quotation), cases included. The teacher reads
 it when the learner asks where a claim comes from. The site builds only the « Affirmations »
 rows whose section is in `concept.md` and the « Références » they cite; the rows whose section is
-in `teaching.md` are teacher-only. A row whose section (the parenthesis of column 1) names no
-section of `concept.md` is not built. « Non vérifié » is not built: its items carry no section to
+in `teaching.md` are teacher-only. A claim of the frontmatter `stances` or `neighbors` names
+`headings.stances` (« Consensus et choix d'école ») as its section, and is built with them. A row
+whose section (the parenthesis of column 1) names neither a section of `concept.md` nor
+`headings.stances` is not built. « Non vérifié » is not built: its items carry no section to
 filter on. Storyline facts are invented and have no source. `concept.md` and `teaching.md` cite
 no reference: references live in the frontmatter `refs` and here (`sources`).
 
@@ -379,7 +382,7 @@ it, with the keys `PROTOCOL.md` uses. French values, for reference:
 
 | Group | Keys and French values |
 |---|---|
-| `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école », `pitfalls` « Pièges », `quick_test` « Le test rapide »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
+| `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (the site's heading for the frontmatter stances, and the section a `sources.md` claim names for them: no `concept.md` section has it), `pitfalls` « Pièges », `quick_test` « Le test rapide »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
 | `case_fields` | `usage` « Usage », `explanation` « Explication », `reserve` « Réserve, sur demande », `situation` « Situation », `question` « Question », `expected_answer` « Réponse attendue », `common_mistakes` « Erreurs fréquentes », `what_works` « Ce qui marche » |
 | `markers` | `storyline` « Fil rouge », `consensus` « consensus », `school` « école », `course` « cours » |
 | `references` | `concept` « concept », `concepts` « concepts », `and` « et » |

@@ -6,7 +6,7 @@ stances:
       text: "Ne parle ni de tranche, ni de couche, ni de story. Dit que l'incrément doit être utilisable et que les éléments du backlog se découpent en éléments plus petits et plus précis, sans dire comment."
       refs: [S1]
     - author: "Pratique établie, hors du Scrum Guide"
-      text: "Découper par valeur plutôt que par couche technique. Les auteurs de stories concordent : Bill Wake (on trouve chez lui, en 2003, la métaphore du gâteau en couches, sous le V d'INVEST), Richard Lawrence (2009) et le guide qu'il publie avec Peter Green."
+      text: "Découper par valeur plutôt que par couche technique. Les auteurs de stories concordent : Bill Wake (on trouve chez lui, en 2003, la métaphore du gâteau en couches, sous le V d'INVEST, concept 7), Richard Lawrence (2009) et le guide qu'il publie avec Peter Green."
       refs: [S2, S3, S4]
   school:
     - author: "Mike Cohn : SPIDR"
@@ -33,7 +33,7 @@ stances:
       refs: [S2, S4]
     - text: "Au niveau du sprint, une tranche est une story."
       refs: []
-    - text: "Chaque story est une tranche verticale. Ce n'est pas un texte du Guide. Deux exceptions entrent aussi au backlog sans en être une : un travail technique qui porte sa propre raison (concept 3) et une exploration bornée (concept 17)."
+    - text: "Chaque story est une tranche verticale. Ce n'est pas un texte du Guide. Deux exceptions entrent aussi au backlog sans en être une : un travail technique qui porte sa propre raison (concept 3b) et une exploration bornée (concept 17b1)."
       refs: [S1]
 neighbors:
   - author: "Le walking skeleton (Alistair Cockburn, années 1990)"
@@ -66,32 +66,6 @@ s'arrête après elle, l'utilisateur s'en sert. Le vertical s'arrête à la stor
 utilisateur, à la taille d'un sprint) : ses tâches, elles, sont horizontales.
 
 ![Le gâteau en couches : une tranche horizontale contre trois tranches verticales](gateau.svg)
-
-## Consensus et choix d'école
-
-- **Consensus** (Scrum Guide 2020) : le Scrum Guide ne parle ni de tranche, ni de couche, ni
-  de story. Il dit que l'incrément doit être utilisable et que les éléments du backlog se
-  découpent en éléments plus petits et plus précis, sans dire comment.
-- **Consensus** (pratique établie, hors du Scrum Guide) : découper par valeur plutôt que par couche technique.
-  Les auteurs de stories concordent : Bill Wake (on trouve chez lui, en 2003, la métaphore du
-  gâteau en couches, sous le V d'INVEST, concept 7), Richard Lawrence (et le guide qu'il publie
-  avec Peter Green).
-- **Choix d'école** :
-  - les catalogues de patrons de découpage, chacun avec son auteur : SPIDR, de Mike Cohn
-    (cinq techniques) ; les neuf patrons de Richard Lawrence (2009, publiés aujourd'hui avec
-    Peter Green) ; « Twenty Ways to Split Stories », de Bill Wake (2005). Ils se recoupent en
-    partie : on attribue chaque patron à son catalogue, on ne les fond pas en un seul.
-- **Notion voisine, distincte** : le walking skeleton d'Alistair Cockburn (années 1990), une
-  toute petite implémentation de bout en bout qui relie les principaux composants de
-  l'architecture. Il sert l'équipe ; il peut ne rien apporter seul à l'utilisateur. Ce n'est
-  pas une tranche verticale au sens du cours.
-- **Choix du cours** (sans source externe, à présenter comme tels) : les quatre couches d'un
-  produit data (un exemple, pas un découpage normé) ; « sert seule à l'utilisateur » comme
-  exigence de chaque tranche (proche de Wake et de Lawrence, qui demandent que chaque tranche ait
-  de la valeur pour l'utilisateur) ; le test « si on s'arrête après cette tranche,
-  l'utilisateur s'en sert-il demain matin ? » ; que chaque story soit une tranche verticale (pas
-  un texte du Guide) : un travail technique qui porte sa propre raison (concept 3b) et une
-  exploration bornée (concept 17b1) entrent aussi au backlog sans en être une.
 
 ## 9a La tranche verticale
 
