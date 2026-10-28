@@ -3,8 +3,8 @@ export const meta = {
   description: 'Migrate one concept of a frozen parcours-po course into a linear-course concept folder, check it, and compare old and new',
   whenToUse: 'Stage 1 only (S1-10): the maintainer asks to migrate concept N of a course from the frozen repositories. args: { course: "<course id>", concept: "<number as in course.yaml: 9, A1>", from?: "<frozen course repo, default ../pdx/parcours-po>", site?: "<frozen site repo, default ../pdx/parcours-po-website>", dest?: "<course folder written into, default courses/<course>>", report?: "<report path, default construction/notes/S1-10-<NN>-report.md>", langDir?: "<language pack dir passed to check-course>", overwrite?: true, accept?: true }. dest is a full course folder (course.yaml, plan.md, glossary.md, domains/…), a copy when not courses/<course>; overwrite empties the target concept folder first. The defaults of from and site are relative to the working directory: a run from a worktree or a copy passes absolute paths.',
   phases: [
-    { title: 'Scope', detail: 'finds the old files, the course.yaml entry, the target folder' },
-    { title: 'Write', detail: 'the diagrams, concept.md, teaching.md and sources.md' },
+    { title: 'Scope', detail: 'finds the old files, the course.yaml entry, the target folder and its listing' },
+    { title: 'Write', detail: 'one colour mapping for the concept, the diagrams, concept.md, teaching.md and sources.md' },
     { title: 'Checks', detail: 'check-course on the concept, form fixes only' },
     { title: 'Compare', detail: 'old to new and new to old, flagged rows verified, report written' },
   ],
@@ -13,13 +13,19 @@ export const meta = {
 // migrate-concept: one concept of the frozen parcours-po (concept file, sources file, site MDX,
 // Astro diagram components) becomes one concept folder of SPEC.md section 4, by the closed list of
 // mapping rules MAP below (taken from the S1-02 prototype and the rulings on #97, #98 and #23).
-// Steps: Scope locates the old files, refuses a target holding files (args.overwrite empties it); Write,
-// blind to any other copy of the concept (BLIND), converts the diagrams, then the Markdown; Checks runs
+// Steps: Scope locates the old files and lists the target (ls -la), and refuses a target whose listing
+// shows files (args.overwrite empties it); Write, blind to any other copy of the concept (BLIND), has a
+// colour agent decide one class-and-opacity pair per old colour token for all the diagrams of the
+// concept (M11, ruling on #23), converts the diagrams with that one mapping, then the Markdown; Checks runs
 // check-course --only the per-concept checks --concept N, fixes form only; Compare sweeps old to new
 // (kept, moved, lost, by design) and new to old (invented), verifies every lost or invented row, writes
 // the report in the fixed format of renderReport(). Fails on a check failing for this concept, or a
 // confirmed lost or invented row without args.accept. Old repos read only; paths: cwd-relative or absolute.
-// Decided in code, not on an agent's word: the target path, the SVG stems, the checks verdict, the report.
+// Decided in code, not on an agent's word: the target path, the SVG stems, whether the target holds
+// files (read from the listing, which the report shows), the colour mapping's form (one pair per token,
+// no pair twice, every token a diagram uses mapped), the checks verdict, the report. The report names
+// paths relative to the course folder (concepts/NN-slug/...) and the old repositories by their folder
+// name: never the absolute paths of args.dest, args.from or args.site (#170).
 
 const A = args || {}
 if (!A.course) throw new Error('args.course missing: the course id (courses/<id>/)')
@@ -95,24 +101,37 @@ paragraph of CF « Banque d'exemples » that lists the storyline facts used (and
 becomes « Faits du fil rouge utilisés », its lead words dropped; any other lead text stays at the top \
 of « Banque d'exemples ». The cases: « Banque d'exemples », same ### headings, every field verbatim, \
 fields as SPEC.md 4.3 lists them (labels « **<label>** : »). CF « Schéma »: « Schéma », verbatim.
-M10 Sources. sources.md from SF: frontmatter and H1 dropped (M1); the intro paragraph kept; \
+M10 Sources. sources.md from SF: frontmatter and H1 dropped (M1); the intro paragraph kept, but for \
+the old paths below; \
 « Affirmations »: same rows, same order, texts unchanged, the header « Affirmation (section de \
 \`concept.md\` ou de \`teaching.md\`) | Source | Ce qui a été vérifié | Nature », a fourth column \
 Nature: when an MDX sources.affirmations item states the same claim, its kind (cours, école, \
 consensus; MDX ecole is written école), and empty when that item has no kind (the absence is the \
 site's choice); only when no MDX item states the claim, the stance of the MDX ecoles item the claim \
 matches (consensus, ecole, cours), else empty. Source column: copied as it is, never an id added, \
-removed or replaced, never « aucune » or another no-source word replaced, with one exception, the \
-orphan: a reference of « Références » that no source cell of the file cites (the sources check fails \
+removed or replaced, never « aucune » or another no-source word replaced, with two exceptions: the \
+old paths below, and the orphan: a reference of « Références » that no source cell of the file cites (the sources check fails \
 on it) and that exactly one row names in its verification column as what supports the claim \
 (« la page [S3b] ajoute … ») is added to that row's source column, after the ids already there; \
 counted moved, detail "orphan [Sx] added". An id the verification column names as a contrast, a source \
 that does not say it, a nuance not retained or a neighbouring idea is not support: it stays out. An \
 orphan with no such row is left, and the run fails on it. A row's section name « Sous-concepts » becomes « Consignes », « Consensus et choix d'école » \
-stays (headings.stances); paths course/sources/NN-slug.md become concepts/NN-slug/sources.md; rows \
-whose section is in teaching.md stay (the site filters them, ruling on #98). « Références » and \
-« Non vérifié »: unchanged. The MDX sources texts (the reader paraphrase): by design, only their kind \
-is used.
+stays (headings.stances); rows whose section is in teaching.md stay (the site filters them, ruling on \
+#98). « Références » and « Non vérifié »: unchanged, but for the old paths below. Old paths: a path of \
+the old repository, anywhere in the file, becomes its path in the course folder: course/plan.md: \
+plan.md; course/glossary.md: glossary.md; course/fil-rouge-*.md: storyline.md; \
+course/concepts/NN-slug.md: concepts/NN-slug/concept.md; course/sources/NN-slug.md: \
+concepts/NN-slug/sources.md; an old decision number (ADR-018): the course decision of the decisions/ \
+folder of the course that says it carries that old decision over (decisions/<slug>.md), else it has no \
+new path. The intro and « Non vérifié » are prose the teacher reads, not source cells (the site builds \
+neither, SPEC.md 4.4): there, a pointer with no new path (an old \
+decision no course decision carries over, off-course.md, the old repository's git history, a task id \
+such as T-021) is dropped by the smallest change, and the claim it points from stays; elsewhere (a \
+source cell, « Références ») it stays as it is. The intro's pointer to the « Consensus et choix \
+d'école » section of the concept stays: the site shows the frontmatter stances under that heading \
+(headings.stances). Each path rewritten and each pointer dropped is a writing choice, one line each \
+(old text, new text), counted moved. The MDX sources texts (the reader paraphrase): by design, only \
+their kind is used.
 M11 Diagrams. One ASTRO component (one variant per distinct prop value used in MDX, e.g. p="a") \
 becomes one SVG under the drawing contract (SPEC.md section 7). Stem: a named component gives its name in \
 lowercase words joined by hyphens (Escalier: escalier, CoutDuRetard: cout-du-retard); a numbered one \
@@ -121,10 +140,20 @@ ASCII without accents, joined by hyphens; stems are unique in the concept. Same 
 written out; <title> kept (it is the frontmatter title and the image alt) and <desc> kept, ids \
 prefixed with the stem; colour tokens (--sch-*), <style> and patterns become currentColor with \
 fill-opacity / stroke-opacity and the classes primary, secondary, muted, the losses (a second colour, \
-a hatch, a halo) recorded. The drawing must stay readable in one colour: map each colour token of \
-the old drawing (each --sch-* it uses) to one pair of class and opacity, two tokens never to the same \
-pair, and list the mapping in the losses; shapes the old drawing told apart by colour get distinct opacities (for three colours, for example 0.85, 0.6, 0.4), not only distinct \
-classes; a contrast ink drawn over a shape (the cut lines across a slice) becomes a gap, the shape \
+a hatch, a halo) recorded. The drawings must stay readable in one colour. The colour mapping is \
+decided once per concept, for all its diagrams, never per drawing (ruling on #23): each colour token \
+of the old drawings (each --sch-* that an element of any component of the concept draws with) gets \
+one pair of class and opacity, the same pair in every diagram of the concept, two tokens never the \
+same pair; the report lists the mapping once, and the losses do not repeat it. An opacity the old \
+component sets on an individual element or class beyond its token's colour (a class .ribbon at 0.7 \
+and .ribbon.thin at 0.45 on the same token, a rect with opacity="0.5") is kept as that element's \
+opacity attribute (SPEC.md section 7 allows it), on top of its token's pair: never folded into the \
+pair, never dropped (a contrast ink, drawn as a gap, has no element to keep it on: a loss; the \
+opacity of a hatch's lines, .hatch-line, goes on the dashed outline that replaces the hatch); the \
+report lists each kept element opacity under the writing choices (maintainer's ruling of 2026-10-28). Shapes the old \
+drawings told apart by colour get distinct opacities (for three colours, for example 0.85, 0.6, 0.4), \
+not only distinct classes; a contrast ink drawn over a shape (the cut lines across a slice) gets no \
+pair (class none) and becomes a gap, the shape \
 drawn as segments with a small gap between them, never a line of another class over it; a hatch becomes a muted fill \
 under a dashed outline; a legend swatch is drawn as the element it stands for (same fill, same \
 outline). Groups "<sub-concept>-<element>", never a bare sub-concept id, the sub-concept being the \
@@ -167,10 +196,32 @@ const SCOPE_SCHEMA = {
       },
     },
     unlisted_h4: { type: 'array', items: { type: 'string' }, description: 'ids of MDX <h4> that are not sub-concepts of the course.yaml entry (rule M5)' },
-    target_exists: { type: 'boolean', description: 'the folder <dest><dir> exists and holds at least one file' },
+    target_listing: { type: 'string', description: 'the output of "ls -ld <dest><dir>; ls -la <dest><dir>" (dir as returned above), verbatim, every line, errors included' },
     missing: { type: 'array', items: { type: 'string' }, description: 'what could not be found (a file, the concept in course.yaml); empty when all is found' },
   },
-  required: ['spec', 'dir', 'course_entry', 'concept_file', 'sources_file', 'mdx_file', 'diagrams', 'unlisted_h4', 'target_exists', 'missing'],
+  required: ['spec', 'dir', 'course_entry', 'concept_file', 'sources_file', 'mdx_file', 'diagrams', 'unlisted_h4', 'target_listing', 'missing'],
+}
+
+const COLOURS_SCHEMA = {
+  type: 'object',
+  properties: {
+    mapping: {
+      type: 'array',
+      description: 'one item per colour token that an element of any of the components draws with',
+      items: {
+        type: 'object',
+        properties: {
+          token: { type: 'string', description: 'the old colour token, as written (--sch-s2)' },
+          class: { type: 'string', enum: ['primary', 'secondary', 'muted', 'none'], description: 'none only for a contrast ink drawn over a shape, which becomes a gap (M11)' },
+          opacity: { type: 'number', description: 'the one opacity of the token, used as fill-opacity or stroke-opacity; 0 for class none' },
+          draws: { type: 'string', description: 'what the token draws, in which component, short' },
+        },
+        required: ['token', 'class', 'opacity', 'draws'],
+      },
+    },
+    unused: { type: 'array', items: { type: 'string' }, description: 'tokens a component declares but no element draws with' },
+  },
+  required: ['mapping', 'unused'],
 }
 
 const DIAGRAM_SCHEMA = {
@@ -181,9 +232,22 @@ const DIAGRAM_SCHEMA = {
     caption: { type: 'string' },
     subconcept: { type: 'string' },
     groups: { type: 'array', items: { type: 'string' }, description: 'the group ids of the SVG' },
-    losses: { type: 'array', items: { type: 'string' }, description: 'what the drawing contract could not carry (a second colour, a hatch, a halo), one line each' },
+    tokens: { type: 'array', items: { type: 'string' }, description: 'the old colour tokens (--sch-*) this drawing draws with' },
+    element_opacities: {
+      type: 'array',
+      description: 'each opacity the old component set on an element or class beyond its token, kept as the element opacity attribute (M11)',
+      items: {
+        type: 'object',
+        properties: {
+          element: { type: 'string', description: 'the old element or class (.ribbon.thin, the rect of the legend), and its group or id in the SVG' },
+          opacity: { type: 'number', description: 'the opacity kept, as the old component set it' },
+        },
+        required: ['element', 'opacity'],
+      },
+    },
+    losses: { type: 'array', items: { type: 'string' }, description: 'what the drawing contract could not carry (a second colour, a hatch, a halo), one line each; not the colour mapping' },
   },
-  required: ['file', 'title', 'caption', 'subconcept', 'groups', 'losses'],
+  required: ['file', 'title', 'caption', 'subconcept', 'groups', 'tokens', 'element_opacities', 'losses'],
 }
 
 const EMPTY_SCHEMA = {
@@ -292,7 +356,10 @@ ${FROM}course/sources/${NN}-*.md, the site page ${SITE}src/content/concepts/fr/$
 use of each in the MDX: one item per distinct variant prop, with the legende of its <Figure> and the \
 section that holds it.
 - The MDX <h4 id> that are not sub-concept ids of the course.yaml entry.
-- Whether ${DEST}<dir>/ exists and holds a file.
+- The listing of the target: with <path> the dir of the course.yaml entry under ${DEST} \
+(${DEST}concepts/${NN}-<slug>), run the one command line "ls -ld <path>; ls -la <path>" and return \
+its output verbatim, every line, errors included (when the folder does not exist, both commands print \
+an error). Do not summarise it.
 
 Stem rule (M11): a named component gives its name in lowercase words joined by hyphens (Escalier: \
 escalier, CoutDuRetard: cout-du-retard); a numbered one (Schema13, SchemaA1, Schema16Prevision, any \
@@ -314,14 +381,35 @@ if (TARGET === DEST || !TARGET.startsWith(`${DEST}concepts/`) || TARGET.length <
 const stems = scope.diagrams.map(d => d.stem)
 for (const st of stems) if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(st)) throw new Error(`Refused SVG stem "${st}": lowercase ASCII words joined by hyphens`)
 if (new Set(stems).size !== stems.length) throw new Error(`SVG stems not unique: ${stems.join(', ')}`)
-// target_exists is the scope agent's word: the report records it
-if (scope.target_exists && !A.overwrite) throw new Error(`${TARGET} already holds files: pass args.overwrite to replace them, or args.dest to write elsewhere`)
-if (scope.target_exists) {
+// Whether the target holds files is read here from the listing the scope agent returns (ls -la), not
+// taken as its yes or no: the first run of concept 0 (wf_18b79caf-82d) stopped on a scope agent that
+// said an absent folder held files (#170). The report shows the listing.
+// The listing is "ls -ld <target>; ls -la <target>": the first line names the folder listed, so the
+// script checks it is this target. Absent: the errors of ls, naming the target. Present: the ls -ld
+// line of a folder ending with the target path, then "total", "." and ".." for an empty folder;
+// anything else that ls -l prints for an entry is a file. A listing that is neither stops the run.
+function listedFiles(listing) {
+  const T = TARGET.replace(/\/$/, '')
+  const lines = String(listing ?? '').split('\n').map(l => l.trim()).filter(Boolean)
+  if (lines.length && lines.every(l => /No such file or directory/.test(l))) return lines.every(l => l.includes(T)) ? { exists: false, files: [] } : null
+  if (!lines.length || !/^d/.test(lines[0]) || !(lines[0].endsWith(` ${T}`) || lines[0].endsWith(`/${T}`) || lines[0].endsWith(`${T}/`))) return null
+  const rest = lines.slice(1)
+  const entries = rest.filter(l => /^[-dlbcpsD][-rwxsStT]{9}/.test(l))
+  const other = rest.filter(l => !entries.includes(l) && !/^total \d+$/.test(l))
+  if (!entries.length || other.length) return null
+  return { exists: true, files: entries.filter(l => !/\s\.\.?$/.test(l)) }
+}
+const listed = listedFiles(scope.target_listing)
+if (!listed) throw new Error(`The listing of ${TARGET} reads as neither an ls -la output nor its "No such file or directory": ${JSON.stringify(scope.target_listing)}. Rerun the workflow (resume) to retry the scope step`)
+const targetHeldFiles = listed.files.length > 0
+if (targetHeldFiles && !A.overwrite) throw new Error(`${TARGET} holds files (ls -la: ${listed.files.join('; ')}): pass args.overwrite to replace them, or args.dest to write elsewhere`)
+if (targetHeldFiles) {
   const emptied = await agent(`Empty the folder ${TARGET}: delete every file and folder inside it, and \
 nothing outside it (for example: find ${TARGET} -mindepth 1 -delete). Do not use git. Then list it \
-(ls -A ${TARGET}) and return whether it is empty.`,
+(ls -A ${TARGET}) and return whether it is empty, and the listing verbatim.`,
     { label: 'empty-target', phase: 'Scope', schema: EMPTY_SCHEMA, model: 'sonnet', effort: 'low' })
-  if (!emptied || !emptied.empty) throw new Error(`${TARGET} could not be emptied: ${emptied ? emptied.listing : 'no answer'}`)
+  // ls -A of an empty folder prints nothing: the listing, not the agent's yes, decides
+  if (!emptied || !emptied.empty || String(emptied.listing).trim()) throw new Error(`${TARGET} could not be emptied: ${emptied ? emptied.listing : 'no answer'}`)
   log(`${TARGET} emptied (args.overwrite)`)
 }
 log(`Concept ${CONCEPT}: ${scope.concept_file}, ${scope.sources_file}, ${scope.mdx_file}, ${scope.diagrams.length} diagram(s); writing ${TARGET}`)
@@ -335,6 +423,7 @@ const INPUTS = `Inputs (read them on disk):
 - the course.yaml entry: ${scope.course_entry}
 - the spec: ${SPEC_DIR}SPEC.md (sections 4 and 7), the templates in ${SPEC_DIR}templates/
 - the repository glossary: docs/glossary.md
+- the course decisions, for rule M10's old decision numbers only: ${DEST}decisions/ (if it exists)
 Target concept folder: ${TARGET}
 
 ${MAP}`
@@ -343,18 +432,74 @@ const CHECK_CMD = `mise exec -- ${SPEC_DIR}checks/check-course ${DEST.replace(/\
 
 // --- Write -----------------------------------------------------------------------------
 
+// One colour mapping per concept (M11, ruling on #23 of 2026-10-28): one agent decides it from all the
+// components before any diagram is written, and every diagram writer receives it. Not the first
+// writer's mapping handed to the next ones: that would write the diagrams one after the other, and the
+// first writer, reading one component, cannot map a token only another component draws with.
+// Its form is checked here: tokens unique, one pair each, no pair twice, every token a writer uses mapped.
+const TOKEN = /^--sch-[a-z0-9]+(-[a-z0-9]+)*$/
+async function decideColours() {
+  if (!scope.diagrams.length) return { mapping: [], unused: [] }
+  const c = await agent(`${ROLE} ${BLIND}
+
+${INPUTS}
+
+Decide the colour mapping of rule M11 for all the diagrams of this concept at once: the components \
+${[...new Set(scope.diagrams.map(d => d.component))].join(', ')}, every variant the MDX uses \
+(${scope.diagrams.map(d => `${d.component.split('/').pop()}${d.variant ? ` ${d.variant}` : ''}`).join(', ')}). \
+Read each component whole (its <style>, its patterns, every element). List every colour token (--sch-*) \
+that an element draws with, in any component, and give each one pair of class and opacity, by M11: the \
+same pair in every diagram, two tokens never the same pair, distinct opacities for shapes the old \
+drawings tell apart by colour (also across components: a token is one ink everywhere), class none \
+(opacity 0) only for a contrast ink drawn over a shape, which becomes a gap. List apart the tokens \
+declared but drawn by no element. An opacity a component sets on one element or class beyond its \
+token is not part of the pair: the writers keep it on the element. Write no file.`,
+    { label: 'colours', phase: 'Write', schema: COLOURS_SCHEMA })
+  if (!c) throw new Error('The colour mapping agent returned nothing: rerun the workflow (resume) to retry it')
+  const seen = new Set(), pairs = new Map()
+  for (const m of c.mapping) {
+    if (!TOKEN.test(m.token)) throw new Error(`Colour mapping: "${m.token}" is not a --sch-* token`)
+    if (seen.has(m.token)) throw new Error(`Colour mapping: ${m.token} mapped twice`)
+    seen.add(m.token)
+    if (m.class === 'none') { if (m.opacity !== 0) throw new Error(`Colour mapping: ${m.token} is class none with opacity ${m.opacity}, expected 0`); continue }
+    if (!(m.opacity > 0 && m.opacity <= 1)) throw new Error(`Colour mapping: ${m.token} has opacity ${m.opacity}, expected above 0 and at most 1`)
+    const pair = `${m.class} ${m.opacity}`
+    if (pairs.has(pair)) throw new Error(`Colour mapping: ${pairs.get(pair)} and ${m.token} share the pair ${pair}`)
+    pairs.set(pair, m.token)
+  }
+  return c
+}
+
 phase('Write')
-const [diagrams, teachingAndSources] = await parallel([
-  () => parallel(scope.diagrams.map(d => () => agent(`${ROLE} ${BLIND}
+// Decided before the parallel writers, not inside them: the runtime's parallel() turns a thunk that
+// throws into null, so a refusal of the mapping would lose its reason there (review of PR #173).
+const colours = await decideColours()
+const [drawnDiagrams, teachingAndSources] = await parallel([
+  async () => {
+    const MAPPING = colours.mapping.map(m => `${m.token}: ${m.class === 'none' ? 'class none, a gap (no ink)' : `class ${m.class}, opacity ${m.opacity}`}`).join('; ')
+    const drawn = await parallel(scope.diagrams.map(d => () => agent(`${ROLE} ${BLIND}
 
 ${INPUTS}
 
 Convert one diagram by rule M11: the component ${d.component}${d.variant ? `, variant ${d.variant} only` : ''}, \
 into ${TARGET}${d.stem}.svg. Its Figure legende: « ${d.legende} ». It stands in: ${d.place}. Follow the \
 drawing contract of SPEC.md section 7 to the letter; \
-check the file is well-formed (xmllint --noout). Write only that file. Return its frontmatter entry, its \
-group ids and the losses.`,
-    { label: `diagram:${d.stem}`, phase: 'Write', schema: DIAGRAM_SCHEMA }))),
+check the file is well-formed (xmllint --noout). Write only that file.
+The colour mapping of the concept, decided once for all its diagrams (M11): ${MAPPING}. Draw each \
+element of a token with that token's class and opacity (fill-opacity for a fill, stroke-opacity for a \
+stroke), never another pair; do not decide a mapping of your own. A token this drawing draws with that \
+the mapping lacks: stop and return it in tokens, without inventing a pair.
+An opacity the component sets on an individual element or class beyond its token's colour (a class \
+at 0.7 and another at 0.45 on the same token, opacity="0.5" on a rect): keep it as that element's \
+opacity attribute, on top of the token's pair; never fold it into the pair, never drop it. The \
+opacity of a hatch's lines (.hatch-line) goes on the dashed outline that replaces the hatch, as that \
+outline's opacity. A contrast ink drawn as a gap has no element left: its opacity is a loss. Return \
+each one kept in element_opacities, naming the element that carries it in the SVG.
+Return its frontmatter entry, its group ids, the old colour tokens it draws with, the element \
+opacities kept, and the losses (not the mapping: the report lists it once).`,
+      { label: `diagram:${d.stem}`, phase: 'Write', schema: DIAGRAM_SCHEMA })))
+    return drawn
+  },
   () => agent(`${ROLE} ${BLIND}
 
 ${INPUTS}
@@ -365,9 +510,16 @@ every choice a rule left you.`,
     { label: 'teaching+sources', phase: 'Write', schema: WRITE_SCHEMA }),
 ])
 
-const diagramEntries = (diagrams || []).filter(Boolean)
+const diagramEntries = (drawnDiagrams || []).filter(Boolean)
 if (diagramEntries.length < scope.diagrams.length) throw new Error(`${scope.diagrams.length - diagramEntries.length} diagram(s) not converted: see the workflow log`)
 diagramEntries.forEach((e, i) => { if (e.file !== `${stems[i]}.svg`) throw new Error(`Diagram ${stems[i]} returned the file ${e.file}`) })
+const mappedTokens = new Set(colours.mapping.map(m => m.token))
+for (const e of diagramEntries) {
+  const unmapped = e.tokens.filter(t => !mappedTokens.has(t))
+  if (unmapped.length) throw new Error(`${e.file} draws with ${unmapped.join(', ')}, which the colour mapping of the concept lacks: the colour agent missed it, see the workflow log`)
+  // element opacities are kept as the element's opacity attribute (M11, maintainer's ruling of 2026-10-28)
+  for (const o of e.element_opacities) if (!(o.opacity > 0 && o.opacity <= 1)) throw new Error(`${e.file}: element opacity ${o.opacity} on ${o.element}, expected above 0 and at most 1`)
+}
 if (!teachingAndSources) throw new Error('teaching.md and sources.md not written: see the workflow log')
 
 const conceptWritten = await agent(`${ROLE} ${BLIND}
@@ -441,7 +593,10 @@ differs from its old one by an id added, removed or replaced, or by a no-source 
 replaced, is a change of sourcing: it is never moved by default. It is moved only when it is the orphan \
 case of M10, and the row's detail then names the orphan and quotes the verification text that names \
 it as support. Any other change of sourcing is invented (an id added or replaced, a no-source word \
-replaced) or lost (an id removed).`
+replaced) or lost (an id removed). An old path M10 rewrites to its path in the course folder, and a \
+pointer with no new path that M10 drops from the intro or « Non vérifié », are not a change of \
+sourcing: they are moved, the detail giving the old and the new text.
+${colours.mapping.length ? `The colour mapping of the diagrams, decided once for the concept (M11): ${colours.mapping.map(m => `${m.token}: ${m.class === 'none' ? 'none (a gap)' : `${m.class} ${m.opacity}`}`).join('; ')}.` : ''}`
 
 const [oldSweep, newSweep] = await parallel([
   () => agent(`${COMPARE}
@@ -484,7 +639,7 @@ confirmed: true only when your search finds nothing; say where you looked or wha
 change of sourcing (an id added, removed or replaced in a source cell or a refs list, a no-source word \
 replaced) is refuted only when it is the orphan case of M10: the reference is cited by no other source \
 cell of the new sources.md, and the row's verification text names it as support, not as a contrast or \
-a nuance not retained.
+a nuance not retained; or when it is an old path M10 rewrites or a pointer it drops.
 
 Lost: ${JSON.stringify(lostRows)}
 Invented: ${JSON.stringify(inventedRows)}`,
@@ -502,18 +657,61 @@ const inventedLeft = inventedRows.filter(confirmed)
 const plain = s => String(s ?? '').replace(/\s*(->|=>|\u2192)\s*/g, ': ')
 const cell = s => plain(s).replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ')
 const count = v => oldSweep.rows.filter(r => r.verdict === v).length
+// The report is merged into the repository and read after the run's dest (a contributor worktree) is
+// gone (#170). Guaranteed: the rendered report holds no absolute path; one left stops the run. On the
+// whole rendered text, agent texts included (rows, choices, check output, listing):
+// 1. the run's own absolute args are replaced as literal text, wherever they stand: args.dest/ by
+//    nothing (paths relative to the course folder, concepts/NN-slug/...), args.dest itself by
+//    courses/<course>; args.from and args.site by their repository folder (parcours-po/course/...);
+//    args.langDir by its specs/... tail;
+// 2. any other absolute path (after any non-word character, under a usual root or a root of the run's
+//    own absolute args): under courses/ or a repository folder, relative to the repository root
+//    (courses/..., specs/...), the old repositories by their folder; anything else "<absolute path>";
+// 3. a path under courses/<course>/, and a relative args.dest, from or site, as in 1.
+const lastPart = p => p.replace(/\/$/, '').split('/').pop()
+const absArgs = [DEST, FROM, SITE, A.langDir ? String(A.langDir) : ''].filter(p => p.startsWith('/'))
+const ROOTS = [...new Set(['Users', 'private', 'tmp', 'home', 'var', 'Volumes', 'opt', 'root', 'workspace', 'workspaces', 'mnt', 'srv', ...absArgs.map(p => p.split('/')[1]).filter(Boolean)])]
+  .map(r => r.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+const ABS_PATH = `(^|[^\\w./~-])(\\/(?:${ROOTS.join('|')})(?:\\/[^\\s\`'"()\\[\\]{}|<>»,;*]*)?)`
+const literal = [
+  [DEST, ''], [DEST.replace(/\/$/, ''), `courses/${A.course}`],
+  [FROM, `${lastPart(FROM)}/`], [FROM.replace(/\/$/, ''), lastPart(FROM)],
+  [SITE, `${lastPart(SITE)}/`], [SITE.replace(/\/$/, ''), lastPart(SITE)],
+  ...(A.langDir ? [[String(A.langDir), String(A.langDir).match(/\/(specs\/.*)$/)?.[1] ?? '<langDir>']] : []),
+]
+const absLiteral = literal.filter(([p]) => p.startsWith('/')).sort((a, b) => b[0].length - a[0].length)
+// relative args: the folder itself (no slash) is left as written (the check command names it)
+const relLiteral = [...literal.filter(([p]) => p.endsWith('/')), [`courses/${A.course}/`, '']]
+  .filter(([p]) => !p.startsWith('/')).sort((a, b) => b[0].length - a[0].length)
+function toRel(p) {
+  let m = p.match(/\/(courses\/.*)$/)
+  if (m) return m[1]
+  for (const repo of [lastPart(SITE), lastPart(FROM)]) { const i = p.indexOf(`/${repo}/`); if (i >= 0) return p.slice(i + 1) }
+  m = p.match(/\/((?:specs|construction|docs|site|teacher|\.claude)\/.*)$/)
+  return m ? m[1] : '<absolute path>'
+}
+function relPaths(text) {
+  let t = absLiteral.reduce((acc, [abs, shown]) => acc.split(abs).join(shown), text)
+  t = t.replace(new RegExp(ABS_PATH, 'g'), (all, pre, p) => pre + toRel(p))
+  t = relLiteral.reduce((acc, [rel, shown]) => acc.split(rel).join(shown), t)
+  const left = t.match(new RegExp(ABS_PATH))
+  if (left) throw new Error(`The report still holds an absolute path: ${left[2]}`)
+  return t
+}
 const failed = !checksPassed || ((lostLeft.length || inventedLeft.length) && !A.accept)
 
 function renderReport() {
   const out = []
   out.push(`# Migration report: concept ${CONCEPT}`, '')
-  out.push(`Workflow \`migrate-concept\`, course \`${A.course}\`, concept folder \`${TARGET}\`.`)
+  out.push(`Workflow \`migrate-concept\`, course \`${A.course}\`, concept folder \`${DIR}\`. Paths in the course folder are relative to it; the old files are named from their repository folder (\`${lastPart(FROM)}\`, \`${lastPart(SITE)}\`).`)
   out.push(`Old files: \`${scope.concept_file}\` (CF), \`${scope.sources_file}\` (SF), \`${scope.mdx_file}\` (MDX)${scope.diagrams.length ? `, ${[...new Set(scope.diagrams.map(d => `\`${d.component}\``))].join(', ')} (ASTRO)` : ''}.`, '')
   out.push('## Summary', '')
   out.push('| kept | moved | by design | lost | invented | refuted | checks | target existed | accepted |')
   out.push('|---|---|---|---|---|---|---|---|---|')
-  out.push(`| ${count('kept')} | ${count('moved')} | ${count('by design')} | ${lostLeft.length} | ${inventedLeft.length} | ${lostRows.length + inventedRows.length - lostLeft.length - inventedLeft.length} | ${checksPassed ? 'pass' : 'fail'} | ${scope.target_exists ? 'yes, emptied' : 'no'} | ${A.accept ? 'yes' : 'no'} |`, '')
-  out.push(`Result: **${failed ? 'failed' : (lostLeft.length || inventedLeft.length) ? 'passed, accepted' : 'passed'}**. lost and invented count the rows confirmed by the verification; the rows it refuted (refuted) are listed at the end and count in no other column. checks is read in code from the output below, which the check agent returns; target existed is the scope agent's word.`, '')
+  out.push(`| ${count('kept')} | ${count('moved')} | ${count('by design')} | ${lostLeft.length} | ${inventedLeft.length} | ${lostRows.length + inventedRows.length - lostLeft.length - inventedLeft.length} | ${checksPassed ? 'pass' : 'fail'} | ${targetHeldFiles ? 'yes, emptied' : 'no'} | ${A.accept ? 'yes' : 'no'} |`, '')
+  out.push(`Result: **${failed ? 'failed' : (lostLeft.length || inventedLeft.length) ? 'passed, accepted' : 'passed'}**. lost and invented count the rows confirmed by the verification; the rows it refuted (refuted) are listed at the end and count in no other column. checks is read in code from the output below, which the check agent returns; target existed is read in code from the listing below, which the scope agent returns.`, '')
+  out.push('## Target before the run', '')
+  out.push(`\`ls -ld ${DIR.replace(/\/$/, '')}; ls -la ${DIR.replace(/\/$/, '')}\`, as the scope agent returned it: ${!listed.exists ? 'no such folder' : targetHeldFiles ? `${listed.files.length} entr${listed.files.length === 1 ? 'y' : 'ies'}, emptied (args.overwrite)` : 'an empty folder'}.`, '', '```', String(scope.target_listing).trim(), '```', '')
   for (const src of ['CF', 'SF', 'MDX', 'ASTRO']) {
     const rows = oldSweep.rows.filter(r => r.source === src)
     if (!rows.length) continue
@@ -536,8 +734,16 @@ function renderReport() {
   out.push('', '## Refuted by the verification', '')
   if (!refuted.length) out.push('None.')
   else { out.push('| Id | Flagged | Found |', '|---|---|---|'); for (const r of refuted) out.push(`| ${r.id} | ${cell(r.item || r.text)} | ${cell(verdictOf(r.id).reason)} |`) }
+  out.push('', '## Colour mapping (M11)', '')
+  if (!colours.mapping.length) out.push('No diagram.')
+  else {
+    out.push('One pair of class and opacity per old colour token, decided once for all the diagrams of the concept.', '')
+    out.push('| Token | Class | Opacity | Draws | Diagrams |', '|---|---|---|---|---|')
+    for (const m of colours.mapping) out.push(`| \`${m.token}\` | ${m.class} | ${m.class === 'none' ? 'none (a gap)' : m.opacity} | ${cell(m.draws)} | ${diagramEntries.filter(d => d.tokens.includes(m.token)).map(d => d.file).join(', ') || 'none'} |`)
+    if (colours.unused.length) out.push('', `Declared but drawn by no element: ${colours.unused.map(t => `\`${t}\``).join(', ')}.`)
+  }
   out.push('', '## Writing choices', '')
-  const choices = [...teachingAndSources.choices, ...conceptWritten.choices, ...diagramEntries.flatMap(d => d.losses.map(l => `${d.file}: ${l} (M11)`))]
+  const choices = [...teachingAndSources.choices, ...conceptWritten.choices, ...diagramEntries.flatMap(d => d.element_opacities.map(o => `${d.file}: element opacity ${o.opacity} kept on ${o.element} (M11)`)), ...diagramEntries.flatMap(d => d.losses.map(l => `${d.file}: ${l} (M11)`))]
   out.push(...(choices.length ? choices.map(c => `- ${plain(c)}`) : ['None.']))
   out.push('', '## Checks', '')
   out.push(`\`${CHECK_CMD}\``, '', '```', checks.output.trim(), '```')
@@ -546,7 +752,7 @@ function renderReport() {
   if (blocking.length) out.push('', 'Failing the run:', ...blocking.map(f => `- ${f}`))
   if (excused.length) out.push('', 'Outside the concept, excused (names neither this concept nor the language pack):', ...excused.map(f => `- ${f}`))
   out.push('')
-  return out.join('\n')
+  return relPaths(out.join('\n'))
 }
 
 const report = renderReport()
@@ -561,7 +767,7 @@ const utf8Length = str => { let n = 0; for (const ch of str) { const c = ch.code
 // one byte of slack: a final newline added or dropped by the writing tool
 if (!written || !written.written || Math.abs(written.bytes - utf8Length(report)) > 1) throw new Error(`The report ${REPORT} was not written as rendered (${written ? written.bytes : 'no'} bytes, ${utf8Length(report)} expected): the run's result is in the workflow log`)
 
-const summary = { concept: CONCEPT, folder: TARGET, report: REPORT, checks: checksPassed ? 'pass' : 'fail', kept: count('kept'), moved: count('moved'), by_design: count('by design'), lost: lostLeft.length, invented: inventedLeft.length, target_existed: scope.target_exists, accepted: !!A.accept }
+const summary = { concept: CONCEPT, folder: TARGET, report: REPORT, checks: checksPassed ? 'pass' : 'fail', kept: count('kept'), moved: count('moved'), by_design: count('by design'), lost: lostLeft.length, invented: inventedLeft.length, target_existed: targetHeldFiles, accepted: !!A.accept }
 log(`Report: ${REPORT}; ${JSON.stringify(summary)}`)
 if (failed) throw new Error(`migrate-concept failed for concept ${CONCEPT}: ${!checksPassed ? 'checks fail; ' : ''}${lostLeft.length} lost, ${inventedLeft.length} invented${A.accept ? ' (accepted)' : ''}. Report: ${REPORT}`)
 return summary
