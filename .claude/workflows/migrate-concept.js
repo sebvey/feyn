@@ -118,13 +118,16 @@ ASCII without accents, joined by hyphens; stems are unique in the concept. Same 
 written out; <title> kept (it is the frontmatter title and the image alt) and <desc> kept, ids \
 prefixed with the stem; colour tokens (--sch-*), <style> and patterns become currentColor with \
 fill-opacity / stroke-opacity and the classes primary, secondary, muted, the losses (a second colour, \
-a hatch, a halo) recorded. The drawing must stay readable in one colour: shapes the old drawing told \
-apart by colour get distinct opacities (for three colours, for example 0.85, 0.6, 0.4), not only distinct \
+a hatch, a halo) recorded. The drawing must stay readable in one colour: map each colour token of \
+the old drawing (each --sch-* it uses) to one pair of class and opacity, two tokens never to the same \
+pair, and list the mapping in the losses; shapes the old drawing told apart by colour get distinct opacities (for three colours, for example 0.85, 0.6, 0.4), not only distinct \
 classes; a contrast ink drawn over a shape (the cut lines across a slice) becomes a gap, the shape \
 drawn as segments 2 units apart, never a line of another class over it; a hatch becomes a muted fill \
 under a dashed outline; a legend swatch is drawn as the element it stands for (same fill, same \
 outline). Groups "<sub-concept>-<element>", never a bare sub-concept id, the sub-concept being the \
-leaf the part illustrates (2c1-etapes, not 2c-etapes). Frontmatter \
+leaf the part illustrates (2c1-etapes, not 2c-etapes): the leaf whose reader text explains what that \
+part shows, which may differ from the diagram's subconcept (labels naming the techniques a later leaf \
+teaches take that later leaf). Frontmatter \
 diagrams entry: file, title (the <title>), caption (the Figure legende), subconcept (the sub-concept \
 the diagram illustrates: the one whose section holds it, or for a diagram in « L'essentiel », the \
 first-level sub-concept it draws).
