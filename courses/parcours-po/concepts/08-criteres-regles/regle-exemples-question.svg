@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 530" fill="currentColor" role="img" aria-labelledby="regle-exemples-question-titre regle-exemples-question-desc" font-family="system-ui, sans-serif" font-size="15">
+  <title id="regle-exemples-question-titre">Une règle métier, deux exemples où un seul fait change, une règle non fixée</title>
+  <desc id="regle-exemples-question-desc">Une règle en haut, reliée à deux exemples en Given/When/Then qui ne diffèrent que par un fait souligné ; en bas, une question sans exemple dessous.</desc>
+  <g id="8a1-regle-velo" class="muted">
+    <rect x="150" y="20" width="300" height="80" rx="6" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="166" y="44" font-size="14">Règle</text>
+    <text x="166" y="76">Un abonné loue un seul vélo à la fois.</text>
+  </g>
+  <g id="8a1-etiquette-regle-metier" class="muted">
+    <text x="20" y="64" font-size="14">règle métier</text>
+  </g>
+  <g id="8a1-liens-regle-exemples" class="muted">
+    <path d="M250 100 L155 150" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <path d="M350 100 L445 150" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+  </g>
+  <g id="8b1-exemple-sans-location" class="primary">
+    <rect x="20" y="150" width="270" height="150" rx="6" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="2"/>
+    <text x="36" y="174" font-size="14" class="muted">Exemple</text>
+    <text x="36" y="204">Given un abonné</text>
+    <text x="36" y="230">sans location en cours</text>
+    <text x="36" y="256">When il loue un vélo</text>
+    <text x="36" y="282">Then la location est acceptée</text>
+  </g>
+  <g id="8b2-fait-sans" class="primary">
+    <path d="M36 236 H206" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  </g>
+  <g id="8b1-exemple-avec-location" class="primary">
+    <rect x="310" y="150" width="270" height="150" rx="6" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="2"/>
+    <text x="326" y="174" font-size="14" class="muted">Exemple</text>
+    <text x="326" y="204">Given un abonné</text>
+    <text x="326" y="230">avec une location en cours</text>
+    <text x="326" y="256">When il loue un vélo</text>
+    <text x="326" y="282">Then la location est refusée</text>
+  </g>
+  <g id="8b2-fait-avec" class="primary">
+    <path d="M326 236 H502" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  </g>
+  <g id="8a1-etiquette-exemples" class="muted">
+    <text x="300" y="326" font-size="14" text-anchor="middle">exemples (critères)</text>
+  </g>
+  <g id="8b2-note-un-seul-fait" class="muted">
+    <text x="300" y="356" text-anchor="middle">un seul fait change d'un exemple à l'autre</text>
+  </g>
+  <g id="8a2-question-duree" class="muted">
+    <rect x="40" y="392" width="520" height="84" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5" stroke-dasharray="7 5"/>
+    <text x="58" y="416" font-size="14">Question</text>
+    <text x="58" y="440">Durée maximale d'une location :</text>
+    <text x="58" y="462">règle non fixée, à faire fixer avant le sprint</text>
+  </g>
+  <g id="8a2-note-example-mapping" class="muted">
+    <text x="300" y="512" font-size="14" text-anchor="middle">Règles, exemples, questions : l'Example Mapping de Matt Wynne.</text>
+  </g>
+</svg>
