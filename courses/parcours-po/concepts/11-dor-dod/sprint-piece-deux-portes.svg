@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 390" fill="currentColor" role="img" aria-labelledby="sprint-piece-deux-portes-titre sprint-piece-deux-portes-desc" font-family="system-ui, sans-serif" font-size="14">
+  <title id="sprint-piece-deux-portes-titre">Le sprint comme une pièce à deux portes</title>
+  <desc id="sprint-piece-deux-portes-desc">Le backlog, le sprint et l'incrément se suivent de gauche à droite. La DoR est la porte d'entrée du sprint, la DoD sa porte de sortie. La story A traverse les deux portes. La story B reste au backlog devant la DoR. La story C, refusée à la DoD, retourne au backlog.</desc>
+
+  <g id="11a-piece-backlog" class="muted">
+    <rect x="10" y="50" width="150" height="210" rx="6" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="85" y="40" text-anchor="middle" fill="currentColor">backlog</text>
+  </g>
+
+  <g id="11a-piece-increment" class="muted">
+    <rect x="440" y="50" width="150" height="210" rx="6" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="515" y="40" text-anchor="middle" fill="currentColor">incrément</text>
+  </g>
+
+  <g id="11a-piece-sprint" class="primary">
+    <rect x="210" y="50" width="180" height="210" rx="6" fill="none" stroke="currentColor" stroke-width="3"/>
+    <text x="300" y="40" text-anchor="middle" font-weight="bold" fill="currentColor">le sprint</text>
+  </g>
+
+  <g id="11b-piece-dor" class="primary">
+    <rect x="180" y="125" width="10" height="135" fill="currentColor"/>
+    <text x="185" y="38" text-anchor="middle" font-weight="bold" fill="currentColor">DoR</text>
+    <text x="185" y="280" text-anchor="middle" fill="currentColor" class="muted">choix d'école</text>
+  </g>
+
+  <g id="11a-piece-dod" class="primary">
+    <rect x="410" y="125" width="10" height="135" fill="currentColor"/>
+    <text x="415" y="38" text-anchor="middle" font-weight="bold" fill="currentColor">DoD</text>
+  </g>
+
+  <g id="11a-piece-story-a-backlog" class="muted">
+    <rect x="20" y="80" width="130" height="52" rx="4" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5"/>
+    <text x="30" y="102" fill="currentColor">story A</text>
+    <text x="30" y="122" fill="currentColor">ses critères</text>
+  </g>
+
+  <g id="11b-piece-story-b" class="muted">
+    <rect x="20" y="170" width="130" height="52" rx="4" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5"/>
+    <text x="30" y="192" fill="currentColor">story B</text>
+    <text x="30" y="212" fill="currentColor">critères à écrire</text>
+  </g>
+
+  <g id="11a-piece-story-a-sprint" class="muted">
+    <rect x="225" y="80" width="150" height="52" rx="4" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5"/>
+    <text x="235" y="102" fill="currentColor">story A</text>
+    <text x="235" y="122" fill="currentColor">en cours</text>
+  </g>
+
+  <g id="11a-piece-story-c" class="muted">
+    <rect x="225" y="170" width="150" height="52" rx="4" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5"/>
+    <text x="235" y="192" fill="currentColor">story C</text>
+    <line x1="233" y1="187" x2="290" y2="187" stroke="currentColor" stroke-width="2"/>
+    <text x="235" y="212" fill="currentColor">DoD non remplie</text>
+  </g>
+
+  <g id="11a-piece-story-a-increment" class="muted">
+    <rect x="450" y="80" width="130" height="52" rx="4" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5"/>
+    <text x="460" y="111" fill="currentColor">story A</text>
+  </g>
+
+  <g id="11a-piece-passage-entree" class="muted">
+    <line x1="150" y1="106" x2="213" y2="106" stroke="currentColor" stroke-opacity="0.6" stroke-width="2"/>
+    <polygon points="225,106 211,99 211,113" fill="currentColor" fill-opacity="0.6"/>
+  </g>
+
+  <g id="11a-piece-passage-sortie" class="muted">
+    <line x1="375" y1="106" x2="438" y2="106" stroke="currentColor" stroke-opacity="0.6" stroke-width="2"/>
+    <polygon points="450,106 436,99 436,113" fill="currentColor" fill-opacity="0.6"/>
+  </g>
+
+  <g id="11a-piece-retour" class="muted">
+    <polyline points="300,222 300,305 85,305 85,272" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2"/>
+    <polygon points="85,260 78,274 92,274" fill="currentColor" fill-opacity="0.6"/>
+    <text x="95" y="328" fill="currentColor">story C refusée : retour au backlog</text>
+  </g>
+
+  <g id="11a-piece-note-dod" class="muted">
+    <text x="470" y="290" text-anchor="middle" fill="currentColor">une seule DoD,</text>
+    <text x="470" y="309" text-anchor="middle" fill="currentColor">la même pour</text>
+    <text x="470" y="328" text-anchor="middle" fill="currentColor">toutes les cartes</text>
+  </g>
+
+  <g id="11b-piece-note-lecture" class="muted">
+    <text x="300" y="372" text-anchor="middle" fill="currentColor">DoR : quand une story peut commencer. DoD : quand elle est terminée.</text>
+  </g>
+</svg>
