@@ -26,7 +26,7 @@ l'outil du backlog (annexe A1) ; travailler sans sprint (annexe A2).
 
 ## Faits du fil rouge utilisés
 
-la journée d'Étienne (point du matin sur l'état du réseau, envoi
+La journée d'Étienne (point du matin sur l'état du réseau, envoi
 des régulateurs, suivi des incidents, bilan du soir) ; ses vues (stations vides, vélos en panne,
 locations du jour) ; la vue des stations vides, déjà livrée, doit servir à Étienne à envoyer les
 régulateurs plus tôt vers les stations qui se vident ; les deux autres vues ne sont pas
@@ -34,8 +34,7 @@ livrées ; l'accès à la table des locations n'est pas obtenu ; le blocage des 
 réclamé par Maud ; sprints de deux semaines ;
 l'objectif produit et sa mesure de résultat, dont la cible, les heures de pointe, la station
 vide et le calcul ne sont pas fixés ; Odile, sponsor. Situations d'exercice, qui ne deviennent
-pas des faits du fil rouge : les stories d'Étienne et le moment où il s'en sert, les cartes de
-Anna et de Dana, les propos de Diego, d'Odile et d'Étienne, la prévision de trois à cinq sprints
+pas des faits du fil rouge : les stories d'Étienne et le moment où il s'en sert, les cartes d'Anna et de Dana, les propos de Diego, d'Odile et d'Étienne, la prévision de trois à cinq sprints
 et le contenu de la tranche en 16c.
 
 ## Banque d'exemples
@@ -244,17 +243,19 @@ et le contenu de la tranche en 16c.
 
 ## Schéma
 
-Deux dessins, chacun sur un cas inventé, distinct de ceux de la banque.
+Deux dessins.
 
-1. **La carte (16b1)**, sur la journée d'un technicien de maintenance : le montrer après la
-   correction de 16b1, qui s'appuie sur 16a. En haut, une flèche de gauche à droite,
-   « colonne vertébrale », sous laquelle quatre cartes côte à côte : « préparer la tournée »,
-   « se rendre sur place », « confirmer la panne », « réparer ou retirer le vélo ». Dessous,
-   sous chaque activité, des cartes « story » empilées, avec à gauche une flèche vers le bas
-   légendée « l'indispensable ». Une ligne épaisse, « première version », traverse les quatre
-   colonnes : au-dessus, une story par activité, sauf sous la troisième, où une case en
-   pointillés porte « trou à explorer » ; dessous, deux rangées de stories de plus en plus
-   pâles. La première version est le plus marqué.
+1. **La carte (16b1)**, sur la journée d'un technicien de maintenance, cas inventé distinct de
+   ceux de la banque. À la demande seulement, et au 16a avec la seule colonne vertébrale, les
+   activités et les stories : sans la ligne « première version » et sans le trou. En haut, une
+   flèche de gauche à droite, « colonne vertébrale », sous laquelle quatre cartes côte à côte :
+   « préparer la tournée », « se rendre sur place », « confirmer la panne », « réparer ou
+   retirer le vélo ». Dessous, sous chaque activité sauf la troisième, des cartes « story »
+   empilées, avec à gauche une flèche vers le bas légendée « l'indispensable » en haut. Une ligne
+   épaisse, « première version », traverse les quatre colonnes : au-dessus, une story par
+   activité, sauf sous la troisième, où une case en pointillés porte « trou à explorer », et où
+   rien n'est dessiné dessous ; sous la ligne, deux rangées de stories plus pâles. La première
+   version est le plus marqué.
 2. **Pour quand ? (16c)** : une flèche horizontale, « sprints », et sur elle une barre épaisse,
    « fourchette », bornée par deux traits, avec au-dessus « prévision des Developers ». Sous la
    barre, deux cases, « l'ordre du backlog » et « une dépendance », chacune avec une flèche vers

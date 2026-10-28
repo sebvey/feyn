@@ -1,6 +1,6 @@
 # Migration report: concept 16
 
-Workflow `migrate-concept`, course `parcours-po`, concept folder `concepts/16-story-map/`. Paths in the course folder are relative to it; the old files are named from their repository folder (`parcours-po`, `parcours-po-website`).
+Workflow `migrate-concept` (run wf_4cab56e6-e3d), course `parcours-po`, concept folder `concepts/16-story-map/`. Paths in the course folder are relative to it; the old files are named from their repository folder (`parcours-po`, `parcours-po-website`).
 Old files: `parcours-po/course/concepts/16-story-map.md` (CF), `parcours-po/course/sources/16-story-map.md` (SF), `parcours-po-website/src/content/concepts/fr/16-story-map.mdx` (MDX), `components/schemas/Schema16.astro`, `components/schemas/Schema16Prevision.astro` (ASTRO).
 
 ## Summary
@@ -28,7 +28,7 @@ Each old diagram was inventoried (what it shows, by idea), drawn anew from its i
 
 ### `components/schemas/Schema16.astro`
 
-Figure legende, in « L'essentiel »: « Une story map. En haut, les activités de l'utilisateur dans l'ordre du récit (la colonne vertébrale) ; dessous, les stories, de l'indispensable au moins nécessaire. Une ligne en travers de la carte délimite la première version : un peu de chaque activité, avec un trou nommé là où une activité n'a pas encore de story. Story map : Patton, choix d'école. »
+Figure caption of the old site (the run's source text), in « L'essentiel »: « Une story map. En haut, les activités de l'utilisateur dans l'ordre du récit (la colonne vertébrale) ; dessous, les stories, de l'indispensable au moins nécessaire. Une ligne en travers de la carte délimite la première version : un peu de chaque activité, avec un trou nommé là où une activité n'a pas encore de story. Story map : Patton, choix d'école. »
 
 One idea.
 
@@ -71,7 +71,7 @@ Relations:
 - E13 traverse aussi les quatre colonnes, sous E1 : entre E1 et E13 la version suivante (E9), en dessous de E13 ce qui vient plus tard (E10)
 - E14 se lit à côté de E1 : le résultat visé et la mesure de la première version
 
-Key of the inventory: E8 « première version »; E9 « version suivante »; E10 « plus tard ». Key drawn: « première version »; « version suivante »; « plus tard ».
+Key of the inventory, at the run: E8 « première version »; E9 « version suivante »; E10 « plus tard ». Key drawn at the run: the same three. In the final drawing there is no key.
 
 | Old | New |
 |---|---|
@@ -79,7 +79,7 @@ Key of the inventory: E8 « première version »; E9 « version suivante »; E10
 
 ### `components/schemas/Schema16Prevision.astro`
 
-Figure legende, in the section 16c1: « Une prévision en fourchette. Les Developers la fondent sur la taille des stories et leur rythme ; l'ordre du backlog et une dépendance peuvent la déplacer ; elle est redessinée à chaque revue de sprint. Une prévision des Developers, pas une promesse. »
+Figure caption of the old site (the run's source text), in the section 16c1: « Une prévision en fourchette. Les Developers la fondent sur la taille des stories et leur rythme ; l'ordre du backlog et une dépendance peuvent la déplacer ; elle est redessinée à chaque revue de sprint. Une prévision des Developers, pas une promesse. »
 
 One idea.
 
@@ -90,7 +90,7 @@ Its sentences, where the inventory sends them (M11):
 
 #### prevision-fourchette.svg
 
-- Title: Une prévision en fourchette, que deux poids peuvent déplacer
+- Title at the run: Une prévision en fourchette, que deux poids peuvent déplacer (final: Une prévision en fourchette que l'ordre du backlog et une dépendance peuvent déplacer)
 - Caption (after the review pass): Une prévision des Developers, donnée en fourchette, que l'ordre du backlog et une dépendance peuvent déplacer. (one sentence)
 - Sub-concept: 16c
 - Idea: « Les Developers la fondent sur la taille des stories et leur rythme ; l'ordre du backlog et une dépendance peuvent la déplacer ; elle est redessinée à chaque revue de sprint. » (MDX section 16c1)
@@ -127,6 +127,7 @@ Self-check of the two diagrams against SPEC.md 7.2 (the contributor's pass, befo
 - story-map.svg: caption cut to one sentence (a). The teaching sentences are gone (b): the note « À côté de la première version… », the second ribbon label pair, the duplicate spine labels. The first version is the most marked (c): its ribbon, its stories and the dashed hole are `primary` at full opacity, the next stories fall to 0.7 and 0.4; the second ribbon and the key are removed. The « livrée » story is removed (e, d: not in concept.md nor in the caption). Labels kept are words of concept.md or the caption (d): « colonne vertébrale », the four activities, « story », « trou à explorer », « première version », « l'indispensable ». The whole drawing is declared and grouped under 16b1 (f), and the figure now sits in the 16b1 section (it was in « L'essentiel »).
 - prevision-fourchette.svg: caption cut to one sentence (a), title reworded without the image « poids » (d). Removed as teaching or not in the caption: the foundation line, the « redessinée à chaque revue de sprint » arrow, « borne basse », « borne haute », « de N à M sprints », « maintenant », « plus tard ». The two weights are the contrast (`secondary`, solid, not dashed: a dashed outline means uncertain) (c).
 - teaching.md « Schéma » rewritten for the two new drawings (h); sources.md first columns and cross-reference paths read as (g) asks: no change.
+- Fresh-agent review of the PR, 3 blocking findings, fixed: the hole is alone under « confirmer la panne » (rows 2 and 3 removed there, rows 2 and 3 now `muted`); « Schéma » says the map is shown at 16a without the version line and the hole, and no longer says to show it unasked; the first columns of `sources.md` name sections of `concept.md` or `teaching.md`.
 - Rules: B no citation line added (the old « Sous-concepts » cites the six cases already); C no orphan reference (every S1 to S12 is cited); « Voir « Sous-concepts » » pointer: none in the stances; « interne » reference type: none in the sources; 16a and 16c are bold-led paragraphs; « annexe A2d » is plain text.
 
 ## Writing choices

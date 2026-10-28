@@ -91,7 +91,7 @@ Patton emploie aussi « walking skeleton » pour cette première version utilisa
 
 ### 16b2 Les deux sens de MVP
 
-« MVP » a deux sens, et on dit toujours lequel on emploie [cours]. Pour Eric Ries [école], c'est la version d'un nouveau produit qui permet d'apprendre le plus sur ses clients pour le moindre effort ; il précise que ce n'est pas faire un produit minimal, et le concept 17 y revient (concept 17). Dans l'usage courant, c'est la première version, avec juste assez pour servir les premiers utilisateurs : la première tranche de la carte, au sens de 16b1.
+« MVP » a deux sens, et on dit toujours lequel on emploie [cours]. Pour Eric Ries [école], c'est la version d'un nouveau produit qui permet d'apprendre le plus sur ses clients pour le moindre effort ; il précise que ce n'est pas faire un produit minimal, et le concept 17 y revient. Dans l'usage courant, c'est la première version, avec juste assez pour servir les premiers utilisateurs : la première tranche de la carte, au sens de 16b1.
 
 Dans les deux cas, ce n'est pas une version au rabais. Tout ce qui entre dans l'incrément remplit la DoD, MVP ou pas (concepts 0 et 11a).
 
