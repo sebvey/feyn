@@ -103,12 +103,14 @@ function makeAgent(o) {
       return { output: `mise WARN a stale tool\n${JSON.stringify({ page: 'found', old: [{ n: 1, caption: LEG_GATEAU.replaceAll("'", '’'), png: 'old-1.png' }, { n: 2, caption: LEG_PART, png: 'old-2.png' }], new: svgs.map(s => ({ svg: s, png: s.replace(/\.svg$/, '.png') })), errors: [] })}` }
     }
     if (L === 'teaching+sources') return { files: [`${TGT}/teaching.md`, `${TGT}/sources.md`], choices: [`M10: \`course/plan.md\` became \`plan.md\` in ${TGT}/sources.md intro`] }
-    if (L === 'concept') return { files: [`${TGT}/concept.md`], choices: ['M4: merged', 'M3: read /Users/someone/elsewhere/notes.md', 'M3: odd contexts path:/Users/me/x, *\/Users/me/x*, {/Users/a}', `M3: course folder path:${TGT.slice(0, -DIR.length - 1)}, the target *${TGT}*`] }
+    if (L === 'concept') return { files: [`${TGT}/concept.md`], choices: o.conceptChoices ?? ['M4: merged', 'M3: read /Users/someone/elsewhere/notes.md', 'M3: odd contexts path:/Users/me/x, *\/Users/me/x*, {/Users/a}', `M3: course folder path:${TGT.slice(0, -DIR.length - 1)}, the target *${TGT}*`] }
     if (L === 'checks') return { output: o.checksOut ?? CHECKS.map(c => `${c}: ok`).join('\n'), fixes: [`${TGT}/concept.md: heading`], left: [] }
     if (L === 'report') {
       const body = prompt.split('-----BEGIN REPORT-----\n')[1].split('\n-----END REPORT-----')[0]
       o.report = body
-      return { written: true, bytes: Buffer.byteLength(body, 'utf8') }
+      // the file as the writing tool leaves it: o.reportOnDisk(body) when given (a blank line added, a cut)
+      const disk = o.reportOnDisk ? o.reportOnDisk(body) : body
+      return { written: true, bytes: Buffer.byteLength(disk, 'utf8'), trimmed_bytes: Buffer.byteLength(disk.trimEnd(), 'utf8') }
     }
     throw new Error(`unexpected agent ${L}`)
   }
@@ -386,5 +388,47 @@ fails += await scenario('absolute dest outside a repository: pwd root, logged', 
 fails += await scenario('relative dest, target named by an absolute path under missing: ignored', { args: { dest: 'courses/parcours-po' }, listing: `ls: cannot access 'courses/parcours-po/${DIR}': No such file or directory`, cwd: '/abs/feyn', missing: [`target folder /abs/feyn/courses/parcours-po/${DIR} does not exist`] }, ({ error, logs }) => [
   ...threw(error),
   ...(logs.some(l => l.startsWith('Ignored as missing')) ? [] : ['not logged as ignored'])])
+// #191: the report shows old texts and the agents' lines as written, arrows included
+{
+  const LEG_ARROW = 'Une part trop grosse -> recoupée en parts fines.'
+  const arrow = structuredClone(INV_PART)
+  arrow.caption_sentences[0].sentence = LEG_ARROW
+  Object.assign(arrow.ideas[0], { title: 'Part trop grosse -> parts fines', justification: LEG_ARROW })
+  arrow.ideas[0].elements[0].labels = ['trop gros -> recoupé | en deux']
+  arrow.ideas[0].relations = ['E1 => E1, recoupée']
+  const CHOICE = 'M13 banned character: in teaching.md, « retiré du service -> 5 disponibles » became « retiré du service : 5 disponibles » (the ASCII arrow -> replaced by a colon)'
+  const diagrams = [
+    { component: `${SITE}/src/components/schemas/Gateau.astro`, variant: '', legende: LEG_GATEAU, place: 'essentials' },
+    { component: `${SITE}/src/components/schemas/PartRecoupee.astro`, variant: '', legende: LEG_ARROW, place: '9b1' }]
+  fails += await scenario('a legende sentence and a writing choice with an arrow: kept as written in the report', { diagrams, inventories: [INV_GATEAU, arrow], conceptChoices: [CHOICE] }, ({ error, report }) => [
+    ...threw(error), ...noAbs(report),
+    ...[`Figure legende, in the section 9b1: « ${LEG_ARROW} »`, `- « ${LEG_ARROW} »: caption of part-recoupee.svg`, `- Caption: ${LEG_ARROW}\n`, '- Title: Part trop grosse -> parts fines\n',
+      `- Idea: « ${LEG_ARROW} »`, '| « trop gros -> recoupé \\| en deux » |', '- E1 => E1, recoupée\n', `- ${CHOICE}\n`]
+      .filter(t => !report?.includes(t)).map(t => `report lacks ${JSON.stringify(t)}`)])
+}
+// #191, wave 3 (concepts 8 and 10): the scope agent listed cwd-relative paths although the prompt gave absolute ones
+{
+  const rel = `courses/parcours-po/${DIR}`
+  const SPECS_REL = 'drwxr-xr-x 9 sve staff 288 Oct 28 14:21 specs'
+  for (const [name, o] of [
+    ['GNU errors', { listing: `ls: cannot access '${rel}': No such file or directory\nls: cannot access '${rel}': No such file or directory` }],
+    ['BSD errors, ./ paths', { listing: `ls: ./${rel}: No such file or directory\nls: ./${rel}: No such file or directory`, rootListing: 'drwxr-xr-x 9 sve staff 288 Oct 28 14:21 ./specs' }],
+    ['an empty folder', { listing: `drwxr-xr-x 2 sve staff 64 Oct 28 14:21 ${rel}\ntotal 0\ndrwxr-xr-x 2 sve staff 64 Oct 28 14:21 .\ndrwxr-xr-x 5 sve staff 160 Oct 28 14:21 ..` }]])
+    fails += await scenario(`scope listings relative to pwd, pwd dest's root (${name}): the run goes on`, { rootListing: SPECS_REL, ...o }, ({ error, calls, report }) => [
+      ...threw(error), ...noAbs(report),
+      ...(calls.find(c => c.label === 'scope')?.prompt.includes('Run each ls with its paths exactly as written above (absolute): no cd before it') ? [] : ['scope prompt does not ask for the paths as written'])])
+  fails += await scenario('scope listing relative to a pwd that is not dest\'s root: stops, says to launch afresh', { cwd: '/Users/me/main', listing: `ls: cannot access '${rel}': No such file or directory\nls: cannot access '${rel}': No such file or directory` }, ({ error }) => (error && /reads as neither .*: launch the workflow afresh to retry the scope step: a resume replays the same scope answer$/.test(error) ? [] : ['not stopped with the fresh-launch message']))
+  fails += await scenario('root listing relative to a pwd that is not dest\'s root: stops, says to launch afresh', { cwd: '/Users/me/main', rootListing: SPECS_REL }, ({ error }) => (error && /shows no specs\/ folder.*launch the workflow afresh/.test(error) ? [] : ['not stopped with the fresh-launch message']))
+  fails += await scenario('listing unreadable: the message says a resume replays the scope answer', { listing: 'the folder holds files' }, ({ error }) => (error && /launch the workflow afresh/.test(error) && !/\(resume\)/.test(error) ? [] : ['message still says resume']))
+}
+// #191, concept 11 (wf_576195d2-f18): the writer left one blank line more than rendered
+fails += await scenario('report written with trailing blank lines more (2 bytes, as concept 11): the run passes, logged', { reportOnDisk: b => `${b}\n\n` }, ({ error, result, logs }) => [
+  ...threw(error),
+  ...(result?.checks === 'pass' ? [] : ['no summary returned']),
+  ...(logs.some(l => /differs from the rendered one in its trailing whitespace only/.test(l)) ? [] : ['difference not logged'])])
+fails += await scenario('report written with blank lines and a space more at its end: the run passes', { reportOnDisk: b => `${b}\n\n \n` }, ({ error }) => threw(error))
+fails += await scenario('report cut short: stops, the summary in the log', { reportOnDisk: b => b.slice(0, -40) }, ({ error, logs }) => [
+  ...(error && /was not written as rendered \(\d+ bytes without trailing whitespace, \d+ in all; \d+ expected/.test(error) ? [] : ['not stopped']),
+  ...(logs.some(l => /^Report: .*"checks":"pass"/.test(l)) ? [] : ['summary not logged before the stop'])])
 console.log(fails ? `${fails} scenario(s) failed` : 'all scenarios pass')
 process.exit(fails ? 1 : 0)
