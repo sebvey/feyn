@@ -95,8 +95,11 @@ function makeAgent(o) {
       const stem = n ? 'part-recoupee' : 'gateau'
       const c = structuredClone(o.compared?.[n] ?? { rows: [{ item: 'E1 « Ingestion »', where: `${TGT}/${stem}.svg 9a-couches`, verdict: 'kept', detail: '' }], keys: [], invented: [] })
       if (o.bareCompare) return c
-      // as a comparison does by default: the old <title> has its row, every state its quote found
-      if (!c.rows.some(r => r.item.includes('<title>'))) c.rows.push({ item: 'old <title>', where: `${TGT}/${stem}.svg <title>`, verdict: 'kept', detail: '' })
+      // as a comparison does by default: the old <title> has its row, every labels sentence its row (moved),
+      // every state its quote found
+      if (!c.rows.some(r => r.item.includes('<title>'))) c.rows.push({ item: 'old <title>', where: `${TGT}/${stem}.svg <title>`, verdict: 'kept', detail: '', sentence: '' })
+      const inv = JSON.parse(/\nIts inventory: (.*)\n/.exec(prompt)[1])
+      for (const t of inv.caption_sentences.filter(t => t.to === 'labels' && !c.rows.some(r => r.sentence === t.sentence))) c.rows.push({ item: `Legende sentence « ${t.sentence} »`, where: `${TGT}/${t.idea}.svg`, verdict: 'moved', detail: 'to the labels', sentence: t.sentence })
       if (!c.states) c.states = n ? [] : [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX, the Figure legende' }]
       return c
     }
@@ -117,7 +120,15 @@ function makeAgent(o) {
     if (L === 'checks') return { output: CHECKS.map(c => `${c}: ok`).join('\n'), fixes: [`${TGT}/concept.md: heading`], left: [] }
     if (L === 'old-to-new') return { rows: [{ source: 'SF', item: 'intro', where: `${TGT}/sources.md intro`, verdict: 'moved', rule: 'M10', detail: 'course/plan.md: plan.md' }, ...(o.oldRows ?? [])] }
     if (L === 'new-to-old') return { rows: o.invented ?? [] }
-    if (L === 'verify') return { verdicts: (JSON.parse(prompt.split('Invented: ')[1] || '[]')).map(r => ({ id: r.id, confirmed: true, reason: 'searched CF « Sous-concepts »: absent' })) }
+    // the verification: every invented row confirmed but a state's claim (o.stateNotFound), a lost candidate
+    // (a labels sentence counted moved) refuted unless o.labelsLost; other lost rows given no verdict
+    if (L === 'verify') {
+      const lost = JSON.parse(prompt.slice(prompt.lastIndexOf('\nLost: ') + 7, prompt.lastIndexOf('\nInvented: ')))
+      const invented = JSON.parse(prompt.split('\nInvented: ').pop() || '[]')
+      return { verdicts: [
+        ...lost.filter(r => r.candidate).map(r => ({ id: r.id, confirmed: !!o.labelsLost, reason: o.labelsLost ? '« ce que voit l\'utilisateur » in no <text>' : 'every part in the <text>' })),
+        ...invented.map(r => ({ id: r.id, confirmed: r.candidate ? !!o.stateNotFound : true, reason: r.candidate ? (o.stateNotFound ? 'not in the old texts' : 'MDX, the Figure') : 'searched CF « Sous-concepts »: absent' }))] }
+    }
     if (L === 'report') {
       const body = prompt.split('-----BEGIN REPORT-----\n')[1].split('\n-----END REPORT-----')[0]
       o.report = body
@@ -314,9 +325,10 @@ fails += await scenario('legende sentences to the title and the labels: out of t
     ...(report && report.includes('Result: **passed, accepted**') ? [] : ['not passed, accepted'])])
 }
 // second review of PR #182: a state's words are found in the old texts, else invented; the old <title> has its row
-fails += await scenario('a state whose words are nowhere: invented, verified', { compared: [{ rows: [], states: [{ element: 'E4', words: 'ne sert pas seule', found: false, detail: 'not in Gateau.astro, CF, MDX or concept.md' }], keys: [], invented: [] }] }, ({ error, report }) => [
+fails += await scenario('a state whose words are nowhere: invented, verified', { compared: [{ rows: [], states: [{ element: 'E4', words: 'ne sert pas seule', found: false, detail: 'not in Gateau.astro, CF, MDX or concept.md' }], keys: [], invented: [] }] }, ({ error, report, calls }) => [
   ...(error && /0 lost, 1 invented/.test(error) ? [] : ['not failed on 1 invented']),
-  ...(report && report.includes('| I1 | gateau.svg | diagram state | « ne sert pas seule » (state refused of E4) | the comparison found these words nowhere') ? [] : ['state row not in the report'])])
+  ...(report && report.includes('| I1 | gateau.svg | diagram state | « ne sert pas seule » (state refused of E4) | the comparison found these words nowhere') ? [] : ['state row not in the report']),
+  ...(calls.find(c => c.label === 'verify')?.prompt.includes('"section":"diagram state","text":"« ne sert pas seule » (state refused of E4)"') ? [] : ['state row not sent to the verification'])])
 fails += await scenario('a state the comparison gives no row: flagged invented', { compared: [{ rows: [], states: [], keys: [], invented: [] }] }, ({ error, report }) => [
   ...(error && /1 invented/.test(error) ? [] : ['not failed on 1 invented']),
   ...(report && report.includes('a state the diagram comparison gave no row: its words not checked') ? [] : ['not flagged'])])
@@ -325,11 +337,47 @@ fails += await scenario('a state whose words are found: a kept row', {}, ({ erro
   ...(report && report.includes('| state « ne sert pas seule » of gateau E4 | MDX, the Figure legende | kept | M11 |') ? [] : ['no kept state row']),
   ...(calls.find(c => c.label === 'compare-diagram:1')?.prompt.includes('Under states, one row per element of the inventory that has a state') ? [] : ['comparison not asked for states'])])
 fails += await scenario('the old <title> given no row: flagged lost', { bareCompare: true, compared: [
-  { rows: [], states: [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX' }], keys: [], invented: [] },
+  { rows: [{ item: 'Legende sentence', where: 'gateau.svg', verdict: 'moved', detail: '', sentence: 'En bas, l’ingestion ; en haut, la restitution.' }], states: [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX' }], keys: [], invented: [] },
   { rows: [{ item: 'old <title> « Une part trop grosse recoupée en parts verticales plus fines »', where: 'part-recoupee.svg <title>', verdict: 'moved', detail: '« plus fines » in the caption' }], states: [], keys: [], invented: [] }] }, ({ error, report, calls }) => [
   ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
-  ...(report && report.includes('| old <title> of parcours-po-website/src/components/schemas/Gateau.astro | none | lost (L1) | M11 | the diagram comparison gave the old <title> no row |') ? [] : ['title row not flagged']),
+  ...(report && report.includes('| old <title> of parcours-po-website/src/components/schemas/Gateau.astro | none | lost (L2) | M11 | the diagram comparison gave the old <title> no row |') ? [] : ['title row not flagged']),
   ...(calls.find(c => c.label === 'compare-diagram:2')?.prompt.includes('one row whose item starts with « old <title> »') ? [] : ['comparison not asked for the old <title>'])])
+// third review of PR #182: a labels sentence counted moved is checked by the verification, a state found where
+// the code cannot check it too, and the old-title guard reads the item's start
+fails += await scenario('a labels sentence counted moved, the verification finds a part undrawn: lost, failing the run', { labelsLost: true }, ({ error, calls, report }) => [
+  ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
+  ...(calls.find(c => c.label === 'verify')?.prompt.includes('"candidate":"a labels sentence the comparison counted moved') ? [] : ['not sent as a candidate']),
+  ...(report && report.includes('| Legende sentence « En bas, l’ingestion ; en haut, la restitution. » | concepts/09-decoupage-vertical/gateau.svg | lost (L1, checked) | M11 |') && /\| 5 \| 1 \| 0 \| 1 \| 0 \| 0 \| pass \|/.test(report) ? [] : ['not counted lost in the report'])])
+fails += await scenario('a labels sentence counted moved, the verification finds every part drawn: stays moved, not refuted', {}, ({ error, report }) => [
+  ...threw(error),
+  ...(report && report.includes('| moved (L1, checked) | M11 |') && /\| 5 \| 2 \| 0 \| 0 \| 0 \| 0 \| pass \|/.test(report) && report.includes('## Refuted by the verification\n\nNone.') ? [] : ['not kept moved'])])
+fails += await scenario('a labels sentence given no row: lost', { bareCompare: true, compared: [
+  { rows: [{ item: 'old <title>', where: 'gateau.svg', verdict: 'kept', detail: '', sentence: '' }], states: [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX' }], keys: [], invented: [] },
+  { rows: [{ item: 'old <title>', where: 'part-recoupee.svg', verdict: 'kept', detail: '', sentence: '' }], states: [], keys: [], invented: [] }] }, ({ error, report }) => [
+  ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
+  ...(report && report.includes('the diagram comparison gave this labels sentence no row') ? [] : ['not flagged'])])
+{
+  const odd = structuredClone(INV_GATEAU); odd.ideas[0].elements[3].state_words = 'refusée par le patron'
+  const said = [{ rows: [], states: [{ element: 'E4', words: 'refusée par le patron', found: true, detail: 'CF « Schéma »' }], keys: [], invented: [] }]
+  fails += await scenario('a state found where the code cannot check: the verification confirms it, kept', { inventories: [odd], compared: said }, ({ error, calls, report }) => [
+    ...threw(error),
+    ...(calls.find(c => c.label === 'verify')?.prompt.includes('"section":"diagram state","text":"« refusée par le patron » (state refused of E4)"') ? [] : ['not sent to the verification']),
+    ...(report && report.includes('| state « refusée par le patron » of gateau E4 | CF « Schéma » | kept | M11 | refused: its words found, confirmed by the verification |') ? [] : ['no kept row'])])
+  fails += await scenario('a state found where the code cannot check: the verification finds nothing, invented', { inventories: [odd], compared: said, stateNotFound: true }, ({ error, report }) => [
+    ...(error && /0 lost, 1 invented/.test(error) ? [] : ['not failed on 1 invented']),
+    ...(report && report.includes('| I1 | gateau.svg | diagram state | « refusée par le patron » (state refused of E4) | found by the comparison: CF « Schéma » |') ? [] : ['not in the report'])])
+}
+fails += await scenario('a row naming only the new <title>: the old <title> flagged lost', { bareCompare: true, compared: [
+  { rows: [{ item: 'new <title> of gateau.svg', where: 'gateau.svg', verdict: 'kept', detail: '', sentence: '' }, { item: 'Legende sentence', where: 'gateau.svg', verdict: 'moved', detail: '', sentence: 'En bas, l’ingestion ; en haut, la restitution.' }], states: [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX' }], keys: [], invented: [] },
+  { rows: [{ item: 'old <title> « Une part trop grosse »', where: 'part-recoupee.svg', verdict: 'kept', detail: '', sentence: '' }], states: [], keys: [], invented: [] }] }, ({ error, report }) => [
+  ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
+  ...(report && report.includes('| old <title> of parcours-po-website/src/components/schemas/Gateau.astro | none | lost') ? [] : ['not flagged'])])
+fails += await scenario('renderings: a build but no figure matching: the sentence says so', { renderOut: JSON.stringify({ page: 'found', old: [{ n: 1, caption: 'another legende', png: 'old-1.png' }], new: [{ svg: 'gateau.svg', png: 'gateau.png' }, { svg: 'part-recoupee.svg', png: 'part-recoupee.png' }], errors: [] }) }, ({ error, report }) => [
+  ...threw(error),
+  ...(report && report.includes("Renderings: the old diagram from the frozen site's build when a figure of the page matched its legende (0 of 2), else not rendered;") && report.includes('| not rendered: source `parcours-po-website/src/components/schemas/Gateau.astro` |') ? [] : ['sentence not following the figures found'])])
+fails += await scenario('a Figure becomes the diagrams\' lines, never "images"', {}, ({ error, calls }) => [
+  ...threw(error),
+  ...(['concept', 'old-to-new', 'teaching+sources'].flatMap(l => /\bimages?\b/.test(calls.find(c => c.label === l)?.prompt ?? '') ? [`${l} prompt says image`] : []))])
 fails += await scenario('drawing agents told to check with xmllint only', {}, ({ error, calls }) => [
   ...threw(error),
   ...(drawers(calls).every(c => c.prompt.includes('with xmllint --noout, and with nothing else: no browser, no preview pane, no screenshot')) ? [] : ['drawer not told'])])
@@ -349,7 +397,7 @@ fails += await scenario('the sweeps\' rows on the diagrams: dropped, the compari
 }, ({ error, logs, calls, report }) => [
   ...threw(error),
   ...(logs.some(l => l.startsWith('2 sweep row(s) on the diagrams dropped')) ? [] : ['not dropped, or not logged']),
-  ...(calls.some(c => c.label === 'verify') ? ['sent to verification'] : []),
+  ...(/the blue ramp|a new layout/.test(calls.find(c => c.label === 'verify')?.prompt ?? '') ? ['sent to verification'] : []),
   ...(report && !report.includes('the blue ramp') ? [] : ['dropped row in the report']),
   ...(calls.find(c => c.label === 'old-to-new')?.prompt.includes('The ASTRO components and the Figure legendes are the diagram comparison\'s') && calls.find(c => c.label === 'new-to-old')?.prompt.includes('The SVGs and the frontmatter diagrams entries are') ? [] : ['sweeps not told'])])
 fails += await scenario('renderings: the command, PNGs beside the report', { args: { report: '/Users/me/wt/construction/notes/181-concept-9-report.md' } }, ({ error, calls, report }) => [
@@ -407,9 +455,9 @@ const TEACH = `${TGT}/teaching.md`
 const LINE_B = 'Cas de la banque : pour 9a1, « Le compteur de relevés ingérés », « Les tâches de Dana » et « Trois « afin de » à juger » ; pour 9b2, « « Quel patron ? » ».'
 fails += await scenario('ruling-B line: counted by design, not invented', { invented: [{ file: TEACH, section: 'Consignes', text: `« ${LINE_B} »`, detail: 'no old text' }] }, ({ error, report, calls }) => [
   ...threw(error),
-  ...(calls.some(c => c.label === 'verify') ? ['sent to verification'] : []),
+  ...((calls.find(c => c.label === 'verify')?.prompt ?? '').includes('Le compteur de relevés ingérés') ? ['sent to verification'] : []),
   ...(report && report.includes(`| teaching.md « Consignes », citation line | by design | M9 | ruling B on #23: ${LINE_B} |`) ? [] : ['no by-design row']),
-  ...(report && /\| 5 \| 1 \| 1 \| 0 \| 0 \| 0 \| pass \|/.test(report) && report.includes('## Invented\n\nNone.') ? [] : ['counts wrong']),
+  ...(report && /\| 5 \| 2 \| 1 \| 0 \| 0 \| 0 \| pass \|/.test(report) && report.includes('## Invented\n\nNone.') ? [] : ['counts wrong']),
   ...(calls.find(c => c.label === 'teaching+sources')?.prompt.includes('Cas de la banque : pour <id>, « <title> », « <title> » et « <title> » ; pour') ? [] : ['writer lacks the form'])])
 fails += await scenario('ruling-B line in another form, a second line, « Poser »: invented', { invented: [
   { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a1, « Le compteur », puis « Les tâches de Dana ».', detail: 'x' },

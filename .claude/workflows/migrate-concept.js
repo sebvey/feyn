@@ -149,7 +149,7 @@ item, CF's precise reference winning. CF's teacher hint on the course's choices 
 externe, à présenter comme tels » or its like) is by design: the protocol rule stances-told-apart (present the course's choices as such) carries it.
 M4 Essentials. « L'essentiel »: the MDX text before the first <Sous>, merged with CF « L'essentiel »: \
 MDX wording as the base, plus what only CF says, at the place it says it. A <Figure> in that zone \
-becomes its image at the same place (M6).
+becomes its \`![…](<stem>.svg)\` lines at the same place (M6).
 M5 Sub-concept sections. <Sous id titre promesse>: "## <id> <title>" then the promise as one paragraph \
 entirely in italics. <h4 id> whose id is a leaf of course.yaml: "### <id> <title>". The <title> is the \
 course.yaml title (a different MDX titre is moved). Reader text unchanged, in MDX order. An <h4> whose \
@@ -369,8 +369,9 @@ const DIAGRAM_COMPARE_SCHEMA = {
           where: { type: 'string', description: 'the new SVG and its group, or concept.md frontmatter caption or title of <file>, or "none"' },
           verdict: { type: 'string', enum: ['kept', 'moved', 'lost'] },
           detail: { type: 'string', description: 'for moved: what changed (a label reworded, another diagram, a role, a legende sentence in a title or in labels); for lost: what is missing, quoted' },
+          sentence: { type: 'string', description: 'for a row on a legende sentence or on a part of one, the whole sentence, verbatim; empty otherwise' },
         },
-        required: ['item', 'where', 'verdict', 'detail'],
+        required: ['item', 'where', 'verdict', 'detail', 'sentence'],
       },
     },
     states: {
@@ -779,7 +780,7 @@ ${INPUTS}
 
 The diagrams are set by their inventories (M11) and drawn after you, from these entries and your \
 concept.md. Their frontmatter entries, verbatim: ${JSON.stringify(entries)}.
-Each Figure of the MDX becomes the images of its diagrams, in this order, at its place (M6), although the \
+Each Figure of the MDX becomes the \`![…](<stem>.svg)\` lines of its diagrams, in this order, at its place (M6), although the \
 files do not exist yet:
 ${figures || 'none'}
 MDX sub-headings not in course.yaml (rule M5): ${scope.unlisted_h4.join(', ') || 'none'}.
@@ -944,7 +945,9 @@ title, moved when that title carries it; to the labels, split into its parts (ea
 what it says of it: « l'ingestion des données », « la restitution, ce que voit l'utilisateur »), moved \
 only when the words of every part are in the text of that idea's SVG (name the groups); lost otherwise. \
 A part drawn nowhere is one more row of its own, lost, quoting it (« ce que voit l'utilisateur »), \
-even when the rest of its sentence is moved: never moved with a part missing;
+even when the rest of its sentence is moved: never moved with a part missing. Each row on a sentence or \
+a part of one gives the whole sentence under sentence; a labels sentence counted moved goes to the \
+verification all the same;
 - for the old <title> of the component${d.variant ? ' (of the variant)' : ''}, verbatim, one row whose item \
 starts with « old <title> »: kept when a new title holds it; moved when the new titles, captions or \
 labels carry its information (say where, also when a legende sentence replaced it as title); lost for \
@@ -977,7 +980,7 @@ section; one row per item inside a section only when its verdict differs from it
 every case field, table row and frontmatter item that is moved or lost. Never use by design for a \
 drop no rule names. The citation line of M9 is new text, not an old item: give it no row (the other \
 sweep reports it). The ASTRO components and the Figure legendes are the diagram comparison's: give them \
-no row; a <Figure> gets one row, for the place of its images (M6).`,
+no row; a <Figure> gets one row, for the place of its \`![…](<stem>.svg)\` lines (M6).`,
     { label: 'old-to-new', phase: 'Compare', schema: OLD_SWEEP_SCHEMA }),
   () => agent(`${COMPARE}
 
@@ -1015,13 +1018,22 @@ if (dropped) log(`${dropped} sweep row(s) on the diagrams dropped: the diagram c
 // old <title> given no row is flagged lost (a legende sentence that replaces it as title dropped it silently).
 const lastPath = f => String(f ?? '').split('/').pop()
 compared.forEach((c, n) => {
-  for (const r of c.rows) oldSweep.rows.push({ source: 'ASTRO', item: r.item, where: r.where, verdict: r.verdict, rule: 'M11', detail: r.detail })
-  if (!c.rows.some(r => /<title>/.test(r.item))) oldSweep.rows.push({ source: 'ASTRO', item: `old <title> of ${scope.diagrams[n].component}${scope.diagrams[n].variant ? ` (${scope.diagrams[n].variant})` : ''}`, where: 'none', verdict: 'lost', rule: 'M11', detail: 'the diagram comparison gave the old <title> no row' })
+  // a labels sentence counted moved is a candidate lost row (third review of PR #182): the verification
+  // keeps it moved only when every part's words are in the SVG's <text>; one given no row is lost
+  const toLabels = inventories[n].caption_sentences.filter(s => s.to === 'labels')
+  const LABELS_CLAIM = 'a labels sentence the comparison counted moved: lost unless every part of it is in the SVG\'s <text>'
+  for (const r of c.rows) oldSweep.rows.push({ source: 'ASTRO', item: r.item, where: r.where, verdict: r.verdict, rule: 'M11', detail: r.detail, ...(r.verdict === 'moved' && toLabels.some(s => norm(s.sentence) === norm(r.sentence)) ? { candidate: LABELS_CLAIM } : {}) })
+  for (const s of toLabels.filter(s => !c.rows.some(r => norm(r.sentence) === norm(s.sentence)))) oldSweep.rows.push({ source: 'ASTRO', item: `legende sentence « ${s.sentence} » (to the labels of ${s.idea}.svg)`, where: 'none', verdict: 'lost', rule: 'M11', detail: 'the diagram comparison gave this labels sentence no row' })
+  if (!c.rows.some(r => /^\s*old <title>/i.test(r.item))) oldSweep.rows.push({ source: 'ASTRO', item: `old <title> of ${scope.diagrams[n].component}${scope.diagrams[n].variant ? ` (${scope.diagrams[n].variant})` : ''}`, where: 'none', verdict: 'lost', rule: 'M11', detail: 'the diagram comparison gave the old <title> no row' })
+  // a state's words: kept in code when the legende or the inventory's labels hold them; a found that the code
+  // cannot check is a candidate invented row, kept only when the verification finds them (third review)
+  const held = [scope.diagrams[n].legende, ...ideas.filter(i => i.diagram === n).flatMap(i => i.elements.flatMap(e => e.labels))].map(t => norm(t).toLowerCase())
   for (const i of ideas.filter(i => i.diagram === n)) {
     for (const e of i.elements.filter(e => e.state)) {
       const row = (c.states || []).find(r => [e.id, `${i.stem} ${e.id}`].includes(String(r.element).trim()) && ws(r.words) === ws(e.state_words))
-      if (row?.found) oldSweep.rows.push({ source: 'ASTRO', item: `state « ${e.state_words} » of ${i.stem} ${e.id}`, where: row.detail, verdict: 'kept', rule: 'M11', detail: `${e.state}: its words quoted` })
-      else newSweep.rows.push({ file: `${i.stem}.svg`, section: 'diagram state', text: `« ${e.state_words} » (state ${e.state} of ${e.id})`, detail: row ? `the comparison found these words nowhere: ${row.detail}` : 'a state the diagram comparison gave no row: its words not checked' })
+      const item = `state « ${e.state_words} » of ${i.stem} ${e.id}`
+      if (row?.found && held.some(t => t.includes(norm(e.state_words).toLowerCase()))) oldSweep.rows.push({ source: 'ASTRO', item, where: row.detail, verdict: 'kept', rule: 'M11', detail: `${e.state}: its words in the legende or the labels, checked in code` })
+      else newSweep.rows.push({ file: `${i.stem}.svg`, section: 'diagram state', text: `« ${e.state_words} » (state ${e.state} of ${e.id})`, detail: !row ? 'a state the diagram comparison gave no row: its words not checked' : row.found ? `found by the comparison: ${row.detail}` : `the comparison found these words nowhere: ${row.detail}`, ...(row?.found ? { candidate: 'a state whose words the comparison found where the code cannot check', kept: { source: 'ASTRO', item, where: row.detail, verdict: 'kept', rule: 'M11', detail: `${e.state}: its words found, confirmed by the verification` } } : {}) })
     }
   }
   for (const k of c.keys || []) {
@@ -1069,7 +1081,7 @@ if (citationAt >= 0) {
   newSweep.rows.splice(citationAt, 1)
   log('« Consignes »: the citation line of M9 counted by design (ruling B on #23)')
 }
-const lostRows = oldSweep.rows.map((r, row) => ({ row, ...r })).filter(r => r.verdict === 'lost').map((r, i) => ({ id: `L${i + 1}`, ...r }))
+const lostRows = oldSweep.rows.map((r, row) => ({ row, ...r })).filter(r => r.verdict === 'lost' || r.candidate).map((r, i) => ({ id: `L${i + 1}`, ...r }))
 const inventedRows = newSweep.rows.map((r, i) => ({ id: `I${i + 1}`, ...r }))
 let verdicts = []
 if (lostRows.length || inventedRows.length) {
@@ -1088,7 +1100,10 @@ information, never on forms, colours or layout (M11): for a lost one, search the
 part of a legende sentence is refuted only when its words are drawn) and the new titles; for an invented \
 one, the inventories and the concept text: a key word is refuted only when they carry its words, never \
 because it names a distinction of form; a state's words only when the old component's <text> or <desc>, \
-CF, MDX or concept.md holds them. The inventories: ${JSON.stringify(inventories)}
+CF, MDX or concept.md holds them. A row with a candidate field is a claim to check, not yet a fault: a \
+lost one (a labels sentence counted moved) is confirmed unless the words of every part of its sentence \
+are in the <text> of the SVG it names; an invented one (a state found) is confirmed unless you find its \
+words, verbatim, in the old component's <text> or <desc>, CF, MDX or concept.md. The inventories: ${JSON.stringify(inventories)}
 ` : ''}
 Lost: ${JSON.stringify(lostRows)}
 Invented: ${JSON.stringify(inventedRows)}`,
@@ -1100,6 +1115,12 @@ const verdictOf = id => verdicts.find(v => v.id === id)
 const confirmed = r => { const v = verdictOf(r.id); return !v || v.confirmed }
 const lostLeft = lostRows.filter(confirmed)
 const inventedLeft = inventedRows.filter(confirmed)
+// a candidate is what the comparison said until the verification confirms the fault: a confirmed one
+// becomes lost (its table row too), a refuted one keeps its claim (moved, or a kept state row) and is not
+// counted refuted
+for (const l of lostRows.filter(l => l.candidate && confirmed(l))) oldSweep.rows[l.row].verdict = 'lost'
+for (const r of inventedRows.filter(r => r.candidate && !confirmed(r))) oldSweep.rows.push(r.kept)
+const refutedRows = [...lostRows, ...inventedRows].filter(r => !confirmed(r) && !r.candidate)
 
 // --- Report ----------------------------------------------------------------------------
 
@@ -1161,8 +1182,8 @@ function renderReport() {
   out.push('## Summary', '')
   out.push('| kept | moved | by design | lost | invented | refuted | checks | target existed | accepted |')
   out.push('|---|---|---|---|---|---|---|---|---|')
-  out.push(`| ${count('kept')} | ${count('moved')} | ${count('by design')} | ${lostLeft.length} | ${inventedLeft.length} | ${lostRows.length + inventedRows.length - lostLeft.length - inventedLeft.length} | ${checksPassed ? 'pass' : 'fail'} | ${targetHeldFiles ? 'yes, emptied' : 'no'} | ${A.accept ? 'yes' : 'no'} |`, '')
-  out.push(`Result: **${failed ? 'failed' : (lostLeft.length || inventedLeft.length) ? 'passed, accepted' : 'passed'}**. lost and invented count the rows confirmed by the verification; the rows it refuted (refuted) are listed at the end and count in no other column. checks is read in code from the output below, which the check agent returns; target existed is read in code from the listing below, which the scope agent returns.`, '')
+  out.push(`| ${count('kept')} | ${count('moved')} | ${count('by design')} | ${lostLeft.length} | ${inventedLeft.length} | ${refutedRows.length} | ${checksPassed ? 'pass' : 'fail'} | ${targetHeldFiles ? 'yes, emptied' : 'no'} | ${A.accept ? 'yes' : 'no'} |`, '')
+  out.push(`Result: **${failed ? 'failed' : (lostLeft.length || inventedLeft.length) ? 'passed, accepted' : 'passed'}**. lost and invented count the rows confirmed by the verification; the rows it refuted (refuted) are listed at the end and count in no other column. A labels sentence counted moved, and a state's words found where the code cannot check them, go to the verification as claims (marked checked): confirmed, they count lost or invented; refuted, as claimed. checks is read in code from the output below, which the check agent returns; target existed is read in code from the listing below, which the scope agent returns.`, '')
   if (longCaptions.length) out.push(`Captions of more than one sentence (SPEC.md 7.2, principle 1: a caption that needs two sentences means two diagrams): ${longCaptions.map(i => `${i.stem}.svg (${i.sentences} sentences)`).join(', ')}. Flagged for the review, not refused.`, '')
   out.push('## Target before the run', '')
   out.push(`\`ls -ld ${DIR.replace(/\/$/, '')}; ls -la ${DIR.replace(/\/$/, '')}\`, as the scope agent returned it: ${!listed.exists ? 'no such folder' : targetHeldFiles ? `${listed.files.length} entr${listed.files.length === 1 ? 'y' : 'ies'}, emptied (args.overwrite)` : 'an empty folder'}.`, '', '```', String(scope.target_listing).trim(), '```', '')
@@ -1173,7 +1194,7 @@ function renderReport() {
     out.push('| Old item | Where it is now | Verdict | Rule | Detail |', '|---|---|---|---|---|')
     for (const r of rows) {  // rows are the oldSweep.rows objects themselves: indexOf finds them
       const flagged = lostRows.find(l => l.row === oldSweep.rows.indexOf(r))
-      const verdict = flagged ? `lost (${flagged.id}${confirmed(flagged) ? '' : ', refuted'})` : r.verdict
+      const verdict = !flagged ? r.verdict : flagged.candidate ? (confirmed(flagged) ? `lost (${flagged.id}, checked)` : `moved (${flagged.id}, checked)`) : `lost (${flagged.id}${confirmed(flagged) ? '' : ', refuted'})`
       out.push(`| ${cell(r.item)} | ${cell(r.where)} | ${verdict} | ${cell(r.rule)} | ${cell(r.detail)} |`)
     }
     out.push('')
@@ -1184,15 +1205,13 @@ function renderReport() {
   out.push('', '## Invented', '')
   if (!inventedLeft.length) out.push('None.')
   else { out.push('| Id | File | Section | New text | Why | Verification |', '|---|---|---|---|---|---|'); for (const r of inventedLeft) out.push(`| ${r.id} | ${cell(r.file)} | ${cell(r.section)} | ${cell(r.text)} | ${cell(r.detail)} | ${cell(verdictOf(r.id)?.reason ?? 'not verified')} |`) }
-  const refuted = [...lostRows, ...inventedRows].filter(r => !confirmed(r))
+  const refuted = refutedRows
   out.push('', '## Refuted by the verification', '')
   if (!refuted.length) out.push('None.')
   else { out.push('| Id | Flagged | Found |', '|---|---|---|'); for (const r of refuted) out.push(`| ${r.id} | ${cell(r.item || r.text)} | ${cell(verdictOf(r.id).reason)} |`) }
   out.push('', '## Diagrams (M11)', '')
   if (!scope.diagrams.length) out.push('No diagram.')
   else {
-    const oldWay = renderings?.page === 'found' ? 'the old diagram from the frozen site\'s build' : renderings?.page === 'absent' || renderings?.page === 'none' ? 'no site build, so the old diagram is its component\'s source, quoted when it came back whole' : 'the old diagram not rendered'
-    out.push(`Each old diagram was inventoried (what it shows, by idea), drawn anew from its inventory and concept.md alone under SPEC.md 7.2, and compared on information (the ASTRO rows above). Renderings: ${oldWay}; the new one in one colour.`, '')
     // an old figure of the build: the one whose caption is the legende; else, as many figures as diagrams, by order
     // else, with no site build, the component's source, quoted below the table once per component (#181)
     const shown = new Set()
@@ -1206,6 +1225,12 @@ function renderReport() {
       const why = renderings?.page === 'absent' ? 'no site build' : 'not rendered'
       return quoted.has(d.component) ? `${why}: its source ${shown.has(d.component) ? 'above' : 'below'}` : `${why}: source \`${d.component}\``
     }
+    // the sentence follows what was found: every old diagram matched a figure of the build, some, or none
+    const matched = scope.diagrams.filter((d, n) => oldHit(d, n)?.png).length
+    const oldWay = renderings?.page === 'found'
+      ? (matched === scope.diagrams.length ? 'the old diagram from the frozen site\'s build' : `the old diagram from the frozen site's build when a figure of the page matched its legende (${matched} of ${scope.diagrams.length}), else not rendered`)
+      : renderings?.page === 'absent' || renderings?.page === 'none' ? 'no site build, so the old diagram is its component\'s source, quoted when it came back whole' : 'the old diagram not rendered'
+    out.push(`Each old diagram was inventoried (what it shows, by idea), drawn anew from its inventory and concept.md alone under SPEC.md 7.2, and compared on information (the ASTRO rows above). Renderings: ${oldWay}; the new one in one colour.`, '')
     const fence = t => '`'.repeat(Math.max(3, ...(String(t).match(/`+/g) || []).map(r => r.length + 1)))
     scope.diagrams.forEach((d, n) => {
       const mine = ideas.filter(i => i.diagram === n)
