@@ -18,6 +18,7 @@ const SITE = '/Users/me/pdx/parcours-po-website'
 const DIR = 'concepts/09-decoupage-vertical'
 const TGT = `${DEST}/${DIR}`
 const TGT0 = TGT
+const ROOT = '/Users/me/wt'
 const CHECKS = 'course-yaml,concept-folder,conventions,svg-contract,sources,glossary-order,typography'.split(',')
 
 const ABSENT_GNU = `ls: cannot access '${TGT}': No such file or directory\nls: cannot access '${TGT}': No such file or directory`
@@ -49,7 +50,8 @@ function makeAgent(o) {
         { component: `${SITE}/src/components/schemas/Gateau.astro`, variant: '', stem: 'gateau', legende: 'Le gâteau', place: 'essentials' },
         { component: `${SITE}/src/components/schemas/PartRecoupee.astro`, variant: '', stem: 'part-recoupee', legende: 'La part', place: '9b1' },
       ],
-      unlisted_h4: [], target_listing: o.listing ?? ABSENT_GNU, missing: [],
+      unlisted_h4: [], target_listing: o.listing ?? ABSENT_GNU, missing: o.missing ?? [],
+      cwd: o.cwd ?? (o.agentRoot ? o.agentRoot.replace(/\/$/, '') : ROOT),
     }
     if (L === 'empty-target') return o.emptied ?? { empty: true, listing: '' }
     if (L === 'colours') return { mapping: o.mapping ?? goodMapping, unused: ['--sch-text-soft'] }
@@ -64,7 +66,8 @@ function makeAgent(o) {
     if (L === 'concept') return { files: [`${TGT}/concept.md`], choices: ['M4: merged', 'M3: read /Users/someone/elsewhere/notes.md', 'M3: odd contexts path:/Users/me/x, *\/Users/me/x*, {/Users/a}', `M3: course folder path:${TGT.slice(0, -DIR.length - 1)}, the target *${TGT}*`] }
     if (L === 'checks') return { output: CHECKS.map(c => `${c}: ok`).join('\n'), fixes: [`${TGT}/concept.md: heading`], left: [] }
     if (L === 'old-to-new') return { rows: [{ source: 'SF', item: 'intro', where: `${TGT}/sources.md intro`, verdict: 'moved', rule: 'M10', detail: 'course/plan.md: plan.md' }] }
-    if (L === 'new-to-old') return { rows: [] }
+    if (L === 'new-to-old') return { rows: o.invented ?? [] }
+    if (L === 'verify') return { verdicts: (JSON.parse(prompt.split('Invented: ')[1] || '[]')).map(r => ({ id: r.id, confirmed: true, reason: 'searched CF « Sous-concepts »: absent' })) }
     if (L === 'report') {
       const body = prompt.split('-----BEGIN REPORT-----\n')[1].split('\n-----END REPORT-----')[0]
       o.report = body
@@ -136,5 +139,41 @@ fails += await scenario('absolute dest under /Users, paths in odd contexts: none
 fails += await scenario('dest under /workspace: none left', { args: { dest: '/workspace/feyn/courses/parcours-po' }, listing: `ls: cannot access '/workspace/feyn/courses/parcours-po/${DIR}': No such file or directory`, agentRoot: '/workspace/feyn/' }, ({ error, report }) => [
   ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
   ...(report && report.includes('| concepts/09-decoupage-vertical/sources.md intro |') && report.includes('check-course courses/parcours-po --only') ? [] : ['paths under /workspace not rewritten'])])
+// #178: a label ink on a fill, the ruling-B line, an absent target named under missing, absolute spec paths
+const labelMapping = [...goodMapping.slice(0, 4), { token: '--sch-s-ink', class: 'plain', opacity: 1, draws: 'the label on the flag' }]
+const writers = calls => calls.filter(c => ['colours', 'teaching+sources', 'concept'].includes(c.label) || c.label.startsWith('diagram:'))
+fails += await scenario('label ink on a fill: plain pair, window form in every writer', { mapping: labelMapping }, ({ error, report, calls }) => [
+  ...(error ? [`threw: ${error}`] : []),
+  ...(calls.find(c => c.label === 'colours')?.prompt.includes('class plain (opacity 1), the label drawn in a window of the fill, never class none') ? [] : ['colour agent not told']),
+  ...(calls.filter(c => c.label.startsWith('diagram:')).every(c => c.prompt.includes('--sch-s-ink: plain: a label in a window of its fill') && c.prompt.includes('fill-rule="evenodd"') && c.prompt.includes('Never a filter, a mask')) ? [] : ['a writer lacks the window form']),
+  ...(writers(calls).every(c => c.prompt.includes('A contrast ink drawn on a fill as a label') || c.label === 'colours') ? [] : ['M11 lacks the label clause']),
+  ...(calls.find(c => c.label === 'checks')?.prompt.includes('the window form of M11, never an outline in place of a fill') ? [] : ['checks agent not told']),
+  ...(report && report.includes('| `--sch-s-ink` | plain (no class, a label in a window) | 1 |') ? [] : ['mapping table wrong'])])
+fails += await scenario('label ink with an opacity other than 1: stops', { mapping: [...goodMapping.slice(0, 4), { token: '--sch-s-ink', class: 'plain', opacity: 0.8, draws: 'x' }] }, ({ error }) => (error && /class plain .* opacity 0.8, expected 1/.test(error) ? [] : ['not stopped']))
+const TEACH = `${TGT}/teaching.md`
+const LINE_B = 'Cas de la banque : pour 9a1, « Le compteur de relevés ingérés », « Trois « afin de » à juger » ; pour 9b2, « « Quel patron ? » ».'
+fails += await scenario('ruling-B line: counted by design, not invented', { invented: [{ file: TEACH, section: 'Consignes', text: `« ${LINE_B} »`, detail: 'no old text' }] }, ({ error, report, calls }) => [
+  ...(error ? [`threw: ${error}`] : []),
+  ...(calls.some(c => c.label === 'verify') ? ['sent to verification'] : []),
+  ...(report && report.includes(`| teaching.md « Consignes », citation line | by design | M9 | ruling B on #23: ${LINE_B} |`) ? [] : ['no by-design row']),
+  ...(report && /\| 1 \| 1 \| 0 \| 0 \| 0 \| pass \|/.test(report) && report.includes('## Invented\n\nNone.') ? [] : ['counts wrong']),
+  ...(calls.find(c => c.label === 'teaching+sources')?.prompt.includes('Cas de la banque : pour <id>, « <title> », « <title> » ; pour') ? [] : ['writer lacks the form'])])
+fails += await scenario('ruling-B line in another form, a second line, « Poser »: invented', { invented: [
+  { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a1, « Le compteur » et « Les tâches de Dana ».', detail: 'x' },
+  { file: TEACH, section: 'Consignes', text: 'Poser « Le compteur », puis « Les tâches de Dana ».', detail: 'x' },
+  { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a1, « Le compteur ».', detail: 'x' },
+  { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a2, « Les tâches de Dana ».', detail: 'x' }] }, ({ error, report }) => [
+  ...(error && /3 invented/.test(error) ? [] : ['not failed on 3 invented']),
+  ...(report && report.includes('et « Les tâches de Dana »') && report.includes('Poser « Le compteur »') && report.includes('| I3 | ') && report.includes('ruling B on #23: Cas de la banque : pour 9a1, « Le compteur ».') ? [] : ['wrong rows'])])
+for (const [name, item] of [['absolute', `target folder ${TGT} does not exist`], ['course-relative', `target courses/parcours-po/${DIR}: No such file or directory.`], ['bare dir', `the target folder ${DIR} does not exist yet`]])
+  fails += await scenario(`absent target named under missing (${name}): ignored`, { missing: [item] }, ({ error }) => (error ? [`threw: ${error}`] : []))
+fails += await scenario('a missing old file under concepts/: stops', { missing: [`target folder ${TGT} does not exist`, `${FROM}/course/concepts/09-decoupage-vertical.md`] }, ({ error }) => (error && /Inputs missing: \/Users\/me\/pdx\/parcours-po\/course\/concepts\/09-decoupage-vertical\.md$/.test(error) ? [] : ['not stopped on the old file alone']))
+fails += await scenario('spec paths absolute in the writers\' inputs', {}, ({ error, calls }) => [
+  ...(error ? [`threw: ${error}`] : []),
+  ...(writers(calls).length === 5 ? [] : ['writers not all called']),
+  ...writers(calls).flatMap(c => [`${ROOT}/specs/linear-course/SPEC.md`, `${ROOT}/specs/linear-course/templates/`, `${ROOT}/docs/glossary.md`, `${ROOT}/construction/notes/S1-08.md`]
+    .filter(p => !c.prompt.includes(p)).map(p => `${c.label} lacks ${p}`)),
+  ...writers(calls).filter(c => /(^|[^\w/])(specs\/linear-course\/|docs\/glossary\.md|construction\/notes\/S1-08\.md)/.test(c.prompt)).map(c => `${c.label} has a relative spec path`)])
+fails += await scenario('working directory not absolute: stops', { cwd: 'feyn' }, ({ error }) => (error && /not an absolute path/.test(error) ? [] : ['not stopped']))
 console.log(fails ? `${fails} scenario(s) failed` : 'all scenarios pass')
 process.exit(fails ? 1 : 0)

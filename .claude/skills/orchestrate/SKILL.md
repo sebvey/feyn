@@ -35,6 +35,19 @@ agent before it reaches the maintainer (decision `fresh-agent-review-before-main
     end of its turn (Claude Code, observed 2026-10-28, #171). Once it pushed its branch:
     `git worktree add -q <main checkout>/.claude/worktrees/<name> -B <branch> origin/<branch>`,
     `git -C <path> branch --set-upstream-to=origin/<branch>`, and resume it with that path.
+  - **A two-phase migration** (a run whose output a contributor then fixes and delivers, as the
+    S1-10 sub-issues): the orchestrator creates the branch and the worktree itself before the
+    run: `git push origin origin/main:refs/heads/<branch>`, `git fetch origin <branch>`,
+    `git worktree add <main checkout>/.claude/worktrees/<name> -B <branch> origin/<branch>`,
+    `git -C <path> branch --set-upstream-to=origin/<branch>`; sets the Status to In progress
+    (`/start` step 4); runs in that worktree. After the run, the contributor is spawned without
+    `isolation`: its current directory is the main checkout, which its brief forbids it to touch;
+    it works in the worktree's absolute path, with `git -C <path>` and
+    `gh pr create --head <branch>`; its brief's "How to run the cycle" names the worktree and
+    the branch in place of `/start`. A contributor spawned with
+    `isolation: "worktree"` cannot write nor run git in another worktree: Edit, `git -C` and
+    `cd` to it are refused (Claude Code, observed 2026-10-28, #178). Other issues keep the
+    path above, where the contributor runs `/start` first.
   - **A blind run** (a run that must not see a file). Its agents run in the work session's
     working directory (Claude Code, observed 2026-10-28, #130); a copy of the repository
     outside it cannot hold the work session: a `cd` there is reset, and `change_directory`
@@ -50,8 +63,8 @@ agent before it reaches the maintainer (decision `fresh-agent-review-before-main
 
 ## 2. The contributor agent
 
-`Agent` with `isolation: "worktree"`, the model above, and the
-[contributor brief](#contributor-brief) filled in. Keep its id: the corrections pass and the
+`Agent` with `isolation: "worktree"` (none for a two-phase migration, step 1), the model above,
+and the [contributor brief](#contributor-brief) filled in. Keep its id: the corrections pass and the
 clean-up need it. Wait for its reply; never do its work in parallel.
 
 Its reply gives the branch, the PR, the files changed, the checks and what it was unsure of.
