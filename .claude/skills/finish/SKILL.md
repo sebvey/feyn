@@ -35,10 +35,12 @@ branch without an issue number: stop and say so.
    `<type>` is the `type:` label, `<area>` the `area:` label, both without their prefix
    (`course(course:parcours-po): write the cases of concept 9`). Summary: imperative,
    lowercase, no final period, under 72 characters for the whole title.
-5. **Body**, from [pr-body.md](pr-body.md). It is read by a maintainer who reviews many PRs on
-   many subjects and must get back into this one from the PR alone; it is also the squash
-   commit message on `main`. 30 lines at most, blank lines and the awaiting section excluded.
-   The sections, in this order, each an `##` heading except the `Closes` line:
+5. **Body**, from the PR body template [pr-body.md](pr-body.md). It is read by a maintainer who
+   reviews many PRs on many subjects and must get back into this one from the PR alone; it is
+   also the squash commit message on `main`. 30 lines at most, blank lines and the awaiting
+   section excluded. The sections, in this order, each an `##` heading except the `Closes`
+   line; a line of the template that does not apply is dropped (the awaiting section outside a
+   draft, `Not verified:` with nothing unverified), and the body carries no HTML comment:
    - **Awaiting the maintainer**, only when the branch leaves a decision to the maintainer
      (a draft, step 6), first because it is the action: the question, the options, the
      recommendation. Removed once the answer is applied. An `Awaiting the orchestrator`
@@ -58,9 +60,14 @@ branch without an issue number: stop and say so.
        "not met" or a "deviation" gets one sub-bullet, the statement in a few words and why.
      - `Checks run:` their names and results, on one line (step 2); an area with no check:
        say so here.
-     - `Fresh-agent review: <N> blocking findings, fixed.`: not written by `/finish`; added
-       at the hand-over by the corrections pass of `/orchestrate` (step 4), absent when the
-       PR had no such review.
+     - `Behaviours:` the tool behaviours whose mark cites this PR
+       ([contributing](../../../docs/contributing.md), "Tool behaviours"), each with its proof
+       in a few words, on one line; a longer proof goes in a comment on the issue, and the
+       mark cites the issue. Dropped when there is none.
+     - `Fresh-agent review: no blocking finding.` or
+       `Fresh-agent review: <N> blocking findings, fixed.`: not written by `/finish`; added
+       at the hand-over by the corrections pass of `/orchestrate` (step 4), and updated, not
+       repeated, after a second review. Absent when the PR had no such review.
      - `Not verified:` one line, if anything.
    - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a
      deviation, a choice the contributor made, a sensitive spot.

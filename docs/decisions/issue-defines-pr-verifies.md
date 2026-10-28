@@ -13,11 +13,11 @@ The Done when is written once, in the issue; it is the contract. The PR does not
 reports: `/finish` rereads the issue's Done when, checks each statement against the branch,
 and writes in the PR body's Checks section one line per issue that counts the verdicts
 (`met`, `not met`, `deviation`), without restating the statements; only a `not met` or a
-`deviation` gets a line saying why. The proof of each statement is not in the PR: the
-fresh-agent reviewer reruns every statement of the issue itself (decision
-`fresh-agent-review-before-maintainer`). When the issue and the PR disagree, the issue wins
-and the PR says why it deviates. The Done when is not edited after `/start`; a change to it
-amends the open PR's body as well.
+`deviation` gets a line saying why. The proof of each statement is not in the PR: on a PR
+that goes through `/orchestrate`, the fresh-agent reviewer reruns every statement of the
+issue itself (decision `fresh-agent-review-before-maintainer`). When the issue and the PR
+disagree, the issue wins and the PR says why it deviates. The Done when is not edited after
+`/start`; a change to it amends the open PR's body as well.
 
 `Closes #n` when the PR ends the issue; `Refs #n` when the PR is one step of it (the issue
 stays open and its Development section shows nothing: link the PR by hand if needed).

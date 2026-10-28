@@ -44,7 +44,8 @@ Its reply gives the branch, the PR, the files changed, the checks and what it wa
 Check it before going on: the PR exists (`mise exec -- gh pr view <pr> --json title,isDraft,body`),
 its title follows `<type>(<area>): <summary>`, the body starts with `Closes #<n>` or `Refs #<n>`
 (or the awaiting section), then has the sections of `/finish` step 5 in order (Context, Issues,
-Changes, Checks, Review first) within its 30 lines, no signature line.
+Changes, Checks, Review first) within its limits (step 5: 30 lines, blank lines and the
+awaiting section excluded), no signature line.
 
 ## 3. Independent review
 
@@ -61,8 +62,9 @@ the run ids `wf_<id>` and their transcript directory.
 - **Findings.** Send the blocking findings, and the non-blocking ones worth fixing, to the
   contributor agent with `SendMessage` (its id; its context is intact). It fixes, pushes and
   updates the PR body, adding to its Checks the line
-  `Fresh-agent review: <N> blocking findings, fixed.` (`/finish` step 5). With nothing to
-  fix, send only that line to add (`0 blocking`). Then check each fixed point yourself in the
+  `Fresh-agent review: <N> blocking findings, fixed.` (`/finish` step 5). With no blocking
+  finding, send that line too: `Fresh-agent review: no blocking finding.` A second review
+  updates the same line. Then check each fixed point yourself in the
   diff (`mise exec -- gh pr diff <pr>`), never on its word, and recheck the sensitive points: a
   counterfactual, a Done when count, a command that touches `main` or a remote branch, the
   title. A second review (step 3) whenever the change adds or edits a decision or a check, or

@@ -5,7 +5,7 @@
 - <option>
 Recommendation: <option, and why in one line>
 
-Closes #<n>
+Closes #<n>   (or Refs #<n>)
 
 ## Context
 
@@ -13,7 +13,7 @@ Closes #<n>
 
 ## Issues
 
-- #<n> <issue title>: <what this PR does for it> (Closes)
+- #<n> <issue title>: <what this PR does for it> (Closes, or Refs)
 
 ## Changes
 
@@ -24,6 +24,7 @@ Closes #<n>
 - Done when #<n>: <count> met[, <count> not met][, <count> deviation].
   - <statement in a few words>: <why it is not met, or how it deviates>
 - Checks run: <name> (<result>), <name> (<result>).
+- Behaviours: <behaviour> (<tool>, <status>): <proof in a few words>.
 - Not verified: <what, in one line>
 
 ## Review first
