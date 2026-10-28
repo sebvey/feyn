@@ -41,13 +41,13 @@ One script per id, `checks/<id>.js`, exporting `run(ctx)`; `check-course` loads 
 | `glossary-order` | `glossary-order.js` | no `concept.md` uses a term before the concept that introduces it (6) |
 | `domain-first-sentence` | `domain-first-sentence.js` | first sentence of each paragraph of « Le fil des concepts » stands alone (5) |
 | `typography` | `typography.js` | no banned character of the language pack in course text (2) |
-| `language-pack-keys` | `language-pack-keys.js` | every key of section 9 exists in the course's pack (9) |
+| `language-pack-keys` | `language-pack-keys.js` | every key of section 9 and of `PROTOCOL.md` exists in the course's pack (9) |
 
-`language-pack-keys` checks the keys of section 9. The keys `PROTOCOL.md` uses are listed in its
-"Keys and parameters" section; S1-05 adds them to the check with the real pack. The pack is read as
-a map of the groups of section 9 (`headings`, `case_fields`, `markers`, `references`,
-`source_types`, `typography.banned`, `checks.anaphora`); S1-05 writes the real pack and may add
-groups beside them.
+`language-pack-keys` checks the keys of section 9 and every key `PROTOCOL.md` uses: a row of
+the pack tables of its "Keys and parameters" section, or a `{group.key}` in a rule (the check reads
+`PROTOCOL.md`, so a new key there is required of the packs at once). A key is a non-empty string;
+the lists (`typography.banned`, `checks.anaphora`, the `learner_says` lists) are non-empty lists of
+strings. The groups beside those (`site`) are read by the site, not checked here.
 
 A claim of `sources.md` has a source when its source cell is not empty: a reference id
 (`[S1]`), a `concepts/NN-slug/sources.md` path, or a word that says there is none (« fil
@@ -100,7 +100,9 @@ mise exec -- specs/linear-course/checks/test-fixtures
 - `fixtures/prototype/`: the course-level files around the concept 9 prototype
   (`courses/parcours-po/concepts/09-decoupage-vertical`, copied in at test time); every check
   passes with `--concept 9`. The real course files come with S1-08.
-- `fixtures/lang/fr.yaml`: the pack the fixtures use (the keys of section 9, French values).
+- `fixtures/lang/fr.yaml`: the pack the fixtures use (the groups the checks read: section 9 and the
+  keys of `PROTOCOL.md`, French values of the real pack `lang/fr.yaml`, without `site`; change both
+  together). `fixtures/lang-broken*/`: packs with one missing key, for the broken copies that name them.
 - `fixtures/spec/valid/`: a minimal spec (`PROTOCOL.md`, `SPEC.md`, one decision); every
   `check-spec` check passes. `fixtures/spec/broken/<name>/`: a copy of it with one defect and its
   `EXPECT` file (a missing slug, a duplicate slug, a rule cited by number, a missing group, a
