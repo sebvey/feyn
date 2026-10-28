@@ -1,5 +1,5 @@
 'use strict';
-// Every diagram against the drawing contract (SPEC.md section 7); declared and present
+// Every diagram against the drawing contract (SPEC.md section 7.1); declared and present
 // diagrams match (section 4.1).
 const fs = require('fs');
 const path = require('path');

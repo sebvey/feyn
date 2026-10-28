@@ -3,8 +3,8 @@
 Version 1.0.0, draft: binding from the tag `linear-course/v1.0.0`. The pedagogical protocol is
 not in this file: it is `PROTOCOL.md`, beside it, because this file would exceed about 400 lines
 with it. The four parts of the spec are the **structure** and its **reader-text conventions**
-(this file), the **drawing contract** (this file), the **checks** (this file, scripts in
-`checks/`) and the **protocol** (`PROTOCOL.md`).
+(this file), the **diagrams**, their drawing contract and style (this file), the **checks** (this
+file, scripts in `checks/`) and the **protocol** (`PROTOCOL.md`).
 
 **Language exception.** The rules of `PROTOCOL.md` are written in French, a bounded exception
 to the language policy (`docs/decisions/language-policy.md`): the old teacher was instructed and
@@ -323,12 +323,15 @@ characters of the lead, and does not open with a word of the language pack's
   `## X.Y.Z, YYYY-MM-DD`. An entry is one line `- MAJOR|MINOR|PATCH, <where> : <what>`. A last
   free paragraph is allowed (the line that links the course to its history before 0.1.0).
 
-## 7. The drawing contract
+## 7. Diagrams
 
 A **diagram** is one SVG in the concept folder, declared in `diagrams` (section 4.1). It serves
 both builds: the site shows it (inline or as an image), the teacher sends it to the desktop
 panel and says its caption; in the terminal, the teacher says the caption and gives the site
-link. All rules are `svg-contract`.
+link. Section 7.1 is the drawing contract, every rule of it `svg-contract`; section 7.2 is the
+style every diagram of a course shares, for the writers and the reviews.
+
+### 7.1 Drawing contract
 
 - **File**: `<stem>.svg`, the stem lowercase ASCII words joined by hyphens; well-formed XML;
   32 KB at most.
@@ -354,6 +357,40 @@ link. All rules are `svg-contract`.
   `xlink:href` not starting with `#`, any external resource.
 
 Nothing checks that the drawing says what its caption says: a review does.
+
+### 7.2 Style
+
+Every diagram of a course is drawn in one style, whoever draws it (a migration, `course-batch`,
+a contributor): the same role takes the same class from one concept to the next (decision
+`one-diagram-style`). It is written for the diagrams to draw, not for compatibility with older
+ones: six principles. No script checks it: a review does.
+
+Each class means one thing in every diagram: **`primary`** what the diagram teaches, its focus;
+**`secondary`** the contrast, a second element set against the first; **`muted`** the context
+and the ordinary text.
+
+1. **One idea per diagram.** A diagram shows what its caption says; a caption that needs two
+   sentences means two diagrams.
+2. **Roles.** A diagram has a subject, at most one contrast, a context and text. A series is the
+   subject in levels; a state (done, not done, refused) is said by form.
+3. **Rendering of the roles.**
+   - subject: `primary`, opacity 1;
+   - series: `primary` at falling opacity (1, 0.7, 0.4);
+   - contrast: `secondary`;
+   - context: `muted`, a low opacity for fills, a middle one for lines;
+   - text: `muted`, opacity 1; `primary` only when the word is the subject;
+   - state: solid for done, dashed for not done or uncertain, struck for refused.
+
+   In one colour, nothing is more marked than the subject; the contrast differs from the subject
+   by opacity or form, not by hue alone.
+4. **Readable in one colour.** Opacity and form carry every distinction, never the hue alone.
+   Text is always legible: never knocked out of a fill, never on a fill darker than itself.
+5. **Composition.** The `viewBox` is 600 units wide by default. The diagram reads left to right
+   or top to bottom; it holds few elements, with space between them. Its text is in the
+   course's words, never under 14 units.
+6. **Text the diagram holds.** Its labels, and a key (a sample and a word) when a distinction of
+   form or opacity must be named. No teaching sentence: that is the `caption`. No decoration,
+   icon or gradient.
 
 ## 8. Versions
 
@@ -402,7 +439,7 @@ non-zero exit on any failure, `--only <id>`), locally and in CI.
 | `course-yaml` | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, paths, supported spec MAJOR, language pack present | 3, 8 |
 | `concept-folder` | the folder's files; the three files' sections and their order; frontmatter keys; one section per sub-concept; « Objectif » equals `objective`; case headings, fields, coverage of leaves, citation in « Consignes » | 4 |
 | `conventions` | the reader-text conventions of `concept.md`; plain Markdown in course files | 2, 4.5 |
-| `svg-contract` | every diagram against the drawing contract; declared and present diagrams match | 4.1, 7 |
+| `svg-contract` | every diagram against the drawing contract; declared and present diagrams match | 4.1, 7.1 |
 | `sources` | reference ids, citations, claims, paths | 4.1, 4.4 |
 | `course-files` | `plan.md` (« Public cible », « Accueil » and its questions), `glossary.md`, `CHANGELOG.md`, domain files: presence, frontmatter, sections, leads | 5, 6 |
 | `glossary-order` | no term used before the concept that introduces it | 6 |

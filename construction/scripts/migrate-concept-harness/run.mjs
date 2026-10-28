@@ -28,13 +28,40 @@ const EMPTY = LD + 'total 0\ndrwxr-xr-x 2 sve staff 64 Oct 28 14:21 .\ndrwxr-xr-
 const OTHER = `drwxr-xr-x 2 sve staff 64 Oct 28 14:21 ${DEST}/concepts\n` + 'total 0\ndrwxr-xr-x 2 sve staff 64 Oct 28 14:21 .\ndrwxr-xr-x 5 sve staff 160 Oct 28 14:21 ..'
 const FULL = LD + `total 8\ndrwxr-xr-x  4 sve staff 128 Oct 28 14:21 .\ndrwxr-xr-x  5 sve staff 160 Oct 28 14:21 ..\n-rw-r--r--@ 1 sve staff 12998 Oct 28 14:21 concept.md\ndrwxr-xr-x  2 sve staff 64 Oct 28 14:21 old dir`
 
-const goodMapping = [
-  { token: '--sch-s1', class: 'primary', opacity: 0.85, draws: 'slice 1 (Gateau), slice a (PartRecoupee)' },
-  { token: '--sch-s2', class: 'primary', opacity: 0.6, draws: 'slice 2, slice c' },
-  { token: '--sch-text', class: 'primary', opacity: 1, draws: 'all text' },
-  { token: '--sch-grey', class: 'muted', opacity: 0.35, draws: 'hatch background' },
-  { token: '--sch-s-ink', class: 'none', opacity: 0, draws: 'cut lines' },
-]
+// the two old diagrams of concept 9, their legendes, and the inventories the stand-in agents return
+const LEG_GATEAU = "Le gâteau en couches. En bas, l'ingestion ; en haut, la restitution. Une couche prise en entier ne sert pas seule ; chaque part verticale sert seule."
+const LEG_PART = 'Une part trop grosse, recoupée.'
+const el = (id, what, labels, role, state = '', state_words = '') => ({ id, what, labels, role, state, state_words })
+// the maintainer's answer of 2026-10-28 on PR #182: the naming sentence to the title, the reading one to
+// the labels, the caption only the sentence that carries the idea
+const LEG_GATEAU_IDEA = 'Une couche prise en entier ne sert pas seule ; chaque part verticale sert seule.'
+const INV_GATEAU = {
+  caption_sentences: [
+    { sentence: 'Le gâteau en couches.', idea: 'gateau', to: 'title' },
+    { sentence: 'En bas, l’ingestion ; en haut, la restitution.', idea: 'gateau', to: 'labels' },
+    { sentence: LEG_GATEAU_IDEA, idea: 'gateau', to: 'caption' }],
+  ideas: [{ stem: 'gateau', title: 'Le gâteau en couches : une tranche horizontale contre trois tranches verticales', subconcept: '9a',
+    justification: 'Une couche prise en entier ne sert pas seule ; chaque part verticale sert seule.', stands_in: 'the legende',
+    elements: [el('E1', 'les couches, de l’ingestion à la restitution', ['Ingestion', 'Restitution'], 'context'),
+      el('E2', 'une part verticale, au premier niveau', ['tranche 1'], 'series'), el('E3', 'une part verticale, au deuxième niveau', ['tranche 2'], 'series'),
+      el('E4', 'la couche prise en entier', ['couche entière'], 'contrast', 'refused', 'ne sert pas seule')],
+    relations: ['E2 et E3 traversent E1, de l’ingestion à la restitution'], key: [{ sample: 'E4', words: 'tranche horizontale : ne sert pas seule' }] }],
+}
+const INV_PART = {
+  caption_sentences: [{ sentence: LEG_PART, idea: 'part-recoupee', to: 'caption' }],
+  ideas: [{ stem: 'part-recoupee', title: 'Une part trop grosse recoupée en parts verticales plus fines', subconcept: '9b1',
+    justification: LEG_PART, stands_in: 'the legende', elements: [el('E1', 'la part trop grosse', ['trop gros pour un sprint'], 'subject')], relations: [], key: [] }],
+}
+// concept 9's Gateau split in two ideas
+const INV_SPLIT = {
+  caption_sentences: [
+    { sentence: 'Le gâteau en couches.', idea: 'gateau-couches', to: 'caption' },
+    { sentence: "En bas, l'ingestion ; en haut, la restitution.", idea: 'gateau-couches', to: 'caption' },
+    { sentence: LEG_GATEAU_IDEA, idea: 'gateau-tranches', to: 'caption' }],
+  ideas: [
+    { ...INV_GATEAU.ideas[0], stem: 'gateau-couches', title: 'Les couches du gâteau', justification: "En bas, l'ingestion ; en haut, la restitution.", elements: [INV_GATEAU.ideas[0].elements[0]], relations: [], key: [] },
+    { ...INV_GATEAU.ideas[0], stem: 'gateau-tranches', title: 'Une tranche horizontale contre des tranches verticales', subconcept: '9a1' }],
+}
 
 function makeAgent(o) {
   const calls = []
@@ -43,12 +70,12 @@ function makeAgent(o) {
     calls.push({ label: opts.label, prompt })
     const L = opts.label
     if (L === 'scope') return {
-      spec: 'linear-course', dir: DIR, course_entry: 'number: 9 ...',
+      spec: 'linear-course', dir: o.dir ?? DIR, course_entry: 'number: 9 ...',
       concept_file: `${FROM}/course/concepts/09-decoupage-vertical.md`, sources_file: `${FROM}/course/sources/09-decoupage-vertical.md`,
       mdx_file: `${SITE}/src/content/concepts/fr/09-decoupage-vertical.mdx`,
       diagrams: o.diagrams ?? [
-        { component: `${SITE}/src/components/schemas/Gateau.astro`, variant: '', stem: 'gateau', legende: 'Le gâteau', place: 'essentials' },
-        { component: `${SITE}/src/components/schemas/PartRecoupee.astro`, variant: '', stem: 'part-recoupee', legende: 'La part', place: '9b1' },
+        { component: `${SITE}/src/components/schemas/Gateau.astro`, variant: '', legende: LEG_GATEAU, place: 'essentials' },
+        { component: `${SITE}/src/components/schemas/PartRecoupee.astro`, variant: '', legende: LEG_PART, place: '9b1' },
       ],
       unlisted_h4: [], target_listing: o.listing ?? ABSENT_GNU, missing: o.missing ?? [],
       cwd: o.cwd ?? (o.agentRoot ? o.agentRoot.replace(/\/$/, '') : ROOT),
@@ -56,20 +83,52 @@ function makeAgent(o) {
       root_listing: o.rootListing ?? (() => { const m = /run the one command "ls -ld (.*?)specs"* and return/.exec(prompt); const r = !m ? '?' : m[1].startsWith('"$(pwd)/') ? `${o.cwd ?? (o.agentRoot ? o.agentRoot.replace(/\/$/, '') : ROOT)}/` : m[1]; return `drwxr-xr-x 9 sve staff 288 Oct 28 14:21 ${r}specs` })(),
     }
     if (L === 'empty-target') return o.emptied ?? { empty: true, listing: '' }
-    if (L === 'colours') return { mapping: o.mapping ?? goodMapping, unused: ['--sch-text-soft'] }
-    if (L.startsWith('diagram:')) {
-      const stem = L.slice(8)
-      return { file: `${stem}.svg`, title: 't', caption: 'c', subconcept: '9a', groups: [`9a-${stem}`],
-        tokens: o.tokens?.[stem] ?? (stem === 'gateau' ? ['--sch-s1', '--sch-s2', '--sch-text', '--sch-grey', '--sch-s-ink'] : ['--sch-s1', '--sch-s2', '--sch-text']),
-        element_opacities: o.elementOpacities?.[stem] ?? (stem === 'gateau' ? [{ element: '.hatch-line, now the dashed outline of group 9a-couche-entiere', opacity: 0.55 }] : []),
-        losses: [`halo dropped in ${TGT}/${stem}.svg`] }
+    if (L.startsWith('inventory:') || L.startsWith('inventory-again:')) {
+      const n = Number(L.split(':')[1]) - 1
+      const again = L.startsWith('inventory-again:')
+      const given = again ? o.inventoriesAgain?.[n] : o.inventories?.[n]
+      return structuredClone(given ?? (o.inventories?.[n] && again ? o.inventories[n] : [INV_GATEAU, INV_PART][n]))
+    }
+    if (L.startsWith('draw:')) { const stem = L.slice(5); return { file: o.drawnFile?.[stem] ?? `${stem}.svg`, groups: [`9a-${stem}`], key: o.drawnKey?.[stem] ?? [] } }
+    if (L.startsWith('compare-diagram:')) {
+      const n = Number(L.split(':')[1]) - 1
+      const stem = n ? 'part-recoupee' : 'gateau'
+      const c = structuredClone(o.compared?.[n] ?? { rows: [{ item: 'E1 « Ingestion »', where: `${TGT}/${stem}.svg 9a-couches`, verdict: 'kept', detail: '' }], keys: [], invented: [] })
+      if (o.bareCompare) return c
+      // as a comparison does by default: the old <title> has its row, every labels sentence its row (moved),
+      // every state its quote found
+      if (!c.rows.some(r => r.item.includes('<title>'))) c.rows.push({ item: 'old <title>', where: `${TGT}/${stem}.svg <title>`, verdict: 'kept', detail: '', sentence: '' })
+      const inv = JSON.parse(/\nIts inventory: (.*)\n/.exec(prompt)[1])
+      for (const t of inv.caption_sentences.filter(t => t.to === 'labels' && !c.rows.some(r => r.sentence === t.sentence))) c.rows.push({ item: `Legende sentence « ${t.sentence} »`, where: `${TGT}/${t.idea}.svg`, verdict: 'moved', detail: 'to the labels', sentence: t.sentence })
+      if (!c.states) c.states = n ? [] : [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX, the Figure legende' }]
+      return c
+    }
+    // the frontmatter diagrams of concept.md as written: by default, the entries the concept writer was given
+    if (L === 'frontmatter') {
+      if (o.frontmatterOut !== undefined) return { output: o.frontmatterOut }
+      const m = /Their frontmatter entries, verbatim: (\[.*?\])\.\n/.exec(calls.find(c => c.label === 'concept')?.prompt ?? '')
+      const fm = m ? JSON.parse(m[1]) : null
+      return { output: `mise WARN a stale tool\n${JSON.stringify(o.frontmatter ? o.frontmatter(fm) : fm)}` }
+    }
+    if (L === 'renderings') {
+      if (o.renderOut !== undefined) return { output: o.renderOut }
+      const svgs = [...prompt.matchAll(/--svg (\S+)/g)].map(m => m[1].split('/').pop())
+      return { output: `mise WARN a stale tool\n${JSON.stringify({ page: 'found', old: [{ n: 1, caption: LEG_GATEAU.replaceAll("'", '’'), png: 'old-1.png' }, { n: 2, caption: LEG_PART, png: 'old-2.png' }], new: svgs.map(s => ({ svg: s, png: s.replace(/\.svg$/, '.png') })), errors: [] })}` }
     }
     if (L === 'teaching+sources') return { files: [`${TGT}/teaching.md`, `${TGT}/sources.md`], choices: [`M10: \`course/plan.md\` became \`plan.md\` in ${TGT}/sources.md intro`] }
     if (L === 'concept') return { files: [`${TGT}/concept.md`], choices: ['M4: merged', 'M3: read /Users/someone/elsewhere/notes.md', 'M3: odd contexts path:/Users/me/x, *\/Users/me/x*, {/Users/a}', `M3: course folder path:${TGT.slice(0, -DIR.length - 1)}, the target *${TGT}*`] }
     if (L === 'checks') return { output: CHECKS.map(c => `${c}: ok`).join('\n'), fixes: [`${TGT}/concept.md: heading`], left: [] }
-    if (L === 'old-to-new') return { rows: [{ source: 'SF', item: 'intro', where: `${TGT}/sources.md intro`, verdict: 'moved', rule: 'M10', detail: 'course/plan.md: plan.md' }] }
+    if (L === 'old-to-new') return { rows: [{ source: 'SF', item: 'intro', where: `${TGT}/sources.md intro`, verdict: 'moved', rule: 'M10', detail: 'course/plan.md: plan.md' }, ...(o.oldRows ?? [])] }
     if (L === 'new-to-old') return { rows: o.invented ?? [] }
-    if (L === 'verify') return { verdicts: (JSON.parse(prompt.split('Invented: ')[1] || '[]')).map(r => ({ id: r.id, confirmed: true, reason: 'searched CF « Sous-concepts »: absent' })) }
+    // the verification: every invented row confirmed but a state's claim (o.stateNotFound), a lost candidate
+    // (a labels sentence counted moved) refuted unless o.labelsLost; other lost rows given no verdict
+    if (L === 'verify') {
+      const lost = JSON.parse(prompt.slice(prompt.lastIndexOf('\nLost: ') + 7, prompt.lastIndexOf('\nInvented: ')))
+      const invented = JSON.parse(prompt.split('\nInvented: ').pop() || '[]')
+      return { verdicts: [
+        ...lost.filter(r => r.candidate).map(r => ({ id: r.id, confirmed: !!o.labelsLost, reason: o.labelsLost ? '« ce que voit l\'utilisateur » in no <text>' : 'every part in the <text>' })),
+        ...invented.map(r => ({ id: r.id, confirmed: r.candidate ? !!o.stateNotFound : true, reason: r.candidate ? (o.stateNotFound ? 'not in the old texts' : 'MDX, the Figure') : 'searched CF « Sous-concepts »: absent' }))] }
+    }
     if (L === 'report') {
       const body = prompt.split('-----BEGIN REPORT-----\n')[1].split('\n-----END REPORT-----')[0]
       o.report = body
@@ -95,71 +154,310 @@ async function scenario(name, o, expect) {
 }
 
 const noAbs = r => (r && /(^|[^\w./~-])\/(Users|private|tmp|workspace)\b/.test(r) ? ['report holds an absolute path'] : [])
+const drawers = calls => calls.filter(c => c.label.startsWith('draw:'))
+const threw = error => (error ? [`threw: ${error}`] : [])
 let fails = 0
-fails += await scenario('two diagrams, target absent (GNU ls): one mapping, relative paths', { dump: 'report-two-diagrams' }, ({ error, report, calls }) => [
-  ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
-  ...(calls.filter(c => c.label === 'colours').length === 1 ? [] : ['colours not called once']),
-  ...(calls.filter(c => c.label.startsWith('diagram:')).every(c => c.prompt.includes('--sch-s2: class primary, opacity 0.6')) ? [] : ['a writer lacks the mapping']),
-  ...(report && (report.match(/## Colour mapping/g) || []).length === 1 ? [] : ['mapping not shown once']),
-  ...(report && report.includes('| `--sch-s1` | primary | 0.85 |') && report.includes('gateau.svg, part-recoupee.svg') ? [] : ['mapping table wrong']),
+
+// #181: no token table is left in the workflow
+{
+  const left = src.split('\n').map((l, i) => [i + 1, l]).filter(([, l]) => l.includes('sch-'))
+  console.log(`${left.length ? 'FAIL' : 'ok  '} no old colour token in the workflow${left.length ? `: line ${left.map(([i]) => i).join(', ')}` : ''}`)
+  if (left.length) fails++
+}
+fails += await scenario('two diagrams, target absent (GNU ls): inventory, blind drawing, comparison, renderings, relative paths', { dump: 'report-two-diagrams' }, ({ error, report, calls }) => [
+  ...threw(error), ...noAbs(report),
+  ...(calls.some(c => /colour/.test(c.label)) ? ['a colour agent was called'] : []),
+  ...(calls.filter(c => c.label.startsWith('inventory:')).length === 2 ? [] : ['not one inventory per old diagram']),
+  ...(drawers(calls).map(c => c.label).join() === 'draw:gateau,draw:part-recoupee' ? [] : ['not one drawing per idea']),
+  ...(calls.filter(c => c.label.startsWith('compare-diagram:')).length === 2 ? [] : ['not one comparison per old diagram']),
+  ...(report && (report.match(/## Diagrams \(M11\)/g) || []).length === 1 && !/## Colour table/.test(report) ? [] : ['diagrams section not shown once']),
+  ...(report && report.includes('| ![old diagram 1](S1-10-09-report/old-1.png) | ![gateau.svg](S1-10-09-report/gateau.png) |') && report.includes('| ![old diagram 2](S1-10-09-report/old-2.png) | ![part-recoupee.svg](S1-10-09-report/part-recoupee.png) |') && report.includes('Renderings: the old diagram from the frozen site\'s build;') ? [] : ['renderings not side by side']),
+  ...(report && report.includes('| E4 | la couche prise en entier | « couche entière » | contrast | refused (« ne sert pas seule ») |') && report.includes('Key of the inventory: E4 « tranche horizontale : ne sert pas seule ». Key drawn: none.') ? [] : ['inventory not in the report']),
+  ...(report && report.includes('- « Le gâteau en couches. »: title of gateau.svg\n- « En bas, l’ingestion ; en haut, la restitution. »: labels of gateau.svg\n- « Une couche') && !report.includes('Captions of more than one sentence') ? [] : ['legende sentences not shown with their place, or a caption flagged']),
+  ...(report && report.includes('### `parcours-po-website/src/components/schemas/Gateau.astro`') ? [] : ['old component not named relative']),
+  ...(report && report.includes('| `parcours-po-website/src/components/schemas/Gateau.astro` |') ? ['component path in a table'] : []),
+  ...(report && report.includes('| E1 « Ingestion » | concepts/09-decoupage-vertical/gateau.svg 9a-couches | kept | M11 |') ? [] : ['comparison rows not under ASTRO']),
   ...(report && report.includes('| no | no |') ? [] : ['target existed not "no"']),
   ...(report && report.includes('no such folder') && report.includes("ls: cannot access 'concepts/09") ? [] : ['listing section wrong']),
   ...(report && report.includes('concept folder `concepts/09-decoupage-vertical/`') && report.includes('`parcours-po/course/concepts/09') ? [] : ['header paths wrong']),
   ...(report && report.includes('check-course courses/parcours-po --only') ? [] : ['check command wrong']),
   ...(calls.some(c => c.label === 'empty-target') ? ['emptied an absent folder'] : []),
-  ...(calls.filter(c => c.label.startsWith('diagram:')).every(c => c.prompt.includes("keep it as that element's") && c.prompt.includes('element_opacities')) ? [] : ['a writer lacks the element-opacity rule']),
-  ...(report && report.includes('- gateau.svg: element opacity 0.55 kept on .hatch-line, now the dashed outline of group 9a-couche-entiere (M11)') ? [] : ['kept element opacity not in the writing choices']),
 ])
-fails += await scenario('element opacity out of range: stops', { elementOpacities: { gateau: [{ element: '.bar', opacity: 75 }] } }, ({ error }) => (error && /element opacity 75 on \.bar/.test(error) ? [] : ['not stopped']))
-fails += await scenario('target absent (macOS ls)', { listing: ABSENT_MAC }, ({ error, report }) => [...(error ? [`threw: ${error}`] : []), ...noAbs(report)])
+fails += await scenario('inventory: captions from the legende\'s sentences to the caption, set in code for concept.md', {}, ({ error, calls, result }) => {
+  const inv = calls.find(c => c.label === 'inventory:1')?.prompt ?? ''
+  const concept = calls.find(c => c.label === 'concept')?.prompt ?? ''
+  return [...threw(error),
+    ...([`${SITE}/src/components/schemas/Gateau.astro`, `${FROM}/course/concepts/09-decoupage-vertical.md`, `${SITE}/src/content/concepts/fr/09-decoupage-vertical.mdx`, `${ROOT}/specs/linear-course/SPEC.md section 7.2`, 'never how it is drawn', `« ${LEG_GATEAU} »`, 'in doubt, one idea'].filter(p => !inv.includes(p)).map(p => `inventory prompt lacks ${p}`)),
+    ...(concept.includes(JSON.stringify({ file: 'gateau.svg', title: INV_GATEAU.ideas[0].title, caption: LEG_GATEAU_IDEA, subconcept: '9a' })) ? [] : ['concept.md not given the caption made of the legende\'s sentences to the caption']),
+    ...(concept.includes(`whose legende is « ${LEG_PART} »: part-recoupee.svg`) ? [] : ['Figure-to-images line missing']),
+    ...(result?.diagrams?.join() === 'gateau.svg,part-recoupee.svg' ? [] : ['summary lacks the diagrams'])]
+})
+const LEAKY = structuredClone(INV_GATEAU)
+LEAKY.ideas[0].elements[1].what = 'une part verticale en var(--sch-s1), fill-opacity 0.7'
+fails += await scenario('inventory naming the old drawing: asked once more, then drawn', { inventories: [LEAKY], inventoriesAgain: [INV_GATEAU] }, ({ error, calls, logs }) => [
+  ...threw(error),
+  ...(calls.some(c => c.label === 'inventory-again:1' && c.prompt.includes('Your first inventory names how the old diagram is drawn: --sch-s1')) ? [] : ['not asked again with the forms named']),
+  ...(logs.some(l => /^Inventory 1 names how the old diagram is drawn/.test(l)) ? [] : ['not logged']),
+  ...(drawers(calls).every(c => !/sch-|fill-opacity/.test(c.prompt)) ? [] : ['a form reached the drawing'])])
+fails += await scenario('inventory naming the old drawing twice: stops before any drawing', { inventories: [LEAKY], inventoriesAgain: [LEAKY] }, ({ error, calls }) => [
+  ...(error && /Gateau\.astro still names how the old diagram is drawn: .*--sch-s1/.test(error) ? [] : ['not stopped']),
+  ...(drawers(calls).length || calls.some(c => c.label === 'concept') ? ['drew or wrote anyway'] : [])])
+{
+  const reworded = structuredClone(INV_GATEAU); reworded.caption_sentences[2].sentence = 'Une couche entière ne sert à rien.'
+  fails += await scenario('legende sentences reworded: stops', { inventories: [reworded] }, ({ error }) => (error && /are not the legende, verbatim and in order/.test(error) ? [] : ['not stopped']))
+  const stray = structuredClone(INV_GATEAU); stray.caption_sentences[0].idea = 'gateau-bis'
+  fails += await scenario('a sentence given to no idea: stops', { inventories: [stray] }, ({ error }) => (error && /goes to "gateau-bis", none of its ideas/.test(error) ? [] : ['not stopped']))
+  const twin = structuredClone(INV_PART); twin.ideas[0].stem = 'gateau'; twin.caption_sentences[0].idea = 'gateau'
+  fails += await scenario('two ideas of the concept with one stem: stops', { inventories: [INV_GATEAU, twin] }, ({ error }) => (error && /SVG stems not unique: gateau, gateau/.test(error) ? [] : ['not stopped']))
+  const bad = structuredClone(INV_PART); bad.ideas[0].stem = 'Part_Recoupée'; bad.caption_sentences[0].idea = 'Part_Recoupée'
+  fails += await scenario('a stem out of form: stops', { inventories: [INV_GATEAU, bad] }, ({ error }) => (error && /Refused SVG stem "Part_Recoupée"/.test(error) ? [] : ['not stopped']))
+}
+fails += await scenario('blind drawing: the drawing agent is given no old file, only its inventory and concept.md, after concept.md', {}, ({ error, calls }) => {
+  const d = drawers(calls)
+  const order = calls.map(c => c.label)
+  return [...threw(error),
+    ...(d.length === 2 ? [] : ['drawers not called']),
+    ...d.flatMap(c => [FROM, SITE, '.astro', 'components/schemas', 'parcours-po-website', '.mdx', '/course/concepts/', 'sch-'].filter(p => c.prompt.includes(p)).map(p => `${c.label} names ${p}`)),
+    ...d.flatMap(c => [`${TGT}/concept.md (the concept text)`, `${ROOT}/specs/linear-course/SPEC.md (section 7)`, `${ROOT}/docs/glossary.md`, 'Never read, list or search any other file or folder', 'never from an older drawing', 'Draw under SPEC.md section 7 to the letter']
+      .filter(p => !c.prompt.includes(p)).map(p => `${c.label} lacks ${p}`)),
+    ...(calls.find(c => c.label === 'draw:gateau')?.prompt.includes('"labels":["couche entière"],"role":"contrast","state":"refused"') ? [] : ['the inventory not given to its drawer']),
+    ...(calls.find(c => c.label === 'draw:gateau')?.prompt.includes('Le gâteau en couches : une tranche horizontale') && !calls.find(c => c.label === 'draw:gateau')?.prompt.includes('trop gros pour un sprint') ? [] : ['a drawer got another idea']),
+    ...(order.indexOf('concept') < order.indexOf('draw:gateau') ? [] : ['drawn before concept.md'])]
+})
+fails += await scenario('split: one old diagram, two ideas, two SVGs at the Figure\'s place, the old rendering beside the first', { inventories: [INV_SPLIT] }, ({ error, calls, report, result }) => {
+  const concept = calls.find(c => c.label === 'concept')?.prompt ?? ''
+  return [...threw(error),
+    ...(drawers(calls).map(c => c.label).join() === 'draw:gateau-couches,draw:gateau-tranches,draw:part-recoupee' ? [] : ['not one drawing per idea']),
+    ...(concept.includes(`whose legende is « ${LEG_GATEAU} »: gateau-couches.svg, gateau-tranches.svg`) ? [] : ['the Figure does not become both images, in order']),
+    ...(concept.includes(JSON.stringify({ file: 'gateau-couches.svg', title: 'Les couches du gâteau', caption: "Le gâteau en couches. En bas, l'ingestion ; en haut, la restitution.", subconcept: '9a' })) && concept.includes('"caption":"Une couche prise en entier ne sert pas seule ; chaque part verticale sert seule.","subconcept":"9a1"') ? [] : ['captions not split by idea']),
+    ...(calls.find(c => c.label === 'compare-diagram:1')?.prompt.includes(`${TGT}/gateau-couches.svg, ${TGT}/gateau-tranches.svg`) ? [] : ['comparison not given both new diagrams']),
+    ...(report && report.includes('\n\nSplit by idea: 2 diagrams.\n') && report.includes('| ![old diagram 1](S1-10-09-report/old-1.png) | ![gateau-couches.svg](S1-10-09-report/gateau-couches.png) |\n|  | ![gateau-tranches.svg](S1-10-09-report/gateau-tranches.png) |') ? [] : ['split not shown in the report']),
+    ...(result?.diagrams?.length === 3 ? [] : ['summary not three diagrams'])]
+})
+// wf_90327be3-efc: a drawing agent returned its file as an absolute path
+fails += await scenario('drawn file returned as its absolute path: accepted', { drawnFile: { 'part-recoupee': `${TGT}/part-recoupee.svg` } }, ({ error, report }) => [
+  ...threw(error), ...noAbs(report)])
+fails += await scenario('drawn file returned as its path under a relative dest: accepted', { args: { dest: 'courses/parcours-po' }, listing: `ls: cannot access 'courses/parcours-po/${DIR}': No such file or directory`, cwd: '/Users/me/main', drawnFile: { gateau: `courses/parcours-po/${DIR}/gateau.svg`, 'part-recoupee': `/Users/me/main/courses/parcours-po/${DIR}/part-recoupee.svg` } }, ({ error }) => threw(error))
+fails += await scenario('drawn file another one: stops', { drawnFile: { 'part-recoupee': `${TGT}/gateau.svg` } }, ({ error }) => (error && /Diagram part-recoupee returned the file .*\/gateau\.svg$/.test(error) ? [] : ['not stopped']))
+fails += await scenario('drawn file in another folder: stops', { drawnFile: { 'part-recoupee': `/Users/me/other/${DIR}/part-recoupee.svg` } }, ({ error }) => (error && /Diagram part-recoupee returned the file \/Users\/me\/other\//.test(error) ? [] : ['not stopped']))
+fails += await scenario('comparison: an element lost and a label invented fail the run, verified like the others', {
+  compared: [{ rows: [{ item: 'E4 « couche entière »', where: 'none', verdict: 'lost', detail: 'the whole layer is in no new diagram' }], invented: [{ file: 'gateau.svg', text: '« tranche 4 »', detail: 'no fourth slice in the inventory' }] }],
+}, ({ error, calls, report }) => [
+  ...(error && /1 lost, 1 invented/.test(error) ? [] : ['not failed on 1 lost, 1 invented']),
+  ...(calls.find(c => c.label === 'verify')?.prompt.includes('"source":"ASTRO","item":"E4 « couche entière »"') && calls.find(c => c.label === 'verify')?.prompt.includes('The inventories: [') ? [] : ['diagram rows or inventories not sent to verification']),
+  ...(report && report.includes('| E4 « couche entière » | none | lost (L1) | M11 |') && report.includes('| I1 | gateau.svg | diagram | « tranche 4 » |') ? [] : ['rows not in the report'])])
+// review of PR #182, B1: a key naming a distinction of form earns no exemption; its words come from the
+// inventory or concept.md, else it is invented (PartRecoupee's « pas fait », from dashed outlines alone)
+const PART_SVG = `${TGT}/part-recoupee.svg`
+fails += await scenario('a drawn key with other words: an invented row, verified, failing the run', {
+  drawnKey: { 'part-recoupee': ['pas fait'] },
+  compared: [undefined, { rows: [{ item: 'E1 « trop gros pour un sprint »', where: `${PART_SVG} 9b1-besoin`, verdict: 'kept', detail: '' }], keys: [{ file: PART_SVG, words: 'pas fait', verdict: 'invented', detail: 'neither the inventory nor concept.md says « pas fait »' }], invented: [] }],
+}, ({ error, calls, report }) => {
+  const cmp = calls.find(c => c.label === 'compare-diagram:2')?.prompt ?? ''
+  const draw = calls.find(c => c.label === 'draw:part-recoupee')?.prompt ?? ''
+  return [
+    ...(error && /0 lost, 1 invented/.test(error) ? [] : ['not failed on 1 invented']),
+    ...(report && report.includes('| I1 | part-recoupee.svg | diagram key | « pas fait » |') && report.includes('Key drawn: « pas fait ».') ? [] : ['key row not in the report']),
+    ...(calls.find(c => c.label === 'verify')?.prompt.includes('"section":"diagram key","text":"« pas fait »"') ? [] : ['key row not verified']),
+    ...(cmp.includes('A key entry earns no exemption') && cmp.includes('{"part-recoupee.svg":["pas fait"]}') && !/A key naming a distinction of form or opacity[^.]*not invented/.test(cmp) ? [] : ['comparison prompt keeps the exemption, or lacks the drawn keys']),
+    ...(['never words of your own', 'nothing is more marked than the', 'never `secondary`'].filter(t => !draw.includes(t)).map(t => `drawer lacks: ${t}`))]
+})
+fails += await scenario('a drawn key the comparison gives no row: flagged invented', { drawnKey: { 'part-recoupee': ['pas fait'] } }, ({ error, report }) => [
+  ...(error && /1 invented/.test(error) ? [] : ['not failed on 1 invented']),
+  ...(report && report.includes('| I1 | part-recoupee.svg | diagram key | « pas fait » | a key entry the drawing agent drew, given no row by the diagram comparison |') ? [] : ['not flagged'])])
+fails += await scenario('a drawn key in the inventory\'s words: kept, the run passes', {
+  drawnKey: { gateau: ['tranche horizontale : ne sert pas seule'] },
+  compared: [{ rows: [], keys: [{ file: `${TGT}/gateau.svg`, words: 'tranche horizontale : ne sert pas seule', verdict: 'kept', detail: 'key E4 of the inventory' }], invented: [] }],
+}, ({ error, report }) => [
+  ...threw(error),
+  ...(report && report.includes('| key « tranche horizontale : ne sert pas seule » of gateau.svg | gateau.svg | kept | M11 | key E4 of the inventory |') ? [] : ['kept key row missing'])])
+{
+  const unsaid = structuredClone(INV_PART); unsaid.ideas[0].elements[0].state = 'not done'
+  fails += await scenario('a state no word says: asked once more, then drawn', { inventories: [INV_GATEAU, unsaid], inventoriesAgain: [undefined, INV_PART] }, ({ error, calls, logs }) => [
+    ...threw(error),
+    ...(calls.some(c => c.label === 'inventory-again:2' && c.prompt.includes('Your first inventory gives a state that no word says: part-recoupee E1 (not done)')) ? [] : ['not asked again']),
+    ...(logs.some(l => l.startsWith('Inventory 2 gives a state that no word says')) ? [] : ['not logged']),
+    ...(calls.find(c => c.label === 'inventory:1')?.prompt.includes('never from a line style, a fill or any other form alone') ? [] : ['inventory prompt lacks the rule'])])
+  fails += await scenario('a state no word says, twice: stops before any drawing', { inventories: [INV_GATEAU, unsaid], inventoriesAgain: [undefined, unsaid] }, ({ error, calls }) => [
+    ...(error && /PartRecoupee\.astro still gives a state that no word says: part-recoupee E1/.test(error) ? [] : ['not stopped']),
+    ...(drawers(calls).length ? ['drew anyway'] : [])])
+}
+// review of PR #182, B2: a caption keeps the sentence of its idea; naming and reading sentences go to the
+// title and the labels, the comparison counts them moved; a caption of more than one sentence is flagged
+fails += await scenario('legende sentences to the title and the labels: out of the caption, given to the drawer and the comparison', {}, ({ error, calls, result }) => {
+  const draw = calls.find(c => c.label === 'draw:gateau')?.prompt ?? ''
+  const cmp = calls.find(c => c.label === 'compare-diagram:1')?.prompt ?? ''
+  return [...threw(error),
+    ...(draw.includes('tell how to read the diagram') && draw.includes('« En bas, l\'ingestion ; en haut, la restitution. »') && !draw.includes('« Le gâteau en couches. »') ? [] : ['drawer not given the reading sentence alone']),
+    ...(cmp.includes('to the title, moved') && cmp.includes('moved only when the words of every part are in the text of that idea') && cmp.includes('never moved with a part missing') && cmp.includes('"to":"labels"') ? [] : ['comparison not told where each sentence goes']),
+    ...(result?.long_captions?.length === 0 ? [] : ['a caption flagged'])]
+})
+{
+  const whole = structuredClone(INV_GATEAU); whole.caption_sentences.forEach(c => { c.to = 'caption' })
+  fails += await scenario('a caption of three sentences: flagged in the report, not refused', { inventories: [whole] }, ({ error, report, result, logs }) => [
+    ...threw(error),
+    ...(report && report.includes('Captions of more than one sentence (SPEC.md 7.2, principle 1: a caption that needs two sentences means two diagrams): gateau.svg (3 sentences).') && report.includes('(**3 sentences**: SPEC.md 7.2, principle 1)') ? [] : ['not flagged in the report']),
+    ...(result?.long_captions?.join() === 'gateau.svg' && logs.some(l => l.startsWith('Captions of more than one sentence')) ? [] : ['not in the summary or the log'])])
+  const lumped = structuredClone(INV_PART); lumped.caption_sentences[0].sentence = LEG_PART
+  fails += await scenario('a caption of one sentence given whole: not flagged', { inventories: [INV_GATEAU, lumped] }, ({ error, result }) => [...threw(error), ...(result?.long_captions?.length ? ['flagged'] : [])])
+  const untitled = structuredClone(INV_GATEAU); untitled.ideas[0].title = 'Une tranche horizontale contre trois tranches verticales'
+  fails += await scenario('a sentence to a title that does not carry it: asked once more', { inventories: [untitled], inventoriesAgain: [INV_GATEAU] }, ({ error, calls }) => [
+    ...threw(error),
+    ...(calls.some(c => c.label === 'inventory-again:1' && c.prompt.includes('gives to a title a sentence that title does not carry: « Le gâteau en couches. »')) ? [] : ['not asked again'])])
+  fails += await scenario('a sentence to a title that does not carry it, twice: stops', { inventories: [untitled], inventoriesAgain: [untitled] }, ({ error, calls }) => [
+    ...(error && /still gives to a title a sentence that title does not carry/.test(error) ? [] : ['not stopped']),
+    ...(drawers(calls).length ? ['drew anyway'] : [])])
+}
+// second review of PR #182: a reading sentence half drawn (« ce que voit l'utilisateur » drawn nowhere in the
+// rerun wf_5508e4e1-d75, counted moved) gives a lost row for the missing part, verified, failing the run
+{
+  const READING = "« En bas, l'ingestion ; en haut, la restitution. »"
+  const half = [{ rows: [
+    { item: `Legende sentence ${READING}`, where: `${TGT}/gateau.svg 9a-couches`, verdict: 'moved', detail: 'to the labels: « Ingestion », « Restitution »' },
+    { item: "part « ce que voit l'utilisateur »", where: 'none', verdict: 'lost', detail: 'drawn nowhere' }], keys: [], invented: [] }]
+  fails += await scenario('a reading sentence half drawn: the missing part lost, verified, failing the run', { compared: half }, ({ error, calls, report }) => [
+    ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
+    ...(report && report.includes("| part « ce que voit l'utilisateur » | none | lost (L1) | M11 |") ? [] : ['lost row not in the report']),
+    ...(calls.find(c => c.label === 'verify')?.prompt.includes("part « ce que voit l'utilisateur »") ? [] : ['not verified']),
+    ...(calls.find(c => c.label === 'inventory:1')?.prompt.includes('each part becomes a label of the element it reads, its words verbatim in that element\'s labels') ? [] : ['inventory not told to make its parts labels'])])
+  fails += await scenario('a reading sentence half drawn, accept: passes, accepted', { compared: half, args: { accept: true } }, ({ error, report }) => [
+    ...threw(error),
+    ...(report && report.includes('Result: **passed, accepted**') ? [] : ['not passed, accepted'])])
+}
+// second review of PR #182: a state's words are found in the old texts, else invented; the old <title> has its row
+fails += await scenario('a state whose words are nowhere: invented, verified', { compared: [{ rows: [], states: [{ element: 'E4', words: 'ne sert pas seule', found: false, detail: 'not in Gateau.astro, CF, MDX or concept.md' }], keys: [], invented: [] }] }, ({ error, report, calls }) => [
+  ...(error && /0 lost, 1 invented/.test(error) ? [] : ['not failed on 1 invented']),
+  ...(report && report.includes('| I1 | gateau.svg | diagram state | « ne sert pas seule » (state refused of E4) | the comparison found these words nowhere') ? [] : ['state row not in the report']),
+  ...(calls.find(c => c.label === 'verify')?.prompt.includes('"section":"diagram state","text":"« ne sert pas seule » (state refused of E4)"') ? [] : ['state row not sent to the verification'])])
+fails += await scenario('a state the comparison gives no row: flagged invented', { compared: [{ rows: [], states: [], keys: [], invented: [] }] }, ({ error, report }) => [
+  ...(error && /1 invented/.test(error) ? [] : ['not failed on 1 invented']),
+  ...(report && report.includes('a state the diagram comparison gave no row: its words not checked') ? [] : ['not flagged'])])
+fails += await scenario('a state whose words are found: a kept row', {}, ({ error, report, calls }) => [
+  ...threw(error),
+  ...(report && report.includes('| state « ne sert pas seule » of gateau E4 | MDX, the Figure legende | kept | M11 |') ? [] : ['no kept state row']),
+  ...(calls.find(c => c.label === 'compare-diagram:1')?.prompt.includes('Under states, one row per element of the inventory that has a state') ? [] : ['comparison not asked for states'])])
+fails += await scenario('the old <title> given no row: flagged lost', { bareCompare: true, compared: [
+  { rows: [{ item: 'Legende sentence', where: 'gateau.svg', verdict: 'moved', detail: '', sentence: 'En bas, l’ingestion ; en haut, la restitution.' }], states: [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX' }], keys: [], invented: [] },
+  { rows: [{ item: 'old <title> « Une part trop grosse recoupée en parts verticales plus fines »', where: 'part-recoupee.svg <title>', verdict: 'moved', detail: '« plus fines » in the caption' }], states: [], keys: [], invented: [] }] }, ({ error, report, calls }) => [
+  ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
+  ...(report && report.includes('| old <title> of parcours-po-website/src/components/schemas/Gateau.astro | none | lost (L2) | M11 | the diagram comparison gave the old <title> no row |') ? [] : ['title row not flagged']),
+  ...(calls.find(c => c.label === 'compare-diagram:2')?.prompt.includes('one row whose item starts with « old <title> »') ? [] : ['comparison not asked for the old <title>'])])
+// third review of PR #182: a labels sentence counted moved is checked by the verification, a state found where
+// the code cannot check it too, and the old-title guard reads the item's start
+fails += await scenario('a labels sentence counted moved, the verification finds a part undrawn: lost, failing the run', { labelsLost: true }, ({ error, calls, report }) => [
+  ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
+  ...(calls.find(c => c.label === 'verify')?.prompt.includes('"candidate":"a labels sentence the comparison counted moved') ? [] : ['not sent as a candidate']),
+  ...(report && report.includes('| Legende sentence « En bas, l’ingestion ; en haut, la restitution. » | concepts/09-decoupage-vertical/gateau.svg | lost (L1, checked) | M11 |') && /\| 5 \| 1 \| 0 \| 1 \| 0 \| 0 \| pass \|/.test(report) ? [] : ['not counted lost in the report'])])
+fails += await scenario('a labels sentence counted moved, the verification finds every part drawn: stays moved, not refuted', {}, ({ error, report }) => [
+  ...threw(error),
+  ...(report && report.includes('| moved (L1, checked) | M11 |') && /\| 5 \| 2 \| 0 \| 0 \| 0 \| 0 \| pass \|/.test(report) && report.includes('## Refuted by the verification\n\nNone.') ? [] : ['not kept moved'])])
+fails += await scenario('a labels sentence given no row: lost', { bareCompare: true, compared: [
+  { rows: [{ item: 'old <title>', where: 'gateau.svg', verdict: 'kept', detail: '', sentence: '' }], states: [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX' }], keys: [], invented: [] },
+  { rows: [{ item: 'old <title>', where: 'part-recoupee.svg', verdict: 'kept', detail: '', sentence: '' }], states: [], keys: [], invented: [] }] }, ({ error, report }) => [
+  ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
+  ...(report && report.includes('the diagram comparison gave this labels sentence no row') ? [] : ['not flagged'])])
+{
+  const odd = structuredClone(INV_GATEAU); odd.ideas[0].elements[3].state_words = 'refusée par le patron'
+  const said = [{ rows: [], states: [{ element: 'E4', words: 'refusée par le patron', found: true, detail: 'CF « Schéma »' }], keys: [], invented: [] }]
+  fails += await scenario('a state found where the code cannot check: the verification confirms it, kept', { inventories: [odd], compared: said }, ({ error, calls, report }) => [
+    ...threw(error),
+    ...(calls.find(c => c.label === 'verify')?.prompt.includes('"section":"diagram state","text":"« refusée par le patron » (state refused of E4)"') ? [] : ['not sent to the verification']),
+    ...(report && report.includes('| state « refusée par le patron » of gateau E4 | CF « Schéma » | kept | M11 | refused: its words found, confirmed by the verification |') ? [] : ['no kept row'])])
+  fails += await scenario('a state found where the code cannot check: the verification finds nothing, invented', { inventories: [odd], compared: said, stateNotFound: true }, ({ error, report }) => [
+    ...(error && /0 lost, 1 invented/.test(error) ? [] : ['not failed on 1 invented']),
+    ...(report && report.includes('| I1 | gateau.svg | diagram state | « refusée par le patron » (state refused of E4) | found by the comparison: CF « Schéma » |') ? [] : ['not in the report'])])
+}
+fails += await scenario('a row naming only the new <title>: the old <title> flagged lost', { bareCompare: true, compared: [
+  { rows: [{ item: 'new <title> of gateau.svg', where: 'gateau.svg', verdict: 'kept', detail: '', sentence: '' }, { item: 'Legende sentence', where: 'gateau.svg', verdict: 'moved', detail: '', sentence: 'En bas, l’ingestion ; en haut, la restitution.' }], states: [{ element: 'E4', words: 'ne sert pas seule', found: true, detail: 'MDX' }], keys: [], invented: [] },
+  { rows: [{ item: 'old <title> « Une part trop grosse »', where: 'part-recoupee.svg', verdict: 'kept', detail: '', sentence: '' }], states: [], keys: [], invented: [] }] }, ({ error, report }) => [
+  ...(error && /1 lost, 0 invented/.test(error) ? [] : ['not failed on 1 lost']),
+  ...(report && report.includes('| old <title> of parcours-po-website/src/components/schemas/Gateau.astro | none | lost') ? [] : ['not flagged'])])
+fails += await scenario('renderings: a build but no figure matching: the sentence says so', { renderOut: JSON.stringify({ page: 'found', old: [{ n: 1, caption: 'another legende', png: 'old-1.png' }], new: [{ svg: 'gateau.svg', png: 'gateau.png' }, { svg: 'part-recoupee.svg', png: 'part-recoupee.png' }], errors: [] }) }, ({ error, report }) => [
+  ...threw(error),
+  ...(report && report.includes("Renderings: the old diagram from the frozen site's build when a figure of the page matched its legende (0 of 2), else not rendered;") && report.includes('| not rendered: source `parcours-po-website/src/components/schemas/Gateau.astro` |') ? [] : ['sentence not following the figures found'])])
+fails += await scenario('a Figure becomes the diagrams\' lines, never "images"', {}, ({ error, calls }) => [
+  ...threw(error),
+  ...(['concept', 'old-to-new', 'teaching+sources'].flatMap(l => /\bimages?\b/.test(calls.find(c => c.label === l)?.prompt ?? '') ? [`${l} prompt says image`] : []))])
+fails += await scenario('drawing agents told to check with xmllint only', {}, ({ error, calls }) => [
+  ...threw(error),
+  ...(drawers(calls).every(c => c.prompt.includes('with xmllint --noout, and with nothing else: no browser, no preview pane, no screenshot')) ? [] : ['drawer not told'])])
+// review of PR #182: the frontmatter diagrams of concept.md as written are the entries set in code
+fails += await scenario('frontmatter diagrams as set, in another order: drawn', { frontmatter: fm => [...fm].reverse() }, ({ error, calls }) => [
+  ...threw(error),
+  ...(calls.find(c => c.label === 'frontmatter')?.prompt.includes(`${ROOT}/specs/linear-course/checks/lib/md.js ${TGT}/concept.md`) ? [] : ['frontmatter command wrong']),
+  ...(calls.map(c => c.label).indexOf('frontmatter') < calls.map(c => c.label).indexOf('draw:gateau') ? [] : ['not read before the drawing'])])
+fails += await scenario('frontmatter caption reworded: stops before any drawing', { frontmatter: fm => fm.map(e => e.file === 'gateau.svg' ? { ...e, caption: `${e.caption} Et plus.` } : e) }, ({ error, calls }) => [
+  ...(error && /are not the entries set from the inventories \(M11\): gateau\.svg caption:/.test(error) ? [] : ['not stopped']),
+  ...(drawers(calls).length ? ['drew anyway'] : [])])
+fails += await scenario('frontmatter with an entry missing and one more key: stops', { frontmatter: fm => [{ ...fm[0], alt: 'x' }] }, ({ error }) => (error && /gateau\.svg: keys alt; part-recoupee\.svg: no entry/.test(error) ? [] : ['not stopped']))
+fails += await scenario('frontmatter unreadable: stops', { frontmatterOut: 'node: command not found' }, ({ error }) => (error && /could not be read/.test(error) ? [] : ['not stopped']))
+fails += await scenario('the sweeps\' rows on the diagrams: dropped, the comparison judges them', {
+  oldRows: [{ source: 'ASTRO', item: 'Gateau.astro', where: 'gateau.svg', verdict: 'lost', rule: 'M11', detail: 'the blue ramp' }],
+  invented: [{ file: `${TGT}/gateau.svg`, section: 'svg', text: 'a new layout', detail: 'not the old geometry' }],
+}, ({ error, logs, calls, report }) => [
+  ...threw(error),
+  ...(logs.some(l => l.startsWith('2 sweep row(s) on the diagrams dropped')) ? [] : ['not dropped, or not logged']),
+  ...(/the blue ramp|a new layout/.test(calls.find(c => c.label === 'verify')?.prompt ?? '') ? ['sent to verification'] : []),
+  ...(report && !report.includes('the blue ramp') ? [] : ['dropped row in the report']),
+  ...(calls.find(c => c.label === 'old-to-new')?.prompt.includes('The ASTRO components and the Figure legendes are the diagram comparison\'s') && calls.find(c => c.label === 'new-to-old')?.prompt.includes('The SVGs and the frontmatter diagrams entries are') ? [] : ['sweeps not told'])])
+fails += await scenario('renderings: the command, PNGs beside the report', { args: { report: '/Users/me/wt/construction/notes/181-concept-9-report.md' } }, ({ error, calls, report }) => [
+  ...threw(error), ...noAbs(report),
+  ...(calls.find(c => c.label === 'renderings')?.prompt.includes(`mise exec -- node ${ROOT}/construction/scripts/diagram-renderings/render.mjs --out /Users/me/wt/construction/notes/181-concept-9-report/ --page ${SITE}/dist/concepts/09/index.html --component ${SITE}/src/components/schemas/Gateau.astro --component ${SITE}/src/components/schemas/PartRecoupee.astro --svg ${TGT}/gateau.svg --svg ${TGT}/part-recoupee.svg`) ? [] : ['render command wrong']),
+  ...(report && report.includes('![gateau.svg](181-concept-9-report/gateau.png)') && report.includes('Renderings in `181-concept-9-report/`, beside this report.') ? [] : ['links not relative to the report'])])
+fails += await scenario('renderings: no site build, the old component\'s source named', { renderOut: JSON.stringify({ page: 'absent', old: [], new: [{ svg: 'gateau.svg', png: 'gateau.png' }, { svg: 'part-recoupee.svg', png: null }], errors: [] }) }, ({ error, report }) => [
+  ...threw(error), ...noAbs(report),
+  ...(report && report.includes('| no site build: source `parcours-po-website/src/components/schemas/Gateau.astro` | ![gateau.svg](S1-10-09-report/gateau.png) |') && report.includes('| part-recoupee.svg: not rendered |') ? [] : ['no-build row wrong']),
+  ...(report && report.includes('Renderings: no site build, so the old diagram is its component\'s source') && !report.includes('from the frozen site\'s build') ? [] : ['renderings sentence names a build'])])
+const SRC_GATEAU = '---\nconst { p } = Astro.props\n---\n<svg viewBox="0 0 10 10" role="img"><text>Ingestion</text></svg>\n<!-- `code` -->\n'
+const srcLine = (c, source, bytes = Buffer.byteLength(source, 'utf8')) => JSON.stringify({ component: c, source, bytes })
+fails += await scenario('renderings: no site build, the old component\'s source quoted; a source cut short, named only', { renderOut: [
+  srcLine(`${SITE}/src/components/schemas/Gateau.astro`, SRC_GATEAU), srcLine(`${SITE}/src/components/schemas/PartRecoupee.astro`, '<svg>cut', 900),
+  JSON.stringify({ page: 'absent', old: [], new: [{ svg: 'gateau.svg', png: 'gateau.png' }, { svg: 'part-recoupee.svg', png: 'part-recoupee.png' }], errors: [] })].join('\n') }, ({ error, report }) => [
+  ...threw(error), ...noAbs(report),
+  ...(report && report.includes('| no site build: its source below | ![gateau.svg](S1-10-09-report/gateau.png) |') && report.includes('Source of `parcours-po-website/src/components/schemas/Gateau.astro`, as the old rendering:\n\n```astro\n---\nconst { p } = Astro.props') && report.includes('<!-- `code` -->\n```\n') ? [] : ['source not quoted']),
+  ...(report && report.includes('| no site build: source `parcours-po-website/src/components/schemas/PartRecoupee.astro` |') && report.includes('the source of parcours-po-website/src/components/schemas/PartRecoupee.astro came back cut (8 bytes, 900 measured): not quoted') ? [] : ['cut source not named only'])])
+fails += await scenario('renderings: no JSON, the report says so, the run goes on', { renderOut: 'qlmanage: command not found' }, ({ error, report }) => [
+  ...threw(error),
+  ...(report && report.includes('| not rendered: source `parcours-po-website/src/components/schemas/Gateau.astro` | gateau.svg: not rendered |') && report.includes('errors: the render command printed no JSON: qlmanage: command not found') ? [] : ['failure not reported'])])
+fails += await scenario('target absent (macOS ls)', { listing: ABSENT_MAC }, ({ error, report }) => [...threw(error), ...noAbs(report)])
 fails += await scenario('target an empty folder: no refusal, no emptying', { listing: EMPTY }, ({ error, report, calls }) => [
-  ...(error ? [`threw: ${error}`] : []), ...(calls.some(c => c.label === 'empty-target') ? ['emptied'] : []),
+  ...threw(error), ...(calls.some(c => c.label === 'empty-target') ? ['emptied'] : []),
   ...(report && report.includes('an empty folder') ? [] : ['listing verdict wrong'])])
 fails += await scenario('target holds files, no overwrite: refused', { listing: FULL }, ({ error }) => (error && /holds files/.test(error) && /concept\.md/.test(error) ? [] : ['not refused']))
 fails += await scenario('target holds files, overwrite: emptied', { listing: FULL, args: { overwrite: true } }, ({ error, report, calls }) => [
-  ...(error ? [`threw: ${error}`] : []), ...(calls.some(c => c.label === 'empty-target') ? [] : ['not emptied']),
+  ...threw(error), ...(calls.some(c => c.label === 'empty-target') ? [] : ['not emptied']),
   ...(report && report.includes('| yes, emptied |') && report.includes('2 entries, emptied') ? [] : ['report wrong'])])
 fails += await scenario('emptying agent says empty but lists a file: stops', { listing: FULL, args: { overwrite: true }, emptied: { empty: true, listing: 'concept.md' } }, ({ error }) => (error && /could not be emptied/.test(error) ? [] : ['not stopped']))
 fails += await scenario('listing unreadable: stops', { listing: 'the folder holds files' }, ({ error }) => (error && /reads as neither/.test(error) ? [] : ['not stopped']))
 fails += await scenario('listing of another existing folder: stops', { listing: OTHER }, ({ error }) => (error && /reads as neither/.test(error) ? [] : ['not stopped']))
 fails += await scenario('error naming another path: stops', { listing: `ls: cannot access '${DEST}/concepts': No such file or directory` }, ({ error }) => (error && /reads as neither/.test(error) ? [] : ['not stopped']))
-fails += await scenario('mapping gives one pair twice: stops', { mapping: [...goodMapping, { token: '--sch-s3', class: 'primary', opacity: 0.6, draws: 'x' }] }, ({ error }) => (error && /share the pair primary 0.6/.test(error) ? [] : ['not stopped']))
-fails += await scenario('mapping maps a token twice: stops', { mapping: [...goodMapping, { ...goodMapping[0] , opacity: 0.5 }] }, ({ error }) => (error && /mapped twice/.test(error) ? [] : ['not stopped']))
-fails += await scenario('class none with an opacity: stops', { mapping: [...goodMapping.slice(0, 4), { token: '--sch-s-ink', class: 'none', opacity: 0.6, draws: 'x' }] }, ({ error }) => (error && /class none/.test(error) ? [] : ['not stopped']))
-fails += await scenario('a writer draws with an unmapped token: stops', { tokens: { 'part-recoupee': ['--sch-s1', '--sch-band'] } }, ({ error }) => (error && /--sch-band.*lacks/.test(error) ? [] : ['not stopped']))
-fails += await scenario('no diagram: no colour agent', { diagrams: [] }, ({ error, report, calls }) => [
-  ...(error ? [`threw: ${error}`] : []), ...(calls.some(c => c.label === 'colours') ? ['colours called'] : []),
-  ...(report && report.includes('## Colour mapping (M11)\n\nNo diagram.') ? [] : ['no-diagram line missing'])])
+fails += await scenario('no diagram: no inventory, no drawing, no rendering', { diagrams: [] }, ({ error, report, calls }) => [
+  ...threw(error), ...(calls.some(c => /^(inventory|draw|compare-diagram|renderings)/.test(c.label)) ? ['a diagram agent called'] : []),
+  ...(report && report.includes('## Diagrams (M11)\n\nNo diagram.') ? [] : ['no-diagram line missing'])])
 fails += await scenario('relative dest, agents give absolute paths: none left, none mangled', { args: { dest: 'courses/parcours-po' }, listing: `ls: cannot access 'courses/parcours-po/${DIR}': No such file or directory`, agentRoot: '/private/tmp/feyn/' }, ({ error, report }) => [
-  ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
+  ...threw(error), ...noAbs(report),
   ...(report && report.includes('| concepts/09-decoupage-vertical/sources.md intro |') ? [] : ['course-folder path wrong']),
   ...(report && report.includes('course folder path:courses/parcours-po, the target *concepts/09-decoupage-vertical*') ? [] : ['dest in odd contexts not rewritten']),
   ...(report && !report.includes('feyn/concepts') && report.includes('<absolute path>') ? [] : ['mangled, or the outside path not replaced'])])
 fails += await scenario('absolute dest under /Users, paths in odd contexts: none left', {}, ({ error, report }) => [
-  ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
+  ...threw(error), ...noAbs(report),
   ...(report && report.includes('path:<absolute path>, *<absolute path>*, {<absolute path>}') ? [] : ['odd-context paths not replaced']),
   ...(report && report.includes('course folder path:courses/parcours-po, the target *concepts/09-decoupage-vertical*') ? [] : ['dest not rewritten as literal text'])])
 fails += await scenario('dest under /workspace: none left', { args: { dest: '/workspace/feyn/courses/parcours-po' }, listing: `ls: cannot access '/workspace/feyn/courses/parcours-po/${DIR}': No such file or directory`, agentRoot: '/workspace/feyn/' }, ({ error, report }) => [
-  ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
+  ...threw(error), ...noAbs(report),
   ...(report && report.includes('| concepts/09-decoupage-vertical/sources.md intro |') && report.includes('check-course courses/parcours-po --only') ? [] : ['paths under /workspace not rewritten'])])
-// #178: a label ink on a fill, the ruling-B line, an absent target named under missing, absolute spec paths
-const labelMapping = [...goodMapping.slice(0, 4), { token: '--sch-s-ink', class: 'plain', opacity: 1, draws: 'the label on the flag' }]
-const writers = calls => calls.filter(c => ['colours', 'teaching+sources', 'concept'].includes(c.label) || c.label.startsWith('diagram:'))
-fails += await scenario('label ink on a fill: plain pair, window form in every writer', { mapping: labelMapping }, ({ error, report, calls }) => [
-  ...(error ? [`threw: ${error}`] : []),
-  ...(calls.find(c => c.label === 'colours')?.prompt.includes('class plain (opacity 1), the label drawn in a window of the fill, never class none') ? [] : ['colour agent not told']),
-  ...(calls.filter(c => c.label.startsWith('diagram:')).every(c => c.prompt.includes('--sch-s-ink: plain: a label in a window of its fill') && c.prompt.includes('fill-rule="evenodd"') && c.prompt.includes('Never a filter, a mask')) ? [] : ['a writer lacks the window form']),
-  ...(writers(calls).every(c => c.prompt.includes('A contrast ink drawn on a fill as a label') || c.label === 'colours') ? [] : ['M11 lacks the label clause']),
-  ...(calls.find(c => c.label === 'checks')?.prompt.includes('the window form of M11, never an outline in place of a fill') ? [] : ['checks agent not told']),
-  ...(report && report.includes('| `--sch-s-ink` | plain (no class, a label in a window) | 1 |') ? [] : ['mapping table wrong'])])
-fails += await scenario('label ink with an opacity other than 1: stops', { mapping: [...goodMapping.slice(0, 4), { token: '--sch-s-ink', class: 'plain', opacity: 0.8, draws: 'x' }] }, ({ error }) => (error && /class plain .* opacity 0.8, expected 1/.test(error) ? [] : ['not stopped']))
+// #178: the ruling-B line, an absent target named under missing, absolute spec paths
+const writers = calls => calls.filter(c => ['teaching+sources', 'concept'].includes(c.label))
+fails += await scenario('checks agent: a forbidden colour fixed by the role, never knocked-out text', {}, ({ error, calls }) => [
+  ...threw(error),
+  ...(calls.find(c => c.label === 'checks')?.prompt.includes('currentColor with the class and opacity of its role by SPEC.md 7.2, never a text knocked out of a fill') ? [] : ['checks agent not told'])])
 const TEACH = `${TGT}/teaching.md`
 const LINE_B = 'Cas de la banque : pour 9a1, « Le compteur de relevés ingérés », « Les tâches de Dana » et « Trois « afin de » à juger » ; pour 9b2, « « Quel patron ? » ».'
 fails += await scenario('ruling-B line: counted by design, not invented', { invented: [{ file: TEACH, section: 'Consignes', text: `« ${LINE_B} »`, detail: 'no old text' }] }, ({ error, report, calls }) => [
-  ...(error ? [`threw: ${error}`] : []),
-  ...(calls.some(c => c.label === 'verify') ? ['sent to verification'] : []),
+  ...threw(error),
+  ...((calls.find(c => c.label === 'verify')?.prompt ?? '').includes('Le compteur de relevés ingérés') ? ['sent to verification'] : []),
   ...(report && report.includes(`| teaching.md « Consignes », citation line | by design | M9 | ruling B on #23: ${LINE_B} |`) ? [] : ['no by-design row']),
-  ...(report && /\| 1 \| 1 \| 0 \| 0 \| 0 \| pass \|/.test(report) && report.includes('## Invented\n\nNone.') ? [] : ['counts wrong']),
+  ...(report && /\| 5 \| 2 \| 1 \| 0 \| 0 \| 0 \| pass \|/.test(report) && report.includes('## Invented\n\nNone.') ? [] : ['counts wrong']),
   ...(calls.find(c => c.label === 'teaching+sources')?.prompt.includes('Cas de la banque : pour <id>, « <title> », « <title> » et « <title> » ; pour') ? [] : ['writer lacks the form'])])
 fails += await scenario('ruling-B line in another form, a second line, « Poser »: invented', { invented: [
   { file: TEACH, section: 'Consignes', text: 'Cas de la banque : pour 9a1, « Le compteur », puis « Les tâches de Dana ».', detail: 'x' },
@@ -170,37 +468,41 @@ fails += await scenario('ruling-B line in another form, a second line, « Poser 
   ...(error && /4 invented/.test(error) ? [] : ['not failed on 4 invented']),
   ...(report && report.includes(', puis « Les tâches de Dana »') && report.includes('Poser « Le compteur »') && report.includes('« A » et « B » et « C »') && report.includes('| I4 | ') && report.includes('ruling B on #23: Cas de la banque : pour 9a1, « Le compteur ».') ? [] : ['wrong rows'])])
 for (const [name, item] of [['absolute', `target folder ${TGT} does not exist`], ['course-relative', `target courses/parcours-po/${DIR}: No such file or directory.`], ['bare dir', `the target folder ${DIR} does not exist yet`]])
-  fails += await scenario(`absent target named under missing (${name}): ignored`, { missing: [item] }, ({ error }) => (error ? [`threw: ${error}`] : []))
+  fails += await scenario(`absent target named under missing (${name}): ignored`, { missing: [item] }, ({ error }) => threw(error))
 fails += await scenario('a missing old file under concepts/: stops', { missing: [`target folder ${TGT} does not exist`, `${FROM}/course/concepts/09-decoupage-vertical.md`] }, ({ error }) => (error && /Inputs missing: \/Users\/me\/pdx\/parcours-po\/course\/concepts\/09-decoupage-vertical\.md$/.test(error) ? [] : ['not stopped on the old file alone']))
 fails += await scenario('one item naming the target and a missing input: stops', { missing: [`target folder ${TGT} does not exist; ${FROM}/course/sources/09-decoupage-vertical.md not found`] }, ({ error }) => (error && /Inputs missing: target folder .*sources\/09-decoupage-vertical\.md not found$/.test(error) ? [] : ['not stopped']))
-fails += await scenario('spec paths absolute in the writers\' inputs', {}, ({ error, calls }) => [
-  ...(error ? [`threw: ${error}`] : []),
-  ...(writers(calls).length === 5 ? [] : ['writers not all called']),
-  ...writers(calls).flatMap(c => [`${ROOT}/specs/linear-course/SPEC.md`, `${ROOT}/specs/linear-course/templates/`, `${ROOT}/docs/glossary.md`, `${ROOT}/construction/notes/S1-08.md`]
-    .filter(p => !c.prompt.includes(p)).map(p => `${c.label} lacks ${p}`)),
-  ...writers(calls).filter(c => /(^|[^\w/])(specs\/linear-course\/|docs\/glossary\.md|construction\/notes\/S1-08\.md)/.test(c.prompt)).map(c => `${c.label} has a relative spec path`)])
+fails += await scenario('spec paths absolute in the writers\', inventories\' and drawers\' inputs', {}, ({ error, calls }) => {
+  const inventories = calls.filter(c => c.label.startsWith('inventory:'))
+  return [...threw(error),
+    ...(writers(calls).length === 2 && inventories.length === 2 && drawers(calls).length === 2 ? [] : ['writers, inventories or drawers not all called']),
+    ...[...writers(calls), ...inventories].flatMap(c => [`${ROOT}/specs/linear-course/SPEC.md`, `${ROOT}/docs/glossary.md`, `${ROOT}/construction/notes/S1-08.md`]
+      .filter(p => !c.prompt.includes(p)).map(p => `${c.label} lacks ${p}`)),
+    ...writers(calls).filter(c => !c.prompt.includes(`${ROOT}/specs/linear-course/templates/`)).map(c => `${c.label} lacks the templates`),
+    ...[...writers(calls), ...inventories, ...drawers(calls)].filter(c => /(^|[^\w/])(specs\/linear-course\/|docs\/glossary\.md|construction\/notes\/S1-08\.md)/.test(c.prompt)).map(c => `${c.label} has a relative spec path`)]
+})
 fails += await scenario('working directory not absolute: stops', { cwd: 'feyn' }, ({ error }) => (error && /not an absolute path/.test(error) ? [] : ['not stopped']))
 fails += await scenario('working directory /: stops', { cwd: '/' }, ({ error }) => (error && /not an absolute path other than \//.test(error) ? [] : ['not stopped']))
 // wave 2: the work session stayed in the main checkout, dest was the worktree's course folder
-fails += await scenario('pwd not dest\'s root: the root is dest\'s, checks included', { cwd: '/Users/me/main' }, ({ error, report, calls }) => [
-  ...(error ? [`threw: ${error}`] : []), ...noAbs(report),
-  ...writers(calls).filter(c => !c.prompt.includes(`${ROOT}/specs/linear-course/SPEC.md`) || c.prompt.includes('/Users/me/main')).map(c => `${c.label} not on dest's root`),
+fails += await scenario('pwd not dest\'s root: the root is dest\'s, checks, drawings and renderings included', { cwd: '/Users/me/main' }, ({ error, report, calls }) => [
+  ...threw(error), ...noAbs(report),
+  ...[...writers(calls), ...drawers(calls)].filter(c => !c.prompt.includes(`${ROOT}/specs/linear-course/SPEC.md`) || c.prompt.includes('/Users/me/main')).map(c => `${c.label} not on dest's root`),
   ...(calls.find(c => c.label === 'checks')?.prompt.includes(`mise exec -- ${ROOT}/specs/linear-course/checks/check-course ${DEST} --only`) ? [] : ['check command not on dest\'s root']),
+  ...(calls.find(c => c.label === 'renderings')?.prompt.includes(`node ${ROOT}/construction/scripts/diagram-renderings/render.mjs`) ? [] : ['render command not on dest\'s root']),
   ...(calls.find(c => c.label === 'scope')?.prompt.includes(`ls -ld ${ROOT}/specs"`) ? [] : ['scope not asked to list dest\'s root'])])
 fails += await scenario('relative dest: the root is pwd', { args: { dest: 'courses/parcours-po' }, listing: `ls: cannot access 'courses/parcours-po/${DIR}': No such file or directory`, cwd: '/Users/me/main' }, ({ error, calls }) => [
-  ...(error ? [`threw: ${error}`] : []),
+  ...threw(error),
   ...(calls.find(c => c.label === 'checks')?.prompt.includes('mise exec -- /Users/me/main/specs/linear-course/checks/check-course courses/parcours-po --only') ? [] : ['check command not on pwd']),
-  ...(writers(calls).every(c => c.prompt.includes('/Users/me/main/docs/glossary.md')) ? [] : ['writers not on pwd'])])
+  ...([...writers(calls), ...drawers(calls)].every(c => c.prompt.includes('/Users/me/main/docs/glossary.md')) ? [] : ['writers or drawers not on pwd'])])
 fails += await scenario('root without specs/: stops', { rootListing: `ls: ${ROOT}/specs: No such file or directory` }, ({ error }) => (error && /shows no specs\/ folder/.test(error) ? [] : ['not stopped']))
 fails += await scenario('absolute dest under courses/ of another form: stops', { args: { dest: '/Users/me/wt/courses/other/parcours-po' } }, ({ error, calls }) => [
   ...(error && /is under a courses\/ folder but is not <repository>\/courses\/parcours-po/.test(error) ? [] : ['not stopped']),
   ...(calls.length ? ['agents called before the refusal'] : [])])
 fails += await scenario('absolute dest outside a repository: pwd root, logged', { args: { dest: '/private/tmp/copy/parcours-po' }, listing: `ls: cannot access '/private/tmp/copy/parcours-po/${DIR}': No such file or directory`, cwd: '/Users/me/main' }, ({ error, calls, logs }) => [
-  ...(error ? [`threw: ${error}`] : []),
+  ...threw(error),
   ...(logs.some(l => /outside a repository: the spec, the glossary and the checks are taken from the working directory \/Users\/me\/main\//.test(l)) ? [] : ['no log line']),
   ...(calls.find(c => c.label === 'checks')?.prompt.includes('mise exec -- /Users/me/main/specs/linear-course/checks/check-course /private/tmp/copy/parcours-po --only') ? [] : ['check command not on pwd'])])
 fails += await scenario('relative dest, target named by an absolute path under missing: ignored', { args: { dest: 'courses/parcours-po' }, listing: `ls: cannot access 'courses/parcours-po/${DIR}': No such file or directory`, cwd: '/abs/feyn', missing: [`target folder /abs/feyn/courses/parcours-po/${DIR} does not exist`] }, ({ error, logs }) => [
-  ...(error ? [`threw: ${error}`] : []),
+  ...threw(error),
   ...(logs.some(l => l.startsWith('Ignored as missing')) ? [] : ['not logged as ignored'])])
 console.log(fails ? `${fails} scenario(s) failed` : 'all scenarios pass')
 process.exit(fails ? 1 : 0)
