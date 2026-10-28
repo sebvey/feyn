@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 490" fill="currentColor" role="img" aria-labelledby="dependances-titre dependances-desc" font-family="system-ui, sans-serif" font-size="14">
+  <title id="dependances-titre">Les dépendances dans une équipe et entre deux équipes</title>
+  <desc id="dependances-desc">En haut, un backlog où B dépend de A et où le PO ordonne. En dessous, deux backlogs, plateforme et équipe appli, liés par une dépendance, la story de la plateforme dépendant de l'élément de l'équipe appli ; chaque PO ordonne le sien, les deux s'accordent sur l'ordre, et l'escalade n'intervient que si cela bloque.</desc>
+
+  <g id="10b1-intitule-dependances">
+    <text class="muted" x="20" y="26" font-size="16" font-weight="bold">10b. Dépendances</text>
+  </g>
+
+  <g id="10b1-backlog-equipe">
+    <rect class="muted" x="20" y="44" width="300" height="150" rx="6" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5"/>
+    <text class="muted" x="34" y="66">un backlog</text>
+  </g>
+
+  <g id="10b1-element-a">
+    <rect class="secondary" x="50" y="82" width="90" height="46" rx="4" fill-opacity="0.25" stroke="currentColor"/>
+    <text class="muted" x="95" y="110" text-anchor="middle">A</text>
+  </g>
+
+  <g id="10b1-element-b">
+    <rect class="secondary" x="200" y="82" width="90" height="46" rx="4" fill="none" stroke="currentColor" stroke-opacity="0.6"/>
+    <text class="muted" x="245" y="110" text-anchor="middle">B</text>
+  </g>
+
+  <g id="10b1-mention-dependance">
+    <line class="muted" x1="198" y1="105" x2="146" y2="105" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <path class="muted" d="M142 105 L152 100 L152 110 Z" fill="currentColor" fill-opacity="0.6"/>
+    <text class="muted" x="170" y="168" text-anchor="middle">B dépend de A</text>
+  </g>
+
+  <g id="10b1-note-po-ordonne">
+    <text class="muted" x="345" y="100">même équipe :</text>
+    <text class="muted" x="345" y="122">le PO ordonne</text>
+  </g>
+
+  <g id="10b2-po-plateforme">
+    <rect class="primary" x="20" y="226" width="150" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <text class="primary" x="95" y="251" text-anchor="middle">PO plateforme</text>
+  </g>
+
+  <g id="10b2-po-appli">
+    <rect class="primary" x="430" y="226" width="150" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <text class="primary" x="505" y="251" text-anchor="middle">PO appli</text>
+  </g>
+
+  <g id="10b2-accord-po">
+    <line class="primary" x1="182" y1="246" x2="418" y2="246" stroke="currentColor" stroke-width="2"/>
+    <path class="primary" d="M172 246 L184 240 L184 252 Z" fill="currentColor"/>
+    <path class="primary" d="M428 246 L416 240 L416 252 Z" fill="currentColor"/>
+    <text class="primary" x="300" y="284" text-anchor="middle">chacun ordonne le sien ;</text>
+    <text class="primary" x="300" y="304" text-anchor="middle">on s'accorde sur l'ordre</text>
+  </g>
+
+  <g id="10b2-ordre-plateforme">
+    <line class="primary" x1="95" y1="268" x2="95" y2="320" stroke="currentColor" stroke-width="2"/>
+    <path class="primary" d="M95 330 L89 318 L101 318 Z" fill="currentColor"/>
+  </g>
+
+  <g id="10b2-ordre-appli">
+    <line class="primary" x1="505" y1="268" x2="505" y2="320" stroke="currentColor" stroke-width="2"/>
+    <path class="primary" d="M505 330 L499 318 L511 318 Z" fill="currentColor"/>
+  </g>
+
+  <g id="10b2-backlog-plateforme">
+    <rect class="muted" x="20" y="332" width="150" height="140" rx="6" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5"/>
+    <text class="muted" x="34" y="354">plateforme</text>
+  </g>
+
+  <g id="10b2-backlog-appli">
+    <rect class="muted" x="430" y="332" width="150" height="140" rx="6" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5"/>
+    <text class="muted" x="444" y="354">équipe appli</text>
+  </g>
+
+  <g id="10b2-story-plateforme">
+    <rect class="primary" x="45" y="384" width="100" height="56" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <text class="primary" x="95" y="417" text-anchor="middle">story</text>
+  </g>
+
+  <g id="10b2-element-appli">
+    <rect class="primary" x="455" y="384" width="100" height="56" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <text class="primary" x="505" y="417" text-anchor="middle">élément</text>
+  </g>
+
+  <g id="10b2-lien-dependance">
+    <line class="primary" x1="145" y1="412" x2="443" y2="412" stroke="currentColor" stroke-opacity="0.7" stroke-width="2"/>
+    <path class="primary" d="M453 412 L441 406 L441 418 Z" fill="currentColor" fill-opacity="0.7"/>
+    <text class="primary" x="300" y="432" text-anchor="middle">dépend de</text>
+  </g>
+
+  <g id="10b2-escalade">
+    <line class="muted" x1="300" y1="312" x2="300" y2="334" stroke="currentColor" stroke-opacity="0.5" stroke-dasharray="4 4"/>
+    <path class="muted" d="M300 344 L295 332 L305 332 Z" fill="currentColor" fill-opacity="0.5"/>
+    <text class="muted" x="300" y="364" text-anchor="middle">si la dépendance bloque : escalade</text>
+    <text class="muted" x="300" y="384" text-anchor="middle">(concept 14)</text>
+  </g>
+</svg>

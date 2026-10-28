@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 290" fill="currentColor" role="img" aria-labelledby="hors-perimetre-titre hors-perimetre-desc" font-family="system-ui, sans-serif" font-size="14">
+  <title id="hors-perimetre-titre">Le hors périmètre d'une story</title>
+  <desc id="hors-perimetre-desc">Une story à gauche ; sur son bord, à l'extérieur, trois lignes du hors périmètre en tirets : l'export en fichier, l'envoi par courriel, l'historique antérieur. Chaque ligne a une flèche vers le backlog, à droite.</desc>
+  <g id="10a-titre" class="muted">
+    <text x="20" y="32" font-size="16" font-weight="bold">10a. Hors périmètre</text>
+  </g>
+  <g id="10a-story" class="muted">
+    <rect x="20" y="70" width="200" height="190" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5" stroke-width="2"/>
+    <text x="34" y="100">la story :</text>
+    <text x="34" y="150"><tspan x="34" dy="0">voir l'indicateur</tspan><tspan x="34" dy="20">sur le tableau de bord</tspan></text>
+  </g>
+  <g id="10a-ligne-export" class="primary">
+    <rect x="220" y="90" width="170" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="234" y="115">export en fichier</text>
+  </g>
+  <g id="10a-ligne-courriel" class="primary">
+    <rect x="220" y="150" width="170" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="234" y="175">envoi par courriel</text>
+  </g>
+  <g id="10a-ligne-historique" class="primary">
+    <rect x="220" y="210" width="170" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+    <text x="234" y="235">historique antérieur</text>
+  </g>
+  <g id="10a-demandes" class="muted">
+    <path d="M390 110 H440 M434 105 L444 110 L434 115" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="2"/>
+    <path d="M390 170 H440 M434 165 L444 170 L434 175" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="2"/>
+    <path d="M390 230 H440 M434 225 L444 230 L434 235" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="2"/>
+  </g>
+  <g id="10a-backlog" class="muted">
+    <rect x="450" y="70" width="130" height="190" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5" stroke-width="2"/>
+    <text x="464" y="100">backlog</text>
+    <text x="464" y="150"><tspan x="464" dy="0">à ordonner</tspan><tspan x="464" dy="20">par le PO</tspan></text>
+  </g>
+</svg>
