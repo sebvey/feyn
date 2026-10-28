@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 470" role="img" aria-labelledby="phrase-trois-blocs-pourquoi-titre phrase-trois-blocs-pourquoi-desc" fill="currentColor" font-family="system-ui, sans-serif">
+  <title id="phrase-trois-blocs-pourquoi-titre">La phrase d'une story en trois blocs, et l'échelle des « pourquoi ? »</title>
+  <desc id="phrase-trois-blocs-pourquoi-desc">
+    En bas, la phrase d'une story en trois blocs côte à côte : « En tant que » (qui), « je veux » (quoi, sans solution),
+    « afin de » (pourquoi), le troisième mis en avant. L'échelle est un cas inventé pour l'illustration.
+    Au-dessus du « afin de », une échelle de « pourquoi ? » qui monte. Premier barreau, barré : suivre les locations,
+    circulaire, il répète le « je veux ». Deuxième barreau : savoir combien de vélos sont sortis. Troisième barreau, encadré :
+    décider combien de vélos redistribuer, on s'arrête ici, c'est la décision de l'utilisateur. Quatrième barreau, en pointillés et grisé :
+    que le réseau serve mieux la ville, trop haut, c'est l'objectif produit.
+    À gauche, la carte de la story, avec une bulle de dialogue, la conversation, et une coche, la confirmation :
+    les 3C de Jeffries, issus d'Extreme Programming.
+  </desc>
+  <g id="5a1-definitions"><defs>
+    <marker id="phrase-trois-blocs-pourquoi-fleche" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" class="muted" fill="currentColor" fill-opacity="0.85" stroke="none" />
+    </marker>
+    <filter id="phrase-trois-blocs-pourquoi-inverse-coche" filterUnits="userSpaceOnUse" x="192" y="190" width="44" height="44">
+      <feComponentTransfer in="SourceGraphic">
+        <feFuncA type="table" tableValues="1 0" />
+      </feComponentTransfer>
+    </filter>
+    <mask id="phrase-trois-blocs-pourquoi-masque-coche" mask-type="alpha" maskUnits="userSpaceOnUse" x="192" y="190" width="44" height="44">
+      <g filter="url(#phrase-trois-blocs-pourquoi-inverse-coche)">
+        <path d="M203 212 L211 221 L226 203" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+    </mask>
+    <filter id="phrase-trois-blocs-pourquoi-inverse-afin" filterUnits="userSpaceOnUse" x="300" y="388" width="290" height="56">
+      <feComponentTransfer in="SourceGraphic">
+        <feFuncA type="table" tableValues="1 0" />
+      </feComponentTransfer>
+    </filter>
+    <mask id="phrase-trois-blocs-pourquoi-masque-afin" mask-type="alpha" maskUnits="userSpaceOnUse" x="299" y="387" width="292" height="58">
+      <g filter="url(#phrase-trois-blocs-pourquoi-inverse-afin)">
+        <text x="445" y="411" text-anchor="middle" font-size="20" font-weight="700" fill="currentColor">afin de</text>
+        <text x="445" y="433" text-anchor="middle" font-size="14.5" fill="currentColor">pourquoi</text>
+      </g>
+    </mask>
+  </defs></g>
+
+  <g id="5a2-carte">
+    <rect x="20" y="62" width="220" height="150" rx="8" class="muted" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="2" />
+    <text x="36" y="90" class="secondary" fill="currentColor" fill-opacity="1" font-size="18" font-weight="700">Carte</text>
+    <text x="36" y="110" class="muted" fill="currentColor" fill-opacity="0.85" font-size="15.5">la phrase écrite</text>
+    <path d="M36 134 H224 M36 154 H224 M36 174 H170" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="5" stroke-linecap="round" />
+  </g>
+
+  <g id="5a2-conversation">
+    <rect x="120" y="8" width="136" height="42" rx="16" class="muted" fill="currentColor" fill-opacity="0.15" stroke="none" />
+    <path d="M146 50 L138 68 L168 50 Z" class="muted" fill="currentColor" fill-opacity="0.15" stroke="none" />
+    <rect x="120" y="8" width="136" height="42" rx="16" class="secondary" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="3" />
+    <path d="M146 50 L138 68 L168 50 Z" class="secondary" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="3" />
+    <text x="188" y="34" text-anchor="middle" class="secondary" fill="currentColor" fill-opacity="1" font-size="16.5" font-weight="700">Conversation</text>
+  </g>
+
+  <g id="5a2-confirmation">
+    <circle cx="214" cy="212" r="22" class="primary" fill="currentColor" fill-opacity="0.85" mask="url(#phrase-trois-blocs-pourquoi-masque-coche)" />
+    <text x="190" y="262" text-anchor="middle" class="secondary" fill="currentColor" fill-opacity="1" font-size="16.5" font-weight="700">Confirmation</text>
+  </g>
+
+  <g id="5a2-les-3c">
+    <text x="130" y="296" text-anchor="middle" class="muted" fill="currentColor" fill-opacity="0.85" font-size="15.5">les 3C (Jeffries, XP)</text>
+  </g>
+
+  <g id="5b-barreau-trop-haut">
+    <rect x="300" y="6" width="290" height="74" rx="8" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="7 5" />
+    <text x="445" y="32" text-anchor="middle" class="muted" fill="currentColor" fill-opacity="0.85" font-size="17">que le réseau serve</text>
+    <text x="445" y="52" text-anchor="middle" class="muted" fill="currentColor" fill-opacity="0.85" font-size="17">mieux la ville</text>
+    <text x="445" y="71" text-anchor="middle" class="muted" fill="currentColor" fill-opacity="0.85" font-size="14.5" font-style="italic">trop haut : l'objectif produit</text>
+  </g>
+
+  <g id="5b-pourquoi-3">
+    <path d="M320 108 V84" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="2.2" marker-end="url(#phrase-trois-blocs-pourquoi-fleche)" />
+    <text x="332" y="101" class="muted" fill="currentColor" fill-opacity="0.85" font-size="15.5" font-weight="600">pourquoi ?</text>
+  </g>
+
+  <g id="5b-barreau-decision">
+    <rect x="300" y="110" width="290" height="62" rx="8" class="muted" fill="currentColor" fill-opacity="0.15" stroke="none" />
+    <rect x="300" y="110" width="290" height="62" rx="8" class="primary" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="4" />
+    <text x="445" y="132" text-anchor="middle" class="secondary" fill="currentColor" fill-opacity="1" font-size="17" font-weight="700">décider combien de vélos</text>
+    <text x="445" y="152" text-anchor="middle" class="secondary" fill="currentColor" fill-opacity="1" font-size="17" font-weight="700">redistribuer</text>
+    <text x="596" y="186" text-anchor="end" class="secondary" fill="currentColor" fill-opacity="1" font-size="14.5" font-weight="700">on s'arrête ici :</text>
+    <text x="596" y="204" text-anchor="end" class="secondary" fill="currentColor" fill-opacity="1" font-size="14.5" font-weight="700">la décision de l'utilisateur</text>
+  </g>
+
+  <g id="5b-pourquoi-2">
+    <path d="M320 238 V214" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="2.2" marker-end="url(#phrase-trois-blocs-pourquoi-fleche)" />
+    <text x="332" y="231" class="muted" fill="currentColor" fill-opacity="0.85" font-size="15.5" font-weight="600">pourquoi ?</text>
+  </g>
+
+  <g id="5b-barreau-intermediaire">
+    <rect x="300" y="244" width="290" height="40" rx="8" class="muted" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="2" />
+    <text x="445" y="270" text-anchor="middle" class="secondary" fill="currentColor" fill-opacity="1" font-size="17" textLength="262" lengthAdjust="spacingAndGlyphs">savoir combien de vélos sont sortis</text>
+  </g>
+
+  <g id="5b-pourquoi-1">
+    <path d="M320 308 V288" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="2.2" marker-end="url(#phrase-trois-blocs-pourquoi-fleche)" />
+    <text x="332" y="303" class="muted" fill="currentColor" fill-opacity="0.85" font-size="15.5" font-weight="600">pourquoi ?</text>
+  </g>
+
+  <g id="5b-barreau-circulaire">
+    <rect x="300" y="314" width="290" height="40" rx="8" class="muted" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="2" opacity="0.85" />
+    <text x="445" y="340" text-anchor="middle" class="muted" fill="currentColor" fill-opacity="0.85" font-size="17">suivre les locations</text>
+    <path d="M380 334 H510" class="secondary" fill="none" stroke="currentColor" stroke-opacity="1" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+    <text x="596" y="373" text-anchor="end" class="muted" fill="currentColor" fill-opacity="0.85" font-size="14.5" font-style="italic">circulaire : répète le « je veux »</text>
+  </g>
+
+  <g id="5a1-blocs">
+    <rect x="5" y="388" width="140" height="56" rx="8" class="muted" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="2" />
+    <text x="75" y="411" text-anchor="middle" class="secondary" fill="currentColor" fill-opacity="1" font-size="18.5" font-weight="700">En tant que</text>
+    <text x="75" y="433" text-anchor="middle" class="muted" fill="currentColor" fill-opacity="0.85" font-size="14.5">qui</text>
+    <rect x="152" y="388" width="140" height="56" rx="8" class="muted" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.5" stroke-width="2" />
+    <text x="222" y="411" text-anchor="middle" class="secondary" fill="currentColor" fill-opacity="1" font-size="18.5" font-weight="700">je veux</text>
+    <text x="222" y="433" text-anchor="middle" class="muted" fill="currentColor" fill-opacity="0.85" font-size="14.5">quoi, sans solution</text>
+  </g>
+
+  <g id="5a1-afin-de">
+    <rect x="300" y="388" width="290" height="56" rx="8" class="primary" fill="currentColor" fill-opacity="0.85" stroke="currentColor" stroke-opacity="0.85" stroke-width="2" mask="url(#phrase-trois-blocs-pourquoi-masque-afin)" />
+  </g>
+
+  <g id="5b-exemple">
+    <text x="300" y="464" text-anchor="middle" class="muted" fill="currentColor" fill-opacity="0.85" font-size="15.5">exemple inventé pour l'illustration</text>
+  </g>
+</svg>
