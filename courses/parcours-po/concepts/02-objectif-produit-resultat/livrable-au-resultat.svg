@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 460" fill="currentColor" role="img" aria-labelledby="livrable-au-resultat-titre livrable-au-resultat-desc" font-family="sans-serif">
+  <title id="livrable-au-resultat-titre">Du livrable au résultat : ce que l'équipe produit, ce qui change chez l'utilisateur</title>
+  <desc id="livrable-au-resultat-desc">
+    Une chaîne de gauche à droite. D'abord le livrable, ce que l'équipe produit, seul sous une accolade : ce que l'équipe maîtrise.
+    Ensuite l'usage, une case grisée, le livrable est consulté : un signal, pas une preuve.
+    Puis un grand cadre, le résultat, qui contient deux cases : le changement de comportement, l'utilisateur fait autre chose qu'avant,
+    puis l'effet visé, l'état futur du produit que l'objectif produit vise.
+    Sous l'usage et le résultat, une accolade : hors du contrôle de l'équipe, ce qui juge le produit.
+    Au-dessus de l'effet visé, un drapeau, l'objectif produit, qui est du consensus (Scrum Guide) ;
+    plus haut, une ligne en pointillés, la vision produit, qui est un choix d'école.
+    Une jauge, la mesure de résultat, est reliée à l'effet visé : elle dit si l'on s'en approche.
+  </desc>
+  <g id="2a-defs">
+  <defs>
+    <marker id="livrable-au-resultat-fleche" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" class="muted" fill="currentColor" fill-opacity="0.6"/>
+    </marker>
+  </defs>
+  </g>
+
+  <g id="2b-vision">
+    <text x="580" y="22" text-anchor="end" font-size="16" font-style="italic" class="muted" fill="currentColor" fill-opacity="0.75">Vision produit : choix d'école</text>
+    <line x1="268" y1="34" x2="580" y2="34" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"/>
+  </g>
+
+  <g id="2b-objectif">
+    <path d="M418 46 H576 A6 6 0 0 1 582 52 V78 A6 6 0 0 1 576 84 H418 A6 6 0 0 1 412 78 V52 A6 6 0 0 1 418 46 Z M424 55 H570 V77 H424 Z" class="primary" fill="currentColor" fill-opacity="1" fill-rule="evenodd" stroke="none"/>
+    <text x="497" y="71" text-anchor="middle" font-size="17" font-weight="700" fill="currentColor">Objectif produit</text>
+    <text x="497" y="104" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="0.75">consensus, Scrum Guide</text>
+    <line x1="497" y1="112" x2="497" y2="158" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2.5" marker-end="url(#livrable-au-resultat-fleche)"/>
+  </g>
+
+  <g id="2a-resultat">
+    <rect x="268" y="116" width="312" height="168" rx="10" class="secondary" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="2.5"/>
+    <text x="282" y="140" font-size="19" font-weight="650" class="muted" fill="currentColor" fill-opacity="1">Résultat</text>
+  </g>
+
+  <g id="2a-livrable">
+    <rect x="20" y="160" width="100" height="110" rx="8" class="muted" fill="currentColor" fill-opacity="0.1" stroke="none"/>
+    <rect x="20" y="160" width="100" height="110" rx="8" class="primary" fill="none" stroke="currentColor" stroke-opacity="1" stroke-width="2.5"/>
+    <text x="70" y="182" text-anchor="middle" font-size="17" font-weight="650" class="muted" fill="currentColor" fill-opacity="1">Livrable</text>
+    <text x="70" y="204" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">ce que</text>
+    <text x="70" y="222" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">l'équipe</text>
+    <text x="70" y="240" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">produit</text>
+  </g>
+
+  <g id="2c-usage">
+    <rect x="144" y="160" width="100" height="110" rx="8" class="muted" fill="currentColor" fill-opacity="0.2" stroke="none"/>
+    <rect x="144" y="160" width="100" height="110" rx="8" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2.5" stroke-dasharray="7 5" opacity="0.55"/>
+    <text x="194" y="182" text-anchor="middle" font-size="17" font-weight="650" class="muted" fill="currentColor" fill-opacity="1">Usage</text>
+    <text x="194" y="202" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">il est</text>
+    <text x="194" y="220" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">consulté</text>
+    <text x="194" y="244" text-anchor="middle" font-size="16" font-style="italic" class="muted" fill="currentColor" fill-opacity="1">signal,</text>
+    <text x="194" y="262" text-anchor="middle" font-size="16" font-style="italic" class="muted" fill="currentColor" fill-opacity="1">pas preuve</text>
+  </g>
+
+  <g id="2a-changement">
+    <rect x="274" y="160" width="136" height="110" rx="8" class="muted" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="342" y="182" text-anchor="middle" font-size="17" font-weight="650" class="muted" fill="currentColor" fill-opacity="1">Changement de</text>
+    <text x="342" y="200" text-anchor="middle" font-size="17" font-weight="650" class="muted" fill="currentColor" fill-opacity="1">comportement</text>
+    <text x="342" y="224" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">l'utilisateur</text>
+    <text x="342" y="242" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">fait autre chose</text>
+    <text x="342" y="260" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">qu'avant</text>
+  </g>
+
+  <g id="2b-effet-vise">
+    <rect x="426" y="160" width="142" height="110" rx="8" class="muted" fill="currentColor" fill-opacity="0.1" stroke="none"/>
+    <rect x="426" y="160" width="142" height="110" rx="8" class="primary" fill="none" stroke="currentColor" stroke-opacity="1" stroke-width="2.5"/>
+    <text x="497" y="182" text-anchor="middle" font-size="17" font-weight="650" class="muted" fill="currentColor" fill-opacity="1">Effet visé</text>
+    <text x="497" y="206" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">l'état futur</text>
+    <text x="497" y="226" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">du produit que</text>
+    <text x="497" y="246" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="1">l'objectif vise</text>
+  </g>
+
+  <g id="2a-chaine">
+    <line x1="122" y1="215" x2="142" y2="215" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2.5" marker-end="url(#livrable-au-resultat-fleche)"/>
+    <line x1="246" y1="215" x2="272" y2="215" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2.5" marker-end="url(#livrable-au-resultat-fleche)"/>
+    <line x1="412" y1="215" x2="424" y2="215" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2.5" marker-end="url(#livrable-au-resultat-fleche)"/>
+  </g>
+
+  <g id="2a-accolades">
+    <path d="M20 296 V304 H120 V296" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2.5"/>
+    <text x="20" y="328" font-size="16" class="muted" fill="currentColor" fill-opacity="0.75">ce que l'équipe</text>
+    <text x="20" y="348" font-size="16" class="muted" fill="currentColor" fill-opacity="0.75">maîtrise</text>
+    <path d="M144 296 V304 H580 V296" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2.5"/>
+    <text x="340" y="328" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="0.75">hors du contrôle de l'équipe :</text>
+    <text x="340" y="348" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="0.75">ce qui juge le produit</text>
+  </g>
+
+  <g id="2c-mesure">
+    <line x1="497" y1="272" x2="497" y2="372" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
+    <rect x="412" y="372" width="170" height="18" rx="9" class="muted" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.5"/>
+    <rect x="412" y="372" width="108" height="18" rx="9" class="secondary" fill="currentColor" fill-opacity="0.85" stroke="none"/>
+    <text x="497" y="418" text-anchor="middle" font-size="17" font-weight="650" class="muted" fill="currentColor" fill-opacity="1">mesure de résultat</text>
+    <text x="497" y="438" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="0.75">dit si on s'approche</text>
+    <text x="497" y="456" text-anchor="middle" font-size="16" class="muted" fill="currentColor" fill-opacity="0.75">de l'effet visé</text>
+  </g>
+</svg>
