@@ -25,5 +25,5 @@ with seven checks. It modifies no file and returns the `inventory` and the `find
   fixed. Two rounds at most.
 - A finding whose fix changes what a concept teaches, or one that returns after round two:
   an issue (`/ticket`), not a fix here.
-- The PR lists each finding fixed or deferred, and the workflow's result as a `Done when,
-  verified:` line.
+- The PR lists each finding fixed or deferred under Changes, and the workflow's result on the
+  `Checks run:` line of its Checks (`/finish` step 5).
