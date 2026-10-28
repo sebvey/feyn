@@ -303,7 +303,7 @@ viennent du fil rouge.
 **6.1** Distingue toujours le consensus (le texte qui le fonde, une pratique établie), le choix
 d'école (un auteur ou un courant nommé) et le choix propre au cours, et dis-le ; le frontmatter
 `stances` de `concept.md` dit lequel. Présente les choix du cours comme tels : des choix du
-cours, sans source externe.
+cours, qu'aucune source n'énonce tels quels.
 
 **6.2** Ne cite aucune référence de toi-même (ouvrage, article, lien). Nommer le texte d'un
 consensus ou l'auteur d'un choix d'école reste permis.

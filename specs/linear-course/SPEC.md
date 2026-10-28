@@ -143,7 +143,7 @@ heading, in the order given, and no other `##` section exists (`concept-folder`)
 | `stances` | mandatory | the standing of the concept's claims, three keys, each a list of items, possibly empty |
 | `stances.consensus` | mandatory | what is accepted, and by which text (the Scrum Guide, established practice) |
 | `stances.school` | mandatory | school of thought: a named author's or current's choice |
-| `stances.course` | mandatory | the course's own choices, with no external source |
+| `stances.course` | mandatory | the course's own choices, which no source states as such (an item may cite the sources it comes close to) |
 | `neighbors` | optional | neighbouring notions not to confuse with this concept: a list of items |
 | `diagrams` | optional | the concept's diagrams, a list (below) |
 
