@@ -6,7 +6,7 @@ argument-hint: "<issue number> [<issue number>…]"
 
 # /orchestrate <n> [<n>…]
 
-One job: drive issue n from Ready to merged without doing the work in the work session that runs it.
+One job: drive issue n from Ready to merged without doing the issue's changes in the work session that runs it.
 That work session is the orchestrator: it briefs, checks and relays; a contributor agent
 does the work, a fresh agent reviews it, the maintainer merges. Every PR is reviewed by a fresh
 agent before it reaches the maintainer (decision `fresh-agent-review-before-maintainer`).
