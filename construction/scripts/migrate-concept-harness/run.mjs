@@ -86,7 +86,7 @@ function makeAgent(o) {
       const given = again ? o.inventoriesAgain?.[n] : o.inventories?.[n]
       return structuredClone(given ?? (o.inventories?.[n] && again ? o.inventories[n] : [INV_GATEAU, INV_PART][n]))
     }
-    if (L.startsWith('draw:')) { const stem = L.slice(5); return { file: `${stem}.svg`, groups: [`9a-${stem}`] } }
+    if (L.startsWith('draw:')) { const stem = L.slice(5); return { file: o.drawnFile?.[stem] ?? `${stem}.svg`, groups: [`9a-${stem}`] } }
     if (L.startsWith('compare-diagram:')) {
       const n = Number(L.split(':')[1]) - 1
       return o.compared?.[n] ?? { rows: [{ item: 'E1 « Ingestion »', where: `${TGT}/${n ? 'part-recoupee' : 'gateau'}.svg 9a-couches`, verdict: 'kept', detail: '' }], invented: [] }
@@ -206,6 +206,12 @@ fails += await scenario('split: one old diagram, two ideas, two SVGs at the Figu
     ...(report && report.includes('\n\nSplit by idea: 2 diagrams.\n') && report.includes('| ![old diagram 1](S1-10-09-report/old-1.png) | ![gateau-couches.svg](S1-10-09-report/gateau-couches.png) |\n|  | ![gateau-tranches.svg](S1-10-09-report/gateau-tranches.png) |') ? [] : ['split not shown in the report']),
     ...(result?.diagrams?.length === 3 ? [] : ['summary not three diagrams'])]
 })
+// wf_90327be3-efc: a drawing agent returned its file as an absolute path
+fails += await scenario('drawn file returned as its absolute path: accepted', { drawnFile: { 'part-recoupee': `${TGT}/part-recoupee.svg` } }, ({ error, report }) => [
+  ...threw(error), ...noAbs(report)])
+fails += await scenario('drawn file returned as its path under a relative dest: accepted', { args: { dest: 'courses/parcours-po' }, listing: `ls: cannot access 'courses/parcours-po/${DIR}': No such file or directory`, cwd: '/Users/me/main', drawnFile: { gateau: `courses/parcours-po/${DIR}/gateau.svg`, 'part-recoupee': `/Users/me/main/courses/parcours-po/${DIR}/part-recoupee.svg` } }, ({ error }) => threw(error))
+fails += await scenario('drawn file another one: stops', { drawnFile: { 'part-recoupee': `${TGT}/gateau.svg` } }, ({ error }) => (error && /Diagram part-recoupee returned the file .*\/gateau\.svg$/.test(error) ? [] : ['not stopped']))
+fails += await scenario('drawn file in another folder: stops', { drawnFile: { 'part-recoupee': `/Users/me/other/${DIR}/part-recoupee.svg` } }, ({ error }) => (error && /Diagram part-recoupee returned the file \/Users\/me\/other\//.test(error) ? [] : ['not stopped']))
 fails += await scenario('comparison: an element lost and a label invented fail the run, verified like the others', {
   compared: [{ rows: [{ item: 'E4 « couche entière »', where: 'none', verdict: 'lost', detail: 'the whole layer is in no new diagram' }], invented: [{ file: 'gateau.svg', text: '« tranche 4 »', detail: 'no fourth slice in the inventory' }] }],
 }, ({ error, calls, report }) => [

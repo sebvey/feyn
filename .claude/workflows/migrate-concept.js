@@ -710,7 +710,10 @@ const drawn = await parallel(ideas.map((i, k) => () => agent(drawPrompt(i, k), {
 ideas.forEach((i, k) => {
   const r = drawn?.[k]
   if (!r) throw new Error(`Diagram ${i.stem}.svg not drawn: see the workflow log`)
-  if (r.file !== `${i.stem}.svg`) throw new Error(`Diagram ${i.stem} returned the file ${r.file}`)
+  // the file may come back as its name or its path (wf_90327be3-efc: one drawing agent gave the absolute
+  // path); any other file stops the run
+  const named = [`${i.stem}.svg`, `${TARGET}${i.stem}.svg`, ...(TARGET.startsWith('/') ? [] : [`${cwd.replace(/\/?$/, '/')}${TARGET}${i.stem}.svg`])]
+  if (!named.includes(String(r.file ?? '').trim())) throw new Error(`Diagram ${i.stem} returned the file ${r.file}`)
   i.groups = r.groups
 })
 
