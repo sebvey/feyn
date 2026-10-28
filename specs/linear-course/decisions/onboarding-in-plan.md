@@ -12,10 +12,11 @@ teacher ask the learner what they know of Scrum.
 The onboarding questions and the teacher's posture belong to the course, not to the protocol:
 `plan.md` has a mandatory « Accueil » section (`headings.onboarding`) giving the posture in a
 paragraph, then the questions as a numbered list, each `**<label>** : <question>`; the protocol
-reads it (rules 1.1, 1.5, 1.6, 8.5) and keeps only what every course shares: the nickname
+reads it (rules `teacher-posture-from-plan`, `onboarding-questions-announced`,
+`onboarding-questions-order` and `onboarding-profile-written`) and keeps only what every course shares: the nickname
 question, first, and no question on pace. Each answer goes to `learner/apprenant.md` as
 `- <label> : <answer>`, in the learner's words. This replaces the generic wording PR #86 put in
-rules 1.1 and 1.6, and the two fixed memory headings « Rôle » and « Avant le parcours ».
+rules `teacher-posture-from-plan` and `onboarding-questions-order`, and the two fixed memory headings « Rôle » and « Avant le parcours ».
 
 ## Options ruled out
 

@@ -52,7 +52,7 @@ the English terms below are how we talk about them in code, docs and issues.
 
 | Term | Means | Not |
 |---|---|---|
-| **protocol** | the pedagogical protocol: the numbered, testable teaching rules of a spec | "the loop", "pedagogy", "rules", "behaviour" |
+| **protocol** | the pedagogical protocol: the testable teaching rules of a spec, each named by a slug | "the loop", "pedagogy", "rules", "behaviour" |
 | **language pack** | `lang/<code>.yaml`: literal phrases, typography, site labels of one language | "i18n", "locale", "strings" |
 | **session** | one conversation between the teacher and a learner; **resume** = the first message of a session with an existing learner; **onboarding** = a new learner | |
 | **save point** | a moment where the teacher writes and commits learner memory | "checkpoint", "sync" |

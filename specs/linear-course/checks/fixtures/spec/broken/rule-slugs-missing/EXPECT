@@ -1,0 +1,2 @@
+check: rule-slugs
+message: decisions/a-decision.md:8 cites rule "third-rule", which PROTOCOL.md does not define

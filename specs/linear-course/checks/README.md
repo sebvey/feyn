@@ -52,6 +52,29 @@ A claim of `sources.md` has a source when its source cell is not empty: a refere
 (`[S1]`), a `concepts/NN-slug/sources.md` path, or a word that says there is none (« fil
 rouge », « aucune »). Ids and paths in the cell are checked.
 
+## Checks of the spec itself
+
+```
+mise exec -- specs/linear-course/checks/check-spec
+mise exec -- specs/linear-course/checks/check-spec <spec-dir> --only rule-slugs
+```
+
+`check-spec` checks the spec's own files, not a course: `PROTOCOL.md`, `SPEC.md` and
+`decisions/` of `<spec-dir>` (default: `specs/linear-course`). Same output, exit codes and
+`--only`, `--list` as `check-course`; the file in a failure line is relative to `<spec-dir>`.
+
+| Id | Script | Verifies |
+|---|---|---|
+| `rule-slugs` | `rule-slugs.js` | every rule of `PROTOCOL.md` is named by a slug, defined once; every rule cited in `PROTOCOL.md`, `SPEC.md` and `decisions/` is cited by a slug that is defined; none is named or cited by a number (decision `rules-named-by-slug`) |
+
+A slug is defined by a line of a rule family (`## <n>. …`) that opens on `**<slug>** `, or by a
+table row of a family whose first cell is `**<slug>**` (the save-point table). It is cited by a
+code span: in a rule family, every code span shaped like a slug (two to five lowercase words
+joined by hyphens); in the tables of `PROTOCOL.md`, every code span of a "Used in" or "Rule"
+column; elsewhere, the code spans that follow « rule », « rules », « règle » or « règles »,
+joined by commas, « and », « to », « et », « à » (« rules `a`, `b` and `c` »). A check id or a
+decision slug in code is not a rule, as long as no such word leads it.
+
 ## Tests
 
 ```
@@ -67,6 +90,11 @@ mise exec -- specs/linear-course/checks/test-fixtures
   (`courses/parcours-po/concepts/09-decoupage-vertical`, copied in at test time); every check
   passes with `--concept 9`. The real course files come with S1-08.
 - `fixtures/lang/fr.yaml`: the pack the fixtures use (the keys of section 9, French values).
+- `fixtures/spec/valid/`: a minimal spec (`PROTOCOL.md`, `SPEC.md`, one decision); every
+  `check-spec` check passes. `fixtures/spec/broken/<name>/`: a copy of it with one defect and its
+  `EXPECT` file (a missing slug, a duplicate slug, a rule cited by number). The test also runs
+  `check-spec` on `specs/linear-course`, which must pass.
 
 The fixtures are plain files: change `valid/` and the broken copies together, then run the
-test. A new check adds a script, a line in `check-course`, a row above and a broken fixture.
+test. A new check adds a script, a line in `check-course` (or `check-spec` for a check of the
+spec's own files), a row above and a broken fixture.

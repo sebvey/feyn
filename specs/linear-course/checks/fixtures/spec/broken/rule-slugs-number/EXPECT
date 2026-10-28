@@ -1,0 +1,2 @@
+check: rule-slugs
+message: SPEC.md:3 rule cited by its number "1.1"
