@@ -1,0 +1,2 @@
+check: rule-slugs
+message: SPEC.md:3 cites a range "`first-rule` to `save-points`"

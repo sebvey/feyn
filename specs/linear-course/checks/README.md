@@ -1,6 +1,7 @@
 # Checks of `linear-course`
 
-Scripts that verify a course against `SPEC.md` (section 10). **Dependency-free Node**
+Scripts that verify a course against `SPEC.md` (section 10), run by `check-course`, and the spec's
+own files (`PROTOCOL.md`, `SPEC.md`, `decisions/`), run by `check-spec`. **Dependency-free Node**
 (CommonJS, no `npm install`; Node 20 or later, run under `mise exec` like every tool here): the course's YAML,
 Markdown and SVG are read by the small readers in `lib/` (`yaml.js`, `md.js`, `xml.js`), which
 cover the subset the spec uses. Chosen once, for every check: a shell version would need a
@@ -52,6 +53,39 @@ A claim of `sources.md` has a source when its source cell is not empty: a refere
 (`[S1]`), a `concepts/NN-slug/sources.md` path, or a word that says there is none (« fil
 rouge », « aucune »). Ids and paths in the cell are checked.
 
+## Checks of the spec itself
+
+```
+mise exec -- specs/linear-course/checks/check-spec
+mise exec -- specs/linear-course/checks/check-spec <spec-dir> --only rule-slugs
+```
+
+`check-spec` checks the spec's own files, not a course: `PROTOCOL.md`, `SPEC.md` and
+`decisions/` of `<spec-dir>` (default: `specs/linear-course`). Same output, exit codes and
+`--only`, `--list` as `check-course`; the file in a failure line is relative to `<spec-dir>`.
+
+| Id | Script | Verifies |
+|---|---|---|
+| `rule-slugs` | `rule-slugs.js` | every rule and every group of rules of `PROTOCOL.md` is named by a slug, defined once in one namespace; every rule or group cited in `PROTOCOL.md`, `SPEC.md` and `decisions/` is cited by a slug that is defined, a group as a group and a rule as a rule; none is named or cited by a number, no range « `a` à `b` » (decisions `rules-named-by-slug`, `rule-groups-replace-ranges`) |
+
+A rule's slug is defined by a line of a rule family (`## <n>. …`) that opens on `**<slug>** `, or
+by a table row of a family whose first cell is `**<slug>**` (the save-point table); a group's slug
+by a heading of a family, « ### <title> (`<slug>`) » (one to five words). Rules and groups share
+one namespace: a slug is defined once. A rule is cited by a
+code span: in a rule family, every code span shaped like a slug (two to five lowercase words
+joined by hyphens); in the tables of `PROTOCOL.md`, every code span of a "Used in" or "Rule"
+column; elsewhere, the code spans that follow « rule », « rules », « règle » or « règles »,
+joined by commas, « and », « to », « et », « à » (« rules `a`, `b` and `c` »). A check id or a
+decision slug in code is not a rule, as long as no such word leads it. Everywhere, the code spans
+that follow « group », « groups », « groupe » or « groupes » must be groups, and those that follow
+« rule(s) » or « règle(s) » must be rules. A range, « `a` à `b` » or « `a` to `b` », fails in
+`PROTOCOL.md` and `SPEC.md`; `decisions/` are not read for ranges, since they quote the ones they
+replaced.
+
+Known limits:
+- A code span after « group » that names something other than a rule group fails as a missing group.
+- A `####` heading inside a family is neither a group nor read by the check: the rules under it stay in the group above.
+
 ## Tests
 
 ```
@@ -67,6 +101,12 @@ mise exec -- specs/linear-course/checks/test-fixtures
   (`courses/parcours-po/concepts/09-decoupage-vertical`, copied in at test time); every check
   passes with `--concept 9`. The real course files come with S1-08.
 - `fixtures/lang/fr.yaml`: the pack the fixtures use (the keys of section 9, French values).
+- `fixtures/spec/valid/`: a minimal spec (`PROTOCOL.md`, `SPEC.md`, one decision); every
+  `check-spec` check passes. `fixtures/spec/broken/<name>/`: a copy of it with one defect and its
+  `EXPECT` file (a missing slug, a duplicate slug, a rule cited by number, a missing group, a
+  group whose slug is a rule's, a range, a group cited as a rule). The test also runs
+  `check-spec` on `specs/linear-course`, which must pass.
 
 The fixtures are plain files: change `valid/` and the broken copies together, then run the
-test. A new check adds a script, a line in `check-course`, a row above and a broken fixture.
+test. A new check adds a script, a line in `check-course` (or `check-spec` for a check of the
+spec's own files), a row above and a broken fixture.

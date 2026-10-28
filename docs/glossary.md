@@ -52,7 +52,7 @@ the English terms below are how we talk about them in code, docs and issues.
 
 | Term | Means | Not |
 |---|---|---|
-| **protocol** | the pedagogical protocol: the numbered, testable teaching rules of a spec | "the loop", "pedagogy", "rules", "behaviour" |
+| **protocol** | the pedagogical protocol: the testable teaching rules of a spec, each named by a slug | "the loop", "pedagogy", "rules", "behaviour" |
 | **language pack** | `lang/<code>.yaml`: literal phrases, typography, site labels of one language | "i18n", "locale", "strings" |
 | **session** | one conversation between the teacher and a learner; **resume** = the first message of a session with an existing learner; **onboarding** = a new learner | |
 | **save point** | a moment where the teacher writes and commits learner memory | "checkpoint", "sync" |
@@ -74,7 +74,7 @@ the English terms below are how we talk about them in code, docs and issues.
 | **batch** | a set of concepts written in one `course-batch` agent workflow run (ex `course-lot`) | "lot", "chunk" |
 | **decision** | a recorded decision: one file by slug in a `decisions/` folder, with its counterfactual. "ADR" is the known synonym in conversation, never in paths | "ADR" in file names, "RFC", "design doc" |
 | **counterfactual** | the first line of a decision: what an agent would do without it | "rationale", "motivation" |
-| **check** | a deterministic script that validates a course against its spec (`checks/`), run locally and in CI | "test", "lint", "validation" |
+| **check** | a deterministic script that validates a course, or the spec's own files, against its spec (`checks/`), run locally and in CI | "test", "lint", "validation" |
 | **taught-check** | the agent workflow that verifies no case asks what the learner has not yet been taught | |
 | **fresh test** | a run of the teacher by a fresh subagent (Sonnet) in a disposable classroom, following a **test scenario** | "e2e", "smoke test", "simulation" |
 | **review** | a reading of a change against the spec by an agent or a human (**quality review** workflow) | "audit", "QA" |

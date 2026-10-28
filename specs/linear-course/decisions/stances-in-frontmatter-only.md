@@ -29,7 +29,7 @@ of `SPEC.md` 4.2 and its review-only rule « says nothing the frontmatter contra
 
 ## Consequences
 
-- Rule 6.1 of `PROTOCOL.md` reads the frontmatter `stances` and carries over, not decides, the
+- Rule `stances-told-apart` of `PROTOCOL.md` reads the frontmatter `stances` and carries over, not decides, the
   hint « à présenter comme tels » the old concept files had in that section: « Présente les
   choix du cours comme tels : des choix du cours, qu'aucune source n'énonce tels quels. »
   `SPEC.md` 4.1 `stances.course` says the same.
