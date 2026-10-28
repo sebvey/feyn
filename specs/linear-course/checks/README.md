@@ -66,15 +66,18 @@ mise exec -- specs/linear-course/checks/check-spec <spec-dir> --only rule-slugs
 
 | Id | Script | Verifies |
 |---|---|---|
-| `rule-slugs` | `rule-slugs.js` | every rule of `PROTOCOL.md` is named by a slug, defined once; every rule cited in `PROTOCOL.md`, `SPEC.md` and `decisions/` is cited by a slug that is defined; none is named or cited by a number (decision `rules-named-by-slug`) |
+| `rule-slugs` | `rule-slugs.js` | every rule and every group of rules of `PROTOCOL.md` is named by a slug, defined once in one namespace; every rule or group cited in `PROTOCOL.md`, `SPEC.md` and `decisions/` is cited by a slug that is defined, a group as a group; none is named or cited by a number (decisions `rules-named-by-slug`, `rule-groups-replace-ranges`) |
 
-A slug is defined by a line of a rule family (`## <n>. …`) that opens on `**<slug>** `, or by a
-table row of a family whose first cell is `**<slug>**` (the save-point table). It is cited by a
+A rule's slug is defined by a line of a rule family (`## <n>. …`) that opens on `**<slug>** `, or
+by a table row of a family whose first cell is `**<slug>**` (the save-point table); a group's slug
+by a heading of a family, « ### <title> (`<slug>`) » (one to five words). Rules and groups share
+one namespace: a slug is defined once. A rule is cited by a
 code span: in a rule family, every code span shaped like a slug (two to five lowercase words
 joined by hyphens); in the tables of `PROTOCOL.md`, every code span of a "Used in" or "Rule"
 column; elsewhere, the code spans that follow « rule », « rules », « règle » or « règles »,
 joined by commas, « and », « to », « et », « à » (« rules `a`, `b` and `c` »). A check id or a
-decision slug in code is not a rule, as long as no such word leads it.
+decision slug in code is not a rule, as long as no such word leads it. Everywhere, the code spans
+that follow « group », « groups », « groupe » or « groupes » must be groups.
 
 ## Tests
 
@@ -93,7 +96,8 @@ mise exec -- specs/linear-course/checks/test-fixtures
 - `fixtures/lang/fr.yaml`: the pack the fixtures use (the keys of section 9, French values).
 - `fixtures/spec/valid/`: a minimal spec (`PROTOCOL.md`, `SPEC.md`, one decision); every
   `check-spec` check passes. `fixtures/spec/broken/<name>/`: a copy of it with one defect and its
-  `EXPECT` file (a missing slug, a duplicate slug, a rule cited by number). The test also runs
+  `EXPECT` file (a missing slug, a duplicate slug, a rule cited by number, a missing group, a
+  group whose slug is a rule's). The test also runs
   `check-spec` on `specs/linear-course`, which must pass.
 
 The fixtures are plain files: change `valid/` and the broken copies together, then run the

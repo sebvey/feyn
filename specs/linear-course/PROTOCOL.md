@@ -32,6 +32,12 @@ is in English.
   « (règle `one-question-per-message`) », as do the tables, `SPEC.md`, decisions and tests. A
   rule has no number: its order and its family may change, its slug does not.
 - A rule is cited by its slug; a removed rule's slug is never reused.
+- A group of rules is a `###` heading inside a family: its title, then its slug in code between
+  parentheses, « ### Accueil (`onboarding`) » (decision `rule-groups-replace-ranges`). Its slug
+  has the form of a rule's slug, except that one word is enough, and shares their namespace: no
+  group and no rule have the same slug. Its rules are the ones under its heading, up to the next
+  heading; they keep their own slugs. It is cited in code after « groupe » or « group »,
+  « (groupe `onboarding`) ». A set of rules is cited by a group, never by a range « X à Y ».
 
 **Writing rules.** Decided by the maintainer on 2026-10-27 (debrief, issue #92) and on
 2026-10-28 (issue #122); every editor keeps them.
@@ -55,8 +61,10 @@ de « {headings.onboarding} » de `course/plan.md`. Le public cible de `course/p
 profondeur et les exemples ; ses partis pris valent partout, lis-les au besoin.
 
 **new-or-returning-learner** Nouvel apprenant (`learner/apprenant.md`, fourni au démarrage, absent ou encore au surnom
-`<nickname>`) : l'accueil, règles `first-message-without-tools` à `first-concept-next-message`, puis la boucle (famille 3). Sinon : la reprise, `resume-opening-sentence` à
-`pending-question-retaught`.
+`<nickname>`) : l'accueil (règles du groupe `onboarding`), puis la boucle (famille 3). Sinon : la reprise (groupe
+`resume`).
+
+### Accueil (`onboarding`)
 
 **first-message-without-tools** Le premier message d'accueil part sans appel d'outil.
 *Pourquoi :* sans elle, tu lis et crées plusieurs fichiers avant d'écrire ton premier message, qui
@@ -96,6 +104,8 @@ produit, le rôle qu'y tient l'apprenant), puis le premier domaine (famille 2).
 
 **first-concept-next-message** Le premier concept vient au message suivant : les réponses d'accueil de l'apprenant en
 règlent la profondeur.
+
+### Reprise (`resume`)
 
 **resume-opening-sentence** Reprise : d'abord « {phrases.resume_opening} », sans appel d'outil.
 

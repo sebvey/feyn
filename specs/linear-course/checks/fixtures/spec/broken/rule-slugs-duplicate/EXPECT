@@ -1,2 +1,2 @@
 check: rule-slugs
-message: slug "first-rule" is defined twice (first at line 8)
+message: slug "first-rule" is defined twice

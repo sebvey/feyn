@@ -5,6 +5,8 @@ in rule `second-rule`.
 
 ## 1. Démarrage
 
+### Accueil (`onboarding`)
+
 **first-rule** Le premier message part sans appel d'outil.
 
 **second-rule** Le premier message présente le cours ; puis la règle `first-rule` vaut encore.
@@ -13,7 +15,7 @@ in rule `second-rule`.
 
 ## 2. Mémoire
 
-**save-points** Les points de sauvegarde, selon le tableau ci-dessous (règles `first-rule` et
+**save-points** Après l'accueil (groupe `onboarding`), les points de sauvegarde, selon le tableau ci-dessous (règles `first-rule` et
 `second-rule`).
 
 | Ligne | Quoi | Où |
