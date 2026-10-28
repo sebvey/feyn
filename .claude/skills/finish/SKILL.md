@@ -69,9 +69,9 @@ branch without an issue number: stop and say so.
 7. **Ask for review**: reply with the PR URL, the title, one line on what the reviewer should
    look at first, and the merge command:
    `mise exec -- gh pr merge <pr> --squash --delete-branch`.
-   The repository squashes with the PR title and body and allows squash only (repository
-   settings, checked 2026-10-28, #135), so the title written at step 4 is the subject on
-   `main`: the command names no subject. Stop there.
+   The repository squashes with the PR title and body and allows squash only (GitHub,
+   observed 2026-10-28, #135), so the PR title, followed by ` (#<pr>)`, becomes the subject
+   on `main`: the command names no subject. Stop there.
    A draft PR: name the question instead of the merge command. The maintainer answers with a
    comment and removes `blocked:maintainer` from the issue: one removal. Then apply the answer,
    remove the section from the body, `mise exec -- gh pr ready <pr>`, and ask for review
