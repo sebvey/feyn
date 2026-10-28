@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 370" fill="currentColor" role="img" aria-labelledby="gateau-titre gateau-desc" font-family="system-ui, sans-serif">
+  <title id="gateau-titre">Le gâteau en couches : une tranche horizontale contre trois tranches verticales</title>
+  <desc id="gateau-desc">Un gâteau de quatre couches empilées, de bas en haut : Ingestion, Transformation, Données prêtes, Restitution. La couche Transformation est grisée en entier et marquée couche entière. Trois parts fines, tranche 1, tranche 2 et tranche 3, traversent les quatre couches de haut en bas. Une légende distingue la tranche horizontale de la tranche verticale.</desc>
+  <g id="9a1-gateau-ingestion" class="muted">
+    <rect x="170" y="212" width="300" height="50" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="156" y="242" font-size="15" text-anchor="end">Ingestion</text>
+  </g>
+  <g id="9a1-gateau-transformation" class="muted">
+    <rect x="170" y="162" width="300" height="50" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="156" y="192" font-size="15" text-anchor="end">Transformation</text>
+  </g>
+  <g id="9a1-gateau-donnees-pretes" class="muted">
+    <rect x="170" y="112" width="300" height="50" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="156" y="142" font-size="15" text-anchor="end">Données prêtes</text>
+  </g>
+  <g id="9a1-gateau-restitution" class="muted">
+    <rect x="170" y="62" width="300" height="50" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="156" y="92" font-size="15" text-anchor="end">Restitution</text>
+  </g>
+  <g id="9a1-gateau-couche-entiere">
+    <rect class="secondary" x="170" y="162" width="300" height="50" fill="currentColor" fill-opacity="0.4" stroke="currentColor" stroke-width="1.5"/>
+    <text class="muted" x="480" y="192" font-size="15">couche entière</text>
+  </g>
+  <g id="9a1-gateau-tranche-1" class="primary">
+    <rect x="200" y="62" width="40" height="200" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="3"/>
+    <text x="220" y="48" font-size="15" text-anchor="middle">tranche 1</text>
+  </g>
+  <g id="9a1-gateau-tranche-2" class="primary">
+    <rect x="300" y="62" width="40" height="200" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="3"/>
+    <text x="320" y="48" font-size="15" text-anchor="middle">tranche 2</text>
+  </g>
+  <g id="9a1-gateau-tranche-3" class="primary">
+    <rect x="400" y="62" width="40" height="200" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="3"/>
+    <text x="420" y="48" font-size="15" text-anchor="middle">tranche 3</text>
+  </g>
+  <g id="9a1-gateau-legende">
+    <rect class="secondary" x="60" y="298" width="40" height="14" fill="currentColor" fill-opacity="0.4" stroke="currentColor" stroke-width="1.5"/>
+    <text class="muted" x="114" y="310" font-size="15">tranche horizontale : ne sert pas seule</text>
+    <rect class="primary" x="72" y="326" width="16" height="30" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="3"/>
+    <text class="muted" x="114" y="346" font-size="15">tranche verticale : un peu de chaque couche, sert seule</text>
+  </g>
+</svg>

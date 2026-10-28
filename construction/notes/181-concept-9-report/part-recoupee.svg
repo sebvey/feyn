@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 570" fill="currentColor" role="img" aria-labelledby="part-recoupee-titre part-recoupee-desc" font-family="system-ui, sans-serif" font-size="14">
+  <title id="part-recoupee-titre">Une part trop grosse recoupée en parts verticales plus fines</title>
+  <desc id="part-recoupee-desc">En haut, une part large en pointillé, la vue des vélos en panne, trop grosse pour un sprint, traverse quatre couches. Trois flèches la recoupent en trois morceaux. À gauche, les quatre couches : restitution en haut, puis données prêtes, transformation, ingestion en bas. Les morceaux a et c sont des parts fines qui traversent les quatre couches ; sous chacun, son patron de découpage et son catalogue. Le morceau b, à droite, est une lamelle large qui ne tient que la couche des données prêtes ; ses trois autres couches restent vides, en pointillé. Sous b, une note : une couche, pas une tranche, pas de patron. Une légende dit que le pointillé signifie pas fait.</desc>
+
+  <g id="9b1-besoin-trop-gros" class="muted">
+    <text x="300" y="32" text-anchor="middle">Une vue des vélos en panne : trop gros pour un sprint</text>
+    <rect x="200" y="46" width="200" height="80" fill-opacity="0.08" fill="currentColor" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <path d="M200 66 H400 M200 86 H400 M200 106 H400" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="1" stroke-dasharray="6 4"/>
+  </g>
+
+  <g id="9b1-recoupe-en-trois" class="muted" opacity="0.6">
+    <path d="M260 130 L201.2 192.4 M330 130 L343.1 190.2 M370 130 L506.9 195.1" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <polygon points="195,199 197.9,189.4 204.5,195.5"/>
+    <polygon points="345,199 338.7,191.2 347.5,189.3"/>
+    <polygon points="515,199 505.0,199.2 508.8,191.1"/>
+  </g>
+
+  <g id="9b1-echelle-couches" class="muted">
+    <path d="M130 205 V365 M126 205 H134 M126 245 H134 M126 285 H134 M126 325 H134 M126 365 H134" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="1"/>
+    <text x="120" y="230" text-anchor="end">restitution</text>
+    <text x="120" y="270" text-anchor="end">données prêtes</text>
+    <text x="120" y="310" text-anchor="end">transformation</text>
+    <text x="120" y="350" text-anchor="end">ingestion</text>
+  </g>
+
+  <g id="9b1-morceau-a-centre" class="primary">
+    <rect x="170" y="205" width="50" height="160" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2"/>
+    <path d="M170 245 H220 M170 285 H220 M170 325 H220" fill="none" stroke="currentColor" stroke-width="1"/>
+    <text x="195" y="392" text-anchor="middle" font-weight="600"><tspan x="195" y="392">a. les stations </tspan><tspan x="195" y="410">du centre-ville </tspan><tspan x="195" y="428">seulement</tspan></text>
+  </g>
+
+  <g id="9b2-patron-a-donnees" class="muted">
+    <text x="195" y="460" text-anchor="middle">D de SPIDR (Cohn)</text>
+    <text x="195" y="480" text-anchor="middle"><tspan x="195" y="480">ou Variations </tspan><tspan x="195" y="498">in Data (Lawrence)</tspan></text>
+  </g>
+
+  <g id="9b1-morceau-c-signales" class="primary">
+    <rect x="320" y="205" width="50" height="160" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2"/>
+    <path d="M320 245 H370 M320 285 H370 M320 325 H370" fill="none" stroke="currentColor" stroke-width="1"/>
+    <text x="345" y="392" text-anchor="middle" font-weight="600"><tspan x="345" y="392">c. les vélos </tspan><tspan x="345" y="410">signalés, </tspan><tspan x="345" y="428">confirmés ou non</tspan></text>
+  </g>
+
+  <g id="9b2-patron-c-regle" class="muted">
+    <text x="345" y="460" text-anchor="middle">R de SPIDR (Cohn)</text>
+    <text x="345" y="480" text-anchor="middle"><tspan x="345" y="480">assouplir d'abord </tspan><tspan x="345" y="498">une règle</tspan></text>
+  </g>
+
+  <g id="9b1-morceau-b-vides" class="muted">
+    <path d="M455 205 H575 V245 H455 Z M455 285 H575 V365 H455 Z M455 325 H575" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="6 4"/>
+  </g>
+
+  <g id="9b1-morceau-b-table" class="secondary">
+    <rect x="455" y="245" width="120" height="40" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2"/>
+    <text x="515" y="392" text-anchor="middle" font-weight="600"><tspan x="515" y="392">b. la table des </tspan><tspan x="515" y="410">signalements</tspan></text>
+  </g>
+
+  <g id="9b1-note-b-couche" class="muted">
+    <text x="515" y="460" text-anchor="middle">une couche</text>
+    <text x="515" y="480" text-anchor="middle"><tspan x="515" y="480">pas une tranche : </tspan><tspan x="515" y="498">pas de patron</tspan></text>
+  </g>
+
+  <g id="9b1-legende-pointille" class="muted">
+    <rect x="16" y="535" width="28" height="16" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="54" y="548">pas fait</text>
+  </g>
+</svg>
