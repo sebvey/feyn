@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 220" fill="currentColor" role="img" aria-labelledby="ecran-etats-titre ecran-etats-desc" font-family="system-ui, sans-serif">
+  <title id="ecran-etats-titre">Un écran d'outil de backlog : les états, où « fait » veut dire DoD remplie</title>
+  <desc id="ecran-etats-desc">Une bande de quatre états, de gauche à droite : Idée, Cadrée (repère : la DoR), Réalisation, Terminée (DoD remplie). Seul le dernier est marqué.</desc>
+  <g id="A1c-bande-titre" class="muted">
+    <text x="12" y="34" font-size="18" font-weight="bold">États</text>
+  </g>
+  <g id="A1c-etat-idee" class="muted">
+    <rect x="12" y="80" width="126" height="90" rx="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="75" y="131" font-size="16" text-anchor="middle">Idée</text>
+  </g>
+  <g id="A1c-etat-cadree" class="secondary">
+    <rect x="162" y="80" width="126" height="90" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
+    <g class="muted">
+      <text x="225" y="121" font-size="16" text-anchor="middle">Cadrée</text>
+      <text x="225" y="146" font-size="14" text-anchor="middle">repère : la DoR</text>
+    </g>
+  </g>
+  <g id="A1c-etat-realisation" class="muted">
+    <rect x="312" y="80" width="126" height="90" rx="6" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="375" y="131" font-size="16" text-anchor="middle">Réalisation</text>
+  </g>
+  <g id="A1c-etat-terminee" class="primary">
+    <rect x="462" y="80" width="126" height="90" rx="6" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="3"/>
+    <text x="525" y="121" font-size="16" font-weight="bold" text-anchor="middle">Terminée</text>
+    <text x="525" y="146" font-size="14" text-anchor="middle">DoD remplie</text>
+  </g>
+  <g id="A1c-ordre-etats" class="muted">
+    <path d="M138 125 H162 M288 125 H312 M438 125 H462" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <path d="M154 119 L162 125 L154 131 M304 119 L312 125 L304 131 M454 119 L462 125 L454 131" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+  </g>
+</svg>
