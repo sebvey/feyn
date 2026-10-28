@@ -123,7 +123,8 @@ plan.md; course/glossary.md: glossary.md; course/fil-rouge-*.md: storyline.md; \
 course/concepts/NN-slug.md: concepts/NN-slug/concept.md; course/sources/NN-slug.md: \
 concepts/NN-slug/sources.md; an old decision number (ADR-018): the course decision of the decisions/ \
 folder of the course that says it carries that old decision over (decisions/<slug>.md), else it has no \
-new path. The intro and « Non vérifié » are reader-facing: there, a pointer with no new path (an old \
+new path. The intro and « Non vérifié » are prose the teacher reads, not source cells (the site builds \
+neither, SPEC.md 4.4): there, a pointer with no new path (an old \
 decision no course decision carries over, off-course.md, the old repository's git history, a task id \
 such as T-021) is dropped by the smallest change, and the claim it points from stays; elsewhere (a \
 source cell, « Références ») it stays as it is. The intro's pointer to the « Consensus et choix \
@@ -189,7 +190,7 @@ const SCOPE_SCHEMA = {
       },
     },
     unlisted_h4: { type: 'array', items: { type: 'string' }, description: 'ids of MDX <h4> that are not sub-concepts of the course.yaml entry (rule M5)' },
-    target_listing: { type: 'string', description: 'the output of ls -la <dest><dir> (dir as returned above), verbatim, every line; when the folder does not exist, the error ls prints' },
+    target_listing: { type: 'string', description: 'the output of "ls -ld <dest><dir>; ls -la <dest><dir>" (dir as returned above), verbatim, every line, errors included' },
     missing: { type: 'array', items: { type: 'string' }, description: 'what could not be found (a file, the concept in course.yaml); empty when all is found' },
   },
   required: ['spec', 'dir', 'course_entry', 'concept_file', 'sources_file', 'mdx_file', 'diagrams', 'unlisted_h4', 'target_listing', 'missing'],
@@ -337,9 +338,10 @@ ${FROM}course/sources/${NN}-*.md, the site page ${SITE}src/content/concepts/fr/$
 use of each in the MDX: one item per distinct variant prop, with the legende of its <Figure> and the \
 section that holds it.
 - The MDX <h4 id> that are not sub-concept ids of the course.yaml entry.
-- The listing of the target: run ls -la ${DEST}concepts/${NN}-<slug> (the dir of the course.yaml \
-entry, under ${DEST}) and return its output verbatim, every line, or the error ls prints when the \
-folder does not exist. Do not summarise it.
+- The listing of the target: with <path> the dir of the course.yaml entry under ${DEST} \
+(${DEST}concepts/${NN}-<slug>), run the one command line "ls -ld <path>; ls -la <path>" and return \
+its output verbatim, every line, errors included (when the folder does not exist, both commands print \
+an error). Do not summarise it.
 
 Stem rule (M11): a named component gives its name in lowercase words joined by hyphens (Escalier: \
 escalier, CoutDuRetard: cout-du-retard); a numbered one (Schema13, SchemaA1, Schema16Prevision, any \
@@ -364,14 +366,18 @@ if (new Set(stems).size !== stems.length) throw new Error(`SVG stems not unique:
 // Whether the target holds files is read here from the listing the scope agent returns (ls -la), not
 // taken as its yes or no: the first run of concept 0 (wf_18b79caf-82d) stopped on a scope agent that
 // said an absent folder held files (#170). The report shows the listing.
-// Absent: the error of ls. Empty: only "total", "." and "..". Anything else that ls -l prints for an
-// entry is a file. A listing that is neither stops the run: no guess either way.
+// The listing is "ls -ld <target>; ls -la <target>": the first line names the folder listed, so the
+// script checks it is this target. Absent: the errors of ls, naming the target. Present: the ls -ld
+// line of a folder ending with the target path, then "total", "." and ".." for an empty folder;
+// anything else that ls -l prints for an entry is a file. A listing that is neither stops the run.
 function listedFiles(listing) {
+  const T = TARGET.replace(/\/$/, '')
   const lines = String(listing ?? '').split('\n').map(l => l.trim()).filter(Boolean)
-  // the error names the folder listed: it must be this target, not another path
-  if (lines.length && lines.every(l => /No such file or directory/.test(l))) return lines.every(l => l.includes(TARGET.replace(/\/$/, ''))) ? { exists: false, files: [] } : null
-  const entries = lines.filter(l => /^[-dlbcpsD][-rwxsStT]{9}/.test(l))
-  const other = lines.filter(l => !entries.includes(l) && !/^total \d+$/.test(l))
+  if (lines.length && lines.every(l => /No such file or directory/.test(l))) return lines.every(l => l.includes(T)) ? { exists: false, files: [] } : null
+  if (!lines.length || !/^d/.test(lines[0]) || !(lines[0].endsWith(` ${T}`) || lines[0].endsWith(`/${T}`) || lines[0].endsWith(`${T}/`))) return null
+  const rest = lines.slice(1)
+  const entries = rest.filter(l => /^[-dlbcpsD][-rwxsStT]{9}/.test(l))
+  const other = rest.filter(l => !entries.includes(l) && !/^total \d+$/.test(l))
   if (!entries.length || other.length) return null
   return { exists: true, files: entries.filter(l => !/\s\.\.?$/.test(l)) }
 }
@@ -446,9 +452,11 @@ declared but drawn by no element. Write no file.`,
 }
 
 phase('Write')
-const [diagramStep, teachingAndSources] = await parallel([
+// Decided before the parallel writers, not inside them: the runtime's parallel() turns a thunk that
+// throws into null, so a refusal of the mapping would lose its reason there (review of PR #173).
+const colours = await decideColours()
+const [drawnDiagrams, teachingAndSources] = await parallel([
   async () => {
-    const colours = await decideColours()
     const MAPPING = colours.mapping.map(m => `${m.token}: ${m.class === 'none' ? 'class none, a gap (no ink)' : `class ${m.class}, opacity ${m.opacity}`}`).join('; ')
     const drawn = await parallel(scope.diagrams.map(d => () => agent(`${ROLE} ${BLIND}
 
@@ -465,7 +473,7 @@ the mapping lacks: stop and return it in tokens, without inventing a pair.
 Return its frontmatter entry, its group ids, the old colour tokens it draws with, and the losses (not \
 the mapping: the report lists it once).`,
       { label: `diagram:${d.stem}`, phase: 'Write', schema: DIAGRAM_SCHEMA })))
-    return { colours, drawn }
+    return drawn
   },
   () => agent(`${ROLE} ${BLIND}
 
@@ -477,9 +485,7 @@ every choice a rule left you.`,
     { label: 'teaching+sources', phase: 'Write', schema: WRITE_SCHEMA }),
 ])
 
-if (!diagramStep) throw new Error('The colour mapping or the diagrams failed: see the workflow log')
-const colours = diagramStep.colours
-const diagramEntries = (diagramStep.drawn || []).filter(Boolean)
+const diagramEntries = (drawnDiagrams || []).filter(Boolean)
 if (diagramEntries.length < scope.diagrams.length) throw new Error(`${scope.diagrams.length - diagramEntries.length} diagram(s) not converted: see the workflow log`)
 diagramEntries.forEach((e, i) => { if (e.file !== `${stems[i]}.svg`) throw new Error(`Diagram ${stems[i]} returned the file ${e.file}`) })
 const mappedTokens = new Set(colours.mapping.map(m => m.token))
@@ -625,16 +631,34 @@ const plain = s => String(s ?? '').replace(/\s*(->|=>|\u2192)\s*/g, ': ')
 const cell = s => plain(s).replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ')
 const count = v => oldSweep.rows.filter(r => r.verdict === v).length
 // The report is merged into the repository and read after the run's dest (a contributor worktree) is
-// gone: it names no absolute path of args.dest, args.from or args.site (#170). Paths in the course
-// folder are written relative to it (concepts/NN-slug/...), the old files from their repository folder
-// (parcours-po/course/..., parcours-po-website/src/...). Applied to the whole rendered report, so agent
-// texts (rows, choices, check output, listing) are covered too.
+// gone (#170). Guaranteed: the rendered report holds no absolute path. Applied to the whole rendered
+// text, agent texts included (rows, choices, check output, listing): an absolute path under args.dest
+// becomes relative to the course folder (concepts/NN-slug/...); under args.from or args.site, it is
+// named from its repository folder (parcours-po/course/..., parcours-po-website/src/...); any other
+// one under courses/ or a repository folder becomes relative to the repository root (courses/...,
+// specs/...); anything else becomes "<absolute path>". A path under courses/<course>/ is then written
+// relative to the course folder. An absolute path left after that stops the run.
 const lastPart = p => p.replace(/\/$/, '').split('/').pop()
-const DEST_SHOWN = DEST.startsWith('/') ? (DEST.match(/(courses\/[^/]+)\/$/)?.[1] ?? '<dest>') : DEST.replace(/\/$/, '')
-const LANG_SHOWN = A.langDir && String(A.langDir).startsWith('/') ? (String(A.langDir).match(/\/(specs\/.*)$/)?.[1] ?? '<langDir>') : A.langDir
-const SHOWN = [[FROM, `${lastPart(FROM)}/`], [SITE, `${lastPart(SITE)}/`], [DEST, ''], [DEST.replace(/\/$/, ''), DEST_SHOWN], ...(A.langDir ? [[String(A.langDir), LANG_SHOWN]] : [])]
-  .sort((a, b) => b[0].length - a[0].length)
-const relPaths = text => SHOWN.reduce((t, [abs, shown]) => t.split(abs).join(shown), text)
+const ABS_PATH = '(^|[\\s`\'"(\\[«])(\\/(?:Users|private|tmp|home|var|Volumes|opt|root)\\/[^\\s`\'"()\\[\\]|<>»,;]*)'
+const absPrefixes = [[FROM, `${lastPart(FROM)}/`], [SITE, `${lastPart(SITE)}/`], [DEST, '']].filter(([p]) => p.startsWith('/')).sort((a, b) => b[0].length - a[0].length)
+function toRel(p) {
+  if (DEST.startsWith('/') && p === DEST.replace(/\/$/, '')) return DEST.match(/(courses\/[^/]+)\/$/)?.[1] ?? '<dest>'
+  for (const [abs, shown] of absPrefixes) if (p.startsWith(abs)) return shown + p.slice(abs.length)
+  let m = p.match(/\/(courses\/.*)$/)
+  if (m) return m[1]
+  for (const repo of [lastPart(SITE), lastPart(FROM)]) { const i = p.indexOf(`/${repo}/`); if (i >= 0) return p.slice(i + 1) }
+  m = p.match(/\/((?:specs|construction|docs|site|teacher|\.claude)\/.*)$/)
+  return m ? m[1] : '<absolute path>'
+}
+const relShown = [[FROM, `${lastPart(FROM)}/`], [SITE, `${lastPart(SITE)}/`], [DEST, ''], [`courses/${A.course}/`, '']]
+  .filter(([p]) => !p.startsWith('/')).sort((a, b) => b[0].length - a[0].length)
+function relPaths(text) {
+  let t = text.replace(new RegExp(ABS_PATH, 'g'), (all, pre, p) => pre + toRel(p))
+  for (const [from, to] of relShown) t = t.split(from).join(to)
+  const left = t.match(new RegExp(ABS_PATH))
+  if (left) throw new Error(`The report still holds an absolute path: ${left[2]}`)
+  return t
+}
 const failed = !checksPassed || ((lostLeft.length || inventedLeft.length) && !A.accept)
 
 function renderReport() {
@@ -648,7 +672,7 @@ function renderReport() {
   out.push(`| ${count('kept')} | ${count('moved')} | ${count('by design')} | ${lostLeft.length} | ${inventedLeft.length} | ${lostRows.length + inventedRows.length - lostLeft.length - inventedLeft.length} | ${checksPassed ? 'pass' : 'fail'} | ${targetHeldFiles ? 'yes, emptied' : 'no'} | ${A.accept ? 'yes' : 'no'} |`, '')
   out.push(`Result: **${failed ? 'failed' : (lostLeft.length || inventedLeft.length) ? 'passed, accepted' : 'passed'}**. lost and invented count the rows confirmed by the verification; the rows it refuted (refuted) are listed at the end and count in no other column. checks is read in code from the output below, which the check agent returns; target existed is read in code from the listing below, which the scope agent returns.`, '')
   out.push('## Target before the run', '')
-  out.push(`\`ls -la ${DIR.replace(/\/$/, '')}\`, as the scope agent returned it: ${!listed.exists ? 'no such folder' : targetHeldFiles ? `${listed.files.length} entr${listed.files.length === 1 ? 'y' : 'ies'}, emptied (args.overwrite)` : 'an empty folder'}.`, '', '```', String(scope.target_listing).trim(), '```', '')
+  out.push(`\`ls -ld ${DIR.replace(/\/$/, '')}; ls -la ${DIR.replace(/\/$/, '')}\`, as the scope agent returned it: ${!listed.exists ? 'no such folder' : targetHeldFiles ? `${listed.files.length} entr${listed.files.length === 1 ? 'y' : 'ies'}, emptied (args.overwrite)` : 'an empty folder'}.`, '', '```', String(scope.target_listing).trim(), '```', '')
   for (const src of ['CF', 'SF', 'MDX', 'ASTRO']) {
     const rows = oldSweep.rows.filter(r => r.source === src)
     if (!rows.length) continue
