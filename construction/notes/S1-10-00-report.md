@@ -172,7 +172,7 @@ Failing the run:
 
 Run `wf_37c49faa-72d` failed on 1 lost, 11 `concept-folder`, 1 `sources` and 6 `glossary-order` failures. Fixed under the maintainer's rulings of 2026-10-28 on #23:
 
-- **L1, dropped by design (M3).** The pointer « Voir « Sous-concepts ». » led from the stance « Parti pris du cours » to the teacher notes (« Consignes », item 1, « Annonce du parti pris »). The stances are reader-facing frontmatter now and « Consignes » is teacher-only: a reader pointer to it would lead nowhere. The claim and « ni consensus ni choix d'école » are carried. Verdict L1: by design, not lost.
+- **L1, dropped by design (M3).** The pointer « Voir « Sous-concepts ». » led from the stance « Parti pris du cours » to the teaching file (« Consignes », item 1, « Annonce du parti pris »). The stances are reader-facing frontmatter now and « Consignes » is teacher-only: a reader pointer to it would lead nowhere. The claim and « ni consensus ni choix d'école » are carried. Verdict L1: by design, not lost (the maintainer's ruling on #23 is awaited).
 - **Ruling B.** `teaching.md` « Consignes » gets item 5, « Cas de la banque », citing the 11 uncited case titles per sub-concept (0a1, 0a2, 0a3). No teaching content added. `concept-folder` passes.
 - **Ruling C.** [S3] supports no claim: the old sources file and the site page cite it only in « Non vérifié » (the French PDF could not be extracted). Removed from « Références »; the « Non vérifié » bullet now says « du Guide (PDF français, novembre 2020) » instead of [S3]. `sources` passes.
 - **Ruling A.** The 6 `glossary-order` failures (Produit, Utilisateur, Valeur, Ordonner, État, Flux continu) are left for #166.
