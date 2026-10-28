@@ -152,10 +152,11 @@ without `isolation` (a two-phase migration) has no worktree of its own: no
 
 ```
 You are a feyn contributor working on GitHub issue #<n> ("<title>") in the repo at your current
-working directory (a git worktree of <main checkout path>). Read CLAUDE.md first, then the
+working directory (a git worktree of <main checkout path>; for a two-phase migration, the
+worktree <path>, your working directory being the main checkout). Read CLAUDE.md first, then the
 issue (`mise exec -- gh issue view <n>`), then its "Reads" files.
 
-## How to run the cycle (you are in a worktree)
+## How to run the cycle (in a worktree)
 Follow `.claude/skills/start/SKILL.md` for #<n>, adapted to a worktree:
 - Do NOT `git switch main` (main is checked out in the main checkout): it fails in a worktree
   (Claude Code, observed 2026-10-27, #115). `git fetch`, then
@@ -189,9 +190,9 @@ are resumed with the answer and the work resumes (Claude Code, observed 2026-10-
 You have no Workflow tool. A Done when that needs a run: make it runnable, open a draft with
 an "Awaiting the orchestrator" section at the top (exact script path and arguments), and stop.
 The orchestrator runs it and resumes you with the result: apply it, remove the section, run
-`mise exec -- gh pr ready <pr>`. Your worktree is removed when you stop with no file change:
-the orchestrator creates one on your branch and resumes you with its absolute path. From then
-on, never `cd`: absolute paths for every file, `git -C <path>` for every git command,
+`mise exec -- gh pr ready <pr>`. Spawned with isolation, your worktree is removed when you stop
+with no file change: the orchestrator creates one on your branch and resumes you with its
+absolute path. From then on (from the start, spawned without isolation), never `cd`: absolute paths for every file, `git -C <path>` for every git command,
 including those of /finish (`git -C <path> status --porcelain`, `git -C <path> push`).
 
 Run the checks that exist (as /finish says). When done, reply with: branch name, PR URL, files

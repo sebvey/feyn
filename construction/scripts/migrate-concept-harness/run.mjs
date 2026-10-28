@@ -85,9 +85,10 @@ const parallel = async thunks => Promise.all(thunks.map(t => Promise.resolve().t
 async function scenario(name, o, expect) {
   const { agent, calls } = makeAgent(o)
   let result, error
-  try { result = await run({ course: 'parcours-po', concept: '9', dest: DEST, from: FROM, site: SITE, ...(o.args || {}) }, agent, parallel, () => {}, () => {}) }
+  const logs = []
+  try { result = await run({ course: 'parcours-po', concept: '9', dest: DEST, from: FROM, site: SITE, ...(o.args || {}) }, agent, parallel, () => {}, m => logs.push(m)) }
   catch (e) { error = e.message }
-  const problems = expect({ result, error, calls, report: o.report })
+  const problems = expect({ result, error, calls, report: o.report, logs })
   console.log(`${problems.length ? 'FAIL' : 'ok  '} ${name}${problems.length ? `: ${problems.join('; ')}${error ? ` [error: ${error}]` : ''}` : ''}`)
   if (o.dump && o.report) writeFileSync(join(here, `${o.dump}.md`), o.report)
   return problems.length ? 1 : 0
@@ -191,5 +192,15 @@ fails += await scenario('relative dest: the root is pwd', { args: { dest: 'cours
   ...(calls.find(c => c.label === 'checks')?.prompt.includes('mise exec -- /Users/me/main/specs/linear-course/checks/check-course courses/parcours-po --only') ? [] : ['check command not on pwd']),
   ...(writers(calls).every(c => c.prompt.includes('/Users/me/main/docs/glossary.md')) ? [] : ['writers not on pwd'])])
 fails += await scenario('root without specs/: stops', { rootListing: `ls: ${ROOT}/specs: No such file or directory` }, ({ error }) => (error && /shows no specs\/ folder/.test(error) ? [] : ['not stopped']))
+fails += await scenario('absolute dest under courses/ of another form: stops', { args: { dest: '/Users/me/wt/courses/other/parcours-po' } }, ({ error, calls }) => [
+  ...(error && /is under a courses\/ folder but is not <repository>\/courses\/parcours-po/.test(error) ? [] : ['not stopped']),
+  ...(calls.length ? ['agents called before the refusal'] : [])])
+fails += await scenario('absolute dest outside a repository: pwd root, logged', { args: { dest: '/private/tmp/copy/parcours-po' }, listing: `ls: cannot access '/private/tmp/copy/parcours-po/${DIR}': No such file or directory`, cwd: '/Users/me/main' }, ({ error, calls, logs }) => [
+  ...(error ? [`threw: ${error}`] : []),
+  ...(logs.some(l => /outside a repository: the spec, the glossary and the checks are taken from the working directory \/Users\/me\/main\//.test(l)) ? [] : ['no log line']),
+  ...(calls.find(c => c.label === 'checks')?.prompt.includes('mise exec -- /Users/me/main/specs/linear-course/checks/check-course /private/tmp/copy/parcours-po --only') ? [] : ['check command not on pwd'])])
+fails += await scenario('relative dest, target named by an absolute path under missing: ignored', { args: { dest: 'courses/parcours-po' }, listing: `ls: cannot access 'courses/parcours-po/${DIR}': No such file or directory`, cwd: '/abs/feyn', missing: [`target folder /abs/feyn/courses/parcours-po/${DIR} does not exist`] }, ({ error, logs }) => [
+  ...(error ? [`threw: ${error}`] : []),
+  ...(logs.some(l => l.startsWith('Ignored as missing')) ? [] : ['not logged as ignored'])])
 console.log(fails ? `${fails} scenario(s) failed` : 'all scenarios pass')
 process.exit(fails ? 1 : 0)

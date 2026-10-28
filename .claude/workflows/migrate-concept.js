@@ -44,7 +44,11 @@ const REPORT = A.report || `construction/notes/S1-10-${NN}-report.md`
 // The repository root of the run (#178): an absolute dest of the form <root>courses/<course>/ gives it
 // (the run's worktree: in wave 2 the work session stayed in the main checkout, so pwd was not it);
 // any other dest, the working directory (pwd). Checked from the scope agent's listing of <root>specs.
+// An absolute dest inside a repository (it holds /courses/) but not of that form stops the run: taking
+// the spec from pwd there is the wave-2 fault. Any other absolute dest (a copy outside a repository)
+// falls back to pwd, logged after the scope step.
 const DEST_ROOT = DEST.startsWith('/') && DEST.endsWith(`/courses/${A.course}/`) ? DEST.slice(0, -`courses/${A.course}/`.length) : ''
+if (DEST.startsWith('/') && !DEST_ROOT && DEST.includes('/courses/')) throw new Error(`args.dest ${DEST} is under a courses/ folder but is not <repository>/courses/${A.course}: the spec root cannot be told from it; pass <repository>/courses/${A.course}`)
 const CONCEPT_CHECKS = 'course-yaml,concept-folder,conventions,svg-contract,sources,glossary-order,typography'
 
 // ROOT: the run's repository root, absolute, with a final slash (#178): DEST_ROOT below, else the pwd
@@ -250,7 +254,7 @@ const COLOURS_SCHEMA = {
         type: 'object',
         properties: {
           token: { type: 'string', description: 'the old colour token, as written (--sch-s2)' },
-          class: { type: 'string', enum: ['primary', 'secondary', 'muted', 'plain', 'none'], description: 'plain only for a contrast ink drawn on a fill as a label (text), drawn in a window of the fill; none only for a contrast ink drawn over a shape as a line or a mark, which becomes a gap (M11)' },
+          class: { type: 'string', enum: ['primary', 'secondary', 'muted', 'plain', 'none'], description: 'plain only for a contrast ink drawn on a fill as a label (text), drawn in a window of the fill; none only for a contrast ink drawn over a shape as a line, a mark or a shape, which becomes a gap (M11)' },
           opacity: { type: 'number', description: 'the one opacity of the token, used as fill-opacity or stroke-opacity; 1 for class plain, 0 for class none' },
           draws: { type: 'string', description: 'what the token draws, in which component, short' },
         },
@@ -420,7 +424,7 @@ if (!scope) throw new Error('Scope agent returned nothing')
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 const dirGiven = String(scope.dir || '').replace(/^courses\/[^/]+\//, '').replace(/\/$/, '')
 const dirValid = new RegExp(`^concepts/${NN}-[a-z0-9]+(-[a-z0-9]+)*$`).test(dirGiven)
-const TARGET_NAMED = `(?:^|[\\s'"«\`(:]|${[DEST, `courses/${A.course}/`].map(esc).join('|')})${esc(dirGiven)}(?=$|/|\\.(?:\\s|$)|[^\\w.-])`
+const TARGET_NAMED = `(?:^|[\\s'"«\`(:]|${esc(DEST)}|(?:/[^\\s'"«»\`()]*/)?${esc(`courses/${A.course}/`)})${esc(dirGiven)}(?=$|/|\\.(?:\\s|$)|[^\\w.-])`
 const namesTarget = m => {
   if (!dirValid || !new RegExp(TARGET_NAMED).test(m)) return false
   const rest = m.replace(new RegExp(TARGET_NAMED, 'g'), ' ')
@@ -438,6 +442,7 @@ ROOT = DEST_ROOT || cwd.replace(/\/?$/, '/')
 const rootLine = String(scope.root_listing ?? '').trim().split('\n')[0].trim()
 if (!/^d/.test(rootLine) || !(rootLine.endsWith(` ${ROOT}specs`) || rootLine.endsWith(` ${ROOT}specs/`))) throw new Error(`The repository root ${ROOT} shows no specs/ folder (ls -ld: ${JSON.stringify(scope.root_listing)}): pass args.dest as <repository>/courses/${A.course}, or run from the repository root`)
 if (DEST_ROOT && DEST_ROOT !== cwd.replace(/\/?$/, '/')) log(`Repository root from args.dest: ${ROOT} (the working directory is ${cwd})`)
+if (DEST.startsWith('/') && !DEST_ROOT) log(`args.dest ${DEST} is outside a repository: the spec, the glossary and the checks are taken from the working directory ${ROOT}`)
 const ROLE = role(), BLIND = blind(), MAP = mapRules()
 // built here, not taken from an agent: the checks and the spec are the ones of the run's root
 const SPEC_DIR = `specs/${scope.spec}/`
