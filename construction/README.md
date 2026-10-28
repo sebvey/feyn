@@ -12,8 +12,6 @@ glossary, skills and closed issues.
 - `notes/`: findings a task leaves for the maintainer or for a later task (a prototype's
   lessons, a design doubt). One file per note, named by the task id.
 - `scripts/`: construction-only scripts (`plan-to-issues`, the stage 1 adapter).
-- `overnight.md`: how a night run works (orchestration script, overnight rules, launch,
-  morning checklist); `scripts/overnight-<n>.js` are the runs.
 
 ## How a work session goes
 

@@ -103,6 +103,23 @@ From the main checkout, on `main`:
 4. `git branch -D worktree-agent-<id>`, the branch the worktree was created on.
    `git worktree list` and `git branch --list 'worktree-agent-*'` show nothing of it left.
 
+## Agents in worktrees
+
+What a contributor agent (a subagent with `isolation: "worktree"`) meets. Each line is a
+behaviour found, with its mark ([docs/contributing.md](../../../docs/contributing.md),
+"Tool behaviours"):
+- The worktree is `.claude/worktrees/agent-<id>`, on a branch `worktree-agent-<id>` cut from
+  `main`'s HEAD; `/finish after-merge` does not remove it (Claude Code, observed 2026-10-27, #115).
+- A worktree with no change at the end of the agent's turn is removed (Claude Code, inferred 2026-10-27, #27).
+- `git switch main` fails in a worktree (Claude Code, observed 2026-10-27, #115). `/start` there
+  runs `mise exec -- gh issue develop <n> --name <branch> --base main` without `--checkout`, then
+  `git fetch origin <branch>` and `git switch -c <branch> --track origin/<branch>`.
+- `git push` can fail to resolve github.com from the sandbox while `gh` works; retry the push
+  outside the sandbox (Claude Code, observed 2026-10-27, #27).
+- A subagent cannot ask the maintainer, so work needing their acceptance runs in two phases:
+  the agent delivers what does not depend on it, the maintainer answers, then the work resumes
+  (Claude Code, observed 2026-10-27, #27).
+
 ## Contributor brief
 
 ```
