@@ -39,7 +39,7 @@ branch without an issue number: stop and say so.
    reviews many PRs on many subjects and must get back into this one from the PR alone; it is
    also the squash commit message on `main`. 30 lines at most, blank lines and the awaiting
    section excluded. The sections, in this order, each an `##` heading except the `Closes`
-   line; a line of the template that does not apply is dropped (the awaiting section outside a
+   line; a line of `pr-body.md` that does not apply is dropped (the awaiting section outside a
    draft, `Not verified:` with nothing unverified), and the body carries no HTML comment:
    - **Awaiting the maintainer**, only when the branch leaves a decision to the maintainer
      (a draft, step 6), first because it is the action: the question, the options, the
@@ -67,7 +67,9 @@ branch without an issue number: stop and say so.
      - `Fresh-agent review: no blocking finding.` or
        `Fresh-agent review: <N> blocking findings, fixed.`: not written by `/finish`; added
        at the hand-over by the corrections pass of `/orchestrate` (step 4), and updated, not
-       repeated, after a second review. Absent when the PR had no such review.
+       repeated, after a second review: `<N>` then counts the blocking findings of all the
+       reviews. It counts within the 30 lines: leave room for it. Absent when the PR had no
+       such review.
      - `Not verified:` one line, if anything.
    - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a
      deviation, a choice the contributor made, a sensitive spot.

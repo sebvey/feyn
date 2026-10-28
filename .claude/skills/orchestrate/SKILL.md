@@ -64,9 +64,9 @@ the run ids `wf_<id>` and their transcript directory.
   updates the PR body, adding to its Checks the line
   `Fresh-agent review: <N> blocking findings, fixed.` (`/finish` step 5). With no blocking
   finding, send that line too: `Fresh-agent review: no blocking finding.` A second review
-  updates the same line. Then check each fixed point yourself in the
-  diff (`mise exec -- gh pr diff <pr>`), never on its word, and recheck the sensitive points: a
-  counterfactual, a Done when count, a command that touches `main` or a remote branch, the
+  updates the same line, `<N>` counting the blocking findings of all the reviews. Then check
+  each fixed point yourself in the diff (`mise exec -- gh pr diff <pr>`), never on its word,
+  and recheck the sensitive points: a counterfactual, a Done when count, a command that touches `main` or a remote branch, the
   title. A second review (step 3) whenever the change adds or edits a decision or a check, or
   goes beyond the findings or the answer.
 - **Decision awaited.** The contributor that leaves a decision to the maintainer opens a draft
