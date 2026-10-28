@@ -34,11 +34,15 @@ it. One branch per issue; commits on it are free-form, only the PR title survive
 `/finish` rereads the Done when, runs the checks that exist for what the branch touches, pushes,
 and opens the PR with the title `<type>(<area>): <summary>`, which becomes the squash commit on
 `main`. The body starts with `Closes #n` (or `Refs #n` when the PR is one step of the issue),
-then "Done when, verified:", one line per statement with its verdict (`met`, `not met`,
-`deviation`) and its proof. The PR never redefines the Done when; the issue wins, and the PR
-says why it deviates. A `Refs` PR first unlinks the branch from the issue (a linked branch
-closes the issue at the merge whatever the body says). Once the PR is open, `/finish` checks
-that the issue lists it (a `Refs` PR: it lists nothing). A branch that leaves a decision to
+then, under `##` headings, Context, Issues, Changes, Checks and Review first, within the
+limits of `/finish` step 5, so that the maintainer gets back into the subject from the PR
+alone. Checks counts the Done when verdicts (`met`, `not met`, `deviation`) without restating
+the statements, and says why for each `not met` or `deviation`; on a PR that goes through
+`/orchestrate`, the fresh-agent reviewer reruns every statement. The PR
+never redefines the Done when; the issue wins, and the PR says why it deviates. A `Refs` PR
+first unlinks the branch from the issue (a linked branch closes the issue at the merge
+whatever the body says). Once the PR is open, `/finish` checks that the issue lists it (a
+`Refs` PR: it lists nothing). A branch that leaves a decision to
 the maintainer opens as a draft PR, with `blocked:maintainer` on its issue only, and an
 "Awaiting the maintainer" section above `Closes #n`. The maintainer answers with a comment
 and removes the label from the issue; only then does the agent apply the answer, remove the
@@ -84,7 +88,9 @@ lost. A behaviour the flow relies on is written at its point of use (the skill s
 that depends on it), in one line ending with a mark `(<tool>, <status> <date>, #<n>)`: `<tool>`
 is `GitHub` or `Claude Code`; `<status>` is `tested` (provoked on purpose), `observed` (seen
 happen), `inferred` (deduced from other facts) or `documented` (stated by the tool's
-documentation); `<date>` is `YYYY-MM-DD`; `#<n>` is the issue or PR that holds the proof. The line goes with its step. A
+documentation); `<date>` is `YYYY-MM-DD`; `#<n>` is the issue or PR that holds the proof: a
+PR holds it on the `Behaviours:` line of its Checks, an issue in a comment (`/finish` step 5).
+The line goes with its step. A
 line the tool disproves is corrected or removed. `grep -rn '(GitHub,\|(Claude Code,' .claude docs construction`
 lists them all. There is no separate reference file: it would be read at the wrong moment.
 

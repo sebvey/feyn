@@ -43,7 +43,9 @@ clean-up need it. Wait for its reply; never do its work in parallel.
 Its reply gives the branch, the PR, the files changed, the checks and what it was unsure of.
 Check it before going on: the PR exists (`mise exec -- gh pr view <pr> --json title,isDraft,body`),
 its title follows `<type>(<area>): <summary>`, the body starts with `Closes #<n>` or `Refs #<n>`
-(or the awaiting section), no signature line.
+(or the awaiting section), then has the sections of `/finish` step 5 in order (Context, Issues,
+Changes, Checks, Review first) within its limits (step 5: 30 lines, blank lines and the
+awaiting section excluded), no signature line.
 
 ## 3. Independent review
 
@@ -59,11 +61,14 @@ the run ids `wf_<id>` and their transcript directory.
 
 - **Findings.** Send the blocking findings, and the non-blocking ones worth fixing, to the
   contributor agent with `SendMessage` (its id; its context is intact). It fixes, pushes and
-  updates the PR body. Then check each fixed point yourself in the diff
-  (`mise exec -- gh pr diff <pr>`), never on its word, and recheck the sensitive points: a
-  counterfactual, a Done when verdict, a command that touches `main` or a remote branch, the
-  title. A second review (step 3) whenever the change adds or edits a decision or a check, or
-  goes beyond the findings or the answer.
+  updates the PR body, adding to its Checks the line
+  `Fresh-agent review: <N> blocking findings, fixed.` (`/finish` step 5). With no blocking
+  finding, send that line too: `Fresh-agent review: no blocking finding.` A second review
+  updates the same line, `<N>` counting the blocking findings of all the reviews. Then check
+  each fixed point yourself in the diff (`mise exec -- gh pr diff <pr>`), never on its word,
+  and recheck the sensitive points: a counterfactual, a Done when count, a command that
+  touches `main` or a remote branch, the title. A second review (step 3) whenever the change
+  adds or edits a decision or a check, or goes beyond the findings or the answer.
 - **Decision awaited.** The contributor that leaves a decision to the maintainer opens a draft
   PR, puts `blocked:maintainer` on the issue only, writes an `Awaiting the maintainer` section
   at the top of the body, and stops (`/finish`, step 6). A decision through `/decide` takes
@@ -81,8 +86,8 @@ the run ids `wf_<id>` and their transcript directory.
 ## 5. Hand-over to the maintainer
 
 Reply with, one line each: the PR URL and title; the review (blocking findings found, fixed);
-what the maintainer should look at first; the merge command `/finish` gives
-(`mise exec -- gh pr merge <pr> --squash --delete-branch`).
+what the maintainer should look at first (the PR's Review first); the merge command `/finish`
+gives (`mise exec -- gh pr merge <pr> --squash --delete-branch`).
 The merge is the maintainer's. Keep the contributor agent alive until then: a late finding
 goes back to it.
 
@@ -167,7 +172,9 @@ comment nothing.
 
 The yardstick is the issue's Done when, statement by statement, not the PR's own verdicts.
 Recheck yourself:
-- each "Done when, verified" line: rerun its command, reread its file; a count, recount it;
+- each statement of the issue's Done when: find the proof yourself (run a command, read a
+  file; a count, recount it); the PR gives only the verdict counts and why a statement is not
+  met or deviates, and those you check too;
 - the checks /finish requires for what the PR touches
   (`mise exec -- gh pr diff <pr> --name-only`), rerun them;
 - evidence from an agent-workflow run

@@ -31,8 +31,10 @@ Read the report, then every file it changed (never trust the summary).
 
 - `open` findings, `needs` (a storyline fact or a glossary term): settle each as small as
   possible, never contradict the existing text, never settle a real business fact; leave
-  unfixed what no case depends on. Each settlement and the option dropped go in the PR.
-- `<n>-errors.md`: errors found in the old files; say them in the PR.
+  unfixed what no case depends on. Each settlement and the option dropped go in the PR's
+  Review first (`/finish` step 5), grouped in one bullet when there are several.
+- `<n>-errors.md`: errors found in the old files; say them in the PR's Review first, one
+  bullet with their count and the file.
 - A review missing (`reviews_missing`) or a concept `failed`: rerun the workflow on those
   concepts alone.
 

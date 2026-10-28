@@ -16,8 +16,9 @@ branch without an issue number: stop and say so.
 
 1. **Done when.** Reread the issue's Done when
    (`mise exec -- gh issue view <n> --json title,labels,body`) and check each statement against
-   the branch. One that does not hold: fix it, or say in the PR which one and why. The Done
-   when is not edited after `/start`; a change to it amends the open PR's body as well.
+   the branch. One that does not hold: fix it, or report it in the PR's Checks as "not met" or
+   "deviation", with why (step 5). The Done when is not edited after `/start`; a change to it
+   amends the open PR's body as well.
 2. **Checks.** Run the ones that exist for what the branch touches
    (`git diff --name-only main...HEAD`):
    - a course `courses/<id>/`: the check runner of the spec it declares
@@ -25,8 +26,8 @@ branch without an issue number: stop and say so.
    - `site/` or a course: `astro check` and the site build, from `site/`;
    - anything else: the checks its area documents, if any.
 
-   No check exists yet for the area: say so in the PR. A failing check is fixed before the PR
-   opens; one that cannot be fixed here is named in the PR, at the top.
+   No check exists yet for the area: say so in the PR's Checks. A failing check is fixed before
+   the PR opens; one that cannot be fixed here is named in the PR's Checks and in Review first.
 3. **Commit and push.** Nothing left uncommitted that belongs to the issue
    (`git status --porcelain`), then
    `git push -u origin <branch>`.
@@ -34,26 +35,47 @@ branch without an issue number: stop and say so.
    `<type>` is the `type:` label, `<area>` the `area:` label, both without their prefix
    (`course(course:parcours-po): write the cases of concept 9`). Summary: imperative,
    lowercase, no final period, under 72 characters for the whole title.
-5. **Body**, short (it will be read, keep it under 30 lines, the awaiting section excluded):
-   - when the branch leaves a decision to the maintainer, an `Awaiting the maintainer`
-     section first, before `Closes #<n>`: the question, the options, the recommendation;
-   - `Closes #<n>` is the first line after that section (the first line of the body when there
-     is none);
-   - what changes, as bullets, describing the diff and nothing else;
-   - a `Done when, verified:` section, one line per statement of the issue's Done when, that
-     starts with a verdict word, `met`, `not met` or `deviation`, then the statement and the
-     proof (command run, file read):
+5. **Body**, from the PR body template [pr-body.md](pr-body.md). It is read by a maintainer who
+   reviews many PRs on many subjects and must get back into this one from the PR alone; it is
+   also the squash commit message on `main`. 30 lines at most, blank lines and the awaiting
+   section excluded. The sections, in this order, each an `##` heading except the `Closes`
+   line; a line of `pr-body.md` that does not apply is dropped (the awaiting section outside a
+   draft, `Not verified:` with nothing unverified), and the body carries no HTML comment:
+   - **Awaiting the maintainer**, only when the branch leaves a decision to the maintainer
+     (a draft, step 6), first because it is the action: the question, the options, the
+     recommendation. Removed once the answer is applied. An `Awaiting the orchestrator`
+     section (`/orchestrate` step 1) takes the same place.
+   - `Closes #<n>` (`Refs #<n>` when the PR is one step of the issue) on its own line, first
+     after the awaiting section (the first line of the body when there is none). Several
+     issues: one such line each.
+   - **Context**: 3 to 10 lines of prose for a reader who forgot the subject: the problem, why
+     now, what the PR changes overall.
+   - **Issues**: one bullet per issue the PR covers, `#<n> <title>: <what this PR does for it>
+     (Closes)` or `(Refs)`. Kept with a single issue.
+   - **Changes**: at most 8 bullets, by intent rather than by file. The detail is the diff.
+     Decisions written (`/decide`) and issues opened on the way are bullets here.
+   - **Checks**:
+     - `Done when #<n>: <count> met[, <count> not met][, <count> deviation].`, one line per
+       issue, from step 1. The statements are not restated (the issue holds them): only a
+       "not met" or a "deviation" gets one sub-bullet, the statement in a few words and why.
+     - `Checks run:` their names and results, on one line (step 2); an area with no check:
+       say so here.
+     - `Behaviours:` the tool behaviours whose mark cites this PR
+       ([contributing](../../../docs/contributing.md), "Tool behaviours"), each with its proof
+       in a few words, on one line; a longer proof goes in a comment on the issue, and the
+       mark cites the issue. Dropped when there is none.
+     - `Fresh-agent review: no blocking finding.` or
+       `Fresh-agent review: <N> blocking findings, fixed.`: not written by `/finish`; added
+       at the hand-over by the corrections pass of `/orchestrate` (step 4), and updated, not
+       repeated, after a second review: `<N>` then counts the blocking findings of all the
+       reviews. It counts within the 30 lines: leave room for it. Absent when the PR had no
+       such review.
+     - `Not verified:` one line, if anything.
+   - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a
+     deviation, a choice the contributor made, a sensitive spot.
 
-     ```
-     Done when, verified:
-     - met: `finish/SKILL.md` step 5 names the three verdict words (file read).
-     - not met: the issue lists the PR (`closedByPullRequestsReferences` is empty).
-     - deviation: a test issue shows the PR (none made; `mise exec -- gh issue develop --help` read).
-     ```
-   - what is not verified, and the checks that do not exist yet;
-   - decisions written (`/decide`), issues opened on the way.
-   - no signature or generated-by line: the squash takes the body as the commit message
-     on `main`; the `Co-Authored-By` trailer on the commits is enough.
+   No signature or generated-by line: the squash takes the body as the commit message on
+   `main`; the `Co-Authored-By` trailer on the commits is enough.
 6. **Open it**:
    - a `Refs #<n>` PR first unlinks the branch
      ([below](#a-refs-pr-and-the-development-link)); a `Closes #<n>` PR skips that;
@@ -66,8 +88,8 @@ branch without an issue number: stop and say so.
      not checked: GitHub drops the issue's linked branch once a PR from it opens
      (GitHub, inferred 2026-10-27, #108). GitHub can take a few seconds to list the PR:
      rerun once. PR still missing on a `Closes` PR: fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
-7. **Ask for review**: reply with the PR URL, the title, one line on what the reviewer should
-   look at first, and the merge command:
+7. **Ask for review**: reply with the PR URL, the title, what the reviewer should look at
+   first (the PR's Review first, in one line), and the merge command:
    `mise exec -- gh pr merge <pr> --squash --delete-branch`.
    The repository squashes with the PR title and body and allows squash only (GitHub,
    observed 2026-10-28, #135), so the PR title, followed by ` (#<pr>)`, becomes the subject

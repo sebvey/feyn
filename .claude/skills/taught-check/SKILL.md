@@ -25,5 +25,7 @@ with seven checks. It modifies no file and returns the `inventory` and the `find
   fixed. Two rounds at most.
 - A finding whose fix changes what a concept teaches, or one that returns after round two:
   an issue (`/ticket`), not a fix here.
-- The PR lists each finding fixed or deferred, and the workflow's result as a `Done when,
-  verified:` line.
+- The PR summarises them under Changes, within `/finish` step 5's limits: one bullet for the
+  findings fixed, with their count, one for the findings deferred, with their issue numbers;
+  the workflow's result goes on a line of its own in Checks, `taught-check: <result>` (an
+  agent workflow, not a check: not on the `Checks run:` line).
