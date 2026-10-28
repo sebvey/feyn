@@ -46,7 +46,10 @@ section and mark the PR ready. Nothing lands on `main` without a PR, the author 
 their own, and `main` is never force-pushed. After the
 merge, `/finish after-merge` confirms the change landed, checks the issue's Status is Done
 (and sets it if the Project did not; a `Refs` issue stays open and In progress), and deletes
-the local branch. Why: decision `issue-defines-pr-verifies`.
+the local branch. `/orchestrate <n>` runs this whole cycle from the main conversation: a
+contributor agent per issue in its own worktree, a review by a fresh agent before the PR
+reaches the maintainer, then the clean-up of the worktree after the merge. Why: decisions
+`issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`.
 
 ## Status, labels and milestones
 
