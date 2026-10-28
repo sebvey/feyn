@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 330" fill="currentColor" role="img" aria-labelledby="recu-mal-jamais-recu-titre recu-mal-jamais-recu-desc" font-family="system-ui, sans-serif" font-size="16">
+  <title id="recu-mal-jamais-recu-titre">Distinguer ce qui se corrige de ce qui manque</title>
+  <desc id="recu-mal-jamais-recu-desc">Un relevé en double entre dans la plateforme : reçu mal, il se corrige. Une donnée que la source n'envoie pas reste hors de la plateforme : jamais reçue, c'est une limite de la source.</desc>
+  <g id="12b-plateforme" class="muted">
+    <rect x="250" y="20" width="330" height="150" rx="8" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="266" y="50" font-weight="bold">la plateforme</text>
+    <text x="266" y="72">ce qu'elle reçoit</text>
+  </g>
+  <g id="12b-doublon" class="secondary">
+    <line x1="252" y1="125" x2="330" y2="125" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <path d="M330 118 L342 125 L330 132 Z" fill="currentColor" fill-opacity="0.6" stroke="none"/>
+    <rect x="344" y="98" width="220" height="54" rx="6" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="454" y="131" text-anchor="middle" class="muted">relevé en double</text>
+  </g>
+  <g id="12b-verdict-doublon" class="muted">
+    <text x="20" y="112">reçu mal :</text>
+    <text x="20" y="134">se corrige (unicité)</text>
+  </g>
+  <g id="12b-donnee-absente" class="primary">
+    <rect x="344" y="240" width="220" height="62" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <text x="454" y="266" text-anchor="middle" font-weight="bold">donnée que la source</text>
+    <text x="454" y="288" text-anchor="middle" font-weight="bold">n'envoie pas</text>
+    <line x1="454" y1="240" x2="454" y2="190" stroke="currentColor" stroke-width="2.5" stroke-dasharray="6 5"/>
+    <line x1="424" y1="180" x2="484" y2="180" stroke="currentColor" stroke-width="4"/>
+  </g>
+  <g id="12b-verdict-donnee" class="muted">
+    <text x="20" y="262">jamais reçu :</text>
+    <text x="20" y="284" class="primary" font-weight="bold">limite de la source</text>
+  </g>
+</svg>

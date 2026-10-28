@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="currentColor" role="img" aria-labelledby="fiche-cinq-cases-titre fiche-cinq-cases-desc" font-family="system-ui, sans-serif">
+  <title id="fiche-cinq-cases-titre">Définir un indicateur : la fiche à cinq cases (exemple inventé pour l'illustration)</title>
+  <desc id="fiche-cinq-cases-desc">La fiche de l'indicateur Nouveaux abonnés a cinq cases : règle de calcul, grain, période, source, fraîcheur. La règle de calcul, en pointillé, garde une question ouverte, à faire fixer.</desc>
+  <g id="12a2-fiche" class="muted">
+    <rect x="20" y="20" width="560" height="330" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="40" y="52" font-size="18" font-weight="bold">Nouveaux abonnés</text>
+  </g>
+  <g id="12a2-case-regle" class="primary">
+    <rect x="40" y="70" width="520" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <text x="56" y="97" font-size="15" class="muted">règle de calcul</text>
+    <text x="210" y="97" font-size="16" font-weight="bold">un renouvellement compte-t-il ?</text>
+  </g>
+  <g id="12a2-case-grain" class="muted">
+    <rect x="40" y="124" width="520" height="44" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="56" y="151" font-size="15">grain</text>
+  </g>
+  <g id="12a2-case-periode" class="muted">
+    <rect x="40" y="178" width="520" height="44" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="56" y="205" font-size="15">période</text>
+  </g>
+  <g id="12a2-case-source" class="muted">
+    <rect x="40" y="232" width="520" height="44" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="56" y="259" font-size="15">source</text>
+  </g>
+  <g id="12a2-case-fraicheur" class="muted">
+    <rect x="40" y="286" width="520" height="44" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="56" y="313" font-size="15">fraîcheur</text>
+  </g>
+  <g id="12a2-cle-a-fixer" class="muted">
+    <rect x="20" y="368" width="28" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3"/>
+    <text x="58" y="382" font-size="14">à faire fixer</text>
+  </g>
+</svg>
