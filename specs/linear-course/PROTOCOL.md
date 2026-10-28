@@ -24,7 +24,7 @@ is in English.
 - `course/` is the classroom's read-only copy of the course; `learner/` is learner memory, the
   three files of `templates/learner/`.
 - Each rule is testable. A "Pourquoi" line (what the teacher does without the rule) follows
-  only the rules where the old teacher was seen drifting in a test or a session.
+  only the rules where the old teacher was seen drifting in a test or a teaching session.
 - A rule is named by a slug, as a decision is (decision `rules-named-by-slug`): two to five
   words, lowercase, joined by hyphens, naming the behaviour, in English in every language of the
   protocol. The rule shows it in bold at its start, `**one-question-per-message**`; a row of the
