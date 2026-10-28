@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" fill="currentColor" font-family="system-ui, sans-serif" role="img" aria-labelledby="colonnes-finalite-titre colonnes-finalite-desc">
+  <title id="colonnes-finalite-titre">Demander seulement ce qui sert</title>
+  <desc id="colonnes-finalite-desc">La source Abonnés a quatre colonnes. Le nom, les coordonnées et l'abonnement sont barrés et s'arrêtent. Seule la station favorite va jusqu'à la finalité « compter les abonnés par station favorite ».</desc>
+  <g id="12c-source-abonnes" class="muted">
+    <rect x="20" y="20" width="560" height="124" rx="6" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="34" y="44" font-size="14">source Abonnés</text>
+  </g>
+  <g id="12c-col-nom" class="secondary">
+    <rect x="30" y="60" width="120" height="60" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="90" y="95" font-size="14" text-anchor="middle" class="muted">nom</text>
+    <line x1="50" y1="90" x2="130" y2="90" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
+    <line x1="90" y1="144" x2="90" y2="180" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+  </g>
+  <g id="12c-col-coordonnees" class="secondary">
+    <rect x="170" y="60" width="120" height="60" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="230" y="95" font-size="14" text-anchor="middle" class="muted">coordonnées</text>
+    <line x1="182" y1="90" x2="278" y2="90" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
+    <line x1="230" y1="144" x2="230" y2="180" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+  </g>
+  <g id="12c-col-abonnement" class="secondary">
+    <rect x="310" y="60" width="120" height="60" rx="4" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="370" y="95" font-size="14" text-anchor="middle" class="muted">abonnement</text>
+    <line x1="322" y1="90" x2="418" y2="90" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
+    <line x1="370" y1="144" x2="370" y2="180" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+  </g>
+  <g id="12c-col-station" class="primary">
+    <rect x="450" y="60" width="120" height="60" rx="4" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="2.5"/>
+    <text x="510" y="95" font-size="14" font-weight="bold" text-anchor="middle">station favorite</text>
+    <line x1="510" y1="144" x2="510" y2="226" stroke="currentColor" stroke-width="2.5"/>
+    <polygon points="502,226 518,226 510,240"/>
+  </g>
+  <g id="12c-arret" class="muted">
+    <line x1="30" y1="180" x2="430" y2="180" stroke="currentColor" stroke-opacity="0.5" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <g id="12c-finalite" class="muted">
+    <rect x="300" y="240" width="280" height="84" rx="6" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="316" y="264" font-size="14" font-weight="bold">finalité</text>
+    <text x="316" y="286" font-size="15">compter les abonnés</text>
+    <text x="316" y="308" font-size="15">par station favorite</text>
+  </g>
+</svg>
