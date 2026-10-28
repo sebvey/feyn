@@ -40,10 +40,10 @@ then, under `##` headings, Context, Issues, Changes, Checks and Review first, wi
 limits of `/finish` step 5, so that the maintainer gets back into the subject from the PR
 alone. Checks counts the Done when verdicts (`met`, `not met`, `deviation`) without restating
 the statements, and says why for each `not met` or `deviation`; on a PR that goes through
-`/orchestrate`, the fresh-agent reviewer reruns every statement. The PR
-never redefines the Done when; the issue wins, and the PR says why it deviates. Once the PR is open, `/finish` checks that the issue lists it (a
-`Refs` PR: it lists nothing). A branch that leaves a decision to
-the maintainer opens as a draft PR, with `blocked:maintainer` on its issue only, and an
+`/orchestrate`, the fresh-agent reviewer reruns every statement. The PR never redefines the
+Done when; the issue wins, and the PR says why it deviates. Once the PR is open, `/finish`
+checks that the issue lists it (a `Refs` PR: it lists nothing). A branch that leaves a
+decision to the maintainer opens as a draft PR, with `blocked:maintainer` on its issue only, and an
 "Awaiting the maintainer" section above `Closes #n`. The maintainer answers with a comment
 and removes the label from the issue; only then does the agent apply the answer, remove the
 section and mark the PR ready. Nothing lands on `main` without a PR, the author never merges

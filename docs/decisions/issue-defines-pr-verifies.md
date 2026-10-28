@@ -21,7 +21,7 @@ disagree, the issue wins and the PR says why it deviates. The Done when is not e
 
 `Closes #n` when the PR ends the issue; `Refs #n` when the PR is one step of it (the issue
 stays open and its Development section shows nothing; never link the PR there by hand: a
-linked PR closes its issue at the merge, decision `no-branch-link`).
+linked PR closes its issue at the merge (GitHub, documented 2026-10-28, #71)).
 
 ## Consequences
 
@@ -30,5 +30,7 @@ linked PR closes its issue at the merge, decision `no-branch-link`).
 - Amended 2026-10-28 (#123): the PR gave each statement with its verdict and proof; it now
   gives the counts and a line per `not met` or `deviation`.
 - Amended 2026-10-28 (#71): a `Refs` PR could be linked by hand in the issue's Development
-  section; a linked PR closes its issue at the merge (GitHub, documented 2026-10-28, #71).
-- Issue #61 makes `/finish` write the verdicts and link the PR to its issue and branch.
+  section; a linked PR closes its issue at the merge. The branch is no longer linked to the
+  issue either (decision `no-branch-link`).
+- Issue #61 makes `/finish` write the verdicts; the PR's `Closes #n` links it to its issue,
+  nothing links the branch.

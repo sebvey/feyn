@@ -51,9 +51,12 @@ create a second one.
 
 ## 4. Mark it in progress
 
-Set the Status to In progress ([project.md](../ticket/project.md), "Commands"): no workflow
-fires on a branch. An issue not in the Project yet (`projectItems` empty) is added first, same
-place.
+Set the Status to In progress ([project.md](../ticket/project.md), "Commands"): no Project
+workflow fires on a branch. An issue not in the Project yet (`projectItems` empty) is added
+first, same place; the Project workflow then sets Backlog, which would overwrite a Status set
+earlier (GitHub, inferred 2026-10-28, #71): rerun
+`mise exec -- gh issue view <n> --json projectItems` until it shows Backlog, then set
+In progress.
 
 ## 5. Restate and plan
 
