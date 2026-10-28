@@ -341,7 +341,7 @@ la source telle qu'il la décrit (auteur, titre, date, article, lien), rien de p
 dis-le.
 
 **unverified-part-told** Si l'apprenant demande d'où vient une affirmation, dis aussi ce que `sources.md` range en
-« {headings.unverified} » pour elle.
+« {headings.unverified} » pour l'affirmation.
 *Pourquoi :* sans elle, tu n'oses pas nommer une source documentée, ou la donnes sans dire ce qui
 reste non vérifié.
 
