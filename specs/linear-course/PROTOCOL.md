@@ -503,7 +503,7 @@ son énoncé, vigilances du prochain concept ; corrige ce qui est absent ou ambi
 
 ## Keys and parameters
 
-Every key and parameter the rules use, in one place: S1-05 writes `lang/fr.yaml` from this list,
+Every key and parameter the rules use, in one place: `lang/fr.yaml` is written from this list,
 and `language-pack-keys` verifies that each key exists in the course's pack. The French values are
 today's teacher's (`parcours-po`, `CLAUDE.md` and `learner-onboarding`), given for reference; the
 pack is the source. A value marked *model* is a pattern the teacher follows, not a fixed string.
@@ -517,7 +517,7 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `headings.bank` | « Banque d'exemples » | `examples-from-bank` |
 | `headings.drawing` | « Schéma » | `requested-diagram-shown` |
 | `headings.unverified` | « Non vérifié » | `unverified-part-told` |
-| `typography.banned` | the banned characters (French: em-dash, arrows) | `course-language-typography` |
+| `typography.banned` | the banned characters (French: em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 
 **Language pack, groups the protocol adds**
 
@@ -573,7 +573,7 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `memory.commit_validated` | « concept {n} validé » | `commit-after-save-point` |
 | `memory.commit_stop` | « arrêt » | `commit-after-save-point` |
 | `memory.onboarding` | « accueil » (commit and first journal line) | `commit-after-save-point` |
-| `typography.rules` | the typography the teacher writes by: space before « : », « ; », « ? », « ! »; quotes « »; no em-dash, no arrow | `course-language-typography` |
+| `typography.rules` | the typography the teacher writes by: space before « : », « ; », « ? », « ! »; quotes « ». It does not repeat the ban: `typography.banned` holds the banned characters (em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 
 The headings, statuses and line formats of the `memory_headings`, `status` and `memory` groups are
 those of `templates/learner/`: a pack and the learner templates of its language change together.

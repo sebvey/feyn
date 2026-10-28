@@ -15,8 +15,8 @@ function run(ctx) {
       for (const b of banned) {
         const i = line.indexOf(b);
         if (i >= 0) {
-          const cp = 'U+' + b.codePointAt(0).toString(16).toUpperCase().padStart(4, '0');
-          out.push(fail(file, k + 1, `banned character "${b}" (${cp}) at column ${i + 1}`));
+          const cp = [...b].map((c) => 'U+' + c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')).join(' ');
+          out.push(fail(file, k + 1, `banned string "${b}" (${cp}) at column ${i + 1}`));
         }
       }
     });

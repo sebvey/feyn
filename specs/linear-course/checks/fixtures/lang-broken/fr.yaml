@@ -1,5 +1,38 @@
-# The pack the check fixtures use: the keys of SPEC.md section 9, with the French values.
-# The course's own pack is specs/linear-course/lang/fr.yaml (task S1-05).
+# A pack with one defect: no headings.bank.
+# Otherwise the fixtures' pack (lang/fr.yaml).
+# Literal phrases the teacher says (PROTOCOL.md "Language pack, groups the protocol adds").
+phrases:
+  concept_title: "Concept {n} : {title}"
+  domain_title: "Domaine {n} : {title}"
+  site_link: "le site web"
+  domains_map_link: "la carte des domaines"
+  concept_page_link: "la page du concept {n}"
+  example_lead: "Exemple :"
+  question_lead: "Question pour toi :"
+  next_lead: "La suite :"
+  continue_prompt: "Des questions ? J'enchaîne ?"
+  questions_announce: "J'ai {count} questions pour toi, voici la première :"  # {count} in words
+  why: "pourquoi ?"
+  banned_check: "as-tu compris ?"
+  reference_model: "{name}, au concept {n}"  # a model: « la DoD, au concept 11 »
+  waiting_example: "Parfait {nickname}, je prépare le concept {n}."  # a model
+  onboarding_setup: "Je mets en place le cours."
+  onboarding_ready: "C'est prêt, on démarre."
+  resume_opening: "Je retrouve où on en était, un instant."
+  stop_opening: "Je sauvegarde ta progression, un instant."
+
+# What the learner says and the teacher reacts to (lists: models, not fixed strings).
+learner_says:
+  faster: "plus vite"
+  slower: "plus lent"
+  example: "exemple"
+  exercise: "exercice"
+  continue: ["on continue", "la suite"]
+  resume: ["on reprend"]
+  stop: ["on s'arrête", "fin de session", "je dois y aller", "on reprendra"]
+  hurry: ["je dois filer", "vite"]
+
+# Section titles of the course files.
 headings:
   objective: "Objectif"
   essentials: "L'essentiel"
@@ -20,6 +53,8 @@ headings:
   onboarding: "Accueil"
   avoid: "Termes à éviter"
   unreleased: "Non publié"
+
+# Labels of the fields of a case of `teaching.md`.
 case_fields:
   usage: "Usage"
   explanation: "Explication"
@@ -29,20 +64,67 @@ case_fields:
   expected_answer: "Réponse attendue"
   common_mistakes: "Erreurs fréquentes"
   what_works: "Ce qui marche"
+
+# Words of the reader text: the storyline lead `**Fil rouge :**` and the stance markers `[cours]`,
+# `[école]`, `[consensus]`.
 markers:
   storyline: "Fil rouge"
   consensus: "consensus"
   school: "école"
   course: "cours"
+
+# Qualifiers a case heading may carry (SPEC.md 4.3).
+qualifiers:
+  fallback: "rechange"
+  dig: "creusage"
+  aside: "aparté"
+
 references:
   concept: "concept"
   concepts: "concepts"
   and: "et"
+
 source_types:
   primary: "primaire"
   secondary: "secondaire"
   marketing: "marketing"
+
+# Headings of the learner memory files; those of templates/learner/.
+memory_headings:
+  next_step: "Prochaine étape"
+  concepts: "Concepts"
+  announced: "Points annoncés pour plus tard"
+  journal: "Journal"
+  levers: "Leviers"
+  vigilances: "Vigilances actives"
+  acquired: "Acquis"
+  preferences: "Préférences"
+
+# Concept statuses in `learner/parcours.md`.
+status:
+  validated: "validé"
+  in_progress: "en cours"
+  skipped: "sauté"
+  to_review: "à revoir"
+
+# Line formats written to learner memory and to the commit messages.
+memory:
+  observation_line: "date, [concept], fait : action"
+  acquired_line: "[concept] fait (date)"
+  profile_line: "- {label} : {answer}"
+  journal_line: "{date}, session {k} : {events}."  # date YYYY-MM-DD
+  minirecap_entry: "mini-récap {from}-{to}"
+  commit_message: "{nickname} : {what}"
+  commit_validated: "concept {n} validé"
+  commit_stop: "arrêt"
+  onboarding: "accueil"
+
+# `rules`: what the teacher does, as a clause of a sentence (no final period). `banned`: the
+# characters course text never uses, the em-dash and the arrows (the ASCII `->`, `<-` and `=>` included).
 typography:
-  banned: ["—", "→", "←", "⇒", "⇐", "↔", "➜", "➔"]
+  rules: "espace avant « : », « ; », « ? » et « ! » ; guillemets « »"
+  banned: ["—", "→", "←", "↔", "↑", "↓", "↕", "↗", "↘", "↖", "↙", "↦", "↳", "↪", "⇒", "⇐", "⇔", "⇨", "⟶", "⟵", "⟷", "⟹", "⟸", "⟺", "➜", "➔", "➝", "➞", "➡", "⬅", "⬆", "⬇", "->", "<-", "=>"]
+
+# Words a domain paragraph's first sentence does not open with (`domain-first-sentence`).
 checks:
   anaphora: ["Il", "Elle", "Ils", "Elles", "Ce", "Cet", "Cette", "Ces", "Puis", "Celui", "Celle", "Ceux", "Celles", "Cela", "Ça"]
