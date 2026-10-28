@@ -85,7 +85,7 @@ fichier à l'apprenant.
 | Hypothèse | assumption | Ce qu'on tient pour vrai sans l'avoir vérifié | 2, 17 |
 | Risque de valeur, risque de faisabilité | value risk, feasibility risk | Hypothèse sur ce que l'utilisateur fera du produit et sur ce qu'il sert l'objectif produit ; hypothèse sur ce qu'on peut construire, données comprises (deux des quatre risques de Cagan ; les données : choix du cours) | 17 |
 | Prototype | prototype | Version rapide et peu chère d'une idée, faite pour la tester et souvent jetée : maquette montrée à l'utilisateur, ou prototype sur données réelles, utilisé pour de vrai par de vrais utilisateurs (Cagan) | 17 |
-| État (d'un élément) | status, state | Étape où se trouve un élément dans le tableau de l'équipe (à faire, en cours, fait), réglée dans l'outil ; absent du Scrum Guide ; Jira dit « statut » | A1 |
+| État d'un élément | status, state | Étape où se trouve un élément dans le tableau de l'équipe (à faire, en cours, fait), réglée dans l'outil ; absent du Scrum Guide ; Jira dit « statut » | A1 |
 | Kanban dans Scrum | Kanban with Scrum | Équipe qui garde ses sprints et y ajoute des pratiques de flux (*Kanban Guide for Scrum Teams*) : le cours s'applique sans l'annexe A2 | A2 |
 | Flux continu | continuous flow | Travail sans sprint : un élément commence quand l'équipe a de la place et se livre quand il est fini (terme du cours) | A2 |
 | Travail en cours | work in progress (WIP) | Éléments commencés et pas finis (*Kanban Guide*) | A2 |
