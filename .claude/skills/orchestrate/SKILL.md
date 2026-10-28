@@ -82,7 +82,7 @@ the run ids `wf_<id>` and their transcript directory.
 
 Reply with, one line each: the PR URL and title; the review (blocking findings found, fixed);
 what the maintainer should look at first; the merge command `/finish` gives
-(`mise exec -- gh pr merge <pr> --squash --delete-branch --subject "<title> (#<pr>)"`).
+(`mise exec -- gh pr merge <pr> --squash --delete-branch`).
 The merge is the maintainer's. Keep the contributor agent alive until then: a late finding
 goes back to it.
 
