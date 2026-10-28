@@ -29,7 +29,7 @@ stances:
       refs: []
 diagrams:
   - file: produit-probleme-utilisateurs-valeur.svg
-    title: "Un produit se décrit par un problème, des utilisateurs et une valeur ; trois acteurs se partagent les décisions"
+    title: "Un produit se décrit par un problème, des utilisateurs et une valeur ; trois intervenants se partagent les décisions"
     caption: "En haut, le produit se décrit par un problème, des utilisateurs et une valeur ; les consommateurs de données sont des utilisateurs. En bas, qui tranche quoi : le PO représente les parties prenantes dans le backlog et répond de la valeur."
     subconcept: 1a
 ---
@@ -42,7 +42,7 @@ Décrire un produit par le problème qu'il résout, ses utilisateurs et la valeu
 
 Un produit livre de la valeur à des utilisateurs connus. Ce cours le décrit par trois choses : le **problème** qu'il résout, les **utilisateurs** qui ont ce problème (un consommateur de données en est un), la **valeur** qu'ils en tirent, plutôt que par sa technique. Le **Product Owner** répond de cette valeur : il tient le backlog produit, donc il dit **quoi**, **dans quel ordre** et **pourquoi**. Les **Developers** décident **comment** et donnent le **coût**. Les **parties prenantes** font valoir leurs besoins en convainquant le PO, qui est une seule personne.
 
-![Un produit se décrit par un problème, des utilisateurs et une valeur ; trois acteurs se partagent les décisions](produit-probleme-utilisateurs-valeur.svg)
+![Un produit se décrit par un problème, des utilisateurs et une valeur ; trois intervenants se partagent les décisions](produit-probleme-utilisateurs-valeur.svg)
 
 ## 1a Le produit : problème, utilisateurs, valeur
 
@@ -68,7 +68,7 @@ Le concept 0 a situé les trois responsabilités de l'équipe Scrum ; voici qui 
 
 **Les Developers** décident du comment et donnent le coût (la taille des éléments). Le PO peut les aider à comprendre les arbitrages, il ne choisit pas la technique à leur place. Le travail du sprint, les Developers le choisissent en discussion avec le PO, quels éléments comme combien : le PO ne le fixe pas seul.
 
-**Les parties prenantes** sont toutes les personnes ou équipes concernées par le produit : les utilisateurs, le financeur, le sponsor, une équipe voisine, un fournisseur de données [cours]. Elles font valoir leurs besoins, et qui veut changer le backlog doit convaincre le PO. Le sponsor porte le budget du produit et porte plus haut les obstacles qui dépassent le PO, sans ordonner le backlog. Arbitrer entre parties prenantes et escalader viennent au concept 14.
+**Les parties prenantes** sont toutes les personnes ou équipes concernées par le produit : les utilisateurs, le financeur, le sponsor, une équipe voisine, un fournisseur de données [cours]. Elles font valoir leurs besoins, et qui veut changer le backlog doit convaincre le PO. Le sponsor porte le budget du produit et porte plus haut les obstacles qui dépassent le PO, sans ordonner le backlog. Arbitrer entre parties prenantes et savoir quand aller plus haut viennent au concept 14.
 
 > **Fil rouge :** Sid, le DSI, qui donne les accès aux données des systèmes, est une partie prenante, comme fournisseur de données.
 
@@ -77,10 +77,10 @@ Le concept 0 a situé les trois responsabilités de l'équipe Scrum ; voici qui 
 - **Décrire le produit par sa technique** (l'architecture, les composants, la fréquence de mise à jour) : la phrase ne dit ni pour qui ni ce qui change. Signe : un abonné ne comprendrait pas à quoi sert la plateforme.
 - **Oublier la valeur** : dire ce que le produit affiche ou calcule, sans dire ce qui change pour une personne nommée : et alors ?
 - **Oublier les consommateurs de données** : un consommateur de données est un utilisateur, pas seulement un destinataire de rapports.
-- **Trancher seul un fait métier**, comme ce dont un utilisateur a besoin ou le temps qu'il gagnerait : il se demande à l'acteur concerné. Le PO ordonne le backlog ; les faits du métier, il les obtient des utilisateurs.
+- **Trancher seul un fait métier**, comme ce dont un utilisateur a besoin ou le temps qu'il gagnerait : il se demande à la personne concernée. Le PO ordonne le backlog ; les faits du métier, il les obtient des utilisateurs.
 - **Garder la casquette de développeur** : choisir la technique ou estimer à la place des Developers. Le comment et le coût sont à eux.
 - **Croire que le PO fixe seul le contenu du sprint** : il propose, les Developers choisissent avec lui.
-- **Partager le rôle** : un comité qui vote l'ordre, ou deux PO qui se le partagent. Déléguer le travail est permis, pas la responsabilité.
+- **Partager la responsabilité de PO** : un comité qui vote l'ordre, ou deux PO qui se la partagent. Déléguer le travail est permis, pas la responsabilité.
 
 ## Le test rapide
 

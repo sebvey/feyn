@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 490" fill="currentColor" role="img" aria-labelledby="dependances-titre dependances-desc" font-family="system-ui, sans-serif" font-size="14">
   <title id="dependances-titre">Les dépendances dans une équipe et entre deux équipes</title>
-  <desc id="dependances-desc">En haut, un backlog où B dépend de A et où le PO ordonne. En dessous, deux backlogs, plateforme et équipe appli, liés par une dépendance, la story de la plateforme dépendant de l'élément de l'équipe appli ; chaque PO ordonne le sien, les deux s'accordent sur l'ordre, et l'escalade n'intervient que si cela bloque.</desc>
+  <desc id="dependances-desc">En haut, un backlog où B dépend de A et où le PO ordonne. En dessous, deux backlogs, plateforme et équipe appli, liés par une dépendance, la story de la plateforme dépendant de l'élément de l'équipe appli ; chaque PO ordonne le sien, les deux s'accordent sur l'ordre, et l'on ne va plus haut que si cela bloque.</desc>
 
   <g id="10b1-intitule-dependances">
     <text class="muted" x="20" y="26" font-size="16" font-weight="bold">10b. Dépendances</text>
@@ -89,7 +89,7 @@
   <g id="10b2-escalade">
     <line class="muted" x1="300" y1="312" x2="300" y2="334" stroke="currentColor" stroke-opacity="0.5" stroke-dasharray="4 4"/>
     <path class="muted" d="M300 344 L295 332 L305 332 Z" fill="currentColor" fill-opacity="0.5"/>
-    <text class="muted" x="300" y="364" text-anchor="middle">si la dépendance bloque : escalade</text>
+    <text class="muted" x="300" y="364" text-anchor="middle">si la dépendance bloque : plus haut</text>
     <text class="muted" x="300" y="384" text-anchor="middle">(concept 14)</text>
   </g>
 </svg>

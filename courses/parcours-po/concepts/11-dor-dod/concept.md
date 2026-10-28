@@ -76,7 +76,7 @@ Un test du cours [cours] aide à ranger une exigence : « vaut-il pour toute sto
 
 La DoR suppose des sprints : sans sprint, voir annexe A2.
 
-**Prête ou pas, et le risque de la barrière.** Au Sprint Planning, le PO propose et les Developers choisissent (concept 15b). Une story dont une condition d'entrée manque n'est pas prête : on ne la prend pas sur la simple confiance qu'elle le deviendra en cours de sprint. Le PO propose à la place une story prête, et il fait avancer ce qui bloque, par exemple une dépendance envers une autre équipe (concept 10b). Si cela bloque sprint après sprint, c'est une escalade (concept 14).
+**Prête ou pas, et le risque de la barrière.** Au Sprint Planning, le PO propose et les Developers choisissent (concept 15b). Une story dont une condition d'entrée manque n'est pas prête : on ne la prend pas sur la simple confiance qu'elle le deviendra en cours de sprint. Le PO propose à la place une story prête, et il fait avancer ce qui bloque, par exemple une dépendance envers une autre équipe (concept 10b). Si cela bloque sprint après sprint, le PO le porte au niveau qui peut le lever (concept 14).
 
 Mais une DoR trop stricte devient une barrière à franchir avant chaque sprint : pour Cohn, un retour au cycle en cascade, d'où son conseil de préférer des repères à des règles. Il admet une exception : certaines dépendances envers une autre équipe ou un fournisseur. Le cours [cours] parle d'un « mini cahier des charges » quand tout doit être spécifié avant le sprint, alors que la conversation continue pendant. La DoR se décide en équipe (Cohn parle de critères établis par l'équipe) : le PO la propose, il ne la fixe pas seul [cours].
 
