@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="currentColor" role="img" aria-labelledby="tableau-de-flux-titre tableau-de-flux-desc" font-family="system-ui, sans-serif" font-size="14">
+  <title id="tableau-de-flux-titre">Un tableau de flux : on tire un élément quand une place se libère</title>
+  <desc id="tableau-de-flux-desc">De gauche à droite : le backlog avec deux cartes prêtes et une carte pas prête, le début du flux où s'applique la DoR, puis la colonne En cours limitée, dont une place libre. La première carte prête est tirée vers la place libre ; la carte pas prête reste dans le backlog.</desc>
+  <g id="A2a-backlog" class="muted">
+    <rect x="10" y="70" width="160" height="205" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="90" y="94" text-anchor="middle" font-weight="bold">Backlog</text>
+    <text x="90" y="114" text-anchor="middle">ordre : le PO</text>
+  </g>
+  <g id="A2a-carte-suivante" class="muted">
+    <rect x="25" y="176" width="130" height="36" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="90" y="199" text-anchor="middle">prêt</text>
+  </g>
+  <g id="A2a-carte-pas-prete" class="muted">
+    <rect x="25" y="222" width="130" height="36" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="90" y="245" text-anchor="middle">pas prêt</text>
+  </g>
+  <g id="A2a-debut-flux" class="muted">
+    <line x1="210" y1="52" x2="210" y2="295" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="210" y="40" text-anchor="middle">début du flux : DoR</text>
+  </g>
+  <g id="A2a-colonne-en-cours" class="muted">
+    <rect x="250" y="70" width="340" height="205" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="420" y="94" text-anchor="middle" font-weight="bold">En cours</text>
+    <text x="420" y="114" text-anchor="middle">limite</text>
+  </g>
+  <g id="A2a-places-occupees" class="muted">
+    <rect x="270" y="176" width="300" height="36" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="420" y="199" text-anchor="middle">en cours</text>
+    <rect x="270" y="222" width="300" height="36" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="420" y="245" text-anchor="middle">en cours</text>
+  </g>
+  <g id="A2a-carte-tiree" class="primary">
+    <rect x="25" y="130" width="130" height="36" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="2.5"/>
+    <text x="90" y="153" text-anchor="middle">prêt</text>
+  </g>
+  <g id="A2a-tirage" class="primary">
+    <path d="M159 148 H260 M252 142 L262 148 L252 154" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  </g>
+  <g id="A2a-place-libre" class="primary">
+    <rect x="270" y="130" width="300" height="36" fill="none" stroke="currentColor" stroke-width="2.5"/>
+    <text x="420" y="153" text-anchor="middle" font-weight="bold">place libre</text>
+  </g>
+</svg>
