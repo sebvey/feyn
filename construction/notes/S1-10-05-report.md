@@ -225,3 +225,4 @@ Failing the run:
 Left, by ruling A (#166): the 4 glossary-order failures (concept.md:58 "Acteur" and "Rôle", concept 6; concept.md:103 "Critère d'acceptation", concept 8; concept.md:60 "Story map", concept 16).
 
 Rerun (`--only course-yaml,concept-folder,conventions,svg-contract,sources,glossary-order,typography --concept 5`): all ok except glossary-order.
+- I1, after the independent review: the line is aligned to the form of the other concepts, `Cas de la banque : pour 5b, « … », « … » et « … ».` (titles exact).

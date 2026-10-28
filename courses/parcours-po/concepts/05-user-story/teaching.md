@@ -24,8 +24,7 @@
    la demande. Exemple du fil rouge : pour la vue des stations vides, la raison qu'Étienne reconnaît
    est d'envoyer les régulateurs plus tôt vers les stations qui se vident, une décision qu'il prend
    chaque jour : c'est un bon point d'arrêt.
-   Cas : « Trois “afin de” à juger », « Remonter de la demande à la décision » et « Un « afin de »
-   trop haut ».
+   Cas de la banque : pour 5b, « Trois « afin de » à juger », « Remonter de la demande à la décision » et « Un « afin de » trop haut ».
 
 ## Banque d'exemples
 
