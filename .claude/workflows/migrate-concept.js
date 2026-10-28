@@ -360,9 +360,10 @@ const WRITTEN_SCHEMA = {
   type: 'object',
   properties: {
     written: { type: 'boolean', description: 'the file exists with the content asked' },
-    bytes: { type: 'integer', description: 'its size, from wc -c' },
+    bytes: { type: 'integer', description: 'its size in bytes, the first number the command prints' },
+    trimmed_bytes: { type: 'integer', description: 'its size in bytes without its trailing whitespace, the second number the command prints' },
   },
-  required: ['written', 'bytes'],
+  required: ['written', 'bytes', 'trimmed_bytes'],
 }
 
 const WRITE_SCHEMA = {
@@ -407,6 +408,8 @@ under missing.
 - The working directory: run pwd and return its output verbatim.
 - The repository root: run the one command "ls -ld ${DEST_ROOT ? `${DEST_ROOT}specs` : '"$(pwd)/specs"'}" and return its \
 output verbatim, errors included.
+Run each ls with its paths exactly as written above${DEST.startsWith('/') ? ' (absolute)' : ''}: no cd before it, no path \
+shortened or made relative.
 
 Modify no file.`,
   { label: 'scope', schema: SCOPE_SCHEMA, model: 'sonnet', effort: 'low' })
@@ -433,11 +436,26 @@ if (missingInputs.length) throw new Error(`Inputs missing: ${missingInputs.join(
 if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(scope.spec)) throw new Error(`Unexpected spec name: ${scope.spec}`)
 // The root (#178): from an absolute dest (DEST_ROOT), else the working directory (pwd, absolute, not /).
 // The spec, its templates, the glossary, S1-08.md and the check command are given from it.
+// A resume replays the answer of an agent that returned before the throw, so only a fresh launch asks the
+// scope agent anew (Claude Code, observed 2026-10-28, #191).
+const RETRY_SCOPE = 'launch the workflow afresh to retry the scope step: a resume replays the same scope answer'
 const cwd = String(scope.cwd ?? '').trim()
-if (!/^\/[^\n]*$/.test(cwd) || cwd === '/' || /\/\.\.?(\/|$)/.test(cwd)) throw new Error(`The working directory "${cwd}" is not an absolute path other than / (pwd): rerun the workflow (resume) to retry the scope step`)
+if (!/^\/[^\n]*$/.test(cwd) || cwd === '/' || /\/\.\.?(\/|$)/.test(cwd)) throw new Error(`The working directory "${cwd}" is not an absolute path other than / (pwd): ${RETRY_SCOPE}`)
 ROOT = DEST_ROOT || cwd.replace(/\/?$/, '/')
+// The scope agent may list a path relative to its working directory although the prompt gives it absolute
+// (wave 3, concepts 8 and 10: "ls -ld specs", "ls: cannot access 'courses/parcours-po/concepts/08-…'").
+// Such a path is read as the one asked when, resolved against pwd, it is that path: never its last component
+// alone, since from another working directory (the main checkout, wave 2) it names another folder.
+// asListed(p): the forms under which ls may print the path p (as given, absolute, or relative to pwd).
+const CWD = cwd.replace(/\/?$/, '/')
+const asListed = p => {
+  const abs = p.startsWith('/') ? p : `${CWD}${p}`
+  const forms = [p, abs]
+  if (abs.startsWith(CWD) && abs !== CWD) forms.push(abs.slice(CWD.length), `./${abs.slice(CWD.length)}`)
+  return [...new Set(forms)].flatMap(f => [f, `${f}/`])
+}
 const rootLine = String(scope.root_listing ?? '').trim().split('\n')[0].trim()
-if (!/^d/.test(rootLine) || !(rootLine.endsWith(` ${ROOT}specs`) || rootLine.endsWith(` ${ROOT}specs/`))) throw new Error(`The repository root ${ROOT} shows no specs/ folder (ls -ld: ${JSON.stringify(scope.root_listing)}): pass args.dest as <repository>/courses/${A.course}, or run from the repository root`)
+if (!/^d/.test(rootLine) || !asListed(`${ROOT}specs`).some(f => rootLine.endsWith(` ${f}`))) throw new Error(`The repository root ${ROOT} shows no specs/ folder (ls -ld: ${JSON.stringify(scope.root_listing)}): pass args.dest as <repository>/courses/${A.course}, or run from the repository root; if the folder is there, ${RETRY_SCOPE}`)
 if (DEST_ROOT && DEST_ROOT !== cwd.replace(/\/?$/, '/')) log(`Repository root from args.dest: ${ROOT} (the working directory is ${cwd})`)
 if (DEST.startsWith('/') && !DEST_ROOT) log(`args.dest ${DEST} is outside a repository: the spec, the glossary and the checks are taken from the working directory ${ROOT}`)
 const ROLE = role(), BLIND = blind(), MAP = mapRules()
@@ -457,9 +475,12 @@ if (TARGET === DEST || !TARGET.startsWith(`${DEST}concepts/`) || TARGET.length <
 // anything else that ls -l prints for an entry is a file. A listing that is neither stops the run.
 function listedFiles(listing) {
   const T = TARGET.replace(/\/$/, '')
+  const forms = asListed(T)
   const lines = String(listing ?? '').split('\n').map(l => l.trim()).filter(Boolean)
-  if (lines.length && lines.every(l => /No such file or directory/.test(l))) return lines.every(l => l.includes(T)) ? { exists: false, files: [] } : null
-  if (!lines.length || !/^d/.test(lines[0]) || !(lines[0].endsWith(` ${T}`) || lines[0].endsWith(`/${T}`) || lines[0].endsWith(`${T}/`))) return null
+  // the path an error of ls names: GNU "ls: cannot access '<path>': No such…", BSD "ls: <path>: No such…"
+  const errorPath = l => (/cannot access '(.*)': No such file or directory/.exec(l) || /^ls: (.*): No such file or directory/.exec(l))?.[1]
+  if (lines.length && lines.every(l => /No such file or directory/.test(l))) return lines.every(l => l.includes(T) || forms.includes(errorPath(l))) ? { exists: false, files: [] } : null
+  if (!lines.length || !/^d/.test(lines[0]) || !(lines[0].endsWith(`/${T}`) || lines[0].endsWith(`${T}/`) || forms.some(f => lines[0].endsWith(` ${f}`)))) return null
   const rest = lines.slice(1)
   const entries = rest.filter(l => /^[-dlbcpsD][-rwxsStT]{9}/.test(l))
   const other = rest.filter(l => !entries.includes(l) && !/^total \d+$/.test(l))
@@ -467,7 +488,7 @@ function listedFiles(listing) {
   return { exists: true, files: entries.filter(l => !/\s\.\.?$/.test(l)) }
 }
 const listed = listedFiles(scope.target_listing)
-if (!listed) throw new Error(`The listing of ${TARGET} reads as neither an ls -la output nor its "No such file or directory": ${JSON.stringify(scope.target_listing)}. Rerun the workflow (resume) to retry the scope step`)
+if (!listed) throw new Error(`The listing of ${TARGET} reads as neither an ls -la output nor its "No such file or directory": ${JSON.stringify(scope.target_listing)}: ${RETRY_SCOPE}`)
 const targetHeldFiles = listed.files.length > 0
 if (targetHeldFiles && !A.overwrite) throw new Error(`${TARGET} holds files (ls -la: ${listed.files.join('; ')}): pass args.overwrite to replace them, or args.dest to write elsewhere`)
 if (targetHeldFiles) {
@@ -796,8 +817,12 @@ if (ideas.length) {
   }
 }
 
-const plain = s => String(s ?? '').replace(/\s*(->|=>|\u2192)\s*/g, ': ')
-const cell = s => plain(s).replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ')
+// The report is outside the course folder: the language pack's banned characters do not bind it, and no
+// check reads it. Old texts (legende sentences, titles, captions, inventories) and the agents' own lines
+// (writing choices, render errors) are shown as written, arrows included (#191: an arrow made a colon
+// garbled the M13 choices of concept 8 and the quoted legende no longer matched the old file). A table
+// cell only escapes its pipes and joins its lines.
+const cell = s => String(s ?? '').replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ')
 // The report is merged into the repository and read after the run's dest (a contributor worktree) is
 // gone (#170). Guaranteed: the rendered report holds no absolute path; one left stops the run. On the
 // whole rendered text, agent texts included (inventories, choices, check output, listing):
@@ -884,15 +909,15 @@ function renderReport() {
     scope.diagrams.forEach((d, n) => {
       const mine = ideas.filter(i => i.diagram === n)
       out.push(`### \`${d.component}\`${d.variant ? `, ${d.variant}` : ''}`, '')
-      out.push(`Figure legende, in ${place(d)}: « ${plain(d.legende)} »`, '', mine.length > 1 ? `Split by idea: ${mine.length} diagrams.` : 'One idea.', '')
-      out.push('Its sentences, where the inventory sends them (M11):', ...inventories[n].caption_sentences.map(c => `- « ${plain(c.sentence)} »: ${c.to} of ${c.idea}.svg`), '')
+      out.push(`Figure legende, in ${place(d)}: « ${d.legende} »`, '', mine.length > 1 ? `Split by idea: ${mine.length} diagrams.` : 'One idea.', '')
+      out.push('Its sentences, where the inventory sends them (M11):', ...inventories[n].caption_sentences.map(c => `- « ${c.sentence} »: ${c.to} of ${c.idea}.svg`), '')
       for (const i of mine) {
         out.push(`#### ${i.stem}.svg`, '')
-        out.push(`- Title: ${plain(i.title)}`, `- Caption: ${plain(i.caption)}${i.sentences > 1 ? ` (**${i.sentences} sentences**: SPEC.md 7.2, principle 1)` : ''}`, `- Sub-concept: ${i.subconcept}`, `- Idea: « ${plain(i.justification)} » (${plain(i.stands_in)})`, '')
+        out.push(`- Title: ${i.title}`, `- Caption: ${i.caption}${i.sentences > 1 ? ` (**${i.sentences} sentences**: SPEC.md 7.2, principle 1)` : ''}`, `- Sub-concept: ${i.subconcept}`, `- Idea: « ${i.justification} » (${i.stands_in})`, '')
         out.push('| Id | Element | Labels | Role | State |', '|---|---|---|---|---|')
         for (const e of i.elements) out.push(`| ${cell(e.id)} | ${cell(e.what)} | ${cell(e.labels.map(l => `« ${l} »`).join(', ')) || 'none'} | ${e.role} | ${e.state ? cell(`${e.state} (« ${e.state_words} »)`) : 'none'} |`)
-        out.push('', ...(i.relations.length ? ['Relations:', ...i.relations.map(r => `- ${plain(r)}`)] : ['Relations: none.']), '')
-        out.push(`Key of the inventory: ${i.key.length ? i.key.map(k => `${k.sample} « ${plain(k.words)} »`).join('; ') : 'none'}. Key drawn: ${i.drawnKey?.length ? i.drawnKey.map(w => `« ${plain(w)} »`).join('; ') : 'none'}.`, '')
+        out.push('', ...(i.relations.length ? ['Relations:', ...i.relations.map(r => `- ${r}`)] : ['Relations: none.']), '')
+        out.push(`Key of the inventory: ${i.key.length ? i.key.map(k => `${k.sample} « ${k.words} »`).join('; ') : 'none'}. Key drawn: ${i.drawnKey?.length ? i.drawnKey.map(w => `« ${w} »`).join('; ') : 'none'}.`, '')
       }
       out.push('| Old | New |', '|---|---|')
       mine.forEach((i, k) => {
@@ -907,11 +932,11 @@ function renderReport() {
       }
     })
     const errors = renderings?.errors || []
-    out.push(`Renderings in \`${RENDER_LINK}\`, beside this report${errors.length ? `; errors: ${errors.map(plain).join('; ')}` : ''}.`)
+    out.push(`Renderings in \`${RENDER_LINK}\`, beside this report${errors.length ? `; errors: ${errors.join('; ')}` : ''}.`)
   }
   out.push('', '## Writing choices', '')
   const choices = [...teachingAndSources.choices, ...conceptWritten.choices]
-  out.push(...(choices.length ? choices.map(c => `- ${plain(c)}`) : ['None.']))
+  out.push(...(choices.length ? choices.map(c => `- ${c}`) : ['None.']))
   out.push('', '## Checks', '')
   out.push(`\`${CHECK_CMD}\``, '', '```', checks.output.trim(), '```')
   if (checks.fixes.length) out.push('', 'Form fixes:', ...checks.fixes.map(f => `- ${f}`))
@@ -923,17 +948,22 @@ function renderReport() {
 }
 
 const report = renderReport()
+const summary = { concept: CONCEPT, folder: TARGET, report: REPORT, checks: checksPassed ? 'pass' : 'fail', target_existed: targetHeldFiles, diagrams: entries.map(e => e.file), long_captions: longCaptions.map(i => `${i.stem}.svg`), renderings: ideas.length ? RENDER_DIR : null }
+// logged before the report is checked: a report check that fails no longer loses the run's result (concept 11)
+log(`Report: ${REPORT}; ${JSON.stringify(summary)}`)
 const written = await agent(`Write the file ${REPORT} with exactly the content between the two markers below (the markers \
-excluded), byte for byte, creating its folder if needed. Do not use git. Then run wc -c on it and return \
-whether it is written and its size.
+excluded), byte for byte, creating its folder if needed. Do not use git. Then run this one command and \
+return the two numbers it prints: bytes, the file's size, and trimmed_bytes, its size without its trailing \
+whitespace.
+mise exec -- node -e 'const t = require("fs").readFileSync(process.argv[1], "utf8"); console.log(Buffer.byteLength(t), Buffer.byteLength(t.trimEnd()))' ${REPORT}
 -----BEGIN REPORT-----
 ${report}
 -----END REPORT-----`,
   { label: 'report', phase: 'Report', schema: WRITTEN_SCHEMA, model: 'sonnet', effort: 'low' })
-// one byte of slack: a final newline added or dropped by the writing tool
-if (!written || !written.written || Math.abs(written.bytes - utf8Length(report)) > 1) throw new Error(`The report ${REPORT} was not written as rendered (${written ? written.bytes : 'no'} bytes, ${utf8Length(report)} expected): the run's result is in the workflow log`)
-
-const summary = { concept: CONCEPT, folder: TARGET, report: REPORT, checks: checksPassed ? 'pass' : 'fail', target_existed: targetHeldFiles, diagrams: entries.map(e => e.file), long_captions: longCaptions.map(i => `${i.stem}.svg`), renderings: ideas.length ? RENDER_DIR : null }
-log(`Report: ${REPORT}; ${JSON.stringify(summary)}`)
+// compared without trailing whitespace on both sides: the writing tool may add or drop blank lines at the
+// end (concept 11, wf_576195d2-f18: one blank line more, 14723 bytes for 14721, a complete report refused)
+const expected = utf8Length(report.trimEnd())
+if (!written || !written.written || written.trimmed_bytes !== expected) throw new Error(`The report ${REPORT} was not written as rendered (${written ? `${written.trimmed_bytes} bytes without trailing whitespace, ${written.bytes} in all` : 'no answer'}; ${expected} expected without trailing whitespace): the run's result is in the workflow log`)
+if (written.bytes !== utf8Length(report)) log(`The report ${REPORT} differs from the rendered one in its trailing whitespace only (${written.bytes} bytes, ${utf8Length(report)} rendered)`)
 if (failed) throw new Error(`migrate-concept failed for concept ${CONCEPT}: checks fail (${blocking.join('; ')}). Report: ${REPORT}`)
 return summary
