@@ -1,0 +1,2 @@
+check: rule-slugs
+message: SPEC.md:4 cites group "welcome", which PROTOCOL.md does not define
