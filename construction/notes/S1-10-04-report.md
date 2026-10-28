@@ -192,9 +192,9 @@ Failing the run:
 
 Contributor pass on issue #150, under the rulings of #23 (2026-10-27, 2026-10-28).
 
-- `concepts/04-hierarchie/sources.md`, Références, S8 type: « interne (observation de session, pas une source externe) » became « primaire (interne : observation de session, pas une source externe) ». S8 is cited by eight claims, so it is a reference; it is first-hand (the course's own session observation), so the closest allowed type is `primaire`, with the old wording as the parenthesised remark (SPEC.md 4.4). To judge: whether an internal observation should be typed `primaire` at all.
+- `concepts/04-hierarchie/sources.md`, Références, S8 type: « interne (observation de session, pas une source externe) » became « primaire (interne : observation de session, pas une source externe) ». S8 is cited by seven claims (and once in « Non vérifié »), so it is a reference; it is first-hand (the course's own session observation), so the closest allowed type is `primaire`, with the old wording as the parenthesised remark (SPEC.md 4.4). To judge: whether an internal observation should be typed `primaire` at all.
 - S5 type « primaire, marketing (pour la formation SAFe) »: already in the SPEC.md 4.4 form (types, then an optional remark in parentheses); nothing changed.
-- Ruling B: `concept-folder` is ok; no case left uncited, nothing added.
+- Ruling B: the run's writer already cited the three 4b case titles inline in « Consignes » item 2 (see "Writing choices"), as 4a1 to 4a3 do; no teaching content added; `concept-folder` is ok.
 - Ruling C: no orphan reference (S1 to S8 all cited).
 - Ruling A: the `glossary-order` failure is not fixed (see below).
 - « annexe A2 » is not in the concept; the reader sub-heading 4b stays a bold-led paragraph.
