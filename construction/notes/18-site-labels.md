@@ -175,6 +175,7 @@ Labels the old site shows that the pack holds in a group the protocol or the spe
 | `source_types.primary`, `.secondary`, `.marketing` | « primaire », « secondaire », « marketing » (legend of the sources page) | pages/sources.astro | 3 |
 | `phrases.domain_title` | « Domaine {n} : {title} » (page titles, previous / next cards, domain links) | lib/lecture.ts, pages/domaines/[n].astro | 1 |
 | `phrases.concept_title` | « Concept {n} : {title} » (concept page title) | pages/concepts/[num].astro | 1 |
+| `site.stances_tab.consensus_intro` | the consensus entry of the stances page legend reuses it: same string, no key of its own | pages/ecoles.astro:69 | 0 |
 | `headings.unverified` | « Non vérifié »: same as `site.sources_tab.unverified` | components/Sources.astro | 0 |
 | `headings.references` | « Références »: same as `site.sources_tab.references` | components/Sources.astro | 0 |
 | `headings.stances` | not a label of the old site: the tab is `site.tabs.stances` | SPEC.md 4.3 | 0 |
@@ -191,7 +192,7 @@ These are visible on the old site but belong to the course (its identity, its st
 | « Un cours de gestion de produit, en clair et sourcé » (tagline) | `i18n/ui.ts` | `course.yaml` |
 | « © Sébastien Vey, CC BY 4.0 » (footer licence) | `i18n/ui.ts` | `course.yaml` (author, licence) |
 | « Un cours de gestion de produit » (home eyebrow) | `pages/index.astro` | `course.yaml` |
-| Fil rouge page (19): eyebrow « Le cas des exemples »; title « Fil rouge : un opérateur de vélos en libre-service »; sections « L’opérateur », « La collectivité », « Le produit et l’équipe », « Les acteurs », « Les sources de données »; « Objectif produit »; « Ce que la plateforme ne fait pas »; « Rôle »; « Besoin principal »; « Central aux concepts : »; region label « Sources de données »; columns « Source », « Contenu », « Propriétaire », « Fraîcheur, défauts connus »; « Non précisée »; intro « Ce que la plateforme peut lire, à qui cela appartient, et ce qu’on sait de sa fraîcheur. » | `pages/fil-rouge.astro` | `storyline.md` |
+| Storyline page (19): eyebrow « Le cas des exemples »; title « Fil rouge : un opérateur de vélos en libre-service »; sections « L’opérateur », « La collectivité », « Le produit et l’équipe », « Les acteurs », « Les sources de données »; « Objectif produit »; « Ce que la plateforme ne fait pas »; « Rôle »; « Besoin principal »; « Central aux concepts : »; region label « Sources de données »; columns « Source », « Contenu », « Propriétaire », « Fraîcheur, défauts connus »; « Non précisée »; intro « Ce que la plateforme peut lire, à qui cela appartient, et ce qu’on sait de sa fraîcheur. » | `pages/fil-rouge.astro` | `storyline.md` |
 | « Valeur, backlog, sprint… » (glossary search placeholder) | `pages/glossaire.astro` | `glossary.md` |
 | « Le Scrum Guide 2020 », « Pratique établie, hors du Scrum Guide » (group names of the stances index) | `pages/ecoles.astro`, `lib/transversal.ts` | the course's stances |
 | About page headings (4): « Un cours donné par un agent », « Comment ce site est fait », « Versions », « Licence » | `pages/a-propos.astro` | not carried: the page is the old site's documentation |

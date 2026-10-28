@@ -3,7 +3,7 @@
 # parameters" tables of PROTOCOL.md (`language-pack-keys` verifies them); `site` holds the labels
 # of the site, read by the site engine. A value with a slot, `{n}`, `{title}`, is filled by whoever
 # reads it. Typography of these values: space before « : », « ; », « ? », « ! », quotes « »;
-# no em-dash, no arrow (the lists under `typography.banned` name them).
+# no em-dash, no arrow (the list under `typography.banned` names them).
 
 # Literal phrases the teacher says (PROTOCOL.md "Language pack, groups the protocol adds").
 phrases:

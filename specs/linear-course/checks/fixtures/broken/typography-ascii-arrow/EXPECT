@@ -1,0 +1,2 @@
+check: typography
+message: banned string "->" (U+002D U+003E)
