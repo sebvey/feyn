@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 390" fill="currentColor" role="img" aria-labelledby="moscow-echeance-backlog-ordonne-titre moscow-echeance-backlog-ordonne-desc" font-family="system-ui, sans-serif" font-size="15">
+  <title id="moscow-echeance-backlog-ordonne-titre">MoSCoW pour une échéance, et le backlog qui reste ordonné</title>
+  <desc id="moscow-echeance-backlog-ordonne-desc">À gauche, une échéance contient quatre bacs empilés : Must, Should, Could, Won't. À droite, le backlog ordonné est une colonne de cinq cartes, de la place 1 à la place 5.</desc>
+  <g id="13c-cadre-echeance" class="muted">
+    <rect x="30" y="64" width="290" height="300" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="30" y="46" fill="currentColor">une échéance</text>
+  </g>
+  <g id="13c-bac-must" class="primary">
+    <rect x="42" y="76" width="266" height="64" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/>
+    <text x="56" y="102" fill="currentColor" font-weight="bold">Must</text>
+    <text x="56" y="124" class="muted" fill="currentColor">le minimum utilisable</text>
+  </g>
+  <g id="13c-bac-should" class="primary">
+    <rect x="42" y="152" width="266" height="64" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/>
+    <text x="56" y="178" fill="currentColor" font-weight="bold">Should</text>
+    <text x="56" y="200" class="muted" fill="currentColor">important, pas vital</text>
+  </g>
+  <g id="13c-bac-could" class="primary">
+    <rect x="42" y="228" width="266" height="64" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/>
+    <text x="56" y="254" fill="currentColor" font-weight="bold">Could</text>
+    <text x="56" y="276" class="muted" fill="currentColor">souhaitable</text>
+  </g>
+  <g id="13c-bac-wont" class="primary">
+    <rect x="42" y="304" width="266" height="48" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/>
+    <text x="56" y="334" fill="currentColor" font-weight="bold">Won't</text>
+    <text x="130" y="334" class="muted" fill="currentColor">pas cette fois</text>
+  </g>
+  <g id="13c-colonne-backlog" class="muted">
+    <text x="400" y="46" fill="currentColor">backlog ordonné</text>
+  </g>
+  <g id="13c-cartes-places" class="secondary">
+    <rect x="400" y="64" width="180" height="48" rx="4" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="418" y="94" class="muted" fill="currentColor">place 1</text>
+    <rect x="400" y="124" width="180" height="48" rx="4" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="418" y="154" class="muted" fill="currentColor">place 2</text>
+    <rect x="400" y="184" width="180" height="48" rx="4" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="418" y="214" class="muted" fill="currentColor">place 3</text>
+    <rect x="400" y="244" width="180" height="48" rx="4" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="418" y="274" class="muted" fill="currentColor">place 4</text>
+    <rect x="400" y="304" width="180" height="48" rx="4" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="418" y="334" class="muted" fill="currentColor">place 5</text>
+  </g>
+</svg>

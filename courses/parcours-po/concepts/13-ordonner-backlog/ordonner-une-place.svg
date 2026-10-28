@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 330" fill="currentColor" role="img" aria-labelledby="ordonner-une-place-titre ordonner-une-place-desc" font-family="system-ui, sans-serif" font-size="16">
+  <title id="ordonner-une-place-titre">Quatre demandes en colonne, dont une pas prête</title>
+  <desc id="ordonner-une-place-desc">Une colonne de quatre cartes, de la place 1 à la place 4, une demande par place. La carte de la place 2 est en pointillé : pas prête.</desc>
+  <g id="13a2-carte-place-1" class="muted">
+    <rect x="120" y="20" width="360" height="56" rx="4" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="140" y="54" fill="currentColor">place 1</text>
+  </g>
+  <g id="13a2-carte-place-2" class="primary">
+    <rect x="120" y="96" width="360" height="56" rx="4" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="3" stroke-dasharray="8 5"/>
+    <text x="140" y="130" fill="currentColor" font-weight="bold">place 2</text>
+    <text x="460" y="130" text-anchor="end" fill="currentColor" font-weight="bold">pas prête</text>
+  </g>
+  <g id="13a2-carte-place-3" class="muted">
+    <rect x="120" y="172" width="360" height="56" rx="4" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="140" y="206" fill="currentColor">place 3</text>
+  </g>
+  <g id="13a2-carte-place-4" class="muted">
+    <rect x="120" y="248" width="360" height="56" rx="4" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="140" y="282" fill="currentColor">place 4</text>
+  </g>
+</svg>

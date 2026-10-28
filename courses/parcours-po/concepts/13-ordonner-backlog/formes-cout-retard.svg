@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 395" fill="currentColor" role="img" aria-labelledby="formes-cout-retard-titre formes-cout-retard-desc" font-family="system-ui, sans-serif" font-size="15">
+  <title id="formes-cout-retard-titre">Deux formes de coût du retard dans le temps</title>
+  <desc id="formes-cout-retard-desc">Un graphique sans graduation : le temps en abscisse, le coût du retard en ordonnée. Une ligne qui monte régulièrement dès le départ ; une courbe presque plate qui monte de plus en plus vite jusqu'à l'échéance, puis retombe au plus bas.</desc>
+  <g id="13b-axe-temps" class="muted">
+    <line x1="70" y1="300" x2="560" y2="300" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="2"/>
+    <path d="M552 294 L562 300 L552 306 Z" fill="currentColor" fill-opacity="0.5"/>
+    <text x="560" y="322" text-anchor="end" fill="currentColor">temps</text>
+  </g>
+  <g id="13b-axe-cout" class="muted">
+    <line x1="70" y1="300" x2="70" y2="42" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="2"/>
+    <path d="M64 50 L70 40 L76 50 Z" fill="currentColor" fill-opacity="0.5"/>
+    <text x="70" y="28" fill="currentColor">coût du retard</text>
+  </g>
+  <g id="13b-repere-echeance" class="muted">
+    <line x1="400" y1="66" x2="400" y2="300" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"/>
+    <text x="400" y="322" text-anchor="middle" fill="currentColor">échéance</text>
+  </g>
+  <g id="13b-trace-continu" class="primary">
+    <line x1="70" y1="284" x2="540" y2="70" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <g id="13b-trace-echeance" class="secondary">
+    <path d="M70 295 L200 294 C290 292 350 230 400 62 L412 295 L545 295" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g id="13b-cle" class="muted">
+    <line x1="70" y1="350" x2="110" y2="350" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" class="primary"/>
+    <text x="124" y="355" fill="currentColor">coût qui grandit dès aujourd'hui</text>
+    <line x1="70" y1="376" x2="110" y2="376" fill="none" stroke="currentColor" stroke-opacity="0.6" stroke-width="3" stroke-linecap="round" class="secondary"/>
+    <text x="124" y="381" fill="currentColor">coût lié à une échéance</text>
+  </g>
+</svg>
