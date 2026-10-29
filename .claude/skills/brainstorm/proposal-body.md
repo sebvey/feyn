@@ -1,7 +1,7 @@
 ### Context
 
 <!-- What led to the brainstorm, for a reader who was not there: the problem, where it was seen
-     (paths, issues, PRs), what fed the session (an earlier proposal, an observation). The
+     (paths, issues, PRs), what fed the brainstorm (an earlier proposal, an observation). The
      proposal is self-sufficient: the triage turns it into work without rereading what fed it. -->
 
 ### Question
@@ -12,7 +12,8 @@
 
 <!-- Numbered, one point each, in bold then its content, as the maintainer validated it.
      Each point ends with "Why: …" and then "Rejected: <the alternative weighed>, because …",
-     or "Rejected: none weighed.": it is the counterfactual `/decide` asks for a decision. -->
+     or "Rejected: none weighed.": it feeds the counterfactual `/decide` asks for a decision
+     ("Without this, an agent would…"). -->
 
 ### Open questions
 

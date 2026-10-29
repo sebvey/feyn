@@ -15,12 +15,12 @@ creates nothing else (no decision, no slice, no edit of the repository).
 The argument is the topic, or the number of a proposal to rework: read it first
 (`/issue <n>`); it is the input, and the new proposal cites it in its Material read.
 
-## 1. The rules of the session
+## 1. The rules of the brainstorm
 
 - **The maintainer decides.** The agent proposes, weighs, objects; a point is settled only
   when the maintainer says so.
 - **One point at a time**: the next point opens when the current one is settled or left open.
-- **Nothing written in the repository** during the session: no commit, no branch, no edit of a
+- **Nothing written in the repository** during the brainstorm: no commit, no branch, no edit of a
   tracked file, no issue. Reading is free.
 - **What is settled is restated** in one or two lines, with its why and the alternative
   rejected, before it goes into the working file; the maintainer confirms or corrects.
@@ -33,15 +33,16 @@ repository root; `tmp/` is in `.gitignore`. It starts as a copy of
 then What we settled point by point, Open questions as they appear. It is disposable once the
 issue exists.
 
-## 3. End the session
+## 3. End the brainstorm
 
-1. Fill Proposed next and Material read, then show the whole file to the maintainer. Every
-   comment of the template is replaced; the maintainer validates it as written or corrects it.
-2. Load `/issue` and follow it with the kind `proposal` and the file as the body
+1. **Nothing settled**: a brainstorm that settled nothing creates no issue. Delete the working
+   file, say so, and stop; a proposal it was reworking stays open, unchanged.
+2. Fill Proposed next and Material read, then show the whole file to the maintainer. Every
+   comment of [proposal-body.md](proposal-body.md) is replaced; the maintainer validates it as
+   written or corrects it.
+3. Load `/issue` and follow it with the kind `proposal` and the file as the body
    (`/issue proposal`). The body is pasted as validated: nothing is rewritten between the file
    and the issue.
-3. A brainstorm that settled nothing creates no issue: delete the working file and say so. A
-   proposal it was reworking stays open, unchanged.
 4. A reworked proposal (the argument was one): close it as completed with a comment naming the
    new one (`mise exec -- gh issue close <old> --reason completed --comment "Reworked into #<new>."`).
    It is never edited.

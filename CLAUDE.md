@@ -42,8 +42,8 @@ where a reserved term exists.
 ## Skills
 
 `/issue` creates or reads an issue. `/start <n>` takes an issue. `/finish` opens the PR.
-`/decide` writes a decision. `/brainstorm` runs a brainstorm and ends it in a proposal. Load the one that matches
-the request.
+`/decide` writes a decision. `/brainstorm` runs a brainstorm and ends it in a proposal. Load the
+one that matches the request.
 
 ## Non-negotiable rules
 
