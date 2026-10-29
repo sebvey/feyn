@@ -40,8 +40,8 @@ issue exists.
 2. Load `/issue` and follow it with the kind `proposal` and the file as the body
    (`/issue proposal`). The body is pasted as validated: nothing is rewritten between the file
    and the issue.
-3. A brainstorm that settled nothing still ends in a short proposal ("Proposed next: Nothing"
-   and the reason), which the maintainer closes at once: it is the trace.
+3. A brainstorm that settled nothing creates no issue: delete the working file and say so. A
+   proposal it was reworking stays open, unchanged.
 4. A reworked proposal (the argument was one): close it as completed with a comment naming the
    new one (`mise exec -- gh issue close <old> --reason completed --comment "Reworked into #<new>."`).
    It is never edited.

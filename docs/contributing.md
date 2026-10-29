@@ -101,8 +101,7 @@ Four moments:
 3. **Brainstorm**: `/brainstorm` frames a session with the maintainer on how feyn works (the
    maintainer decides, one point at a time, nothing written in the repository during the
    session) and ends it in a proposal, created with `/issue proposal`. A brainstorm that
-   settles nothing still ends in a short proposal ("Proposed next: Nothing"), closed at once:
-   it is the trace.
+   settles nothing leaves no issue.
 4. **Triage the Backlog**: each observation is attached to an epic as a slice, set Ready if it
    stands alone in one PR, made an epic if it is an objective, or closed with the reason. **No
    Done when, no epic**: an objective whose Done when cannot be written stays an observation.
