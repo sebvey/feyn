@@ -38,3 +38,5 @@ The maintainer works in the web interface: the Project's Board view, filtered on
 - Amended 2026-10-28 (#71): the skills added the issue and set every Status, the workflows
   only helping when on; the workflows now carry add, Backlog and Done, and Done means closed,
   not closed by a PR.
+- Amended 2026-10-29 (#229): the Project's views are Epics, Ready, WIP and Backlog
+  (`docs/contributing.md`, "How the work is organised"); the morning walks them, not a Board view.

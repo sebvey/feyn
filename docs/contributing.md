@@ -9,8 +9,7 @@ opened this repository. Every section ends with the decision it rests on, in
 `specs/` holds the contracts a course is written against, `courses/` the courses, `teacher/`
 the template that turns a course into a classroom, `site/` the engine that publishes it,
 `.claude/` the skills and agent workflows, `docs/` what belongs to no single area. During the
-construction, `construction/` holds the design, the plan and the session notes; its fate (archived
-or removed) is a slice of theme #225. Why: decision `monorepo-feyn`.
+construction, `construction/` holds the design, the plan and the session notes; its fate is issue #232. Why: decision `monorepo-feyn`.
 
 ## An observation becomes an issue
 
@@ -58,7 +57,58 @@ in its own worktree, a review by a fresh agent before the PR reaches the maintai
 clean-up of the worktree after the merge. Why: decisions
 `issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`.
 
-## Status, labels and milestones
+## How the work is organised
+
+Four work items, all GitHub issues:
+- An **epic** is an objective that closes: the label `epic`, the title "Epic: …", five
+  sections in order (Objective, Why now, Material, Done when, Out of scope), the parent of its
+  slices. **No done-when, no epic**: what cannot get a Done when is an observation to triage,
+  or a label. An epic has no To do and no sub-issue posed in advance. Its Status: Backlog
+  (not ready), Ready (nothing blocks it, no open blocked-by link, and its five sections are
+  written; the maintainer sets it at triage; taken or not), In progress (a slice is in
+  progress), Done (its last slice closed).
+- A **slice** is a unit of work: one PR, a verifiable Done when, a sub-issue of its epic. It is
+  posed only when it is the next one. Its standard name is "story", adopted as its form when
+  user stories are written.
+- An **observation** is what is seen in passing: an issue without a parent, in the Backlog,
+  grouped by its `area:` label, until triaged.
+- A **milestone** is a release target, named after the tag that closes it
+  (`linear-course/v1.0.0`); it holds the slices that must close before the tag, and is created
+  only when a release is in sight. It holds slices only; an epic targets it through its
+  slices. Tooling has none.
+
+Three moments:
+1. **Take an epic**, among the Ready ones: read its Material, pose one or two slices with
+   `/ticket`, each attached to the epic and Ready, and write the epic's **plan comment** (the
+   slices envisaged, in order, in five lines; what is unknown; what was dropped). The epic goes
+   In progress when its first slice starts.
+2. **Deliver a slice**: `/orchestrate <n>`, then two lines on the plan comment (the slice
+   closed, the next to pose; if the next is not obvious, back to moment 1). `/finish` says when
+   the epic can close.
+3. **Triage the Backlog**: each observation is attached to an epic as a slice, set Ready if it
+   stands alone in one PR, made an epic if it is an objective, or closed with the reason.
+
+Rules of the cycle: one epic In progress at a time per orchestrator (two at most, on disjoint
+files); a slice exists only if it is the next one; a slice that reveals work of another epic
+opens an observation, not a slice.
+
+Two glossaries, each at home: the repository glossary applies in repository files, a course's
+in that course's files, so Scrum vocabulary (epic, story) is available to the repository even
+where a course teaches it ([`glossary.md`](glossary.md)).
+
+The Project has four views: three show one Status each (Ready, WIP for In progress, Backlog),
+the fourth lists the epics:
+
+| View | Shows | Answers |
+|---|---|---|
+| Epics | `label:epic`; Status, Sub-issues progress, Milestone | where does each epic stand? |
+| Ready | `status:Ready -label:epic`, grouped by Parent issue | what is ready to take? |
+| WIP | board, `-status:Backlog,Ready,Done has:status -label:epic` (In progress only), grouped by Parent issue, with Linked pull requests | what is in progress? |
+| Backlog | `status:Backlog -label:epic`, grouped by Parent issue | what awaits triage? Its "No Parent Issue" group is the inbox |
+
+Why: decision `themes-and-release-milestones`.
+
+## Status and labels
 
 - Every issue is an item of the Project (the GitHub Project "feyn", number 4), and its Status
   says where it stands: Backlog (proposed, to triage), Ready (decided, free to take),
@@ -72,20 +122,15 @@ clean-up of the worktree after the merge. Why: decisions
   the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
 - `type:bug`, `type:course`, `type:improvement`, `type:decision`; `area:*` derived from the
   tree (`spec:<name>`, `course:<id>`, `teacher`, `site`, `agentic`, `repo`).
-- Themes: the work is framed by themes (issues with the label `theme`, #220 to #225), split
-  one slice at a time when taken; a slice is attached to its theme as a sub-issue. Milestones:
-  one per release target, named after the tag that closes it; the tooling, at HEAD, carries
-  none. Why: decision `themes-and-release-milestones`.
 
 ## The maintainer's morning
 
-In the web interface, the Project's Board view, one column per Status. First what waits for
-the maintainer: the filter `label:blocked:maintainer` in the Board view (or the same search in
-the issue list); the PR list shows the draft PRs. Then the In progress column (what moves on
-its own), then Ready (what can be taken). An unblock is a comment on the issue that says what
-was validated, then the label removed: the comment is the trace a fresh agent reads. Why:
-decisions
-`blocked-is-a-label-not-a-state`, `project-status-not-state-labels`.
+In the web interface, the Project's views. First what waits for the maintainer: the search
+`label:blocked:maintainer` in the issue list; the PR list shows the draft PRs. Then the WIP
+view (what moves on its own), then Ready (what can be taken), then Backlog (what to triage).
+An unblock is a comment on the issue that says what was validated, then the label removed: the
+comment is the trace a fresh agent reads. Why: decisions `blocked-is-a-label-not-a-state`,
+`project-status-not-state-labels`.
 
 ## Tool behaviours
 
