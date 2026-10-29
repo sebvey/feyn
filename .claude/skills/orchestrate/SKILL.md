@@ -123,12 +123,18 @@ ids given are "none" (the PR still cites its run id).
 - **A decision after the hand-over.** The maintainer can refuse or settle a choice while the
   PR awaits the merge: relay it to the contributor with `SendMessage`, the maintainer's words
   quoted; the second-review rule above applies.
+- **The Status.** A correction asked on a delivered PR (a late finding, a decision after the
+  hand-over): set the slice back to In progress ([project.md](../ticket/project.md),
+  "Commands"); the renewed hand-over (step 5) sets Ready for review again.
 
 ## 5. Hand-over to the maintainer
 
-Reply with, one line each: the PR URL and title; the review (blocking findings found, fixed);
-what the maintainer should look at first (the PR's Review first); the merge command `/finish`
-gives (`mise exec -- gh pr merge <pr> --squash --delete-branch`).
+Set the issue Ready for review, a `Closes` PR only (the contributor's `/finish` left it In
+progress; [project.md](../ticket/project.md), "Commands":
+`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`),
+then reply with, one line each: the PR URL and title; the Status; the review
+(blocking findings found, fixed); what the maintainer should look at first (the PR's Review
+first); the merge command `/finish` gives (`mise exec -- gh pr merge <pr> --squash --delete-branch`).
 The merge is the maintainer's. Keep the contributor agent alive until then: a late finding
 goes back to it.
 
@@ -149,8 +155,9 @@ From the main checkout, on `main`:
 3. `/finish after-merge` for the issue branch: it confirms the change landed, the Status, and
    deletes the local branch. The Project workflow "Item closed" sets Done;
    `/finish after-merge` sets it only when that Project workflow is off. Its lines on the
-   epic's plan comment, the epic to close and the issues now free (`/finish`, "Clean up",
-   step 7) are relayed to the maintainer in the clean-up reply.
+   epic's plan comment, the epic to verify and close (set Ready for review when its last slice
+   closed) and the issues now free (`/finish`, "Clean up", step 7) are relayed to the
+   maintainer in the clean-up reply.
 4. `git branch -D worktree-agent-<id>`, the branch the worktree was created on.
    `git worktree list` and `git branch --list 'worktree-agent-*'` show nothing of it left.
 
@@ -183,7 +190,8 @@ Follow `.claude/skills/start/SKILL.md` for #<n>, adapted to a worktree:
 (Two-phase migration, spawned without isolation: your current directory is the main checkout:
 never edit, commit or switch there. The branch, the worktree <path> and the Status are done:
 skip their steps above. Absolute paths, `git -C <path>`, `gh pr create --head <branch>`.)
-Then do the work, then follow `.claude/skills/finish/SKILL.md` to push and open the PR. Do NOT
+Then do the work, then follow `.claude/skills/finish/SKILL.md` to push and open the PR,
+leaving the Status In progress (the orchestrator sets Ready for review at the hand-over). Do NOT
 merge. No signature or generated-by line in the PR body (the squash uses it as the commit
 message).
 

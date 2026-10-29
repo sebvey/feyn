@@ -51,7 +51,8 @@ merge, `/finish after-merge` confirms the change landed, checks the issue's Stat
 (the Project workflow "Item closed" sets it; `/finish` sets it only when that Project workflow
 is off; a `Refs` issue stays open and In progress), and deletes
 the local branch; it then adds the slice closed and the next to pose to the epic's plan
-comment, names the epic whose slices are now all closed, for the maintainer to close, and the
+comment, sets Ready for review the epic whose slices are now all closed, for the maintainer
+to verify and close, and names the
 issues the closed one blocked that are now free.
 `/orchestrate <n>` runs this whole cycle from one work session: a contributor agent per issue
 in its own worktree, a review by a fresh agent before the PR reaches the maintainer, then the
@@ -67,7 +68,8 @@ Four work items, all GitHub issues:
   or a label. An epic has no To do and no sub-issue posed in advance. Its Status: Backlog
   (not ready), Ready (nothing blocks it, no open blocked-by link, and its five sections are
   written; the maintainer sets it at triage; taken or not), In progress (a slice is in
-  progress), Done (its last slice closed).
+  progress), Ready for review (its last slice closed; the maintainer verifies its Done when
+  and closes it, or adds a slice and it goes back to In progress), Done (closed).
 - A **slice** is a unit of work: one PR, a verifiable Done when, a sub-issue of its epic. It is
   posed only when it is the next one. Its standard name is "story", adopted as its form when
   user stories are written.
@@ -83,9 +85,10 @@ Three moments:
    `/ticket`, each attached to the epic and Ready, and write the epic's **plan comment** (the
    slices envisaged, in order, in five lines; what is unknown; what was dropped). The epic goes
    In progress when its first slice starts.
-2. **Deliver a slice**: `/orchestrate <n>`, then two lines on the plan comment (the slice
-   closed, the next to pose; if the next is not obvious, back to moment 1). `/finish` says when
-   the epic can close.
+2. **Deliver a slice**: `/orchestrate <n>`; the slice is Ready for review while its PR awaits
+   the merge. Then two lines on the plan comment (the slice closed, the next to pose; if the
+   next is not obvious, back to moment 1). When the last slice closes, `/finish` sets the epic
+   Ready for review: the maintainer verifies its Done when and closes it.
 3. **Triage the Backlog**: each observation is attached to an epic as a slice, set Ready if it
    stands alone in one PR, made an epic if it is an objective, or closed with the reason.
 
@@ -97,14 +100,14 @@ Two glossaries, each at home: the repository glossary applies in repository file
 in that course's files, so Scrum vocabulary (epic, story) is available to the repository even
 where a course teaches it ([`glossary.md`](glossary.md)).
 
-The Project has four views: three show one Status each (Ready, WIP for In progress, Backlog),
-the fourth lists the epics:
+The Project has four views: three show the slices by Status (Ready, WIP for In progress and
+Ready for review, Backlog), the fourth lists the epics:
 
 | View | Shows | Answers |
 |---|---|---|
 | Epics | `label:epic`; Status, Sub-issues progress, Milestone | where does each epic stand? |
 | Ready | `status:Ready -label:epic`, grouped by Parent issue | what is ready to take? |
-| WIP | board, `-status:Backlog,Ready,Done has:status -label:epic` (In progress only), grouped by Parent issue, with Linked pull requests | what is in progress? |
+| WIP | board, `-status:Backlog,Ready,Done has:status -label:epic` (In progress and Ready for review), grouped by Parent issue, with Linked pull requests | what is in progress, what awaits the merge? |
 | Backlog | `status:Backlog -label:epic`, grouped by Parent issue | what awaits triage? Its "No Parent Issue" group is the inbox |
 
 Why: decision `themes-and-release-milestones`.
@@ -113,10 +116,16 @@ Why: decision `themes-and-release-milestones`.
 
 - Every issue is an item of the Project (the GitHub Project "feyn", number 4), and its Status
   says where it stands: Backlog (proposed, to triage), Ready (decided, free to take),
-  In progress (a branch exists), Done (closed; the close reason stays on GitHub). One at a
+  In progress (a branch exists), Ready for review (the work claims done, the maintainer
+  reviews and concludes: a slice whose PR is open after the fresh-agent review, the
+  maintainer merges; an epic whose slices are all closed, the maintainer verifies its Done
+  when and closes it), Done (closed; the close reason stays on GitHub). Needs Decision is in
+  the Project but unused for now: the label `blocked:maintainer` carries a decision awaited. One at a
   time. The Project workflows add the open issues created or updated while they are on, set
   Backlog when one is added and Done when it closes; the skills set the rest: `/ticket` Ready when the maintainer decided,
-  `/start` In progress. `.claude/skills/ticket/project.md` says who sets each Status. There
+  `/start` In progress, `/finish` Ready for review, or the orchestrator at the hand-over under
+  `/orchestrate` (a correction asked on a delivered PR returns the slice to In progress,
+  `/orchestrate` step 4). `.claude/skills/ticket/project.md` says who sets each Status. There
   are no state labels. Why: decision `project-status-not-state-labels`.
 - `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is
   a draft, which keeps it from being merged); on top of the Status, never instead of it; only
@@ -127,7 +136,8 @@ Why: decision `themes-and-release-milestones`.
 ## The maintainer's morning
 
 In the web interface, the Project's views. First what waits for the maintainer: the search
-`label:blocked:maintainer` in the issue list; the PR list shows the draft PRs. Then the WIP
+`label:blocked:maintainer` in the issue list; the PR list shows the draft PRs; the Ready for
+review column of the WIP view and the Ready for review epics (Epics view). Then the WIP
 view (what moves on its own), then Ready (what can be taken), then Backlog (what to triage).
 An unblock is a comment on the issue that says what was validated, then the label removed: the
 comment is the trace a fresh agent reads. Why: decisions `blocked-is-a-label-not-a-state`,

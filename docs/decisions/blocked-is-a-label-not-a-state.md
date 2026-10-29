@@ -36,3 +36,6 @@ on its own), then Ready (what can be taken).
 
 - Amended 2026-10-29 (#229): the Project's views are Epics, Ready, WIP and Backlog
   (`docs/contributing.md`, "How the work is organised"); the morning walks them, not a Board view.
+- Amended 2026-10-29 (#235): the Status field has six options today; Needs Decision is present
+  in the Project and unused, and the label `blocked:maintainer` still carries a decision
+  awaited (decision `project-status-not-state-labels`).

@@ -24,6 +24,8 @@ Refuse, saying why in one line, and change nothing, when:
 - its Status is already In progress: look for its branch (`git branch --list "*/<n>-*"`)
   and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
   instead. In progress with no branch and no PR is a Status that drifted: say so and go on;
+- its Status is Ready for review: its PR awaits the maintainer's merge; name the PR and stop
+  (a correction asked on it goes to that PR, `/orchestrate` step 4);
 - it has no `type:` label, or no Done when: propose the fix (`/ticket <n>` shows what is
   missing) and stop.
 
