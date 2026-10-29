@@ -31,3 +31,8 @@ on its own), then Ready (what can be taken).
 - A fourth state `state:blocked`: it loses the state the issue had before the block.
 - No label, the block written in a comment: it cannot be filtered, and an agent reading the
   list would start the issue.
+
+## Consequences
+
+- Amended 2026-10-29 (#229): the Project's views are Epics, Ready, WIP and Backlog
+  (`docs/contributing.md`, "How the work is organised"); the morning walks them, not a Board view.

@@ -14,7 +14,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `docs/` | `decisions/`, `glossary.md`, `contributing.md` |
 | `.claude/` | skills and agent workflows |
 | `.github/` | issue template and CI workflows |
-| `construction/` | temporary: design, plan, notes, scripts; its fate is not decided yet |
+| `construction/` | temporary: design, plan, notes, scripts; its fate: an observation to triage into an epic |
 
 ## Language
 

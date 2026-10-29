@@ -8,7 +8,8 @@ area: repo
 Without this, an agent would write the whole plan of a stage in one shot (as the 27 issues of
 2026-10-27 were, S2-01 to S4-07, replaying the old course end to end before anything was
 learnt), or open a milestone per epic, so the work would be counted against a plan nobody
-reads any more and a milestone would close on nothing.
+reads any more and a milestone would close on nothing; or frame a heap of tooling issues as a
+parent epic with no done-when, as #225 was.
 
 Work is framed by **epics** and released by **milestones**. An epic is an objective that
 closes: an issue labelled `epic`, titled "Epic: …", parent of its slices (GitHub sub-issues).
@@ -32,7 +33,7 @@ epic, their bodies kept as material; `stage-1` is renamed `linear-course/v1.0.0`
 ## Options ruled out
 
 - "Theme", the word of this decision until its amendment: a theme need not close, so it held a
-  heap (#225, whose Done when was "each slice has its issue") as readily as an objective. "Epic"
+  heap (#225, the flow and the tooling) as readily as an objective. "Epic"
   had been ruled out because the course teaches it (concept 4), but each glossary applies in its
   own files, and a word may be reserved in both with two meanings.
 - A milestone per epic: an epic already closes by its parent issue, and may span releases.
@@ -44,8 +45,6 @@ epic, their bodies kept as material; `stage-1` is renamed `linear-course/v1.0.0`
   (blocked by #29); #222 the teacher and #223 the site (blocked by #221); #224 course quality
   (blocked by #222); #228 the work organisation.
 - `construction/` no longer ends "at stage 4"; its fate is not decided yet.
-- `/ticket` attaches a slice to its epic; `/finish` after-merge names the epic to close when
-  its last slice closes (its step 7).
 - Amended 2026-10-29 (#229): "theme" became "epic" (label renamed, #220 to #224 retitled);
   added the entry rule, the Definition of Ready, the plan comment, the milestone an epic may
   target; #225 (the flow and the tooling) dissolved as a heap, its six issues back in the

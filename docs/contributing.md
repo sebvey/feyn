@@ -64,15 +64,19 @@ Four work items, all GitHub issues:
 - An **epic** is an objective that closes: the label `epic`, the title "Epic: …", five
   sections in order (Objective, Why now, Material, Done when, Out of scope), the parent of its
   slices. **No done-when, no epic**: what cannot get a Done when is an observation to triage,
-  or a label. An epic is Ready when nothing blocks it (no open blocked-by link) and its five
-  sections are written; the maintainer sets it at triage.
+  or a label. An epic has no To do and no sub-issue posed in advance. Its Status: Backlog
+  (not ready), Ready (nothing blocks it, no open blocked-by link, and its five sections are
+  written; the maintainer sets it at triage; taken or not), In progress (a slice is in
+  progress), Done (its last slice closed).
 - A **slice** is a unit of work: one PR, a verifiable Done when, a sub-issue of its epic. It is
-  posed only when it is the next one.
+  posed only when it is the next one. Its standard name is "story", adopted as its form when
+  user stories are written.
 - An **observation** is what is seen in passing: an issue without a parent, in the Backlog,
   grouped by its `area:` label, until triaged.
 - A **milestone** is a release target, named after the tag that closes it
   (`linear-course/v1.0.0`); it holds the slices that must close before the tag, and is created
-  only when a release is in sight. Tooling has none.
+  only when a release is in sight. It holds slices only; an epic targets it through its
+  slices. Tooling has none.
 
 Three moments:
 1. **Take an epic**, among the Ready ones: read its Material, pose one or two slices with
@@ -87,9 +91,14 @@ Three moments:
 
 Rules of the cycle: one epic In progress at a time per orchestrator (two at most, on disjoint
 files); a slice exists only if it is the next one; a slice that reveals work of another epic
-opens an observation, not a slice; a milestone holds slices only.
+opens an observation, not a slice.
 
-The Project has four views, each showing one Status, plus Epics:
+Two glossaries, each at home: the repository glossary applies in repository files, a course's
+in that course's files, so Scrum vocabulary (epic, story) is available to the repository even
+where a course teaches it ([`glossary.md`](glossary.md)).
+
+The Project has four views: three show one Status each (Ready, WIP for In progress, Backlog),
+the fourth lists the epics:
 
 | View | Shows | Answers |
 |---|---|---|

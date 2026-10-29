@@ -1,6 +1,6 @@
 # Repository glossary
 
-Every term below is **reserved**: it means one thing in feyn's code, docs, skills, issues and decisions.
+Every term below is **reserved**: it means one thing in the repository's files: code, docs, skills, issues and decisions.
 The words in its "Not" column are **banned** for that meaning: never use them where the reserved term applies.
 To add a term, open a PR that adds its row here and replaces, in the same PR, the banned words already in use.
 
@@ -66,8 +66,8 @@ the English terms below are how we talk about them in code, docs and issues.
 
 | Term | Means | Not |
 |---|---|---|
-| **area** | the part of the repo an issue or PR belongs to, derived from the tree: `spec:<name>`, `course:<id>`, `teacher`, `site`, `agentic`, `repo` | "domain" (course vocabulary), "component", "module", "scope" |
-| **issue** | a GitHub issue, the only ticket; sections **Observation**, **To do**, **Done when** | "ticket", "task", "story" |
+| **area** | the part of the repo an issue or PR belongs to, derived from the tree: `spec:<name>`, `course:<id>`, `teacher`, `site`, `agentic`, `repo` | "domain" (reserved for a course domain in this glossary), "component", "module", "scope" |
+| **issue** | a GitHub issue, the only ticket; sections **Observation**, **To do**, **Done when**; an epic, an issue with the label `epic`, has the five sections of decision `themes-and-release-milestones` instead | "ticket", "task", "story" |
 | **label** | always qualified: **type** (`type:bug`, `type:course`, `type:improvement`, `type:decision`), **area** (`area:<area>`), and `blocked:maintainer` (a maintainer decision is awaited; on the issue only). No state label: where an issue stands is its **Status** | |
 | **Project** | the GitHub Project "feyn" (number 4) that holds every issue with its Status: what the maintainer looks at in the web interface (its four **views**, Epics, Ready, WIP and Backlog, are in `docs/contributing.md`) and what the agent lists (`gh project item-list`) | "board" for the Project itself, "kanban", "dashboard" |
 | **Status** | the Project's field that says where an issue stands: **Backlog** (proposed, to triage), **Ready** (decided, free to take), **In progress** (a branch exists), **Done** (closed; the close reason stays on GitHub). It replaces the state labels. Written with a capital when it names the field; the lowercase `status` key of a decision's frontmatter is a different, allowed key | "state" for where the work stands (an issue's `state` is GitHub's open or closed) |
