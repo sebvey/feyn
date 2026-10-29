@@ -52,6 +52,31 @@ interface (Project feyn, menu ⋯, Workflows) (GitHub, observed 2026-10-28, #71)
   Project workflows ([above](#the-project-workflows)); "Item added to project" off, set the
   Status; on, or the query fails, tell the maintainer and stop.
 
+## Themes
+
+Work is framed by themes (decision `themes-and-release-milestones`): an issue with the label
+`theme`, parent of its slices. The Project shows them through its "Parent issue" and
+"Sub-issues progress" fields (a **Themes** table view filtered on `label:theme`; the Backlog and
+Ready views grouped by Parent issue, set in the web interface: Project feyn, a view's menu,
+Group by).
+
+- **Read** a slice's theme: `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
+  (HTTP 404 « No parent issue found » when it has none); a theme's slices and their count:
+  `mise exec -- gh api repos/sebvey/feyn/issues/<theme>/sub_issues --jq '.[] | [.number, .state, .title] | @tsv'`
+  and `mise exec -- gh api repos/sebvey/feyn/issues/<theme> --jq .sub_issues_summary`.
+- **Attach** a slice to its theme (the link takes the slice's database id, not its number):
+  `mise exec -- gh api -X POST repos/sebvey/feyn/issues/<theme>/sub_issues -F sub_issue_id=$(mise exec -- gh api repos/sebvey/feyn/issues/<n> --jq .id)`.
+- **Detach**: `mise exec -- gh api -X DELETE repos/sebvey/feyn/issues/<theme>/sub_issues -F sub_issue_id=<database id>`.
+- The themes of 2026-10-29: #220 the `linear-course` spec v1; #221 `parcours-po` conformity;
+  #222 the teacher; #223 the site; #224 course quality; #225 the flow and the tooling.
+
+## Milestones
+
+A milestone is a release target, named after the tag that closes it (`linear-course/v1.0.0`,
+`parcours-po/v0.2.0`); it holds the issues that must close before the tag and closes when the
+tag exists. Tooling issues carry none. Read them:
+`mise exec -- gh api repos/sebvey/feyn/milestones --jq '.[] | [.number, .title, .open_issues] | @tsv'`.
+
 ## Dependencies
 
 A dependency between issues is a blocked-by link, nothing else (decision

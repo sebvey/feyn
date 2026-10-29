@@ -51,7 +51,10 @@ bullets (`- **Observation**: …`); read both.
      Paths in two areas: the area that carries the intent; if none does, propose two issues.
      A label missing on GitHub is created, since the tree says it exists:
      `mise exec -- gh label create area:<area> --color 0075ca --description "Area: <area>"`.
-4. **Find the links.** Which open issues must close before this one can start (it is blocked
+4. **Find the theme and the links.** Which theme the issue is a slice of
+   ([project.md](project.md), "Themes"): the one the observation serves; ask the maintainer
+   when none fits (an issue with no theme is possible, and said). Then which open issues must
+   close before this one can start (it is blocked
    by them), and which open issues cannot start before this one closes (it blocks them): those
    the observation names, and those whose work it changes (a file, a key, a format they rely
    on). Ask the maintainer when unsure; none is a normal answer. Two issues that only edit the
@@ -69,8 +72,10 @@ bullets (`- **Observation**: …`); read both.
    ([project.md](project.md)); nothing to do for a Backlog issue. When the maintainer said the
    work is decided, set its Status to Ready as [project.md](project.md), "Commands", says
    under "Set a Status on a new item".
-9. **Set the links** found at step 4 ([project.md](project.md), "Dependencies").
-10. Reply with the issue number, its URL, its Status, its labels and its links, in one line.
+9. **Attach it to its theme** and **set the links** found at step 4 ([project.md](project.md),
+   "Themes" and "Dependencies").
+10. Reply with the issue number, its URL, its Status, its labels, its theme and its links, in
+    one line.
 
 ## Vocabulary
 
