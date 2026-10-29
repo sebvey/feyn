@@ -24,7 +24,7 @@ with seven checks. It modifies no file and returns the `inventory` and the `find
   the issue's branch, whether or not the change caused it, then rerun from the first concept
   fixed. Two rounds at most.
 - A finding whose fix changes what a concept teaches, or one that returns after round two:
-  an issue (`/feyn-issue`), not a fix here.
+  an issue (`/feyn-issue observation`), not a fix here.
 - The PR summarises them under Changes, within `/feyn-pull-request` step 5's limits: one bullet for the
   findings fixed, with their count, one for the findings deferred, with their issue numbers;
   the workflow's result goes on a line of its own in Checks, `taught-check: <result>` (an

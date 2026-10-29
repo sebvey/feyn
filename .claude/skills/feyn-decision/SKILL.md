@@ -55,7 +55,7 @@ distinct (say why in one line). Same slug already taken: the same decision exist
 
 ## 5. Write it
 
-From [decision.md](decision.md), at `<folder>/<slug>.md`:
+From [decision-body.md](../../reference/decision-body.md), at `<folder>/<slug>.md`:
 - `date`: today; `issue`: the issue number the decision comes from, or `null`;
   `status: accepted`; `area`: the area it binds (`repo`, `site`, `teacher`, `spec:<name>`,
   `course:<id>`);

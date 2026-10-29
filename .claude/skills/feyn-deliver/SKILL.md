@@ -151,9 +151,9 @@ From the main checkout, on `main`:
 3. `/feyn-merge-cleanup <branch>` for the issue branch: it confirms the change landed, the Status, and
    deletes the local branch. The Project workflow "Item closed" sets Done;
    `/feyn-merge-cleanup` sets it only when that Project workflow is off. Its lines on the
-   epic's plan comment, the epic to verify and close (set Ready for review when its last slice
-   closed) and the issues now free (`/feyn-merge-cleanup` step 7) are relayed to the
-   maintainer in the clean-up reply.
+   epic's plan comment, the epic to verify and close (set Ready for review when its plan
+   comment says its last slice closed) and the issues now free (`/feyn-merge-cleanup` step 7)
+   are relayed to the maintainer in the clean-up reply.
 4. `git branch -D worktree-agent-<id>`, the branch the worktree was created on.
    `git worktree list` and `git branch --list 'worktree-agent-*'` show nothing of it left.
 

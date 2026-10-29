@@ -29,17 +29,17 @@ The argument is the topic, or the number of a proposal to rework: read it first
 
 `tmp/feyn-brainstorm-<date>-<topic>.md` (date `YYYY-MM-DD`, topic two or three words), at the
 repository root; `tmp/` is in `.gitignore`. It starts as a copy of
-[proposal-body.md](proposal-body.md) and fills as points settle: Context and Question first,
-then What we settled point by point, Open questions as they appear. It is disposable once the
-issue exists.
+[proposal-body.md](../../reference/proposal-body.md) and fills as points settle: Context and
+Question first, then What we settled point by point, Open questions as they appear. It is
+disposable once the issue exists.
 
 ## 3. End the brainstorm
 
 1. **Nothing settled**: a brainstorm that settled nothing creates no issue. Delete the working
    file, say so, and stop; a proposal it was reworking stays open, unchanged.
 2. Fill Proposed next and Material read, then show the whole file to the maintainer. Every
-   comment of [proposal-body.md](proposal-body.md) is replaced; the maintainer validates it as
-   written or corrects it.
+   comment of [proposal-body.md](../../reference/proposal-body.md) is replaced; the maintainer
+   validates it as written or corrects it.
 3. Load `/feyn-issue` and follow it with the kind `proposal` and the file as the body
    (`/feyn-issue proposal`). The body is pasted as validated: nothing is rewritten between the file
    and the issue.
