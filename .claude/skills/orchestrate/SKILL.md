@@ -124,13 +124,13 @@ ids given are "none" (the PR still cites its run id).
   PR awaits the merge: relay it to the contributor with `SendMessage`, the maintainer's words
   quoted; the second-review rule above applies.
 - **The Status.** A correction asked on a delivered PR (a late finding, a decision after the
-  hand-over): set the slice back to In progress ([project.md](../ticket/project.md),
+  hand-over): set the slice back to In progress ([project.md](../../reference/project.md),
   "Commands"); the renewed hand-over (step 5) sets Ready for review again.
 
 ## 5. Hand-over to the maintainer
 
 Set the issue Ready for review, a `Closes` PR only (the contributor's `/finish` left it In
-progress; [project.md](../ticket/project.md), "Commands":
+progress; [project.md](../../reference/project.md), "Commands":
 `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`),
 then reply with, one line each: the PR URL and title; the Status; the review
 (blocking findings found, fixed); what the maintainer should look at first (the PR's Review

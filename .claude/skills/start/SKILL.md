@@ -13,20 +13,20 @@ Status; the work itself comes after.
 
 `mise exec -- gh issue view <n> --json number,title,url,state,labels,body,comments,projectItems`
 
-The Status is the `status.name` of the `feyn` item in `projectItems` ([project.md](../ticket/project.md)).
+The Status is the `status.name` of the `feyn` item in `projectItems` ([project.md](../../reference/project.md)).
 
 Refuse, saying why in one line, and change nothing, when:
 - the issue carries `blocked:maintainer`: name what the maintainer must decide (the body or
   the last comment says it) and stop. Only the maintainer removes that label;
 - an issue that blocks it is still open
-  ([project.md](../ticket/project.md), "Dependencies"): name each open blocker and stop;
+  ([project.md](../../reference/project.md), "Dependencies"): name each open blocker and stop;
 - the issue is closed, or its Status is Done;
 - its Status is already In progress: look for its branch (`git branch --list "*/<n>-*"`)
   and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
   instead. In progress with no branch and no PR is a Status that drifted: say so and go on;
 - its Status is Ready for review: its PR awaits the maintainer's merge; name the PR and stop
   (a correction asked on it goes to that PR, `/orchestrate` step 4);
-- it has no `type:` label, or no Done when: propose the fix (`/ticket <n>` shows what is
+- it has no `type:` label, or no Done when: propose the fix (`/issue <n>` shows what is
   missing) and stop.
 
 ## 2. Start from an up-to-date main
@@ -53,11 +53,11 @@ create a second one.
 
 ## 4. Mark it in progress
 
-Set the Status to In progress ([project.md](../ticket/project.md), "Commands"): no
+Set the Status to In progress ([project.md](../../reference/project.md), "Commands"): no
 Project workflow fires on a branch. An issue not in the Project yet (`projectItems` empty):
-set it as [project.md](../ticket/project.md), "Commands", says under "Set a Status on a new
+set it as [project.md](../../reference/project.md), "Commands", says under "Set a Status on a new
 item". When the issue's parent is an epic (label `epic`, read as
-[project.md](../ticket/project.md), "Epics", says) not yet In progress, set the epic In
+[project.md](../../reference/project.md), "Epics", says) not yet In progress, set the epic In
 progress too.
 
 ## 5. Restate and plan

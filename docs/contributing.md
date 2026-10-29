@@ -15,10 +15,11 @@ construction, `construction/` holds the design, the plan and the session notes; 
 
 GitHub Issues is the only backlog; nothing is tracked in a local file. An issue has three
 sections: Observation (what was seen, where), To do, Done when (statements a reviewer can
-verify by reading a file or running a command). `/ticket <observation>` writes it with its
-labels and sets its blocked-by links; the Project workflows add it to the Project in Backlog,
-and `/ticket` sets Ready when the maintainer decided the work; `/ticket <n>` summarises one, its
-links included. Why: decisions `issue-defines-pr-verifies`, `blocked-by-links-for-dependencies`.
+verify by reading a file or running a command). `/issue <kind> <observation>` writes it, of
+the kind it is given (`observation` by default, `slice`, `epic`; the rules on which kind are
+under "How the work is organised"), with its labels and its blocked-by links; the Project
+workflows add it to the Project in Backlog, and `/issue` sets Ready when the maintainer decided
+the work; `/issue <n>` summarises one, its links included. Why: decisions `issue-defines-pr-verifies`, `blocked-by-links-for-dependencies`.
 
 ## An issue becomes a branch
 
@@ -82,15 +83,23 @@ Four work items, all GitHub issues:
 
 Three moments:
 1. **Take an epic**, among the Ready ones: read its Material, pose one or two slices with
-   `/ticket`, each attached to the epic and Ready, and write the epic's **plan comment** (the
-   slices envisaged, in order, in five lines; what is unknown; what was dropped). The epic goes
-   In progress when its first slice starts.
+   `/issue slice`, each attached to the epic and Ready, and write the epic's **plan comment**
+   (the slices envisaged, in order, in five lines; what is unknown; what was dropped). The epic
+   goes In progress when its first slice starts. A slice is created only when it is the next
+   one the plan comment names, or one of the first one or two of an epic with no plan comment
+   yet; otherwise the plan comment is rewritten first. This holds as well for the next slice
+   after a delivery and for a slice added when the maintainer's check of the epic's Done when
+   fails.
 2. **Deliver a slice**: `/orchestrate <n>`; the slice is Ready for review while its PR awaits
    the merge. Then two lines on the plan comment (the slice closed, the next to pose; if the
    next is not obvious, back to moment 1). When the last slice closes, `/finish` sets the epic
    Ready for review: the maintainer verifies its Done when and closes it.
 3. **Triage the Backlog**: each observation is attached to an epic as a slice, set Ready if it
-   stands alone in one PR, made an epic if it is an objective, or closed with the reason.
+   stands alone in one PR, made an epic if it is an objective, or closed with the reason. **No
+   Done when, no epic**: an objective whose Done when cannot be written stays an observation.
+
+An issue created without a kind is an observation (`/issue <observation>`): no parent, in the
+Backlog, until triaged.
 
 Rules of the cycle: one epic In progress at a time per orchestrator (two at most, on disjoint
 files); a slice exists only if it is the next one; a slice that reveals work of another epic
@@ -122,10 +131,10 @@ Why: decision `themes-and-release-milestones`.
   when and closes it), Done (closed; the close reason stays on GitHub). Needs Decision is in
   the Project but unused for now: the label `blocked:maintainer` carries a decision awaited. One at a
   time. The Project workflows add the open issues created or updated while they are on, set
-  Backlog when one is added and Done when it closes; the skills set the rest: `/ticket` Ready when the maintainer decided,
+  Backlog when one is added and Done when it closes; the skills set the rest: `/issue` Ready when the maintainer decided,
   `/start` In progress, `/finish` Ready for review, or the orchestrator at the hand-over under
   `/orchestrate` (a correction asked on a delivered PR returns the slice to In progress,
-  `/orchestrate` step 4). `.claude/skills/ticket/project.md` says who sets each Status. There
+  `/orchestrate` step 4). `.claude/reference/project.md` says who sets each Status. There
   are no state labels. Why: decision `project-status-not-state-labels`.
 - `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is
   a draft, which keeps it from being merged); on top of the Status, never instead of it; only
