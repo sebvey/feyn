@@ -39,8 +39,8 @@ on `main`. The body starts with `Closes #n` (or `Refs #n` when the PR is one ste
 then, under `##` headings, Context, Issues, Changes, Checks and Review first, within the limits of
 `/feyn-pull-request` step 5, so that the maintainer gets back into the subject from the PR alone.
 Checks counts the Done when verdicts (`met`, `not met`, `deviation`) without restating the
-statements, and says why for each `not met` or `deviation`; on a PR that goes through
-`/feyn-deliver`, the fresh-agent reviewer reruns every statement. The PR never redefines the Done
+statements, and says why for each `not met` or `deviation`; on every PR, the fresh-agent reviewer
+of `/feyn-pr-review` reruns every statement. The PR never redefines the Done
 when; the issue wins, and the PR says why it deviates. Once the PR is open, `/feyn-pull-request`
 checks that the issue lists it (a `Refs` PR: it lists nothing). A branch that leaves a decision to
 the maintainer opens as a draft PR, with `blocked:maintainer` on its issue only, and an "Awaiting
@@ -54,7 +54,9 @@ branch; it then adds the slice closed and the next to pose to the epic's plan co
 for review the epic whose slices are now all closed, for the maintainer to verify and close, and
 names the issues the closed one blocked that are now free. `/feyn-deliver <n>` runs this whole cycle
 from one work session: a contributor agent per issue in its own worktree, a review by a fresh agent
-before the PR reaches the maintainer, then the clean-up of the worktree after the merge. Why:
+before the PR reaches the maintainer, then the clean-up of the worktree after the merge. On the
+direct path, without `/feyn-deliver`, `/feyn-pull-request` runs that review (`/feyn-pr-review`)
+before it sets Ready for review. Why:
 decisions `issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`.
 
 ## How the work is organised

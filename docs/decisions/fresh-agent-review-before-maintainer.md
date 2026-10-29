@@ -21,3 +21,11 @@ contributor's own verification (`/finish`, decision `issue-defines-pr-verifies`)
 - The contributor agent reviewing its own PR, or a subagent resumed from it: it rereads with
   the reasoning that produced the defects.
 - The maintainer as the only reviewer: the defects reach them, and each costs a round trip.
+
+## Consequences
+
+- Amended 2026-10-29 (#248): the review is `/feyn-pr-review`, a skill of the work-cycle
+  tooling, run by `/feyn-deliver` at its review step and by `/feyn-pull-request` on the direct
+  path before Ready for review (there, the work session that did the work applies the findings
+  and checks them in the diff); so every PR gets it, not only those that went through
+  `/orchestrate`.

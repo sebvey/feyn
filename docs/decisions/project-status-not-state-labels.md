@@ -50,3 +50,7 @@ The maintainer works in the web interface: the Project's Board view, filtered on
   to In progress (`/orchestrate` step 4), and the renewed hand-over sets Ready for review
   again. **Needs Decision** stays in the Project, unused by the skills for now: the label
   `blocked:maintainer` carries a decision awaited (decision `blocked-is-a-label-not-a-state`).
+- Amended 2026-10-29 (#248): Ready for review on a slice is set by `/feyn-pull-request` at
+  delivery on the direct path, after the fresh-agent review, and by `/feyn-deliver` at the
+  hand-over; the names, ids, workflows and commands live in `.claude/reference/project.md`
+  (moved by #240).
