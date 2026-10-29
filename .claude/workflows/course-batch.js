@@ -1,7 +1,7 @@
 export const meta = {
-  name: 'course-batch',
+  name: 'feyn-course-batch-workflow',
   description: 'Write a batch of concepts of a course: sources, writing, two reviews, fixes, checks',
-  whenToUse: 'The maintainer asks to run course-batch on a batch issue or on a list of concepts. args: { course: "<course id>", concepts?: ["9", "10"], issue?: <n>, work?: "<dir for intermediate products>", dryRun?: true }. dryRun needs args.concepts, spawns no agent and returns the steps.',
+  whenToUse: 'Run by the skill /feyn-course-batch, which triages what it leaves open: the maintainer asks to write a batch from a batch issue or a list of concepts. args: { course: "<course id>", concepts?: ["9", "10"], issue?: <n>, work?: "<dir for intermediate products>", dryRun?: true }. dryRun needs args.concepts, spawns no agent and returns the steps.',
   phases: [
     { title: 'Scope', detail: 'reads the issue and the course, lists the batch concepts' },
     { title: 'Sources', detail: 'one agent per concept, writes sources.md' },

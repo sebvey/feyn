@@ -1,7 +1,7 @@
 export const meta = {
-  name: 'taught-check',
+  name: 'feyn-taught-check-workflow',
   description: 'Verify that no case of a course asks what the learner has not yet been taught',
-  whenToUse: 'After an issue that changes what a concept teaches (teaching notes, a sub-concept, an order), or when the maintainer asks. args: { course: "<course id>", from?: "<first concept reread>", to?: "<last concept reread>" }; default the whole course, annexes included. Report only: no agent modifies a file.',
+  whenToUse: 'Run by the skill /feyn-taught-check, which triages its findings: after an issue that changes what a concept teaches (teaching notes, a sub-concept, an order), or when the maintainer asks. args: { course: "<course id>", from?: "<first concept reread>", to?: "<last concept reread>" }; default the whole course, annexes included. Report only: no agent modifies a file.',
   phases: [
     { title: 'Scope', detail: 'lists concepts and annexes in course order, and their entry points' },
     { title: 'Inventory', detail: 'what the learner receives, unit by unit, up to the last concept reread' },

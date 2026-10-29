@@ -2,7 +2,7 @@
 date: 2026-10-28
 issue: 71
 status: accepted
-area: repo
+area: agentic
 ---
 
 Without this, an agent would link the branch to the issue with `gh issue develop`, and a `Refs`

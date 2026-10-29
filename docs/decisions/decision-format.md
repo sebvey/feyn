@@ -15,11 +15,15 @@ identifier, cited as "decision two-versioned-objects". Its frontmatter holds `da
 `area` (the area it binds). After the frontmatter, the first line is the **counterfactual**,
 "Without this, an agent would…"; then the decision in one paragraph. Optional headings,
 only when they add: options ruled out, consequences. No index: `ls` and the frontmatter
-suffice.
+suffice. A decision that still holds but whose mechanism changed (a skill renamed, a file
+moved, a step that now runs elsewhere) gets one line `- Amended <date> (#<n>): …` under a
+`## Consequences` heading, added when the file has none; the rest of the file stays untouched.
+A decision that no longer holds is superseded (`status: superseded-by: <slug>`), never amended.
 
 A decision lives in the `decisions/` folder of the most local area it binds:
 `specs/<name>/decisions/`, `courses/<id>/decisions/`, `teacher/decisions/`, `site/decisions/`;
-two areas or more, `docs/decisions/`.
+the agentic layer (`.claude/`, `.github/`), `.claude/decisions/`; two areas or more,
+`docs/decisions/`.
 
 A decision is written when its counterfactual can be named and it spans several files or is
 costly to undo; otherwise a comment where it applies, or nothing. Decisions on how the teacher
@@ -35,3 +39,8 @@ counterfactual, picks the folder, checks for a neighbouring slug.
 - The issue number as identifier: it ties a decision to GitHub and forces an issue for a
   decision taken in a PR.
 - "ADR" in paths: it is the known synonym in conversation only.
+
+## Consequences
+
+- Amended 2026-10-30 (#252): the agentic layer has its own folder, `.claude/decisions/`; the
+  "Amended" line is the written practice.

@@ -1,5 +1,5 @@
 export const meta = {
-  name: 'migrate-concept',
+  name: 'feyn-migrate-concept-workflow',
   description: 'Migrate one concept of a frozen parcours-po course into a linear-course concept folder, check it, and report its diagrams and checks for the review',
   whenToUse: 'Stage 1 only (S1-10): the maintainer asks to migrate concept N of a course from the frozen repositories. args: { course: "<course id>", concept: "<number as in course.yaml: 9, A1>", from?: "<frozen course repo, default ../pdx/parcours-po>", site?: "<frozen site repo, default ../pdx/parcours-po-website>", dest?: "<course folder written into, default courses/<course>>", report?: "<report path, default construction/notes/S1-10-<NN>-report.md>", langDir?: "<language pack dir passed to check-course>", overwrite?: true }. dest is a full course folder (course.yaml, plan.md, glossary.md, domains/…), a copy when not courses/<course>; overwrite empties the target concept folder first. The PNGs of the old and new diagrams go to the folder named after the report (its path without .md). The defaults of from and site are relative to the working directory: a run from a worktree or a copy passes absolute paths.',
   phases: [
@@ -882,7 +882,7 @@ const failed = !checksPassed
 function renderReport() {
   const out = []
   out.push(`# Migration report: concept ${CONCEPT}`, '')
-  out.push(`Workflow \`migrate-concept\`, course \`${A.course}\`, concept folder \`${DIR}\`. Paths in the course folder are relative to it; the old files are named from their repository folder (\`${lastPart(FROM)}\`, \`${lastPart(SITE)}\`).`)
+  out.push(`Workflow \`feyn-migrate-concept-workflow\`, course \`${A.course}\`, concept folder \`${DIR}\`. Paths in the course folder are relative to it; the old files are named from their repository folder (\`${lastPart(FROM)}\`, \`${lastPart(SITE)}\`).`)
   out.push(`Old files: \`${scope.concept_file}\` (CF), \`${scope.sources_file}\` (SF), \`${scope.mdx_file}\` (MDX)${scope.diagrams.length ? `, ${[...new Set(scope.diagrams.map(d => `\`${d.component}\``))].join(', ')} (ASTRO)` : ''}.`, '')
   out.push('## Summary', '')
   out.push('| checks | target existed | old diagrams | new diagrams | captions of more than one sentence |')

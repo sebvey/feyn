@@ -1,12 +1,13 @@
 ---
 name: feyn-taught-check
-description: "Tooling of the work cycle, called by the maintainer and by `/feyn-deliver`'s contributor after any change to what a concept teaches: run the taught-check agent workflow, which reports the cases of a course that ask what the learner has not yet been taught, and triage its findings. Use for \"/feyn-taught-check parcours-po\", \"/feyn-taught-check parcours-po from 9\"."
+description: "Tooling of the work cycle, called by the maintainer and by `/feyn-deliver`'s contributor after any change to what a concept teaches: run the agent workflow feyn-taught-check-workflow, which reports the cases of a course that ask what the learner has not yet been taught, and triage its findings. Use for \"/feyn-taught-check parcours-po\", \"/feyn-taught-check parcours-po from 9\"."
 argument-hint: "<course id> [from <concept>] [to <concept>]"
 ---
 
 # /feyn-taught-check
 
-One job: run the agent workflow `taught-check.js` of `.claude/workflows/` and handle what it finds.
+One job: run the agent workflow `feyn-taught-check-workflow` (`.claude/workflows/taught-check.js`)
+and handle what it finds.
 It is mandatory after any change to what is taught (teaching notes, a sub-concept, an order), before
 the merge (`SPEC.md` section 10).
 

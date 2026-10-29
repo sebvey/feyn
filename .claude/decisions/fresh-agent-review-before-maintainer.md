@@ -2,7 +2,7 @@
 date: 2026-10-28
 issue: 128
 status: accepted
-area: repo
+area: agentic
 ---
 
 Without this, an agent would hand the maintainer a PR it verified itself; on

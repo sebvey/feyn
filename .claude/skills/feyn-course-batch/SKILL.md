@@ -1,12 +1,13 @@
 ---
 name: feyn-course-batch
-description: "Tooling of the work cycle, called by the maintainer and by `/feyn-deliver`'s contributor on a batch issue: run the course-batch agent workflow on a batch of concepts of a course (sources, writing, two reviews, fixes, checks), or list its steps with a dry run, then triage what it leaves open. Use for \"/feyn-course-batch parcours-po 42\", \"/feyn-course-batch parcours-po 9 10 --dry-run\"."
+description: "Tooling of the work cycle, called by the maintainer and by `/feyn-deliver`'s contributor on a batch issue: run the agent workflow feyn-course-batch-workflow on a batch of concepts of a course (sources, writing, two reviews, fixes, checks), or list its steps with a dry run, then triage what it leaves open. Use for \"/feyn-course-batch parcours-po 42\", \"/feyn-course-batch parcours-po 9 10 --dry-run\"."
 argument-hint: "<course id> <issue number | concept numbers> [--dry-run]"
 ---
 
 # /feyn-course-batch
 
-One job: run the agent workflow `course-batch.js` of `.claude/workflows/` on a batch, then triage
+One job: run the agent workflow `feyn-course-batch-workflow` (`.claude/workflows/course-batch.js`)
+on a batch, then triage
 what it leaves open. A course changes only through an issue or a batch: work on the batch issue's
 branch (`/feyn-issue-branch`).
 

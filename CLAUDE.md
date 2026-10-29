@@ -12,7 +12,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `teacher/` | teacher template, teacher skills, classroom build script |
 | `site/` | the site engine (Astro); reads `courses/` directly |
 | `docs/` | `decisions/`, `glossary.md`, `contributing.md` |
-| `.claude/` | skills and agent workflows |
+| `.claude/` | `skills/` (the HOW), `workflows/`, `reference/` (the WHAT), `decisions/`; decision `claude-folder-layout` |
 | `.github/` | issue template and CI workflows |
 | `construction/` | temporary: design, plan, notes, scripts; its fate is #232 |
 
