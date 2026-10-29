@@ -1,6 +1,6 @@
 ---
 name: feyn-merge-cleanup
-description: "Tooling of the work cycle, called by `/feyn-deliver` once the maintainer merged a pull request: confirm the issue branch's change landed on main, delete the local branch, check the issue is closed and Done, add the slice's two lines to its epic's plan comment, set the epic Ready for review when its last slice closed, and name the issues the merge freed. Use for \"/feyn-merge-cleanup\", \"/feyn-merge-cleanup improvement/12-fix-caption-check\"."
+description: "Tooling of the work cycle, called by `/feyn-deliver` once the maintainer merged a pull request: confirm the issue branch's change landed on main, delete the local branch, check the issue is closed and Done, add the slice's two lines to its epic's plan comment, set the epic Ready for review when its plan comment says its last slice closed, and name the issues the merge freed. Use for \"/feyn-merge-cleanup\", \"/feyn-merge-cleanup improvement/12-fix-caption-check\"."
 argument-hint: "[<issue branch>]"
 ---
 
@@ -9,7 +9,7 @@ argument-hint: "[<issue branch>]"
 One job: clean up after the merge of an issue branch's PR, the moment that follows
 `/feyn-pull-request` and is never in the same turn. It never merges, and never deletes a remote
 branch. It writes on GitHub: two lines on the epic's plan comment, and the epic set Ready for
-review when its last slice closed (step 7).
+review when its plan comment says its last slice closed (step 7).
 
 The branch is the issue branch `<type>/<n>-<slug>` (made by `/feyn-issue-branch`): the one the
 argument names, or else the current branch; `<n>` is the issue. No argument on `main`, or a
@@ -61,22 +61,22 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      A parent with the label `epic` is the epic: add two lines to its **plan comment**
      ([project.md](../../reference/project.md), "Epics": find it, read it into a file, append,
      PATCH it), the slice closed (`#<n> (PR #<pr>)`, what it delivered in a few words) and the
-     next slice to pose, from the plan comment's order, or "next slice to pose: the maintainer
-     decides" when it is not obvious, or "next slice: none, the epic closes" when this was its
-     last; no plan comment: add one beginning with `**Plan comment**`, with the two lines, and
-     say it was missing. The reply gives the two lines. Then read the plan comment's last
-     "next slice" line, the one just written: when it says the epic closes ("next slice: none,
-     the epic closes"), set the epic Ready for review
-     ([project.md](../../reference/project.md), "Commands"), and the reply ends with one line,
-     the epic's number and title, its Done when (read in its body), to verify, and that closing
-     it is the maintainer's (path: the epic, button "Close issue", reason completed or not
-     planned; a statement that does not hold: a new slice, `/feyn-issue slice #<epic>`); only
-     the lines of the next bullet follow it. Otherwise leave the epic In progress, however many
-     of its sub-issues are closed: a slice exists only if it is the next one
-     ([contributing](../../../docs/contributing.md), "How the work is organised", rules of the
-     cycle). Never close it yourself. Any other parent: no plan comment and no Status; when its
-     `sub_issues_summary` shows every sub-issue closed, the reply ends with one line, its number
-     and title, and that closing it is the maintainer's.
+     next slice to pose, from the plan comment's order, or "Next slice to pose: the maintainer
+     decides" when it is not obvious, or "Next slice to pose: none, the epic closes" when this
+     was its last; no plan comment: add one beginning with `**Plan comment**`, with the two
+     lines, and say it was missing. The reply gives the two lines.
+     Open, and the plan comment's last "Next slice to pose" line, the one just written, says
+     the epic closes: set the epic Ready for review ([project.md](../../reference/project.md),
+     "Commands"). Otherwise leave it In progress, however many of its sub-issues are closed: a
+     slice exists only if it is the next one ([contributing](../../../docs/contributing.md),
+     "How the work is organised", rules of the cycle).
+     Any other parent: no plan comment and no Status; it is done when, open, its
+     `sub_issues_summary` shows every sub-issue closed.
+     An epic set Ready for review, or another parent done: the reply ends with one line, its
+     number and title, its Done when (read in its body), to verify, and that closing it is the
+     maintainer's (path: the issue, button "Close issue", reason completed or not planned; for
+     an epic, a statement that does not hold: a new slice, `/feyn-issue slice #<epic>`); only
+     the lines of the next bullet follow it. Never close the epic nor another parent yourself.
    - **The issues it blocked.**
      `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<n>/dependencies/blocking --jq '.[] | select(.state == "open" and .issue_dependencies_summary.blocked_by == 0) | [.number, .title] | @tsv'`
      lists each open issue that #n blocked whose blockers are now all closed

@@ -5,11 +5,10 @@ The brief `/feyn-deliver` step 2 fills in and gives to the contributor agent.
 ```
 You are a feyn contributor working on GitHub issue #<n> ("<title>") in the repo at your current
 working directory (a git worktree of <main checkout path>; for a two-phase migration, the
-worktree <path>, your working directory being the main checkout). Read CLAUDE.md first, then the
-issue (`mise exec -- gh issue view <n>`), then its "Reads" files.
-
-Read `.claude/reference/worktree-agent.md` first: the rules and the Claude Code behaviours of an
-agent in a worktree.
+worktree <path>, your working directory being the main checkout). Read
+`.claude/reference/worktree-agent.md` (the rules and the Claude Code behaviours of an agent in a
+worktree), then CLAUDE.md, then the issue (`mise exec -- gh issue view <n>`), then its "Reads"
+files.
 
 ## How to run the cycle (in a worktree)
 Follow `.claude/skills/feyn-issue-branch/SKILL.md` for #<n>, adapted to a worktree:

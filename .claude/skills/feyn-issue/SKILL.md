@@ -82,7 +82,7 @@ bullets (`- **Observation**: …`), or for an epic the five sections of
      on). Ask the maintainer when unsure; none is a normal answer. Two issues that only edit
      the same file are not linked. The links go on GitHub, never as a line in the body.
 5. **Write the body** into a file made with `mktemp` (outside the repository), each comment of
-   the issue template replaced. A slice or an observation, from
+   its body file replaced. A slice or an observation, from
    [issue-body.md](../../reference/issue-body.md): Observation (facts and places, no
    solution), To do (the work, numbered when the order matters), Done when (statements a
    reviewer can verify by reading or running something); Reads only when the work needs other
@@ -99,10 +99,9 @@ bullets (`- **Observation**: …`), or for an epic the five sections of
    when the maintainer names one, on a slice or on an epic that targets a release; never on a
    proposal). It prints the issue URL.
 8. **Ready, when step 4 says so.** The Project workflows add the issue and set Backlog
-   ([project.md](../../reference/project.md)); nothing to do for a Backlog issue. A slice, or
-   an observation whose work the maintainer decided: set its Status to Ready as
-   [project.md](../../reference/project.md), "Commands", says under "Set a Status on a new
-   item".
+   ([project.md](../../reference/project.md)); nothing to do for a Backlog issue. Set Ready
+   the issues step 4 makes Ready, as [project.md](../../reference/project.md), "Commands",
+   says under "Set a Status on a new item".
 9. **Attach a slice to its epic** and **set the links** found at step 4
    ([project.md](../../reference/project.md), "Epics" and "Dependencies"). An observation, an
    epic and a proposal have no parent.

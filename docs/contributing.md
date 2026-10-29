@@ -102,26 +102,24 @@ Four moments:
    added when the maintainer's check of the epic's Done when fails.
 2. **Deliver a slice**: `/feyn-deliver <n>`; the slice is Ready for review while its PR awaits the
    merge. Then `/feyn-merge-cleanup` adds two lines on the plan comment (the slice closed, the next
-   to pose; if the next is not obvious, back to moment 1). When the plan comment's last line
-   says the epic closes ("next slice: none, the epic closes"), `/feyn-merge-cleanup` sets the
-   epic Ready for review: the maintainer verifies its Done when and closes it. All its
-   sub-issues closed does not mean that: a slice exists only if it is the next one (rules of
-   the cycle, below), so every delivery leaves them all closed until the next is posed.
+   to pose; if the next is not obvious, back to moment 1). When the plan comment's last "Next
+   slice to pose" line says the epic closes ("Next slice to pose: none, the epic closes"),
+   `/feyn-merge-cleanup` sets the epic Ready for review: the maintainer verifies its Done when
+   and closes it. All its sub-issues closed does not mean that: a slice exists only if it is
+   the next one (rules of the cycle, below), so every delivery leaves them all closed until
+   the next is posed.
 3. **Brainstorm**: `/feyn-brainstorm` frames a work session with the maintainer on how feyn works
    (the maintainer decides, one point at a time, nothing written in the repository during the
    brainstorm) and ends it in a proposal, created with `/feyn-issue proposal`. A brainstorm that
    settles nothing leaves no issue.
 4. **Triage the Backlog**: each observation is attached to an epic as a slice, set Ready if it
-   stands alone in one PR, made an epic if it is an objective, or closed with the reason. **No
-   Done when, no epic**: an objective whose Done when cannot be written stays an observation. A
+   stands alone in one PR, made an epic if it is an objective, or closed with the reason. A
    proposal is self-sufficient: the triage turns its Proposed next into what it says
    (`/feyn-decision` for a decision; `/feyn-issue epic`, `/feyn-issue slice #<epic>`, or
    `/feyn-issue observation` set Ready when it stands alone in one PR; each citing the
    proposal) without rereading what fed it, then closes it as completed with a comment naming
    what it produced. A proposal reworked by a new brainstorm is closed as completed with a
    comment naming the new proposal, never edited.
-
-`/feyn-issue` has no default kind: called without one, it asks which and creates nothing.
 
 Rules of the cycle: one epic In progress at a time per orchestrator (two at most, on disjoint
 files); a slice exists only if it is the next one; a slice that reveals work of another epic
@@ -185,10 +183,11 @@ depends on it), in one line ending with a mark `(<tool>, <status> <date>, #<n>)`
 is `YYYY-MM-DD`; `#<n>` is the issue or PR that holds the proof: a PR holds it on the `Behaviours:`
 line of its Checks, an issue in a comment (`/feyn-pull-request` step 5). The line goes with its
 step. A line the tool disproves is corrected or removed.
-`grep -rn '(GitHub,\|(Claude Code,' .claude docs construction` lists them all. There is no separate
-reference file: it would be read at the wrong moment. The behaviours every agent in a worktree
-relies on have one point of use, which that agent reads first:
-[`.claude/reference/worktree-agent.md`](../.claude/reference/worktree-agent.md).
+`grep -rn '(GitHub,\|(Claude Code,' .claude docs construction` lists them all. There is no
+catalogue of behaviours: it would be read at the wrong moment. One exception: the behaviours
+every agent in a worktree meets are written once in
+[`.claude/reference/worktree-agent.md`](../.claude/reference/worktree-agent.md), which the
+briefs of those agents name as their first read; that file is their point of use.
 
 ## Decisions and vocabulary
 

@@ -88,8 +88,9 @@ at triage. An epic has no To do and no slice posed in advance.
 
 **Take an epic**: the procedure is in [contributing](../../docs/contributing.md), "How the work
 is organised", moments 1 and 2; the commands it needs are above. The epic goes Ready for review
-when its plan comment's last line says it closes ("next slice: none, the epic closes",
-`/feyn-merge-cleanup` step 7), however many of its sub-issues are closed.
+when the plan comment's last "Next slice to pose" line says it closes ("Next slice to pose:
+none, the epic closes", `/feyn-merge-cleanup` step 7), however many of its sub-issues are
+closed.
 
 **The views**, set by the maintainer in the web interface (Project feyn, a view's menu:
 filter, Layout, Group by, Fields):
