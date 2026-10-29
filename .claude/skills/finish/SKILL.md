@@ -1,13 +1,14 @@
 ---
 name: finish
-description: 'Deliver the current issue branch on feyn - run the checks that exist, push, open the PR to main with "Closes #n" and the title <type>(<area>): <summary>, ask for review; after the merge, confirm the change landed and delete the local branch. Use for "/finish", "open the PR", "it is merged, clean up".'
+description: 'Deliver the current issue branch on feyn - run the checks that exist, push, open the PR to main with "Closes #n" and the title <type>(<area>): <summary>, ask for review; after the merge, confirm the change landed, delete the local branch and note the slice on its epic's plan comment. Use for "/finish", "open the PR", "it is merged, clean up".'
 argument-hint: "[after-merge]"
 ---
 
 # /finish
 
 Two moments, never in the same turn: **deliver** (open the PR), then, once the PR is merged,
-**clean up**. It never merges: the merge belongs to the reviewer.
+**clean up**. It never merges: the merge belongs to the reviewer. The clean-up writes on
+GitHub: two lines on the epic's plan comment (step 7).
 
 The branch is `<type>/<n>-<slug>` (made by `/start`); `<n>` is the issue. On `main`, or on a
 branch without an issue number: stop and say so.
@@ -135,17 +136,25 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
    - Either way, if the issue still carries `blocked:maintainer`, tell the
      maintainer.
 7. A `Closes` PR whose issue closed: say what its closing frees. Nothing closes a parent issue
-   (it has no PR of its own, and no GitHub automation closes it with its sub-issues), and
+   (an epic has no PR of its own, and no GitHub automation closes it with its sub-issues), and
    nothing says an issue is free once its last blocker closes.
-   - **The parent.** `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
+   - **The epic.** `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
      prints the parent's number; HTTP 404 « No parent issue found »: no parent, skip to the
      next bullet. Then
-     `mise exec -- gh api repos/sebvey/feyn/issues/<parent> --jq '[.state, .sub_issues_summary]'`:
-     open, with `completed` equal to `total`, means every sub-issue is closed. Then the reply
-     ends with one line: the parent's number and title, its Done when (read in its body), and
-     that closing it is the maintainer's (path: the parent issue, button "Close issue", reason
-     completed or not planned); only the lines of the next bullet follow it. Never close it
-     yourself.
+     `mise exec -- gh api repos/sebvey/feyn/issues/<parent> --jq '[.state, .sub_issues_summary, [.labels[].name]]'`.
+     A parent with the label `epic` is the epic: add two lines to its **plan comment**
+     ([project.md](../ticket/project.md), "Epics": find it, read it into a file, append,
+     PATCH it), the slice closed (`#<n> (PR #<pr>)`, what it delivered in a few words) and the
+     next slice to pose, from the plan comment's order, or "next slice to pose: the maintainer
+     decides" when it is not obvious, or "next slice: none, the epic closes" when this was its
+     last; no plan comment: add one beginning with `**Plan comment**`, with the two lines, and
+     say it was missing. The reply
+     gives the two lines. Any other parent: no plan comment, and "parent issue" replaces
+     "epic" below. Open, with `completed` equal to `total`, means every sub-issue is closed:
+     the reply ends with one line, the epic's number and title, its Done when (read in its
+     body), and that closing it is the maintainer's (path: the epic, button "Close issue",
+     reason completed or not planned); only the lines of the next bullet follow it. Never
+     close it yourself.
    - **The issues it blocked.**
      `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<n>/dependencies/blocking --jq '.[] | select(.state == "open" and .issue_dependencies_summary.blocked_by == 0) | [.number, .title] | @tsv'`
      lists each open issue that #n blocked whose blockers are now all closed
