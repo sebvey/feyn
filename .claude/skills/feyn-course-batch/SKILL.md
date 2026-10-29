@@ -6,8 +6,8 @@ argument-hint: "<course id> <issue number | concept numbers> [--dry-run]"
 
 # /feyn-course-batch
 
-One job: run the agent workflow `feyn-course-batch-workflow` (`.claude/workflows/course-batch.js`)
-on a batch, then triage
+One job: run the agent workflow `feyn-course-batch-workflow` (`course-batch.js` of
+`.claude/workflows/`) on a batch, then triage
 what it leaves open. A course changes only through an issue or a batch: work on the batch issue's
 branch (`/feyn-issue-branch`).
 

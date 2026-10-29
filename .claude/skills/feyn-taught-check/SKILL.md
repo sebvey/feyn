@@ -6,8 +6,8 @@ argument-hint: "<course id> [from <concept>] [to <concept>]"
 
 # /feyn-taught-check
 
-One job: run the agent workflow `feyn-taught-check-workflow` (`.claude/workflows/taught-check.js`)
-and handle what it finds.
+One job: run the agent workflow `feyn-taught-check-workflow` (`taught-check.js` of
+`.claude/workflows/`) and handle what it finds.
 It is mandatory after any change to what is taught (teaching notes, a sub-concept, an order), before
 the merge (`SPEC.md` section 10).
 
