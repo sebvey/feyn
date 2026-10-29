@@ -7,8 +7,9 @@ argument-hint: "[after-merge]"
 # /finish
 
 Two moments, never in the same turn: **deliver** (open the PR), then, once the PR is merged,
-**clean up**. It never merges: the merge belongs to the reviewer. The clean-up writes on
-GitHub: two lines on the epic's plan comment (step 7).
+**clean up**. It never merges: the merge belongs to the reviewer. Each writes on GitHub: the
+delivery sets the issue Ready for review (step 7); the clean-up adds two lines to the epic's
+plan comment, and sets the epic Ready for review when its last slice closed (step 7).
 
 The branch is `<type>/<n>-<slug>` (made by `/start`); `<n>` is the issue. On `main`, or on a
 branch without an issue number: stop and say so.
@@ -87,17 +88,21 @@ branch without an issue number: stop and say so.
      is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
      list the PR: rerun once. PR still missing on a `Closes` PR, or listed on a `Refs` PR (a
      closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
-7. **Ask for review**: reply with the PR URL, the title, what the reviewer should look at
-   first (the PR's Review first, in one line), and the merge command:
-   `mise exec -- gh pr merge <pr> --squash --delete-branch`.
+7. **Ask for review**: set the issue's Status to Ready for review (the work claims done, the
+   maintainer concludes; [project.md](../ticket/project.md)):
+   `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
+   Not for a `Refs` PR (the issue stays In progress), and not under `/orchestrate`, whose
+   hand-over sets it after the fresh-agent review (its step 5). Then reply with the PR URL, the
+   title, what the reviewer should look at first (the PR's Review first, in one line), and the
+   merge command: `mise exec -- gh pr merge <pr> --squash --delete-branch`.
    The repository squashes with the PR title and body and allows squash only (GitHub,
    observed 2026-10-28, #135), so the PR title, followed by ` (#<pr>)`, becomes the subject
    on `main`: the command names no subject. Stop there.
-   A draft PR: name the question instead of the merge command. The maintainer answers with a
-   comment and removes `blocked:maintainer` from the issue: one removal. Then apply the answer,
-   remove the section from the body, `mise exec -- gh pr ready <pr>`, and ask for review
-   again. Never remove the label yourself; if it is still on the issue, the answer is not
-   given: stop.
+   A draft PR: the issue stays In progress, with its label; name the question instead of the
+   merge command. The maintainer answers with a comment and removes `blocked:maintainer` from
+   the issue: one removal. Then apply the answer, remove the section from the body,
+   `mise exec -- gh pr ready <pr>`, and ask for review again (Ready for review then). Never
+   remove the label yourself; if it is still on the issue, the answer is not given: stop.
 
 ## Clean up (after the merge)
 
@@ -151,9 +156,11 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      say it was missing. The reply
      gives the two lines. Any other parent: no plan comment, and "parent issue" replaces
      "epic" below. Open, with `completed` equal to `total`, means every sub-issue is closed:
-     the reply ends with one line, the epic's number and title, its Done when (read in its
-     body), and that closing it is the maintainer's (path: the epic, button "Close issue",
-     reason completed or not planned); only the lines of the next bullet follow it. Never
+     set the epic Ready for review ([project.md](../ticket/project.md), "Commands"; an epic
+     only, not another parent), and the reply ends with one line, the epic's number and title,
+     its Done when (read in its body), to verify, and that closing it is the maintainer's
+     (path: the epic, button "Close issue", reason completed or not planned; a statement that
+     does not hold: a new slice, `/ticket`); only the lines of the next bullet follow it. Never
      close it yourself.
    - **The issues it blocked.**
      `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<n>/dependencies/blocking --jq '.[] | select(.state == "open" and .issue_dependencies_summary.blocked_by == 0) | [.number, .title] | @tsv'`

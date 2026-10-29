@@ -34,7 +34,8 @@ bullets (`- **Observation**: …`), or for an epic the five sections of
    An open issue on the same point: add a comment to it instead
    (`mise exec -- gh issue comment <n> --body-file <file>`) and stop.
 3. **Decide what it is** ([project.md](project.md), "Epics"), one of three:
-   - a **slice**: the maintainer names its epic (Ready or In progress), or the observation
+   - a **slice**: the maintainer names its epic (Ready, In progress, or Ready for review
+     when the maintainer's check of its Done when adds a slice), or the observation
      serves the epic In progress. An epic with no plan comment is being taken: its first one
      or two slices are allowed, and the plan comment is written right after them. With a plan
      comment, a slice is created only if it is the next one it names; otherwise refuse, and

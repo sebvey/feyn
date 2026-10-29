@@ -8,7 +8,9 @@ field says where an issue stands:
 |---|---|---|---|
 | Backlog | proposed, to triage | Project workflow "Item added to project" | `c1d0b0c3` |
 | Ready | decided, free to take | `/ticket` when the maintainer decided, or the maintainer | `be2d48d7` |
-| In progress | a branch exists | `/start` (no Project workflow fires on a branch) | `be703c13` |
+| In progress | a branch exists | `/start` (no Project workflow fires on a branch); `/orchestrate` step 4 when a correction is asked on a delivered PR | `be703c13` |
+| Needs Decision | present in the Project, unused by the skills for now: the label `blocked:maintainer` carries a decision awaited | nobody | `33e9b212` |
+| Ready for review | the work claims done, the maintainer reviews and concludes: a slice whose PR is open after the fresh-agent review (the maintainer merges), an epic whose slices are all closed (the maintainer verifies its Done when and closes it) | `/finish`: "Deliver" step 7 for a slice (`/orchestrate` step 5 when it runs the cycle), "Clean up" step 7 for its epic | `deab4f08` |
 | Done | closed (the close reason stays on GitHub) | Project workflow "Item closed"; `/finish after-merge` only when that Project workflow is off | `9e81e5a6` |
 
 Project id `PVT_kwHOADOnU84Bo8V6`, Status field id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`.
@@ -87,7 +89,10 @@ at triage. An epic has no To do and no slice posed in advance.
 `/ticket`, each attached to the epic and Ready, and write the epic's plan comment (the slices
 envisaged, in order, in five lines; what is unknown; what was dropped). The epic goes In
 progress when its first slice starts: `/start` sets it ("Commands"). After each slice, `/finish`
-adds two lines to the plan comment (the slice closed, the next to pose).
+adds two lines to the plan comment (the slice closed, the next to pose). When its last slice
+closes (`sub_issues_summary.completed == total`), `/finish` sets the epic Ready for review: the
+maintainer verifies its Done when and closes it. A statement that does not hold adds a slice
+(`/ticket`), and the epic goes back to In progress when that slice starts (`/start`).
 
 **The views**, set by the maintainer in the web interface (Project feyn, a view's menu:
 filter, Layout, Group by, Fields):
@@ -96,7 +101,7 @@ filter, Layout, Group by, Fields):
 |---|---|---|---|---|
 | Epics | table | `label:epic` | | Status, Sub-issues progress, Milestone |
 | Ready | table | `status:Ready -label:epic` | Parent issue | |
-| WIP | board | `-status:Backlog,Ready,Done has:status -label:epic` (In progress only) | Parent issue | Linked pull requests |
+| WIP | board | `-status:Backlog,Ready,Done has:status -label:epic` (In progress and Ready for review) | Parent issue | Linked pull requests |
 | Backlog | table | `status:Backlog -label:epic` | Parent issue | |
 
 The Backlog's "No Parent Issue" group is the triage inbox: the observations.

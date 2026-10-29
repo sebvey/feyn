@@ -40,3 +40,13 @@ The maintainer works in the web interface: the Project's Board view, filtered on
   not closed by a PR.
 - Amended 2026-10-29 (#229): the Project's views are Epics, Ready, WIP and Backlog
   (`docs/contributing.md`, "How the work is organised"); the morning walks them, not a Board view.
+- Amended 2026-10-29 (#235): the Status field has six options. **Ready for review**: the work
+  claims done, the maintainer reviews and concludes; for a slice, its PR is open after the
+  fresh-agent review and the maintainer merges; for an epic, every slice is closed and the
+  maintainer verifies its Done when before closing it (a statement that does not hold adds a
+  slice, and the epic goes back to In progress). `/finish` sets it, at the hand-over of a slice
+  (`/orchestrate` step 5 when it runs the cycle, after the fresh-agent review) and when an
+  epic's last slice closes. A correction asked on a delivered PR returns the slice
+  to In progress (`/orchestrate` step 4), and the renewed hand-over sets Ready for review
+  again. **Needs Decision** stays in the Project, unused by the skills for now: the label
+  `blocked:maintainer` carries that state (decision `blocked-is-a-label-not-a-state`).
