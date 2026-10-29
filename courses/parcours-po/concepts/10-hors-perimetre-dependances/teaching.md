@@ -148,10 +148,10 @@ l'équipe appli sont des propositions d'exercice : ils ne deviennent pas des fai
 - **Situation** : la story d'Abba (concept 7) : « En tant qu'abonné, je veux savoir avant de
   partir s'il reste un vélo à ma station, afin de ne pas me déplacer pour rien. » La
   disponibilité par station vient de la plateforme ; la livrer à Abba par un canal (SMS, serveur
-  vocal, appli) relève de l'équipe appli, dont Pia est la PO ; Scarlette est Scrum Master des deux équipes. Pia veut aussi la disponibilité
-  par station pour l'appli. Le canal pour les abonnés sans l'appli n'est pas au backlog de
-  l'équipe appli. Dana : « Notre part sera prête à la fin du sprint. Le canal, c'est l'affaire de
-  l'équipe appli. »
+  vocal, appli) relève de l'équipe appli, dont Pia est la PO ; Scarlette est Scrum Master des deux
+  équipes. Pia veut aussi la disponibilité par station pour l'appli. Le canal pour les abonnés sans
+  l'appli n'est pas au backlog de l'équipe appli. Dana : « Notre part sera prête à la fin du sprint.
+  Le canal, c'est l'affaire de l'équipe appli. »
 - **Question** : en tant que PO de la plateforme, que fais-tu de cette dépendance ?
 - **Réponse attendue** : Dana a raison sur la frontière : le canal relève de l'équipe appli.
   Mais la part de la plateforme, livrée seule, ne sert pas Abba tant que le canal n'existe pas.

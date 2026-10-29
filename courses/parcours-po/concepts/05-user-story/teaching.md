@@ -10,12 +10,13 @@
    reste courte, et le détail va dans la conversation et la confirmation.
    Exemples du fil rouge : en 5a1, Régis, régulateur, veut savoir quelles stations vont se vider,
    pour y aller avant : qui (le régulateur), quoi (connaître les stations qui vont se vider),
-   pourquoi (y aller avant). En 5a2, Abba, une abonnée, veut savoir avant de partir s'il reste un vélo à sa station : la phrase
-   tient en une ligne ; ce qu'est « sa station » (celle qu'elle a choisie comme favorite) et la
-   fraîcheur visée (moins de 15 minutes) se précisent à côté, en conversation puis en critères.
-   Découpe en deux messages : **5a1** les trois parties, avec « La demande de Maud, en story » (« Une
-   semaine de Maud : story ou parcours ? » en rechange, ou si l'apprenant décrit un parcours) ; **5a2** les 3C avec « La carte suffit-elle ? », l'origine réduite à une
-   ligne. Chaque message a sa question.
+   pourquoi (y aller avant). En 5a2, Abba, une abonnée, veut savoir avant de partir s'il reste un
+   vélo à sa station : la phrase tient en une ligne ; ce qu'est « sa station » (celle qu'elle a
+   choisie comme favorite) et la fraîcheur visée (moins de 15 minutes) se précisent à côté, en
+   conversation puis en critères. Découpe en deux messages : **5a1** les trois parties, avec « La
+   demande de Maud, en story » (« Une semaine de Maud : story ou parcours ? » en rechange, ou si
+   l'apprenant décrit un parcours) ; **5a2** les 3C avec « La carte suffit-elle ? », l'origine
+   réduite à une ligne. Chaque message a sa question.
 2. **5b le « afin de » et les « pourquoi ? » successifs** : un « afin de » circulaire (il répète
    le « je veux ») ou de confort (« être bien informé ») n'aide ni à ordonner ni à choisir une
    solution. Le PO demande « pourquoi ? » à l'utilisateur, plusieurs fois, et s'arrête à une

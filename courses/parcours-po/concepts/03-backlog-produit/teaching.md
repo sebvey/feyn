@@ -69,8 +69,8 @@ ne deviennent pas des faits du fil rouge.
   précis pour que les Developers puissent le choisir au Sprint Planning et le finir en un
   sprint : le Scrum Guide dit alors qu'il est « prêt à être choisi » (consensus). Que le bas
   reste vague, le Scrum Guide 2017 le disait et la version 2020 ne le dit plus ; c'est le D de
-  DEEP (détaillé à bon escient), choix d'école de Cohn et Pichler. Rappel en une ligne (concept 0) : le backlog reste
-  la seule source de travail de l'équipe.
+  DEEP (détaillé à bon escient), choix d'école de Cohn et Pichler. Rappel en une ligne (concept 0) :
+  le backlog reste la seule source de travail de l'équipe.
 - **Situation** : Anna propose de consacrer les deux prochains jours à écrire en détail tous
   les éléments du backlog, jusqu'à la comparaison au même mois de l'an dernier pour Charlotte. Or
   cette comparaison suppose les locations par quartier, qui supposent l'accès à la table des
@@ -94,8 +94,9 @@ ne deviennent pas des faits du fil rouge.
     savoir d'un élément pour que les Developers le choisissent au Sprint Planning ? » ;
   - répondre « non » sans dire quoi détailler : relancer par « que détailles-tu en premier ? ».
 - **Ce qui marche** : « quand cet élément sera pris, que saura-t-on de plus qu'aujourd'hui ? ».
-  Pour réexpliquer après « détaillé partout » : une autre demande d'Étienne, voir les locations du jour par station, attend elle aussi l'accès à la table des locations ; si la DSI n'accorde que certaines colonnes, le détail
-  écrit aujourd'hui est à refaire.
+  Pour réexpliquer après « détaillé partout » : une autre demande d'Étienne, voir les locations du
+  jour par station, attend elle aussi l'accès à la table des locations ; si la DSI n'accorde que
+  certaines colonnes, le détail écrit aujourd'hui est à refaire.
 
 ### Maud passe par Diego (3a2)
 - **Explication** : le backlog est la seule source de travail de l'équipe (concept 0) : ce qui

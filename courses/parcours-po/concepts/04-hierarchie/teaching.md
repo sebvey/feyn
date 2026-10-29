@@ -60,8 +60,8 @@ mois, puis comparaison au même mois de l'an dernier).
     vues (2 et 5), en plus de la vue des stations vides, déjà livrée ;
   - Partie 1, mettre 4 au backlog produit parce que le travail est nécessaire : il ne sert qu'à
     réaliser 3, c'est une tâche du plan des Developers. Un travail technique qui porte sa propre
-    raison (par exemple dédoublonner les relevés des stations, qui contiennent des doublons : ce travail sert plusieurs vues, pas une seule story) entre, lui, au backlog,
-    et le PO l'ordonne ;
+    raison (par exemple dédoublonner les relevés des stations, qui contiennent des doublons : ce
+    travail sert plusieurs vues, pas une seule story) entre, lui, au backlog, et le PO l'ordonne ;
   - Partie 2, trancher 2 et 5 sur leur libellé (« une vue, c'est une feature ») : le mot « vue » ne
     fait pas le niveau, les besoins d'Étienne le font.
 - **Ce qui marche** : partir du haut et demander ce que chaque élément contient, puis placer
@@ -100,10 +100,11 @@ mois, puis comparaison au même mois de l'an dernier).
   features ne contiennent qu'une story, la feature répète la story et double l'écriture et le
   suivi. Avant de le retirer, vérifier que ces features ne sont pas des stories mal classées, ou
   des features dont les autres stories ne sont pas encore écrites : si c'est le cas, on reclasse
-  et on recompte. Sinon, proposer de retirer le niveau (epic > story > tâche) et d'y revenir si des besoins faits de plusieurs besoins distincts reviennent (comptés en « je veux » en 4b). Une réponse qui propose de retirer le niveau
-  sans cette vérification est juste : apporter la vérification dans la correction. Nuance : c'est
-  un choix du cours, pas un consensus ; une feature isolée qui ne contient qu'une story
-  n'est pas un signal. Comment régler les niveaux dans l'outil :
+  et on recompte. Sinon, proposer de retirer le niveau (epic > story > tâche) et d'y revenir si des
+  besoins faits de plusieurs besoins distincts reviennent (comptés en « je veux » en 4b). Une
+  réponse qui propose de retirer le niveau sans cette vérification est juste : apporter la
+  vérification dans la correction. Nuance : c'est un choix du cours, pas un consensus ; une feature
+  isolée qui ne contient qu'une story n'est pas un signal. Comment régler les niveaux dans l'outil :
   annexe A1a, à proposer quand l'apprenant en a besoin.
 - **Erreurs fréquentes** :
   - garder le niveau « au cas où » : chaque niveau se remplit et se tient à jour ;
