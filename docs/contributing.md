@@ -202,9 +202,9 @@ first ("Without this, an agent would…"), in the `decisions/` folder of the are
 the agentic layer's (`.claude/`, `.github/`) in `.claude/decisions/`, two areas or more and the
 repository's in `docs/decisions/`; `/feyn-decision` writes it and refuses one without a
 counterfactual. A decision that still holds but whose mechanism changed gets an "Amended" line;
-one that no longer holds is superseded. Issues, PRs and documents
-use the reserved words of the glossary and avoid the words it lists as "not". Why: decisions
-`decision-format`, `reserved-vocabulary`.
+one that no longer holds is superseded. Issues, PRs and documents use the reserved words of the
+glossary and avoid the words it lists as "not". Why: decisions `decision-format`,
+`reserved-vocabulary`.
 
 ## Language
 

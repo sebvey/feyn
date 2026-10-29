@@ -974,5 +974,5 @@ ${report}
 const expected = utf8Length(report.trimEnd())
 if (!written || !written.written || written.trimmed_bytes !== expected) throw new Error(`The report ${REPORT} was not written as rendered (${written ? `${written.trimmed_bytes} bytes without trailing whitespace, ${written.bytes} in all` : 'no answer'}; ${expected} expected without trailing whitespace): the run's result is in the workflow log`)
 if (written.bytes !== utf8Length(report)) log(`The report ${REPORT} differs from the rendered one in its trailing whitespace only (${written.bytes} bytes, ${utf8Length(report)} rendered)`)
-if (failed) throw new Error(`migrate-concept failed for concept ${CONCEPT}: checks fail (${blocking.join('; ')}). Report: ${REPORT}`)
+if (failed) throw new Error(`feyn-migrate-concept-workflow failed for concept ${CONCEPT}: checks fail (${blocking.join('; ')}). Report: ${REPORT}`)
 return summary

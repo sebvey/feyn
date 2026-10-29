@@ -43,4 +43,6 @@ counterfactual, picks the folder, checks for a neighbouring slug.
 ## Consequences
 
 - Amended 2026-10-30 (#252): the agentic layer has its own folder, `.claude/decisions/`; the
-  "Amended" line is the written practice.
+  "Amended" line is the written practice. The two sentences of the body that state them changed
+  too, an exception to that practice named here: `decision-format` is the rule itself, and an
+  agent reads the rule in its body.

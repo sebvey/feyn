@@ -91,7 +91,7 @@ the English terms below are how we talk about them in code, docs and issues.
 | **agent workflow** | a Claude Code multi-agent script in `.claude/workflows/`; its name (`meta.name`) is `feyn-<script>-workflow`, so that the skill listing tells it from a skill | |
 | **CI workflow** | a GitHub Actions file in `.github/workflows/` | "pipeline", "action" |
 | **Project workflow** | a built-in automation of the Project ("Auto-add to project", "Item added to project", "Item closed"), turned on in the web interface; `.claude/reference/project.md` lists which are on | "automation", "workflow" alone |
-| **template** | always qualified: **course templates** (`specs/<name>/templates/`, model files of a course), **teacher template** (`teacher/CLAUDE.template.md`), **issue template**, **PR body template** (`.claude/reference/pr-body.md`) | "template" alone, "boilerplate", "scaffold" |
+| **template** | always qualified: **course templates** (`specs/<name>/templates/`, model files of a course), **teacher template** (`teacher/CLAUDE.template.md`), **issue template**, **body template** (`.claude/reference/*-body.md`: the body of an issue, an epic, a proposal or a decision, and the **PR body template**, `.claude/reference/pr-body.md`) | "template" alone, "boilerplate", "scaffold" |
 | **channel** | where a build is served from: **prod** (a course tag), **next** (`main`), **preview** (a PR) | "environment", "stage", "env" |
 | **release** | tagging a course version (`<id>/vX.Y.Z`) and deploying prod; "publish" means a release, never a build | "deploy" alone, "ship" |
 | **course version** / **spec version** | the two versioned objects; tooling has a **commit sha**, no version | "site version", "teacher version" |

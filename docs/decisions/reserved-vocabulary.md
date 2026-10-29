@@ -31,3 +31,5 @@ already in use.
   repository files and a course's in its course files; a word may be reserved in both with two
   meanings; a repository text that means the course's sense cites it as such; Scrum vocabulary
   is available to the repository ("epic", decision `themes-and-release-milestones`).
+- Amended 2026-10-30 (#252): the agent workflows are named `feyn-<script>-workflow`
+  (`feyn-course-batch-workflow`).
