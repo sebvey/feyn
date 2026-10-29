@@ -135,17 +135,23 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
    - Either way, if the issue still carries `blocked:maintainer`, tell the
      maintainer.
 7. A `Closes` PR whose issue closed: say what its closing frees. Nothing closes a parent issue
-   (it has no PR of its own, and no GitHub automation closes it with its sub-issues), and
+   (an epic has no PR of its own, and no GitHub automation closes it with its sub-issues), and
    nothing says an issue is free once its last blocker closes.
-   - **The parent.** `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
+   - **The epic.** `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
      prints the parent's number; HTTP 404 « No parent issue found »: no parent, skip to the
      next bullet. Then
-     `mise exec -- gh api repos/sebvey/feyn/issues/<parent> --jq '[.state, .sub_issues_summary]'`:
-     open, with `completed` equal to `total`, means every sub-issue is closed. Then the reply
-     ends with one line: the parent's number and title, its Done when (read in its body), and
-     that closing it is the maintainer's (path: the parent issue, button "Close issue", reason
-     completed or not planned); only the lines of the next bullet follow it. Never close it
-     yourself.
+     `mise exec -- gh api repos/sebvey/feyn/issues/<parent> --jq '[.state, .sub_issues_summary, [.labels[].name]]'`.
+     A parent with the label `epic` is the epic: add two lines to its **plan comment**
+     ([project.md](../ticket/project.md), "Epics": find it, edit it), the slice closed
+     (`#<n> (PR #<pr>)`, what it delivered in a few words) and the next slice to pose, from the
+     plan comment's order, or "next slice to pose: the maintainer decides" when it is not
+     obvious; no plan comment: add one with the two lines and say it was missing. The reply
+     gives the two lines. Any other parent: no plan comment, and "parent issue" replaces
+     "epic" below. Open, with `completed` equal to `total`, means every sub-issue is closed:
+     the reply ends with one line, the epic's number and title, its Done when (read in its
+     body), and that closing it is the maintainer's (path: the epic, button "Close issue",
+     reason completed or not planned); only the lines of the next bullet follow it. Never
+     close it yourself.
    - **The issues it blocked.**
      `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<n>/dependencies/blocking --jq '.[] | select(.state == "open" and .issue_dependencies_summary.blocked_by == 0) | [.number, .title] | @tsv'`
      lists each open issue that #n blocked whose blockers are now all closed

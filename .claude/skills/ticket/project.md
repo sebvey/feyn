@@ -52,29 +52,61 @@ interface (Project feyn, menu ⋯, Workflows) (GitHub, observed 2026-10-28, #71)
   Project workflows ([above](#the-project-workflows)); "Item added to project" off, set the
   Status; on, or the query fails, tell the maintainer and stop.
 
-## Themes
+## Epics
 
-Work is framed by themes (decision `themes-and-release-milestones`): an issue with the label
-`theme`, parent of its slices. The Project shows them through its "Parent issue" and
-"Sub-issues progress" fields (a **Themes** table view filtered on `label:theme`; the Backlog and
-Ready views grouped by Parent issue, set in the web interface: Project feyn, a view's menu,
-Group by).
+Work is organised by epics, split into slices one at a time
+([contributing](../../../docs/contributing.md), "How the work is organised"; decision
+`themes-and-release-milestones`). An **epic** is an issue with the label `epic`, titled
+"Epic: …", in the five sections of [epic-body.md](epic-body.md), parent of its **slices**
+(sub-issues). An **observation** is an issue with no parent, in the Backlog until triaged.
 
-- **Read** a slice's theme: `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
-  (HTTP 404 « No parent issue found » when it has none); a theme's slices and their count:
-  `mise exec -- gh api repos/sebvey/feyn/issues/<theme>/sub_issues --jq '.[] | [.number, .state, .title] | @tsv'`
-  and `mise exec -- gh api repos/sebvey/feyn/issues/<theme> --jq .sub_issues_summary`.
-- **Attach** a slice to its theme (the link takes the slice's database id, not its number):
-  `mise exec -- gh api -X POST repos/sebvey/feyn/issues/<theme>/sub_issues -F sub_issue_id=$(mise exec -- gh api repos/sebvey/feyn/issues/<n> --jq .id)`.
-- **Detach**: `mise exec -- gh api -X DELETE repos/sebvey/feyn/issues/<theme>/sub_issues -F sub_issue_id=<database id>`.
-- The themes of 2026-10-29: #220 the `linear-course` spec v1; #221 `parcours-po` conformity;
-  #222 the teacher; #223 the site; #224 course quality; #225 the flow and the tooling.
+- **Read** a slice's epic: `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
+  (HTTP 404 « No parent issue found » when it has none); an epic's slices and their count:
+  `mise exec -- gh api repos/sebvey/feyn/issues/<epic>/sub_issues --jq '.[] | [.number, .state, .title] | @tsv'`
+  and `mise exec -- gh api repos/sebvey/feyn/issues/<epic> --jq .sub_issues_summary`.
+  The epics: `mise exec -- gh issue list --label epic --json number,title --jq '.[] | [.number, .title] | @tsv'`.
+- **Attach** a slice to its epic (the link takes the slice's database id, not its number):
+  `mise exec -- gh api -X POST repos/sebvey/feyn/issues/<epic>/sub_issues -F sub_issue_id=$(mise exec -- gh api repos/sebvey/feyn/issues/<n> --jq .id)`.
+- **Detach**: `mise exec -- gh api -X DELETE repos/sebvey/feyn/issues/<epic>/sub_issue -F sub_issue_id=<database id>`
+  (singular `sub_issue`: the plural returns 404) (GitHub, observed 2026-10-29, #230).
+- **The plan comment**: the last comment of the epic whose body starts with "**Plan comment**".
+  Its database id:
+  `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<epic>/comments --jq '.[] | select(.body | startswith("**Plan comment**")) | .id' | tail -n 1`
+  (nothing printed: the epic has none). Edit it:
+  `mise exec -- gh api -X PATCH repos/sebvey/feyn/issues/comments/<id> -F body=@<file>`; add one:
+  `mise exec -- gh issue comment <epic> --body-file <file>`.
+
+**Definition of Ready** of an epic: its five sections are written, the Done when verifiable,
+and nothing blocks it (no open blocked-by link, "Dependencies"). The maintainer sets it Ready
+at triage. An epic has no To do and no slice posed in advance.
+
+**Take an epic**, among the Ready ones: read its Material, pose one or two slices with
+`/ticket`, each attached to the epic and Ready, and write the epic's plan comment (the slices
+envisaged, in order, in five lines; what is unknown; what was dropped). The epic goes In
+progress when its first slice starts (set its Status, "Commands"). After each slice, `/finish`
+adds two lines to the plan comment (the slice closed, the next to pose).
+
+**The views**, set by the maintainer in the web interface (Project feyn, a view's menu:
+filter, Layout, Group by, Fields):
+
+| View | Layout | Filter | Grouped by | Columns |
+|---|---|---|---|---|
+| Epics | table | `label:epic` | | Status, Sub-issues progress, Milestone |
+| Ready | table | `status:Ready -label:epic` | Parent issue | |
+| WIP | board | `-status:Backlog,Ready,Done has:status -label:epic` (In progress only) | Parent issue | Linked pull requests |
+| Backlog | table | `status:Backlog -label:epic` | Parent issue | |
+
+The Backlog's "No Parent Issue" group is the triage inbox: the observations.
+
+The epics of 2026-10-29: #220 the `linear-course` spec v1; #221 `parcours-po` conformity;
+#222 the teacher; #223 the site; #224 `parcours-po`, first quality campaign; #228 the work
+organisation.
 
 ## Milestones
 
 A milestone is a release target, named after the tag that closes it (`linear-course/v1.0.0`,
-`parcours-po/v0.2.0`); it holds the issues that must close before the tag and closes when the
-tag exists. Tooling issues carry none. Read them:
+`parcours-po/v0.2.0`); it holds the slices that must close before the tag (an epic targets it
+through its slices) and closes when the tag exists. Tooling issues carry none. Read them:
 `mise exec -- gh api repos/sebvey/feyn/milestones --jq '.[] | [.number, .title, .open_issues] | @tsv'`.
 
 ## Dependencies
