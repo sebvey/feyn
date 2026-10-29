@@ -32,7 +32,12 @@ what the caller passes, "none" for each input it does not pass:
 - **Checks to rerun.** A PR with any check or fixture runner to rerun (a course, `site/`,
   `specs/*/checks/` in `mise exec -- gh pr diff <pr> --name-only`): the reviewer gets
   `isolation: "worktree"`, and the brief has it check out the PR head detached. Its worktree
-  holds no issue branch; the caller removes it (`/feyn-deliver` step 6.1, 6.2 and 6.4).
+  holds no issue branch; the caller removes it (`/feyn-deliver` step 6.1, 6.2 and 6.4). Tell
+  that reviewer: spawned with isolation, a compound shell command (`&&`, a heredoc) is refused
+  as too complex to verify it stays in the worktree: run one plain command at a time
+  (Claude Code, observed 2026-10-29, #249).
+- **A draft PR** (a decision awaited): say so; a decision awaiting the maintainer's answer is
+  not a finding.
 - **An agent-workflow run.** The run ids `wf_<id>` and their transcript directory.
 - **A blind run.** The deleted paths and the worktree.
 - **A `migrate-concept` PR** (the S1-10 sub-issues). The [migration variant](#migration-variant),

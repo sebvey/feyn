@@ -39,9 +39,9 @@ on `main`. The body starts with `Closes #n` (or `Refs #n` when the PR is one ste
 then, under `##` headings, Context, Issues, Changes, Checks and Review first, within the limits of
 `/feyn-pull-request` step 5, so that the maintainer gets back into the subject from the PR alone.
 Checks counts the Done when verdicts (`met`, `not met`, `deviation`) without restating the
-statements, and says why for each `not met` or `deviation`; on every PR, the fresh-agent reviewer
-of `/feyn-pr-review` reruns every statement. The PR never redefines the Done
-when; the issue wins, and the PR says why it deviates. Once the PR is open, `/feyn-pull-request`
+statements, and says why for each `not met` or `deviation`; on every PR, unless the maintainer
+asked for one without a review, the fresh-agent reviewer of `/feyn-pr-review` reruns every
+statement. The PR never redefines the Done when; the issue wins, and the PR says why it deviates. Once the PR is open, `/feyn-pull-request`
 checks that the issue lists it (a `Refs` PR: it lists nothing). A branch that leaves a decision to
 the maintainer opens as a draft PR, with `blocked:maintainer` on its issue only, and an "Awaiting
 the maintainer" section above `Closes #n`. The maintainer answers with a comment and removes the

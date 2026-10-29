@@ -91,7 +91,8 @@ Load `/feyn-pr-review <pr>`: a fresh agent reads the PR, not the contributor's r
 what the PR does not hold: for a PR whose evidence is an agent-workflow run, the run ids
 `wf_<id>` and their transcript directory, and for a blind run the deleted paths and the
 worktree; for a `migrate-concept` PR (the S1-10 sub-issues), the
-[migration variant](../feyn-pr-review/SKILL.md#migration-variant). A reviewer
+[migration variant](../feyn-pr-review/SKILL.md#migration-variant) with what fills it: the
+concept, its folder, the old concept file and the site page. A reviewer
 given its own worktree (checks to rerun): clean it with steps 6.1, 6.2 and 6.4 only: it holds
 no issue branch, so no `/feyn-merge-cleanup` for it.
 

@@ -25,8 +25,9 @@ Follow `.claude/skills/feyn-issue-branch/SKILL.md` for #<n>, adapted to a worktr
 (Two-phase migration, spawned without isolation: your current directory is the main checkout:
 never edit, commit or switch there. The branch, the worktree <path> and the Status are done:
 skip their steps above. Absolute paths, `git -C <path>`, `gh pr create --head <branch>`.)
-Then do the work, then follow `.claude/skills/feyn-pull-request/SKILL.md` to push and open the PR,
-leaving the Status In progress (the orchestrator sets Ready for review at the hand-over). Do NOT
+Then do the work, then follow `.claude/skills/feyn-pull-request/SKILL.md` to push and open the PR;
+skip its step 7: the orchestrator runs the review. Leave the Status In progress (the
+orchestrator sets Ready for review at the hand-over). Do NOT
 merge. No signature or generated-by line in the PR body (the squash uses it as the commit
 message).
 

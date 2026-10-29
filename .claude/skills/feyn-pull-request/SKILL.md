@@ -90,7 +90,11 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
 7. **Fresh-agent review**, on the direct path. Under `/feyn-deliver`, skip this step: its
    orchestrator runs the review (its step 3) and sends the findings back (its step 4). Run
-   `/feyn-pr-review <pr>`, then, yourself, since no other agent fixes on the direct path:
+   `/feyn-pr-review <pr>`; a draft PR (a decision awaited, step 6) is reviewed now, before the
+   maintainer's answer, and the decision awaiting that answer is not a finding. Then, yourself,
+   since no other agent fixes on the direct path:
+   - remove the reviewer's worktree when `/feyn-pr-review` returns one, as `/feyn-deliver`
+     steps 6.1, 6.2 and 6.4;
    - apply the blocking findings, and the non-blocking ones worth fixing; commit, push, and
      update the body (`mise exec -- gh pr edit <pr> --body-file <file>`);
    - check each fix in the diff (`mise exec -- gh pr diff <pr>`);
