@@ -195,7 +195,10 @@ faits du fil rouge. Le prof ne demande jamais à l'apprenant de fixer une règle
 ### Des chiffres fiables, dit Charlotte (12b, en rechange)
 - **Explication** : une exigence de qualité vague ne se teste pas ; on la traduit en règles
   mesurables, une dimension à la fois, et c'est l'utilisateur qui dit le niveau dont il a
-  besoin (la qualité dépend de l'usage).
+  besoin (la qualité dépend de l'usage). La liste des dimensions est un choix d'école : six chez
+  DAMA UK (exactitude, complétude, unicité, cohérence, fraîcheur, validité). Une exigence va dans la
+  DoD si elle vaut pour toute story (11a), dans un critère si elle est propre à une story (8a1),
+  dans la définition si elle concerne l'indicateur.
 - **Situation** : Charlotte, chargée de mission mobilité, à propos des locations par quartier :
   « Je présente ces chiffres au conseil : il me faut des chiffres fiables. »
 - **Question** : comment transformes-tu « fiables » en exigences qu'on peut vérifier ?
