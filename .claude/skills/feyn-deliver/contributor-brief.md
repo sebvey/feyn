@@ -21,7 +21,7 @@ Follow `.claude/skills/feyn-issue-branch/SKILL.md` for #<n>, adapted to a worktr
   outside the sandbox (Claude Code, observed 2026-10-27, #27).
 - Spawned with isolation, a compound shell command (`&&`, a heredoc) is refused as too complex
   to verify it stays in the worktree: write files with the Write and Edit tools and run one
-  plain command at a time (Claude Code, observed 2026-10-29, #248).
+  plain command at a time (Claude Code, observed 2026-10-29, #249).
 (Two-phase migration, spawned without isolation: your current directory is the main checkout:
 never edit, commit or switch there. The branch, the worktree <path> and the Status are done:
 skip their steps above. Absolute paths, `git -C <path>`, `gh pr create --head <branch>`.)
