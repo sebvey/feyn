@@ -64,15 +64,19 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      next slice to pose, from the plan comment's order, or "next slice to pose: the maintainer
      decides" when it is not obvious, or "next slice: none, the epic closes" when this was its
      last; no plan comment: add one beginning with `**Plan comment**`, with the two lines, and
-     say it was missing. The reply
-     gives the two lines. Any other parent: no plan comment, and "parent issue" replaces
-     "epic" below. Open, with `completed` equal to `total`, means every sub-issue is closed:
-     set the epic Ready for review ([project.md](../../reference/project.md), "Commands"; an epic
-     only, not another parent), and the reply ends with one line, the epic's number and title,
-     its Done when (read in its body), to verify, and that closing it is the maintainer's
-     (path: the epic, button "Close issue", reason completed or not planned; a statement that
-     does not hold: a new slice, `/feyn-issue`); only the lines of the next bullet follow it. Never
-     close it yourself.
+     say it was missing. The reply gives the two lines. Then read the plan comment's last
+     "next slice" line, the one just written: when it says the epic closes ("next slice: none,
+     the epic closes"), set the epic Ready for review
+     ([project.md](../../reference/project.md), "Commands"), and the reply ends with one line,
+     the epic's number and title, its Done when (read in its body), to verify, and that closing
+     it is the maintainer's (path: the epic, button "Close issue", reason completed or not
+     planned; a statement that does not hold: a new slice, `/feyn-issue slice #<epic>`); only
+     the lines of the next bullet follow it. Otherwise leave the epic In progress, however many
+     of its sub-issues are closed: a slice exists only if it is the next one
+     ([contributing](../../../docs/contributing.md), "How the work is organised", rules of the
+     cycle). Never close it yourself. Any other parent: no plan comment and no Status; when its
+     `sub_issues_summary` shows every sub-issue closed, the reply ends with one line, its number
+     and title, and that closing it is the maintainer's.
    - **The issues it blocked.**
      `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<n>/dependencies/blocking --jq '.[] | select(.state == "open" and .issue_dependencies_summary.blocked_by == 0) | [.number, .title] | @tsv'`
      lists each open issue that #n blocked whose blockers are now all closed

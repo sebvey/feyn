@@ -37,12 +37,13 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    `<type>` is the `type:` label, `<area>` the `area:` label, both without their prefix
    (`course(course:parcours-po): write the cases of concept 9`). Summary: imperative,
    lowercase, no final period, under 72 characters for the whole title.
-5. **Body**, from the PR body template [pr-body.md](pr-body.md). It is read by a maintainer who
-   reviews many PRs on many subjects and must get back into this one from the PR alone; it is
-   also the squash commit message on `main`. 30 lines at most, blank lines and the awaiting
-   section excluded. The sections, in this order, each an `##` heading except the `Closes`
-   line; a line of `pr-body.md` that does not apply is dropped (the awaiting section outside a
-   draft, `Not verified:` with nothing unverified), and the body carries no HTML comment:
+5. **Body**, from the PR body template [pr-body.md](../../reference/pr-body.md). It is read by
+   a maintainer who reviews many PRs on many subjects and must get back into this one from the
+   PR alone; it is also the squash commit message on `main`. 30 lines at most, blank lines and
+   the awaiting section excluded. The sections, in this order, each an `##` heading except the
+   `Closes` line; a line of `pr-body.md` that does not apply is dropped (the awaiting section
+   outside a draft, `Not verified:` with nothing unverified), and the body carries no HTML
+   comment:
    - **Awaiting the maintainer**, only when the branch leaves a decision to the maintainer
      (a draft, step 6), first because it is the action: the question, the options, the
      recommendation. Removed once the answer is applied. An `Awaiting the orchestrator`

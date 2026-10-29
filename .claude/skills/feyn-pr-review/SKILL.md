@@ -32,10 +32,9 @@ what the caller passes, "none" for each input it does not pass:
 - **Checks to rerun.** A PR with any check or fixture runner to rerun (a course, `site/`,
   `specs/*/checks/` in `mise exec -- gh pr diff <pr> --name-only`): the reviewer gets
   `isolation: "worktree"`, and the brief has it check out the PR head detached. Its worktree
-  holds no issue branch; the caller removes it (`/feyn-deliver` step 6.1, 6.2 and 6.4). Tell
-  that reviewer: spawned with isolation, a compound shell command (`&&`, a heredoc) is refused
-  as too complex to verify it stays in the worktree: run one plain command at a time
-  (Claude Code, observed 2026-10-29, #249).
+  holds no issue branch; the caller removes it (`/feyn-deliver` step 6.1, 6.2 and 6.4). That
+  reviewer reads [worktree-agent.md](../../reference/worktree-agent.md) first: the rules and
+  the Claude Code behaviours of an agent in a worktree (the brief names it).
 - **A draft PR** (a decision awaited): say so; a decision awaiting the maintainer's answer is
   not a finding.
 - **An agent-workflow run.** The run ids `wf_<id>` and their transcript directory.
@@ -64,6 +63,7 @@ head with `git fetch` and `git show origin/<branch>:<path>`. To rerun checks in 
 `git fetch` then `git switch --detach origin/<branch>` (the branch itself is checked out in
 the contributor's worktree, so `git switch <branch>` fails). Change nothing, push nothing,
 comment nothing.
+In a worktree, read `.claude/reference/worktree-agent.md` first.
 
 The yardstick is the issue's Done when, statement by statement, not the PR's own verdicts.
 Recheck yourself:
