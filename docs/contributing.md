@@ -9,8 +9,8 @@ opened this repository. Every section ends with the decision it rests on, in
 `specs/` holds the contracts a course is written against, `courses/` the courses, `teacher/`
 the template that turns a course into a classroom, `site/` the engine that publishes it,
 `.claude/` the skills and agent workflows, `docs/` what belongs to no single area. During the
-construction, `construction/` holds the design, the plan and the session notes; it is removed
-at the end of stage 4. Why: decision `monorepo-feyn`.
+construction, `construction/` holds the design, the plan and the session notes; its fate (archived
+or removed) is a slice of theme #225. Why: decision `monorepo-feyn`.
 
 ## An observation becomes an issue
 
@@ -72,8 +72,10 @@ clean-up of the worktree after the merge. Why: decisions
   the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
 - `type:bug`, `type:course`, `type:improvement`, `type:decision`; `area:*` derived from the
   tree (`spec:<name>`, `course:<id>`, `teacher`, `site`, `agentic`, `repo`).
-- Milestones: one per stage of the construction, then one per release of a course or a spec;
-  the tooling, at HEAD, carries none. Why: decision `milestones-per-stage-then-release`.
+- Themes: the work is framed by themes (issues with the label `theme`, #220 to #225), split
+  one slice at a time when taken; a slice is attached to its theme as a sub-issue. Milestones:
+  one per release target, named after the tag that closes it; the tooling, at HEAD, carries
+  none. Why: decision `themes-and-release-milestones`.
 
 ## The maintainer's morning
 
