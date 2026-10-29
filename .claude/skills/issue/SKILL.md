@@ -1,7 +1,7 @@
 ---
 name: issue
-description: Create a GitHub issue on feyn of the kind it is given - an observation (the default), a slice attached to its epic, or an epic (type and area labels, a Status in the Project) - or read an existing issue and summarise it. Use for "/issue <n>", "/issue <kind> <observation>", "open an issue for…", "what is issue 12 about?".
-argument-hint: "<issue number> | [observation|slice|epic] <observation>"
+description: Create a GitHub issue on feyn of the kind it is given - an observation (the default), a slice attached to its epic, an epic, or a proposal (type and area labels, a Status in the Project) - or read an existing issue and summarise it. Use for "/issue <n>", "/issue <kind> <observation>", "open an issue for…", "what is issue 12 about?".
+argument-hint: "<issue number> | [observation|slice|epic|proposal] <observation>"
 ---
 
 # /issue
@@ -10,7 +10,8 @@ One job: put an observation into an issue, or tell what an issue says. It does n
 work (that is `/start`) and does not fix anything on the way.
 
 The argument decides the mode: a number (`12`, `#12`) reads; anything else creates, of the
-kind its first word names (`observation`, `slice`, `epic`), an observation when it names none.
+kind its first word names (`observation`, `slice`, `epic`, `proposal`), an observation when it
+names none.
 
 ## Read an issue
 
@@ -25,32 +26,40 @@ kind its first word names (`observation`, `slice`, `epic`), an observation when 
 
 The issue body is either the issue template's sections (`### Observation`, …) or the plan's
 bullets (`- **Observation**: …`), or for an epic the five sections of
-[epic-body.md](epic-body.md); read all three.
+[epic-body.md](epic-body.md), or for a proposal the six sections of
+[proposal-body.md](../brainstorm/proposal-body.md); read all four.
 
 ## Create an issue
 
 1. **Say it back.** Restate the observation in two lines: what was seen, where (paths, issue,
    PR, work session). An observation with no place is not an issue yet: ask where it was seen.
+   A proposal: its Question and the count of points settled.
 2. **Look for a twin.** `mise exec -- gh issue list --state open --search "<two or three key words>"`.
    An open issue on the same point: add a comment to it instead
-   (`mise exec -- gh issue comment <n> --body-file <file>`) and stop.
+   (`mise exec -- gh issue comment <n> --body-file <file>`) and stop. A proposal skips this
+   step: an open proposal on the same question is closed by `/brainstorm` once the new one
+   exists, never commented.
 3. **Take the kind given** ([project.md](../../reference/project.md), "Epics"): the first word of the argument
-   when it is `observation`, `slice` or `epic`; `observation` when there is none. The skill
+   when it is `observation`, `slice`, `epic` or `proposal`; `observation` when there is none. The skill
    writes the kind it is given and never chooses or changes it: which kind fits which moment is
    decided by whoever creates the issue ([contributing](../../../docs/contributing.md), "How
    the work is organised").
    - a **slice** is attached to an epic: the argument names it (`#220`); none named, ask
      which;
    - an **epic** carries the label `epic` and the five sections of [epic-body.md](epic-body.md);
-   - an **observation** has no parent, stays in the Backlog, carries its `area:` label.
+   - an **observation** has no parent, stays in the Backlog, carries its `area:` label;
+   - a **proposal** carries the label `proposal` and the six sections of
+     [proposal-body.md](../brainstorm/proposal-body.md); it has no parent and no milestone,
+     and stays in the Backlog until triaged.
 4. **Pick the Status, the labels and the links.**
    - Status `Backlog` (a Project workflow sets it), unless the maintainer said the work is
      decided (`Ready`, set at step 8): a slice is always Ready when posed (it is the next
-     one), at take time or after a delivery; an observation stays Backlog; an epic is set
+     one), at take time or after a delivery; an observation and a proposal stay Backlog; an epic is set
      Ready by the maintainer at triage. No state
      label: the Status replaced them ([project.md](../../reference/project.md)).
    - `type:`: `bug` (something is broken), `course` (course files), `decision` (a decision to
-     write), `improvement` (tooling, spec, process). An epic also carries `epic`.
+     write), `improvement` (tooling, spec, process). An epic also carries `epic`, a proposal
+     `proposal`.
    - `area:` from the paths the observation names (the tree is the list):
 
      | Path | Area label |
@@ -76,20 +85,25 @@ bullets (`- **Observation**: …`), or for an epic the five sections of
    matters), Done when (statements a reviewer can verify by reading or running something);
    Reads only when the work needs other files. An epic, from [epic-body.md](epic-body.md):
    Objective, Why now, Material, Done when, Out of scope; no To do, no slice posed in advance.
+   A proposal: the file `/brainstorm` hands over, already in the six sections of
+   [proposal-body.md](../brainstorm/proposal-body.md), as written; nothing is rewritten.
 6. **Title**: imperative, like a commit summary, under 70 characters ("Fix the caption check
-   on nested groups"), no issue prefix. An epic: "Epic: " and the objective in a few words.
+   on nested groups"), no issue prefix. An epic: "Epic: " and the objective in a few words. A
+   proposal: "Proposal: " and what it settles in a few words.
 7. **Create** it:
    `mise exec -- gh issue create --title "<title>" --body-file <file> --label type:<type> --label area:<area>`
-   (add `--label epic` for an epic, `--milestone <name>` when the maintainer names one, on a
-   slice or on an epic that targets a release). It prints the issue URL.
+   (add `--label epic` for an epic, `--label proposal` for a proposal, `--milestone <name>`
+   when the maintainer names one, on a slice or on an epic that targets a release; never on a
+   proposal). It prints the issue URL.
 8. **Ready, when decided.** The Project workflows add the issue and set Backlog
    ([project.md](../../reference/project.md)); nothing to do for a Backlog issue. When the maintainer said the
    work is decided, set its Status to Ready as [project.md](../../reference/project.md), "Commands", says
    under "Set a Status on a new item".
 9. **Attach a slice to its epic** and **set the links** found at step 4
-   ([project.md](../../reference/project.md), "Epics" and "Dependencies"). An observation and an epic have no
-   parent.
-10. Reply in one line with the issue number, its URL, what it is (slice, observation or epic),
+   ([project.md](../../reference/project.md), "Epics" and "Dependencies"). An observation, an epic and a
+   proposal have no parent.
+10. Reply in one line with the issue number, its URL, what it is (slice, observation, epic or
+    proposal),
     its epic for a slice, its Status, its labels and its links.
 
 ## Vocabulary
