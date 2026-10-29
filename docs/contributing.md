@@ -62,7 +62,7 @@ clean-up of the worktree after the merge. Why: decisions
 
 ## How the work is organised
 
-Four work items, all GitHub issues:
+Five work items, all GitHub issues:
 - An **epic** is an objective that closes: the label `epic`, the title "Epic: …", five
   sections in order (Objective, Why now, Material, Done when, Out of scope), the parent of its
   slices. **No done-when, no epic**: what cannot get a Done when is an observation to triage,
@@ -76,12 +76,16 @@ Four work items, all GitHub issues:
   user stories are written.
 - An **observation** is what is seen in passing: an issue without a parent, in the Backlog,
   carrying its `area:` label, until triaged.
+- A **proposal** is the validated output of a brainstorm: the label `proposal`, the title
+  "Proposal: …", six sections in order (Context, Question, What we settled, Open questions,
+  Proposed next, Material read), no parent, no milestone, in the Backlog until triaged. It is
+  never a PR by itself.
 - A **milestone** is a release target, named after the tag that closes it
   (`linear-course/v1.0.0`); it holds the slices that must close before the tag, and the epic
   that targets it carries it too; it is created only when a release is in sight. Tooling has
   none.
 
-Three moments:
+Four moments:
 1. **Take an epic**, among the Ready ones: read its Material, pose one or two slices with
    `/issue slice`, each attached to the epic and Ready, and write the epic's **plan comment**
    (the slices envisaged, in order, in five lines; what is unknown; what was dropped). The epic
@@ -94,9 +98,19 @@ Three moments:
    the merge. Then two lines on the plan comment (the slice closed, the next to pose; if the
    next is not obvious, back to moment 1). When the last slice closes, `/finish` sets the epic
    Ready for review: the maintainer verifies its Done when and closes it.
-3. **Triage the Backlog**: each observation is attached to an epic as a slice, set Ready if it
+3. **Brainstorm**: `/brainstorm` frames a session with the maintainer on how feyn works (the
+   maintainer decides, one point at a time, nothing written in the repository during the
+   session) and ends it in a proposal, created with `/issue proposal`. A brainstorm that
+   settles nothing still ends in a short proposal ("Proposed next: Nothing"), closed at once:
+   it is the trace.
+4. **Triage the Backlog**: each observation is attached to an epic as a slice, set Ready if it
    stands alone in one PR, made an epic if it is an objective, or closed with the reason. **No
    Done when, no epic**: an objective whose Done when cannot be written stays an observation.
+   A proposal is self-sufficient: the triage turns its Proposed next into what it says
+   (`/decide` for a decision, `/issue epic` or `/issue slice`, each citing the proposal in its
+   Material) without rereading what fed it, then closes it as completed with a comment naming
+   what it produced. A proposal reworked by a new brainstorm is closed as completed with a
+   comment naming the new proposal, never edited.
 
 An issue created without a kind is an observation (`/issue <observation>`): no parent, in the
 Backlog, until triaged.
