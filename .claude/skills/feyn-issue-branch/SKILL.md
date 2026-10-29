@@ -1,10 +1,10 @@
 ---
-name: start
-description: Take GitHub issue n on feyn - refuse if a maintainer decision is awaited or an issue that blocks it is still open, create the branch <type>/<n>-<slug> from an up-to-date main, set its Status to In progress, restate the Done when and lay out the plan. Use for "/start <n>", "take issue 12", "let's do #12".
+name: feyn-issue-branch
+description: "Tooling of the work cycle, called by `/feyn-deliver` (its contributor agent, first): put GitHub issue n on feyn in progress on its own branch. It refuses the issue when a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date main, sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
 argument-hint: "<issue number>"
 ---
 
-# /start <n>
+# /feyn-issue-branch <n>
 
 One job: put issue n in progress on its own branch. It writes nothing but the branch and the
 Status; the work itself comes after.
@@ -25,8 +25,8 @@ Refuse, saying why in one line, and change nothing, when:
   and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
   instead. In progress with no branch and no PR is a Status that drifted: say so and go on;
 - its Status is Ready for review: its PR awaits the maintainer's merge; name the PR and stop
-  (a correction asked on it goes to that PR, `/orchestrate` step 4);
-- it has no `type:` label, or no Done when: propose the fix (`/issue <n>` shows what is
+  (a correction asked on it goes to that PR, `/feyn-deliver` step 4);
+- it has no `type:` label, or no Done when: propose the fix (`/feyn-issue <n>` shows what is
   missing) and stop.
 
 ## 2. Start from an up-to-date main
@@ -64,9 +64,9 @@ progress too.
 
 Reply with:
 - the branch name;
-- the **Done when**, copied as written: it is the contract `/finish` and the review hold the
+- the **Done when**, copied as written: it is the contract `/feyn-pull-request` and the review hold the
   work to. The body has it as a `### Done when` section or a `- **Done when**:` bullet. It is
-  not edited after `/start`; a change to it amends the open PR's body as well;
+  not edited after `/feyn-issue-branch`; a change to it amends the open PR's body as well;
 - the files the issue says to read, then the plan: what changes, in which files, and how each
   Done when statement will be verified (a command to run, a file to read). One line per item.
 

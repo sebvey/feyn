@@ -1,13 +1,13 @@
 ---
-name: issue
-description: Create a GitHub issue on feyn of the kind it is given - an observation (the default), a slice attached to its epic, an epic, or a proposal (type and area labels, a Status in the Project) - or read an existing issue and summarise it. Use for "/issue <n>", "/issue <kind> <observation>", "open an issue for…", "what is issue 12 about?".
+name: feyn-issue
+description: "Tooling of the work cycle, called by `/feyn-brainstorm`, the triage and `/feyn-deliver`'s contributor: create a GitHub issue on feyn of the kind it is given (an observation by default, a slice attached to its epic, an epic, or a proposal), with its type and area labels, its links and its Status in the Project, or read an existing issue and summarise it. Use for \"/feyn-issue 12\", \"/feyn-issue <observation>\", \"/feyn-issue slice #220 <observation>\", \"/feyn-issue epic <objective>\", \"/feyn-issue proposal\"."
 argument-hint: "<issue number> | [observation|slice|epic|proposal] <observation>"
 ---
 
-# /issue
+# /feyn-issue
 
 One job: put an observation into an issue, or tell what an issue says. It does not start the
-work (that is `/start`) and does not fix anything on the way.
+work (that is `/feyn-issue-branch`) and does not fix anything on the way.
 
 The argument decides the mode: a number (`12`, `#12`) reads; anything else creates, of the
 kind its first word names (`observation`, `slice`, `epic`, `proposal`), an observation when it
@@ -27,7 +27,7 @@ names none.
 The issue body is either the issue template's sections (`### Observation`, …) or the plan's
 bullets (`- **Observation**: …`), or for an epic the five sections of
 [epic-body.md](epic-body.md), or for a proposal the six sections of
-[proposal-body.md](../brainstorm/proposal-body.md); read all four.
+[proposal-body.md](../feyn-brainstorm/proposal-body.md); read all four.
 
 ## Create an issue
 
@@ -37,7 +37,7 @@ bullets (`- **Observation**: …`), or for an epic the five sections of
 2. **Look for a twin.** `mise exec -- gh issue list --state open --search "<two or three key words>"`.
    An open issue on the same point: add a comment to it instead
    (`mise exec -- gh issue comment <n> --body-file <file>`) and stop. A proposal skips this
-   step: an open proposal on the same question is closed by `/brainstorm` once the new one
+   step: an open proposal on the same question is closed by `/feyn-brainstorm` once the new one
    exists, never commented.
 3. **Take the kind given** ([project.md](../../reference/project.md), "Epics"): the first word of the argument
    when it is `observation`, `slice`, `epic` or `proposal`; `observation` when there is none. The skill
@@ -49,7 +49,7 @@ bullets (`- **Observation**: …`), or for an epic the five sections of
    - an **epic** carries the label `epic` and the five sections of [epic-body.md](epic-body.md);
    - an **observation** has no parent, stays in the Backlog, carries its `area:` label;
    - a **proposal** carries the label `proposal` and the six sections of
-     [proposal-body.md](../brainstorm/proposal-body.md); it has no parent and no milestone,
+     [proposal-body.md](../feyn-brainstorm/proposal-body.md); it has no parent and no milestone,
      and stays in the Backlog until triaged.
 4. **Pick the Status, the labels and the links.**
    - Status `Backlog` (a Project workflow sets it), unless the maintainer said the work is
@@ -85,8 +85,8 @@ bullets (`- **Observation**: …`), or for an epic the five sections of
    matters), Done when (statements a reviewer can verify by reading or running something);
    Reads only when the work needs other files. An epic, from [epic-body.md](epic-body.md):
    Objective, Why now, Material, Done when, Out of scope; no To do, no slice posed in advance.
-   A proposal: the file `/brainstorm` hands over, already in the six sections of
-   [proposal-body.md](../brainstorm/proposal-body.md), as written; nothing is rewritten.
+   A proposal: the file `/feyn-brainstorm` hands over, already in the six sections of
+   [proposal-body.md](../feyn-brainstorm/proposal-body.md), as written; nothing is rewritten.
 6. **Title**: imperative, like a commit summary, under 70 characters ("Fix the caption check
    on nested groups"), no issue prefix. An epic: "Epic: " and the objective in a few words. A
    proposal: "Proposal: " and what it settles in a few words.

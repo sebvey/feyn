@@ -1,10 +1,10 @@
 ---
-name: orchestrate
-description: Run the issue cycle on feyn from one work session - a contributor subagent per issue in its own worktree (/start, the work, /finish without merging), an independent review by a fresh agent against the Done when, a corrections pass, the hand-over to the maintainer, then the clean-up after the merge (worktree and worktree-agent branch). Use for "/orchestrate <n>", "run issue 12 through agents", "take 12 and 14 in parallel".
+name: feyn-deliver
+description: "Deliver a Ready issue on feyn, a slice or a standalone observation, from Ready to merged: a contributor agent in its own worktree takes the issue, does the work and opens the PR; a fresh agent reviews it against the Done when; a corrections pass; the hand-over to the maintainer, who merges; then the clean-up after the merge. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"/feyn-deliver 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\"."
 argument-hint: "<issue number> [<issue number>…]"
 ---
 
-# /orchestrate <n> [<n>…]
+# /feyn-deliver <n> [<n>…]
 
 One job: drive issue n from Ready to merged without doing the issue's changes in the work session that runs it.
 That work session is the orchestrator: it briefs, checks and relays; a contributor agent
@@ -22,7 +22,7 @@ comes once, at the hand-over (step 5).
 
 ## 1. Before spawning
 
-- Read each issue (`mise exec -- gh issue view <n>`): the refusals of `/start` step 1 apply here
+- Read each issue (`mise exec -- gh issue view <n>`): the refusals of `/feyn-issue-branch` step 1 apply here
   first: name the reason and stop for that issue.
 - Several numbers: one contributor agent per issue, in parallel, only when their To do touch
   distinct files. Two issues that share a file run one after the other (the second after the
@@ -50,15 +50,15 @@ comes once, at the hand-over (step 5).
     `git fetch origin <branch>`,
     `git worktree add <main checkout>/.claude/worktrees/<name> -B <branch> origin/<branch>`,
     `git -C <path> branch --set-upstream-to=origin/<branch>`; sets the Status to In progress
-    (`/start` step 4); runs with absolute `dest` and `report` paths into that worktree, no `cd`
+    (`/feyn-issue-branch` step 4); runs with absolute `dest` and `report` paths into that worktree, no `cd`
     (the workflow takes its spec root from an absolute `dest`). After the run, the contributor
     is spawned without `isolation`: its current directory is the main checkout, which its brief
     forbids it to touch; it works with absolute paths, `git -C <path>` and
-    `gh pr create --head <branch>`, and its brief marks the steps of `/start` already done. A
+    `gh pr create --head <branch>`, and its brief marks the steps of `/feyn-issue-branch` already done. A
     contributor spawned with `isolation: "worktree"` cannot write nor run git in another
     worktree: Edit, `git -C` and `cd` to it are refused
     (Claude Code, observed 2026-10-28, #178). Other issues keep the path above, where the
-    contributor runs `/start` first.
+    contributor runs `/feyn-issue-branch` first.
   - **A blind run** (a run that must not see a file). Its agents run in the work session's
     working directory (Claude Code, observed 2026-10-28, #130); a copy of the repository
     outside it cannot hold the work session: a `cd` there is reset, and `change_directory`
@@ -81,7 +81,7 @@ clean-up need it. Wait for its reply; never do its work in parallel.
 Its reply gives the branch, the PR, the files changed, the checks and what it was unsure of.
 Check it before going on: the PR exists (`mise exec -- gh pr view <pr> --json title,isDraft,body`),
 its title follows `<type>(<area>): <summary>`, the body starts with `Closes #<n>` or `Refs #<n>`
-(or the awaiting section), then has the sections of `/finish` step 5 in order (Context, Issues,
+(or the awaiting section), then has the sections of `/feyn-pull-request` step 5 in order (Context, Issues,
 Changes, Checks, Review first) within its limits (step 5: 30 lines, blank lines and the
 awaiting section excluded), no signature line.
 
@@ -92,7 +92,7 @@ A new `Agent` (never the contributor, never resumed from it), `opus`, with the
 checks to rerun (any check or fixture runner: a course, `site/`, `specs/*/checks/`): give the
 reviewer `isolation: "worktree"` too (the brief has it check out the PR head detached), and
 clean its worktree with steps 6.1, 6.2 and 6.4 only: it holds no issue branch, so no
-`/finish after-merge` for it. A PR whose evidence is an agent-workflow run: give the reviewer
+`/feyn-merge-cleanup` for it. A PR whose evidence is an agent-workflow run: give the reviewer
 the run ids `wf_<id>` and their transcript directory, and for a blind run the deleted paths
 and the worktree. A `migrate-concept` PR (the S1-10 sub-issues): add the
 [migration variant](#migration-variant) to the brief; with no prototype of the concept, the run
@@ -103,7 +103,7 @@ ids given are "none" (the PR still cites its run id).
 - **Findings.** Send the blocking findings, and the non-blocking ones worth fixing, to the
   contributor agent with `SendMessage` (its id; its context is intact). It fixes, pushes and
   updates the PR body, adding to its Checks the line
-  `Fresh-agent review: <N> blocking findings, fixed.` (`/finish` step 5). With no blocking
+  `Fresh-agent review: <N> blocking findings, fixed.` (`/feyn-pull-request` step 5). With no blocking
   finding, send that line too: `Fresh-agent review: no blocking finding.` A second review
   updates the same line, `<N>` counting the blocking findings of all the reviews. Then check
   each fixed point yourself in the diff (`mise exec -- gh pr diff <pr>`), never on its word,
@@ -112,7 +112,7 @@ ids given are "none" (the PR still cites its run id).
   adds or edits a decision or a check, or goes beyond the findings or the answer.
 - **Decision awaited.** The contributor that leaves a decision to the maintainer opens a draft
   PR, puts `blocked:maintainer` on the issue only, writes an `Awaiting the maintainer` section
-  at the top of the body, and stops (`/finish`, step 6). A decision through `/decide` takes
+  at the top of the body, and stops (`/feyn-pull-request`, step 6). A decision through `/feyn-decision` takes
   this path unless the maintainer accepted its counterfactual in the work session (step 1).
   Relay the question,
   the options and the recommendation to the maintainer. The maintainer answers with a comment
@@ -129,12 +129,12 @@ ids given are "none" (the PR still cites its run id).
 
 ## 5. Hand-over to the maintainer
 
-Set the issue Ready for review, a `Closes` PR only (the contributor's `/finish` left it In
+Set the issue Ready for review, a `Closes` PR only (the contributor's `/feyn-pull-request` left it In
 progress; [project.md](../../reference/project.md), "Commands":
 `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`),
 then reply with, one line each: the PR URL and title; the Status; the review
 (blocking findings found, fixed); what the maintainer should look at first (the PR's Review
-first); the merge command `/finish` gives (`mise exec -- gh pr merge <pr> --squash --delete-branch`).
+first); the merge command `/feyn-pull-request` gives (`mise exec -- gh pr merge <pr> --squash --delete-branch`).
 The merge is the maintainer's. Keep the contributor agent alive until then: a late finding
 goes back to it.
 
@@ -144,7 +144,7 @@ From the main checkout, on `main`:
 
 1. The worktree: `git worktree list --porcelain` gives its path
    (`.claude/worktrees/agent-<id>`), on a branch `worktree-agent-<id>` cut from `main`'s HEAD;
-   `/finish after-merge` does not remove it (Claude Code, observed 2026-10-27, #115). A
+   `/feyn-merge-cleanup` does not remove it (Claude Code, observed 2026-10-27, #115). A
    worktree with no change at the end of the agent's turn is removed
    (Claude Code, observed 2026-10-28, #171). It is locked while its agent runs
    (`locked claude agent agent-<id>`) (Claude Code, observed 2026-10-28, #128) and unlocked
@@ -152,11 +152,11 @@ From the main checkout, on `main`:
    agent (`TaskStop`), then, if needed, `git worktree unlock <path>`.
 2. `git -C <path> status --porcelain` must print nothing; anything printed: stop and show it.
    Then `git worktree remove <path>`. The issue branch is no longer checked out anywhere.
-3. `/finish after-merge` for the issue branch: it confirms the change landed, the Status, and
+3. `/feyn-merge-cleanup <branch>` for the issue branch: it confirms the change landed, the Status, and
    deletes the local branch. The Project workflow "Item closed" sets Done;
-   `/finish after-merge` sets it only when that Project workflow is off. Its lines on the
+   `/feyn-merge-cleanup` sets it only when that Project workflow is off. Its lines on the
    epic's plan comment, the epic to verify and close (set Ready for review when its last slice
-   closed) and the issues now free (`/finish`, "Clean up", step 7) are relayed to the
+   closed) and the issues now free (`/feyn-merge-cleanup` step 7) are relayed to the
    maintainer in the clean-up reply.
 4. `git branch -D worktree-agent-<id>`, the branch the worktree was created on.
    `git worktree list` and `git branch --list 'worktree-agent-*'` show nothing of it left.
@@ -177,20 +177,20 @@ worktree <path>, your working directory being the main checkout). Read CLAUDE.md
 issue (`mise exec -- gh issue view <n>`), then its "Reads" files.
 
 ## How to run the cycle (in a worktree)
-Follow `.claude/skills/start/SKILL.md` for #<n>, adapted to a worktree:
+Follow `.claude/skills/feyn-issue-branch/SKILL.md` for #<n>, adapted to a worktree:
 - Do NOT `git switch main` (main is checked out in the main checkout): it fails in a worktree
   (Claude Code, observed 2026-10-27, #115). `git fetch`, then
   `git switch -c <type>/<n>-<slug> origin/main` and `git push -u origin <type>/<n>-<slug>`.
 - Before any commit, run `git config --show-origin user.email` and check it shows the
   workspace identity (not empty). Never `git config user.email` nor `git -c user.email=`.
   `git` plain; `gh` and `node` through `mise exec --`.
-- Set the issue's Status to In progress as /start says.
+- Set the issue's Status to In progress as /feyn-issue-branch says.
 - `git push` can fail to resolve github.com from the sandbox while `gh` works; retry the push
   outside the sandbox (Claude Code, observed 2026-10-27, #27).
 (Two-phase migration, spawned without isolation: your current directory is the main checkout:
 never edit, commit or switch there. The branch, the worktree <path> and the Status are done:
 skip their steps above. Absolute paths, `git -C <path>`, `gh pr create --head <branch>`.)
-Then do the work, then follow `.claude/skills/finish/SKILL.md` to push and open the PR,
+Then do the work, then follow `.claude/skills/feyn-pull-request/SKILL.md` to push and open the PR,
 leaving the Status In progress (the orchestrator sets Ready for review at the hand-over). Do NOT
 merge. No signature or generated-by line in the PR body (the squash uses it as the commit
 message).
@@ -200,7 +200,7 @@ message).
 reserved terms, counterfactuals the maintainer accepted (verbatim, with the date)>
 
 ## A decision for the maintainer
-A choice the issue does not settle, or a /decide decision whose counterfactual the maintainer
+A choice the issue does not settle, or a /feyn-decision decision whose counterfactual the maintainer
 has not accepted: open the PR as a draft, put `blocked:maintainer` on the issue only (not the
 PR), write an "Awaiting the maintainer" section at the top of the body (question, options,
 recommendation), and stop. You cannot ask the maintainer, so work needing their acceptance
@@ -214,9 +214,9 @@ The orchestrator runs it and resumes you with the result: apply it, remove the s
 `mise exec -- gh pr ready <pr>`. Spawned with isolation, your worktree is removed when you stop
 with no file change: the orchestrator creates one on your branch and resumes you with its
 absolute path. From then on (from the start, spawned without isolation), never `cd`: absolute paths for every file, `git -C <path>` for every git command,
-including those of /finish (`git -C <path> status --porcelain`, `git -C <path> push`).
+including those of /feyn-pull-request (`git -C <path> status --porcelain`, `git -C <path> push`).
 
-Run the checks that exist (as /finish says). When done, reply with: branch name, PR URL, files
+Run the checks that exist (as /feyn-pull-request says). When done, reply with: branch name, PR URL, files
 changed, checks run and their results, and anything you were unsure of. Stay available for a
 corrections pass: review findings may come back to you.
 ```
@@ -238,7 +238,7 @@ Recheck yourself:
 - each statement of the issue's Done when: find the proof yourself (run a command, read a
   file; a count, recount it); the PR gives only the verdict counts and why a statement is not
   met or deviates, and those you check too;
-- the checks /finish requires for what the PR touches
+- the checks /feyn-pull-request requires for what the PR touches
   (`mise exec -- gh pr diff <pr> --name-only`), rerun them;
 - evidence from an agent-workflow run
   (<run ids wf_<id> and transcript directory, or "none">): read the run's transcripts and check what its agents actually read and did, not only what

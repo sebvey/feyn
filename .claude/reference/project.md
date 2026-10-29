@@ -1,17 +1,17 @@
 # The Project and its Status
 
-The one place `/issue`, `/start` and `/finish` take the Project's names, ids and commands
-from. The **Project** is the GitHub Project "feyn", number 4, owner `sebvey`; its **Status**
-field says where an issue stands:
+The one place `/feyn-issue`, `/feyn-issue-branch`, `/feyn-pull-request` and `/feyn-merge-cleanup`
+take the Project's names, ids and commands from. The **Project** is the GitHub Project "feyn",
+number 4, owner `sebvey`; its **Status** field says where an issue stands:
 
 | Status | Means | Set by | Option id |
 |---|---|---|---|
 | Backlog | proposed, to triage | Project workflow "Item added to project" | `c1d0b0c3` |
-| Ready | decided, free to take | `/issue` when the maintainer decided, or the maintainer | `be2d48d7` |
-| In progress | a branch exists | `/start` (no Project workflow fires on a branch); `/orchestrate` step 4 when a correction is asked on a delivered PR | `be703c13` |
+| Ready | decided, free to take | `/feyn-issue` when the maintainer decided, or the maintainer | `be2d48d7` |
+| In progress | a branch exists | `/feyn-issue-branch` (no Project workflow fires on a branch); `/feyn-deliver` step 4 when a correction is asked on a delivered PR | `be703c13` |
 | Needs Decision | present in the Project, unused by the skills for now: the label `blocked:maintainer` carries a decision awaited | nobody | `33e9b212` |
-| Ready for review | the work claims done, the maintainer reviews and concludes: a slice whose PR is open after the fresh-agent review (the maintainer merges), an epic whose slices are all closed (the maintainer verifies its Done when and closes it) | `/finish`: "Deliver" step 7 for a slice (`/orchestrate` step 5 when it runs the cycle), "Clean up" step 7 for its epic | `deab4f08` |
-| Done | closed (the close reason stays on GitHub) | Project workflow "Item closed"; `/finish after-merge` only when that Project workflow is off | `9e81e5a6` |
+| Ready for review | the work claims done, the maintainer reviews and concludes: a slice whose PR is open after the fresh-agent review (the maintainer merges), an epic whose slices are all closed (the maintainer verifies its Done when and closes it) | `/feyn-pull-request` step 7 for a slice (`/feyn-deliver` step 5 when it runs the cycle), `/feyn-merge-cleanup` step 7 for its epic | `deab4f08` |
+| Done | closed (the close reason stays on GitHub) | Project workflow "Item closed"; `/feyn-merge-cleanup` only when that Project workflow is off | `9e81e5a6` |
 
 Project id `PVT_kwHOADOnU84Bo8V6`, Status field id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`.
 
@@ -47,7 +47,7 @@ interface (Project feyn, menu ⋯, Workflows) (GitHub, observed 2026-10-28, #71)
   `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "<Status>"`.
   The same by ids, for a script:
   `mise exec -- gh project item-edit --project-id PVT_kwHOADOnU84Bo8V6 --id <item id> --field-id PVTSSF_lAHOADOnU84Bo8V6zhnaHqI --single-select-option-id <option id>`.
-- **Set a Status on a new item** (`/issue` Ready, `/start` In progress on an issue just
+- **Set a Status on a new item** (`/feyn-issue` Ready, `/feyn-issue-branch` In progress on an issue just
   added): wait for Backlog first, since "Item added to project" would overwrite a Status set
   earlier (GitHub, inferred 2026-10-28, #71). Read the Status up to 3 times, a few seconds
   apart (no item yet: add it, once). Backlog: set the Status. Still not Backlog: read the
@@ -58,8 +58,8 @@ interface (Project feyn, menu ⋯, Workflows) (GitHub, observed 2026-10-28, #71)
 
 Work is organised by epics, split into slices one at a time
 ([contributing](../../docs/contributing.md), "How the work is organised"; decision
-`themes-and-release-milestones`). An **epic** is an issue with the label `epic`, titled
-"Epic: …", in the five sections of [epic-body.md](../skills/issue/epic-body.md), parent of its **slices**
+`themes-and-release-milestones`). An **epic** is an issue with the label `epic`, titled "Epic: …",
+in the five sections of [epic-body.md](../skills/feyn-issue/epic-body.md), parent of its **slices**
 (sub-issues). An **observation** is an issue with no parent, in the Backlog until triaged.
 
 - **Read** a slice's epic: `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
@@ -86,13 +86,14 @@ and nothing blocks it (no open blocked-by link, "Dependencies"). The maintainer 
 at triage. An epic has no To do and no slice posed in advance.
 
 **Take an epic**, among the Ready ones: read its Material, pose one or two slices with
-`/issue`, each attached to the epic and Ready, and write the epic's plan comment (the slices
-envisaged, in order, in five lines; what is unknown; what was dropped). The epic goes In
-progress when its first slice starts: `/start` sets it ("Commands"). After each slice, `/finish`
-adds two lines to the plan comment (the slice closed, the next to pose). When its last slice
-closes (`sub_issues_summary.completed == total`), `/finish` sets the epic Ready for review: the
-maintainer verifies its Done when and closes it. A statement that does not hold adds a slice
-(`/issue`), and the epic goes back to In progress when that slice starts (`/start`).
+`/feyn-issue`, each attached to the epic and Ready, and write the epic's plan comment (the slices
+envisaged, in order, in five lines; what is unknown; what was dropped). The epic goes In progress
+when its first slice starts: `/feyn-issue-branch` sets it ("Commands"). After each slice,
+`/feyn-merge-cleanup` adds two lines to the plan comment (the slice closed, the next to pose). When
+its last slice closes (`sub_issues_summary.completed == total`), `/feyn-merge-cleanup` sets the epic
+Ready for review: the maintainer verifies its Done when and closes it. A statement that does not
+hold adds a slice (`/feyn-issue`), and the epic goes back to In progress when that slice starts
+(`/feyn-issue-branch`).
 
 **The views**, set by the maintainer in the web interface (Project feyn, a view's menu:
 filter, Layout, Group by, Fields):

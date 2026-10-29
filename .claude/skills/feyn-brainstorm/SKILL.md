@@ -1,10 +1,10 @@
 ---
-name: brainstorm
-description: Run a brainstorm with the maintainer on how feyn works (the flow, the tooling, the organisation of the work) and end it in a proposal issue, the validated output the triage turns into work. Use for "/brainstorm", "let's brainstorm", "let's think about…", "wrap up this discussion".
+name: feyn-brainstorm
+description: "Run a brainstorm with the maintainer on how feyn works (the flow, the skills, the organisation of the work) and end it in a proposal issue, the validated output the triage turns into work. Use for \"on brainstorme sur les skills\", \"brainstormons sur le flow\", \"let's brainstorm the skills\", \"let's think about…\", \"wrap up this discussion\", \"on conclut le brainstorm\", \"/feyn-brainstorm\"."
 argument-hint: "[topic | proposal number]"
 ---
 
-# /brainstorm
+# /feyn-brainstorm
 
 One job: frame a brainstorm with the maintainer and end it in a **proposal**, an issue with the
 label `proposal` whose body is the brainstorm's validated output. The proposal is the only
@@ -13,7 +13,7 @@ memory of the brainstorm: what is not in it is lost. The triage turns it into wo
 creates nothing else (no decision, no slice, no edit of the repository).
 
 The argument is the topic, or the number of a proposal to rework: read it first
-(`/issue <n>`); it is the input, and the new proposal cites it in its Material read.
+(`/feyn-issue <n>`); it is the input, and the new proposal cites it in its Material read.
 
 ## 1. The rules of the brainstorm
 
@@ -27,7 +27,7 @@ The argument is the topic, or the number of a proposal to rework: read it first
 
 ## 2. The working file
 
-`tmp/brainstorm-<date>-<topic>.md` (date `YYYY-MM-DD`, topic two or three words), at the
+`tmp/feyn-brainstorm-<date>-<topic>.md` (date `YYYY-MM-DD`, topic two or three words), at the
 repository root; `tmp/` is in `.gitignore`. It starts as a copy of
 [proposal-body.md](proposal-body.md) and fills as points settle: Context and Question first,
 then What we settled point by point, Open questions as they appear. It is disposable once the
@@ -40,8 +40,8 @@ issue exists.
 2. Fill Proposed next and Material read, then show the whole file to the maintainer. Every
    comment of [proposal-body.md](proposal-body.md) is replaced; the maintainer validates it as
    written or corrects it.
-3. Load `/issue` and follow it with the kind `proposal` and the file as the body
-   (`/issue proposal`). The body is pasted as validated: nothing is rewritten between the file
+3. Load `/feyn-issue` and follow it with the kind `proposal` and the file as the body
+   (`/feyn-issue proposal`). The body is pasted as validated: nothing is rewritten between the file
    and the issue.
 4. A reworked proposal (the argument was one): close it as completed with a comment naming the
    new one (`mise exec -- gh issue close <old> --reason completed --comment "Reworked into #<new>."`).

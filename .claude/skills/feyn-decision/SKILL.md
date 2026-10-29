@@ -1,10 +1,10 @@
 ---
-name: decide
-description: Write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds; refuse it when no counterfactual is named or the entry bar is not met. Use for "/decide", "record this decision", "write an ADR for…".
+name: feyn-decision
+description: "Tooling of the work cycle, called by the triage and by `/feyn-deliver`'s contributor: write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or refuse it when no counterfactual is named or the entry bar is not met. Use for \"/feyn-decision <the decision, in a sentence>\"."
 argument-hint: "<the decision, in a sentence>"
 ---
 
-# /decide
+# /feyn-decision
 
 One job: turn a choice into a decision file, or say why it does not deserve one. The format
 is `docs/decisions/decision-format.md`; this skill applies it.
@@ -68,5 +68,5 @@ A decision it supersedes: change that file's `status` to `superseded-by: <slug>`
 commit.
 
 Commit it on the current issue branch (`git add <file>`,
-`git commit -m "decide <slug>"`); on `main`, stop and propose `/issue` first:
+`git commit -m "decide <slug>"`); on `main`, stop and propose `/feyn-issue` first:
 a decision lands through a PR like the rest. Reply with the path and the counterfactual.
