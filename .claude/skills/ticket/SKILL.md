@@ -34,20 +34,22 @@ bullets (`- **Observation**: …`), or for an epic the five sections of
    An open issue on the same point: add a comment to it instead
    (`mise exec -- gh issue comment <n> --body-file <file>`) and stop.
 3. **Decide what it is** ([project.md](project.md), "Epics"), one of three:
-   - a **slice**: the maintainer names its epic, or the observation serves the epic In
-     progress. Created only if it is the next one of that epic (its plan comment says which);
-     otherwise refuse, and say which slice is next, or that the epic's plan comment must be
-     rewritten first;
+   - a **slice**: the maintainer names its epic (Ready or In progress), or the observation
+     serves the epic In progress. An epic with no plan comment is being taken: its first one
+     or two slices are allowed, and the plan comment is written right after them. With a plan
+     comment, a slice is created only if it is the next one it names; otherwise refuse, and
+     say which slice is next, or that the epic's plan comment must be rewritten first;
    - an **epic**: the maintainer says so. Refuse it when its Done when cannot be written: no
      done-when, no epic; it is an observation;
-   - an **observation**: anything else. No parent, Backlog, grouped by its `area:` label,
+   - an **observation**: anything else. No parent, Backlog, carrying its `area:` label,
      triaged later.
 
    Ask the maintainer when unsure which.
 4. **Pick the Status, the labels and the links.**
    - Status `Backlog` (a Project workflow sets it), unless the maintainer said the work is
-     decided (`Ready`, set at step 8): a slice posed when an epic is taken is Ready; an
-     observation stays Backlog; an epic is set Ready by the maintainer at triage. No state
+     decided (`Ready`, set at step 8): a slice is always Ready when posed (it is the next
+     one), at take time or after a delivery; an observation stays Backlog; an epic is set
+     Ready by the maintainer at triage. No state
      label: the Status replaced them ([project.md](project.md)).
    - `type:`: `bug` (something is broken), `course` (course files), `decision` (a decision to
      write), `improvement` (tooling, spec, process). An epic also carries `epic`.
@@ -80,8 +82,8 @@ bullets (`- **Observation**: …`), or for an epic the five sections of
    on nested groups"), no issue prefix. An epic: "Epic: " and the objective in a few words.
 7. **Create** it:
    `mise exec -- gh issue create --title "<title>" --body-file <file> --label type:<type> --label area:<area>`
-   (add `--label epic` for an epic, `--milestone <name>` when the maintainer names one; never
-   on an epic). It prints the issue URL.
+   (add `--label epic` for an epic, `--milestone <name>` when the maintainer names one, on a
+   slice or on an epic that targets a release). It prints the issue URL.
 8. **Ready, when decided.** The Project workflows add the issue and set Backlog
    ([project.md](project.md)); nothing to do for a Backlog issue. When the maintainer said the
    work is decided, set its Status to Ready as [project.md](project.md), "Commands", says

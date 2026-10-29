@@ -68,13 +68,16 @@ Work is organised by epics, split into slices one at a time
 - **Attach** a slice to its epic (the link takes the slice's database id, not its number):
   `mise exec -- gh api -X POST repos/sebvey/feyn/issues/<epic>/sub_issues -F sub_issue_id=$(mise exec -- gh api repos/sebvey/feyn/issues/<n> --jq .id)`.
 - **Detach**: `mise exec -- gh api -X DELETE repos/sebvey/feyn/issues/<epic>/sub_issue -F sub_issue_id=<database id>`
-  (singular `sub_issue`: the plural returns 404) (GitHub, observed 2026-10-29, #230).
+  (singular `sub_issue`: the plural returns 404) (GitHub, observed 2026-10-29, #233).
 - **The plan comment**: the last comment of the epic whose body starts with "**Plan comment**".
   Its database id:
   `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<epic>/comments --jq '.[] | select(.body | startswith("**Plan comment**")) | .id' | tail -n 1`
-  (nothing printed: the epic has none). Edit it:
-  `mise exec -- gh api -X PATCH repos/sebvey/feyn/issues/comments/<id> -F body=@<file>`; add one:
-  `mise exec -- gh issue comment <epic> --body-file <file>`.
+  (nothing printed: the epic has none). Edit it: the PATCH replaces the whole body, so read it
+  first, `mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> --jq .body > <file>`,
+  append to the file, then
+  `mise exec -- gh api -X PATCH repos/sebvey/feyn/issues/comments/<id> -F body=@<file>`. Add
+  one: `mise exec -- gh issue comment <epic> --body-file <file>`; its body begins with
+  `**Plan comment**`, or the lookup never finds it.
 
 **Definition of Ready** of an epic: its five sections are written, the Done when verifiable,
 and nothing blocks it (no open blocked-by link, "Dependencies"). The maintainer sets it Ready
@@ -83,7 +86,7 @@ at triage. An epic has no To do and no slice posed in advance.
 **Take an epic**, among the Ready ones: read its Material, pose one or two slices with
 `/ticket`, each attached to the epic and Ready, and write the epic's plan comment (the slices
 envisaged, in order, in five lines; what is unknown; what was dropped). The epic goes In
-progress when its first slice starts (set its Status, "Commands"). After each slice, `/finish`
+progress when its first slice starts: `/start` sets it ("Commands"). After each slice, `/finish`
 adds two lines to the plan comment (the slice closed, the next to pose).
 
 **The views**, set by the maintainer in the web interface (Project feyn, a view's menu:
@@ -105,8 +108,8 @@ organisation.
 ## Milestones
 
 A milestone is a release target, named after the tag that closes it (`linear-course/v1.0.0`,
-`parcours-po/v0.2.0`); it holds the slices that must close before the tag (an epic targets it
-through its slices) and closes when the tag exists. Tooling issues carry none. Read them:
+`parcours-po/v0.2.0`); it holds the slices that must close before the tag, and the epic that
+targets it carries it too; it closes when the tag exists. Tooling issues carry none. Read them:
 `mise exec -- gh api repos/sebvey/feyn/milestones --jq '.[] | [.number, .title, .open_issues] | @tsv'`.
 
 ## Dependencies

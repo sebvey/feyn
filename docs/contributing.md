@@ -74,9 +74,9 @@ Four work items, all GitHub issues:
 - An **observation** is what is seen in passing: an issue without a parent, in the Backlog,
   grouped by its `area:` label, until triaged.
 - A **milestone** is a release target, named after the tag that closes it
-  (`linear-course/v1.0.0`); it holds the slices that must close before the tag, and is created
-  only when a release is in sight. It holds slices only; an epic targets it through its
-  slices. Tooling has none.
+  (`linear-course/v1.0.0`); it holds the slices that must close before the tag, and the epic
+  that targets it carries it too; it is created only when a release is in sight. Tooling has
+  none.
 
 Three moments:
 1. **Take an epic**, among the Ready ones: read its Material, pose one or two slices with

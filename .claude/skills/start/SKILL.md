@@ -54,7 +54,9 @@ create a second one.
 Set the Status to In progress ([project.md](../ticket/project.md), "Commands"): no
 Project workflow fires on a branch. An issue not in the Project yet (`projectItems` empty):
 set it as [project.md](../ticket/project.md), "Commands", says under "Set a Status on a new
-item".
+item". When the issue's parent is an epic (label `epic`, read as
+[project.md](../ticket/project.md), "Epics", says) not yet In progress, set the epic In
+progress too.
 
 ## 5. Restate and plan
 

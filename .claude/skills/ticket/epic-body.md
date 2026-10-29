@@ -1,6 +1,6 @@
 ### Objective
 
-<!-- What is true once the epic closes, in two to four sentences. -->
+<!-- What is true once the epic closes, in two to four lines. -->
 
 ### Why now
 
@@ -13,9 +13,9 @@
 
 ### Done when
 
-<!-- Statements a reviewer can verify by reading a file or running a command, one per bullet.
-     No Done when, no epic: what cannot get one is an observation. -->
+<!-- Two or three coarse statements a reviewer can verify by reading a file or running a
+     command, one per bullet. No Done when, no epic: what cannot get one is an observation. -->
 
 ### Out of scope
 
-<!-- What the epic does not cover, and where it goes instead when known. -->
+<!-- One line: what the epic does not cover, naming the epic that takes it. -->
