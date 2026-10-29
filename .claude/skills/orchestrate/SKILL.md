@@ -130,7 +130,9 @@ ids given are "none" (the PR still cites its run id).
 ## 5. Hand-over to the maintainer
 
 Set the issue Ready for review, a `Closes` PR only (the contributor's `/finish` left it In
-progress), then reply with, one line each: the PR URL and title; the Status; the review
+progress; [project.md](../ticket/project.md), "Commands":
+`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`),
+then reply with, one line each: the PR URL and title; the Status; the review
 (blocking findings found, fixed); what the maintainer should look at first (the PR's Review
 first); the merge command `/finish` gives (`mise exec -- gh pr merge <pr> --squash --delete-branch`).
 The merge is the maintainer's. Keep the contributor agent alive until then: a late finding

@@ -91,8 +91,11 @@ branch without an issue number: stop and say so.
 7. **Ask for review**: set the issue's Status to Ready for review (the work claims done, the
    maintainer concludes; [project.md](../ticket/project.md)):
    `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
-   Not for a `Refs` PR (the issue stays In progress), and not under `/orchestrate`, whose
-   hand-over sets it after the fresh-agent review (its step 5). Then reply with the PR URL, the
+   Only when a fresh-agent review was done (the Checks line `Fresh-agent review:` exists) or
+   the maintainer asked for a PR without one; not for a `Refs` PR (the issue stays In
+   progress), and not under `/orchestrate`, whose hand-over sets it after the fresh-agent
+   review (its step 5). A correction asked on the PR returns the issue to In progress until it
+   is delivered again. Then reply with the PR URL, the
    title, what the reviewer should look at first (the PR's Review first, in one line), and the
    merge command: `mise exec -- gh pr merge <pr> --squash --delete-branch`.
    The repository squashes with the PR title and body and allows squash only (GitHub,
@@ -101,7 +104,8 @@ branch without an issue number: stop and say so.
    A draft PR: the issue stays In progress, with its label; name the question instead of the
    merge command. The maintainer answers with a comment and removes `blocked:maintainer` from
    the issue: one removal. Then apply the answer, remove the section from the body,
-   `mise exec -- gh pr ready <pr>`, and ask for review again (Ready for review then). Never
+   `mise exec -- gh pr ready <pr>`, and ask for review again (Ready for review then, as above; not under `/orchestrate`, where
+   the orchestrator sets it after the fresh-agent review). Never
    remove the label yourself; if it is still on the issue, the answer is not given: stop.
 
 ## Clean up (after the merge)

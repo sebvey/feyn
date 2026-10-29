@@ -120,11 +120,12 @@ Why: decision `themes-and-release-milestones`.
   reviews and concludes: a slice whose PR is open after the fresh-agent review, the
   maintainer merges; an epic whose slices are all closed, the maintainer verifies its Done
   when and closes it), Done (closed; the close reason stays on GitHub). Needs Decision is in
-  the Project but unused for now: `blocked:maintainer` carries that state. One at a
+  the Project but unused for now: the label `blocked:maintainer` carries a decision awaited. One at a
   time. The Project workflows add the open issues created or updated while they are on, set
   Backlog when one is added and Done when it closes; the skills set the rest: `/ticket` Ready when the maintainer decided,
-  `/start` In progress, `/finish` Ready for review (a correction asked on a delivered PR
-  returns the slice to In progress, `/orchestrate` step 4). `.claude/skills/ticket/project.md` says who sets each Status. There
+  `/start` In progress, `/finish` Ready for review, or the orchestrator at the hand-over under
+  `/orchestrate` (a correction asked on a delivered PR returns the slice to In progress,
+  `/orchestrate` step 4). `.claude/skills/ticket/project.md` says who sets each Status. There
   are no state labels. Why: decision `project-status-not-state-labels`.
 - `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is
   a draft, which keeps it from being merged); on top of the Status, never instead of it; only

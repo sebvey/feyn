@@ -49,4 +49,4 @@ The maintainer works in the web interface: the Project's Board view, filtered on
   epic's last slice closes. A correction asked on a delivered PR returns the slice
   to In progress (`/orchestrate` step 4), and the renewed hand-over sets Ready for review
   again. **Needs Decision** stays in the Project, unused by the skills for now: the label
-  `blocked:maintainer` carries that state (decision `blocked-is-a-label-not-a-state`).
+  `blocked:maintainer` carries a decision awaited (decision `blocked-is-a-label-not-a-state`).
