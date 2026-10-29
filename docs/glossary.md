@@ -4,8 +4,11 @@ Every term below is **reserved**: it means one thing in feyn's code, docs, skill
 The words in its "Not" column are **banned** for that meaning: never use them where the reserved term applies.
 To add a term, open a PR that adds its row here and replaces, in the same PR, the banned words already in use.
 
-This is the repository glossary. Each course has its own **course glossary**
-(`courses/<id>/glossary.md`), which belongs to the course and follows the course's language. French
+**Two glossaries, each at home.** This is the repository glossary: it applies in repository files
+(docs, skills, issues, decisions, specs). Each course has its own **course glossary**
+(`courses/<id>/glossary.md`), which belongs to the course, follows the course's language and applies
+in that course's files. A word may be reserved in both with two meanings (**epic**); a repository
+text that speaks of the course's meaning says so ("epic, in the course's sense"). French
 course files keep their French section headings (« Objectif », « L'essentiel », « Pièges »…);
 the English terms below are how we talk about them in code, docs and issues.
 
@@ -66,15 +69,16 @@ the English terms below are how we talk about them in code, docs and issues.
 | **area** | the part of the repo an issue or PR belongs to, derived from the tree: `spec:<name>`, `course:<id>`, `teacher`, `site`, `agentic`, `repo` | "domain" (course vocabulary), "component", "module", "scope" |
 | **issue** | a GitHub issue, the only ticket; sections **Observation**, **To do**, **Done when** | "ticket", "task", "story" |
 | **label** | always qualified: **type** (`type:bug`, `type:course`, `type:improvement`, `type:decision`), **area** (`area:<area>`), and `blocked:maintainer` (a maintainer decision is awaited; on the issue only). No state label: where an issue stands is its **Status** | |
-| **Project** | the GitHub Project "feyn" (number 4) that holds every issue with its Status: what the maintainer looks at in the web interface (its **Board view** is GitHub's layout with one column per Status) and what the agent lists (`gh project item-list`) | "board" for the Project itself, "kanban", "dashboard" |
+| **Project** | the GitHub Project "feyn" (number 4) that holds every issue with its Status: what the maintainer looks at in the web interface (its four **views**, Epics, Ready, WIP and Backlog, are in `docs/contributing.md`) and what the agent lists (`gh project item-list`) | "board" for the Project itself, "kanban", "dashboard" |
 | **Status** | the Project's field that says where an issue stands: **Backlog** (proposed, to triage), **Ready** (decided, free to take), **In progress** (a branch exists), **Done** (closed; the close reason stays on GitHub). It replaces the state labels. Written with a capital when it names the field; the lowercase `status` key of a decision's frontmatter is a different, allowed key | "state" for where the work stands (an issue's `state` is GitHub's open or closed) |
 | **draft** | a PR that cannot be merged until it is marked ready (`gh pr ready`); `/finish` opens one when a maintainer decision is awaited (the issue, not the PR, carries `blocked:maintainer`), and a contributor opens one when an orchestrator's agent-workflow run is awaited (`/orchestrate`, step 1) | "WIP" |
 | **blocked** | two senses, never mixed. "Blocked by #n": a blocked-by link between issues (decision `blocked-by-links-for-dependencies`), lifted when the blocking issue closes. `blocked:maintainer`: a maintainer decision is awaited, on the issue only, lifted when the maintainer removes the label | "on hold" |
 | **work session** | always qualified (the other sense is a **teaching session**): one Claude Code conversation on the feyn repository: a **reflection session** (with the maintainer, distilled by `/debrief`), an orchestration (`/orchestrate`), a construction task. A reflection session or a construction task leaves a **session note** in `construction/notes/` | "session" alone |
-| **theme** | an objective framed as a GitHub issue with the label `theme`, parent of its slices, split one slice at a time when taken (decision `themes-and-release-milestones`): #220 to #225 | "subject", "epic" (course vocabulary), "initiative", "stream", "phase" |
-| **slice** | an ordinary issue attached to its theme as a sub-issue; the unit of work | "task", "story" |
-| **milestone** | a release target: named after the tag that closes it (`linear-course/v1.0.0`, `parcours-po/v0.2.0`), holding the issues that must close before the tag; tooling has none | "sprint", "phase", "version" for the milestone itself |
-| **stage** | historical: one of the five milestones of the construction plan of 2026-10-27 (stage 0 to 4), abandoned on 2026-10-29 for themes; the word stays only in `construction/` and in old issues | "lot", "phase", "sprint", "iteration" |
+| **epic** | an objective that closes, with a verifiable Done when: an issue with the label `epic`, titled "Epic: …", in five sections (Objective, Why now, Material, Done when, Out of scope), parent of its slices, split one slice at a time when taken; its plan is a **plan comment** on it (decision `themes-and-release-milestones`). No Done when, no epic | "theme", "subject", "initiative", "stream", "phase" |
+| **slice** | a unit of work, one PR with a verifiable Done when: the result of splitting an epic, attached to it as a sub-issue. The standard name is "story", which becomes the form of a slice once user stories are written | "task", "story" (until user stories are written) |
+| **observation** | what is seen in passing: an issue without a parent, in the Backlog, grouped by its `area:` label; triaged into a slice, an epic, an issue Ready on its own, or closed. Also the first section of an issue | |
+| **milestone** | a release target: named after the tag that closes it (`linear-course/v1.0.0`, `parcours-po/v0.2.0`), holding the slices that must close before the tag, created when a release is in sight; an epic may target one; tooling has none | "sprint", "phase", "version" for the milestone itself |
+| **stage** | historical: one of the five milestones of the construction plan of 2026-10-27 (stage 0 to 4), abandoned on 2026-10-29 for epics; the word stays only in `construction/` and in old issues | "lot", "phase", "sprint", "iteration" |
 | **batch** | a set of concepts written in one `course-batch` agent workflow run (ex `course-lot`) | "lot", "chunk" |
 | **decision** | a recorded decision: one file by slug in a `decisions/` folder, with its counterfactual. "ADR" is the known synonym in conversation, never in paths | "ADR" in file names, "RFC", "design doc" |
 | **counterfactual** | the first line of a decision: what an agent would do without it | "rationale", "motivation" |

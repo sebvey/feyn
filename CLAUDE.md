@@ -14,7 +14,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `docs/` | `decisions/`, `glossary.md`, `contributing.md` |
 | `.claude/` | skills and agent workflows |
 | `.github/` | issue template and CI workflows |
-| `construction/` | temporary: design, plan, notes, scripts; its fate is a slice of theme #225 |
+| `construction/` | temporary: design, plan, notes, scripts; its fate is not decided yet |
 
 ## Language
 
@@ -55,9 +55,11 @@ the request.
 
 ## Construction
 
-This section goes with `construction/` (a slice of theme #225). Until then, read
+This section goes with `construction/`, whose fate is not decided yet. Until then, read
 `construction/README.md` first: it says how a work session goes. The design is in
 `construction/design/`, the plan of 2026-10-27 in `construction/plan/` (abandoned on
-2026-10-29 for themes, decision `themes-and-release-milestones`: read as material only). A
-session writes its note in `construction/notes/<id>.md`. Work is framed by themes (#220 to
-#225), split one slice at a time; a work session starts with an issue number.
+2026-10-29 for epics, decision `themes-and-release-milestones`: read as material only). A
+session writes its note in `construction/notes/<id>.md`. Work is framed by epics, split one
+slice at a time; a work session starts with an issue number. How the work is organised (epics,
+slices, observations, milestones, the Project's views): `docs/contributing.md`, "How the work
+is organised".
