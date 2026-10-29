@@ -148,7 +148,9 @@ From the main checkout, on `main`:
    Then `git worktree remove <path>`. The issue branch is no longer checked out anywhere.
 3. `/finish after-merge` for the issue branch: it confirms the change landed, the Status, and
    deletes the local branch. The Project workflow "Item closed" sets Done;
-   `/finish after-merge` sets it only when that Project workflow is off.
+   `/finish after-merge` sets it only when that Project workflow is off. Its line on the
+   parent issue to close and the issues now free (`/finish`, "Clean up", step 7) is relayed
+   to the maintainer in the clean-up reply.
 4. `git branch -D worktree-agent-<id>`, the branch the worktree was created on.
    `git worktree list` and `git branch --list 'worktree-agent-*'` show nothing of it left.
 

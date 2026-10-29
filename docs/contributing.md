@@ -51,9 +51,10 @@ their own, and `main` is never force-pushed. After the
 merge, `/finish after-merge` confirms the change landed, checks the issue's Status is Done
 (the Project workflow "Item closed" sets it; `/finish` sets it only when that Project workflow
 is off; a `Refs` issue stays open and In progress), and deletes
-the local branch. `/orchestrate <n>` runs this whole cycle from one work session: a
-contributor agent per issue in its own worktree, a review by a fresh agent before the PR
-reaches the maintainer, then the clean-up of the worktree after the merge. Why: decisions
+the local branch; it then names the parent issue whose sub-issues are now all closed, for the
+maintainer to close, and the issues the closed one blocked that are now free. `/orchestrate <n>`
+runs this whole cycle from one work session: a contributor agent per issue in its own
+worktree, a review by a fresh agent before the PR reaches the maintainer, then the clean-up of the worktree after the merge. Why: decisions
 `issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`.
 
 ## Status, labels and milestones
