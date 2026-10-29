@@ -39,7 +39,8 @@ The most local area the decision binds:
 | one course | `courses/<id>/decisions/` |
 | the teacher | `teacher/decisions/` |
 | the site | `site/decisions/` |
-| two areas or more, the repository, the agentic layer | `docs/decisions/` |
+| the agentic layer (`.claude/`, `.github/`) | `.claude/decisions/` |
+| two areas or more, the repository | `docs/decisions/` |
 
 ## 4. The slug, and its neighbours
 
@@ -47,18 +48,20 @@ Slug: two to five words, lowercase, hyphens, naming the choice, not the problem
 (`classroom-as-build`, not `classroom-problem`). Never a number, never "adr".
 
 Before writing, list every decision and grep them for the decision's key words:
-`find . -path '*/decisions/*.md' -not -path './construction/*' -not -path '*/node_modules/*'`,
-then `grep -ril --include='*.md' "<key word>" docs specs courses teacher site | grep /decisions/`
-(quoted globs: zsh stops on a pattern that matches nothing). A neighbour on the same point: show
-it, and ask whether the new one supersedes it, amends it (edit that file instead), or is
-distinct (say why in one line). Same slug already taken: the same decision exists; stop.
+`find . -path '*/decisions/*.md' -not -path './construction/*' -not -path '*/node_modules/*' -not -path './.claude/worktrees/*'`,
+then `grep -ril --include='*.md' --exclude-dir=worktrees "<key word>" docs specs courses teacher site .claude | grep /decisions/`
+(quoted globs: zsh stops on a pattern that matches nothing; `.claude/worktrees/` holds the
+copies of other branches). A neighbour on the same point, in any of the `decisions/` folders:
+show it, and ask whether the new one supersedes it, amends it (an "Amended" line in that file
+instead, as `decision-format` says), or is distinct (say why in one line). Same slug already
+taken in any folder: the same decision exists; stop.
 
 ## 5. Write it
 
 From [decision-body.md](../../reference/decision-body.md), at `<folder>/<slug>.md`:
 - `date`: today; `issue`: the issue number the decision comes from, or `null`;
-  `status: accepted`; `area`: the area it binds (`repo`, `site`, `teacher`, `spec:<name>`,
-  `course:<id>`);
+  `status: accepted`; `area`: the area it binds (`repo`, `agentic`, `site`, `teacher`,
+  `spec:<name>`, `course:<id>`);
 - first line of the body: the counterfactual, as accepted;
 - then the decision in one paragraph: what is decided, where it applies, what it replaces;
 - optional sections only when they add: "Options ruled out", "Consequences";

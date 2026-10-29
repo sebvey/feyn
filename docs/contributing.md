@@ -2,15 +2,21 @@
 
 How a change happens here, from the first observation to `main`, for a reader who has never
 opened this repository. Every section ends with the decision it rests on, in
-[`docs/decisions/`](decisions/); the reserved words are in [`glossary.md`](glossary.md).
+[`docs/decisions/`](decisions/) or, for the agentic layer, in
+[`.claude/decisions/`](../.claude/decisions/); the reserved words are in
+[`glossary.md`](glossary.md).
 
 ## Where things are
 
 `specs/` holds the contracts a course is written against, `courses/` the courses, `teacher/`
 the teacher template that turns a course into a classroom, `site/` the engine that publishes
-it, `.claude/` the skills and agent workflows, `docs/` what belongs to no single area. During
+it, `.claude/` the agentic layer, `docs/` what belongs to no single area. During
 the construction, `construction/` holds the design, the plan and the session notes; its fate
-is issue #232. Why: decision `monorepo-feyn`.
+is issue #232. `.claude/` has four folders: `skills/` the HOW (one folder per skill, its
+`SKILL.md` and its briefs), `workflows/` the agent workflows, `reference/` the WHAT (what a
+thing is or looks like: the body templates, the Project reference, the rules of an agent in a
+worktree), `decisions/` the decisions that bind the agentic layer. Why: decisions
+`monorepo-feyn`, `claude-folder-layout`.
 
 ## An observation becomes an issue
 
@@ -192,10 +198,13 @@ briefs of those agents name as their first read; that file is their point of use
 ## Decisions and vocabulary
 
 A choice that spans several files or is costly to undo becomes a decision file, counterfactual
-first ("Without this, an agent would…"), in the `decisions/` folder of the area it binds;
-`/feyn-decision` writes it and refuses one without a counterfactual. Issues, PRs and documents
-use the reserved words of the glossary and avoid the words it lists as "not". Why: decisions
-`decision-format`, `reserved-vocabulary`.
+first ("Without this, an agent would…"), in the `decisions/` folder of the area it binds:
+the agentic layer's (`.claude/`, `.github/`) in `.claude/decisions/`, two areas or more and the
+repository's in `docs/decisions/`; `/feyn-decision` writes it and refuses one without a
+counterfactual. A decision that still holds but whose mechanism changed gets an "Amended" line;
+one that no longer holds is superseded. Issues, PRs and documents use the reserved words of the
+glossary and avoid the words it lists as "not". Why: decisions `decision-format`,
+`reserved-vocabulary`.
 
 ## Language
 

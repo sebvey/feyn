@@ -1,6 +1,6 @@
 ---
 name: feyn-brainstorm
-description: "Run a brainstorm with the maintainer on how feyn works (the flow, the skills, the organisation of the work) and end it in a proposal issue, the validated output the triage turns into work. Use for \"on brainstorme sur les skills\", \"brainstormons sur le flow\", \"let's brainstorm the skills\", \"let's think about…\", \"wrap up this discussion\", \"on conclut le brainstorm\", \"/feyn-brainstorm\"."
+description: "Run a brainstorm with the maintainer on how feyn works (the flow, the skills, the organisation of the work) and end it in a proposal issue, the validated output the triage turns into work. Use for \"on brainstorme sur les skills\", \"brainstormons sur le flow\", \"let's brainstorm the skills\", \"wrap up this discussion\", \"on conclut le brainstorm\", \"/feyn-brainstorm\"."
 argument-hint: "[topic | proposal number]"
 ---
 

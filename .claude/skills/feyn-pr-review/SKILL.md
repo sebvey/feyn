@@ -39,7 +39,7 @@ what the caller passes, "none" for each input it does not pass:
   not a finding.
 - **An agent-workflow run.** The run ids `wf_<id>` and their transcript directory.
 - **A blind run.** The deleted paths and the worktree.
-- **A `migrate-concept` PR** (the S1-10 sub-issues). The [migration variant](#migration-variant),
+- **A `migrate-concept.js` PR** (the S1-10 sub-issues). The [migration variant](#migration-variant),
   appended to the brief; with no prototype of the concept, the run ids given are "none" (the PR
   still cites its run id).
 
@@ -97,7 +97,7 @@ Report, nothing else:
 
 ### Migration variant
 
-Appended to the reviewer brief for a PR that delivers a `migrate-concept` run (rule D on #23,
+Appended to the reviewer brief for a PR that delivers a `migrate-concept.js` run (rule D on #23,
 2026-10-28: the comparison with the old course is dropped; what counts is the quality of the
 new concept):
 
