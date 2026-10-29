@@ -44,7 +44,7 @@ epic, their bodies kept as material; `stage-1` is renamed `linear-course/v1.0.0`
 - The epics of 2026-10-29: #220 the `linear-course` spec v1; #221 `parcours-po` conformity
   (blocked by #29); #222 the teacher and #223 the site (blocked by #221); #224 course quality
   (blocked by #222); #228 the work organisation.
-- `construction/` no longer ends "at stage 4"; its fate is not decided yet.
+- `construction/` no longer ends "at stage 4"; its fate is observation #232.
 - Amended 2026-10-29 (#229): "theme" became "epic" (label renamed, #220 to #224 retitled);
   added the entry rule, the Definition of Ready, the plan comment, the milestone an epic may
   target; #225 (the flow and the tooling) dissolved as a heap, its six issues back in the

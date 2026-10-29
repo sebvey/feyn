@@ -9,8 +9,7 @@ opened this repository. Every section ends with the decision it rests on, in
 `specs/` holds the contracts a course is written against, `courses/` the courses, `teacher/`
 the template that turns a course into a classroom, `site/` the engine that publishes it,
 `.claude/` the skills and agent workflows, `docs/` what belongs to no single area. During the
-construction, `construction/` holds the design, the plan and the session notes; its fate (archived
-or removed) is not decided yet. Why: decision `monorepo-feyn`.
+construction, `construction/` holds the design, the plan and the session notes; its fate is issue #232. Why: decision `monorepo-feyn`.
 
 ## An observation becomes an issue
 

@@ -14,7 +14,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `docs/` | `decisions/`, `glossary.md`, `contributing.md` |
 | `.claude/` | skills and agent workflows |
 | `.github/` | issue template and CI workflows |
-| `construction/` | temporary: design, plan, notes, scripts; its fate: an observation to triage into an epic |
+| `construction/` | temporary: design, plan, notes, scripts; its fate is #232 |
 
 ## Language
 
@@ -55,7 +55,7 @@ the request.
 
 ## Construction
 
-This section goes with `construction/`, whose fate is not decided yet. Until then, read
+This section goes with `construction/`, whose fate is #232. Until then, read
 `construction/README.md` first: it says how a work session goes. The design is in
 `construction/design/`, the plan of 2026-10-27 in `construction/plan/` (abandoned on
 2026-10-29 for epics, decision `themes-and-release-milestones`: read as material only). A
