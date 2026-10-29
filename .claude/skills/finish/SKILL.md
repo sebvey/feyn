@@ -142,13 +142,14 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      next bullet. Then
      `mise exec -- gh api repos/sebvey/feyn/issues/<parent> --jq '[.state, .sub_issues_summary]'`:
      open, with `completed` equal to `total`, means every sub-issue is closed. Then the reply
-     carries one line: the parent's number and title, its Done when (read in its body), and
+     ends with one line: the parent's number and title, its Done when (read in its body), and
      that closing it is the maintainer's (path: the parent issue, button "Close issue", reason
-     completed or not planned). Never close it yourself.
+     completed or not planned); only the lines of the next bullet follow it. Never close it
+     yourself.
    - **The issues it blocked.**
-     `mise exec -- gh api repos/sebvey/feyn/issues/<n>/dependencies/blocking --jq '.[] | select(.state == "open" and .issue_dependencies_summary.blocked_by == 0) | [.number, .title] | @tsv'`
-     lists each open issue <n> blocked whose blockers are now all closed
+     `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<n>/dependencies/blocking --jq '.[] | select(.state == "open" and .issue_dependencies_summary.blocked_by == 0) | [.number, .title] | @tsv'`
+     lists each open issue that #n blocked whose blockers are now all closed
      (`issue_dependencies_summary.blocked_by` counts its open blockers, `total_blocked_by` all
-     of them); it prints nothing when there is none. Name each in the same reply as now free,
-     with its Status ([project.md](../ticket/project.md), "Commands"): free to take when
-     Ready, still to triage when Backlog.
+     of them); it prints nothing when there is none. Name each at the end of the same reply,
+     one line each, as now free, with its Status ([project.md](../ticket/project.md),
+     "Commands"): free to take when Ready, still to triage when Backlog.
