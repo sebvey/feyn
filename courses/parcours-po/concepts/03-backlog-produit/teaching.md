@@ -5,7 +5,7 @@
    s'argumente par l'objectif produit (concept 2) ; comment ordonner (valeur, coût, risque,
    dépendances) vient au concept 13. Émergente : le backlog change à mesure que l'équipe
    apprend ; un élément se précise quand il approche du haut, le bas reste vague (DEEP, choix
-   d'école). Seule source de travail : rappel du concept 1, sans le réenseigner. Un **élément du
+   d'école). Seule source de travail : rappel du concept 0, sans le réenseigner. Un **élément du
    backlog** est toute entrée du backlog, quel que soit son niveau (les niveaux : concept 4).
    3a s'enseigne en deux messages de 15 lignes, chacun avec sa question : **3a1** « ordonnée »
    (exemple « Trois niveaux de priorité »), puis **3a2** « émergente » (« Tout détailler d'avance ? »),
