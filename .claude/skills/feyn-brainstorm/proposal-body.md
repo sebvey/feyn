@@ -12,7 +12,7 @@
 
 <!-- Numbered, one point each, in bold then its content, as the maintainer validated it.
      Each point ends with "Why: …" and then "Rejected: <the alternative weighed>, because …",
-     or "Rejected: none weighed.": it feeds the counterfactual `/decide` asks for a decision
+     or "Rejected: none weighed.": it feeds the counterfactual `/feyn-decision` asks for a decision
      ("Without this, an agent would…"). -->
 
 ### Open questions
@@ -21,7 +21,7 @@
 
 ### Proposed next
 
-<!-- What the triage creates from this proposal: a decision (`/decide`), an epic, slices, or
+<!-- What the triage creates from this proposal: a decision (`/feyn-decision`), an epic, slices, or
      "Nothing" and the reason. Each epic or slice: its title, the points of "What we settled"
      it carries, and a draft Done when of one to three statements a reviewer can verify; the
      triage may reword it, never invent it. Blocked-by links between them, in words. -->

@@ -36,3 +36,6 @@ instructions only.
 
 - A course in another language brings its own files and a language pack; nothing else in the
   repository is translated.
+- Amended 2026-10-29 (#246): a maintainer phrasing quoted in a skill description's "Use for"
+  may be in French, as a quote from course material is; everything else in a skill stays in
+  English.

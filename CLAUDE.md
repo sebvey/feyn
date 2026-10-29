@@ -41,9 +41,10 @@ where a reserved term exists.
 
 ## Skills
 
-`/issue` creates or reads an issue. `/start <n>` takes an issue. `/finish` opens the PR.
-`/decide` writes a decision. `/brainstorm` runs a brainstorm and ends it in a proposal. Load the
-one that matches the request.
+`/feyn-deliver <n>` delivers a Ready issue through a contributor agent, a fresh-agent review and
+the hand-over to the maintainer. `/feyn-brainstorm` runs a brainstorm with the maintainer and
+ends it in a proposal. Load the one that matches the request. The other `feyn-` skills are their
+tooling: called by them, and loaded directly only for a one-off act.
 
 ## Non-negotiable rules
 

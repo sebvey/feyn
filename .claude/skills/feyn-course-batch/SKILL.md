@@ -1,13 +1,14 @@
 ---
-name: course-batch
-description: Run the course-batch agent workflow on a batch of concepts of a course (sources, writing, two reviews, fixes, checks), or list its steps with a dry run. Use for "/course-batch", "run course-batch on issue 42", "write the batch of concepts 9 and 10".
+name: feyn-course-batch
+description: "Tooling of the work cycle, called by the maintainer and by `/feyn-deliver`'s contributor on a batch issue: run the course-batch agent workflow on a batch of concepts of a course (sources, writing, two reviews, fixes, checks), or list its steps with a dry run, then triage what it leaves open. Use for \"/feyn-course-batch parcours-po 42\", \"/feyn-course-batch parcours-po 9 10 --dry-run\"."
 argument-hint: "<course id> <issue number | concept numbers> [--dry-run]"
 ---
 
-# /course-batch
+# /feyn-course-batch
 
-One job: run `.claude/workflows/course-batch.js` on a batch, then triage what it leaves open.
-A course changes only through an issue or a batch: work on the batch issue's branch (`/start`).
+One job: run the agent workflow `course-batch.js` of `.claude/workflows/` on a batch, then triage
+what it leaves open. A course changes only through an issue or a batch: work on the batch issue's
+branch (`/feyn-issue-branch`).
 
 ## 1. Run
 
@@ -32,7 +33,7 @@ Read the report, then every file it changed (never trust the summary).
 - `open` findings, `needs` (a storyline fact or a glossary term): settle each as small as
   possible, never contradict the existing text, never settle a real business fact; leave
   unfixed what no case depends on. Each settlement and the option dropped go in the PR's
-  Review first (`/finish` step 5), grouped in one bullet when there are several.
+  Review first (`/feyn-pull-request` step 5), grouped in one bullet when there are several.
 - `<n>-errors.md`: errors found in the old files; say them in the PR's Review first, one
   bullet with their count and the file.
 - A review missing (`reviews_missing`) or a concept `failed`: rerun the workflow on those
@@ -41,5 +42,5 @@ Read the report, then every file it changed (never trust the summary).
 ## 3. Finish
 
 Run `mise exec -- specs/<name>/checks/check-course courses/<id>` on the whole course, then
-`taught-check` ([taught-check](../taught-check/SKILL.md)) from the first concept touched, and
-`/finish`.
+`/feyn-taught-check` ([feyn-taught-check](../feyn-taught-check/SKILL.md)) from the first concept
+touched, and `/feyn-pull-request`.

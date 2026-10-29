@@ -1,25 +1,24 @@
 ---
-name: finish
-description: 'Deliver the current issue branch on feyn - run the checks that exist, push, open the PR to main with "Closes #n" and the title <type>(<area>): <summary>, ask for review; after the merge, confirm the change landed, delete the local branch and note the slice on its epic's plan comment. Use for "/finish", "open the PR", "it is merged, clean up".'
-argument-hint: "[after-merge]"
+name: feyn-pull-request
+description: "Tooling of the work cycle, called by `/feyn-deliver` (its contributor agent, at the end of the work): turn the current issue branch on feyn into a pull request to main, rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, checking the issue lists it, then asking for review. It never merges. Use for \"/feyn-pull-request\"."
 ---
 
-# /finish
+# /feyn-pull-request
 
-Two moments, never in the same turn: **deliver** (open the PR), then, once the PR is merged,
-**clean up**. It never merges: the merge belongs to the reviewer. Each writes on GitHub: the
-delivery sets the issue Ready for review (step 7); the clean-up adds two lines to the epic's
-plan comment, and sets the epic Ready for review when its last slice closed (step 7).
+One job: deliver the current issue branch as a pull request to `main` and ask for its review.
+It never merges: the merge belongs to the reviewer. It writes on GitHub: the PR, and the issue
+set Ready for review (step 7). Once the PR is merged, `/feyn-merge-cleanup` cleans up, never in
+the same turn.
 
-The branch is `<type>/<n>-<slug>` (made by `/start`); `<n>` is the issue. On `main`, or on a
-branch without an issue number: stop and say so.
+The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the issue. On
+`main`, or on a branch without an issue number: stop and say so.
 
-## Deliver
+## Steps
 
 1. **Done when.** Reread the issue's Done when
    (`mise exec -- gh issue view <n> --json title,labels,body`) and check each statement against
    the branch. One that does not hold: fix it, or report it in the PR's Checks as "not met" or
-   "deviation", with why (step 5). The Done when is not edited after `/start`; a change to it
+   "deviation", with why (step 5). The Done when is not edited after `/feyn-issue-branch`; a change to it
    amends the open PR's body as well.
 2. **Checks.** Run the ones that exist for what the branch touches
    (`git diff --name-only main...HEAD`):
@@ -46,7 +45,7 @@ branch without an issue number: stop and say so.
    - **Awaiting the maintainer**, only when the branch leaves a decision to the maintainer
      (a draft, step 6), first because it is the action: the question, the options, the
      recommendation. Removed once the answer is applied. An `Awaiting the orchestrator`
-     section (`/orchestrate` step 1) takes the same place.
+     section (`/feyn-deliver` step 1) takes the same place.
    - `Closes #<n>` (`Refs #<n>` when the PR is one step of the issue) on its own line, first
      after the awaiting section (the first line of the body when there is none). Several
      issues: one such line each.
@@ -55,7 +54,7 @@ branch without an issue number: stop and say so.
    - **Issues**: one bullet per issue the PR covers, `#<n> <title>: <what this PR does for it>
      (Closes)` or `(Refs)`. Kept with a single issue.
    - **Changes**: at most 8 bullets, by intent rather than by file. The detail is the diff.
-     Decisions written (`/decide`) and issues opened on the way are bullets here.
+     Decisions written (`/feyn-decision`) and issues opened on the way are bullets here.
    - **Checks**:
      - `Done when #<n>: <count> met[, <count> not met][, <count> deviation].`, one line per
        issue, from step 1. The statements are not restated (the issue holds them): only a
@@ -67,8 +66,8 @@ branch without an issue number: stop and say so.
        in a few words, on one line; a longer proof goes in a comment on the issue, and the
        mark cites the issue. Dropped when there is none.
      - `Fresh-agent review: no blocking finding.` or
-       `Fresh-agent review: <N> blocking findings, fixed.`: not written by `/finish`; added
-       at the hand-over by the corrections pass of `/orchestrate` (step 4), and updated, not
+       `Fresh-agent review: <N> blocking findings, fixed.`: not written by `/feyn-pull-request`; added
+       at the hand-over by the corrections pass of `/feyn-deliver` (step 4), and updated, not
        repeated, after a second review: `<N>` then counts the blocking findings of all the
        reviews. It counts within the 30 lines: leave room for it. Absent when the PR had no
        such review.
@@ -93,7 +92,7 @@ branch without an issue number: stop and say so.
    `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
    Only when a fresh-agent review was done (the Checks line `Fresh-agent review:` exists) or
    the maintainer asked for a PR without one; not for a `Refs` PR (the issue stays In
-   progress), and not under `/orchestrate`, whose hand-over sets it after the fresh-agent
+   progress), and not under `/feyn-deliver`, whose hand-over sets it after the fresh-agent
    review (its step 5). A correction asked on the PR returns the issue to In progress until it
    is delivered again. Then reply with the PR URL, the
    title, what the reviewer should look at first (the PR's Review first, in one line), and the
@@ -104,72 +103,7 @@ branch without an issue number: stop and say so.
    A draft PR: the issue stays In progress, with its label; name the question instead of the
    merge command. The maintainer answers with a comment and removes `blocked:maintainer` from
    the issue: one removal. Then apply the answer, remove the section from the body,
-   `mise exec -- gh pr ready <pr>`, and ask for review again (Ready for review then, as above; not under `/orchestrate`, where
+   `mise exec -- gh pr ready <pr>`, and ask for review again (Ready for review then, as above; not under `/feyn-deliver`, where
    the orchestrator sets it after the fresh-agent review). Never
    remove the label yourself; if it is still on the issue, the answer is not given: stop.
 
-## Clean up (after the merge)
-
-Squash makes a new commit on `main`, so git does not see the branch as merged and
-`git branch -d` refuses it. Two separate moves: confirm, then delete.
-
-1. `mise exec -- gh pr view <branch> --json state,mergedAt,title` shows `MERGED`; otherwise
-   stop: nothing to clean.
-2. `git switch main`, `git pull --ff-only`.
-3. **Confirm** that `main` holds the branch's version of every file it touched (`main` may
-   have moved on with other merges, so compare those files only):
-   `git diff main <branch> -- $(git diff --name-only $(git merge-base main <branch>) <branch>)`
-   must print nothing. Read the result before going on; anything printed: stop and show it.
-4. **Delete**: `git branch -D <branch>` (already gone if the merge ran in this
-   checkout: nothing to do). The remote branch goes with the merge
-   (`mise exec -- gh pr merge --squash --delete-branch`); if it is still there
-   (`git ls-remote --heads origin <branch>`), tell the maintainer. Never delete a
-   remote branch yourself.
-5. Check the squash commit carries the PR title
-   (`git log main -1 --format=%s --grep "(#<pr>)"`); if not, tell the
-   maintainer (`main` is never rewritten).
-6. Check the issue with the PR (`mise exec -- gh issue view <n> --json url,state,projectItems`).
-   - `Closes` PR: the issue must be closed; if not, say so (the PR body lost its
-     `Closes #<n>`). Its Status is Done when the Project workflow "Item closed" is on: read
-     the Project workflows ([project.md](../../reference/project.md), "The Project workflows").
-     On: the Status should read Done; not yet, rerun the Status read once after a few
-     seconds; still not Done, say so and leave it (the Project workflow is what failed, the
-     maintainer looks). Off: set Done yourself ([project.md](../../reference/project.md), "Commands").
-     The query fails: the state is unknown, report it and set nothing. `projectItems` empty:
-     the issue was never in the Project, tell the maintainer.
-   - `Refs` PR: the issue must still be open, Status unchanged (In progress). If it closed
-     anyway (a closing keyword in the body), reopen it
-     (`mise exec -- gh issue reopen <n> --comment "Reopened: PR #<pr> only referenced it (Refs)."`),
-     set its Status back to In progress ([project.md](../../reference/project.md), "Commands"),
-     and tell the maintainer which step of "Deliver" missed it.
-   - Either way, if the issue still carries `blocked:maintainer`, tell the
-     maintainer.
-7. A `Closes` PR whose issue closed: say what its closing frees. Nothing closes a parent issue
-   (an epic has no PR of its own, and no GitHub automation closes it with its sub-issues), and
-   nothing says an issue is free once its last blocker closes.
-   - **The epic.** `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
-     prints the parent's number; HTTP 404 « No parent issue found »: no parent, skip to the
-     next bullet. Then
-     `mise exec -- gh api repos/sebvey/feyn/issues/<parent> --jq '[.state, .sub_issues_summary, [.labels[].name]]'`.
-     A parent with the label `epic` is the epic: add two lines to its **plan comment**
-     ([project.md](../../reference/project.md), "Epics": find it, read it into a file, append,
-     PATCH it), the slice closed (`#<n> (PR #<pr>)`, what it delivered in a few words) and the
-     next slice to pose, from the plan comment's order, or "next slice to pose: the maintainer
-     decides" when it is not obvious, or "next slice: none, the epic closes" when this was its
-     last; no plan comment: add one beginning with `**Plan comment**`, with the two lines, and
-     say it was missing. The reply
-     gives the two lines. Any other parent: no plan comment, and "parent issue" replaces
-     "epic" below. Open, with `completed` equal to `total`, means every sub-issue is closed:
-     set the epic Ready for review ([project.md](../../reference/project.md), "Commands"; an epic
-     only, not another parent), and the reply ends with one line, the epic's number and title,
-     its Done when (read in its body), to verify, and that closing it is the maintainer's
-     (path: the epic, button "Close issue", reason completed or not planned; a statement that
-     does not hold: a new slice, `/issue`); only the lines of the next bullet follow it. Never
-     close it yourself.
-   - **The issues it blocked.**
-     `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<n>/dependencies/blocking --jq '.[] | select(.state == "open" and .issue_dependencies_summary.blocked_by == 0) | [.number, .title] | @tsv'`
-     lists each open issue that #n blocked whose blockers are now all closed
-     (`issue_dependencies_summary.blocked_by` counts its open blockers, `total_blocked_by` all
-     of them); it prints nothing when there is none. Name each at the end of the same reply,
-     one line each, as now free, with its Status ([project.md](../../reference/project.md),
-     "Commands"): free to take when Ready, still to triage when Backlog.

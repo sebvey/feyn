@@ -1,14 +1,14 @@
 ---
-name: taught-check
-description: Run the taught-check agent workflow, which reports the cases of a course that ask what the learner has not yet been taught, and triage its findings. Use for "/taught-check", "run taught-check on parcours-po from concept 9", after any change to what a concept teaches.
+name: feyn-taught-check
+description: "Tooling of the work cycle, called by the maintainer and by `/feyn-deliver`'s contributor after any change to what a concept teaches: run the taught-check agent workflow, which reports the cases of a course that ask what the learner has not yet been taught, and triage its findings. Use for \"/feyn-taught-check parcours-po\", \"/feyn-taught-check parcours-po from 9\"."
 argument-hint: "<course id> [from <concept>] [to <concept>]"
 ---
 
-# /taught-check
+# /feyn-taught-check
 
-One job: run `.claude/workflows/taught-check.js` and handle what it finds. It is mandatory
-after any change to what is taught (teaching notes, a sub-concept, an order), before the merge
-(`SPEC.md` section 10).
+One job: run the agent workflow `taught-check.js` of `.claude/workflows/` and handle what it finds.
+It is mandatory after any change to what is taught (teaching notes, a sub-concept, an order), before
+the merge (`SPEC.md` section 10).
 
 ## 1. Run
 
@@ -24,8 +24,8 @@ with seven checks. It modifies no file and returns the `inventory` and the `find
   the issue's branch, whether or not the change caused it, then rerun from the first concept
   fixed. Two rounds at most.
 - A finding whose fix changes what a concept teaches, or one that returns after round two:
-  an issue (`/issue`), not a fix here.
-- The PR summarises them under Changes, within `/finish` step 5's limits: one bullet for the
+  an issue (`/feyn-issue`), not a fix here.
+- The PR summarises them under Changes, within `/feyn-pull-request` step 5's limits: one bullet for the
   findings fixed, with their count, one for the findings deferred, with their issue numbers;
   the workflow's result goes on a line of its own in Checks, `taught-check: <result>` (an
   agent workflow, not a check: not on the `Checks run:` line).
