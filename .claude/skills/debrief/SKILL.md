@@ -1,6 +1,6 @@
 ---
 name: debrief
-description: Distil a reflection session with the maintainer on feyn (how the project works, the flow, the tooling) into decisions (/decide), issues (/ticket), a docs/contributing.md diff and a session note, then list what was written and what was refused. Use for "/debrief", "distil this session", "wrap up this discussion".
+description: Distil a reflection session with the maintainer on feyn (how the project works, the flow, the tooling) into decisions (/decide), issues (/issue), a docs/contributing.md diff and a session note, then list what was written and what was refused. Use for "/debrief", "distil this session", "wrap up this discussion".
 argument-hint: "[topic]"
 ---
 
@@ -35,7 +35,7 @@ refused choice that applies to one place becomes a paragraph of step 5 or nothin
 
 ## 4. Issues
 
-For each piece of work and each open question: load `/ticket` and follow it, one issue per
+For each piece of work and each open question: load `/issue` and follow it, one issue per
 independent piece (two pieces that can be delivered apart are two issues). Its twin search
 applies: a twin open issue gets a comment instead. The Observation names the reflection session (date,
 issue `<n>`). A question waiting for the maintainer gets `blocked:maintainer`.

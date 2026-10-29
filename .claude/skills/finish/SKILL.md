@@ -89,7 +89,7 @@ branch without an issue number: stop and say so.
      list the PR: rerun once. PR still missing on a `Closes` PR, or listed on a `Refs` PR (a
      closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
 7. **Ask for review**: set the issue's Status to Ready for review (the work claims done, the
-   maintainer concludes; [project.md](../ticket/project.md)):
+   maintainer concludes; [project.md](../../reference/project.md)):
    `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
    Only when a fresh-agent review was done (the Checks line `Fresh-agent review:` exists) or
    the maintainer asked for a PR without one; not for a `Refs` PR (the issue stays In
@@ -131,16 +131,16 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
 6. Check the issue with the PR (`mise exec -- gh issue view <n> --json url,state,projectItems`).
    - `Closes` PR: the issue must be closed; if not, say so (the PR body lost its
      `Closes #<n>`). Its Status is Done when the Project workflow "Item closed" is on: read
-     the Project workflows ([project.md](../ticket/project.md), "The Project workflows").
+     the Project workflows ([project.md](../../reference/project.md), "The Project workflows").
      On: the Status should read Done; not yet, rerun the Status read once after a few
      seconds; still not Done, say so and leave it (the Project workflow is what failed, the
-     maintainer looks). Off: set Done yourself ([project.md](../ticket/project.md), "Commands").
+     maintainer looks). Off: set Done yourself ([project.md](../../reference/project.md), "Commands").
      The query fails: the state is unknown, report it and set nothing. `projectItems` empty:
      the issue was never in the Project, tell the maintainer.
    - `Refs` PR: the issue must still be open, Status unchanged (In progress). If it closed
      anyway (a closing keyword in the body), reopen it
      (`mise exec -- gh issue reopen <n> --comment "Reopened: PR #<pr> only referenced it (Refs)."`),
-     set its Status back to In progress ([project.md](../ticket/project.md), "Commands"),
+     set its Status back to In progress ([project.md](../../reference/project.md), "Commands"),
      and tell the maintainer which step of "Deliver" missed it.
    - Either way, if the issue still carries `blocked:maintainer`, tell the
      maintainer.
@@ -152,7 +152,7 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      next bullet. Then
      `mise exec -- gh api repos/sebvey/feyn/issues/<parent> --jq '[.state, .sub_issues_summary, [.labels[].name]]'`.
      A parent with the label `epic` is the epic: add two lines to its **plan comment**
-     ([project.md](../ticket/project.md), "Epics": find it, read it into a file, append,
+     ([project.md](../../reference/project.md), "Epics": find it, read it into a file, append,
      PATCH it), the slice closed (`#<n> (PR #<pr>)`, what it delivered in a few words) and the
      next slice to pose, from the plan comment's order, or "next slice to pose: the maintainer
      decides" when it is not obvious, or "next slice: none, the epic closes" when this was its
@@ -160,16 +160,16 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      say it was missing. The reply
      gives the two lines. Any other parent: no plan comment, and "parent issue" replaces
      "epic" below. Open, with `completed` equal to `total`, means every sub-issue is closed:
-     set the epic Ready for review ([project.md](../ticket/project.md), "Commands"; an epic
+     set the epic Ready for review ([project.md](../../reference/project.md), "Commands"; an epic
      only, not another parent), and the reply ends with one line, the epic's number and title,
      its Done when (read in its body), to verify, and that closing it is the maintainer's
      (path: the epic, button "Close issue", reason completed or not planned; a statement that
-     does not hold: a new slice, `/ticket`); only the lines of the next bullet follow it. Never
+     does not hold: a new slice, `/issue`); only the lines of the next bullet follow it. Never
      close it yourself.
    - **The issues it blocked.**
      `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<n>/dependencies/blocking --jq '.[] | select(.state == "open" and .issue_dependencies_summary.blocked_by == 0) | [.number, .title] | @tsv'`
      lists each open issue that #n blocked whose blockers are now all closed
      (`issue_dependencies_summary.blocked_by` counts its open blockers, `total_blocked_by` all
      of them); it prints nothing when there is none. Name each at the end of the same reply,
-     one line each, as now free, with its Status ([project.md](../ticket/project.md),
+     one line each, as now free, with its Status ([project.md](../../reference/project.md),
      "Commands"): free to take when Ready, still to triage when Backlog.

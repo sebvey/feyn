@@ -68,5 +68,5 @@ A decision it supersedes: change that file's `status` to `superseded-by: <slug>`
 commit.
 
 Commit it on the current issue branch (`git add <file>`,
-`git commit -m "decide <slug>"`); on `main`, stop and propose `/ticket` first:
+`git commit -m "decide <slug>"`); on `main`, stop and propose `/issue` first:
 a decision lands through a PR like the rest. Reply with the path and the counterfactual.

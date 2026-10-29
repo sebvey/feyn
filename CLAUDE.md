@@ -41,7 +41,7 @@ where a reserved term exists.
 
 ## Skills
 
-`/ticket` creates or reads an issue. `/start <n>` takes an issue. `/finish` opens the PR.
+`/issue` creates or reads an issue. `/start <n>` takes an issue. `/finish` opens the PR.
 `/decide` writes a decision. `/debrief` distils a reflection session. Load the one that matches
 the request.
 
