@@ -87,13 +87,13 @@ the English terms below are how we talk about them in code, docs and issues.
 | **taught-check** | the agent workflow that verifies no case asks what the learner has not yet been taught | |
 | **fresh test** | a run of the teacher by a fresh subagent (Sonnet) in a disposable classroom, following a **test scenario** | "e2e", "smoke test", "simulation" |
 | **review** | a reading of a change against the spec by an agent or a human | "audit", "QA" |
-| **skill** | a Claude Code skill of `.claude/skills/`, folder and name prefixed `feyn-`, invoked as `/feyn-<name>` or loaded from its description; a **job skill** does the job of one moment of the work and is named by a verb (`feyn-deliver`, `feyn-brainstorm`); the **tooling** is the skills the job skills call, each named by what it produces or handles (`feyn-issue-branch`, `feyn-pull-request`) | "command", "prompt", "recipe" |
+| **skill** | a Claude Code skill of `.claude/skills/`, folder and name prefixed `feyn-`, invoked as `/feyn-<name>` or loaded from its description; a **job skill** does the job of one moment of the work and is named by a verb (`feyn-deliver`, `feyn-brainstorm`); the **work-cycle tooling** is the other skills, called by the job skills, by the moments without a skill (take an epic, triage) or directly for a one-off act, each named by what it produces or handles (`feyn-issue-branch`, `feyn-pull-request`); "tooling" alone is the build, site and teacher code | "command", "prompt", "recipe" |
 | **agent workflow** | a Claude Code multi-agent script in `.claude/workflows/` | |
 | **CI workflow** | a GitHub Actions file in `.github/workflows/` | "pipeline", "action" |
 | **Project workflow** | a built-in automation of the Project ("Auto-add to project", "Item added to project", "Item closed"), turned on in the web interface; `.claude/reference/project.md` lists which are on | "automation", "workflow" alone |
 | **template** | always qualified: **course templates** (`specs/<name>/templates/`, model files of a course), **teacher template** (`teacher/CLAUDE.template.md`), **issue template**, **PR body template** (`.claude/skills/feyn-pull-request/pr-body.md`) | "template" alone, "boilerplate", "scaffold" |
 | **channel** | where a build is served from: **prod** (a course tag), **next** (`main`), **preview** (a PR) | "environment", "stage", "env" |
-| **release** | tagging a course version (`<id>/vX.Y.Z`) and deploying prod | "deploy" alone, "ship" |
+| **release** | tagging a course version (`<id>/vX.Y.Z`) and deploying prod; "publish" means a release, never a build | "deploy" alone, "ship" |
 | **course version** / **spec version** | the two versioned objects; tooling has a **commit sha**, no version | "site version", "teacher version" |
 | **freeze** | the moment after which the old repositories no longer change; announced by the agent | |
 | **health** | a report on the repository's state; no skill produces it yet | "status", "doctor" |

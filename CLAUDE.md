@@ -43,8 +43,9 @@ where a reserved term exists.
 
 `/feyn-deliver <n>` delivers a Ready issue through a contributor agent, a fresh-agent review and
 the hand-over to the maintainer. `/feyn-brainstorm` runs a brainstorm with the maintainer and
-ends it in a proposal. Load the one that matches the request. The other `feyn-` skills are their
-tooling: called by them, and loaded directly only for a one-off act.
+ends it in a proposal. Load the one that matches the request. The other `feyn-` skills are the
+work-cycle tooling: called by them or by the moments without a skill (take an epic, triage), and
+loaded directly for a one-off act.
 
 ## Non-negotiable rules
 

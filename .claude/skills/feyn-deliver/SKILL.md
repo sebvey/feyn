@@ -1,6 +1,6 @@
 ---
 name: feyn-deliver
-description: "Deliver a Ready issue on feyn, a slice or a standalone observation, from Ready to merged: a contributor agent in its own worktree takes the issue, does the work and opens the PR; a fresh agent reviews it against the Done when; a corrections pass; the hand-over to the maintainer, who merges; then the clean-up after the merge. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"/feyn-deliver 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\", \"c'est mergé, nettoie\", \"it is merged, clean up\"."
+description: "Deliver a Ready issue on feyn, a slice or a standalone observation, from Ready to merged: a contributor agent in its own worktree takes the issue, does the work and opens the PR; a fresh agent reviews it against the Done when; a corrections pass; the hand-over to the maintainer, who merges; then the clean-up after the merge. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"/feyn-deliver 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\"."
 argument-hint: "<issue number> [<issue number>…]"
 ---
 
