@@ -29,7 +29,7 @@ comes once, at the hand-over (step 5).
   first is merged).
 - Model of the contributor agent: `opus` for text and decisions (skills, docs, decisions,
   course material, a To do that leaves choices); `sonnet` for execution from a clear contract
-  (the To do gives the exact change). The reviewer is always `opus`.
+  (the To do gives the exact change).
 - A decision the issue asks for: did the maintainer accept its counterfactual in this
   work session? Then the brief gives it verbatim, with the date. Otherwise the contributor
   takes the decision-awaited path (step 4).
@@ -75,7 +75,7 @@ comes once, at the hand-over (step 5).
 ## 2. The contributor agent
 
 `Agent` with `isolation: "worktree"` (none for a two-phase migration, step 1), the model above,
-and the [contributor brief](#contributor-brief) filled in. Keep its id: the corrections pass and the
+and the [contributor brief](contributor-brief.md) filled in. Keep its id: the corrections pass and the
 clean-up need it. Wait for its reply; never do its work in parallel.
 
 Its reply gives the branch, the PR, the files changed, the checks and what it was unsure of.
@@ -87,29 +87,25 @@ awaiting section excluded), no signature line.
 
 ## 3. Independent review
 
-A new `Agent` (never the contributor, never resumed from it), `opus`, with the
-[reviewer brief](#reviewer-brief). It reads the PR, not the contributor's reply. A PR with
-checks to rerun (any check or fixture runner: a course, `site/`, `specs/*/checks/`): give the
-reviewer `isolation: "worktree"` too (the brief has it check out the PR head detached), and
-clean its worktree with steps 6.1, 6.2 and 6.4 only: it holds no issue branch, so no
-`/feyn-merge-cleanup` for it. A PR whose evidence is an agent-workflow run: give the reviewer
-the run ids `wf_<id>` and their transcript directory, and for a blind run the deleted paths
-and the worktree. A `migrate-concept` PR (the S1-10 sub-issues): add the
-[migration variant](#migration-variant) to the brief; with no prototype of the concept, the run
-ids given are "none" (the PR still cites its run id).
+Load `/feyn-pr-review <pr>`: a fresh agent reads the PR, not the contributor's reply. Pass it
+what the PR does not hold: for a PR whose evidence is an agent-workflow run, the run ids
+`wf_<id>` and their transcript directory, and for a blind run the deleted paths and the
+worktree; for a `migrate-concept` PR (the S1-10 sub-issues), the
+[migration variant](../feyn-pr-review/SKILL.md#migration-variant) with what fills it: the
+concept, its folder, the old concept file and the site page. A reviewer
+given its own worktree (checks to rerun): clean it with steps 6.1, 6.2 and 6.4 only: it holds
+no issue branch, so no `/feyn-merge-cleanup` for it.
 
 ## 4. Corrections pass, decision awaited
 
 - **Findings.** Send the blocking findings, and the non-blocking ones worth fixing, to the
   contributor agent with `SendMessage` (its id; its context is intact). It fixes, pushes and
-  updates the PR body, adding to its Checks the line
-  `Fresh-agent review: <N> blocking findings, fixed.` (`/feyn-pull-request` step 5). With no blocking
-  finding, send that line too: `Fresh-agent review: no blocking finding.` A second review
-  updates the same line, `<N>` counting the blocking findings of all the reviews. Then check
-  each fixed point yourself in the diff (`mise exec -- gh pr diff <pr>`), never on its word,
-  and recheck the sensitive points: a counterfactual, a Done when count, a command that
-  touches `main` or a remote branch, the title. A second review (step 3) whenever the change
-  adds or edits a decision or a check, or goes beyond the findings or the answer.
+  updates the PR body, adding to its Checks the `Fresh-agent review:` line
+  (`/feyn-pull-request` step 5); with no blocking finding, send that line too. Then check each
+  fixed point yourself in the diff (`mise exec -- gh pr diff <pr>`), never on its word, and
+  recheck the sensitive points: a counterfactual, a Done when count, a command that touches
+  `main` or a remote branch, the title. A second review (step 3) follows the rule of
+  `/feyn-pull-request` step 7.
 - **Decision awaited.** The contributor that leaves a decision to the maintainer opens a draft
   PR, puts `blocked:maintainer` on the issue only, writes an `Awaiting the maintainer` section
   at the top of the body, and stops (`/feyn-pull-request`, step 6). A decision through `/feyn-decision` takes
@@ -122,7 +118,7 @@ ids given are "none" (the PR still cites its run id).
   `mise exec -- gh pr ready <pr>`. Check the applied answer yourself.
 - **A decision after the hand-over.** The maintainer can refuse or settle a choice while the
   PR awaits the merge: relay it to the contributor with `SendMessage`, the maintainer's words
-  quoted; the second-review rule above applies.
+  quoted; the second-review rule of `/feyn-pull-request` step 7 applies.
 - **The Status.** A correction asked on a delivered PR (a late finding, a decision after the
   hand-over): set the slice back to In progress ([project.md](../../reference/project.md),
   "Commands"); the renewed hand-over (step 5) sets Ready for review again.
@@ -167,123 +163,3 @@ worktree of its contributor leaves its `worktree-agent-<id>` branch behind
 (Claude Code, observed 2026-10-28, #171): delete that one with step 4. A contributor spawned
 without `isolation` (a two-phase migration) has no worktree of its own: no
 `worktree-agent-*` branch to delete.
-
-## Contributor brief
-
-```
-You are a feyn contributor working on GitHub issue #<n> ("<title>") in the repo at your current
-working directory (a git worktree of <main checkout path>; for a two-phase migration, the
-worktree <path>, your working directory being the main checkout). Read CLAUDE.md first, then the
-issue (`mise exec -- gh issue view <n>`), then its "Reads" files.
-
-## How to run the cycle (in a worktree)
-Follow `.claude/skills/feyn-issue-branch/SKILL.md` for #<n>, adapted to a worktree:
-- Do NOT `git switch main` (main is checked out in the main checkout): it fails in a worktree
-  (Claude Code, observed 2026-10-27, #115). `git fetch`, then
-  `git switch -c <type>/<n>-<slug> origin/main` and `git push -u origin <type>/<n>-<slug>`.
-- Before any commit, run `git config --show-origin user.email` and check it shows the
-  workspace identity (not empty). Never `git config user.email` nor `git -c user.email=`.
-  `git` plain; `gh` and `node` through `mise exec --`.
-- Set the issue's Status to In progress as /feyn-issue-branch says.
-- `git push` can fail to resolve github.com from the sandbox while `gh` works; retry the push
-  outside the sandbox (Claude Code, observed 2026-10-27, #27).
-(Two-phase migration, spawned without isolation: your current directory is the main checkout:
-never edit, commit or switch there. The branch, the worktree <path> and the Status are done:
-skip their steps above. Absolute paths, `git -C <path>`, `gh pr create --head <branch>`.)
-Then do the work, then follow `.claude/skills/feyn-pull-request/SKILL.md` to push and open the PR,
-leaving the Status In progress (the orchestrator sets Ready for review at the hand-over). Do NOT
-merge. No signature or generated-by line in the PR body (the squash uses it as the commit
-message).
-
-## The work
-<the To do items this agent owns, with what the orchestrator already knows: files to match,
-reserved terms, counterfactuals the maintainer accepted (verbatim, with the date)>
-
-## A decision for the maintainer
-A choice the issue does not settle, or a /feyn-decision decision whose counterfactual the maintainer
-has not accepted: open the PR as a draft, put `blocked:maintainer` on the issue only (not the
-PR), write an "Awaiting the maintainer" section at the top of the body (question, options,
-recommendation), and stop. You cannot ask the maintainer, so work needing their acceptance
-runs in two phases: you deliver what does not depend on it, the maintainer answers, then you
-are resumed with the answer and the work resumes (Claude Code, observed 2026-10-27, #27).
-
-## An agent-workflow run
-You have no Workflow tool. A Done when that needs a run: make it runnable, open a draft with
-an "Awaiting the orchestrator" section at the top (exact script path and arguments), and stop.
-The orchestrator runs it and resumes you with the result: apply it, remove the section, run
-`mise exec -- gh pr ready <pr>`. Spawned with isolation, your worktree is removed when you stop
-with no file change: the orchestrator creates one on your branch and resumes you with its
-absolute path. From then on (from the start, spawned without isolation), never `cd`: absolute paths for every file, `git -C <path>` for every git command,
-including those of /feyn-pull-request (`git -C <path> status --porcelain`, `git -C <path> push`).
-
-Run the checks that exist (as /feyn-pull-request says). When done, reply with: branch name, PR URL, files
-changed, checks run and their results, and anything you were unsure of. Stay available for a
-corrections pass: review findings may come back to you.
-```
-
-## Reviewer brief
-
-```
-You review PR #<pr> (branch <branch>) on feyn, which claims to deliver issue #<n>. You are
-not its contributor: trust nothing in the PR body or in any summary; recount and recheck
-every claim yourself. Read CLAUDE.md, the issue (`mise exec -- gh issue view <n>`) and the
-files it lists, then the PR (`mise exec -- gh pr view <pr>`, `mise exec -- gh pr diff <pr>`); read a file at the PR's
-head with `git fetch` and `git show origin/<branch>:<path>`. To rerun checks in a worktree,
-`git fetch` then `git switch --detach origin/<branch>` (the branch itself is checked out in
-the contributor's worktree, so `git switch <branch>` fails). Change nothing, push nothing,
-comment nothing.
-
-The yardstick is the issue's Done when, statement by statement, not the PR's own verdicts.
-Recheck yourself:
-- each statement of the issue's Done when: find the proof yourself (run a command, read a
-  file; a count, recount it); the PR gives only the verdict counts and why a statement is not
-  met or deviates, and those you check too;
-- the checks /feyn-pull-request requires for what the PR touches
-  (`mise exec -- gh pr diff <pr> --name-only`), rerun them;
-- evidence from an agent-workflow run
-  (<run ids wf_<id> and transcript directory, or "none">): read the run's transcripts and check what its agents actually read and did, not only what
-  they output. The directory moves with the work session's working directory (Claude Code,
-  observed 2026-10-28, #130); not found: `find ~/.claude/projects -type d -name 'wf_<id>*'`.
-  A blind run (<the deleted paths and the worktree, or "none">): each agent's `"cwd"` is that
-  worktree, and no tool call reads a deleted path or the main checkout's copy of it, or runs
-  `git` (the workflow's agents are told not to use git: a `git` call can reach the deleted
-  file through history);
-- reserved terms of docs/glossary.md and the words it bans; the rules of CLAUDE.md
-  (language, no em-dashes in French, title `<type>(<area>): <summary>`, `Closes #<n>`, no
-  signature line);
-- consistency with the files the change must match (sibling skills, docs/contributing.md,
-  decisions it names), and that every path, command and decision slug it cites exists;
-- a decision: its counterfactual names a concrete wrong act, and the maintainer accepted it.
-
-Report, nothing else:
-- Verdict per Done when statement: met, not met, deviation, with your own proof.
-- Blocking findings (the PR must not reach the maintainer as is): file, line, what is wrong,
-  what fixes it.
-- Non-blocking findings: same format, one line each.
-- What you could not check, and why.
-```
-
-### Migration variant
-
-Appended to the reviewer brief for a PR that delivers a `migrate-concept` run (rule D on #23,
-2026-10-28: the comparison with the old course is dropped; what counts is the quality of the
-new concept):
-
-```
-This PR migrates concept <n> into <concept folder>. Judge the new concept, not its likeness to
-the old one:
-- against specs/linear-course/SPEC.md: the reader text of concept.md, the frontmatter, the
-  three files of section 4, and each diagram under section 7.2 (open the SVGs and the
-  renderings of the report);
-- against specs/linear-course/PROTOCOL.md: what the teacher reads in teaching.md and
-  sources.md;
-- under rules A to C of #23: glossary-order failures listed under Checks, not fixed (A); the
-  citation line of « Consignes » in its one form, no teaching content added (B); each orphan
-  reference tied to the claim it supports or removed, the PR saying which (C);
-- read the old concept once (<old concept file>, <site page>), as the only guard against a
-  passage lost: name a lost passage as a finding, never a rewording that keeps the meaning.
-This replaces the brief's bullet on evidence from an agent-workflow run: read the run's
-transcripts only when a hand migration of this concept existed before the run (a prototype in
-construction/notes/), to check that no agent of the run read it. With no prototype, the
-transcripts are not read.
-```

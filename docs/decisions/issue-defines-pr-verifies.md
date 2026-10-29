@@ -34,3 +34,5 @@ linked PR closes its issue at the merge (GitHub, documented 2026-10-28, #71).
   issue either (decision `no-branch-link`).
 - Issue #61 makes `/finish` write the verdicts; the PR's `Closes #n` links it to its issue,
   nothing links the branch.
+- Amended 2026-10-29 (#248): the fresh-agent reviewer reruns every statement on every PR,
+  through `/feyn-pr-review`, not only on a PR that goes through `/orchestrate`.
