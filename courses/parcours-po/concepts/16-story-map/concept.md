@@ -21,7 +21,7 @@ stances:
     - text: "La prévision se donne en fourchette plutôt qu'en valeur unique, calculée à partir de la vélocité. C'est une pratique de son école ; elle découle aussi de l'empirisme du Scrum Guide."
       author: "Mike Cohn : la prévision en fourchette"
       refs: ["S11", "S1"]
-    - text: "Pratiques courantes d'estimation et de prévision, absentes du Scrum Guide : le cours les nomme sans les enseigner. Ron Jeffries juge faible leur usage pour prédire une date de fin. En flux continu, la prévision passe par le temps de cycle (annexe A2d)."
+    - text: "Pratiques courantes d'estimation et de prévision, absentes du Scrum Guide : le cours les nomme sans les enseigner. Ron Jeffries juge faible leur usage pour prédire une date de fin. En flux continu (sans sprint), la prévision passe par le temps de cycle, la durée entre le début et la fin d'un élément (annexe A2d)."
       author: "Story points et vélocité"
       refs: ["S12", "S11", "S1"]
   course:
@@ -101,7 +101,7 @@ Dans les deux cas, ce n'est pas une version au rabais. Tout ce qui entre dans l'
 
 **Une fourchette, pas une date.** À « pour quand ? », le PO n'invente pas de date. La prévision se construit sur la taille des stories, que les Developers estiment, et sur leur rythme des derniers sprints : le Scrum Guide rappelle que seul ce qui s'est déjà passé sert à décider. Le Guide 2020 donne aux Developers la prévision du sprint ; il ne dit pas qui prévoit une version. Le cours retient que la prévision d'une version se construit sur leur taille et leur rythme, et que le PO la porte aux parties prenantes [cours].
 
-Elle se donne en **fourchette**, pratique de l'école de Mike Cohn, qui la calcule à partir de la vélocité [école], et elle se revoit à chaque sprint (l'empirisme du Guide l'appelle). Ce n'est pas une promesse : les engagements de Scrum sont l'objectif produit, l'objectif de sprint et la DoD. Story points et vélocité sont des pratiques courantes, absentes du Scrum Guide, que cette page nomme sans les enseigner ; Ron Jeffries juge faible leur usage pour prédire une date de fin [école]. En flux continu, la prévision passe par le temps de cycle (annexe A2d).
+Elle se donne en **fourchette**, pratique de l'école de Mike Cohn, qui la calcule à partir de la vélocité [école], et elle se revoit à chaque sprint (l'empirisme du Guide l'appelle). Ce n'est pas une promesse : les engagements de Scrum sont l'objectif produit, l'objectif de sprint et la DoD. Story points et vélocité sont des pratiques courantes, absentes du Scrum Guide, que cette page nomme sans les enseigner ; Ron Jeffries juge faible leur usage pour prédire une date de fin [école]. En flux continu (sans sprint), la prévision passe par le temps de cycle, la durée entre le début et la fin d'un élément (annexe A2d).
 
 ![Une prévision en fourchette que l'ordre du backlog et une dépendance peuvent déplacer](prevision-fourchette.svg)
 

@@ -75,7 +75,7 @@ Un indicateur est une valeur calculée par le produit pour ses utilisateurs, com
 
 Cette liste est un choix du cours [cours], qui recoupe la pratique des outils d'indicateurs ; le grain vient de la modélisation dimensionnelle de Kimball [école]. Période et fraîcheur ne se confondent pas : la première dit à quel moment le nombre est vrai, la seconde de combien ce moment peut dater quand on le lit.
 
-La définition dit **ce qu'on compte, sur quoi, quand**, jamais comment : une requête ou une jointure est le comment des Developers. La DoD de l'équipe vélos exige que chaque indicateur publié ait sa définition écrite (concept 11a) : le PO la fait écrire et fixer, les Developers font le calcul. La DoD exige la définition, elle n'en fixe pas les règles. La mesure de résultat de l'objectif produit (concept 2c) est un indicateur comme les autres et demande la même définition.
+La définition dit **ce qu'on compte, sur quoi, quand**, jamais comment : une requête ou une jointure est le comment des Developers. La DoD de l'équipe vélos (concept 11a) exige que chaque indicateur publié ait sa définition écrite : le PO la fait écrire et fixer, les Developers font le calcul. La DoD exige la définition, elle n'en fixe pas les règles. La mesure de résultat de l'objectif produit (concept 2c) est un indicateur comme les autres et demande la même définition.
 
 ### 12a2 Ce qui manque, et qui le fixe
 

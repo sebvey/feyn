@@ -9,7 +9,7 @@
    backlog** est toute entrée du backlog, quel que soit son niveau (les niveaux : concept 4).
    3a s'enseigne en deux messages de 15 lignes, chacun avec sa question : **3a1** « ordonnée »
    (exemple « Trois niveaux de priorité »), puis **3a2** « émergente » (« Tout détailler d'avance ? »),
-   qui rappelle en une ligne « seule source » (concept 1). 3a est validé quand les deux réponses
+   qui rappelle en une ligne « seule source » (concept 0). 3a est validé quand les deux réponses
    le sont. « Maud passe par Diego » (3a2) sert d'exemple de rechange, ou d'exercice si l'apprenant
    le demande ou confond un travail hors du backlog avec un raccourci acceptable.
 2. **3b Ce qu'il n'est pas.** Un cahier des charges découpé : rempli et validé au début, puis
@@ -69,7 +69,7 @@ ne deviennent pas des faits du fil rouge.
   précis pour que les Developers puissent le choisir au Sprint Planning et le finir en un
   sprint : le Scrum Guide dit alors qu'il est « prêt à être choisi » (consensus). Que le bas
   reste vague, le Scrum Guide 2017 le disait et la version 2020 ne le dit plus ; c'est le D de
-  DEEP (détaillé à bon escient), choix d'école de Cohn et Pichler. Rappel en une ligne (concept 1) : le backlog reste
+  DEEP (détaillé à bon escient), choix d'école de Cohn et Pichler. Rappel en une ligne (concept 0) : le backlog reste
   la seule source de travail de l'équipe.
 - **Situation** : Anna propose de consacrer les deux prochains jours à écrire en détail tous
   les éléments du backlog, jusqu'à la comparaison au même mois de l'an dernier pour Charlotte. Or
@@ -94,12 +94,11 @@ ne deviennent pas des faits du fil rouge.
     savoir d'un élément pour que les Developers le choisissent au Sprint Planning ? » ;
   - répondre « non » sans dire quoi détailler : relancer par « que détailles-tu en premier ? ».
 - **Ce qui marche** : « quand cet élément sera pris, que saura-t-on de plus qu'aujourd'hui ? ».
-  Pour réexpliquer après « détaillé partout » : la vue des locations du jour d'Étienne attend elle
-  aussi l'accès à la table des locations ; si la DSI n'accorde que certaines colonnes, le détail
+  Pour réexpliquer après « détaillé partout » : une autre demande d'Étienne, voir les locations du jour par station, attend elle aussi l'accès à la table des locations ; si la DSI n'accorde que certaines colonnes, le détail
   écrit aujourd'hui est à refaire.
 
 ### Maud passe par Diego (3a2)
-- **Explication** : le backlog est la seule source de travail de l'équipe (concept 1) : ce qui
+- **Explication** : le backlog est la seule source de travail de l'équipe (concept 0) : ce qui
   n'y est pas, l'équipe ne le fait pas ; sinon le backlog ne dit plus ce que fait l'équipe ni
   pourquoi.
 - **Situation** : Maud va voir Diego directement : « Envoie à la DSI, chaque matin, la liste

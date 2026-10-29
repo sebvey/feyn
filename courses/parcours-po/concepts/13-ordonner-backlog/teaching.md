@@ -59,7 +59,7 @@ du fil rouge.
   répondent (choix du cours). Les **dépendances** : ce dont une autre demande a besoin
   remonte. L'ordre d'arrivée n'en fait pas partie.
 - **Situation** : à la revue, la demande de Maud (bloquer à la location un vélo signalé en
-  panne) est entrée au backlog (10a2). Diego : « On vient d'en parler, c'est le bon moment :
+  panne) est entrée au backlog (10a2). Odile, directrice des opérations, encadre la maintenance de Maud. Diego : « On vient d'en parler, c'est le bon moment :
   prenons-la au prochain sprint. » Au backlog attend aussi la disponibilité par station pour
   l'appli, demandée par Pia. Le blocage se fait dans le système de location, à la DSI ; la
   plateforme peut lui fournir la liste des vélos signalés. Bloquer dès le signalement est une

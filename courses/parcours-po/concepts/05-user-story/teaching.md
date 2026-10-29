@@ -10,7 +10,7 @@
    reste courte, et le détail va dans la conversation et la confirmation.
    Exemples du fil rouge : en 5a1, Régis, régulateur, veut savoir quelles stations vont se vider,
    pour y aller avant : qui (le régulateur), quoi (connaître les stations qui vont se vider),
-   pourquoi (y aller avant). En 5a2, Abba veut savoir avant de partir s'il reste un vélo à sa station : la phrase
+   pourquoi (y aller avant). En 5a2, Abba, une abonnée, veut savoir avant de partir s'il reste un vélo à sa station : la phrase
    tient en une ligne ; ce qu'est « sa station » (celle qu'elle a choisie comme favorite) et la
    fraîcheur visée (moins de 15 minutes) se précisent à côté, en conversation puis en critères.
    Découpe en deux messages : **5a1** les trois parties, avec « La demande de Maud, en story » (« Une

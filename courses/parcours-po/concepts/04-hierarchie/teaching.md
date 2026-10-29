@@ -60,8 +60,7 @@ mois, puis comparaison au même mois de l'an dernier).
     vues (2 et 5), en plus de la vue des stations vides, déjà livrée ;
   - Partie 1, mettre 4 au backlog produit parce que le travail est nécessaire : il ne sert qu'à
     réaliser 3, c'est une tâche du plan des Developers. Un travail technique qui porte sa propre
-    raison (par exemple dédoublonner les relevés des stations, qui contiennent des doublons, défaut
-    connu des données : ce travail sert plusieurs vues, pas une seule story) entre, lui, au backlog,
+    raison (par exemple dédoublonner les relevés des stations, qui contiennent des doublons : ce travail sert plusieurs vues, pas une seule story) entre, lui, au backlog,
     et le PO l'ordonne ;
   - Partie 2, trancher 2 et 5 sur leur libellé (« une vue, c'est une feature ») : le mot « vue » ne
     fait pas le niveau, les besoins d'Étienne le font.
@@ -101,8 +100,7 @@ mois, puis comparaison au même mois de l'an dernier).
   features ne contiennent qu'une story, la feature répète la story et double l'écriture et le
   suivi. Avant de le retirer, vérifier que ces features ne sont pas des stories mal classées, ou
   des features dont les autres stories ne sont pas encore écrites : si c'est le cas, on reclasse
-  et on recompte. Sinon, proposer de retirer le niveau (epic > story > tâche) et d'y revenir si
-  des besoins à plusieurs « je veux » reviennent. Une réponse qui propose de retirer le niveau
+  et on recompte. Sinon, proposer de retirer le niveau (epic > story > tâche) et d'y revenir si des besoins faits de plusieurs besoins distincts reviennent (comptés en « je veux » en 4b). Une réponse qui propose de retirer le niveau
   sans cette vérification est juste : apporter la vérification dans la correction. Nuance : c'est
   un choix du cours, pas un consensus ; une feature isolée qui ne contient qu'une story
   n'est pas un signal. Comment régler les niveaux dans l'outil :
@@ -113,7 +111,7 @@ mois, puis comparaison au même mois de l'an dernier).
     sprints.
 - **Ce qui marche** : compter, feature par feature, les stories dessous, à voix haute. Après
   « au cas où, ça ne coûte rien » : montrer le coût dans l'outil (une feature à une seule story,
-  ce sont deux éléments à écrire, ranger et suivre pour un seul « je veux » d'Étienne).
+  ce sont deux éléments à écrire, ranger et suivre pour un seul besoin d'Étienne).
 
 ### Un seul « je veux » ? (4b)
 - **Explication** : un « je veux », c'est un besoin que l'utilisateur dit lui-même, à la

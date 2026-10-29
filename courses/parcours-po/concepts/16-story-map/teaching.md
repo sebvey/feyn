@@ -193,7 +193,7 @@ et le contenu de la tranche en 16c.
 - **Explication** : à « pour quand ? », le PO ne donne pas une date qu'il invente. La prévision
   se construit sur la taille des stories, que les Developers estiment, et sur leur rythme des
   derniers sprints (Scrum Guide : seul ce qui s'est déjà passé sert à prévoir). Elle se donne
-  en fourchette (école de Mike Cohn) et se revoit à chaque sprint. Ce n'est pas une promesse.
+  en fourchette (école de Mike Cohn) et se revoit à chaque sprint. Ce n'est pas une promesse. Une prévision dit aussi ce qui la ferait bouger : l'ordre du backlog (ce qui passe devant retarde ce qui suit, concept 13) et une dépendance non levée (concept 10).
   Le Scrum Guide cite des pratiques de prévision sans en imposer ; story points et vélocité en
   sont, choix d'école, sans les détailler ici.
 - **Situation** : Étienne, devant la première tranche : « Pour quand ? » Dans cet exercice, Étienne

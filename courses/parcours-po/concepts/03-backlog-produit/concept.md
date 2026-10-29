@@ -57,9 +57,9 @@ Le backlog produit est la **liste ordonnée et émergente** de ce qu'il faut pou
 
 Un **élément du backlog** est toute entrée du backlog, quel que soit son niveau (les niveaux sont au concept 4). Dans une liste ordonnée, chaque élément a une place, et le haut dit ce que l'équipe fera ensuite.
 
-Le Scrum Guide dit « ordonné » et non « priorisé » depuis 2011. Des niveaux de priorité (haute, moyenne, basse) laissent des ex aequo qui ne disent pas quoi prendre d'abord ; un ordre n'en laisse pas [cours]. Le cours dit donc « ordonner », et réserve « priorité » à MoSCoW (concept 13). La place de chaque élément s'argumente par l'objectif produit [cours] ; comment ordonner (valeur, coût, risque, dépendances) vient au concept 13.
+Le Scrum Guide dit « ordonné » et non « priorisé » depuis 2011. Des niveaux de priorité (haute, moyenne, basse) laissent des ex aequo qui ne disent pas quoi prendre d'abord ; un ordre n'en laisse pas [cours]. Le cours dit donc « ordonner », et réserve « priorité » à MoSCoW, un classement pour une échéance (concept 13). La place de chaque élément s'argumente par l'objectif produit [cours] ; comment ordonner (valeur, coût, risque, dépendances) vient au concept 13.
 
-Le backlog est aussi la seule source de travail de l'équipe (vu au concept 1) : ce qui n'y figure pas, l'équipe ne le fait pas. Le PO en répond ; d'autres peuvent écrire des éléments, et il reste responsable. Qui veut changer le backlog doit le convaincre.
+Le backlog est aussi la seule source de travail de l'équipe (vu au concept 0) : ce qui n'y figure pas, l'équipe ne le fait pas. Le PO en répond ; d'autres peuvent écrire des éléments, et il reste responsable. Qui veut changer le backlog doit le convaincre.
 
 ### 3a2 Émergente
 

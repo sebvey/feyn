@@ -73,7 +73,7 @@ Les 3C sont une pratique établie, de Ron Jeffries (XP, 2001), hors du Scrum Gui
 
 La carte n'est donc pas à allonger : elle reste courte, et le détail va dans la conversation et la confirmation.
 
-> **Fil rouge :** Abba veut savoir avant de partir s'il reste un vélo à sa station. La phrase tient en une ligne ; ce qu'est « sa station » (celle qu'elle a choisie comme favorite) et la fraîcheur visée (moins de 15 minutes) se précisent à côté, en conversation puis en critères.
+> **Fil rouge :** Abba, une abonnée, veut savoir avant de partir s'il reste un vélo à sa station. La phrase tient en une ligne ; ce qu'est « sa station » (celle qu'elle a choisie comme favorite) et la fraîcheur visée (moins de 15 minutes) se précisent à côté, en conversation puis en critères.
 
 ## 5b Le « afin de » et les « pourquoi ? » successifs
 

@@ -104,7 +104,7 @@ Le niveau se juge d'après ce qu'il reste à livrer, pas dans l'absolu. Ce qui e
 ## Pièges
 
 - **Classer un epic en story** : une phrase courte, ou au format d'une story, cache plusieurs besoins (« gérer toute la flotte », exemple inventé). Déplier le « je veux » : s'il en contient d'autres, ce n'est pas une story.
-- **Mettre une tâche au backlog produit** : le travail qui ne sert qu'à réaliser une story (cas inventé : convertir un fichier en entrée pour un écran) est une tâche, dans le plan des Developers (backlog de sprint). Un travail technique qui porte sa propre raison (par exemple dédoublonner les relevés des stations, qui contiennent des doublons, défaut connu des données : ce travail sert plusieurs vues, pas une seule story ; concept 3) entre, lui, au backlog, et le PO l'ordonne.
+- **Mettre une tâche au backlog produit** : le travail qui ne sert qu'à réaliser une story (cas inventé : convertir un fichier en entrée pour un écran) est une tâche, dans le plan des Developers (backlog de sprint). Un travail technique qui porte sa propre raison (par exemple dédoublonner les relevés des stations, qui contiennent des doublons : ce travail sert plusieurs vues, pas une seule story ; concept 3) entre, lui, au backlog, et le PO l'ordonne.
 - **Croire que Scrum impose des niveaux**, ou copier ceux de l'outil sans les choisir.
 - **Garder un niveau de trop** : quand la plupart des features ne contiennent qu'une story, un niveau double le travail. Le régler dans l'outil : annexe A1.
 - **Faire du thème un niveau** : son sens varie selon l'outil et l'auteur.
