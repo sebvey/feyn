@@ -10,10 +10,15 @@ YAML parser too, and the checks must run the same on a laptop and in CI.
 ## Run
 
 ```
-mise exec -- specs/linear-course/checks/check-course courses/<id>
-mise exec -- specs/linear-course/checks/check-course courses/<id> --only svg-contract
-mise exec -- specs/linear-course/checks/check-course courses/<id> --only concept-folder,sources --concept 9
+mise exec -- specs/check-course courses/<id>
+mise exec -- specs/check-course courses/<id> --only svg-contract
+mise exec -- specs/check-course courses/<id> --only concept-folder,sources --concept 9
 ```
+
+`specs/check-course` reads `spec: linear-course@<MAJOR>` in the course's `course.yaml` and runs
+`specs/linear-course/<MAJOR>/checks/check-course` with the same arguments; it refuses an unknown
+spec or MAJOR, naming it, with exit code 2. This folder's `check-course` runs this MAJOR's checks
+directly, `--list` with no course included.
 
 One line per passing check (`<id>: ok`), one line per failure
 (`<id>: fail: <file>:<line> <message>`, the file relative to the course folder). The exit code is
@@ -23,7 +28,7 @@ One line per passing check (`<id>: ok`), one line per failure
 |---|---|
 | `--only <id>[,<id>]` | runs those checks only (repeatable); an unknown id is a usage error |
 | `--concept <number>` | the per-concept checks (`concept-folder`, `conventions`, `svg-contract`, `sources`, `glossary-order`) look at that concept only, and `course-yaml` demands only that concept's folder: for a migration in progress, when the other concept folders do not exist yet |
-| `--lang-dir <dir>` | reads the language pack `<dir>/<language>.yaml` instead of `specs/linear-course/lang/` (also `LINEAR_COURSE_LANG_DIR`) |
+| `--lang-dir <dir>` | reads the language pack `<dir>/<language>.yaml` instead of this MAJOR's `lang/` (also `LINEAR_COURSE_LANG_DIR`) |
 | `--list` | prints the check ids |
 
 ## The checks
@@ -32,7 +37,7 @@ One script per id, `checks/<id>.js`, exporting `run(ctx)`; `check-course` loads 
 
 | Id | Script | Verifies (SPEC.md) |
 |---|---|---|
-| `course-yaml` | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, paths, spec MAJOR, pack present (3, 8) |
+| `course-yaml` | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, paths, spec declared, pack present (3, 8) |
 | `concept-folder` | `concept-folder.js` | files, sections and their order, frontmatter, sub-concept sections, « Objectif », cases, leaf coverage, citation in « Consignes » (4) |
 | `conventions` | `conventions.js` | reader-text conventions of `concept.md`; plain Markdown in every course file (2, 4.5) |
 | `svg-contract` | `svg-contract.js` | every diagram against the drawing contract; declared and present diagrams (4.1, 7.1) |
@@ -56,13 +61,14 @@ rouge », « aucune »). Ids and paths in the cell are checked.
 ## Checks of the spec itself
 
 ```
-mise exec -- specs/linear-course/checks/check-spec
-mise exec -- specs/linear-course/checks/check-spec <spec-dir> --only rule-slugs
+mise exec -- specs/linear-course/1/checks/check-spec
+mise exec -- specs/linear-course/1/checks/check-spec <spec-dir> --only rule-slugs
 ```
 
 `check-spec` checks the spec's own files, not a course: `PROTOCOL.md`, `SPEC.md` and
-`decisions/` of `<spec-dir>` (default: `specs/linear-course`). Same output, exit codes and
-`--only`, `--list` as `check-course`; the file in a failure line is relative to `<spec-dir>`.
+`decisions/` of `<spec-dir>` (default: this MAJOR's folder, `specs/linear-course/1`). Same
+output, exit codes and `--only`, `--list` as `check-course`; the file in a failure line is
+relative to `<spec-dir>`.
 
 | Id | Script | Verifies |
 |---|---|---|
@@ -89,7 +95,7 @@ Known limits:
 ## Tests
 
 ```
-mise exec -- specs/linear-course/checks/test-fixtures
+mise exec -- specs/linear-course/1/checks/test-fixtures
 ```
 
 - `fixtures/valid/`: a minimal valid course (four concepts, one annex, one diagram); every
@@ -107,7 +113,10 @@ mise exec -- specs/linear-course/checks/test-fixtures
   `check-spec` check passes. `fixtures/spec/broken/<name>/`: a copy of it with one defect and its
   `EXPECT` file (a missing slug, a duplicate slug, a rule cited by number, a missing group, a
   group whose slug is a rule's, a range, a group cited as a rule). The test also runs
-  `check-spec` on `specs/linear-course`, which must pass.
+  `check-spec` on `specs/linear-course/1`, which must pass.
+- `fixtures/dispatcher/<name>/`: a `course.yaml` that `specs/check-course` refuses, `other-spec`
+  (an unknown spec, `other@1`) and `unknown-major` (`linear-course@9`); the test also runs
+  `specs/check-course` on `valid/`, which must pass.
 
 The fixtures are plain files: change `valid/` and the broken copies together, then run the
 test. A new check adds a script, a line in `check-course` (or `check-spec` for a check of the

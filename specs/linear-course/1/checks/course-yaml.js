@@ -1,9 +1,10 @@
 'use strict';
 // course.yaml: fields, identifiers, order, partition into domains, annexes, prerequisites,
-// paths, supported spec MAJOR, language pack present (SPEC.md sections 3 and 8).
+// paths, spec declared, language pack present (SPEC.md sections 3 and 8). An unknown spec
+// or MAJOR is refused by specs/check-course, before these checks run.
 const path = require('path');
 const yaml = require('./lib/yaml');
-const { fail, normNumber, SLUG, SUPPORTED_MAJORS } = require('./lib/course');
+const { fail, normNumber, SLUG } = require('./lib/course');
 
 const F = 'course.yaml';
 const isStr = (v) => typeof v === 'string' && v.trim() !== '';
@@ -24,11 +25,7 @@ function run(ctx) {
   if (!isStr(cy.id) || !SLUG.test(cy.id)) bad(cy, 'id', 'id must be lowercase ASCII words joined by hyphens');
   else if (cy.id !== path.basename(ctx.root)) bad(cy, 'id', `id "${cy.id}" must equal the course folder name "${path.basename(ctx.root)}"`);
   if (!isStr(cy.spec)) bad(cy, 'spec', 'spec is mandatory: linear-course@<MAJOR>');
-  else {
-    const m = /^linear-course@(\d+)$/.exec(cy.spec);
-    if (!m) bad(cy, 'spec', `spec "${cy.spec}" must be linear-course@<MAJOR>`);
-    else if (!SUPPORTED_MAJORS.includes(parseInt(m[1], 10))) bad(cy, 'spec', `unknown spec MAJOR ${m[1]} (these checks know ${SUPPORTED_MAJORS.join(', ')})`);
-  }
+  else if (!/^linear-course@\d+$/.test(cy.spec)) bad(cy, 'spec', `spec "${cy.spec}" must be linear-course@<MAJOR>`);
   if (!isStr(cy.language) || !/^[a-z]{2}$/.test(cy.language)) bad(cy, 'language', 'language must be an ISO 639-1 code');
   else if (ctx.packError) bad(cy, 'language', ctx.packError.message);
   for (const k of ['title', 'audience']) if (!isStr(cy[k])) bad(cy, k, `${k} is mandatory`, 1);

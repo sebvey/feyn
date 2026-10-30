@@ -45,6 +45,6 @@ Read the report, then every file it changed (never trust the summary).
 
 ## 3. Finish
 
-Run `mise exec -- specs/<name>/checks/check-course courses/<id>` on the whole course, then
+Run `mise exec -- specs/check-course courses/<id>` on the whole course, then
 `/feyn-taught-check` ([feyn-taught-check](../feyn-taught-check/SKILL.md)) from the first concept
 touched, and `/feyn-pull-request`.

@@ -5,7 +5,6 @@ const path = require('path');
 const yaml = require('./yaml');
 const md = require('./md');
 
-const SUPPORTED_MAJORS = [1];
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 function normNumber(n) {
@@ -20,7 +19,6 @@ function load(dir, opts = {}) {
     root,
     opts,
     cache: new Map(),
-    SUPPORTED_MAJORS,
     SLUG,
     rel: (abs) => path.relative(root, abs).split(path.sep).join('/'),
     abs: (rel) => path.join(root, rel),
@@ -139,4 +137,4 @@ function load(dir, opts = {}) {
 
 const fail = (file, line, message) => ({ file, line: line || 1, message });
 
-module.exports = { load, fail, normNumber, SLUG, SUPPORTED_MAJORS };
+module.exports = { load, fail, normNumber, SLUG };

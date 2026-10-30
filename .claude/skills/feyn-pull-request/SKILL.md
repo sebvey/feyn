@@ -24,7 +24,7 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
 2. **Checks.** Run the ones that exist for what the branch touches
    (`git diff --name-only main...HEAD`):
    - a course `courses/<id>/`: the check runner of the spec it declares
-     (`specs/<name>/checks/check-course courses/<id>`);
+     (`specs/check-course courses/<id>`);
    - `site/` or a course: `astro check` and the site build, from `site/`;
    - anything else: the checks its area documents, if any.
 
