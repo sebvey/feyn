@@ -1,0 +1,2 @@
+check: course-files
+message: variant "Strate" is also in the row at glossary.md:8: a variant belongs to one row

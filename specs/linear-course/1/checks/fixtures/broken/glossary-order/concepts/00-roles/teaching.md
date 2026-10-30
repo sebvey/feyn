@@ -6,7 +6,7 @@
 
 ## Faits du fil rouge utilisés
 
-Régis veut une carte des stations.
+Régis veut une carte des stations, sur une seule couche.
 
 ## Banque d'exemples
 

@@ -17,7 +17,8 @@ Nommer les rôles de l'équipe.
 
 ## L'essentiel
 
-Un rôle est ce que fait une personne dans une couche. Voir le concept 1.
+Un rôle est ce que fait une personne sur une couche du produit. Voir le
+concept 1.
 
 ## 0a Les deux rôles
 
@@ -37,7 +38,7 @@ Le second rôle fait.
 
 *Une règle fixe le cadre.*
 
-La règle est la même pour tous.
+La règle est la même pour tous. Ses mots sont dans le lexique (annexe A1a).
 
 ## Pièges
 
@@ -49,3 +50,7 @@ La règle est la même pour tous.
 > « Une question à se poser ? »
 
 Une note sur la question.
+
+## Approfondissement
+
+Une autre façon de nommer les rôles, pour qui veut aller plus loin.

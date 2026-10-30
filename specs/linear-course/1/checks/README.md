@@ -53,10 +53,10 @@ its mode in this order.
 | `conventions` | conformity | `conventions.js` | reader-text conventions of `concept.md`; plain Markdown in every course file (2, 4.5) |
 | `svg-contract` | conformity | `svg-contract.js` | every diagram against the drawing contract, a root `<defs>` accepted; declared and present diagrams (4.1, 7.1) |
 | `sources` | conformity | `sources.js` | reference ids, citations, claims, paths (4.1, 4.4) |
-| `course-files` | conformity | `course-files.js` | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md`, `CHANGELOG.md`, domain files, no unlisted file in `domains/` (5, 6) |
+| `course-files` | conformity | `course-files.js` | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md` (four columns, one concept number in the fourth, no variant in two rows), `CHANGELOG.md`, domain files, no unlisted file in `domains/` (5, 6) |
 | `domain-first-sentence` | conformity | `domain-first-sentence.js` | the first sentence of each paragraph of « Le fil des concepts » ends with `.`, `?` or `!` within 300 characters of the lead (5) |
 | `language-pack-keys` | conformity | `language-pack-keys.js` | every key of section 9 and of `PROTOCOL.md` exists in the course's pack (9) |
-| `glossary-order` | quality | `glossary-order.js` | no `concept.md` uses a term before the concept that introduces it (6) |
+| `glossary-order` | quality | `glossary-order.js` | no `concept.md`, body or frontmatter (stance and neighbour texts, diagram titles and captions), uses a glossary term before the concept that defines it (the fourth column), unless the sentence carries a concept reference to that concept (`lib/refs.js`, the grammar `conventions` checks); every use is reported; each comma variant of the term cell is matched whole word, case ignored; a row whose term cell has a parenthesis is skipped (6) |
 | `typography` | quality | `typography.js` | no banned character of the language pack in course text (2) |
 | `domain-first-sentence-standalone` | quality | `domain-first-sentence-standalone.js` | the first sentence of each paragraph of « Le fil des concepts » does not open with a word of the pack's `checks.anaphora` list; a pack without that list is a failure of this check (5, 9) |
 
@@ -115,7 +115,9 @@ Every course fixture runs in both modes; `--list` and `--quality --list` must pr
 lists, and a run must run the checks of its mode and no other.
 
 - `fixtures/valid/`: a minimal valid course (four concepts, one annex, one diagram with a root
-  `<defs>`); every check of both modes passes.
+  `<defs>`; a glossary with a comma variant, a qualified row used before its concept, an empty
+  English cell, and earlier uses silenced by a concept reference, one of them to an annex
+  sub-concept); every check of both modes passes.
 - `fixtures/broken/<name>/`: a copy of it with one defect; its `EXPECT` file names the check
   that must fail, in its mode, and the message it must give. No other check of either mode may
   fail (the test says so), except for the broken language pack.

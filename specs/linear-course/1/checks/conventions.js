@@ -4,9 +4,9 @@
 const yaml = require('./lib/yaml');
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
+const { parser: refParser } = require('./lib/refs');
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const ID = '(?:A\\d+|\\d+)(?:[a-z]\\d?)?';
 
 function plainMarkdown(ctx, file, out, opts = {}) {
   const m = ctx.md(file);
@@ -39,10 +39,6 @@ function checkConcept(ctx, c, out, all) {
     storyline: ctx.word('markers', 'storyline'),
     list: ['consensus', 'school', 'course'].map((k) => ctx.word('markers', k)).filter(Boolean),
   };
-  const refWord = ctx.word('concept_refs', 'concept');
-  const refWords = ctx.word('concept_refs', 'concepts');
-  const andWord = ctx.word('concept_refs', 'and');
-  const annexWord = ctx.word('concept_refs', 'annex');
 
   // sub-concept sections
   for (const s of top) {
@@ -81,39 +77,27 @@ function checkConcept(ctx, c, out, all) {
   const subRanges = top.filter((s) => c.subs.some((x) => x.level === 1 && (s.title === x.id || s.title.startsWith(x.id + ' '))));
   const inSubSection = (n) => subRanges.some((s) => n > s.line && n <= (s.lines.length ? s.lines[s.lines.length - 1].n : s.line));
 
-  // concept references
-  if (refWord && refWords && andWord) {
-    const re = new RegExp(`(?<![\\p{L}\\p{N}])(${esc(refWords)}|${esc(refWord)})\\s+(${ID}(?:(?:\\s*,\\s*|\\s+${esc(andWord)}\\s+)${ID})*)(?![\\p{L}\\p{N}])`, 'giu');
+  // concept references (lib/refs.js): to a concept or sub-concept with the concept words, to an
+  // annex or a sub-concept of one with the annex word
+  const refs = refParser(ctx);
+  if (refs) {
     const known = ctx.allNumbers();
     const subs = ctx.allSubIds();
-    bodyLines.forEach((l) => {
-      if (l.code) return;
-      const t = mdlib.maskCode(l.t);
-      let m;
-      re.lastIndex = 0;
-      while ((m = re.exec(t))) {
-        for (const id of m[2].split(new RegExp(`\\s*,\\s*|\\s+${esc(andWord)}\\s+`, 'u'))) {
-          const norm = /^\d/.test(id) ? id.replace(/^0+(?=\d)/, '') : id;
-          const asSub = /^(A?\d+)([a-z])(\d)?$/.test(id);
-          if (!(asSub ? subs.has(id) : known.has(norm))) out.push(fail(cf, l.n, `concept reference "${m[1]} ${m[2]}": ${id} names no concept or sub-concept of the course`));
-        }
-      }
-    });
-  }
-
-  // concept references to an annex: the annex word, then an annex number or a sub-concept id of an annex
-  if (annexWord) {
-    const re = new RegExp(`(?<![\\p{L}\\p{N}])(${esc(annexWord)})\\s+(${ID})(?![\\p{L}\\p{N}])`, 'giu');
     const annexIds = new Set(ctx.concepts.filter((x) => x.annex).flatMap((x) => [x.number, ...x.subs.map((s) => s.id)]));
+    const found = [];
     bodyLines.forEach((l) => {
-      if (l.code) return;
-      const t = mdlib.maskCode(l.t);
-      let m;
-      re.lastIndex = 0;
-      while ((m = re.exec(t))) {
-        if (!annexIds.has(m[2])) out.push(fail(cf, l.n, `concept reference "${m[1]} ${m[2]}": ${m[2]} names no annex of the course, nor a sub-concept of one`));
-      }
+      if (!l.code) for (const r of refs(mdlib.maskCode(l.t))) found.push({ n: l.n, r });
     });
+    for (const { n, r } of found.filter((x) => !x.r.annex)) {
+      for (const id of r.ids) {
+        const norm = /^\d/.test(id) ? id.replace(/^0+(?=\d)/, '') : id;
+        const asSub = /^(A?\d+)([a-z])(\d)?$/.test(id);
+        if (!(asSub ? subs.has(id) : known.has(norm))) out.push(fail(cf, n, `concept reference "${r.word} ${r.list}": ${id} names no concept or sub-concept of the course`));
+      }
+    }
+    for (const { n, r } of found.filter((x) => x.r.annex)) {
+      if (!annexIds.has(r.list)) out.push(fail(cf, n, `concept reference "${r.word} ${r.list}": ${r.list} names no annex of the course, nor a sub-concept of one`));
+    }
   }
 
   // stance markers
