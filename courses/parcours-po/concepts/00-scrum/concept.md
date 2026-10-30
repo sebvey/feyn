@@ -5,9 +5,11 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Les trois responsabilités (Developers, Product Owner, Scrum Master), le sprint et ses quatre événements, les trois artefacts avec leurs engagements. L'incrément s'ajoute aux précédents ; un sprint peut en produire plusieurs, que l'on peut livrer avant sa fin ; la revue de sprint n'est pas une porte de mise en production."
       refs: ["S1"]
+      verified: ["« Scrum defines three specific accountabilities within the Scrum Team » (Scrum Team) ; « four formal events for inspection and adaptation within a containing event, the Sprint » (Scrum Events) ; « For the Product Backlog it is the Product Goal. For the Sprint Backlog it is the Sprint Goal. For the Increment it is the Definition of Done. » (Scrum Artifacts) ; « Each Increment is additive to all prior Increments » ; « Multiple Increments may be created within a Sprint » ; « The Sprint Review should never be considered a gate to releasing value » (Increment)"]
     - author: "Les limites du Scrum Guide"
       text: "« User story », « vision produit » et « Definition of Ready » n'y figurent pas, pas plus que « ticket », terme d'outil : ils viennent d'autres pratiques (concepts 2, 5 et 11)."
       refs: ["S1"]
+      verified: ["absent de The Scrum Guide 2020 (texte entier cherché : « vision » et « user story », 0 occurrence ; « Definition of Ready » absente ; « ticket » n'en est pas un terme)"]
   school:
     - text: "Aucun choix d'école dans ce concept : tout ce qu'il enseigne vient du Scrum Guide ou du cours."
       refs: []
@@ -16,12 +18,16 @@ stances:
       refs: []
     - text: "Le réflexe : « si on décidait de le livrer maintenant, un utilisateur pourrait-il s'en servir, et la DoD est-elle remplie ? ». Le Guide exige un incrément utilisable et conforme à la DoD ; il n'exige pas qu'il soit livré."
       refs: ["S1"]
+      verified: ["« the Increment must be usable » ; « Work cannot be considered part of an Increment unless it meets the Definition of Done » ; « an Increment may be delivered to stakeholders prior to the end of the Sprint » (Increment)"]
     - text: "Une échéance propre à un sprint n'a pas sa place dans la DoD, qui vaut pour tout ce qui entre dans l'incrément. Elle relève de l'objectif de sprint si elle dit ce que le sprint vise, du plan des Developers si elle organise le travail."
       refs: ["S1"]
+      verified: ["« Work cannot be considered part of an Increment unless it meets the Definition of Done » (Increment)"]
     - text: "Un pipeline fini mais que personne ne peut consulter n'est pas un incrément."
       refs: ["S1"]
+      verified: ["« the Increment must be usable » (Increment)"]
     - text: "La rétrospective réunit l'équipe Scrum, sans les parties prenantes. Le Guide ne nomme que l'équipe Scrum ; le cours en tire que les parties prenantes n'y viennent pas."
       refs: ["S1"]
+      verified: ["« The Scrum Team inspects how the last Sprint went » (Sprint Retrospective)"]
 diagrams:
   - file: sprint-duree-increment-etat.svg
     title: "Un sprint est une durée, un incrément est un état du produit"

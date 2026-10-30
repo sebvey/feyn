@@ -5,26 +5,34 @@ stances:
     - text: "Un produit est un moyen de livrer de la valeur, avec des frontières claires, des parties prenantes connues et des utilisateurs ou clients bien définis."
       author: "Le Scrum Guide 2020 : le produit"
       refs: [S1]
+      verified: ["« A product is a vehicle to deliver value. It has a clear boundary, known stakeholders, well-defined users or customers. » (Commitment: Product Goal)"]
     - text: "Le PO répond de la valeur du produit et du backlog : il formule l'objectif produit, crée les éléments, les ordonne et rend le backlog transparent. Il est une seule personne, pas un comité ; il peut déléguer ce travail, mais il en reste responsable. Qui veut changer le backlog doit le convaincre. L'organisation respecte ses décisions, visibles dans le contenu et l'ordre du backlog."
       author: "Le Scrum Guide 2020 : le PO"
       refs: [S1]
+      verified: ["« accountable for maximizing the value of the product » ; « Developing and explicitly communicating the Product Goal » ; « Ordering Product Backlog items » ; « The Product Owner is one person, not a committee. » ; « Regardless, the Product Owner remains accountable. » ; « Those wanting to change the Product Backlog can do so by trying to convince the Product Owner. » ; « the entire organization must respect their decisions » (Product Owner)"]
     - text: "Le comment revient aux seuls Developers, qui estiment aussi la taille des éléments ; le PO peut les aider à comprendre les arbitrages. Le travail du sprint, les Developers le choisissent en discussion avec le PO : le PO ne le fixe pas seul."
       author: "Le Scrum Guide 2020 : les Developers"
       refs: [S1]
+      verified: ["« How this is done is at the sole discretion of the Developers » ; « Through discussion with the Product Owner, the Developers select items from the Product Backlog to include in the current Sprint » (Sprint Planning) ; « The Developers who will be doing the work are responsible for the sizing. The Product Owner may influence the Developers by helping them understand and select trade-offs. » (Product Backlog)"]
   school:
     - text: "Décrire un produit par son groupe cible et ses « besoins » : les problèmes qu'il retire aux utilisateurs et les bénéfices qu'il leur apporte. Le cours en tire la grille problème, utilisateurs, valeur ; le Scrum Guide nomme déjà les utilisateurs et la valeur."
       author: "Roman Pichler : Product Vision Board"
       refs: [S5, S1]
+      verified: ["« the problems and pain points the product removes, and the benefits or gains it creates for the users and the customers » (article, les « needs » du tableau)", "« A product is a vehicle to deliver value. It has a clear boundary, known stakeholders, well-defined users or customers. » (Commitment: Product Goal)"]
     - text: "Traiter les consommateurs de données comme des clients. Le propriétaire d'un produit de données doit savoir qui en sont les utilisateurs et comment ils s'en servent."
       author: "Zhamak Dehghani : data mesh"
       refs: [S2]
+      verified: ["« the consumers of that data should be treated as customers » (article)"]
   course:
     - text: "La grille problème, utilisateurs, valeur : le cours sépare le problème et la valeur, que Pichler réunit sous « besoins », et n'emploie pas « besoin », réservé aux stories."
       refs: [S5]
+      verified: ["« the problems and pain points the product removes, and the benefits or gains it creates for the users and the customers » (article, les « needs » du tableau)"]
     - text: "Les consommateurs de données sont des utilisateurs du produit (cas inventé : un service d'analyse qui reçoit un jeu de données, un organisme qui reçoit des indicateurs). Choix du cours, appuyé sur le choix d'école de Dehghani."
       refs: [S2]
+      verified: ["« the consumers of that data should be treated as customers » (article)"]
     - text: "Une partie prenante est toute personne ou équipe concernée par le produit : utilisateur, financeur, sponsor, équipe voisine, fournisseur de données. Le sponsor porte le budget du produit et porte plus haut les obstacles qui dépassent le PO, sans ordonner le backlog. Le Scrum Guide emploie « stakeholders » sans le définir."
       refs: [S1]
+      verified: ["absent de The Scrum Guide 2020 (texte entier) : une définition de « stakeholders », mot employé sans être défini"]
     - text: "Le PO obtient les faits du métier auprès des utilisateurs, au lieu de les trancher seul."
       refs: []
 diagrams:
