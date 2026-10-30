@@ -1,15 +1,15 @@
 ---
 name: feyn-pull-request
-description: "Tooling of the work cycle, called by `/feyn-deliver` (its contributor agent, at the end of the work): turn the current issue branch on feyn into a pull request to main, rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, checking the issue lists it, having it reviewed by `/feyn-pr-review` on the direct path, then asking for review. It never merges. Use for \"/feyn-pull-request\"."
+description: "Tooling of the work cycle, called by `/feyn-deliver` (its contributor agent, at the end of the work): turn the current issue branch on feyn into a pull request to main, rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, checking the issue lists it, having it reviewed by `/feyn-pr-review` on the direct path (not on a direct delivery), then asking for review. It never merges. Use for \"/feyn-pull-request\"."
 ---
 
 # /feyn-pull-request
 
 One job: deliver the current issue branch as a pull request to `main` and ask for its review.
 It never merges: the merge belongs to the maintainer. On the direct path (the work session that
-did the work runs it), it has the PR reviewed by a fresh agent (step 7). It writes on GitHub: the
-PR, and the issue set Ready for review (step 8). Once the PR is merged, `/feyn-merge-cleanup`
-cleans up, never in the same turn.
+did the work runs it), it has the PR reviewed by a fresh agent, except on a direct delivery
+(step 7). It writes on GitHub: the PR, and the issue set Ready for review (step 8). Once the PR
+is merged, `/feyn-merge-cleanup` cleans up, never in the same turn.
 
 The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the issue. On
 `main`, or on a branch without an issue number: stop and say so.
@@ -71,8 +71,11 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
        `Fresh-agent review: <N> blocking findings, fixed.`: added after the review, by step 7 on
        the direct path, by the corrections pass of `/feyn-deliver` (its step 4) under it; updated,
        not repeated, after a second review: `<N>` then counts the blocking findings of all the
-       reviews. It counts within the 30 lines: leave room for it. Absent when the maintainer
-       asked for a PR without a review.
+       reviews. On a direct delivery (the issue's To do opens with "Direct delivery",
+       [contributing](../../../docs/contributing.md), "How the work is organised", moment 2):
+       `Fresh-agent review: none, direct delivery.`, written here, before the PR opens, since no
+       review runs (step 7). It counts within the 30 lines: leave room for it. Absent when the
+       maintainer asked for a PR without a review.
      - `Not verified:` one line, if anything.
    - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a
      deviation, a choice the contributor made, a sensitive spot.
@@ -89,8 +92,10 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
      list the PR: rerun once. PR still missing on a `Closes` PR, or listed on a `Refs` PR (a
      closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
-7. **Fresh-agent review**, on the direct path. Under `/feyn-deliver`, skip this step: its
-   orchestrator runs the review (its step 3) and sends the findings back (its step 4). Run
+7. **Fresh-agent review**, on the direct path. On a direct delivery, `/feyn-pr-review` does
+   not run and the line is already in Checks (step 5): skip to step 8; the rest of this step
+   applies to the other PRs. Under `/feyn-deliver`, skip this step: its orchestrator runs the
+   review (its step 3) and sends the findings back (its step 4). Run
    `/feyn-pr-review <pr>`; a draft PR (a decision awaited, step 6) is reviewed now, before the
    maintainer's answer, and the decision awaiting that answer is not a finding. Then, yourself,
    since no other agent fixes on the direct path:
@@ -109,12 +114,13 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
 8. **Ask for review**: set the issue's Status to Ready for review (the work claims done, the
    maintainer concludes; [project.md](../../reference/project.md)):
    `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
-   Only once the `Fresh-agent review:` line is in Checks (step 7), or when the maintainer asked
-   for a PR without a review (the reply then says so); not for a `Refs` PR (the issue stays In
-   progress), and not under `/feyn-deliver`, whose orchestrator runs the review and sets it at
-   the hand-over (its step 5). A correction asked on the PR returns the issue to In progress
-   until it is delivered again. Then reply with the PR URL, the title, what the maintainer
-   should look at first (the PR's Review first, in one line), and the merge command:
+   Only once the `Fresh-agent review:` line is in Checks (step 7), `none, direct delivery`
+   included (step 5), or when the maintainer asked for a PR without a review (the reply then
+   says so); not for a `Refs` PR (the issue stays In progress), and not under `/feyn-deliver`,
+   whose orchestrator runs the review and sets it at the hand-over (its step 5). A correction
+   asked on the PR returns the issue to In progress until it is delivered again. Then reply with the
+   PR URL, the title, what the maintainer should look at first (the PR's Review first, in one
+   line), and the merge command:
    `mise exec -- gh pr merge <pr> --squash --delete-branch`.
    The repository squashes with the PR title and body and allows squash only (GitHub,
    observed 2026-10-28, #135), so the PR title, followed by ` (#<pr>)`, becomes the subject

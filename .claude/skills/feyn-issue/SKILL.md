@@ -1,7 +1,7 @@
 ---
 name: feyn-issue
-description: "Tooling of the work cycle, called by `/feyn-brainstorm`, the triage and `/feyn-deliver`'s contributor: create a GitHub issue on feyn from `<kind> [#<epic>] <observation>`, of the kind it is given (`observation`, `slice` attached to its epic, `epic` or `proposal`; no kind given, it asks which and creates nothing), with its type and area labels, its links and its Status in the Project, or read an existing issue and summarise it. Use for \"/feyn-issue 12\", \"/feyn-issue observation <observation>\", \"/feyn-issue slice #220 <observation>\", \"/feyn-issue epic <objective>\", \"/feyn-issue proposal\"."
-argument-hint: "<issue number> | <kind> [#<epic>] <observation>, kind: observation, slice, epic, proposal"
+description: "Tooling of the work cycle, called by `/feyn-brainstorm`, the triage and `/feyn-deliver`'s contributor: create a GitHub issue on feyn from `<kind> [#<epic>] [direct] <observation>`, of the kind it is given (`observation`, `slice` attached to its epic, `epic` or `proposal`; no kind given, it asks which and creates nothing; `direct`, for a slice or an observation only, marks a direct delivery, refused when the work is more than one edit with no behaviour), with its type and area labels, its links and its Status in the Project, or read an existing issue and summarise it. Use for \"/feyn-issue 12\", \"/feyn-issue observation <observation>\", \"/feyn-issue observation direct <observation>\", \"/feyn-issue slice #220 <observation>\", \"/feyn-issue slice #220 direct <observation>\", \"/feyn-issue epic <objective>\", \"/feyn-issue proposal\"."
+argument-hint: "<issue number> | <kind> [#<epic>] [direct] <observation>, kind: observation, slice, epic, proposal; direct: slice or observation only"
 ---
 
 # /feyn-issue
@@ -10,10 +10,14 @@ One job: put an observation into an issue, or tell what an issue says. It does n
 work (that is `/feyn-issue-branch`) and does not fix anything on the way.
 
 The argument decides the mode: a number (`12`, `#12`) reads; anything else creates, in the
-form `<kind> [#<epic>] <observation>`:
+form `<kind> [#<epic>] [direct] <observation>`:
 - `<kind>` is the first word when it is exactly `observation`, `slice`, `epic` or `proposal`;
   any other first word is not a kind (an observation that starts with "epics…" names none);
 - `#<epic>` follows the kind for a slice, and only for a slice: a slice needs it;
+- `direct` is the word right after the kind (after `#<epic>` for a slice) when it is exactly
+  that word, for a slice or an observation only (step 3); an observation whose own first word
+  is "direct" can read the same: when unsure, ask the maintainer and create nothing until the
+  answer;
 - no kind: ask which of the four, and create nothing until the answer.
 
 ## Read an issue
@@ -21,7 +25,8 @@ form `<kind> [#<epic>] <observation>`:
 1. `mise exec -- gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences,projectItems`.
 2. Answer in at most ten lines: the title; a body with a head: its Where, What and Why as
    the first line, then the rest; a body without one (written before #262): the observation
-   in one sentence; the To do as a short list; the Done when as written; the Status (from
+   in one sentence; the To do as a short list, naming the line "Direct delivery" when it
+   opens the To do; the Done when as written; the Status (from
    `projectItems`); the labels (type, area, `blocked:maintainer`); what blocks it and what it
    blocks, open ones first ([project.md](../../reference/project.md), "Dependencies"); open or
    closed, and by which PR; what the comments added or changed; its epic for a slice, its
@@ -58,6 +63,13 @@ the plan's bullets (`- **Observation**: …`), or for an epic the five sections 
    - an **observation** has no parent and carries its `area:` label;
    - a **proposal** carries the label `proposal` and the six sections of
      [proposal-body.md](../../reference/proposal-body.md); it has no parent and no milestone.
+   - `direct`, right after the kind for an observation (`observation direct`) or after the epic
+     for a slice (`slice #220 direct`), says the maintainer names this issue a **direct
+     delivery**: the maintainer's work session makes the branch, the edit and the PR, with no
+     contributor and no fresh-agent review ([contributing](../../../docs/contributing.md),
+     "How the work is organised", moment 2). The skill never adds it on its own. An epic or a
+     proposal never takes it: `epic direct` or `proposal direct` is refused, saying why, and
+     nothing is created.
 4. **Pick the Status, the labels and the links.**
    - Status: a **slice** is Ready when posed (it is the next one), at take time or after a
      delivery; an **observation** is Backlog unless the maintainer said the work is decided,
@@ -94,6 +106,12 @@ the plan's bullets (`- **Observation**: …`), or for an epic the five sections 
      verify by reading or running something), Observation (the fact first, then the context;
      facts and places, no solution), To do (one line per item, the how in sub-bullets,
      numbered when the order matters), Reads only when the work needs other files.
+     - With `direct` (step 3): first hold the Done when to the criterion of a direct delivery,
+       one edit with no behaviour, as [contributing](../../../docs/contributing.md), "How the
+       work is organised", moment 2, states it. A Done when that asks more: refuse `direct`,
+       saying which statement or which file goes beyond it, and create nothing. Otherwise the
+       first line of the To do section is the plain line `Direct delivery`, alone, before the
+       first item: `/feyn-deliver` and `/feyn-pull-request` read it there.
      - Then reread it as the maintainer of the morning, choosing among ten Ready issues: does
        the head say where, what and why in three lines; does the Observation open with the
        fact; does each To do item hold in one line? One no: fix before creating, then reread.
@@ -119,7 +137,8 @@ the plan's bullets (`- **Observation**: …`), or for an epic the five sections 
    ([project.md](../../reference/project.md), "Epics" and "Dependencies"). An observation, an
    epic and a proposal have no parent.
 10. Reply in one line with the issue number, its URL, what it is (slice, observation, epic or
-    proposal), its epic for a slice, its Status, its labels and its links.
+    proposal), "direct delivery" when its To do opens with that line, its epic for a slice, its
+    Status, its labels and its links.
 
 ## Vocabulary
 

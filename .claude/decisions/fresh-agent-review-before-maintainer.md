@@ -29,3 +29,5 @@ contributor's own verification (`/finish`, decision `issue-defines-pr-verifies`)
   path before Ready for review (there, the work session that did the work applies the findings
   and checks them in the diff); so every PR gets it, not only those that went through
   `/orchestrate`.
+- Amended 2026-10-30 (#264): every PR but a direct delivery, a slice of one edit with no
+  behaviour that the maintainer names `direct` at creation; its PR says so in its Checks line.
