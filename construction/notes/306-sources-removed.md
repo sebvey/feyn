@@ -111,3 +111,52 @@ Body of `concept.md`: unchanged.
   (`https://support.atlassian.com/jira-software-cloud/docs/link-issues`) left.
 - S3's « consultée le » lost its pointer to `07-invest.md`.
 - « Non vérifié »: every entry now opens with its section; none removed.
+
+## 11-dor-dod
+
+Body of `concept.md`: unchanged.
+
+| Line | Row | Went to |
+|---|---|---|
+| 19 | « Exigence 1 : « Chaque vue affiche l'heure de la dernière mise à jour des données » : DoD » | nowhere: a storyline fact and a teaching device |
+| 20 | « Exigence 3 : « Les relevés en double sont détectés ... » : DoD » | nowhere: a storyline fact and a teaching device (its paths to `storyline.md` and concept 12 with it) |
+| 21 | « Exigence 2 : « Dans la vue des stations vides ... » : critère d'acceptation » | nowhere: storyline facts and a teaching device (its path to concept 8 with it) |
+| 24 | « L'exception demandée par Étienne ... » | nowhere: a teaching device; « lever la DoD pour une story pressée » merged into the row at line 8 (Pièges added); its paths to `storyline.md` and concept 0 with it |
+| 26 | « Aparté : en préparant les stories de Charlotte ... » | nowhere: storyline facts and a teaching device |
+| 27 | « Une DoR qui exige toutes les questions réglées, une maquette validée ... » | nowhere: a teaching device; its claims of the body are the rows at lines 32, 33 and 35; its paths to concepts 5 and 1 with it |
+| 28 | « Faire avancer l'accès : relancer Sid ... » | nowhere: storyline facts |
+| 38 | « DoR de l'équipe vélos ... » | nowhere: a storyline fact |
+| 39 | « Story d'Étienne « voir les locations du jour par station » ... » | nowhere: storyline facts |
+| 42 | « La DoD nommée au concept 0 (0a3) ... » | nowhere: a cross-reference (path to concept 0) |
+| 43 | « Critère d'acceptation ou règle métier ... » | nowhere: a cross-reference (path to concept 8) |
+| 44 | « Dépendances envers une autre équipe ou la DSI » | nowhere: a cross-reference (path to concept 10) |
+| 45 | « Données du produit : définition d'un indicateur ... » | nowhere: cross-references (`plan.md`) |
+| 46 | « Seuil « presque vide », définition d'une station vide, heures de pointe : non fixés » | nowhere: storyline facts |
+
+- Kept and re-anchored, their reasoning dropped: 5 and 6 (L'essentiel, 11a), 7 (11a), 8 (11a,
+  Pièges), 9 (L'essentiel, 11a, Pièges; « Ce qui marche » left), 10 (11a), 11 (11a, Pièges;
+  its verified cell, a pointer to row 9, is now the quotation), 12 (11a), 13 (11a, Pièges:
+  « La DoD évolue » was a case), 14 (11a), 15 (L'essentiel, 11a, Le test rapide), 16 (11a,
+  Pièges), 17 and 18 (11a), 22 (11a, Pièges), 23 (11a), 25 (11a, Le test rapide), 29 (L'essentiel,
+  11b, Pièges), 30 (11b, Pièges), 31 and 32 (11b), 33 (L'essentiel, 11b), 34 (L'essentiel, 11b,
+  Pièges), 35 (11b, Pièges), 36 and 37 (11b), 40 (11b, Pièges: the claim the body makes, the
+  case's expected answer left), 41 (11b, source « cours »).
+- Row 9: reference S8 (session observations, link « (dépôt) ») left the row and
+  « Références »: it backed the course's wording, not the claim.
+- Row 18: the remark on « souvent » and « temps de réponse » left the cell: « Non vérifié »
+  holds it, as on `main`.
+- Row 22: reference S10 (the course glossary, link `glossary.md`) and the path to concept 8
+  (which states the distinction as a course choice) became the source « cours ». Row 33 lost
+  S10 (the glossary) too; S10 left « Références ».
+- Row 34: S5 and S6 left it: S6 had no quotation in the row, and S5's only quotation is the
+  word « apparently ». S5 (Scrum Patterns) left frontmatter `stances.school[1]` and
+  « Références »: its title, link and date are in the « Non vérifié » entry on the first
+  author of the DoR. The « ready-ready / done-done » parallel of row 33 left: a wording of the
+  course.
+- Row 37: « Relu le 2026-10-24 » moved to S6's « consultée le »; Cohn's velocity remark
+  (« non repris »): nowhere.
+- Paths copied (Done when): rows 5, 12, 29, 31 cited concept 0, row 14 concept 8, for the
+  Scrum Guide 2020: S1 kept (the deviation accepted on #304), its quotations at the places
+  checked on 2026-10-30.
+- « Non vérifié »: every entry now opens with its section; none removed; the first entry now
+  carries S5's description.
