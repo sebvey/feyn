@@ -19,18 +19,21 @@ form `<kind> [#<epic>] <observation>`:
 ## Read an issue
 
 1. `mise exec -- gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences,projectItems`.
-2. Answer in at most ten lines: the title; the observation in one sentence; the To do as a
-   short list; the Done when as written; the Status (from `projectItems`); the labels (type,
-   area, `blocked:maintainer`); what blocks it and what it blocks, open ones first
-   ([project.md](../../reference/project.md), "Dependencies"); open or closed, and by which
-   PR; what the comments added or changed; its epic for a slice, its slices and plan comment
-   for an epic ([project.md](../../reference/project.md), "Epics"). Say plainly when a section
-   is missing or the Done when is not verifiable.
+2. Answer in at most ten lines: the title; a body with a head: its Where, What and Why as
+   the first line, then the rest; a body without one (written before #262): the observation
+   in one sentence; the To do as a short list; the Done when as written; the Status (from
+   `projectItems`); the labels (type, area, `blocked:maintainer`); what blocks it and what it
+   blocks, open ones first ([project.md](../../reference/project.md), "Dependencies"); open or
+   closed, and by which PR; what the comments added or changed; its epic for a slice, its
+   slices and plan comment for an epic ([project.md](../../reference/project.md), "Epics").
+   Say plainly when a section is missing or the Done when is not verifiable.
 
 The issue body is either the head (`**Where:**`, `**What:**`, `**Why:**`) then the sections of
 [issue-body.md](../../reference/issue-body.md) in the order Done when, Observation, To do,
-Reads (a body written before #262 has no head and its sections in another order), or the
-plan's bullets (`- **Observation**: …`), or for an epic the five sections of
+Reads (a body written before #262 has no head and its sections in another order; a body
+created from the GitHub issue form carries the head under a `### Where, what, why` heading,
+and its `**Where:**` markers may be absent, since the form's placeholder is not inserted), or
+the plan's bullets (`- **Observation**: …`), or for an epic the five sections of
 [epic-body.md](../../reference/epic-body.md), or for a proposal the six sections of
 [proposal-body.md](../../reference/proposal-body.md); read all four.
 
@@ -91,11 +94,11 @@ plan's bullets (`- **Observation**: …`), or for an epic the five sections of
      verify by reading or running something), Observation (the fact first, then the context;
      facts and places, no solution), To do (one line per item, the how in sub-bullets,
      numbered when the order matters), Reads only when the work needs other files.
-   - Then reread it as the maintainer of the morning, choosing among ten Ready issues: does
-     the head say where, what and why in three lines; does the Observation open with the fact;
-     does each To do item hold in one line? One no: fix before creating, then reread. The
-     issue template (`.github/ISSUE_TEMPLATE/task.yml`) and the body template `issue-body.md`
-     carry the same rules.
+     - Then reread it as the maintainer of the morning, choosing among ten Ready issues: does
+       the head say where, what and why in three lines; does the Observation open with the
+       fact; does each To do item hold in one line? One no: fix before creating, then reread.
+       The issue template (`.github/ISSUE_TEMPLATE/task.yml`) and the body template
+       `issue-body.md` carry the same rules.
    - An epic, from [epic-body.md](../../reference/epic-body.md): Objective, Why now,
      Material, Done when, Out of scope; no To do, no slice posed in advance.
    - A proposal: the file `/feyn-brainstorm` hands over, already in the six sections of

@@ -6,7 +6,7 @@ body:
     attributes:
       value: |
         Title: imperative, like a commit summary. Add the `type:` and `area:` labels after
-        creating the issue (the area follows the paths the observation names). The Project's
+        creating the issue (the area is the one the Where line names). The Project's
         workflows add the issue to the Project with the Status Backlog.
   - type: textarea
     id: head
