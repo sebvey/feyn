@@ -74,6 +74,12 @@ markers:
   school: "école"
   course: "cours"
 
+# The nature of a claim of `sources.md` that is not a stance marker: what a source says with no
+# stance (a tool's default, a date, a figure). The other natures are the markers consensus,
+# school, course (SPEC.md 4.4). Read by `sources` only: never a marker of the reader text.
+natures:
+  fact: "fait"
+
 # The qualifiers a case heading may carry, at most one, and no other word (SPEC.md 4.3).
 qualifiers:
   fallback: "rechange"

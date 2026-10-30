@@ -1,7 +1,7 @@
 'use strict';
-// The concept folder: files, sections and their order, frontmatter keys, one section per
-// sub-concept, « Objectif » equals the objective, case headings (sub-concept and closed
-// qualifier) and fields (a qualifier on « Question » only), coverage of
+// The concept folder: files, sections and their order, frontmatter keys (`verified` parallel
+// to `refs`), one section per sub-concept, « Objectif » equals the objective, case headings
+// (sub-concept and closed qualifier) and fields (a qualifier on « Question » only), coverage of
 // leaves, citation of every case in « Consignes » (SPEC.md section 4).
 const yaml = require('./lib/yaml');
 const mdlib = require('./lib/md');
@@ -19,11 +19,20 @@ function checkItems(list, where, out, file, label) {
   list.forEach((it, i) => {
     const l = yaml.lineOf(list, i, yaml.lineOf(where.c, where.k));
     if (!isObj(it)) { out.push(fail(file, l, `${label}[${i}] is not a map`)); return; }
-    for (const k of Object.keys(it)) if (!['text', 'author', 'refs'].includes(k)) out.push(fail(file, yaml.lineOf(it, k, l), `${label}[${i}]: unknown key "${k}"`));
+    for (const k of Object.keys(it)) if (!['text', 'author', 'refs', 'verified'].includes(k)) out.push(fail(file, yaml.lineOf(it, k, l), `${label}[${i}]: unknown key "${k}"`));
     if (typeof it.text !== 'string' || it.text.trim() === '') out.push(fail(file, l, `${label}[${i}]: text is mandatory`));
     else if (/\]\(|<\/?[A-Za-z]/.test(it.text)) out.push(fail(file, yaml.lineOf(it, 'text', l), `${label}[${i}]: text is inline Markdown, bold and italics only (no link, no HTML)`));
     if (it.author !== undefined && (typeof it.author !== 'string' || it.author.trim() === '')) out.push(fail(file, yaml.lineOf(it, 'author', l), `${label}[${i}]: author must be a non-empty string`));
     if (!Array.isArray(it.refs) || it.refs.some((r) => typeof r !== 'string')) out.push(fail(file, l, `${label}[${i}]: refs is mandatory (a list of reference ids, possibly empty)`));
+    else {
+      // verified: parallel to refs, one quotation and its place per reference; none without refs
+      const v = it.verified;
+      const n = v === undefined ? 0 : Array.isArray(v) ? v.length : -1;
+      const vl = yaml.lineOf(it, 'verified', l);
+      if (v !== undefined && it.refs.length === 0) out.push(fail(file, vl, `${label}[${i}]: an item with no refs has no verified`));
+      else if (n === -1 || (Array.isArray(v) && v.some((x) => typeof x !== 'string' || x.trim() === ''))) out.push(fail(file, vl, `${label}[${i}]: verified is a list of non-empty strings, one per reference of refs`));
+      else if (n !== it.refs.length) out.push(fail(file, vl, `${label}[${i}]: verified must have one entry per reference of refs (${it.refs.length}), found ${n}`));
+    }
   });
 }
 
@@ -233,7 +242,7 @@ function checkConcept(ctx, c, out) {
       { text: H('references'), mandatory: true, match: (t) => t === H('references') },
       { text: H('unverified'), mandatory: true, match: (t) => t === H('unverified') },
     ], out);
-    for (const [key, cols] of [['claims', 4], ['references', 5]]) {
+    for (const [key, cols] of [['claims', 5], ['references', 5]]) {
       const s = top.sections.find((x) => x.title === H(key));
       if (!s) continue;
       const tabs = mdlib.tables(s.lines);

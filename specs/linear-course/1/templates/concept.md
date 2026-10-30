@@ -13,9 +13,12 @@ How to use: copy to the concept folder, replace every <placeholder>, delete this
 - Storyline blockquote: starts with `**Fil rouge :**`; no other blockquote in the sub-concept
   sections.
 - Frontmatter: `stances` (three keys, each a list, possibly empty), `neighbors` (optional).
-  An item has `text` (bold and italics only), `author` (expected on consensus and school) and
-  `refs` (ids of sources.md, possibly empty). They are the one place for the stances: the
-  body has no stances section, and the site renders them from the frontmatter.
+  An item has `text` (bold and italics only), `author` (expected on consensus and school),
+  `refs` (ids of sources.md, possibly empty) and, when `refs` is not empty, `verified`: one
+  entry per id, in the same order, the shortest quotation in « » and its place in parentheses.
+  They are the one place for the stances and their sources: the body has no stances section,
+  « Affirmations » of sources.md has no stance row, and the site builds them from the
+  frontmatter.
 - A diagram is optional: to have none, delete the `diagrams` key and the image line below. To
   have one: draw it from diagram.svg, declare it in `diagrams` (all four keys), and put the
   image alone in its paragraph, once, in the section of its `subconcept` or in « L'essentiel »;
@@ -32,10 +35,12 @@ stances:
     - text: "<what is accepted>"
       author: "<the text or author it belongs to>"
       refs: [S1]
+      verified: ["<« the shortest quotation » (its place)>"]
   school:
     - text: "<a school of thought's choice>"
       author: "<author or current>"
       refs: [S2]
+      verified: ["<« the shortest quotation » (its place)>"]
   course:
     - text: "<the course's own choice>"
       refs: []

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" role="img" aria-labelledby="couches-titre couches-desc" fill="currentColor" font-family="sans-serif">
+  <title id="couches-titre">Trois couches empilées</title>
+  <desc id="couches-desc">Trois rectangles empilés : restitution, transformation, ingestion.</desc>
+  <defs>
+    <marker id="couches-fleche" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L6,3 L0,6 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g id="1a-couches" class="secondary">
+    <rect x="10" y="10" width="180" height="24" fill-opacity="0.3" stroke="currentColor"/>
+    <rect x="10" y="38" width="180" height="24" fill-opacity="0.2" stroke="currentColor"/>
+    <rect x="10" y="66" width="180" height="24" fill-opacity="0.1" stroke="currentColor"/>
+    <line x1="195" y1="88" x2="195" y2="14" stroke="currentColor" marker-end="url(#couches-fleche)"/>
+  </g>
+  <g id="1a-noms" class="primary" font-size="12">
+    <text x="20" y="26">Restitution</text>
+    <text x="20" y="54">Transformation</text>
+    <text x="20" y="82">Ingestion</text>
+  </g>
+</svg>

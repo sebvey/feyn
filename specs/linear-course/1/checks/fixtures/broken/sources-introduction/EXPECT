@@ -1,0 +1,2 @@
+check: sources
+message: sources.md has no introduction

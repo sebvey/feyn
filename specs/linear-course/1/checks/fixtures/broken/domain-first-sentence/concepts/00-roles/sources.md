@@ -1,10 +1,9 @@
-Les sources du concept.
-
 ## Affirmations
 
-| Affirmation (section de `concept.md` ou de `teaching.md`) | Source | Ce qui a été vérifié | Nature |
-|---|---|---|---|
-| Une affirmation acceptée (Consensus et choix d'école) | [S1] | « le texte » | consensus |
+| Affirmation | Section | Source | Vérifié | Nature |
+|---|---|---|---|---|
+| Deux rôles suffisent pour commencer | 0a, L'essentiel | [S1] | « le texte » (section 2) | consensus |
+| Le premier rôle décide | 0a1 | cours | | cours |
 
 ## Références
 
@@ -14,4 +13,5 @@ Les sources du concept.
 
 ## Non vérifié
 
-- Rien.
+- 0b : aucune source consultée ne fixe la règle. Écrire « une règle », pas « la règle de Scrum ».
+- Consensus et choix d'école : le choix du cours n'a pas été cherché ailleurs.

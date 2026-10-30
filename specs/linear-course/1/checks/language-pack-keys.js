@@ -11,6 +11,7 @@ const KEYS = {
   case_fields: ['usage', 'explanation', 'situation', 'question', 'expected_answer', 'common_mistakes', 'what_works'],
   qualifiers: ['fallback', 'practice', 'aside'],
   markers: ['storyline', 'consensus', 'school', 'course'],
+  natures: ['fact'],
   concept_refs: ['concept', 'concepts', 'and', 'annex'],
   source_types: ['primary', 'secondary', 'marketing'],
 };

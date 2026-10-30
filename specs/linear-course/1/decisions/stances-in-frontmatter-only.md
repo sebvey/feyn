@@ -34,3 +34,8 @@ of `SPEC.md` 4.2 and its review-only rule « says nothing the frontmatter contra
   choix du cours comme tels : des choix du cours, qu'aucune source n'énonce tels quels. »
   `SPEC.md` 4.1 `stances.course` says the same.
 - Decision `reader-facing-and-teacher-only-files`: its one filter includes `headings.stances`.
+- Amended 2026-10-30 (#217): a stance or a neighbour is sourced in its own item, `refs` and
+  `verified` (`SPEC.md` 4.1); no « Affirmations » row of `sources.md` names it any more.
+  `headings.stances` stays as the site's heading and as the section a « Non vérifié » entry
+  names for a stance or a neighbour. The one filter the last consequence speaks of is gone
+  (decision `reader-facing-and-teacher-only-files`, amended).
