@@ -296,14 +296,14 @@ same text serves the reader and the teacher.
 
 | Reader | Needs | When |
 |---|---|---|
-| the learner | why the domain matters and how its concepts connect | on the site, before its concepts |
+| the learner | why the domain matters and how its concepts connect | before its concepts |
 | the teacher | what it says to present the domain (`domain-presented-from-sheet`) | before the first concept of a domain |
 | the creator (human or agent) | what each section says, and that it teaches no concept | writing or changing a domain |
 
 `domains/<number>-<slug>.md`, one per domain of `course.yaml` (`course-files`). Reader-facing:
-the site builds it, the teacher reads it. The site's domain page shows its four sections, in
-order; the file holds no text for the teacher only. It teaches no concept and makes no claim
-that a concept of the domain does not make: it has no sources file. No H1.
+the site builds it, the teacher reads it. It holds no text for the teacher only: its whole text
+is for the reader. It teaches no concept and makes no claim that a concept of the domain does
+not make: it has no sources file. No H1.
 
 Frontmatter: `description` (mandatory, one sentence for the site), nothing else; number, title,
 objective and duration are in `course.yaml` (`course-files`).
@@ -314,8 +314,9 @@ Body, all mandatory, in this order (`course-files`):
 2. « Le fil des concepts » (`concept_thread`): one short paragraph per concept of the domain,
    in order, opening with `**<number>. <concept title>.**`, the title as in `course.yaml`
    (`course-files`). A domain of one concept has one paragraph for the concept, then one per
-   first-level sub-concept, opening with `**<id>. <title>.**`. The site shows the first
-   sentence after the lead on the domain page: that sentence stands alone (below).
+   first-level sub-concept, opening with `**<id>. <title>.**`. Each paragraph's first sentence
+   after the lead stands alone, so that a consumer (the domain page, a concept's card) can show
+   it alone (below).
 3. « D'où l'on vient, où l'on va » (`from_to`): what the previous domain gives this one, and
    what this one gives the next.
 4. « Un cas qui traverse le domaine » (`crossing_case`): a storyline situation where each
