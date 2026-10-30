@@ -5,38 +5,66 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Le PO peut représenter les besoins de nombreuses parties prenantes ; qui veut changer le backlog doit convaincre le PO, une seule personne, pas un comité (concept 1b). L'organisation entière respecte ses décisions, visibles dans le contenu et l'ordre du backlog ; le PO rend le backlog transparent."
       refs: ["S1"]
+      verified:
+        - "« The Product Owner may represent the needs of many stakeholders in the Product Backlog. Those wanting to change the Product Backlog can do so by trying to convince the Product Owner. » ; « The Product Owner is one person, not a committee. » ; « the entire organization must respect their decisions. These decisions are visible in the content and ordering of the Product Backlog » ; « Ensuring that the Product Backlog is transparent, visible and understood. » (Product Owner)"
     - author: "Le Scrum Guide 2020"
       text: "L'équipe Scrum présente son travail aux parties prenantes : elles ne sont pas l'équipe. Le Scrum Master fait lever les obstacles à l'avancement de l'équipe, facilite la collaboration avec les parties prenantes et lève les barrières entre elles et l'équipe."
       refs: ["S1"]
+      verified:
+        - "« The Scrum Team presents the results of their work to key stakeholders » (Sprint Review) ; « Causing the removal of impediments to the Scrum Team's progress » ; « Facilitating stakeholder collaboration as requested or needed » ; « Removing barriers between stakeholders and Scrum Teams » (Scrum Master)"
     - author: "Ce que le Guide ne dit pas"
       text: "Il ne dit ni comment identifier les parties prenantes, ni comment dire non, ni dans quel ordre escalader. Les mots « escalade » et « sponsor » n'y figurent pas."
       refs: ["S1"]
+      verified:
+        - "définition de « stakeholder » absente du texte (recherche du 2026-10-22) ; « escalat », « sponsor » absents du texte (recherche du 2026-10-30)"
   school:
     - author: "R. Edward Freeman : la définition large"
       text: "Une partie prenante est quiconque peut agir sur l'organisation ou est touché par elle, fournisseurs compris. Définition donnée en management, pour une organisation ; le cours l'applique au produit."
       refs: ["S2", "S3"]
+      verified:
+        - "« any group or individual who can affect or is affected by the achievement of the organization's objectives » ; « customers, suppliers, employees, financiers, and communities » (Stakeholder Legitimacy)"
+        - "« any group or individual who can affect of an organization's objectives or who is affected by the achievement of an organization's objectives » (Who counts as a stakeholder?)"
     - author: "La grille pouvoir et intérêt"
       text: "Elle classe les parties prenantes selon leur pouvoir sur le produit et leur intérêt pour lui. Souvent attribuée à Mendelow, mais Mendelow croisait le pouvoir et le dynamisme de l'environnement ; la forme pouvoir et intérêt vient de Johnson et Scholes. Attribution discordante, dite comme telle, sans date."
       refs: ["S7", "S8", "S9", "S10"]
+      verified:
+        - "« the dynamism of the environment and the power of the stakeholder relative to the organization » (Abstract)"
+        - "« In reality, it is an adaptation of Mendelow's original Power/ Dynamism Matrix by Gerry Johnson and Kevan Scholes in their Exploring Corporate Strategy, 3rd ed. » ; « it was actually published in 1981, not 1991 » (Source)"
+        - "« Johnson and Scholes adapted Mendelow's model in Exploring Corporate Strategy, replacing the dynamism axis with interest. » (page)"
+        - "« Gerry Johnson and Kevan Scholes later reshaped it into the clean power-interest grid practitioners recognise today, set out in Exploring Corporate Strategy » (Origins and history)"
     - author: "Roman Pichler : dire non"
       text: "Dire non fait partie du rôle. Écouter d'abord pourquoi la demande compte, la ramener à l'objectif produit, ne pas trancher dans la précipitation, chercher un terrain commun sans couper la poire en deux. Pichler parle des « product people », pas de Scrum."
       refs: ["S4"]
+      verified:
+        - "« Saying no is a firm part of our job as product people » (introduction) ; « empathise with the individual before you offer an answer » (Empathise with the Stakeholder) ; « consider if the feature is aligned with the product goal » (Reframe the Conversation) ; « Don't Rush the Decision » ; « Try to Find Common Ground, but Don't Split the Difference » (titres)"
     - author: "PMI : le sponsor comme voie d'escalade"
       text: "En gestion de projet, pour ce qui dépasse le responsable du projet, le sponsor sert de voie d'escalade. Cadre de projet, pas Scrum ; le cours le transpose au PO et au produit."
       refs: ["S11"]
+      verified:
+        - "« For issues that are beyond the control of the project manager, the sponsor serves as an escalation path. » (page)"
   course:
     - text: "Les cinq catégories de parties prenantes d'un produit data : utilisateurs, financeur, sponsor, équipes voisines, fournisseurs de données. Un même acteur peut en cumuler plusieurs. Choix du cours, sans source externe : la définition large de Freeman ne fonde pas ce découpage."
       refs: []
     - text: "Dire non, c'est dire « pas maintenant », en montrant où est la demande et pourquoi. Ni le Guide ni Pichler ne le formulent ainsi."
       refs: ["S1", "S4"]
+      verified:
+        - "« Ensuring that the Product Backlog is transparent, visible and understood. » (Product Owner)"
+        - "« consider if the feature is aligned with the product goal » (Reframe the Conversation)"
     - text: "Revoir l'ordre sur un fait nouveau n'est pas céder : c'est ordonner. Pichler n'en dit que l'écoute et le refus de la précipitation."
       refs: ["S4"]
+      verified:
+        - "« empathise with the individual before you offer an answer » (Empathise with the Stakeholder) ; « Don't Rush the Decision » (titre)"
     - text: "L'ordre des démarches pour un obstacle : d'abord la personne concernée (ce n'est pas encore une escalade), puis le Scrum Master, puis le sponsor. Aucune source consultée ne le donne."
       refs: ["S1", "S11"]
+      verified:
+        - "« Causing the removal of impediments to the Scrum Team's progress » (Scrum Master)"
+        - "« For issues that are beyond the control of the project manager, the sponsor serves as an escalation path. » (page)"
     - text: "Le moment de passer à la marche suivante : la démarche a eu lieu et rien n'a changé à la fin du sprint en cours ; prévenir le Scrum Master sans attendre si l'obstacle empêche de livrer ce que l'équipe a prévu au sprint. Pas une règle Scrum."
       refs: []
     - text: "Un désaccord sur l'ordre de son propre backlog n'est pas un obstacle : le PO le tranche. Une dépendance bloquée dans le backlog d'une autre équipe est, elle, un obstacle pour la sienne."
       refs: ["S1"]
+      verified:
+        - "« The Product Owner is one person, not a committee. » ; « the entire organization must respect their decisions » (Product Owner)"
 diagrams:
   - file: "parties-prenantes-cinq-familles.svg"
     title: "Le produit comme un tuyau"
