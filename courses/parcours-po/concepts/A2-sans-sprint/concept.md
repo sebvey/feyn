@@ -5,30 +5,57 @@ stances:
     - author: "Pas de consensus pour travailler sans sprint"
       text: "Aucun texte ne fait consensus. Ce que le cours tient du Scrum Guide reste vrai : un incrément peut être livré avant toute revue, et les pratiques de prévision (dont les « cumulative flows ») sont citées sans être imposées."
       refs: ["S3"]
+      verified:
+        - "« an Increment may be delivered to stakeholders prior to the end of the Sprint » ; « The Sprint Review should never be considered a gate to releasing value » (Increment) ; « Various practices exist to forecast progress, like burn-downs, burn-ups, or cumulative flows. » (The Sprint)"
   school:
     - author: "The Kanban Guide (John Coleman, Daniel Vacanti, v2025.5)"
       text: "Le texte du flux sans sprint. Kanban y est une stratégie pour optimiser le flux de valeur : définir et visualiser le workflow, gérer activement les éléments, améliorer le workflow. L'équipe écrit sa Definition of Workflow (ce qu'est un élément, quand il commence et finit, ses états, des règles de passage explicites), tire un élément quand elle a de la place et suit quatre mesures : travail en cours, débit, âge d'un élément, temps de cycle. Pas de rôles, pas d'événements, pas de cadence imposée. Le guide dit « contrôler » le travail en cours."
       refs: ["S1"]
+      verified:
+        - "« Kanban is a strategy for optimizing the flow of value through a process. » ; « Defining and visualizing a workflow » (Definition of Kanban) ; « At a minimum, Kanban system members must create their DoW using all of the following elements » ; « Explicit policies about how work items can flow through each state » (Defining and Visualizing the Workflow) ; « Kanban system members should start work on an item (pull or select) only when there is a clear signal that there is capacity to do so. » ; « Kanban system members must explicitly control the number of work items in a workflow from started to finished » (Actively Managing Items in a Workflow) ; « The four mandatory flow metrics to track in Kanban are » (Flow Metrics) ; « There is no requirement, however, to wait for a formal meeting at a regular cadence to make these changes » (Improving the Workflow) ; « role », « event », « sprint » absents du texte entier (cherché le 2026-10-30)"
     - author: "La méthode Kanban (David J. Anderson, Kanban University)"
       text: "Une autre école que le *Kanban Guide*, avec son propre vocabulaire : le point d'engagement, le réapprovisionnement, des cadences de revue dont la revue de la livraison du service. Ni elle ni le *Kanban Guide* ne sont le consensus."
       refs: ["S4", "S5", "S7"]
+      verified:
+        - "« the 7 Kanban Cadences » ; « Replenishment/Commitment » (page)"
+        - "« The point at which the decision is made to start activities to deliver a work item. » (Commitment Point) ; « The act of reviewing the requested work items that fulfill the \"ready for delivery\" criteria and selecting the ones to be pulled into the system based on available capacity. » (Replenishment) ; « Service Delivery Review » (Review)"
+        - "« David Anderson's 2010 book, Kanban » ; « In 2020 John Coleman and Daniel Vacanti published The Kanban Guide » (Evolution and documentation of method)"
   course:
     - text: "Ce qui ne change pas sans sprint : le backlog ordonné par le PO, la DoD, l'incrément, l'objectif produit. Le *Kanban Guide* n'en parle pas ; le cours les garde du Scrum Guide."
       refs: ["S1", "S3"]
+      verified:
+        - "« backlog », « product owner », « done » absents du texte entier (cherché le 2026-10-30)"
+        - "« The Product Owner is also accountable for effective Product Backlog management » (Product Owner) ; « Work cannot be considered part of an Increment unless it meets the Definition of Done. » (Increment) ; « The Product Goal is the long-term objective for the Scrum Team. » (Commitment: Product Goal)"
     - text: "Le PO ordonne, les Developers tirent. Le *Kanban Guide* ne nomme que les membres du système Kanban."
       refs: ["S1"]
+      verified:
+        - "« Kanban system members should start work on an item (pull or select) only when there is a clear signal that there is capacity to do so. » (Actively Managing Items in a Workflow) ; « role » absent du texte entier (cherché le 2026-10-30)"
     - text: "La DoR devient la règle pour franchir le début du flux."
       refs: ["S1", "S5"]
+      verified:
+        - "« Explicit policies about how work items can flow through each state » (Defining and Visualizing the Workflow) ; « ready » absent du texte entier (cherché le 2026-10-30)"
+        - "« The act of reviewing the requested work items that fulfill the \"ready for delivery\" criteria and selecting the ones to be pulled into the system based on available capacity. » (Replenishment)"
     - text: "L'objectif produit et l'ordre du backlog donnent la direction, à la place de l'objectif de sprint."
       refs: ["S3"]
+      verified:
+        - "« The Product Goal is the long-term objective for the Scrum Team. » (Commitment: Product Goal) ; « Ordering Product Backlog items » (Product Owner)"
     - text: "L'équipe inspecte ce qui est livré avec les parties prenantes, à une cadence qu'elle choisit."
       refs: ["S1", "S3", "S4"]
+      verified:
+        - "« There is no requirement, however, to wait for a formal meeting at a regular cadence to make these changes » (Improving the Workflow)"
+        - "« The Sprint Review should never be considered a gate to releasing value » (Increment)"
+        - "« the 7 Kanban Cadences » (page)"
     - text: "« Limite du travail en cours » : le mot du *Kanban Guide for Scrum Teams* ; « flux continu » est le vocabulaire du cours."
       refs: ["S1", "S2"]
+      verified:
+        - "« Kanban system members must explicitly control the number of work items in a workflow from started to finished » (Actively Managing Items in a Workflow) ; « continuous flow » absent du texte entier (cherché le 2026-10-30)"
+        - "« Scrum Teams using Kanban must explicitly limit the number of these work items in progress. » (Limiting Work in Progress (WIP))"
 neighbors:
   - author: "Kanban dans Scrum : The Kanban Guide for Scrum Teams (Scrum.org, janvier 2021)"
     text: "Un autre cas, à ne pas confondre : le Scrum Guide s'y applique en entier, le sprint reste. Une équipe qui garde ses sprints et y ajoute des pratiques de flux suit le cours tel quel, sans cette annexe. Ce guide relie le débit aux dates de livraison probables dont parle le PO."
     refs: ["S2"]
+    verified:
+      - "« This guide assumes the reader is operating a process using the Scrum framework. » ; « Therefore, The Scrum Guide applies in its entirety. » (Relation to the Scrum Guide) ; « The Kanban complementary practices don't invalidate the need for Scrum's Sprint. » (The Sprint) ; « Reviewing Throughput can provide additional information when the Product Owner discusses likely delivery dates. » (Sprint Review)"
 diagrams:
   - file: tableau-de-flux.svg
     title: "Un tableau de flux : on tire un élément quand une place se libère"
