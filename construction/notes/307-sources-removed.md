@@ -86,3 +86,55 @@ Body of `concept.md`: unchanged.
 - « Non vérifié »: the entry on the 2010 Guide left (a trace of S3, the body does not name it);
   every other entry now opens with its section; the paths to concept 11 and the storyline's
   actors left their text.
+
+## 14-parties-prenantes
+
+Body of `concept.md`: unchanged.
+
+| Line | Row | Went to |
+|---|---|---|
+| 25 | « Comprendre ce qui bloque l'accès : la DSI demande de justifier chaque colonne ... » | nowhere: storyline facts (its path to concept 12 with it) |
+| 26 | « Accès à la table des locations demandé, pas encore obtenu ... » | nowhere: storyline facts |
+| 27 | « Rechange : Pia refuse de placer le canal d'Abba ... » | nowhere: a teaching device and storyline facts; the claim of the body is the row at line 34 (its path to concept 10 with it) |
+| 28 | « Acteurs de 14a classés ... » | nowhere: storyline facts |
+| 36 | « Les colonnes autorisées relèvent de la DSI ... » | nowhere: the body does not state it (its path to concept 12 with it) |
+| 37 | « Rechange 10b2 : le refus de Pia ... » | nowhere: a teaching device and storyline facts; the claim of the body is the row at line 34 |
+| 21 and 33 | « Pratique de gestion de projet : le sponsor ... » and « Ce que le sponsor peut faire d'utile ... » | merged into one row (14a, 14c, S11); Odile and the board: storyline facts |
+| 22 and 32 | « Le sponsor n'ordonne pas le backlog » and « Le sponsor convainc le PO comme les autres ... » | merged into one row (14b, Pièges, S1); « un seul objectif produit à la fois » and its path to concept 2: nowhere, the body does not state it |
+
+- Kept and re-anchored, their reasoning dropped: 5 (« Le Scrum Guide parle de parties
+  prenantes connues sans les définir », 14a: the claim the body makes; the stance went to
+  `stances.consensus[2]`), 6 (14a), 7 (14a, source « cours »), 8 (L'essentiel, 14a, Pièges;
+  storyline facts left), 10 (L'essentiel, 14b), 11 (L'essentiel, 14b, Pièges), 12 to 14 (14b),
+  15 (L'essentiel, 14b, « cours »), 16 (14b), 17 (14a), 18 and 19 (14c), 20 (L'essentiel, 14c),
+  23 (L'essentiel, 14c; Sid, Scarlette, Odile and the board left), 24 (Pièges: its second
+  claim is the row at line 34), 29 (14a, Pièges; the storyline's names left), 30 (14a; the
+  storyline's actors and the path to concept 1 left), 31 (14b, Pièges: the claims the body
+  makes, below), 34 (L'essentiel, 14c, Pièges, Le test rapide), 35 (14c).
+- Row 5: the glossary remark and the path to concept 1 left.
+- Row 6: the lists of Mendelow (S3) and the reasoning left; S2's « customers, suppliers,
+  employees, financiers, and communities » and S3's « any group or individual who can affect
+  of an organization's objectives ... » are quoted (quotations added); « (Freeman, 1984, p. 46) »
+  stays in S2's description.
+- Row 7: « aucune ; [S2] pour la seule définition large » became « cours ».
+- Row 8: « Erreurs fréquentes » (a section of the old file) left the section cell.
+- Row 9: its path to concept 1 became S12, concept 1's S2 (Dehghani) copied, with its
+  quotation; concept 1 records no place, so the cell gives « (page) ».
+- Row 13: the transparency pillar quotation left: its link to saying no is the course's.
+- Row 14: « Saying no is a firm part of our job as product people » left the row for
+  `stances.school[2]`; the row keeps the four quotations the body's sentence rests on.
+- Row 20: the glossary and « [S1] en partie » became « cours ».
+- Row 23: « [S1] en partie ; [S11] en partie ; fil rouge » became « cours »; the S1 and S11
+  quotations are in `stances.course[3]`.
+- Row 31: its claim is now what the body says (facts are asked of the one who holds them; no
+  promise of what is not decided), source « cours »; « revoir l'ordre sur un fait nouveau » went
+  to `stances.course[2]` (S4); « dire ce qui ferait monter la demande »: nowhere, the body does
+  not state it; Charlotte and the storyline left.
+- Row 34: the glossary left the source.
+- Row 35: « trois sprints de relances, c'est déjà attendre » and Sid: nowhere, the body does
+  not state them.
+- Frontmatter: every item with `refs` got its `verified`; `stances.consensus[2]` gets the
+  absences of « escalat » and « sponsor », searched on 2026-10-30.
+- « Non vérifié »: the PSPO entry left (« aucune affirmation n'en dépend »: it anchors no
+  claim); « dire ce qui ferait monter la demande » and « trois sprints de relances » left their
+  entries (the body does not state them); every other entry now opens with its section.
