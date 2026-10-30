@@ -188,7 +188,7 @@ In this order (`concept-folder`):
 
 1. « Objectif » (`objective`), mandatory: the concept's `objective`, verbatim, give or take line
    breaks, written with a capital first letter and ending with a period where the field ends
-   with none (`concept-folder`).
+   with no `.`, `!` or `?` (`concept-folder`).
 2. « L'essentiel » (`essentials`), mandatory: the definition and why it matters, a few lines;
    may hold a diagram image.
 3. The sub-concept sections, mandatory: one per first-level sub-concept, in `course.yaml` order,
