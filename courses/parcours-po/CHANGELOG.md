@@ -19,6 +19,6 @@ Une ligne par changement : `- CATÉGORIE, concept ou fichier : ce qui change`.
   le champ « Réserve » de 9b2 (autres patrons de SPIDR et de Lawrence) est retiré, à reprendre
   en « Approfondissement » ; en 12, « (hypothèse d'exercice) » passe du libellé au texte de la
   « Situation ».
-- PATCH, concept 9 : la matière retirée de 9b2 revient en « Approfondissement » (Workflow
+- MINOR, concept 9 : la matière retirée de 9b2 revient en « Approfondissement » (Workflow
   Steps, Defer Performance et un exemple de Business Rule Variations, patrons de Lawrence),
   hors du parcours : aucun cas ne s'y appuie ; `sources.md` rattache ces patrons à la section.
