@@ -4,20 +4,39 @@ stances:
   consensus:
     - author: "Pratiques de la donnée : DAMA UK, reprise par le cadre de qualité des données du gouvernement britannique ; recensement de DAMA NL"
       text: "La qualité des données s'exprime en règles mesurables sur des dimensions, et le niveau de qualité exigé dépend de l'usage. Le Scrum Guide et les référentiels du PO ne disent ni comment définir un indicateur ni comment exprimer la qualité des données."
-      refs: ["S3", "S4", "S5", "S11"]
+      refs: ["S1", "S3", "S4", "S11", "S11b"]
+      verified:
+        - "« accountable for maximizing the value of the product resulting from the work of the Scrum Team » ; « How this is done may vary widely » (Product Owner)"
+        - "« Uniqueness measures the number of duplicates » (3. Uniqueness)"
+        - "« There are six core data quality dimensions, as defined by DAMA UK » (Data quality dimensions – how to measure your data quality) ; « The level of quality required will vary depending on the purpose » (Why do we need a data quality framework?)"
+        - "absent des objectifs d'apprentissage : ni définition d'un indicateur, ni qualité des données (relevé le 2026-10-22)"
+        - "absent des domaines de l'évaluation : ni définition d'un indicateur, ni qualité des données (relevé le 2026-10-22)"
     - author: "Le RGPD (texte de loi)"
       text: "Une donnée personnelle est une information sur une personne identifiée ou identifiable, y compris par un identifiant ; une donnée pseudonymisée qu'on peut rattacher à une personne reste personnelle. Les données sont collectées pour des finalités déterminées (limitation des finalités) et limitées à ce qui est nécessaire à ces finalités (minimisation)."
-      refs: ["S6", "S7", "S13"]
+      refs: ["S6", "S6b", "S7"]
+      verified:
+        - "« toute information se rapportant à une personne physique identifiée ou identifiable » ; « notamment par référence à un identifiant, tel qu'un nom, un numéro d'identification » (art. 4, 1)"
+        - "« collectées pour des finalités déterminées, explicites et légitimes » (art. 5, 1, b) ; « adéquates, pertinentes et limitées à ce qui est nécessaire au regard des finalités pour lesquelles elles sont traitées (minimisation des données) » (art. 5, 1, c)"
+        - "« Les données à caractère personnel qui ont fait l'objet d'une pseudonymisation et qui pourraient être attribuées à une personne physique par le recours à des informations supplémentaires devraient être considérées comme des informations concernant une personne physique identifiable » (considérant 26)"
   school:
     - author: "La liste des dimensions de qualité"
       text: "Six chez DAMA UK : exactitude, complétude, unicité, cohérence, fraîcheur, validité. D'autres listes existent ailleurs, parfois bien plus longues."
-      refs: ["S3", "S4", "S5"]
+      refs: ["S3", "S4"]
+      verified:
+        - "« Accuracy », « Completeness », « Uniqueness », « Consistency », « Timeliness », « Validity » (titres 1 à 6)"
+        - "« There are six core data quality dimensions, as defined by DAMA UK » ; « This is not a prescriptive list and may vary depending upon your data and your users' needs » (Data quality dimensions – how to measure your data quality)"
     - author: "Le grain (Kimball Group)"
       text: "Terme de la modélisation dimensionnelle : ce que représente une ligne d'une table de faits. Le cours l'étend à un indicateur : ce que représente une valeur de l'indicateur (par station, par quartier)."
       refs: ["S2"]
+      verified:
+        - "« The grain establishes exactly what a single fact table row represents » (page)"
   course:
     - text: "Le contenu d'une définition d'indicateur : ce qu'il compte et sa règle de calcul, son grain, sa période, sa source, sa fraîcheur. Aucun texte de référence ne fixe cette liste ; elle recoupe la pratique des outils d'indicateurs."
       refs: ["S2", "S8", "S9"]
+      verified:
+        - "« The grain establishes exactly what a single fact table row represents » (page)"
+        - "« Consider it as your WHERE clause » ; « Define the data's grain on the time dimension column » (page)"
+        - "« the measure to calculate, the aggregation to apply, the time grain to use, and any filters » (page)"
     - text: "Les trois lieux d'une exigence de qualité : la DoD, un critère d'acceptation, la définition de l'indicateur."
       refs: []
     - text: "La définition vaut pour l'indicateur partout où il est publié."
@@ -26,6 +45,8 @@ stances:
       refs: []
     - text: "« Fraîcheur » traduit *timeliness* : sens voisin mais pas identique. DAMA UK parle de données disponibles quand on en a besoin ; le cours vise l'âge maximal des données."
       refs: ["S3"]
+      verified:
+        - "« Timeliness indicates whether the data is available when expected and needed » (5. Timeliness)"
 neighbors:
   - author: "Indicateur et mesure de résultat"
     text: "L'indicateur est une valeur calculée par le produit pour ses utilisateurs (un livrable). La mesure de résultat juge si le produit atteint son objectif (concept 2). Les deux ont besoin d'une définition complète."

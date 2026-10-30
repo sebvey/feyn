@@ -160,3 +160,66 @@ Body of `concept.md`: unchanged.
   checked on 2026-10-30.
 - « Non vérifié »: every entry now opens with its section; none removed; the first entry now
   carries S5's description.
+
+## 12-donnees-produit
+
+Body of `concept.md`: unchanged.
+
+| Line | Row | Went to |
+|---|---|---|
+| 5 | « Ni le Scrum Guide ni les référentiels du PO ne disent comment définir un indicateur ... » | frontmatter `stances.consensus[0]`: S11 split into S11 and S11b (absences); the path to concept 2 became S1, concept 2's Scrum Guide copied, with its quotation |
+| 9 | « Données personnelles : finalité et minimisation sont des principes du RGPD » | merged into the rows at lines 37 and 38 (12c), and frontmatter `stances.consensus[1]` |
+| 15 | « Corrigé « vélos disponibles par station » ... » | nowhere: storyline facts and a teaching device |
+| 16 | « Exercice « locations par quartier » pour Charlotte ... » | nowhere: storyline facts and a teaching device (its path to concept 8 with it) |
+| 18 | « La DoD de l'équipe vélos exige que chaque indicateur publié ait sa définition écrite ... » | nowhere: a storyline fact; « la DoD exige la définition, elle n'en fixe pas les règles » is a wording of the course (its paths to `storyline.md` and concept 11 with it) |
+| 19 | « La mesure de résultat de l'objectif produit est aussi un indicateur ... » | nowhere: storyline facts (its path to concept 2 with it) |
+| 20 | « Brouillon d'Anna ... » | nowhere: a teaching device |
+| 21 | « Exclure les vélos signalés en panne invente une règle ... » | nowhere: a storyline fact (its path to concept 8 with it) |
+| 22 | « Écrire la requête ou la jointure au lieu de la définition ... » | merged into the row at line 10 (Pièges) |
+| 23 | « La comparaison au même mois de l'an dernier (story B) ... » | nowhere: a teaching device; « une fois, pour l'indicateur » is the row at line 17 (its path to concept 10 with it) |
+| 24 | « Fraîcheur des locations par quartier : à demander à Charlotte » | nowhere: a storyline fact |
+| 25 | « La vue des locations du jour d'Étienne ... » | nowhere: a storyline fact |
+| 26 | « La story de Charlotte ne remplit pas la DoR ... » | nowhere: a teaching device (its path to concept 11 with it) |
+| 31 | « Nombre de vélos signalés par semaine, regardé par Maud ... » | nowhere: storyline facts and a teaching device (its path to concept 10 with it) |
+| 32 | « Ce qui compte comme « en panne » ... » | nowhere: a cross-reference |
+| 34 | « Mesurer une dimension, c'est poser une règle chiffrable » | merged into the row at line 33 (12b, Pièges) |
+| 40 | « Pour les locations par quartier, l'identifiant de l'abonné n'est pas nécessaire ... » | nowhere: storyline facts and a teaching device |
+| 41 | « Pas la colonne du vélo pour cette finalité ... » | nowhere: storyline facts and a teaching device (its path to concept 11 with it) |
+| 43 | « « On l'anonymisera dans l'entrepôt » ... » | nowhere: a teaching device; the claim of the body is the row at line 36 |
+| 46 | « Un indicateur est une valeur calculée par le produit, un livrable ... » | frontmatter `neighbors[0]` (no reference: concept 2 states it as a course choice) |
+| 47 to 52 | cross-references to concepts 2, 8, 10, 11, 14, 15 and unfixed storyline facts | nowhere |
+
+- Kept and re-anchored, their reasoning dropped: 6 (L'essentiel, 12b), 7 (12b), 8 (12b; S3
+  added to its source cell, since its cell quoted S3), 10 (L'essentiel, 12a1, Pièges), 11
+  (12a1), 12 (12a1), 13 (12a1), 14 (12a1, 12b), 17 (12a2, Pièges), 27 (12b), 28 (12b), 29 (12b,
+  Pièges, Le test rapide), 30 (12b, Pièges; the storyline part left), 33 (12b, Pièges), 35 (12c),
+  36 (12c, Pièges), 37 and 38 (12c), 39 (12c, Pièges, Le test rapide), 42 (12c, Pièges), 44 (12c:
+  the claim the body makes, Sid and the storyline left), 45 (12c, Pièges).
+- Row 6: « There are six core data quality dimensions, as defined by DAMA UK » is on the
+  framework page (S4), not on S3, as checked on 2026-10-30; the row now cites it to S4. S5
+  (DAMA NL) had no quotation: it left the row.
+- Row 7: S5 left; its claim (other lists, some much longer) now rests on S4's « This is not a
+  prescriptive list ... », found on 2026-10-30 (a quotation added); the dates of DAMA UK and of
+  the DMBOK 2: nowhere, the body does not date them.
+- Rows 10 and 22: the path to concept 1 became S1 (the Scrum Guide 2020, copied from concepts 1
+  and 2, whose descriptions are identical), with concept 1's quotation, at the place checked
+  on 2026-10-30; `plan.md` left.
+- Rows 11, 12, 29, 35: reference S10 (the course glossary, no link) became « cours » or left;
+  S10 left « Références ».
+- Row 14: its path to concept 8 (a freshness in an acceptance criterion) left: the body of
+  concept 12 does not state it.
+- Rows 17 and 29: the paths to concepts 11 and 8 (Cohn's page on DoD and conditions of
+  satisfaction, the same description in both) became S14, copied, with their quotations.
+- Row 33: its path to concept 7 (the vague word, a course choice there) left the source.
+- Row 36: S13 (the 2025 ruling, read through commentaries) had no quotation: it left the row,
+  frontmatter `stances.consensus[1]` and « Références »; its link is in the « Non vérifié »
+  entry on the ruling.
+- Frontmatter: `stances.consensus[0]` lost S5 and gained S1 and S11b; `stances.consensus[1]`
+  lost S13 and gained S6b; `stances.school[0]` lost S5. The author of `stances.consensus[0]`
+  still names DAMA NL: a « Non vérifié » entry says its claim has no quotation.
+- Links with two places: S6 split into S6 (chapter I, art. 4) and S6b (chapter II, art. 5); S7
+  into S7 (recital 26) and S7b (the EDPB release); S11 into S11 (CSPO) and S11b (PSPO). Each
+  quotation of `main` names its article, recital or source, so each went to its own reference.
+- The paragraph under « Références » (« Pas de S1 ... ») left: the concept now cites S1.
+- « Non vérifié »: every entry now opens with its section; the DAMA NL entry is new (S5's
+  description); the entry on the 2025 ruling now carries S13's link.
