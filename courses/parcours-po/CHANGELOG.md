@@ -31,3 +31,10 @@ Une ligne par changement : `- CATÉGORIE, concept ou fichier : ce qui change`.
 - PATCH, concepts 2 et 10 : un piège renvoie au concept 17 pour « hypothèse », la légende du
   schéma des dépendances au concept 14 pour « escalade ».
 - PATCH, concept 11 : `sources.md` cite les lignes du glossaire sous leur nouvelle forme.
+- PATCH, concept 0 : `teaching.md` dit « entraînement » là où il restait « creusage ».
+- PATCH, concepts 0 à 17, annexes A1 et A2 : les `sources.md` suivent la spec. « Affirmations »
+  a cinq colonnes, dont une colonne de section, sans introduction, et son en-tête dit
+  « Vérifié » ; chaque ligne est une affirmation du corps de `concept.md`, à la section qui la
+  fait. Les positions et les notions voisines sont sourcées dans leur entrée du frontmatter
+  (`verified` à côté de `refs`) ; un chemin vers un autre concept est remplacé par une référence
+  propre au concept. Le corps des `concept.md` ne change pas.

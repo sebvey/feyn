@@ -5,40 +5,79 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Scrum repose sur l'empirisme : la connaissance vient de l'expérience et on décide sur ce qu'on observe ; dans un environnement complexe, ce qui va arriver est inconnu. Le Guide ne parle ni de spike ni de découverte. Il ne nomme les hypothèses (assumptions) qu'à la rétrospective, pour celles qui ont égaré l'équipe dans sa façon de travailler, pas pour les hypothèses du produit."
       refs: ["S1"]
+      verified:
+        - "« Empiricism asserts that knowledge comes from experience and making decisions based on what is observed » (Scrum Theory) ; « In complex environments, what will happen is unknown. » (The Sprint) ; « Assumptions that led them astray are identified and their origins explored » (Sprint Retrospective) ; « spike », « discover » et, hors de la rétrospective, « assumption » absents du texte entier (cherché le 2026-10-30)"
     - author: "Pratique établie, hors du Scrum Guide"
       text: "Repérer et valider les hypothèses du produit fait partie du travail du PO (objectifs d'apprentissage du CSPO de Scrum Alliance), et les façons de les valider se comparent par leur coût et par la qualité de ce qu'on apprend."
       refs: ["S2"]
+      verified:
+        - "« describe how a product owner includes product discovery and validation in their work » (3.1) ; « describe how scrum supports validating product assumptions » (4.1) ; « compare at least three approaches to validate product assumptions by their cost and quality of learning » (4.2)"
     - author: "Pratique établie en analyse de données (CRISP-DM, guides de Google)"
       text: "La réussite d'une analyse de données se dit par un niveau atteint (une précision de prévision, par exemple), mesuré sur des données mises de côté, et distinct des critères de réussite du métier. Le seuil d'une alerte se choisit en pesant le coût d'une fausse alerte et celui d'un cas manqué, avec les utilisateurs. CRISP-DM met en garde contre les objectifs inatteignables et admet que les critères changent au fil de l'analyse. Cette pratique ne dit pas à quel moment on fixe le niveau."
       refs: ["S10", "S12", "S13", "S14"]
+      verified:
+        - "« a certain level of predictive accuracy » (1.3 Determine data mining goals, p. 18 du PDF) ; « The model is built on the training set and its quality estimated on the test set. » (4.2 Generate test design, p. 51 du PDF) ; « the data mining success criteria are different than the business success criteria » (1.3 Determine data mining goals, p. 38 du PDF) ; « Beware of setting unattainable goals » (1.1 Determine business objectives, p. 33 du PDF) ; « may have changed during and/or as a result of data mining » (5 Evaluation, p. 64 du PDF)"
+        - "« Weighing the cost of false positives and false negatives is a critical decision that will shape your users' experiences. » (Weigh false positives & negatives) ; « test the balance between precision and recall with your users » (Consider precision & recall tradeoffs)"
+        - "« If false positives (false alarms) are highly costly, it may make sense to choose a threshold that gives a lower FPR » (AUC and ROC for choosing model and threshold)"
+        - "« it's not a good idea if the cost of one type of wrong classification is greater than the other » (introduction de la page)"
   school:
     - author: "Marty Cagan : les quatre grands risques"
       text: "Valeur (les utilisateurs choisiront-ils de s'en servir ?), utilisabilité (sauront-ils s'en servir ?), faisabilité (les ingénieurs peuvent-ils le construire avec le temps, les compétences et la technologie dont on dispose ?), viabilité (la solution marche-t-elle pour l'entreprise ?). Cagan veut qu'on les traite tôt, avant de construire. Il parle de product manager, pas de PO, et répartit les risques par rôle : valeur et viabilité au product manager, utilisabilité au designer, faisabilité à l'ingénieur principal."
       refs: ["S3"]
+      verified:
+        - "« value risk (whether customers will buy it or users will choose to use it) » ; « usability risk (whether users can figure out how to use it) » ; « feasibility risk (whether our engineers can build what we need with the time, skills and technology we have) » ; « business viability risk (whether this solution also works for the various aspects of our business) » ; « Tackle the big risks early » ; « The Product Manager is responsible for the value and viability risks » ; « The Product Designer is responsible for the usability risk » ; « The Product Lead Engineer is responsible for the feasibility risk » ; « Product Owner » absent du billet (page)"
     - author: "L'exploration bornée (spike), venue d'XP"
       text: "Un travail limité dans le temps qui ne traite que la question posée, et qu'on s'attend à jeter ; d'abord pour une question technique ou de conception, que certains emploient aussi pour une question métier (concept 7). Certaines équipes la mettent au backlog produit, d'autres la gardent dans un autre élément. L'inventeur et la date ne sont pas vérifiés."
       refs: ["S4", "S5"]
+      verified:
+        - "« Create spike solutions to figure out answers to tough technical or design problems. » ; « Build the spike to only addresses the problem under examination and ignore all other concerns » ; « Most spikes are not good enough to keep, so expect to throw it away » (page)"
+        - "« a time-boxed research activity that helps teams make better decisions » ; « Spikes are a concept adapted from Extreme Programming (XP) » (Agile Spike Definition) ; « This could be uncertainty about how a feature should work or about how it will be built. » (When to Use Spikes) ; « Some agile software development teams opt to put a spike story on the product backlog along with user stories. » ; « Other teams take the approach that a spike is really part of some other product backlog item » (Spikes & Backlogs)"
     - author: "Marty Cagan : les prototypes"
       text: "Choisir la façon la plus rapide et la moins chère de tester une idée. Cagan en distingue plusieurs sortes, dont un prototype de faisabilité, écrit par les ingénieurs et qu'on peut jeter, et un prototype sur données réelles, utilisé pour de vrai par de vrais utilisateurs, pour prouver qu'une idée marche. Une maquette montrée à l'utilisateur ne prouve pas qu'il s'en servira : on dit une chose et on en fait une autre."
       refs: ["S8"]
+      verified:
+        - "« come up with the fastest, cheapest way to test out your ideas » (Hybrids) ; « These are written by engineers in order to address technical risks during product discovery » ; « It may be throwaway » (Feasibility Prototypes) ; « it's not good for proving anything » ; « People say all kinds of things and then go do something different. » (High-Fidelity User Prototypes) ; « The main purpose of a live-data prototype is to actually prove something » ; « real users will use the live-data prototype for real » (Live-Data Prototypes)"
     - author: "Teresa Torres : décider avant l'expérience"
       text: "Dire d'avance comment on jugera l'expérience et ce qu'on fera selon le résultat. Si toutes les réponses mènent à la même action, ne pas explorer. Torres fixe aussi avant le test le seuil qui dira s'il a réussi."
       refs: ["S6", "S7"]
+      verified:
+        - "« Be explicit about how you will evaluate the assumption. » ; « Decide upfront how you will act on the data you collect. » ; « If the answer is the same in all three instances, skip your experiment and take action now. » (Invest the Time to Get Your Experiment Design Right)"
+        - "« setting a specific, predetermined threshold for success before you run a test or experiment » (What is a line in the sand?)"
     - author: "Teresa Torres : la découverte continue"
       text: "L'équipe qui construit le produit parle aux utilisateurs chaque semaine, par petites activités de recherche au service d'un résultat visé. Nommée ici, pas enseignée."
       refs: ["S9"]
+      verified:
+        - "« weekly touch points with customers by the team building the product, where they conduct small research activities in pursuit of a desired outcome » (What is continuous discovery?)"
     - author: "Eric Ries : le MVP"
       text: "La version d'un nouveau produit qui permet d'apprendre le plus sur ses clients pour le moindre effort : une manière d'apprendre parmi d'autres (concept 16b)."
       refs: ["S11"]
+      verified:
+        - "« that version of a new product which allows a team to collect the maximum amount of validated learning about customers with the least effort » (page)"
   course:
     - text: "Le cours retient deux des quatre risques, valeur et faisabilité, et range la donnée dans la faisabilité : existe-t-elle, est-elle assez bonne, assez fraîche ? Cagan ne parle pas de données."
       refs: ["S3", "S10"]
+      verified:
+        - "« data » absent du billet (page)"
+        - "« Is the data complete (does it cover all the cases required)? » ; « Are there missing values in the data? » (2.4 Verify data quality, p. 21 du PDF)"
     - text: "Une exploration se décide avant sur trois points : la question, la durée, ce qu'on décidera selon la réponse. La question et l'action viennent de Torres, la durée du spike ; les réunir est un choix du cours."
       refs: ["S4", "S5", "S6"]
+      verified:
+        - "« put a pair of developers on the problem for a week or two » (page)"
+        - "« Because spikes are time-boxed, the investment is fixed. » (Agile Spike Example)"
+        - "« Be explicit about how you will evaluate the assumption. » ; « Decide upfront how you will act on the data you collect. » (Invest the Time to Get Your Experiment Design Right)"
     - text: "Le PO pose la question, les Developers explorent."
       refs: ["S3", "S4", "S8"]
+      verified:
+        - "« The Product Lead Engineer is responsible for the feasibility risk » (page)"
+        - "« put a pair of developers on the problem » (page)"
+        - "« These are written by engineers in order to address technical risks during product discovery » (Feasibility Prototypes) ; « this is code so it requires your developers to create the live-data prototype » (Live-Data Prototypes)"
     - text: "Deux seuils à ne pas mêler : celui qui juge l'exploration (ce qui compte comme « oui »), fixé avant comme chez Torres, que le PO fait dire par les utilisateurs concernés sans le chiffrer (17b1) ; et le niveau qu'un critère d'acceptation exige de la fonction livrée, fixé après l'exploration, qui montre ce qu'on peut atteindre. Les guides de Google choisissent le seuil d'un modèle sur ses résultats mesurés, donc après la mesure : un appui, pas un consensus."
       refs: ["S6", "S7", "S10", "S13"]
+      verified:
+        - "« Define which metric(s) you will use and any relevant thresholds. » (Invest the Time to Get Your Experiment Design Right)"
+        - "« setting a specific, predetermined threshold for success before you run a test or experiment » (What is a line in the sand?)"
+        - "« Beware of setting unattainable goals » (1.1 Determine business objectives, p. 33 du PDF) ; « may have changed during and/or as a result of data mining » (5 Evaluation, p. 64 du PDF)"
+        - "« The points on a ROC curve closest to (0,1) represent a range of the best-performing thresholds for the given model. » (AUC and ROC for choosing model and threshold)"
     - text: "Un prototype se jette : il n'est pas une story livrée et ne remplit pas la DoD (17b2)."
       refs: []
 neighbors:
