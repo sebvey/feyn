@@ -3,7 +3,7 @@
 | Affirmation | Section | Source | Vérifié | Nature |
 |---|---|---|---|---|
 | Deux rôles suffisent pour commencer | 0a, L'essentiel | [S1] | « le texte » (section 2) | consensus |
-| Le premier rôle décide | 0a1 | aucune | | cours |
+| Le premier rôle décide | 0a1 | aucune | « le texte » (section 2) | cours |
 | Une autre façon de nommer les rôles | Approfondissement | [S1] | « un autre texte » (section 3) | fait |
 
 ## Références

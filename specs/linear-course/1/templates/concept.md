@@ -17,7 +17,7 @@ How to use: copy to the concept folder, replace every <placeholder>, delete this
   `refs` (ids of sources.md, possibly empty) and, when `refs` is not empty, `verified`: one
   entry per id, in the same order, the shortest quotation in « » and its place in parentheses.
   They are the one place for the stances and their sources: the body has no stances section,
-  « Affirmations » of sources.md has no stance row, and the site renders them from the
+  « Affirmations » of sources.md has no stance row, and the site builds them from the
   frontmatter.
 - A diagram is optional: to have none, delete the `diagrams` key and the image line below. To
   have one: draw it from diagram.svg, declare it in `diagrams` (all four keys), and put the

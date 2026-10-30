@@ -80,17 +80,22 @@ function checkConcept(ctx, c, out) {
       return;
     }
     if (!anchors) return;
-    for (const a of list) {
-      if (anchors.has(a) || (extra && a === extra)) continue;
-      if (a === H('stances')) out.push(fail(sf, line, `${what}: section « ${a} »: a stance or neighbour is sourced in its frontmatter item (refs, verified), not in « ${H('claims')} »`));
-      else out.push(fail(sf, line, `${what}: unknown section "${a}": a sub-concept id or a fixed section (${fixedList}) that exists in concept.md${extra ? `, or « ${extra} » for a stance or neighbour` : ''}`));
-    }
+    // one failure per cell or entry, naming its unknown pieces
+    const bad = list.filter((a) => !anchors.has(a) && !(extra && a === extra));
+    if (!bad.length) return;
+    if (!extra && bad.includes(H('stances'))) out.push(fail(sf, line, `${what}: section « ${H('stances')} »: a stance or neighbour is sourced in its frontmatter item (refs, verified), not in « ${H('claims')} »`));
+    const unknown = bad.filter((a) => extra || a !== H('stances'));
+    if (unknown.length) out.push(fail(sf, line, `${what}: unknown section ${unknown.map((a) => `"${a}"`).join(', ')}: a sub-concept id or a fixed section (${fixedList}) that exists in concept.md${extra ? `, or « ${extra} » for a stance or neighbour` : ''}`));
   };
 
   if (secClaims) {
     const t = mdlib.tables(secClaims.lines)[0];
     if (t) for (const r of t.rows) {
-      if (r.cells.length !== 5) continue;
+      // a row not in five cells (concept-folder fails it) still cites its ids
+      if (r.cells.length !== 5) {
+        for (const id of r.cells.join(' ').match(CITED) || []) cited.add(id);
+        continue;
+      }
       const [claim, section, source, verified, nature] = r.cells;
       const what = `claim "${short(claim)}"`;
       if (claim === '') out.push(fail(sf, r.line, 'a claim row has no claim'));

@@ -29,7 +29,8 @@ function checkItems(list, where, out, file, label) {
       const v = it.verified;
       const n = v === undefined ? 0 : Array.isArray(v) ? v.length : -1;
       const vl = yaml.lineOf(it, 'verified', l);
-      if (n === -1 || (Array.isArray(v) && v.some((x) => typeof x !== 'string' || x.trim() === ''))) out.push(fail(file, vl, `${label}[${i}]: verified is a list of non-empty strings, one per reference of refs`));
+      if (v !== undefined && it.refs.length === 0) out.push(fail(file, vl, `${label}[${i}]: an item with no refs has no verified`));
+      else if (n === -1 || (Array.isArray(v) && v.some((x) => typeof x !== 'string' || x.trim() === ''))) out.push(fail(file, vl, `${label}[${i}]: verified is a list of non-empty strings, one per reference of refs`));
       else if (n !== it.refs.length) out.push(fail(file, vl, `${label}[${i}]: verified must have one entry per reference of refs (${it.refs.length}), found ${n}`));
     }
   });
