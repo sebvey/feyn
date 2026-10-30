@@ -96,7 +96,7 @@ Une mesure seule ne suffit pas à conclure : on la croise avec d'autres sources 
 - **Prendre l'usage du livrable pour le résultat** (consultations, connexions), ou se contenter d'un comptage brut sans le ramener à une base (par utilisateur, par période). L'usage est utile comme signal, insuffisant comme preuve ; un comptage brut monte avec la taille de la base d'utilisateurs (cas inventé : le nombre total de visites d'un site).
 - **Oublier qu'une mesure qui devient la cible cesse d'être une bonne mesure** (loi de Goodhart) : un service d'assistance jugé sur le nombre de tickets ouverts (exemple inventé) pourrait le faire baisser en décourageant les demandes, sans qu'un client soit mieux aidé. Une mesure mal définie trompe aussi, sans que personne le veuille (cas inventé : « client actif » compté avec ou sans achat récent). La définition d'un indicateur se travaille au concept 12. Croiser la mesure avec d'autres sources.
 - **Inventer la cible chiffrée ou la définition des heures de pointe** à la place des parties prenantes.
-- **Croire l'objectif produit gravé** : pour Scrum.org, c'est une hypothèse qu'on reformule quand on apprend (choix d'école).
+- **Croire l'objectif produit gravé** : pour Scrum.org, c'est une hypothèse (concept 17) qu'on reformule quand on apprend (choix d'école).
 
 ## Le test rapide
 

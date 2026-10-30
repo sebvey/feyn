@@ -38,7 +38,7 @@ diagrams:
     subconcept: "10a"
   - file: "dependances.svg"
     title: "Les dépendances dans une équipe et entre deux équipes"
-    caption: "Les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s'accordent sur l'ordre, et on n'escalade que si cela bloque (cas inventés pour l'illustration)."
+    caption: "Les dépendances : dans une équipe, le PO ordonne ; entre deux équipes, chaque PO ordonne le sien et les deux s'accordent sur l'ordre, et on n'escalade que si cela bloque (concept 14 ; cas inventés pour l'illustration)."
     subconcept: "10b"
 ---
 
