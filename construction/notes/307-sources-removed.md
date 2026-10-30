@@ -138,3 +138,78 @@ Body of `concept.md`: unchanged.
 - « Non vérifié »: the PSPO entry left (« aucune affirmation n'en dépend »: it anchors no
   claim); « dire ce qui ferait monter la demande » and « trois sprints de relances » left their
   entries (the body does not state them); every other entry now opens with its section.
+
+## 15-vie-story
+
+Body of `concept.md`: unchanged.
+
+| Line | Row | Went to |
+|---|---|---|
+| 12 | « « Vélo en panne » : signalé par un abonné ou constaté par Théo ... » | nowhere: storyline facts |
+| 14 | « Découper un élément fait partie du refinement » | merged into the row at line 5 (« breaking down »); its paths to concepts 4 and 9 left |
+| 15 | « Le PO prépare le lien des stories avec l'objectif produit » | nowhere: the body of concept 15 does not state it (a case of `teaching.md`) |
+| 28 | « Situation : objectif de sprint autour des vélos en panne ... » | nowhere: storyline facts |
+| 29, 39 | « Sans sprint : renvoi à l'annexe A2 » | nowhere: pointers to an annex |
+| 38 | « Étienne et Maud, parties prenantes clés de la revue ... » | nowhere: storyline facts |
+| 40 | « Les états d'un élément du backlog ... sont ceux d'un outil ... » | frontmatter `neighbors[0]` (S7, S7b, S8, S1): the 15c sentence says what the neighbour item says, so it has no row (SPEC 4.1) |
+| 41 | « « Fait » dans l'outil ne dit rien s'il ne veut pas dire DoD remplie » | frontmatter `neighbors[0]` (S7, S1), for the same reason |
+| 42, 43 | cross-references to concepts 0 to 17 and the annexes | nowhere |
+| 44, 45, 47 | facts of the storyline, fixed or not | nowhere |
+| 46 | « Ce que la source contient ne dit pas ce dont l'utilisateur a besoin ... » | nowhere: the body does not state it |
+| 48 | « En attendant le seuil, livrer d'abord une story dont les règles sont connues ... » | nowhere: a teaching device; « on livre d'abord ce dont les règles sont connues » is the row at line 11 |
+| 49 | « Si Étienne a besoin de données pour fixer le seuil, une exploration bornée l'éclaire ... » | nowhere: a pointer to concept 17 and storyline facts |
+| 50 | « Proposition d'objectif « Que la maintenance et l'exploitation voient les vélos en panne ... » » | nowhere: a teaching device |
+| 51 | « « Si une des trois stories ne passe pas, le sprint a-t-il échoué ? » ... » | nowhere: a teaching device; the claim of the body is the row at line 22 |
+| 52 | « La liste pour le blocage n'est pas prête ... » | nowhere: storyline facts and a teaching device |
+| 54 | « Une story hors DoD montrée « en avant-première » en revue passe pour faite » | nowhere: a teaching device; the claim of the body is the row at line 36 |
+| 55 | « « Fait » dans l'outil : demander à l'équipe ce qu'il veut dire chez elle » | nowhere: the body does not state it |
+
+- Kept and re-anchored, their reasoning dropped: 5 (L'essentiel, 15a1), 6 (L'essentiel, 15a1,
+  Pièges), 7 and 8 (15a1), 9 (15a1, school), 10 (L'essentiel, 15a1, Pièges, « cours »), 11
+  (L'essentiel, 15a2, Pièges, « cours »), 13 (15a1, Pièges, « cours »), 16 (L'essentiel, 15b),
+  17 (15b, Pièges), 18 to 21 (15b), 22 (15b, Pièges), 23 (15b), 24 (15b, Pièges, Le test
+  rapide), 25 (15b: the body states it), 26 (15b, nature `école`), 27 (15b, Pièges), 30
+  (L'essentiel, 15c), 31 (15c), 32 (L'essentiel, 15c, Pièges), 33 (15c), 34 (15c, Pièges), 35
+  (15c, Pièges, « cours »), 36 and 37 (15c, Pièges), 53 (15b, nature `cours`).
+- Row 6: « The Product Backlog is refined as needed » left (the body does not say the refinement
+  runs during the sprint); « 10% » searched again on 2026-10-30.
+- Row 8: S2 (« The Development Team is responsible for all estimates ») and the absence of
+  « estimat » left: the body does not name the 2017 Guide for the size.
+- Row 10: its paths to concepts 4, 7 and 8 and S4 left; source « cours ». S4's claim is the row
+  at line 9; the gap between them is in « Non vérifié », as on `main`.
+- Row 11: S9 and S10 (an improvement and observations of a teaching session, link « (dépôt) »)
+  left the row and « Références »; the paths to concepts 7 and 8 (INVEST) left: the body points
+  to concept 7, it does not source it.
+- Row 13: its paths to concepts 7, 8 and 12 and the storyline's DoD left; source « cours ».
+- Row 19: « of one day or less » left (the body does not state it); the paths to concepts 4 and
+  9 left (S1 kept); « How this is done is at the sole discretion of the Developers. » is now the
+  whole sentence (longer).
+- Row 20: « Commitment: Sprint Goal » (a heading) left the quotations; the path to concept 0
+  left (S1 kept).
+- Row 23: S3's « shortened Sprint cancellation section »: nowhere, the body does not state it.
+- Row 26: its path to concept 11 became S1's absence « Definition of Ready », copied from concept
+  11 (S1 kept, a deviation); the storyline's DoR left.
+- Row 27: its paths to concepts 0 and 14 left (S1 kept); the quotations of the first two topics
+  are now written out.
+- Row 32: the timebox quotation left: the body does not state it.
+- Row 33: its path to concept 0 left (S1 kept); « banque » left the section.
+- Row 34: S1 left the row (its two quotations backed a reasoning); the page now quotes the
+  antipattern in two quotations, « ... by the Developers » and « It's a myth ... », where `main`
+  joined them across the page's dash.
+- Row 35: S6 and S1 left the row for `stances.course[2]`; source « cours ».
+- Row 36: S6's antipattern « The product shown does not conform to the Definition of Done »
+  left; the path to concept 11 left (S1 kept).
+- Row 37: « trying to convince the Product Owner » and the paths to concepts 10 and 13 left;
+  S6's sentence is now quoted whole (« new opportunities may be identified, discussed together
+  and potentially added to the backlog », longer).
+- Row 53: « Ordering Product Backlog items » (Product Owner) is added for « où le PO
+  l'ordonne »; the warning to Maud: nowhere, a storyline fact.
+- Links with two places: S7 split into S7 (« What are work item statuses ... ») and S7b
+  (« Workflows and statuses for boards in business spaces »); each quotation now names its
+  page. `neighbors[0]` cites S7, S7b, S8 and S1 (was S7, S8, S1).
+- References removed: S9 and S10 (internal, link « (dépôt) »).
+- Frontmatter: every item with `refs` got its `verified`; `neighbors[0]` gets the absences of
+  « status » and « workflow » in the Scrum Guide, searched on 2026-10-30.
+- « Non vérifié »: every entry now opens with its section; the internal base of the « définir
+  X » entry (one teaching session, one learner) left with S9 and S10; « déjà relevé au concept
+  0 » left the entry on French terms.

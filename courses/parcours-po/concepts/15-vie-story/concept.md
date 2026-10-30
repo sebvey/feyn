@@ -5,36 +5,62 @@ stances:
     - author: "Le Scrum Guide 2020 : le refinement"
       text: "Découper les éléments du backlog et les préciser (description, ordre, taille). C'est une activité continue, pas un événement : le Guide ne lui fixe ni moment ni durée. Il se fait en général avant le Sprint Planning, et l'équipe peut encore préciser un élément pendant. Les Developers qui feront le travail répondent de la taille."
       refs: ["S1", "S2"]
+      verified:
+        - "« Product Backlog refinement is the act of breaking down and further defining Product Backlog items into smaller more precise items. This is an ongoing activity to add details, such as a description, order, and size. » ; « They usually acquire this degree of transparency after refining activities. » ; « The Developers who will be doing the work are responsible for the sizing. » (Product Backlog) ; « The Scrum Team may refine these items during this process, which increases understanding and confidence. » (Topic Two: What can be Done this Sprint?) ; « Scrum combines four formal events for inspection and adaptation within a containing event, the Sprint. » (Scrum Theory)"
+        - "« The Scrum Team decides how and when refinement is done. Refinement usually consumes no more than 10% of the capacity of the Development Team. » (p. 15)"
     - author: "Le Scrum Guide 2020 : le Sprint Planning"
       text: "Trois sujets. **Pourquoi** : le PO propose comment le produit peut gagner en valeur, toute l'équipe Scrum fixe l'objectif de sprint avant la fin du Sprint Planning. **Quoi** : les Developers choisissent les éléments en discutant avec le PO. **Comment** : les Developers planifient le travail, à leur seule discrétion. Le « pourquoi » est l'ajout de 2020."
       refs: ["S1", "S3"]
+      verified:
+        - "« The Product Owner proposes how the product could increase its value and utility in the current Sprint. The whole Scrum Team then collaborates to define a Sprint Goal that communicates why the Sprint is valuable to stakeholders. The Sprint Goal must be finalized prior to the end of Sprint Planning. » (Topic One: Why is this Sprint valuable?) ; « Through discussion with the Product Owner, the Developers select items from the Product Backlog to include in the current Sprint. » (Topic Two: What can be Done this Sprint?) ; « How this is done is at the sole discretion of the Developers. » (Topic Three: How will the chosen work get done?)"
+        - "« In addition to the Sprint Planning topics of \"What\" and \"How\", the 2020 Scrum Guide places emphasis on a third topic, \"Why\", referring to the Sprint Goal » (Changes between 2017 and 2020 Scrum Guides)"
     - author: "Le Scrum Guide 2020 : l'objectif de sprint"
       text: "L'objectif unique du sprint et l'engagement du backlog de sprint (concept 0a3). Il donne cohérence et focus. Les Developers s'y engagent, mais il laisse de la souplesse sur le travail exact : si le travail diffère de ce qu'ils attendaient, ils renégocient la portée avec le PO sans toucher à l'objectif. Si l'objectif devient obsolète, seul le PO peut annuler le sprint."
       refs: ["S1"]
+      verified:
+        - "« For the Sprint Backlog it is the Sprint Goal » (Scrum Artifacts) ; « The Sprint Goal is the single objective for the Sprint. » ; « The Sprint Goal also creates coherence and focus, encouraging the Scrum Team to work together rather than on separate initiatives. » ; « Although the Sprint Goal is a commitment by the Developers, it provides flexibility in terms of the exact work needed to achieve it. » ; « If the work turns out to be different than they expected, they collaborate with the Product Owner to negotiate the scope of the Sprint Backlog within the Sprint without affecting the Sprint Goal. » (Commitment: Sprint Goal) ; « A Sprint could be cancelled if the Sprint Goal becomes obsolete. Only the Product Owner has the authority to cancel the Sprint. » (The Sprint)"
     - author: "Le Scrum Guide 2020 : la revue de sprint"
       text: "On inspecte ce que le sprint a produit et ce qui a changé ; les participants décident ensemble de la suite et le backlog peut être ajusté. C'est une séance de travail, pas une simple présentation, ni une porte de mise en production. Une story qui ne remplit pas la DoD n'y est pas présentée (concept 0b)."
       refs: ["S1"]
+      verified:
+        - "« the Scrum Team and stakeholders review what was accomplished in the Sprint and what has changed in their environment. Based on this information, attendees collaborate on what to do next. The Product Backlog may also be adjusted to meet new opportunities. » ; « The Sprint Review is a working session and the Scrum Team should avoid limiting it to a presentation. » (Sprint Review) ; « The Sprint Review should never be considered a gate to releasing value. » (Increment) ; « If a Product Backlog item does not meet the Definition of Done, it cannot be released or even presented at the Sprint Review. » (Commitment: Definition of Done)"
     - author: "Pratique établie, hors du Scrum Guide (Scrum.org)"
       text: "La revue n'est ni une démonstration à sens unique, ni une séance où le PO « accepte » le travail des Developers."
       refs: ["S6"]
+      verified:
+        - "« Sprint Review is a status meeting, demo or one-way presentation » ; « The Sprint Review is conducted to have the Product Owner \"accept\" the work completed by the Developers » ; « It's a myth that a successful Sprint Review is one where the Product Owner signs off on the work » (Common antipatterns)"
   school:
     - author: "Christiaan Verwijs et Barry Overeem : le refinement en conversations"
       text: "Ce n'est pas forcément une réunion de toute l'équipe : c'est une suite de conversations, parfois avec les parties prenantes."
       refs: ["S4"]
+      verified:
+        - "« refinement is not an event in Scrum » ; « Refinement is simply the ongoing process of having those conversations. Sometimes this means talking with stakeholders about some item that may be part of the next Sprint » (page)"
     - author: "Mike Cohn : l'objectif de sprint"
       text: "« Finir les sept stories » n'est pas un bon objectif de sprint (cohérent avec le Scrum Guide) : il doit être d'un niveau plus haut. Cohn tient pourtant l'objectif de sprint pour facultatif, contre le Scrum Guide, qui en fait un engagement."
       refs: ["S5"]
+      verified:
+        - "« \"Finish the seven user stories we committed to\" is not a good sprint goal. A sprint goal has to be higher-level than that. » ; « contrary to the Scrum Guide, I consider sprint goals an optional part of Scrum » (One Sign Your Sprint Goal Isn't Helpful)"
   course:
     - text: "Un mot flou se fait préciser par l'utilisateur concerné de chaque story. Le sens peut différer d'une story à l'autre, sous un nom distinct ; un chiffre partagé garde une seule définition (concept 7a2)."
       refs: ["S4"]
+      verified:
+        - "« collaborating with the Product Owner and stakeholders where necessary » (page)"
     - text: "Une story « définir X » dont une autre dépend n'apporte rien seule : X se précise au refinement, et on livre d'abord ce dont les règles sont connues. Aucune source externe ne traite ce cas."
       refs: []
     - text: "Le mot « recette » nomme, dans le cours, l'erreur qui fait de la revue une validation avant livraison."
       refs: ["S6", "S1"]
+      verified:
+        - "« It's a myth that a successful Sprint Review is one where the Product Owner signs off on the work » (Common antipatterns)"
+        - "« The Sprint Review should never be considered a gate to releasing value. » (Increment)"
 neighbors:
   - author: "Les états d'un élément dans l'outil"
     text: "« À faire », « en cours », « fait » : un workflow choisi et configurable par l'équipe, propre à l'outil. Le Scrum Guide n'en fixe aucun, et « fait » ne dit rien s'il ne veut pas dire que la Definition of Done est remplie (annexe A1)."
-    refs: ["S7", "S8", "S1"]
+    refs: ["S7", "S7b", "S8", "S1"]
+    verified:
+      - "« you can edit or remove them from a workflow to suit your team's need. You can also create your own. » ; « Work has finished on the work item. » (Work item statuses)"
+      - "« Jira lets you collect many statuses under a To do, In Progress, or Done category. » (Statuses and transitions)"
+      - "« Statuses are the steps of a team's workflow. » (introduction)"
+      - "« status », « workflow » absents du texte (recherche du 2026-10-30) ; « Work cannot be considered part of an Increment unless it meets the Definition of Done. » (Increment)"
 diagrams:
   - file: sprint-planning-trois-questions.svg
     title: "Les trois questions du Sprint Planning"
