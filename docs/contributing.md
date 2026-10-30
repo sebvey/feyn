@@ -69,10 +69,11 @@ then adds the slice closed and the next to pose to the epic's plan comment, sets
 the epic whose plan comment now says its last slice closed, for the maintainer to verify and
 close, and names the issues the closed one blocked that are now free. `/feyn-deliver <n>` runs
 this whole cycle from one work session: a contributor agent per issue in its own worktree, a
-review by a fresh agent before the PR reaches the maintainer, then the clean-up of the worktree
-after the merge. On the direct path, without `/feyn-deliver`, `/feyn-pull-request` runs that
-review (`/feyn-pr-review`) before it sets Ready for review, except on a direct delivery
-("How the work is organised", moment 2). Why: decisions
+review by a fresh agent before the PR reaches the maintainer, the PR a draft until that review
+and its corrections are done, then the clean-up of the worktree after the merge. On the direct
+path, without `/feyn-deliver`, `/feyn-pull-request` runs that review (`/feyn-pr-review`) before
+it sets Ready for review, except on a direct delivery ("How the work is organised", moment 2).
+Why: decisions
 `issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`.
 
 ## How the work is organised
@@ -190,7 +191,8 @@ Why: decision `themes-and-release-milestones`.
 ## The maintainer's morning
 
 In the web interface, the Project's views. First what waits for the maintainer: the search
-`label:blocked:maintainer` in the issue list; the PR list shows the draft PRs; the Ready for
+`label:blocked:maintainer` in the issue list; the PR list shows the draft PRs (a PR under
+`/feyn-deliver` is also a draft until its review is done: not one to answer); the Ready for
 review column of the WIP view and the Ready for review epics (Epics view). Then the WIP
 view (what moves on its own), then Ready (what can be taken), then Backlog (what to triage).
 An unblock is a comment on the issue that says what was validated, then the label removed: the
@@ -206,7 +208,9 @@ depends on it), in one line ending with a mark `(<tool>, <status> <date>, #<n>)`
 `inferred` (deduced from other facts) or `documented` (stated by the tool's documentation); `<date>`
 is `YYYY-MM-DD`; `#<n>` is the issue or PR that holds the proof: a PR holds it on the `Behaviours:`
 line of its Checks, an issue in a comment (`/feyn-pull-request` step 5). The line goes with its
-step. A line the tool disproves is corrected or removed.
+step; a skill may instead group its marks in a last section, `## Tool behaviours`, one line per
+mark naming its step: the step states its rule, the section its proof (as `/feyn-deliver` does).
+A line the tool disproves is corrected or removed.
 `grep -rn '(GitHub,\|(Claude Code,' .claude docs construction` lists them all. There is no
 catalogue of behaviours: it would be read at the wrong moment. One exception: the behaviours
 every agent in a worktree meets are written once in

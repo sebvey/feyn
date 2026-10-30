@@ -28,5 +28,9 @@ Code behaviour ([contributing](../../docs/contributing.md), "Tool behaviours").
   plain command at a time (Claude Code, observed 2026-10-29, #249).
 - Spawned with isolation, your worktree is removed when you stop with no file change
   (Claude Code, observed 2026-10-28, #171).
+- Spawned with isolation, you cannot write nor run git in a worktree other than yours: Edit,
+  `git -C` and `cd` to it are refused (Claude Code, observed 2026-10-28, #178).
+- A `cd` into a worktree moves the working directory of the work session that runs it, even
+  for one command, hence the rule above: never `cd` (Claude Code, observed 2026-10-28, #171).
 - You cannot ask the maintainer: work needing their acceptance runs in two phases
   (Claude Code, observed 2026-10-27, #27).

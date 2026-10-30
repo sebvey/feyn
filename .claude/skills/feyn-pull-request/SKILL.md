@@ -86,7 +86,10 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    - `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`; with a
      decision awaited, add `--draft` (no label on the PR: the draft already keeps it from
      being merged) and put `blocked:maintainer` on the issue
-     (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`);
+     (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`). Under `/feyn-deliver`,
+     `--draft` always: the PR stays a draft until its review and corrections are done, and the
+     orchestrator marks it ready at its hand-over (its step 5). A direct delivery is never a
+     draft;
    - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
      lists the PR when it says `Closes #<n>`; a `Refs` PR: it lists nothing, since the branch
      is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
@@ -107,10 +110,15 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    - add to Checks `Fresh-agent review: <N> blocking findings, fixed.` or
      `Fresh-agent review: no blocking finding.` (step 5).
 
-   **A second review**, `/feyn-pr-review <pr>` again, whenever the change adds or edits a
-   decision or a check, or goes beyond the findings or the maintainer's answer; the line then
-   counts the blocking findings of all the reviews. This rule holds on both paths:
-   `/feyn-deliver` step 4 points here.
+   **A second review**, `/feyn-pr-review <pr>` again, only when the correction goes beyond
+   what the review asked: a change added on your own, or one that changes the meaning of a
+   rule; the line then counts the blocking findings of all the reviews. A change the review
+   prescribed, its text included, decision or check included, is checked by the caller in the
+   diff against the review's words. The `Fresh-agent review:` line says when a decision or a
+   check was touched without a second review (`…, fixed; a decision touched as prescribed, no
+   second review.`). The same holds for the maintainer's answer (step 8). Under `/feyn-deliver`
+   this rule does not apply: the reviewer, resumed, verifies the corrections (`/feyn-deliver`
+   step 4).
 8. **Ask for review**: set the issue's Status to Ready for review (the work claims done, the
    maintainer concludes; [project.md](../../reference/project.md)):
    `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
@@ -129,7 +137,8 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    merge command. The maintainer answers with a comment and removes `blocked:maintainer` from
    the issue: one removal. Then apply the answer, remove the section from the body,
    `mise exec -- gh pr ready <pr>`, and ask for review again (the second-review rule of step 7
-   applies; Ready for review then, as above; not under `/feyn-deliver`, where the orchestrator
-   sets it after the fresh-agent review). Never
+   applies; Ready for review then, as above). Under `/feyn-deliver`, neither: the PR stays a
+   draft, and the orchestrator has the reviewer verify the answer, then marks the PR ready and
+   sets Ready for review at its hand-over (its steps 4 and 5). Never
    remove the label yourself; if it is still on the issue, the answer is not given: stop.
 
