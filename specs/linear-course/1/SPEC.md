@@ -125,9 +125,9 @@ A **sub-concept** node:
 | `title` | mandatory | the sub-concept title, as its heading in `concept.md` writes it |
 | `children` | optional | second-level nodes, 9 at most (a child id ends in one digit); the tree has two levels at most |
 
-A node without `children` is a **leaf sub-concept**: one teacher message with one question. A
-leaf too big for one message is split into more leaves, or its « Consignes » (section 4.3) say
-how the teacher splits it.
+A node without `children` is a **leaf sub-concept**: as a rule, one teacher message with one
+question. The teacher cuts a leaf too big for one message (`PROTOCOL.md`, rule
+`short-messages`); its « Consignes » (section 4.3) may say how.
 
 Rules:
 - concept numbers and sub-concept ids are unique; the concepts come in course order: numbered

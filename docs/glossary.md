@@ -35,7 +35,7 @@ the English terms below are how we talk about them in code, docs and issues.
 | **concept** | a numbered unit of the course (`0`..`17`, `A1`, `A2`); its **concept folder** holds `concept.md`, `teaching.md`, `sources.md`, diagrams | "fiche", "lesson", "chapter", "page" |
 | **numbered concept** | a concept whose number is an integer (`0`, `1`…): it belongs to exactly one domain, and the numbered concepts come first in course order | "regular concept", "main concept" |
 | **annex** | a concept numbered `A1`, `A2`…, listed in `annexes` of `course.yaml` (« annexe »): it belongs to no domain and comes after the numbered concepts | "appendix", "bonus concept" |
-| **sub-concept** | a node of a concept's teaching tree (`9a`, `9a1`); a **leaf sub-concept** is one teacher message with one question | "section", "step", "unit" |
+| **sub-concept** | a node of a concept's teaching tree (`9a`, `9a1`); a **leaf sub-concept** is, as a rule, one teacher message with one question | "section", "step", "unit" |
 | **objective** | what the learner can do after the concept (one sentence; `course.yaml` field, « Objectif » section). One term for the current « Objectif » and « À la fin, l'apprenant sait » | "goal", "outcome", "aim" |
 | **reader text** | the reader-facing explanation of a sub-concept in `concept.md`, what the site shows | "body", "content", "copy" |
 | **reader-facing** / **teacher-only** | the two visibility classes of course files: `concept.md`, `sources.md`, diagrams are reader-facing; `teaching.md` is teacher-only | "public" / "private" (those describe the repository) |

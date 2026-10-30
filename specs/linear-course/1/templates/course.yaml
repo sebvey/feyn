@@ -5,7 +5,8 @@
 # per concept, in course order. Concept `<n>` is 0, 1, 2... for a concept, A1, A2... for an
 # annex (an annex is also listed in `annexes`); `<NN>` is the number on two digits (09), an
 # annex keeps its number (A1). `language` must name an existing language pack.
-# A leaf sub-concept (no `children`) is one teacher message; a node has 9 children at most.
+# A leaf sub-concept (no `children`) is, as a rule, one teacher message; a node has 9
+# children at most.
 # Identifiers (numbers, sub-concept ids, titles of cases, dir and file names) are cited by
 # learner memory and site addresses: changing one is a course MAJOR (SPEC.md section 8).
 id: <course-id>
