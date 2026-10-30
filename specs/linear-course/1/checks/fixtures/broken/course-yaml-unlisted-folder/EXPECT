@@ -1,0 +1,2 @@
+check: course-yaml
+message: folder concepts/03-orphelin is the dir of no concept

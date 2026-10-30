@@ -1,6 +1,7 @@
 'use strict';
 // plan.md, glossary.md, CHANGELOG.md and the domain files: presence, frontmatter, sections,
-// leads (SPEC.md sections 5 and 6); « Accueil » of plan.md and its questions.
+// leads, no unlisted domain file (SPEC.md sections 5 and 6); « Accueil » of plan.md and its
+// questions.
 const yaml = require('./lib/yaml');
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
@@ -16,8 +17,9 @@ function onboarding(secs, title) {
   const out = [];
   const lines = s.lines.filter((l) => !l.code);
   const first = lines.findIndex((l) => /^\d+\. /.test(l.t));
-  const posture = (first < 0 ? lines : lines.slice(0, first)).some((l) => l.t.trim());
-  if (!posture) out.push(fail('plan.md', s.line, `« ${title} » opens with a paragraph giving the teacher's posture`));
+  const posture = mdlib.blocks(first < 0 ? lines : lines.slice(0, first));
+  if (!posture.length) out.push(fail('plan.md', s.line, `« ${title} » opens with a paragraph giving the teacher's posture`));
+  else if (posture.length > 1) out.push(fail('plan.md', posture[1].line, `« ${title} » opens with one paragraph giving the teacher's posture, found ${posture.length} before the list`));
   if (first < 0) { out.push(fail('plan.md', s.line, `« ${title} » has no numbered list of onboarding questions`)); return out; }
   const labels = new Set();
   let blank = false;
@@ -98,7 +100,12 @@ function run(ctx) {
     });
   }
 
-  // domain files
+  // domain files: every file of domains/ is the file of a domain of course.yaml
+  const listed = new Set(ctx.cy.domains.map((d) => (d && typeof d.file === 'string' ? d.file : null)));
+  for (const e of ctx.list('domains')) {
+    if (e.name.startsWith('.')) continue;
+    if (!listed.has('domains/' + e.name)) out.push(fail(`domains/${e.name}`, 1, `domains/${e.name} is the file of no domain of course.yaml: every file of domains/ is listed`));
+  }
   ctx.cy.domains.forEach((d, i) => {
     if (!d || typeof d !== 'object' || typeof d.file !== 'string') return;
     const f = d.file;

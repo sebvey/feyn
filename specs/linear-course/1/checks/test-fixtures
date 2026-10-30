@@ -8,7 +8,8 @@
 //                                  domain-first-sentence-standalone (quality) reports the absence
 //   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>", optional "lang-dir: <path>":
 //                                  that check fails, in its mode, with a line containing the
-//                                  fragment, and no check of either mode fails beside it
+//                                  fragment, and no check of either mode fails beside it;
+//                                  broken/course-yaml-unlisted-folder passes with --concept 0
 //   fixtures/prototype             course-level files wrapped around the concept 9 prototype
 //                                  (courses/parcours-po/concepts/09-decoupage-vertical): passes
 //                                  every check of both modes with --concept 9
@@ -79,6 +80,12 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   const others = ex.check === 'language-pack-keys' ? []
     : ['conformity', 'quality'].flatMap((mode) => failing(run(d, ['--lang-dir', lang, ...FLAG[mode]])).filter((l) => !l.startsWith(ex.check + ': ')));
   if (others.length) report(`broken/${name} breaks nothing else`, false, others.slice(0, 2).join(' | '));
+}
+
+// --concept looks at one concept only: an unlisted concept folder does not fail course-yaml
+{
+  const r = run(path.join(fx, 'broken', 'course-yaml-unlisted-folder'), ['--lang-dir', path.join(fx, 'lang'), '--only', 'course-yaml', '--concept', '0']);
+  report('broken/course-yaml-unlisted-folder passes course-yaml with --concept 0', r.code === 0, notOk(r));
 }
 
 // the prototype

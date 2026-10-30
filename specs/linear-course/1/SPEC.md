@@ -123,11 +123,11 @@ A **sub-concept** node:
 |---|---|---|
 | `id` | mandatory | first level: the concept number and a letter, from `a` in order (`9a`, `9b`, `A2a`); second level: its parent's id and a digit, from `1` in order (`9a1`, `9a2`) |
 | `title` | mandatory | the sub-concept title, as its heading in `concept.md` writes it |
-| `children` | optional | second-level nodes; the tree has two levels at most |
-| `messages` | optional | leaf only: the number of teacher messages the leaf takes, 2 or more; absent means 1 |
+| `children` | optional | second-level nodes, 9 at most (a child id ends in one digit); the tree has two levels at most |
 
-A node without `children` is a **leaf sub-concept**: one teacher message with one question
-(or `messages` of them).
+A node without `children` is a **leaf sub-concept**: one teacher message with one question. A
+leaf too big for one message is split into more leaves, or its « Consignes » (section 4.3) say
+how the teacher splits it.
 
 Rules:
 - concept numbers and sub-concept ids are unique; the concepts come in course order: numbered
@@ -136,7 +136,8 @@ Rules:
   and follow the previous domain's; annexes belong to no domain and are exactly the `A`
   numbers;
 - a prerequisite is an existing numbered concept that comes earlier (any numbered concept for
-  an annex).
+  an annex);
+- every folder of `concepts/` is the `dir` of a concept entry.
 
 **Identifiers.** Concept numbers, sub-concept ids, case titles (section 4.3), domain numbers and
 their concepts, concept `dir` and domain `file` names are the course's identifiers: learner
@@ -300,7 +301,8 @@ same text serves the reader and the teacher.
 | the teacher | what it says to present the domain (`domain-presented-from-sheet`) | before the first concept of a domain |
 | the creator (human or agent) | what each section says, and that it teaches no concept | writing or changing a domain |
 
-`domains/<number>-<slug>.md`, one per domain of `course.yaml` (`course-files`). Reader-facing:
+`domains/<number>-<slug>.md`, one per domain of `course.yaml`, and no other file in `domains/`
+(`course-files`). Reader-facing:
 the site builds it, the teacher reads it. It holds no text for the teacher only: its whole text
 is for the reader. It teaches no concept and makes no claim that a concept of the domain does
 not make: it has no sources file. No H1.
@@ -341,7 +343,7 @@ welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases l
 
 - **`plan.md`** (`course-files`): a first `##` section « Public cible » (`audience`, mandatory),
   the full audience prose; a `##` section « Accueil » (`onboarding`, mandatory), what the
-  teacher takes from the course to welcome a new learner: a paragraph giving the teacher's
+  teacher takes from the course to welcome a new learner: one paragraph giving the teacher's
   posture (« Posture : Product Owner senior qui forme l'apprenant. »), then a numbered list of
   the onboarding questions, at least one, each `<n>. **<question label>** : <question>`, the
   question labels distinct; the list ends the section, nothing follows it (`course-files`).
@@ -416,7 +418,8 @@ checks what a script can tell, a review the rest (below).
   `<desc>` if present). `<title>` is the root's first child and equals the frontmatter `title`;
   `<desc>`, optional, describes the drawing for screen readers. Their ids start with the stem
   (`gateau-titre`).
-- **Groups**: every drawn child of the root is a `<g>` with an `id`. Group ids are
+- **Groups**: every drawn child of the root is a `<g>` with an `id`; a `<defs>`, which is not
+  drawn, may sit at the root beside them, and what it holds follows this contract. Group ids are
   `<sub-concept>-<element>`: a sub-concept id of the concept, a hyphen, lowercase ASCII letters
   and digits joined by hyphens (`9a1-couches`, `9a1-tranche-1`); never a bare sub-concept id, which is the reader-text
   anchor. Ids are unique across the concept's diagrams.
@@ -547,12 +550,12 @@ usage error.
 
 | Id | Family | Verifies | Sections |
 |---|---|---|---|
-| `course-yaml` | conformity | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, paths, spec declared (`specs/check-course` refuses an unknown spec or MAJOR), language pack present | 3, 8 |
+| `course-yaml` | conformity | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/`, spec declared (`specs/check-course` refuses an unknown spec or MAJOR), language pack present | 3, 8 |
 | `concept-folder` | conformity | the folder's files; the three files' sections and their order; frontmatter keys; one section per sub-concept; « Objectif » equals `objective`; case headings, fields, coverage of leaves, citation in « Consignes » | 4 |
 | `conventions` | conformity | the reader-text conventions of `concept.md`; plain Markdown in course files | 2, 4.5 |
-| `svg-contract` | conformity | every diagram against the drawing contract; declared and present diagrams match | 4.1, 7.1 |
+| `svg-contract` | conformity | every diagram against the drawing contract (a root `<defs>` accepted); declared and present diagrams match | 4.1, 7.1 |
 | `sources` | conformity | reference ids, citations, claims, paths | 4.1, 4.4 |
-| `course-files` | conformity | `plan.md` (« Public cible », « Accueil » and its questions), `glossary.md`, `CHANGELOG.md`, domain files: presence, frontmatter, sections, leads | 5, 6 |
+| `course-files` | conformity | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md`, `CHANGELOG.md`, domain files: presence, no unlisted file in `domains/`, frontmatter, sections, leads | 5, 6 |
 | `domain-first-sentence` | conformity | the first sentence of each paragraph of « Le fil des concepts » ends within 300 characters of the lead | 5 |
 | `language-pack-keys` | conformity | every key of section 9 and of `PROTOCOL.md` exists in the course's language pack | 9 |
 | `glossary-order` | quality | no term used before the concept that introduces it | 6 |

@@ -40,7 +40,6 @@ concepts:
             title: "Le second rôle"
       - id: 0b
         title: "La règle"
-        messages: 2
   - number: 1
     slug: couches
     title: "Les couches"

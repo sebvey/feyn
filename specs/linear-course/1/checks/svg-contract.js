@@ -87,7 +87,8 @@ function checkFile(ctx, concept, rel, decl, ids, out) {
   }
   // groups
   for (const k of kids) {
-    if (k.name === 'title' || k.name === 'desc') continue;
+    // <defs> is not drawn: it may sit at the root, and its content follows the contract (walk above)
+    if (k.name === 'title' || k.name === 'desc' || k.name === 'defs') continue;
     if (k.name !== 'g') { here(k.line, `every drawn child of the root is a <g>, found <${k.name}>`); continue; }
     const id = k.attrs.id;
     if (!id) { here(k.line, 'a top-level <g> needs an id: <sub-concept>-<element>'); continue; }

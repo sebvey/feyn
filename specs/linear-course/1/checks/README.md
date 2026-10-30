@@ -35,7 +35,7 @@ One line per passing check (`<id>: ok`), one line per failure
 |---|---|
 | `--quality` | runs the quality checks instead of the conformity checks |
 | `--only <id>[,<id>]` | runs those checks of the mode only (repeatable); an unknown id, or an id of the other mode, is a usage error |
-| `--concept <number>` | the per-concept checks (`concept-folder`, `conventions`, `svg-contract`, `sources`, `glossary-order`) look at that concept only, and `course-yaml` demands only that concept's folder: for a migration in progress, when the other concept folders do not exist yet |
+| `--concept <number>` | the per-concept checks (`concept-folder`, `conventions`, `svg-contract`, `sources`, `glossary-order`) look at that concept only, and `course-yaml` demands only that concept's folder and does not look for unlisted folders in `concepts/`: for a migration in progress, when the other concept folders do not exist yet |
 | `--lang-dir <dir>` | reads the language pack `<dir>/<language>.yaml` instead of this MAJOR's `lang/` (also `LINEAR_COURSE_LANG_DIR`) |
 | `--list` | prints the check ids of the mode |
 
@@ -48,12 +48,12 @@ its mode in this order.
 
 | Id | Family | Script | Verifies (SPEC.md) |
 |---|---|---|---|
-| `course-yaml` | conformity | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, paths, spec declared, pack present (3, 8) |
+| `course-yaml` | conformity | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/` (not looked for under `--concept`), spec declared, pack present (3, 8) |
 | `concept-folder` | conformity | `concept-folder.js` | files, sections and their order, frontmatter, sub-concept sections, « Objectif », cases, leaf coverage, citation in « Consignes » (4) |
 | `conventions` | conformity | `conventions.js` | reader-text conventions of `concept.md`; plain Markdown in every course file (2, 4.5) |
-| `svg-contract` | conformity | `svg-contract.js` | every diagram against the drawing contract; declared and present diagrams (4.1, 7.1) |
+| `svg-contract` | conformity | `svg-contract.js` | every diagram against the drawing contract, a root `<defs>` accepted; declared and present diagrams (4.1, 7.1) |
 | `sources` | conformity | `sources.js` | reference ids, citations, claims, paths (4.1, 4.4) |
-| `course-files` | conformity | `course-files.js` | `plan.md` (« Public cible », « Accueil »), `glossary.md`, `CHANGELOG.md`, domain files (5, 6) |
+| `course-files` | conformity | `course-files.js` | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md`, `CHANGELOG.md`, domain files, no unlisted file in `domains/` (5, 6) |
 | `domain-first-sentence` | conformity | `domain-first-sentence.js` | the first sentence of each paragraph of « Le fil des concepts » ends with `.`, `?` or `!` within 300 characters of the lead (5) |
 | `language-pack-keys` | conformity | `language-pack-keys.js` | every key of section 9 and of `PROTOCOL.md` exists in the course's pack (9) |
 | `glossary-order` | quality | `glossary-order.js` | no `concept.md` uses a term before the concept that introduces it (6) |
@@ -114,11 +114,12 @@ mise exec -- specs/linear-course/1/checks/test-fixtures
 Every course fixture runs in both modes; `--list` and `--quality --list` must print two disjoint
 lists, and a run must run the checks of its mode and no other.
 
-- `fixtures/valid/`: a minimal valid course (four concepts, one annex, one diagram); every
-  check of both modes passes.
+- `fixtures/valid/`: a minimal valid course (four concepts, one annex, one diagram with a root
+  `<defs>`); every check of both modes passes.
 - `fixtures/broken/<name>/`: a copy of it with one defect; its `EXPECT` file names the check
   that must fail, in its mode, and the message it must give. No other check of either mode may
   fail (the test says so), except for the broken language pack.
+  `broken/course-yaml-unlisted-folder` also runs with `--concept 0`, where `course-yaml` passes.
 - `fixtures/prototype/`: the course-level files around the concept 9 prototype
   (`courses/parcours-po/concepts/09-decoupage-vertical`, copied in at test time); every check
   of both modes passes with `--concept 9`. The real course files come with S1-08.

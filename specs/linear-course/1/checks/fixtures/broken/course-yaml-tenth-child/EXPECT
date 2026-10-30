@@ -1,0 +1,2 @@
+check: course-yaml
+message: 0a has 10 children, 9 at most
