@@ -1,7 +1,8 @@
 ---
 date: 2026-10-27
 issue: null
-status: superseded-by: versioned-objects-and-spec-layout
+status: superseded
+superseded-by: versioned-objects-and-spec-layout
 area: repo
 ---
 

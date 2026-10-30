@@ -71,8 +71,8 @@ From [decision-body.md](../../reference/decision-body.md), at `<folder>/<slug>.m
 - optional sections only when they add: "Options ruled out", "Consequences";
 - under 40 lines. Reserved terms of `docs/glossary.md`; "decision" in the text, never "ADR".
 
-A decision it supersedes: change that file's `status` to `superseded-by: <slug>` in the same
-commit.
+A decision it supersedes: in the same commit, change that file's `status` to `superseded` and
+add `superseded-by: <slug>` on the line after it (decision `decision-format`).
 
 Commit it on the current issue branch (`git add <file>`,
 `git commit -m "decide <slug>"`); on `main`, stop and propose `/feyn-issue` first:
