@@ -98,7 +98,7 @@ l'apprenant de fixer un seuil ou un niveau, ni de dire si une hypothèse est vra
   c'est une hypothèse. Puis, pour ranger : « si c'est faux, on ne sait pas le construire
   (faisabilité), ou on le construit pour rien (valeur) ? ».
 
-### De quoi dépend la story de Régis ? (17a, en rechange)
+### De quoi dépend la story de Régis ? (17a, rechange)
 - **Explication** : à poser après une réponse fausse ou pour « exercice », sans rappeler les
   deux risques : la question les fait retrouver.
 - **Situation** : la story est écrite : « En tant que régulateur, je veux voir les stations du
@@ -241,7 +241,7 @@ l'apprenant de fixer un seuil ou un niveau, ni de dire si une hypothèse est vra
   laquelle coûte le plus ? ». Puis l'image d'une balance : la fausse alerte sur un plateau, le
   cas manqué sur l'autre.
 
-### Les chiffres d'Anna (17c, en rechange)
+### Les chiffres d'Anna (17c, rechange)
 - **Explication** : à poser après « Le critère à 90 % » si l'apprenant a besoin d'un cas
   chiffré, ou pour « exercice ».
 - **Situation** : dans cet exercice, Anna revient de son exploration avec deux réglages
@@ -262,7 +262,7 @@ l'apprenant de fixer un seuil ou un niveau, ni de dire si une hypothèse est vra
   - lire « 9 sur 10 » comme « juste 9 fois sur 10 » : ce n'est qu'un des deux chiffres.
 - **Ce qui marche** : faire traduire chaque réglage en une journée de Régis.
 
-### Presque vide d'après l'historique (17c, en rechange)
+### Presque vide d'après l'historique (17c, rechange)
 - **Explication** : cette logique vaut pour toute règle métier non fixée : une donnée ou une exploration l'éclaire, l'utilisateur concerné la fixe. Le cours n'en donne pas la valeur.
 - **Situation** : dans cet exercice, Anna a vu dans l'historique qu'une station du centre-ville
   qui descend à 3 vélos se vide souvent dans l'heure. Dana : « Voilà, c'est prouvé : presque

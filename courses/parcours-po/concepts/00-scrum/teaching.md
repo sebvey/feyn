@@ -29,17 +29,17 @@
    remplit pas la DoD n'en fait pas partie (ni livré ni présenté à la revue, il retourne au
    backlog produit). Le message de 0b pose « La vue des stations vides livrée un mercredi » ;
    « « Le sprint est livré » » sert d'exercice ou de creusage.
-5. **Cas de la banque** : pour 0a1 et 0a2, un par message, dans l'ordre des messages, l'en-tête
-   du cas nommant sa partie, par exemple (0a1, le PO). Pour 0a1, « Qui est le chef de l'équipe
-   vélos ? », « Diego écrit des éléments du backlog », « Anna est-elle une Developer ? », « Qui
-   tranche dans l'équipe vélos » ; pour 0a2, « Une semaine pour souffler », « Scarlette choisit le travail du sprint », « Le
-   compte rendu du matin », « Des diapositives pour Étienne », « Odile veut assister à la
-   rétrospective », puis « Le sprint raconté par Diego » après les cinq messages, en exercice ou
-   au creusage ; pour 0a3, « Trois artefacts, trois engagements ».
+5. **Cas de la banque** : pour 0a1 et 0a2, un par message, dans l'ordre des messages. Pour
+   0a1, « Qui est le chef de l'équipe vélos ? », « Diego écrit des éléments du backlog »,
+   « Anna est-elle une Developer ? », « Qui tranche dans l'équipe vélos » ; pour 0a2, « Une
+   semaine pour souffler », « Scarlette choisit le travail du sprint », « Le compte rendu du
+   matin », « Des diapositives pour Étienne », « Odile veut assister à la rétrospective », puis
+   « Le sprint raconté par Diego » après les cinq messages, en exercice ou au creusage ; pour
+   0a3, « Trois artefacts, trois engagements ».
 
 ## Banque d'exemples
 
-### Qui est le chef de l'équipe vélos ? (0a1, l'équipe en bref)
+### Qui est le chef de l'équipe vélos ? (0a1)
 - **Explication** : une équipe Scrum est petite (en général dix personnes au plus), sans
   sous-équipe ni hiérarchie, tournée vers un seul objectif à la fois, l'objectif produit (l'état
   futur visé du produit, détaillé en 0a3). Elle s'organise elle-même : elle décide en interne qui
@@ -67,7 +67,7 @@
     comment faire le travail ? ».
 - **Ce qui marche** : pour chaque rôle, demander « de quoi répond-il ? ».
 
-### Diego écrit des éléments du backlog (0a1, le PO)
+### Diego écrit des éléments du backlog (0a1)
 - **Explication** : le PO répond de la valeur du produit. Il répond aussi du backlog produit :
   formuler l'objectif produit et le faire connaître ; créer les éléments du backlog (toute entrée
   du backlog, quelle que soit sa taille ; détaillés au concept 3) et les rendre clairs ; les
@@ -98,7 +98,7 @@
     dire dans la correction, sans vigilance.
 - **Ce qui marche** : séparer « faire le travail » (confiable) et « en répondre » (le PO seul).
 
-### Anna est-elle une Developer ? (0a1, les Developers)
+### Anna est-elle une Developer ? (0a1)
 - **Explication** : les Developers sont les membres de l'équipe qui réalisent l'incrément, quel
   que soit leur métier : le mot « developers » n'exclut aucune compétence. Ils répondent de quatre
   choses : créer le backlog de sprint, leur plan pour le sprint (détaillé en 0a3) ; la qualité, en
@@ -126,7 +126,7 @@
     « dans une équipe Scrum, peut-il y avoir un groupe à part ? ».
 - **Ce qui marche** : « qui réalise l'incrément ? » plutôt que « qui code ? ».
 
-### Qui tranche dans l'équipe vélos (0a1, le Scrum Master)
+### Qui tranche dans l'équipe vélos (0a1)
 - **Explication** : le Scrum Master répond de l'efficacité de l'équipe Scrum, et de la mise en
   place de Scrum tel que le décrit le Scrum Guide. Il sert l'équipe : il l'aide à s'organiser
   elle-même, à se concentrer sur des incréments qui remplissent la DoD, fait lever les obstacles à
@@ -156,7 +156,7 @@
     répondent les Developers, et de quoi répond le PO ? ».
 - **Ce qui marche** : pour chaque rôle, demander « de quoi répond-il ? ».
 
-### Une semaine pour souffler (0a2, le sprint en bref)
+### Une semaine pour souffler (0a2)
 - **Explication** : le sprint est une durée fixe, d'un mois au plus ; un sprint plus court donne
   plus de cycles d'apprentissage. Le suivant commence dès la fin du précédent, sans pause. Le
   sprint est lui-même un événement, celui qui contient les quatre autres : Sprint Planning au
@@ -181,7 +181,7 @@
     uns aux autres, chacun contenant les quatre événements.
 - **Ce qui marche** : l'image d'une frise, des blocs collés les uns aux autres.
 
-### Scarlette choisit le travail du sprint (0a2, Sprint Planning)
+### Scarlette choisit le travail du sprint (0a2)
 - **Explication** : le Sprint Planning ouvre le sprint ; toute l'équipe Scrum y prépare le
   sprint, en trois sujets. Pourquoi ce sprint a-t-il de la valeur : le PO propose comment le
   produit peut gagner en valeur pendant le sprint, puis toute l'équipe fixe l'objectif de
@@ -206,7 +206,7 @@
     événement. Le dire dans la correction.
 - **Ce qui marche** : pour chaque événement, demander « qui y décide quoi ? ».
 
-### Le compte rendu du matin (0a2, Daily Scrum)
+### Le compte rendu du matin (0a2)
 - **Explication** : le Daily Scrum est un événement de 15 minutes pour les Developers, chaque
   jour du sprint, à la même heure et au même endroit. Son but : inspecter l'avancement vers
   l'objectif de sprint et adapter le backlog de sprint, avec un plan pour la journée qui vient.
@@ -228,7 +228,7 @@
     Scrum Master ? ».
 - **Ce qui marche** : demander « au Daily Scrum, qui parle à qui, et pour quoi faire ? ».
 
-### Des diapositives pour Étienne (0a2, revue de sprint)
+### Des diapositives pour Étienne (0a2)
 - **Explication** : la revue de sprint est l'avant-dernier événement du sprint. L'équipe Scrum
   y présente son travail aux parties prenantes clés, et l'avancement vers
   l'objectif produit est discuté. Ensemble, ils regardent ce que le sprint a produit et ce qui a
@@ -247,7 +247,7 @@
   - « La revue valide la livraison » : vient en 0b ; le dire en une ligne, sans réenseigner.
 - **Ce qui marche** : demander « à la sortie de la revue, qu'est-ce qui a changé ? ».
 
-### Odile veut assister à la rétrospective (0a2, rétrospective)
+### Odile veut assister à la rétrospective (0a2)
 - **Explication** : la rétrospective a pour but de trouver comment gagner en qualité et en
   efficacité. L'équipe Scrum y inspecte comment s'est passé le sprint : les personnes, leurs
   échanges, les processus, les outils et la DoD. Elle dit ce qui a bien marché, les problèmes
@@ -274,7 +274,7 @@
     les parties prenantes donnent-elles leur avis sur le travail ? ».
 - **Ce qui marche** : « produit à la revue, façon de travailler à la rétrospective ».
 
-### Le sprint raconté par Diego (0a2, creusage)
+### Le sprint raconté par Diego (0a2, entraînement)
 - **Usage** : après les cinq messages de 0a2, pour « exercice » ou au creusage du concept 0 ; un
   récit neuf, qui mêle des erreurs sur les quatre événements.
 - **Situation** : Diego (data engineer) raconte le sprint de l'équipe appli, qu'il a observé :
@@ -365,7 +365,7 @@
   un état du produit ? ») ; l'image d'un escalier dont chaque marche est un incrément, avec une
   marche le mercredi.
 
-### « Le sprint est livré » (0b, exercice ou creusage)
+### « Le sprint est livré » (0b, entraînement)
 - **Explication** : un élément qui ne remplit pas la DoD ne fait pas partie de l'incrément : il
   n'est ni livré ni présenté à la revue de sprint, et retourne au backlog produit, où le PO
   l'ordonne avec le reste.

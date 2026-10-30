@@ -112,7 +112,7 @@ de fixer une règle ni de faire le travail des Developers (estimer, planifier le
   chaque semaine le nombre de techniciens en tournée ; Étienne pilote la flotte ; Théo prépare sa
   tournée. Trois décisions, peut-être trois sens.
 
-### La story « définir le seuil » (15a2, exemple éprouvé)
+### La story « définir le seuil » (15a2)
 - **Explication** : un mot ou une règle à préciser n'est pas une story : rien ne change pour
   l'utilisateur quand c'est fait. On le précise au refinement, avec l'utilisateur concerné.
   Rappel, sans le réenseigner : la règle non fixée, le PO la fait fixer (concept 8a2) ; la DoR
@@ -183,7 +183,7 @@ de fixer une règle ni de faire le travail des Developers (estimer, planifier le
 - **Ce qui marche** : demander « si une des trois stories ne passe pas, le sprint a-t-il
   échoué ? » : la liste dit oui, un objectif peut dire non.
 
-### La liste pour le blocage entre-t-elle au sprint ? (15b, en rechange)
+### La liste pour le blocage entre-t-elle au sprint ? (15b, rechange)
 - **Explication** : au Sprint Planning, les Developers choisissent les éléments prêts ; une
   story qui ne remplit pas la DoR ne se choisit pas (concept 11b). Le PO propose, il n'impose
   pas.
@@ -206,7 +206,7 @@ de fixer une règle ni de faire le travail des Developers (estimer, planifier le
   - Partie 1 ou 2, trancher la règle soi-même : à faire fixer, pas à décider en planning.
 - **Ce qui marche** : relire la DoR de l'équipe à voix haute, ligne par ligne, devant la story.
 
-### La story qui ne passe pas (15b, en rechange)
+### La story qui ne passe pas (15b, rechange)
 - **Explication** : l'objectif de sprint est un engagement des Developers, mais il laisse de la
   souplesse sur le travail exact. Si le travail diffère de ce qu'ils attendaient, ils
   renégocient la portée avec le PO, sans toucher à l'objectif. Si l'objectif devient obsolète,
@@ -260,7 +260,7 @@ de fixer une règle ni de faire le travail des Developers (estimer, planifier le
 - **Ce qui marche** : trois temps, au ton de PO : reconnaître ce que la revue a appris, dire où
   va chaque demande et qui la place, dire quand se reprécise le mot.
 
-### La revue en recette (15c, en rechange)
+### La revue en recette (15c, rechange)
 - **Explication** : la revue n'est ni une démonstration à sens unique, ni une séance où le PO
   « accepte » le travail (Scrum.org, pratique établie) ; le cours en tire qu'elle n'est pas non
   plus une recette où une partie prenante valide (choix du cours). Fait se décide par la DoD,

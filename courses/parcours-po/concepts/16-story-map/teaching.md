@@ -84,7 +84,7 @@ et le contenu de la tranche en 16c.
   puis poser chaque story sous le moment où il la lit. Lien avec le format (5), chez Patton :
   la tâche de l'utilisateur va après « je veux », l'activité après « afin de ».
 
-### On peut supprimer le backlog ? (16a, en rechange)
+### On peut supprimer le backlog ? (16a, rechange)
 - **Explication** : rappel en une ligne : de gauche à droite, l'ordre du récit ; de haut en
   bas, l'indispensable d'abord ; l'ordre du backlog, la décision du PO.
 - **Situation** : Dana, devant la carte de la journée d'Étienne : « Maintenant qu'on a la carte,
@@ -225,7 +225,7 @@ et le contenu de la tranche en 16c.
   ferait bouger. Si la réponse est elliptique (« trois à cinq sprints »), faire préciser avant de
   corriger : « et tu le dis comment à Étienne ? ».
 
-### Il me faut une date (16c, en rechange)
+### Il me faut une date (16c, rechange)
 - **Explication** : rappel en une ligne : la prévision est une fourchette, pas une promesse.
 - **Situation** : Étienne (propos d'exercice) : « Une fourchette ne m'aide pas : il me faut une
   date ferme. »

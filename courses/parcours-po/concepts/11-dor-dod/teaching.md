@@ -77,7 +77,7 @@ exemple ne les fixe. Le prof ne demande jamais à l'apprenant de fixer une règl
   vaut au niveau de l'incrément », formule qui a fait croire à une DoD par incrément. Le test
   rapide à voix haute, exigence par exigence.
 
-### L'exception demandée par Étienne (11a, en rechange)
+### L'exception demandée par Étienne (11a, rechange)
 
 - **Explication** : critères et DoD s'ajoutent : une story terminée passe ses propres critères
   et toute la DoD. La DoD est commune : on ne la lève pas pour une story. Une story qui ne la
@@ -166,7 +166,7 @@ exemple ne les fixe. Le prof ne demande jamais à l'apprenant de fixer une règl
 - **Ce qui marche** : comparer la DoD (quand une story est terminée) et la DoR (quand elle
   peut commencer) : les deux portes du sprint.
 
-### Une DoR qui devient barrière (11b, en rechange)
+### Une DoR qui devient barrière (11b, rechange)
 
 - **Explication** : une DoR trop stricte devient une barrière à franchir avant chaque sprint ;
   c'est l'avis de Mike Cohn, qui y voit un retour au cycle en cascade (choix d'école). Image,
