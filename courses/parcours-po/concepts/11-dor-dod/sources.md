@@ -29,7 +29,6 @@
 | Une story dont une condition d'entrée manque n'est pas prête : le PO propose à la place une story prête et fait avancer ce qui bloque | 11b, Pièges | [S1], [S6] | « The Product Owner proposes how the product could increase its value and utility in the current Sprint » (Topic One: Why is this Sprint valuable?) ; « with the possible exception of dependencies on certain teams or vendors » (page) | cours |
 | Une DoR trop stricte devient une barrière avant chaque sprint, un retour au cycle en cascade pour Cohn, qui préfère des repères à des règles | 11b, Pièges | [S6] | « the definition of ready becomes a huge step towards a sequential, stage-gate approach » ; « A stage-gate approach is, after all, another way of describing a waterfall process » ; « Favor guidelines rather than rules on your Definition of Ready » (page) | école |
 | Cohn admet une exception : certaines dépendances envers une autre équipe ou un fournisseur | 11b | [S6] | « with the possible exception of dependencies on certain teams or vendors » (page) | école |
-| La DoR suppose des sprints ; sans sprint, l'annexe A2 | 11b | cours | Choix du cours, sans source externe. | cours |
 
 ## Références
 

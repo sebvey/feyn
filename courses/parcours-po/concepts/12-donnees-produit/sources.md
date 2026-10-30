@@ -29,7 +29,7 @@
 
 | Réf. | Source (auteur, titre, date) | Lien | Type | Consultée le |
 |---|---|---|---|---|
-| S1 | Schwaber, Sutherland, *The Scrum Guide*, novembre 2020 | https://scrumguides.org/scrum-guide.html | primaire | 2026-10-22 |
+| S1 | Schwaber, Sutherland, *The Scrum Guide*, novembre 2020 | https://scrumguides.org/scrum-guide.html | primaire | 2026-10-22 ; 2026-10-30 (sections des citations relevées) |
 | S2 | Kimball Group, « Grain », *Dimensional Modeling Techniques* (sans auteur ni date) | https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/grain/ | primaire (site du groupe de l'auteur, qui vend aussi des formations) | 2026-10-22 |
 | S3 | Government Data Quality Hub, « Meet the data quality dimensions », 24 juin 2021, d'après DAMA UK, « The six primary dimensions for data quality assessment », 2013 | https://www.gov.uk/government/news/meet-the-data-quality-dimensions | primaire (reprise officielle des dimensions de DAMA UK) | 2026-10-22 ; 2026-10-30 (sections des citations relevées) |
 | S4 | Government Data Quality Hub, *The Government Data Quality Framework*, 3 décembre 2020 | https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework | primaire | 2026-10-22 ; 2026-10-30 (sections des citations relevées) |

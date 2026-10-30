@@ -8,8 +8,24 @@ nowhere (not a claim of the body of `concept.md`). Line numbers are the lines of
 on `main` at `298fb36`.
 
 Places: a place in parentheses is one `main` held, or one checked on 2026-10-30 by fetching
-the source (the Scrum Guide 2020, and in concept 9 Wake's INVEST, Lawrence's 2009 post, the
-Humanizing Work guide and SPIDR); « (page) » is the whole page where no place was recorded.
+the source (the Scrum Guide 2020; in concept 9 Wake's INVEST, Lawrence's 2009 post, the
+Humanizing Work guide and SPIDR; in concept 10 Atlassian's PRD article and Confluence
+template and the Jira Data Center and Cloud pages on issue linking; in concept 12 the two
+gov.uk pages on data quality); « (page) » is the whole page where no place was recorded,
+« (texte) » the 2017 Scrum Guide PDF.
+
+Quotations new or longer than on `main`, each checked on 2026-10-30 in the fetched source:
+concept 9 SPIDR's « During a spike a team isn't trying to develop the new functionality »
+(row on the spike); concept 9 S4's « This may satisfy small, but it fails at independent and
+valuable. » (`stances.consensus[1]`; `main` held it for S3 only); concept 9 S4's « that will
+need to be combined with changes to other components or layers to have observable value to
+users » (row on a layer alone); concept 10 the Scrum Guide sentence completed with
+« Therefore, they » (`stances.course[3]`, `neighbors[0]`, row on two products); concept 10
+the scope creep passage of S2b (row and `stances.course[1]`); concept 11 the full Retrospective
+sentence « The Scrum Team inspects how the last Sprint went ... » (`stances.consensus[0]`, row
+on the Retrospective); concept 12 S4's « This is not a prescriptive list ... » (row on the list
+of dimensions, `stances.school[0]`). The quotations that `main` held in another wording are
+listed under their concept.
 Every verified cell kept now holds quotations and their place only: the reasoning and
 pointers to other files or concepts it held were dropped.
 
@@ -28,7 +44,7 @@ Body of `concept.md`: unchanged.
 | 24 | « Ces patrons sont aujourd'hui publiés par Humanizing Work » | frontmatter `stances.school[1]`; the names under the photos: « Non vérifié » (Consensus et choix d'école); the order of the guide's patterns: nowhere |
 | 30 | « Choisir le découpage qui permet de reporter ou d'abandonner une story » | frontmatter `stances.school[2]` (S4) and `[3]` (S6, Wake's quotation): the body does not state it |
 | 31 | « Wake, « Twenty Ways to Split Stories » (2005) » | frontmatter `stances.school[3]` (S6); the list of dimensions and Pietri: nowhere |
-| 32 | « Le walking skeleton (Alistair Cockburn) » | frontmatter `neighbors[0]` (S8); the Pièges claim keeps a row (« Le walking skeleton relie les couches ... »); the comparison with the spike: nowhere |
+| 32 | « Le walking skeleton (Alistair Cockburn) » | frontmatter `neighbors[0]` (S8); the Pièges sentence on the walking skeleton says what the neighbour item says, so it has no row (SPEC 4.1); the comparison with the spike: nowhere |
 | 33 | « Une tranche qui traverse toutes les couches sans servir seule (compteur de relevés) » | nowhere: a teaching device (the case « Le compteur de relevés ingérés »); the body's claim is in the row « Traverser les couches ne suffit pas » |
 | 38 | « Exemples du fil rouge : Régis ... » | nowhere: storyline facts and teaching devices |
 | 39 | « Schéma 9b, cas inventé ... » | nowhere: an invented example; the patterns it names have their rows (D, R, the overlap of the catalogues) |
@@ -81,6 +97,7 @@ Body of `concept.md`: unchanged.
 | 30 | « Les signalements par téléphone absents ... » | nowhere: a storyline fact |
 | 31 | « La puce « Consensus (pratique établie, hors du Scrum Guide) » » | frontmatter `stances.consensus[1]`; the label is a wording of the course |
 
+- Row 21 also got, for S1, the absence « products » (au pluriel), searched on 2026-10-30.
 - Kept and re-anchored, their reasoning dropped: 5 (10a1, Pièges), 8 (L'essentiel, 10a1,
   nature `école`), 9 (L'essentiel, 10a1, Pièges, now S2b), 10 (10a1, Pièges, Le test rapide;
   « reste une demande » is the row at line 8), 11 (10a2), 12 (L'essentiel, 10a2, Pièges; its
@@ -140,8 +157,10 @@ Body of `concept.md`: unchanged.
   Pièges), 17 and 18 (11a), 22 (11a, Pièges), 23 (11a), 25 (11a, Le test rapide), 29 (L'essentiel,
   11b, Pièges), 30 (11b, Pièges), 31 and 32 (11b), 33 (L'essentiel, 11b), 34 (L'essentiel, 11b,
   Pièges), 35 (11b, Pièges), 36 and 37 (11b), 40 (11b, Pièges: the claim the body makes, the
-  case's expected answer left), 41 (11b, source « cours »).
-- Row 9: reference S8 (session observations, link « (dépôt) ») left the row and
+  case's expected answer left).
+- Row 41 (« 11b suppose des sprints ; l'annexe A2 ... »): nowhere, a pointer to an annex, like
+  the cross-references at lines 42 to 45.
+- Row 9: reference S8 (observations of a teaching session, link « (dépôt) ») left the row and
   « Références »: it backed the course's wording, not the claim.
 - Row 18: the remark on « souvent » and « temps de réponse » left the cell: « Non vérifié »
   holds it, as on `main`.
@@ -201,6 +220,8 @@ Body of `concept.md`: unchanged.
 - Row 7: S5 left; its claim (other lists, some much longer) now rests on S4's « This is not a
   prescriptive list ... », found on 2026-10-30 (a quotation added); the dates of DAMA UK and of
   the DMBOK 2: nowhere, the body does not date them.
+- S1's « consultée le » gained « 2026-10-30 (sections des citations relevées) », the date
+  its places were checked; the rest of the row is as in concepts 1 and 2.
 - Rows 10 and 22: the path to concept 1 became S1 (the Scrum Guide 2020, copied from concepts 1
   and 2, whose descriptions are identical), with concept 1's quotation, at the place checked
   on 2026-10-30; `plan.md` left.
