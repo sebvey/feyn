@@ -120,3 +120,11 @@ Les deux catalogues se recoupent en partie, sans se confondre : on attribue chaq
 > « Si on s'arrête après cette tranche, l'utilisateur s'en sert-il demain matin ? »
 
 Formulation du cours, cohérente avec la valeur pour l'utilisateur que demandent Wake et Lawrence.
+
+## Approfondissement
+
+Richard Lawrence a d'autres patrons que ceux de 9b2. En voici deux de plus, et un exemple du troisième. Ce sont des choix d'école [école], à attribuer à Lawrence, pas à SPIDR.
+
+- **Workflow Steps** : une story suit un circuit en plusieurs étapes. Chez Lawrence, publier une brève sur le site de l'entreprise demande une relecture éditoriale, une validation juridique et un passage sur un site de recette. Le début et la fin portent souvent l'essentiel de la valeur ; les étapes du milieu en ajoutent, sans servir seules. On livre d'abord le cas simple de bout en bout, puis on ajoute les étapes du milieu. Le guide de Lawrence et Peter Green ajoute que, quand tout le circuit compte, on cherche une tranche fine qui le traverse en entier (le cas le plus courant, par exemple) ; dans les deux cas, découper une étape à la fois, du début à la fin, est la mauvaise façon.
+- **Defer Performance** : « que ça marche » avant « que ce soit rapide ». Quand une grande part de l'effort est de rendre une fonction rapide, une première story la livre lente, une seconde la rend rapide (chez Lawrence, une recherche de vols, puis la même en moins de 5 secondes). On apprend déjà beaucoup de la version lente, et elle a un peu de valeur pour l'utilisateur qui, sans elle, ne pourrait pas faire ce que demande la story. Le guide de Lawrence et Green étend l'idée aux autres exigences non fonctionnelles (la sécurité, la montée en charge) et met en garde : on prend vite l'habitude de dire finie une story qui ne l'est pas. SPIDR n'a pas de patron sous ce nom.
+- **Business Rule Variations**, que 9b2 oppose au R de SPIDR : chez Lawrence, une recherche de vols « à dates flexibles » cache plusieurs règles métier, et chacune peut faire une bonne story.
