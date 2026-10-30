@@ -11,7 +11,7 @@ opened this repository. Every section ends with the decision it rests on, in
 `specs/` holds the contracts a course is written against, `courses/` the courses, `teacher/`
 the teacher template, the teacher skills and
 the classroom build script that turns a course into a classroom, `site/` the engine that
-publishes it, `.claude/` the agentic layer, `docs/` what belongs to no single area. During the
+builds it, `.claude/` the agentic layer, `docs/` what belongs to no single area. During the
 construction, `construction/` holds the design, the plan and the session notes; its fate is
 issue #232. `.claude/` has four folders: `skills/` the HOW (one folder per skill, its `SKILL.md`
 and its briefs), `workflows/` the agent workflows, `reference/` the WHAT (what a thing is or looks
