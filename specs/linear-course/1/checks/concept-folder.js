@@ -1,6 +1,7 @@
 'use strict';
 // The concept folder: files, sections and their order, frontmatter keys, one section per
-// sub-concept, « Objectif » equals the objective, case headings and fields, coverage of
+// sub-concept, « Objectif » equals the objective, case headings (sub-concept and closed
+// qualifier) and fields (a qualifier on « Question » only), coverage of
 // leaves, citation of every case in « Consignes » (SPEC.md section 4).
 const yaml = require('./lib/yaml');
 const mdlib = require('./lib/md');
@@ -157,14 +158,26 @@ function checkConcept(ctx, c, out) {
       const titles = new Map();
       const fieldLabels = Object.entries((ctx.pack && ctx.pack.case_fields) || {});
       const keyOf = (lab) => (fieldLabels.find(([, v]) => v === lab) || [])[0];
+      // the qualifiers: a closed list, the pack's `qualifiers` values (SPEC.md 4.3)
+      const quals = Object.values((ctx.pack && ctx.pack.qualifiers) || {}).filter((v) => typeof v === 'string');
+      const qualList = quals.map((q) => `« ${q} »`).join(', ');
       for (const cs of caseSecs) {
         const m = /^(.*\S)\s*\(([^()]*)\)\s*$/.exec(cs.title);
         if (!m) { out.push(fail(tf, cs.line, `case heading "${cs.title}" must be "<title> (<sub-concept>)"`)); continue; }
         const title = m[1].trim();
         const parts = m[2].split(',').map((p) => p.trim());
         const sub = parts.find((p) => subIds.has(p));
+        const rest = parts.filter((p, i) => i !== parts.indexOf(sub));
         if (parts.length > 2 || !sub) out.push(fail(tf, cs.line, `case "${title}": the parenthesis must hold a sub-concept id of ${label} (and at most one qualifier), found "${m[2]}"`));
-        else cases.push({ title, sub, line: cs.line });
+        else {
+          // a wrong qualifier fails here only: the case still counts for coverage and citation
+          if (rest.length && !quals.includes(rest[0])) {
+            const inside = quals.find((q) => rest[0].split(/\s+/).includes(q));
+            if (inside) out.push(fail(tf, cs.line, `case "${title}": "${rest[0]}" holds a word besides the qualifier « ${inside} »: the parenthesis holds the sub-concept id and the qualifier alone`));
+            else out.push(fail(tf, cs.line, `case "${title}": unknown qualifier "${rest[0]}": a qualifier is one of ${qualList}, and nothing else goes in the parenthesis`));
+          }
+          cases.push({ title, sub, line: cs.line });
+        }
         if (titles.has(title)) out.push(fail(tf, cs.line, `case title "${title}" is used twice (line ${titles.get(title)}): titles are unique in the concept`));
         titles.set(title, cs.line);
 
@@ -176,6 +189,7 @@ function checkConcept(ctx, c, out) {
           if (!fm) { out.push(fail(tf, l.n, `case "${title}": a field opens with "**<label>** :", found "${l.t.slice(0, 40)}"`)); continue; }
           const key = keyOf(fm[1].trim());
           if (!key) { out.push(fail(tf, l.n, `case "${title}": unknown field "${fm[1].trim()}"`)); continue; }
+          if (fm[2].trim() !== '' && key !== 'question') out.push(fail(tf, l.n, `case "${title}": field « ${fm[1].trim()} » carries a qualifier ("${fm[2].replace(/^\s*,/, '').trim()}"): only « ${ctx.word('case_fields', 'question') || 'question'} » may carry one before the colon`));
           if (fields.some((f) => f.key === key)) out.push(fail(tf, l.n, `case "${title}": field « ${fm[1].trim()} » appears twice`));
           fields.push({ key, line: l.n });
         }
@@ -187,7 +201,7 @@ function checkConcept(ctx, c, out) {
         for (let i = 1; i < present.length; i++) {
           if (idx(present[i]) < idx(present[i - 1])) { out.push(fail(tf, fields[idx(present[i])].line, `case "${title}": « ${fw(present[i])} » must come after « ${fw(present[i - 1])} »`)); break; }
         }
-        for (const k of ['usage', 'explanation', 'reserve']) {
+        for (const k of ['usage', 'explanation']) {
           if (idx(k) >= 0 && idx('situation') >= 0 && idx(k) > idx('situation')) out.push(fail(tf, fields[idx(k)].line, `case "${title}": « ${fw(k)} » must come before « ${fw('situation')} »`));
         }
         if (idx('what_works') >= 0 && idx('what_works') !== fields.length - 1) out.push(fail(tf, fields[idx('what_works')].line, `case "${title}": « ${fw('what_works')} » comes last`));

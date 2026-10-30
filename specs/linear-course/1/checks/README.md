@@ -49,7 +49,7 @@ its mode in this order.
 | Id | Family | Script | Verifies (SPEC.md) |
 |---|---|---|---|
 | `course-yaml` | conformity | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/` (not looked for under `--concept`), spec declared, pack present (3, 8) |
-| `concept-folder` | conformity | `concept-folder.js` | files, sections and their order, frontmatter, sub-concept sections, « Objectif », cases, leaf coverage, citation in « Consignes » (4) |
+| `concept-folder` | conformity | `concept-folder.js` | files, sections and their order, frontmatter, sub-concept sections, « Objectif », cases (in the heading, at most one qualifier, a value of the pack's `qualifiers`; a qualifier on « Question » only), leaf coverage, citation in « Consignes » (4, 9) |
 | `conventions` | conformity | `conventions.js` | reader-text conventions of `concept.md`; plain Markdown in every course file (2, 4.5) |
 | `svg-contract` | conformity | `svg-contract.js` | every diagram against the drawing contract, a root `<defs>` accepted; declared and present diagrams (4.1, 7.1) |
 | `sources` | conformity | `sources.js` | reference ids, citations, claims, paths (4.1, 4.4) |

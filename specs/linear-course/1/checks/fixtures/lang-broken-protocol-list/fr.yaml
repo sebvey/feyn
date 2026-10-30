@@ -59,7 +59,6 @@ headings:
 case_fields:
   usage: "Usage"
   explanation: "Explication"
-  reserve: "Réserve, sur demande"
   situation: "Situation"
   question: "Question"
   expected_answer: "Réponse attendue"
@@ -74,10 +73,10 @@ markers:
   school: "école"
   course: "cours"
 
-# Qualifiers a case heading may carry (SPEC.md 4.3).
+# The qualifiers a case heading may carry, at most one, and no other word (SPEC.md 4.3).
 qualifiers:
   fallback: "rechange"
-  dig: "creusage"
+  practice: "entraînement"
   aside: "aparté"
 
 references:
