@@ -20,10 +20,17 @@ The argument is the topic, or the number of a proposal to rework: read it first
 - **The maintainer decides.** The agent proposes, weighs, objects; a point is settled only
   when the maintainer says so.
 - **One point at a time**: the next point opens when the current one is settled or left open.
+- **A point is one decision**, never a bundle: two decisions, two turns. Before asking
+  "validated?", count what the maintainer is asked to validate; more than one decision, split.
+- **A point names at most three objects** (files, issues, skills) and never refers to "point N
+  above" nor to the numbering inside another issue: what it needs, it names again.
 - **Nothing written in the repository** during the brainstorm: no commit, no branch, no edit of a
   tracked file, no issue. Reading is free.
-- **What is settled is restated** in one or two lines, with its why and the alternative
-  rejected, before it goes into the working file; the maintainer confirms or corrects.
+- **What is settled is restated** in one sentence per decision, with its why and the alternative
+  rejected, before it goes into the working file; the maintainer confirms or corrects. The
+  detail (lists, verdicts per item, counts) goes into the working file, which the maintainer
+  opens if they want: on 2026-10-30 (#259) one "validated?" asked on about twenty elements and
+  three nested decisions could not be digested; split in three turns, it could.
 
 ## 2. The working file
 
