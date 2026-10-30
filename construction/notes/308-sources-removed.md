@@ -72,7 +72,19 @@ Body of `concept.md`: unchanged.
   knowledge » (row 18, `main` held « the knowledge » only), « Some agile software development
   teams opt to put a spike story ... », « Other teams take the approach ... » (row 21, `main`
   held fragments) and « This could be uncertainty about how a feature should work or about how
-  it will be built. » (`stances.school[1]`); S8's « the four main types of prototypes »
+  it will be built. » (`stances.school[1]`), and « Spikes are a concept adapted from Extreme Programming (XP) » (row
+  17, `stances.school[1]`; `main` held « a concept adapted from Extreme Programming (XP) »);
+  S2's 3.1 objective with its opening « describe how ... » (row 7); S3's four risks with their
+  openings « value risk (... », « usability risk (... », « feasibility risk (... », « business
+  viability risk (... » (row 11, `stances.school[0]`; `main` held the parentheses only) and
+  « the techniques for tackling these early » (row 13, `main` held « techniques for tackling
+  these early »); S4's « Create spike solutions to figure out answers to tough technical or
+  design problems. » (`stances.school[1]`; `main` held « tough technical or design problems »);
+  S10's « Is the data complete (does it cover all the cases required)? » (row 14,
+  `stances.course[0]`; `main` held « Is the data complete […]? »); S8's « These are written by
+  engineers in order to address technical risks during product discovery » (`stances.school[2]`,
+  `stances.course[2]`; `main` held it from « written by engineers »), « the four main types of
+  prototypes »
   (row 25) and « this is code so it requires your developers to create the live-data
   prototype » (`stances.course[2]`); S10's « The data understanding phase starts with initial
   data collection ... » (row 29, `main` described the phase) and « The model is built on the
@@ -89,7 +101,7 @@ Body of `concept.md`: unchanged.
   « assumption » outside the retrospective in the Scrum Guide; « data » and « Product Owner »
   in Cagan's « The Four Big Risks ».
 - References: none removed; S1 to S10 and S12 to S14 gained « ; 2026-10-30 (sections des
-  citations relevées) ».
+  citations relevées) », S11 « ; 2026-10-30 (citation relevée) ».
 - « Non vérifié »: every entry now opens with its section; none removed; « Tension levée dans
   la fiche » lost its bold.
 
@@ -122,7 +134,7 @@ Body of `concept.md`: unchanged.
   Pièges, « cours »), 34 (L'essentiel, Pièges, « cours »).
 - Paths whose reference this concept already held, kept rather than copied (the deviation
   accepted on #304): concept 4's Scrum Guide (S1, row 5), Jira hierarchy page (S2, row 8) and
-  Azure process page (S3, row 10, quotation of concept 4's row 14 copied); concept 10's Scrum
+  Azure process page (S3, row 10, the Agile part of concept 4's row 8 quotation copied); concept 10's Scrum
   Guide (S1, rows 22, 36) and Jira linking page (S6, row 16); concepts 0 and 11's Scrum Guide
   (S1, row 27); concept 11's Cohn DoR page (S13, row 30). `plan.md` (row 15) left.
 - Links with several places, split where each quotation names its page: S6 into S6 (Jira Data
@@ -141,7 +153,16 @@ Body of `concept.md`: unchanged.
   workflow of any work item type (WIT) by hiding inherited states or adding custom states. »;
   S12b's « These workflows are team-specific and come with a default set and order » and
   « Create statuses by clicking the + button, or remove statuses » (`main` paraphrased: add,
-  rename, remove); the Scrum Guide's DoD definition for `neighbors[0]`.
+  rename, remove); S8b's « The statuses are recommended starting points for each template, but
+  you can edit or remove them from a workflow to suit your team's need. » and « You can also
+  create your own. » (`main` held fragments); the Scrum Guide's DoD definition for
+  `neighbors[0]`.
+- Row 5: « Product Backlog items » (Product Backlog) left its cell: it settled nothing in the
+  claim; the absences do.
+- S12, S12b: the link is now the copy archived on 2026-10-01, where they were read; the live
+  addresses, which lead to « Issue properties », are in « consultée le ».
+- S13's description now reads as concept 11's S6, « (sans signature ; site et voix de Cohn) »
+  added. S14 gained « ; 2026-10-30 (citation relevée) ».
 - References: S3 lost the pointer to concept 4 in « consultée le »; S2, S6, S13 lost theirs
   too; every re-read reference gained « ; 2026-10-30 (sections des citations relevées) » (S9,
   S11 « page relue », S12, S12b « copie archivée du 1er octobre 2026 relue »).
@@ -167,8 +188,14 @@ Body of `concept.md`: unchanged.
 | 33 | « Le débit aide le PO à parler des dates de livraison probables » | frontmatter `neighbors[0]` (the item says it, the body does not) |
 | 34 | « Le Scrum Guide cite « cumulative flows » ... » | frontmatter `stances.consensus[0]` |
 
-- Kept and re-anchored, their reasoning dropped: 11 (L'essentiel, Pièges, « cours »), 12
-  (Pièges, nature `fait`), 15 and 16 (merged, A2a, `école`), 17 (A2a), 18 (A2a), 20 (Pièges),
+- Row 12 (« Le cours n'affirme pas que les équipes data travaillent surtout en flux »):
+  re-anchored Pièges, source « cours », nature `cours`: S8's « using students as subjects »
+  does not settle the absence of a survey. S8 left « Références »; its description, link and
+  quotation are in the « Non vérifié » entry on the share of data teams in flow.
+- Row 23: S1's « in pursuit of these goals » replaced by the absence of « sprint goal » and
+  « product goal », searched on 2026-10-30.
+- The Kanban Zone page now has its URL in « Non vérifié », beside Nave's.
+- Kept and re-anchored, their reasoning dropped: 11 (L'essentiel, Pièges, « cours »), 15 and 16 (merged, A2a, `école`), 17 (A2a), 18 (A2a), 20 (Pièges),
   21 (A2a), 22 (A2a), 23 (A2b), 25 (A2b), 27 (A2c, Pièges), 28 (A2c, Pièges; S6 left it), 29
   (L'essentiel, A2c), 31 (A2d), 32 (A2d, Pièges).
 - Paths whose reference this concept already held, kept rather than copied (the deviation
@@ -176,7 +203,7 @@ Body of `concept.md`: unchanged.
   (copied, S3); row 21, concepts 0 and 13's Scrum Guide (S3, « Ordering Product Backlog
   items », found on 2026-10-30); row 24, concepts 1 and 13's Scrum Guide (S3, « trying to
   convince the Product Owner »); row 32, concept 16's Scrum Guide (S3, « Sprint forecasts »,
-  at the place concept 16 gives). `decisions/team-in-sprints.md` and `plan.md` (rows 11, 13,
+  at the place checked on 2026-10-30, « Sprint Planning, Topic Two »). `decisions/team-in-sprints.md` and `plan.md` (rows 11, 13,
   23) left.
 - S6 (two tool vendors' pages, search excerpts only) left the row at line 28 and
   « Références »: it backed only the frequency and the participants, which the body does not
@@ -190,7 +217,8 @@ Body of `concept.md`: unchanged.
   objective for the Scrum Team. » and « Work cannot be considered part of an Increment unless
   it meets the Definition of Done. » (`main` said « vérifié aux concepts 2 et 13 »); S4's
   « the 7 Kanban Cadences » and « Replenishment/Commitment » (`main` paraphrased); S7's two
-  sentences on Anderson's 2010 book and Coleman and Vacanti's 2020 guide (`main` paraphrased).
+  sentences on Anderson's 2010 book and Coleman and Vacanti's 2020 guide (`main` paraphrased);
+  S1's « sprint goal », « product goal » absences.
 - Absences: « increment » is absent from S1 as a word (`main` counted « incremental »).
 - References: S1, S3 lost their pointers to concepts 3 and 0 in « consultée le »; S2 lost its
   note on concept 3.

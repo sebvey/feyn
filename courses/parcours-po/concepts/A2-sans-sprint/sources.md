@@ -5,7 +5,7 @@
 | Le *Kanban Guide* n'a ni rôles, ni événements, ni cadence imposée : sans sprint, pas de Sprint Planning ni de revue de sprint | L'essentiel, A2a, A2c | [S1] | « role », « event », « sprint » absents du texte entier (cherché le 2026-10-30) ; « There is no requirement, however, to wait for a formal meeting at a regular cadence to make these changes » (Improving the Workflow) | école |
 | En flux, un élément fini peut être livré sans attendre de revue ; la fin d'un élément est définie par l'équipe | L'essentiel, A2c | [S3], [S1] | « an Increment may be delivered to stakeholders prior to the end of the Sprint » ; « The Sprint Review should never be considered a gate to releasing value » (Increment) ; « A definition for when work items are started and finished within the workflow » (Defining and Visualizing the Workflow) | consensus |
 | Ce qui ne change pas sans sprint : le backlog ordonné par le PO, la DoD, l'incrément, l'objectif produit | L'essentiel, Pièges | cours | Parti pris du cours. | cours |
-| Le cours n'a trouvé aucune enquête qui montre que les équipes data travaillent surtout en flux | Pièges | [S8] | « using students as subjects » (résumé) | fait |
+| Le cours n'a trouvé aucune enquête qui montre que les équipes data travaillent surtout en flux | Pièges | cours | | cours |
 | L'équipe fixe combien d'éléments peuvent être en cours à la fois, et en commence un nouveau quand le nombre repasse sous cette limite | A2a | [S1], [S2] | « Kanban system members must explicitly control the number of work items in a workflow from started to finished » ; « Kanban system members should start work on an item (pull or select) only when there is a clear signal that there is capacity to do so. » ; « When WIP drops below the control set in the DoW, that can be a signal to select new work. » (Actively Managing Items in a Workflow) ; « Scrum Teams using Kanban must explicitly limit the number of these work items in progress. » (Limiting Work in Progress (WIP)) | école |
 | Le travail en cours : les éléments commencés et pas finis | A2a | [S1] | « WIP: The number of work items started but not finished » (Flow Metrics) ; « Any work items between a started point and a finished point are considered work in progress » (Defining and Visualizing the Workflow) | école |
 | La Definition of Workflow dit entre autres où commence un élément, où il finit, et à quelle règle il franchit chaque passage | A2a | [S1] | « At a minimum, Kanban system members must create their DoW using all of the following elements » ; « A definition for when work items are started and finished within the workflow » ; « One or more defined states » ; « Explicit policies about how work items can flow through each state » (Defining and Visualizing the Workflow) | école |
@@ -14,7 +14,7 @@
 | Kanban University appelle point d'engagement le moment où l'on décide de commencer à livrer un élément | A2a | [S5] | « The point at which the decision is made to start activities to deliver a work item. » (Commitment Point) | école |
 | Le PO a ordonné le backlog, les Developers tirent l'élément suivant | A2a | [S3] | « Ordering Product Backlog items » (Product Owner) | cours |
 | Un élément commencé sans pouvoir avancer prend une place sous la limite | Pièges | [S1] | « Any work items between a started point and a finished point are considered work in progress » (Defining and Visualizing the Workflow) | cours |
-| Sans objectif de sprint, la direction vient de l'objectif produit et de l'ordre du backlog | A2b | [S1], [S3] | « in pursuit of these goals » (Why Use Kanban?), seule occurrence de « goal » ; « The Product Goal is the long-term objective for the Scrum Team. » (Commitment: Product Goal) | cours |
+| Sans objectif de sprint, la direction vient de l'objectif produit et de l'ordre du backlog | A2b | [S1], [S3] | « sprint goal », « product goal » absents du texte entier (cherché le 2026-10-30) ; « The Product Goal is the long-term objective for the Scrum Team. » (Commitment: Product Goal) | cours |
 | La place libérée va à l'élément prêt le plus haut ; le PO tient le haut du backlog à jour, et qui veut changer l'ordre le convainc | A2b, Pièges | [S3] | « Those wanting to change the Product Backlog can do so by trying to convince the Product Owner » (Product Owner) | cours |
 | Le réapprovisionnement de la méthode Kanban : un moment régulier pour revoir le haut du backlog | A2b | [S5], [S4] | « The act of reviewing the requested work items that fulfill the "ready for delivery" criteria and selecting the ones to be pulled into the system based on available capacity. » (Replenishment) ; « Replenishment/Commitment » (page) | école |
 | Le *Kanban Guide* ne prévoit aucune réunion avec les parties prenantes : la seule revue qu'il cite est celle des éléments en cours | A2c | [S1] | « event » absent du texte entier (cherché le 2026-10-30) ; « review the active items regularly » (Actively Managing Items in a Workflow) | école |
@@ -22,7 +22,7 @@
 | La revue de la livraison du service de la méthode Kanban porte sur la performance du service | A2c, Pièges | [S5], [S4] | « A type of cadence designed to reflect on the performance or risk of one or more services with a goal to improve service delivery. » ; « Service Delivery Review » (Review) ; « the 7 Kanban Cadences » (page) | école |
 | Les quatre mesures du *Kanban Guide* : travail en cours, débit, âge d'un élément, temps de cycle ; le temps de cycle va du début d'un élément à sa fin | A2d | [S1] | « The four mandatory flow metrics to track in Kanban are » ; « Throughput: The number of work items finished per unit of time » ; « Work Item Age: The elapsed time between when a work item started and the current date » ; « Cycle Time: The elapsed time between when a work item started and when a work item finished » (Flow Metrics) | école |
 | Sur l'historique du temps de cycle, l'équipe tire une prévision en deux parties, une durée et une probabilité : l'attente de niveau de service ; exemple du guide, 85 % des éléments finis en huit jours ou moins | A2d | [S1] | « is a forecast of how long it should take a work item to flow from started to finished » ; « 85% of work items will be finished in eight days or less » ; « should be based on historical cycle time » (Defining and Visualizing the Workflow) | école |
-| La prévision vient des Developers et de leurs mesures, pas d'une date que le PO invente ; elle compte depuis le début d'un élément et n'est pas une promesse | A2d, Pièges | [S1], [S3] | « Cycle Time: The elapsed time between when a work item started and when a work item finished » (Flow Metrics) ; « Sprint forecasts » (Sprint Planning, sujet deux) | cours |
+| La prévision vient des Developers et de leurs mesures, pas d'une date que le PO invente ; elle compte depuis le début d'un élément et n'est pas une promesse | A2d, Pièges | [S1], [S3] | « Cycle Time: The elapsed time between when a work item started and when a work item finished » (Flow Metrics) ; « Sprint forecasts » (Sprint Planning, Topic Two) | cours |
 
 ## Références
 
@@ -34,7 +34,6 @@
 | S4 | Anderson, « Kanban Cadences », Kanban University (sans date) | https://kanban.university/kanban-cadences | primaire (pour ce que dit la méthode), marketing (pour ce qu'elle recommande ; organisme qui vend ses formations) | 2026-10-23 ; 2026-10-30 (citations relevées) |
 | S5 | Kanban University, « The Kanban Method Glossary » (sans date), entrées « Commitment Point », « Replenishment », « Review », « Cadences » | https://kanban.university/glossary | primaire (pour les définitions de la méthode), marketing (pour ce qu'elle recommande) | 2026-10-23 ; 2026-10-30 (entrées des citations relevées) |
 | S7 | Wikipédia, « Kanban (development) » | https://en.wikipedia.org/wiki/Kanban_(development) | secondaire | 2026-10-23 (extrait de recherche seulement) ; 2026-10-30 (page relue, sections des citations relevées) |
-| S8 | Saltz, Shamshurin, Crowston, « Comparing Data Science Project Management Methodologies via a Controlled Experiment », HICSS-50, janvier 2017 | https://scholarspace.manoa.hawaii.edu/items/de744e20-d1a2-4a3f-b213-227065eb83c6 | primaire (résumé seul lu) | 2026-10-23 |
 
 ## Non vérifié
 
@@ -42,7 +41,9 @@
   livraison du service toutes les deux semaines) ne se lisent que dans un exemple d'Anderson
   [S4] et des pages d'éditeurs d'outils (Nave, « The Rhythm of Success: Kanban Meetings »,
   https://getnave.com/blog/kanban-meetings ; Kanban Zone, « Improve information flow with
-  Kanban cadences », 2019), lues en extraits de recherche. Le concept ne donne pas de
+  Kanban cadences », 2019,
+  https://kanbanzone.com/2019/improve-your-information-flow-with-kanban-cadences), lues en
+  extraits de recherche. Le concept ne donne pas de
   fréquence comme règle.
 - A2b, A2c : qui participe au réapprovisionnement (le PO, le client) et à la revue de la
   livraison du service : ces mêmes pages d'éditeurs seulement ; le glossaire de Kanban
@@ -62,7 +63,9 @@
 - A2d : la prévision du nombre d'éléments livrés à une date par le débit (simulation de Monte
   Carlo ou autre) est absente de [S1] et [S2] ; à ne pas affirmer.
 - Pièges : aucune enquête trouvée sur la part des équipes data qui travaillent en flux (ce qui
-  ne prouve pas qu'il n'en existe pas) ; [S8] est une expérience sur des étudiants (résumé seul
-  lu).
+  ne prouve pas qu'il n'en existe pas). Saltz, Shamshurin, Crowston, « Comparing Data Science
+  Project Management Methodologies via a Controlled Experiment », HICSS-50, janvier 2017
+  (https://scholarspace.manoa.hawaii.edu/items/de744e20-d1a2-4a3f-b213-227065eb83c6) est une
+  expérience « using students as subjects » (résumé seul lu, le 2026-10-23), pas une enquête.
 - Consensus et choix d'école : les pages de Kanban University [S4], [S5] ne sont pas datées ;
   l'ajout de la « Risk Review » en 2014 est dit par Anderson [S4], sans autre source.
