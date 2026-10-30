@@ -128,7 +128,9 @@ the plan's bullets (`- **Observation**: …`), or for an epic the five sections 
    `mise exec -- gh issue create --title "<title>" --body-file <file> --label type:<type> --label area:<area>`
    (add `--label epic` for an epic, `--label proposal` for a proposal, `--milestone <name>`
    when the maintainer names one, on a slice or on an epic that targets a release; never on a
-   proposal). It prints the issue URL.
+   proposal). It prints the issue URL. One issue per command, never from a shell function: a
+   `gh issue create` inside a function with `${5:+--milestone "$5"}` failed silently
+   (Claude Code, observed 2026-10-29, #269).
 8. **Ready, when step 4 says so.** The Project workflows add the issue and set Backlog
    ([project.md](../../reference/project.md)); nothing to do for a Backlog issue. Set Ready
    the issues step 4 makes Ready, as [project.md](../../reference/project.md), "Commands",

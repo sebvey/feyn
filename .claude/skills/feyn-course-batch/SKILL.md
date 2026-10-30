@@ -20,6 +20,10 @@ Arguments of the workflow: `{ course, concepts?, issue?, work?, dryRun? }`.
   `batch-work/`; it is not committed.
 - `dryRun: true` (with `concepts`): spawns no agent and lists the steps per concept. Run it
   first on a batch you have not run before.
+- Launch it with `scriptPath` absolute: `Workflow` called by name serves a frozen version of
+  the script (Claude Code, observed 2026-10-29, #269).
+- An agent of the run with no tool call for several minutes is stalled, not blocked: wait
+  (Claude Code, observed 2026-10-29, #269).
 
 Per concept, the workflow writes `sources.md`, then `concept.md` and `teaching.md`, has them
 reviewed on substance and on form, fixes, runs the `check-course` checks on the concept, and

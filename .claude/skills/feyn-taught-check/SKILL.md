@@ -17,6 +17,9 @@ Arguments: `{ course, from?, to? }`. Pass `from` as the first concept touched by
 without it, the whole course is reread, annexes included. The workflow builds an inventory of
 what the learner receives, unit by unit, then has groups of four concepts reread against it,
 with seven checks. It modifies no file and returns the `inventory` and the `findings`.
+Launch it with `scriptPath` absolute: `Workflow` called by name serves a frozen version of the
+script (Claude Code, observed 2026-10-29, #269). An agent of the run with no tool call for
+several minutes is stalled, not blocked: wait (Claude Code, observed 2026-10-29, #269).
 
 ## 2. Handle the findings
 
