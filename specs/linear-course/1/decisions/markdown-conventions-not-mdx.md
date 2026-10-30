@@ -29,3 +29,5 @@ site maps each convention is the site's decision `markdown-conventions-mapped-by
 
 - The visual work of the site is kept; only where its structure comes from changes, at the
   cost of a plugin layer in `site/`.
+- Amended 2026-10-30 (#216): the site's decision `markdown-conventions-mapped-by-plugins` does
+  not exist yet; it is written with the site epic #223.

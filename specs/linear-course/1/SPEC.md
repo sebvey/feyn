@@ -11,9 +11,10 @@ to the language policy (`docs/decisions/language-policy.md`): the old teacher wa
 corrected in French. Task S2-09 (issue #38) closes it: it translates the rules to English, rule
 by rule, and removes this paragraph.
 
-"Mandatory" means a check fails without it; "optional" means it may be absent, and when present
-it follows the rule given. Every rule names the check that enforces it, in backquotes; a rule
-with no check id is enforced by review.
+"Mandatory" means an element's absence fails the check named; its form is checked where that
+check says so, reviewed otherwise. "Optional" means it may be absent, and when present it
+follows the rule given. Every rule names the check that enforces it, in backquotes; a rule with
+no check id is enforced by review.
 
 ## 1. Purpose and scope
 
@@ -34,6 +35,15 @@ Out of scope here: the protocol (`PROTOCOL.md`), the learner memory files (the p
 
 ## 2. The course folder
 
+**Purpose.** The tree a course is made of: every build and every check finds a file by its
+place in it, and the section each line names gives the file's form.
+
+| Reader | Needs | When |
+|---|---|---|
+| the creator (human or agent) | the files a course has, which are mandatory, where each one's form is given | creating a course; adding a domain or a concept |
+| the site | where each file it builds is | at each build |
+| the reviewer | that a change sits where the spec puts it, in plain CommonMark | reviewing a change |
+
 ```
 courses/<id>/
   course.yaml          mandatory   identity, domains, concepts, sub-concepts (section 3)
@@ -42,7 +52,7 @@ courses/<id>/
   storyline.md         mandatory   the storyline (section 6)
   CHANGELOG.md         mandatory   the course changelog (section 6)
   domains/N-slug.md    mandatory   one domain file per domain (section 5)
-  concepts/NN-slug/    mandatory   one concept folder per concept and annex (section 4)
+  concepts/NN-slug/    mandatory   one concept folder per numbered concept and annex (section 4)
   decisions/           optional    the course's decisions; no build reads it
 ```
 
@@ -51,6 +61,17 @@ remark directive (`conventions`). Course text follows the typography of the lang
 its banned characters (French: em-dash, arrows) fail the check (`typography`).
 
 ## 3. `course.yaml`
+
+**Purpose.** The map of the course: its identity, its domains, its concepts in course order with
+their prerequisites and sub-concept trees, and the identifiers that learner memory and site
+addresses cite.
+
+| Reader | Needs | When |
+|---|---|---|
+| the creator (human or agent) | the course order and the split of each concept into leaf sub-concepts | designing the course; each change of its plan |
+| the teacher | the order it teaches in, the prerequisites, one leaf sub-concept per message | each teaching session |
+| the site | titles, objectives, durations, the order of the pages and their addresses | at each build |
+| the maintainer | the identifiers whose change is a course MAJOR (below) | classing a course change |
 
 Read by the site, the classroom build and the checks (`course-yaml` for every rule here).
 
@@ -68,7 +89,7 @@ Read by the site, the classroom build and the checks (`course-yaml` for every ru
 | `storyline` | mandatory | path of the storyline file: `storyline.md` |
 | `glossary` | mandatory | path of the course glossary: `glossary.md` |
 | `domains` | mandatory | the domains, in course order (below) |
-| `concepts` | mandatory | every concept and annex, in course order (below) |
+| `concepts` | mandatory | every numbered concept and annex, in course order (below) |
 | `annexes` | optional | numbers of the concepts that are annexes; absent means none |
 
 A **domain** entry:
@@ -87,7 +108,7 @@ A **concept** entry (annexes included):
 
 | Field | Status | Meaning |
 |---|---|---|
-| `number` | mandatory | the concept's identifier: `0`, `1`… for a concept, `A1`, `A2`… for an annex; a string (an unquoted integer is read as its decimal string) |
+| `number` | mandatory | the concept's identifier: `0`, `1`… for a numbered concept, `A1`, `A2`… for an annex; a string (an unquoted integer is read as its decimal string) |
 | `slug` | mandatory | lowercase ASCII words joined by hyphens |
 | `title` | mandatory | the concept title |
 | `objective` | mandatory | what the learner can do after the concept, one sentence; restated in « Objectif » (section 4.2) |
@@ -269,9 +290,20 @@ In `teaching.md`, concept references follow the same form, not checked.
 
 ## 5. Domain files
 
+**Purpose.** A domain file is the way into a domain: the problem it settles, how its concepts
+follow one another, where it sits in the course, and a storyline situation that crosses it. The
+same text serves the reader and the teacher.
+
+| Reader | Needs | When |
+|---|---|---|
+| the learner | why the domain matters and how its concepts connect | before its concepts |
+| the teacher | what it says to present the domain (`domain-presented-from-sheet`) | before the first concept of a domain |
+| the creator (human or agent) | what each section says, and that it teaches no concept | writing or changing a domain |
+
 `domains/<number>-<slug>.md`, one per domain of `course.yaml` (`course-files`). Reader-facing:
-the site builds it, the teacher reads it. It teaches no concept and makes no claim that a
-concept of the domain does not make: it has no sources file. No H1.
+the site builds it, the teacher reads it. It holds no text for the teacher only: its whole text
+is for the reader. It teaches no concept and makes no claim that a concept of the domain does
+not make: it has no sources file. No H1.
 
 Frontmatter: `description` (mandatory, one sentence for the site), nothing else; number, title,
 objective and duration are in `course.yaml` (`course-files`).
@@ -282,8 +314,8 @@ Body, all mandatory, in this order (`course-files`):
 2. « Le fil des concepts » (`concept_thread`): one short paragraph per concept of the domain,
    in order, opening with `**<number>. <concept title>.**`, the title as in `course.yaml`
    (`course-files`). A domain of one concept has one paragraph for the concept, then one per
-   first-level sub-concept, opening with `**<id>. <title>.**`. The site shows the first
-   sentence after the lead on the domain page: that sentence stands alone (below).
+   first-level sub-concept, opening with `**<id>. <title>.**`. Each paragraph's first sentence
+   after the lead stands alone, so that a consumer can show it alone (below).
 3. « D'où l'on vient, où l'on va » (`from_to`): what the previous domain gives this one, and
    what this one gives the next.
 4. « Un cas qui traverse le domaine » (`crossing_case`): a storyline situation where each
@@ -295,6 +327,17 @@ word of the language pack's `checks.anaphora` list (French: « Il », « Elle »
 « Puis »…), so that it stands alone (`domain-first-sentence-standalone`, a quality check).
 
 ## 6. Course files
+
+**Purpose.** The files that hold what spans the whole course: who it is for and how the teacher
+welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases live in
+(`storyline.md`), its history (`CHANGELOG.md`).
+
+| Reader | Needs | When |
+|---|---|---|
+| the teacher | its posture, the onboarding questions, the course's stances, the storyline facts its cases use | onboarding; each case it poses |
+| the learner | the course glossary and the storyline | reading the course on the site |
+| the creator (human or agent) | the terms to use and in which concept each is introduced, the storyline facts a case may draw on | writing a concept or a case |
+| the maintainer | what changed in each course version | each release |
 
 - **`plan.md`** (`course-files`): a first `##` section « Public cible » (`audience`, mandatory),
   the full audience prose; a `##` section « Accueil » (`onboarding`, mandatory), what the
@@ -326,13 +369,36 @@ word of the language pack's `checks.anaphora` list (French: « Il », « Elle »
 
 ## 7. Diagrams
 
+**Purpose.** A diagram shows in one drawing what a sub-concept teaches. One SVG serves every
+place the learner meets it, so it is complete on its own and no consumer asks it to change.
+
+| Reader | Needs | When |
+|---|---|---|
+| the learner | a drawing readable on the site in both themes and in the desktop panel; in the terminal, its caption and the site link | at the sub-concept it illustrates |
+| the creator (human or agent) | the contract an SVG meets (7.1) and the style it is drawn in (7.2) | drawing or redrawing a diagram |
+| the site | the one property a consumer keeps when it displays a diagram (below) | at each build |
+| the teacher | the same property, in the desktop panel | sending a diagram |
+| the reviewer | the style and the match with the caption, which no script checks | reviewing a diagram |
+
 A **diagram** is one SVG in the concept folder, declared in `diagrams` (section 4.1). It serves
-both builds: the site shows it (inline or as an image), the teacher sends it to the desktop
-panel and says its caption; in the terminal, the teacher says the caption and gives the site
-link. Section 7.1 is the drawing contract, every rule of it `svg-contract`; section 7.2 is the
-style every diagram of a course shares, for the writers and the reviews.
+both builds: the site shows it, the teacher sends it to the desktop panel and says its caption;
+in the terminal, the teacher says the caption and gives the site link. A consumer displays the
+SVG so that `currentColor` follows the colour of the text around it, and may tint the three
+classes of 7.1, never must. Section 7.1 is the drawing contract, checked by `svg-contract`
+where a script can tell, by review otherwise; section 7.2 is the style every diagram of a course
+shares, for the writers and the reviews.
 
 ### 7.1 Drawing contract
+
+**Purpose.** The rules that keep one SVG safe and readable in every consumer: `svg-contract`
+checks what a script can tell, a review the rest (below).
+
+| Reader | Needs | When |
+|---|---|---|
+| the creator (human or agent) | what an SVG may hold, to pass `svg-contract` | drawing a diagram |
+| the site | an SVG shown as it is: no script, no external resource, colours that follow the text around it | at each build |
+| the teacher | an SVG the desktop panel shows as it is | sending a diagram |
+| the learner | with a screen reader, the title and description of the drawing | reading a concept on the site |
 
 - **File**: `<stem>.svg`, the stem lowercase ASCII words joined by hyphens; well-formed XML;
   32 KB at most.
@@ -340,8 +406,8 @@ style every diagram of a course shares, for the writers and the reviews.
 - **Colour**: the root has `fill="currentColor"`. Every `fill` and `stroke` is `currentColor`
   or `none`; shades come from `fill-opacity`, `stroke-opacity` and `opacity`. No other colour
   value (hex, `rgb()`, named), no `style` attribute, no `<style>` element. The only classes are
-  `primary`, `secondary` and `muted`: the site's stylesheet sets their `color` (and the dark
-  theme's), which re-tints `currentColor`. Outside the site (desktop panel, any viewer) the
+  `primary`, `secondary` and `muted`: a consumer's stylesheet may set their `color` (and the
+  dark theme's), which re-tints `currentColor`. Outside the site (desktop panel, any viewer) the
   drawing stays readable in one colour.
 - **Text**: words are `<text>` (and `<tspan>`), never paths; the diagram has at least one
   `<text>`. Fonts: only the attribute `font-family` with generic families (`system-ui`,
@@ -360,6 +426,14 @@ style every diagram of a course shares, for the writers and the reviews.
 Nothing checks that the drawing says what its caption says: a review does.
 
 ### 7.2 Style
+
+**Purpose.** One meaning per class and six principles, so that the same role looks the same from
+one concept to the next, whoever draws it.
+
+| Reader | Needs | When |
+|---|---|---|
+| the creator (human or agent) | which class and opacity each role takes, what a diagram holds | drawing or redrawing a diagram |
+| the reviewer | the principles a diagram is judged against | reviewing a diagram |
 
 Every diagram of a course is drawn in one style, whoever draws it (a migration, `course-batch`,
 a contributor): the same role takes the same class from one concept to the next (decision
@@ -395,6 +469,15 @@ and the ordinary text.
 
 ## 8. Versions
 
+**Purpose.** What a spec version and a course version promise, so that a change is classed
+before it lands and a course runs against the checks of the MAJOR it declares.
+
+| Reader | Needs | When |
+|---|---|---|
+| the maintainer | the bump a change makes, to the spec or to a course | classing a change; each release |
+| the creator (human or agent) | the course changes that are a MAJOR (an identifier) | changing a released course |
+| the reviewer | the class a course change claims in `CHANGELOG.md` | reviewing a course change |
+
 The spec's versions, its MAJOR folders and what each bump means are decision
 `versioned-objects-and-spec-layout` (`docs/decisions/versioned-objects-and-spec-layout.md`),
 summarised in `specs/README.md`.
@@ -408,6 +491,14 @@ is taught changes (a case, a sub-concept, a stance, a duration), PATCH for wordi
 in 0.x may still move anything, identifiers included.
 
 ## 9. Language pack keys
+
+**Purpose.** The words that depend on the course language, named by key so that this file, the
+checks and the protocol hold for every language.
+
+| Reader | Needs | When |
+|---|---|---|
+| the creator (human or agent) | the headings, case field labels and markers to write, in the course language | writing any course file |
+| the maintainer | the keys a new language's pack must hold | adding a language |
 
 The language pack of the course language holds every key below, `checks.anaphora` excepted,
 which is optional; `language-pack-keys` verifies it, with the keys `PROTOCOL.md` uses. French
@@ -424,6 +515,16 @@ values, for reference:
 | `checks` | `anaphora`, optional: the words a domain paragraph's first sentence does not open with; without it, `domain-first-sentence-standalone` fails |
 
 ## 10. Checks
+
+**Purpose.** What verifies a course against this spec, in two families: a conformity check says
+whether the course can be consumed and blocks a change; a quality check says whether it is good
+and feeds course issues.
+
+| Reader | Needs | When |
+|---|---|---|
+| the creator (human or agent) | which check enforces each rule, and how to run it | after each change, before the PR |
+| the reviewer | which rules a script already verified, so the review reads the rest | reviewing a change |
+| the maintainer | the quality findings to triage into course issues | on demand |
 
 Dependency-free Node scripts in `checks/`, one per id; `checks/README.md` gives their options
 and fixtures. `specs/check-course <course-dir>` runs this folder's `checks/check-course` in one

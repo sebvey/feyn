@@ -36,3 +36,5 @@ the classes and this counterfactual were accepted by the maintainer on 2026-10-2
   `course-batch` follows it for new diagrams.
 - A drawing no longer keeps the old composition: the review judges whether it carries the same
   information, and the maintainer validates each before and after (#180).
+- Amended 2026-10-30 (#216): #180 was closed not planned: no redraw of the diagrams of concepts
+  0 to 5 and 9, migrated before this decision, is planned.

@@ -33,11 +33,13 @@ the English terms below are how we talk about them in code, docs and issues.
 |---|---|---|
 | **domain** (course) | an ordered group of concepts with its own page and presentation. Course vocabulary only: never a part of the repo (that is an **area**) | |
 | **concept** | a numbered unit of the course (`0`..`17`, `A1`, `A2`); its **concept folder** holds `concept.md`, `teaching.md`, `sources.md`, diagrams | "fiche", "lesson", "chapter", "page" |
+| **numbered concept** | a concept whose number is an integer (`0`, `1`…): it belongs to exactly one domain, and the numbered concepts come first in course order | "regular concept", "main concept" |
+| **annex** | a concept numbered `A1`, `A2`…, listed in `annexes` of `course.yaml` (« annexe »): it belongs to no domain and comes after the numbered concepts | "appendix", "bonus concept" |
 | **sub-concept** | a node of a concept's teaching tree (`9a`, `9a1`); a **leaf sub-concept** is one teacher message with one question | "section", "step", "unit" |
 | **objective** | what the learner can do after the concept (one sentence; `course.yaml` field, « Objectif » section). One term for the current « Objectif » and « À la fin, l'apprenant sait » | "goal", "outcome", "aim" |
 | **reader text** | the reader-facing explanation of a sub-concept in `concept.md`, what the site shows | "body", "content", "copy" |
 | **reader-facing** / **teacher-only** | the two visibility classes of course files: `concept.md`, `sources.md`, diagrams are reader-facing; `teaching.md` is teacher-only | "public" / "private" (those describe the repository) |
-| **teaching notes** | `teaching.md`: teaching instructions and the example bank | "guide", "notes", "answers" |
+| **teaching notes** | the whole of `teaching.md`, the example bank included: the instructions (« Consignes »), the storyline facts used, the example bank, the drawing instruction (« Schéma ») | "guide", "notes", "answers" |
 | **example bank** | the set of **cases** of a concept, in its teaching notes | "examples", "exercises", "questions" |
 | **case** | one entry of the bank: situation, question, expected answer, common mistakes, follow-ups; its **title** is its id (learner memory cites it) | "example", "exercise", "scenario" |
 | **example** | in a teacher message, the illustration that precedes the question (« Exemple ») | the bank's cases |
@@ -58,6 +60,8 @@ the English terms below are how we talk about them in code, docs and issues.
 | **protocol** | the pedagogical protocol: the testable teaching rules of a spec, each named by a slug, set in families and **groups** of rules, each group named by a slug too (`onboarding`) | "the loop", "pedagogy", "rules", "behaviour" |
 | **language pack** | `lang/<code>.yaml`: literal phrases, typography, site labels of one language | "i18n", "locale", "strings" |
 | **teaching session** | always qualified (the other sense is a **work session**): one conversation between the teacher and a learner; **resume** = the first message of a teaching session with an existing learner; **onboarding** = a new learner | "session" alone, "course session" |
+| **course path** | « le fil »: the course as the teacher leads the learner through it, concept after concept in course order; the teacher proposes to come back to it after an aside (`back-to-thread-after-aside`, a slug the protocol slice of #220 renames). Not the **storyline** (« fil rouge »), nor a domain's « Le fil des concepts » (`concept_thread`) | "main line", "track" |
+| **concept status** | where a learner stands on a concept, in learner memory (`learner/parcours.md`, pack group `status`): validated, in progress, skipped, to review; a concept absent from the table is to do. Not the Project's **Status** (an issue's), nor the `status` key of a decision's frontmatter | "state", "level" |
 | **save point** | a moment where the teacher writes and commits learner memory | "checkpoint", "sync" |
 | **mini-recap** | the five-line recap every 3 or 4 validated concepts | "summary" |
 | **course.lock** | the classroom's record: course id, ref, course sha, tooling sha, channel, `site_url`, date | "manifest" |
@@ -94,7 +98,7 @@ the English terms below are how we talk about them in code, docs and issues.
 | **agent workflow** | a Claude Code multi-agent script in `.claude/workflows/`; its name (`meta.name`) is `feyn-<script>-workflow`, so that the skill listing tells it from a skill | |
 | **CI workflow** | a GitHub Actions file in `.github/workflows/` | "pipeline", "action" |
 | **Project workflow** | a built-in automation of the Project ("Auto-add to project", "Item added to project", "Item closed"), turned on in the web interface; `.claude/reference/project.md` lists which are on | "automation", "workflow" alone |
-| **template** | always qualified: **course templates** (`specs/<name>/<MAJOR>/templates/`, model files of a course), **teacher template** (`teacher/CLAUDE.template.md`), **issue template**, **body template** (`.claude/reference/*-body.md`: the body of an issue, an epic, a proposal or a decision, and the **PR body template**, `.claude/reference/pr-body.md`) | "template" alone, "boilerplate", "scaffold" |
+| **template** | always qualified: **course templates** (`specs/<name>/<MAJOR>/templates/`, model files of a course, `learner/` excepted), **learner templates** (`specs/<name>/<MAJOR>/templates/learner/`, model files of learner memory, in French for now), **teacher template** (`teacher/CLAUDE.template.md`), **issue template**, **body template** (`.claude/reference/*-body.md`: the body of an issue, an epic, a proposal or a decision, and the **PR body template**, `.claude/reference/pr-body.md`) | "template" alone, "boilerplate", "scaffold" |
 | **channel** | where a build is served from: **prod** (a course tag), **next** (`main`), **preview** (a PR) | "environment", "stage", "env" |
 | **release** | tagging a course version (`<id>/vX.Y.Z`) and deploying prod; "publish" means a release, never a build | "deploy" alone, "ship" |
 | **course version** / **spec version** | the two versioned objects; tooling has a **commit sha**, no version | "site version", "teacher version" |
