@@ -198,6 +198,24 @@ In this order (`concept-folder`):
 
 ### 4.3 `teaching.md`
 
+**Purpose.** `teaching.md` holds what the teacher needs beyond the reader text, above all the
+**cases**. A case is the prepared question of the loop: the teacher poses it at a sub-concept and
+corrects the answer. It gives coverage (every leaf sub-concept has one, checked), the course's
+own position (its expected answer is the stance the concept states: consensus, school or
+course), experience (it anticipates the mistakes learners make), anchoring (it lives in the
+storyline) and testability (taught-check and fresh tests cite it by its title). A case is created for one of
+four needs, its **type** (below): one per leaf sub-concept, on the course path; a fallback, when
+the learner fails the first; a practice case, for the learner who wants to practise a validated
+concept; an aside, for a frequent question off the course path. A case is never created for what
+the reader text does not state: that is a gap of the concept, filled in `concept.md`.
+
+| Reader | Needs | When |
+|---|---|---|
+| the teacher | the order and split of the concept, the case to pose at each sub-concept, how to correct the answer | each leaf sub-concept; each fallback, practice case or aside |
+| the learner | through the teacher, a case's explanation, situation and question; its expected answer never before they answer | each message that poses a case |
+| the creator (human or agent) | when to create a case, and what each of its fields may contain | writing or changing a concept's teaching notes |
+| taught-check | what each case asks, against what the learner was taught before it | after a change to what a concept teaches |
+
 In this order (`concept-folder`):
 
 1. « Consignes » (`instructions`), mandatory: the order of teaching and the split into
@@ -211,26 +229,41 @@ In this order (`concept-folder`):
 4. « Schéma » (`drawing`), optional: the drawing instruction (metaphor, what it shows) behind
    the concept's diagrams.
 
-A **case** heading is `### <title> (<sub-concept>)`, where the parenthesis may add one
-qualifier before or after the id, separated by a comma: `(9a1, rechange)`, `(0a2, creusage)`,
-`(aparté, 11a)`. The qualifier is free text; the protocol gives meaning to some (a fallback,
-a dig, an aside). The case's **title**, its identifier, is the heading without the
-parenthesis; titles are unique in the concept. The sub-concept is one of the concept's, at any
-level; every leaf sub-concept has at least one case (`concept-folder`).
+`teaching.md` never overrides a protocol rule: it says what to teach, `PROTOCOL.md` says how and
+when (« Schéma » says what to draw, not when to send a diagram); a « Consignes » that
+contradicts a rule is a defect of the concept (review). A case restates only the storyline facts
+listed in « Faits du fil rouge utilisés », which takes them from `storyline.md`; it adds the
+unfolding (who says what, when), never a new fact (review).
+
+A **case** heading is `### <title> (<sub-concept>)`. The parenthesis holds the sub-concept id
+and at most one **qualifier**, before or after the id, separated by a comma: `(9a1, rechange)`,
+`(aparté, 11a)`; nothing else (`concept-folder`). The qualifier is a value of the language
+pack's `qualifiers` group and gives the case its type:
+
+| Type | Qualifier (key) | The teacher poses it |
+|---|---|---|
+| main | none | at its sub-concept, on the course path, in the order of « Consignes » |
+| fallback | « rechange » (`qualifiers.fallback`) | when the learner fails the case of the same sub-concept; it stands alone: its own situation and question, nothing borrowed from the failed case |
+| practice | « entraînement » (`qualifiers.practice`) | when the learner practises a validated concept, one case per message, without re-explaining (`PROTOCOL.md`, rules `validated-concept-exercises` and `digging-cases-chosen`) |
+| aside | « aparté » (`qualifiers.aside`) | in an aside, on a question off the course path (rule `asides-welcome`) |
+
+The case's **title**, its identifier, is the heading without the parenthesis; titles are unique
+in the concept. The sub-concept is one of the concept's, at any level; every leaf sub-concept
+has at least one case (`concept-folder`).
 
 A case is a list of fields, each item opening with `**<label>** :`, its text on the same line
-or in a nested list (`concept-folder`):
+or in a nested list; only the « Question » label may carry a qualifier of its own before the
+colon (« **Question**, en deux parties : ») (`concept-folder`):
 
-| Field (key) | Status | Holds |
-|---|---|---|
-| « Usage » (`usage`) | optional | when to pose the case, for a case outside the normal order |
-| « Explication » (`explanation`) | optional | what the teacher says before the case |
-| « Réserve, sur demande » (`reserve`) | optional | what the teacher gives only if the learner asks |
-| « Situation » (`situation`) | mandatory | actors and storyline facts |
-| « Question » (`question`) | mandatory | the question; the label may carry a qualifier before the colon (« **Question**, en deux parties : ») |
-| « Réponse attendue » (`expected_answer`) | mandatory | the right answer, with its nuances |
-| « Erreurs fréquentes » (`common_mistakes`) | mandatory | frequent answers and how to correct them, follow-ups inline |
-| « Ce qui marche » (`what_works`) | optional | a wording or follow-up that worked |
+| Field (key) | Status | May contain | Who reads it | When the teacher uses it |
+|---|---|---|---|---|
+| « Usage » (`usage`) | optional | when to pose the case, for a case off the course path: a fallback, a practice case, an aside | the teacher | choosing the next case |
+| « Explication » (`explanation`) | optional | what the teacher says before the case: the source of its explanation of the sub-concept; without it, the teacher explains from the leaf's reader text | the teacher, then the learner | in the message that poses the case, before the situation |
+| « Situation » (`situation`) | mandatory | the actors and the storyline facts posed up front, and the unfolding (who says what, when) | the teacher, then the learner | in the message that poses the case, before the question |
+| « Question » (`question`) | mandatory | the question the case asks | the teacher, then the learner; taught-check | at the end of the message that poses the case |
+| « Réponse attendue » (`expected_answer`) | mandatory | the right answer with its nuances: the course's position as `concept.md` states it | the teacher; taught-check | correcting the learner's answer |
+| « Erreurs fréquentes » (`common_mistakes`) | mandatory | frequent answers and how to correct them, follow-ups inline | the teacher | correcting a partial or wrong answer, and in its follow-ups |
+| « Ce qui marche » (`what_works`) | optional | a wording or follow-up a teacher saw work; empty in a new course; the maintainer adds it from what the teacher notes in learner memory (`PROTOCOL.md`, rule `save-levers`) | the teacher | posing the case and correcting the answer |
 
 The optional fields before « Situation » come in any order; the four mandatory fields come in
 the order of the table; « Ce qui marche » comes last.
@@ -500,7 +533,7 @@ checks and the protocol hold for every language.
 
 | Reader | Needs | When |
 |---|---|---|
-| the creator (human or agent) | the headings, case field labels and markers to write, in the course language | writing any course file |
+| the creator (human or agent) | the headings, case field labels, qualifiers and markers to write, in the course language | writing any course file |
 | the maintainer | the keys a new language's pack must hold | adding a language |
 
 The language pack of the course language holds every key below, `checks.anaphora` excepted,
@@ -510,7 +543,8 @@ values, for reference:
 | Group | Keys and French values |
 |---|---|
 | `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (the site's heading for the frontmatter stances, and the section a `sources.md` claim names for them: no `concept.md` section has it), `pitfalls` « Pièges », `quick_test` « Le test rapide »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
-| `case_fields` | `usage` « Usage », `explanation` « Explication », `reserve` « Réserve, sur demande », `situation` « Situation », `question` « Question », `expected_answer` « Réponse attendue », `common_mistakes` « Erreurs fréquentes », `what_works` « Ce qui marche » |
+| `case_fields` | `usage` « Usage », `explanation` « Explication », `situation` « Situation », `question` « Question », `expected_answer` « Réponse attendue », `common_mistakes` « Erreurs fréquentes », `what_works` « Ce qui marche » |
+| `qualifiers` | `fallback` « rechange », `practice` « entraînement », `aside` « aparté »: the closed list of a case heading's qualifiers (4.3) |
 | `markers` | `storyline` « Fil rouge », `consensus` « consensus », `school` « école », `course` « cours » |
 | `references` | `concept` « concept », `concepts` « concepts », `and` « et » |
 | `source_types` | `primary` « primaire », `secondary` « secondaire », `marketing` « marketing » |
@@ -551,7 +585,7 @@ usage error.
 | Id | Family | Verifies | Sections |
 |---|---|---|---|
 | `course-yaml` | conformity | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/`, spec declared (`specs/check-course` refuses an unknown spec or MAJOR), language pack present | 3, 8 |
-| `concept-folder` | conformity | the folder's files; the three files' sections and their order; frontmatter keys; one section per sub-concept; « Objectif » equals `objective`; case headings, fields, coverage of leaves, citation in « Consignes » | 4 |
+| `concept-folder` | conformity | the folder's files; the three files' sections and their order; frontmatter keys; one section per sub-concept; « Objectif » equals `objective`; case headings and their qualifier, fields, a qualifier on « Question » only, coverage of leaves, citation in « Consignes » | 4, 9 |
 | `conventions` | conformity | the reader-text conventions of `concept.md`; plain Markdown in course files | 2, 4.5 |
 | `svg-contract` | conformity | every diagram against the drawing contract (a root `<defs>` accepted); declared and present diagrams match | 4.1, 7.1 |
 | `sources` | conformity | reference ids, citations, claims, paths | 4.1, 4.4 |

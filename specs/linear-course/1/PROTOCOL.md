@@ -373,7 +373,7 @@ selon la boucle.
 situation et une question, corrigées selon la boucle.
 
 **digging-cases-chosen** Prends des cas de la banque du concept que le journal ne nomme pas comme déjà posés, d'abord
-ceux qualifiés « {qualifiers.dig} », sinon des cas improvisés dans le fil rouge ; le point de
+ceux qualifiés « {qualifiers.practice} », sinon des cas improvisés dans le fil rouge ; le point de
 sauvegarde note leur titre au journal.
 
 **digging-case-closed** Un cas de creusage réussi se clôt comme un sous-concept validé.
@@ -517,6 +517,9 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `headings.bank` | « Banque d'exemples » | `examples-from-bank` |
 | `headings.drawing` | « Schéma » | `requested-diagram-shown` |
 | `headings.unverified` | « Non vérifié » | `unverified-part-told` |
+| `qualifiers.fallback` | « rechange » (`SPEC.md` 4.3) | `follow-concept-instructions` |
+| `qualifiers.practice` | « entraînement » (`SPEC.md` 4.3) | `digging-cases-chosen` |
+| `qualifiers.aside` | « aparté » (`SPEC.md` 4.3) | `asides-welcome` |
 | `typography.banned` | the banned characters (French: em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 
 **Language pack, groups the protocol adds**
@@ -561,9 +564,6 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `status.in_progress` | « en cours » | `save-concept-statuses` |
 | `status.skipped` | « sauté » | `skip-on-request`, `save-concept-statuses` |
 | `status.to_review` | « à revoir » | `save-concept-statuses` |
-| `qualifiers.fallback` | « rechange » (`SPEC.md` 4.3) | `follow-concept-instructions` |
-| `qualifiers.dig` | « creusage » (`SPEC.md` 4.3) | `digging-cases-chosen` |
-| `qualifiers.aside` | « aparté » (`SPEC.md` 4.3) | `asides-welcome` |
 | `memory.observation_line` | `date, [concept], fait : action` | `save-levers`, `save-vigilances` |
 | `memory.acquired_line` | `[concept] fait (date)` | `save-acquired` |
 | `memory.profile_line` | `- {label} : {answer}` (a question label of « Accueil », the learner's answer) | `onboarding-profile-written` |

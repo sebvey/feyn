@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 'use strict';
-// Runs check-course on the fixtures and on the concept 9 prototype, in both modes (conformity,
-// the default, and --quality), and says whether every run gave the expected result:
+// Runs check-course on the fixtures, in both modes (conformity, the default, and --quality),
+// and says whether every run gave the expected result (a real course is checked by
+// specs/check-course courses/<id>, not here):
 //   --list, --quality --list       print the conformity checks and the quality checks
 //   fixtures/valid                 passes every check of both modes
 //   fixtures/lang-no-anaphora      a pack without checks.anaphora: valid passes conformity, and
@@ -10,16 +11,12 @@
 //                                  that check fails, in its mode, with a line containing the
 //                                  fragment, and no check of either mode fails beside it;
 //                                  broken/course-yaml-unlisted-folder passes with --concept 0
-//   fixtures/prototype             course-level files wrapped around the concept 9 prototype
-//                                  (courses/parcours-po/concepts/09-decoupage-vertical): passes
-//                                  every check of both modes with --concept 9
 //   fixtures/spec/...              the same for check-spec (the spec's own files), and the
 //                                  repository's spec passes it
 //   fixtures/dispatcher/<name>     a course.yaml that specs/check-course refuses: other-spec
 //                                  (spec other@1), unknown-major (linear-course@9); the
 //                                  dispatcher passes --quality through
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
@@ -88,22 +85,6 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   report('broken/course-yaml-unlisted-folder passes course-yaml with --concept 0', r.code === 0, notOk(r));
 }
 
-// the prototype
-{
-  const proto = path.join(repo, 'courses', 'parcours-po', 'concepts', '09-decoupage-vertical');
-  if (!fs.existsSync(proto)) report('prototype passes', false, `${proto} does not exist`);
-  else {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'check-course-'));
-    const course = path.join(tmp, 'parcours-po');
-    fs.cpSync(path.join(fx, 'prototype'), course, { recursive: true });
-    fs.cpSync(proto, path.join(course, 'concepts', '09-decoupage-vertical'), { recursive: true });
-    for (const mode of ['conformity', 'quality']) {
-      const r = run(course, ['--lang-dir', path.join(fx, 'lang'), '--concept', '9', ...FLAG[mode]]);
-      report(`prototype (concept 9) passes every ${mode} check`, r.code === 0, notOk(r));
-    }
-    fs.rmSync(tmp, { recursive: true, force: true });
-  }
-}
 // the spec's own files (check-spec): fixtures/spec/valid passes, fixtures/spec/broken/<name> fails
 // as its EXPECT says, and the repository's spec (this MAJOR's folder) passes
 {
