@@ -5,7 +5,15 @@ in rule `second-rule`.
 
 ## 1. Démarrage
 
+**Purpose.** How a teaching session starts.
+
+| Reader | Needs | When |
+|---|---|---|
+| the teacher | which way in to take | the first message |
+
 ### Accueil (`onboarding`)
+
+**Purpose.** The onboarding of a new learner.
 
 **first-rule** Le premier message part sans appel d'outil.
 

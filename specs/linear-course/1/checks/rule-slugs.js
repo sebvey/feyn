@@ -4,7 +4,8 @@
 // slug that is defined (decisions rules-named-by-slug, rule-groups-replace-ranges).
 //
 // Defined, in a rule family ("## <n>. ..."): a rule by a line that opens on `**<slug>** `, or by a
-// table row whose first cell is `**<slug>**`; a group by a heading `### <title> (`<slug>`)`.
+// table row whose first cell is `**<slug>**`; a group by a heading `### <title> (`<slug>`)`. The
+// `**Purpose.**` paragraph that opens a family or a group defines nothing.
 // Cited:
 //   - in a rule family, every code span shaped like a rule slug;
 //   - in a table of PROTOCOL.md, every code span of a "Used in" or "Rule" column;
@@ -104,7 +105,7 @@ function run(ctx) {
         continue;
       }
       const head = /^\*\*([^*]+)\*\*(?:\s|$)/.exec(l.t);
-      if (head) define(head[1], l.n, 'rule');
+      if (head && head[1] !== 'Purpose.') define(head[1], l.n, 'rule');
       for (const c of codeSpans(l.t)) if (SLUG.test(c)) cites.push({ file: PROTOCOL, slug: c, line: l.n, kind: 'any' });
     }
     for (const tb of mdlib.tables(s.lines)) {

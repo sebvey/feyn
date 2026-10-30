@@ -92,7 +92,8 @@ relative to `<spec-dir>`. It has one mode: its checks are conformity checks.
 
 A rule's slug is defined by a line of a rule family (`## <n>. …`) that opens on `**<slug>** `, or
 by a table row of a family whose first cell is `**<slug>**` (the save-point table); a group's slug
-by a heading of a family, « ### <title> (`<slug>`) » (one to five words). Rules and groups share
+by a heading of a family, « ### <title> (`<slug>`) » (one to five words). The `**Purpose.**`
+paragraph that opens a family or a group defines nothing. Rules and groups share
 one namespace: a slug is defined once. A rule is cited by a
 code span: in a rule family, every code span shaped like a slug (two to five lowercase words
 joined by hyphens); in the tables of `PROTOCOL.md`, every code span of a "Used in" or "Rule"

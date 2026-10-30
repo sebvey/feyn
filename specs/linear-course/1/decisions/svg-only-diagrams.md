@@ -29,4 +29,8 @@ teacher could not show.
 - An SVG is longer to write than Mermaid; the contract and its check make an agent's SVG
   reliable.
 - When the teacher shows a diagram is not this decision's: protocol rules `diagram-only-on-request`,
-  `requested-diagram-shown` and `diagram-fallback` settle it.
+  `requested-diagram-shown` and `diagram-not-displayable` settle it.
+- Amended 2026-10-30 (#218): the protocol renamed its fallback rule for a diagram that cannot
+  show, before the tag (`diagram-not-displayable`); the line above cites the new slug, an
+  exception to decision `decision-format`'s "rest untouched" asked by the maintainer, since
+  `rule-slugs` fails a slug that no rule defines.

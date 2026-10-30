@@ -39,3 +39,7 @@ instructions only.
 - Amended 2026-10-29 (#246): a maintainer phrasing quoted in a skill description's "Use for"
   may be in French, as a quote from course material is; everything else in a skill stays in
   English.
+- Amended 2026-10-30 (#218): the protocol of `linear-course` 1 does not switch to English at a
+  stage: its v1 is a base inherited from `parcours-po`, in French, changed by user story, and the
+  exception stays until a teacher or a course of another language needs the translation, a spec
+  MINOR. Issue #38 is closed not planned; the translation is a future user story of epic #222.
