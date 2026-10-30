@@ -117,11 +117,11 @@ Mark every PR ready, the review and the corrections being done:
 `Refs` issue stays In progress; the contributor's `/feyn-pull-request` left it In progress;
 [project.md](../../reference/project.md), "Commands":
 `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`).
-Then reply with, one line each: the PR URL and title; the
-Status; the review (blocking findings found, fixed); what the maintainer should look at first
-(the PR's Review first); the merge command `/feyn-pull-request` gives
-(`mise exec -- gh pr merge <pr> --squash --delete-branch`). The merge is the maintainer's. Keep
-the contributor agent alive until then: a late finding goes back to it.
+Then reply with, one line each: the PR URL and title; the Status; the review (blocking findings
+found, fixed); what the maintainer should look at first (the PR's Review first); the merge
+command `/feyn-pull-request` gives (`mise exec -- gh pr merge <pr> --squash --delete-branch`).
+The merge is the maintainer's. Keep the contributor agent alive until then: a late finding goes
+back to it.
 
 ## 6. After the merge
 

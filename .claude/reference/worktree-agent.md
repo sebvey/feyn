@@ -26,7 +26,5 @@ Read first by every agent that works in a worktree: the contributor of `/feyn-de
   (Claude Code, observed 2026-10-28, #171).
 - Spawned with isolation, you cannot write nor run git in a worktree other than yours: Edit,
   `git -C` and `cd` to it are refused (Claude Code, observed 2026-10-28, #178).
-- The work session's own `cd` into a worktree moves its working directory, even for one
-  command (Claude Code, observed 2026-10-28, #171).
 - You cannot ask the maintainer: work needing their acceptance runs in two phases
   (Claude Code, observed 2026-10-27, #27).
