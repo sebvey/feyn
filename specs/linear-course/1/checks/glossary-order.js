@@ -100,8 +100,11 @@ function run(ctx) {
     const cell = glossary.termCell(r.cells[0]);
     if (cell.qualified) continue;
     const def = ctx.conceptByNumber(glossary.definingNumber(r.cells[3]));
-    if (!def || !cell.variants.length) continue;
-    const re = new RegExp(`(?<![\\p{L}\\p{N}])(?:${cell.variants.map(esc).join('|')})(?![\\p{L}\\p{N}])`, 'giu');
+    // the words matched: each variant without its qualifier (none here, since a qualified row
+    // was skipped above; the skip is what keeps the homonym from being matched)
+    const words = cell.variants.map((v) => v.replace(/\s*\([^)]*\)/g, '').trim()).filter(Boolean);
+    if (!def || !words.length) continue;
+    const re = new RegExp(`(?<![\\p{L}\\p{N}])(?:${words.map(esc).join('|')})(?![\\p{L}\\p{N}])`, 'giu');
     terms.push({ re, def, line: r.line, ref: `${def.annex ? annexWord : refWord} ${def.number}` });
   }
   const parse = refs.parser(ctx);
@@ -115,7 +118,7 @@ function run(ctx) {
     if (!later.length) continue;
     const seen = new Set();
     for (const s of [...frontSentences(m.data), ...bodySentences(m.body)]) {
-      const named = new Set(parse ? parse(s.text).flatMap((r) => r.ids.map((id) => refs.conceptOf(ctx, id))).filter(Boolean) : []);
+      const named = new Set(parse ? parse(s.text).flatMap((r) => r.ids.map((id) => refs.conceptOf(ctx, id, r.annex))).filter(Boolean) : []);
       for (const t of later) {
         if (named.has(t.def)) continue;
         t.re.lastIndex = 0;

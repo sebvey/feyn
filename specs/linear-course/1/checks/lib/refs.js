@@ -1,13 +1,13 @@
 'use strict';
 // Concept references of the reader text (SPEC.md section 4.5): the words of the pack group
 // concept_refs, then concept numbers or sub-concept ids. One grammar, read by `conventions`
-// (each id exists) and `glossary-order` (a reference silences a forward use).
+// (each id exists) and `glossary-order` (a concept reference silences a forward use).
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const ID = '(?:A\\d+|\\d+)(?:[a-z]\\d?)?';
 
 // -> (text) => [{ index, word, list, ids, annex }], or null when the pack lacks the words.
-// `annex` is true for a reference made with concept_refs.annex.
+// `annex` is true for a concept reference made with concept_refs.annex.
 function parser(ctx) {
   const refWord = ctx.word('concept_refs', 'concept');
   const refWords = ctx.word('concept_refs', 'concepts');
@@ -42,10 +42,13 @@ function parser(ctx) {
 }
 
 // the concept a reference id names: a concept number (leading zeros dropped) or the id of one
-// of its sub-concepts; null when it names none
-function conceptOf(ctx, id) {
-  if (/^(A?\d+)([a-z])(\d)?$/.test(id)) return ctx.concepts.find((c) => c.subs.some((s) => s.id === id)) || null;
-  return ctx.conceptByNumber(/^\d/.test(id) ? id.replace(/^0+(?=\d)/, '') : id) || null;
+// of its sub-concepts; null when it names none, or when `annex` (the annex word was used) and
+// the concept is not an annex
+function conceptOf(ctx, id, annex) {
+  const c = /^(A?\d+)([a-z])(\d)?$/.test(id)
+    ? ctx.concepts.find((x) => x.subs.some((s) => s.id === id))
+    : ctx.conceptByNumber(/^\d/.test(id) ? id.replace(/^0+(?=\d)/, '') : id);
+  return c && (!annex || c.annex) ? c : null;
 }
 
 module.exports = { parser, conceptOf, ID };

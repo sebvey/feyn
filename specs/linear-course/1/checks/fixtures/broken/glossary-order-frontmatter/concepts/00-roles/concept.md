@@ -17,8 +17,8 @@ Nommer les rôles de l'équipe.
 
 ## L'essentiel
 
-Un rôle est ce que fait une personne sur une couche du produit ; voir le concept 1 et
-l'annexe A1.
+Un rôle est ce que fait une personne sur une couche du produit ; voir le
+concept 1.
 
 ## 0a Les deux rôles
 
