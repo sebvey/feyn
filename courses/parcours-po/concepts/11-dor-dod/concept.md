@@ -5,40 +5,67 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "La DoD est l'engagement de l'incrément : la description de son état quand il remplit les exigences de qualité du produit. Un élément qui la remplit entre dans l'incrément ; sinon, il n'est ni livré ni présenté en revue de sprint, et retourne au backlog (concept 0b). Les équipes d'un même produit partagent la même DoD. Si l'organisation a un standard, l'équipe le suit au minimum ; sinon, l'équipe Scrum écrit la sienne. Les Developers la respectent ; la rétrospective l'inspecte."
       refs: ["S1", "S2"]
+      verified:
+        - "« For the Increment it is the Definition of Done » (Scrum Artifacts) ; « The Definition of Done is a formal description of the state of the Increment when it meets the quality measures required for the product » ; « If a Product Backlog item does not meet the Definition of Done, it cannot be released or even presented at the Sprint Review. Instead, it returns to the Product Backlog for future consideration. » ; « they must mutually define and comply with the same Definition of Done » ; « If the Definition of Done for an increment is part of the standards of the organization, all Scrum Teams must follow it as a minimum. If it is not an organizational standard, the Scrum Team must create a Definition of Done appropriate for the product. » ; « The Developers are required to conform to the Definition of Done » (Commitment: Definition of Done) ; « The Scrum Team inspects how the last Sprint went with regards to individuals, interactions, processes, tools, and their Definition of Done. » (Sprint Retrospective)"
+        - "« Any one product or system should have a definition of \"Done\" that is a standard for any work done on it. » (texte)"
     - author: "Le Scrum Guide 2020, sur la DoR et les critères"
       text: "Ne parle ni de story, ni de critère d'acceptation, ni de DoR. Dit qu'un élément que l'équipe peut finir en un sprint est prêt à être choisi au Sprint Planning, et qu'il le devient en général après avoir été précisé ; l'équipe peut encore le préciser pendant le Sprint Planning."
       refs: ["S1"]
+      verified:
+        - "« story », « acceptance », « Definition of Ready » absents du texte (recherche du 2026-10-30) ; « Product Backlog items that can be Done by the Scrum Team within one Sprint are deemed ready for selection in a Sprint Planning event. They usually acquire this degree of transparency after refining activities. » (Product Backlog) ; « The Scrum Team may refine these items during this process, which increases understanding and confidence. » (Topic Two: What can be Done this Sprint?)"
     - author: "Pratique établie, hors du Scrum Guide"
       text: "Distinguer DoD et critère d'acceptation. Mike Cohn voit la DoD comme des critères ajoutés à chaque story ; les critères d'acceptation, eux, sont propres à une story."
       refs: ["S3"]
+      verified:
+        - "« an agreed-upon set of things that must be true before any product backlog item is considered complete » ; « Think of the definition of done as a special set of acceptance criteria that are added to every user story » ; « conditions of satisfaction are specific to a given product backlog item » (page)"
   school:
     - author: "Le contenu de la DoD"
       text: "Il est propre au produit ou à l'organisation : le Scrum Guide ne le fixe pas. Exemple en data, chez Scott Ambler, pour une équipe d'entrepôt de données : détection et signalement des erreurs de données, documentation technique à jour, métadonnées captées et validées."
       refs: ["S1", "S9"]
+      verified:
+        - "« If it is not an organizational standard, the Scrum Team must create a Definition of Done appropriate for the product. » (Commitment: Definition of Done)"
+        - "« Detection and reporting of potential data errors implemented » ; « Supporting technical documentation is up to date » ; « Enterprise metadata captured, validated, and accepted » (page)"
     - author: "Écrire une DoR"
       text: "Pratique née chez des praticiens vers 2008-2009 ; son premier auteur est discuté, on ne l'attribue à personne. Le terme « ready-ready » (prêt pour de bon), face à « done-done », est celui de l'entreprise Systematic."
-      refs: ["S4", "S5"]
+      refs: ["S4"]
+      verified:
+        - "« Systematic introduced the term ready-ready, to express that work from the Product Backlog has been sufficiently elaborated to be allocated to a sprint » (page)"
     - author: "La DoR selon Mike Cohn"
       text: "Il en cite des conditions typiques : critères d'acceptation identifiés, taille qui tient dans un sprint, dépendances externes levées."
       refs: ["S6"]
+      verified:
+        - "« The conditions of satisfaction (acceptance criteria) have been fully identified for the story » ; « The story has been estimated and is under a certain size » ; « All external dependencies have been resolved, whether the dependency was on another team or on an outside vendor » (page)"
     - author: "Mike Cohn : le risque d'une DoR trop stricte"
       text: "Elle devient une barrière à franchir avant chaque sprint, qui ramène au cycle en cascade. Il conseille des repères plutôt que des règles, avec une exception possible : certaines dépendances envers une autre équipe ou un fournisseur."
       refs: ["S6"]
+      verified:
+        - "« the definition of ready becomes a huge step towards a sequential, stage-gate approach » ; « A stage-gate approach is, after all, another way of describing a waterfall process » ; « Favor guidelines rather than rules on your Definition of Ready » ; « with the possible exception of dependencies on certain teams or vendors » (page)"
   course:
     - text: "La formule « une seule DoD, pour toute story »."
       refs: ["S1", "S2"]
+      verified:
+        - "« If there are multiple Scrum Teams working together on a product, they must mutually define and comply with the same Definition of Done » (Commitment: Definition of Done)"
+        - "« Any one product or system should have a definition of \"Done\" that is a standard for any work done on it. » (texte)"
     - text: "Le test « vaut-il pour toute story du même type de travail, sans être recopié ? », qui sépare la DoD d'un critère d'acceptation."
       refs: ["S3"]
+      verified:
+        - "« Think of the definition of done as a special set of acceptance criteria that are added to every user story » (page)"
     - text: "Une règle métier, vérité du domaine, n'est ni une exigence de la DoD ni un critère (concept 8)."
       refs: []
     - text: "L'image du « mini cahier des charges » pour une DoR trop stricte. Cohn parle de stage-gate et de cascade, pas de cahier des charges."
       refs: ["S6"]
+      verified:
+        - "« the definition of ready becomes a huge step towards a sequential, stage-gate approach » (page)"
     - text: "La DoR se décide en équipe : le PO la propose, il ne la fixe pas seul."
       refs: ["S6"]
+      verified:
+        - "« meets a set of team-established criteria as to whether the story is ready for a sprint » (page)"
 neighbors:
   - author: "« Prêt à être choisi » (Scrum Guide)"
     text: "Le critère du Guide est qu'un élément soit faisable en un sprint, pas une liste de conditions. La DoR en est une version écrite par l'équipe, qui peut aller plus loin."
     refs: ["S1"]
+    verified:
+      - "« Product Backlog items that can be Done by the Scrum Team within one Sprint are deemed ready for selection in a Sprint Planning event » (Product Backlog)"
 diagrams:
   - file: "sprint-piece-deux-portes.svg"
     title: "Le sprint comme une pièce à deux portes"
