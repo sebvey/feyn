@@ -5,23 +5,39 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Ne parle pas de story et n'impose aucun format aux éléments du backlog. Il cite des attributs (description, ordre, taille) qui varient selon le domaine. Rien de ce concept n'est donc dans le Scrum Guide."
       refs: [S1]
+      verified:
+        - "« story », « stories », « user story » absents du texte (recherche du 2026-10-22) ; « an ongoing activity to add details, such as a description, order, and size. Attributes often vary with the domain of work. » (Product Backlog)"
     - author: "Pratique établie, hors du Scrum Guide"
       text: "La story vient d'Extreme Programming (XP), où Kent Beck a introduit le terme. Les 3C (carte, conversation, confirmation) sont de Ron Jeffries (XP), en 2001."
-      refs: [S3, S4, S5]
+      refs: [S3, S4]
+      verified:
+        - "« Essential XP: Card, Conversation, Confirmation » (titre, 30 août 2001)"
+        - "« Kent Beck first introduced the term as part of Extreme Programming » (page)"
   school:
     - author: "Rachel Davies, chez Connextra : le format « en tant que / je veux / afin de »"
       text: "Un modèle né à Londres, au début des années 2000, devenu le plus courant sans être obligatoire. Mike Cohn, qui le recommande, dit lui-même qu'il n'y a pas de formule magique."
-      refs: [S2, S5, S6]
+      refs: [S2, S6]
+      verified:
+        - "« originated with agile coach Rachel Davies at a UK company, Connextra, in the early 2000s » ; « the most popular way of writing user stories » ; « There is no magic formula » (page)"
+        - "« there is NO REQUIRED STRUCTURE » (page)"
     - author: "Ron Jeffries : la confirmation"
       text: "Jeffries parle de tests d'acceptation, des exemples définis par le client. Rapprocher la confirmation des critères d'acceptation est la lecture courante, et celle du cours."
       refs: [S3]
+      verified:
+        - "« This component is the acceptance test » (Confirmation)"
   course:
     - text: "Poser des « pourquoi ? » successifs sur le « afin de » est un choix du cours. Il s'inspire des « cinq pourquoi » venus de Toyota, conçus pour remonter à la cause d'un problème ; le nombre de « pourquoi ? » varie selon le problème."
       refs: [S7]
+      verified:
+        - "« The number of whys may be higher or lower depending on the complexity of the analysis and problem » (page, mention « citation needed »)"
     - text: "S'arrêter à une décision que l'utilisateur prend ou à un gain qu'il reconnaît. Au-delà, la raison devient l'objectif produit ou un enjeu général, commun à beaucoup de stories, et n'aide plus à ordonner."
       refs: [S2]
+      verified:
+        - "« The structure of good user stories actually helps the product owner prioritize » (page)"
     - text: "Le PO n'invente pas la raison : il la demande à l'utilisateur."
       refs: [S3]
+      verified:
+        - "« The requirement itself is communicated from customer to programmers through conversation » (Conversation)"
     - text: "Une story, un seul « je veux » : s'il y en a plusieurs, ce n'est plus une story (feature ou epic, concept 4 ; un parcours, concept 16)."
       refs: []
     - text: "Le test du « afin de » lu à la personne qui a fait la demande est une formulation du cours."
@@ -29,7 +45,7 @@ stances:
 neighbors:
   - author: "Le parcours de l'utilisateur"
     text: "Une story exprime un besoin, pas tout ce que fait l'utilisateur. Le parcours organise les stories en story map, une carte des stories rangées sous les étapes du parcours (Jeff Patton, concept 16)."
-    refs: [S9]
+    refs: []
 diagrams:
   - file: phrase-trois-blocs-pourquoi.svg
     title: "La phrase d'une story en trois blocs, et l'échelle des « pourquoi ? »"
