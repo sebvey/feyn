@@ -128,7 +128,7 @@ function run(ctx) {
           const key = `${n}|${t.line}`;
           if (seen.has(key)) continue;
           seen.add(key);
-          out.push(fail(f, n, `uses the term "${u[0]}" before concept ${t.def.number}, which defines it (glossary.md:${t.line}): use it after, or name that concept in the sentence (« ${t.ref} »)`));
+          out.push(fail(f, n, `uses the term "${u[0]}" before concept ${t.def.number}, its defining concept (glossary.md:${t.line}): use it after, or name that concept in the sentence (« ${t.ref} »)`));
         }
       }
     }
