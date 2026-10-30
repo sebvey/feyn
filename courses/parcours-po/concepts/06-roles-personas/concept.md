@@ -5,18 +5,32 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Ne parle ni de rôle utilisateur, ni de persona, ni d'acteur. Dit seulement qu'un produit a des utilisateurs ou des clients bien définis. Rien de ce concept n'est donc du consensus Scrum."
       refs: ["S1"]
+      verified:
+        - "« persona », « user role », « actor » absents du texte (recherche du 2026-10-22) ; « known stakeholders, well-defined users or customers » (définition du produit)"
   school:
     - author: "Mike Cohn : écrire pour des rôles précis"
       text: "Recommandation de Cohn, répandue, d'après l'usage-centered design de Constantine et Lockwood : supposer un seul type d'utilisateur fait manquer des stories. Cohn admet que « utilisateur » suffit quand tous ont besoin du même comportement pour la même raison, et qu'une seule story ne couvre deux rôles que dans ce cas. Il conseille un rôle plus précis quand celui-ci change la conversation : règles, données, moment, droits ou résultat différents. Ce n'est ni le Scrum Guide ni un consensus démontré."
       refs: ["S2", "S3"]
+      verified:
+        - "« is a fallacy and can lead a team to miss stories for users who do not fit the general mold » ; « The disciplines of usage-centered design (Constantine and Lockwood 1999) and interaction design (Cooper 1999) teach us the benefits of identifying user roles and personas prior to writing stories. » (chapitre 3, premier paragraphe)"
+        - "« Sometimes \"user\" is specific enough. If everyone who uses the product needs the same behavior for the same reason, a more detailed role may not add much. » ; « ask whether the role changes the conversation » (page)"
     - author: "Alan Cooper : les personas"
       text: "Venus du design d'interaction : un portrait fictif construit à partir d'utilisateurs réels. Pas obligatoires, discutés entre praticiens (on leur reproche des preuves surtout anecdotiques et un risque de stéréotype). Cohn les rattache à Cooper, dans le même chapitre que les rôles."
       refs: ["S2", "S6", "S7"]
+      verified:
+        - "« interaction design (Cooper 1999) » (chapitre 3, premier paragraphe)"
+        - "« hypothetical archetypes, as a practical interaction design tool » ; « first published in 1998, introduced the use of personas » ; « Whether you hate or love this idea as a development tool, you can thank me. » (extrait)"
+        - "« a semi-fictional characterization or representation of a typical customer segment or end user » (page)"
   course:
     - text: "« L'acteur agit et y gagne » : le rôle qui fait l'action du « je veux » est celui qui gagne ce que dit le « afin de ». Le critère réunit deux repères de Cohn, l'initiateur de l'action et celui qui en profite. Cohn écrit pourtant parfois une story pour un rôle qui y gagne sans agir : c'est une règle pratique, pas une règle sans exception."
       refs: ["S3", "S5"]
+      verified:
+        - "« names the person or role who benefits » (page)"
+        - "« initiator of the action » ; « As the company owner, I want ads on the site so that I make money » (page)"
     - text: "Celui qui construit n'est pas l'acteur : pas de story « en tant que développeur ». Un consommateur de données, lui, reste un utilisateur (concept 1) : le piège vise celui qui construit, pas celui qui consomme."
       refs: ["S5"]
+      verified:
+        - "« I don't necessarily mean we want a bunch of \"programmer stories.\" Those are generally best avoided. » (page)"
     - text: "Le PO vérifie l'acteur auprès des utilisateurs plutôt que de le deviner."
       refs: []
     - text: "La story garde le rôle (« en tant qu'abonné ») même quand l'équipe a un persona, qui sert à la conversation et aux exemples. Certaines équipes écrivent leurs stories au nom d'un persona : c'est possible, à condition que le persona vienne d'utilisateurs réels."
@@ -24,7 +38,7 @@ stances:
 neighbors:
   - author: "Le proto-persona"
     text: "Un portrait fait des hypothèses de l'équipe, sans entretiens. On le confond souvent avec un persona ; ce n'en est pas un au sens du portrait construit à partir d'utilisateurs réels."
-    refs: ["S7"]
+    refs: []
 diagrams:
   - file: acteur-story.svg
     title: "Deux flèches vers l'acteur de la story"

@@ -5,32 +5,60 @@ stances:
     - text: "Ne parle ni de critère d'acceptation, ni de règle métier, ni de story. Rien de ce concept n'est donc du consensus Scrum."
       author: "Le Scrum Guide 2020"
       refs: ["S1"]
+      verified:
+        - "« acceptance », « criteri », « business rule », « testable », « example » absents du texte ; « story » absent du texte (recherche du 2026-10-22)"
     - text: "Chaque story porte des critères d'acceptation. C'est la confirmation des 3C de Ron Jeffries (XP, concept 5) et le T d'INVEST de Bill Wake (concept 7). Mike Cohn parle de conditions de satisfaction, presque synonymes, et en confie l'écriture d'abord au PO ; le cours y ajoute la conversation avec l'utilisateur et l'équipe."
       author: "Pratique établie, hors du Scrum Guide"
       refs: ["S2", "S3", "S4"]
+      verified:
+        - "« This component is the acceptance test » (Confirmation)"
+        - "« I understand what I want well enough that I could write a test for it » (T)"
+        - "« Acceptance criteria and conditions of satisfaction (CoS) are two terms that mean almost the same thing » ; « product owners are the people primarily responsible for creating conditions of satisfaction » ; « specific to a given product backlog item » (page)"
   school:
     - text: "Forme créée par North et Matts, dans les années 2000, pour écrire les critères d'une story en scénarios ; elle vient du BDD (behaviour-driven development) de Dan North, décrite dans un article de 2006. Cucumber et son langage Gherkin rendent ces scénarios exécutables ; la forme s'emploie aussi sans outil, comme simple heuristique."
       author: "Dan North et Chris Matts : Given/When/Then"
       refs: ["S5", "S6", "S10"]
+      verified:
+        - "« Matts and I » ; « to capture a story's acceptance criteria » ; « I started to refer to TDD as BDD, or behaviour-driven development » (article)"
+        - "« Gherkin uses a set of special keywords to give structure and meaning to executable specifications » (page)"
+        - "« can also be used purely as a heuristic irrespective of any tool » (page)"
     - text: "Décrire les exigences par des exemples, popularisé par le livre d'Adzic (2011). L'expression est plus ancienne : Martin Fowler la mentionne dès 2004."
       author: "Gojko Adzic : Specification by Example"
-      refs: ["S8", "S9"]
+      refs: ["S8"]
+      verified:
+        - "« a collaborative method for specifying requirements and tests » (page)"
     - text: "Poser les règles à part et les illustrer par des exemples : règles sur des cartes bleues, exemples sur des cartes vertes, questions sans réponse sur des cartes rouges. Chez Wynne, règles et critères d'acceptation vont sur la même carte. Gherkin a un mot-clé Rule qui regroupe les exemples d'une règle."
       author: "Matt Wynne : Example Mapping"
       refs: ["S7", "S6"]
+      verified:
+        - "« acceptance criteria, or rules » ; « For each rule, we may need one or more examples to illustrate it » ; « simply capture the question and move on » (page)"
+        - "« one business rule that should be implemented » (page)"
   course:
     - text: "Séparer critère et règle métier par le test « est-ce encore vrai si cette story n'existe pas ? ». Aucune source ne sépare les deux de cette façon : chez Wynne, règles et critères vont sur la même carte."
       refs: ["S7"]
+      verified:
+        - "« acceptance criteria, or rules » (page)"
     - text: "Ne changer qu'une variable d'un exemple à l'autre. Heuristique du cours, sans source externe ; Gherkin recommande seulement de limiter chaque exemple à quelques étapes."
-      refs: ["S5", "S6"]
+      refs: ["S6"]
+      verified:
+        - "« 3-5 steps per example » (page)"
     - text: "Une contrainte d'usage s'écrit dans un critère, dans le contexte de départ (Given), sans nommer de solution (concept 7)."
       refs: ["S3"]
+      verified:
+        - "« A good story captures the essence, not the details » (N)"
     - text: "Le Then vérifie un résultat observable par l'utilisateur, pas un moyen choisi par l'équipe."
       refs: ["S6", "S3"]
+      verified:
+        - "« An outcome should be on an observable output » (page)"
+        - "« details will be co-created by the customer and programmer » (N)"
     - text: "Une règle non fixée n'est ni inventée ni tranchée par le PO seul : il la fait fixer par l'utilisateur concerné avant que la story parte (concept 7a2)."
       refs: ["S7"]
+      verified:
+        - "« simply capture the question and move on » (page)"
     - text: "Given/When/Then n'est pas obligatoire : un critère écrit autrement convient s'il reste tranchable."
       refs: ["S10"]
+      verified:
+        - "« can also be used purely as a heuristic irrespective of any tool » (page)"
 diagrams:
   - file: regle-exemples-question.svg
     title: "Une règle métier, deux exemples, une règle non fixée"

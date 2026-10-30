@@ -5,27 +5,47 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Ne parle ni d'INVEST ni de story. Dit qu'un élément du backlog que l'équipe peut terminer en un sprint est prêt à être choisi au Sprint Planning, et que les Developers qui feront le travail en estiment la taille."
       refs: ["S2"]
+      verified:
+        - "« INVEST » absent du texte, sauf dans « Investments » (biographie des auteurs) ; « story » absent du texte (recherche du 2026-10-22) ; « Product Backlog items that can be Done by the Scrum Team within one Sprint are deemed ready for selection in a Sprint Planning event » ; « The Developers who will be doing the work are responsible for the sizing. » (Product Backlog)"
     - author: "Pratique établie, hors du Scrum Guide"
       text: "INVEST est une grille de Bill Wake (2003, milieu XP), reprise par d'autres praticiens, dont Mike Cohn. Wake la présente comme un aide-mémoire, pas comme une règle. Il l'ouvre sur les 3C de Ron Jeffries (concept 5) : la carte n'est pas toute la story."
       refs: ["S1", "S3"]
+      verified:
+        - "« I developed the INVEST acronym, and wrote this article in April and August, 2003 » ; « The INVEST and SMART acronyms can remind teams » ; « It would be easy to mistake the story card for the \"whole story,\" but Ron Jeffries points out that stories in XP have three components: Cards […], Conversation […], and Confirmation (tests that verify them) » (article)"
+        - "« a widely accepted set of criteria, or checklist, to assess the quality of a user story » (page)"
   school:
     - author: "Bill Wake : la taille d'une story (S)"
       text: "Chez Wake, une story représente au plus quelques semaines-personnes de travail. Certaines équipes visent quelques jours-personnes, et Wake le signale lui-même. Ce sont deux repères à ne pas mêler."
       refs: ["S1"]
+      verified:
+        - "« Stories typically represent at most a few person-weeks worth of work. » ; « (Some teams restrict them to a few person-days of work.) » (article)"
     - author: "XP : l'exploration bornée (spike)"
       text: "Venue d'XP, pour une question technique ou de conception et pour fiabiliser une estimation. L'usage varie selon les écoles : le guide de Microsoft (Visual Studio 2010) l'emploie aussi pour une question métier. Elle se traite au concept 17."
       refs: ["S1", "S4", "S6"]
+      verified:
+        - "« split a story into a (time-boxed) \"spike\" that will give the team enough information to make a decent estimate » (article)"
+        - "« Create spike solutions to figure out answers to tough technical or design problems » ; « The goal is reducing the risk of a technical problem or increase the reliability of a user story's estimate » (page)"
+        - "« understand what 'book award travel' means » (page)"
   course:
     - text: "Le repère de taille du cours : une story tient dans un sprint (concept 4). Ce sont les Developers qui en jugent."
       refs: ["S2", "S3"]
+      verified:
+        - "« Product Backlog items that can be Done by the Scrum Team within one Sprint are deemed ready for selection in a Sprint Planning event » ; « The Developers who will be doing the work are responsible for the sizing. » (Product Backlog)"
+        - "« so as to fit within an iteration » (page)"
     - text: "Quand plusieurs lettres (E, S, T) restent douteuses ensemble, chercher le mot flou dont elles dépendent plutôt que de les cocher. Règle pratique du cours, sans source externe ; Wake lie seulement E à la compréhension, S au périmètre connu et T à la clarté."
       refs: ["S1"]
+      verified:
+        - "« it's hard to estimate a story we don't understand » ; « it seems to be too hard to know what's in the story's scope » ; « If a customer doesn't know how to test something, this may indicate that the story isn't clear enough » (article)"
     - text: "Le PO fait préciser le mot flou par l'utilisateur concerné, avant le sprint ; ni lui ni les Developers ne le fixent. Parti pris du cours, posé en 7a2."
       refs: ["S2"]
+      verified:
+        - "« breaking down and further defining Product Backlog items into smaller more precise items » (Product Backlog)"
     - text: "« Négociable » ne veut pas dire « tout est ouvert » : une contrainte réelle d'usage ne se négocie pas, et elle s'écrit dans un critère d'acceptation, sans nommer de solution. Règle pratique du cours, sans source externe."
-      refs: ["S1"]
+      refs: []
     - text: "Le cours range aussi sous I le travail d'une autre équipe dont la story a besoin. Choix du cours : chez Wake, I ne vise que les autres stories."
       refs: ["S1"]
+      verified:
+        - "« we'd like them to not overlap in concept, and we'd like to be able to schedule and implement them in any order » (article)"
 diagrams:
   - file: six-lettres-invest.svg
     title: "Les six lettres d'INVEST"
