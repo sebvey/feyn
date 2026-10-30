@@ -44,3 +44,7 @@
   du glossaire, sans source consultée ; le concept 14 (arbitrer, escalader) en porte la source.
 - 1b : **une partie prenante inclut les utilisateurs** : définition du glossaire, propre au
   cours (voir la ligne « Partie prenante »).
+- Consensus et choix d'école : **le propriétaire d'un produit de données doit savoir qui en sont
+  les utilisateurs et comment ils s'en servent** (seconde phrase de l'item de Dehghani) :
+  paraphrase de [S2] relevée le 2026-10-22, sans citation ; la citation de l'item ne confirme
+  que la première phrase.

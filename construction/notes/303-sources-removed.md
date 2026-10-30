@@ -40,6 +40,7 @@ Destinations: **item** (a frontmatter item of `concept.md`: its `refs` and `veri
 | « Non vérifié » « Le PO tient compte du coût pour ordonner » (Banque, streaming) | nowhere: a claim only `teaching.md` makes (concept 13 sources it) |
 | « Non vérifié » « Cible de fraîcheur de moins de 15 minutes » | nowhere: a storyline fact |
 | « Non vérifié » « Décrire le produit par sa technique ... », the words « la fiche ne l'énonce plus comme consensus » | trimmed: the trace of a removed claim |
+| « Non vérifié » « Un désaccord qui dépasse le PO se porte au sponsor » (Banque, vote) | rewritten as the 1b entry « le sponsor porte plus haut les obstacles qui dépassent le PO », the claim the body makes |
 
 ## 02-objectif-produit-resultat
 
@@ -67,5 +68,8 @@ Destinations: **item** (a frontmatter item of `concept.md`: its `refs` and `veri
 | Reference S4 (Torres) | « Non vérifié », with its title and link: no quotation, cited by nothing else |
 | Reference S9, its second link (`https://www.romanpichler.com/blog/the-product-vision-board/`) | nowhere: the description names the post and its date; the quotations come from the tool page |
 | Reference S11, its second link (`https://www.senseandrespond.co/books`) | nowhere: the Google Books page carries the title and subtitle quoted |
-| Reference S12, its second summary (UIE, `https://aycl.uie.com/virtual_seminars/outcomes`) | « Non vérifié », in the entry on Seiden's exact definition: which summary carries the phrase was not noted |
-| Reference S16, its second link (`https://www.scrum.org/ebm`) | nowhere: the same Scrum.org page |
+| Reference S12 (the Medium summary) and its second summary (UIE, `https://aycl.uie.com/virtual_seminars/outcomes`) | « Non vérifié », in the entry on Seiden's exact definition, both with their link: which summary carries the phrase was not noted, so neither can hold it in a `verified` cell; the quotation left the row on Seiden (2a) and items `stances.school[0]` and `stances.course[0]`, which keep S11 |
+| Reference S16, its second link (`https://www.scrum.org/ebm`) | nowhere: taken for the same Scrum.org page (not verified: the link was not opened for this pass) |
+| Row « La vision est un choix d'école : Scrum.org et Scrum Alliance la gardent ... », reference [S6] and the quotation « a bridge between the product vision and the Sprint Goals » | trimmed: four references for three quotations, and the page (S5 or S6) that carries « a bridge ... » was not noted; the S5 place now holds the S5 quotation on vision (« often an aspirational vision ... »), and S6 left the row, having no quotation on vision |
+| Row « Accoler deux résultats dans un objectif produit ... », reference [S13] | source [S1] only: S13 was a course choice, not a source |
+| Row « Normaliser les comptages bruts ... », the part « l'application au calcul de la mesure retenue ... est un raisonnement du cours » | trimmed: it applied the claim to a storyline measure |

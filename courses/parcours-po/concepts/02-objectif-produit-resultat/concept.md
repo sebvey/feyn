@@ -13,8 +13,8 @@ stances:
   school:
     - author: "Josh Seiden : le résultat comme changement de comportement"
       text: "Le résultat est un changement de comportement de l'utilisateur, qui produit la valeur (*Outcomes Over Output*, 2019). Le cours attribue à Seiden l'idée, pas une citation."
-      refs: ["S11", "S12"]
-      verified: ["« Why Customer Behavior Is the Key Metric for Business Success » (sous-titre, fiche du livre)", "« an outcome is a change in human behavior that drives business results » (résumé du livre)"]
+      refs: ["S11"]
+      verified: ["« Why Customer Behavior Is the Key Metric for Business Success » (sous-titre, fiche du livre)"]
     - author: "Scrum.org, Scrum Alliance : la vision produit"
       text: "Le Scrum Guide 2020 ne contient plus le mot « vision » (la version 2017 l'employait). Scrum.org et Scrum Alliance la gardent : pour Scrum.org, l'objectif produit est un pas concret et mesurable vers une vision souvent aspirationnelle. Un format de vision : le Product Vision Board de Roman Pichler (2011)."
       refs: ["S1", "S3", "S2", "S5", "S8", "S9"]
@@ -37,8 +37,8 @@ stances:
       verified: ["« 4 Key Value Areas » (page Evidence-Based Management)"]
   course:
     - text: "Le test qui sépare livrable et résultat : si l'équipe peut le faire seule, sans que personne ne change sa façon de travailler, c'est un livrable. Tiré de l'idée de Seiden, pas une citation."
-      refs: ["S11", "S12"]
-      verified: ["« Why Customer Behavior Is the Key Metric for Business Success » (sous-titre, fiche du livre)", "« an outcome is a change in human behavior that drives business results » (résumé du livre)"]
+      refs: ["S11"]
+      verified: ["« Why Customer Behavior Is the Key Metric for Business Success » (sous-titre, fiche du livre)"]
     - text: "Un indicateur que la plateforme calcule pour ses utilisateurs est un livrable, même quand on s'en sert pour juger le produit : on parle alors de mesure de résultat. Même chiffre, deux rôles."
       refs: []
     - text: "Un objectif produit qui décrit une caractéristique du livrable ou un moyen ne convient pas : il ne dit pas ce qui change pour qui."

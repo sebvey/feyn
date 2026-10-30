@@ -5,7 +5,7 @@
 | Le PO est responsable de maximiser la valeur du produit ; le Scrum Guide ne dit pas comment la mesurer | L'essentiel | [S1] | « accountable for maximizing the value of the product resulting from the work of the Scrum Team » ; « How this is done may vary widely » | consensus |
 | Le Scrum Guide 2020 n'emploie pas les mots « output » et « outcome » au sens livrable et résultat | 2a | [S1] | Texte cherché : « output » 0 occurrence ; « outcome » une seule, au sens de « l'issue du sprint » (« inspect the outcome of the Sprint », revue de sprint) | consensus |
 | Distinguer livrable (output) et résultat (outcome) fait partie des objectifs d'apprentissage de référence du PO | 2a | [S2] | CSPO 5.1 « describe the relationship between outcome and output » ; 5.2 « maximize outcomes and impact while minimizing outputs » ; 5.7 élément du backlog qui décrit le résultat visé et la valeur | consensus |
-| Pour Josh Seiden, le résultat est un changement de comportement de l'utilisateur, qui produit la valeur | 2a | [S11], [S12] | Sous-titre du livre : « Why Customer Behavior Is the Key Metric for Business Success » (Seiden, 2019) ; « an outcome is a change in human behavior that drives business results » (résumés du livre) | école |
+| Pour Josh Seiden, le résultat est un changement de comportement de l'utilisateur, qui produit la valeur | 2a | [S11] | Sous-titre du livre : « Why Customer Behavior Is the Key Metric for Business Success » (Seiden, 2019) | école |
 | Un livrable terminé, ou un incrément en production, ne prouve pas la valeur | 2a, Pièges | [S1], [S2] | SG : l'incrément doit être utilisable « to provide value » (Increment) ; CSPO 5.2 « maximize outcomes and impact while minimizing outputs » | consensus |
 | Test du cours : ce que l'équipe peut faire seule, sans que personne ne change sa façon de travailler, est un livrable ; un changement de comportement de l'utilisateur est un résultat | 2a | cours | Tiré de l'idée attribuée à Seiden (le résultat est un changement de comportement) ; pas une citation | cours |
 | Un indicateur calculé par la plateforme est un livrable, qui sert aussi de mesure de résultat quand on s'en sert pour juger le produit | 2a | cours | Choix de vocabulaire du cours (glossaire : « indicateur », ce que calcule le produit ; « mesure de résultat », ce qui juge le produit) | cours |
@@ -18,7 +18,7 @@
 | L'objectif produit relie le sprint au long terme : au Sprint Planning, le PO montre comment les éléments importants se rattachent à l'objectif produit ; à la revue, on discute du progrès vers lui ; chaque incrément est un pas vers lui | 2b | [S1] | « how they map to the Product Goal » (Sprint Planning) ; « progress toward the Product Goal is discussed » (revue) ; « An Increment is a concrete stepping stone toward the Product Goal » | consensus |
 | L'objectif produit a été introduit par le Scrum Guide 2020 | 2b | [S3] | « The 2020 Scrum Guide introduces the concept of a Product Goal » (historique des révisions) | consensus |
 | Le Scrum Guide 2020 ne contient pas le mot « vision » ; la version 2017 l'employait (« a step toward a vision or goal », à propos de l'incrément) | 2b | [S1], [S3] | Texte 2020 cherché : « vision » 0 occurrence hors navigation du site (cadrage T-018a, revérifié) ; historique des révisions, changements 2016-2017 : « The increment is a step toward a vision or goal » | consensus |
-| La vision est un choix d'école : Scrum.org et Scrum Alliance la gardent et la relient à l'objectif produit | 2b | [S2], [S5], [S8] | CSPO 2.1 « explain the relationship between a product vision and a product goal » ; Scrum.org : l'objectif produit est « a bridge between the product vision and the Sprint Goals » ; PSPO, domaine « Product Vision » | école |
+| La vision est un choix d'école : Scrum.org et Scrum Alliance la gardent et la relient à l'objectif produit | 2b | [S2], [S5], [S8] | CSPO 2.1 « explain the relationship between a product vision and a product goal » ; Scrum.org : la vision est « often an aspirational vision of what the product could be » (page « Product Goal ») ; PSPO, domaine « Product Vision » | école |
 | Pour Scrum.org, l'objectif produit est un pas concret, mesurable, vers une vision souvent aspirationnelle | 2b | [S5] | « a concrete, actionable, measurable objective » ; la vision est « often an aspirational vision of what the product could be » | école |
 | Le Scrum Guide n'impose ni format ni horizon à l'objectif produit | 2b | [S1], [S5] | Aucun format dans le SG ; Scrum.org : « There is no specific format for the Product Goal or indication of how long the planning horizon is » | consensus |
 | Critères d'un bon objectif produit selon Scrum.org : aligné sur la vision, clair et concis, orienté résultat (un besoin du client), mesurable, transparent | 2b | [S6] | Liste des critères de « Formulating a Product Goal », dont « Outcome-driven to reflect a customer want or need » ; page sans auteur nommé | école |
@@ -48,10 +48,9 @@
 | S5 | Scrum.org, « Product Goal » (page de ressource, sans auteur nommé) | https://www.scrum.org/resources/product-goal | primaire (Scrum.org), marketing pour ses formations | 2026-10-22 |
 | S6 | Scrum.org, « Formulating a Product Goal » (page de ressource, sans auteur nommé) | https://www.scrum.org/resources/formulating-product-goal | primaire (Scrum.org), marketing pour ses formations | 2026-10-22 |
 | S8 | Scrum.org, PSPO I | https://www.scrum.org/assessments/professional-scrum-product-owner-i-certification | primaire, marketing (pour la certification) | 2026-10-22 (cadrage T-018a) |
-| S9 | Pichler, « The Product Vision Board », page de l'outil (billet du même titre publié le 10 mai 2011) | https://www.romanpichler.com/tools/the-product-vision-board/ | primaire (site de l'auteur, qui vend aussi ses formations) | 2026-10-22 |
+| S9 | Pichler, « The Product Vision Board », page de l'outil, romanpichler.com | https://www.romanpichler.com/tools/the-product-vision-board/ | primaire (site de l'auteur, qui vend aussi ses formations) | 2026-10-22 |
 | S10 | Rodden, Hutchinson, Fu, « Measuring the User Experience on a Large Scale: User-Centered Metrics for Web Applications », CHI 2010 (version auteur) | https://research.google.com/pubs/archive/36299.pdf | primaire | 2026-10-22 |
 | S11 | Seiden, *Outcomes Over Output: Why Customer Behavior Is the Key Metric for Business Success*, Sense & Respond Press, 2019 (fiche du livre) | https://books.google.com/books/about/Outcomes_Over_Output.html?id=1QbDzQEACAAJ | primaire (fiche), livre non lu | 2026-10-22 |
-| S12 | Résumé du livre de Seiden (Medium, « Book Sips #9 ») | https://medium.com/the-pm-library/book-sips-9-outcomes-over-output-by-joshua-seiden-82103583c602 | secondaire | 2026-10-22 |
 | S15 | Ries, « Vanity Metrics vs. Actionable Metrics », billet invité sur le blog de Tim Ferriss, 19 mai 2009 | https://tim.blog/2009/05/19/vanity-metrics-vs-actionable-metrics/ | primaire | 2026-10-22 |
 | S16 | Scrum.org, Evidence-Based Management | https://www.scrum.org/resources/evidence-based-management | primaire (Scrum.org), marketing pour ses formations | 2026-10-22 |
 | S19 | Wikipédia, « Goodhart's law » | https://en.wikipedia.org/wiki/Goodhart%27s_law | secondaire | 2026-10-22 |
@@ -59,11 +58,13 @@
 ## Non vérifié
 
 - 2a : **définition exacte de Seiden** : la phrase « an outcome is a change in human behavior
-  that drives business results » circule, avec ou sans « measurable », dans des résumés (S12 ;
-  UIE, « Managing Outcomes in Three Easy Steps », https://aycl.uie.com/virtual_seminars/outcomes,
-  consulté le 2026-10-22, sans que la page qui porte la phrase ait été notée) ; le texte du
-  livre n'a pas pu être lu. Le fichier du concept peut attribuer à Seiden
-  l'idée (résultat = changement de comportement de l'utilisateur), pas une citation.
+  that drives business results » circule, avec ou sans « measurable », dans deux résumés du
+  livre consultés le 2026-10-22 (Medium, « Book Sips #9 »,
+  https://medium.com/the-pm-library/book-sips-9-outcomes-over-output-by-joshua-seiden-82103583c602 ;
+  UIE, « Managing Outcomes in Three Easy Steps »,
+  https://aycl.uie.com/virtual_seminars/outcomes), sans que la page qui la porte ait été notée ;
+  le texte du livre n'a pas pu être lu. Le fichier du concept peut attribuer à Seiden l'idée
+  (résultat = changement de comportement de l'utilisateur), pas une citation.
 - Pièges : **loi de Goodhart** : la formulation de 1975 et son lieu de publication ne sont
   rapportés que par des sources secondaires, discordantes sur le lieu ; la formulation courante
   vient de Strathern (1997), qui l'attribue à Hoskin. Écrire « loi de Goodhart » sans date ni
