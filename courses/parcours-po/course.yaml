@@ -69,10 +69,8 @@ concepts:
         children:
           - id: 0a1
             title: "Trois responsabilités"
-            messages: 4
           - id: 0a2
             title: "Le sprint et ses quatre événements"
-            messages: 5
           - id: 0a3
             title: "Trois artefacts, trois engagements"
       - id: 0b

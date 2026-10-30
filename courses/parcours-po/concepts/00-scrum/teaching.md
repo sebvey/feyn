@@ -10,7 +10,9 @@
 2. **Ce que l'apprenant sait déjà** : ce qu'il a dit de Scrum à l'accueil (« Avant le parcours »
    de `learner/apprenant.md`) ne fait sauter aucun message ; l'explication du sous-concept qui le
    traite le rappelle (« tu l'as dit : … »), plus court.
-3. **0a le cadre**, en trois parties :
+3. **0a le cadre**, en trois parties. 0a1 et 0a2 ne tiennent pas chacun en un message (« Reste
+   court ») : l'enseignant les découpe comme ci-dessous, une partie par message ; le cas de
+   chaque message est au point 5, et l'en-tête du cas nomme sa partie, par exemple (0a1, le PO) :
    - **0a1 les responsabilités**, en quatre messages, chacun avec son explication, son exemple
      et sa question, dans cet ordre : l'équipe en bref, le PO, les Developers, le Scrum Master.
      Le niveau est celui du Scrum Guide : de quoi chacun répond. Ce que le PO tranche face aux
@@ -27,12 +29,13 @@
    remplit pas la DoD n'en fait pas partie (ni livré ni présenté à la revue, il retourne au
    backlog produit). Le message de 0b pose « La vue des stations vides livrée un mercredi » ;
    « « Le sprint est livré » » sert d'exercice ou de creusage.
-5. **Cas de la banque** : pour 0a1, « Qui est le chef de l'équipe vélos ? », « Diego écrit des
-   éléments du backlog », « Anna est-elle une Developer ? », « Qui tranche dans l'équipe vélos » ;
-   pour 0a2, « Une semaine pour souffler », « Scarlette choisit le travail du sprint », « Le
+5. **Cas de la banque** : pour 0a1, un par message, dans l'ordre des messages, « Qui est le chef
+   de l'équipe vélos ? », « Diego écrit des éléments du backlog », « Anna est-elle une
+   Developer ? », « Qui tranche dans l'équipe vélos » ; pour 0a2, un par message, dans l'ordre
+   des messages, « Une semaine pour souffler », « Scarlette choisit le travail du sprint », « Le
    compte rendu du matin », « Des diapositives pour Étienne », « Odile veut assister à la
-   rétrospective », « Le sprint raconté par Diego » ; pour 0a3, « Trois artefacts, trois
-   engagements ».
+   rétrospective », puis « Le sprint raconté par Diego » après les cinq messages, en exercice ou
+   au creusage ; pour 0a3, « Trois artefacts, trois engagements ».
 
 ## Banque d'exemples
 

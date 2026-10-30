@@ -10,3 +10,7 @@ rédaction. En 0.x, tout peut encore bouger.
 Une ligne par changement : `- CATÉGORIE, concept ou fichier : ce qui change`.
 
 ## Non publié
+
+- PATCH, concept 0 : le découpage de 0a1 (quatre messages) et de 0a2 (cinq messages) passe de
+  `course.yaml` (champ `messages`, retiré de la spec) aux « Consignes » de `teaching.md`, qui
+  lient chaque message à son cas de la banque.
