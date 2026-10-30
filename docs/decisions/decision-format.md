@@ -11,15 +11,15 @@ without it.
 
 A decision is one Markdown file named by its slug (`two-versioned-objects.md`); the slug is its
 identifier, cited as "decision two-versioned-objects". Its frontmatter holds `date`, `issue`
-(the originating issue number, or `null`), `status` (`accepted` or `superseded`), `area` (the
-area it binds) and, only when superseded, `superseded-by: <slug>` (the decision that replaces
-it). After the frontmatter, the first line is the **counterfactual**, "Without this, an agent
-would…"; then the decision in one paragraph. Optional headings, only when they add: options
-ruled out, consequences. No index: `ls` and the frontmatter suffice. A decision that still
-holds but whose mechanism changed (a skill renamed, a file moved, a step that now runs
-elsewhere) gets one line `- Amended <date> (#<n>): …` under a `## Consequences` heading, added
-when the file has none; the rest of the file stays untouched. A decision that no longer holds
-is superseded (`status: superseded` and `superseded-by: <slug>`), never amended.
+(the originating issue number, or `null`), `status` (`accepted` or `superseded`), followed,
+only when superseded, by `superseded-by: <slug>` (the decision that replaces it), and `area`
+(the area it binds). After the frontmatter, the first line is the **counterfactual**, "Without
+this, an agent would…"; then the decision in one paragraph. Optional headings, only when they
+add: options ruled out, consequences. No index: `ls` and the frontmatter suffice. A decision
+that still holds but whose mechanism changed (a skill renamed, a file moved, a step that now
+runs elsewhere) gets one line `- Amended <date> (#<n>): …` under a `## Consequences` heading,
+added when the file has none; the rest of the file stays untouched. A decision that no longer
+holds is superseded (`status: superseded` and `superseded-by: <slug>`), never amended.
 
 A decision lives in the `decisions/` folder of the most local area it binds:
 `specs/<name>/<MAJOR>/decisions/` (a new MAJOR copies them under the same slugs),
