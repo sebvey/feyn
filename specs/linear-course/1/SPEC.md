@@ -207,7 +207,7 @@ In this order (`concept-folder`):
    sub-concept sections teach, for the learner who asks to go further. Its claims are sourced in
    `sources.md` like any other (4.4), and the site builds it like the rest of the file. The
    teacher reads it in an aside, on the learner's request (`PROTOCOL.md`, rule
-   `asides-welcome`), never on the course path; no case, of any type, relies on it.
+   `deepening-read-in-aside`), never on the course path; no case, of any type, relies on it.
 
 ### 4.3 `teaching.md`
 
