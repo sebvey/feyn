@@ -1,5 +1,5 @@
 'use strict';
-// A term of the course glossary is used after the concept that defines it (SPEC.md section 6):
+// A term of the course glossary is used after its defining concept (SPEC.md section 6):
 // every use in a concept.md, body and frontmatter, before the defining concept fails, unless its
 // sentence carries a concept reference to that concept. Each comma variant of the term cell is
 // matched, whole word, case ignored; a row whose term cell has a parenthesis (a sense
@@ -128,7 +128,7 @@ function run(ctx) {
           const key = `${n}|${t.line}`;
           if (seen.has(key)) continue;
           seen.add(key);
-          out.push(fail(f, n, `uses the term "${u[0]}" before concept ${t.def.number}, which defines it (glossary.md:${t.line}): use it after, or name that concept in the sentence (« ${t.ref} »)`));
+          out.push(fail(f, n, `uses the term "${u[0]}" before concept ${t.def.number}, its defining concept (glossary.md:${t.line}): use it after, or name that concept in the sentence (« ${t.ref} »)`));
         }
       }
     }

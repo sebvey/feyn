@@ -1,2 +1,2 @@
 check: glossary-order
-message: concept.md:20 uses the term "couche" before concept 1, which defines it (glossary.md:8): use it after, or name that concept in the sentence (« concept 1 »)
+message: concept.md:20 uses the term "couche" before concept 1, its defining concept (glossary.md:8): use it after, or name that concept in the sentence (« concept 1 »)
