@@ -22,7 +22,7 @@ no section.
 
 | Line | Row | Went to |
 |---|---|---|
-| 9 | « Les rôles utilisateurs viennent du usage-centered design ; les personas, de l'interaction design » | frontmatter `stances.school[0]` and `school[1]` (the S2 quotation); the body names neither discipline |
+| 9 | « Les rôles utilisateurs viennent du usage-centered design ; les personas, de l'interaction design » | frontmatter `stances.school[0]` and `school[1]` (the S2 quotation); the body does not name the usage-centered design; « venu du design d'interaction » (6b) is covered by the row « Le persona est un choix d'école » (row 17, S2) |
 | 18 | « Exemple du fil rouge en 6a : Étienne… Régis… » | nowhere: a storyline fact |
 | 21 | « Le persona se construit à partir d'utilisateurs réels interrogés » | « Non vérifié » (6b, Pièges): S7 held a paraphrase, no quotation; S8 had none either |
 | 22 | « Les personas viennent d'Alan Cooper » | merged into row 17 (6b); its S6 quotation (« first published in 1998… ») in `stances.school[1]` |
@@ -93,7 +93,8 @@ no section.
   as its S1, identical to S2 here (description, link, type, consulted on): S2 kept, the
   quotation of concept 1 copied with the place « (Product Backlog) » that concept 1's
   frontmatter gives it; re-anchored to 7a1, Pièges; order [S2], [S1].
-- Row 14: split: V for Wake (S1, the reasoning left) and a new row for the Agile Alliance's
+- Row 14: split in three: V for Wake (S1, the reasoning left), V for the user as the
+  course's reading (« cours », nature `cours`), and a row for the Agile Alliance's
   « Valuable (or vertical) » (S3, 7a1, nature `fait`), a claim the body makes.
 - Rows 12, 15, 16, 17, 21: 7a -> 7a1 (and 7a2, Pièges where the body says it); row 16 lost
   « banque « Heures de pointe » ».
@@ -134,7 +135,8 @@ no section.
 | 37 | « Dépendances (10) et DoR (11) : nommés avec renvoi » | nowhere: pointers, not claims |
 
 - Rows 9, 11, 12, 24: re-anchored from « Consensus et choix d'école » or 8b to 8b1 (and
-  Pièges for row 11); row 12 lost its writing advice; row 9 lost the publication history
+  Pièges for row 11); row 12 lost its writing advice and now reads as 8b1 does (« Cucumber
+  et son langage Gherkin outillent Given/When/Then »); row 9 lost the publication history
   (the reference holds it).
 - Row 14: S11 (the course glossary) left; L'essentiel -> L'essentiel, 8a1.
 - Row 16: S11, S6 and S7 left: « cours »; Gherkin's Rule quotation went to
@@ -148,7 +150,7 @@ no section.
   vague word, whose source is the Scrum Guide 2020 (concept 7's S2), identical to S1 here: S1
   kept, concept 7's quotation copied. Row 23's S7 quotation went to the Example Mapping row
   and `stances.course[4]`; the storyline DoR and « presque vide » left.
-- Rows 25, 26: S12 (session observations) left; re-anchored to 8b1, Pièges.
+- Rows 25, 26: S12 (teaching session observations) left; re-anchored to 8b1, Pièges.
 - Row 27: S12 -> « cours »; Gherkin's « 3-5 steps per example » stays in `stances.course[1]`.
 - Row 28: storyline facts left; the row keeps the claim of the body (a result observable by
   the user, not a means), [S6], [S3].
@@ -166,8 +168,9 @@ no section.
   it the quotation « BDD is a practice where members of the team discuss the expected behavior
   of a system »; the description still names both entries. Which page carries the other
   quotations is not recorded.
-- References S11 (the course glossary, link `glossary.md`) and S12 (session observations,
-  link « (dépôt) ») left: internal, not sources; the claims they backed cite « cours ».
+- References S11 (the course glossary, link `glossary.md`) and S12 (teaching session
+  observations, link « (dépôt) ») left: internal, not sources; the claims they backed cite
+  « cours ».
 - Frontmatter `stances.course[1]` lost S5: North's ATM example is paraphrased, not quoted;
   « Non vérifié » (8b2).
 - « Non vérifié »: the entry on SPIDR and Richard Lawrence left: not a claim of concept 8,
