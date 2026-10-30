@@ -29,7 +29,8 @@ writing instruction already shows in the body.
 - Row 20, « Détailler tôt le bas du backlog », stays, nature `école` -> `cours`: the body marks
   the claim « [cours] » (3a2).
 - Row 25, « On n'en remplit qu'une partie au début »: S5 left it (Rubin's « Prioritizing beyond
-  that is likely a waste of effort » does not settle it).
+  that is likely a waste of effort » does not settle it); nature `fait`, what the replaced
+  2017 guide stated.
 - Row 26, « On ne le dépile pas »: S3 left it (the revision history does not say the order
   changes).
 - Reference S5: its second link (InformIT extract,
@@ -52,7 +53,9 @@ writing instruction already shows in the body.
 
 - Rows 8 and 27 cited `concepts/00-scrum/sources.md`, `concepts/01-produit-et-po/sources.md`
   and `concepts/03-backlog-produit/sources.md`: the reference those concepts cite there is
-  the Scrum Guide 2020, already S1 here with the same description and link; the quotations of
+  the Scrum Guide 2020, the same work and URL as S1 here, which was kept rather than copied
+  (concept 0's S1 differs in its description and consulted-on date, concept 3's in its
+  consulted-on remark: a deviation from the ruling, raised in the PR); the quotations of
   their verified cells were copied (« composed of the Sprint Goal (why)… », « a plan by and for
   the Developers », « It is the single source of work undertaken by the Scrum Team. »).
 - Row 12, « La frontière entre niveaux est floue »: kept as « Aucun seuil ne sépare les
@@ -61,7 +64,12 @@ writing instruction already shows in the body.
 - Row 14, thème: S6 left it (no quotation).
 - Row 18, « Chaque équipe choisit ses niveaux »: S4 left it (no quotation); « Non vérifié »
   (4a2).
-- Row 19, « Une story tient dans un sprint »: S2 left it (a deduction, no quotation).
+- Row 7, « La tâche »: narrowed to what the body says (the Developers plan the work of each
+  item); « un jour ou moins » and « à leur seule discrétion » stay in
+  `stances.consensus[0]`, which quotes them.
+- Row 19, « Une story tient dans un sprint »: S2 left it (a deduction, no quotation); split in
+  two rows, « tient dans un sprint » (L'essentiel, 4a1, « cours ») and « aucune durée en
+  jours » (Pièges, S7), since Wake's « at most a few person-weeks » settles only the second.
 - Rows 20 to 25 and 28: the internal reference S8 (session improvements, `[c4]`) and the
   « appui partiel » mentions became the source « cours ».
 - Reference S6 (Wikipédia, « User story ») left: no row or item quotes it any more; its
