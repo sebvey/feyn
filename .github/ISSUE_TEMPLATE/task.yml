@@ -1,13 +1,56 @@
 name: Issue
-description: "An issue on feyn: Observation, To do, Done when."
+description: "An issue on feyn: the head (where, what, why), Done when, Observation, To do, Reads."
 title: "Imperative summary of the work"
 body:
   - type: markdown
     attributes:
       value: |
         Title: imperative, like a commit summary. Add the `type:` and `area:` labels after
-        creating the issue (the area follows the paths the observation names). The Project's
+        creating the issue (the area is the one the Where line names). The Project's
         workflows add the issue to the Project with the Status Backlog.
+  - type: textarea
+    id: head
+    attributes:
+      label: Where, what, why
+      description: >-
+        Three lines, each its own paragraph (a blank line between them), read to choose among
+        the Ready issues: `**Where:**` the area, then at most three words on what is touched;
+        `**What:**` what the issue delivers, in one sentence; `**Why:**` why it matters now, in
+        one sentence.
+      placeholder: |
+        **Where:** agentic (the issue template)
+
+        **What:** <what the issue delivers>
+
+        **Why:** <why it matters now>
+    validations:
+      required: true
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when
+      description: Statements a reviewer can verify by reading a file or running a command, one per bullet.
+    validations:
+      required: true
+  - type: textarea
+    id: observation
+    attributes:
+      label: Observation
+      description: >-
+        From the fact to the context: first line, what is wrong or missing, and where (path,
+        line); then the other facts, one short bullet each; the history last. Facts only, no
+        solution.
+    validations:
+      required: true
+  - type: textarea
+    id: todo
+    attributes:
+      label: To do
+      description: >-
+        One line per item, the what (the file and the change); the how, when needed, in
+        sub-bullets. Numbered when the order matters.
+    validations:
+      required: true
   - type: textarea
     id: reads
     attributes:
@@ -16,24 +59,3 @@ body:
       placeholder: "design/08-agentic.md (\"GitHub Issues\")"
     validations:
       required: false
-  - type: textarea
-    id: observation
-    attributes:
-      label: Observation
-      description: What exists, what is missing, where.
-    validations:
-      required: true
-  - type: textarea
-    id: todo
-    attributes:
-      label: To do
-      description: The work, as steps when the order matters.
-    validations:
-      required: true
-  - type: textarea
-    id: done-when
-    attributes:
-      label: Done when
-      description: Verifiable statements.
-    validations:
-      required: true
