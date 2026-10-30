@@ -205,8 +205,11 @@ Body of `concept.md`: unchanged.
 - Frontmatter: every item with `refs` got its `verified`; `stances.consensus[2]` gets the
   absences of « escalat » and « sponsor », searched on 2026-10-30; `stances.school[0]` quotes
   S3 for Freeman and Reed's definition only (Mendelow's list left: it is not Freeman's).
-- S11's description now names its author, V. M. James, 2011, PMI Global Congress North America,
-  as the archived page shows (found by the review); « auteur non relevé » left.
+- S11's description now names its author, V. M. James, 2011, PMI Global Congress North America
+  (found by the review); « auteur non relevé » left. Checked on 2026-10-30 on the archived copy
+  of 2021-07-31 (`https://web.archive.org/web/20210731151126/https://www.pmi.org/learning/library/project-sponsorship-collaborative-journey-6210`),
+  which also holds the escalation quotation; « consultée le » adds « ; 2026-10-30 (auteur
+  relevé sur une copie archivée de 2021) ».
 - « Non vérifié »: the PSPO entry left (« aucune affirmation n'en dépend »: it anchors no
   claim); « dire ce qui ferait monter la demande » and « trois sprints de relances » left their
   entries (the body does not state them); every other entry now opens with its section.
@@ -335,8 +338,8 @@ Body of `concept.md`: unchanged.
 - Row 30: its path to concept 1 left (S1 kept).
 - Rows 31 and 32: row 31 stays a consensus row on S1, its « Sprint forecasts » now the
   sentence's end, « the more confident they will be in their Sprint forecasts » (longer); row 32
-  is the `cours` row on the release forecast, on S9 and S7 (S1 left it: its quotation is row
-  31's). A first pass had merged them; the review split them back.
+  is the `cours` row on the release forecast, on S1 (the absence « release plan », searched on
+  2026-10-30, as in `stances.consensus[0]`), S9 and S7. A first pass had merged them; the review split them back.
 - Row 23: « Patton l'emploie dans ce sens » and S3 left after the review: 16b2 does not state
   it (it is `stances.school[1]`).
 - Row 33: S10's paraphrases are now quoted (« The word commitment usually relates to undertaken
