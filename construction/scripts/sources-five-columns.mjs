@@ -2,8 +2,8 @@
 // then, to check the result: mise exec -- node construction/scripts/sources-five-columns.mjs <course dir> --verify <git ref>
 // Puts the « Affirmations » table of every concepts/*/sources.md of a course in the five columns of SPEC 4.4
 // (claim, section, source, verified, nature) and removes the file's introduction (the lines above
-// « Affirmations »), changing no other byte. The section column takes, verbatim, the claim cell's last
-// parenthesis when that parenthesis closes the cell and names a section: its first piece (up to the first
+// « Affirmations »), changing no other word (a claim cell loses the spaces before its parenthesis).
+// The section column takes, verbatim, the claim cell's last parenthesis when that parenthesis closes the cell and names a section: its first piece (up to the first
 // « , » or « ; ») opens with a sub-concept id (0a1, A2b), « concept N », a section of concept.md or
 // teaching.md (L'essentiel, Pièges, Le test rapide, Approfondissement, Objectif, Schéma, Consensus et choix
 // d'école, Banque d'exemples, Consignes, Faits du fil rouge utilisés), a part of the bank (banque, Sur un
