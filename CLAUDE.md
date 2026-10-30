@@ -7,7 +7,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 
 | Folder | Holds |
 |---|---|
-| `specs/` | specs of course kinds (`linear-course`: contract, language packs, checks, templates) |
+| `specs/` | specs of course kinds (`linear-course`: contract, language packs, checks, templates); rules in `specs/README.md` |
 | `courses/` | one folder per course, `courses/<id>/` (first: `parcours-po`) |
 | `teacher/` | teacher template, teacher skills, classroom build script |
 | `site/` | the site engine (Astro); reads `courses/` directly |
