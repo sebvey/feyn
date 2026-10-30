@@ -120,9 +120,8 @@ lists, and a run must run the checks of its mode and no other.
   that must fail, in its mode, and the message it must give. No other check of either mode may
   fail (the test says so), except for the broken language pack.
   `broken/course-yaml-unlisted-folder` also runs with `--concept 0`, where `course-yaml` passes.
-- `fixtures/prototype/`: the course-level files around the concept 9 prototype
-  (`courses/parcours-po/concepts/09-decoupage-vertical`, copied in at test time); every check
-  of both modes passes with `--concept 9`. The real course files come with S1-08.
+- No real course is a fixture: `specs/check-course courses/parcours-po` checks the real course,
+  and a change to the spec reports its new failures there.
 - `fixtures/lang/fr.yaml`: the pack the fixtures use (the groups the checks read: section 9 and the
   keys of `PROTOCOL.md`, French values of the real pack `lang/fr.yaml`, without `site`; change both
   together). `fixtures/lang-broken*/`: packs with one missing key, for the broken copies that name them.

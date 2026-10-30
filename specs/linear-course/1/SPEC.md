@@ -201,9 +201,9 @@ In this order (`concept-folder`):
 **Purpose.** `teaching.md` holds what the teacher needs beyond the reader text, above all the
 **cases**. A case is the prepared question of the loop: the teacher poses it at a sub-concept and
 corrects the answer. It gives coverage (every leaf sub-concept has one, checked), the course's
-own position (its expected answer is the consensus or school the concept states), experience
-(its common mistakes come from real learners), anchoring (it lives in the storyline) and
-testability (taught-check and fresh tests cite it by its title). A case is created for one of
+own position (its expected answer is the stance the concept states: consensus, school or
+course), experience (it anticipates the mistakes learners make), anchoring (it lives in the
+storyline) and testability (taught-check and fresh tests cite it by its title). A case is created for one of
 four needs, its **type** (below): one per leaf sub-concept, on the course path; a fallback, when
 the learner fails the first; a practice case, for the learner who wants to practise a validated
 concept; an aside, for a frequent question off the course path. A case is never created for what
@@ -212,7 +212,7 @@ the reader text does not state: that is a gap of the concept, filled in `concept
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | the order and split of the concept, the case to pose at each sub-concept, how to correct the answer | each leaf sub-concept; each fallback, practice case or aside |
-| the learner | through the teacher, a case's explanation, situation and question; never its expected answer | each message that poses a case |
+| the learner | through the teacher, a case's explanation, situation and question; its expected answer never before they answer | each message that poses a case |
 | the creator (human or agent) | when to create a case, and what each of its fields may contain | writing or changing a concept's teaching notes |
 | taught-check | what each case asks, against what the learner was taught before it | after a change to what a concept teaches |
 
@@ -244,7 +244,7 @@ pack's `qualifiers` group and gives the case its type:
 |---|---|---|
 | main | none | at its sub-concept, on the course path, in the order of « Consignes » |
 | fallback | « rechange » (`qualifiers.fallback`) | when the learner fails the case of the same sub-concept; it stands alone: its own situation and question, nothing borrowed from the failed case |
-| practice | « entraînement » (`qualifiers.practice`) | when the learner practises a validated concept, one case per message, without re-explaining (`PROTOCOL.md`, rule `digging-cases-chosen`) |
+| practice | « entraînement » (`qualifiers.practice`) | when the learner practises a validated concept, one case per message, without re-explaining (`PROTOCOL.md`, rules `validated-concept-exercises` and `digging-cases-chosen`) |
 | aside | « aparté » (`qualifiers.aside`) | in an aside, on a question off the course path (rule `asides-welcome`) |
 
 The case's **title**, its identifier, is the heading without the parenthesis; titles are unique
@@ -263,7 +263,7 @@ colon (« **Question**, en deux parties : ») (`concept-folder`):
 | « Question » (`question`) | mandatory | the question the case asks | the teacher, then the learner; taught-check | at the end of the message that poses the case |
 | « Réponse attendue » (`expected_answer`) | mandatory | the right answer with its nuances: the course's position as `concept.md` states it | the teacher; taught-check | correcting the learner's answer |
 | « Erreurs fréquentes » (`common_mistakes`) | mandatory | frequent answers and how to correct them, follow-ups inline | the teacher | correcting a partial or wrong answer, and in its follow-ups |
-| « Ce qui marche » (`what_works`) | optional | a wording or follow-up a teacher saw work; empty in a new course; the maintainer adds it from the teacher's observations | the teacher | posing the case and correcting the answer |
+| « Ce qui marche » (`what_works`) | optional | a wording or follow-up a teacher saw work; empty in a new course; the maintainer adds it from what the teacher notes in learner memory (`PROTOCOL.md`, rule `save-levers`) | the teacher | posing the case and correcting the answer |
 
 The optional fields before « Situation » come in any order; the four mandatory fields come in
 the order of the table; « Ce qui marche » comes last.
