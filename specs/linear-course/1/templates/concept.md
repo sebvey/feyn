@@ -8,8 +8,8 @@ How to use: copy to the concept folder, replace every <placeholder>, delete this
 - One ## section per first-level sub-concept of course.yaml, in order: `## <id> <title>` (the
   title as in course.yaml), then the promise, one paragraph all in italics. With children it
   holds only the ### sections of its children; without, its reader text follows the promise.
-- Concept references are plain text: `concept 4`, `concepts 5 et 7b`. Stance markers `[cours]`,
-  `[école]`, `[consensus]` come right after the claim they qualify.
+- Concept references are plain text: `concept 4`, `concepts 5 et 7b`, `annexe A2`. Stance
+  markers `[cours]`, `[école]`, `[consensus]` come right after the claim they qualify.
 - Storyline blockquote: starts with `**Fil rouge :**`; no other blockquote in the sub-concept
   sections.
 - Frontmatter: `stances` (three keys, each a list, possibly empty), `neighbors` (optional).
@@ -18,9 +18,12 @@ How to use: copy to the concept folder, replace every <placeholder>, delete this
   body has no stances section, and the site renders them from the frontmatter.
 - A diagram is optional: to have none, delete the `diagrams` key and the image line below. To
   have one: draw it from diagram.svg, declare it in `diagrams` (all four keys), and put the
-  image alone in its paragraph, once; the alt text is the declared `title`.
+  image alone in its paragraph, once, in the section of its `subconcept` or in « L'essentiel »;
+  the alt text is the declared `title`.
 - « Pièges »: one bulleted list, each item opening with the pitfall in bold. « Le test
   rapide »: one blockquote (the question), then at most one paragraph (the note).
+- « Approfondissement » is optional: more matter for the learner who asks to go further,
+  sourced in sources.md; no case relies on it. To have none, delete the section.
 -->
 ---
 description: "<one sentence for the site>"
@@ -80,3 +83,7 @@ diagrams:
 > <one question that checks in ten seconds that the concept is applied>
 
 <the note: what a right answer looks like>
+
+## Approfondissement
+
+<more matter on the concept, for the learner who asks to go further>

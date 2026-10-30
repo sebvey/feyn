@@ -6,12 +6,12 @@ const yaml = require('./lib/yaml');
 const { fail } = require('./lib/course');
 
 const KEYS = {
-  headings: ['objective', 'essentials', 'stances', 'pitfalls', 'quick_test', 'instructions', 'storyline_facts', 'bank', 'drawing',
+  headings: ['objective', 'essentials', 'stances', 'pitfalls', 'quick_test', 'deepening', 'instructions', 'storyline_facts', 'bank', 'drawing',
     'claims', 'references', 'unverified', 'problem', 'concept_thread', 'from_to', 'crossing_case', 'audience', 'onboarding', 'avoid', 'unreleased'],
   case_fields: ['usage', 'explanation', 'situation', 'question', 'expected_answer', 'common_mistakes', 'what_works'],
   qualifiers: ['fallback', 'practice', 'aside'],
   markers: ['storyline', 'consensus', 'school', 'course'],
-  references: ['concept', 'concepts', 'and'],
+  concept_refs: ['concept', 'concepts', 'and', 'annex'],
   source_types: ['primary', 'secondary', 'marketing'],
 };
 const LISTS = { typography: 'banned' };

@@ -75,7 +75,7 @@ addresses cite.
 
 Read by the site, the classroom build and the checks (`course-yaml` for every rule here).
 
-| Field | Status | Meaning |
+| Field | Presence | Meaning |
 |---|---|---|
 | `id` | mandatory | the course id: lowercase ASCII words joined by hyphens, equal to the folder name |
 | `spec` | mandatory | `linear-course@<MAJOR>`: the spec MAJOR the course follows (section 8) |
@@ -94,7 +94,7 @@ Read by the site, the classroom build and the checks (`course-yaml` for every ru
 
 A **domain** entry:
 
-| Field | Status | Meaning |
+| Field | Presence | Meaning |
 |---|---|---|
 | `number` | mandatory | integer; the domains are numbered 1, 2, 3… in list order |
 | `slug` | mandatory | lowercase ASCII words joined by hyphens |
@@ -106,7 +106,7 @@ A **domain** entry:
 
 A **concept** entry (annexes included):
 
-| Field | Status | Meaning |
+| Field | Presence | Meaning |
 |---|---|---|
 | `number` | mandatory | the concept's identifier: `0`, `1`… for a numbered concept, `A1`, `A2`… for an annex; a string (an unquoted integer is read as its decimal string) |
 | `slug` | mandatory | lowercase ASCII words joined by hyphens |
@@ -119,7 +119,7 @@ A **concept** entry (annexes included):
 
 A **sub-concept** node:
 
-| Field | Status | Meaning |
+| Field | Presence | Meaning |
 |---|---|---|
 | `id` | mandatory | first level: the concept number and a letter, from `a` in order (`9a`, `9b`, `A2a`); second level: its parent's id and a digit, from `1` in order (`9a1`, `9a2`) |
 | `title` | mandatory | the sub-concept title, as its heading in `concept.md` writes it |
@@ -148,7 +148,7 @@ memory and site addresses cite them. Changing one is a course MAJOR (section 8).
 ```
 concepts/09-decoupage-vertical/
   concept.md         mandatory   reader-facing: built by the site, read by the teacher
-  teaching.md        mandatory   teacher-only: teaching notes and example bank; never built
+  teaching.md        mandatory   teacher-only: teaching notes, example bank included; never built
   sources.md         mandatory   reader-facing, filtered by the site (4.4)
   <stem>.svg         optional    reader-facing: one file per diagram (section 7)
 ```
@@ -159,7 +159,7 @@ heading, in the order given, and no other `##` section exists (`concept-folder`)
 
 ### 4.1 `concept.md` frontmatter
 
-| Key | Status | Meaning |
+| Key | Presence | Meaning |
 |---|---|---|
 | `description` | mandatory | one sentence for the site (search engines, previews) |
 | `stances` | mandatory | the standing of the concept's claims, three keys, each a list of items, possibly empty |
@@ -187,7 +187,8 @@ declared file exists and every SVG of the folder is declared (`svg-contract`).
 In this order (`concept-folder`):
 
 1. « Objectif » (`objective`), mandatory: the concept's `objective`, verbatim, give or take line
-   breaks, a capital first letter and a final period (`concept-folder`).
+   breaks, written with a capital first letter and ending with a period where the field ends
+   with no `.`, `!` or `?` (`concept-folder`).
 2. « L'essentiel » (`essentials`), mandatory: the definition and why it matters, a few lines;
    may hold a diagram image.
 3. The sub-concept sections, mandatory: one per first-level sub-concept, in `course.yaml` order,
@@ -195,6 +196,11 @@ In this order (`concept-folder`):
    A leaf section holds the leaf's **reader text**: the explanation as a site reader reads it.
 4. « Pièges » (`pitfalls`), mandatory: the pitfalls of the whole concept.
 5. « Le test rapide » (`quick_test`), mandatory: the quick test of the whole concept.
+6. « Approfondissement » (`deepening`), optional: more matter on the concept, beyond what its
+   sub-concept sections teach, for the learner who asks to go further. Its claims are sourced in
+   `sources.md` like any other (4.4), and the site builds it like the rest of the file. The
+   teacher reads it in an aside, on the learner's request (`PROTOCOL.md`, rule
+   `asides-welcome`), never on the course path; no case, of any type, relies on it.
 
 ### 4.3 `teaching.md`
 
@@ -255,7 +261,7 @@ A case is a list of fields, each item opening with `**<label>** :`, its text on 
 or in a nested list; only the « Question » label may carry a qualifier of its own before the
 colon (« **Question**, en deux parties : ») (`concept-folder`):
 
-| Field (key) | Status | May contain | Who reads it | When the teacher uses it |
+| Field (key) | Presence | May contain | Who reads it | When the teacher uses it |
 |---|---|---|---|---|
 | « Usage » (`usage`) | optional | when to pose the case, for a case off the course path: a fallback, a practice case, an aside | the teacher | choosing the next case |
 | « Explication » (`explanation`) | optional | what the teacher says before the case: the source of its explanation of the sub-concept; without it, the teacher explains from the leaf's reader text | the teacher, then the learner | in the message that poses the case, before the situation |
@@ -311,10 +317,10 @@ convention.
 | sub-concept section | `## <id> <title>` (first level), then one paragraph entirely in italics: the **promise**; a first-level sub-concept with children holds nothing else; one without children holds its reader text after the promise | `conventions` |
 | leaf heading | `### <id> <title>` (second level), then the reader text | `conventions` |
 | heading title | the `<title>` of a sub-concept heading equals the `title` of `course.yaml` | `conventions` |
-| concept reference | plain text `concept 4`, `concept 8a2`, `(concept 17)`, `concepts 5 et 7b`: the word (`references.concept`, plural `references.concepts`, list joined by `references.and`) then concept numbers or sub-concept ids; each names an existing concept or sub-concept of the course. A bare id with no such word (`qu'en 9a`) is plain text and is not linked | `conventions` |
+| concept reference | plain text `concept 4`, `concept 8a2`, `(concept 17)`, `concepts 5 et 7b`: the word (`concept_refs.concept`, plural `concept_refs.concepts`, list joined by `concept_refs.and`) then concept numbers or sub-concept ids; each names an existing concept or sub-concept of the course. To an annex, `annexe A2`, `annexe A2b`: the word `concept_refs.annex` then an annex number or the sub-concept id of an annex, which exists in the course. A bare id with no such word (`qu'en 9a`) is plain text and is not linked | `conventions` |
 | stance marker | `[cours]`, `[école]`, `[consensus]` (`markers.course`, `markers.school`, `markers.consensus`) right after the claim it qualifies; no link reference definition carries a marker's label | `conventions` |
 | storyline blockquote | a blockquote whose first line starts with `**Fil rouge :**` (`markers.storyline`); in the sub-concept sections, no other blockquote | `conventions` |
-| diagram image | `![<title>](<file>)` alone in its paragraph, `<file>` a declared diagram and `<title>` its declared `title`; each declared diagram appears once in the body; the caption comes from the frontmatter | `conventions` |
+| diagram image | `![<title>](<file>)` alone in its paragraph, `<file>` a declared diagram and `<title>` its declared `title`; each declared diagram appears once in the body; the caption comes from the frontmatter. The image sits in the section of its `subconcept` (one of its `###` sections included) or in « L'essentiel » (review) | `conventions` |
 | pitfalls | « Pièges » is one bulleted list, each item opening with the pitfall in bold | `conventions` |
 | quick test | « Le test rapide » is one blockquote (the question), then at most one paragraph (the note) | `conventions` |
 | plain Markdown | no H1, no `####` or deeper heading, no HTML tag, no MDX `import`/`export` or component, no `:::` directive | `conventions` |
@@ -542,11 +548,11 @@ values, for reference:
 
 | Group | Keys and French values |
 |---|---|
-| `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (the site's heading for the frontmatter stances, and the section a `sources.md` claim names for them: no `concept.md` section has it), `pitfalls` « Pièges », `quick_test` « Le test rapide »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
+| `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (the site's heading for the frontmatter stances, and the section a `sources.md` claim names for them: no `concept.md` section has it), `pitfalls` « Pièges », `quick_test` « Le test rapide », `deepening` « Approfondissement »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
 | `case_fields` | `usage` « Usage », `explanation` « Explication », `situation` « Situation », `question` « Question », `expected_answer` « Réponse attendue », `common_mistakes` « Erreurs fréquentes », `what_works` « Ce qui marche » |
 | `qualifiers` | `fallback` « rechange », `practice` « entraînement », `aside` « aparté »: the closed list of a case heading's qualifiers (4.3) |
 | `markers` | `storyline` « Fil rouge », `consensus` « consensus », `school` « école », `course` « cours » |
-| `references` | `concept` « concept », `concepts` « concepts », `and` « et » |
+| `concept_refs` | `concept` « concept », `concepts` « concepts », `and` « et », `annex` « annexe »: the words of a concept reference (4.5) |
 | `source_types` | `primary` « primaire », `secondary` « secondaire », `marketing` « marketing » |
 | `typography` | `banned`: the characters course text never uses (French: em-dash, arrows) |
 | `checks` | `anaphora`, optional: the words a domain paragraph's first sentence does not open with; without it, `domain-first-sentence-standalone` fails |
