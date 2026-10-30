@@ -72,16 +72,16 @@ const FINDINGS_SCHEMA = {
 
 const CHECKS = `The seven checks:
 1. expected answer (its core, or the mistake the question makes the learner correct) that belongs to a concept or sub-concept taught later; a nuance with a cross-reference stays allowed;
-2. expected answer broader than the case's explanation and the previous units;
+2. expected answer broader than the case's « Explication » (or the leaf's reader text when the case has none) and the previous units;
 3. answer that relies on a storyline fact, actor or rule absent from the situation and the previous units;
-4. glossary term used before its defining concept, without a definition in passing;
+4. glossary term used before its defining concept, without a definition in passing, and without a concept reference to the defining concept or one of its sub-concepts in its sentence;
 5. follow-up or correction of the common mistakes that relies on a notion not yet seen;
 6. false cross-reference ("seen in X", "recall of X", list of what is already taught) to an X that comes later, or that does not hold what is claimed;
 7. the same checks for the fallback cases, the practice cases, the aside cases and the annexes, from their entry point.
 
-What the learner has received at a point of the course: the preceding units of the inventory, the explanation and the situation of the case. They are not assumed to read the storyline, the glossary or the rest of the file, even though the site shows the first two. Out of scope: prerequisites a learner skipped at their own request.
-The learner-facing material of a case is its « Explication » and « Situation »; the « Question », « Réponse attendue » and « Erreurs fréquentes » fields are the teacher's.
-The « Approfondissement » section of concept.md (headings.deepening, SPEC.md 4.2) is never taught matter: the teacher reads it only in an aside, on the learner's request, never on the course path, and no case of any type relies on it. A case whose expected answer needs it asks what the learner has not been taught: it is a finding (check 2).`
+What the learner has received at a point of the course: the preceding units of the inventory and, for the case, its « Explication » (or the leaf's reader text when the case has none), its « Situation » and its « Question ». They are not assumed to read the storyline, the glossary or teaching.md, even though the site shows the first two. Out of scope: prerequisites a learner skipped at their own request.
+The learner receives a case's « Explication » (or the leaf's reader text), « Situation » and « Question »; the « Réponse attendue » and « Erreurs fréquentes » fields are the teacher's.
+The « Approfondissement » section of concept.md (headings.deepening, specs/linear-course/1/SPEC.md 4.2) is never taught matter: the teacher reads it only in an aside, on the learner's request, never on the course path, and no case of any type relies on it. A case whose expected answer needs it asks what the learner has not been taught: it is a finding (check 2).`
 
 // --- Scope -----------------------------------------------------------------------------
 
@@ -116,7 +116,7 @@ const inventory = await agent(`${ROLE}
 
 Build the cumulative inventory of what the learner receives following the course, from concept ${main[0].id} to concept ${lastMain.id}, in course order (${scout.course_yaml}). Files: ${upTo.flatMap(c => [c.concept_file, c.teaching_file]).filter(Boolean).join(', ')}.
 
-One unit per message the teacher sends on the main thread, in the order they send them, following the « Consignes » of teaching.md and the sub-concept tree of course.yaml: the sub-concept, and for each the case of the example bank that serves as its example. For each unit, list what the learner receives there, taken from the explanation and the situation of the case (not the expected answer, which they do not read): notions, rules, defined terms, storyline actors with what is said of them, storyline facts. Also note the answer the correction gives them, in one line. Only main cases enter the inventory: fallback, practice and aside cases do not, nor does the « Approfondissement » section of concept.md.
+One unit per message the teacher sends on the course path, in the order they send them, following the « Consignes » of teaching.md and the sub-concept tree of course.yaml: the sub-concept, and for each the case of the example bank that serves as its example. For each unit, list what the learner receives there, taken from the case's « Explication », or the leaf's reader text when the case has none, and its « Situation » (not the expected answer, which they do not read): notions, rules, defined terms, storyline actors with what is said of them, storyline facts. Also note the answer the correction gives them, in one line. Only main cases, the course-path cases, enter the inventory: fallback, practice and aside cases do not, nor does the « Approfondissement » section of concept.md.
 
 Return the inventory as text, one unit per block, titled "<concept><sub-concept>: <title of the case>". No other comment.`,
   { label: 'inventory' })
@@ -131,11 +131,11 @@ for (let i = 0; i < target.length; i += GROUP) groups.push(target.slice(i, i + G
 phase('Reread')
 const reviews = await parallel(groups.map(g => () => agent(`${ROLE}
 
-You reread ${g.map(c => `${c.teaching_file} (concept ${c.id}${c.entry ? `, annex opened after ${c.entry}` : ''})`).join(', ')}, and the sub-concept sections of the matching concept.md. For each case of their example bank, of the four types of SPEC.md 4.3 (main, fallback « rechange », practice « entraînement », aside « aparté »), and for the sections that describe the sub-concepts, judge whether the learner can answer with what they have received at that point. The course glossary (${scout.glossary}) says the defining concept of each term.
+You reread ${g.map(c => `${c.teaching_file} (concept ${c.id}${c.entry ? `, annex opened after ${c.entry}` : ''})`).join(', ')}, and the sub-concept sections of the matching concept.md. For each case of their example bank, of the four types of specs/linear-course/1/SPEC.md 4.3 (main, fallback « rechange », practice « entraînement », aside « aparté »), and for the sections that describe the sub-concepts, judge whether the learner can answer with what they have received at that point. The course glossary (${scout.glossary}) says the defining concept of each term.
 
 ${CHECKS}
 
-Inventory of what the learner receives, on the main thread:
+Inventory of what the learner receives, on the course path:
 ${inventory}
 
 "blocking": the learner cannot give the core of the expected answer, or the teacher would correct on a notion they have not received. "minor": the rest (false cross-reference, undefined term one can guess). Report only real defects, each proved by the inventory; no finding is a normal result.`,
