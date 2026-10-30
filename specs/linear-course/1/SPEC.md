@@ -377,7 +377,7 @@ welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases l
 |---|---|---|
 | the teacher | its posture, the onboarding questions, the course's stances, the storyline facts its cases use | onboarding; each case it poses |
 | the learner | the course glossary and the storyline | reading the course on the site |
-| the creator (human or agent) | the terms to use and the concept that defines each, the storyline facts a case may draw on | writing a concept or a case |
+| the creator (human or agent) | the terms to use and the defining concept of each, the storyline facts a case may draw on | writing a concept or a case |
 | the maintainer | what changed in each course version | each release |
 
 - **`plan.md`** (`course-files`): a first `##` section « Public cible » (`audience`, mandatory),
@@ -399,9 +399,16 @@ welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases l
   2. its English term, empty when the term has no useful English equivalent or when the course
      term already is the English word;
   3. the definition;
-  4. the **defining concept**: one concept number of `course.yaml`, the concept whose reader
-     text defines the term (`course-files`). No list of the concepts that use the term: a
-     script or the site computes it from the variants.
+  4. the **defining concept**: one concept number of `course.yaml`, the concept a learner
+     opens to dig into the term: the one whose reader text teaches it (its objective or one of
+     its sub-concepts is about it), not one that uses it or defines it in passing with a
+     concept reference to another concept (`course-files` checks the form; review checks the
+     choice). Two concepts that teach the term as deeply usually mean two terms, in two rows;
+     otherwise the defining concept is the first in course order. A term no concept teaches is
+     a gap of the course (its explanation enters a concept) or leaves the glossary. The
+     definition sums up the defining concept's reader text and states nothing it does not. No
+     list of the concepts that use the term: a script or the site computes it from the
+     variants.
 
   Optionally a section « Termes à éviter » (`avoid`): one table, three columns: the term to
   avoid, what to say instead, why. An H1 is allowed. The site reads the first table as is.
@@ -413,7 +420,7 @@ welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases l
   hold the same variant, case ignored, its qualifier included (`course-files`).
 
   **Order** (`glossary-order`, a quality check: it reports, it does not block): a term is used
-  after the concept that defines it, in course order. The scope is the reader text, the
+  after its defining concept, in course order. The scope is the reader text, the
   `concept.md` of each concept: its body and its frontmatter (the texts of `stances` and
   `neighbors`, the `title` and `caption` of `diagrams`); `teaching.md` is not read. Every use
   counts, not only the first. In the `concept.md` of a concept that comes before the defining
@@ -621,7 +628,7 @@ usage error.
 | `course-files` | conformity | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md` (four columns, one defining concept per row, a variant in one row), `CHANGELOG.md`, domain files: presence, no unlisted file in `domains/`, frontmatter, sections, leads | 5, 6 |
 | `domain-first-sentence` | conformity | the first sentence of each paragraph of « Le fil des concepts » ends within 300 characters of the lead | 5 |
 | `language-pack-keys` | conformity | every key of section 9 and of `PROTOCOL.md` exists in the course's language pack | 9 |
-| `glossary-order` | quality | no glossary term used in a `concept.md`, body or frontmatter, before the concept that defines it, unless its sentence carries a concept reference to that concept; each comma variant matched, a qualified row skipped | 6 |
+| `glossary-order` | quality | no glossary term used in a `concept.md`, body or frontmatter, before its defining concept, unless its sentence carries a concept reference to that concept; each comma variant matched, a qualified row skipped | 6 |
 | `typography` | quality | no banned character of the language pack in course text | 2 |
 | `domain-first-sentence-standalone` | quality | the first sentence of each paragraph of « Le fil des concepts » does not open with a word of `checks.anaphora` | 5, 9 |
 | `rule-slugs` | conformity (`check-spec`) | `PROTOCOL.md` names each of its rules and groups by a slug defined once; `PROTOCOL.md`, `SPEC.md` and `decisions/` cite them by a defined slug, never by a number or a range | `PROTOCOL.md` |

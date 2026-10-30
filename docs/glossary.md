@@ -55,6 +55,7 @@ the English terms below are how we talk about them in code, docs and issues.
 | **deepening** | the optional « Approfondissement » section of `concept.md` (`headings.deepening`): more matter on the concept, sourced in `sources.md`, built by the site, read by the teacher in an aside on the learner's request; no case relies on it. Not a **practice case**, which is more practice on what the concept taught | "dig", "reserve" |
 | **concept reference** | in reader text, the words that name a concept, a sub-concept or an annex: « concept 4 », « concepts 5 et 7b », « annexe A2 » (« renvoi »; the pack group `concept_refs`, `SPEC.md` 4.5). Not the **references** of `sources.md` | "reference" alone |
 | **course glossary** | `courses/<id>/glossary.md`, course material | this file |
+| **defining concept** | the concept of a course glossary row (its fourth column): the concept a learner opens to dig into the term, the one whose reader text teaches it (`SPEC.md` section 6). Not a concept that only uses the term or defines it in passing | "introducing concept", "first concept" |
 
 ## How the teacher works
 

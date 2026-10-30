@@ -69,7 +69,7 @@ function run(ctx) {
         for (const r of t.rows) {
           if (r.cells.length !== 4) { out.push(fail('glossary.md', r.line, `row has ${r.cells.length} cells, expected 4`)); continue; }
           if (!r.cells[0]) out.push(fail('glossary.md', r.line, 'a row has no term'));
-          if (!numbers.has(glossary.definingNumber(r.cells[3]))) out.push(fail('glossary.md', r.line, `defining concept "${r.cells[3]}": one concept number of course.yaml, the concept whose reader text defines the term`));
+          if (!numbers.has(glossary.definingNumber(r.cells[3]))) out.push(fail('glossary.md', r.line, `defining concept "${r.cells[3]}": one concept number of course.yaml, the concept that teaches the term`));
           for (const v of glossary.termCell(r.cells[0]).variants) {
             const k = v.toLowerCase();
             if (seen.has(k)) out.push(fail('glossary.md', r.line, `variant "${v}" is also in the row at glossary.md:${seen.get(k)}: a variant belongs to one row`));
