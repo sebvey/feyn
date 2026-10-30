@@ -18,7 +18,7 @@ phrases:
   continue_prompt: "Des questions ? J'enchaîne ?"
   questions_announce: "J'ai {count} questions pour toi, voici la première :"  # {count} in words
   why: "pourquoi ?"
-  banned_check: "as-tu compris ?"
+  banned_question: "as-tu compris ?"
   reference_model: "{name}, au concept {n}"  # a model: « la DoD, au concept 11 »
   waiting_example: "Parfait {nickname}, je prépare le concept {n}."  # a model
   onboarding_setup: "Je mets en place le cours."

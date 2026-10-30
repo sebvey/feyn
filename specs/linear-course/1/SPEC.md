@@ -7,9 +7,10 @@ with it. The four parts of the spec are the **structure** and its **reader-text 
 file, scripts in `checks/`) and the **protocol** (`PROTOCOL.md`).
 
 **Language exception.** The rules of `PROTOCOL.md` are written in French, a bounded exception
-to the language policy (`docs/decisions/language-policy.md`): the old teacher was instructed and
-corrected in French. Task S2-09 (issue #38) closes it: it translates the rules to English, rule
-by rule, and removes this paragraph.
+to the language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited
+from `parcours-po`, whose teacher was instructed and corrected in French. It changes by user
+story, its fresh tests come with the teacher, and the exception stays until a teacher or a course
+of another language needs the translation, a spec MINOR that removes this paragraph.
 
 "Mandatory" means an element's absence fails the check named; its form is checked where that
 check says so, reviewed otherwise. "Optional" means it may be absent, and when present it
@@ -206,7 +207,7 @@ In this order (`concept-folder`):
    sub-concept sections teach, for the learner who asks to go further. Its claims are sourced in
    `sources.md` like any other (4.4), and the site builds it like the rest of the file. The
    teacher reads it in an aside, on the learner's request (`PROTOCOL.md`, rule
-   `asides-welcome`), never on the course path; no case, of any type, relies on it.
+   `deepening-read-in-aside`), never on the course path; no case, of any type, relies on it.
 
 ### 4.3 `teaching.md`
 
@@ -256,7 +257,7 @@ pack's `qualifiers` group and gives the case its type:
 |---|---|---|
 | main | none | at its sub-concept, on the course path, in the order of « Consignes » |
 | fallback | « rechange » (`qualifiers.fallback`) | when the learner fails the case of the same sub-concept; it stands alone: its own situation and question, nothing borrowed from the failed case |
-| practice | « entraînement » (`qualifiers.practice`) | when the learner practises a validated concept, one case per message, without re-explaining (`PROTOCOL.md`, rules `validated-concept-exercises` and `digging-cases-chosen`) |
+| practice | « entraînement » (`qualifiers.practice`) | when the learner practises a validated concept, one case per message, without re-explaining (`PROTOCOL.md`, rules `validated-concept-practised` and `practice-cases-chosen`) |
 | aside | « aparté » (`qualifiers.aside`) | in an aside, on a question off the course path (rule `asides-welcome`) |
 
 The case's **title**, its identifier, is the heading without the parenthesis; titles are unique
@@ -382,7 +383,7 @@ same text serves the reader and the teacher.
 | Reader | Needs | When |
 |---|---|---|
 | the learner | why the domain matters and how its concepts connect | before its concepts |
-| the teacher | what it says to present the domain (`domain-presented-from-sheet`) | before the first concept of a domain |
+| the teacher | what it says to present the domain (`domain-presented-from-file`) | before the first concept of a domain |
 | the creator (human or agent) | what each section says, and that it teaches no concept | writing or changing a domain |
 
 `domains/<number>-<slug>.md`, one per domain of `course.yaml`, and no other file in `domains/`
