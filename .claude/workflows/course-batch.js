@@ -40,7 +40,7 @@ batch, check). Course files stay in the course language.`
 const SCOUT_SCHEMA = {
   type: 'object',
   properties: {
-    spec_dir: { type: 'string', description: 'specs/<name>/ of the spec that course.yaml declares, ends with /' },
+    spec_dir: { type: 'string', description: 'specs/<name>/<MAJOR>/ of the spec and MAJOR that course.yaml declares (spec: <name>@<MAJOR>), ends with /: where you read SPEC.md and the templates (the checks run through specs/check-course)' },
     shared_files: { type: 'array', items: { type: 'string' }, description: 'files every agent of the batch reads: course.yaml, plan.md, storyline.md, glossary.md, SPEC.md sections 4 to 6, the course templates, PROTOCOL.md if it exists, the issue' },
     batch_instructions: { type: 'string', description: 'instructions of the issue for the whole batch, copied word for word' },
     concepts: {
@@ -124,7 +124,7 @@ if (!scout || !scout.concepts.length) throw new Error('Empty scope: no concept f
 for (const c of scout.concepts) c.dir = c.dir.replace(/^courses\/[^/]+\//, '').replace(/\/?$/, '/')
 log(`Batch: ${scout.concepts.map(c => c.id).join(', ')}; intermediate products in ${WORK}`)
 
-const CHECK_CMD = id => `mise exec -- ${scout.spec_dir}checks/check-course ${COURSE.replace(/\/$/, '')} --concept ${id}`
+const CHECK_CMD = id => `mise exec -- specs/check-course ${COURSE.replace(/\/$/, '')} --concept ${id}`
 
 const context = c => `Context of the batch (read these files on disk):
 ${scout.shared_files.map(f => `- ${f}`).join('\n')}

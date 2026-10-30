@@ -10,6 +10,8 @@
 //                                  every check with --concept 9
 //   fixtures/spec/...              the same for check-spec (the spec's own files), and the
 //                                  repository's spec passes it
+//   fixtures/dispatcher/<name>     a course.yaml that specs/check-course refuses: other-spec
+//                                  (spec other@1), unknown-major (linear-course@9)
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -18,7 +20,8 @@ const { spawnSync } = require('child_process');
 const here = __dirname;
 const runner = path.join(here, 'check-course');
 const fx = path.join(here, 'fixtures');
-const repo = path.resolve(here, '..', '..', '..');
+// here is specs/<name>/<MAJOR>/checks
+const repo = path.resolve(here, '..', '..', '..', '..');
 let bad = 0;
 
 function run(dir, extra) {
@@ -64,7 +67,7 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   }
 }
 // the spec's own files (check-spec): fixtures/spec/valid passes, fixtures/spec/broken/<name> fails
-// as its EXPECT says, and the repository's spec (specs/linear-course) passes
+// as its EXPECT says, and the repository's spec (this MAJOR's folder) passes
 {
   const spec = (dir, extra) => {
     const r = spawnSync(process.execPath, [path.join(here, 'check-spec'), dir, ...extra], { encoding: 'utf8' });
@@ -82,6 +85,21 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   }
   const s = spec(path.join(here, '..'), []);
   report('the repository spec passes every spec check', s.code === 0, notOk(s));
+}
+// the dispatcher (specs/check-course): it runs this MAJOR's checks on a course declaring it,
+// and refuses an unknown spec or MAJOR, naming it, with exit code 2
+{
+  const dispatcher = path.join(repo, 'specs', 'check-course');
+  const disp = (dir, extra) => {
+    const r = spawnSync(process.execPath, [dispatcher, dir, ...extra], { encoding: 'utf8' });
+    return { code: r.status, lines: r.stdout.split('\n').filter(Boolean), err: r.stderr };
+  };
+  const v = disp(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang')]);
+  report('the dispatcher runs this MAJOR on valid', v.code === 0 && v.lines.length > 0, v.lines.filter((l) => !l.endsWith(': ok')).join(' | ') || v.err);
+  for (const [name, want] of [['other-spec', 'unknown spec "other"'], ['unknown-major', 'unknown MAJOR 9 of spec "linear-course"']]) {
+    const r = disp(path.join(fx, 'dispatcher', name), []);
+    report(`the dispatcher refuses dispatcher/${name}`, r.code === 2 && r.err.includes(want) && r.lines.length === 0, `expected exit 2 and "${want}", got ${r.code}: ${r.err || r.lines.join(' | ')}`);
+  }
 }
 console.log(bad ? `${bad} unexpected result(s)` : 'all as expected');
 process.exit(bad ? 1 : 0);

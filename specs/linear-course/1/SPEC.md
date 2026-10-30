@@ -402,16 +402,16 @@ The spec has a version `MAJOR.MINOR.PATCH`, tagged `linear-course/vX.Y.Z` on `ma
 | MINOR | an optional section or field added, a protocol rule added or changed |
 | PATCH | the contract's wording, with no change to what is checked or taught |
 
-A course declares the MAJOR it follows: `spec: linear-course@1`. The checks of this folder
-verify a course against its declared MAJOR and fail on a MAJOR they do not know
-(`course-yaml`); the teacher, the site and the classroom build refuse it. Tooling has no
-version: it reads every spec MAJOR still alive.
+A course declares the MAJOR it follows: `spec: linear-course@1`. `specs/check-course` reads
+it, runs the checks of that MAJOR's folder, and refuses an unknown spec or MAJOR; the teacher,
+the site and the classroom build refuse it too. Tooling has no version: it reads every spec
+MAJOR still alive.
 
 A course has its own version, tagged `<id>/vX.Y.Z` and recorded in its `CHANGELOG.md`: MAJOR
 when an identifier changes (section 3) or the course moves to a new spec MAJOR, MINOR when what
 is taught changes (a case, a sub-concept, a stance, a duration), PATCH for wording. A course
 in 0.x may still move anything, identifiers included. The spec's own changelog,
-`specs/linear-course/CHANGELOG.md`, opens with v1.0.0.
+`specs/linear-course/1/CHANGELOG.md`, opens with v1.0.0.
 
 ## 9. Language pack keys
 
@@ -431,12 +431,13 @@ it, with the keys `PROTOCOL.md` uses. French values, for reference:
 ## 10. Checks
 
 Dependency-light scripts in `checks/`, one per id, run on a course by
-`checks/check-course <course-dir>` (one line per check, `ok` or `fail: <file>:<line> <message>`,
-non-zero exit on any failure, `--only <id>`), locally and in CI.
+`specs/check-course <course-dir>`, which runs this folder's `checks/check-course` (one line per
+check, `ok` or `fail: <file>:<line> <message>`, non-zero exit on any failure, `--only <id>`),
+locally and in CI.
 
 | Id | Verifies | Sections |
 |---|---|---|
-| `course-yaml` | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, paths, supported spec MAJOR, language pack present | 3, 8 |
+| `course-yaml` | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, paths, spec declared (`specs/check-course` refuses an unknown spec or MAJOR), language pack present | 3, 8 |
 | `concept-folder` | the folder's files; the three files' sections and their order; frontmatter keys; one section per sub-concept; « Objectif » equals `objective`; case headings, fields, coverage of leaves, citation in « Consignes » | 4 |
 | `conventions` | the reader-text conventions of `concept.md`; plain Markdown in course files | 2, 4.5 |
 | `svg-contract` | every diagram against the drawing contract; declared and present diagrams match | 4.1, 7.1 |

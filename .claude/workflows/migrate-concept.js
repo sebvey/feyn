@@ -247,7 +247,7 @@ touch is copied as it is.`
 const SCOPE_SCHEMA = {
   type: 'object',
   properties: {
-    spec: { type: 'string', description: 'the spec name course.yaml declares, without its MAJOR (linear-course@1: linear-course)' },
+    spec: { type: 'string', description: 'the spec course.yaml declares, name and MAJOR as written (linear-course@1)' },
     dir: { type: 'string', description: 'the concept dir as course.yaml writes it (concepts/09-decoupage-vertical)' },
     course_entry: { type: 'string', description: 'the concept entry of course.yaml, copied whole: number, slug, title, objective, prerequisites, dir, subconcepts' },
     concept_file: { type: 'string', description: 'path of the old concept file (CF), <from>course/concepts/NN-*.md' },
@@ -393,7 +393,7 @@ const scope = await agent(`${role()}
 
 Locate the inputs of the migration of concept ${CONCEPT} of the course ${A.course}.
 - ${DEST}course.yaml: the concept entry whose number is "${CONCEPT}" (copy it whole), and the spec it \
-declares (field spec: linear-course@1 is the spec linear-course).
+declares (field spec, as written: linear-course@1).
 - The old concept file ${FROM}course/concepts/${NN}-*.md, the old sources file \
 ${FROM}course/sources/${NN}-*.md, the site page ${SITE}src/content/concepts/fr/${NN}-*.mdx.
 - The diagram components the MDX imports (its import lines under components/schemas/), and every \
@@ -433,7 +433,8 @@ const namesTarget = m => {
 const missingInputs = scope.missing.filter(m => !namesTarget(m))
 if (missingInputs.length < scope.missing.length) log(`Ignored as missing (the target is not an input): ${scope.missing.filter(namesTarget).join('; ')}`)
 if (missingInputs.length) throw new Error(`Inputs missing: ${missingInputs.join('; ')}`)
-if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(scope.spec)) throw new Error(`Unexpected spec name: ${scope.spec}`)
+const SPEC_MATCH = /^([a-z0-9]+(?:-[a-z0-9]+)*)@(\d+)$/.exec(String(scope.spec ?? '').trim())
+if (!SPEC_MATCH) throw new Error(`Unexpected spec: ${scope.spec} (expected <name>@<MAJOR>)`)
 // The root (#178): from an absolute dest (DEST_ROOT), else the working directory (pwd, absolute, not /).
 // The spec, its templates, the glossary, S1-08.md and the check command are given from it.
 // A resume replays the answer of an agent that returned before the throw, so only a fresh launch asks the
@@ -459,8 +460,9 @@ if (!/^d/.test(rootLine) || !asListed(`${ROOT}specs`).some(f => rootLine.endsWit
 if (DEST_ROOT && DEST_ROOT !== cwd.replace(/\/?$/, '/')) log(`Repository root from args.dest: ${ROOT} (the working directory is ${cwd})`)
 if (DEST.startsWith('/') && !DEST_ROOT) log(`args.dest ${DEST} is outside a repository: the spec, the glossary and the checks are taken from the working directory ${ROOT}`)
 const ROLE = role(), BLIND = blind(), MAP = mapRules()
-// built here, not taken from an agent: the checks and the spec are the ones of the run's root
-const SPEC_DIR = `specs/${scope.spec}/`
+// built here, not taken from an agent: the checks and the spec are the ones of the run's root, the spec
+// read from the folder of the MAJOR the course declares
+const SPEC_DIR = `specs/${SPEC_MATCH[1]}/${SPEC_MATCH[2]}/`
 const DIR = String(scope.dir).replace(/^courses\/[^/]+\//, '').replace(/\/?$/, '/')
 // the target is emptied below: its path is checked here, never trusted from the scope agent
 if (!new RegExp(`^concepts/${NN}-[a-z0-9]+(-[a-z0-9]+)*/$`).test(DIR)) throw new Error(`Refused concept dir "${scope.dir}": expected concepts/${NN}-<slug>`)
@@ -516,7 +518,7 @@ Target concept folder: ${TARGET}
 
 ${MAP}`
 
-const CHECK_CMD = `mise exec -- ${ROOT}${SPEC_DIR}checks/check-course ${DEST.replace(/\/$/, '')} --only ${CONCEPT_CHECKS} --concept ${CONCEPT}${A.langDir ? ` --lang-dir ${A.langDir}` : ''}`
+const CHECK_CMD = `mise exec -- ${ROOT}specs/check-course ${DEST.replace(/\/$/, '')} --only ${CONCEPT_CHECKS} --concept ${CONCEPT}${A.langDir ? ` --lang-dir ${A.langDir}` : ''}`
 
 // The renderings of the report (#181): one PNG per old diagram (from the frozen site's build, when it has
 // one) and per new SVG (one colour, qlmanage), in a folder beside the report, named after it

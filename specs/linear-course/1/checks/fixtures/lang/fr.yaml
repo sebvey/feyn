@@ -1,5 +1,5 @@
 # The pack the check fixtures use: the groups the checks read (SPEC.md section 9 and the keys of
-# PROTOCOL.md), with the French values of the real pack, specs/linear-course/lang/fr.yaml, minus `site`.
+# PROTOCOL.md), with the French values of the real pack, specs/linear-course/1/lang/fr.yaml, minus `site`.
 # Change both together.
 # Literal phrases the teacher says (PROTOCOL.md "Language pack, groups the protocol adds").
 phrases:

@@ -2,7 +2,7 @@
 'use strict';
 // check-spec [<spec-dir>] [--only <id>[,<id>...]] [--list]
 // The checks of the spec's own files (PROTOCOL.md, SPEC.md, decisions/), not of a course.
-// <spec-dir> defaults to the folder above this script (specs/linear-course).
+// <spec-dir> defaults to the folder above this script (specs/linear-course/1).
 const fs = require('fs');
 const path = require('path');
 

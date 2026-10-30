@@ -3,7 +3,7 @@
 Summary of decision `versioned-objects-and-spec-layout`; if they differ, the decision wins.
 
 A spec is the contract for a type of course. The only spec is `linear-course`; its MAJOR 1
-still sits in `specs/linear-course/` until it moves to `specs/linear-course/1/` (epic #220).
+sits in `specs/linear-course/1/`.
 
 ## Layout
 
@@ -25,7 +25,7 @@ A new MAJOR copies the tree of the previous one, its decisions under the same sl
 A course declares the MAJOR it follows in `course.yaml` (`spec: linear-course@1`).
 `specs/check-course <course>` reads it, runs `specs/<name>/<MAJOR>/checks`, and refuses an
 unknown spec or MAJOR. Its conformity mode, the default, runs the conformity checks; its
-quality mode runs the quality checks. The dispatcher comes with the move (epic #220).
+quality mode runs the quality checks (quality mode: next slice of #220).
 
 ## Versions
 
