@@ -55,6 +55,11 @@ Body of `concept.md`: unchanged.
 - Paths copied (Done when): row 9, concept 2's S5 and S6 as S15 and S16, with their
   quotations; row 18, concept 9's S5 (SPIDR) as S17, with the quotations of its spike row and
   their place; row 22, concept 13's S6 as S18, with the five factors of its row 13.
+- S18 re-synced after #316 merged (`main` at 2753909) with concept 13's S6 as merged: its
+  « consultée le » now reads « 2026-10-22 (relu) ; 2026-10-30 (sections des citations
+  relevées) » (the pointer to concept 10 left), and the row quotes « Value » ; « Cost » ;
+  « Learning » ; « Risk » ; « Dependencies » (titres des facteurs 1 à 5), concept 13's row 9
+  and `stances.consensus` items as merged. Description, link and type were already identical.
 - Paths whose reference this concept already held: row 17 cited concept 7's S4, which is
   Wells, this concept's S4 (same page): S4 kept with its own quotations, re-read on
   2026-10-30; Wake's « (time-boxed) "spike" » (concept 7's S1) left: S5's « a time-boxed
@@ -202,8 +207,13 @@ Body of `concept.md`: unchanged.
   accepted on #304): row 19, concept 11's Scrum Guide absence « Definition of Ready »
   (copied, S3); row 21, concepts 0 and 13's Scrum Guide (S3, « Ordering Product Backlog
   items », found on 2026-10-30); row 24, concepts 1 and 13's Scrum Guide (S3, « trying to
-  convince the Product Owner »); row 32, concept 16's Scrum Guide (S3, « Sprint forecasts »,
-  at the place checked on 2026-10-30, « Sprint Planning, Topic Two »). `decisions/team-in-sprints.md` and `plan.md` (rows 11, 13,
+  convince the Product Owner », both as concept 13 quotes them on `main` at 2753909); row 32,
+  concept 16's Scrum Guide (S3), re-synced after #316 merged with concept 16's row « La
+  prévision du sprint est celle des Developers »: « the more confident they will be in their
+  Sprint forecasts » (Topic Two: What can be Done this Sprint?). Concept 16's other forecast
+  row (« Une prévision n'est pas une promesse », on the Scrum Guide's commitments and a
+  Scrum.org article) is not copied: A2 rests « pas une promesse » on the *Kanban Guide*'s
+  forecast with a probability (S1), and the row is « cours ». `decisions/team-in-sprints.md` and `plan.md` (rows 11, 13,
   23) left.
 - S6 (two tool vendors' pages, search excerpts only) left the row at line 28 and
   « Références »: it backed only the frequency and the participants, which the body does not
