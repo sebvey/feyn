@@ -39,6 +39,8 @@ One line per passing check (`<id>: ok`), one line per failure
 | `--lang-dir <dir>` | reads the language pack `<dir>/<language>.yaml` instead of this MAJOR's `lang/` (also `LINEAR_COURSE_LANG_DIR`) |
 | `--list` | prints the check ids of the mode |
 
+`--only` takes ids of the current mode only: conformity and quality checks need two runs.
+
 ## The checks
 
 One script per id, `checks/<id>.js`, exporting `run(ctx)`; `check-course` loads the checks of
