@@ -9,14 +9,15 @@ opened this repository. Every section ends with the decision it rests on, in
 ## Where things are
 
 `specs/` holds the contracts a course is written against, `courses/` the courses, `teacher/`
-the teacher template that turns a course into a classroom, `site/` the engine that publishes
-it, `.claude/` the agentic layer, `docs/` what belongs to no single area. During
-the construction, `construction/` holds the design, the plan and the session notes; its fate
-is issue #232. `.claude/` has four folders: `skills/` the HOW (one folder per skill, its
-`SKILL.md` and its briefs), `workflows/` the agent workflows, `reference/` the WHAT (what a
-thing is or looks like: the body templates, the Project reference, the rules of an agent in a
-worktree), `decisions/` the decisions that bind the agentic layer. Why: decisions
-`monorepo-feyn`, `claude-folder-layout`.
+the teacher template, the teacher skills and
+the classroom build script that turns a course into a classroom, `site/` the engine that
+publishes it, `.claude/` the agentic layer, `docs/` what belongs to no single area. During the
+construction, `construction/` holds the design, the plan and the session notes; its fate is
+issue #232. `.claude/` has four folders: `skills/` the HOW (one folder per skill, its `SKILL.md`
+and its briefs), `workflows/` the agent workflows, `reference/` the WHAT (what a thing is or looks
+like: the body templates, the Project reference, the rules of an agent in a worktree),
+`decisions/` the decisions that bind the agentic layer. Why: decisions `monorepo-feyn`,
+`claude-folder-layout`.
 
 ## An observation becomes an issue
 
