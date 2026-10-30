@@ -7,11 +7,71 @@ their matter went (#307, SPEC 4.4 and 4.1). Destinations: a frontmatter item (it
 nowhere (not a claim of the body of `concept.md`). Line numbers are the lines of `sources.md`
 on `main` at `966d514`.
 
-PLACES
+Places: a place in parentheses is one `main` held, or one checked on 2026-10-30 by fetching
+the source: the Scrum Guide 2020 (all four concepts), the Guides of 2011 (p. 13), July 2013 and
+2017 (p. 15, p. 16), the revision history; in concept 13 Cohn's « 5 Key Factors », Pichler's
+2010 post, Reinertsen's chapter 1 (book pages), the three Black Swan Farming pages, the Agile
+2013 programme, votito.com, the DSDM MoSCoW page, the SAFe WSJF page, Wikipédia and the Open
+Library record; in concept 14 the Parmar et al. PDF, votito.com, Pichler's 2021 post, the
+Mendelow abstract, the Product Field, Which Framework and HotPMO pages; in concept 15 Cohn's
+sprint goal page, the Scrum.org Sprint Review page and the three Atlassian pages; in concept 16
+Patton's 2008 post (archived copy) and memo (pages), Ries's post, Wikipédia, the CSPO
+objectives, the archived Scrum.org forecast article, the velocity range calculator and
+Jeffries's post. « (page) » is the whole page where no place was recorded or the page has no
+heading for it (the PMI library article, the Scrum.org myth 14 post and Rubin's chapter 6 could
+not be fetched on 2026-10-30: their quotations are `main`'s, at « (page) »); « (titre de la
+page) », « (titre de section) » and « (titres) » mark a quotation that is a heading.
 
 Quotations new or longer than on `main`, each checked on 2026-10-30 in the fetched source:
 
-QUOTES
+- Concept 13: Pichler's « four useful factors to prioritise the product backlog: value; risk
+  and uncertainty; releasability; and dependencies » (row on the criteria,
+  `stances.consensus[2]`, `stances.course[0]`); Reinertsen's sentence completed with « for
+  product development projects » (row on the cost of delay, `stances.school[0]`); the Agile 2013
+  programme's title, « by using CD3 (Cost of Delay Divided by Duration) » and « Engineer,
+  blackswanfarming.com » (row on Arnold, `stances.school[1]`); Black Swan Farming's « most of
+  the things that have a date attached to them start off with a Cost of Delay of $Zero/week »
+  (row on the two shapes); the absence « necessity » in the July 2013 Guide
+  (`stances.consensus[1]`); DSDM's Must sentence (« These provide the Minimum Usable SubseT
+  (MUST) ... », longer), « one or more of the Could haves provide the first choice of what is to
+  be dropped from this timeframe », « all requirements that have not been met are re-prioritised
+  in the light of the needs of the next Increment », « In a DSDM project where time has been
+  fixed, it is vital to understand the relative importance of the work to be done », « it is up
+  to the Business Visionary or their empowered Business Ambassador to explain why a requirement
+  is a Must Have » and « Must Have » ; « Should Have » ; « Could Have » ; « Won't Have this time »
+  (rows on MoSCoW, `stances.school[3]`); Wikipédia's « This prioritization method was developed by
+  Dai Clegg in 1994 for use in rapid application development (RAD). » and the Open Library
+  record's « Dai Clegg, Richard Barker. » ; « 1994 » (row on Clegg, `stances.school[3]`). Copied
+  from another concept (no re-reading needed, checked anyway): concept 10's « needs to be moved
+  higher on the backlog », concept 1's « may represent the needs ... convince the Product
+  Owner. », concept 3's « "ordered," instead of "prioritized," ».
+- Concept 14: S2's « customers, suppliers, employees, financiers, and communities »; S3's « any
+  group or individual who can affect of an organization's objectives ... » and « Suppliers »
+  (row on Freeman, `stances.school[0]`); « the dynamism of the environment and the power of the
+  stakeholder relative to the organization » (Mendelow, longer); the Product Field, Which
+  Framework and HotPMO sentences on Johnson and Scholes (row on the grid,
+  `stances.school[1]`); « It has a clear boundary, known stakeholders, well-defined users or
+  customers. » kept from `main` at its place; the absences « escalat » and « sponsor »
+  (`stances.consensus[2]`). Copied: concept 1's Dehghani quotation (S12).
+- Concept 15: « Scrum combines four formal events for inspection and adaptation within a
+  containing event, the Sprint. » (whole sentence); « How this is done is at the sole discretion
+  of the Developers. » (whole sentence); « Ordering Product Backlog items » (row on the story
+  that leaves the sprint); Scrum.org's « new opportunities may be identified, discussed together
+  and potentially added to the backlog » (longer); the three Atlassian sentences (« you can edit
+  or remove them from a workflow to suit your team's need. You can also create your own. », « Jira
+  lets you collect many statuses under a To do, In Progress, or Done category. », « Statuses are
+  the steps of a team's workflow. ») and the absences « status », « workflow », « 10% »
+  (`neighbors[0]`, row on the refinement). Copied: concept 11's absence « Definition of Ready ».
+- Concept 16: the absences « story map », « user stor », « release plan », « velocity »,
+  « story point », « estimat »; « It is the single source of work undertaken by the Scrum Team. »
+  (whole sentence); « the more confident they will be in their Sprint forecasts » (longer than
+  « Sprint forecasts »); the three artifact commitments; S10's « the removal of the term
+  "commit" in favor of "forecast" ... », « The word commitment usually relates to undertaken
+  duties. » and « the chosen alternative "forecast" has to do with making assumptions based on
+  reliable information and evidence »; Patton's « the simplest possible functional version of
+  the product » (`neighbors[0]`); the Goal-Level box's « Summary », « Functional »,
+  « Sub-Functional ». Copied: concept 9's Cockburn quotations (S13), concept 13's « MoSCoW
+  Relating to a Specific Timeframe » (S14).
 
 Every verified cell kept now holds quotations and their place only: the reasoning and
 pointers to other files or concepts it held were dropped.
