@@ -7,7 +7,7 @@ area: spec:linear-course
 
 Without this, an agent would define a rule's obligation by the check that verifies it, as
 `SPEC.md:15-18` does ("Mandatory means an element's absence fails the check named"), so it
-would write that a rule « fails » a check that blocks nothing (`typography`, `SPEC.md:61-62`),
+would write that a rule "fails" a check that blocks nothing (`typography`, `SPEC.md:61-62`),
 find no way to write a recommendation verified by review, let a verdict of agents
 (taught-check) block the CI although agents do not give the same verdict twice, and call a
 course conforming because it passes the blocking checks (working notes D1, D14).
@@ -74,11 +74,12 @@ taxonomy without a use.
 **Conformance clause** (D14). Two classes of products: the **course**, its diagrams included,
 and the **teacher**. The language pack is not a product: it lives in the spec's folder, written
 by the spec's authors, and its consistency is the spec's own (`check-spec`,
-`language-pack-keys`). A course conforms when it holds every requirement of
+`language-pack-keys`): a rule on the pack sits with the spec's own rules, never in
+`rules/course.yaml`, and counts toward no course's conformance. A course conforms when it holds every requirement of
 `rules/course.yaml`, whatever its method; the blocking checks are a necessary condition, not a
 sufficient one; the review and taught-check do the rest, and a course tag certifies the whole.
-A teacher conforms when it holds every requirement of `rules/protocol.yaml`, shown by fresh
-tests. Recommendations are outside conformance (the ISO sense of "should"). The word
+A teacher conforms when it holds every requirement of `rules/protocol.yaml`; the method of a
+rule of the protocol is demonstration, by the fresh tests (D8). Recommendations are outside conformance (the ISO sense of "should"). The word
 "conformity" (ISO) stays; "conformance clause" names the section, after the W3C QA Framework,
 whose idea ISO shares.
 

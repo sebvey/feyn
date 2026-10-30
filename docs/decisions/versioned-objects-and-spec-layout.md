@@ -58,11 +58,12 @@ archived repository. This replaces decision `two-versioned-objects`.
   told otherwise. During 0.x this protection is weak, and that is assumed.
 - A MAJOR copies the whole tree, so stricter or new conformity checks are batched into one
   MAJOR; tooling cost grows with each live MAJOR.
-- Amended 2026-10-31 (#322): the folder of a MAJOR also holds `COURSE.md` (what a course is),
-  `rules/` (the rules as data) and `schemas/`, and `SPEC.md` becomes the frame (decision
-  `spec-files-and-alpha-version`); a MAJOR in preparation carries `<MAJOR>.0.0-alpha` until its
-  tag, with no prerelease number nor tag. The two check families and the two modes of
-  `check-course` give way to attributes of the rule (decision `rules-with-level-and-method`): a
+- Amended 2026-10-31 (#322), which voids the body's sentences from "Checks come in two
+  families" to the end of their paragraph, the two modes of `check-course` and the wording of
+  the bump table: the folder of a MAJOR also holds `COURSE.md` (what a course is), `rules/` (the rules as data) and `schemas/`, and
+  `SPEC.md` becomes the frame (decision `spec-files-and-alpha-version`); a MAJOR in
+  preparation carries `<MAJOR>.0.0-alpha` until its tag, with no prerelease number nor tag.
+  The two check families and the two modes of `check-course` give way to attributes of the rule (decision `rules-with-level-and-method`): a
   check blocks when it verifies a requirement by test, otherwise it reports, and checks are
   selected by category. The bump table reads in levels for the rules of a course: "a
   conformity check" reads "a requirement", "a quality check" reads "a recommendation", so a

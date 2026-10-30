@@ -25,13 +25,12 @@ protocol of the teacher (Purpose, notation, keys and parameters); its rules are 
 description (`SPEC.md`, `COURSE.md`, `PROTOCOL.md`) is informative: it explains and cites rule
 ids, and never uses the verbal forms of obligation; the rule files are normative. "teacher"
 stays the name of the class of products, "protocol" the name of its file and description.
-
 The version: a MAJOR in preparation carries `<MAJOR>.0.0-alpha` in its folder until its tag,
 with no prerelease number and no prerelease tag; `linear-course` is `1.0.0-alpha` in `1/` until
 `linear-course/v1.0.0`. "draft" leaves `SPEC.md` and `PROTOCOL.md`: it is the reserved term for
 a PR. `specs/linear-course/1/CHANGELOG.md` takes the form of a course's changelog (one line per
 entry, ranked by bump, the convention of Changesets, named in the description), with an
-« Unreleased » section that becomes `1.0.0` at the tag; during the alpha, entries carry no bump
+"Unreleased" section that becomes `1.0.0` at the tag; during the alpha, entries carry no bump
 class.
 
 ## Options ruled out
