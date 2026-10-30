@@ -315,8 +315,7 @@ Body, all mandatory, in this order (`course-files`):
    in order, opening with `**<number>. <concept title>.**`, the title as in `course.yaml`
    (`course-files`). A domain of one concept has one paragraph for the concept, then one per
    first-level sub-concept, opening with `**<id>. <title>.**`. Each paragraph's first sentence
-   after the lead stands alone, so that a consumer (the domain page, a concept's card) can show
-   it alone (below).
+   after the lead stands alone, so that a consumer can show it alone (below).
 3. « D'où l'on vient, où l'on va » (`from_to`): what the previous domain gives this one, and
    what this one gives the next.
 4. « Un cas qui traverse le domaine » (`crossing_case`): a storyline situation where each
@@ -385,9 +384,9 @@ A **diagram** is one SVG in the concept folder, declared in `diagrams` (section 
 both builds: the site shows it, the teacher sends it to the desktop panel and says its caption;
 in the terminal, the teacher says the caption and gives the site link. A consumer displays the
 SVG so that `currentColor` follows the colour of the text around it, and may tint the three
-classes of 7.1, never must. Section 7.1 is the drawing contract, every rule of it
-`svg-contract`; section 7.2 is the style every diagram of a course shares, for the writers and
-the reviews.
+classes of 7.1, never must. Section 7.1 is the drawing contract, checked by `svg-contract`
+where a script can tell, by review otherwise; section 7.2 is the style every diagram of a course
+shares, for the writers and the reviews.
 
 ### 7.1 Drawing contract
 
