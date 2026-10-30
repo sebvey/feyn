@@ -14,3 +14,8 @@ Une ligne par changement : `- CATÉGORIE, concept ou fichier : ce qui change`.
 - PATCH, concept 0 : le découpage de 0a1 (quatre messages) et de 0a2 (cinq messages) passe de
   `course.yaml` (champ `messages`, retiré de la spec) aux « Consignes » de `teaching.md`, qui
   lient chaque message à son cas de la banque.
+- MINOR, concepts 0, 5, 9, 11 à 17 : les en-têtes de cas ne gardent que le sous-concept et
+  « rechange » ou « entraînement » ; les réponses de Maud (5b) passent dans la « Situation » ;
+  le champ « Réserve » de 9b2 (autres patrons de SPIDR et de Lawrence) est retiré, à reprendre
+  en « Approfondissement » ; en 12, « (hypothèse d'exercice) » passe du libellé au texte de la
+  « Situation ».

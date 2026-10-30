@@ -141,7 +141,7 @@ ils ne deviennent pas des faits du fil rouge.
   (« je lui explique l'ordre »), faire préciser avant de corriger : « que lui dis-tu, mot pour
   mot ? ». Puis la relire avec trois cases : pas maintenant, pourquoi, où est sa demande.
 
-### Odile demande de passer Charlotte en tête (14b, en rechange)
+### Odile demande de passer Charlotte en tête (14b, rechange)
 - **Explication** : le sponsor porte le budget et se fait entendre ; il convainc le PO comme les
   autres parties prenantes. L'organisation entière, sponsor compris, respecte les décisions du PO
   sur l'ordre (Scrum Guide).
@@ -219,7 +219,7 @@ ils ne deviennent pas des faits du fil rouge.
   relancer : « et à Sid, qu'apportes-tu ? ». Si la première réponse va d'emblée à Odile,
   proposer ensuite le cas limite.
 
-### Faire trancher Odile entre Pia et Charlotte ? (14c, cas limite)
+### Faire trancher Odile entre Pia et Charlotte ? (14c)
 - **Situation** : situation d'exercice. Pia et Charlotte te relancent chaque semaine pour le même
   sprint. Diego : « Remonte ça à Odile, c'est elle le sponsor, elle tranchera. »
 - **Question** : que réponds-tu à Diego, et pourquoi ?
@@ -239,7 +239,7 @@ ils ne deviennent pas des faits du fil rouge.
     (concepts 0a1 et 1b).
 - **Ce qui marche** : le test rapide, obstacle ou désaccord, posé à voix haute.
 
-### Pia refuse le canal d'Abba (14c, en rechange)
+### Pia refuse le canal d'Abba (14c, rechange)
 - **Explication** : la suite annoncée au concept 10b2. Un autre PO ordonne seul son
   backlog : son refus est une décision de PO, comme ton ordre est le tien. Pour ton équipe, une
   story bloquée par ce qu'elle ne lève pas seule est pourtant un obstacle : on convainc d'abord

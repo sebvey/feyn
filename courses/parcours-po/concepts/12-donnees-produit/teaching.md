@@ -132,7 +132,7 @@ faits du fil rouge. Le prof ne demande jamais à l'apprenant de fixer une règle
   vélo pris et rendu à la même station en trois minutes : une location ou zéro ?). Le
   désaccord montre la règle qui manque.
 
-### La mesure de résultat est aussi un indicateur (12a, en rechange)
+### La mesure de résultat est aussi un indicateur (12a, rechange)
 - **Explication** : la mesure de résultat de l'objectif produit (concept 2c) est un indicateur
   comme un autre : elle a besoin d'une définition complète. Rappel, sans réenseigner 2c.
 - **Situation** : la mesure de résultat retenue : le temps cumulé pendant lequel une station du
@@ -162,7 +162,7 @@ faits du fil rouge. Le prof ne demande jamais à l'apprenant de fixer une règle
   plateforme reçoit mal se corrige (un relevé en double) ; ce qu'elle ne reçoit jamais est une limite de
   la source : elle s'écrit (dans la définition de l'indicateur) et se montre à ceux qui lisent le
   chiffre.
-- **Situation** (hypothèse d'exercice) : la plateforme publie le nombre de vélos signalés par
+- **Situation** : hypothèse d'exercice. La plateforme publie le nombre de vélos signalés par
   semaine, que Maud regarde pour fixer le nombre de techniciens en tournée. Les signalements
   viennent de l'appli (équipe appli) ; ceux reçus par téléphone n'y sont pas saisis. Diego :
   « C'est un défaut de qualité : ajoutons une story pour le corriger. »
@@ -192,7 +192,7 @@ faits du fil rouge. Le prof ne demande jamais à l'apprenant de fixer une règle
   de ce qu'elle ne reçoit pas (un signalement jamais saisi) ; et « si Maud fixe ses
   techniciens sur ce chiffre sans savoir qu'il manque des pannes, que se passe-t-il ? ».
 
-### Des chiffres fiables, dit Charlotte (12b, en rechange)
+### Des chiffres fiables, dit Charlotte (12b, rechange)
 - **Explication** : une exigence de qualité vague ne se teste pas ; on la traduit en règles
   mesurables, une dimension à la fois, et c'est l'utilisateur qui dit le niveau dont il a
   besoin (la qualité dépend de l'usage). La liste des dimensions est un choix d'école : six chez
@@ -257,7 +257,7 @@ faits du fil rouge. Le prof ne demande jamais à l'apprenant de fixer une règle
 - **Ce qui marche** : écrire la demande en deux colonnes, « colonne » et « à quoi elle sert pour
   Charlotte » ; une colonne sans raison ne se demande pas.
 
-### Prenons toute la table (12c, en rechange)
+### Prenons toute la table (12c, rechange)
 - **Explication** : une donnée pseudonymisée (un identifiant à la place du nom) reste une donnée
   personnelle pour qui peut la rattacher à une personne (RGPD). Une finalité se dit avant
   d'utiliser les données, pas après.

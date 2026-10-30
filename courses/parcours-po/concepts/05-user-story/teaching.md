@@ -138,11 +138,11 @@ l'exercice : ils ne deviennent pas des faits du fil rouge.
 - **Explication** : quand le « afin de » est faible, le PO demande « pourquoi ? » à l'utilisateur,
   plusieurs fois, jusqu'à une décision que celui-ci prend ou un gain qu'il reconnaît. La
   technique rappelle les « cinq pourquoi » venus de Toyota ; ici, le nombre importe peu.
-- **Réserve, sur demande** : réponses de Maud, à donner seulement quand l'apprenant pose la question : au premier
-  « pourquoi ? » : « Pour savoir combien de vélos mes techniciens auront à réparer. » Au second :
-  « Parce que chaque semaine, je fixe le nombre de techniciens en tournée. »
 - **Situation** : tu as écrit « … afin de suivre les pannes ». Le prof joue Maud, que
-  l'apprenant peut interroger.
+  l'apprenant peut interroger. Les réponses de Maud, que le prof garde pour lui et donne
+  seulement quand l'apprenant pose la question : au premier « pourquoi ? » : « Pour savoir
+  combien de vélos mes techniciens auront à réparer. » Au second : « Parce que chaque semaine,
+  je fixe le nombre de techniciens en tournée. »
 - **Question** : pose tes « pourquoi ? » à Maud, puis réécris le « afin de ».
 - **Réponse attendue** : « … afin de fixer le nombre de techniciens en tournée ». On s'arrête là
   parce que c'est une décision que Maud prend elle-même, chaque semaine : elle reconnaît la

@@ -184,11 +184,6 @@ d'exercice : ils ne deviennent pas des faits du fil rouge.
     variantes en stories à part).
   Exemple résolu : le morceau a (le centre-ville d'abord) restreint les données : le D de
   SPIDR, ou Variations in Data chez Lawrence, même idée sous deux noms.
-- **Réserve, sur demande** : les autres lettres de SPIDR (Paths : un chemin de l'utilisateur à
-  la fois ; Interfaces : une interface à la fois, ou minimale d'abord) ; chez Lawrence, Defer
-  Performance (« que ça marche » avant « que ce soit rapide »), Business Rule Variations (une
-  story par variante de règle), Workflow Steps. Les deux catalogues se recoupent (données,
-  règles) sans se confondre.
 - **Situation** : le morceau c de « prévoir les stations à risque » (9b1) : une prévision par
   la tendance de la dernière heure, avant tout modèle.
 - **Question** : quel patron le morceau c applique-t-il, et dans quel catalogue ?
@@ -208,7 +203,7 @@ d'exercice : ils ne deviennent pas des faits du fil rouge.
     corriger.
 - **Ce qui marche** : une question par message (pas « laquelle, puis quel patron » d'un coup,
   ni « quel patron pour a et pour c ») ; donner a comme exemple résolu, puis faire relier c.
-  Pour tenir en 15 lignes, ne pas réciter les catalogues : la réserve sert sur demande.
+  Pour tenir en 15 lignes, ne pas réciter les catalogues.
 
 ## Schéma
 

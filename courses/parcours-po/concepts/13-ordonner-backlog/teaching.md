@@ -210,7 +210,7 @@ du fil rouge.
   puis « et d'une deuxième ? ». Si la réponse est « je lui dis non », relancer : « et alors,
   que proposes-tu à Charlotte ? ».
 
-### Tout le backlog en MoSCoW ? (13c, en rechange)
+### Tout le backlog en MoSCoW ? (13c, rechange)
 - **Explication** : MoSCoW se rapporte à une échéance ou à un délai fixé ; le backlog, lui,
   reste une liste ordonnée (concept 3).
 - **Situation** : Anna propose : « Classons tout le backlog en MoSCoW, ce sera plus simple que
