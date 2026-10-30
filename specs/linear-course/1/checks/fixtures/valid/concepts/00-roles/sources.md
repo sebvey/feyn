@@ -5,6 +5,7 @@ Les sources du concept.
 | Affirmation (section de `concept.md` ou de `teaching.md`) | Source | Ce qui a été vérifié | Nature |
 |---|---|---|---|
 | Une affirmation acceptée (Consensus et choix d'école) | [S1] | « le texte » | consensus |
+| Une autre façon de nommer les rôles (Approfondissement) | [S1] | « le texte » | consensus |
 
 ## Références
 

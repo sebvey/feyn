@@ -38,6 +38,7 @@ headings:
   stances: "Consensus et choix d'école"
   pitfalls: "Pièges"
   quick_test: "Le test rapide"
+  deepening: "Approfondissement"
   instructions: "Consignes"
   storyline_facts: "Faits du fil rouge utilisés"
   bank: "Banque d'exemples"
@@ -78,10 +79,13 @@ qualifiers:
   practice: "entraînement"
   aside: "aparté"
 
-references:
+# The words of a concept reference in reader text: « concept 4 », « concepts 5 et 7b »,
+# « annexe A2 » (SPEC.md 4.5).
+concept_refs:
   concept: "concept"
   concepts: "concepts"
   and: "et"
+  annex: "annexe"
 
 source_types:
   primary: "primaire"

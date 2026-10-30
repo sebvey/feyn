@@ -39,9 +39,10 @@ function checkConcept(ctx, c, out, all) {
     storyline: ctx.word('markers', 'storyline'),
     list: ['consensus', 'school', 'course'].map((k) => ctx.word('markers', k)).filter(Boolean),
   };
-  const refWord = ctx.word('references', 'concept');
-  const refWords = ctx.word('references', 'concepts');
-  const andWord = ctx.word('references', 'and');
+  const refWord = ctx.word('concept_refs', 'concept');
+  const refWords = ctx.word('concept_refs', 'concepts');
+  const andWord = ctx.word('concept_refs', 'and');
+  const annexWord = ctx.word('concept_refs', 'annex');
 
   // sub-concept sections
   for (const s of top) {
@@ -96,6 +97,21 @@ function checkConcept(ctx, c, out, all) {
           const asSub = /^(A?\d+)([a-z])(\d)?$/.test(id);
           if (!(asSub ? subs.has(id) : known.has(norm))) out.push(fail(cf, l.n, `concept reference "${m[1]} ${m[2]}": ${id} names no concept or sub-concept of the course`));
         }
+      }
+    });
+  }
+
+  // concept references to an annex: the annex word, then an annex number or a sub-concept id of an annex
+  if (annexWord) {
+    const re = new RegExp(`(?<![\\p{L}\\p{N}])(${esc(annexWord)})\\s+(${ID})(?![\\p{L}\\p{N}])`, 'giu');
+    const annexIds = new Set(ctx.concepts.filter((x) => x.annex).flatMap((x) => [x.number, ...x.subs.map((s) => s.id)]));
+    bodyLines.forEach((l) => {
+      if (l.code) return;
+      const t = mdlib.maskCode(l.t);
+      let m;
+      re.lastIndex = 0;
+      while ((m = re.exec(t))) {
+        if (!annexIds.has(m[2])) out.push(fail(cf, l.n, `concept reference "${m[1]} ${m[2]}": ${m[2]} names no annex of the course, nor a sub-concept of one`));
       }
     });
   }

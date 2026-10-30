@@ -60,6 +60,7 @@ const DUMMY = {
   'why it happens and how to spot it': 'Une explication.',
   'one question that checks in ten seconds that the concept is applied': 'Qui décide de l\'ordre ?',
   'the note: what a right answer looks like': 'Une réponse juste nomme le premier rôle.',
+  'more matter on the concept, for the learner who asks to go further': 'Une autre façon de nommer les rôles.',
   'case title for a1': 'Le cas du premier rôle',
   'case title for a2': 'Le cas du second rôle',
   "the order of teaching and the split into messages, the cross-references not to re-teach, the\nconcept's own vigilance points": 'Un message par sous-concept.',

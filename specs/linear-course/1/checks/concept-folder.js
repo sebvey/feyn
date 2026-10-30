@@ -109,6 +109,7 @@ function checkConcept(ctx, c, out) {
     }
     exp.push({ text: H('pitfalls'), mandatory: true, match: (t) => t === H('pitfalls') });
     exp.push({ text: H('quick_test'), mandatory: true, match: (t) => t === H('quick_test') });
+    exp.push({ text: H('deepening'), mandatory: false, match: (t) => t === H('deepening') });
     headingSeq(cf, top.sections, exp, out);
 
     // « Objectif » equals the objective

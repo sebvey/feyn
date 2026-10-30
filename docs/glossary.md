@@ -52,6 +52,8 @@ the English terms below are how we talk about them in code, docs and issues.
 | **diagram** | an SVG of a concept under the **drawing contract**, with its **caption** | "schema" (data), "figure", "image", "illustration", "schéma" |
 | **drawing contract** | the SVG rules of the spec, `SPEC.md` 7.1 (viewBox, currentColor, three classes, `<text>`, named groups); the style of 7.2 is not part of it | "style guide" |
 | **pitfalls**, **essentials**, **quick test** | the « Pièges », « L'essentiel », « Le test rapide » sections | |
+| **deepening** | the optional « Approfondissement » section of `concept.md` (`headings.deepening`): more matter on the concept, sourced in `sources.md`, built by the site, read by the teacher in an aside on the learner's request; no case relies on it. Not a **practice case**, which is more practice on what the concept taught | "dig", "reserve" |
+| **concept reference** | in reader text, the words that name a concept, a sub-concept or an annex: « concept 4 », « concepts 5 et 7b », « annexe A2 » (« renvoi »; the pack group `concept_refs`, `SPEC.md` 4.5). Not the **references** of `sources.md` | "reference" alone |
 | **course glossary** | `courses/<id>/glossary.md`, course material | this file |
 
 ## How the teacher works
