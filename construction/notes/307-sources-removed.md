@@ -18,8 +18,9 @@ sprint goal page, the Scrum.org Sprint Review page and the three Atlassian pages
 Patton's 2008 post (archived copy) and memo (pages), Ries's post, Wikipédia, the CSPO
 objectives, the archived Scrum.org forecast article, the velocity range calculator and
 Jeffries's post. « (page) » is the whole page where no place was recorded or the page has no
-heading for it (the PMI library article, the Scrum.org myth 14 post and Rubin's chapter 6 could
-not be fetched on 2026-10-30: their quotations are `main`'s, at « (page) »); « (titre de la
+heading for it (the PMI library article and the Scrum.org myth 14 post could not be fetched
+on 2026-10-30: their quotations are `main`'s, at « (page) »; the review matched them on
+archived copies); « (titre de la
 page) », « (titre de section) » and « (titres) » mark a quotation that is a heading.
 
 Quotations new or longer than on `main`, each checked on 2026-10-30 in the fetched source:
@@ -43,10 +44,10 @@ Quotations new or longer than on `main`, each checked on 2026-10-30 in the fetch
   Dai Clegg in 1994 for use in rapid application development (RAD). » and the Open Library
   record's « Dai Clegg, Richard Barker. » ; « 1994 » (row on Clegg, `stances.school[3]`). Copied
   from another concept (no re-reading needed, checked anyway): concept 10's « needs to be moved
-  higher on the backlog », concept 1's « may represent the needs ... convince the Product
-  Owner. », concept 3's « "ordered," instead of "prioritized," ».
+  higher on the backlog », concept 1's « Those wanting to change the Product Backlog can
+  do so by trying to convince the Product Owner. » (its second sentence), concept 3's « "ordered," instead of "prioritized," ».
 - Concept 14: S2's « customers, suppliers, employees, financiers, and communities »; S3's « any
-  group or individual who can affect of an organization's objectives ... » and « Suppliers »
+  group or individual who can affect of an organization's objectives ... »
   (row on Freeman, `stances.school[0]`); « the dynamism of the environment and the power of the
   stakeholder relative to the organization » (Mendelow, longer); the Product Field, Which
   Framework and HotPMO sentences on Johnson and Scholes (row on the grid,
@@ -61,7 +62,8 @@ Quotations new or longer than on `main`, each checked on 2026-10-30 in the fetch
   or remove them from a workflow to suit your team's need. You can also create your own. », « Jira
   lets you collect many statuses under a To do, In Progress, or Done category. », « Statuses are
   the steps of a team's workflow. ») and the absences « status », « workflow », « 10% »
-  (`neighbors[0]`, row on the refinement). Copied: concept 11's absence « Definition of Ready ».
+  (`neighbors[0]`, row on the refinement). Copied: concept 11's absence « Definition of Ready » and its S4's
+  « Systematic introduced the term ready-ready ... » (S11).
 - Concept 16: the absences « story map », « user stor », « release plan », « velocity »,
   « story point », « estimat »; « It is the single source of work undertaken by the Scrum Team. »
   (whole sentence); « the more confident they will be in their Sprint forecasts » (longer than
@@ -97,11 +99,14 @@ Body of `concept.md`: unchanged.
 - Rows whose section was « Consensus et choix d'école »: the stance went to its item (5, 6, 9,
   13 to `stances.consensus[0]` and `[2]`, 22 to `stances.school[0]`, 23 to `[1]`, 26 to `[3]`),
   the claim the body makes kept its row at the body's sections.
-- Row 9: its quotation is now concept 1's, copied (« may represent the needs ... convince the
-  Product Owner. »), with `main`'s second quotation; the path to concept 1 left (S1 kept, the
-  deviation accepted on #304). « Banque d'exemples » left the section.
+- Row 9: its quotation is now concept 1's second sentence (« Those wanting to change the
+  Product Backlog can do so by trying to convince the Product Owner. »; its first sentence, on
+  stakeholders, left after the review: not the shortest quotation), with `main`'s second
+  quotation; the path to concept 1 left (S1 kept, the deviation accepted on #304). « Banque
+  d'exemples » left the section.
 - Row 11: the 2011 to 2017 Guides (S2, S4) left it: the body does not cite them; S8 (Rubin)
-  stays, with its quotation.
+  left it after the review (its quotation, the PO using the estimates, does not settle « ce sont
+  eux qui estiment »), and left « Références »: no other row or item cites it.
 - Row 13: S2 (the 2011 Guide) and S7 (two forum and guide pages, extracts of search, no
   quotation) left it; S7 left « Références ». Cohn's five factors are now quoted by their
   headings and Pichler by his introduction's sentence (a quotation added).
@@ -140,9 +145,11 @@ Body of `concept.md`: unchanged.
   page (`https://blackswanfarming.com/cost-of-delay/`) left, no quotation. S13 split into S13
   (the Agile 2013 programme) and S13b (votito.com); the xprocess page left. S18 kept Wikipédia;
   whichframework.org left.
-- References removed: S3 (the 2010 Guide, a third-party copy read in a search extract), S7, S10
-  (observations of a teaching session, link « (dépôt) »).
-- « consultée le » of S5, S6, S8, S9 lost their pointers to other concepts' files.
+- References removed: S3 (the 2010 Guide, a third-party copy read in a search extract), S7, S8
+  (Rubin, see row 11), S10 (observations of a teaching session, link « (dépôt) »).
+- « consultée le » of S5, S6, S9 lost their pointers to other concepts' files; S9's is now
+  « 2026-10-22 (déjà vérifiée ; relue) ; 2026-10-30 (sections des citations relevées) »,
+  `main`'s text with the date its places were checked, identical to concept 16's S14.
 - « Non vérifié »: the entry on the 2010 Guide left (a trace of S3, the body does not name it);
   every other entry now opens with its section; the paths to concept 11 and the storyline's
   actors left their text.
@@ -179,7 +186,9 @@ Body of `concept.md`: unchanged.
 - Row 7: « aucune ; [S2] pour la seule définition large » became « cours ».
 - Row 8: « Erreurs fréquentes » (a section of the old file) left the section cell.
 - Row 9: its path to concept 1 became S12, concept 1's S2 (Dehghani) copied, with its
-  quotation; concept 1 records no place, so the cell gives « (page) ».
+  quotation at the place concept 1's frontmatter gives, « (article) »; nature `cours` (was
+  `école`): the body lists it among the course's categories, and concept 1 states it as a
+  course item.
 - Row 13: the transparency pillar quotation left: its link to saying no is the course's.
 - Row 14: « Saying no is a firm part of our job as product people » left the row for
   `stances.school[2]`; the row keeps the four quotations the body's sentence rests on.
@@ -194,7 +203,10 @@ Body of `concept.md`: unchanged.
 - Row 35: « trois sprints de relances, c'est déjà attendre » and Sid: nowhere, the body does
   not state them.
 - Frontmatter: every item with `refs` got its `verified`; `stances.consensus[2]` gets the
-  absences of « escalat » and « sponsor », searched on 2026-10-30.
+  absences of « escalat » and « sponsor », searched on 2026-10-30; `stances.school[0]` quotes
+  S3 for Freeman and Reed's definition only (Mendelow's list left: it is not Freeman's).
+- S11's description now names its author, V. M. James, 2011, PMI Global Congress North America,
+  as the archived page shows (found by the review); « auteur non relevé » left.
 - « Non vérifié »: the PSPO entry left (« aucune affirmation n'en dépend »: it anchors no
   claim); « dire ce qui ferait monter la demande » and « trois sprints de relances » left their
   entries (the body does not state them); every other entry now opens with its section.
@@ -247,8 +259,10 @@ Body of `concept.md`: unchanged.
 - Row 20: « Commitment: Sprint Goal » (a heading) left the quotations; the path to concept 0
   left (S1 kept).
 - Row 23: S3's « shortened Sprint cancellation section »: nowhere, the body does not state it.
-- Row 26: its path to concept 11 became S1's absence « Definition of Ready », copied from concept
-  11 (S1 kept, a deviation); the storyline's DoR left.
+- Row 26: its path to concept 11 became S1's absence « Definition of Ready » and S11, concept
+  11's S4 (Jakobsen and Sutherland, the DoR as a school choice) copied identically, both with
+  concept 11's quotations (S1 kept, a deviation; S11 added after the review); the storyline's
+  DoR left.
 - Row 27: its paths to concepts 0 and 14 left (S1 kept); the quotations of the first two topics
   are now written out.
 - Row 32: the timebox quotation left: the body does not state it.
@@ -256,7 +270,8 @@ Body of `concept.md`: unchanged.
 - Row 34: S1 left the row (its two quotations backed a reasoning); the page now quotes the
   antipattern in two quotations, « ... by the Developers » and « It's a myth ... », where `main`
   joined them across the page's dash.
-- Row 35: S6 and S1 left the row for `stances.course[2]`; source « cours ».
+- Row 35: S6 and S1 left the row for `stances.course[2]`; source « cours », verified cell empty
+  (its remark on the word « recette » left after the review).
 - Row 36: S6's antipattern « The product shown does not conform to the Definition of Done »
   left; the path to concept 11 left (S1 kept).
 - Row 37: « trying to convince the Product Owner » and the paths to concepts 10 and 13 left;
@@ -267,7 +282,7 @@ Body of `concept.md`: unchanged.
 - Links with two places: S7 split into S7 (« What are work item statuses ... ») and S7b
   (« Workflows and statuses for boards in business spaces »); each quotation now names its
   page. `neighbors[0]` cites S7, S7b, S8 and S1 (was S7, S8, S1).
-- References removed: S9 and S10 (internal, link « (dépôt) »).
+- References removed: S9 and S10 (internal, link « (dépôt) »). Added: S11 (row 26).
 - Frontmatter: every item with `refs` got its `verified`; `neighbors[0]` gets the absences of
   « status » and « workflow » in the Scrum Guide, searched on 2026-10-30.
 - « Non vérifié »: every entry now opens with its section; the internal base of the « définir
@@ -295,8 +310,8 @@ Body of `concept.md`: unchanged.
   Pièges), 13 (16a, 16b1, « cours »), 14 (16a), 15 (16b1), 16 (L'essentiel, 16b1), 17 (16b1,
   Pièges), 18 (L'essentiel, 16b1), 19 (L'essentiel, 16b1, Pièges), 20 (16b1, Pièges), 21
   (16b2), 22 (16b2, Pièges), 23 (16b2, nature `fait`), 26 (16b2, Pièges), 29 (16c), 30 (16c,
-  Pièges: the claim the body makes, the stance in `stances.consensus[0]`), 31 merged into 32
-  (L'essentiel, 16c), 33 (16c, Pièges; « Objectif » left the section, it is not one), 34
+  Pièges: the claim the body makes, the stance in `stances.consensus[0]`), 31 (16c,
+  consensus), 32 (L'essentiel, 16c), 33 (16c, Pièges; « Objectif » left the section, it is not one), 34
   (L'essentiel, 16c), 35 (16c, « cours »), 36 (16c), 39 (L'essentiel, 16c, nature `cours`), 40
   (16c).
 - Row 5: S4 (Patton and Economy's book, a publisher's page, not read) left the row and
@@ -307,17 +322,23 @@ Body of `concept.md`: unchanged.
   left: the body does not state them.
 - Row 11: its paths to concepts 1 and 13 left (S1 kept: the Scrum Guide sentences are quoted
   here at their places).
-- Row 12: its path to concept 4 left; the three goal levels are quoted from the Goal-Level box.
-- Row 13: S3 and the path to concept 4 left; source « cours »; S3's quotations went to
-  `stances.course[4]`.
+- Row 12: its path to concept 4 left; the claim is now what 16a says (the columns are the
+  user's activities, not views, epics or features), quoted from S3's definition of activities;
+  the goal levels left after the review: 16a does not state them.
+- Row 13: S3 and the path to concept 4 left; source « cours », verified cell empty (its remark
+  on « trou à explorer » left after the review); S3's quotations went to `stances.course[4]`.
 - Row 14: its path to concept 3 left.
 - Row 15: « ce n'est pas une tranche horizontale au sens du concept 9 »: a pointer, left.
 - Row 19: its path to concept 2 left.
 - Row 20: S3 (no quotation) and the path to concept 9 left.
 - Row 26: its paths to concepts 0 and 11 left (S1 kept).
 - Row 30: its path to concept 1 left (S1 kept).
-- Row 32: S1's « Sprint forecasts » is now the sentence's end, « the more confident they will be
-  in their Sprint forecasts » (longer).
+- Rows 31 and 32: row 31 stays a consensus row on S1, its « Sprint forecasts » now the
+  sentence's end, « the more confident they will be in their Sprint forecasts » (longer); row 32
+  is the `cours` row on the release forecast, on S9 and S7 (S1 left it: its quotation is row
+  31's). A first pass had merged them; the review split them back.
+- Row 23: « Patton l'emploie dans ce sens » and S3 left after the review: 16b2 does not state
+  it (it is `stances.school[1]`).
 - Row 33: S10's paraphrases are now quoted (« The word commitment usually relates to undertaken
   duties. » and « the chosen alternative "forecast" has to do with making assumptions ... »,
   quotations added); S1's artifact commitments are now quoted (quotations added).
@@ -336,6 +357,9 @@ Body of `concept.md`: unchanged.
   archivée » moved into the description.
 - References removed: S4 (book not read) and S8 (PSPO, « non relu », no quotation).
 - References added by copy: S13 (concept 9's S8, Cockburn) and S14 (concept 13's S9, DSDM).
+  S14's « consultée le » adds « ; 2026-10-30 (sections des citations relevées) » to `main`'s
+  text: its section heading was checked on that date, in both concepts, so S14 and concept 13's
+  S9 are identical and both differ from `main` by that date.
 - S3's « consultée le » lost « déjà cité au cadrage T-018a §8 et en `02`, `05` ».
 - Frontmatter: every item with `refs` got its `verified`; `neighbors[0]` cites S2, S3 and S13
   (was S2, S3).

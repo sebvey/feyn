@@ -23,7 +23,7 @@ stances:
       refs: ["S2", "S3"]
       verified:
         - "« any group or individual who can affect or is affected by the achievement of the organization's objectives » ; « customers, suppliers, employees, financiers, and communities » (Stakeholder Legitimacy)"
-        - "« any group or individual who can affect of an organization's objectives or who is affected by the achievement of an organization's objectives » ; « Suppliers » (Who counts as a stakeholder?)"
+        - "« any group or individual who can affect of an organization's objectives or who is affected by the achievement of an organization's objectives » (Who counts as a stakeholder?)"
     - author: "La grille pouvoir et intérêt"
       text: "Elle classe les parties prenantes selon leur pouvoir sur le produit et leur intérêt pour lui. Souvent attribuée à Mendelow, mais Mendelow croisait le pouvoir et le dynamisme de l'environnement ; la forme pouvoir et intérêt vient de Johnson et Scholes. Attribution discordante, dite comme telle, sans date."
       refs: ["S7", "S8", "S9", "S10"]
