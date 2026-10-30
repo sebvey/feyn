@@ -64,3 +64,50 @@ Body of `concept.md`: unchanged.
   claims the concept does not make. Added: the origin of SPIDR (Consensus et choix d'école:
   [S5] says the stories were collected, not that Cohn split them). Every other entry now opens
   with its section.
+
+## 10-hors-perimetre-dependances
+
+Body of `concept.md`: unchanged.
+
+| Line | Row | Went to |
+|---|---|---|
+| 6 | « Le Scrum Guide n'impose aucune forme aux éléments du backlog » | merged into the row at line 5 (10a1, Pièges, école) and frontmatter `stances.school[0]` |
+| 7 | « Un élément choisi au Sprint Planning a en général été précisé avant ... » | frontmatter `stances.consensus[0]` (S1); « clarifier ce qui n'y est pas »: nowhere, a deduction |
+| 13 | « Le hors périmètre de la story de Théo ... » | nowhere: storyline facts |
+| 20 | « Consensus : réduire les dépendances et rendre visibles celles qui restent » | frontmatter `stances.consensus[1]` (S7's quotation); the transparency pillar of S1: nowhere, the item does not rest on it |
+| 23 | « Choix d'école, SAFe : ... « ART Planning Board » » | frontmatter `stances.school[2]` (S8, S9): the body does not name SAFe |
+| 25 | « Scarlette, Scrum Master des deux équipes ; Odile, sponsor ; Pia ... » | nowhere: storyline facts |
+| 28 | « Faits de 10b2 : ... » | nowhere: storyline facts and teaching devices |
+| 30 | « Les signalements par téléphone absents ... » | nowhere: a storyline fact |
+| 31 | « La puce « Consensus (pratique établie, hors du Scrum Guide) » » | frontmatter `stances.consensus[1]`; the label is a wording of the course |
+
+- Kept and re-anchored, their reasoning dropped: 5 (10a1, Pièges), 8 (L'essentiel, 10a1,
+  nature `école`), 9 (L'essentiel, 10a1, Pièges, now S2b), 10 (10a1, Pièges, Le test rapide;
+  « reste une demande » is the row at line 8), 11 (10a2), 12 (L'essentiel, 10a2, Pièges; its
+  second claim, « qui veut changer l'ordre le convainc », is the row at line 27), 14
+  (L'essentiel, 10b1; the glossary left the source), 15 (10b1), 16 (10b1, Pièges), 17 (10b1,
+  Pièges, Le test rapide), 18 (10b1), 19 (10b1, Pièges, Le test rapide), 21 (10b2, nature
+  `fait`; the storyline part left), 22 (10b2, Pièges), 24 (10b2), 26 (10b1), 27 (10b2,
+  Pièges; Pia and the storyline left), 29 (10a2, Pièges: the claim the body makes, a rule not
+  fixed is fixed, not settled in review, source « cours »; the blocking rule of the
+  storyline left).
+- Row 6's quotation now reads « an ongoing activity to add details, such as a description,
+  order, and size. Attributes often vary with the domain of work. », the Scrum Guide's text
+  (checked on 2026-10-30; `main` had « adding details »), as #304 did in concept 5.
+- Row 15's quotation was one string across a paragraph break of Wake's text; it is now two
+  quotations, « ... in any order » and « We can't always achieve this ».
+- Row 9 had no quotation (« [S2] relie la liste d'exclusions à la prévention de la dérive du
+  périmètre »): the passage on scope creep was found on 2026-10-30 on the Confluence template,
+  S2's second link, which became S2b with its quotation; `stances.course[1]` now cites S2b
+  instead of S2.
+- Paths: row 26 cited concept 7 for the Scrum Guide's sizing sentence: S1 kept (the deviation
+  accepted on #304), quotation copied; row 29 cited concept 8 for a rule that concept 8 states
+  as a course choice: source « cours ».
+- Links with two places: S2 split into S2 (the PRD article, which holds « What we're not
+  doing ») and S2b (the template, which holds the scope creep passage). S4 kept the copy of the
+  book, where its quotations were read; the publisher's page
+  (`https://www.mountaingoatsoftware.com/books/user-stories-applied`) left. S10 kept the Jira
+  Data Center page, which lists the four default link types; the Jira Cloud page
+  (`https://support.atlassian.com/jira-software-cloud/docs/link-issues`) left.
+- S3's « consultée le » lost its pointer to `07-invest.md`.
+- « Non vérifié »: every entry now opens with its section; none removed.

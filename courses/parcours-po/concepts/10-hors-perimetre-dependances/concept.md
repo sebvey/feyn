@@ -5,32 +5,59 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Ne parle ni de hors périmètre ni de dépendance entre éléments du backlog. Dit qu'un élément choisi au Sprint Planning a en général été précisé avant, que le contenu du sprint peut encore se clarifier pendant le sprint avec le PO, et que la revue de sprint peut adapter le backlog, que le PO ordonne (concepts 0, 1 et 3)."
       refs: ["S1"]
+      verified:
+        - "« out of scope », « dependency », « dependencies » absents du texte (recherche du 2026-10-30) ; « They usually acquire this degree of transparency after refining activities. » (Product Backlog) ; « Scope may be clarified and renegotiated with the Product Owner as more is learned » (The Sprint) ; « The Product Backlog may also be adjusted to meet new opportunities » (Sprint Review) ; « Ordering Product Backlog items » (Product Owner)"
     - author: "Pratique établie, hors du Scrum Guide"
       text: "Réduire les dépendances et rendre visibles celles qui restent. Bill Wake (le I d'INVEST), Mike Cohn et Scrum.org (le Nexus Guide, pour plusieurs équipes sur un même produit) concordent. Cohn donne deux façons de lever une dépendance entre deux stories : les fusionner, si la story fusionnée reste petite, ou les découper autrement. Il compte aussi les dépendances parmi ce qui pèse pour ordonner un backlog (concept 13)."
       refs: ["S3", "S4", "S5", "S7"]
+      verified:
+        - "« we'd like to be able to schedule and implement them in any order » ; « We can't always achieve this » (Independent)"
+        - "« Combine the dependent stories into one larger but independent story » ; « Find a different way of splitting the stories » (ch. 2, Independent)"
+        - "« Some items may not be high priority on their own, but they're necessary for delivering other items » (page)"
+        - "« The Product Backlog must be decomposed so that dependencies are transparent, identified across teams, and removed or minimized » (page)"
   school:
     - author: "Une rubrique « Hors périmètre » dans la story"
       text: "Certaines équipes l'ajoutent, sans auteur attitré. Le Scrum Guide n'impose aucune forme aux éléments du backlog. Atlassian recommande une section voisine, « ce qu'on ne fait pas », dans un document d'exigences, pas dans une story."
       refs: ["S1", "S2"]
+      verified:
+        - "« out of scope » absent du texte (recherche du 2026-10-30) ; « an ongoing activity to add details, such as a description, order, and size. Attributes often vary with the domain of work. » (Product Backlog)"
+        - "« clearly calling out what you're not doing. Flag things that are out of scope at the moment, but might be considered at a later time » (8. What we're not doing)"
     - author: "La façon de noter une dépendance"
       text: "Un lien entre deux éléments dans l'outil (dans Jira, « blocks / is blocked by » ; détail à l'annexe A1)."
       refs: ["S10"]
+      verified:
+        - "« New installations of Jira come with four default types of links » ; « blocks / is blocked by » (About issue linking)"
     - author: "SAFe : l'ART Planning Board"
       text: "Ce cadre de passage à l'échelle affiche sur un tableau les dépendances entre les features de plusieurs équipes d'un même train. Hors de ce cours."
       refs: ["S8", "S9"]
+      verified:
+        - "« a visualization of the PI's feature delivery dates, feature dependencies among teams, and relevant milestones » (page)"
+        - "« an ART planning board that reflects feature delivery dates and dependencies » (page)"
   course:
     - text: "Ne mettre hors périmètre que les demandes plausibles : celles qu'un utilisateur ou une partie prenante pourrait croire incluses. Une évidence que personne n'attend n'a pas sa place dans la liste."
       refs: ["S2"]
+      verified:
+        - "« Flag things that are out of scope at the moment, but might be considered at a later time » (8. What we're not doing)"
     - text: "Écrit avant le sprint, le hors périmètre aligne les attentes : à la revue, personne ne découvre un manque convenu."
-      refs: ["S2"]
+      refs: ["S2b"]
+      verified:
+        - "« one of the best ways to prevent it is to be proactive » ; « list what's out of scope for this feature or release » (How to write a product requirements document (PRD), étape 5)"
     - text: "Quand la story dont l'autre dépend a une valeur seule, garder les deux et les ordonner plutôt que les fusionner. Quand aucune des deux n'en a, redécouper en tranches verticales."
       refs: ["S4"]
+      verified:
+        - "« works well in this case because the combined story is only five days long » ; « a better approach is usually to find a different dimension along which to split » (ch. 2, Independent)"
     - text: "Entre deux produits, chacun avec son PO, s'accorder entre PO sur l'ordre dans les deux backlogs. Le Scrum Guide ne traite pas ce cas."
       refs: ["S1", "S7"]
+      verified:
+        - "« multiple cohesive Scrum Teams, each focused on the same product. Therefore, they should share the same Product Goal, Product Backlog, and Product Owner. » (Scrum Team)"
+        - "« A Nexus has a single Product Owner who manages a single Product Backlog » (page)"
 neighbors:
   - author: "Plusieurs équipes sur un même produit"
     text: "Elles partagent le même PO et le même backlog (Scrum Guide, Nexus Guide). Ce n'est pas le cas traité ici : deux produits, chacun avec son PO et son backlog."
     refs: ["S1", "S7"]
+    verified:
+      - "« multiple cohesive Scrum Teams, each focused on the same product. Therefore, they should share the same Product Goal, Product Backlog, and Product Owner. » (Scrum Team)"
+      - "« A Nexus has a single Product Owner who manages a single Product Backlog » (page)"
 diagrams:
   - file: "hors-perimetre.svg"
     title: "Le hors périmètre d'une story"
