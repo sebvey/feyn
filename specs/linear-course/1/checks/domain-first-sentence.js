@@ -1,13 +1,14 @@
 'use strict';
-// The first sentence of each paragraph of « Le fil des concepts » stands alone (SPEC.md section 5).
+// Conformity: the first sentence of each paragraph of « Le fil des concepts » ends within 300
+// characters of the lead, so that the site can show it on the domain page (SPEC.md section 5).
+// The opening anaphora is the quality check domain-first-sentence-standalone.
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
 
-function run(ctx) {
-  if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
-  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see language-pack-keys')];
+// Each paragraph of « Le fil des concepts » of every domain file: { file, line, rest }, rest being
+// the paragraph's text after its bold lead. Shared with domain-first-sentence-standalone.
+function paragraphs(ctx) {
   const thread = ctx.word('headings', 'concept_thread');
-  const ana = ctx.pack.checks && Array.isArray(ctx.pack.checks.anaphora) ? ctx.pack.checks.anaphora.map((w) => String(w).toLowerCase()) : [];
   const out = [];
   for (const d of ctx.cy.domains) {
     if (!d || typeof d.file !== 'string') continue;
@@ -17,20 +18,28 @@ function run(ctx) {
     if (!sec) continue;
     for (const p of mdlib.blocks(sec.lines)) {
       const lm = /^\*\*[^*]+\*\*\s*/.exec(p.text);
-      const rest = lm ? p.text.slice(lm[0].length) : p.text;
-      const first = rest.slice(0, 300);
-      if (!/[.?!](?=\s|$)/.test(first)) {
-        out.push(fail(d.file, p.line, `first sentence: no ".", "?" or "!" within 300 characters of the lead ("${rest.slice(0, 40)}...")`));
-        continue;
-      }
-      const w = (/^[\p{L}]+/u.exec(rest) || [''])[0].toLowerCase();
-      const wa = (/^[\p{L}]+['’]/u.exec(rest) || [''])[0].toLowerCase();
-      if (ana.includes(w) || (wa && ana.includes(wa))) {
-        out.push(fail(d.file, p.line, `first sentence opens with "${(wa && ana.includes(wa)) ? wa : w}", an anaphora: it must stand alone`));
-      }
+      out.push({ file: d.file, line: p.line, rest: lm ? p.text.slice(lm[0].length) : p.text });
     }
   }
   return out;
 }
 
-module.exports = { id: 'domain-first-sentence', run };
+function unusable(ctx) {
+  if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
+  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see language-pack-keys')];
+  return null;
+}
+
+function run(ctx) {
+  const u = unusable(ctx);
+  if (u) return u;
+  const out = [];
+  for (const p of paragraphs(ctx)) {
+    if (!/[.?!](?=\s|$)/.test(p.rest.slice(0, 300))) {
+      out.push(fail(p.file, p.line, `first sentence: no ".", "?" or "!" within 300 characters of the lead ("${p.rest.slice(0, 40)}...")`));
+    }
+  }
+  return out;
+}
+
+module.exports = { id: 'domain-first-sentence', run, paragraphs, unusable };

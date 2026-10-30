@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 // Smoke run of the templates (task S1-06): builds a course from them with every placeholder
-// filled with a dummy value, then runs check-course on it. Two runs: with a diagram, and
-// without (the `diagrams` key and the image line deleted, as the concept template says).
+// filled with a dummy value, then runs check-course on it in both modes. Two courses: with a
+// diagram, and without (the `diagrams` key and the image line deleted, as the concept template
+// says).
 //   mise exec -- specs/linear-course/1/templates/smoke-test [--keep]
 // The learner/ templates have no check: they are only scanned for unreplaced placeholders.
 const fs = require('fs');
@@ -165,11 +166,13 @@ function build(withDiagram) {
 }
 for (const withDiagram of [true, false]) {
   const { tmp, course } = build(withDiagram);
-  const r = spawnSync(process.execPath, [path.join(spec, 'checks', 'check-course'), course, '--lang-dir', lang], { encoding: 'utf8' });
-  const notOk = r.stdout.split('\n').filter((l) => l && !l.endsWith(': ok'));
-  const ok = r.status === 0 && !notOk.length;
-  console.log(`${ok ? 'ok  ' : 'FAIL'} templates ${withDiagram ? 'with' : 'without'} a diagram pass every check${ok ? '' : ': ' + (notOk.join(' | ') || r.stderr)}`);
-  if (!ok) bad++;
+  for (const mode of ['conformity', 'quality']) {
+    const r = spawnSync(process.execPath, [path.join(spec, 'checks', 'check-course'), course, '--lang-dir', lang, ...(mode === 'quality' ? ['--quality'] : [])], { encoding: 'utf8' });
+    const notOk = r.stdout.split('\n').filter((l) => l && !l.endsWith(': ok'));
+    const ok = r.status === 0 && !notOk.length;
+    console.log(`${ok ? 'ok  ' : 'FAIL'} templates ${withDiagram ? 'with' : 'without'} a diagram pass every ${mode} check${ok ? '' : ': ' + (notOk.join(' | ') || r.stderr)}`);
+    if (!ok) bad++;
+  }
   if (keep) console.log('kept: ' + tmp); else fs.rmSync(tmp, { recursive: true, force: true });
 }
 if (list) {

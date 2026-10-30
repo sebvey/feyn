@@ -11,9 +11,16 @@ YAML parser too, and the checks must run the same on a laptop and in CI.
 
 ```
 mise exec -- specs/check-course courses/<id>
+mise exec -- specs/check-course courses/<id> --quality
 mise exec -- specs/check-course courses/<id> --only svg-contract
 mise exec -- specs/check-course courses/<id> --only concept-folder,sources --concept 9
 ```
+
+Two modes (decision `versioned-objects-and-spec-layout`). The **conformity mode**, the default,
+runs the conformity checks: whether the course is consumable; the machine runs it on every
+change, and a `fail` blocks. The **quality mode**, `--quality`, runs the quality checks: whether
+the course is good; the maintainer runs it on demand, and its failures are findings, triaged into
+course issues. No conformity path runs the quality mode.
 
 `specs/check-course` reads `spec: linear-course@<MAJOR>` in the course's `course.yaml` and runs
 `specs/linear-course/<MAJOR>/checks/check-course` with the same arguments; it refuses an unknown
@@ -26,33 +33,37 @@ One line per passing check (`<id>: ok`), one line per failure
 
 | Option | Does |
 |---|---|
-| `--only <id>[,<id>]` | runs those checks only (repeatable); an unknown id is a usage error |
+| `--quality` | runs the quality checks instead of the conformity checks |
+| `--only <id>[,<id>]` | runs those checks of the mode only (repeatable); an unknown id, or an id of the other mode, is a usage error |
 | `--concept <number>` | the per-concept checks (`concept-folder`, `conventions`, `svg-contract`, `sources`, `glossary-order`) look at that concept only, and `course-yaml` demands only that concept's folder: for a migration in progress, when the other concept folders do not exist yet |
 | `--lang-dir <dir>` | reads the language pack `<dir>/<language>.yaml` instead of this MAJOR's `lang/` (also `LINEAR_COURSE_LANG_DIR`) |
-| `--list` | prints the check ids |
+| `--list` | prints the check ids of the mode |
 
 ## The checks
 
-One script per id, `checks/<id>.js`, exporting `run(ctx)`; `check-course` loads them in this order.
+One script per id, `checks/<id>.js`, exporting `run(ctx)`; `check-course` loads the checks of
+its mode in this order.
 
-| Id | Script | Verifies (SPEC.md) |
-|---|---|---|
-| `course-yaml` | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, paths, spec declared, pack present (3, 8) |
-| `concept-folder` | `concept-folder.js` | files, sections and their order, frontmatter, sub-concept sections, « Objectif », cases, leaf coverage, citation in « Consignes » (4) |
-| `conventions` | `conventions.js` | reader-text conventions of `concept.md`; plain Markdown in every course file (2, 4.5) |
-| `svg-contract` | `svg-contract.js` | every diagram against the drawing contract; declared and present diagrams (4.1, 7.1) |
-| `sources` | `sources.js` | reference ids, citations, claims, paths (4.1, 4.4) |
-| `course-files` | `course-files.js` | `plan.md` (« Public cible », « Accueil »), `glossary.md`, `CHANGELOG.md`, domain files (5, 6) |
-| `glossary-order` | `glossary-order.js` | no `concept.md` uses a term before the concept that introduces it (6) |
-| `domain-first-sentence` | `domain-first-sentence.js` | first sentence of each paragraph of « Le fil des concepts » stands alone (5) |
-| `typography` | `typography.js` | no banned character of the language pack in course text (2) |
-| `language-pack-keys` | `language-pack-keys.js` | every key of section 9 and of `PROTOCOL.md` exists in the course's pack (9) |
+| Id | Family | Script | Verifies (SPEC.md) |
+|---|---|---|---|
+| `course-yaml` | conformity | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, paths, spec declared, pack present (3, 8) |
+| `concept-folder` | conformity | `concept-folder.js` | files, sections and their order, frontmatter, sub-concept sections, « Objectif », cases, leaf coverage, citation in « Consignes » (4) |
+| `conventions` | conformity | `conventions.js` | reader-text conventions of `concept.md`; plain Markdown in every course file (2, 4.5) |
+| `svg-contract` | conformity | `svg-contract.js` | every diagram against the drawing contract; declared and present diagrams (4.1, 7.1) |
+| `sources` | conformity | `sources.js` | reference ids, citations, claims, paths (4.1, 4.4) |
+| `course-files` | conformity | `course-files.js` | `plan.md` (« Public cible », « Accueil »), `glossary.md`, `CHANGELOG.md`, domain files (5, 6) |
+| `domain-first-sentence` | conformity | `domain-first-sentence.js` | the first sentence of each paragraph of « Le fil des concepts » ends with `.`, `?` or `!` within 300 characters of the lead (5) |
+| `language-pack-keys` | conformity | `language-pack-keys.js` | every key of section 9 and of `PROTOCOL.md` exists in the course's pack (9) |
+| `glossary-order` | quality | `glossary-order.js` | no `concept.md` uses a term before the concept that introduces it (6) |
+| `typography` | quality | `typography.js` | no banned character of the language pack in course text (2) |
+| `domain-first-sentence-standalone` | quality | `domain-first-sentence-standalone.js` | the first sentence of each paragraph of « Le fil des concepts » does not open with a word of the pack's `checks.anaphora` list; a pack without that list is a failure of this check (5, 9) |
 
 `language-pack-keys` checks the keys of section 9 and every key `PROTOCOL.md` uses: a row of
 the pack tables of its "Keys and parameters" section, or a `{group.key}` in a rule (the check reads
 `PROTOCOL.md`, so a new key there is required of the packs at once). A key is a non-empty string;
-the lists (`typography.banned`, `checks.anaphora`, the `learner_says` lists) are non-empty lists of
-strings. The groups beside those (`site`) are read by the site, not checked here.
+the lists (`typography.banned`, the `learner_says` lists) are non-empty lists of strings.
+`checks.anaphora` is optional: `domain-first-sentence-standalone` reads it. The groups beside
+those (`site`) are read by the site, not checked here.
 
 A claim of `sources.md` has a source when its source cell is not empty: a reference id
 (`[S1]`), a `concepts/NN-slug/sources.md` path, or a word that says there is none (« fil
@@ -68,11 +79,11 @@ mise exec -- specs/linear-course/1/checks/check-spec <spec-dir> --only rule-slug
 `check-spec` checks the spec's own files, not a course: `PROTOCOL.md`, `SPEC.md` and
 `decisions/` of `<spec-dir>` (default: this MAJOR's folder, `specs/linear-course/1`). Same
 output, exit codes and `--only`, `--list` as `check-course`; the file in a failure line is
-relative to `<spec-dir>`.
+relative to `<spec-dir>`. It has one mode: its checks are conformity checks.
 
-| Id | Script | Verifies |
-|---|---|---|
-| `rule-slugs` | `rule-slugs.js` | every rule and every group of rules of `PROTOCOL.md` is named by a slug, defined once in one namespace; every rule or group cited in `PROTOCOL.md`, `SPEC.md` and `decisions/` is cited by a slug that is defined, a group as a group and a rule as a rule; none is named or cited by a number, no range « `a` à `b` » (decisions `rules-named-by-slug`, `rule-groups-replace-ranges`) |
+| Id | Family | Script | Verifies |
+|---|---|---|---|
+| `rule-slugs` | conformity | `rule-slugs.js` | every rule and every group of rules of `PROTOCOL.md` is named by a slug, defined once in one namespace; every rule or group cited in `PROTOCOL.md`, `SPEC.md` and `decisions/` is cited by a slug that is defined, a group as a group and a rule as a rule; none is named or cited by a number, no range « `a` à `b` » (decisions `rules-named-by-slug`, `rule-groups-replace-ranges`) |
 
 A rule's slug is defined by a line of a rule family (`## <n>. …`) that opens on `**<slug>** `, or
 by a table row of a family whose first cell is `**<slug>**` (the save-point table); a group's slug
@@ -98,17 +109,22 @@ Known limits:
 mise exec -- specs/linear-course/1/checks/test-fixtures
 ```
 
+Every course fixture runs in both modes; `--list` and `--quality --list` must print two disjoint
+lists, and a run must run the checks of its mode and no other.
+
 - `fixtures/valid/`: a minimal valid course (four concepts, one annex, one diagram); every
-  check passes.
+  check of both modes passes.
 - `fixtures/broken/<name>/`: a copy of it with one defect; its `EXPECT` file names the check
-  that must fail and the message it must give. No other check may fail (the test says so),
-  except for the broken language pack.
+  that must fail, in its mode, and the message it must give. No other check of either mode may
+  fail (the test says so), except for the broken language pack.
 - `fixtures/prototype/`: the course-level files around the concept 9 prototype
   (`courses/parcours-po/concepts/09-decoupage-vertical`, copied in at test time); every check
-  passes with `--concept 9`. The real course files come with S1-08.
+  of both modes passes with `--concept 9`. The real course files come with S1-08.
 - `fixtures/lang/fr.yaml`: the pack the fixtures use (the groups the checks read: section 9 and the
   keys of `PROTOCOL.md`, French values of the real pack `lang/fr.yaml`, without `site`; change both
   together). `fixtures/lang-broken*/`: packs with one missing key, for the broken copies that name them.
+  `fixtures/lang-no-anaphora/`: the pack without the optional `checks.anaphora`; `valid/` with it
+  passes the conformity mode, and the quality mode fails `domain-first-sentence-standalone` only.
 - `fixtures/spec/valid/`: a minimal spec (`PROTOCOL.md`, `SPEC.md`, one decision); every
   `check-spec` check passes. `fixtures/spec/broken/<name>/`: a copy of it with one defect and its
   `EXPECT` file (a missing slug, a duplicate slug, a rule cited by number, a missing group, a
@@ -116,8 +132,9 @@ mise exec -- specs/linear-course/1/checks/test-fixtures
   `check-spec` on `specs/linear-course/1`, which must pass.
 - `fixtures/dispatcher/<name>/`: a `course.yaml` that `specs/check-course` refuses, `other-spec`
   (an unknown spec, `other@1`) and `unknown-major` (`linear-course@9`); the test also runs
-  `specs/check-course` on `valid/`, which must pass.
+  `specs/check-course` on `valid/` in both modes, which must pass.
 
 The fixtures are plain files: change `valid/` and the broken copies together, then run the
-test. A new check adds a script, a line in `check-course` (or `check-spec` for a check of the
-spec's own files), a row above and a broken fixture.
+test. A new check adds a script, a line in the list of its mode in `check-course` (or in
+`check-spec` for a check of the spec's own files), a row above with its family, a row in
+`SPEC.md` section 10 and a broken fixture.

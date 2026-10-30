@@ -1,17 +1,22 @@
 #!/usr/bin/env node
 'use strict';
-// Runs check-course on the fixtures and on the concept 9 prototype, and says whether every
-// run gave the expected result:
-//   fixtures/valid                 passes every check
+// Runs check-course on the fixtures and on the concept 9 prototype, in both modes (conformity,
+// the default, and --quality), and says whether every run gave the expected result:
+//   --list, --quality --list       print the conformity checks and the quality checks
+//   fixtures/valid                 passes every check of both modes
+//   fixtures/lang-no-anaphora      a pack without checks.anaphora: valid passes conformity, and
+//                                  domain-first-sentence-standalone (quality) reports the absence
 //   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>", optional "lang-dir: <path>":
-//                                  that check fails, with a line containing the fragment
+//                                  that check fails, in its mode, with a line containing the
+//                                  fragment, and no check of either mode fails beside it
 //   fixtures/prototype             course-level files wrapped around the concept 9 prototype
 //                                  (courses/parcours-po/concepts/09-decoupage-vertical): passes
-//                                  every check with --concept 9
+//                                  every check of both modes with --concept 9
 //   fixtures/spec/...              the same for check-spec (the spec's own files), and the
 //                                  repository's spec passes it
 //   fixtures/dispatcher/<name>     a course.yaml that specs/check-course refuses: other-spec
-//                                  (spec other@1), unknown-major (linear-course@9)
+//                                  (spec other@1), unknown-major (linear-course@9); the
+//                                  dispatcher passes --quality through
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -32,11 +37,34 @@ function report(name, ok, detail) {
   console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}${ok ? '' : ': ' + detail}`);
   if (!ok) bad++;
 }
+const notOk = (r) => r.lines.filter((l) => !l.endsWith(': ok')).join(' | ') || r.err;
+const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
+const ids = (r) => r.lines.map((l) => l.slice(0, l.indexOf(':')));
+
+// the two modes: --list prints each, and each run runs its checks and no other
+const listOf = (extra) => spawnSync(process.execPath, [runner, ...extra, '--list'], { encoding: 'utf8' }).stdout.split('\n').filter(Boolean);
+const MODES = { conformity: listOf([]), quality: listOf(['--quality']) };
+const FLAG = { conformity: [], quality: ['--quality'] };
+report('--list and --quality --list print two disjoint lists',
+  MODES.conformity.length > 0 && MODES.quality.length > 0 && !MODES.conformity.some((id) => MODES.quality.includes(id)),
+  `conformity: ${MODES.conformity.join(', ')}; quality: ${MODES.quality.join(', ')}`);
+const modeOf = (id) => (MODES.quality.includes(id) ? 'quality' : 'conformity');
 
 // valid
+for (const mode of ['conformity', 'quality']) {
+  const r = run(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang'), ...FLAG[mode]]);
+  report(`valid passes every ${mode} check, and only those run`, r.code === 0 && ids(r).join(',') === MODES[mode].join(','), notOk(r) || ids(r).join(','));
+}
+
+// a pack without checks.anaphora: consumable, so conformity passes; the quality check reports it
 {
-  const r = run(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang')]);
-  report('valid passes every check', r.code === 0, r.lines.filter((l) => !l.endsWith(': ok')).join(' | ') || r.err);
+  const lang = path.join(fx, 'lang-no-anaphora');
+  const c = run(path.join(fx, 'valid'), ['--lang-dir', lang]);
+  report('lang-no-anaphora passes the conformity mode', c.code === 0, notOk(c));
+  const q = run(path.join(fx, 'valid'), ['--lang-dir', lang, '--quality']);
+  const f = failing(q);
+  report('lang-no-anaphora fails domain-first-sentence-standalone only, in the quality mode',
+    q.code === 1 && f.length === 1 && f[0].startsWith('domain-first-sentence-standalone: fail: ') && f[0].includes('no checks.anaphora'), notOk(q));
 }
 
 // broken
@@ -44,11 +72,12 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   const d = path.join(fx, 'broken', name);
   const ex = Object.fromEntries(fs.readFileSync(path.join(d, 'EXPECT'), 'utf8').split('\n').filter(Boolean).map((l) => [l.slice(0, l.indexOf(':')), l.slice(l.indexOf(':') + 1).trim()]));
   const lang = ex['lang-dir'] ? path.resolve(d, ex['lang-dir']) : path.join(fx, 'lang');
-  const r = run(d, ['--lang-dir', lang, '--only', ex.check]);
+  const r = run(d, ['--lang-dir', lang, ...FLAG[modeOf(ex.check)], '--only', ex.check]);
   const hit = r.lines.filter((l) => l.startsWith(ex.check + ': fail: '));
-  report(`broken/${name} fails ${ex.check}`, r.code === 1 && hit.some((l) => l.includes(ex.message)), `expected "${ex.message}", got ${r.lines.join(' | ') || r.err}`);
-  // and only that check: the other checks do not mind the defect
-  const others = ex.check === 'language-pack-keys' ? [] : run(d, ['--lang-dir', lang]).lines.filter((l) => l.includes(': fail: ') && !l.startsWith(ex.check + ': '));
+  report(`broken/${name} fails ${ex.check} (${modeOf(ex.check)})`, r.code === 1 && hit.some((l) => l.includes(ex.message)), `expected "${ex.message}", got ${r.lines.join(' | ') || r.err}`);
+  // and only that check: the other checks of both modes do not mind the defect
+  const others = ex.check === 'language-pack-keys' ? []
+    : ['conformity', 'quality'].flatMap((mode) => failing(run(d, ['--lang-dir', lang, ...FLAG[mode]])).filter((l) => !l.startsWith(ex.check + ': ')));
   if (others.length) report(`broken/${name} breaks nothing else`, false, others.slice(0, 2).join(' | '));
 }
 
@@ -61,8 +90,10 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     const course = path.join(tmp, 'parcours-po');
     fs.cpSync(path.join(fx, 'prototype'), course, { recursive: true });
     fs.cpSync(proto, path.join(course, 'concepts', '09-decoupage-vertical'), { recursive: true });
-    const r = run(course, ['--lang-dir', path.join(fx, 'lang'), '--concept', '9']);
-    report('prototype (concept 9) passes every check', r.code === 0, r.lines.filter((l) => !l.endsWith(': ok')).join(' | ') || r.err);
+    for (const mode of ['conformity', 'quality']) {
+      const r = run(course, ['--lang-dir', path.join(fx, 'lang'), '--concept', '9', ...FLAG[mode]]);
+      report(`prototype (concept 9) passes every ${mode} check`, r.code === 0, notOk(r));
+    }
     fs.rmSync(tmp, { recursive: true, force: true });
   }
 }
@@ -73,7 +104,6 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     const r = spawnSync(process.execPath, [path.join(here, 'check-spec'), dir, ...extra], { encoding: 'utf8' });
     return { code: r.status, lines: r.stdout.split('\n').filter(Boolean), err: r.stderr };
   };
-  const notOk = (r) => r.lines.filter((l) => !l.endsWith(': ok')).join(' | ') || r.err;
   const v = spec(path.join(fx, 'spec', 'valid'), []);
   report('spec/valid passes every spec check', v.code === 0, notOk(v));
   for (const name of fs.readdirSync(path.join(fx, 'spec', 'broken')).sort()) {
@@ -94,8 +124,10 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     const r = spawnSync(process.execPath, [dispatcher, dir, ...extra], { encoding: 'utf8' });
     return { code: r.status, lines: r.stdout.split('\n').filter(Boolean), err: r.stderr };
   };
-  const v = disp(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang')]);
-  report('the dispatcher runs this MAJOR on valid', v.code === 0 && v.lines.length > 0, v.lines.filter((l) => !l.endsWith(': ok')).join(' | ') || v.err);
+  for (const mode of ['conformity', 'quality']) {
+    const v = disp(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang'), ...FLAG[mode]]);
+    report(`the dispatcher runs this MAJOR's ${mode} checks on valid`, v.code === 0 && ids(v).join(',') === MODES[mode].join(','), notOk(v) || ids(v).join(','));
+  }
   for (const [name, want] of [['other-spec', 'unknown spec "other"'], ['unknown-major', 'unknown MAJOR 9 of spec "linear-course"']]) {
     const r = disp(path.join(fx, 'dispatcher', name), []);
     report(`the dispatcher refuses dispatcher/${name}`, r.code === 2 && r.err.includes(want) && r.lines.length === 0, `expected exit 2 and "${want}", got ${r.code}: ${r.err || r.lines.join(' | ')}`);

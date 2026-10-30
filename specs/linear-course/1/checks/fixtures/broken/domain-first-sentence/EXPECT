@@ -1,2 +1,2 @@
 check: domain-first-sentence
-message: opens with "il", an anaphora
+message: no ".", "?" or "!" within 300 characters of the lead

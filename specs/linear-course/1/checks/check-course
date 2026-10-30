@@ -1,17 +1,23 @@
 #!/usr/bin/env node
 'use strict';
-// check-course <course-dir> [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>] [--list]
+// check-course <course-dir> [--quality] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>] [--list]
+// Two modes (decision `versioned-objects-and-spec-layout`): the conformity checks by default, the
+// quality checks with --quality. No conformity path runs the quality mode.
 const path = require('path');
 const { load } = require('./lib/course');
 
-const CHECKS = ['course-yaml', 'concept-folder', 'conventions', 'svg-contract', 'sources', 'course-files',
-  'glossary-order', 'domain-first-sentence', 'typography', 'language-pack-keys'];
+const MODES = {
+  conformity: ['course-yaml', 'concept-folder', 'conventions', 'svg-contract', 'sources', 'course-files',
+    'domain-first-sentence', 'language-pack-keys'],
+  quality: ['glossary-order', 'typography', 'domain-first-sentence-standalone'],
+};
 
 function usage(code) {
   const out = code ? console.error : console.log;
-  out('usage: check-course <course-dir> [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>]');
-  out('       check-course --list');
-  out(`checks: ${CHECKS.join(', ')}`);
+  out('usage: check-course <course-dir> [--quality] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>]');
+  out('       check-course [--quality] --list');
+  out(`conformity checks (the default): ${MODES.conformity.join(', ')}`);
+  out(`quality checks (--quality): ${MODES.quality.join(', ')}`);
   process.exit(code);
 }
 
@@ -19,10 +25,13 @@ const args = process.argv.slice(2);
 let dir = null;
 const only = [];
 const opts = {};
+let mode = 'conformity';
+let list = false;
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === '--help' || a === '-h') usage(0);
-  else if (a === '--list') { console.log(CHECKS.join('\n')); process.exit(0); }
+  else if (a === '--list') list = true;
+  else if (a === '--quality') mode = 'quality';
   else if (a === '--only') only.push(...String(args[++i] || '').split(',').filter(Boolean));
   else if (a.startsWith('--only=')) only.push(...a.slice(7).split(',').filter(Boolean));
   else if (a === '--concept') opts.concept = args[++i];
@@ -33,8 +42,16 @@ for (let i = 0; i < args.length; i++) {
   else if (dir === null) dir = a;
   else usage(2);
 }
+const CHECKS = MODES[mode];
+if (list) { console.log(CHECKS.join('\n')); process.exit(0); }
 if (dir === null) usage(2);
-for (const id of only) if (!CHECKS.includes(id)) { console.error(`unknown check id "${id}" (known: ${CHECKS.join(', ')})`); process.exit(2); }
+for (const id of only) {
+  if (CHECKS.includes(id)) continue;
+  const other = mode === 'quality' ? 'conformity' : 'quality';
+  if (MODES[other].includes(id)) console.error(`"${id}" is a ${other} check: ${other === 'quality' ? 'add' : 'drop'} --quality`);
+  else console.error(`unknown check id "${id}" (${mode} checks: ${CHECKS.join(', ')})`);
+  process.exit(2);
+}
 
 const fs = require('fs');
 if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) { console.error(`not a directory: ${dir}`); process.exit(2); }
