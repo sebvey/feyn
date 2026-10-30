@@ -5,34 +5,53 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Le backlog contient des « éléments du backlog », sans niveau : les mots epic, feature, story, thème et tâche n'y figurent pas. Découper un élément en éléments plus petits et plus précis fait partie du travail continu sur le backlog (le refinement, vu au concept 15). Au Sprint Planning, les Developers planifient le travail de chaque élément choisi, souvent en le découpant en travail d'un jour ou moins ; la façon de le faire est à leur seule discrétion."
       refs: ["S1"]
+      verified:
+        - "« epic », « feature », « story », « theme », « task » absents du texte (recherche du 2026-10-22) ; « Product Backlog refinement is the act of breaking down and further defining Product Backlog items into smaller more precise items » (Product Backlog) ; « This is often done by decomposing Product Backlog items into smaller work items of one day or less. How this is done is at the sole discretion of the Developers. » (Sprint Planning)"
   school:
     - author: "Mike Cohn : l'epic, la feature, le thème"
       text: "Au sens d'origine, un epic est une grosse story, trop grosse pour un sprint. Aucun seuil ne sépare les niveaux, et « feature » n'a pas de sens unique : Cohn le juge même superflu et propose d'en faire une étiquette plutôt qu'un niveau. Chez lui, un thème est une collection de stories. La frontière entre niveaux reste floue entre praticiens."
-      refs: ["S2", "S6"]
+      refs: ["S2"]
+      verified:
+        - "« epic just means big user story » ; « there's no magic threshold at which we call a particular story an epic » ; « to mean a collection of user stories » (page)"
     - author: "Jira Cloud (Atlassian) : choix d'outil"
       text: "Trois niveaux par défaut, Epic > Story > Subtask (sous-tâche), modifiables ; des niveaux au-dessus seulement dans les offres Premium et Enterprise."
       refs: ["S3"]
+      verified:
+        - "« By default, Jira is set up with three levels of work type hierarchy » ; « You can modify these levels » ; « Jira Premium and Enterprise customers can also create and manage additional levels » (page)"
     - author: "Azure DevOps (Microsoft) : choix d'outil"
       text: "Les niveaux dépendent du processus choisi à la création du projet. Agile : Epic > Feature > User Story > Task. Scrum : Epic > Feature > Product Backlog Item > Task. Basic : Epic > Issue > Task."
       refs: ["S4"]
+      verified:
+        - "« Epic », « Feature », « User Story », « Task » (Agile) ; « Product backlog item » (Scrum) ; « Epic », « Issue », « Task » (Basic) (tableau « Main distinctions among the default processes ») ; « You can't change a project's base process after the project is created. » (page)"
     - author: "SAFe (Scaled Agile) : choix de cadre"
       text: "Un cadre pour plusieurs équipes, qui ajoute des niveaux : la capability, entre epic et feature. Une feature y est dimensionnée pour plusieurs équipes réunies. Le cours juge qu'une équipe seule n'en a pas besoin."
       refs: ["S5"]
+      verified:
+        - "« sized to be delivered by an Agile Release Train within a PI » ; « whose implementation often spans multiple ARTs » (page)"
   course:
     - text: "Compter les « je veux » pour trancher, en jugeant d'après ce qu'il reste à livrer. Un seul « je veux » trop gros pour un sprint est un epic (au sens de Cohn, une grosse story), qui se découpe. Quand la taille et le compte divergent, le compte l'emporte. Ces règles pratiques n'ont pas de source externe."
       refs: []
     - text: "Un niveau est de trop quand la plupart des features ne contiennent qu'une story. Règle pratique du cours, sans source externe ; Cohn, qui juge la feature superflue, va dans le même sens. Avant de retirer un niveau, on vérifie que ses éléments ne sont pas mal classés."
-      refs: ["S2"]
+      refs: []
     - text: "La tâche revient aux Developers : le PO ne l'écrit pas. Le Guide laisse le découpage à leur discrétion ; le cours en déduit que la tâche est à eux."
       refs: ["S1"]
+      verified:
+        - "« How this is done is at the sole discretion of the Developers. » (Sprint Planning)"
     - text: "« Quatre mots courants » est un choix du cours, pas un constat d'usage. Aucune source ne dit que la plupart des équipes emploient ces quatre mots, et les outils vérifiés ont trois ou quatre niveaux par défaut."
       refs: ["S3", "S4"]
+      verified:
+        - "« By default, Jira is set up with three levels of work type hierarchy » (page)"
+        - "« Epic », « Feature », « User Story », « Task » (Agile) ; « Epic », « Issue », « Task » (Basic) (tableau « Main distinctions among the default processes »)"
     - text: "Peu de niveaux suffisent : choix du cours."
       refs: []
 neighbors:
   - author: "Le thème"
     text: "Le cours n'en fait pas un niveau : son sens varie selon les auteurs et les outils (chez Cohn, une collection de stories), et aucun des deux outils cités n'en a un niveau par défaut."
-    refs: ["S2", "S3", "S4", "S6"]
+    refs: ["S2", "S3", "S4"]
+    verified:
+      - "« to mean a collection of user stories » (page)"
+      - "niveau 1 « by default called Epic », niveau 0 « called Story », niveau -1 « called Subtask » (page)"
+      - "« Epic », « Feature », « User Story », « Task » (Agile) ; « Epic », « Issue », « Task » (Basic) (tableau « Main distinctions among the default processes »)"
 diagrams:
   - file: arbre-niveaux-backlog.svg
     title: "L'arbre des niveaux du backlog : epic, feature, story, tâche"
