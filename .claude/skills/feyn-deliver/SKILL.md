@@ -128,10 +128,9 @@ back to it.
 From the main checkout, on `main`:
 
 0. The merge: `mise exec -- gh pr view <pr> --json state,mergedAt` shows `MERGED`; otherwise
-   stop and tell the maintainer, before any `git worktree remove` or `git branch -D`. The
-   maintainer's word starts step 6; it does not prove the merge, which can fail on a GitHub
-   error the maintainer does not see. It is the check of `/feyn-merge-cleanup` step 1, done
-   here first because the worktree removal (6.2) comes before `/feyn-merge-cleanup` (6.3).
+   stop and tell the maintainer, before any `git worktree remove` or `git branch -D`. It is
+   the check of `/feyn-merge-cleanup` step 1, done here first because the worktree removal
+   (6.2) comes before `/feyn-merge-cleanup` (6.3).
 1. The worktree: `git worktree list --porcelain` gives its path
    (`.claude/worktrees/agent-<id>`), on a branch `worktree-agent-<id>` cut from `main`'s HEAD;
    `/feyn-merge-cleanup` does not remove it. A worktree with no change at the end of the
@@ -160,6 +159,8 @@ The behaviours the steps above rely on, one line each with its step
   (Claude Code, observed 2026-10-28, #130).
 - Step 1, an agent-workflow run: a `cd` into a worktree moves the work session even for one
   command, and a run launched then runs its agents there (Claude Code, observed 2026-10-28, #171).
+- Step 6.0: a merge can fail on a GitHub error the maintainer does not see
+  (GitHub, observed 2026-10-30, #320).
 - Step 6.1: the worktree of an agent spawned with isolation (`.claude/worktrees/agent-<id>`, on
   a branch `worktree-agent-<id>` cut from `main`'s HEAD) is not removed by
   `/feyn-merge-cleanup` (Claude Code, observed 2026-10-27, #115).
