@@ -5,35 +5,45 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Le PO répond de la valeur, sans méthode imposée pour la mesurer. L'objectif produit est un état futur du produit qui sert de cible à l'équipe, son objectif à long terme. Il est l'engagement du backlog produit et figure dans ce backlog ; l'équipe l'atteint ou l'abandonne avant d'en prendre un autre. Le développer et le communiquer est la première des tâches de gestion du backlog que le Guide confie au PO. Chaque incrément est un pas vers lui ; le Sprint Planning y rattache les éléments choisis, la revue de sprint discute du progrès vers lui. Le Guide n'impose ni format ni horizon. Sa version 2020 a introduit l'objectif produit."
       refs: ["S1", "S3", "S5"]
+      verified: ["« accountable for maximizing the value of the product » ; « How this is done may vary widely » (Product Owner) ; « The Product Goal describes a future state of the product which can serve as a target for the Scrum Team to plan against » ; « The Product Goal is the long-term objective for the Scrum Team » ; « They must fulfill (or abandon) one objective before taking on the next » (Commitment: Product Goal) ; « For the Product Backlog it is the Product Goal » (Scrum Artifacts) ; « Developing and explicitly communicating the Product Goal » (Product Owner) ; « An Increment is a concrete stepping stone toward the Product Goal » (Increment) ; « how they map to the Product Goal » (Sprint Planning) ; « progress toward the Product Goal is discussed » (Sprint Review)", "« The 2020 Scrum Guide introduces the concept of a Product Goal » (Changes between 2017 and 2020 Scrum Guides)", "« There is no specific format for the Product Goal or indication of how long the planning horizon is » (page « Product Goal »)"]
     - author: "Pratique établie, hors du Scrum Guide"
       text: "Distinguer livrable (*output*) et résultat (*outcome*), et mesurer le résultat. Les objectifs d'apprentissage du PO de Scrum Alliance le demandent ; Scrum.org, Teresa Torres et Josh Seiden partagent la distinction. Le Scrum Guide n'emploie pas ces mots en ce sens."
-      refs: ["S2", "S4", "S6", "S11"]
+      refs: ["S2", "S6", "S11"]
+      verified: ["« describe the relationship between outcome and output » (CSPO 5.1) ; « list at least three techniques to measure value » (CSPO 5.5)", "« Outcome-driven to reflect a customer want or need » (page « Formulating a Product Goal », critères)", "« Outcomes Over Output » (titre du livre, fiche du livre)"]
   school:
     - author: "Josh Seiden : le résultat comme changement de comportement"
       text: "Le résultat est un changement de comportement de l'utilisateur, qui produit la valeur (*Outcomes Over Output*, 2019). Le cours attribue à Seiden l'idée, pas une citation."
-      refs: ["S11", "S12"]
+      refs: ["S11"]
+      verified: ["« Why Customer Behavior Is the Key Metric for Business Success » (sous-titre, fiche du livre)"]
     - author: "Scrum.org, Scrum Alliance : la vision produit"
       text: "Le Scrum Guide 2020 ne contient plus le mot « vision » (la version 2017 l'employait). Scrum.org et Scrum Alliance la gardent : pour Scrum.org, l'objectif produit est un pas concret et mesurable vers une vision souvent aspirationnelle. Un format de vision : le Product Vision Board de Roman Pichler (2011)."
       refs: ["S1", "S3", "S2", "S5", "S8", "S9"]
+      verified: ["absent de The Scrum Guide 2020 (texte cherché : « vision », 0 occurrence hors navigation du site)", "« The increment is a step toward a vision or goal » (changements entre 2016 et 2017)", "« explain the relationship between a product vision and a product goal » (CSPO 2.1)", "« a concrete, actionable, measurable objective » ; « often an aspirational vision of what the product could be » (page « Product Goal »)", "« Product Vision » (domaine de l'examen PSPO I)", "« first created by Roman in 2011 » (page de l'outil)"]
     - author: "Scrum.org : critères d'un bon objectif produit"
       text: "Aligné sur la vision, clair et concis, orienté résultat, mesurable, transparent. Et l'objectif produit vu comme une hypothèse (ce qu'on tient pour vrai sans l'avoir vérifié, concept 17) : on peut le reformuler quand on apprend, sans que ce soit un échec."
       refs: ["S5", "S6"]
+      verified: ["« Product Goals are hypotheses » (page « Product Goal »)", "« Outcome-driven to reflect a customer want or need » ; « This isn't a failure, but a natural consequence of incremental and experimental development » (page « Formulating a Product Goal »)"]
     - author: "Rodden, Hutchinson et Fu (Google) : Goals-Signals-Metrics et HEART"
       text: "Choisir une mesure en partant du but, puis du signal qui montre le succès, puis de la mesure. Cinq catégories de mesures centrées utilisateur : Happiness, Engagement, Adoption, Retention, Task success. Une mesure seule ne suffit pas : on la croise avec d'autres sources."
       refs: ["S10"]
+      verified: ["« articulating the goals of a product or feature, then identifying signals that indicate success, and finally building specific metrics » ; « metrics should not stand alone. They should be triangulated with findings from other sources » (article)"]
     - author: "Eric Ries : les mesures de vanité"
       text: "Se méfier des chiffres flatteurs qui ne disent pas quoi faire ; garder les mesures qui aident à décider."
       refs: ["S15"]
+      verified: ["« might make you feel good » ; « help them make decisions » (billet du 19 mai 2009)"]
     - author: "Cités sans être enseignés"
       text: "Evidence-Based Management (Scrum.org, quatre domaines de valeur) ; une mesure de succès par version (Jeff Patton, concept 16) ; les mesures d'un produit de données selon Zhamak Dehghani : qualité des données (le respect de règles mesurables, comme la complétude ou la fraîcheur, concept 12), délai pour les consommer, satisfaction des consommateurs."
-      refs: ["S16", "S17", "S18"]
+      refs: ["S16"]
+      verified: ["« 4 Key Value Areas » (page Evidence-Based Management)"]
   course:
     - text: "Le test qui sépare livrable et résultat : si l'équipe peut le faire seule, sans que personne ne change sa façon de travailler, c'est un livrable. Tiré de l'idée de Seiden, pas une citation."
-      refs: ["S11", "S12", "S13"]
+      refs: ["S11"]
+      verified: ["« Why Customer Behavior Is the Key Metric for Business Success » (sous-titre, fiche du livre)"]
     - text: "Un indicateur que la plateforme calcule pour ses utilisateurs est un livrable, même quand on s'en sert pour juger le produit : on parle alors de mesure de résultat. Même chiffre, deux rôles."
-      refs: ["S13"]
+      refs: []
     - text: "Un objectif produit qui décrit une caractéristique du livrable ou un moyen ne convient pas : il ne dit pas ce qui change pour qui."
-      refs: ["S1", "S6", "S13"]
+      refs: ["S1", "S6"]
+      verified: ["« How this is done is at the sole discretion of the Developers » (Sprint Planning)", "« Outcome-driven to reflect a customer want or need » (page « Formulating a Product Goal », critères)"]
 diagrams:
   - file: livrable-au-resultat.svg
     title: "Du livrable au résultat : ce que l'équipe produit, ce qui change chez l'utilisateur"

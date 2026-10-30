@@ -1,52 +1,42 @@
 ## Affirmations
 
-| Affirmation | Section | Source | Ce qui a été vérifié | Nature |
+| Affirmation | Section | Source | Vérifié | Nature |
 |---|---|---|---|---|
-| Le PO est responsable de maximiser la valeur du produit ; le Scrum Guide ne dit pas comment la mesurer | L'essentiel, Consensus | [S1] | « accountable for maximizing the value of the product resulting from the work of the Scrum Team » ; « How this is done may vary widely » | consensus |
-| Le Scrum Guide 2020 n'emploie pas les mots « output » et « outcome » au sens livrable et résultat | Consensus | [S1] | Texte cherché : « output » 0 occurrence ; « outcome » une seule, au sens de « l'issue du sprint » (« inspect the outcome of the Sprint », revue de sprint) | consensus |
-| Distinguer livrable (output) et résultat (outcome) fait partie des objectifs d'apprentissage de référence du PO | Consensus | [S2] | CSPO 5.1 « describe the relationship between outcome and output » ; 5.2 « maximize outcomes and impact while minimizing outputs » ; 5.7 élément du backlog qui décrit le résultat visé et la valeur | consensus |
-| La distinction livrable et résultat est partagée par plusieurs auteurs et organismes : Scrum Alliance, Scrum.org, Torres, Seiden | Consensus | [S2], [S4], [S6], [S11] | CSPO 5.1 ; Scrum.org : objectif produit « Outcome-driven to reflect a customer want or need » ; Torres : l'arbre part d'un résultat visé ; Seiden : titre du livre | consensus |
-| Le résultat est un changement de comportement de l'utilisateur, qui produit la valeur (choix d'école : Seiden) | Consensus et choix d'école | [S11], [S12] | Sous-titre du livre : « Why Customer Behavior Is the Key Metric for Business Success » (Seiden, 2019) ; définition « changement de comportement qui produit des résultats pour l'entreprise » rapportée de façon concordante par des sources secondaires ; texte exact non lu (voir « Non vérifié ») | école |
-| Josh Seiden est l'auteur de l'idée du résultat comme changement de comportement | Consensus et choix d'école | [S11] | Auteur seul, éditeur, année 2019 (fiche Google Books et site de l'éditeur) | école |
-| Livrer un indicateur n'est pas obtenir le résultat : un PO data livre des indicateurs et doit mesurer un changement chez l'utilisateur | Consignes 2a, Pièges | [S2], [S13] | Raisonnement du cours appuyé sur CSPO 5.1 ; pas d'auteur à citer : à présenter comme une conséquence de la distinction, pas comme une citation | |
-| Une sortie à l'heure ou un incrément terminé ne prouve pas la valeur | Pièges, Banque d'exemples « Vue livrée, objectif atteint » | [S1], [S2] | SG : l'incrément doit être utilisable « to provide value » ; la valeur se juge au résultat (CSPO 5.1, 5.2) | |
-| Test du cours : ce que l'équipe peut faire seule, sans que personne ne change sa façon de travailler, est un livrable ; un changement de comportement de l'utilisateur est un résultat | Banque d'exemples, « Livrable ou résultat ? » | [S11], [S12], [S13] | Choix du cours, tiré de l'idée attribuée à Seiden (résultat = changement de comportement) ; pas une citation | cours |
-| Un indicateur calculé par la plateforme est un livrable, qui sert aussi de mesure de résultat quand on s'en sert pour juger le produit | Consignes, Banque d'exemples | [S13] | Choix du cours et glossaire du cours (« indicateur » : ce que calcule le produit ; « mesure de résultat » : ce qui juge le produit) ; choix de vocabulaire du cours | cours |
-| La satisfaction d'un utilisateur est une perception, utile en complément, qui ne dit pas seule si le résultat visé est obtenu | Banque d'exemples, « Vue livrée, objectif atteint » | [S10] | HEART : la catégorie Happiness couvre les mesures d'attitude (satisfaction), à côté des catégories de comportement ; l'article recommande de choisir les catégories selon le but | école |
-| Définition de l'objectif produit : un état futur du produit qui sert de cible à l'équipe pour planifier | L'essentiel, Consensus | [S1] | « The Product Goal describes a future state of the product which can serve as a target for the Scrum Team to plan against » | consensus |
-| L'objectif produit est l'objectif à long terme de l'équipe Scrum | Consensus | [S1] | « The Product Goal is the long-term objective for the Scrum Team » | consensus |
-| Un seul objectif produit à la fois : l'équipe l'atteint ou l'abandonne avant de passer au suivant | Consensus | [S1], [S5] | « They must fulfill (or abandon) one objective before taking on the next » ; l'équipe est « focused on one objective at a time, the Product Goal » | consensus |
-| L'objectif produit est l'engagement du backlog produit ; il est dans le backlog | Consensus | [S1] | « For the Product Backlog it is the Product Goal » ; « The Product Goal is in the Product Backlog. The rest of the Product Backlog emerges to define "what" will fulfill the Product Goal » | consensus |
-| Développer et communiquer explicitement l'objectif produit est la première des tâches de gestion du backlog produit que le Scrum Guide confie au PO (la responsabilité première du PO restant de maximiser la valeur) | Consensus | [S1] | Liste : « Developing and explicitly communicating the Product Goal » vient en premier, avant créer, ordonner et rendre transparents les éléments du backlog | consensus |
-| L'objectif produit relie le sprint au long terme : au Sprint Planning, le PO montre comment les éléments importants se rattachent à l'objectif produit ; à la revue, on discute du progrès vers lui ; chaque incrément est un pas vers lui | Consensus | [S1] | « how they map to the Product Goal » (Sprint Planning) ; « progress toward the Product Goal is discussed » (revue) ; « An Increment is a concrete stepping stone toward the Product Goal » | consensus |
-| L'objectif produit a été introduit par le Scrum Guide 2020 | Consensus | [S3], [S7] | Historique des révisions : « The 2020 Scrum Guide introduces the concept of a Product Goal » ; Dave West (Scrum.org), 18 novembre 2020 | consensus |
-| Le Scrum Guide 2020 ne contient pas le mot « vision » ; la version 2017 l'employait (« a step toward a vision or goal », à propos de l'incrément) | Consensus et choix d'école | [S1], [S3] | Texte 2020 cherché : « vision » 0 occurrence hors navigation du site (cadrage T-018a, revérifié) ; historique des révisions, changements 2016-2017 : « The increment is a step toward a vision or goal » | consensus |
-| La vision est un choix d'école : Scrum.org et Scrum Alliance la gardent et la relient à l'objectif produit | Consensus et choix d'école | [S2], [S5], [S6], [S8] | CSPO 2.1 « explain the relationship between a product vision and a product goal » ; PSPO, domaine « Product Vision » ; Scrum.org : l'objectif produit est « a bridge between the product vision and the Sprint Goals » | école |
-| Pour Scrum.org, l'objectif produit est un pas concret, mesurable, vers une vision souvent aspirationnelle | Consignes 2b, Banque d'exemples « Trois objectifs produits à juger » | [S5] | « a concrete, actionable, measurable objective » ; la vision est « often an aspirational vision of what the product could be » | école |
-| Le Scrum Guide n'impose ni format ni horizon à l'objectif produit | Consensus | [S1], [S5] | Aucun format dans le SG ; Scrum.org : « There is no specific format for the Product Goal or indication of how long the planning horizon is » | consensus |
-| Critères d'un bon objectif produit selon Scrum.org : aligné sur la vision, clair et concis, orienté résultat (un besoin du client), mesurable, transparent (choix d'école : Scrum.org) | Consensus et choix d'école ; Banque 2b reprend « orienté résultat, mesurable, clair » | [S6] | Liste citée telle quelle dans « Formulating a Product Goal » ; page sans auteur nommé | école |
-| Un objectif produit formulé comme une caractéristique du livrable ou un moyen ne convient pas : il ne dit pas ce qui change pour qui ; le besoin d'un utilisateur (par exemple de fraîcheur, banque « Trois objectifs ») est un fait à demander aux utilisateurs, la technique revient aux Developers | Banque d'exemples, Pièges | [S1], [S6], [S13] | Scrum.org : objectif « Outcome-driven to reflect a customer want or need » ; SG : « How this is done is at the sole discretion of the Developers » (Sprint Planning), pour la technique seule ; le temps réel comme niveau de fraîcheur suit le glossaire du cours et le concept 1 (le besoin se demande à Étienne) | cours |
-| Accoler deux résultats dans un objectif produit disperse l'équipe et empêche d'argumenter l'ordre du backlog | Banque d'exemples, « Deux objectifs à la fois ? » | [S1], [S13] | Conséquence de « one objective at a time » et de « They must fulfill (or abandon) one objective before taking on the next » ; raisonnement du cours, pas une citation | cours |
-| Un objectif produit est une hypothèse : il peut changer quand l'équipe apprend ; l'abandonner ou le reformuler n'est pas un échec (choix d'école : Scrum.org) | Pièges | [S5], [S6] | « Product Goals are hypotheses » ; « This isn't a failure, but a natural consequence of incremental and experimental development » | école |
-| Formats de vision, choix d'école : le Product Vision Board de Roman Pichler | Consensus et choix d'école | [S9] | Billet de Pichler publié le 10 mai 2011 ; page de l'outil : « first created by Roman in 2011 », « target group, needs, key features, and business goals » | école |
-| Mesurer la valeur fait partie des objectifs d'apprentissage du PO, sans technique imposée | Consensus | [S2] | CSPO 5.5 « list at least three techniques to measure value » ; 5.4 la valeur vue par au moins trois groupes de parties prenantes | consensus |
-| Goals-Signals-Metrics (Rodden, Hutchinson, Fu, Google, CHI 2010) : partir du but, chercher le signal (comportement ou perception qui montre le succès), puis construire la mesure (choix d'école) | Consensus et choix d'école, Banque d'exemples | [S10] | Article lu : « articulating the goals of a product or feature, then identifying signals that indicate success, and finally building specific metrics » | école |
-| Une mesure n'est utile que si elle se rattache explicitement à un but (choix d'école : Rodden et al.) | L'essentiel, Pièges | [S10] | « it is unlikely to be useful in practice unless it explicitly relates to a goal » | école |
-| Choisir un signal sensible et spécifique au but : il ne bouge que quand l'expérience s'améliore ou se dégrade, pas pour une autre raison (choix d'école : Rodden et al.) | Banque d'exemples, Pièges | [S10] | « Choose signals that are sensitive and specific to the goal » | école |
-| Le nombre de consultations d'une vue mesure l'usage du livrable (catégories Adoption ou Engagement de HEART) : signal utile, pas preuve du résultat | Banque d'exemples, Pièges | [S10], [S13] | HEART : Adoption et Engagement mesurent l'usage d'un produit ou d'une fonction ; l'article demande de rattacher chaque mesure à un but ; l'écart avec le résultat est un raisonnement du cours | |
-| Le nombre d'éléments livrés par sprint mesure le livrable, pas le résultat | Banque d'exemples | [S2] | CSPO 5.1 (outcome et output) ; 5.2 « maximize outcomes and impact while minimizing outputs » | cours |
-| Normaliser les comptages bruts (ratio, pourcentage, moyenne par utilisateur), qui montent avec le nombre d'utilisateurs (choix d'école : Rodden et al.) | Pièges | [S10] | « Raw counts will go up as your user base grows, and need to be normalized » ; l'application au calcul de la mesure retenue (par station ou cumulé sur le centre-ville, non fixé par le fil rouge) est un raisonnement du cours | école |
-| Une mesure ne suffit pas seule : la croiser avec d'autres sources (entretiens, observation) (choix d'école : Rodden et al.) | Pièges | [S10] | « metrics should not stand alone. They should be triangulated with findings from other sources » | école |
-| HEART : Happiness, Engagement, Adoption, Retention, Task success, catégories de mesures centrées utilisateur (choix d'école : Rodden et al., Google) | Consensus et choix d'école | [S10] | Article lu : les cinq catégories ; « It is not always appropriate to employ metrics from every category » | école |
-| Les mesures de vanité (Eric Ries) : des chiffres flatteurs (total des visites) qui ne disent pas quoi faire ; préférer des mesures qui aident à décider | Consensus et choix d'école ; Banque 2c, Réponse attendue | [S15] | Billet invité de Ries, 19 mai 2009 : vanity metrics « might make you feel good » ; garder les mesures qui « help them make decisions » | école |
-| Evidence-Based Management (Scrum.org) : quatre domaines de valeur (valeur actuelle, valeur non réalisée, délai de mise sur le marché, capacité d'innovation) ; cadre d'organisation, cité comme choix d'école sans être enseigné | Consensus et choix d'école | [S16] | Cadrage T-018a §8 (page EBM de Scrum.org) ; revérifié le 2026-10-22 : la page parle de « 4 Key Value Areas » mesurées par des « Key Value Indicators » ; guide EBM (PDF) non lu | école |
-| Patton : une mesure de succès par tranche de version (choix d'école) | Consensus et choix d'école | [S17] | Cadrage T-018a §8 (« Story Map Concepts ») | école |
-| Pour un produit de données, Zhamak Dehghani fait suivre au propriétaire du produit la qualité des données, le délai pour les consommer et la satisfaction des consommateurs (choix d'école, data mesh) | Consensus et choix d'école | [S18] | Cadrage T-018a §8 | école |
-| Une mesure qui devient une cible cesse d'être une bonne mesure (loi de Goodhart) | Pièges | [S19] | Formulation et attribution rapportées par une source secondaire ; texte de 1975 non lu (voir « Non vérifié ») ; l'exemple du service d'assistance jugé sur le nombre de tickets ouverts est un cas inventé du cours | |
-| Une mesure mal définie trompe sans que personne la force ; la définition d'un indicateur se travaille au concept 12 | Pièges | [S13] | Raisonnement du cours ; « vélo disponible » (à quai et louable) est une règle fixée du fil rouge ; la définition de « vide » dans la mesure ne l'est pas | cours |
-| Qualité des données : respect de règles mesurables comme la complétude ou la fraîcheur | glose de Consensus et choix d'école | glossaire du cours | Définition du glossaire (« Qualité des données », concept 12) | école |
-| Hypothèse : ce qu'on tient pour vrai sans l'avoir vérifié | glose de Consensus et choix d'école | glossaire et plan du cours | Définition d'usage du cours, concept 17 ; pas une citation | école |
-| L'objectif produit retenu est une direction : sans cible chiffrée, une mesure dit si on s'en approche, pas qu'il est atteint | Consignes 2b ; Banque d'exemples, Réponse attendue ; hors L'essentiel | [S1], [S6] | SG : l'objectif produit est « a target for the Scrum Team to plan against » ; Scrum.org le veut « measurable » ; la cible chiffrée n'est pas fixée dans le fil rouge | |
+| Le PO est responsable de maximiser la valeur du produit ; le Scrum Guide ne dit pas comment la mesurer | L'essentiel | [S1] | « accountable for maximizing the value of the product resulting from the work of the Scrum Team » ; « How this is done may vary widely » | consensus |
+| Le Scrum Guide 2020 n'emploie pas les mots « output » et « outcome » au sens livrable et résultat | 2a | [S1] | Texte cherché : « output » 0 occurrence ; « outcome » une seule, au sens de « l'issue du sprint » (« inspect the outcome of the Sprint », revue de sprint) | consensus |
+| Distinguer livrable (output) et résultat (outcome) fait partie des objectifs d'apprentissage de référence du PO | 2a | [S2] | CSPO 5.1 « describe the relationship between outcome and output » ; 5.2 « maximize outcomes and impact while minimizing outputs » ; 5.7 élément du backlog qui décrit le résultat visé et la valeur | consensus |
+| Pour Josh Seiden, le résultat est un changement de comportement de l'utilisateur, qui produit la valeur | 2a | [S11] | Sous-titre du livre : « Why Customer Behavior Is the Key Metric for Business Success » (Seiden, 2019) | école |
+| Un livrable terminé, ou un incrément en production, ne prouve pas la valeur | 2a, Pièges | [S1], [S2] | SG : l'incrément doit être utilisable « to provide value » (Increment) ; CSPO 5.2 « maximize outcomes and impact while minimizing outputs » | consensus |
+| Test du cours : ce que l'équipe peut faire seule, sans que personne ne change sa façon de travailler, est un livrable ; un changement de comportement de l'utilisateur est un résultat | 2a | cours | Tiré de l'idée attribuée à Seiden (le résultat est un changement de comportement) ; pas une citation | cours |
+| Un indicateur calculé par la plateforme est un livrable, qui sert aussi de mesure de résultat quand on s'en sert pour juger le produit | 2a | cours | Choix de vocabulaire du cours (glossaire : « indicateur », ce que calcule le produit ; « mesure de résultat », ce qui juge le produit) | cours |
+| La satisfaction d'un utilisateur est une perception, utile en complément, qui ne dit pas seule si le résultat visé est obtenu | 2a | [S10] | HEART : la catégorie Happiness couvre les mesures d'attitude (satisfaction), à côté des catégories de comportement ; l'article recommande de choisir les catégories selon le but | école |
+| Définition de l'objectif produit : un état futur du produit qui sert de cible à l'équipe pour planifier | L'essentiel, 2b | [S1] | « The Product Goal describes a future state of the product which can serve as a target for the Scrum Team to plan against » | consensus |
+| L'objectif produit est l'objectif à long terme de l'équipe Scrum | L'essentiel, 2b | [S1] | « The Product Goal is the long-term objective for the Scrum Team » | consensus |
+| Un seul objectif produit à la fois : l'équipe l'atteint ou l'abandonne avant de passer au suivant | L'essentiel, 2b | [S1], [S5] | « They must fulfill (or abandon) one objective before taking on the next » ; l'équipe est « focused on one objective at a time, the Product Goal » | consensus |
+| L'objectif produit est l'engagement du backlog produit ; il est dans le backlog | 2b | [S1] | « For the Product Backlog it is the Product Goal » ; « The Product Goal is in the Product Backlog. The rest of the Product Backlog emerges to define "what" will fulfill the Product Goal » | consensus |
+| Développer et communiquer explicitement l'objectif produit est la première des tâches de gestion du backlog produit que le Scrum Guide confie au PO (la responsabilité première du PO restant de maximiser la valeur) | 2b | [S1] | Liste : « Developing and explicitly communicating the Product Goal » vient en premier, avant créer, ordonner et rendre transparents les éléments du backlog | consensus |
+| L'objectif produit relie le sprint au long terme : au Sprint Planning, le PO montre comment les éléments importants se rattachent à l'objectif produit ; à la revue, on discute du progrès vers lui ; chaque incrément est un pas vers lui | 2b | [S1] | « how they map to the Product Goal » (Sprint Planning) ; « progress toward the Product Goal is discussed » (revue) ; « An Increment is a concrete stepping stone toward the Product Goal » | consensus |
+| L'objectif produit a été introduit par le Scrum Guide 2020 | 2b | [S3] | « The 2020 Scrum Guide introduces the concept of a Product Goal » (historique des révisions) | consensus |
+| Le Scrum Guide 2020 ne contient pas le mot « vision » ; la version 2017 l'employait (« a step toward a vision or goal », à propos de l'incrément) | 2b | [S1], [S3] | Texte 2020 cherché : « vision » 0 occurrence hors navigation du site (cadrage T-018a, revérifié) ; historique des révisions, changements 2016-2017 : « The increment is a step toward a vision or goal » | consensus |
+| La vision est un choix d'école : Scrum.org et Scrum Alliance la gardent et la relient à l'objectif produit | 2b | [S2], [S5], [S8] | CSPO 2.1 « explain the relationship between a product vision and a product goal » ; Scrum.org : la vision est « often an aspirational vision of what the product could be » (page « Product Goal ») ; PSPO, domaine « Product Vision » | école |
+| Pour Scrum.org, l'objectif produit est un pas concret, mesurable, vers une vision souvent aspirationnelle | 2b | [S5] | « a concrete, actionable, measurable objective » ; la vision est « often an aspirational vision of what the product could be » | école |
+| Le Scrum Guide n'impose ni format ni horizon à l'objectif produit | 2b | [S1], [S5] | Aucun format dans le SG ; Scrum.org : « There is no specific format for the Product Goal or indication of how long the planning horizon is » | consensus |
+| Critères d'un bon objectif produit selon Scrum.org : aligné sur la vision, clair et concis, orienté résultat (un besoin du client), mesurable, transparent | 2b | [S6] | Liste des critères de « Formulating a Product Goal », dont « Outcome-driven to reflect a customer want or need » ; page sans auteur nommé | école |
+| Un objectif produit formulé comme une caractéristique du livrable ou un moyen ne convient pas : il ne dit pas ce qui change pour qui ; le besoin d'un utilisateur est un fait à lui demander, la technique revient aux Developers | 2b, Pièges | [S1], [S6] | SG : « How this is done is at the sole discretion of the Developers » (Sprint Planning), pour la technique seule ; Scrum.org : objectif « Outcome-driven to reflect a customer want or need » | cours |
+| Accoler deux résultats dans un objectif produit disperse l'équipe et empêche d'argumenter l'ordre du backlog | 2b, Pièges | [S1] | Conséquence de « one objective at a time » et de « They must fulfill (or abandon) one objective before taking on the next » ; raisonnement du cours, pas une citation | cours |
+| Un objectif produit est une hypothèse : il peut changer quand l'équipe apprend ; l'abandonner ou le reformuler n'est pas un échec (choix d'école : Scrum.org) | 2b, Pièges | [S5], [S6] | « Product Goals are hypotheses » ; « This isn't a failure, but a natural consequence of incremental and experimental development » | école |
+| L'objectif produit retenu est une direction : sans cible chiffrée, une mesure dit si on s'en approche, pas qu'il est atteint | 2b | [S1], [S6] | SG : l'objectif produit est « a target for the Scrum Team to plan against » ; Scrum.org le veut « measurable » | cours |
+| Goals-Signals-Metrics (Rodden, Hutchinson, Fu, Google, CHI 2010) : partir du but, chercher le signal (comportement ou perception qui montre le succès), puis construire la mesure | 2c | [S10] | Article lu : « articulating the goals of a product or feature, then identifying signals that indicate success, and finally building specific metrics » | école |
+| Une mesure n'est utile que si elle se rattache explicitement à un but (choix d'école : Rodden et al.) | L'essentiel, 2c | [S10] | « it is unlikely to be useful in practice unless it explicitly relates to a goal » | école |
+| Choisir un signal sensible et spécifique au but : il ne bouge que quand l'expérience s'améliore ou se dégrade, pas pour une autre raison (choix d'école : Rodden et al.) | 2c | [S10] | « Choose signals that are sensitive and specific to the goal » | école |
+| HEART : Happiness, Engagement, Adoption, Retention, Task success, catégories de mesures centrées utilisateur, à choisir selon le but (choix d'école : Rodden et al., Google) | 2c | [S10] | Article lu : les cinq catégories ; « It is not always appropriate to employ metrics from every category » | école |
+| L'usage d'un livrable (consultations, connexions) est un signal utile, pas une preuve du résultat | 2c, Pièges | cours | Raisonnement du cours, appuyé sur HEART (Adoption et Engagement mesurent l'usage d'un produit ou d'une fonction) [S10] | cours |
+| Le nombre d'éléments livrés par sprint mesure le livrable, pas le résultat | 2c | [S2] | CSPO 5.1 (outcome et output) ; 5.2 « maximize outcomes and impact while minimizing outputs » | cours |
+| Normaliser les comptages bruts (ratio, pourcentage, moyenne par utilisateur), qui montent avec le nombre d'utilisateurs (choix d'école : Rodden et al.) | 2c, Pièges | [S10] | « Raw counts will go up as your user base grows, and need to be normalized » | école |
+| Une mesure ne suffit pas seule : la croiser avec d'autres sources (entretiens, observation) (choix d'école : Rodden et al.) | 2c, Pièges | [S10] | « metrics should not stand alone. They should be triangulated with findings from other sources » | école |
+| Les mesures de vanité (Eric Ries) : des chiffres flatteurs qui ne disent pas quoi faire ; préférer des mesures qui aident à décider | 2c | [S15] | Billet invité de Ries, 19 mai 2009 : vanity metrics « might make you feel good » ; garder les mesures qui « help them make decisions » | école |
+| Une mesure qui devient une cible cesse d'être une bonne mesure (loi de Goodhart) | Pièges | [S19] | « Any observed statistical regularity will tend to collapse once pressure is placed upon it for control purposes » (formulation de 1975, rapportée par l'article) | consensus |
+| Une mesure mal définie trompe sans que personne la force ; la définition d'un indicateur se travaille au concept 12 | 2c, Pièges | cours | Raisonnement du cours | cours |
 
 ## Références
 
@@ -55,46 +45,51 @@
 | S1 | Schwaber, Sutherland, *The Scrum Guide*, novembre 2020 | https://scrumguides.org/scrum-guide.html | primaire | 2026-10-22 |
 | S2 | Scrum Alliance, *CSPO Learning Objectives*, janvier 2022 (mis en forme 2/2024) | https://www.scrumalliance.org/media/certifications/los/cspo_learning_objectives_2022.pdf | primaire | 2026-10-22 |
 | S3 | Scrum Guides, « Scrum Guide Revision History » | https://scrumguides.org/revisions.html | primaire | 2026-10-22 |
-| S4 | Torres, « Opportunity Solution Trees », Product Talk, 2023 | https://www.producttalk.org/opportunity-solution-trees/ | primaire | 2026-10-22 (cadrage T-018a) |
 | S5 | Scrum.org, « Product Goal » (page de ressource, sans auteur nommé) | https://www.scrum.org/resources/product-goal | primaire (Scrum.org), marketing pour ses formations | 2026-10-22 |
 | S6 | Scrum.org, « Formulating a Product Goal » (page de ressource, sans auteur nommé) | https://www.scrum.org/resources/formulating-product-goal | primaire (Scrum.org), marketing pour ses formations | 2026-10-22 |
-| S7 | West, « Scrum Guide 2020 Update - Introducing the Product Goal », Scrum.org, 18 novembre 2020 | https://www.scrum.org/resources/blog/scrum-guide-2020-update-introducing-product-goal | secondaire | 2026-10-22 (titre, auteur et date vus en lien depuis S5 ; billet non lu) |
 | S8 | Scrum.org, PSPO I | https://www.scrum.org/assessments/professional-scrum-product-owner-i-certification | primaire, marketing (pour la certification) | 2026-10-22 (cadrage T-018a) |
-| S9 | Pichler, « The Product Vision Board », 10 mai 2011 ; page de l'outil | https://www.romanpichler.com/blog/the-product-vision-board/ ; https://www.romanpichler.com/tools/the-product-vision-board/ | primaire (site de l'auteur, qui vend aussi ses formations) | 2026-10-22 |
+| S9 | Pichler, « The Product Vision Board », page de l'outil, romanpichler.com | https://www.romanpichler.com/tools/the-product-vision-board/ | primaire (site de l'auteur, qui vend aussi ses formations) | 2026-10-22 |
 | S10 | Rodden, Hutchinson, Fu, « Measuring the User Experience on a Large Scale: User-Centered Metrics for Web Applications », CHI 2010 (version auteur) | https://research.google.com/pubs/archive/36299.pdf | primaire | 2026-10-22 |
-| S11 | Seiden, *Outcomes Over Output: Why Customer Behavior Is the Key Metric for Business Success*, Sense & Respond Press, 2019 (fiche du livre) | https://books.google.com/books/about/Outcomes_Over_Output.html?id=1QbDzQEACAAJ ; https://www.senseandrespond.co/books | primaire (fiche), livre non lu | 2026-10-22 |
-| S12 | Résumés du livre de Seiden (Medium, « Book Sips #9 » ; UIE, « Managing Outcomes in Three Easy Steps ») | https://medium.com/the-pm-library/book-sips-9-outcomes-over-output-by-joshua-seiden-82103583c602 ; https://aycl.uie.com/virtual_seminars/outcomes | secondaire | 2026-10-22 |
-| S13 | Choix du cours : un PO data livre des indicateurs (ce que la plateforme calcule pour ses utilisateurs) et doit mesurer un résultat (ce qui change chez l'utilisateur) ; livrer l'indicateur n'est pas obtenir le résultat ; raisonnement appuyé sur la distinction livrable et résultat de CSPO 5.1 [S2] | (aucun) | primaire (interne : raisonnement, pas une source externe) | 2026-10-22 |
+| S11 | Seiden, *Outcomes Over Output: Why Customer Behavior Is the Key Metric for Business Success*, Sense & Respond Press, 2019 (fiche du livre) | https://books.google.com/books/about/Outcomes_Over_Output.html?id=1QbDzQEACAAJ | primaire (fiche), livre non lu | 2026-10-22 |
 | S15 | Ries, « Vanity Metrics vs. Actionable Metrics », billet invité sur le blog de Tim Ferriss, 19 mai 2009 | https://tim.blog/2009/05/19/vanity-metrics-vs-actionable-metrics/ | primaire | 2026-10-22 |
-| S16 | Scrum.org, Evidence-Based Management | https://www.scrum.org/resources/evidence-based-management ; https://www.scrum.org/ebm | primaire (Scrum.org), marketing pour ses formations | 2026-10-22 |
-| S17 | Patton, « Story Map Concepts » | https://www.jpattonassociates.com/wp-content/uploads/2015/03/story_mapping.pdf | primaire | 2026-10-22 (cadrage T-018a) |
-| S18 | Dehghani, « Data Mesh Principles and Logical Architecture », 3 décembre 2020 | https://martinfowler.com/articles/data-mesh-principles.html | primaire | 2026-10-22 (cadrage T-018a) |
+| S16 | Scrum.org, Evidence-Based Management | https://www.scrum.org/resources/evidence-based-management | primaire (Scrum.org), marketing pour ses formations | 2026-10-22 |
 | S19 | Wikipédia, « Goodhart's law » | https://en.wikipedia.org/wiki/Goodhart%27s_law | secondaire | 2026-10-22 |
 
 ## Non vérifié
 
-- **Définition exacte de Seiden** : la phrase « an outcome is a change in human behavior that
-  drives business results » circule, avec ou sans « measurable », dans des résumés (S12) ; le
-  texte du livre n'a pas pu être lu. Le fichier du concept peut attribuer à Seiden l'idée
+- 2a : **définition exacte de Seiden** : la phrase « an outcome is a change in human behavior
+  that drives business results » circule, avec ou sans « measurable », dans deux résumés du
+  livre consultés le 2026-10-22 (Medium, « Book Sips #9 »,
+  https://medium.com/the-pm-library/book-sips-9-outcomes-over-output-by-joshua-seiden-82103583c602 ;
+  UIE, « Managing Outcomes in Three Easy Steps »,
+  https://aycl.uie.com/virtual_seminars/outcomes), sans que la page qui la porte ait été notée ;
+  le texte du livre n'a pas pu être lu. Le fichier du concept peut attribuer à Seiden l'idée
   (résultat = changement de comportement de l'utilisateur), pas une citation.
-- **Phrase de positionnement de Geoffrey Moore** : retirée du fichier du concept en revue ; la
-  source consultée (TechTarget) la décrit comme une phrase de positionnement, pas comme un
-  format de vision produit, et aucune source ne l'assimilait à une vision.
-- **Effet de la pluie** : « la pluie peut réduire les locations » (Banque d'exemples, « La mesure
-  baisse : victoire ? ») est une hypothèse de bon sens, posée au conditionnel, sans source ;
-  elle sert de cause concurrente dans une situation d'exercice.
-- **Patton et la distinction livrable et résultat** : retiré de la liste du consensus en revue ;
-  la source S17 n'appuie qu'une mesure de succès par version, cité à ce titre seulement.
-- **Loi de Goodhart** : la formulation de 1975 (« Any observed statistical regularity will tend
-  to collapse once pressure is placed upon it for control purposes ») et son lieu de publication
-  ne sont rapportés que par des sources secondaires, discordantes sur le lieu ; la formulation
-  courante vient de Strathern (1997), qui l'attribue à Hoskin. Si le fichier du concept s'en
-  sert, écrire « loi de Goodhart » sans date ni citation.
-- **Guide EBM** : le guide lui-même (PDF) n'a pas été lu ; les quatre domaines de valeur
-  viennent de la page EBM de Scrum.org. Les catégories de mesures diffèrent
-  selon les versions du guide (2018, 2024) d'après des reprises : ne rien en dire de plus.
-- **Billet de Dave West (S7)** : vu seulement comme lien (titre, auteur, date) ; son contenu n'a
-  pas été lu. L'introduction de l'objectif produit en 2020 repose sur S3.
-- **Indicateur avancé et indicateur retardé** (leading, lagging) : non recherché. Si le
-  rédacteur veut opposer une mesure qui bouge vite (signal) à une mesure lente (bilan annuel),
-  qu'il s'appuie sur Goals-Signals-Metrics (S10), qui est vérifié, ou ajoute une source.
+- Pièges : **loi de Goodhart** : la formulation de 1975 et son lieu de publication ne sont
+  rapportés que par des sources secondaires, discordantes sur le lieu ; la formulation courante
+  vient de Strathern (1997), qui l'attribue à Hoskin. Écrire « loi de Goodhart » sans date ni
+  citation.
+- 2b : **billet de Dave West** (« Scrum Guide 2020 Update - Introducing the Product Goal »,
+  Scrum.org, 18 novembre 2020) : vu seulement comme lien (titre, auteur, date), son contenu n'a
+  pas été lu. L'introduction de l'objectif produit en 2020 repose sur l'historique des
+  révisions (S3).
+- 2c : **indicateur avancé et indicateur retardé** (leading, lagging) : non recherché. Pour
+  opposer une mesure qui bouge vite (signal) à une mesure lente (bilan annuel), s'appuyer sur
+  Goals-Signals-Metrics (S10), qui est vérifié, ou ajouter une source.
+- Consensus et choix d'école : **Teresa Torres partage la distinction livrable et résultat**
+  (« Opportunity Solution Trees », Product Talk, 2023,
+  https://www.producttalk.org/opportunity-solution-trees/) : relevé au cadrage T-018a (l'arbre
+  part d'un résultat visé), sans citation ; la référence a quitté l'item.
+- Consensus et choix d'école : **guide EBM** : le guide lui-même (PDF) n'a pas été lu ; les
+  quatre domaines de valeur viennent de la page EBM de Scrum.org. Les catégories de mesures
+  diffèrent selon les versions du guide (2018, 2024) d'après des reprises : ne rien en dire de
+  plus.
+- Consensus et choix d'école : **une mesure de succès par version selon Jeff Patton**
+  (« Story Map Concepts »,
+  https://www.jpattonassociates.com/wp-content/uploads/2015/03/story_mapping.pdf) : relevé au
+  cadrage T-018a, sans citation ; la référence a quitté l'item. Cette source n'appuie pas la
+  distinction livrable et résultat.
+- Consensus et choix d'école : **les mesures d'un produit de données selon Zhamak Dehghani**
+  (qualité des données, délai pour les consommer, satisfaction des consommateurs ; « Data Mesh
+  Principles and Logical Architecture », martinfowler.com, 3 décembre 2020) : relevé au cadrage
+  T-018a, sans citation ; la référence a quitté l'item.

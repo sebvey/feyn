@@ -28,14 +28,14 @@
    la DoD, s'ajoute aux précédents, et peut être livré avant la fin du sprint ; un élément qui ne
    remplit pas la DoD n'en fait pas partie (ni livré ni présenté à la revue, il retourne au
    backlog produit). Le message de 0b pose « La vue des stations vides livrée un mercredi » ;
-   « « Le sprint est livré » » sert d'exercice ou de creusage.
+   « « Le sprint est livré » » sert d'exercice ou d'entraînement.
 5. **Cas de la banque** : pour 0a1 et 0a2, un par message, dans l'ordre des messages. Pour
    0a1, « Qui est le chef de l'équipe vélos ? », « Diego écrit des éléments du backlog »,
    « Anna est-elle une Developer ? », « Qui tranche dans l'équipe vélos » ; pour 0a2, « Une
    semaine pour souffler », « Scarlette choisit le travail du sprint », « Le compte rendu du
    matin », « Des diapositives pour Étienne », « Odile veut assister à la rétrospective », puis
-   « Le sprint raconté par Diego » après les cinq messages, en exercice ou au creusage ; pour
-   0a3, « Trois artefacts, trois engagements ».
+   « Le sprint raconté par Diego » après les cinq messages, en exercice ou à l'entraînement ;
+   pour 0a3, « Trois artefacts, trois engagements ».
 
 ## Banque d'exemples
 
@@ -275,8 +275,8 @@
 - **Ce qui marche** : « produit à la revue, façon de travailler à la rétrospective ».
 
 ### Le sprint raconté par Diego (0a2, entraînement)
-- **Usage** : après les cinq messages de 0a2, pour « exercice » ou au creusage du concept 0 ; un
-  récit neuf, qui mêle des erreurs sur les quatre événements.
+- **Usage** : après les cinq messages de 0a2, pour « exercice » ou à l'entraînement du
+  concept 0 ; un récit neuf, qui mêle des erreurs sur les quatre événements.
 - **Situation** : Diego (data engineer) raconte le sprint de l'équipe appli, qu'il a observé :
   « Au Sprint Planning, le PO arrive avec l'objectif de sprint déjà écrit et la liste des
   éléments. Le Daily Scrum dure une heure, et Odile, la directrice des opérations, y vient chaque
