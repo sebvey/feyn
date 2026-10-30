@@ -45,10 +45,11 @@ comes once, at the hand-over (step 5).
 - A Done when that needs an agent-workflow run: a subagent has no Workflow tool. The
   contributor makes the run possible and stops on a draft with an `Awaiting the orchestrator`
   section (exact script path and arguments): the second use of a draft, an awaited
-  orchestrator run. Run it after the maintainer's go-ahead (above). The run and its reruns
-  after fixes come before step 3: the reviewer needs their transcripts. Resume the contributor
-  with the result: it applies it and removes the section; the PR stays a draft until the
-  hand-over (step 5). Check it.
+  orchestrator run. Ask the maintainer for a go-ahead for this run, then run it. Its agents run
+  in the work session's working directory; while a run is launched or running, no `cd`:
+  absolute paths and `git -C <path>`. The run and its reruns after fixes come before step 3:
+  the reviewer needs their transcripts. Resume the contributor with the result: it applies it
+  and removes the section; the PR stays a draft until the hand-over (step 5). Check it.
 
 ## 2. The contributor agent
 
@@ -106,15 +107,17 @@ steps 6.1, 6.2 and 6.4 only: it holds no issue branch, so no `/feyn-merge-cleanu
   quoted; the reviewer verifies the change as above.
 - **The Status.** A correction asked on a delivered PR (a late finding, a decision after the
   hand-over): set the slice back to In progress ([project.md](../../reference/project.md),
-  "Commands"); the renewed hand-over (step 5) sets Ready for review again.
+  "Commands") and turn the PR back into a draft (`mise exec -- gh pr ready --undo <pr>`); the
+  renewed hand-over (step 5) marks it ready and sets Ready for review again.
 
 ## 5. Hand-over to the maintainer
 
-Set the issue Ready for review, a `Closes` PR only (the contributor's `/feyn-pull-request` left
-it In progress; [project.md](../../reference/project.md), "Commands":
-`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`),
-then mark the PR ready, the review and the corrections being done:
-`mise exec -- gh pr ready <pr>`. Then reply with, one line each: the PR URL and title; the
+Mark every PR ready, the review and the corrections being done:
+`mise exec -- gh pr ready <pr>`. Then set the issue Ready for review, for a `Closes` PR only (a
+`Refs` issue stays In progress; the contributor's `/feyn-pull-request` left it In progress;
+[project.md](../../reference/project.md), "Commands":
+`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`).
+Then reply with, one line each: the PR URL and title; the
 Status; the review (blocking findings found, fixed); what the maintainer should look at first
 (the PR's Review first); the merge command `/feyn-pull-request` gives
 (`mise exec -- gh pr merge <pr> --squash --delete-branch`). The merge is the maintainer's. Keep
@@ -148,6 +151,10 @@ The behaviours the steps above rely on, one line each with its step
 
 - Step 1, an agent-workflow run: a subagent has no Workflow tool
   (Claude Code, observed 2026-10-28, #130).
+- Step 1, an agent-workflow run: its agents run in the work session's working directory
+  (Claude Code, observed 2026-10-28, #130).
+- Step 1, an agent-workflow run: a `cd` into a worktree moves the work session even for one
+  command, and a run launched then runs its agents there (Claude Code, observed 2026-10-28, #171).
 - Step 6.1: the worktree of an agent spawned with isolation (`.claude/worktrees/agent-<id>`, on
   a branch `worktree-agent-<id>` cut from `main`'s HEAD) is not removed by
   `/feyn-merge-cleanup` (Claude Code, observed 2026-10-27, #115).

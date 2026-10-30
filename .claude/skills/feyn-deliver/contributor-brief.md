@@ -17,8 +17,8 @@ files.
 ## How to run the cycle (in a worktree)
 Follow `.claude/skills/feyn-issue-branch/SKILL.md` for #<n>, adapted to a worktree:
 - In place of its `git switch main`: `git fetch`, then
-  `git ls-remote --heads origin <type>/<n>-<slug>`. The branch exists: switch to it
-  (`git switch <type>/<n>-<slug>`) and say so, as /feyn-issue-branch step 3 says. Otherwise
+  `git ls-remote --heads origin "*/<n>-*"`. A branch for the issue exists: switch to it
+  (`git switch <that branch>`) and say so, as /feyn-issue-branch step 3 says. Otherwise
   `git switch -c <type>/<n>-<slug> origin/main` and `git push -u origin <type>/<n>-<slug>`.
 - Set the issue's Status to In progress as /feyn-issue-branch says.
 Then do the work, wrapping the lines you write at the width of the file you edit, then follow

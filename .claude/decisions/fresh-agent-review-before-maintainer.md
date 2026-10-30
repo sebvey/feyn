@@ -31,6 +31,7 @@ contributor's own verification (`/finish`, decision `issue-defines-pr-verifies`)
   `/orchestrate`.
 - Amended 2026-10-30 (#264): every PR but a direct delivery, a slice of one edit with no
   behaviour that the maintainer names `direct` at creation; its PR says so in its Checks line.
-- Amended 2026-10-30 (#237): the reviewer, resumed with the corrections, checks the fixes (each
-  finding, the statements touched, what lies beyond); the orchestrator keeps the sensitive
-  points; a new agent only when the reviewer is gone.
+- Amended 2026-10-30 (#237): under `/feyn-deliver`, the reviewer, resumed with the
+  corrections, checks the fixes (each finding, the statements touched, what lies beyond); the
+  orchestrator keeps the sensitive points; a new agent only when the reviewer is gone. On the
+  direct path the second-review rule of #258 point 4 holds.

@@ -1,7 +1,8 @@
 # Note, 2026-10-30: the migration procedures of the work cycle
 
-These procedures served the S1-10 sub-issues (the `migrate-concept` runs). #237 removed them
-from `feyn-deliver`, `feyn-pr-review` and the contributor brief; their text and marks follow.
+These procedures served the S1-10 sub-issues (#23, sub-issues #146 to #165: the
+`migrate-concept` runs). #237 removed them from `feyn-deliver`, `feyn-pr-review`, the
+contributor brief and `worktree-agent.md`; their text and marks follow.
 
 ## From `feyn-deliver` step 1, under the agent-workflow run
 
@@ -63,6 +64,14 @@ from `feyn-deliver`, `feyn-pr-review` and the contributor brief; their text and 
   (`worktree-agent.md`): the orchestrator creates one on your branch and resumes you with its
   absolute path; from then on (from the start, spawned without isolation), work on that path
   as `worktree-agent.md` says."
+
+## From `.claude/reference/worktree-agent.md`
+
+- Head: "Read first by every agent that works in a worktree, spawned with isolation or not".
+- Git and the tools: "Told to work in a worktree by its absolute path (resumed on a new
+  worktree, or spawned without isolation): never `cd`; absolute paths for every file,
+  `git -C <path>` for every git command, including those of `/feyn-pull-request`
+  (`git -C <path> status --porcelain`, `git -C <path> push`)."
 
 ## From `feyn-pr-review`
 

@@ -62,7 +62,9 @@ follows the brief:
 You reviewed PR #<pr>. The contributor applied corrections in <range>. Recheck each finding
 you raised against the diff, rerun the Done when statements the corrections touch, read
 everything in the diff beyond your findings, and report: each finding fixed or not, anything
-new, your verdict. Never take the PR body's word for it.
+new, your verdict. Never take the PR body's word for it. Before rerunning checks, `git fetch`,
+then `git switch --detach <new head>`; your worktree gone: say so and work from
+`git show origin/<branch>:<path>`.
 ```
 
 Its reply returns as in step 3, under a heading `Fresh-agent verification of PR #<pr>`. Its

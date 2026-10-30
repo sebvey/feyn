@@ -60,7 +60,8 @@ Once the PR is open, `/feyn-pull-request` checks that the issue lists it (a `Ref
 nothing). A branch that leaves a decision to the maintainer opens as a draft PR, with
 `blocked:maintainer` on its issue only, and an "Awaiting the maintainer" section above
 `Closes #n`. The maintainer answers with a comment and removes the label from the issue; only
-then does the agent apply the answer, remove the section and mark the PR ready. Nothing lands on
+then does the agent apply the answer, remove the section and mark the PR ready (under
+`/feyn-deliver`, the orchestrator marks it ready at the hand-over, not the agent). Nothing lands on
 `main` without a PR, the author never merges their own, and `main` is never force-pushed. After
 the merge, `/feyn-merge-cleanup` confirms the change landed, checks the issue's Status is Done
 (the Project workflow "Item closed" sets it; `/feyn-merge-cleanup` sets it only when that Project
@@ -73,8 +74,7 @@ review by a fresh agent before the PR reaches the maintainer, the PR a draft unt
 and its corrections are done, then the clean-up of the worktree after the merge. On the direct
 path, without `/feyn-deliver`, `/feyn-pull-request` runs that review (`/feyn-pr-review`) before
 it sets Ready for review, except on a direct delivery ("How the work is organised", moment 2).
-Why: decisions
-`issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`.
+Why: decisions `issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`.
 
 ## How the work is organised
 
@@ -208,14 +208,14 @@ depends on it), in one line ending with a mark `(<tool>, <status> <date>, #<n>)`
 `inferred` (deduced from other facts) or `documented` (stated by the tool's documentation); `<date>`
 is `YYYY-MM-DD`; `#<n>` is the issue or PR that holds the proof: a PR holds it on the `Behaviours:`
 line of its Checks, an issue in a comment (`/feyn-pull-request` step 5). The line goes with its
-step; a skill may instead group its marks in a last section, `## Tool behaviours`, one line per
-mark naming its step: the step states its rule, the section its proof (as `/feyn-deliver` does).
-A line the tool disproves is corrected or removed.
+step. A line the tool disproves is corrected or removed.
 `grep -rn '(GitHub,\|(Claude Code,' .claude docs construction` lists them all. There is no
-catalogue of behaviours: it would be read at the wrong moment. One exception: the behaviours
+catalogue of behaviours: it would be read at the wrong moment. Two exceptions: the behaviours
 every agent in a worktree meets are written once in
 [`.claude/reference/worktree-agent.md`](../.claude/reference/worktree-agent.md), which the
-briefs of those agents name as their first read; that file is their point of use.
+briefs of those agents name as their first read; that file is their point of use. And a skill
+may group its marks in a last section, `## Tool behaviours`, one line per mark naming its step:
+the step states its rule, the section its proof (as `/feyn-deliver` does).
 
 ## Decisions and vocabulary
 

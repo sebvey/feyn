@@ -71,7 +71,10 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
        `Fresh-agent review: <N> blocking findings, fixed.`: added after the review, by step 7 on
        the direct path, by the corrections pass of `/feyn-deliver` (its step 4) under it; updated,
        not repeated, after a second review: `<N>` then counts the blocking findings of all the
-       reviews. On a direct delivery (the issue's To do opens with "Direct delivery",
+       reviews. A decision or a check touched as the review prescribed, without a second review
+       (step 7): `Fresh-agent review: <N> blocking findings, fixed; a decision touched as
+       prescribed, no second review.` (`a check` for a check). On a direct delivery (the
+       issue's To do opens with "Direct delivery",
        [contributing](../../../docs/contributing.md), "How the work is organised", moment 2):
        `Fresh-agent review: none, direct delivery.`, written here, before the PR opens, since no
        review runs (step 7). It counts within the 30 lines: leave room for it. Absent when the
@@ -113,12 +116,11 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    **A second review**, `/feyn-pr-review <pr>` again, only when the correction goes beyond
    what the review asked: a change added on your own, or one that changes the meaning of a
    rule; the line then counts the blocking findings of all the reviews. A change the review
-   prescribed, its text included, decision or check included, is checked by the caller in the
-   diff against the review's words. The `Fresh-agent review:` line says when a decision or a
-   check was touched without a second review (`…, fixed; a decision touched as prescribed, no
-   second review.`). The same holds for the maintainer's answer (step 8). Under `/feyn-deliver`
-   this rule does not apply: the reviewer, resumed, verifies the corrections (`/feyn-deliver`
-   step 4).
+   prescribed, its text included, decision or check included: check it yourself in the diff
+   against the review's words. The `Fresh-agent review:` line says when a decision or a check
+   was touched without a second review (step 5). The same holds for the maintainer's answer
+   (step 8). Under `/feyn-deliver` this rule does not apply: the reviewer, resumed, verifies
+   the corrections (`/feyn-deliver` step 4).
 8. **Ask for review**: set the issue's Status to Ready for review (the work claims done, the
    maintainer concludes; [project.md](../../reference/project.md)):
    `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
