@@ -1,6 +1,7 @@
 'use strict';
 // course.yaml: fields, identifiers, order, partition into domains, annexes, prerequisites,
-// paths, spec declared, language pack present (SPEC.md sections 3 and 8). An unknown spec
+// paths, no unlisted concept folder, spec declared, language pack present (SPEC.md sections 3
+// and 8). An unknown spec
 // or MAJOR is refused by specs/check-course, before these checks run.
 const path = require('path');
 const yaml = require('./lib/yaml');
@@ -10,6 +11,7 @@ const F = 'course.yaml';
 const isStr = (v) => typeof v === 'string' && v.trim() !== '';
 const isPosInt = (v) => Number.isInteger(v) && v > 0;
 const NUMBER = /^(\d+|A\d+)$/;
+const MAX_CHILDREN = 9;
 
 function run(ctx) {
   const out = [];
@@ -104,7 +106,7 @@ function run(ctx) {
       if (!s || typeof s !== 'object') { bad(c.subconcepts, a, `${label}: sub-concept ${a + 1} is not a map`); return; }
       const letter = String.fromCharCode(97 + a);
       const check = (node, want2, level, l) => {
-        for (const k of Object.keys(node)) if (!['id', 'title', 'children', 'messages'].includes(k)) bad(node, k, `unknown field "${k}" in sub-concept`, l);
+        for (const k of Object.keys(node)) if (!['id', 'title', 'children'].includes(k)) bad(node, k, `unknown field "${k}" in sub-concept`, l);
         const id = normNumber(node.id);
         if (id !== want2) bad(node, 'id', `${label}: sub-concept id must be "${want2}", found "${node.id}"`, l);
         if (id) { if (subSeen.has(id)) bad(node, 'id', `sub-concept id "${id}" is not unique`, l); subSeen.add(id); }
@@ -114,18 +116,25 @@ function run(ctx) {
           if (!Array.isArray(kids) || kids.length === 0) bad(node, 'children', `${label}: children of ${want2} must be a non-empty list`, l);
           else if (level === 2) bad(node, 'children', `${label}: the sub-concept tree has two levels at most (${want2} has children)`, l);
           else kids.forEach((k, b) => {
+            if (b === MAX_CHILDREN) bad(kids, b, `${label}: ${want2} has ${kids.length} children, ${MAX_CHILDREN} at most (a child id ends in one digit)`, l);
             if (!k || typeof k !== 'object') bad(kids, b, `${label}: bad sub-concept under ${want2}`, l);
             else check(k, want2 + (b + 1), 2, yaml.lineOf(kids, b, l));
           });
-        }
-        if (node.messages !== undefined) {
-          if (kids !== undefined) bad(node, 'messages', `${label}: messages is for leaf sub-concepts only (${want2} has children)`, l);
-          else if (!Number.isInteger(node.messages) || node.messages < 2) bad(node, 'messages', `${label}: messages of ${want2} must be an integer of 2 or more`, l);
         }
       };
       check(s, num + letter, 1, sl);
     });
   });
+
+  // every folder of concepts/ is the dir of a concept; under --concept, only that concept's
+  // folder is demanded, so the others may be missing and unlisted ones are not looked for
+  if (!only) {
+    const dirs = new Set(cy.concepts.map((c) => (c && typeof c.dir === 'string' ? c.dir : null)));
+    for (const e of ctx.list('concepts')) {
+      if (e.name.startsWith('.') || !e.isDirectory()) continue;
+      if (!dirs.has('concepts/' + e.name)) out.push(fail(`concepts/${e.name}`, 1, `folder concepts/${e.name} is the dir of no concept of course.yaml: every folder of concepts/ is listed`));
+    }
+  }
 
   // order, partition, annexes, prerequisites
   const entries = ctx.concepts;
