@@ -25,7 +25,7 @@ A new MAJOR copies the tree of the previous one, its decisions under the same sl
 A course declares the MAJOR it follows in `course.yaml` (`spec: linear-course@1`).
 `specs/check-course <course>` reads it, runs `specs/<name>/<MAJOR>/checks`, and refuses an
 unknown spec or MAJOR. Its conformity mode, the default, runs the conformity checks; its
-quality mode runs the quality checks.
+quality mode runs the quality checks (quality mode: next slice of #220).
 
 ## Versions
 

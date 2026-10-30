@@ -40,7 +40,7 @@ batch, check). Course files stay in the course language.`
 const SCOUT_SCHEMA = {
   type: 'object',
   properties: {
-    spec_dir: { type: 'string', description: 'specs/<name>/<MAJOR>/ of the spec and MAJOR that course.yaml declares (spec: <name>@<MAJOR>), ends with /' },
+    spec_dir: { type: 'string', description: 'specs/<name>/<MAJOR>/ of the spec and MAJOR that course.yaml declares (spec: <name>@<MAJOR>), ends with /: where you read SPEC.md and the templates (the checks run through specs/check-course)' },
     shared_files: { type: 'array', items: { type: 'string' }, description: 'files every agent of the batch reads: course.yaml, plan.md, storyline.md, glossary.md, SPEC.md sections 4 to 6, the course templates, PROTOCOL.md if it exists, the issue' },
     batch_instructions: { type: 'string', description: 'instructions of the issue for the whole batch, copied word for word' },
     concepts: {
