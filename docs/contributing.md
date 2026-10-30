@@ -26,9 +26,10 @@ observation; an epic and a proposal have their own sections) opens with a head o
 read to choose among the Ready issues (Where: the area; What it delivers; Why now), then its
 sections: Done when (statements a reviewer can verify by reading a file or running a command),
 Observation (what was seen, where, the fact first), To do, Reads.
-`/feyn-issue <kind> [#<epic>] <observation>` writes it, of the kind it is given (`observation`,
-`slice` with its epic, `epic` or `proposal`; no kind, it asks which and creates nothing; the rules
-on which kind are under "How the work is organised"), with its labels and its blocked-by links;
+`/feyn-issue <kind> [#<epic>] [direct] <observation>` writes it, of the kind it is given
+(`observation`, `slice` with its epic, `epic` or `proposal`; no kind, it asks which and creates
+nothing; `direct` names a slice or an observation for a direct delivery; the rules on which kind,
+and on `direct`, are under "How the work is organised"), with its labels and its blocked-by links;
 the Project workflows add it to the Project in Backlog, and `/feyn-issue` sets it Ready when it
 is a slice, or an observation whose work the maintainer decided; `/feyn-issue <n>` summarises
 one, its links included. Why: decisions `issue-defines-pr-verifies`,
@@ -52,8 +53,9 @@ then, under `##` headings, Context, Issues, Changes, Checks and Review first, wi
 `/feyn-pull-request` step 5, so that the maintainer gets back into the subject from the PR alone.
 Checks counts the Done when verdicts (`met`, `not met`, `deviation`) without restating the
 statements, and says why for each `not met` or `deviation`; on every PR, unless the maintainer
-asked for one without a review, the fresh-agent reviewer of `/feyn-pr-review` reruns every
-statement. The PR never redefines the Done when; the issue wins, and the PR says why it deviates.
+asked for one without a review or named its slice a direct delivery, the fresh-agent reviewer of
+`/feyn-pr-review` reruns every statement. The PR never redefines the Done when; the issue wins,
+and the PR says why it deviates.
 Once the PR is open, `/feyn-pull-request` checks that the issue lists it (a `Refs` PR: it lists
 nothing). A branch that leaves a decision to the maintainer opens as a draft PR, with
 `blocked:maintainer` on its issue only, and an "Awaiting the maintainer" section above
@@ -69,7 +71,8 @@ close, and names the issues the closed one blocked that are now free. `/feyn-del
 this whole cycle from one work session: a contributor agent per issue in its own worktree, a
 review by a fresh agent before the PR reaches the maintainer, then the clean-up of the worktree
 after the merge. On the direct path, without `/feyn-deliver`, `/feyn-pull-request` runs that
-review (`/feyn-pr-review`) before it sets Ready for review. Why: decisions
+review (`/feyn-pr-review`) before it sets Ready for review, except on a direct delivery
+("How the work is organised", moment 2). Why: decisions
 `issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`.
 
 ## How the work is organised
@@ -110,14 +113,22 @@ Four moments:
    the first one or two of an epic with no plan comment yet; otherwise the plan comment is
    rewritten first. This holds as well for the next slice after a delivery and for a slice
    added when the maintainer's check of the epic's Done when fails.
-2. **Deliver a slice**: `/feyn-deliver <n>`; the slice is Ready for review while its PR awaits the
-   merge. Then `/feyn-merge-cleanup` adds two lines on the plan comment (the slice closed, the next
-   to pose; if the next is not obvious, back to moment 1). When the plan comment's last "Next
-   slice to pose" line says the epic closes ("Next slice to pose: none, the epic closes"),
-   `/feyn-merge-cleanup` sets the epic Ready for review: the maintainer verifies its Done when
-   and closes it. All its sub-issues closed does not mean that: a slice exists only if it is
-   the next one (rules of the cycle, below), so every delivery leaves them all closed until
-   the next is posed.
+2. **Deliver a slice**, on one of two paths. `/feyn-deliver <n>` delivers every slice but one the
+   maintainer named `direct` at its creation (`/feyn-issue slice #<epic> direct <observation>`,
+   `/feyn-issue observation direct <observation>`), whose To do then opens with the line "Direct
+   delivery". A **direct delivery** is a slice of one edit with no behaviour: no skill, check,
+   decision, workflow or course file touched, and no Done when statement that asks more than
+   "this sentence says this" (a wording, a link, a typo, a mechanical rename in one file). The
+   maintainer's work session makes its branch, its edit and its PR with the work-cycle tooling
+   (`/feyn-issue-branch`, `/feyn-pull-request`): no contributor, no fresh-agent review, and the
+   PR's Checks say `Fresh-agent review: none, direct delivery.` On both paths the slice is Ready
+   for review while its PR awaits the merge. Then `/feyn-merge-cleanup` adds two lines on the
+   plan comment (the slice closed, the next to pose; if the next is not obvious, back to moment
+   1). When the plan comment's last "Next slice to pose" line says the epic closes ("Next slice
+   to pose: none, the epic closes"), `/feyn-merge-cleanup` sets the epic Ready for review: the
+   maintainer verifies its Done when and closes it. All its sub-issues closed does not mean
+   that: a slice exists only if it is the next one (rules of the cycle, below), so every
+   delivery leaves them all closed until the next is posed.
 3. **Brainstorm**: `/feyn-brainstorm` frames a work session with the maintainer on how feyn works
    (the maintainer decides, one point at a time, nothing written in the repository during the
    brainstorm) and ends it in a proposal, created with `/feyn-issue proposal`. A brainstorm that
