@@ -41,9 +41,9 @@ function parser(ctx) {
   };
 }
 
-// the concept a reference id names: a concept number (leading zeros dropped) or the id of one
-// of its sub-concepts; null when it names none, or when `annex` (the annex word was used) and
-// the concept is not an annex
+// the concept an id of a concept reference names: a concept number (leading zeros dropped) or
+// the id of one of its sub-concepts; null when it names none, or when `annex` (the annex word
+// was used) and the concept is not an annex
 function conceptOf(ctx, id, annex) {
   const c = /^(A?\d+)([a-z])(\d)?$/.test(id)
     ? ctx.concepts.find((x) => x.subs.some((s) => s.id === id))
