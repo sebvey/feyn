@@ -5,40 +5,73 @@ stances:
     - text: "Ne parle ni de tranche, ni de couche, ni de story. Dit que l'incrément doit être utilisable et que les éléments du backlog se découpent en éléments plus petits et plus précis, sans dire comment."
       author: "Le Scrum Guide 2020"
       refs: [S1]
+      verified:
+        - "« story », « slice », « layer », « vertical » absents du texte (recherche du 2026-10-30) ; « the Increment must be usable » (Increment) ; « Product Backlog refinement is the act of breaking down and further defining Product Backlog items into smaller more precise items » (Product Backlog)"
     - text: "Découper par valeur plutôt que par couche technique. Les auteurs de stories concordent : Bill Wake (on trouve chez lui, en 2003, la métaphore du gâteau en couches, sous le V d'INVEST, concept 7), Richard Lawrence (2009) et le guide qu'il publie avec Peter Green."
       author: "Pratique établie, hors du Scrum Guide"
       refs: [S2, S3, S4]
+      verified:
+        - "« Think of a whole story as a multi-layer cake » ; « the best way is to slice vertically through the layers » (Valuable)"
+        - "« may satisfy small, but it fails at independent and valuable » (introduction)"
+        - "« Many new agile teams attempt to split stories by architectural layer » ; « This may satisfy small, but it fails at independent and valuable. » (User Stories Are Vertical Slices)"
   school:
     - text: "Cinq techniques de découpage : Spike, Paths, Interfaces, Data, Rules. Cohn dit les avoir tirées des stories qu'il avait découpées. Le spike y est une technique essentielle, mais normalement pas la première à essayer."
       author: "Mike Cohn : SPIDR"
       refs: [S5]
+      verified:
+        - "« The five I ended up with form the acronym SPIDR » (SPIDR Technique for Splitting Stories) ; « This is absolutely an essential way to split stories » ; « But normally it won't be the first technique you'll reach for » (1. Splitting User Stories Using a Spike)"
     - text: "Publiés en 2009, publiés aujourd'hui avec Peter Green. Lawrence écrit ne pas les avoir inventés, mais observés et compilés. Pour lui, le spike est le dernier recours. Parmi les neuf : Variations in Data (traiter d'abord une sorte de données) et Simple/Complex (chercher la version la plus simple, puis sortir chaque variante dans sa story)."
       author: "Richard Lawrence : neuf patrons (2009)"
       refs: [S3, S4]
+      verified:
+        - "« I've discovered nine patterns » ; « I didn't invent these patterns, I've just observed and compiled them » (introduction) ; « The spike split is last because it should be your last resort. » (Pattern #9: Break Out a Spike)"
+        - "« Complexity in a story can come from handling variations in data » (Pattern #4: Variations in Data) ; « stop and ask, “What's the simplest version of this?” Capture that simple version as its own story » (Pattern #7: Simple/Complex)"
     - text: "Choisir le découpage qui permet de reporter, voire d'abandonner, une story de faible valeur. Ordonner reste l'affaire du backlog (concept 13)."
       author: "Lawrence et Green : choisir son découpage"
       refs: [S4]
+      verified:
+        - "« Choose the split that lets you deprioritize or throw away a story » (Step 3: Evaluating the split)"
     - text: "Un troisième catalogue, plus long : une vingtaine de dimensions de découpage. Pour Wake, découper sert à séparer les parties de forte valeur de celles de faible valeur."
       author: "Bill Wake : « Twenty Ways to Split Stories » (2005)"
       refs: [S6]
+      verified:
+        - "« the parts that are of high value from those of low value » (page)"
     - text: "Ils se recoupent en partie, sans se confondre. Le D de SPIDR et Variations in Data (Lawrence) disent la même chose. Le R de SPIDR (assouplir d'abord la règle) et Business Rule Variations (une story par variante de règle) diffèrent. Simple/Complex n'existe pas dans SPIDR. On attribue chaque patron à son catalogue, on ne les fond pas en un seul."
       author: "Entre les catalogues"
       refs: [S3, S4, S5]
+      verified:
+        - "« Complexity in a story can come from handling variations in data » (Pattern #5: Variations in Data) ; « Digging into “flexible dates” reveals several different business rules, each of which can be a good story on its own » (Pattern #2: Business Rule Variations)"
+        - "« Complexity in a story can come from handling variations in data » (Pattern #4: Variations in Data) ; « Digging into “flexible dates” reveals several different business rules, each of which can be a good story on its own » (Pattern #3: Business Rule Variations)"
+        - "« an initial version of a story that processes only a subset of the data » (4. Splitting User Stories by Data) ; « Temporarily relaxing support for the rules that a story will ultimately need to support » (5. Splitting User Stories by Rules) ; « splitting by spikes, paths, interfaces, data, and rules » (Getting Better at Splitting Stories)"
   course:
     - text: "Les quatre couches d'un produit data (ingestion, transformation, données prêtes, restitution) sont un exemple, pas un découpage normé. Wake donne d'autres couches : réseau, persistance, logique, présentation."
       refs: [S2]
+      verified:
+        - "« a network layer, a persistence layer, a logic layer, and a presentation layer » (Valuable)"
     - text: "« Sert seule à l'utilisateur » est l'exigence de chaque tranche. C'est proche de Wake et de Lawrence, qui demandent que chaque tranche ait de la valeur pour l'utilisateur."
       refs: [S2, S3, S4]
+      verified:
+        - "« Making each slice valuable to the customer » (Valuable)"
+        - "« may satisfy small, but it fails at independent and valuable » (introduction)"
+        - "« a valuable change in system behavior » (User Stories Are Vertical Slices)"
     - text: "Le test : « si on s'arrête après cette tranche, l'utilisateur s'en sert-il demain matin ? ». Aucune source ne le formule ainsi."
       refs: [S2, S4]
+      verified:
+        - "« Making each slice valuable to the customer » (Valuable)"
+        - "« a valuable change in system behavior » (User Stories Are Vertical Slices)"
     - text: "Au niveau du sprint, une tranche est une story."
       refs: []
     - text: "Chaque story est une tranche verticale. Ce n'est pas un texte du Guide. Deux exceptions entrent aussi au backlog sans en être une : un travail technique qui porte sa propre raison (concept 3b) et une exploration bornée (concept 17b1)."
-      refs: [S1]
+      refs: [S1, S10]
+      verified:
+        - "« story » absent du texte (recherche du 2026-10-30) ; « what is needed to improve the product » (Product Backlog)"
+        - "« put a spike story on the product backlog along with user stories » (page)"
 neighbors:
   - text: "Une toute petite implémentation de bout en bout, qui relie les principaux composants de l'architecture. Elle sert l'équipe ; elle peut ne rien apporter seule à l'utilisateur. Ce n'est pas une tranche verticale au sens du cours."
     author: "Le walking skeleton (Alistair Cockburn, années 1990)"
     refs: [S8]
+    verified:
+      - "« A Walking Skeleton is a tiny implementation of the system that performs a small end-to-end function. It need not use the final architecture, but it should link together the main architectural components. » ; « The architecture and the functionality can then evolve in parallel » (page)"
 diagrams:
   - file: gateau.svg
     title: "Le gâteau en couches : une tranche horizontale contre trois tranches verticales"
