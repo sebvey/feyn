@@ -141,7 +141,7 @@ const reviewPrompt = (c, kind, round, previous) => {
   const scope = kind === 'substance'
     ? `the SUBSTANCE:
 - accuracy: every verifiable claim of concept.md and teaching.md has its row in sources.md (or in « Non vérifié »), and the source says what the files claim; reopen a source online if a row looks doubtful; consensus and school correctly labelled and attributed;
-- consistency: facts and actors match the storyline (no unflagged new fact), terms match the course glossary (no term used before the concept that introduces it), cross-references are right, no duplicate of another concept folder.`
+- consistency: facts and actors match the storyline (no unflagged new fact), terms match the course glossary (no term used before its defining concept), cross-references are right, no duplicate of another concept folder.`
     : `the FORM:
 - teaching: each sub-concept fits one teacher message under the protocol and the course writing rules; each question tests understanding, never "did you understand?"; a question that tests several points is written in parts, as the template of teaching.md shows; expected answers right and nuanced; common mistakes realistic for the audience of plan.md; conformity to the course templates and SPEC.md section 4;
 - overlap: no section that explains uses the situation of a case of the example bank or states its verdict (reader text principles stay general);
