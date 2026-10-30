@@ -377,7 +377,7 @@ welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases l
 |---|---|---|
 | the teacher | its posture, the onboarding questions, the course's stances, the storyline facts its cases use | onboarding; each case it poses |
 | the learner | the course glossary and the storyline | reading the course on the site |
-| the creator (human or agent) | the terms to use and in which concept each is introduced, the storyline facts a case may draw on | writing a concept or a case |
+| the creator (human or agent) | the terms to use and the concept that defines each, the storyline facts a case may draw on | writing a concept or a case |
 | the maintainer | what changed in each course version | each release |
 
 - **`plan.md`** (`course-files`): a first `##` section « Public cible » (`audience`, mandatory),
@@ -392,14 +392,37 @@ welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases l
   a question on pace does not belong here, the teacher adjusts the pace as the course goes. Then
   optional `##` sections the teacher reads: the course's stances
   (« Parti pris : une équipe en sprints »), its own writing rules. An H1 is allowed.
-- **`glossary.md`** (`course-files`): an optional introduction; one table, four columns in this
-  order: the course term, its English term, the definition, the concepts that use it (numbers
-  separated by commas; the first one introduces it). Optionally a section « Termes à éviter »
-  (`avoid`): one table, three columns: the term to avoid, what to say instead, why. An H1 is
-  allowed. The site reads the first table as is.
-  **Order** (`glossary-order`): the `concept.md` of a concept does not use a term (the term
-  cell, without its parenthesis, whole word, case ignored) introduced by a concept that comes
-  later in course order.
+- **`glossary.md`** (`course-files`): an optional introduction; one table, before any `##`
+  section, of four columns in this order (`course-files` checks their count; this file names
+  them by their meaning, and their header text is the course's, « Concept » or « Défini dans »):
+  1. the course term, in the **term cell** (below);
+  2. its English term, empty when the term has no useful English equivalent or when the course
+     term already is the English word;
+  3. the definition;
+  4. the **defining concept**: one concept number of `course.yaml`, the concept whose reader
+     text defines the term (`course-files`). No list of the concepts that use the term: a
+     script or the site computes it from the variants.
+
+  Optionally a section « Termes à éviter » (`avoid`): one table, three columns: the term to
+  avoid, what to say instead, why. An H1 is allowed. The site reads the first table as is.
+
+  **Term cell**: one term, or its variants separated by commas (« Product Owner, PO »), each
+  matched whole word, case ignored. A parenthesis is a sense qualifier (« État (d'un
+  élément) »): a row whose term cell has one is skipped by the order check, since no script
+  tells the senses of a homonym apart; review does. A variant belongs to one row: no two rows
+  hold the same variant, case ignored, its qualifier included (`course-files`).
+
+  **Order** (`glossary-order`, a quality check: it reports, it does not block): a term is used
+  after the concept that defines it, in course order. The scope is the reader text, the
+  `concept.md` of each concept: its body and its frontmatter (the texts of `stances` and
+  `neighbors`, the `title` and `caption` of `diagrams`); `teaching.md` is not read. Every use
+  counts, not only the first. In the `concept.md` of a concept that comes before the defining
+  concept, a term is used only in a sentence that carries a concept reference (4.5) to the
+  defining concept or to one of its sub-concepts (« annexe A2 », « annexe A2b » for an annex),
+  or that defines the term in passing (review). A sentence ends at « . », « ? », « ! » or « … »
+  followed by a space or the end of its block; « : » and « ; » do not end it. A paragraph, a
+  blockquote, a list item, a heading, a table row and a frontmatter text are blocks, and a
+  sentence never crosses one.
 - **`storyline.md`**: the storyline, free prose in the course language, read by the teacher and
   shown by the site. The cases take their actors and facts from it, without contradicting it
   (review).
@@ -595,10 +618,10 @@ usage error.
 | `conventions` | conformity | the reader-text conventions of `concept.md`; plain Markdown in course files | 2, 4.5 |
 | `svg-contract` | conformity | every diagram against the drawing contract (a root `<defs>` accepted); declared and present diagrams match | 4.1, 7.1 |
 | `sources` | conformity | reference ids, citations, claims, paths | 4.1, 4.4 |
-| `course-files` | conformity | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md`, `CHANGELOG.md`, domain files: presence, no unlisted file in `domains/`, frontmatter, sections, leads | 5, 6 |
+| `course-files` | conformity | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md` (four columns, one defining concept per row, a variant in one row), `CHANGELOG.md`, domain files: presence, no unlisted file in `domains/`, frontmatter, sections, leads | 5, 6 |
 | `domain-first-sentence` | conformity | the first sentence of each paragraph of « Le fil des concepts » ends within 300 characters of the lead | 5 |
 | `language-pack-keys` | conformity | every key of section 9 and of `PROTOCOL.md` exists in the course's language pack | 9 |
-| `glossary-order` | quality | no term used before the concept that introduces it | 6 |
+| `glossary-order` | quality | no glossary term used in a `concept.md`, body or frontmatter, before the concept that defines it, unless its sentence carries a concept reference to that concept; each comma variant matched, a qualified row skipped | 6 |
 | `typography` | quality | no banned character of the language pack in course text | 2 |
 | `domain-first-sentence-standalone` | quality | the first sentence of each paragraph of « Le fil des concepts » does not open with a word of `checks.anaphora` | 5, 9 |
 | `rule-slugs` | conformity (`check-spec`) | `PROTOCOL.md` names each of its rules and groups by a slug defined once; `PROTOCOL.md`, `SPEC.md` and `decisions/` cite them by a defined slug, never by a number or a range | `PROTOCOL.md` |

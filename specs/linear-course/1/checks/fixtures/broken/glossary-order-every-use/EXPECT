@@ -1,0 +1,2 @@
+check: glossary-order
+message: concept.md:35 uses the term "couche" before concept 1

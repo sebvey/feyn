@@ -4,6 +4,7 @@
 // questions.
 const yaml = require('./lib/yaml');
 const mdlib = require('./lib/md');
+const glossary = require('./lib/glossary');
 const { fail } = require('./lib/course');
 
 const SEMVER = /^(\d+)\.(\d+)\.(\d+), \d{4}-\d{2}-\d{2}$/;
@@ -62,12 +63,19 @@ function run(ctx) {
     if (tabs.length !== 1) out.push(fail('glossary.md', 1, `the glossary holds one table before any ## section, found ${tabs.length}`));
     else {
       const t = tabs[0];
-      if (t.header.length !== 4) out.push(fail('glossary.md', t.line, `the glossary table has ${t.header.length} columns, expected 4 (term, English term, definition, concepts)`));
-      else for (const r of t.rows) {
-        if (r.cells.length !== 4) { out.push(fail('glossary.md', r.line, `row has ${r.cells.length} cells, expected 4`)); continue; }
-        if (!r.cells[0]) out.push(fail('glossary.md', r.line, 'a row has no term'));
-        const nums = r.cells[3].split(',').map((x) => x.trim());
-        if (!r.cells[3] || nums.some((n) => !numbers.has(n.replace(/^0+(?=\d)/, '')))) out.push(fail('glossary.md', r.line, `concepts "${r.cells[3]}": numbers of concepts of course.yaml, separated by commas`));
+      if (t.header.length !== 4) out.push(fail('glossary.md', t.line, `the glossary table has ${t.header.length} columns, expected 4 (term, English term, definition, defining concept)`));
+      else {
+        const seen = new Map();
+        for (const r of t.rows) {
+          if (r.cells.length !== 4) { out.push(fail('glossary.md', r.line, `row has ${r.cells.length} cells, expected 4`)); continue; }
+          if (!r.cells[0]) out.push(fail('glossary.md', r.line, 'a row has no term'));
+          if (!numbers.has(glossary.definingNumber(r.cells[3]))) out.push(fail('glossary.md', r.line, `defining concept "${r.cells[3]}": one concept number of course.yaml, the concept whose reader text defines the term`));
+          for (const v of glossary.termCell(r.cells[0]).variants) {
+            const k = v.toLowerCase();
+            if (seen.has(k)) out.push(fail('glossary.md', r.line, `variant "${v}" is also in the row at glossary.md:${seen.get(k)}: a variant belongs to one row`));
+            else seen.set(k, r.line);
+          }
+        }
       }
     }
     for (const s of secs.sections) {
