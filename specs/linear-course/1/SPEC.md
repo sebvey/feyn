@@ -289,9 +289,10 @@ Body, all mandatory, in this order (`course-files`):
 4. « Un cas qui traverse le domaine » (`crossing_case`): a storyline situation where each
    concept of the domain serves, in order, without giving the answer.
 
-**First sentence** (`domain-first-sentence`): it ends with `.`, `?` or `!` within 300
-characters of the lead, and does not open with a word of the language pack's
-`checks.anaphora` list (French: « Il », « Elle », « Ce », « Cette », « Puis »…).
+**First sentence**: it ends with `.`, `?` or `!` within 300 characters of the lead, so that
+the site can show it (`domain-first-sentence`, a conformity check), and does not open with a
+word of the language pack's `checks.anaphora` list (French: « Il », « Elle », « Ce », « Cette »,
+« Puis »…), so that it stands alone (`domain-first-sentence-standalone`, a quality check).
 
 ## 6. Course files
 
@@ -394,29 +395,23 @@ and the ordinary text.
 
 ## 8. Versions
 
-The spec has a version `MAJOR.MINOR.PATCH`, tagged `linear-course/vX.Y.Z` on `main`:
+The spec's versions, its MAJOR folders and what each bump means are decision
+`versioned-objects-and-spec-layout` (`docs/decisions/versioned-objects-and-spec-layout.md`),
+summarised in `specs/README.md`.
 
-| Bump | When |
-|---|---|
-| MAJOR | the structure changes: a file, a field or a mandatory section added, removed or renamed; builds and checks must follow |
-| MINOR | an optional section or field added, a protocol rule added or changed |
-| PATCH | the contract's wording, with no change to what is checked or taught |
-
-A course declares the MAJOR it follows: `spec: linear-course@1`. `specs/check-course` reads
-it, runs the checks of that MAJOR's folder, and refuses an unknown spec or MAJOR; the teacher,
-the site and the classroom build refuse it too. Tooling has no version: it reads every spec
-MAJOR still alive.
+A course declares the MAJOR it follows: `spec: linear-course@1`. `specs/check-course` reads it
+and runs this MAJOR's checks (section 10).
 
 A course has its own version, tagged `<id>/vX.Y.Z` and recorded in its `CHANGELOG.md`: MAJOR
 when an identifier changes (section 3) or the course moves to a new spec MAJOR, MINOR when what
 is taught changes (a case, a sub-concept, a stance, a duration), PATCH for wording. A course
-in 0.x may still move anything, identifiers included. The spec's own changelog,
-`specs/linear-course/1/CHANGELOG.md`, opens with v1.0.0.
+in 0.x may still move anything, identifiers included.
 
 ## 9. Language pack keys
 
-The language pack of the course language holds every key below; `language-pack-keys` verifies
-it, with the keys `PROTOCOL.md` uses. French values, for reference:
+The language pack of the course language holds every key below, `checks.anaphora` excepted,
+which is optional; `language-pack-keys` verifies it, with the keys `PROTOCOL.md` uses. French
+values, for reference:
 
 | Group | Keys and French values |
 |---|---|
@@ -426,28 +421,44 @@ it, with the keys `PROTOCOL.md` uses. French values, for reference:
 | `references` | `concept` « concept », `concepts` « concepts », `and` « et » |
 | `source_types` | `primary` « primaire », `secondary` « secondaire », `marketing` « marketing » |
 | `typography` | `banned`: the characters course text never uses (French: em-dash, arrows) |
-| `checks` | `anaphora`: the words a domain paragraph's first sentence does not open with |
+| `checks` | `anaphora`, optional: the words a domain paragraph's first sentence does not open with; without it, `domain-first-sentence-standalone` fails |
 
 ## 10. Checks
 
-Dependency-light scripts in `checks/`, one per id, run on a course by
-`specs/check-course <course-dir>`, which runs this folder's `checks/check-course` (one line per
-check, `ok` or `fail: <file>:<line> <message>`, non-zero exit on any failure, `--only <id>`),
-locally and in CI.
+Dependency-free Node scripts in `checks/`, one per id; `checks/README.md` gives their options
+and fixtures. `specs/check-course <course-dir>` runs this folder's `checks/check-course` in one
+of two modes (decision `versioned-objects-and-spec-layout`), locally and in CI:
 
-| Id | Verifies | Sections |
-|---|---|---|
-| `course-yaml` | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, paths, spec declared (`specs/check-course` refuses an unknown spec or MAJOR), language pack present | 3, 8 |
-| `concept-folder` | the folder's files; the three files' sections and their order; frontmatter keys; one section per sub-concept; « Objectif » equals `objective`; case headings, fields, coverage of leaves, citation in « Consignes » | 4 |
-| `conventions` | the reader-text conventions of `concept.md`; plain Markdown in course files | 2, 4.5 |
-| `svg-contract` | every diagram against the drawing contract; declared and present diagrams match | 4.1, 7.1 |
-| `sources` | reference ids, citations, claims, paths | 4.1, 4.4 |
-| `course-files` | `plan.md` (« Public cible », « Accueil » and its questions), `glossary.md`, `CHANGELOG.md`, domain files: presence, frontmatter, sections, leads | 5, 6 |
-| `glossary-order` | no term used before the concept that introduces it | 6 |
-| `domain-first-sentence` | the first sentence of each paragraph of « Le fil des concepts » stands alone | 5 |
-| `typography` | no banned character of the language pack in course text | 2 |
-| `language-pack-keys` | every key of section 9 and of `PROTOCOL.md` exists in the course's language pack | 9 |
+- the **conformity mode**, the default, runs the conformity checks: whether the course is
+  consumable (the site builds, the teacher teaches, identifiers resolve). The machine runs it on
+  every change (`/feyn-pull-request`, CI, the builds), and a `fail` blocks.
+- the **quality mode**, `--quality`, runs the quality checks: whether the course is good. The
+  maintainer runs it on demand; its failures are findings, triaged into course issues. No
+  conformity path runs it.
+
+`checks/check-spec` checks the spec's own files (`PROTOCOL.md`, `SPEC.md`, `decisions/`), not a
+course; it has one mode, and its checks are conformity checks.
+
+Both print one line per passing check (`<id>: ok`) and one line per failure
+(`<id>: fail: <file>:<line> <message>`, the file relative to the course folder, or to the spec
+folder for `check-spec`). The exit code is 0 when every check passes, 1 when one fails, 2 on a
+usage error.
+
+| Id | Family | Verifies | Sections |
+|---|---|---|---|
+| `course-yaml` | conformity | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, paths, spec declared (`specs/check-course` refuses an unknown spec or MAJOR), language pack present | 3, 8 |
+| `concept-folder` | conformity | the folder's files; the three files' sections and their order; frontmatter keys; one section per sub-concept; « Objectif » equals `objective`; case headings, fields, coverage of leaves, citation in « Consignes » | 4 |
+| `conventions` | conformity | the reader-text conventions of `concept.md`; plain Markdown in course files | 2, 4.5 |
+| `svg-contract` | conformity | every diagram against the drawing contract; declared and present diagrams match | 4.1, 7.1 |
+| `sources` | conformity | reference ids, citations, claims, paths | 4.1, 4.4 |
+| `course-files` | conformity | `plan.md` (« Public cible », « Accueil » and its questions), `glossary.md`, `CHANGELOG.md`, domain files: presence, frontmatter, sections, leads | 5, 6 |
+| `domain-first-sentence` | conformity | the first sentence of each paragraph of « Le fil des concepts » ends within 300 characters of the lead | 5 |
+| `language-pack-keys` | conformity | every key of section 9 and of `PROTOCOL.md` exists in the course's language pack | 9 |
+| `glossary-order` | quality | no term used before the concept that introduces it | 6 |
+| `typography` | quality | no banned character of the language pack in course text | 2 |
+| `domain-first-sentence-standalone` | quality | the first sentence of each paragraph of « Le fil des concepts » does not open with a word of `checks.anaphora` | 5, 9 |
+| `rule-slugs` | conformity (`check-spec`) | `PROTOCOL.md` names each of its rules and groups by a slug defined once; `PROTOCOL.md`, `SPEC.md` and `decisions/` cite them by a defined slug, never by a number or a range | `PROTOCOL.md` |
 
 **`taught-check`** is not a script: it is an agent workflow (`.claude/workflows/taught-check.js`)
-that verifies that no case asks what the learner has not yet been taught. It is mandatory after
-any change to what is taught (`teaching.md`, a sub-concept, an order), before the merge.
+that verifies that no case asks what the learner has not yet been taught. It is a quality check,
+run on demand through `/feyn-taught-check`, and its findings are triaged like the others.

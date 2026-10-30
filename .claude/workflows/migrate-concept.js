@@ -53,7 +53,7 @@ const REPORT = A.report || `construction/notes/S1-10-${NN}-report.md`
 // falls back to pwd, logged after the scope step.
 const DEST_ROOT = DEST.startsWith('/') && DEST.endsWith(`/courses/${A.course}/`) ? DEST.slice(0, -`courses/${A.course}/`.length) : ''
 if (DEST.startsWith('/') && !DEST_ROOT && DEST.includes('/courses/')) throw new Error(`args.dest ${DEST} is under a courses/ folder but is not <repository>/courses/${A.course}: the spec root cannot be told from it; pass <repository>/courses/${A.course}`)
-const CONCEPT_CHECKS = 'course-yaml,concept-folder,conventions,svg-contract,sources,glossary-order,typography'
+const CONCEPT_CHECKS = 'course-yaml,concept-folder,conventions,svg-contract,sources'
 
 // ROOT: the run's repository root, absolute, with a final slash (#178): DEST_ROOT below, else the pwd
 // the scope agent returns. Empty for the scope prompt (paths relative to the working directory); set
@@ -783,9 +783,9 @@ verbatim, every line: the verdict is read from it.`,
 if (!checks) throw new Error('Checks agent returned nothing')
 // The verdict is read from the output, line by line ("<id>: ok" or "<id>: fail: <file>:<line> <message>").
 // A per-concept check that fails fails the run, whatever the file (a broken language pack is reported
-// against course.yaml). A course-yaml or typography failure is excused only when it names neither this
+// against course.yaml). A course-yaml failure is excused only when it names neither this
 // concept nor the language pack; a check with no line at all fails the run.
-const PER_CONCEPT = ['concept-folder', 'conventions', 'svg-contract', 'sources', 'glossary-order']
+const PER_CONCEPT = ['concept-folder', 'conventions', 'svg-contract', 'sources']
 const checkLines = checks.output.split('\n').map(l => l.trim()).filter(Boolean)
 const blocking = [], excused = []
 for (const id of CONCEPT_CHECKS.split(',')) {

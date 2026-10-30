@@ -25,6 +25,6 @@ mise exec -- specs/linear-course/1/templates/smoke-test
 ```
 
 Builds a course from the templates with every placeholder filled by a dummy value (the table
-in the script), once with a diagram and once without, and runs `check-course` on it. It fails
-on an unreplaced placeholder too. A change to a template that breaks a check, or to a check
-that a template no longer satisfies, shows here.
+in the script), once with a diagram and once without, and runs `check-course` on it in both
+modes, conformity and `--quality`. It fails on an unreplaced placeholder too. A change to a
+template that breaks a check, or to a check that a template no longer satisfies, shows here.

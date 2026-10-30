@@ -13,7 +13,9 @@ const KEYS = {
   references: ['concept', 'concepts', 'and'],
   source_types: ['primary', 'secondary', 'marketing'],
 };
-const LISTS = { typography: 'banned', checks: 'anaphora' };
+const LISTS = { typography: 'banned' };
+// checks.anaphora is optional (SPEC.md section 9): a pack without it is consumable;
+// domain-first-sentence-standalone, a quality check, reports its absence.
 
 
 // The keys PROTOCOL.md uses: a row of its "Keys and parameters" tables (`| `group.key` | ...`; a value

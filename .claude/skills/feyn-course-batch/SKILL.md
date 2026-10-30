@@ -26,9 +26,9 @@ Arguments of the workflow: `{ course, concepts?, issue?, work?, dryRun? }`.
   (Claude Code, observed 2026-10-29, #269).
 
 Per concept, the workflow writes `sources.md`, then `concept.md` and `teaching.md`, has them
-reviewed on substance and on form, fixes, runs the `check-course` checks on the concept, and
-does a second round only for a review that had a blocking finding. It touches nothing outside
-the concept folders.
+reviewed on substance and on form, fixes, runs the conformity checks of `check-course` (its
+default mode) on the concept, and does a second round only for a review that had a blocking
+finding. It touches nothing outside the concept folders.
 
 ## 2. Triage what it returns
 
@@ -45,6 +45,6 @@ Read the report, then every file it changed (never trust the summary).
 
 ## 3. Finish
 
-Run `mise exec -- specs/check-course courses/<id>` on the whole course, then
-`/feyn-taught-check` ([feyn-taught-check](../feyn-taught-check/SKILL.md)) from the first concept
-touched, and `/feyn-pull-request`.
+Run `mise exec -- specs/check-course courses/<id>` (the conformity checks) on the whole course,
+then `/feyn-taught-check` ([feyn-taught-check](../feyn-taught-check/SKILL.md)) from the first
+concept touched, and `/feyn-pull-request`.
