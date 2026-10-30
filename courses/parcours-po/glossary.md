@@ -67,7 +67,7 @@ passant. Le prof peut montrer ce fichier à l'apprenant.
 | Donnée personnelle | personal data | Information sur une personne identifiée ou identifiable (RGPD) | 12 |
 | Finalité | purpose | Ce pour quoi des données sont demandées, dit avant de les collecter (RGPD) | 12 |
 | Minimisation | data minimisation | Ne demander que les données nécessaires à la finalité (RGPD) | 12 |
-| Ordonner | order | Décider de la place de chaque élément dans le backlog | 3 |
+| Ordonner | order | Décider de la place de chaque élément dans le backlog | 13 |
 | Prêt à être choisi | ready for selection | Élément que l'équipe peut finir en un sprint, une fois précisé (Scrum Guide) ; la DoR en est une version écrite par l'équipe | 3 |
 | Coût du retard | cost of delay | Ce qu'on perd à livrer plus tard (choix d'école) | 13 |
 | WSJF | Weighted Shortest Job First | Coût du retard divisé par la durée, pour ordonner (choix d'école, SAFe) | 13 |
