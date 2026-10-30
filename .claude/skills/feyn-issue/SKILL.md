@@ -27,8 +27,10 @@ form `<kind> [#<epic>] <observation>`:
    for an epic ([project.md](../../reference/project.md), "Epics"). Say plainly when a section
    is missing or the Done when is not verifiable.
 
-The issue body is either the issue template's sections (`### Observation`, …) or the plan's
-bullets (`- **Observation**: …`), or for an epic the five sections of
+The issue body is either the head (`**Where:**`, `**What:**`, `**Why:**`) then the sections of
+[issue-body.md](../../reference/issue-body.md) in the order Done when, Observation, To do,
+Reads (a body written before #262 has no head and its sections in another order), or the
+plan's bullets (`- **Observation**: …`), or for an epic the five sections of
 [epic-body.md](../../reference/epic-body.md), or for a proposal the six sections of
 [proposal-body.md](../../reference/proposal-body.md); read all four.
 
@@ -82,14 +84,22 @@ bullets (`- **Observation**: …`), or for an epic the five sections of
      on). Ask the maintainer when unsure; none is a normal answer. Two issues that only edit
      the same file are not linked. The links go on GitHub, never as a line in the body.
 5. **Write the body** into a file made with `mktemp` (outside the repository), each comment of
-   its body file replaced. A slice or an observation, from
-   [issue-body.md](../../reference/issue-body.md): Observation (facts and places, no
-   solution), To do (the work, numbered when the order matters), Done when (statements a
-   reviewer can verify by reading or running something); Reads only when the work needs other
-   files. An epic, from [epic-body.md](../../reference/epic-body.md): Objective, Why now,
-   Material, Done when, Out of scope; no To do, no slice posed in advance. A proposal: the file
-   `/feyn-brainstorm` hands over, already in the six sections of
-   [proposal-body.md](../../reference/proposal-body.md), as written; nothing is rewritten.
+   its body file replaced.
+   - A slice or an observation, from [issue-body.md](../../reference/issue-body.md): the head
+     (three lines, each its own paragraph: Where, the area and at most three words on what is
+     touched; What it delivers; Why it matters now), then Done when (statements a reviewer can
+     verify by reading or running something), Observation (the fact first, then the context;
+     facts and places, no solution), To do (one line per item, the how in sub-bullets,
+     numbered when the order matters), Reads only when the work needs other files.
+   - Then reread it as the maintainer of the morning, choosing among ten Ready issues: does
+     the head say where, what and why in three lines; does the Observation open with the fact;
+     does each To do item hold in one line? One no: fix before creating, then reread. The
+     issue template (`.github/ISSUE_TEMPLATE/task.yml`) and the body template `issue-body.md`
+     carry the same rules.
+   - An epic, from [epic-body.md](../../reference/epic-body.md): Objective, Why now,
+     Material, Done when, Out of scope; no To do, no slice posed in advance.
+   - A proposal: the file `/feyn-brainstorm` hands over, already in the six sections of
+     [proposal-body.md](../../reference/proposal-body.md), as written; nothing is rewritten.
 6. **Title**: imperative, like a commit summary, under 70 characters ("Fix the caption check
    on nested groups"), no issue prefix. An epic: "Epic: " and the objective in a few words. A
    proposal: "Proposal: " and what it settles in a few words.

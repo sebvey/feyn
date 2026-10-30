@@ -21,15 +21,18 @@ like: the body templates, the Project reference, the rules of an agent in a work
 
 ## An observation becomes an issue
 
-GitHub Issues is the only backlog; nothing is tracked in a local file. An issue has three sections:
-Observation (what was seen, where), To do, Done when (statements a reviewer can verify by reading a
-file or running a command). `/feyn-issue <kind> [#<epic>] <observation>` writes it, of the kind
-it is given (`observation`, `slice` with its epic, `epic` or `proposal`; no kind, it asks which
-and creates nothing; the rules on which kind are under "How the work is organised"), with its
-labels and its blocked-by links; the Project workflows add it to the Project in Backlog, and
-`/feyn-issue` sets it Ready when it is a slice, or an observation whose work the maintainer
-decided; `/feyn-issue <n>` summarises one, its links included. Why: decisions
-`issue-defines-pr-verifies`, `blocked-by-links-for-dependencies`.
+GitHub Issues is the only backlog; nothing is tracked in a local file. An issue (a slice or an
+observation; an epic and a proposal have their own sections) opens with a head of three lines,
+read to choose among the Ready issues (Where: the area; What it delivers; Why now), then its
+sections: Done when (statements a reviewer can verify by reading a file or running a command),
+Observation (what was seen, where, the fact first), To do, Reads.
+`/feyn-issue <kind> [#<epic>] <observation>` writes it, of the kind it is given (`observation`,
+`slice` with its epic, `epic` or `proposal`; no kind, it asks which and creates nothing; the rules
+on which kind are under "How the work is organised"), with its labels and its blocked-by links;
+the Project workflows add it to the Project in Backlog, and `/feyn-issue` sets it Ready when it
+is a slice, or an observation whose work the maintainer decided; `/feyn-issue <n>` summarises
+one, its links included. Why: decisions `issue-defines-pr-verifies`,
+`blocked-by-links-for-dependencies`.
 
 ## An issue becomes a branch
 
