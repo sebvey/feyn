@@ -10,7 +10,7 @@ number 4, owner `sebvey`; its **Status** field says where an issue stands:
 | Ready | decided, free to take | `/feyn-issue` for a slice or a decided observation, or the maintainer | `be2d48d7` |
 | In progress | a branch exists | `/feyn-issue-branch` (no Project workflow fires on a branch); `/feyn-deliver` step 4 when a correction is asked on a delivered PR | `be703c13` |
 | Needs Decision | present in the Project, unused by the skills for now: the label `blocked:maintainer` carries a decision awaited | nobody | `33e9b212` |
-| Ready for review | the work claims done, the maintainer reviews and concludes: a slice whose PR is open after the fresh-agent review (the maintainer merges), an epic whose plan comment says its last slice closed (the maintainer verifies its Done when and closes it) | `/feyn-pull-request` step 8 for a slice (`/feyn-deliver` step 5 when it runs the cycle), `/feyn-merge-cleanup` step 7 for its epic | `deab4f08` |
+| Ready for review | the work claims done, the maintainer reviews and concludes: a slice whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none, direct delivery.` (the maintainer merges), an epic whose plan comment says its last slice closed (the maintainer verifies its Done when and closes it) | `/feyn-pull-request` step 8 for a slice (`/feyn-deliver` step 5 when it runs the cycle), `/feyn-merge-cleanup` step 7 for its epic | `deab4f08` |
 | Done | closed (the close reason stays on GitHub) | Project workflow "Item closed"; `/feyn-merge-cleanup` only when that Project workflow is off | `9e81e5a6` |
 
 Project id `PVT_kwHOADOnU84Bo8V6`, Status field id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`.

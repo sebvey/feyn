@@ -15,7 +15,9 @@ form `<kind> [#<epic>] [direct] <observation>`:
   any other first word is not a kind (an observation that starts with "epics…" names none);
 - `#<epic>` follows the kind for a slice, and only for a slice: a slice needs it;
 - `direct` is the word right after the kind (after `#<epic>` for a slice) when it is exactly
-  that word, for a slice or an observation only (step 3);
+  that word, for a slice or an observation only (step 3); an observation whose own first word
+  is "direct" can read the same: when unsure, ask the maintainer and create nothing until the
+  answer;
 - no kind: ask which of the four, and create nothing until the answer.
 
 ## Read an issue
@@ -23,7 +25,8 @@ form `<kind> [#<epic>] [direct] <observation>`:
 1. `mise exec -- gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences,projectItems`.
 2. Answer in at most ten lines: the title; a body with a head: its Where, What and Why as
    the first line, then the rest; a body without one (written before #262): the observation
-   in one sentence; the To do as a short list; the Done when as written; the Status (from
+   in one sentence; the To do as a short list, naming the line "Direct delivery" when it
+   opens the To do; the Done when as written; the Status (from
    `projectItems`); the labels (type, area, `blocked:maintainer`); what blocks it and what it
    blocks, open ones first ([project.md](../../reference/project.md), "Dependencies"); open or
    closed, and by which PR; what the comments added or changed; its epic for a slice, its

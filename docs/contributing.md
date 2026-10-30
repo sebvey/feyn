@@ -113,16 +113,18 @@ Four moments:
    the first one or two of an epic with no plan comment yet; otherwise the plan comment is
    rewritten first. This holds as well for the next slice after a delivery and for a slice
    added when the maintainer's check of the epic's Done when fails.
-2. **Deliver a slice**, on one of two paths. `/feyn-deliver <n>` delivers every slice but one the
-   maintainer named `direct` at its creation (`/feyn-issue slice #<epic> direct <observation>`,
+2. **Deliver a slice**, in one of two ways: `/feyn-deliver <n>`, or a direct delivery.
+   `/feyn-deliver <n>` delivers every slice except those the maintainer named `direct` at their
+   creation (`/feyn-issue slice #<epic> direct <observation>`,
    `/feyn-issue observation direct <observation>`), whose To do then opens with the line "Direct
-   delivery". A **direct delivery** is a slice of one edit with no behaviour: no skill, check,
-   decision, workflow or course file touched, and no Done when statement that asks more than
-   "this sentence says this" (a wording, a link, a typo, a mechanical rename in one file). The
-   maintainer's work session makes its branch, its edit and its PR with the work-cycle tooling
-   (`/feyn-issue-branch`, `/feyn-pull-request`): no contributor, no fresh-agent review, and the
-   PR's Checks say `Fresh-agent review: none, direct delivery.` On both paths the slice is Ready
-   for review while its PR awaits the merge. Then `/feyn-merge-cleanup` adds two lines on the
+   delivery". A **direct delivery** is a slice or a standalone observation of one edit with no
+   behaviour: no skill, check, decision, agent workflow or course file touched, and no Done when
+   statement that asks more than "this sentence says this" (a wording, a link, a typo, a
+   mechanical rename in one file). The maintainer's work session makes its branch, its edit and
+   its PR with the work-cycle tooling (`/feyn-issue-branch`, `/feyn-pull-request`): no
+   contributor, no fresh-agent review, and the PR's Checks say
+   `Fresh-agent review: none, direct delivery.` Either way the slice is Ready for review while
+   its PR awaits the merge. Then `/feyn-merge-cleanup` adds two lines on the
    plan comment (the slice closed, the next to pose; if the next is not obvious, back to moment
    1). When the plan comment's last "Next slice to pose" line says the epic closes ("Next slice
    to pose: none, the epic closes"), `/feyn-merge-cleanup` sets the epic Ready for review: the
@@ -167,9 +169,10 @@ Why: decision `themes-and-release-milestones`.
 - Every issue is an item of the Project (the GitHub Project "feyn", number 4), and its Status says
   where it stands: Backlog (proposed, to triage), Ready (decided, free to take), In progress (a
   branch exists), Ready for review (the work claims done, the maintainer reviews and concludes: a
-  slice whose PR is open after the fresh-agent review, the maintainer merges; an epic whose plan
-  comment says its last slice closed, the maintainer verifies its Done when and closes it), Done
-  (closed; the close reason stays on GitHub). Needs Decision is in the Project but unused for
+  slice whose PR is open after the fresh-agent review, or with the line `Fresh-agent review:
+  none, direct delivery.`, the maintainer merges; an epic whose plan comment says its last slice
+  closed, the maintainer verifies its Done when and closes it), Done (closed; the close reason
+  stays on GitHub). Needs Decision is in the Project but unused for
   now: the label `blocked:maintainer` carries a decision awaited. One at a time. The Project
   workflows add the open issues created or updated while they are on, set Backlog when one is
   added and Done when it closes; the skills set the rest: `/feyn-issue` Ready for a slice or a

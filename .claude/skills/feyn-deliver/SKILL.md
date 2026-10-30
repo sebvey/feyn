@@ -22,13 +22,14 @@ comes once, at the hand-over (step 5).
 
 ## 1. Before spawning
 
+- Read each issue (`mise exec -- gh issue view <n>`).
 - **A direct delivery.** An issue whose To do opens with the line "Direct delivery" (named
   `direct` by the maintainer at its creation, [contributing](../../../docs/contributing.md),
   "How the work is organised", moment 2) stops the cycle for that issue, before the refusals
-  below: reply "this slice is delivered on the direct path (`/feyn-issue-branch`, the edit,
+  below: reply "this slice is delivered as a direct delivery (`/feyn-issue-branch`, the edit,
   `/feyn-pull-request`): nothing to spawn", and spawn nothing.
-- Read each issue (`mise exec -- gh issue view <n>`): the refusals of `/feyn-issue-branch` step 1 apply here
-  first: name the reason and stop for that issue.
+- Then the refusals of `/feyn-issue-branch` step 1 apply: name the reason and stop for that
+  issue.
 - Several numbers: one contributor agent per issue, in parallel, only when their To do touch
   distinct files. Two issues that share a file run one after the other (the second after the
   first is merged).
