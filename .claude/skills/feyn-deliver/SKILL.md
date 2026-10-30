@@ -127,6 +127,11 @@ back to it.
 
 From the main checkout, on `main`:
 
+0. The merge: `mise exec -- gh pr view <pr> --json state,mergedAt` shows `MERGED`; otherwise
+   stop and tell the maintainer, before any `git worktree remove` or `git branch -D`. The
+   maintainer's word starts step 6; it does not prove the merge, which can fail on a GitHub
+   error the maintainer does not see. It is the check of `/feyn-merge-cleanup` step 1, done
+   here first because the worktree removal (6.2) comes before `/feyn-merge-cleanup` (6.3).
 1. The worktree: `git worktree list --porcelain` gives its path
    (`.claude/worktrees/agent-<id>`), on a branch `worktree-agent-<id>` cut from `main`'s HEAD;
    `/feyn-merge-cleanup` does not remove it. A worktree with no change at the end of the
