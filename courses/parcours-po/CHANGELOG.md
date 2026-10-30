@@ -22,9 +22,12 @@ Une ligne par changement : `- CATÉGORIE, concept ou fichier : ce qui change`.
 - MINOR, concept 9 : la matière retirée de 9b2 revient en « Approfondissement » (Workflow
   Steps, Defer Performance et un exemple de Business Rule Variations, patrons de Lawrence),
   hors du parcours : aucun cas ne s'y appuie ; `sources.md` rattache ces patrons à la section.
-- PATCH, `glossary.md` : la quatrième colonne, « Défini dans », donne le seul concept qui définit
-  le terme ; les variantes s'écrivent avec des virgules (« Product Owner, PO »), une parenthèse
-  ne précise plus que le sens (« Produit (d'une équipe) », « Escalade (d'un obstacle) ») ; epic,
-  feature et tâche, story points et vélocité, risque de valeur et risque de faisabilité ont
-  chacun leur ligne, « story » rejoint « User story » ; l'introduction suit la spec.
-- PATCH, concept 2 : un piège renvoie au concept 17 pour « hypothèse ».
+- PATCH, `glossary.md` : la quatrième colonne, « Défini dans », donne le seul concept qui enseigne
+  le terme (une définition en passant, qui renvoie ailleurs, ne compte pas) ; les variantes
+  s'écrivent avec des virgules (« Product Owner, PO »), une parenthèse ne précise plus que le
+  sens (« Produit (d'une équipe) », « Rôle (d'utilisateur) ») ; epic, feature et tâche, story
+  points et vélocité, risque de valeur et risque de faisabilité ont chacun leur ligne, « story »
+  rejoint « User story » ; l'introduction suit la spec.
+- PATCH, concepts 2 et 10 : un piège renvoie au concept 17 pour « hypothèse », la légende du
+  schéma des dépendances au concept 14 pour « escalade ».
+- PATCH, concept 11 : `sources.md` cite les lignes du glossaire sous leur nouvelle forme.

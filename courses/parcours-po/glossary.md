@@ -29,15 +29,15 @@ passant. Le prof peut montrer ce fichier à l'apprenant.
 | Valeur (d'un produit) | value | Ce que l'utilisateur ou l'organisation gagne (temps, meilleure décision, risque évité) | 1 |
 | Livrable | output | Ce que l'équipe produit (une vue, un indicateur, un pipeline) | 2 |
 | Résultat | outcome | Ce qui change chez l'utilisateur grâce au livrable | 2 |
-| Objectif produit | Product Goal | État futur visé du produit, cible à long terme de l'équipe | 0 |
+| Objectif produit | Product Goal | État futur visé du produit, cible à long terme de l'équipe | 2 |
 | Vision produit | product vision | Raison d'être du produit à long terme ; absente du Scrum Guide (choix d'école) | 2 |
 | Mesure de résultat | outcome metric | Mesure qui dit si on s'approche du résultat visé | 2 |
-| Backlog produit | Product Backlog | Liste ordonnée et émergente de ce qui pourrait améliorer le produit | 0 |
+| Backlog produit | Product Backlog | Liste ordonnée et émergente de ce qui pourrait améliorer le produit | 3 |
 | Élément du backlog | Product Backlog item | Toute entrée du backlog, quel que soit son niveau | 3 |
 | Epic | epic | Niveau de découpage choisi par l'équipe : besoin trop gros pour un sprint, dont les morceaux ne sont pas tous connus (au sens d'origine, une grosse story, Cohn) | 4 |
 | Feature | feature | Niveau de découpage choisi par l'équipe : capacité qui sert seule à l'utilisateur, faite de plusieurs besoins | 4 |
 | Tâche | task | Travail des Developers pour réaliser une story, que l'utilisateur ne voit pas ; elle vit dans le backlog de sprint et n'est pas un besoin | 4 |
-| User story, story | user story | Un besoin précis d'un utilisateur, vu de lui ; format courant (choix d'école) : en tant que, je veux, afin de | 4 |
+| User story, story | user story | Un besoin précis d'un utilisateur, vu de lui ; format courant (choix d'école) : en tant que, je veux, afin de | 5 |
 | 3C | Card, Conversation, Confirmation | Une story est une carte, une conversation et une confirmation (Jeffries) | 5 |
 | Acteur (d'une story) | actor | Rôle qui fait l'action du « je veux » et y gagne ce que dit le « afin de » (heuristique du cours) | 6 |
 | Rôle (d'utilisateur) | user role | Catégorie d'utilisateurs aux besoins communs | 6 |
@@ -57,9 +57,9 @@ passant. Le prof peut montrer ce fichier à l'apprenant.
 | Patron de découpage | splitting pattern | Façon type de découper une story trop grosse (choix d'école) | 9 |
 | Hors périmètre | out of scope | Ce qu'une story ne fait pas alors qu'on pourrait l'attendre | 10 |
 | Dépendance | dependency | Une story ne peut pas être livrée, ou n'a pas de sens, avant une autre story ou le travail d'une autre équipe | 10 |
-| Definition of Done, DoD | Definition of Done | Exigences de qualité que tout élément remplit pour faire partie de l'incrément | 0 |
+| Definition of Done, DoD | Definition of Done | Exigences de qualité que tout élément remplit pour faire partie de l'incrément | 11 |
 | Definition of Ready, DoR | Definition of Ready | Conditions qu'un élément remplit avant d'être commencé : entrer dans un sprint, ou franchir le début du flux (annexe A2) ; choix d'école | 11 |
-| Indicateur | metric | Valeur calculée par le produit pour ses utilisateurs (locations par quartier) | 2 |
+| Indicateur | metric | Valeur calculée par le produit pour ses utilisateurs (locations par quartier) | 12 |
 | Définition d'un indicateur | metric definition | Ce qu'il compte, sa règle de calcul, son grain, sa période, sa source, sa fraîcheur | 12 |
 | Grain | grain | Ce que représente une valeur d'un indicateur ou une ligne d'une table (par station, par quartier ; Kimball) | 12 |
 | Qualité des données | data quality | Respect de règles mesurables sur des dimensions (six chez DAMA UK : complétude, unicité, fraîcheur, validité, exactitude, cohérence ; la liste est un choix d'école) | 12 |
@@ -74,9 +74,9 @@ passant. Le prof peut montrer ce fichier à l'apprenant.
 | MoSCoW | MoSCoW | Classement Must, Should, Could, Won't pour une échéance (choix d'école) | 13 |
 | Sponsor | sponsor | Responsable qui porte le budget du produit et porte plus haut les obstacles qui dépassent le PO, sans ordonner le backlog | 1 |
 | Obstacle | impediment | Ce qui bloque l'équipe et qu'elle ne lève pas seule | 14 |
-| Escalade (d'un obstacle) | escalation | Porter un obstacle au niveau qui peut le lever | 14 |
+| Escalade | escalation | Porter un obstacle au niveau qui peut le lever | 14 |
 | Refinement | Product Backlog refinement | Activité continue qui précise et découpe les éléments du backlog | 15 |
-| Objectif de sprint | Sprint Goal | Objectif unique du sprint, fixé au Sprint Planning | 0 |
+| Objectif de sprint | Sprint Goal | Objectif unique du sprint, fixé au Sprint Planning | 15 |
 | Backlog de sprint | Sprint Backlog | Objectif de sprint, éléments choisis et plan des Developers | 0 |
 | Story map | story map | Carte du backlog selon le parcours de l'utilisateur (Patton) | 16 |
 | Colonne vertébrale | backbone | Ligne des activités de l'utilisateur en haut de la story map, dans l'ordre de son récit ; elle ne s'ordonne pas (Patton) | 16 |
