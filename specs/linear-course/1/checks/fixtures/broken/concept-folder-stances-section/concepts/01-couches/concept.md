@@ -5,6 +5,7 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Une affirmation acceptée."
       refs: [S1]
+      verified: ["« le texte » (section 2)"]
   school: []
   course:
     - text: "Un choix du cours."

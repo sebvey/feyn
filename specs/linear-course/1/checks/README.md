@@ -49,10 +49,10 @@ its mode in this order.
 | Id | Family | Script | Verifies (SPEC.md) |
 |---|---|---|---|
 | `course-yaml` | conformity | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/` (not looked for under `--concept`), spec declared, pack present (3, 8) |
-| `concept-folder` | conformity | `concept-folder.js` | files, sections and their order, frontmatter, sub-concept sections, « Objectif », cases (in the heading, at most one qualifier, a value of the pack's `qualifiers`; a qualifier on « Question » only), leaf coverage, citation in « Consignes » (4, 9) |
+| `concept-folder` | conformity | `concept-folder.js` | files, sections and their order, frontmatter (`verified` parallel to `refs`), sub-concept sections, « Objectif », cases (in the heading, at most one qualifier, a value of the pack's `qualifiers`; a qualifier on « Question » only), leaf coverage, citation in « Consignes » (4, 9) |
 | `conventions` | conformity | `conventions.js` | reader-text conventions of `concept.md`; plain Markdown in every course file (2, 4.5) |
 | `svg-contract` | conformity | `svg-contract.js` | every diagram against the drawing contract, a root `<defs>` accepted; declared and present diagrams (4.1, 7.1) |
-| `sources` | conformity | `sources.js` | reference ids, citations, claims, paths (4.1, 4.4) |
+| `sources` | conformity | `sources.js` | no introduction; « Affirmations » in five columns: section anchors that exist in `concept.md`, a source cell of reference ids or the `markers.course` word, a verification (empty for a « cours » claim only), a nature (`markers` consensus, school, course, or `natures.fact`); reference ids, links (one URL or empty), types, dates; every id cited exists, every reference is cited by a claim or a frontmatter item; « Non vérifié » entries open with their section (4.1, 4.4) |
 | `course-files` | conformity | `course-files.js` | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md` (four columns, one concept number in the fourth, no variant in two rows), `CHANGELOG.md`, domain files, no unlisted file in `domains/` (5, 6) |
 | `domain-first-sentence` | conformity | `domain-first-sentence.js` | the first sentence of each paragraph of « Le fil des concepts » ends with `.`, `?` or `!` within 300 characters of the lead (5) |
 | `language-pack-keys` | conformity | `language-pack-keys.js` | every key of section 9 and of `PROTOCOL.md` exists in the course's pack (9) |
@@ -67,9 +67,12 @@ the lists (`typography.banned`, the `learner_says` lists) are non-empty lists of
 `checks.anaphora` is optional: `domain-first-sentence-standalone` reads it. The groups beside
 those (`site`) are read by the site, not checked here.
 
-A claim of `sources.md` has a source when its source cell is not empty: a reference id
-(`[S1]`), a `concepts/NN-slug/sources.md` path, or a word that says there is none (« fil
-rouge », « aucune »). Ids and paths in the cell are checked.
+A claim's source cell holds reference ids (`[S1], [S2]`) or the `markers.course` word
+(« cours »), nothing else: free text (« aucune », « fil rouge ») and a path to another concept
+fail. A section anchor is a sub-concept id or a fixed section by its pack value
+(`headings.essentials`, `pitfalls`, `quick_test`, `deepening`) whose heading exists in
+`concept.md`; a « Non vérifié » entry is a list item `<anchors> : <text>`, and may also name
+`headings.stances`. The form of the verified cell (a quotation and its place) is reviewed.
 
 ## Checks of the spec itself
 
@@ -117,7 +120,9 @@ lists, and a run must run the checks of its mode and no other.
 - `fixtures/valid/`: a minimal valid course (four concepts, one annex, one diagram with a root
   `<defs>`; a glossary with a comma variant, a qualified row used before its concept, an empty
   English cell, and earlier uses silenced by a concept reference, one of them to an annex
-  sub-concept); every check of both modes passes.
+  sub-concept; in `sources.md`, a claim on two anchors, a « cours » claim with no verification,
+  a `fait` claim on « Approfondissement », « Non vérifié » entries anchored to a sub-concept and
+  to the stances, stance items with `verified`); every check of both modes passes.
 - `fixtures/broken/<name>/`: a copy of it with one defect; its `EXPECT` file names the check
   that must fail, in its mode, and the message it must give. No other check of either mode may
   fail (the test says so), except for the broken language pack.
@@ -126,7 +131,8 @@ lists, and a run must run the checks of its mode and no other.
   and a change to the spec reports its new failures there.
 - `fixtures/lang/fr.yaml`: the pack the fixtures use (the groups the checks read: section 9 and the
   keys of `PROTOCOL.md`, French values of the real pack `lang/fr.yaml`, without `site`; change both
-  together). `fixtures/lang-broken*/`: packs with one missing key, for the broken copies that name them.
+  together). `fixtures/lang-broken*/`: packs with one missing key (`lang-broken-natures`: the group
+  `natures`), for the broken copies that name them.
   `fixtures/lang-no-anaphora/`: the pack without the optional `checks.anaphora`; `valid/` with it
   passes the conformity mode, and the quality mode fails `domain-first-sentence-standalone` only.
 - `fixtures/spec/valid/`: a minimal spec (`PROTOCOL.md`, `SPEC.md`, one decision); every

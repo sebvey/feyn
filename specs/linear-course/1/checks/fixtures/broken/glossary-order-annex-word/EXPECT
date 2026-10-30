@@ -1,2 +1,2 @@
 check: glossary-order
-message: concept.md:10 uses the term "couche" before concept 1
+message: concept.md:11 uses the term "couche" before concept 1

@@ -31,3 +31,7 @@ alignment stamp. One filter inside a file exists, and only one: the site builds 
   has its section in `concept.md` and a case in `teaching.md`).
 - A new teacher-only need gets a section of `teaching.md`, never a marker in a reader-facing
   file.
+- Amended 2026-10-30 (#217): no filter inside a file. The site builds every « Affirmations »
+  row of `sources.md` and the « Références »; no row is teacher-only, since `sources.md` traces
+  the body of `concept.md` only (decision `sources-trace-the-concept`). « Non vérifié » is the
+  one section-level exclusion, by its pack heading (`SPEC.md` 4.4).

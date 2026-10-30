@@ -149,7 +149,7 @@ memory and site addresses cite them. Changing one is a course MAJOR (section 8).
 concepts/09-decoupage-vertical/
   concept.md         mandatory   reader-facing: built by the site, read by the teacher
   teaching.md        mandatory   teacher-only: teaching notes, example bank included; never built
-  sources.md         mandatory   reader-facing, filtered by the site (4.4)
+  sources.md         mandatory   reader-facing: built by the site, « Non vérifié » excepted (4.4)
   <stem>.svg         optional    reader-facing: one file per diagram (section 7)
 ```
 
@@ -175,7 +175,13 @@ section (`concept-folder`), and the site renders them from the frontmatter, unde
 
 An **item**: `text` (mandatory, inline Markdown: bold and italics only), `author` (optional;
 expected on consensus and school items: the text or author the claim belongs to), `refs`
-(mandatory, possibly empty: reference ids of `sources.md`, `sources`).
+(mandatory, possibly empty: reference ids of `sources.md`, `sources`), `verified` (mandatory
+when `refs` is not empty, absent otherwise: a list parallel to `refs`, one entry per reference
+in the same order, each the shortest quotation that settles the item, between « », and its
+place in parentheses, as the verified column of 4.4; `concept-folder` fails a `verified` whose
+length differs from `refs`). A stance or a neighbour is sourced in its item, never by a row of
+« Affirmations »: the proof sits beside what it proves. `verified` is audit material, like
+« Affirmations »; a re-verification is a change of `concept.md`.
 
 A **diagram** entry, all keys mandatory: `file` (the SVG's file name), `title` (one line: the
 SVG `<title>` and the image alt), `caption` (what the diagram shows: the teacher says it, the
@@ -276,35 +282,74 @@ the order of the table; « Ce qui marche » comes last.
 
 ### 4.4 `sources.md`
 
-`sources.md` traces the source of every verifiable claim of the concept folder (definition,
-consensus, school and its author, date, figure, quotation), cases included. The teacher reads
-it when the learner asks where a claim comes from. A claim of the frontmatter `stances` or
-`neighbors` names `headings.stances` (« Consensus et choix d'école ») as its section (the
-parenthesis of column 1). The site builds only the « Affirmations » rows whose section is in
-`concept.md` or is `headings.stances`, and the « Références » they cite; the other rows (a
-section of `teaching.md`) are teacher-only. « Non vérifié » is not built: its items carry no section to
-filter on. Storyline facts are invented and have no source. `concept.md` and `teaching.md` cite
-no reference: references live in the frontmatter `refs` and here (`sources`).
+**Purpose.** `sources.md` shows that the concept is grounded, and lets anyone trace a claim of
+its body to what it rests on. « Références » serves the site reader first; « Affirmations »
+serves the audit (the reviewer, the maintainer, the teacher on request). Traceability is worth
+its re-verification, not its volume.
 
-In this order (`concept-folder`):
+| Reader | Needs | When |
+|---|---|---|
+| the site reader | to know the course is grounded; where to read further; which claim is consensus, school or the course's choice | reading a concept |
+| the teacher | the source as described, to answer « d'où ça vient ? », and what is not verified (`PROTOCOL.md`, rules `origin-from-sources-file` and `unverified-part-told`) | on the learner's request |
+| the creator (human or agent) | what to source and what not to; where to put what could not be confirmed | writing the concept |
+| the reviewer | that a claim is backed by what it cites: the quotation, the place | reviewing a change |
+| the maintainer | when a source changes or a section is rewritten, what to re-verify; when it was consulted | months later |
 
-1. An introduction, optional: a paragraph that sums up the sources of the concept.
-2. « Affirmations » (`claims`), mandatory: one table, four columns in this order: the claim in a
-   few words with the section it lives in, in parentheses (a section of `concept.md` or of
-   `teaching.md`); its source (reference ids `[S1]`, and paths `concepts/NN-slug/sources.md` of
-   another concept where it was verified); what was verified (short quotation when useful);
-   its nature: a stance marker word (section 4.5) or empty.
-3. « Références » (`references`), mandatory: one table, five columns in this order: id
-   (`S<n>`, optionally a lowercase letter: `S5b`); source (author, title, date); link (a URL,
-   or empty); type: one or more of `primary`, `secondary`, `marketing`, written as the language
-   pack's words and separated by commas, then an optional remark in parentheses (« primaire,
-   marketing (aimant à prospects) »); consulted on (starts with `YYYY-MM-DD`).
-4. « Non vérifié » (`unverified`), mandatory, possibly empty: a list of the claims no consulted
-   source confirms, and why.
+Only `concept.md` is sourced. « Affirmations » covers the verifiable claims of its body (a
+definition, a date, a figure, a quotation, what a guide says or does not say). Not a row: a
+storyline fact (invented, in `storyline.md`), a teaching device (an invented example, a
+deduction of a case), a stance or a neighbour (sourced in its frontmatter item, 4.1), a wording
+of the course. A claim only `teaching.md` states is a gap of the concept, added to `concept.md`
+first, or no claim to source. `concept.md` and `teaching.md` cite no reference: references live
+in the frontmatter `refs` and here (`sources`).
 
-Rules (`sources`): reference ids are unique; every id cited (frontmatter `refs`, source column)
-exists in « Références »; every reference is cited by at least one claim; every claim has a
-source and a verification; a path names a concept `dir` of `course.yaml`.
+The site builds every row of « Affirmations » and « Références »: no row is teacher-only.
+« Non vérifié » is the one section never built (by its pack heading); the classroom copies the
+whole file.
+
+The file has no H1 and no introduction: it opens on « Affirmations » (`sources`). In this order
+(`concept-folder`):
+
+1. « Affirmations » (`claims`), mandatory: one table, five columns in this order:
+   - **claim**: the claim in a few words;
+   - **section**: where `concept.md` makes it: sub-concept ids (`4b`, `9a1`) and fixed sections
+     by their pack value, « L'essentiel », « Pièges », « Le test rapide », « Approfondissement »
+     (`headings.essentials`, `pitfalls`, `quick_test`, `deepening`), several separated by
+     commas, never a heading's text; each exists in `concept.md` (`sources`). « Objectif » is
+     not one: it states what the learner will do, not a claim;
+   - **source**: reference ids `[S1]`, separated by commas, or the `markers.course` word
+     (« cours ») for a claim the course makes by its own choice; nothing else: no free text, no
+     path to another concept, whose verification each concept repeats with its own reference
+     (`sources`);
+   - **verified**: per reference of the source cell, in the same order, the shortest quotation
+     that settles the claim, between « », then its place in parentheses (section, page,
+     heading); for an absence, « absent de » and the place searched; for a « cours » claim, one
+     line saying what it follows from, or nothing. No reasoning, no pointer to « Non vérifié »:
+     what cannot be quoted goes there (review). The cell is empty only for a « cours » claim
+     (`sources`);
+   - **nature**, mandatory: `consensus`, `école`, `cours` (the stance markers
+     `markers.consensus`, `markers.school`, `markers.course`) or `fait` (`natures.fact`: what a
+     source states with no stance, a tool's default, a date, a figure) (`sources`). A claim the
+     reader text marks with a stance marker has that marker's nature; a « cours » source has
+     nature `cours` (review).
+2. « Références » (`references`), mandatory: one table, five columns in this order: **id**
+   (`S<n>`, optionally a lowercase letter: `S5b`), unique; **source** (author, title, date: how
+   the teacher names it; a description repeated from another concept is copied identically);
+   **link**, one URL or empty: a second place is a second reference, never a second URL nor a
+   path to a repository file (`sources`); **type**, how much to trust it and how to name it: one
+   or more of `primary` (the text itself), `secondary` (someone reporting it), `marketing` (a
+   vendor's or a training's page), written as the language pack's words and separated by
+   commas, then an optional remark in parentheses (« primaire, marketing (aimant à
+   prospects) »); **consulted on**, when this reference was read for this concept: it starts
+   with `YYYY-MM-DD`. References are per concept: each concept cites its own.
+3. « Non vérifié » (`unverified`), mandatory, possibly empty: a list; each entry opens with its
+   section, in the forms of the section column or `headings.stances` (« Consensus et choix
+   d'école ») for a stance or a neighbour, then « : » (`sources`), then what no consulted source
+   confirms, why, and, when useful, the instruction that follows (« écrire X, pas Y »). It holds
+   no trace of a removed claim: git history is the trace.
+
+Rules (`sources`): every id cited (frontmatter `refs`, source column) exists in « Références »;
+every reference is cited by a claim or a frontmatter item.
 
 ### 4.5 Reader-text conventions
 
@@ -569,7 +614,7 @@ checks and the protocol hold for every language.
 
 | Reader | Needs | When |
 |---|---|---|
-| the creator (human or agent) | the headings, case field labels, qualifiers and markers to write, in the course language | writing any course file |
+| the creator (human or agent) | the headings, case field labels, qualifiers, markers and natures to write, in the course language | writing any course file |
 | the maintainer | the keys a new language's pack must hold | adding a language |
 
 The language pack of the course language holds every key below, `checks.anaphora` excepted,
@@ -578,10 +623,11 @@ values, for reference:
 
 | Group | Keys and French values |
 |---|---|
-| `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (the site's heading for the frontmatter stances, and the section a `sources.md` claim names for them: no `concept.md` section has it), `pitfalls` « Pièges », `quick_test` « Le test rapide », `deepening` « Approfondissement »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
+| `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (the site's heading for the frontmatter stances, and the section a « Non vérifié » entry of `sources.md` names for a stance or a neighbour: no `concept.md` section has it), `pitfalls` « Pièges », `quick_test` « Le test rapide », `deepening` « Approfondissement »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
 | `case_fields` | `usage` « Usage », `explanation` « Explication », `situation` « Situation », `question` « Question », `expected_answer` « Réponse attendue », `common_mistakes` « Erreurs fréquentes », `what_works` « Ce qui marche » |
 | `qualifiers` | `fallback` « rechange », `practice` « entraînement », `aside` « aparté »: the closed list of a case heading's qualifiers (4.3) |
 | `markers` | `storyline` « Fil rouge », `consensus` « consensus », `school` « école », `course` « cours » |
+| `natures` | `fact` « fait »: the nature of a `sources.md` claim that a source states with no stance (4.4); the other natures are the stance markers `consensus`, `school`, `course`. Read by `sources` only: never a marker of the reader text, which `conventions` checks |
 | `concept_refs` | `concept` « concept », `concepts` « concepts », `and` « et », `annex` « annexe »: the words of a concept reference (4.5) |
 | `source_types` | `primary` « primaire », `secondary` « secondaire », `marketing` « marketing » |
 | `typography` | `banned`: the characters course text never uses (French: em-dash, arrows) |
@@ -621,10 +667,10 @@ usage error.
 | Id | Family | Verifies | Sections |
 |---|---|---|---|
 | `course-yaml` | conformity | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/`, spec declared (`specs/check-course` refuses an unknown spec or MAJOR), language pack present | 3, 8 |
-| `concept-folder` | conformity | the folder's files; the three files' sections and their order; frontmatter keys; one section per sub-concept; « Objectif » equals `objective`; case headings and their qualifier, fields, a qualifier on « Question » only, coverage of leaves, citation in « Consignes » | 4, 9 |
+| `concept-folder` | conformity | the folder's files; the three files' sections and their order; frontmatter keys, `verified` parallel to `refs`; one section per sub-concept; « Objectif » equals `objective`; case headings and their qualifier, fields, a qualifier on « Question » only, coverage of leaves, citation in « Consignes » | 4, 9 |
 | `conventions` | conformity | the reader-text conventions of `concept.md`; plain Markdown in course files | 2, 4.5 |
 | `svg-contract` | conformity | every diagram against the drawing contract (a root `<defs>` accepted); declared and present diagrams match | 4.1, 7.1 |
-| `sources` | conformity | reference ids, citations, claims, paths | 4.1, 4.4 |
+| `sources` | conformity | no introduction; claims in five columns: section anchors that exist in `concept.md`, a source cell of reference ids or the `markers.course` word, a verification, a nature; reference ids, links (one URL or empty), types, dates; every id cited exists, every reference cited; « Non vérifié » entries anchored | 4.1, 4.4 |
 | `course-files` | conformity | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md` (four columns, one defining concept per row, a variant in one row), `CHANGELOG.md`, domain files: presence, no unlisted file in `domains/`, frontmatter, sections, leads | 5, 6 |
 | `domain-first-sentence` | conformity | the first sentence of each paragraph of « Le fil des concepts » ends within 300 characters of the lead | 5 |
 | `language-pack-keys` | conformity | every key of section 9 and of `PROTOCOL.md` exists in the course's language pack | 9 |

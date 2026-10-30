@@ -1,10 +1,8 @@
-Les sources du concept.
-
 ## Affirmations
 
-| Affirmation (section de `concept.md` ou de `teaching.md`) | Source | Ce qui a été vérifié | Nature |
-|---|---|---|---|
-| Un choix du cours (Consensus et choix d'école) | `concepts/00-roles/sources.md` | vérifié au concept 0 | cours |
+| Affirmation | Section | Source | Vérifié | Nature |
+|---|---|---|---|---|
+| Chaque mot du cours a une définition courte | A1a | cours | suit du lexique du cours | cours |
 
 ## Références
 
@@ -12,5 +10,3 @@ Les sources du concept.
 |---|---|---|---|---|
 
 ## Non vérifié
-
-- Rien.
