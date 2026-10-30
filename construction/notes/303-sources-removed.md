@@ -66,7 +66,7 @@ Destinations: **item** (a frontmatter item of `concept.md`: its `refs` and `veri
 | « Non vérifié » « Effet de la pluie » | nowhere: a claim only `teaching.md` makes |
 | « Non vérifié » « Patton et la distinction livrable et résultat » | replaced by the Patton entry above |
 | Reference S4 (Torres) | « Non vérifié », with its title and link: no quotation, cited by nothing else |
-| Reference S9, its second link (`https://www.romanpichler.com/blog/the-product-vision-board/`) | nowhere: the description names the post and its date; the quotations come from the tool page |
+| Reference S9, its second link (`https://www.romanpichler.com/blog/the-product-vision-board/`) | nowhere: the description now names only the tool page, which carries the quotations |
 | Reference S11, its second link (`https://www.senseandrespond.co/books`) | nowhere: the Google Books page carries the title and subtitle quoted |
 | Reference S12 (the Medium summary) and its second summary (UIE, `https://aycl.uie.com/virtual_seminars/outcomes`) | « Non vérifié », in the entry on Seiden's exact definition, both with their link: which summary carries the phrase was not noted, so neither can hold it in a `verified` cell; the quotation left the row on Seiden (2a) and items `stances.school[0]` and `stances.course[0]`, which keep S11 |
 | Reference S16, its second link (`https://www.scrum.org/ebm`) | nowhere: taken for the same Scrum.org page (not verified: the link was not opened for this pass) |
