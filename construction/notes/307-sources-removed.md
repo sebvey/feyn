@@ -213,3 +213,72 @@ Body of `concept.md`: unchanged.
 - « Non vérifié »: every entry now opens with its section; the internal base of the « définir
   X » entry (one teaching session, one learner) left with S9 and S10; « déjà relevé au concept
   0 » left the entry on French terms.
+
+## 16-story-map
+
+Body of `concept.md`: unchanged.
+
+| Line | Row | Went to |
+|---|---|---|
+| 9 | « Les tâches de l'utilisateur font de bons titres de story ... » | nowhere: the body does not state it (a case of `teaching.md`) |
+| 24 | « Patton emploie « walking skeleton » pour la première tranche ... » | frontmatter `neighbors[0]` (S2, S3, and S13, concept 9's S8 copied) and `stances.school[0]`: the 16b1 and Pièges sentences say what the neighbour item says, so they have no row (SPEC 4.1) |
+| 25 | « La planification d'une version n'est pas dans le Scrum Guide 2020 ... » | frontmatter `stances.consensus[0]` (S1: « story map », « release plan » searched on 2026-10-30) and `[2]` (S7, CSPO 2.4 and 2.5); 2.6 and the PSPO domain (S8): nowhere, the body does not state them |
+| 27 | « Le sponsor n'ordonne pas le backlog » | nowhere: a cross-reference to concepts 1 and 14 |
+| 28 | « Le Scrum Guide cite des pratiques de prévision sans en imposer aucune » | frontmatter `stances.consensus[0]`: the body does not name burn-downs; its claim on what has already happened is the row at line 29 |
+| 37 | « En flux continu, la prévision passe par le temps de cycle » | nowhere as a row: a pointer to annex A2; « Non vérifié » (16c) now says no source of this concept settles it |
+| 38 | « L'échéance du bilan au conseil n'est pas fixée ... » | nowhere: a storyline fact |
+| 41 | « Un accès qui bloque longtemps est un obstacle à escalader » | nowhere: a pointer to concept 14c |
+| 42 | « La prévision du travail se distingue de la prévision des stations à risque ... » | frontmatter `neighbors[1]` (no reference: a course distinction) |
+
+- Kept and re-anchored, their reasoning dropped: 5 (L'essentiel, 16a), 6 (16a; « Schéma »
+  left), 7 (16a; « Consignes » left), 8 (16a, Pièges), 10 (16a), 11 (16a, Pièges), 12 (16a,
+  Pièges), 13 (16a, 16b1, « cours »), 14 (16a), 15 (16b1), 16 (L'essentiel, 16b1), 17 (16b1,
+  Pièges), 18 (L'essentiel, 16b1), 19 (L'essentiel, 16b1, Pièges), 20 (16b1, Pièges), 21
+  (16b2), 22 (16b2, Pièges), 23 (16b2, nature `fait`), 26 (16b2, Pièges), 29 (16c), 30 (16c,
+  Pièges: the claim the body makes, the stance in `stances.consensus[0]`), 31 merged into 32
+  (L'essentiel, 16c), 33 (16c, Pièges; « Objectif » left the section, it is not one), 34
+  (L'essentiel, 16c), 35 (16c, « cours »), 36 (16c), 39 (L'essentiel, 16c, nature `cours`), 40
+  (16c).
+- Row 5: S4 (Patton and Economy's book, a publisher's page, not read) left the row and
+  « Références »: its description is in the « Non vérifié » entry on the book; S1's absence is
+  now « story map », « user stor » (searched on 2026-10-30) instead of the pointer to concept 5;
+  S2 and S3 are quoted.
+- Row 6: « The backbone is arranged in a narrative flow » and the remark on activities and tasks
+  left: the body does not state them.
+- Row 11: its paths to concepts 1 and 13 left (S1 kept: the Scrum Guide sentences are quoted
+  here at their places).
+- Row 12: its path to concept 4 left; the three goal levels are quoted from the Goal-Level box.
+- Row 13: S3 and the path to concept 4 left; source « cours »; S3's quotations went to
+  `stances.course[4]`.
+- Row 14: its path to concept 3 left.
+- Row 15: « ce n'est pas une tranche horizontale au sens du concept 9 »: a pointer, left.
+- Row 19: its path to concept 2 left.
+- Row 20: S3 (no quotation) and the path to concept 9 left.
+- Row 26: its paths to concepts 0 and 11 left (S1 kept).
+- Row 30: its path to concept 1 left (S1 kept).
+- Row 32: S1's « Sprint forecasts » is now the sentence's end, « the more confident they will be
+  in their Sprint forecasts » (longer).
+- Row 33: S10's paraphrases are now quoted (« The word commitment usually relates to undertaken
+  duties. » and « the chosen alternative "forecast" has to do with making assumptions ... »,
+  quotations added); S1's artifact commitments are now quoted (quotations added).
+- Row 34: S1 left the row: « se revoit à chaque sprint » is the row at line 39.
+- Row 35: its paths to concepts 10 and 13 left; source « cours ».
+- Row 36: S11's quotation is the calculator's sentence (« the tool estimates velocity as a
+  range »).
+- Row 39: its path to concept 0 left (S1 kept); nature `cours` (was `école`): the body states it
+  as the course's reading of the Guide.
+- Row 40: its path to concept 13 became S14, concept 13's S9 (DSDM) copied as it is on `main`,
+  with the quotation of its verified cell (the section « MoSCoW Relating to a Specific
+  Timeframe »).
+- Links with two places: S2 and S10 kept the archived copy, where they were read; the live URLs
+  (`https://jpattonassociates.com/the-new-backlog/`,
+  `https://www.scrum.org/resources/commitment-vs-forecast`) left, and « lu sur une copie
+  archivée » moved into the description.
+- References removed: S4 (book not read) and S8 (PSPO, « non relu », no quotation).
+- References added by copy: S13 (concept 9's S8, Cockburn) and S14 (concept 13's S9, DSDM).
+- S3's « consultée le » lost « déjà cité au cadrage T-018a §8 et en `02`, `05` ».
+- Frontmatter: every item with `refs` got its `verified`; `neighbors[0]` cites S2, S3 and S13
+  (was S2, S3).
+- « Non vérifié »: the entry on the cycle time is new (16c, a stance whose `refs` no quotation
+  settles on that point); the book entry now carries S4's description; the « Il me faut une
+  date » and Diego cases left their entries; every entry now opens with its section.
