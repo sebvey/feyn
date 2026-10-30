@@ -52,7 +52,7 @@ courses/<id>/
   storyline.md         mandatory   the storyline (section 6)
   CHANGELOG.md         mandatory   the course changelog (section 6)
   domains/N-slug.md    mandatory   one domain file per domain (section 5)
-  concepts/NN-slug/    mandatory   one concept folder per concept and annex (section 4)
+  concepts/NN-slug/    mandatory   one concept folder per numbered concept and annex (section 4)
   decisions/           optional    the course's decisions; no build reads it
 ```
 
@@ -68,7 +68,7 @@ addresses cite.
 
 | Reader | Needs | When |
 |---|---|---|
-| the creator (human or agent) | the course order and the split of each concept into leaf sub-concepts, fixed before a concept is written | designing the course; each change of its plan |
+| the creator (human or agent) | the course order and the split of each concept into leaf sub-concepts | designing the course; each change of its plan |
 | the teacher | the order it teaches in, the prerequisites, one leaf sub-concept per message | each teaching session |
 | the site | titles, objectives, durations, the order of the pages and their addresses | at each build |
 | the maintainer | the identifiers whose change is a course MAJOR (below) | classing a course change |
@@ -89,7 +89,7 @@ Read by the site, the classroom build and the checks (`course-yaml` for every ru
 | `storyline` | mandatory | path of the storyline file: `storyline.md` |
 | `glossary` | mandatory | path of the course glossary: `glossary.md` |
 | `domains` | mandatory | the domains, in course order (below) |
-| `concepts` | mandatory | every concept and annex, in course order (below) |
+| `concepts` | mandatory | every numbered concept and annex, in course order (below) |
 | `annexes` | optional | numbers of the concepts that are annexes; absent means none |
 
 A **domain** entry:
@@ -108,7 +108,7 @@ A **concept** entry (annexes included):
 
 | Field | Status | Meaning |
 |---|---|---|
-| `number` | mandatory | the concept's identifier: `0`, `1`… for a concept, `A1`, `A2`… for an annex; a string (an unquoted integer is read as its decimal string) |
+| `number` | mandatory | the concept's identifier: `0`, `1`… for a numbered concept, `A1`, `A2`… for an annex; a string (an unquoted integer is read as its decimal string) |
 | `slug` | mandatory | lowercase ASCII words joined by hyphens |
 | `title` | mandatory | the concept title |
 | `objective` | mandatory | what the learner can do after the concept, one sentence; restated in « Objectif » (section 4.2) |
@@ -291,12 +291,12 @@ In `teaching.md`, concept references follow the same form, not checked.
 ## 5. Domain files
 
 **Purpose.** A domain file is the way into a domain: the problem it settles, how its concepts
-follow one another, where it sits in the course, and a case that crosses it. The same text
-serves the reader and the teacher.
+follow one another, where it sits in the course, and a storyline situation that crosses it. The
+same text serves the reader and the teacher.
 
 | Reader | Needs | When |
 |---|---|---|
-| the learner, on the site | why the domain matters and how its concepts connect | before its concepts |
+| the learner | why the domain matters and how its concepts connect | on the site, before its concepts |
 | the teacher | what it says to present the domain (`domain-presented-from-sheet`) | before the first concept of a domain |
 | the creator (human or agent) | what each section says, and that it teaches no concept | writing or changing a domain |
 
@@ -335,7 +335,7 @@ welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases l
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | its posture, the onboarding questions, the course's stances, the storyline facts its cases use | onboarding; each case it poses |
-| the learner, on the site | the course glossary and the storyline | reading the course |
+| the learner | the course glossary and the storyline | reading the course on the site |
 | the creator (human or agent) | the terms to use and in which concept each is introduced, the storyline facts a case may draw on | writing a concept or a case |
 | the maintainer | what changed in each course version | each release |
 
@@ -376,26 +376,29 @@ place the learner meets it, so it is complete on its own and no consumer asks it
 |---|---|---|
 | the learner | a drawing readable on the site in both themes and in the desktop panel; in the terminal, its caption and the site link | at the sub-concept it illustrates |
 | the creator (human or agent) | the contract an SVG meets (7.1) and the style it is drawn in (7.2) | drawing or redrawing a diagram |
-| the site, the teacher | the one property a consumer keeps when it displays a diagram (below) | at each build; sending a diagram |
+| the site | the one property a consumer keeps when it displays a diagram (below) | at each build |
+| the teacher | the same property, in the desktop panel | sending a diagram |
 | the reviewer | the style and the match with the caption, which no script checks | reviewing a diagram |
 
 A **diagram** is one SVG in the concept folder, declared in `diagrams` (section 4.1). It serves
 both builds: the site shows it, the teacher sends it to the desktop panel and says its caption;
 in the terminal, the teacher says the caption and gives the site link. A consumer displays the
 SVG so that `currentColor` follows the colour of the text around it, and may tint the three
-classes of 7.1, never must. Section 7.1 is the drawing contract, every rule of it `svg-contract`; section 7.2 is the
-style every diagram of a course shares, for the writers and the reviews.
+classes of 7.1, never must. Section 7.1 is the drawing contract, every rule of it
+`svg-contract`; section 7.2 is the style every diagram of a course shares, for the writers and
+the reviews.
 
 ### 7.1 Drawing contract
 
-**Purpose.** The rules that keep one SVG safe and readable in every consumer, each checked by
-`svg-contract`.
+**Purpose.** The rules that keep one SVG safe and readable in every consumer: `svg-contract`
+checks what a script can tell, a review the rest (below).
 
 | Reader | Needs | When |
 |---|---|---|
 | the creator (human or agent) | what an SVG may hold, to pass `svg-contract` | drawing a diagram |
-| the site, the teacher | an SVG shown as it is: no script, no external resource, colours that follow the text around it | at each build; sending a diagram |
-| the learner using a screen reader | the title and description of the drawing | reading a concept |
+| the site | an SVG shown as it is: no script, no external resource, colours that follow the text around it | at each build |
+| the teacher | an SVG the desktop panel shows as it is | sending a diagram |
+| the learner | with a screen reader, the title and description of the drawing | reading a concept on the site |
 
 - **File**: `<stem>.svg`, the stem lowercase ASCII words joined by hyphens; well-formed XML;
   32 KB at most.
