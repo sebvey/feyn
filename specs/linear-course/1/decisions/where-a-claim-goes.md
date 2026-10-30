@@ -1,7 +1,8 @@
 ---
 date: 2026-10-28
 issue: 99
-status: superseded-by: sources-trace-the-concept
+status: superseded
+superseded-by: sources-trace-the-concept
 area: spec:linear-course
 ---
 

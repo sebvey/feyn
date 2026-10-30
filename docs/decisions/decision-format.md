@@ -11,14 +11,15 @@ without it.
 
 A decision is one Markdown file named by its slug (`two-versioned-objects.md`); the slug is its
 identifier, cited as "decision two-versioned-objects". Its frontmatter holds `date`, `issue`
-(the originating issue number, or `null`), `status` (`accepted` or `superseded-by: <slug>`) and
-`area` (the area it binds). After the frontmatter, the first line is the **counterfactual**,
-"Without this, an agent would…"; then the decision in one paragraph. Optional headings,
-only when they add: options ruled out, consequences. No index: `ls` and the frontmatter
-suffice. A decision that still holds but whose mechanism changed (a skill renamed, a file
-moved, a step that now runs elsewhere) gets one line `- Amended <date> (#<n>): …` under a
-`## Consequences` heading, added when the file has none; the rest of the file stays untouched.
-A decision that no longer holds is superseded (`status: superseded-by: <slug>`), never amended.
+(the originating issue number, or `null`), `status` (`accepted` or `superseded`), followed,
+only when superseded, by `superseded-by: <slug>` (the decision that replaces it), and `area`
+(the area it binds). After the frontmatter, the first line is the **counterfactual**, "Without
+this, an agent would…"; then the decision in one paragraph. Optional headings, only when they
+add: options ruled out, consequences. No index: `ls` and the frontmatter suffice. A decision
+that still holds but whose mechanism changed (a skill renamed, a file moved, a step that now
+runs elsewhere) gets one line `- Amended <date> (#<n>): …` under a `## Consequences` heading,
+added when the file has none; the rest of the file stays untouched. A decision that no longer
+holds is superseded (`status: superseded` and `superseded-by: <slug>`), never amended.
 
 A decision lives in the `decisions/` folder of the most local area it binds:
 `specs/<name>/<MAJOR>/decisions/` (a new MAJOR copies them under the same slugs),
@@ -50,3 +51,8 @@ counterfactual, picks the folder, checks for a neighbouring slug.
   `specs/<name>/<MAJOR>/decisions/` (decision `versioned-objects-and-spec-layout`), and
   `/decide` is now `/feyn-decision` (#247). The body says so too, the exception named by #252:
   this file is the rule itself, and an agent reads the rule in its body.
+- Amended 2026-10-31 (#321): a superseded decision has two keys, `status: superseded` and
+  `superseded-by: <slug>`, in place of `status: superseded-by: <slug>`, which a YAML 1.2.2
+  parser refuses (a plain scalar never contains ": "); a tool filters on `status` without
+  parsing a string. The body says so too, the exception named by #252: this file is the rule
+  itself, and an agent reads the rule in its body.
