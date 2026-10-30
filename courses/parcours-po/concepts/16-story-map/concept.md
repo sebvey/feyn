@@ -5,40 +5,75 @@ stances:
     - text: "Le backlog est une liste ordonnée et émergente, seule source du travail, et le PO répond de l'ordre (concepts 1b et 3). Le Guide ne parle ni de story map ni de plan de version. Les Developers qui feront le travail en estiment la taille ; le travail choisi au Sprint Planning est leur prévision. Les engagements sont l'objectif produit, l'objectif de sprint et la DoD (concept 0a3). Le Guide cite des pratiques de prévision (burn-down, burn-up, flux cumulé) sans en imposer aucune, et rappelle que dans un environnement complexe, ce qui va arriver est inconnu : seul ce qui s'est déjà passé sert à décider. Il ne dit pas qui prévoit une version."
       author: "Le Scrum Guide 2020"
       refs: ["S1"]
+      verified:
+        - "« an emergent, ordered list » ; « It is the single source of work undertaken by the Scrum Team. » ; « The Developers who will be doing the work are responsible for the sizing. » (Product Backlog) ; « Ordering Product Backlog items » (Product Owner) ; « story map », « release plan » absents du texte (recherche du 2026-10-30) ; « the more confident they will be in their Sprint forecasts » (Topic Two: What can be Done this Sprint?) ; « For the Product Backlog it is the Product Goal » ; « For the Sprint Backlog it is the Sprint Goal » ; « For the Increment it is the Definition of Done » (Scrum Artifacts) ; « Various practices exist to forecast progress, like burn-downs, burn-ups, or cumulative flows. While proven useful, these do not replace the importance of empiricism. In complex environments, what will happen is unknown. Only what has already happened may be used for forward-looking decision making. » (The Sprint)"
     - text: "Le Guide de 2011 a remplacé « commit » par « forecast » pour le travail choisi : un engagement renvoie à des obligations assumées, une prévision à des hypothèses fondées sur des faits. Source secondaire, dont l'auteur n'est pas affiché, cohérente avec le texte du Guide."
       author: "Scrum.org : prévision et promesse"
       refs: ["S10"]
+      verified:
+        - "« the removal of the term \"commit\" in favor of \"forecast\" in regards to the work selected for a Sprint » (introduction) ; « The word commitment usually relates to undertaken duties. » ; « the chosen alternative \"forecast\" has to do with making assumptions based on reliable information and evidence » (Why forecast is better suited than commitment?)"
     - text: "Les référentiels de PO (le CSPO de Scrum Alliance) font planifier une version et établir une prévision avec les parties prenantes."
       author: "Pratique établie, hors du Scrum Guide"
       refs: ["S7"]
+      verified:
+        - "« list the components of a product plan or forecast with stakeholders » (2.4) ; « describe how to plan a product release » (2.5)"
   school:
     - text: "En haut, les activités de l'utilisateur, de gauche à droite dans l'ordre du récit (la colonne vertébrale, qui ne s'ordonne pas) ; dessous, les stories, de haut en bas, l'indispensable en haut ; des tranches de version qui traversent toute la colonne vertébrale, avec à côté de chacune son résultat visé et une mesure de succès. Patton voit la carte comme une meilleure version du backlog que la liste plate. Il appelle aussi « walking skeleton » la première version utilisable, en citant Alistair Cockburn : un autre usage du mot que celui du cours, qui le réserve au sens de Cockburn (concept 9)."
       author: "Jeff Patton : la story map"
       refs: ["S2", "S3"]
+      verified:
+        - "« At the top of the map are \"big stories.\" I call them user activities » (Build a story map) ; « I don't prioritize the backbone. It just \"is.\" I do prioritize the ribs » ; « This is what Alistair Cockburn refers to as the \"walking skeleton\". » (Your software has a backbone and a skeleton) ; « horizontal swim lanes for each release » (Plan using your backbone) ; « a better version of a product backlog » (The New User Story Backlog is a Map)"
+        - "« The left to right axis in a story map is organized in the order you'd tell the story about your user » ; « Use a tape line to identify slices of tasks » ; « Identify the target outcomes of your slice in a sticky note or card to the left of the slice » (p. 1) ; « Slice your map into holistic product releases that span the users and use of the product. » ; « For each release, identify product success metrics. » ; « a \"functional walking skeleton\" » (p. 2)"
     - text: "La version d'un nouveau produit qui permet d'apprendre le plus sur ses clients pour le moindre effort. Ries précise que ce n'est pas faire un produit minimal (repris au concept 17). Dans l'usage courant, le MVP est la première version, avec juste assez pour servir les premiers utilisateurs ; Patton l'emploie dans ce sens."
       author: "Eric Ries : le MVP"
       refs: ["S5", "S6", "S3"]
+      verified:
+        - "« the minimum viable product is that version of a new product which allows a team to collect the maximum amount of validated learning about customers with the least effort. » ; « MVP, despite the name, is not about creating minimal products » (page)"
+        - "« a version of a product with just enough features to be usable by early customers who can then provide feedback » (introduction)"
+        - "« a minimal viable product release » (p. 2)"
     - text: "La prévision se donne en fourchette plutôt qu'en valeur unique, calculée à partir de la vélocité. C'est une pratique de son école ; elle découle aussi de l'empirisme du Scrum Guide."
       author: "Mike Cohn : la prévision en fourchette"
       refs: ["S11", "S1"]
+      verified:
+        - "« Rather than providing a single value forecast, the tool estimates velocity as a range » (page)"
+        - "« In complex environments, what will happen is unknown. Only what has already happened may be used for forward-looking decision making. » (The Sprint)"
     - text: "Pratiques courantes d'estimation et de prévision, absentes du Scrum Guide : le cours les nomme sans les enseigner. Ron Jeffries juge faible leur usage pour prédire une date de fin. En flux continu (sans sprint), la prévision passe par le temps de cycle, la durée entre le début et la fin d'un élément (annexe A2d)."
       author: "Story points et vélocité"
       refs: ["S12", "S11", "S1"]
+      verified:
+        - "« I may have invented story points, and if I did, I'm sorry now » ; « at best a weak idea » (page)"
+        - "« Rather than providing a single value forecast, the tool estimates velocity as a range » (page)"
+        - "« velocity », « story point », « estimat » absents du texte (recherche du 2026-10-30)"
   course:
     - text: "La carte complète le backlog ordonné, elle ne le remplace pas. C'est compatible avec le Scrum Guide (une seule liste ordonnée, ordonnée par le PO), mais pas avec Patton, pour qui la carte est un meilleur backlog."
       refs: ["S1", "S2"]
+      verified:
+        - "« an emergent, ordered list » ; « It is the single source of work undertaken by the Scrum Team. » (Product Backlog) ; « Ordering Product Backlog items » (Product Owner)"
+        - "« a better version of a product backlog » (The New User Story Backlog is a Map) ; « in favor of putting stories into a flat-backlog » (Keep your map displayed to communicate the big picture)"
     - text: "La prévision d'une version se construit sur la taille et le rythme des Developers. Le PO ne l'invente pas : il la porte aux parties prenantes. Le Guide 2020 ne dit pas qui prévoit une version ; le Guide 2017 confiait au PO le suivi du travail restant vers un but."
       refs: ["S1", "S9", "S7"]
+      verified:
+        - "« The Developers who will be doing the work are responsible for the sizing. » (Product Backlog) ; « the more confident they will be in their Sprint forecasts » (Topic Two: What can be Done this Sprint?)"
+        - "« to assess progress toward completing projected work by the desired time for the goal » (Monitoring Progress Toward Goals, p. 16)"
+        - "« list the components of a product plan or forecast with stakeholders » (2.4)"
     - text: "Ce qui la fait bouger : l'ordre du backlog et une dépendance non levée. Si une date compte vraiment, on la prend comme échéance et c'est le contenu qui varie (concept 13c) ; on ne fixe pas à la fois la date et tout le contenu."
       refs: []
     - text: "Ce qui entre dans l'incrément, même pour un MVP, remplit la DoD. Le MVP de Ries qui n'est pas un incrément est une expérience (concept 17)."
       refs: ["S1"]
+      verified:
+        - "« Work cannot be considered part of an Increment unless it meets the Definition of Done. » (Increment)"
     - text: "Une même vue peut apparaître sous plusieurs activités, et une activité sans story se voit comme un trou à explorer avec l'utilisateur ; une première version n'est pas complète tant que ce trou n'est pas exploré. « Trou à explorer » n'est pas une formule de Patton."
       refs: ["S3"]
+      verified:
+        - "« Story maps are for looking at the big picture » (p. 1) ; « Slice your map into holistic product releases that span the users and use of the product. » (p. 2)"
 neighbors:
   - text: "Une toute petite implémentation de bout en bout, qui relie les composants de l'architecture. Patton rattache le mot à Cockburn mais l'applique à une première version utilisable. Le cours réserve le terme au sens de Cockburn (concept 9)."
     author: "Le walking skeleton (Alistair Cockburn)"
-    refs: ["S2", "S3"]
+    refs: ["S2", "S3", "S13"]
+    verified:
+      - "« the smallest possible system you could build that would give you end to end functionality. This is what Alistair Cockburn refers to as the \"walking skeleton\". » (Your software has a backbone and a skeleton)"
+      - "« a \"functional walking skeleton\" » ; « the simplest possible functional version of the product » (p. 2)"
+      - "« A Walking Skeleton is a tiny implementation of the system that performs a small end-to-end function. It need not use the final architecture, but it should link together the main architectural components. » ; « The architecture and the functionality can then evolve in parallel » (page)"
   - text: "La prévision des Developers (ce qu'ils pensent livrer, et quand) est le sujet de cette page. La prévision des stations à risque est, elle, une fonction du produit pour Régis (concepts 9 et 17). Distinction de vocabulaire du cours."
     author: "Deux sens du mot « prévision »"
     refs: []

@@ -5,36 +5,69 @@ stances:
     - author: "Le Scrum Guide 2020"
       text: "Le PO répond de l'ordre du backlog ; qui veut le changer le convainc (concept 1b). Il peut porter dans le backlog les besoins de nombreuses parties prenantes. Les Developers qui feront le travail en estiment la taille ; le PO peut les aider à comprendre les compromis. Le Guide ne dit pas comment ordonner."
       refs: ["S1"]
+      verified:
+        - "« Ordering Product Backlog items » ; « may represent the needs of many stakeholders in the Product Backlog. Those wanting to change the Product Backlog can do so by trying to convince the Product Owner. » (Product Owner) ; « The Developers who will be doing the work are responsible for the sizing. The Product Owner may influence the Developers by helping them understand and select trade-offs. » (Product Backlog) ; critère pour ordonner absent du texte (recherche du 2026-10-22 : « order », « ordering », « ordered », « risk », « dependenc », « size »)"
     - author: "Le Scrum Guide d'octobre 2011"
       text: "Il disait que le backlog est « souvent » ordonné par valeur, risque, priorité et nécessité. La phrase a disparu dès la version de 2013."
       refs: ["S2", "S4"]
+      verified:
+        - "« The Product Backlog is often ordered by value, risk, priority, and necessity. » (p. 13)"
+        - "« necessity » absent du texte (recherche du 2026-10-30)"
     - author: "Pratique établie, hors du Scrum Guide"
       text: "Ordonner selon la valeur, le coût, le risque et les dépendances. Mike Cohn donne cinq facteurs : ces quatre et l'apprentissage (ce que l'équipe apprend en faisant l'élément, concept 17). Roman Pichler pèse aussi valeur, risque et dépendances. Aucun texte n'impose cette liste. Le risque y est celui qui pèse sur la réussite du produit ; le risque pour les utilisateurs (sécurité) en est un autre sens."
       refs: ["S6", "S19"]
+      verified:
+        - "« Value » ; « Cost » ; « Learning » ; « Risk » ; « Dependencies » (titres des facteurs 1 à 5) ; « If something is risky and you need to do it, do it early. » (Factor 4: Risk)"
+        - "« four useful factors to prioritise the product backlog: value; risk and uncertainty; releasability; and dependencies » (introduction)"
   school:
     - author: "Don Reinertsen (2009) : le coût du retard"
       text: "En fait la mesure économique à quantifier : sans lui, les files d'attente paraissent gratuites. Le terme vient du développement de produit, pas du Scrum."
       refs: ["S11"]
+      verified:
+        - "« the only way to comprehend the economic importance of queues is to quantify the cost of delay for product development projects » (chapitre 1, p. 4) ; « Without a cost of delay, queues appear to be free » (chapitre 1, p. 6)"
     - author: "Joshua Arnold : commencer sans chiffres"
       text: "Propose de commencer par des bandes qualitatives de valeur et d'urgence, et décrit des profils d'urgence, dont l'échéance externe. Il chiffre ensuite lui-même (CD3, le coût du retard divisé par la durée, proche de WSJF)."
-      refs: ["S12", "S13"]
+      refs: ["S12", "S12b", "S13"]
+      verified:
+        - "« Killer » ; « Bonus » ; « Meh » (Qualitative Value) ; « ASAP » ; « Soon » ; « Whenever » (Qualitative Urgency) ; « would lack many of the benefits of a quantitative approach » (Qualitative Cost of Delay)"
+        - "« Where requirements have a specific deadline the Urgency Profile is slightly different » (4) Impact of External deadline)"
+        - "« Black Swan Farming using Cost of Delay: Discover, nurture and speed up delivery of value (Joshua Arnold, Ozlem Yuce) » ; « by using CD3 (Cost of Delay Divided by Duration) » ; « Engineer, blackswanfarming.com » (page)"
     - author: "SAFe : WSJF"
       text: "Le coût du retard relatif divisé par la durée relative du travail. À nommer, pas à enseigner : un score de plus parmi d'autres (proche du CD3 d'Arnold), possible si l'organisation l'emploie. Le score ne remplace pas le pourquoi de chaque place."
-      refs: ["S14", "S12"]
+      refs: ["S14", "S12c"]
+      verified:
+        - "« WSJF is estimated as the relative cost of delay divided by the relative job duration » (Definition)"
+        - "« Cost of Delay Divided by Duration » (titre de la page)"
     - author: "DSDM : MoSCoW (attribué à Dai Clegg, 1994)"
       text: "Must, Should, Could, Won't, pour un délai fixé. DSDM recommande de ne pas dépasser environ 60 % de l'effort en Must. Chez DSDM, c'est le représentant de l'activité concernée qui dit ce qui est Must."
       refs: ["S9", "S17", "S18"]
+      verified:
+        - "« Must Have » ; « Should Have » ; « Could Have » ; « Won't Have this time » (Introduction) ; « typically no more than 60% Must Have effort » (Balancing the Priorities) ; « it is up to the Business Visionary or their empowered Business Ambassador to explain why a requirement is a Must Have » (Discussing and Reviewing Priorities)"
+        - "« Dai Clegg, Richard Barker. » ; « 1994 » (notice)"
+        - "« This prioritization method was developed by Dai Clegg in 1994 for use in rapid application development (RAD). » (Background)"
   course:
     - text: "La liste « valeur, coût, risque, dépendances » est le choix du cours, appuyé sur Cohn et, pour valeur, risque et dépendances, sur Pichler. À prendre comme une pratique établie, pas comme une liste canonique."
       refs: ["S6", "S19"]
+      verified:
+        - "« Value » ; « Cost » ; « Learning » ; « Risk » ; « Dependencies » (titres des facteurs 1 à 5)"
+        - "« four useful factors to prioritise the product backlog: value; risk and uncertainty; releasability; and dependencies » (introduction)"
     - text: "Ce qui est prêt pèse sur l'ordre : ce qui ne l'est pas ne peut pas être fait ensuite, et l'ordre fait alors remonter ce qui le rend prêt. Un élément est prêt à être choisi quand l'équipe peut le finir en un sprint (Scrum Guide) ; la Definition of Ready est un choix d'école (concept 11b)."
       refs: ["S1"]
+      verified:
+        - "« Product Backlog items that can be Done by the Scrum Team within one Sprint are deemed ready for selection in a Sprint Planning event » (Product Backlog)"
     - text: "Le risque a deux sens : pour le produit (Cohn, Pichler), et pour les utilisateurs (sécurité). Un risque de sécurité peut passer devant l'objectif produit, mais sa gravité se fait qualifier par ceux qui en répondent, pas par le PO seul. Aucune source ne le dit pour un backlog Scrum. DSDM range en Must ce sans quoi la livraison ne serait pas sûre : appui indirect, dans un autre cadre."
       refs: ["S9"]
+      verified:
+        - "« Unsafe without it » (Must Have)"
     - text: "Le sponsor ou le financeur convainc le PO comme les autres : on pèse la demande, pas son auteur. Transposé de Cohn et du Scrum Guide, pas écrit tel quel."
       refs: ["S1"]
+      verified:
+        - "« Those wanting to change the Product Backlog can do so by trying to convince the Product Owner » ; « the entire organization must respect their decisions » (Product Owner)"
     - text: "MoSCoW classe pour une échéance ; il ne remplace pas l'ordre du backlog, qui reste une liste ordonnée sans ex aequo."
       refs: ["S1", "S9"]
+      verified:
+        - "« an emergent, ordered list » (Product Backlog)"
+        - "« MoSCoW Relating to a Specific Timeframe » (titre de section)"
 neighbors:
   - author: "Les priorités (« haute », « moyenne », « basse »)"
     text: "Une priorité laisse des ex aequo ; un ordre donne à chaque demande une place unique. Dans le cours, « priorité » ne s'emploie que pour MoSCoW."
