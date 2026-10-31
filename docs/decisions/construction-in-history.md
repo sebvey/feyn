@@ -37,3 +37,6 @@ maintainer or a later issue goes in its issue, its PR or a new issue.
   `notes/S1-08.md` and its default report folder `notes/`. A new run restores them first
   (`git restore --source=2c16adf3e66a -- construction/scripts construction/notes/S1-08.md`) and
   passes `report`.
+- Amended 2026-10-31 (#365): the agent workflow `migrate-concept.js` is removed, its migration
+  done; it is read in the history at `0f1b6dd4fc27`:
+  `git show 0f1b6dd4fc27:.claude/workflows/migrate-concept.js`.
