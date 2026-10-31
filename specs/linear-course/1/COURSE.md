@@ -11,8 +11,9 @@ teacher reads them) and one **teacher-only** file (the teacher reads it, the sit
 it). The site and the classroom are builds of the course, without rewriting.
 
 **Until the extraction of the rules (#318).** This file keeps its verbal forms of obligation,
-read in the levels of `SPEC.md` (section 4). "Mandatory" means an element's absence fails the
-check named, a requirement; its form is checked where that check says so, reviewed otherwise.
+read in the levels of `SPEC.md` (section 4). "Mandatory" means a requirement: the element is
+present. The check named verifies it, at the level and severity `SPEC.md` section 10 gives that
+check; its form is checked where that check says so, reviewed otherwise.
 "Optional" means it may be absent, a permission, and when present it follows the rule given.
 Every rule names the check that verifies it by test, in backquotes (`SPEC.md` section 10 gives
 its level); a rule with no check id is verified by inspection, the review.

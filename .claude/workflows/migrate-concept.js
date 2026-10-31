@@ -890,7 +890,7 @@ function renderReport() {
   out.push('| checks | target existed | old diagrams | new diagrams | captions of more than one sentence |')
   out.push('|---|---|---|---|---|')
   out.push(`| ${checksPassed ? 'pass' : 'fail'} | ${targetHeldFiles ? 'yes, emptied' : 'no'} | ${scope.diagrams.length} | ${ideas.length} | ${longCaptions.length} |`, '')
-  out.push(`Result: **${failed ? 'failed' : 'passed'}**. checks is read in code from the output below, which the check agent returns; target existed is read in code from the listing below, which the scope agent returns. The new concept is not compared with the old one (rule D on #23): the fresh-agent review judges it against SPEC.md and PROTOCOL.md.`, '')
+  out.push(`Result: **${failed ? 'failed' : 'passed'}**. checks is read in code from the output below, which the check agent returns; target existed is read in code from the listing below, which the scope agent returns. The new concept is not compared with the old one (rule D on #23): the fresh-agent review judges it against COURSE.md and PROTOCOL.md.`, '')
   if (longCaptions.length) out.push(`Captions of more than one sentence (COURSE.md 6.2, principle 1: a caption that needs two sentences means two diagrams): ${longCaptions.map(i => `${i.stem}.svg (${i.sentences} sentences)`).join(', ')}. Flagged for the review, not refused.`, '')
   out.push('## Target before the run', '')
   out.push(`\`ls -ld ${DIR.replace(/\/$/, '')}; ls -la ${DIR.replace(/\/$/, '')}\`, as the scope agent returned it: ${!listed.exists ? 'no such folder' : targetHeldFiles ? `${listed.files.length} entr${listed.files.length === 1 ? 'y' : 'ies'}, emptied (args.overwrite)` : 'an empty folder'}.`, '', '```', String(scope.target_listing).trim(), '```', '')
