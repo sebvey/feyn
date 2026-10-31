@@ -124,11 +124,11 @@ Four moments:
    with the command of [`.claude/reference/project.md`](../.claude/reference/project.md),
    "Epics", "The plan comment" ("Add one"). Whoever takes the epic is its orchestrator: they
    cut its integration branch from `main` and push it, and deliver every slice on it (moment
-   2). The epic goes In progress when its first slice starts. A slice is created only when it
-   is the next one the plan comment names, or one of the first one or two of an epic with no
-   plan comment yet; otherwise the plan comment is rewritten first. This holds as well for the
-   next slice after a delivery and for a slice added when the maintainer's check of the epic's
-   Done when fails.
+   2); `/feyn-deliver-epic <epic>` runs this moment and the next. The epic goes In progress when
+   its first slice starts. A slice is created only when it is the next one the plan comment
+   names, or one of the first one or two of an epic with no plan comment yet; otherwise the plan
+   comment is rewritten first. This holds as well for the next slice after a delivery and for a
+   slice added when the maintainer's check of the epic's Done when fails.
 2. **Deliver a slice**, on the epic's integration branch (decision `epic-on-integration-branch`): a
    contributor agent opens a PR to that branch, a fresh agent reviews it, and the orchestrator
    merges it (squash), closes the slice (`Closes` does not close an issue on a branch other than
@@ -136,19 +136,18 @@ Four moments:
    maintainer. `main` is merged into the integration branch when it moves, never rebased. A choice
    of a slice that departs from the epic's Done when or adds structure becomes an open question at
    once, and the work goes on; the maintainer answers on the epic, and the orchestrator marks the
-   line answered in the plan comment and applies the answer, by a slice when it needs work. The
-   slice workflow and the skill that deliver an epic come from #342; until then the orchestrator
-   runs this delivery with the work-cycle tooling (`/feyn-deliver`, `/feyn-pull-request`), base and
-   merge adapted. After each merge, two lines go on the plan comment (the slice closed, the next to
-   pose; if the next is not obvious, back to moment 1), as `/feyn-merge-cleanup` writes them. When
-   the last slice is merged, a fresh agent reviews the whole integration branch against the epic's
-   Done when, a slice fixes what it finds, and the orchestrator hands over the epic PR once no open
-   question remains: the epic goes Ready for review, the maintainer verifies its Done when and
-   merges the epic PR, which closes the epic (from #342; until then `/feyn-merge-cleanup` sets the
-   epic Ready for review when the plan comment's last "Next slice to pose" line says "Next slice to
-   pose: none, the epic closes"). All its sub-issues closed does not mean the epic closes: a slice
-   exists only if it is the next one (rules of the cycle, below), so every delivery leaves them all
-   closed until the next is posed.
+   line answered in the plan comment and applies the answer, by a slice when it needs work.
+   `/feyn-deliver-epic <epic>` runs this delivery, each slice through the agent workflow
+   `deliver-slice.js` of `.claude/workflows/`. After each merge, two lines go on the plan comment
+   (the slice closed, the next to pose; if the next is not obvious, back to moment 1), as
+   `/feyn-merge-cleanup` writes them. When the last slice is merged, a fresh agent reviews the
+   whole integration branch against the epic's Done when, a slice fixes what it finds, and the
+   orchestrator hands over the epic PR once no open question remains: the epic goes Ready for
+   review, the maintainer verifies its Done when and merges the epic PR, which closes the epic (from
+   #342; until then `/feyn-merge-cleanup` sets the epic Ready for review when the plan comment's
+   last "Next slice to pose" line says "Next slice to pose: none, the epic closes"). All its
+   sub-issues closed does not mean the epic closes: a slice exists only if it is the next one (rules
+   of the cycle, below), so every delivery leaves them all closed until the next is posed.
    **Deliver an observation**: one PR to `main`, merged by the maintainer, in one of two ways:
    `/feyn-deliver <n>`, or a direct delivery. `/feyn-deliver <n>` delivers every observation
    except those the maintainer named `direct` at their creation
