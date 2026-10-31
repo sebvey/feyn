@@ -2,15 +2,16 @@
 
 Scripts that verify a course against `COURSE.md` and `rules/course.yaml` (listed in `SPEC.md`
 section 10), run by `check-course`, and the tests of the spec's own files (`PROTOCOL.md`,
-`SPEC.md`, `COURSE.md`, `decisions/`, `rules/`, `schemas/`, `lang/`), run by `check-spec`. Node 20 or later, CommonJS,
-run under `mise exec` like every tool here, with the dependencies of `package.json` (decision
-`checks-use-ajv-and-yaml`): the course's YAML is read by the package `yaml` in YAML 1.2 mode,
-through `lib/yaml-lines.js`, which keeps the line of each key and item so a failure points at
-`file:line`; ajv compiles the schemas of `schemas/` through its class `Ajv2020` (JSON Schema
-2020-12); Markdown and SVG are read by the small readers in `lib/` (`md.js`, `xml.js`), which
-cover the subset the spec uses. Each rule of `rules/course.yaml` names in `check` the script
-that verifies it, and `check-course` takes its checks from there (`lib/rules.js`); `course-yaml` and
-`concept-folder` verify the two schema rules with their own code, not through ajv.
+`SPEC.md`, `COURSE.md`, `decisions/`, `rules/`, `schemas/`, `lang/`), run by `check-spec`.
+Node 20 or later, CommonJS, run under `mise exec` like every tool here, with the dependencies of
+`package.json` (decision `checks-use-ajv-and-yaml`): the course's YAML is read by the package
+`yaml` in YAML 1.2 mode, through `lib/yaml-lines.js`, which keeps the line of each key and item
+so a failure points at `file:line`; ajv compiles the schemas of `schemas/` through its class
+`Ajv2020` (JSON Schema 2020-12); Markdown and SVG are read by the small readers in `lib/`
+(`md.js`, `xml.js`), which cover the subset the spec uses. Each rule of `rules/course.yaml`
+names in `check` the script that verifies it, and `check-course` takes its checks from there
+(`lib/rules.js`); `course-yaml` and `concept-folder` verify the two schema rules with their own
+code, not through ajv.
 
 ## Install
 
@@ -35,18 +36,20 @@ mise exec -- specs/linear-course/1/checks/check-course --list
 
 The checks come from the rule file of a course (`SPEC.md` section 7; decision
 `rules-with-level-and-method`): `check-course` runs, in one run, every check named by the
-`check` of a rule of `rules/course.yaml` whose method is test. A check's category and level come from its rules, which `rule-files` (`check-spec`)
-holds to one category and one level per check, and its severity follows: it **blocks** when its
-rules are requirements verified by test, otherwise it **reports**. A failure of a blocking check
-sets exit code 1; a failure of a reporting check is printed the same way, its findings triaged
-into course issues, and leaves exit code 0. The blocking checks run first, then the reporting
-ones, each in the order of `rules/course.yaml`; no list of checks is written in `check-course`.
+`check` of a rule of `rules/course.yaml` whose method is test. A check's category and level come
+from its rules, which `rule-files` (`check-spec`) holds to one category and one level per check,
+and its severity follows: it **blocks** when its rules are requirements verified by test,
+otherwise it **reports**. A failure of a blocking check sets exit code 1; a failure of a
+reporting check is printed the same way, its findings triaged into course issues, and leaves exit
+code 0. The blocking checks run first, then the reporting ones, each in the order of
+`rules/course.yaml`; no list of checks is written in `check-course`.
 
 A check runs on a course when its method is test and its script is in this folder. The tests of
 `check-spec` (`rule-slugs`, `rule-files`, `language-pack-keys`) verify no rule: `check-course`
-neither runs nor lists them. A check of another method is not run here: `taught-check` (analysis) is an agent
-workflow, run through `/feyn-taught-check`, and a rule verified by inspection has no check, the
-review reads it. `--list` names every check, the ones not run here with how they run.
+neither runs nor lists them. A check of another method is not run here: `taught-check`
+(analysis) is an agent workflow, run through `/feyn-taught-check`, and a rule verified by
+inspection has no check, the review reads it. `--list` names every check, the ones not run here
+with how they run.
 
 `specs/check-course` reads `spec: linear-course@<MAJOR>` in the course's `course.yaml` and runs
 `specs/linear-course/<MAJOR>/checks/check-course` with the same arguments; it refuses an unknown
@@ -128,7 +131,8 @@ key there is required of the packs at once). A key is a non-empty string; the li
 `checks.anaphora` is optional: `domain-first-sentence-standalone` reads it. The groups beside
 those (`site`) are read by the site, not tested here. A `<spec-dir>` with no pack in `lang/` has
 none to test. A course's checks read the pack of its language as before (`--lang-dir` included)
-and say "see language-pack-keys" when it is unusable.
+and say "see COURSE.md section 7" when it is unusable; a pack given with `--lang-dir` lies
+outside the spec's `lang/`, so no test verifies its keys.
 
 A rule's slug is defined by a line of a rule family (`## <n>. …`) that opens on `**<slug>** `, or
 by a table row of a family whose first cell is `**<slug>**` (the save-point table); a group's slug
@@ -178,23 +182,24 @@ an id of a test of `check-spec` and an id outside `--category` are usage errors 
   `broken/course-yaml-unlisted-folder` also runs with `--concept 0`, where `course-yaml` passes.
 - No real course is a fixture: `specs/check-course courses/parcours-po` checks the real course,
   and a change to the spec reports its new failures there.
-- `fixtures/lang/fr.yaml`: the pack the fixtures use (the groups the checks read: `COURSE.md` section 7 and the
-  keys of `PROTOCOL.md`, French values of the real pack `lang/fr.yaml`, without `site`; change both
-  together). `fixtures/lang-no-anaphora/`: the pack without the optional `checks.anaphora`; `valid/` with it
-  fails `domain-first-sentence-standalone` only, a reporting check, so with exit code 0 (a
-  reporting failure alone); `broken/course-files` with it fails a blocking and a reporting check,
-  exit code 1.
+- `fixtures/lang/fr.yaml`: the pack the fixtures use (the groups the checks read: `COURSE.md`
+  section 7 and the keys of `PROTOCOL.md`, French values of the real pack `lang/fr.yaml`, without
+  `site`; change both together). `fixtures/lang-no-anaphora/`: the pack without the optional
+  `checks.anaphora`; `valid/` with it fails `domain-first-sentence-standalone` only, a reporting
+  check, so with exit code 0 (a reporting failure alone); `broken/course-files` with it fails a
+  blocking and a reporting check, exit code 1.
 - `fixtures/spec/valid/`: a minimal spec (`PROTOCOL.md` with a string key and a list key,
   `SPEC.md`, `COURSE.md`, one decision, the two rule files with a rule of each method, one
   schema, `lang/fr.yaml`: the fixtures' pack plus the key of its `PROTOCOL.md`); every
   `check-spec` test passes. `fixtures/spec/broken/<name>/`: a copy of it with one defect and its
   `EXPECT` file; no other `check-spec` test may fail. The copies for `rule-slugs` and
-  `rule-files` have no `lang/`, so `language-pack-keys` has no pack to test there. For `language-pack-keys`: a key of
-  `COURSE.md` section 7 missing, a group missing (`natures`), a key of `PROTOCOL.md` missing, a
-  list key of `PROTOCOL.md` given as a string. For `rule-slugs`: a missing slug, a duplicate
-  slug, a rule cited by number, a missing group, a group whose slug is a rule's, a range, a range
-  in `COURSE.md`, a group cited as a rule. For `rule-files`: a missing level; a level, a method, a
-  category and a family off their lists; a protocol group that `PROTOCOL.md` does not define; an id in both rule files; a check that does not exist; a
+  `rule-files` have no `lang/`, so `language-pack-keys` has no pack to test there. For
+  `language-pack-keys`: a key of `COURSE.md` section 7 missing, a group missing (`natures`), a
+  key of `PROTOCOL.md` missing, a list key of `PROTOCOL.md` given as a string. For `rule-slugs`:
+  a missing slug, a duplicate slug, a rule cited by number, a missing group, a group whose slug
+  is a rule's, a range, a range in `COURSE.md`, a group cited as a rule. For `rule-files`: a
+  missing level; a level, a method, a category and a family off their lists; a protocol group
+  that `PROTOCOL.md` does not define; an id in both rule files; a check that does not exist; a
   check over two categories; a check over two levels; a schema that does not compile; a schema
   no rule names. The test also runs
   `check-spec` on `specs/linear-course/1`, which must pass.

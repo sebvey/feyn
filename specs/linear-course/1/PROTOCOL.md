@@ -648,9 +648,10 @@ son énoncé, vigilances du prochain concept ; corrige ce qui est absent ou ambi
 ## Keys and parameters
 
 Every key and parameter the rules use, in one place: `lang/fr.yaml` is written from this list,
-and `language-pack-keys` verifies that each key exists in the course's pack. The French values are
-today's teacher's (`parcours-po`, `CLAUDE.md` and `learner-onboarding`), given for reference; the
-pack is the source. A value marked *model* is a pattern the teacher follows, not a fixed string.
+and `language-pack-keys` (`check-spec`) verifies that each key exists in every pack of `lang/`.
+The French values are today's teacher's (`parcours-po`, `CLAUDE.md` and `learner-onboarding`),
+given for reference; the pack is the source. A value marked *model* is a pattern the teacher
+follows, not a fixed string.
 
 **Language pack, groups of `COURSE.md` section 7 used here**
 

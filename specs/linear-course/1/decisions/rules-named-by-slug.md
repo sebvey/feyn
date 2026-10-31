@@ -36,5 +36,5 @@ how the teacher teaches.
   (decision `rules-with-level-and-method`): the protocol's rules move from `PROTOCOL.md` to
   `rules/protocol.yaml` at the extraction of #318, their slugs kept; the rules of
   `rules/course.yaml` are named the same way. A rule id is unique across the rule files
-  (two, `rules/course.yaml` and `rules/protocol.yaml`; #339) and never reused; the check `rule-slugs` reads the rule files once the
-  rules are there.
+  (two, `rules/course.yaml` and `rules/protocol.yaml`; #339) and never reused; the check
+  `rule-slugs` reads the rule files once the rules are there.

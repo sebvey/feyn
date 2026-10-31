@@ -2,9 +2,9 @@
 'use strict';
 // check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>]
 // check-course [--category <c>[,<c>...]] --list
-// The checks, their category and their severity come from the rule files (lib/rules.js; decision
+// The checks, their category and their severity come from rules/course.yaml (lib/rules.js; decision
 // `rules-with-level-and-method`): by default every check of method test that runs on a course,
-// the blocking ones first, then the reporting ones, each in the order of the rule files. A failure
+// the blocking ones first, then the reporting ones, each in the order of rules/course.yaml. A failure
 // of a blocking check sets exit code 1; a failure of a reporting check is printed and leaves 0.
 const path = require('path');
 require('./lib/deps').need();
@@ -26,7 +26,7 @@ function usage(code) {
   const out = code ? console.error : console.log;
   out('usage: check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>]');
   out('       check-course [--category <c>[,<c>...]] --list');
-  out('runs every check of method test of the rule files; a failure of a blocking check sets exit code 1,');
+  out('runs every check of method test of rules/course.yaml; a failure of a blocking check sets exit code 1,');
   out('a failure of a reporting check leaves it 0');
   out(`categories: ${RULES.categories.join(', ')}`);
   out(`blocking checks: ${ORDERED.filter((c) => c.severity === 'blocks').map((c) => c.id).join(', ')}`);
@@ -63,12 +63,12 @@ for (let i = 0; i < args.length; i++) {
   else usage(2);
 }
 for (const c of categories) {
-  if (!RULES.categories.includes(c)) refuse(`unknown category "${c}" (categories of the rule files: ${RULES.categories.join(', ')})`);
+  if (!RULES.categories.includes(c)) refuse(`unknown category "${c}" (categories of rules/course.yaml: ${RULES.categories.join(', ')})`);
 }
 const inCategories = (c) => !categories.length || categories.includes(c.category);
 
 if (list) {
-  // every check of the rule files, those check-course does not run included, with how they run
+  // every check of rules/course.yaml, those check-course does not run included, with how they run
   const rows = [...ORDERED, ...RULES.checks.filter((c) => !c.runsHere)].filter(inCategories);
   const w = Math.max(...rows.map((c) => c.id.length));
   const wc = Math.max(...rows.map((c) => c.category.length));

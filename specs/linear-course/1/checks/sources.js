@@ -163,7 +163,7 @@ function checkConcept(ctx, c, out) {
 
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
-  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see language-pack-keys')];
+  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see COURSE.md section 7')];
   const out = [];
   for (const c of ctx.selected()) checkConcept(ctx, c, out);
   return out;

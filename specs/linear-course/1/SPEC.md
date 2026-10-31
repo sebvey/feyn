@@ -47,8 +47,9 @@ method, a `text` and, where an observed counterfactual exists, a `why`; a rule o
 also has an `origin`. A group may declare `category` and `method` once for its rules, and a rule
 may override them; a group of `rules/protocol.yaml` is a group of `PROTOCOL.md`, its slug as its
 `id` (decision `rule-groups-replace-ranges`). A rule binds a product (section 3), so the rule files
-are two, `rules/course.yaml` and `rules/protocol.yaml`. The spec's own files (the rule files, the schemas, the slugs of the protocol, the
-language packs) are verified by the tests of `check-spec`, which are not rules (section 10).
+are two, `rules/course.yaml` and `rules/protocol.yaml`. The spec's own files (the rule files, the
+schemas, the slugs of the protocol, the language packs) are verified by the tests of
+`check-spec`, which are not rules (section 10).
 
 `rules/course.yaml` holds the rules the checks of a course verify, taught-check included, and one
 rule verified by inspection, the review; `schemas/course.schema.yaml` and

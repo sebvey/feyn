@@ -31,7 +31,8 @@ const FAMILIES = ['session-start', 'domain-presentation', 'loop', 'message-form'
   'stances-and-sources', 'practice-skip-asides', 'learner-memory', 'stop'];
 const FILES = {
   'rules/course.yaml': { categories: COURSE_CATEGORIES, methods: METHODS, extra: [] },
-  'rules/protocol.yaml': { categories: FAMILIES, methods: ['demonstration'], extra: ['origin'] },};
+  'rules/protocol.yaml': { categories: FAMILIES, methods: ['demonstration'], extra: ['origin'] },
+};
 const RULE_KEYS = ['id', 'level', 'category', 'method', 'check', 'text', 'why'];
 const GROUP_KEYS = ['id', 'title', 'category', 'method', 'rules'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){1,4}$/;
