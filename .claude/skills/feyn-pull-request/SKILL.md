@@ -49,8 +49,7 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    comment:
    - **Awaiting the maintainer**, only when the branch leaves a decision to the maintainer
      (a draft, step 6), first because it is the action: the question, the options, the
-     recommendation. Removed once the answer is applied. An `Awaiting the orchestrator`
-     section (`/feyn-deliver` step 1) takes the same place.
+     recommendation. Removed once the answer is applied.
    - `Closes #<n>` (`Refs #<n>` when the PR is one step of the issue) on its own line, first
      after the awaiting section (the first line of the body when there is none). Several
      issues: one such line each.
@@ -72,7 +71,7 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
        mark cites the issue. Dropped when there is none.
      - `Fresh-agent review: no blocking finding.` or
        `Fresh-agent review: <N> blocking findings, fixed.`: added after the review, by step 7 on
-       the direct path, by the corrections pass of `/feyn-deliver` (its step 4) under it; updated,
+       the direct path, by the agent workflow `deliver-slice.js` under `/feyn-deliver`; updated,
        not repeated, after a second review: `<N>` then counts the blocking findings of all the
        reviews. A decision or a check touched as the review prescribed, without a second review
        (step 7): `Fresh-agent review: <N> blocking findings, fixed; a decision touched as
@@ -103,13 +102,13 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
 7. **Fresh-agent review**, on the direct path. On a direct delivery, `/feyn-pr-review` does
    not run and the line is already in Checks (step 5): skip to step 8; the rest of this step
-   applies to the other PRs. Under `/feyn-deliver`, skip this step: its orchestrator runs the
-   review (its step 3) and sends the findings back (its step 4). Run
+   applies to the other PRs. Under `/feyn-deliver`, skip this step: its agent workflow runs the
+   review and the corrections. Run
    `/feyn-pr-review <pr>`; a draft PR (a decision awaited, step 6) is reviewed now, before the
    maintainer's answer, and the decision awaiting that answer is not a finding. Then, yourself,
    since no other agent fixes on the direct path:
-   - remove the reviewer's worktree when `/feyn-pr-review` returns one, as `/feyn-deliver`
-     steps 6.1, 6.2 and 6.4;
+   - remove the reviewer's worktree when `/feyn-pr-review` returns one, as `/feyn-pr-review`
+     step 2 says;
    - apply the blocking findings, and the non-blocking ones worth fixing; commit, push, and
      update the body (`mise exec -- gh pr edit <pr> --body-file <file>`);
    - check each fix in the diff (`mise exec -- gh pr diff <pr>`);
@@ -122,8 +121,8 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    prescribed, its text included, decision or check included: check it yourself in the diff
    against the review's words. The `Fresh-agent review:` line says when a decision or a check
    was touched without a second review (step 5). The same holds for the maintainer's answer
-   (step 8). Under `/feyn-deliver` this rule does not apply: the reviewer, resumed, verifies
-   the corrections (`/feyn-deliver` step 4).
+   (step 8). Under `/feyn-deliver` this rule does not apply: a fresh agent of its workflow
+   verifies each round of corrections.
 8. **Ask for review**: set the issue's Status to Ready for review (the work claims done, the
    maintainer concludes; [project.md](../../reference/project.md)):
    `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
@@ -143,7 +142,7 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    the issue: one removal. Then apply the answer, remove the section from the body,
    `mise exec -- gh pr ready <pr>`, and ask for review again (the second-review rule of step 7
    applies; Ready for review then, as above). Under `/feyn-deliver`, neither: the PR stays a
-   draft, and the orchestrator has the reviewer verify the answer, then marks the PR ready and
+   draft, the orchestrator reruns its workflow with the answer, then marks the PR ready and
    sets Ready for review at its hand-over (its steps 4 and 5). Never
    remove the label yourself; if it is still on the issue, the answer is not given: stop.
 

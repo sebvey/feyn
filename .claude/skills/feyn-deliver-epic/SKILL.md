@@ -18,8 +18,9 @@ merges the epic PR. Nothing is spawned and no run launched before the maintainer
 ## Progress
 
 The rule of `/feyn-deliver`, "Progress": while runs are in flight, at most three lines per
-message (what just finished, what runs now, what is awaited from the maintainer). The full
-report comes once, at the hand-over (step 5).
+message (what just finished, what runs now, what is awaited from the maintainer). After each
+slice merged, the progress report of step 2.7 is that message. The full report comes once, at
+the hand-over (step 5).
 
 ## 1. Take the epic
 
@@ -77,10 +78,24 @@ One at a time, the next one only (rules of the cycle):
    The remote slice branch goes with the merge; still there
    (`git ls-remote --heads origin <branch>`): tell the maintainer.
 6. **Two lines on the plan comment** ([project.md](../../reference/project.md), "Epics", "The
-   plan comment"), as `/feyn-merge-cleanup` step 7 writes them: `#<n> (PR #<pr>): <what it
-   delivered>`, then `Next slice to pose: <the next>`; not obvious, rewrite the plan first (step
-   1). After the last slice: `Next slice to pose: none, the whole-branch review is next.` (not
-   `/feyn-merge-cleanup`'s "none, the epic closes": the epic closes only with its epic PR).
+   plan comment": find it, read it into a file, append, PATCH it): `#<n> (PR #<pr>): <what it
+   delivered, in a few words>`, then `Next slice to pose: <the next, from the plan's order>`;
+   not obvious, rewrite the plan first (step 1). After the last slice:
+   `Next slice to pose: none, the whole-branch review is next.` (the epic closes only with its
+   epic PR, step 5).
+7. **The progress report** to the maintainer, at most four lines (maintainer, 2026-10-31):
+   ```
+   #<n> <title> (PR #<pr>) merged: <what it delivered>.
+   Slices: <planned> planned (an estimate), <done> done, <in progress> in progress, <remaining> remaining.
+   Open questions: <count>, <their slices, or none>.
+   Next: <the next slice to pose, or the whole-branch review>.
+   ```
+   `<planned>` is the count of slices the plan comment envisages, as last rewritten (debrief
+   rule 6); `<done>` and `<in progress>` count the epic's slices closed and open
+   ([project.md](../../reference/project.md), "Epics", the slices and their count);
+   `<remaining>` is `<planned>` minus the other two, and when it falls below zero, the line says
+   "plan exceeded" and the plan is rewritten (step 1); the open questions are counted as step 3
+   says.
 
 ## 3. Open questions
 
