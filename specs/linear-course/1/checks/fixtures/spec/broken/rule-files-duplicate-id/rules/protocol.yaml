@@ -9,3 +9,7 @@ groups:
         level: requirement
         origin: "new"
         text: Le premier message part sans appel d'outil.
+      - id: leaf-has-a-case
+        level: requirement
+        origin: "new"
+        text: Le deuxième message présente le cours.

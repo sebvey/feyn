@@ -1,3 +1,0 @@
-check: language-pack-keys
-message: missing key phrases.resume_opening
-lang-dir: ../../lang-broken-protocol
