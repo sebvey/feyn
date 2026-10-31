@@ -64,7 +64,13 @@ comes once, at the hand-over (step 5).
    `worktree-wf_<run id>-<n>` branches, with one more check before each removal, since the PR is
    not merged yet: after `git fetch`, the worktree's `HEAD` is on the PR's branch on `origin`
    (`git -C <path> branch -r --contains HEAD` names `origin/<branch>`); not there: stop and show
-   it. The local issue branch stays: `/feyn-merge-cleanup` deletes it after the merge (step 6).
+   it. A run that opened no PR (`pr` 0, a `blocked` or `failed` run) has no branch to test: a
+   worktree whose `HEAD` adds nothing to `origin/main` (`git -C <path> log origin/main..HEAD`
+   prints nothing) is removed after the status check; one with commits stays, named to the
+   maintainer with the run's status. Then, when the PR exists, move the local issue branch to
+   its head, which a corrector's push (`git push origin HEAD:<branch>`, from a detached `HEAD`)
+   does not move: `git branch -f <branch> origin/<branch>`, its worktree being gone. The local
+   issue branch stays: `/feyn-merge-cleanup` deletes it after the merge (step 6).
 
 ## 3. Read the result
 
@@ -90,8 +96,8 @@ Every field, never only `status`:
 ## 4. Reruns: corrections, decision awaited
 
 Every change to the PR after a run goes through a new run of the workflow on the same issue,
-with `work` naming the change: its contributor resumes the branch and the PR, a fresh agent
-reviews them, and step 2.2 cleans the run.
+with `work` naming the change: its contributor resumes the PR from the local issue branch,
+which step 2.2 moved to the PR's head, a fresh agent reviews it, and step 2.2 cleans the run.
 - **Decision awaited.** A run `blocked` on a choice only the maintainer can make (its
   `contrib.question`): put `blocked:maintainer` on the issue
   (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`) and relay the question, the
@@ -109,7 +115,8 @@ reviews them, and step 2.2 cleans the run.
 ## 5. Hand-over to the maintainer
 
 Mark the PR ready, the review and the corrections being done: `mise exec -- gh pr ready <pr>`.
-Then set the issue Ready for review ([project.md](../../reference/project.md), "Commands":
+Then, for a `Closes` PR only (a `Refs` issue stays In progress), set the issue Ready for review
+([project.md](../../reference/project.md), "Commands":
 `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`).
 Then reply with, one line each: the PR URL and title; the Status; the review (the result's
 `reviewLine`, the rounds of corrections); what the maintainer should look at first (the PR's
