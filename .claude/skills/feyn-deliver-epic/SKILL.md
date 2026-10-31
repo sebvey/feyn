@@ -151,10 +151,10 @@ maintainer, reaches the maintainer as an open question, never only as a line of 
 
 ## 4. Review of the whole branch
 
-When the last slice is merged and `main` merged in: a fresh agent (`Agent`, `isolation:
-"worktree"`, model `opus`) reviews `origin/main...origin/<integration branch>` against the
-epic's Done when, statement by statement, with the "Reviewer brief" of `/feyn-pr-review`
-adapted (the branch in place of a PR, the epic in place of an issue,
+When the last slice is merged and `main` merged in: a fresh agent (`Agent`, `subagent_type:
+"feyn-pr-reviewer"`, `isolation: "worktree"`) reviews `origin/main...origin/<integration
+branch>` against the epic's Done when, statement by statement, its reviewer brief adapted by
+the prompt (the branch in place of a PR, the epic in place of an issue,
 `git switch --detach origin/<integration branch>`), and lists every structural choice it finds
 in the diff that the plan comment holds neither as open nor as answered. A blocking finding: a
 slice fixes it (step 2), then a fresh agent verifies the fix, as

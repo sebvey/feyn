@@ -33,3 +33,13 @@ owns it.
 - Amended 2026-10-31 (#350): `feyn-deliver/contributor-brief.md` is gone, the agent workflow
   `deliver-slice.js` briefing the contributor; the example of a skill's brief is now the
   Reviewer brief section of `feyn-pr-review/SKILL.md`.
+- Amended 2026-10-31 (#368): `.claude/` has a fifth folder, `agents/`, the project subagents
+  (Claude Code's custom subagents): one file per agent whose brief is reused from run to run,
+  its frontmatter (`name`, `description`, an explicit `tools` list, `model`) and the brief as
+  its system prompt, spawned by name (`subagent_type` of `Agent`, `agentType` of a workflow's
+  `agent()`). Its `tools` list enforces what the brief only asked: a read-only agent gets no
+  Edit or Write. The first two are `feyn-backlog-analyst` (`/feyn-triage`) and
+  `feyn-pr-reviewer` (`/feyn-pr-review`, `deliver-slice.js`, `/feyn-deliver-epic`); the
+  Reviewer brief section of `feyn-pr-review/SKILL.md` moved into the latter, which is now the
+  example of a reused brief. A brief written for one spawn stays in its skill or workflow. A
+  session loads `.claude/agents/` at its start (Claude Code, documented 2026-10-31, #368).

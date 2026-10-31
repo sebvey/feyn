@@ -7,7 +7,7 @@ description: "Run a pass on the Backlog of feyn with the maintainer (moment 4 of
 
 One job: a pass on the Backlog with the maintainer, as
 [contributing](../../../docs/contributing.md), "How the work is organised", moment 4, says. The work
-session runs it: only it has the `Agent` tool for the analysing agent. The agent reads, the work
+session runs it: only it has the `Agent` tool that spawns the analysing agent. The agent reads, the work
 session presents and executes, the maintainer decides each item. The commands are in
 [project.md](../../reference/project.md), cited here, not copied. Nothing is executed on an item
 before the maintainer's decision on it.
@@ -20,36 +20,14 @@ computed from the working list (step 2).
 
 ## 1. The analysing agent
 
-Spawn one fresh agent (`Agent`, model `opus`), changing nothing, with this brief, self-contained:
-it is given no list of recent changes, which would steer what it sees (on 2026-10-31, an agent
-briefed with one skipped #318 without a word).
-
-> You analyse the Backlog of the repository feyn, read-only: no edit, no commit, no comment on
-> GitHub. Run `git fetch` and read `origin/main` (`git show origin/main:<path>`,
-> `git log origin/main`). `gh` runs through `mise exec --`. Read `CLAUDE.md`,
-> `docs/contributing.md` ("How the work is organised") and `docs/glossary.md` first.
->
-> The Backlog: `mise exec -- gh project item-list 4 --owner sebvey --limit 200 --format json`,
-> the items whose `status` is `Backlog`. For each, read the issue with its comments
-> (`mise exec -- gh issue view <n> --comments`), then the repository as it is. Ask first: does
-> this issue still deserve to exist, in this form? Only then: what in it is wrong? Find what
-> changed yourself: `git log origin/main --since=<the issue's updatedAt>`, the files and issues
-> it cites (`git log origin/main -- <file>`, `mise exec -- gh issue view <m>`), the epics it
-> could belong to (`mise exec -- gh issue list --label epic --state all --limit 200`).
->
-> An issue is stale when it no longer deserves to exist in this form: done, moot, a need that
-> is gone, the work of an epic, a list of several observations, a duplicate, or a body the
-> repository no longer matches. Only what has a real value is kept: an issue, a file or a piece
-> of code that served a need now gone is closed or removed, not kept for a possible later use; a
-> need that comes back is solved then, with its context (maintainer, 2026-10-31). A file or code
-> of that kind found on the way: name it after the stale issues.
->
-> Report only the stale issues, ordered by number, each as: `#<n> <title>`, its frame in one
-> line (what it is for, where it belongs), the proof (a commit, a file and line, an issue, each
-> named), and one verdict, the first that applies in this order: close (done, or moot), fold
-> into an epic (name it), split (name the observations), merge (name the issue it goes into),
-> revise (say what). Then one line per Backlog issue you did not treat, with why. End with the
-> counts: Backlog issues, read, stale, not treated.
+Spawn one fresh agent of the project subagent `feyn-backlog-analyst`
+([its file](../../agents/feyn-backlog-analyst.md): its brief, read-only tools, model `opus`):
+`Agent` with `subagent_type: "feyn-backlog-analyst"` and the prompt "Analyse the Backlog of
+feyn as your brief says." Nothing more: it is given no list of recent changes, which would
+steer what it sees (on 2026-10-31, an agent briefed with one skipped #318 without a word). Its
+brief lives in its file, not here; a change to it is made there. A work session loads
+`.claude/agents/` at its start: an agent file added or changed during the session is not seen
+until the next one (Claude Code, documented 2026-10-31, #368).
 
 Check what it returns before using it: each proof is named and can be opened, and every Backlog
 issue is either reported, sound, or named as not treated.
