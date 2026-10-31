@@ -171,9 +171,9 @@ Four moments:
    brainstorm) and ends it in a proposal, created with `/feyn-issue proposal`. A brainstorm that
    settles nothing leaves no issue.
 4. **Triage the Backlog**, a pass run with `/feyn-triage`: a fresh agent reports the stale issues,
-   the maintainer decides each one in turn. Each observation is attached to an epic as a slice, set
-   Ready if it stands alone in one PR, made an epic if it is an objective, or closed with the
-   reason. A proposal is self-sufficient: the triage turns its Proposed next into what it says
+   the maintainer decides each one in turn; the sound ones are routed when the maintainer asks.
+   Each observation is attached to an epic as a slice, set Ready if it stands alone in one PR,
+   made an epic if it is an objective, or closed with the reason. A proposal is self-sufficient: the triage turns its Proposed next into what it says
    (`/feyn-decision` for a decision; `/feyn-issue epic`, `/feyn-issue slice #<epic>`, or
    `/feyn-issue observation` set Ready when it stands alone in one PR; each citing the proposal)
    without rereading what fed it, then closes it as completed with a comment naming what it

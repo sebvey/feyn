@@ -45,7 +45,7 @@ where a reserved term exists.
 - A level-2 heading per topic when a reply holds several topics or opens a new one.
 - A pass over a list opens each message with `<pass>: <n>/<N> treated · in progress: #<x>`.
 - A list to work through lives in a file, not in memory.
-- An item's frame (its purpose, where it belongs) before what is wrong; English not translated.
+- An item's frame (purpose, place) before what is wrong; English not translated systematically.
 
 ## Skills
 

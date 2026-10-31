@@ -94,7 +94,8 @@ As the maintainer decided, then the working list:
 A duplicate comment (posted twice by mistake) is hidden as duplicate, never deleted: on its
 page, the comment's menu ⋯, "Hide", reason "Duplicate"; or `mise exec -- gh api graphql -f
 query='mutation { minimizeComment(input: {subjectId: "<comment node id>", classifier:
-DUPLICATE}) { clientMutationId } }'`.
+DUPLICATE}) { clientMutationId } }'`, the node id read with `mise exec -- gh api
+repos/sebvey/feyn/issues/<n>/comments --jq '.[] | [.node_id, .body[:60]] | @tsv'`.
 
 ## 5. End the pass
 
