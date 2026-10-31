@@ -73,7 +73,7 @@ read or when the dependencies are not installed.
 | `--lang-dir <dir>` | reads the language pack `<dir>/<language>.yaml` instead of this MAJOR's `lang/` (also `LINEAR_COURSE_LANG_DIR`) |
 | `--list` | prints every check of the rule files, `--category` applied, in the order of the run: its id, its category, its severity (`blocks` or `reports`), and for a check not run here, how it runs; no course needed |
 
-The flag of the removed quality mode is a usage error whose one line names its replacement: the
+The flag `--quality`, removed, is a usage error whose one line names its replacement: the
 default run, which holds the reporting checks, or `--category`.
 
 ## The checks
@@ -158,8 +158,8 @@ each run's exit code to the severity of the check that fails: 1 for a blocking c
 reporting one. `--list` must name every check of the rule files with the category and the
 severity of its rules, and a run must run every check `--list` does not mark "not run here".
 `--category` runs the checks of its categories only (`writing`, `spec`, `structure,diagrams`;
-`broken/svg-contract` passes with `--category writing`); an unknown category, the flag of the
-removed quality mode, an id of `check-spec` and an id outside `--category` are usage errors (exit
+`broken/svg-contract` passes with `--category writing`); an unknown category, the flag
+`--quality`, removed, an id of `check-spec` and an id outside `--category` are usage errors (exit
 code 2).
 
 - `fixtures/valid/`: a minimal valid course (four concepts, one annex, one diagram with a root

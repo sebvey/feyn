@@ -141,7 +141,7 @@ typography:
   banned: ["—", "→", "←", "↔", "↑", "↓", "↕", "↗", "↘", "↖", "↙", "↦", "↳", "↪", "⇒", "⇐", "⇔", "⇨", "⟶", "⟵", "⟷", "⟹", "⟸", "⟺", "➜", "➔", "➝", "➞", "➡", "⬅", "⬆", "⬇", "->", "<-", "=>"]
 
 # Words a domain paragraph's first sentence does not open with (`domain-first-sentence-standalone`,
-# a quality check; optional).
+# a reporting check; optional).
 checks:
   anaphora: ["Il", "Elle", "Ils", "Elles", "Ce", "Cet", "Cette", "Ces", "Puis", "Celui", "Celle", "Ceux", "Celles", "Cela", "Ça"]
 

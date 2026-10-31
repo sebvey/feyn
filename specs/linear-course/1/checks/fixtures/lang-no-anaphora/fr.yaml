@@ -1,5 +1,5 @@
-# A pack with no checks.anaphora, an optional list: conformity passes, the quality check
-# domain-first-sentence-standalone reports its absence. Otherwise the fixtures' pack (lang/fr.yaml).
+# A pack with no checks.anaphora, an optional list: the blocking checks pass, the reporting
+# check domain-first-sentence-standalone reports its absence. Otherwise the fixtures' pack (lang/fr.yaml).
 # Literal phrases the teacher says (PROTOCOL.md "Language pack, groups the protocol adds").
 phrases:
   concept_title: "Concept {n} : {title}"

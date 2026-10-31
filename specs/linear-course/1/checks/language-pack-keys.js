@@ -17,7 +17,7 @@ const KEYS = {
 };
 const LISTS = { typography: 'banned' };
 // checks.anaphora is optional (COURSE.md section 7): a pack without it is consumable;
-// domain-first-sentence-standalone, a quality check, reports its absence.
+// domain-first-sentence-standalone, a reporting check, reports its absence.
 
 
 // The keys PROTOCOL.md uses: a row of its "Keys and parameters" tables (`| `group.key` | ...`; a value

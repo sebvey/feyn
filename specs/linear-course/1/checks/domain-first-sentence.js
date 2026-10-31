@@ -1,7 +1,7 @@
 'use strict';
-// Conformity: the first sentence of each paragraph of « Le fil des concepts » ends within 300
+// Blocks: the first sentence of each paragraph of « Le fil des concepts » ends within 300
 // characters of the lead, so that the site can show it on the domain page (COURSE.md section 4).
-// The opening anaphora is the quality check domain-first-sentence-standalone.
+// The opening anaphora is domain-first-sentence-standalone, which reports.
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
 
