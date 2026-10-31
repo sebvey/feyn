@@ -80,8 +80,11 @@ Every field, never only `status`:
   (`mise exec -- gh pr view <pr> --json title,isDraft,body`), its title follows
   `<type>(<area>): <summary>`, the body starts with `Closes #<n>`, then has the sections of
   `/feyn-pull-request` step 5 in order (Context, Issues, Changes, Checks, Review first) within
-  its limits (30 lines, blank lines excluded), no signature line; its `reviewLine` is in the
-  PR's Checks, as `/feyn-deliver-epic` step 2.4 says for `merged`. Keep your own check of the
+  its limits (30 lines, blank lines excluded; Review first 1 to 3 bullets), no signature line;
+  its `reviewLine` is in the PR's Checks, as `/feyn-deliver-epic` step 2.4 says for `merged`;
+  the PR has one "Review notes" comment (`mise exec -- gh pr view <pr> --comments`,
+  `/feyn-pull-request` step 5), which holds the detail: a body over its limits is fixed by
+  moving its overflow to that comment, never by dropping it. Keep your own check of the
   sensitive points in the diff (`mise exec -- gh pr diff <pr>`): a counterfactual, a Done when
   count, a command that touches `main` or a remote branch, the title.
 - `deviations`, whatever the status: each is named to the maintainer at the hand-over (step 5),
