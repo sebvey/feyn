@@ -14,7 +14,10 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `docs/` | `decisions/`, `glossary.md`, `contributing.md` |
 | `.claude/` | `skills/` (the HOW), `workflows/`, `reference/` (the WHAT), `decisions/`; decision `claude-folder-layout` |
 | `.github/` | issue template and CI workflows |
-| `construction/` | temporary: design, plan, notes, scripts; its fate is #232 |
+
+`construction/` (design, plan, notes, scripts of the construction) was removed on 2026-10-31:
+its files are read at `2c16adf3e66a` (`git show 2c16adf3e66a:construction/<path>`; decision
+`construction-in-history`).
 
 ## Language
 
@@ -48,7 +51,9 @@ workflow, up to the hand-over of its PR to `main`; a direct delivery is made wit
 `/feyn-issue-branch` and `/feyn-pull-request`. `/feyn-brainstorm` runs a brainstorm with the
 maintainer and ends it in a proposal. Load the one that matches the request. The other `feyn-`
 skills are the work-cycle tooling: called by them or by the moment without a skill (triage), and
-loaded directly for a one-off act.
+loaded directly for a one-off act. A work session starts with an issue number. How the work is
+organised (epics, slices, observations, milestones, the Project's views): `docs/contributing.md`,
+"How the work is organised".
 
 ## Non-negotiable rules
 
@@ -57,14 +62,3 @@ loaded directly for a one-off act.
 - A teacher behaviour decision needs two tests.
 - A course changes only through an issue or a batch.
 - Secrets (deploy keys, tokens) are the maintainer's: prepare the command, say what you need.
-
-## Construction
-
-This section goes with `construction/`, whose fate is #232. Until then, read
-`construction/README.md` first: it says how a work session goes. The design is in
-`construction/design/`, the plan of 2026-10-27 in `construction/plan/` (abandoned on
-2026-10-29 for epics, decision `themes-and-release-milestones`: read as material only). A
-session writes its note in `construction/notes/<id>.md`. Work is framed by epics, split one
-slice at a time; a work session starts with an issue number. How the work is organised (epics,
-slices, observations, milestones, the Project's views): `docs/contributing.md`, "How the work
-is organised".

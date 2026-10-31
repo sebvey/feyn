@@ -52,3 +52,6 @@ epic, their bodies kept as material; `stage-1` is renamed `linear-course/v1.0.0`
 - Amended 2026-10-31 (#344): the plan comment also holds the epic's open questions, and the
   epic is delivered on an integration branch, validated by the maintainer's merge of its epic PR
   (decision `epic-on-integration-branch`).
+- Amended 2026-10-31 (#232): `construction/` is removed; the plan of 2026-10-27 and its stage
+  files are read at `2c16adf3e66a` (`git show 2c16adf3e66a:construction/plan/<file>`; decision
+  `construction-in-history`).
