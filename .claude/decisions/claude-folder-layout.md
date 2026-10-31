@@ -7,7 +7,7 @@ area: agentic
 
 Without this, an agent would put a template, a reference or a decision in the folder of the skill that first used it, and the next skill would link into another skill's folder.
 
-`.claude/` has four folders. `skills/` holds the HOW: one folder per skill, with its `SKILL.md`
+`.claude/` has four folders (five since #368, see Consequences). `skills/` holds the HOW: one folder per skill, with its `SKILL.md`
 and its briefs (`feyn-deliver/contributor-brief.md`). `workflows/` holds the agent workflows.
 `reference/` holds the WHAT, what a thing is or looks like: the body templates
 (`issue-body.md`, `pr-body.md`, …), the Project reference `project.md`, the rules of an agent
