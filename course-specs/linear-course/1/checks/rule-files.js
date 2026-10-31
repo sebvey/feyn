@@ -38,7 +38,7 @@ const GROUP_KEYS = ['id', 'title', 'category', 'method', 'rules'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){1,4}$/;
 const GROUP_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){0,4}$/;
 const SCHEMA_REF = /schemas\/[A-Za-z0-9._-]+\.schema\.yaml/g;
-// here is specs/<name>/<MAJOR>/checks
+// here is course-specs/<name>/<MAJOR>/checks
 const WORKFLOWS = path.resolve(__dirname, '..', '..', '..', '..', '.claude', 'workflows');
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);

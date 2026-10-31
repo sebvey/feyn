@@ -9,20 +9,21 @@ Without this, an agent would drop `@1` support when `@2` appears, or open a MAJO
 fix.
 
 Two objects are versioned, a course and a spec, in semver; everything else is tooling. A spec
-is the contract for a type of course, kept in one folder per MAJOR, `specs/<name>/<MAJOR>/`
-(`1/`, not `v1/`), which holds `SPEC.md` (the structure), `PROTOCOL.md` (the protocol),
-`README.md`, `checks/` (its checks and their fixtures), `decisions/`, `lang/` (the language
-packs), `templates/` (the course templates) and `CHANGELOG.md`. A new MAJOR copies the tree of
-the previous one, its decisions under the same slugs. A course declares the MAJOR it follows
-(`spec: linear-course@1`); `specs/check-course <course>` reads it and runs
-`specs/<name>/<MAJOR>/checks`, refusing an unknown spec or MAJOR: its conformity mode, the
-default, runs the conformity checks, its quality mode the quality checks. A spec version is
-tagged `<name>/vX.Y.Z`, a course version `<id>/vX.Y.Z`:
+is the contract for a type of course, kept in one folder per MAJOR,
+`course-specs/<name>/<MAJOR>/` (`1/`, not `v1/`), which holds `SPEC.md` (the structure),
+`PROTOCOL.md` (the protocol), `README.md`, `checks/` (its checks and their fixtures),
+`decisions/`, `lang/` (the language packs), `templates/` (the course templates) and
+`CHANGELOG.md`. A new MAJOR copies the tree of the previous one, its decisions under the same
+slugs. A course declares the MAJOR it follows (`spec: linear-course@1`);
+`course-specs/check-course <course>` reads it and runs `course-specs/<name>/<MAJOR>/checks`,
+refusing an unknown spec or MAJOR: its conformity mode, the default, runs the conformity
+checks, its quality mode the quality checks. A spec version is tagged `<name>/vX.Y.Z`, a course
+version `<id>/vX.Y.Z`:
 
 | Object | MAJOR | MINOR | PATCH |
 |---|---|---|---|
 | course `courses/<id>/` | identifiers change (concept and sub-concept numbers, case titles that learner memory cites), or the spec MAJOR changes | what is taught changes (case, sub-concept, stance, duration) | wording |
-| spec `specs/<name>/` | the structure changes (files, fields, mandatory sections); a conformity check added or made stricter; an optional field made mandatory; a quality check moved to conformity | an optional element; a protocol rule added, changed or renamed (the old slug is burnt); a conformity check made looser or moved to quality; a quality check added or made stricter; a language-pack key added or renamed, every pack updated | wording; a false positive lifted |
+| spec `course-specs/<name>/` | the structure changes (files, fields, mandatory sections); a conformity check added or made stricter; an optional field made mandatory; a quality check moved to conformity | an optional element; a protocol rule added, changed or renamed (the old slug is burnt); a conformity check made looser or moved to quality; a quality check added or made stricter; a language-pack key added or renamed, every pack updated | wording; a false positive lifted |
 
 A MAJOR lives while a served course version declares it, a course tag included, then is
 archived. An old MAJOR receives bug fixes only (a wrong check, a mistake in the protocol), as
@@ -70,3 +71,9 @@ archived repository. This replaces decision `two-versioned-objects`.
   requirement added or made stricter, or a recommendation made a requirement, is a MAJOR; a
   requirement made a recommendation, or a recommendation added or made stricter, is a MINOR; a
   rule of the protocol added, changed or renamed stays a MINOR.
+- Amended 2026-10-31 (#340): the folder `specs/` is renamed `course-specs/`, a name that says
+  what it specifies; a MAJOR of a spec lives in `course-specs/<name>/<MAJOR>/` and the
+  dispatcher is `course-specs/check-course`. The paths of this body and of the other decisions
+  read the new name in place: a path renamed changes no decision, and an agent follows the path
+  it reads; the dated amendment lines and the superseded decision `two-versioned-objects` keep
+  the old one.

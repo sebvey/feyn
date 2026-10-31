@@ -2,8 +2,8 @@
 'use strict';
 // Runs check-course on the fixtures, once each with the default (every check of method test),
 // and says whether every run gave the expected result (a real course is checked by
-// specs/check-course courses/<id>, not here). The severity of each check follows from its rules
-// (SPEC.md section 7): the test reads rules/course.yaml itself and holds the exit codes to it.
+// course-specs/check-course courses/<id>, not here). The severity of each check follows from its
+// rules (SPEC.md section 7): the test reads rules/course.yaml itself and holds the exit codes to it.
 //   --list                         names every check with its category and
 //                                  its severity, as rules/course.yaml gives them; the check it
 //                                  does not run (taught-check) marked "not run here"
@@ -21,7 +21,7 @@
 //   fixtures/spec/...              the same for check-spec (the tests of the spec's own files,
 //                                  its language packs included), and the repository's spec
 //                                  passes it
-//   fixtures/dispatcher/<name>     a course.yaml that specs/check-course refuses: other-spec
+//   fixtures/dispatcher/<name>     a course.yaml that course-specs/check-course refuses: other-spec
 //                                  (spec other@1), unknown-major (linear-course@9); the
 //                                  dispatcher passes --category through
 const fs = require('fs');
@@ -32,7 +32,7 @@ require('./lib/deps').need();
 const here = __dirname;
 const runner = path.join(here, 'check-course');
 const fx = path.join(here, 'fixtures');
-// here is specs/<name>/<MAJOR>/checks
+// here is course-specs/<name>/<MAJOR>/checks
 const repo = path.resolve(here, '..', '..', '..', '..');
 let bad = 0;
 
@@ -203,10 +203,10 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   const s = spec(path.join(here, '..'), []);
   report('the repository spec passes every spec check', s.code === 0, notOk(s));
 }
-// the dispatcher (specs/check-course): it runs this MAJOR's checks on a course declaring it,
+// the dispatcher (course-specs/check-course): it runs this MAJOR's checks on a course declaring it,
 // and refuses an unknown spec or MAJOR, naming it, with exit code 2
 {
-  const dispatcher = path.join(repo, 'specs', 'check-course');
+  const dispatcher = path.join(repo, 'course-specs', 'check-course');
   const disp = (dir, extra) => {
     const r = spawnSync(process.execPath, [dispatcher, dir, ...extra], { encoding: 'utf8' });
     return { code: r.status, lines: r.stdout.split('\n').filter(Boolean), err: r.stderr };

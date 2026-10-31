@@ -1,6 +1,6 @@
 # feyn
 
-feyn is a monorepo of courses taught by a Claude Code teacher and published as a site. A course is a set of source files under `courses/<id>/`, written against a spec in `specs/`; the teacher template in `teacher/` turns a course into a classroom, and the engine in `site/` builds the site from it.
+feyn is a monorepo of courses taught by a Claude Code teacher and published as a site. A course is a set of source files under `courses/<id>/`, written against a spec in `course-specs/`; the teacher template in `teacher/` turns a course into a classroom, and the engine in `site/` builds the site from it.
 
 > **The expected answers of every course are visible in this repository.** It is public for now: the teacher-only files (expected answers, common mistakes, follow-ups) can be read by anyone. This is acceptable for a beta with trusted testers; do not read them if you want to learn from the course.
 

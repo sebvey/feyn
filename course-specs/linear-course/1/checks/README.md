@@ -16,22 +16,23 @@ code, not through ajv.
 ## Install
 
 ```
-mise exec -- npm ci --prefix specs/linear-course/1/checks
+mise exec -- npm ci --prefix course-specs/linear-course/1/checks
 ```
 
 From the repository root, once per clone or worktree, and again when `package-lock.json` changes:
 `npm ci` installs the locked versions in `node_modules/` here, which git ignores. The command has
 no `cd`, so an agent in a worktree can run it. Without it, `check-course`, `check-spec`,
-`test-fixtures` and `specs/check-course` stop with one line giving that command (exit code 2).
+`test-fixtures` and `course-specs/check-course` stop with one line giving that command (exit
+code 2).
 
 ## Run
 
 ```
-mise exec -- specs/check-course courses/<id>
-mise exec -- specs/check-course courses/<id> --category pedagogy
-mise exec -- specs/check-course courses/<id> --only svg-contract
-mise exec -- specs/check-course courses/<id> --only concept-folder,sources --concept 9
-mise exec -- specs/linear-course/1/checks/check-course --list
+mise exec -- course-specs/check-course courses/<id>
+mise exec -- course-specs/check-course courses/<id> --category pedagogy
+mise exec -- course-specs/check-course courses/<id> --only svg-contract
+mise exec -- course-specs/check-course courses/<id> --only concept-folder,sources --concept 9
+mise exec -- course-specs/linear-course/1/checks/check-course --list
 ```
 
 The checks come from the rule file of a course (`SPEC.md` section 7; decision
@@ -51,9 +52,9 @@ neither runs nor lists them. A check of another method is not run here: `taught-
 inspection has no check, the review reads it. `--list` names every check, the ones not run here
 with how they run.
 
-`specs/check-course` reads `spec: linear-course@<MAJOR>` in the course's `course.yaml` and runs
-`specs/linear-course/<MAJOR>/checks/check-course` with the same arguments; it refuses an unknown
-spec or MAJOR, naming it, with exit code 2. The `spec:` line names the MAJOR, whose `yaml`
+`course-specs/check-course` reads `spec: linear-course@<MAJOR>` in the course's `course.yaml` and
+runs `course-specs/linear-course/<MAJOR>/checks/check-course` with the same arguments; it refuses an
+unknown spec or MAJOR, naming it, with exit code 2. The `spec:` line names the MAJOR, whose `yaml`
 package (in its `checks/node_modules/`) then reads `course.yaml`: the dispatcher needs that
 MAJOR's `npm ci` too. This folder's `check-course` runs this MAJOR's checks
 directly, `--list` with no course included.
@@ -105,13 +106,13 @@ fail. A section anchor is a sub-concept id or a fixed section by its pack value
 ## Tests of the spec itself
 
 ```
-mise exec -- specs/linear-course/1/checks/check-spec
-mise exec -- specs/linear-course/1/checks/check-spec <spec-dir> --only rule-slugs
+mise exec -- course-specs/linear-course/1/checks/check-spec
+mise exec -- course-specs/linear-course/1/checks/check-spec <spec-dir> --only rule-slugs
 ```
 
 `check-spec` runs the tests of the spec's own files, not a course: `PROTOCOL.md`, `SPEC.md`,
 `COURSE.md`, `decisions/`, `rules/`, `schemas/` and `lang/` of `<spec-dir>` (default: this
-MAJOR's folder, `specs/linear-course/1`). Same output and `--only` as `check-course`, with no
+MAJOR's folder, `course-specs/linear-course/1`). Same output and `--only` as `check-course`, with no
 summary line and a `--list` of ids alone; the file in a failure line is relative to
 `<spec-dir>`. Its tests are not rules (decision `rules-with-level-and-method`, amended by #339):
 they carry no category and no level, and each failure blocks `check-spec` (exit code 1). Their
@@ -156,7 +157,7 @@ Known limits:
 ## Tests
 
 ```
-mise exec -- specs/linear-course/1/checks/test-fixtures
+mise exec -- course-specs/linear-course/1/checks/test-fixtures
 ```
 
 Every course fixture runs once, with the default; the test reads `rules/course.yaml` itself and
@@ -180,8 +181,8 @@ an id of a test of `check-spec` and an id outside `--category` are usage errors 
   that must fail and the message it must give, with the exit code its severity gives. No other
   check may fail (the test says so).
   `broken/course-yaml-unlisted-folder` also runs with `--concept 0`, where `course-yaml` passes.
-- No real course is a fixture: `specs/check-course courses/parcours-po` checks the real course,
-  and a change to the spec reports its new failures there.
+- No real course is a fixture: `course-specs/check-course courses/parcours-po` checks the real
+  course, and a change to the spec reports its new failures there.
 - `fixtures/lang/fr.yaml`: the pack the fixtures use (the groups the checks read: `COURSE.md`
   section 7 and the keys of `PROTOCOL.md`, French values of the real pack `lang/fr.yaml`, without
   `site`; change both together). `fixtures/lang-no-anaphora/`: the pack without the optional
@@ -202,11 +203,11 @@ an id of a test of `check-spec` and an id outside `--category` are usage errors 
   that `PROTOCOL.md` does not define; an id in both rule files; a check that does not exist; a
   check over two categories; a check over two levels; a schema that does not compile; a schema
   no rule names. The test also runs
-  `check-spec` on `specs/linear-course/1`, which must pass.
-- `fixtures/dispatcher/<name>/`: a `course.yaml` that `specs/check-course` refuses, `other-spec`
-  (an unknown spec, `other@1`) and `unknown-major` (`linear-course@9`); the test also runs
-  `specs/check-course` on `valid/`, with the default and with `--category writing`, which must
-  pass.
+  `check-spec` on `course-specs/linear-course/1`, which must pass.
+- `fixtures/dispatcher/<name>/`: a `course.yaml` that `course-specs/check-course` refuses,
+  `other-spec` (an unknown spec, `other@1`) and `unknown-major` (`linear-course@9`); the test also
+  runs `course-specs/check-course` on `valid/`, with the default and with `--category writing`,
+  which must pass.
 
 The fixtures are plain files: change `valid/` and the broken copies together, then run the
 test. A new check of a course adds a script, the rules it verifies in `rules/course.yaml` (their

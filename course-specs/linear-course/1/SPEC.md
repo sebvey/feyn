@@ -151,7 +151,7 @@ before it lands and a course runs against the checks of the MAJOR it declares.
 | the reviewer | the class a course change claims in `CHANGELOG.md` | reviewing a course change |
 
 The spec's versions and its MAJOR folders are decision `versioned-objects-and-spec-layout`
-(`docs/decisions/versioned-objects-and-spec-layout.md`), summarised in `specs/README.md`. A
+(`docs/decisions/versioned-objects-and-spec-layout.md`), summarised in `course-specs/README.md`. A
 spec version is tagged `linear-course/vX.Y.Z`.
 
 **The alpha.** A MAJOR in preparation carries `<MAJOR>.0.0-alpha` in its folder until its tag,
@@ -171,8 +171,8 @@ A MAJOR lives while a served course version declares it, a course tag included; 
 archived. Tooling reads every live MAJOR. An old MAJOR receives bug fixes only, as a PATCH,
 never a tightening; a bug fix is ported to every live MAJOR.
 
-A course declares the MAJOR it follows: `spec: linear-course@1`. `specs/check-course` reads it
-and runs this MAJOR's checks (section 10).
+A course declares the MAJOR it follows: `spec: linear-course@1`. `course-specs/check-course` reads
+it and runs this MAJOR's checks (section 10).
 
 A course has its own version, tagged `<id>/vX.Y.Z` and recorded in its `CHANGELOG.md`: MAJOR
 when an identifier changes (`COURSE.md` section 2) or the course moves to a new spec MAJOR,
@@ -206,7 +206,7 @@ method and the severity that follows (section 7); and the tests of the spec's ow
 
 Node scripts in `checks/`, one per id, with the dependencies of `checks/package.json` installed
 by `npm ci` (decision `checks-use-ajv-and-yaml`); `checks/README.md` gives how to install and run
-them, their options and fixtures. `specs/check-course <course-dir>` runs this folder's
+them, their options and fixtures. `course-specs/check-course <course-dir>` runs this folder's
 `checks/check-course` on a course. `checks/check-spec` runs the tests of the spec's own files
 (`PROTOCOL.md`, `SPEC.md`, `COURSE.md`, `decisions/`, `rules/`, `schemas/`, `lang/`), not a
 course.
@@ -233,7 +233,7 @@ are those of `COURSE.md`.
 
 | Id | Category | Level | Method | Severity | Verifies | Sections |
 |---|---|---|---|---|---|---|
-| `course-yaml` | `structure` | requirement | test | blocks | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/`, spec declared (`specs/check-course` refuses an unknown spec or MAJOR), language pack present | 2; `SPEC.md` 8 |
+| `course-yaml` | `structure` | requirement | test | blocks | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/`, spec declared (`course-specs/check-course` refuses an unknown spec or MAJOR), language pack present | 2; `SPEC.md` 8 |
 | `concept-folder` | `structure` | requirement | test | blocks | the folder's files; the three files' sections and their order, the column count of the `sources.md` tables; frontmatter keys, `verified` parallel to `refs`; one section per sub-concept; « Objectif » equals `objective` | 3 |
 | `case-contract` | `pedagogy` | requirement | test | blocks | case headings and their qualifier, titles unique in the concept, fields, a qualifier on « Question » only, coverage of leaves, citation in « Consignes » | 3.3, 7 |
 | `conventions` | `writing` | requirement | test | blocks | the reader-text conventions of `concept.md`; plain Markdown in course files | 1, 3.5 |

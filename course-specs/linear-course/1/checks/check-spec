@@ -4,7 +4,7 @@
 // The tests of the spec's own files (PROTOCOL.md, SPEC.md, COURSE.md, decisions/, rules/,
 // schemas/, lang/), not of a course: they verify no rule, carry no category and no level, and
 // each failure blocks (exit code 1; decision rules-with-level-and-method, amended by #339).
-// <spec-dir> defaults to the folder above this script (specs/linear-course/1).
+// <spec-dir> defaults to the folder above this script (course-specs/linear-course/1).
 const fs = require('fs');
 const path = require('path');
 require('./lib/deps').need();

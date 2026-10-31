@@ -22,7 +22,7 @@ added when the file has none; the rest of the file stays untouched. A decision t
 holds is superseded (`status: superseded` and `superseded-by: <slug>`), never amended.
 
 A decision lives in the `decisions/` folder of the most local area it binds:
-`specs/<name>/<MAJOR>/decisions/` (a new MAJOR copies them under the same slugs),
+`course-specs/<name>/<MAJOR>/decisions/` (a new MAJOR copies them under the same slugs),
 `courses/<id>/decisions/`, `teacher/decisions/`, `site/decisions/`; the agentic layer
 (`.claude/`, `.github/`), `.claude/decisions/`; two areas or more, `docs/decisions/`.
 
@@ -56,3 +56,6 @@ counterfactual, picks the folder, checks for a neighbouring slug.
   parser refuses (a plain scalar never contains ": "); a tool filters on `status` without
   parsing a string. The body says so too, the exception named by #252: this file is the rule
   itself, and an agent reads the rule in its body.
+- Amended 2026-10-31 (#340): the folder of the specs is `course-specs/`, so a spec's decisions
+  live in `course-specs/<name>/<MAJOR>/decisions/` (decision
+  `versioned-objects-and-spec-layout`). The body says so too, the exception named by #252.

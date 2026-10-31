@@ -11,14 +11,14 @@ Schema validator of its own in `lib/` to read the schemas, and stretch the YAML 
 D11; minor point 4 of the second standards run).
 
 The checks of `linear-course` take dependencies: a `package.json` with its lockfile in
-`specs/linear-course/1/checks/`, installed by `npm ci`; ajv validates the schemas, through the
-class `Ajv2020` (`ajv/dist/2020`), since the schemas are JSON Schema 2020-12 (decision
-`spec-files-and-alpha-version`); the package `yaml` (eemeli) reads YAML 1.2.2 in place of
-`lib/yaml.js`, which is removed. A failure still points at `file:line`: ajv gives a path in the
-object (`/concepts/3/slug`), the `yaml` package gives the positions in the source, and the
-checks map the one to the other (from #336). The other readers of `lib/` (`md.js`, `xml.js`)
-stay. Node 20 or later, run under `mise exec`, stays. This replaces "Dependency-free Node (CommonJS, no
-`npm install`)" of `specs/linear-course/1/checks/README.md:4-5`.
+`course-specs/linear-course/1/checks/`, installed by `npm ci`; ajv validates the schemas,
+through the class `Ajv2020` (`ajv/dist/2020`), since the schemas are JSON Schema 2020-12
+(decision `spec-files-and-alpha-version`); the package `yaml` (eemeli) reads YAML 1.2.2 in
+place of `lib/yaml.js`, which is removed. A failure still points at `file:line`: ajv gives a
+path in the object (`/concepts/3/slug`), the `yaml` package gives the positions in the source,
+and the checks map the one to the other (from #336). The other readers of `lib/` (`md.js`,
+`xml.js`) stay. Node 20 or later, run under `mise exec`, stays. This replaces "Dependency-free
+Node (CommonJS, no `npm install`)" of `course-specs/linear-course/1/checks/README.md:4-5`.
 
 ## Options ruled out
 

@@ -11,8 +11,8 @@ Read first by every agent that works in a worktree: the contributor of `/feyn-de
   workspace identity (not empty). Never `git config user.email` nor `git -c user.email=`.
 - `git` plain; `gh` and `node` through `mise exec --`.
 - A new worktree has no `node_modules/` (git ignores it): before the checks of a spec, run
-  `mise exec -- npm ci --prefix specs/linear-course/1/checks` from the worktree's root, or the
-  checks stop at exit 2 with that command.
+  `mise exec -- npm ci --prefix course-specs/linear-course/1/checks` from the worktree's root,
+  or the checks stop at exit 2 with that command.
 - The shell is zsh: quote globs passed as arguments (`grep --include='*.md'`, not
   `--include=*.md`).
 

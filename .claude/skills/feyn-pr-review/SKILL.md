@@ -31,8 +31,8 @@ A new `Agent`, model `opus` always, never the contributor and never resumed from
 the PR, its branch (`headRefName`), the issue, and what the caller passes, "none" for each
 input it does not pass:
 - **Checks to rerun.** A PR with any check or fixture runner to rerun (a course, `site/`,
-  `specs/check-course`, `specs/*/*/checks/` in `mise exec -- gh pr diff <pr> --name-only`): the
-  reviewer gets
+  `course-specs/check-course`, `course-specs/*/*/checks/` in `mise exec -- gh pr diff <pr>
+  --name-only`): the reviewer gets
   `isolation: "worktree"`, and the brief has it check out the PR head detached. Its worktree
   holds no issue branch; the caller removes it (`/feyn-deliver` step 6.1, 6.2 and 6.4). That
   reviewer reads [worktree-agent.md](../../reference/worktree-agent.md) first: the rules and
@@ -91,7 +91,7 @@ Recheck yourself:
   file; a count, recount it); the PR gives only the verdict counts and why a statement is not
   met or deviates, and those you check too;
 - the checks /feyn-pull-request requires for what the PR touches
-  (`mise exec -- gh pr diff <pr> --name-only`), rerun them; `specs/check-course` prints the
+  (`mise exec -- gh pr diff <pr> --name-only`), rerun them; `course-specs/check-course` prints the
   failures of the reporting checks too, with exit code 0: one the PR adds is a non-blocking
   finding;
 - evidence from an agent-workflow run

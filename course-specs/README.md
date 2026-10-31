@@ -3,11 +3,11 @@
 Summary of decision `versioned-objects-and-spec-layout`; if they differ, the decision wins.
 
 A spec is the contract for a type of course. The only spec is `linear-course`; its MAJOR 1
-sits in `specs/linear-course/1/`.
+sits in `course-specs/linear-course/1/`.
 
 ## Layout
 
-One folder per MAJOR, `specs/<name>/<MAJOR>/` (`1/`, not `v1/`), holds:
+One folder per MAJOR, `course-specs/<name>/<MAJOR>/` (`1/`, not `v1/`), holds:
 
 | File or folder | Holds |
 |---|---|
@@ -26,10 +26,10 @@ One folder per MAJOR, `specs/<name>/<MAJOR>/` (`1/`, not `v1/`), holds:
 A new MAJOR copies the tree of the previous one, its decisions under the same slugs.
 
 A course declares the MAJOR it follows in `course.yaml` (`spec: linear-course@1`).
-`specs/check-course <course>` reads it, runs `specs/<name>/<MAJOR>/checks`, and refuses an
-unknown spec or MAJOR. The MAJOR's `check-course` takes its checks from the MAJOR's rule files
-and runs them in one run: a failure of a check that blocks sets exit code 1, a failure of a check
-that reports is printed and leaves 0; `--category` selects checks by category.
+`course-specs/check-course <course>` reads it, runs `course-specs/<name>/<MAJOR>/checks`, and
+refuses an unknown spec or MAJOR. The MAJOR's `check-course` takes its checks from the MAJOR's
+rule files and runs them in one run: a failure of a check that blocks sets exit code 1, a failure
+of a check that reports is printed and leaves 0; `--category` selects checks by category.
 
 ## Versions
 
