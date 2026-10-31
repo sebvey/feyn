@@ -47,10 +47,10 @@ const DEST = (A.dest || `courses/${A.course}`).replace(/\/?$/, '/')
 const REPORT = A.report || `construction/notes/S1-10-${NN}-report.md`
 // The repository root of the run (#178): an absolute dest of the form <root>courses/<course>/ gives it
 // (the run's worktree: in wave 2 the work session stayed in the main checkout, so pwd was not it);
-// any other dest, the working directory (pwd). Checked from the scope agent's listing of <root>specs.
-// An absolute dest inside a repository (it holds /courses/) but not of that form stops the run: taking
-// the spec from pwd there is the wave-2 fault. Any other absolute dest (a copy outside a repository)
-// falls back to pwd, logged after the scope step.
+// any other dest, the working directory (pwd). Checked from the scope agent's listing of
+// <root>course-specs. An absolute dest inside a repository (it holds /courses/) but not of that form
+// stops the run: taking the spec from pwd there is the wave-2 fault. Any other absolute dest (a copy
+// outside a repository) falls back to pwd, logged after the scope step.
 const DEST_ROOT = DEST.startsWith('/') && DEST.endsWith(`/courses/${A.course}/`) ? DEST.slice(0, -`courses/${A.course}/`.length) : ''
 if (DEST.startsWith('/') && !DEST_ROOT && DEST.includes('/courses/')) throw new Error(`args.dest ${DEST} is under a courses/ folder but is not <repository>/courses/${A.course}: the spec root cannot be told from it; pass <repository>/courses/${A.course}`)
 // The blocking checks that look at a concept (check-course --list): --only keeps the reporting
@@ -272,7 +272,7 @@ const SCOPE_SCHEMA = {
     unlisted_h4: { type: 'array', items: { type: 'string' }, description: 'ids of MDX <h4> that are not sub-concepts of the course.yaml entry (rule M5)' },
     target_listing: { type: 'string', description: 'the output of "ls -ld <dest><dir>; ls -la <dest><dir>" (dir as returned above), verbatim, every line, errors included' },
     cwd: { type: 'string', description: 'the output of the command pwd, verbatim: the absolute path of the working directory' },
-    root_listing: { type: 'string', description: 'the output of the ls -ld command on the specs folder of the repository root given in the prompt, verbatim, errors included' },
+    root_listing: { type: 'string', description: 'the output of the ls -ld command on the course-specs folder of the repository root given in the prompt, verbatim, errors included' },
     missing: { type: 'array', items: { type: 'string' }, description: 'the inputs that could not be found (an old file, a diagram component, the concept in course.yaml); empty when all are found. Never the target folder: it is not an input, it may not exist yet, and target_listing says whether it does' },
   },
   required: ['spec', 'dir', 'course_entry', 'concept_file', 'sources_file', 'mdx_file', 'diagrams', 'unlisted_h4', 'target_listing', 'cwd', 'root_listing', 'missing'],
@@ -408,7 +408,7 @@ its output verbatim, every line, errors included (when the folder does not exist
 an error). Do not summarise it. The target is not an input: whether it exists or not, it never goes \
 under missing.
 - The working directory: run pwd and return its output verbatim.
-- The repository root: run the one command "ls -ld ${DEST_ROOT ? `${DEST_ROOT}specs` : '"$(pwd)/specs"'}" and return its \
+- The repository root: run the one command "ls -ld ${DEST_ROOT ? `${DEST_ROOT}course-specs` : '"$(pwd)/course-specs"'}" and return its \
 output verbatim, errors included.
 Run each ls with its paths exactly as written above${DEST.startsWith('/') ? ' (absolute)' : ''}: no cd before it, no path \
 shortened or made relative.
@@ -458,13 +458,13 @@ const asListed = p => {
   return [...new Set(forms)].flatMap(f => [f, `${f}/`])
 }
 const rootLine = String(scope.root_listing ?? '').trim().split('\n')[0].trim()
-if (!/^d/.test(rootLine) || !asListed(`${ROOT}specs`).some(f => rootLine.endsWith(` ${f}`))) throw new Error(`The repository root ${ROOT} shows no specs/ folder (ls -ld: ${JSON.stringify(scope.root_listing)}): pass args.dest as <repository>/courses/${A.course}, or run from the repository root; if the folder is there, ${RETRY_SCOPE}`)
+if (!/^d/.test(rootLine) || !asListed(`${ROOT}course-specs`).some(f => rootLine.endsWith(` ${f}`))) throw new Error(`The repository root ${ROOT} shows no course-specs/ folder (ls -ld: ${JSON.stringify(scope.root_listing)}): pass args.dest as <repository>/courses/${A.course}, or run from the repository root; if the folder is there, ${RETRY_SCOPE}`)
 if (DEST_ROOT && DEST_ROOT !== cwd.replace(/\/?$/, '/')) log(`Repository root from args.dest: ${ROOT} (the working directory is ${cwd})`)
 if (DEST.startsWith('/') && !DEST_ROOT) log(`args.dest ${DEST} is outside a repository: the spec, the glossary and the checks are taken from the working directory ${ROOT}`)
 const ROLE = role(), BLIND = blind(), MAP = mapRules()
 // built here, not taken from an agent: the checks and the spec are the ones of the run's root, the spec
 // read from the folder of the MAJOR the course declares
-const SPEC_DIR = `specs/${SPEC_MATCH[1]}/${SPEC_MATCH[2]}/`
+const SPEC_DIR = `course-specs/${SPEC_MATCH[1]}/${SPEC_MATCH[2]}/`
 const DIR = String(scope.dir).replace(/^courses\/[^/]+\//, '').replace(/\/?$/, '/')
 // the target is emptied below: its path is checked here, never trusted from the scope agent
 if (!new RegExp(`^concepts/${NN}-[a-z0-9]+(-[a-z0-9]+)*/$`).test(DIR)) throw new Error(`Refused concept dir "${scope.dir}": expected concepts/${NN}-<slug>`)
@@ -520,7 +520,7 @@ Target concept folder: ${TARGET}
 
 ${MAP}`
 
-const CHECK_CMD = `mise exec -- ${ROOT}specs/check-course ${DEST.replace(/\/$/, '')} --only ${CONCEPT_CHECKS} --concept ${CONCEPT}${A.langDir ? ` --lang-dir ${A.langDir}` : ''}`
+const CHECK_CMD = `mise exec -- ${ROOT}course-specs/check-course ${DEST.replace(/\/$/, '')} --only ${CONCEPT_CHECKS} --concept ${CONCEPT}${A.langDir ? ` --lang-dir ${A.langDir}` : ''}`
 
 // The renderings of the report (#181): one PNG per old diagram (from the frozen site's build, when it has
 // one) and per new SVG (one colour, qlmanage), in a folder beside the report, named after it
@@ -842,11 +842,12 @@ const cell = s => String(s ?? '').replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' '
 // 1. the run's own absolute args are replaced as literal text, wherever they stand: args.dest/ by
 //    nothing (paths relative to the course folder, concepts/NN-slug/...), args.dest itself by
 //    courses/<course>; args.from and args.site by their repository folder (parcours-po/course/...);
-//    args.langDir by its specs/... tail; the run's working directory (ROOT, the scope agent's pwd) by
-//    nothing (paths relative to the repository root: specs/..., docs/...);
+//    args.langDir by its course-specs/... tail; the run's working directory (ROOT, the scope agent's
+//    pwd) by nothing (paths relative to the repository root: course-specs/..., docs/...);
 // 2. any other absolute path (after any non-word character, under a usual root or a root of the run's
 //    own absolute args): under courses/ or a repository folder, relative to the repository root
-//    (courses/..., specs/...), the old repositories by their folder; anything else "<absolute path>";
+//    (courses/..., course-specs/...), the old repositories by their folder; anything else
+//    "<absolute path>";
 // 3. a path under courses/<course>/, and a relative args.dest, from or site, as in 1.
 const lastPart = p => p.replace(/\/$/, '').split('/').pop()
 const absArgs = [DEST, FROM, SITE, ROOT, A.langDir ? String(A.langDir) : ''].filter(p => p.startsWith('/'))
@@ -857,7 +858,7 @@ const literal = [
   [DEST, ''], [DEST.replace(/\/$/, ''), `courses/${A.course}`],
   [FROM, `${lastPart(FROM)}/`], [FROM.replace(/\/$/, ''), lastPart(FROM)],
   [SITE, `${lastPart(SITE)}/`], [SITE.replace(/\/$/, ''), lastPart(SITE)],
-  ...(A.langDir ? [[String(A.langDir), String(A.langDir).match(/\/(specs\/.*)$/)?.[1] ?? '<langDir>']] : []),
+  ...(A.langDir ? [[String(A.langDir), String(A.langDir).match(/\/(course-specs\/.*)$/)?.[1] ?? '<langDir>']] : []),
   [ROOT, ''],
 ]
 const absLiteral = literal.filter(([p]) => p.startsWith('/')).sort((a, b) => b[0].length - a[0].length)
@@ -868,7 +869,7 @@ function toRel(p) {
   let m = p.match(/\/(courses\/.*)$/)
   if (m) return m[1]
   for (const repo of [lastPart(SITE), lastPart(FROM)]) { const i = p.indexOf(`/${repo}/`); if (i >= 0) return p.slice(i + 1) }
-  m = p.match(/\/((?:specs|construction|docs|site|teacher|\.claude)\/.*)$/)
+  m = p.match(/\/((?:course-specs|construction|docs|site|teacher|\.claude)\/.*)$/)
   return m ? m[1] : '<absolute path>'
 }
 function relPaths(text) {

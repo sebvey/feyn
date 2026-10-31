@@ -2,7 +2,7 @@
 // course.yaml: fields, identifiers, order, partition into domains, annexes, prerequisites,
 // paths, no unlisted concept folder, spec declared, language pack present (COURSE.md section 2,
 // SPEC.md section 8). An unknown spec
-// or MAJOR is refused by specs/check-course, before these checks run.
+// or MAJOR is refused by course-specs/check-course, before these checks run.
 const path = require('path');
 const yaml = require('./lib/yaml-lines');
 const { fail, normNumber, SLUG } = require('./lib/course');

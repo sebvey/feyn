@@ -83,7 +83,7 @@ the plan's bullets (`- **Observation**: …`), or for an epic the five sections 
 
      | Path | Area label |
      |---|---|
-     | `specs/<name>/` | `area:spec:<name>` |
+     | `course-specs/<name>/` | `area:spec:<name>` |
      | `courses/<id>/` | `area:course:<id>` |
      | `teacher/` | `area:teacher` |
      | `site/` | `area:site` |

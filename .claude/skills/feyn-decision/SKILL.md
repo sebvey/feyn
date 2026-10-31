@@ -35,7 +35,7 @@ The most local area the decision binds:
 
 | Binds | Folder |
 |---|---|
-| one spec | `specs/<name>/<MAJOR>/decisions/` of each MAJOR it binds: the current one for a new rule, every live MAJOR for a bug fix |
+| one spec | `course-specs/<name>/<MAJOR>/decisions/` of each MAJOR it binds: the current one for a new rule, every live MAJOR for a bug fix |
 | one course | `courses/<id>/decisions/` |
 | the teacher | `teacher/decisions/` |
 | the site | `site/decisions/` |
@@ -49,16 +49,16 @@ Slug: two to five words, lowercase, hyphens, naming the choice, not the problem
 
 Before writing, list every decision and grep them for the decision's key words:
 `find . -path '*/decisions/*.md' -not -path './construction/*' -not -path '*/node_modules/*' -not -path './.claude/worktrees/*'`,
-then `grep -ril --include='*.md' --exclude-dir=worktrees "<key word>" docs specs courses teacher site .claude | grep /decisions/`
+then `grep -ril --include='*.md' --exclude-dir=worktrees "<key word>" docs course-specs courses teacher site .claude | grep /decisions/`
 (quoted globs: zsh stops on a pattern that matches nothing; `.claude/worktrees/` holds the
 copies of other branches). A neighbour on the same point, in any of the `decisions/` folders:
 show it, and ask whether the new one supersedes it, amends it (an "Amended" line in that file
 instead, as `decision-format` says), or is distinct (say why in one line). Same slug already
 taken in any folder: the same decision exists; stop. One exception: the same slug in two MAJORs
-of one spec (`specs/<name>/1/decisions/<slug>.md`, `specs/<name>/2/decisions/<slug>.md`) is one
-decision, copied with the tree or ported as a bug fix (decision
-`versioned-objects-and-spec-layout`), not a collision; a decision written for several MAJORs
-is one file in each, under one slug.
+of one spec (`course-specs/<name>/1/decisions/<slug>.md`,
+`course-specs/<name>/2/decisions/<slug>.md`) is one decision, copied with the tree or ported as
+a bug fix (decision `versioned-objects-and-spec-layout`), not a collision; a decision written
+for several MAJORs is one file in each, under one slug.
 
 ## 5. Write it
 

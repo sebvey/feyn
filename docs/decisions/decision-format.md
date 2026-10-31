@@ -18,11 +18,12 @@ this, an agent would…"; then the decision in one paragraph. Optional headings,
 add: options ruled out, consequences. No index: `ls` and the frontmatter suffice. A decision
 that still holds but whose mechanism changed (a skill renamed, a file moved, a step that now
 runs elsewhere) gets one line `- Amended <date> (#<n>): …` under a `## Consequences` heading,
-added when the file has none; the rest of the file stays untouched. A decision that no longer
-holds is superseded (`status: superseded` and `superseded-by: <slug>`), never amended.
+added when the file has none; the rest of the file stays untouched, except a renamed path,
+updated in place in the body of every live decision. A decision that no longer holds is
+superseded (`status: superseded` and `superseded-by: <slug>`), never amended.
 
 A decision lives in the `decisions/` folder of the most local area it binds:
-`specs/<name>/<MAJOR>/decisions/` (a new MAJOR copies them under the same slugs),
+`course-specs/<name>/<MAJOR>/decisions/` (a new MAJOR copies them under the same slugs),
 `courses/<id>/decisions/`, `teacher/decisions/`, `site/decisions/`; the agentic layer
 (`.claude/`, `.github/`), `.claude/decisions/`; two areas or more, `docs/decisions/`.
 
@@ -56,3 +57,9 @@ counterfactual, picks the folder, checks for a neighbouring slug.
   parser refuses (a plain scalar never contains ": "); a tool filters on `status` without
   parsing a string. The body says so too, the exception named by #252: this file is the rule
   itself, and an agent reads the rule in its body.
+- Amended 2026-10-31 (#340): the folder of the specs is `course-specs/`, so a spec's decisions
+  live in `course-specs/<name>/<MAJOR>/decisions/` (decision
+  `versioned-objects-and-spec-layout`). The body says so too, the exception named by #252. A
+  renamed path is updated in place in the body of every live decision, with no "Amended" line
+  there: a path renamed changes no decision, and an agent follows the path it reads; the dated
+  "Amended" lines and the superseded decisions keep the old one. The body says so too.
