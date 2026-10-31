@@ -27,3 +27,9 @@ owns it.
 - Every decision taken during agentic work in `.claude/decisions/`: a decision such as the
   Project's Status binds the maintainer first, and a reader of contributing looks for it under
   `docs/`.
+
+## Consequences
+
+- Amended 2026-10-31 (#350): `feyn-deliver/contributor-brief.md` is gone, the agent workflow
+  `deliver-slice.js` briefing the contributor; the example of a skill's brief is now the
+  Reviewer brief section of `feyn-pr-review/SKILL.md`.

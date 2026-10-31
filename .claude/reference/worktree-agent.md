@@ -1,9 +1,9 @@
 # Rules for an agent in a worktree
 
-Read first by every agent that works in a worktree: the contributor of `/feyn-deliver`
-([its brief](../skills/feyn-deliver/contributor-brief.md)) and the reviewer of
-`/feyn-pr-review` that reruns checks. A line ending with a mark is a Claude Code behaviour
-([contributing](../../docs/contributing.md), "Tool behaviours").
+Read first by every agent that works in a worktree: the contributor, reviewers and correctors
+of the agent workflow [`deliver-slice.js`](../workflows/deliver-slice.js) (which briefs them)
+and the reviewer of `/feyn-pr-review` that reruns checks. A line ending with a mark is a
+Claude Code behaviour ([contributing](../../docs/contributing.md), "Tool behaviours").
 
 ## Git and the tools
 

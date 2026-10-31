@@ -1,6 +1,6 @@
 ---
 name: feyn-issue-branch
-description: "Tooling of the work cycle, called by `/feyn-deliver` (its contributor agent, first): put GitHub issue n on feyn in progress on its own branch. It refuses the issue when a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date main, sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
+description: "Tooling of the work cycle, called by the contributor agent of the agent workflow deliver-slice.js (under `/feyn-deliver` and `/feyn-deliver-epic`), first: put GitHub issue n on feyn in progress on its own branch. It refuses the issue when a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date main (from its epic's integration branch for a slice of an epic), sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
 argument-hint: "<issue number>"
 ---
 
@@ -43,6 +43,10 @@ Name: `<type>/<n>-<slug>`, where `<type>` is the issue's `type:` label without i
 lowercase, joined by hyphens (`course/42-concept-9-cases`).
 
 `git switch -c <type>/<n>-<slug> origin/main`, then `git push -u origin <type>/<n>-<slug>`.
+A slice of an epic, a direct slice included, starts from the epic's integration branch (the
+Delivery line of its plan comment; [project.md](../../reference/project.md), "Delivery on an
+integration branch"): `origin/<integration branch>` in place of `origin/main`, as the brief of
+the agent workflow `deliver-slice.js` or `/feyn-deliver-epic` step 2, "A direct slice", says.
 
 The branch is not linked to the issue: the PR's `Closes #<n>` links them, and a `Refs #<n>`
 PR leaves the issue open (decision `no-branch-link`).

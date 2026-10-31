@@ -35,3 +35,6 @@ contributor's own verification (`/finish`, decision `issue-defines-pr-verifies`)
   corrections, checks the fixes (each finding, the statements touched, what lies beyond); the
   orchestrator keeps the sensitive points; a new agent only when the reviewer is gone. On the
   direct path the second-review rule of #258 point 4 holds.
+- Amended 2026-10-31 (#344): a slice of an epic is reviewed by a fresh agent and merged by the
+  orchestrator into the epic's integration branch; what reaches the maintainer is the epic PR,
+  after a fresh agent reviewed the whole branch (decision `epic-on-integration-branch`).

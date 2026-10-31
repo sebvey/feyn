@@ -1,6 +1,6 @@
 ---
 name: feyn-pr-review
-description: "Tooling of the work cycle, called by `/feyn-deliver` and by `/feyn-pull-request`: a fresh agent reviews a pull request on feyn against its issue's Done when and returns its report (a verdict per statement, blocking and non-blocking findings, what it could not check), changing nothing; it can also review a merged PR after the fact. Use for \"/feyn-pr-review 247\"."
+description: "Tooling of the work cycle, called by `/feyn-pull-request` on the direct path, its Reviewer brief followed by the agents of the agent workflow deliver-slice.js: a fresh agent reviews a pull request on feyn against its issue's Done when and returns its report (a verdict per statement, blocking and non-blocking findings, what it could not check), changing nothing; it can also review a merged PR after the fact. Use for \"/feyn-pr-review 247\"."
 argument-hint: "<pr number>"
 ---
 
@@ -8,10 +8,11 @@ argument-hint: "<pr number>"
 
 One job: have a fresh agent review PR `<pr>` against its issue's Done when, and return its
 report. Every PR is reviewed this way before it reaches the maintainer (decision
-`fresh-agent-review-before-maintainer`): `/feyn-deliver` runs it at its step 3,
-`/feyn-pull-request` on the direct path at its step 7. It changes nothing in the repository,
-pushes nothing, comments nothing on GitHub and sets no Status: the caller applies the findings
-and sets Ready for review.
+`fresh-agent-review-before-maintainer`): `/feyn-pull-request` runs it on the direct path at its
+step 7; the agent workflow `deliver-slice.js` (under `/feyn-deliver` and `/feyn-deliver-epic`)
+spawns its own reviewers, which follow the [reviewer brief](#reviewer-brief) and step 4. It
+changes nothing in the repository, pushes nothing, comments nothing on GitHub and sets no
+Status: the caller applies the findings and sets Ready for review.
 
 ## 1. Read the PR
 
@@ -34,10 +35,15 @@ input it does not pass:
   `course-specs/check-course`, `course-specs/*/*/checks/` in `mise exec -- gh pr diff <pr>
   --name-only`): the reviewer gets
   `isolation: "worktree"`, and the brief has it check out the PR head detached. Its worktree
-  holds no issue branch; the caller removes it (`/feyn-deliver` step 6.1, 6.2 and 6.4). That
-  reviewer reads [worktree-agent.md](../../reference/worktree-agent.md) first: the rules and
-  the Claude Code behaviours of an agent in a worktree (the brief names it).
-- **A draft PR**: under `/feyn-deliver` every PR is a draft until its hand-over, which is not
+  holds no issue branch (`.claude/worktrees/agent-<id>`, on a branch `worktree-agent-<id>`);
+  the caller removes it once the review and its verification are done: still locked
+  (`locked claude agent agent-<id>`), its agent runs, stop it (`TaskStop`) then
+  `git worktree unlock <path>`; `git -C <path> status --porcelain` must print nothing
+  (anything printed: stop and show it); then `git worktree remove <path>` and
+  `git branch -D worktree-agent-<id>`. That reviewer reads
+  [worktree-agent.md](../../reference/worktree-agent.md) first: the rules and the Claude Code
+  behaviours of an agent in a worktree (the brief names it).
+- **A draft PR**: under the agent workflow every PR is a draft until its hand-over, which is not
   a finding; a decision awaited: say so; a decision awaiting the maintainer's answer is not a
   finding.
 - **An agent-workflow run.** The run ids `wf_<id>` and their transcript directory.
@@ -54,10 +60,10 @@ when it had one, for the caller's clean-up.
 
 ## 4. Verify the corrections
 
-Under `/feyn-deliver` (its step 4), once the contributor pushed its corrections, the caller
-resumes the reviewer with `SendMessage` to its name and this brief, `<range>` being the PR's
-head the reviewer read, two dots, the new head; after a maintainer's answer, the answer quoted
-follows the brief:
+Once corrections are pushed, a caller that keeps the reviewer resumes it with `SendMessage` to
+its name and this brief (the agent workflow `deliver-slice.js` gives it to a new agent instead,
+with the findings), `<range>` being the PR's head the reviewer read, two dots, the new head;
+after a maintainer's answer, the answer quoted follows the brief:
 
 ```
 You reviewed PR #<pr>. The contributor applied corrections in <range>. Recheck each finding

@@ -41,10 +41,13 @@ where a reserved term exists.
 
 ## Skills
 
-`/feyn-deliver <n>` delivers a Ready issue through a contributor agent, a fresh-agent review and
-the hand-over to the maintainer. `/feyn-brainstorm` runs a brainstorm with the maintainer and
-ends it in a proposal. Load the one that matches the request. The other `feyn-` skills are the
-work-cycle tooling: called by them or by the moments without a skill (take an epic, triage), and
+`/feyn-deliver-epic <epic>` delivers a Ready epic on its integration branch, slice by slice
+through the agent workflow `deliver-slice.js`, up to the hand-over of its epic PR.
+`/feyn-deliver <n>` delivers a Ready observation (an issue with no parent epic) through the same
+workflow, up to the hand-over of its PR to `main`; a direct delivery is made with
+`/feyn-issue-branch` and `/feyn-pull-request`. `/feyn-brainstorm` runs a brainstorm with the
+maintainer and ends it in a proposal. Load the one that matches the request. The other `feyn-`
+skills are the work-cycle tooling: called by them or by the moment without a skill (triage), and
 loaded directly for a one-off act.
 
 ## Non-negotiable rules

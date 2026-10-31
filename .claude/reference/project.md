@@ -10,8 +10,8 @@ number 4, owner `sebvey`; its **Status** field says where an issue stands:
 | Ready | decided, free to take | `/feyn-issue` for a slice or a decided observation, or the maintainer | `be2d48d7` |
 | In progress | a branch exists | `/feyn-issue-branch` (no Project workflow fires on a branch); `/feyn-deliver` step 4 when a correction is asked on a delivered PR | `be703c13` |
 | Needs Decision | present in the Project, unused by the skills for now: the label `blocked:maintainer` carries a decision awaited | nobody | `33e9b212` |
-| Ready for review | the work claims done, the maintainer reviews and concludes: a slice whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none, direct delivery.` (the maintainer merges), an epic whose plan comment says its last slice closed (the maintainer verifies its Done when and closes it) | `/feyn-pull-request` step 8 for a slice (`/feyn-deliver` step 5 when it runs the cycle), `/feyn-merge-cleanup` step 7 for its epic | `deab4f08` |
-| Done | closed (the close reason stays on GitHub) | Project workflow "Item closed"; `/feyn-merge-cleanup` only when that Project workflow is off | `9e81e5a6` |
+| Ready for review | the work claims done, the maintainer reviews and concludes: an observation whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none, direct delivery.` (the maintainer merges), an epic whose epic PR is handed over (the maintainer verifies its Done when and merges the epic PR); a slice of an epic never has it ("Epics", "Delivery on an integration branch") | `/feyn-pull-request` step 8 (`/feyn-deliver` step 5 when it runs the cycle); for an epic, its orchestrator at the hand-over of the epic PR (`/feyn-deliver-epic` step 5) | `deab4f08` |
+| Done | closed (the close reason stays on GitHub) | Project workflow "Item closed"; `/feyn-merge-cleanup` only when that Project workflow is off; for a slice of an epic, its orchestrator when it merges the slice into the integration branch and closes it | `9e81e5a6` |
 
 Project id `PVT_kwHOADOnU84Bo8V6`, Status field id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`.
 
@@ -87,10 +87,36 @@ and nothing blocks it (no open blocked-by link, "Dependencies"). The maintainer 
 at triage. An epic has no To do and no slice posed in advance.
 
 **Take an epic**: the procedure is in [contributing](../../docs/contributing.md), "How the work
-is organised", moments 1 and 2; the commands it needs are above. The epic goes Ready for review
-when the plan comment's last "Next slice to pose" line says it closes ("Next slice to pose:
-none, the epic closes", `/feyn-merge-cleanup` step 7), however many of its sub-issues are
-closed.
+is organised", moments 1 and 2, run by `/feyn-deliver-epic`; the commands it needs are above.
+The epic goes Ready for review when its epic PR is handed over (below), however many of its
+sub-issues are closed.
+
+**Delivery on an integration branch** (decision `epic-on-integration-branch`):
+- The **integration branch**: cut from `main` by the epic's orchestrator when the epic is
+  taken, named like an issue branch after the epic (`<type>/<epic>-<slug>`), pushed to
+  `origin`. Each slice branch starts from it and each slice PR targets it
+  (`--base <integration branch>`). `main` is merged into it when it moves, never rebased.
+- A slice PR is reviewed by a fresh agent and merged (squash) by the orchestrator, who then
+  closes the slice, since `Closes #<n>` closes an issue only on a merge into `main`
+  (`mise exec -- gh issue close <n> --reason completed --comment "Delivered by PR #<pr>, merged into the integration branch <branch> of epic #<epic>."`).
+- The **epic PR**: from the integration branch to `main`, its body starting with
+  `Closes #<epic>`, opened after a fresh agent reviewed the whole branch against the epic's Done
+  when, handed over only when no open question remains. The maintainer merges it (squash),
+  which closes the epic.
+- An **open question**: a choice of a slice that departs from the epic's Done when or adds
+  structure (a new file, a category, a marker, an exception to a principle). The orchestrator
+  writes it at once as a line of the plan comment (`Open question: <the choice>, <the options
+  ruled out>, <the cost of going back> (#<slice>)`), as a comment on the epic, and in the work
+  session to the maintainer (the comment, posted from the maintainer's account, notifies
+  nobody), and the work goes on. The maintainer answers on the epic; the orchestrator adds
+  the line `Answered: <the answer> (<date>)` right under its `Open question:` line, which
+  stays, and applies the answer, by a slice when it needs work (`/feyn-deliver-epic` step 3).
+- The Status: the slice goes Ready, In progress, then Done at its merge into the integration
+  branch, never Ready for review; the epic goes In progress with its first slice, Ready for
+  review at the hand-over of its epic PR, Done when that PR's merge closes it.
+- `/feyn-deliver-epic` runs this, each slice through the agent workflow `deliver-slice.js` in
+  epic mode; `/feyn-deliver` delivers an observation through the same workflow in observation
+  mode, its PR to `main`.
 
 **The views**, set by the maintainer in the web interface (Project feyn, a view's menu:
 filter, Layout, Group by, Fields):
