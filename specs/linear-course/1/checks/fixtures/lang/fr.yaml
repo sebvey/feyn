@@ -1,4 +1,4 @@
-# The pack the check fixtures use: the groups the checks read (SPEC.md section 9 and the keys of
+# The pack the check fixtures use: the groups the checks read (COURSE.md section 7 and the keys of
 # PROTOCOL.md), with the French values of the real pack, specs/linear-course/1/lang/fr.yaml, minus `site`.
 # Change both together.
 # Literal phrases the teacher says (PROTOCOL.md "Language pack, groups the protocol adds").
@@ -77,18 +77,18 @@ markers:
 
 # The nature of a claim of `sources.md` that is not a stance marker: what a source says with no
 # stance (a tool's default, a date, a figure). The other natures are the markers consensus,
-# school, course (SPEC.md 4.4). Read by `sources` only: never a marker of the reader text.
+# school, course (COURSE.md 3.4). Read by `sources` only: never a marker of the reader text.
 natures:
   fact: "fait"
 
-# The qualifiers a case heading may carry, at most one, and no other word (SPEC.md 4.3).
+# The qualifiers a case heading may carry, at most one, and no other word (COURSE.md 3.3).
 qualifiers:
   fallback: "rechange"
   practice: "entraînement"
   aside: "aparté"
 
 # The words of a concept reference in reader text: « concept 4 », « concepts 5 et 7b »,
-# « annexe A2 » (SPEC.md 4.5).
+# « annexe A2 » (COURSE.md 3.5).
 concept_refs:
   concept: "concept"
   concepts: "concepts"

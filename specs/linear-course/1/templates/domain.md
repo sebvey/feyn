@@ -1,5 +1,5 @@
 <!--
-Template of courses/<id>/domains/<N>-<slug>.md (SPEC.md section 5).
+Template of courses/<id>/domains/<N>-<slug>.md (COURSE.md section 4).
 Reader-facing: the site builds it, the teacher reads it. It teaches no concept and makes no
 claim that a concept of the domain does not make: it has no sources file.
 How to use: copy to domains/<number>-<slug>.md as named in course.yaml, replace every

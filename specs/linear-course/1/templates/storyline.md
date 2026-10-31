@@ -1,5 +1,5 @@
 <!--
-Template of courses/<id>/storyline.md (SPEC.md section 6).
+Template of courses/<id>/storyline.md (COURSE.md section 5).
 Free prose in the course language, read by the teacher and shown by the site. The cases take
 their actors and facts from it and never contradict it.
 How to use: copy to the course folder, replace every <placeholder>, delete this comment (from

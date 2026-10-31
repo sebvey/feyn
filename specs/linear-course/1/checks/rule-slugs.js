@@ -1,7 +1,7 @@
 'use strict';
 // Every rule and every group of rules of PROTOCOL.md is named by a slug, defined once in one
-// namespace, and every rule or group cited in PROTOCOL.md, SPEC.md and decisions/ is cited by a
-// slug that is defined (decisions rules-named-by-slug, rule-groups-replace-ranges).
+// namespace, and every rule or group cited in PROTOCOL.md, SPEC.md, COURSE.md and decisions/ is
+// cited by a slug that is defined (decisions rules-named-by-slug, rule-groups-replace-ranges).
 //
 // Defined, in a rule family ("## <n>. ..."): a rule by a line that opens on `**<slug>** `, or by a
 // table row whose first cell is `**<slug>**`; a group by a heading `### <title> (`<slug>`)`. The
@@ -9,15 +9,15 @@
 // Cited:
 //   - in a rule family, every code span shaped like a rule slug;
 //   - in a table of PROTOCOL.md, every code span of a "Used in" or "Rule" column;
-//   - outside the rule families (PROTOCOL.md's other sections, SPEC.md, decisions/*.md), the code
-//     spans that follow « rule », « rules », « règle » or « règles », joined by commas, « and »,
+//   - outside the rule families (PROTOCOL.md's other sections, SPEC.md, COURSE.md,
+//     decisions/*.md), the code spans that follow « rule », « rules », « règle » or « règles », joined by commas, « and »,
 //     « to », « et », « à »: each must be a rule;
 //   - everywhere, the code spans that follow « group », « groups », « groupe » or « groupes »: each
 //     must be a group.
 //   - in a rule family too, the code spans after « règle(s) » must be rules.
 // A rule named or cited by its old number (`**1.2**`, « règle 1.2 », « rules 1.1, 1.5 ») fails too,
-// and so does a range, « `a` à `b` » or « `a` to `b` », in PROTOCOL.md or SPEC.md (decision
-// rule-groups-replace-ranges). decisions/ are not read for ranges: they record history and quote
+// and so does a range, « `a` à `b` » or « `a` to `b` », in PROTOCOL.md, SPEC.md or COURSE.md
+// (decision rule-groups-replace-ranges). decisions/ are not read for ranges: they record history and quote
 // the ranges they replaced.
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
@@ -28,6 +28,8 @@ const NUMBER = /^\d+\.\d+[a-z]?$/;
 const RULE_WORD = /\b(?:[Rr]ules?|[Rr]ègles?)/;
 const GROUP_WORD = /\b(?:[Gg]roups?|[Gg]roupes?)/;
 const PROTOCOL = 'PROTOCOL.md';
+// the descriptions read beside PROTOCOL.md: the frame, and what a course is
+const DESCRIPTIONS = ['SPEC.md', 'COURSE.md'];
 
 const codeSpans = (t) => [...t.matchAll(/`([^`]+)`/g)].map((m) => m[1]);
 
@@ -136,11 +138,15 @@ function run(ctx) {
     }
   }
 
-  // prose outside the rule families, SPEC.md, decisions/*.md: citations led by a word
+  // prose outside the rule families, SPEC.md, COURSE.md, decisions/*.md: citations led by a word
   const prose = [{ file: PROTOCOL, lines: [...pre, ...others.flatMap((s) => s.lines)] }];
-  const spec = ctx.read('SPEC.md');
-  if (spec === null) out.push(fail('SPEC.md', 1, 'SPEC.md is missing'));
-  else prose.push({ file: 'SPEC.md', lines: mdlib.split(spec).body });
+  const descriptions = [];
+  for (const name of DESCRIPTIONS) {
+    const t = ctx.read(name);
+    if (t === null) out.push(fail(name, 1, `${name} is missing`));
+    else descriptions.push({ file: name, lines: mdlib.split(t).body });
+  }
+  prose.push(...descriptions);
   for (const name of ctx.list('decisions').filter((n) => n.endsWith('.md')).sort()) {
     prose.push({ file: 'decisions/' + name, lines: mdlib.split(ctx.read('decisions/' + name) || '').body });
   }
@@ -167,9 +173,8 @@ function run(ctx) {
     else if (!d) out.push(fail(c.file, c.line, `cites rule "${c.slug}", which PROTOCOL.md does not define`));
   }
 
-  // ranges, in PROTOCOL.md and SPEC.md
-  const ranged = [{ file: PROTOCOL, lines: body }];
-  if (spec !== null) ranged.push({ file: 'SPEC.md', lines: mdlib.split(spec).body });
+  // ranges, in PROTOCOL.md, SPEC.md and COURSE.md
+  const ranged = [{ file: PROTOCOL, lines: body }, ...descriptions];
   for (const r of ranged) {
     for (const g of rangeCitations(r.lines)) out.push(fail(r.file, g.line, `cites a range "${g.text}": cite the rules one by one, or the group that holds them`));
   }

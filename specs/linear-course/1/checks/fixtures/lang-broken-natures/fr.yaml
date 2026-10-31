@@ -74,14 +74,14 @@ markers:
   school: "école"
   course: "cours"
 
-# The qualifiers a case heading may carry, at most one, and no other word (SPEC.md 4.3).
+# The qualifiers a case heading may carry, at most one, and no other word (COURSE.md 3.3).
 qualifiers:
   fallback: "rechange"
   practice: "entraînement"
   aside: "aparté"
 
 # The words of a concept reference in reader text: « concept 4 », « concepts 5 et 7b »,
-# « annexe A2 » (SPEC.md 4.5).
+# « annexe A2 » (COURSE.md 3.5).
 concept_refs:
   concept: "concept"
   concepts: "concepts"

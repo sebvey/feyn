@@ -1,5 +1,5 @@
 'use strict';
-// Concept references of the reader text (SPEC.md section 4.5): the words of the pack group
+// Concept references of the reader text (COURSE.md section 3.5): the words of the pack group
 // concept_refs, then concept numbers or sub-concept ids. One grammar, read by `conventions`
 // (each id exists) and `glossary-order` (a concept reference silences a forward use).
 

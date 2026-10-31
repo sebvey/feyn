@@ -1,5 +1,5 @@
 'use strict';
-// Every key of SPEC.md section 9 and every key PROTOCOL.md uses exists in the course language's pack.
+// Every key of COURSE.md section 7 and every key PROTOCOL.md uses exists in the course language's pack.
 const fs = require('fs');
 const path = require('path');
 const yaml = require('./lib/yaml');
@@ -16,7 +16,7 @@ const KEYS = {
   source_types: ['primary', 'secondary', 'marketing'],
 };
 const LISTS = { typography: 'banned' };
-// checks.anaphora is optional (SPEC.md section 9): a pack without it is consumable;
+// checks.anaphora is optional (COURSE.md section 7): a pack without it is consumable;
 // domain-first-sentence-standalone, a quality check, reports its absence.
 
 

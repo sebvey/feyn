@@ -40,8 +40,8 @@ batch, check). Course files stay in the course language.`
 const SCOUT_SCHEMA = {
   type: 'object',
   properties: {
-    spec_dir: { type: 'string', description: 'specs/<name>/<MAJOR>/ of the spec and MAJOR that course.yaml declares (spec: <name>@<MAJOR>), ends with /: where you read SPEC.md and the templates (the checks run through specs/check-course)' },
-    shared_files: { type: 'array', items: { type: 'string' }, description: 'files every agent of the batch reads: course.yaml, plan.md, storyline.md, glossary.md, SPEC.md sections 4 to 6, the course templates, PROTOCOL.md if it exists, the issue' },
+    spec_dir: { type: 'string', description: 'specs/<name>/<MAJOR>/ of the spec and MAJOR that course.yaml declares (spec: <name>@<MAJOR>), ends with /: where you read COURSE.md and the templates (the checks run through specs/check-course)' },
+    shared_files: { type: 'array', items: { type: 'string' }, description: 'files every agent of the batch reads: course.yaml, plan.md, storyline.md, glossary.md, COURSE.md sections 3 to 5, the course templates, PROTOCOL.md if it exists, the issue' },
     batch_instructions: { type: 'string', description: 'instructions of the issue for the whole batch, copied word for word' },
     concepts: {
       type: 'array',
@@ -110,13 +110,13 @@ const WRITE_SCHEMA = {
 phase('Scope')
 const scout = await agent(`${ROLE}
 
-Read ${COURSE}course.yaml (it names the spec: field spec) and the spec's SPEC.md and templates.\
+Read ${COURSE}course.yaml (it names the spec: field spec) and the spec's COURSE.md and templates.\
 ${A.issue ? ` Read issue #${A.issue} ("mise exec -- gh issue view ${A.issue}") and its parent.` : ''}\
 ${A.concepts ? ` The batch is the concepts ${A.concepts.join(', ')}.` : ' The batch is the concepts the issue asks to write.'}
 
 Return the scope of the batch: its concepts in course order, with for each its concept folder, \
 its course.yaml entry, its own inputs and the instructions of the issue about it, copied word \
-for word. A concept folder holds concept.md, teaching.md, sources.md (SPEC.md section 4).`,
+for word. A concept folder holds concept.md, teaching.md, sources.md (COURSE.md section 3).`,
   { label: 'scope', schema: SCOUT_SCHEMA, model: 'sonnet', effort: 'low' })
 
 if (!scout || !scout.concepts.length) throw new Error('Empty scope: no concept found for the batch')
@@ -143,7 +143,7 @@ const reviewPrompt = (c, kind, round, previous) => {
 - accuracy: every verifiable claim of concept.md and teaching.md has its row in sources.md (or in « Non vérifié »), and the source says what the files claim; reopen a source online if a row looks doubtful; consensus and school correctly labelled and attributed;
 - consistency: facts and actors match the storyline (no unflagged new fact), terms match the course glossary (no term used before its defining concept, except in a sentence that carries a concept reference to it or to one of its sub-concepts, or that defines the term in passing), cross-references are right, no duplicate of another concept folder.`
     : `the FORM:
-- teaching: each sub-concept fits one teacher message under the protocol and the course writing rules; each question tests understanding, never "did you understand?"; a question that tests several points is written in parts, as the template of teaching.md shows; expected answers right and nuanced; common mistakes realistic for the audience of plan.md; conformity to the course templates and SPEC.md section 4;
+- teaching: each sub-concept fits one teacher message under the protocol and the course writing rules; each question tests understanding, never "did you understand?"; a question that tests several points is written in parts, as the template of teaching.md shows; expected answers right and nuanced; common mistakes realistic for the audience of plan.md; conformity to the course templates and COURSE.md section 3;
 - overlap: no section that explains uses the situation of a case of the example bank or states its verdict (reader text principles stay general);
 - style: the course writing rules of plan.md and the typography of the language pack.`
   return `${ROLE}
@@ -174,14 +174,14 @@ const results = await pipeline(
 
 ${context(c)}
 
-Sources step. Write ${COURSE}${c.dir}sources.md following SPEC.md section 4.4 and the course template. Start from the sources the inputs already verified (do not redo them) and search online only for what is missing. Cover what the concept folder will claim: definitions, consensus with its reference text, schools with their author, dates, figures, quotations, and every claim of the existing files, verified one by one. Tell primary from secondary and marketing sources; put in « Non vérifié » what you could not confirm. Errors found in the existing files go in ${WORK}${c.id}-errors.md (create it only if there are some). Return a three-line summary: what is verified, what is not, the errors found.`,
+Sources step. Write ${COURSE}${c.dir}sources.md following COURSE.md section 3.4 and the course template. Start from the sources the inputs already verified (do not redo them) and search online only for what is missing. Cover what the concept folder will claim: definitions, consensus with its reference text, schools with their author, dates, figures, quotations, and every claim of the existing files, verified one by one. Tell primary from secondary and marketing sources; put in « Non vérifié » what you could not confirm. Errors found in the existing files go in ${WORK}${c.id}-errors.md (create it only if there are some). Return a three-line summary: what is verified, what is not, the errors found.`,
     { label: `sources:${c.id}`, phase: 'Sources' }),
 
   (sourcesSummary, c) => agent(`${ROLE}
 
 ${context(c)}
 
-Writing step. sources.md of ${COURSE}${c.dir} has just been written (summary: ${sourcesSummary}). Write concept.md and teaching.md there, following SPEC.md section 4, the course templates and the course writing rules of plan.md, for the audience of plan.md, from the course.yaml entry (the sub-concept tree is the structure), the sources, the storyline, the glossary, the inputs and the existing files (keep what is right and proven). Follow the protocol for the example bank. The reader text respects the overlap rule: principles in general terms, neither the situation nor the verdict of a case. The files cite no reference: each claim you add has its row in sources.md; add it, or put it in « Non vérifié ». Edit neither the storyline nor the glossary: a new fact or term you need goes in ${WORK}${c.id}-needs.md (create it only if needed) and your text stays consistent with what exists meanwhile.`,
+Writing step. sources.md of ${COURSE}${c.dir} has just been written (summary: ${sourcesSummary}). Write concept.md and teaching.md there, following COURSE.md section 3, the course templates and the course writing rules of plan.md, for the audience of plan.md, from the course.yaml entry (the sub-concept tree is the structure), the sources, the storyline, the glossary, the inputs and the existing files (keep what is right and proven). Follow the protocol for the example bank. The reader text respects the overlap rule: principles in general terms, neither the situation nor the verdict of a case. The files cite no reference: each claim you add has its row in sources.md; add it, or put it in « Non vérifié ». Edit neither the storyline nor the glossary: a new fact or term you need goes in ${WORK}${c.id}-needs.md (create it only if needed) and your text stays consistent with what exists meanwhile.`,
     { label: `writing:${c.id}`, phase: 'Writing', schema: WRITE_SCHEMA }),
 
   async (written, c) => {

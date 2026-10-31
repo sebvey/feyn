@@ -1,17 +1,17 @@
 # Templates of `linear-course`
 
-One template per file `SPEC.md` defines. Copy one to the course folder, replace every
+One template per file `COURSE.md` defines. Copy one to the course folder, replace every
 `<placeholder>`, delete the header comment (a `#` block in `course.yaml`; a `<!-- -->` block,
 the first thing in the file, elsewhere: course Markdown has no HTML). The header says what the
-file is, which SPEC section binds it, and the rules a check enforces.
+file is, which COURSE.md section binds it, and the rules a check enforces.
 
-| Template | Becomes | SPEC |
+| Template | Becomes | COURSE.md |
 |---|---|---|
-| `course.yaml` | `courses/<id>/course.yaml` | 3 |
-| `plan.md`, `glossary.md`, `storyline.md`, `CHANGELOG.md` | the same names in `courses/<id>/` | 6 |
-| `domain.md` | `courses/<id>/domains/<N>-<slug>.md` | 5 |
-| `concept.md`, `teaching.md`, `sources.md` | the same names in `courses/<id>/concepts/<NN>-<slug>/` | 4 |
-| `diagram.svg` | `<stem>.svg` in a concept folder, optional | 7 |
+| `course.yaml` | `courses/<id>/course.yaml` | 2 |
+| `plan.md`, `glossary.md`, `storyline.md`, `CHANGELOG.md` | the same names in `courses/<id>/` | 5 |
+| `domain.md` | `courses/<id>/domains/<N>-<slug>.md` | 4 |
+| `concept.md`, `teaching.md`, `sources.md` | the same names in `courses/<id>/concepts/<NN>-<slug>/` | 3 |
+| `diagram.svg` | `<stem>.svg` in a concept folder, optional | 6 |
 | `learner/{apprenant,observations,parcours}.md` | a learner's memory files, ported from the old course; no check reads them | protocol |
 
 The headings and markers in the templates are the French language pack's (`lang/fr.yaml`): a
