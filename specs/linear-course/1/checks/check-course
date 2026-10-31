@@ -8,8 +8,8 @@ require('./lib/deps').need();
 const { load } = require('./lib/course');
 
 const MODES = {
-  conformity: ['course-yaml', 'concept-folder', 'conventions', 'svg-contract', 'sources', 'course-files',
-    'domain-first-sentence', 'language-pack-keys'],
+  conformity: ['course-yaml', 'concept-folder', 'case-contract', 'conventions', 'svg-contract', 'sources',
+    'course-files', 'domain-first-sentence', 'language-pack-keys'],
   quality: ['glossary-order', 'typography', 'domain-first-sentence-standalone'],
 };
 

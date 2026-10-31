@@ -80,6 +80,24 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   if (others.length) report(`broken/${name} breaks nothing else`, false, others.slice(0, 2).join(' | '));
 }
 
+// the schemas of the spec (schemas/*.schema.yaml, JSON Schema 2020-12 read by Ajv2020): valid's
+// course.yaml and the frontmatter of each of its concept.md are valid against them
+{
+  const Ajv2020 = require('ajv/dist/2020').default;
+  const yaml = require('./lib/yaml-lines');
+  const md = require('./lib/md');
+  const schema = (n) => new Ajv2020({ allErrors: true, logger: false }).compile(yaml.parse(fs.readFileSync(path.join(here, '..', 'schemas', n), 'utf8')));
+  const errs = (v) => v.errors.map((e) => `${e.instancePath || '/'} ${e.message}`).slice(0, 2).join(' | ');
+  const course = schema('course.schema.yaml');
+  const front = schema('concept-frontmatter.schema.yaml');
+  const cy = yaml.parse(fs.readFileSync(path.join(fx, 'valid', 'course.yaml'), 'utf8'));
+  report('valid/course.yaml is valid against schemas/course.schema.yaml', course(cy), course.errors && errs(course));
+  for (const c of cy.concepts) {
+    const data = md.split(fs.readFileSync(path.join(fx, 'valid', c.dir, 'concept.md'), 'utf8')).data;
+    report(`valid/${c.dir}/concept.md is valid against schemas/concept-frontmatter.schema.yaml`, front(data), front.errors && errs(front));
+  }
+}
+
 // --concept looks at one concept only: an unlisted concept folder does not fail course-yaml
 {
   const r = run(path.join(fx, 'broken', 'course-yaml-unlisted-folder'), ['--lang-dir', path.join(fx, 'lang'), '--only', 'course-yaml', '--concept', '0']);
@@ -101,6 +119,8 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     const r = spec(d, ['--only', ex.check]);
     const hit = r.lines.filter((l) => l.startsWith(ex.check + ': fail: '));
     report(`spec/broken/${name} fails ${ex.check}`, r.code === 1 && hit.some((l) => l.includes(ex.message)), `expected "${ex.message}", got ${r.lines.join(' | ') || r.err}`);
+    const others = failing(spec(d, [])).filter((l) => !l.startsWith(ex.check + ': '));
+    if (others.length) report(`spec/broken/${name} breaks nothing else`, false, others.slice(0, 2).join(' | '));
   }
   const s = spec(path.join(here, '..'), []);
   report('the repository spec passes every spec check', s.code === 0, notOk(s));

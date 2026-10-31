@@ -32,16 +32,31 @@ The files of the spec are split by class of products (section 3), plus the frame
 | `SPEC.md` | the frame: this file |
 | `COURSE.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the language pack keys |
 | `PROTOCOL.md` | the protocol of the teacher: purpose, notation, rules named by slug, keys and parameters |
+| `rules/course.yaml` | the rules of a course, in English |
+| `rules/protocol.yaml` | the rules of the teacher, in French |
+| `rules/spec.yaml` | the rules on the spec itself: its language packs, the slugs of its protocol, its rule files and schemas |
+| `schemas/*.schema.yaml` | the tables of fields of `COURSE.md`, as JSON Schema 2020-12 written in YAML, each one rule of `rules/course.yaml` |
 | `CHANGELOG.md` | the changes of the spec, an « Unreleased » section until the tag |
 | `checks/` | the check scripts, their fixtures and `checks/README.md` (how to run them) |
 | `lang/<code>.yaml` | the language packs |
 | `templates/` | the course templates |
 | `decisions/` | the decisions of this spec |
 
-The rules of a course leave `COURSE.md` for `rules/course.yaml`, its tables of fields for
-`schemas/*.schema.yaml`, and the rules of the protocol leave `PROTOCOL.md` for
-`rules/protocol.yaml`, in slices of #317 and in #318. Until that extraction, `COURSE.md` and
-`PROTOCOL.md` keep their verbal forms of obligation, read as `COURSE.md` says in its opening.
+A rule file is a list of groups, each a list of rules; a rule has an `id` (a slug), a `level`
+(section 4), a `category` (section 6), a `method` (section 5), a `check` when one implements the
+method, a `text` and, where an observed counterfactual exists, a `why`; a rule of the protocol
+also has an `origin`. A group may declare `category` and `method` once for its rules, and a rule
+may override them; a group of `rules/protocol.yaml` is a group of `PROTOCOL.md`, its slug as its
+`id` (decision `rules-with-level-and-method`). `check-spec` verifies the rule files and the
+schemas (section 10).
+
+`rules/course.yaml` holds the rules the checks of a course verify, taught-check included, and one
+rule verified by inspection, the review; `schemas/course.schema.yaml` and
+`schemas/concept-frontmatter.schema.yaml` are the tables of `COURSE.md` sections 2 and 3.1
+(#329). The other rules of a course leave `COURSE.md` for `rules/course.yaml`, and the rules of
+the protocol leave `PROTOCOL.md` for `rules/protocol.yaml`, which holds one today, in #318.
+Until that extraction, `COURSE.md` and `PROTOCOL.md` keep their verbal forms of obligation, read
+as `COURSE.md` says in its opening.
 
 **Language exception.** The rules of `PROTOCOL.md` are written in French, a bounded exception
 to the language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited
@@ -53,18 +68,18 @@ of another language needs the translation, a spec MINOR that removes this paragr
 
 Two classes of products: the **course**, its diagrams included, and the **teacher**.
 
-- A course conforms when it holds every requirement of its rules (today `COURSE.md`, then
-  `rules/course.yaml`), whatever the method that verifies each one. The blocking checks are a
-  necessary condition, not a sufficient one: the review and taught-check do the rest, and a
-  course tag certifies the whole.
-- A teacher conforms when it holds every requirement of the protocol (today `PROTOCOL.md`, then
-  `rules/protocol.yaml`); the method of a rule of the protocol is demonstration, by the fresh
-  tests. No teacher conforms yet, since no fresh test exists.
+- A course conforms when it holds every requirement of its rules (`rules/course.yaml`, and
+  until #318 the rest of `COURSE.md`), whatever the method that verifies each one. The blocking
+  checks are a necessary condition, not a sufficient one: the review and taught-check do the
+  rest, and a course tag certifies the whole.
+- A teacher conforms when it holds every requirement of the protocol (`rules/protocol.yaml`,
+  and until #318 the rest of `PROTOCOL.md`); the method of a rule of the protocol is
+  demonstration, by the fresh tests. No teacher conforms yet, since no fresh test exists.
 - Recommendations are outside conformance.
 
 The language pack is not a product: it lives in this folder, written by the spec's authors, and
 its consistency is the spec's own (`check-spec`, `language-pack-keys`). A rule on the pack sits
-with the spec's own rules and counts toward no course's conformance.
+with the spec's own rules, in `rules/spec.yaml`, and counts toward no course's conformance.
 
 ## 4. Levels
 
@@ -107,7 +122,12 @@ A rule of a course has a category, from a closed list, extended when needed:
 | `sources` | does every claim trace back to a source? |
 | `diagrams` | do the drawings follow their contract? |
 
-For a rule of the protocol, the category is its family (the nine families of `PROTOCOL.md`).
+For a rule of the protocol, the category is its family (the nine families of `PROTOCOL.md`),
+written in `rules/protocol.yaml` as a slug of its title, in their order: `session-start`,
+`domain-presentation`, `loop`, `message-form`, `storyline`, `stances-and-sources`,
+`practice-skip-asides`, `learner-memory`, `stop`. For a rule on the spec itself
+(`rules/spec.yaml`), which counts toward no product's conformance (section 3), the category is
+`spec`.
 
 ## 7. Severity
 
@@ -187,30 +207,35 @@ by `npm ci` (decision `checks-use-ajv-and-yaml`); `checks/README.md` gives how t
 them, their options and fixtures. `specs/check-course <course-dir>` runs this folder's
 `checks/check-course` on a course; until the checks read the rules (#317), it runs the checks that
 block by default and the checks that report with `--quality`. `checks/check-spec` checks the spec's own files
-(`PROTOCOL.md`, `SPEC.md`, `COURSE.md`, `decisions/`), not a course.
+(`PROTOCOL.md`, `SPEC.md`, `COURSE.md`, `decisions/`, `rules/`, `schemas/`), not a course.
 
 Both print one line per passing check (`<id>: ok`) and one line per failure
 (`<id>: fail: <file>:<line> <message>`, the file relative to the course folder, or to the spec
 folder for `check-spec`). The exit code is 0 when every check passes, 1 when one fails, 2 on a
 usage error or when the dependencies are not installed.
 
-The level of each check below is the one its rules carry today; the rules themselves move to
-`rules/course.yaml` in a slice of #317. The sections are those of `COURSE.md`.
+The category, level and method of each check below are those of the rules it verifies, in
+`rules/course.yaml` and `rules/spec.yaml` (the `check` of each rule); `rule-files` verifies
+that a check has one category and one level. A rule that no check implements yet is verified by
+its method alone: the review for an inspection, the fresh tests for a demonstration. The sections
+are those of `COURSE.md`.
 
 | Id | Category | Level | Method | Severity | Verifies | Sections |
 |---|---|---|---|---|---|---|
 | `course-yaml` | `structure` | requirement | test | blocks | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/`, spec declared (`specs/check-course` refuses an unknown spec or MAJOR), language pack present | 2; `SPEC.md` 8 |
-| `concept-folder` | `structure` (its cases part is `pedagogy`, split in a slice of #317) | requirement | test | blocks | the folder's files; the three files' sections and their order, the column count of the `sources.md` tables; frontmatter keys, `verified` parallel to `refs`; one section per sub-concept; « Objectif » equals `objective`; case headings and their qualifier, fields, a qualifier on « Question » only, coverage of leaves, citation in « Consignes » | 3, 7 |
+| `concept-folder` | `structure` | requirement | test | blocks | the folder's files; the three files' sections and their order, the column count of the `sources.md` tables; frontmatter keys, `verified` parallel to `refs`; one section per sub-concept; « Objectif » equals `objective` | 3 |
+| `case-contract` | `pedagogy` | requirement | test | blocks | case headings and their qualifier, titles unique in the concept, fields, a qualifier on « Question » only, coverage of leaves, citation in « Consignes » | 3.3, 7 |
 | `conventions` | `writing` | requirement | test | blocks | the reader-text conventions of `concept.md`; plain Markdown in course files | 1, 3.5 |
 | `svg-contract` | `diagrams` | requirement | test | blocks | every diagram against the drawing contract (a root `<defs>` accepted); declared and present diagrams match | 3.1, 6.1 |
 | `sources` | `sources` | requirement | test | blocks | no introduction; in each claim row (its five columns are `concept-folder`'s): section anchors that exist in `concept.md`, a source cell of reference ids or the `markers.course` word, a verification, a nature; reference ids, links (one URL or empty), types, dates; every id cited exists, every reference cited; « Non vérifié » entries anchored | 3.1, 3.4 |
 | `course-files` | `structure` | requirement | test | blocks | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md` (four columns, one defining concept per row, a variant in one row), `CHANGELOG.md`, domain files: presence, no unlisted file in `domains/`, frontmatter, sections, leads | 4, 5 |
 | `domain-first-sentence` | `writing` | requirement | test | blocks | the first sentence of each paragraph of « Le fil des concepts » ends within 300 characters of the lead | 4 |
-| `language-pack-keys` | none: a rule of the spec itself (section 3) | requirement | test | blocks | every key of `COURSE.md` section 7 and of `PROTOCOL.md` exists in the course's language pack | 7 |
+| `language-pack-keys` | `spec`: a rule on the spec itself (section 3) | requirement | test | blocks | every key of `COURSE.md` section 7 and of `PROTOCOL.md` exists in the course's language pack | 7 |
 | `glossary-order` | `pedagogy` | recommendation | test | reports | no glossary term used in a `concept.md`, body or frontmatter, before its defining concept, unless its sentence carries a concept reference to that concept; each comma variant matched, a qualified row skipped | 5 |
 | `typography` | `writing` | recommendation | test | reports | no banned character of the language pack in course text | 1 |
 | `domain-first-sentence-standalone` | `writing` | recommendation | test | reports | the first sentence of each paragraph of « Le fil des concepts » does not open with a word of `checks.anaphora` | 4, 7 |
-| `rule-slugs` (`check-spec`) | none: a rule of the spec itself | requirement | test | blocks | `PROTOCOL.md` names each of its rules and groups by a slug defined once; `PROTOCOL.md`, `SPEC.md`, `COURSE.md` and `decisions/` cite them by a defined slug, never by a number or a range | `PROTOCOL.md` |
+| `rule-slugs` (`check-spec`) | `spec` | requirement | test | blocks | `PROTOCOL.md` names each of its rules and groups by a slug defined once; `PROTOCOL.md`, `SPEC.md`, `COURSE.md` and `decisions/` cite them by a defined slug, never by a number or a range | `PROTOCOL.md` |
+| `rule-files` (`check-spec`) | `spec` | requirement | test | blocks | `rules/*.yaml`: required fields, closed lists (levels, methods, categories, families), ids unique across the files, every check named exists, one category and one level per check; each schema of `schemas/` compiles under `Ajv2020` and is named by one rule of `rules/course.yaml` | `SPEC.md` 2, 4 to 6 |
 | `taught-check` | `pedagogy` | recommendation | analysis | reports | no case asks what the learner has not yet been taught | 3.3 |
 
 **`taught-check`** is not a script: it is an agent workflow (`.claude/workflows/taught-check.js`),

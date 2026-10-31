@@ -1,0 +1,84 @@
+# The table of COURSE.md section 3.1: the keys of the concept.md frontmatter, an item and a
+# diagram entry, their presence and their form. What the table does not say (verified parallel
+# to refs, an item's text in inline Markdown, a declared diagram that exists) is a rule of
+# rules/course.yaml.
+$schema: https://json-schema.org/draft/2020-12/schema
+title: concept.md frontmatter
+type: object
+required: [description, stances]
+additionalProperties: false
+properties:
+  description:
+    description: one sentence for the site (search engines, previews)
+    $ref: '#/$defs/text'
+  stances:
+    description: >-
+      the standing of the concept's claims, three keys, each a list of items, possibly empty
+    type: object
+    required: [consensus, school, course]
+    additionalProperties: false
+    properties:
+      consensus:
+        description: what is accepted, and by which text
+        $ref: '#/$defs/items'
+      school:
+        description: "school of thought: a named author's or current's choice"
+        $ref: '#/$defs/items'
+      course:
+        description: the course's own choices, which no source states as such
+        $ref: '#/$defs/items'
+  neighbors:
+    description: neighbouring notions not to confuse with this concept
+    $ref: '#/$defs/items'
+  diagrams:
+    description: the concept's diagrams
+    type: array
+    items:
+      $ref: '#/$defs/diagram'
+$defs:
+  text:
+    type: string
+    pattern: '\S'
+  items:
+    type: array
+    items:
+      $ref: '#/$defs/item'
+  item:
+    type: object
+    required: [text, refs]
+    additionalProperties: false
+    properties:
+      text:
+        description: "inline Markdown: bold and italics only"
+        $ref: '#/$defs/text'
+      author:
+        description: the text or author the claim belongs to
+        $ref: '#/$defs/text'
+      refs:
+        description: reference ids of sources.md, possibly empty
+        type: array
+        items:
+          type: string
+      verified:
+        description: parallel to refs, one quotation and its place per reference
+        type: array
+        items:
+          $ref: '#/$defs/text'
+  diagram:
+    description: a diagram entry, all keys mandatory
+    type: object
+    required: [file, title, caption, subconcept]
+    additionalProperties: false
+    properties:
+      file:
+        description: the SVG's file name
+        $ref: '#/$defs/text'
+      title:
+        description: "one line: the SVG <title> and the image alt"
+        $ref: '#/$defs/text'
+      caption:
+        description: what the diagram shows
+        $ref: '#/$defs/text'
+      subconcept:
+        description: the id of the sub-concept it illustrates
+        $ref: '#/$defs/text'

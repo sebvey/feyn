@@ -1,0 +1,11 @@
+# fixture: the rules of the teacher
+groups:
+  - id: onboarding
+    title: Accueil
+    category: onboarding
+    method: demonstration
+    rules:
+      - id: first-rule
+        level: requirement
+        origin: "new"
+        text: Le premier message part sans appel d'outil.
