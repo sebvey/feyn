@@ -14,8 +14,9 @@ the classroom build script that turns a course into a classroom, `site/` the eng
 builds it, `.claude/` the agentic layer, `docs/` what belongs to no single area.
 `construction/`, the design, plan and session notes of the construction, was removed on
 2026-10-31: its files are read at `2c16adf3e66a` (`git show 2c16adf3e66a:construction/<path>`).
-`.claude/` has four folders: `skills/` the HOW (one folder per skill, its `SKILL.md`
-and its briefs), `workflows/` the agent workflows, `reference/` the WHAT (what a thing is or looks
+`.claude/` has five folders: `skills/` the HOW (one folder per skill, its `SKILL.md`
+and its briefs), `agents/` the project subagents (an agent whose brief is reused from run to
+run, spawned by name, its tools limited by its file), `workflows/` the agent workflows, `reference/` the WHAT (what a thing is or looks
 like: the body templates, the Project reference, the rules of an agent in a worktree),
 `decisions/` the decisions that bind the agentic layer. Why: decisions `monorepo-feyn`,
 `claude-folder-layout`, `construction-in-history`.

@@ -14,9 +14,13 @@ export const meta = {
 // checkout is found by the agents themselves (the first path "git worktree list" prints); the
 // rules cite the decision epic-on-integration-branch, not a date.
 // Briefs: the contributor follows /feyn-issue-branch and /feyn-pull-request, adapted to the base
-// (the skills stay the one source of their steps). The reviewer follows the "Reviewer brief" of
-// /feyn-pr-review, with this workflow's additions; its steps 2 to 4 (spawn, return, resume) are
-// folded in here, since the workflow spawns the agents itself and cannot resume one.
+// (the skills stay the one source of their steps). The reviewer and the verifier are the project
+// subagent feyn-pr-reviewer (.claude/agents/feyn-pr-reviewer.md, its agentType: the reviewer
+// brief, no Edit or Write tool), with this workflow's additions in their prompt; the steps 2 to 4
+// of /feyn-pr-review (spawn, return, resume) are folded in here, since the workflow spawns the
+// agents itself and cannot resume one.
+// A session started before .claude/agents/feyn-pr-reviewer.md existed has not loaded it: the run
+// then fails at the Review stage; the cure is to start a new session and run again.
 
 const A = args || {}
 for (const k of ['issue', 'type', 'area']) if (!A[k]) throw new Error(`args.${k} missing: args are { issue, epic?, base?, type, area, work?, dryRun? }`)
@@ -150,7 +154,9 @@ log(`PR #${contrib.pr} opened on ${contrib.branch}`)
 
 // ---------- Review
 phase('Review')
-const REVIEW_BASE = `You review PR #${contrib.pr} (branch ${contrib.branch}, base ${BASE}) on feyn, which claims to deliver issue #${A.issue}, ${SCOPE}. You are the fresh agent of ".claude/skills/feyn-pr-review/SKILL.md": read it and follow its section "Reviewer brief" (PR #${contrib.pr}, branch ${contrib.branch}, issue #${A.issue}, agent-workflow run: none), not its steps, which this workflow runs.${OBS ? '' : ` Read also the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments"); the base is ${A.base} wherever the brief or a skill says main.`} You are in your own worktree: read ".claude/reference/worktree-agent.md" first; "git fetch" then "git switch --detach origin/${contrib.branch}" (the branch is checked out elsewhere). Change nothing, push nothing, comment nothing. ${CHECKOUT}
+// The project subagent of .claude/agents/, loaded by the session at its start.
+const REVIEWER = 'feyn-pr-reviewer'
+const REVIEW_BASE = `You review PR #${contrib.pr} (branch ${contrib.branch}, base ${BASE}) on feyn, which claims to deliver issue #${A.issue}, ${SCOPE}. You are the fresh agent of /feyn-pr-review: follow your brief (PR #${contrib.pr}, branch ${contrib.branch}, issue #${A.issue}, checks to rerun: those the PR diff touches, agent-workflow run: none), not the steps of ".claude/skills/feyn-pr-review/SKILL.md", which this workflow runs.${OBS ? '' : ` Read also the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments"); the base is ${A.base} wherever the brief or a skill says main.`} You are in your own worktree: read ".claude/reference/worktree-agent.md" first; "git fetch" then "git switch --detach origin/${contrib.branch}" (the branch is checked out elsewhere). Change nothing, push nothing, comment nothing. ${CHECKOUT}
 
 ${RULES}
 The PR is a draft until ${OBS ? 'its hand-over' : 'it is merged'}: not a finding. Under these rules, a choice the contributor made and listed in "Review first", a counterfactual it proposed, and a decision the maintainer has not accepted yet are acceptable when sound: judge them on their merit, never block only because the maintainer has not seen them. Check also the consistency with ${OBS ? 'the decisions the issue names' : "the epic's Done when and plan comment"}.`
@@ -158,7 +164,7 @@ The PR is a draft until ${OBS ? 'its hand-over' : 'it is merged'}: not a finding
 const review = await agent(`${REVIEW_BASE}
 
 Return the head sha you reviewed, a verdict per Done when statement with your own proof, the blocking findings (the PR must not be ${OBS ? 'handed over' : 'merged'} as is), the non-blocking findings, and what you could not check and why.`,
-  { label: `review PR #${contrib.pr}`, phase: 'Review', schema: REVIEW_SCHEMA, isolation: 'worktree', model: 'opus' })
+  { label: `review PR #${contrib.pr}`, phase: 'Review', schema: REVIEW_SCHEMA, isolation: 'worktree', agentType: REVIEWER, model: 'opus' })
 
 if (!review) return { status: 'failed', stage: 'review', contrib, deviations: contrib.deviations }
 log(`review: ${review.blocking.length} blocking, ${review.nonBlocking.length} non-blocking`)
@@ -190,7 +196,7 @@ Run the checks the change touches. Then update the PR body (mise exec -- gh pr e
   const verify = await agent(`${REVIEW_BASE}
 
 You verify corrections, as step 4 of /feyn-pr-review says, as a new agent. The reviewed head was ${head}; the corrections are in ${head}..${fix.head}. The findings raised were: blocking ${JSON.stringify(blocking)}; non-blocking ${JSON.stringify(nonBlocking)}. The corrector says it fixed ${JSON.stringify(fix.fixed)} and left ${JSON.stringify(fix.left)}. Recheck each finding against the diff, rerun the Done when statements and checks the corrections touch, read everything in the correction diff beyond the findings. Return conform true when no blocking finding remains and every left non-blocking finding has an acceptable reason; the head you verified; the blocking and non-blocking findings still open or new; notes.`,
-    { label: `verify ${round} PR #${contrib.pr}`, phase: 'Correct', schema: VERIFY_SCHEMA, isolation: 'worktree', model: 'opus' })
+    { label: `verify ${round} PR #${contrib.pr}`, phase: 'Correct', schema: VERIFY_SCHEMA, isolation: 'worktree', agentType: REVIEWER, model: 'opus' })
   if (!verify) return { status: 'failed', stage: `verify-${round}`, contrib, review, rounds, deviations: contrib.deviations }
   rounds.push({ round, fix, verify })
   head = verify.head

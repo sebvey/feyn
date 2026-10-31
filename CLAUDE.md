@@ -12,7 +12,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `teacher/` | teacher template, teacher skills, classroom build script |
 | `site/` | the site engine (Astro); reads `courses/` directly |
 | `docs/` | `decisions/`, `glossary.md`, `contributing.md` |
-| `.claude/` | `skills/` (the HOW), `workflows/`, `reference/` (the WHAT), `decisions/`; decision `claude-folder-layout` |
+| `.claude/` | `skills/` (the HOW), `agents/` (project subagents), `workflows/`, `reference/` (the WHAT), `decisions/`; decision `claude-folder-layout` |
 | `.github/` | issue template and CI workflows |
 
 `construction/` (design, plan, notes, scripts of the construction) was removed on 2026-10-31:
