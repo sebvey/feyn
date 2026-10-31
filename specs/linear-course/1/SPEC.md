@@ -220,9 +220,9 @@ unknown one a usage error). A check runs on a course when it verifies rules of
 Both print one line per passing check (`<id>: ok`) and one line per failure
 (`<id>: fail: <file>:<line> <message>`, the file relative to the course folder, or to the spec
 folder for `check-spec`), whatever the severity; `check-course` ends with a summary line that
-counts the failed checks of each severity. The exit code is 1 when a blocking check fails, 0 when
-none does (a reporting check that fails leaves it 0), 2 on a usage error or when the
-dependencies are not installed.
+counts the failed checks of each severity. The exit code is 1 when a blocking check fails or a
+check of either severity crashes, 0 otherwise (a reporting check that fails leaves it 0), 2 on a
+usage error, when the rule files cannot be read or when the dependencies are not installed.
 
 The category, level and method of each check below are those of the rules it verifies, in
 `rules/course.yaml` and `rules/spec.yaml` (the `check` of each rule); `rule-files` verifies
