@@ -88,7 +88,7 @@ the plan's bullets (`- **Observation**: …`), or for an epic the five sections 
      | `teacher/` | `area:teacher` |
      | `site/` | `area:site` |
      | `.claude/`, `.github/` | `area:agentic` |
-     | root files, `docs/`, `construction/` | `area:repo` |
+     | root files, `docs/` | `area:repo` |
 
      Paths in two areas: the area that carries the intent; if none does, propose two issues.
      A label missing on GitHub is created, since the tree says it exists:
@@ -108,10 +108,10 @@ the plan's bullets (`- **Observation**: …`), or for an epic the five sections 
      numbered when the order matters), Reads only when the work needs other files.
      - A Done when statement that searches the repository (an `rg` or a `grep` that must print
        nothing, or only some lines) excludes the history: released CHANGELOG entries, dated
-       amendments, superseded decisions and `construction/` (`--glob '!construction/**'`, the
-       others by path or named as exceptions). Otherwise the contributor rewrites the history
-       to meet it, as #339's `rg` made its contributor split a string and rewrite an amendment
-       (a debrief rule, `/feyn-deliver-epic`). The same holds for an epic's Done when.
+       amendments and superseded decisions (by path or named as exceptions). Otherwise the
+       contributor rewrites the history to meet it, as #339's `rg` made its contributor split a
+       string and rewrite an amendment (a debrief rule, `/feyn-deliver-epic`). The same holds
+       for an epic's Done when.
      - With `direct` (step 3): first hold the Done when to the criterion of a direct delivery,
        one edit with no behaviour, as [contributing](../../../docs/contributing.md), "How the
        work is organised", moment 2, states it. A Done when that asks more: refuse `direct`,

@@ -11,13 +11,14 @@ opened this repository. Every section ends with the decision it rests on, in
 `course-specs/` holds the contracts a course is written against, `courses/` the courses, `teacher/`
 the teacher template, the teacher skills and
 the classroom build script that turns a course into a classroom, `site/` the engine that
-builds it, `.claude/` the agentic layer, `docs/` what belongs to no single area. During the
-construction, `construction/` holds the design, the plan and the session notes; its fate is
-issue #232. `.claude/` has four folders: `skills/` the HOW (one folder per skill, its `SKILL.md`
+builds it, `.claude/` the agentic layer, `docs/` what belongs to no single area.
+`construction/`, the design, plan and session notes of the construction, was removed on
+2026-10-31: its files are read at `2c16adf3e66a` (`git show 2c16adf3e66a:construction/<path>`).
+`.claude/` has four folders: `skills/` the HOW (one folder per skill, its `SKILL.md`
 and its briefs), `workflows/` the agent workflows, `reference/` the WHAT (what a thing is or looks
 like: the body templates, the Project reference, the rules of an agent in a worktree),
 `decisions/` the decisions that bind the agentic layer. Why: decisions `monorepo-feyn`,
-`claude-folder-layout`.
+`claude-folder-layout`, `construction-in-history`.
 
 ## An observation becomes an issue
 
@@ -246,7 +247,7 @@ depends on it), in one line ending with a mark `(<tool>, <status> <date>, #<n>)`
 is `YYYY-MM-DD`; `#<n>` is the issue or PR that holds the proof: a PR holds it on the `Behaviours:`
 line of its Checks, an issue in a comment (`/feyn-pull-request` step 5). The line goes with its
 step. A line the tool disproves is corrected or removed.
-`grep -rn '(GitHub,\|(Claude Code,' .claude docs construction` lists them all. There is no
+`grep -rn '(GitHub,\|(Claude Code,' .claude docs` lists them all. There is no
 catalogue of behaviours: it would be read at the wrong moment. Two exceptions: the behaviours
 every agent in a worktree meets are written once in
 [`.claude/reference/worktree-agent.md`](../.claude/reference/worktree-agent.md), which the

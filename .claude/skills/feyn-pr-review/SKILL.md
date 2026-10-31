@@ -83,8 +83,9 @@ name no longer resolves (the reviewer is gone): steps 1 to 3 again, with a new a
 You review PR #<pr> (branch <branch>) on feyn, which claims to deliver issue #<n>. You are
 not its contributor: trust nothing in the PR body or in any summary; recount and recheck
 every claim yourself. Read CLAUDE.md, the issue (`mise exec -- gh issue view <n>`) and the
-files it lists (a note of construction/notes/ only when the issue names it), then the PR
-(`mise exec -- gh pr view <pr>`, `mise exec -- gh pr diff <pr>`); read a file at the PR's
+files it lists (a file of construction/, removed, only when the issue names it, read with
+`git show 2c16adf3e66a:<path>`), then the PR (`mise exec -- gh pr view <pr>`,
+`mise exec -- gh pr diff <pr>`); read a file at the PR's
 head with `git fetch` and `git show origin/<branch>:<path>`. To rerun checks in a worktree,
 `git fetch` then `git switch --detach origin/<branch>` (the branch itself is checked out in
 the contributor's worktree, so `git switch <branch>` fails). Change nothing, push nothing,

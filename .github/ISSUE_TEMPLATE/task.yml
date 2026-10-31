@@ -56,6 +56,6 @@ body:
     attributes:
       label: Reads
       description: Design files, specs and sources the work needs, one per line.
-      placeholder: "design/08-agentic.md (\"GitHub Issues\")"
+      placeholder: "docs/contributing.md (\"How the work is organised\")"
     validations:
       required: false
