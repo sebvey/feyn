@@ -36,5 +36,9 @@ or later, run under `mise exec`, stays. This replaces "Dependency-free Node (Com
 ## Consequences
 
 - An `npm ci` step runs before the checks, in CI (#137) and locally (under `mise exec`).
-- The checks are ported to the `yaml` package; how an instance path maps to `file:line` is
-  settled by the slice that ports them (#317, slice 3).
+- The checks are ported to the `yaml` package (#327), and the schemas come with #329. Today a
+  failure maps to `file:line` through the `yaml` package's positions alone, kept by
+  `lib/yaml-lines.js` for each key and item; no ajv instance path is mapped: `course-yaml` and
+  `concept-folder` verify the two schema rules with their own code until #336 wires ajv into
+  them; ajv serves today in `rule-files` (`check-spec`), which compiles the schemas, and in
+  `test-fixtures`, which validates the valid fixture against them.

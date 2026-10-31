@@ -47,7 +47,7 @@ A rule file is a list of groups, each a list of rules; a rule has an `id` (a slu
 method, a `text` and, where an observed counterfactual exists, a `why`; a rule of the protocol
 also has an `origin`. A group may declare `category` and `method` once for its rules, and a rule
 may override them; a group of `rules/protocol.yaml` is a group of `PROTOCOL.md`, its slug as its
-`id` (decision `rules-with-level-and-method`). `check-spec` verifies the rule files and the
+`id` (decision `rule-groups-replace-ranges`). `check-spec` verifies the rule files and the
 schemas (section 10).
 
 `rules/course.yaml` holds the rules the checks of a course verify, taught-check included, and one
