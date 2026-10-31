@@ -56,14 +56,15 @@ One at a time, the next one only (rules of the cycle):
    - `merged`: its `reviewLine` must be in the PR's Checks
      (`mise exec -- gh pr view <pr> --json body`); missing, add it
      (`mise exec -- gh pr edit <pr> --body-file <file>`).
-   - `merged-with-problems`: a slice not closed or not Done (debrief rule 4). Fix it before the
-     next slice (close it, set its Status, [project.md](../../reference/project.md), "Commands"), or
-     report it to the maintainer and wait; never the next slice over it.
+   - `merged-with-problems`: read its `problems`, a slice not closed or not Done (debrief rule
+     4), or another problem of the merge. Fix it before the next slice (close it, set its
+     Status, [project.md](../../reference/project.md), "Commands"), or report it to the
+     maintainer and wait; never the next slice over it.
    - `needs-orchestrator` (blocking findings after two rounds): read them; rerun the workflow on
      the same issue with `work` naming them (its contributor resumes the branch), or report them.
-   - `blocked`, `failed`, `merge-failed`: the `question`, or the `stage` that failed; a question
-     that leaves the epic's Done when impossible goes to the maintainer (step 3), the rest is
-     rerun.
+   - `blocked`, `failed`, `merge-failed`: `contrib.question`, the `stage` that failed, or the
+     merge's `problems`; a question that leaves the epic's Done when impossible goes to the
+     maintainer (step 3), the rest is rerun.
    - `deviations`, whatever the status: each becomes an open question at once (step 3).
      `choicesMade`: a structural one (a new file, a category, a marker, an exception to a
      principle) too (debrief rule 1); the others wait for the hand-over.
@@ -78,7 +79,8 @@ One at a time, the next one only (rules of the cycle):
 6. **Two lines on the plan comment** ([project.md](../../reference/project.md), "Epics", "The
    plan comment"), as `/feyn-merge-cleanup` step 7 writes them: `#<n> (PR #<pr>): <what it
    delivered>`, then `Next slice to pose: <the next>`; not obvious, rewrite the plan first (step
-   1). After the last slice: `Next slice to pose: none, the whole branch is reviewed.`
+   1). After the last slice: `Next slice to pose: none, the whole-branch review is next.` (not
+   `/feyn-merge-cleanup`'s "none, the epic closes": the epic closes only with its epic PR).
 
 ## 3. Open questions
 
@@ -90,10 +92,10 @@ maintainer, reaches the maintainer as an open question, never only as a line of 
   ([project.md](../../reference/project.md), "Delivery on an integration branch"), and a comment
   on the epic, numbered, each with its recommendation, ending "Answer here; the plan comment
   records the answer.";
-- answered on the epic: rewrite the line `Answered: <the answer> (<date>)` and apply the answer,
-  by a slice (posed next) when it needs work;
-- the count: the plan comment's lines starting with `Open question:`. The epic PR is not handed
-  over while one remains.
+- answered on the epic: the line `Answered: <the answer> (<date>)` right under its
+  `Open question:` line, and apply the answer, by a slice (posed next) when it needs work;
+- the count: the plan comment's lines starting with `Open question:` that no `Answered:` line
+  follows. The epic PR is not handed over while one remains.
 
 ## 4. Review of the whole branch
 

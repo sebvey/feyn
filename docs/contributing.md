@@ -142,12 +142,12 @@ Four moments:
    (the slice closed, the next to pose; if the next is not obvious, back to moment 1), as
    `/feyn-merge-cleanup` writes them. When the last slice is merged, a fresh agent reviews the
    whole integration branch against the epic's Done when, a slice fixes what it finds, and the
-   orchestrator hands over the epic PR once no open question remains: the epic goes Ready for review, the maintainer verifies its Done when and
-   merges the epic PR, which closes the epic (from #342; until then `/feyn-merge-cleanup` sets the
-   epic Ready for review when the plan comment's last "Next slice to pose" line says "Next slice to
-   pose: none, the epic closes"). All its sub-issues closed does not mean the epic closes: a slice
-   exists only if it is the next one (rules of the cycle, below), so every delivery leaves them all
-   closed until the next is posed.
+   orchestrator hands over the epic PR once no open question remains: the epic goes Ready for
+   review, the maintainer verifies its Done when and merges the epic PR, which closes the epic (from
+   #342; until then `/feyn-merge-cleanup` sets the epic Ready for review when the plan comment's
+   last "Next slice to pose" line says "Next slice to pose: none, the epic closes"). All its
+   sub-issues closed does not mean the epic closes: a slice exists only if it is the next one (rules
+   of the cycle, below), so every delivery leaves them all closed until the next is posed.
    **Deliver an observation**: one PR to `main`, merged by the maintainer, in one of two ways:
    `/feyn-deliver <n>`, or a direct delivery. `/feyn-deliver <n>` delivers every observation
    except those the maintainer named `direct` at their creation
