@@ -1,6 +1,6 @@
 ---
 name: feyn-decision
-description: "Tooling of the work cycle, called by the triage and by `/feyn-deliver`'s contributor: write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or refuse it when no counterfactual is named or the entry bar is not met. Use for \"/feyn-decision <the decision, in a sentence>\"."
+description: "Tooling of the work cycle, called by the triage and by the contributor of the agent workflow deliver-slice.js: write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or refuse it when no counterfactual is named or the entry bar is not met. Use for \"/feyn-decision <the decision, in a sentence>\"."
 argument-hint: "<the decision, in a sentence>"
 ---
 

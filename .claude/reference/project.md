@@ -106,9 +106,11 @@ sub-issues are closed.
 - An **open question**: a choice of a slice that departs from the epic's Done when or adds
   structure (a new file, a category, a marker, an exception to a principle). The orchestrator
   writes it at once as a line of the plan comment (`Open question: <the choice>, <the options
-  ruled out>, <the cost of going back> (#<slice>)`) and as a comment on the epic, and the work
-  goes on. The maintainer answers on the epic; the orchestrator rewrites the line as
-  `Answered: <the answer> (<date>)` and applies it, by a slice when it needs work.
+  ruled out>, <the cost of going back> (#<slice>)`), as a comment on the epic, and in the work
+  session to the maintainer (the comment, posted from the maintainer's account, notifies
+  nobody), and the work goes on. The maintainer answers on the epic; the orchestrator adds
+  the line `Answered: <the answer> (<date>)` right under its `Open question:` line, which
+  stays, and applies the answer, by a slice when it needs work (`/feyn-deliver-epic` step 3).
 - The Status: the slice goes Ready, In progress, then Done at its merge into the integration
   branch, never Ready for review; the epic goes In progress with its first slice, Ready for
   review at the hand-over of its epic PR, Done when that PR's merge closes it.
