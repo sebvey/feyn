@@ -34,6 +34,6 @@ next channel with one more prefix: one mechanism, not three.
 - A release is a course tag on `main` (`/publish`), which deploys the prod site and, on the
   maintainer's request, rebuilds the prod classroom.
 - Every course has the three addresses from its first build, under its own sub-path.
-- Amended 2026-10-31 (#344): an epic is delivered on an integration branch cut from `main`,
-  which lives as long as the epic and merges into `main` by its epic PR (decision
-  `epic-on-integration-branch`); it is not a channel. Every other branch is an issue branch.
+- Amended 2026-10-31 (#344): the integration branch ruled out above is allowed for an epic
+  (decision `epic-on-integration-branch`): cut from `main`, it lives as long as the epic and
+  merges into `main` by its epic PR; it is not a channel. Every other branch is an issue branch.

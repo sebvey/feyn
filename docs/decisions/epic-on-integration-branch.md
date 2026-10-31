@@ -33,8 +33,7 @@ for a slice, the delivery to `main` with one merge by the maintainer per slice.
 ## Consequences
 
 - Trial: epic #317 (plan comment, 2026-10-31), eight slices merged by the orchestrator, one
-  merge by the maintainer (#335). A slice of an epic never goes Ready for review; the epic does,
-  when its epic PR is handed over.
+  merge by the maintainer (#335). A slice never goes Ready for review; its epic does.
 - Amends `three-channels` (one more branch outlives an issue),
   `fresh-agent-review-before-maintainer` (the epic PR reaches the maintainer) and
   `themes-and-release-milestones` (the plan comment holds the open questions).

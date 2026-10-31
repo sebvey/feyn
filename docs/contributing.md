@@ -129,26 +129,26 @@ Four moments:
    plan comment yet; otherwise the plan comment is rewritten first. This holds as well for the
    next slice after a delivery and for a slice added when the maintainer's check of the epic's
    Done when fails.
-2. **Deliver a slice**, on the epic's integration branch (decision
-   `epic-on-integration-branch`): a contributor agent opens a PR to that branch, a fresh agent
-   reviews it, and the orchestrator merges it (squash), closes the slice (`Closes` does not
-   close an issue on a branch other than `main`) and sets it Done; a slice never goes Ready for
-   review, its PR never awaits the maintainer. `main` is merged into the integration branch when
-   it moves, never rebased. A choice of a slice that departs from the epic's Done when or adds
-   structure becomes an open question at once, and the work goes on; the maintainer answers on
-   the epic, and the orchestrator marks the line answered in the plan comment and applies the
-   answer, by a slice when it needs work. The slice workflow and the skill that delivers an epic
-   come from #342; until then `/feyn-deliver <n>` delivers a slice to `main`. After each merge,
-   two lines go on the plan comment (the slice closed, the next to pose; if the next is not
-   obvious, back to moment 1), as `/feyn-merge-cleanup` writes them. When the last slice is
-   merged, a fresh agent reviews the whole integration branch against the epic's Done when, a
-   slice fixes what it finds, and the orchestrator hands over the epic PR once no open question
-   remains: the epic goes Ready for review, the maintainer verifies its Done when and merges the
-   epic PR, which closes the epic (from #342; until then `/feyn-merge-cleanup` sets the epic
-   Ready for review when the plan comment's last "Next slice to pose" line says "Next slice to
-   pose: none, the epic closes"). All its sub-issues closed does not mean the epic closes: a
-   slice exists only if it is the next one (rules of the cycle, below), so every delivery
-   leaves them all closed until the next is posed.
+2. **Deliver a slice**, on the epic's integration branch (decision `epic-on-integration-branch`): a
+   contributor agent opens a PR to that branch, a fresh agent reviews it, and the orchestrator
+   merges it (squash), closes the slice (`Closes` does not close an issue on a branch other than
+   `main`) and sets it Done; a slice never goes Ready for review, its PR never awaits the
+   maintainer. `main` is merged into the integration branch when it moves, never rebased. A choice
+   of a slice that departs from the epic's Done when or adds structure becomes an open question at
+   once, and the work goes on; the maintainer answers on the epic, and the orchestrator marks the
+   line answered in the plan comment and applies the answer, by a slice when it needs work. The
+   slice workflow and the skill that deliver an epic come from #342; until then the orchestrator
+   runs this delivery with the work-cycle tooling (`/feyn-deliver`, `/feyn-pull-request`), base and
+   merge adapted. After each merge, two lines go on the plan comment (the slice closed, the next to
+   pose; if the next is not obvious, back to moment 1), as `/feyn-merge-cleanup` writes them. When
+   the last slice is merged, a fresh agent reviews the whole integration branch against the epic's
+   Done when, a slice fixes what it finds, and the orchestrator hands over the epic PR once no open
+   question remains: the epic goes Ready for review, the maintainer verifies its Done when and
+   merges the epic PR, which closes the epic (from #342; until then `/feyn-merge-cleanup` sets the
+   epic Ready for review when the plan comment's last "Next slice to pose" line says "Next slice to
+   pose: none, the epic closes"). All its sub-issues closed does not mean the epic closes: a slice
+   exists only if it is the next one (rules of the cycle, below), so every delivery leaves them all
+   closed until the next is posed.
    **Deliver an observation**: one PR to `main`, merged by the maintainer, in one of two ways:
    `/feyn-deliver <n>`, or a direct delivery. `/feyn-deliver <n>` delivers every observation
    except those the maintainer named `direct` at their creation
@@ -160,8 +160,9 @@ Four moments:
    in one file). The maintainer's work session makes its branch, its edit and its PR with the
    work-cycle tooling (`/feyn-issue-branch`, `/feyn-pull-request`): no contributor, no
    fresh-agent review, and the PR's Checks say `Fresh-agent review: none, direct delivery.`; a
-   direct slice's PR targets the integration branch and the orchestrator merges it. An
-   observation is Ready for review while its PR awaits the merge.
+   direct slice's PR targets the integration branch and the orchestrator merges it (until #342
+   brings the tooling, it skips `/feyn-pull-request` step 8, so the slice never goes Ready for
+   review). An observation is Ready for review while its PR awaits the merge.
 3. **Brainstorm**: `/feyn-brainstorm` frames a work session with the maintainer on how feyn works
    (the maintainer decides, one point at a time, nothing written in the repository during the
    brainstorm) and ends it in a proposal, created with `/feyn-issue proposal`. A brainstorm that
@@ -200,21 +201,20 @@ Why: decisions `themes-and-release-milestones`, `epic-on-integration-branch`.
 
 - Every issue is an item of the Project (the GitHub Project "feyn", number 4), and its Status says
   where it stands: Backlog (proposed, to triage), Ready (decided, free to take), In progress (a
-  branch exists), Ready for review (the work claims done, the maintainer reviews and concludes:
-  an observation whose PR is open after the fresh-agent review, or with the line `Fresh-agent
-  review: none, direct delivery.`, the maintainer merges; an epic whose epic PR is handed over,
-  the maintainer verifies its Done when and merges the epic PR; a slice of an epic never has
-  it, from #342), Done (closed; the close reason stays on GitHub). Needs Decision is in the
-  Project but unused for now: the label `blocked:maintainer` carries a decision awaited. One at
-  a time. The Project workflows add the open issues created or updated while they are on, set
-  Backlog when one is added and Done when it closes; the skills set the rest: `/feyn-issue` Ready for a slice or a
-  decided observation, `/feyn-issue-branch` In progress, `/feyn-pull-request` Ready for review,
-  or the orchestrator at the hand-over under `/feyn-deliver` (a correction asked on a delivered
-  PR returns the slice to In progress, `/feyn-deliver` step 4); the orchestrator of an epic sets
-  a slice Done when it merges it into the integration branch, and the epic Ready for review when
-  it hands over the epic PR (from #342). `.claude/reference/project.md` says who sets each
-  Status. There are no state labels. Why: decisions `project-status-not-state-labels`,
-  `epic-on-integration-branch`.
+  branch exists), Ready for review (the work claims done, the maintainer reviews and concludes: an
+  observation whose PR is open after the fresh-agent review, or with the line `Fresh-agent review:
+  none, direct delivery.`, the maintainer merges; an epic whose epic PR is handed over, the
+  maintainer verifies its Done when and merges the epic PR; a slice of an epic never has it), Done
+  (closed; the close reason stays on GitHub). Needs Decision is in the Project but unused for now:
+  the label `blocked:maintainer` carries a decision awaited. One at a time. The Project workflows
+  add the open issues created or updated while they are on, set Backlog when one is added and Done
+  when it closes; the skills set the rest: `/feyn-issue` Ready for a slice or a decided observation,
+  `/feyn-issue-branch` In progress, `/feyn-pull-request` Ready for review, or the orchestrator at
+  the hand-over under `/feyn-deliver` (a correction asked on a delivered PR returns the slice to In
+  progress, `/feyn-deliver` step 4); the orchestrator of an epic sets a slice Done when it merges it
+  into the integration branch, and the epic Ready for review when it hands over the epic PR
+  (from #342). `.claude/reference/project.md` says who sets each Status. There are no state
+  labels. Why: decisions `project-status-not-state-labels`, `epic-on-integration-branch`.
 - `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is
   a draft, which keeps it from being merged); on top of the Status, never instead of it; only
   the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
@@ -252,8 +252,8 @@ briefs of those agents name as their first read; that file is their point of use
 may group its marks in a last section, `## Tool behaviours`, one line per mark naming its step:
 the step states its rule, the section its proof (as `/feyn-deliver` does).
 `.claude/settings.json` sets `"idleCompaction": false`: an idle compaction replaces a work
-session's history by a summary and erases the material of its debrief (maintainer, 2026-10-31)
-(Claude Code, observed 2026-10-31, #344).
+session's history by a summary and erases the material of its debrief, as the maintainer saw
+on 2026-10-31 (Claude Code, observed 2026-10-31, #345).
 
 ## Decisions and vocabulary
 
