@@ -36,12 +36,12 @@ mise exec -- specs/linear-course/1/checks/check-course --list
 The checks come from the rule files (`SPEC.md` section 7; decision
 `rules-with-level-and-method`): `check-course` runs, in one run, every check named by the
 `check` of a rule of `rules/course.yaml` or `rules/spec.yaml` whose method is test and that runs
-on a course. A check takes the category and the level of its rules (`rule-files` guarantees one
-of each), and its severity follows: it **blocks** when its rules are requirements verified by
-test, otherwise it **reports**. A failure of a blocking check sets exit code 1; a failure of a
-reporting check is printed the same way, its findings triaged into course issues, and leaves
-exit code 0. The blocking checks run first, then the reporting ones, each in the order of the
-rule files; no list of checks is written in `check-course`.
+on a course. A check's category and level come from its rules, which `rule-files` (`check-spec`)
+holds to one category and one level per check, and its severity follows: it **blocks** when its
+rules are requirements verified by test, otherwise it **reports**. A failure of a blocking check
+sets exit code 1; a failure of a reporting check is printed the same way, its findings triaged
+into course issues, and leaves exit code 0. The blocking checks run first, then the reporting
+ones, each in the order of the rule files; no list of checks is written in `check-course`.
 
 A check runs on a course when its script is in this folder and it verifies rules of
 `rules/course.yaml`, or when its script exports `runsOn: 'course'`: `language-pack-keys`, whose

@@ -69,5 +69,4 @@ archived repository. This replaces decision `two-versioned-objects`.
   conformity check" reads "a requirement", "a quality check" reads "a recommendation", so a
   requirement added or made stricter, or a recommendation made a requirement, is a MAJOR; a
   requirement made a recommendation, or a recommendation added or made stricter, is a MINOR; a
-  rule of the protocol added, changed or renamed stays a MINOR. `specs/README.md` and
-  `checks/README.md` say the old frame until the slices of #317 rewrite them.
+  rule of the protocol added, changed or renamed stays a MINOR.

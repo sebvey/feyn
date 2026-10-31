@@ -27,12 +27,13 @@ no class: `- file or area: what changes`.
 - `checks/`: the checks read YAML with the package `yaml` (YAML 1.2), installed by `npm ci` from
   `checks/package.json`; `lib/yaml.js` removed; the same failures at the same `file:line` (#327).
 - `rules/`, `schemas/`, `checks/`: the rules the checks verify as data in `rules/course.yaml`,
-  one rule per method, `rules/protocol.yaml` (one rule) and `rules/spec.yaml` (the rules on the
-  spec itself, category `spec`; decisions `spec-files-and-alpha-version` and `rules-with-level-and-method` amended); the tables of
-  `COURSE.md` 2 and 3.1 as `schemas/course.schema.yaml` and
-  `schemas/concept-frontmatter.schema.yaml`; `concept-folder` split, its cases part now
-  `case-contract` (`pedagogy`), the same failures at the same `file:line`; `check-spec`'s new
-  `rule-files` validates the rule files and the schemas, with ajv (`Ajv2020`) (#329).
+  `rules/protocol.yaml` (one rule) and `rules/spec.yaml` (the rules on the spec itself, category
+  `spec`; decisions `spec-files-and-alpha-version` and `rules-with-level-and-method` amended),
+  at least one rule of each method across them; the tables of `COURSE.md` 2 and 3.1 as
+  `schemas/course.schema.yaml` and `schemas/concept-frontmatter.schema.yaml`; `concept-folder`
+  split, its cases part now `case-contract` (`pedagogy`), the same failures at the same
+  `file:line`; `check-spec`'s new `rule-files` validates the rule files and the schemas, with ajv
+  (`Ajv2020`) (#329).
 - `checks/`: `check-course` takes its checks, their category and their severity from
   `rules/course.yaml` and `rules/spec.yaml` (`lib/rules.js`) and runs, by default, every check of
   method test in one run: a failure of a blocking check sets exit code 1, a failure of a
