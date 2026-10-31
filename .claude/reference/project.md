@@ -10,7 +10,7 @@ number 4, owner `sebvey`; its **Status** field says where an issue stands:
 | Ready | decided, free to take | `/feyn-issue` for a slice or a decided observation, or the maintainer | `be2d48d7` |
 | In progress | a branch exists | `/feyn-issue-branch` (no Project workflow fires on a branch); `/feyn-deliver` step 4 when a correction is asked on a delivered PR | `be703c13` |
 | Needs Decision | present in the Project, unused by the skills for now: the label `blocked:maintainer` carries a decision awaited | nobody | `33e9b212` |
-| Ready for review | the work claims done, the maintainer reviews and concludes: an observation whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none, direct delivery.` (the maintainer merges), an epic whose epic PR is handed over (the maintainer verifies its Done when and merges the epic PR); a slice of an epic never has it ("Epics", "Delivery on an integration branch") | `/feyn-pull-request` step 8 (`/feyn-deliver` step 5 when it runs the cycle); for an epic, its orchestrator at the hand-over of the epic PR (from #342; until then `/feyn-merge-cleanup` step 7) | `deab4f08` |
+| Ready for review | the work claims done, the maintainer reviews and concludes: an observation whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none, direct delivery.` (the maintainer merges), an epic whose epic PR is handed over (the maintainer verifies its Done when and merges the epic PR); a slice of an epic never has it ("Epics", "Delivery on an integration branch") | `/feyn-pull-request` step 8 (`/feyn-deliver` step 5 when it runs the cycle); for an epic, its orchestrator at the hand-over of the epic PR (`/feyn-deliver-epic` step 5) | `deab4f08` |
 | Done | closed (the close reason stays on GitHub) | Project workflow "Item closed"; `/feyn-merge-cleanup` only when that Project workflow is off; for a slice of an epic, its orchestrator when it merges the slice into the integration branch and closes it | `9e81e5a6` |
 
 Project id `PVT_kwHOADOnU84Bo8V6`, Status field id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`.
@@ -87,11 +87,9 @@ and nothing blocks it (no open blocked-by link, "Dependencies"). The maintainer 
 at triage. An epic has no To do and no slice posed in advance.
 
 **Take an epic**: the procedure is in [contributing](../../docs/contributing.md), "How the work
-is organised", moments 1 and 2; the commands it needs are above. The epic goes Ready for review
-when its epic PR is handed over (below), however many of its sub-issues are closed; until #342
-brings the skill that delivers an epic, `/feyn-merge-cleanup` step 7 sets it when the plan
-comment's last "Next slice to pose" line says it closes ("Next slice to pose: none, the epic
-closes").
+is organised", moments 1 and 2, run by `/feyn-deliver-epic`; the commands it needs are above.
+The epic goes Ready for review when its epic PR is handed over (below), however many of its
+sub-issues are closed.
 
 **Delivery on an integration branch** (decision `epic-on-integration-branch`):
 - The **integration branch**: cut from `main` by the epic's orchestrator when the epic is
@@ -114,8 +112,9 @@ closes").
 - The Status: the slice goes Ready, In progress, then Done at its merge into the integration
   branch, never Ready for review; the epic goes In progress with its first slice, Ready for
   review at the hand-over of its epic PR, Done when that PR's merge closes it.
-- The skills and the agent workflow that run this come from #342; until then the orchestrator
-  runs it with the work-cycle tooling, base and merge adapted.
+- `/feyn-deliver-epic` runs this, each slice through the agent workflow `deliver-slice.js` in
+  epic mode; `/feyn-deliver` delivers an observation through the same workflow in observation
+  mode, its PR to `main`.
 
 **The views**, set by the maintainer in the web interface (Project feyn, a view's menu:
 filter, Layout, Group by, Fields):

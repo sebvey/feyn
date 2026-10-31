@@ -1,18 +1,22 @@
 ---
 name: feyn-deliver
-description: "Deliver a Ready issue on feyn, a slice or a standalone observation, from Ready to merged: a contributor agent in its own worktree takes the issue, does the work and opens the PR; a fresh agent reviews it against the Done when; a corrections pass; the hand-over to the maintainer, who merges; then the clean-up after the merge. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"/feyn-deliver 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\"."
+description: "Deliver a Ready observation on feyn (an issue with no parent epic), from Ready to the maintainer's merge: run it through the agent workflow feyn-deliver-slice-workflow in observation mode (a contributor agent opens the PR to main, a fresh agent reviews it against the Done when, corrections verified by a fresh agent), read its result, clean the run, hand the PR over to the maintainer, who merges, then clean up after the merge. A slice of an epic goes to /feyn-deliver-epic; a direct delivery is unchanged. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"/feyn-deliver 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\"."
 argument-hint: "<issue number> [<issue number>…]"
 ---
 
 # /feyn-deliver <n> [<n>…]
 
-One job: drive issue n from Ready to merged without doing the issue's changes in the work session that runs it.
-That work session is the orchestrator: it briefs, checks and relays; a contributor agent
-does the work, a fresh agent reviews it, the maintainer merges. Every PR is reviewed by a fresh
-agent before it reaches the maintainer (decision `fresh-agent-review-before-maintainer`).
+One job: drive observation n from Ready to merged without doing the issue's changes in the
+work session that runs it. That work session is the orchestrator: it runs the agent workflow
+`.claude/workflows/deliver-slice.js` in observation mode, reads its result, cleans the run and
+hands over; the workflow's agents contribute, review and correct, the maintainer merges. Every
+PR is reviewed by a fresh agent before it reaches the maintainer (decision
+`fresh-agent-review-before-maintainer`). An observation stays one PR to `main`, merged by the
+maintainer (decision `epic-on-integration-branch`); the slices of an epic are delivered by
+`/feyn-deliver-epic`, which this skill cites rather than repeats where the two runs are the same.
 
-Nothing is spawned before the maintainer's go-ahead: they say "deliver", "go", or name the
-issue, in the work session; the same before any agent-workflow run.
+Nothing is spawned and no run launched before the maintainer's go-ahead: they say "deliver",
+"go", or name the issue, in the work session.
 
 ## Progress
 
@@ -23,7 +27,7 @@ no announcement of a review before it exists, no repeat of the previous message.
 counts and before/after go in the PR or the issue, and the message links them. The full report
 comes once, at the hand-over (step 5).
 
-## 1. Before spawning
+## 1. Before the run
 
 - Read each issue (`mise exec -- gh issue view <n>`).
 - **A direct delivery.** An issue whose To do opens with the line "Direct delivery" (named
@@ -31,142 +35,122 @@ comes once, at the hand-over (step 5).
   "How the work is organised", moment 2) stops the cycle for that issue, before the refusals
   below: reply "this slice is delivered as a direct delivery (`/feyn-issue-branch`, the edit,
   `/feyn-pull-request`): nothing to spawn", and spawn nothing.
+- **A slice of an epic.** Its parent
+  (`mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`; HTTP 404: none)
+  carries the label `epic`: refuse in one line, "#<n> is a slice of epic #<epic>:
+  `/feyn-deliver-epic <epic>` delivers it", and run nothing for that issue.
 - Then the refusals of `/feyn-issue-branch` step 1 apply: name the reason and stop for that
-  issue.
-- Several numbers: one contributor agent per issue, in parallel, only when their To do touch
-  distinct files. Two issues that share a file run one after the other (the second after the
-  first is merged).
-- Model of the contributor agent: at the least latitude left to the contributor, `opus` (an
-  issue that mixes text or decisions with execution included); `sonnet` only when the To do
-  gives the exact change.
+  issue. Except In progress: the run resumes it, its contributor taking the issue's branch and
+  PR where they are.
+- Several numbers: one run per issue, in parallel, only when their To do touch distinct files.
+  Two issues that share a file run one after the other (the second after the first is merged).
 - A decision the issue asks for: did the maintainer accept its counterfactual in this
-  work session? Then the brief gives it verbatim, with the date. Otherwise the contributor
-  takes the decision-awaited path (step 4).
-- A Done when that needs an agent-workflow run: a subagent has no Workflow tool. The
-  contributor makes the run possible and stops on a draft with an `Awaiting the orchestrator`
-  section (exact script path and arguments): the second use of a draft, an awaited
-  orchestrator run. Ask the maintainer for a go-ahead for this run, then run it. Its agents run
-  in the work session's working directory; while a run is launched or running, no `cd`:
-  absolute paths and `git -C <path>`. The run and its reruns after fixes come before step 3:
-  the reviewer needs their transcripts. Resume the contributor with the result: it applies it
-  and removes the section; the PR stays a draft until the hand-over (step 5). Check it.
+  work session? Then `work` (step 2) gives it verbatim, with the date. Otherwise the contributor
+  proposes the counterfactual and lists it in the PR's Review first, and the hand-over names it.
+- A Done when that needs an agent-workflow run: the workflow's contributor has no Workflow tool;
+  it makes the run possible and names the exact script and arguments in its `unsure`. Step 3
+  reads it.
 
-## 2. The contributor agent
+## 2. The run
 
-`Agent` with `isolation: "worktree"`, the model above, and the
-[contributor brief](contributor-brief.md) filled in. Keep its id: the corrections pass and the
-clean-up need it. Wait for its reply; never do its work in parallel.
+1. **Run** `.claude/workflows/deliver-slice.js` as `/feyn-deliver-epic` step 2.3 says (its
+   `whenToUse`, `scriptPath` absolute, its `dryRun` first in a work session), in observation
+   mode: `issue`, `type` and `area` (the issue's labels without their prefix), no `epic`, no
+   `base`; `work` only when the issue needs guidance beyond its To do. `work` cites only what an
+   agent can read itself (repository files on `main`, issues and their comments, PRs): a
+   maintainer's note goes into the issue first.
+   While a run is launched or running, no `cd`: absolute paths and `git -C <path>`.
+2. **Clean the run** as `/feyn-deliver-epic` step 2.5 says for its worktrees and their
+   `worktree-wf_<run id>-<n>` branches, with one more check before each removal, since the PR is
+   not merged yet: after `git fetch`, the worktree's `HEAD` is on the PR's branch on `origin`
+   (`git -C <path> branch -r --contains HEAD` names `origin/<branch>`); not there: stop and show
+   it. A run that opened no PR (`pr` 0, a `blocked` or `failed` run) has no branch to test: a
+   worktree whose `HEAD` adds nothing to `origin/main` (`git -C <path> log origin/main..HEAD`
+   prints nothing) is removed after the status check; one with commits stays, named to the
+   maintainer with the run's status. Then, when the PR exists, move the local issue branch to
+   its head, which a corrector's push (`git push origin HEAD:<branch>`, from a detached `HEAD`)
+   does not move: `git branch -f <branch> origin/<branch>`, its worktree being gone. The local
+   issue branch stays: `/feyn-merge-cleanup` deletes it after the merge (step 6).
 
-Its reply gives the branch, the PR, the files changed, the checks and what it was unsure of.
-Check it before going on: the PR exists and is a draft
-(`mise exec -- gh pr view <pr> --json title,isDraft,body`), its title follows
-`<type>(<area>): <summary>`, the body starts with `Closes #<n>` or `Refs #<n>` (or the awaiting
-section), then has the sections of `/feyn-pull-request` step 5 in order (Context, Issues,
-Changes, Checks, Review first) within its limits (step 5: 30 lines, blank lines and the
-awaiting section excluded), no signature line.
+## 3. Read the result
 
-## 3. Independent review
+Every field, never only `status`:
+- `ready-for-handover`: the PR is a draft
+  (`mise exec -- gh pr view <pr> --json title,isDraft,body`), its title follows
+  `<type>(<area>): <summary>`, the body starts with `Closes #<n>`, then has the sections of
+  `/feyn-pull-request` step 5 in order (Context, Issues, Changes, Checks, Review first) within
+  its limits (30 lines, blank lines excluded), no signature line; its `reviewLine` is in the
+  PR's Checks, as `/feyn-deliver-epic` step 2.4 says for `merged`. Keep your own check of the
+  sensitive points in the diff (`mise exec -- gh pr diff <pr>`): a counterfactual, a Done when
+  count, a command that touches `main` or a remote branch, the title.
+- `deviations`, whatever the status: each is named to the maintainer at the hand-over (step 5),
+  with its options ruled out and its cost of going back; `choicesMade` that add structure (a new
+  file, a category, a marker, an exception to a principle) too.
+- `unsure` that names an agent-workflow run the Done when needs: ask the maintainer for a
+  go-ahead for that run, then run it; then a new run of the workflow (step 4) with `work`
+  giving the run ids `wf_<id>`, their transcript directory and the result: its contributor
+  applies it and its reviewer reads the transcripts.
+- `needs-orchestrator`, `blocked`, `failed`: as `/feyn-deliver-epic` step 2.4 says, a question
+  going to the maintainer as a decision awaited (step 4).
 
-Load `/feyn-pr-review <pr>`: a fresh agent reads the PR, not the contributor's reply. Pass it
-what the PR does not hold: for a PR whose evidence is an agent-workflow run, the run ids
-`wf_<id>` and their transcript directory. Keep the reviewer's name, which `/feyn-pr-review`
-returns with its report: step 4 resumes it. A reviewer given its own worktree (checks to
-rerun): once its verification is done (step 4), clean that worktree if it is still there with
-steps 6.1, 6.2 and 6.4 only: it holds no issue branch, so no `/feyn-merge-cleanup` for it.
+## 4. Reruns: corrections, decision awaited
 
-## 4. Corrections pass, decision awaited
-
-- **Findings.** Note the PR's head (`mise exec -- gh pr view <pr> --json headRefOid`), then
-  send the blocking findings, and the non-blocking ones worth fixing, to the contributor agent
-  with `SendMessage` (its id; its context is intact). It fixes, pushes and updates the PR
-  body, adding to its Checks the `Fresh-agent review:` line (`/feyn-pull-request` step 5);
-  with no blocking finding, send that line too.
-- **The reviewer verifies the corrections.** After the contributor's fixes, resume the
-  reviewer with `SendMessage` to its name and the brief of `/feyn-pr-review` step 4: the PR
-  and the corrections' commit range (the head noted above, then the new head). It rechecks
-  each finding it raised, reruns the Done when statements the corrections touch, reads
-  everything in the diff beyond its findings, and returns a short verdict: conform, or what is
-  missing. What is missing goes back to the contributor, then to the reviewer again. Keep your
-  own check of the sensitive points in the diff (`mise exec -- gh pr diff <pr>`): a
-  counterfactual, a Done when count, a command that touches `main` or a remote branch, the
-  title. A new fresh agent (step 3) only when the reviewer is gone (its name no longer
-  resolves). The second-review rule of `/feyn-pull-request` step 7 does not apply here: the
-  resumed reviewer rereads whatever changed.
-- **Decision awaited.** The contributor that leaves a decision to the maintainer opens a draft
-  PR, puts `blocked:maintainer` on the issue only, writes an `Awaiting the maintainer` section
-  at the top of the body, and stops (`/feyn-pull-request`, step 6). A decision through
-  `/feyn-decision` takes this path unless the maintainer accepted its counterfactual in the
-  work session (step 1). Relay the question, the options and the recommendation to the
-  maintainer. The maintainer answers with a comment on the issue and removes the label; check
-  it is gone (`mise exec -- gh issue view <n> --json labels`), then resume the contributor with
-  `SendMessage` and the answer: it applies it and removes the section; the PR stays a draft
-  until the hand-over. The reviewer verifies the applied answer as it verifies corrections
-  (above), the maintainer's words quoted with the range.
-- **A decision after the hand-over.** The maintainer can refuse or settle a choice while the
-  PR awaits the merge: relay it to the contributor with `SendMessage`, the maintainer's words
-  quoted; the reviewer verifies the change as above.
-- **The Status.** A correction asked on a delivered PR (a late finding, a decision after the
-  hand-over): set the slice back to In progress ([project.md](../../reference/project.md),
-  "Commands") and turn the PR back into a draft (`mise exec -- gh pr ready --undo <pr>`); the
-  renewed hand-over (step 5) marks it ready and sets Ready for review again.
+Every change to the PR after a run goes through a new run of the workflow on the same issue,
+with `work` naming the change: its contributor resumes the PR from the local issue branch,
+which step 2.2 moved to the PR's head, a fresh agent reviews it, and step 2.2 cleans the run.
+- **Decision awaited.** A run `blocked` on a choice only the maintainer can make (its
+  `contrib.question`): put `blocked:maintainer` on the issue
+  (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`) and relay the question, the
+  options and the recommendation. The maintainer answers with a comment on the issue and removes
+  the label; check it is gone (`mise exec -- gh issue view <n> --json labels`), then rerun with
+  the answer quoted in `work`.
+- **A late finding or a decision after the hand-over.** The maintainer can ask for a correction,
+  refuse or settle a choice while the PR awaits the merge: rerun with the maintainer's words
+  quoted in `work`.
+- **The Status.** A correction asked on a delivered PR: set the issue back to In progress
+  ([project.md](../../reference/project.md), "Commands") and turn the PR back into a draft
+  (`mise exec -- gh pr ready --undo <pr>`); the renewed hand-over (step 5) marks it ready and
+  sets Ready for review again.
 
 ## 5. Hand-over to the maintainer
 
-Mark every PR ready, the review and the corrections being done:
-`mise exec -- gh pr ready <pr>`. Then set the issue Ready for review, for a `Closes` PR only (a
-`Refs` issue stays In progress; the contributor's `/feyn-pull-request` left it In progress;
-[project.md](../../reference/project.md), "Commands":
+Mark the PR ready, the review and the corrections being done: `mise exec -- gh pr ready <pr>`.
+Then, for a `Closes` PR only (a `Refs` issue stays In progress), set the issue Ready for review
+([project.md](../../reference/project.md), "Commands":
 `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`).
-Then reply with, one line each: the PR URL and title; the Status; the review (blocking findings
-found, fixed); what the maintainer should look at first (the PR's Review first); the merge
-command `/feyn-pull-request` gives (`mise exec -- gh pr merge <pr> --squash --delete-branch`).
-The merge is the maintainer's. Keep the contributor agent alive until then: a late finding goes
-back to it.
+Then reply with, one line each: the PR URL and title; the Status; the review (the result's
+`reviewLine`, the rounds of corrections); what the maintainer should look at first (the PR's
+Review first); each deviation and each structural choice of step 3, with its options ruled out
+and its cost of going back; the merge command `/feyn-pull-request` gives
+(`mise exec -- gh pr merge <pr> --squash --delete-branch`). The merge is the maintainer's.
 
 ## 6. After the merge
 
 From the main checkout, on `main`:
 
-0. The merge: `mise exec -- gh pr view <pr> --json state,mergedAt` shows `MERGED`; otherwise
-   stop and tell the maintainer, before any `git worktree remove` or `git branch -D`. It is
-   the check of `/feyn-merge-cleanup` step 1, done here first because the worktree removal
-   (6.2) comes before `/feyn-merge-cleanup` (6.3).
-1. The worktree: `git worktree list --porcelain` gives its path
-   (`.claude/worktrees/agent-<id>`), on a branch `worktree-agent-<id>` cut from `main`'s HEAD;
-   `/feyn-merge-cleanup` does not remove it. A worktree with no change at the end of the
-   agent's turn is already gone. It is locked while its agent runs
-   (`locked claude agent agent-<id>`) and unlocked once the agent has finished. Still locked:
-   stop the agent (`TaskStop`), then, if needed, `git worktree unlock <path>`.
-2. `git -C <path> status --porcelain` must print nothing; anything printed: stop and show it.
-   Then `git worktree remove <path>`. The issue branch is no longer checked out anywhere.
+1. `mise exec -- gh pr view <pr> --json state,mergedAt` shows `MERGED`; otherwise stop and tell
+   the maintainer.
+2. Nothing of the runs is left: `git worktree list` and `git branch --list 'worktree-wf_*'` show
+   none of their worktrees and branches; one left: clean it as step 2.2 says.
 3. `/feyn-merge-cleanup <branch>` for the issue branch: it confirms the change landed, the
-   Status, and deletes the local branch. The Project workflow "Item closed" sets Done;
-   `/feyn-merge-cleanup` sets it only when that Project workflow is off. Its lines on the
-   epic's plan comment, the epic to verify and close (set Ready for review when its plan
-   comment says its last slice closed) and the issues now free (`/feyn-merge-cleanup` step 7)
-   are relayed to the maintainer in the clean-up reply.
-4. `git branch -D worktree-agent-<id>`, the branch the worktree was created on.
-   `git worktree list` and `git branch --list 'worktree-agent-*'` show nothing of it left.
+   Status, deletes the local branch, and names the issues now free, relayed to the maintainer in
+   the clean-up reply.
 
 ## Tool behaviours
 
 The behaviours the steps above rely on, one line each with its step
-([contributing](../../../docs/contributing.md), "Tool behaviours"):
+([contributing](../../../docs/contributing.md), "Tool behaviours"); those of the run and its
+clean-up are in `/feyn-deliver-epic`, "Tool behaviours" (steps 2.3 and 2.5):
 
 - Step 1, an agent-workflow run: a subagent has no Workflow tool
   (Claude Code, observed 2026-10-28, #130).
-- Step 1, an agent-workflow run: its agents run in the work session's working directory
+- Step 2.1: an agent workflow's agents run in the work session's working directory
   (Claude Code, observed 2026-10-28, #130).
-- Step 1, an agent-workflow run: a `cd` into a worktree moves the work session even for one
-  command, and a run launched then runs its agents there (Claude Code, observed 2026-10-28, #171).
-- Step 6.0: a merge can fail on a GitHub error the maintainer does not see
-  (GitHub, observed 2026-10-30, #320).
-- Step 6.1: the worktree of an agent spawned with isolation (`.claude/worktrees/agent-<id>`, on
-  a branch `worktree-agent-<id>` cut from `main`'s HEAD) is not removed by
-  `/feyn-merge-cleanup` (Claude Code, observed 2026-10-27, #115).
-- Step 6.1: a worktree with no change at the end of the agent's turn is removed
+- Step 2.1: a `cd` into a worktree moves the work session even for one command, and a run
+  launched then runs its agents there (Claude Code, observed 2026-10-28, #171).
+- Step 2.2: a worktree with no change at the end of its agent's turn is removed
   (Claude Code, observed 2026-10-28, #171).
-- Step 6.1: the worktree is locked while its agent runs (`locked claude agent agent-<id>`)
+- Step 2.2: the worktree is locked while its agent runs
   (Claude Code, observed 2026-10-28, #128).
-- Step 6.1: the worktree is unlocked once the agent has finished
-  (Claude Code, observed 2026-10-28, #130).
+- Step 6.1: a merge can fail on a GitHub error the maintainer does not see
+  (GitHub, observed 2026-10-30, #320).
