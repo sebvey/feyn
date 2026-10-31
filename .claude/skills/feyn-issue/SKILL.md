@@ -110,7 +110,8 @@ the plan's bullets (`- **Observation**: …`), or for an epic the five sections 
        nothing, or only some lines) excludes the history: released CHANGELOG entries, dated
        amendments and superseded decisions (by path or named as exceptions). Otherwise the
        contributor rewrites the history to meet it, as #339's `rg` made its contributor split a
-       string and rewrite an amendment (a debrief rule, `/feyn-deliver-epic`). The same holds for an epic's Done when.
+       string and rewrite an amendment (a debrief rule, `/feyn-deliver-epic`). The same holds
+       for an epic's Done when.
      - With `direct` (step 3): first hold the Done when to the criterion of a direct delivery,
        one edit with no behaviour, as [contributing](../../../docs/contributing.md), "How the
        work is organised", moment 2, states it. A Done when that asks more: refuse `direct`,

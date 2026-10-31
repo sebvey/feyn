@@ -16,10 +16,11 @@ construction) is removed from the tree on 2026-10-31. Its files stay readable in
 `2c16adf3e66a`, the last commit of `main` that holds them:
 `git show 2c16adf3e66a:construction/<path>`, and `git ls-tree -r --name-only 2c16adf3e66a
 construction/` lists them. A file cited as `construction/<path>`, in an issue, a decision or a
-skill, is read there. This replaces the removal "at stage 4" (decision `monorepo-feyn`, the
-plan's S4-07), which decision `themes-and-release-milestones` left to observation #232. A work
-session leaves no note in a file any more: what it leaves for the maintainer or a later issue
-goes in its issue, its PR or a new issue.
+skill, is read there. This replaces the removal "at stage 4"
+(`construction/design/02-monorepo.md` and the plan's S4-07 in `construction/plan/stage-4.md`,
+both read at `2c16adf3e66a`), which decision `themes-and-release-milestones` left to
+observation #232. A work session leaves no note in a file any more: what it leaves for the
+maintainer or a later issue goes in its issue, its PR or a new issue.
 
 ## Options ruled out
 
