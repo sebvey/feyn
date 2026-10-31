@@ -52,3 +52,5 @@ no class: `- file or area: what changes`.
 - folder, `decisions/`: the spec moves from `specs/` to `course-specs/` (#340); paths updated
   in `SPEC.md`, the README, the checks and the decisions `rules-named-by-slug`,
   `checks-use-ajv-and-yaml`, `spec-files-and-alpha-version`.
+- `decisions/`: decision `one-diagram-style` amended, the workflow `migrate-concept` it names
+  removed and read in the history (#365).
