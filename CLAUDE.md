@@ -41,6 +41,11 @@ where a reserved term exists.
   interface cannot do it.
 - Never ask the maintainer to run a command you can run.
 - Answer in the language of the conversation; the repository stays in English.
+- No next topic while the previous one is open, a pending maintainer action included.
+- A level-2 heading per topic when a reply holds several topics or opens a new one.
+- A pass over a list opens each message with `<pass>: <n>/<N> treated · in progress: #<x>`.
+- A list to work through lives in a file, not in memory.
+- An item's frame (its purpose, where it belongs) before what is wrong; English not translated.
 
 ## Skills
 
@@ -49,11 +54,11 @@ through the agent workflow `deliver-slice.js`, up to the hand-over of its epic P
 `/feyn-deliver <n>` delivers a Ready observation (an issue with no parent epic) through the same
 workflow, up to the hand-over of its PR to `main`; a direct delivery is made with
 `/feyn-issue-branch` and `/feyn-pull-request`. `/feyn-brainstorm` runs a brainstorm with the
-maintainer and ends it in a proposal. Load the one that matches the request. The other `feyn-`
-skills are the work-cycle tooling: called by them or by the moment without a skill (triage), and
-loaded directly for a one-off act. A work session starts with an issue number. How the work is
-organised (epics, slices, observations, milestones, the Project's views): `docs/contributing.md`,
-"How the work is organised".
+maintainer and ends it in a proposal. `/feyn-triage` runs a pass on the Backlog with the
+maintainer. Load the one that matches the request. The other `feyn-` skills are the work-cycle
+tooling: called by them, and loaded directly for a one-off act. A work session starts with an
+issue number. How the work is organised (epics, slices, observations, milestones, the
+Project's views): `docs/contributing.md`, "How the work is organised".
 
 ## Non-negotiable rules
 
