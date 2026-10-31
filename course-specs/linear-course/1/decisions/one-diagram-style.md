@@ -38,3 +38,6 @@ the classes and this counterfactual were accepted by the maintainer on 2026-10-2
   information, and the maintainer validates each before and after (#180).
 - Amended 2026-10-30 (#216): #180 was closed not planned: no redraw of the diagrams of concepts
   0 to 5 and 9, migrated before this decision, is planned.
+- Amended 2026-10-31 (#365): the agent workflow `migrate-concept` is removed, its migration
+  done; its step M11 is read in the history at `0f1b6dd4fc27`:
+  `git show 0f1b6dd4fc27:.claude/workflows/migrate-concept.js`.
