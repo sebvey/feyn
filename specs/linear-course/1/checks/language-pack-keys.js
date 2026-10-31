@@ -82,4 +82,6 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'language-pack-keys', run, KEYS, protocolKeys };
+// Its rule is on the spec itself (rules/spec.yaml), yet the pack it checks is the one of each
+// course's language: check-course runs it on a course (lib/rules.js).
+module.exports = { id: 'language-pack-keys', runsOn: 'course', run, KEYS, protocolKeys };

@@ -163,7 +163,7 @@ ${context(c)}
 You are the writer of the concept folder ${COURSE}${c.dir}. ${findings.length ? `The reviewers' findings:
 ${JSON.stringify(findings, null, 1)}
 
-For each finding: check it against the files (real defect or false positive). Fix the real defects in concept.md, teaching.md and, if needed, sources.md. Dismiss false positives and say why. A finding that needs a new storyline fact, a new glossary term or a coordinator choice: do not settle it, put it in "open" and add it to ${WORK}${c.id}-needs.md. Then run` : 'The reviewers found nothing. Run'} "${CHECK_CMD(c.id)}" and return its output; fix what it reports about the files you wrote.`
+For each finding: check it against the files (real defect or false positive). Fix the real defects in concept.md, teaching.md and, if needed, sources.md. Dismiss false positives and say why. A finding that needs a new storyline fact, a new glossary term or a coordinator choice: do not settle it, put it in "open" and add it to ${WORK}${c.id}-needs.md. Then run` : 'The reviewers found nothing. Run'} "${CHECK_CMD(c.id)}" and return its output; in the files you wrote, fix every failure of a blocking check (its last line, the summary, names them; exit code 1), and a failure of a reporting check (exit code 0) when the fix keeps what the text says, otherwise put it in "open".`
 
 // --- Pipeline per concept --------------------------------------------------------------
 

@@ -33,3 +33,10 @@ no class: `- file or area: what changes`.
   `schemas/concept-frontmatter.schema.yaml`; `concept-folder` split, its cases part now
   `case-contract` (`pedagogy`), the same failures at the same `file:line`; `check-spec`'s new
   `rule-files` validates the rule files and the schemas, with ajv (`Ajv2020`) (#329).
+- `checks/`: `check-course` takes its checks, their category and their severity from
+  `rules/course.yaml` and `rules/spec.yaml` (`lib/rules.js`) and runs, by default, every check of
+  method test in one run: a failure of a blocking check sets exit code 1, a failure of a
+  reporting check is printed and leaves 0, and a summary line counts both; `--category` selects
+  by category, `--list` prints each check with its category and severity; `--quality` is gone, a
+  usage error naming its replacement; `test-fixtures` runs each fixture once and checks the exit
+  code against the severity (#331).

@@ -25,8 +25,9 @@ A new MAJOR copies the tree of the previous one, its decisions under the same sl
 
 A course declares the MAJOR it follows in `course.yaml` (`spec: linear-course@1`).
 `specs/check-course <course>` reads it, runs `specs/<name>/<MAJOR>/checks`, and refuses an
-unknown spec or MAJOR. Its conformity mode, the default, runs the conformity checks; its
-quality mode, `--quality`, runs the quality checks.
+unknown spec or MAJOR. The MAJOR's `check-course` takes its checks from the MAJOR's rule files
+and runs them in one run: a failure of a check that blocks sets exit code 1, a failure of a check
+that reports is printed and leaves 0; `--category` selects checks by category.
 
 ## Versions
 
@@ -47,7 +48,8 @@ never a tightening; a bug fix is ported to every live MAJOR.
 | | Conformity check | Quality check |
 |---|---|---|
 | Says | the course is consumable: the site builds, the teacher teaches, identifiers resolve | the course is good: term order, captions, lengths |
-| Run by | the machine on every change: `/feyn-pull-request`, CI, the builds | the maintainer on demand; taught-check is one, run by agents |
-| Result | a `fail` blocks the merge and the builds | findings, triaged into course issues |
+| Run by | the machine on every change: `/feyn-pull-request`, CI, the builds | its scripts in the same run of `specs/check-course`; taught-check on demand, by agents |
+| Result | a `fail` blocks the merge and the builds | findings, triaged into course issues; a `fail` leaves the exit code 0 |
 
-No conformity path runs the quality mode.
+Which family a check is in follows from its rules (the MAJOR's `SPEC.md`, section 7): a check
+that verifies requirements by test blocks, any other reports.

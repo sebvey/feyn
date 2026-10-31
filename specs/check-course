@@ -5,21 +5,21 @@
 // specs/<name>/<MAJOR>/checks/check-course with the same arguments, its output and exit code
 // unchanged. Refuses (exit 2) a course whose spec or MAJOR has no folder here, and stops
 // (exit 2) when the MAJOR's dependencies are not installed (`npm ci` in its checks/).
-// The MAJOR's check-course holds the two modes (decision `versioned-objects-and-spec-layout`):
-// conformity by default, quality with --quality, passed through like every other argument.
+// The MAJOR's check-course takes its checks, their category and their severity from its rule
+// files (its SPEC.md section 7); --category and its other options are passed through.
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { createRequire } = require('module');
 
 const SPECS = __dirname;
-const VALUED = new Set(['--only', '--concept', '--lang-dir']);
+const VALUED = new Set(['--category', '--only', '--concept', '--lang-dir']);
 
 function usage(code) {
   const out = code ? console.error : console.log;
-  out('usage: check-course <course-dir> [--quality] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>] [--list]');
-  out('runs specs/<name>/<MAJOR>/checks/check-course for the spec that <course-dir>/course.yaml declares:');
-  out('its conformity checks by default, its quality checks with --quality;');
+  out('usage: check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>] [--list]');
+  out('runs specs/<name>/<MAJOR>/checks/check-course for the spec that <course-dir>/course.yaml declares,');
+  out('with the same arguments: every check of method test, a blocking failure exit 1, a reporting one 0;');
   out('--list needs a course, since the checks depend on its MAJOR');
   process.exit(code);
 }
