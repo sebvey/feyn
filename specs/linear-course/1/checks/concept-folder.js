@@ -2,7 +2,7 @@
 // The concept folder: files, sections and their order, frontmatter keys (`verified` parallel
 // to `refs`), one section per sub-concept, « Objectif » equals the objective, case headings
 // (sub-concept and closed qualifier) and fields (a qualifier on « Question » only), coverage of
-// leaves, citation of every case in « Consignes » (SPEC.md section 4).
+// leaves, citation of every case in « Consignes » (COURSE.md section 3).
 const yaml = require('./lib/yaml');
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
@@ -168,7 +168,7 @@ function checkConcept(ctx, c, out) {
       const titles = new Map();
       const fieldLabels = Object.entries((ctx.pack && ctx.pack.case_fields) || {});
       const keyOf = (lab) => (fieldLabels.find(([, v]) => v === lab) || [])[0];
-      // the qualifiers: a closed list, the pack's `qualifiers` values (SPEC.md 4.3)
+      // the qualifiers: a closed list, the pack's `qualifiers` values (COURSE.md 3.3)
       const quals = Object.values((ctx.pack && ctx.pack.qualifiers) || {}).filter((v) => typeof v === 'string');
       const qualList = quals.map((q) => `« ${q} »`).join(', ');
       for (const cs of caseSecs) {

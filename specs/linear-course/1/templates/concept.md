@@ -1,5 +1,5 @@
 <!--
-Template of courses/<id>/concepts/<NN>-<slug>/concept.md (SPEC.md sections 4.1, 4.2, 4.5).
+Template of courses/<id>/concepts/<NN>-<slug>/concept.md (COURSE.md sections 3.1, 3.2, 3.5).
 Reader-facing: the site builds it, the teacher teaches from it. Nothing about one learner.
 How to use: copy to the concept folder, replace every <placeholder>, delete this comment
 (from the opening to the closing mark, marks included: no HTML in course Markdown).

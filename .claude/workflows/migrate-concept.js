@@ -12,7 +12,7 @@ export const meta = {
 }
 
 // migrate-concept: one concept of the frozen parcours-po (concept file, sources file, site MDX,
-// Astro diagram components) becomes one concept folder of SPEC.md section 4, by the closed list of
+// Astro diagram components) becomes one concept folder of COURSE.md section 3, by the closed list of
 // mapping rules MAP below (taken from the S1-02 prototype and the rulings on #97, #98 and #23).
 // Steps: Scope locates the old files and lists the target (ls -la), and refuses a target whose listing
 // shows files (args.overwrite empties it); Inventory lists what each old diagram shows, grouped by idea
@@ -22,7 +22,7 @@ export const meta = {
 // Checks runs check-course --only the per-concept checks --concept N, fixes form only; Report renders the
 // old and new diagrams as PNGs and writes the report in the fixed format of renderReport(). No comparison
 // with the old course (rule D on #23, #184): the fresh-agent review judges the new concept against
-// SPEC.md and PROTOCOL.md, reading the old concept once. Fails on a check failing for this concept. Old
+// COURSE.md and PROTOCOL.md, reading the old concept once. Fails on a check failing for this concept. Old
 // repos read only; paths: cwd-relative or absolute.
 // Decided in code, not on an agent's word: the target path, the SVG stems (format, uniqueness), whether
 // the target holds files (read from the listing, which the report shows), the frontmatter entries of the
@@ -77,7 +77,7 @@ the Write step starts: write your files from the inputs and the rules alone.`
 
 // The diagrams (M11, #181): never transcribed. An inventory agent reads the old component and the concept
 // text and lists what the diagram shows, grouped by idea; a drawing agent draws one SVG per idea under
-// SPEC.md section 7.2 from that inventory and concept.md alone; the fresh-agent review judges the result.
+// COURSE.md section 6.2 from that inventory and concept.md alone; the fresh-agent review judges the result.
 // The maintainer stopped the transcription on 2026-10-28: the old site drew one hue at three strengths,
 // now for a series, now for a contrast, so no table maps its colours (first draft of #181, PR #182).
 // The drawing agent's blindness rests on its prompt, not on a sandbox: the prompt (DRAW_ROLE, drawPrompt)
@@ -108,24 +108,24 @@ leaf the part illustrates (2c1-etapes, not 2c-etapes): the leaf whose reader tex
 shows, which may differ from the diagram's subconcept (labels naming the techniques a later leaf teaches \
 take that later leaf); group ids are unique across the concept's diagrams`
 // How a diagram is drawn, given to the drawing agent and restated in M11 for the other agents
-const DRAW_RULES = `Draw under SPEC.md section 7 to the letter: 7.1 the contract (the check svg-contract), \
-7.2 the style (the meaning of the classes and the six principles). Each element of the inventory takes the \
-rendering of its role (7.2, principle 3), a state its form; in one colour nothing is more marked than the \
+const DRAW_RULES = `Draw under COURSE.md section 6 to the letter: 6.1 the contract (the check svg-contract), \
+6.2 the style (the meaning of the classes and the six principles). Each element of the inventory takes the \
+rendering of its role (6.2, principle 3), a state its form; in one colour nothing is more marked than the \
 subject, and the contrast differs from it by opacity or form, never by hue alone. Text is \`muted\`; \
 \`primary\` only for the words of the subject; never \`secondary\`, not even a label of the contrast. Every \
 element, relation and label of the inventory is drawn, each label verbatim (straight apostrophe '). A key \
 (a sample and its words) only when a distinction of form or opacity must be named: the inventory's key, \
 or a key whose words come only from the inventory (a label, a key entry, a state's words) or from \
 concept.md, never words of your own (a key word nowhere in them is invented). No teaching sentence (the \
-caption is said beside the diagram, never drawn in it). The composition is yours, under 7.2 principle 5: \
+caption is said beside the diagram, never drawn in it). The composition is yours, under 6.2 principle 5: \
 nothing of an older drawing of it is to be kept or matched. <title> is the root's first child and equals \
 the entry's title; <desc>, optional, in French, describes the drawing; their ids start with the stem. \
 ${GROUP_RULE}.`
 
 // The mapping, a closed list: every old item has its rule, and the writers cite the rule ids in their choices.
 const mapRules = () => `Mapping rules (old file to new folder). Old files: CF the concept file, SF the sources \
-file, MDX the site page, ASTRO the diagram components. New folder: the three files of SPEC.md section 4 \
-and the SVGs of section 7.
+file, MDX the site page, ASTRO the diagram components. New folder: the three files of COURSE.md section 3 \
+and the SVGs of section 6.
 
 M1 Identity. CF frontmatter and H1, SF frontmatter and H1, MDX numero, titre, prerequis: not written \
 in the folder; course.yaml holds them (no H1 in the three files). « Objectif » is the course.yaml \
@@ -149,7 +149,7 @@ M5 Sub-concept sections. <Sous id titre promesse>: "## <id> <title>" then the pr
 entirely in italics. <h4 id> whose id is a leaf of course.yaml: "### <id> <title>". The <title> is the \
 course.yaml title (a different MDX titre gives way to it). Reader text unchanged, in MDX order. An <h4> whose \
 id course.yaml does not list (ruling on #23): a paragraph of its parent leaf's reader text, led by its \
-title in bold. Sections follow course.yaml order (SPEC.md 4.2).
+title in bold. Sections follow course.yaml order (COURSE.md 3.2).
 M6 Components. <Renvoi n="4"/>: "concept 4"; n="2c1": "concept 2c1"; consecutive renvois in one \
 parenthesis or list: "concepts 2 et 3a"; an annex (n="A2", "A2d"): "annexe A2" as the site printed it, \
 plain text. <Pastille kind="cours|ecole|consensus"/>: "[cours]", "[école]", "[consensus]" where the \
@@ -178,7 +178,7 @@ sentence added to « Consignes » (« Poser « … », puis « … ». »), brea
 paragraph of CF « Banque d'exemples » that lists the storyline facts used (and what is not fixed) \
 becomes « Faits du fil rouge utilisés », its lead words dropped; any other lead text stays at the top \
 of « Banque d'exemples ». The cases: « Banque d'exemples », same ### headings, every field verbatim, \
-fields as SPEC.md 4.3 lists them (labels « **<label>** : »). CF « Schéma »: « Schéma », verbatim.
+fields as COURSE.md 3.3 lists them (labels « **<label>** : »). CF « Schéma »: « Schéma », verbatim.
 M10 Sources. sources.md from SF: frontmatter and H1 dropped (M1); the intro paragraph kept, but for \
 the old paths below; \
 « Affirmations »: same rows, same order, texts unchanged, the header « Affirmation (section de \
@@ -202,7 +202,7 @@ course/concepts/NN-slug.md: concepts/NN-slug/concept.md; course/sources/NN-slug.
 concepts/NN-slug/sources.md; an old decision number (ADR-018): the course decision of the decisions/ \
 folder of the course that says it carries that old decision over (decisions/<slug>.md), else it has no \
 new path. The intro and « Non vérifié » are prose the teacher reads, not source cells (the site builds \
-neither, SPEC.md 4.4): there, a pointer with no new path (an old \
+neither, COURSE.md 3.4): there, a pointer with no new path (an old \
 decision no course decision carries over, off-course.md, the old repository's git history, a task id \
 such as T-021) is dropped by the smallest change, and the claim it points from stays; elsewhere (a \
 source cell, « Références ») it stays as it is. The intro's pointer to the « Consensus et choix \
@@ -213,7 +213,7 @@ their kind is used.
 M11 Diagrams. An old diagram (one ASTRO component, one variant per distinct prop value used in MDX, e.g. \
 p="a") is not transcribed: it is inventoried and drawn anew (maintainer's \
 choice of 2026-10-28 on #181, decision one-diagram-style). The inventory lists what the old diagram \
-shows: its elements, labels and relations, the role of each (SPEC.md 7.2: subject, series, contrast, \
+shows: its elements, labels and relations, the role of each (COURSE.md 6.2: subject, series, contrast, \
 context, text), the key if any, grouped by idea, each idea justified by a sentence of the Figure legende \
 or of the concept text, quoted (in doubt, one idea); a state (done, not done, uncertain, refused) only \
 when words say it (the old diagram's words, its <desc> or the concept text, quoted), never from a line \
@@ -238,7 +238,7 @@ its idea's).
 M12 By design, nowhere: MDX alignement, import lines, the old drawing of a diagram (its geometry, \
 colours, styles and Astro code: M11 draws anew), the \
 CF teacher hint of M3, the H1s and frontmatters of M1, the MDX sources texts of M10.
-M13 Form. Plain CommonMark under SPEC.md 4.5, no HTML, no MDX, no directive. Banned characters of the \
+M13 Form. Plain CommonMark under COURSE.md 3.5, no HTML, no MDX, no directive. Banned characters of the \
 language pack (French: em-dash, arrows) replaced by the smallest change (comma, colon, a word); each \
 replacement is a writing choice. The course writes the straight apostrophe: a typographic one (’) becomes ' in \
 every file, SVG text included (form, not a writing choice). Nothing else is reworded: a text the rules do not \
@@ -282,7 +282,7 @@ const ELEMENT = {
     id: { type: 'string', description: 'E1, E2… in the order the idea reads' },
     what: { type: 'string', description: 'what the element is, in the concept\'s words (a notion, a step, an actor, a group of items); never how it was drawn' },
     labels: { type: 'array', items: { type: 'string' }, description: 'the words the old diagram writes on or beside it, verbatim (straight apostrophe), possibly none' },
-    role: { type: 'string', enum: ROLES, description: 'its role, SPEC.md 7.2 principle 2: the subject, a level of a series (the subject in levels), the contrast, the context, or text (a heading, a note)' },
+    role: { type: 'string', enum: ROLES, description: 'its role, COURSE.md 6.2 principle 2: the subject, a level of a series (the subject in levels), the contrast, the context, or text (a heading, a note)' },
     state: { type: 'string', enum: STATES, description: 'the state it says, if any: done, not done, uncertain, refused; empty when no word says one (a line style alone is no state)' },
     state_words: { type: 'string', description: 'the words that say its state, verbatim, from the old diagram, its <desc> or the concept text; empty when state is empty' },
   },
@@ -511,7 +511,7 @@ const INPUTS = `Inputs (read them on disk):
 - MDX, the site page: ${scope.mdx_file}
 - ASTRO, the diagram components: ${[...new Set(scope.diagrams.map(d => d.component))].join(', ') || '(none)'}
 - the course.yaml entry: ${scope.course_entry}
-- the spec: ${ROOT}${SPEC_DIR}SPEC.md (sections 4 and 7), the templates in ${ROOT}${SPEC_DIR}templates/
+- the spec: ${ROOT}${SPEC_DIR}COURSE.md (sections 3 and 6), the templates in ${ROOT}${SPEC_DIR}templates/
 - the repository glossary: ${ROOT}docs/glossary.md
 - the course decisions, for rule M10's old decision numbers only: ${DEST}decisions/ (if it exists)
 Target concept folder: ${TARGET}
@@ -534,11 +534,11 @@ const inventoryPrompt = d => `${ROLE}
 
 Take the inventory of one old diagram of concept ${CONCEPT}: what it shows, never how it is drawn (rule \
 M11 below). A drawing agent will draw it anew from your inventory and the concept text alone, under \
-SPEC.md section 7.2, without ever seeing the old diagram: everything it must show is in your inventory, \
+COURSE.md section 6.2, without ever seeing the old diagram: everything it must show is in your inventory, \
 and nothing of the old drawing is.
 Read only: the component ${d.component}${d.variant ? ` (variant ${d.variant} only)` : ''}; the concept \
 text, CF ${scope.concept_file} and MDX ${scope.mdx_file} (the Figure stands in ${place(d)}); \
-${ROOT}${SPEC_DIR}SPEC.md section 7.2. The course.yaml entry: ${scope.course_entry}. Never read, list or \
+${ROOT}${SPEC_DIR}COURSE.md section 6.2. The course.yaml entry: ${scope.course_entry}. Never read, list or \
 search another folder or copy of this concept (courses/${A.course}/concepts/, construction/notes/, git \
 history). Modify no file.
 
@@ -552,17 +552,17 @@ split into its parts, and each part becomes a label of the element it reads, its
 element's labels (« l'ingestion des données » on the ingestion layer, « la restitution, ce que voit \
 l'utilisateur » on the restitution layer): the drawing writes the labels and nothing else of the \
 sentence, so a word left out of the labels is lost. A caption keeps one sentence per idea when it can \
-(SPEC.md 7.2, principle 1).
+(COURSE.md 6.2, principle 1).
 - ideas: an idea is one thing the diagram teaches, stated by a sentence of the legende or of the concept \
 text (its justification, verbatim, and where it stands). Two ideas only when the diagram teaches two \
-things that one caption cannot say in one sentence (SPEC.md 7.2, principle 1); in doubt, one idea. Per \
+things that one caption cannot say in one sentence (COURSE.md 6.2, principle 1); in doubt, one idea. Per \
 idea: its stem (${STEM_RULE}); its title (the old <title>${d.variant ? ' of the variant' : ''}, verbatim, \
 for a diagram not split, or, when a sentence goes to the title and the old <title> does not carry it, \
 that sentence without its final period; for a split one, one line per idea from the old title's words \
 and the concept's words, carrying the sentence that goes to its title, if any); its subconcept (rule \
 M11); its elements, relations and key.
 - elements: each thing the diagram shows, in the concept's words, with the words the old diagram writes \
-on or beside it (labels, verbatim, straight apostrophe), its role by SPEC.md 7.2 (subject; series: one \
+on or beside it (labels, verbatim, straight apostrophe), its role by COURSE.md 6.2 (subject; series: one \
 element per level; contrast; context; text: a heading or a note) and its state. A state only when words \
 say it: words of the old diagram, of its <desc> or of the concept text, quoted in state_words; never \
 from a line style, a fill or any other form alone (an outline drawn dashed that no word calls not done \
@@ -634,7 +634,7 @@ if (!teachingAndSources) throw new Error('teaching.md and sources.md not written
 // The ideas, decided here from the inventories (M11): each caption is the legende's sentences of its idea
 // that go to the caption, and all the sentences, put back together, must be the legende (no sentence lost,
 // none reworded); an idea with none takes its justifying sentence. A caption of more than one sentence is
-// flagged in the report (SPEC.md 7.2, principle 1), not refused. The stems are checked here, never trusted.
+// flagged in the report (COURSE.md 6.2, principle 1), not refused. The stems are checked here, never trusted.
 const inventories = scope.diagrams.map((d, n) => {
   const inv = taken?.[n]
   const name = `${d.component}${d.variant ? ` (${d.variant})` : ''}`
@@ -659,7 +659,7 @@ const ideas = inventories.flatMap((inv, n) => inv.ideas.map(i => {
   return { ...i, title: straight(i.title), diagram: n, split: inv.ideas.length > 1, caption, reading: mine('labels').map(straight), sentences: Math.max(sentences.length, sentenceCount(caption)) }
 }))
 const longCaptions = ideas.filter(i => i.sentences > 1)
-if (longCaptions.length) log(`Captions of more than one sentence (SPEC.md 7.2, principle 1): ${longCaptions.map(i => `${i.stem}.svg (${i.sentences})`).join(', ')}`)
+if (longCaptions.length) log(`Captions of more than one sentence (COURSE.md 6.2, principle 1): ${longCaptions.map(i => `${i.stem}.svg (${i.sentences})`).join(', ')}`)
 for (const i of ideas) {
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(i.stem)) throw new Error(`Refused SVG stem "${i.stem}": lowercase ASCII words joined by hyphens`)
   if (!i.title || /\n/.test(i.title)) throw new Error(`Diagram ${i.stem}: its title is empty or not one line`)
@@ -690,7 +690,7 @@ ${figures || 'none'}
 MDX sub-headings not in course.yaml (rule M5): ${scope.unlisted_h4.join(', ') || 'none'}.
 
 Write ${TARGET}concept.md by rules M1 to M8 and M13: frontmatter description, stances, neighbors (if \
-MDX has ecoles.voisines), diagrams (the entries above, in body order); body in the order of SPEC.md 4.2. \
+MDX has ecoles.voisines), diagrams (the entries above, in body order); body in the order of COURSE.md 3.2. \
 Copy the old texts as they are; change only what a rule names. Write only that file. Return it and every \
 choice a rule left you.`,
   { label: 'concept', phase: 'Write', schema: WRITE_SCHEMA })
@@ -731,14 +731,14 @@ draw is French, in the course's words. Vocabulary: ${ROOT}docs/glossary.md.`
 const drawPrompt = (i, k) => `${DRAW_ROLE}
 
 You draw from what the diagram must show, never from an older drawing of it. Read only these files: \
-${TARGET}concept.md (the concept text), ${ROOT}${SPEC_DIR}SPEC.md (section 7), ${ROOT}docs/glossary.md. \
+${TARGET}concept.md (the concept text), ${ROOT}${SPEC_DIR}COURSE.md (section 6), ${ROOT}docs/glossary.md. \
 Never read, list or search any other file or folder: not the other files of ${TARGET} (its other \
 diagrams are drawn at the same time, each from its own idea), not another concept or course, not \
 construction/, not another repository, not git history, not the web. Write only ${TARGET}${i.stem}.svg.
 
 Its frontmatter entry, fixed: ${JSON.stringify(entries[k])}.
 What it shows, its inventory: ${JSON.stringify({ idea: i.justification, elements: i.elements, relations: i.relations, key: i.key })}
-The roles are those of SPEC.md 7.2: subject; series (the subject in levels, in the order of the \
+The roles are those of COURSE.md 6.2: subject; series (the subject in levels, in the order of the \
 relations); contrast; context; text. A state: done, not done, uncertain, refused; its words are the \
 element's state_words.${i.reading.length ? `
 These sentences of the old legende tell how to read the diagram: their parts are labels of the \
@@ -775,7 +775,7 @@ Run "${CHECK_CMD}". For each failure in a file of ${TARGET}: fix it when the fix
 a label, a list shape, a frontmatter key, an id, an SVG attribute, a quote character, a wrapped line, \
 the orphan reference of rule M10 added to the source column of the one row that names it as support, \
 and no other source-column change; a colour, a style or a filter the contract forbids in an SVG: \
-currentColor with the class and opacity of its role by SPEC.md 7.2, never a text knocked out of a fill); \
+currentColor with the class and opacity of its role by COURSE.md 6.2, never a text knocked out of a fill); \
 leave it when the fix would change what the text says, and say why. Rerun after fixing, at most three \
 runs in all. A failure in a file outside ${TARGET} is not yours: leave it. Return the last output \
 verbatim, every line: the verdict is read from it.`,
@@ -803,7 +803,7 @@ log(`Checks: ${checksPassed ? 'pass' : 'fail'}${checks.fixes.length ? `, ${check
 // --- Report ----------------------------------------------------------------------------
 
 // No comparison with the old course (rule D on #23, #184): the new concept is judged by check-course and
-// by the fresh-agent review against SPEC.md and PROTOCOL.md. The report shows what the review reads: the
+// by the fresh-agent review against COURSE.md and PROTOCOL.md. The report shows what the review reads: the
 // scope, each diagram's inventory and where each legende sentence went, the caption flags, the checks and
 // the old and new renderings side by side.
 phase('Report')
@@ -891,7 +891,7 @@ function renderReport() {
   out.push('|---|---|---|---|---|')
   out.push(`| ${checksPassed ? 'pass' : 'fail'} | ${targetHeldFiles ? 'yes, emptied' : 'no'} | ${scope.diagrams.length} | ${ideas.length} | ${longCaptions.length} |`, '')
   out.push(`Result: **${failed ? 'failed' : 'passed'}**. checks is read in code from the output below, which the check agent returns; target existed is read in code from the listing below, which the scope agent returns. The new concept is not compared with the old one (rule D on #23): the fresh-agent review judges it against SPEC.md and PROTOCOL.md.`, '')
-  if (longCaptions.length) out.push(`Captions of more than one sentence (SPEC.md 7.2, principle 1: a caption that needs two sentences means two diagrams): ${longCaptions.map(i => `${i.stem}.svg (${i.sentences} sentences)`).join(', ')}. Flagged for the review, not refused.`, '')
+  if (longCaptions.length) out.push(`Captions of more than one sentence (COURSE.md 6.2, principle 1: a caption that needs two sentences means two diagrams): ${longCaptions.map(i => `${i.stem}.svg (${i.sentences} sentences)`).join(', ')}. Flagged for the review, not refused.`, '')
   out.push('## Target before the run', '')
   out.push(`\`ls -ld ${DIR.replace(/\/$/, '')}; ls -la ${DIR.replace(/\/$/, '')}\`, as the scope agent returned it: ${!listed.exists ? 'no such folder' : targetHeldFiles ? `${listed.files.length} entr${listed.files.length === 1 ? 'y' : 'ies'}, emptied (args.overwrite)` : 'an empty folder'}.`, '', '```', String(scope.target_listing).trim(), '```', '')
   out.push('## Diagrams (M11)', '')
@@ -915,7 +915,7 @@ function renderReport() {
     const oldWay = renderings?.page === 'found'
       ? (matched === scope.diagrams.length ? 'the old diagram from the frozen site\'s build' : `the old diagram from the frozen site's build when a figure of the page matched its legende (${matched} of ${scope.diagrams.length}), else not rendered`)
       : renderings?.page === 'absent' || renderings?.page === 'none' ? 'no site build, so the old diagram is its component\'s source, quoted when it came back whole' : 'the old diagram not rendered'
-    out.push(`Each old diagram was inventoried (what it shows, by idea), drawn anew from its inventory and concept.md alone under SPEC.md 7.2. Renderings: ${oldWay}; the new one in one colour.`, '')
+    out.push(`Each old diagram was inventoried (what it shows, by idea), drawn anew from its inventory and concept.md alone under COURSE.md 6.2. Renderings: ${oldWay}; the new one in one colour.`, '')
     const fence = t => '`'.repeat(Math.max(3, ...(String(t).match(/`+/g) || []).map(r => r.length + 1)))
     scope.diagrams.forEach((d, n) => {
       const mine = ideas.filter(i => i.diagram === n)
@@ -924,7 +924,7 @@ function renderReport() {
       out.push('Its sentences, where the inventory sends them (M11):', ...inventories[n].caption_sentences.map(c => `- « ${c.sentence} »: ${c.to} of ${c.idea}.svg`), '')
       for (const i of mine) {
         out.push(`#### ${i.stem}.svg`, '')
-        out.push(`- Title: ${i.title}`, `- Caption: ${i.caption}${i.sentences > 1 ? ` (**${i.sentences} sentences**: SPEC.md 7.2, principle 1)` : ''}`, `- Sub-concept: ${i.subconcept}`, `- Idea: « ${i.justification} » (${i.stands_in})`, '')
+        out.push(`- Title: ${i.title}`, `- Caption: ${i.caption}${i.sentences > 1 ? ` (**${i.sentences} sentences**: COURSE.md 6.2, principle 1)` : ''}`, `- Sub-concept: ${i.subconcept}`, `- Idea: « ${i.justification} » (${i.stands_in})`, '')
         out.push('| Id | Element | Labels | Role | State |', '|---|---|---|---|---|')
         for (const e of i.elements) out.push(`| ${cell(e.id)} | ${cell(e.what)} | ${cell(e.labels.map(l => `« ${l} »`).join(', ')) || 'none'} | ${e.role} | ${e.state ? cell(`${e.state} (« ${e.state_words} »)`) : 'none'} |`)
         out.push('', ...(i.relations.length ? ['Relations:', ...i.relations.map(r => `- ${r}`)] : ['Relations: none.']), '')

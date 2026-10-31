@@ -1,5 +1,5 @@
 <!--
-Template of courses/<id>/concepts/<NN>-<slug>/sources.md (SPEC.md section 4.4).
+Template of courses/<id>/concepts/<NN>-<slug>/sources.md (COURSE.md section 3.4).
 Reader-facing: the site builds every row of « Affirmations » and « Références »; it never builds
 « Non vérifié ». The teacher reads it when asked where a claim comes from.
 It traces the verifiable claims of the body of concept.md, and nothing else: a storyline fact, a

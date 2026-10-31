@@ -1,6 +1,6 @@
 # Templates of `linear-course`
 
-One template per file `SPEC.md` defines. Copy one to the course folder, replace every
+One template per file `COURSE.md` defines. Copy one to the course folder, replace every
 `<placeholder>`, delete the header comment (a `#` block in `course.yaml`; a `<!-- -->` block,
 the first thing in the file, elsewhere: course Markdown has no HTML). The header says what the
 file is, which SPEC section binds it, and the rules a check enforces.

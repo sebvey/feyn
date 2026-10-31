@@ -1,6 +1,6 @@
 'use strict';
-// The reader-text conventions of concept.md (SPEC.md section 4.5); plain Markdown in every
-// course file (section 2).
+// The reader-text conventions of concept.md (COURSE.md section 3.5); plain Markdown in every
+// course file (section 1).
 const yaml = require('./lib/yaml');
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');

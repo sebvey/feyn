@@ -11,7 +11,8 @@ One folder per MAJOR, `specs/<name>/<MAJOR>/` (`1/`, not `v1/`), holds:
 
 | File or folder | Holds |
 |---|---|
-| `SPEC.md` | the structure of a course |
+| `SPEC.md` | the frame: scope, conformance, levels, methods, categories, severity, versions, checks |
+| `COURSE.md` | what a course is: its files, fields, diagrams, language pack keys |
 | `PROTOCOL.md` | the protocol |
 | `README.md` | the entry to the MAJOR |
 | `checks/` | the checks and their fixtures |
