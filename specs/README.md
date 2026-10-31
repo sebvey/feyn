@@ -14,10 +14,10 @@ One folder per MAJOR, `specs/<name>/<MAJOR>/` (`1/`, not `v1/`), holds:
 | `SPEC.md` | the frame: scope, conformance, levels, methods, categories, severity, versions, checks |
 | `COURSE.md` | what a course is: its files, fields, diagrams, language pack keys |
 | `PROTOCOL.md` | the protocol |
-| `rules/` | the rules as data: of a course, of the protocol, of the spec itself |
+| `rules/` | the rules as data, two files: of a course, of the protocol |
 | `schemas/` | the JSON Schemas of a course's files |
 | `README.md` | the entry to the MAJOR |
-| `checks/` | the checks and their fixtures |
+| `checks/` | the checks of a course, the tests of the spec's own files, their fixtures |
 | `decisions/` | the spec's decisions |
 | `lang/` | the language packs |
 | `templates/` | the course templates |

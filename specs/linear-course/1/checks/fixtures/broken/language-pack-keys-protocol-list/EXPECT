@@ -1,3 +1,0 @@
-check: language-pack-keys
-message: missing key learner_says.stop (a non-empty list of strings)
-lang-dir: ../../lang-broken-protocol-list

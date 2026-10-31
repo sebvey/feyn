@@ -1,18 +1,17 @@
 'use strict';
-// The rule files and the schemas of the spec (rules/spec.yaml, group "The rule files and the
-// schemas"; decisions rules-with-level-and-method, spec-files-and-alpha-version):
-//   - rules/course.yaml, rules/protocol.yaml and rules/spec.yaml exist, each a map whose one key
+// A test of the spec's own files, run by check-spec, which verifies no rule (decisions
+// rules-with-level-and-method, spec-files-and-alpha-version): the rule files and the schemas.
+//   - rules/course.yaml and rules/protocol.yaml exist, each a map whose one key
 //     `groups` is a non-empty list; a group has `rules`, a non-empty list, and may declare `id`
 //     (a group slug), `title`, `category` and `method`;
 //   - a rule has `id` (a slug of two to five words), `level`, `category`, `method` (on the rule
 //     or on its group) and `text`; `check` and `why` are optional; a rule of the protocol also has
 //     `origin`; no other key;
 //   - the closed lists of SPEC.md sections 4 to 6: the levels, the methods (a rule of the
-//     protocol: demonstration), the categories of a course, the families of the protocol, `spec`
-//     for the rules on the spec itself;
+//     protocol: demonstration), the categories of a course, the families of the protocol;
 //   - a group of rules/protocol.yaml has an `id`, the slug of a group of PROTOCOL.md (a heading
 //     "### <title> (`<slug>`)" of a rule family "## <n>. ...", as rule-slugs reads it);
-//   - the ids of rules and groups are unique across the three files;
+//   - the ids of rules and groups are unique across the two files;
 //   - a check named exists, as a script of this folder (`<check>.js`) or an agent workflow of
 //     the repository (`.claude/workflows/<check>.js`);
 //   - a check verifies rules of one category and one level;
@@ -33,7 +32,6 @@ const FAMILIES = ['session-start', 'domain-presentation', 'loop', 'message-form'
 const FILES = {
   'rules/course.yaml': { categories: COURSE_CATEGORIES, methods: METHODS, extra: [] },
   'rules/protocol.yaml': { categories: FAMILIES, methods: ['demonstration'], extra: ['origin'] },
-  'rules/spec.yaml': { categories: ['spec'], methods: METHODS, extra: [] },
 };
 const RULE_KEYS = ['id', 'level', 'category', 'method', 'check', 'text', 'why'];
 const GROUP_KEYS = ['id', 'title', 'category', 'method', 'rules'];

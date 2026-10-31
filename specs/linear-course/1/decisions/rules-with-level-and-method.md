@@ -135,6 +135,18 @@ GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
 - No teacher conforms today, since no fresh test exists: that is the target of #222.
 - In French, « schéma » means a drawing or a JSON Schema; the repository, in English, says
   `diagram` and `schema`.
-- Amended 2026-10-31 (#329): the closed list of categories gains `spec`, the category of the
-  rules on the spec itself, held in `rules/spec.yaml` (its language packs, the slugs of its
-  protocol, its rule files and schemas); decision `spec-files-and-alpha-version`, amended.
+- Amended 2026-10-31 (#329), reversed by #339: the closed list of categories had gained a
+  category for rules on the spec itself, held in a third rule file (its language packs, the
+  slugs of its protocol, its rule files and schemas); decision `spec-files-and-alpha-version`,
+  amended.
+- Amended 2026-10-31 (#339): a rule binds a product, a course or a teacher. The consistency of
+  the spec's own files (the rule files, the schemas, the slugs of the protocol, the language
+  packs) is verified by the tests of `check-spec` (`rule-files`, `rule-slugs`,
+  `language-pack-keys`), which are not rules: they carry no category and no level, and each
+  failure blocks `check-spec`. The categories are those of a course and the families of the
+  protocol; where the conformance clause above puts a rule on the pack with the spec's own
+  rules, read that the pack is tested by `check-spec`, by no rule. Without this, a contributor
+  applies "every check verifies a rule" to a check of the spec's files and writes a rule file
+  and a category for them, as #329 did (a third rule file in `rules/`, a sixth category named
+  after the spec, and a marker exported by `language-pack-keys` so that `check-course` ran it
+  on a course).
