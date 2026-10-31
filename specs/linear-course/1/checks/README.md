@@ -2,11 +2,21 @@
 
 Scripts that verify a course against `COURSE.md` (listed in `SPEC.md` section 10), run by
 `check-course`, and the spec's own files (`PROTOCOL.md`, `SPEC.md`, `COURSE.md`, `decisions/`), run
-by `check-spec`. **Dependency-free Node**
-(CommonJS, no `npm install`; Node 20 or later, run under `mise exec` like every tool here): the course's YAML,
-Markdown and SVG are read by the small readers in `lib/` (`yaml.js`, `md.js`, `xml.js`), which
-cover the subset the spec uses. Chosen once, for every check: a shell version would need a
-YAML parser too, and the checks must run the same on a laptop and in CI.
+by `check-spec`. Node 20 or later, CommonJS, run under `mise exec` like every tool here, with the
+dependencies of `package.json` (decision `checks-use-ajv-and-yaml`): the course's YAML is read by
+the package `yaml` in YAML 1.2 mode, through `lib/yaml-lines.js`, which keeps the line of each key
+and item so a failure points at `file:line`; Markdown and SVG are read by the small readers in
+`lib/` (`md.js`, `xml.js`), which cover the subset the spec uses.
+
+## Install
+
+```
+(cd specs/linear-course/1/checks && mise exec -- npm ci)
+```
+
+Once per clone, and again when `package-lock.json` changes: `npm ci` installs the locked versions
+in `node_modules/` here, which git ignores. Without it, `check-course`, `check-spec`,
+`test-fixtures` and `specs/check-course` stop with one line giving that command (exit code 2).
 
 ## Run
 
@@ -25,12 +35,15 @@ course issues. No conformity path runs the quality mode.
 
 `specs/check-course` reads `spec: linear-course@<MAJOR>` in the course's `course.yaml` and runs
 `specs/linear-course/<MAJOR>/checks/check-course` with the same arguments; it refuses an unknown
-spec or MAJOR, naming it, with exit code 2. This folder's `check-course` runs this MAJOR's checks
+spec or MAJOR, naming it, with exit code 2. The `spec:` line names the MAJOR, whose `yaml`
+package (in its `checks/node_modules/`) then reads `course.yaml`: the dispatcher needs that
+MAJOR's `npm ci` too. This folder's `check-course` runs this MAJOR's checks
 directly, `--list` with no course included.
 
 One line per passing check (`<id>: ok`), one line per failure
 (`<id>: fail: <file>:<line> <message>`, the file relative to the course folder). The exit code is
-0 when every check passes, 1 when one fails, 2 on a usage error.
+0 when every check passes, 1 when one fails, 2 on a usage error or when the dependencies are not
+installed.
 
 | Option | Does |
 |---|---|

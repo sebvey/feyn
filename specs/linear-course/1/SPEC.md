@@ -182,8 +182,9 @@ with its category, level and method, and the severity that follows (section 7).
 | the reviewer | which rules a script already verified, so the review reads the rest | reviewing a change |
 | the maintainer | the reported findings to triage into course issues | on demand |
 
-Node scripts in `checks/`, one per id; `checks/README.md` gives how to run them, their options
-and fixtures. `specs/check-course <course-dir>` runs this folder's `checks/check-course` on a
+Node scripts in `checks/`, one per id, with the dependencies of `checks/package.json` installed
+by `npm ci` (decision `checks-use-ajv-and-yaml`); `checks/README.md` gives how to install and run
+them, their options and fixtures. `specs/check-course <course-dir>` runs this folder's `checks/check-course` on a
 course; until the checks read the rules (#317), it runs the checks that block by default and the
 checks that report with `--quality`. `checks/check-spec` checks the spec's own files
 (`PROTOCOL.md`, `SPEC.md`, `COURSE.md`, `decisions/`), not a course.
@@ -191,7 +192,7 @@ checks that report with `--quality`. `checks/check-spec` checks the spec's own f
 Both print one line per passing check (`<id>: ok`) and one line per failure
 (`<id>: fail: <file>:<line> <message>`, the file relative to the course folder, or to the spec
 folder for `check-spec`). The exit code is 0 when every check passes, 1 when one fails, 2 on a
-usage error.
+usage error or when the dependencies are not installed.
 
 The level of each check below is the one its rules carry today; the rules themselves move to
 `rules/course.yaml` in a slice of #317. The sections are those of `COURSE.md`.

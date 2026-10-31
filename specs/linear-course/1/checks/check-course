@@ -4,6 +4,7 @@
 // Two modes (decision `versioned-objects-and-spec-layout`): the conformity checks by default, the
 // quality checks with --quality. No conformity path runs the quality mode.
 const path = require('path');
+require('./lib/deps').need();
 const { load } = require('./lib/course');
 
 const MODES = {

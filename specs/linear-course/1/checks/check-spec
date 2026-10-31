@@ -5,6 +5,7 @@
 // <spec-dir> defaults to the folder above this script (specs/linear-course/1).
 const fs = require('fs');
 const path = require('path');
+require('./lib/deps').need();
 
 const CHECKS = ['rule-slugs'];
 

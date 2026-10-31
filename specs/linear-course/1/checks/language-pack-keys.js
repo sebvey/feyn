@@ -2,7 +2,7 @@
 // Every key of COURSE.md section 7 and every key PROTOCOL.md uses exists in the course language's pack.
 const fs = require('fs');
 const path = require('path');
-const yaml = require('./lib/yaml');
+const yaml = require('./lib/yaml-lines');
 const { fail } = require('./lib/course');
 
 const KEYS = {

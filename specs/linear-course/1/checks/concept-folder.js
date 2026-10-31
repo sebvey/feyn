@@ -3,7 +3,7 @@
 // to `refs`), one section per sub-concept, « Objectif » equals the objective, case headings
 // (sub-concept and closed qualifier) and fields (a qualifier on « Question » only), coverage of
 // leaves, citation of every case in « Consignes » (COURSE.md section 3).
-const yaml = require('./lib/yaml');
+const yaml = require('./lib/yaml-lines');
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
 

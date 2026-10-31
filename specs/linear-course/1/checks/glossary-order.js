@@ -7,7 +7,7 @@
 const mdlib = require('./lib/md');
 const glossary = require('./lib/glossary');
 const refs = require('./lib/refs');
-const yaml = require('./lib/yaml');
+const yaml = require('./lib/yaml-lines');
 const { fail } = require('./lib/course');
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
