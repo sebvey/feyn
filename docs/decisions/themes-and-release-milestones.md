@@ -49,3 +49,6 @@ epic, their bodies kept as material; `stage-1` is renamed `linear-course/v1.0.0`
   added the entry rule, the Definition of Ready, the plan comment, the milestone an epic may
   target; #225 (the flow and the tooling) dissolved as a heap, its six issues back in the
   Backlog without a parent.
+- Amended 2026-10-31 (#344): the plan comment also holds the epic's open questions, and the
+  epic is delivered on an integration branch, validated by the maintainer's merge of its epic PR
+  (decision `epic-on-integration-branch`).
