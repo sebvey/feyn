@@ -49,3 +49,6 @@ no class: `- file or area: what changes`.
   each failure blocks `check-spec`; `language-pack-keys` leaves `check-course` and tests every
   pack of `lang/` in `check-spec`; decision `rules-with-level-and-method` amended, a rule binds a
   product (#339).
+- folder, `decisions/`: the spec moves from `specs/` to `course-specs/` (#340); paths updated
+  in `SPEC.md`, the README, the checks and the decisions `rules-named-by-slug`,
+  `checks-use-ajv-and-yaml`, `spec-files-and-alpha-version`.

@@ -1,4 +1,4 @@
-# specs
+# course-specs
 
 Summary of decision `versioned-objects-and-spec-layout`; if they differ, the decision wins.
 
