@@ -184,9 +184,9 @@ with its category, level and method, and the severity that follows (section 7).
 
 Node scripts in `checks/`, one per id, with the dependencies of `checks/package.json` installed
 by `npm ci` (decision `checks-use-ajv-and-yaml`); `checks/README.md` gives how to install and run
-them, their options and fixtures. `specs/check-course <course-dir>` runs this folder's `checks/check-course` on a
-course; until the checks read the rules (#317), it runs the checks that block by default and the
-checks that report with `--quality`. `checks/check-spec` checks the spec's own files
+them, their options and fixtures. `specs/check-course <course-dir>` runs this folder's
+`checks/check-course` on a course; until the checks read the rules (#317), it runs the checks that
+block by default and the checks that report with `--quality`. `checks/check-spec` checks the spec's own files
 (`PROTOCOL.md`, `SPEC.md`, `COURSE.md`, `decisions/`), not a course.
 
 Both print one line per passing check (`<id>: ok`) and one line per failure

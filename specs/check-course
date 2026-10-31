@@ -61,14 +61,17 @@ function runnerOf(spec) {
 // The YAML reader is the MAJOR's own `yaml` package (decision `checks-use-ajv-and-yaml`), so the
 // top-level "spec:" line names the MAJOR whose package then reads course.yaml (YAML 1.2); a
 // `spec` read otherwise names the MAJOR run. A course.yaml with a YAML error runs the MAJOR of
-// its "spec:" line, whose course-yaml check reports the error.
+// its "spec:" line, whose course-yaml check reports the error. The line scan is the bootstrap: a
+// spec it misses (a quoted key, a value on the next line) is refused as "declares no spec", even
+// when YAML would read it. The dispatcher checks only the `yaml` dependency it needs; the MAJOR's
+// check-course checks the others.
 const line = text.split('\n').find((l) => /^spec\s*:/.test(l));
 if (!line) refuse(`${file} declares no spec (spec: <name>@<MAJOR>)`);
 const spec = line.replace(/^spec\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2');
 let runner = runnerOf(spec);
 const checks = path.dirname(runner);
 if (!fs.existsSync(path.join(checks, 'node_modules', 'yaml', 'package.json'))) {
-  console.error(`checks: dependencies missing, run: (cd ${path.relative(process.cwd(), checks) || '.'} && mise exec -- npm ci)`);
+  console.error(`checks: dependencies missing, run: mise exec -- npm ci --prefix ${path.relative(process.cwd(), checks) || '.'}`);
   process.exit(2);
 }
 const YAML = createRequire(path.join(checks, 'package.json'))('yaml');

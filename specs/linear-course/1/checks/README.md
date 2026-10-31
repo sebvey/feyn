@@ -11,11 +11,12 @@ and item so a failure points at `file:line`; Markdown and SVG are read by the sm
 ## Install
 
 ```
-(cd specs/linear-course/1/checks && mise exec -- npm ci)
+mise exec -- npm ci --prefix specs/linear-course/1/checks
 ```
 
-Once per clone, and again when `package-lock.json` changes: `npm ci` installs the locked versions
-in `node_modules/` here, which git ignores. Without it, `check-course`, `check-spec`,
+From the repository root, once per clone or worktree, and again when `package-lock.json` changes:
+`npm ci` installs the locked versions in `node_modules/` here, which git ignores. The command has
+no `cd`, so an agent in a worktree can run it. Without it, `check-course`, `check-spec`,
 `test-fixtures` and `specs/check-course` stop with one line giving that command (exit code 2).
 
 ## Run
