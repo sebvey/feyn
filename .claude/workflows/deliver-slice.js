@@ -41,7 +41,7 @@ const STEPS = [
   'correct 2 (if the verification of round 1 is not conform): corrections, then a fresh agent verifies them; still not conform: status needs-orchestrator',
   ...(OBS
     ? ['hand over: no merge; status ready-for-handover, the maintainer merges the PR into main']
-    : [`merge: squash the PR into ${A.base}, close #${A.issue}, read its Status; not Done: a problem in the result; the slice's remote branch stays (remote branches are the maintainer's)`]),
+    : [`merge: squash the PR into ${A.base}, close #${A.issue}, read its Status; not Done: a problem in the result; the slice's remote branch is not deleted by the workflow (the repository deletes a head branch on its merge)`]),
 ]
 
 if (A.dryRun) {
@@ -224,7 +224,7 @@ if (OBS) return { status: 'ready-for-handover', ...report }
 
 // ---------- Merge
 phase('Merge')
-const merge = await agent(`You merge PR #${contrib.pr} of feyn into the integration branch ${A.base} and close its slice #${A.issue}. Use only gh commands (through "mise exec --"); run no git command and no cd: your working directory is the repository's main checkout and must not change.
+const merge = await agent(`You merge PR #${contrib.pr} of feyn into the integration branch ${A.base} and close its slice #${A.issue}. Use only gh commands (through "mise exec --"); run no git command and no cd: your working directory is the work session's and must not change.
 1. "mise exec -- gh pr view ${contrib.pr} --json baseRefName,headRefOid,state,isDraft": the base must be ${A.base} and the head ${head}; otherwise stop and report the problem, merging nothing.
 2. "mise exec -- gh pr ready ${contrib.pr}", then "mise exec -- gh pr merge ${contrib.pr} --squash --match-head-commit ${head}" (no --delete-branch: it would touch the local checkout). Read "mise exec -- gh pr view ${contrib.pr} --json state,mergeCommit": state MERGED, note the merge commit sha.
    Leave the slice's remote branch: remote branches are the maintainer's, and decision epic-on-integration-branch grants the merge and the close, not a deletion.

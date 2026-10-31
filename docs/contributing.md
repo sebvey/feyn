@@ -134,8 +134,8 @@ Four moments:
    `main`) and sets it Done; a slice never goes Ready for review, its PR never awaits the
    maintainer. `main` is merged into the integration branch when it moves, never rebased. A choice
    of a slice that departs from the epic's Done when or adds structure becomes an open question at
-   once, and the work goes on; the maintainer answers on the epic, and the orchestrator marks the
-   line answered in the plan comment and applies the answer, by a slice when it needs work.
+   once, and the work goes on; the maintainer answers on the epic, and the orchestrator adds the
+   answer under its line in the plan comment and applies it, by a slice when it needs work.
    `/feyn-deliver-epic <epic>` runs this delivery, each slice through the agent workflow
    `deliver-slice.js` of `.claude/workflows/`. After each merge, two lines go on the plan comment
    (the slice closed, the next to pose; if the next is not obvious, back to moment 1), and a
@@ -150,18 +150,21 @@ Four moments:
    `/feyn-deliver <n>`, or a direct delivery. `/feyn-deliver <n>` delivers every observation (an
    issue with no parent epic; given a slice, it refuses and names `/feyn-deliver-epic`), through
    `deliver-slice.js` in observation mode, except those the maintainer named `direct` at their
-   creation (`/feyn-issue observation direct <observation>`, or `/feyn-issue slice #<epic> direct
-   <observation>` for a slice), whose To do then opens with the line "Direct delivery". A **direct
-   delivery** is a slice or a standalone observation of one edit with no behaviour: no skill,
-   check, decision, agent workflow or course file touched, and no Done when statement that asks
-   more than "this sentence says this" (a wording, a link, a typo, a mechanical rename in one
-   file). The maintainer's work session makes its branch, its edit and its PR with the work-cycle
-   tooling (`/feyn-issue-branch`, `/feyn-pull-request`): no contributor, no fresh-agent review, and
-   the PR's Checks say `Fresh-agent review: none, direct delivery.`; a direct slice's PR targets
-   the integration branch and the orchestrator merges it (it skips `/feyn-pull-request` step 8, so
-   the slice never goes Ready for review). Which skill delivers what: `/feyn-deliver-epic` an epic,
-   its slices included; `/feyn-deliver` an observation; the direct delivery the work-cycle tooling,
-   as above. An observation is Ready for review while its PR awaits the merge.
+   creation. A **direct delivery** is a slice or a standalone observation of one edit with no
+   behaviour, named `direct` by the maintainer at its creation (`/feyn-issue observation direct
+   <observation>`, or `/feyn-issue slice #<epic> direct <observation>` for a slice), its To do
+   then opening with the line "Direct delivery": no skill, check, decision, agent workflow or
+   course file touched, and no Done when statement that asks more than "this sentence says this"
+   (a wording, a link, a typo, a mechanical rename in one file). The maintainer's work session
+   makes its branch, its edit and its PR with the work-cycle tooling (`/feyn-issue-branch`,
+   `/feyn-pull-request`): no contributor, no fresh-agent review, and the PR's Checks say
+   `Fresh-agent review: none, direct delivery.`. A direct slice is delivered so by its epic's
+   orchestrator (`/feyn-deliver-epic` step 2, "A direct slice"): its branch is cut from the
+   integration branch, its PR targets it (`--base <integration branch>`), the orchestrator merges
+   it, and it skips `/feyn-pull-request` step 8, so the slice never goes Ready for review. Which
+   skill delivers what: `/feyn-deliver-epic` an epic, its slices included, direct ones too;
+   `/feyn-deliver` an observation; the work-cycle tooling the direct delivery of an observation.
+   An observation is Ready for review while its PR awaits the merge.
 3. **Brainstorm**: `/feyn-brainstorm` frames a work session with the maintainer on how feyn works
    (the maintainer decides, one point at a time, nothing written in the repository during the
    brainstorm) and ends it in a proposal, created with `/feyn-issue proposal`. A brainstorm that

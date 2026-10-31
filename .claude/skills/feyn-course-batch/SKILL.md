@@ -1,6 +1,6 @@
 ---
 name: feyn-course-batch
-description: "Tooling of the work cycle, called by the maintainer and by `/feyn-deliver`'s contributor on a batch issue: run the agent workflow feyn-course-batch-workflow on a batch of concepts of a course (sources, writing, two reviews, fixes, checks), or list its steps with a dry run, then triage what it leaves open. Use for \"/feyn-course-batch parcours-po 42\", \"/feyn-course-batch parcours-po 9 10 --dry-run\"."
+description: "Tooling of the work cycle, called by the maintainer and by the contributor of the agent workflow deliver-slice.js on a batch issue: run the agent workflow feyn-course-batch-workflow on a batch of concepts of a course (sources, writing, two reviews, fixes, checks), or list its steps with a dry run, then triage what it leaves open. Use for \"/feyn-course-batch parcours-po 42\", \"/feyn-course-batch parcours-po 9 10 --dry-run\"."
 argument-hint: "<course id> <issue number | concept numbers> [--dry-run]"
 ---
 

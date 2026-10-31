@@ -1,6 +1,6 @@
 ---
 name: feyn-deliver
-description: "Deliver a Ready observation on feyn (an issue with no parent epic), from Ready to the maintainer's merge: run it through the agent workflow feyn-deliver-slice-workflow in observation mode (a contributor agent opens the PR to main, a fresh agent reviews it against the Done when, corrections verified by a fresh agent), read its result, clean the run, hand the PR over to the maintainer, who merges, then clean up after the merge. A slice of an epic goes to /feyn-deliver-epic; a direct delivery is unchanged. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"/feyn-deliver 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\"."
+description: "Deliver a Ready observation on feyn (an issue with no parent epic), from Ready to the maintainer's merge: run it through the agent workflow feyn-deliver-slice-workflow in observation mode (a contributor agent opens the PR to main, a fresh agent reviews it against the Done when, corrections verified by a fresh agent), read its result, clean the run, hand the PR over to the maintainer, who merges, then clean up after the merge. A slice of an epic, direct or not, goes to /feyn-deliver-epic; the direct delivery of an observation is unchanged. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"/feyn-deliver 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\"."
 argument-hint: "<issue number> [<issue number>…]"
 ---
 
@@ -30,15 +30,16 @@ comes once, at the hand-over (step 5).
 ## 1. Before the run
 
 - Read each issue (`mise exec -- gh issue view <n>`).
-- **A direct delivery.** An issue whose To do opens with the line "Direct delivery" (named
-  `direct` by the maintainer at its creation, [contributing](../../../docs/contributing.md),
-  "How the work is organised", moment 2) stops the cycle for that issue, before the refusals
-  below: reply "this slice is delivered as a direct delivery (`/feyn-issue-branch`, the edit,
-  `/feyn-pull-request`): nothing to spawn", and spawn nothing.
-- **A slice of an epic.** Its parent
+- **A slice of an epic**, direct or not. Its parent
   (`mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`; HTTP 404: none)
   carries the label `epic`: refuse in one line, "#<n> is a slice of epic #<epic>:
-  `/feyn-deliver-epic <epic>` delivers it", and run nothing for that issue.
+  `/feyn-deliver-epic <epic>` delivers it" (a direct slice included, its step 2, "A direct
+  slice"), and run nothing for that issue.
+- **A direct delivery.** An observation whose To do opens with the line "Direct delivery"
+  (named `direct` by the maintainer at its creation, [contributing](../../../docs/contributing.md),
+  "How the work is organised", moment 2) stops the cycle for that issue, before the refusals
+  below: reply "this observation is delivered as a direct delivery (`/feyn-issue-branch`, the
+  edit, `/feyn-pull-request`): nothing to spawn", and spawn nothing.
 - Then the refusals of `/feyn-issue-branch` step 1 apply: name the reason and stop for that
   issue. Except In progress: the run resumes it, its contributor taking the issue's branch and
   PR where they are.
@@ -121,8 +122,8 @@ Then, for a `Closes` PR only (a `Refs` issue stays In progress), set the issue R
 Then reply with, one line each: the PR URL and title; the Status; the review (the result's
 `reviewLine`, the rounds of corrections); what the maintainer should look at first (the PR's
 Review first); each deviation and each structural choice of step 3, with its options ruled out
-and its cost of going back; the merge command `/feyn-pull-request` gives
-(`mise exec -- gh pr merge <pr> --squash --delete-branch`). The merge is the maintainer's.
+and its cost of going back; where to merge, as `/feyn-deliver-epic` step 5.4 gives it: the PR
+page, "Squash and merge". The merge is the maintainer's.
 
 ## 6. After the merge
 

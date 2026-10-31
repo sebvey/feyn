@@ -1,6 +1,6 @@
 ---
 name: feyn-taught-check
-description: "Tooling of the work cycle, called by the maintainer and by `/feyn-deliver`'s contributor after any change to what a concept teaches: run the agent workflow feyn-taught-check-workflow, which reports the cases of a course that ask what the learner has not yet been taught, and triage its findings. Use for \"/feyn-taught-check parcours-po\", \"/feyn-taught-check parcours-po from 9\"."
+description: "Tooling of the work cycle, called by the maintainer and by the contributor of the agent workflow deliver-slice.js after any change to what a concept teaches: run the agent workflow feyn-taught-check-workflow, which reports the cases of a course that ask what the learner has not yet been taught, and triage its findings. Use for \"/feyn-taught-check parcours-po\", \"/feyn-taught-check parcours-po from 9\"."
 argument-hint: "<course id> [from <concept>] [to <concept>]"
 ---
 

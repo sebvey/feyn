@@ -5,10 +5,9 @@ status: accepted
 area: repo
 ---
 
-Without this, an orchestrator delivers each slice of an epic to `main` and waits for the
-maintainer to merge each one, as `/feyn-deliver` step 5 says; with the maintainer away, the epic
-stops at its first PR, and a slice that departs from the epic's Done when reaches the hand-over
-unseen, as #329 did.
+Without this, an agent would deliver each slice of an epic as a PR to `main` and wait for the
+maintainer to merge each one, so the epic stops at its first PR while the maintainer is away,
+and a slice that departs from the epic's Done when reaches the hand-over unseen, as #329 did.
 
 An epic is delivered by its orchestrator on an **integration branch**, cut from `main` when the
 epic is taken and named like an issue branch after the epic (`<type>/<epic>-<slug>`). Each slice
