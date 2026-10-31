@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const xml = require('./lib/xml');
-const yaml = require('./lib/yaml');
+const yaml = require('./lib/yaml-lines');
 const { fail } = require('./lib/course');
 
 const CLASSES = new Set(['primary', 'secondary', 'muted']);

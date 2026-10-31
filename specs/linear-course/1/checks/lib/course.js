@@ -2,7 +2,7 @@
 // Loads a course folder for the checks: course.yaml, language pack, concept index, files.
 const fs = require('fs');
 const path = require('path');
-const yaml = require('./yaml');
+const yaml = require('./yaml-lines');
 const md = require('./md');
 
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;

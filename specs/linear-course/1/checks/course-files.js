@@ -2,7 +2,7 @@
 // plan.md, glossary.md, CHANGELOG.md and the domain files: presence, frontmatter, sections,
 // leads, no unlisted domain file (COURSE.md sections 4 and 5); « Accueil » of plan.md and its
 // questions.
-const yaml = require('./lib/yaml');
+const yaml = require('./lib/yaml-lines');
 const mdlib = require('./lib/md');
 const glossary = require('./lib/glossary');
 const { fail } = require('./lib/course');

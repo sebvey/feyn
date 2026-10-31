@@ -4,7 +4,7 @@
 // SPEC.md section 8). An unknown spec
 // or MAJOR is refused by specs/check-course, before these checks run.
 const path = require('path');
-const yaml = require('./lib/yaml');
+const yaml = require('./lib/yaml-lines');
 const { fail, normNumber, SLUG } = require('./lib/course');
 
 const F = 'course.yaml';

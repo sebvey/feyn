@@ -1,0 +1,11 @@
+{
+  "name": "linear-course-1-checks",
+  "private": true,
+  "description": "The checks of linear-course MAJOR 1 (decision checks-use-ajv-and-yaml)",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1"
+  }
+}

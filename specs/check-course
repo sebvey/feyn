@@ -3,12 +3,14 @@
 // check-course <course-dir> [<the options of the MAJOR's check-course>]
 // Reads `spec: <name>@<MAJOR>` in <course-dir>/course.yaml and runs
 // specs/<name>/<MAJOR>/checks/check-course with the same arguments, its output and exit code
-// unchanged. Refuses (exit 2) a course whose spec or MAJOR has no folder here.
+// unchanged. Refuses (exit 2) a course whose spec or MAJOR has no folder here, and stops
+// (exit 2) when the MAJOR's dependencies are not installed (`npm ci` in its checks/).
 // The MAJOR's check-course holds the two modes (decision `versioned-objects-and-spec-layout`):
 // conformity by default, quality with --quality, passed through like every other argument.
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const { createRequire } = require('module');
 
 const SPECS = __dirname;
 const VALUED = new Set(['--only', '--concept', '--lang-dir']);
@@ -39,21 +41,43 @@ if (dir === null) usage(2);
 const file = path.join(dir, 'course.yaml');
 let text;
 try { text = fs.readFileSync(file, 'utf8'); } catch (e) { refuse(`cannot read ${file}`); }
-const line = text.split('\n').find((l) => /^spec\s*:/.test(l));
-if (!line) refuse(`${file} declares no spec (spec: <name>@<MAJOR>)`);
-const spec = line.replace(/^spec\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2');
-const m = /^([a-z0-9]+(?:-[a-z0-9]+)*)@(\d+)$/.exec(spec);
-if (!m) refuse(`${file}: spec "${spec}" must be <name>@<MAJOR>`);
-const [, name, major] = m;
 
 const isDir = (p) => { try { return fs.statSync(p).isDirectory(); } catch (e) { return false; } };
 const known = (p) => fs.readdirSync(p).filter((d) => !d.startsWith('.') && isDir(path.join(p, d))).sort();
-if (!isDir(path.join(SPECS, name))) refuse(`unknown spec "${name}" in ${file} (known: ${known(SPECS).join(', ')})`);
-const runner = path.join(SPECS, name, major, 'checks', 'check-course');
-if (!fs.existsSync(runner)) {
-  const majors = known(path.join(SPECS, name)).filter((d) => /^\d+$/.test(d));
-  refuse(`unknown MAJOR ${major} of spec "${name}" in ${file} (known: ${majors.join(', ') || 'none'})`);
+// spec "<name>@<MAJOR>" -> the MAJOR's check-course, or a refusal
+function runnerOf(spec) {
+  const m = /^([a-z0-9]+(?:-[a-z0-9]+)*)@(\d+)$/.exec(spec);
+  if (!m) refuse(`${file}: spec "${spec}" must be <name>@<MAJOR>`);
+  const [, name, major] = m;
+  if (!isDir(path.join(SPECS, name))) refuse(`unknown spec "${name}" in ${file} (known: ${known(SPECS).join(', ')})`);
+  const runner = path.join(SPECS, name, major, 'checks', 'check-course');
+  if (!fs.existsSync(runner)) {
+    const majors = known(path.join(SPECS, name)).filter((d) => /^\d+$/.test(d));
+    refuse(`unknown MAJOR ${major} of spec "${name}" in ${file} (known: ${majors.join(', ') || 'none'})`);
+  }
+  return runner;
 }
+
+// The YAML reader is the MAJOR's own `yaml` package (decision `checks-use-ajv-and-yaml`), so the
+// top-level "spec:" line names the MAJOR whose package then reads course.yaml (YAML 1.2); a
+// `spec` read otherwise names the MAJOR run. A course.yaml with a YAML error runs the MAJOR of
+// its "spec:" line, whose course-yaml check reports the error. The line scan is the bootstrap: a
+// spec it misses (a quoted key, a value on the next line) is refused as "declares no spec", even
+// when YAML would read it. The dispatcher checks only the `yaml` dependency it needs; the MAJOR's
+// check-course checks the others.
+const line = text.split('\n').find((l) => /^spec\s*:/.test(l));
+if (!line) refuse(`${file} declares no spec (spec: <name>@<MAJOR>)`);
+const spec = line.replace(/^spec\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2');
+let runner = runnerOf(spec);
+const checks = path.dirname(runner);
+if (!fs.existsSync(path.join(checks, 'node_modules', 'yaml', 'package.json'))) {
+  console.error(`checks: dependencies missing, run: mise exec -- npm ci --prefix ${path.relative(process.cwd(), checks) || '.'}`);
+  process.exit(2);
+}
+const YAML = createRequire(path.join(checks, 'package.json'))('yaml');
+const doc = YAML.parseDocument(text, { version: '1.2' });
+const declared = doc.errors.length ? null : doc.get('spec');
+if (typeof declared === 'string' && declared !== spec) runner = runnerOf(declared);
 
 const r = spawnSync(process.execPath, [runner, ...args], { stdio: 'inherit' });
 if (r.error) refuse(`cannot run ${runner}: ${r.error.message}`);

@@ -24,3 +24,5 @@ no class: `- file or area: what changes`.
   level, method and severity); sections 2 to 7 and 9 move to `COURSE.md` as written, renumbered
   1 to 7 (#323). `check-spec`'s `rule-slugs` reads `COURSE.md` too.
 - `SPEC.md`, `PROTOCOL.md`: version `1.0.0-alpha`, "draft" gone (#323).
+- `checks/`: the checks read YAML with the package `yaml` (YAML 1.2), installed by `npm ci` from
+  `checks/package.json`; `lib/yaml.js` removed; the same failures at the same `file:line` (#327).
