@@ -1,40 +1,59 @@
 #!/usr/bin/env node
 'use strict';
-// check-course <course-dir> [--quality] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>] [--list]
-// Two modes (decision `versioned-objects-and-spec-layout`): the conformity checks by default, the
-// quality checks with --quality. No conformity path runs the quality mode.
+// check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>]
+// check-course [--category <c>[,<c>...]] --list
+// The checks, their category and their severity come from the rule files (lib/rules.js; decision
+// `rules-with-level-and-method`): by default every check of method test that runs on a course,
+// the blocking ones first, then the reporting ones, each in the order of the rule files. A failure
+// of a blocking check sets exit code 1; a failure of a reporting check is printed and leaves 0.
 const path = require('path');
 require('./lib/deps').need();
 const { load } = require('./lib/course');
+const rules = require('./lib/rules');
 
-const MODES = {
-  conformity: ['course-yaml', 'concept-folder', 'case-contract', 'conventions', 'svg-contract', 'sources',
-    'course-files', 'domain-first-sentence', 'language-pack-keys'],
-  quality: ['glossary-order', 'typography', 'domain-first-sentence-standalone'],
-};
+const QUALITY_GONE = '--quality is gone: the reporting checks run by default, and --category <c> selects checks by category (check-course --list)';
+
+let RULES;
+try { RULES = rules.load(); } catch (e) {
+  if (!(e instanceof rules.RulesError)) throw e;
+  console.error(`check-course: ${e.message}`);
+  process.exit(2);
+}
+const HERE = RULES.checks.filter((c) => c.runsHere);
+const ORDERED = [...HERE.filter((c) => c.severity === 'blocks'), ...HERE.filter((c) => c.severity === 'reports')];
 
 function usage(code) {
   const out = code ? console.error : console.log;
-  out('usage: check-course <course-dir> [--quality] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>]');
-  out('       check-course [--quality] --list');
-  out(`conformity checks (the default): ${MODES.conformity.join(', ')}`);
-  out(`quality checks (--quality): ${MODES.quality.join(', ')}`);
+  out('usage: check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>]');
+  out('       check-course [--category <c>[,<c>...]] --list');
+  out('runs every check of method test of the rule files; a failure of a blocking check sets exit code 1,');
+  out('a failure of a reporting check leaves it 0');
+  out(`categories: ${RULES.categories.join(', ')}`);
+  out(`blocking checks: ${ORDERED.filter((c) => c.severity === 'blocks').map((c) => c.id).join(', ')}`);
+  out(`reporting checks: ${ORDERED.filter((c) => c.severity === 'reports').map((c) => c.id).join(', ')}`);
   process.exit(code);
 }
+function refuse(message) {
+  console.error(message);
+  process.exit(2);
+}
+const ids = (v) => String(v || '').split(',').filter(Boolean);
 
 const args = process.argv.slice(2);
 let dir = null;
 const only = [];
+const categories = [];
 const opts = {};
-let mode = 'conformity';
 let list = false;
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === '--help' || a === '-h') usage(0);
   else if (a === '--list') list = true;
-  else if (a === '--quality') mode = 'quality';
-  else if (a === '--only') only.push(...String(args[++i] || '').split(',').filter(Boolean));
-  else if (a.startsWith('--only=')) only.push(...a.slice(7).split(',').filter(Boolean));
+  else if (a === '--quality') refuse(QUALITY_GONE);
+  else if (a === '--category') categories.push(...ids(args[++i]));
+  else if (a.startsWith('--category=')) categories.push(...ids(a.slice(11)));
+  else if (a === '--only') only.push(...ids(args[++i]));
+  else if (a.startsWith('--only=')) only.push(...ids(a.slice(7)));
   else if (a === '--concept') opts.concept = args[++i];
   else if (a.startsWith('--concept=')) opts.concept = a.slice(10);
   else if (a === '--lang-dir') opts.langDir = path.resolve(args[++i] || '');
@@ -43,34 +62,53 @@ for (let i = 0; i < args.length; i++) {
   else if (dir === null) dir = a;
   else usage(2);
 }
-const CHECKS = MODES[mode];
-if (list) { console.log(CHECKS.join('\n')); process.exit(0); }
+for (const c of categories) {
+  if (!RULES.categories.includes(c)) refuse(`unknown category "${c}" (categories of the rule files: ${RULES.categories.join(', ')})`);
+}
+const inCategories = (c) => !categories.length || categories.includes(c.category);
+
+if (list) {
+  // every check of the rule files, those check-course does not run included, with how they run
+  const rows = [...ORDERED, ...RULES.checks.filter((c) => !c.runsHere)].filter(inCategories);
+  const w = Math.max(...rows.map((c) => c.id.length));
+  const wc = Math.max(...rows.map((c) => c.category.length));
+  for (const c of rows) console.log(`${c.id.padEnd(w)}  ${c.category.padEnd(wc)}  ${c.severity.padEnd(7)}${c.runsHere ? '' : `  not run here: ${c.how}`}`.trimEnd());
+  process.exit(0);
+}
 if (dir === null) usage(2);
 for (const id of only) {
-  if (CHECKS.includes(id)) continue;
-  const other = mode === 'quality' ? 'conformity' : 'quality';
-  if (MODES[other].includes(id)) console.error(`"${id}" is a ${other} check: ${other === 'quality' ? 'add' : 'drop'} --quality`);
-  else console.error(`unknown check id "${id}" (${mode} checks: ${CHECKS.join(', ')})`);
-  process.exit(2);
+  const c = RULES.checks.find((x) => x.id === id);
+  if (!c) refuse(`unknown check id "${id}" (check-course --list)`);
+  if (!c.runsHere) refuse(`"${id}" is not run by check-course: ${c.how}`);
+  if (!inCategories(c)) refuse(`"${id}" is in category ${c.category}, which --category does not select`);
 }
 
 const fs = require('fs');
-if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) { console.error(`not a directory: ${dir}`); process.exit(2); }
+if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) refuse(`not a directory: ${dir}`);
 
 const ctx = load(dir, opts);
-const run = only.length ? CHECKS.filter((id) => only.includes(id)) : CHECKS;
-let failed = 0;
-for (const id of run) {
+const run = ORDERED.filter(inCategories).filter((c) => !only.length || only.includes(c.id));
+const failed = { blocks: [], reports: [] };
+let crashed = false;
+for (const c of run) {
   let failures;
   try {
-    failures = require('./' + id).run(ctx);
+    failures = require('./' + c.id).run(ctx);
   } catch (e) {
+    // a check that crashed did not run: exit code 1, whatever its severity
+    crashed = true;
     failures = [{ file: 'check-course', line: 1, message: `the check crashed: ${e.stack.split('\n').slice(0, 3).join(' | ')}` }];
   }
-  if (!failures.length) console.log(`${id}: ok`);
+  if (!failures.length) console.log(`${c.id}: ok`);
   else {
-    failed++;
-    for (const f of failures) console.log(`${id}: fail: ${f.file}:${f.line} ${f.message}`);
+    failed[c.severity].push(c.id);
+    for (const f of failures) console.log(`${c.id}: fail: ${f.file}:${f.line} ${f.message}`);
   }
 }
-process.exit(failed ? 1 : 0);
+const count = (sev) => {
+  const n = run.filter((c) => c.severity === sev).length;
+  return `${n} ${sev === 'blocks' ? 'blocking' : 'reporting'} check${n === 1 ? '' : 's'}, ${failed[sev].length} failed${failed[sev].length ? ` (${failed[sev].join(', ')})` : ''}`;
+};
+const code = failed.blocks.length || crashed ? 1 : 0;
+console.log(`summary: ${count('blocks')}; ${count('reports')}; exit ${code}`);
+process.exit(code);

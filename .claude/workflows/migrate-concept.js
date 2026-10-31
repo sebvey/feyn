@@ -53,6 +53,8 @@ const REPORT = A.report || `construction/notes/S1-10-${NN}-report.md`
 // falls back to pwd, logged after the scope step.
 const DEST_ROOT = DEST.startsWith('/') && DEST.endsWith(`/courses/${A.course}/`) ? DEST.slice(0, -`courses/${A.course}/`.length) : ''
 if (DEST.startsWith('/') && !DEST_ROOT && DEST.includes('/courses/')) throw new Error(`args.dest ${DEST} is under a courses/ folder but is not <repository>/courses/${A.course}: the spec root cannot be told from it; pass <repository>/courses/${A.course}`)
+// The blocking checks that look at a concept (check-course --list): --only keeps the reporting
+// checks, glossary-order among them, out of the verdict of a migration.
 const CONCEPT_CHECKS = 'course-yaml,concept-folder,case-contract,conventions,svg-contract,sources'
 
 // ROOT: the run's repository root, absolute, with a final slash (#178): DEST_ROOT below, else the pwd

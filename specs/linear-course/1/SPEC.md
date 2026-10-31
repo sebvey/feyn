@@ -205,14 +205,24 @@ with its category, level and method, and the severity that follows (section 7).
 Node scripts in `checks/`, one per id, with the dependencies of `checks/package.json` installed
 by `npm ci` (decision `checks-use-ajv-and-yaml`); `checks/README.md` gives how to install and run
 them, their options and fixtures. `specs/check-course <course-dir>` runs this folder's
-`checks/check-course` on a course; until the checks read the rules (#317), it runs the checks that
-block by default and the checks that report with `--quality`. `checks/check-spec` checks the spec's own files
+`checks/check-course` on a course. `checks/check-spec` checks the spec's own files
 (`PROTOCOL.md`, `SPEC.md`, `COURSE.md`, `decisions/`, `rules/`, `schemas/`), not a course.
+
+`check-course` takes its checks from the rule files: by default it runs, in one run, every check
+of method test that runs on a course, blocking and reporting, and `--category <c>[,<c>...]`
+runs the checks of those categories only, a closed list (the categories of the rule files, an
+unknown one a usage error). A check runs on a course when it verifies rules of
+`rules/course.yaml`, or when its script says it runs on one: `language-pack-keys`, category
+`spec`, runs on a course, in the default run and under `--category spec`; `rule-slugs` and
+`rule-files` are `check-spec`'s. A check of another method is not run by a script:
+`check-course --list` names it, with how it runs.
 
 Both print one line per passing check (`<id>: ok`) and one line per failure
 (`<id>: fail: <file>:<line> <message>`, the file relative to the course folder, or to the spec
-folder for `check-spec`). The exit code is 0 when every check passes, 1 when one fails, 2 on a
-usage error or when the dependencies are not installed.
+folder for `check-spec`), whatever the severity; `check-course` ends with a summary line that
+counts the failed checks of each severity. The exit code is 1 when a blocking check fails, 0 when
+none does (a reporting check that fails leaves it 0), 2 on a usage error or when the
+dependencies are not installed.
 
 The category, level and method of each check below are those of the rules it verifies, in
 `rules/course.yaml` and `rules/spec.yaml` (the `check` of each rule); `rule-files` verifies

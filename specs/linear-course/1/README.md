@@ -10,5 +10,5 @@ holds its MAJOR 1, version `1.0.0-alpha` until its tag; a course follows it by d
 - `PROTOCOL.md`: the pedagogical protocol the teacher executes.
 - `CHANGELOG.md`: the changes of the spec, « Unreleased » until the tag.
 - `lang/<code>.yaml`: the language packs (phrases, typography, headings, markers, site labels).
-- `checks/`: the check scripts; `specs/check-course <course-dir>` runs the checks that block on a course that declares this MAJOR, `--quality` the checks that report (`SPEC.md` section 10).
+- `checks/`: the check scripts; `specs/check-course <course-dir>` runs on a course that declares this MAJOR the checks of the rule files, those that block and those that report, `--category` selecting by category (`SPEC.md` section 10).
 - `templates/`: the course templates; `decisions/`: the decisions of this spec.
