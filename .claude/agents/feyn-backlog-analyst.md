@@ -1,7 +1,7 @@
 ---
 name: feyn-backlog-analyst
 description: "Analysing agent of /feyn-triage on feyn: reads every Backlog issue against the repository, read-only, and reports the stale ones with proof and a verdict. Spawned by the work session that runs /feyn-triage, with no list of recent changes."
-tools: Read, Grep, Glob, Bash
+tools: Read, Bash
 model: opus
 ---
 

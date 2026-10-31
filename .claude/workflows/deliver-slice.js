@@ -19,8 +19,6 @@ export const meta = {
 // brief, no Edit or Write tool), with this workflow's additions in their prompt; the steps 2 to 4
 // of /feyn-pr-review (spawn, return, resume) are folded in here, since the workflow spawns the
 // agents itself and cannot resume one.
-// A session started before .claude/agents/feyn-pr-reviewer.md existed has not loaded it: the run
-// then fails at the Review stage; the cure is to start a new session and run again.
 
 const A = args || {}
 for (const k of ['issue', 'type', 'area']) if (!A[k]) throw new Error(`args.${k} missing: args are { issue, epic?, base?, type, area, work?, dryRun? }`)
@@ -154,7 +152,7 @@ log(`PR #${contrib.pr} opened on ${contrib.branch}`)
 
 // ---------- Review
 phase('Review')
-// The project subagent of .claude/agents/, loaded by the session at its start.
+// The project subagent of .claude/agents/ (decision claude-folder-layout).
 const REVIEWER = 'feyn-pr-reviewer'
 const REVIEW_BASE = `You review PR #${contrib.pr} (branch ${contrib.branch}, base ${BASE}) on feyn, which claims to deliver issue #${A.issue}, ${SCOPE}. You are the fresh agent of /feyn-pr-review: follow your brief (PR #${contrib.pr}, branch ${contrib.branch}, issue #${A.issue}, checks to rerun: those the PR diff touches, agent-workflow run: none), not the steps of ".claude/skills/feyn-pr-review/SKILL.md", which this workflow runs.${OBS ? '' : ` Read also the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments"); the base is ${A.base} wherever the brief or a skill says main.`} You are in your own worktree: read ".claude/reference/worktree-agent.md" first; "git fetch" then "git switch --detach origin/${contrib.branch}" (the branch is checked out elsewhere). Change nothing, push nothing, comment nothing. ${CHECKOUT}
 
