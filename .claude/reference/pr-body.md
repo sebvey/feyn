@@ -30,7 +30,7 @@ Closes #<n>   (or Refs #<n>)
 ## Review first
 
 - <where the maintainer's judgment is needed>
-- Detail: the "Review notes" comment.
+- <the last one, at most the third>. Detail: the "Review notes" comment.
 
 ---
 

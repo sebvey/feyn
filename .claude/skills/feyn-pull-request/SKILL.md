@@ -45,11 +45,11 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    lowercase, no final period, under 72 characters for the whole title.
 5. **Body**, from the first part of the PR body template
    [pr-body.md](../../reference/pr-body.md). It is read by a maintainer who reviews many PRs on
-   many subjects and must get back into this one from the PR alone; it is also the squash commit message on `main`. 30 lines at most, blank lines and
-   the awaiting section excluded. The sections, in this order, each an `##` heading except the
-   `Closes` line; a line of `pr-body.md` that does not apply is dropped (the awaiting section
-   outside a draft, `Not verified:` with nothing unverified), and the body carries no HTML
-   comment:
+   many subjects and must get back into this one from the PR alone; it is also the squash
+   commit message on `main`. 30 lines at most, blank lines and the awaiting section excluded.
+   The sections, in this order, each an `##` heading except the `Closes` line; a line of
+   `pr-body.md` that does not apply is dropped (the awaiting section outside a draft,
+   `Not verified:` with nothing unverified), and the body carries no HTML comment:
    - **Awaiting the maintainer**, only when the branch leaves a decision to the maintainer
      (a draft, step 6), first because it is the action: the question, the options, the
      recommendation. Removed once the answer is applied.
@@ -88,15 +88,15 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
        maintainer asked for a PR without a review.
      - `Not verified:` one line, if anything.
    - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a
-     deviation, a choice the contributor made, a sensitive spot. The last one points to the
-     "Review notes" comment when the PR has one.
+     deviation, a choice the contributor made, a sensitive spot. The last one ends with a
+     pointer to the "Review notes" comment when the PR has one, not a bullet of its own.
 
    No signature or generated-by line: the squash takes the body as the commit message on
    `main`; the `Co-Authored-By` trailer on the commits is enough. `.claude/settings.json` sets
-   `"attribution": { "pr": "" }`, which removes the line at its source, the system reminder
-   that asks for it, and keeps the commit trailer (Claude Code, documented 2026-10-31, #372);
-   this sentence stays until a run of the agent workflow `deliver-slice.js` shows its agents
-   no longer receive that reminder.
+   `"attribution": { "pr": "" }`, which hides the PR attribution and keeps the commit trailer
+   (Claude Code, documented 2026-10-31, #375). That it also removes the system reminder that
+   asks for the line is not verified: this sentence stays until a run of the agent workflow
+   `deliver-slice.js` shows its agents no longer receive that reminder.
 
    Before each `gh pr create`, and each `gh pr edit` of the body, count its lines (blank lines
    and the awaiting section excluded) and the bullets of Review first: over 30 lines or over 3
