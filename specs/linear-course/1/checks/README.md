@@ -109,7 +109,7 @@ relative to `<spec-dir>`. It has one mode: its checks are conformity checks.
 | Id | Family | Script | Verifies |
 |---|---|---|---|
 | `rule-slugs` | conformity | `rule-slugs.js` | every rule and every group of rules of `PROTOCOL.md` is named by a slug, defined once in one namespace; every rule or group cited in `PROTOCOL.md`, `SPEC.md`, `COURSE.md` and `decisions/` is cited by a slug that is defined, a group as a group and a rule as a rule; none is named or cited by a number, no range « `a` à `b` » (decisions `rules-named-by-slug`, `rule-groups-replace-ranges`) |
-| `rule-files` | conformity | `rule-files.js` | `rules/course.yaml`, `rules/protocol.yaml` and `rules/spec.yaml` exist; a group has a non-empty `rules` list and may declare `id`, `title`, `category`, `method`; a rule has `id` (a slug), `level`, `category` and `method` (on the rule or its group), `text`, optional `check` and `why`, and in the protocol `origin`, no other key; the closed lists (levels, methods, the categories of a course, the families of the protocol, `spec`; a rule of the protocol is a demonstration); ids of rules and groups unique across the three files; every check named exists (`checks/<id>.js` or `.claude/workflows/<id>.js`); one category and one level per check; each `schemas/*.schema.yaml` compiles under `Ajv2020` and is named by the text of one rule of `rules/course.yaml`, and a schema named there exists (`SPEC.md` 2, 4 to 6) |
+| `rule-files` | conformity | `rule-files.js` | `rules/course.yaml`, `rules/protocol.yaml` and `rules/spec.yaml` exist; a group has a non-empty `rules` list and may declare `id`, `title`, `category`, `method`; a rule has `id` (a slug), `level`, `category` and `method` (on the rule or its group), `text`, optional `check` and `why`, and in the protocol `origin`, no other key; a group of `rules/protocol.yaml` has an `id` that is a group of `PROTOCOL.md`; the closed lists (levels, methods, the categories of a course, the families of the protocol, `spec`; a rule of the protocol is a demonstration); ids of rules and groups unique across the three files; every check named exists (`checks/<id>.js` or `.claude/workflows/<id>.js`); one category and one level per check; each `schemas/*.schema.yaml` compiles under `Ajv2020` and is named by the text of one rule of `rules/course.yaml`, and a schema named there exists (`SPEC.md` 2, 4 to 6) |
 
 A rule's slug is defined by a line of a rule family (`## <n>. …`) that opens on `**<slug>** `, or
 by a table row of a family whose first cell is `**<slug>**` (the save-point table); a group's slug
@@ -165,7 +165,7 @@ lists, and a run must run the checks of its mode and no other.
   file; no other `check-spec` check may fail. For `rule-slugs`: a missing slug, a duplicate
   slug, a rule cited by number, a missing group, a group whose slug is a rule's, a range, a range
   in `COURSE.md`, a group cited as a rule. For `rule-files`: a missing level; a level, a method, a
-  category and a family off their lists; an id in two rule files; a check that does not exist; a
+  category and a family off their lists; a protocol group that `PROTOCOL.md` does not define; an id in two rule files; a check that does not exist; a
   check over two categories; a check over two levels; a schema that does not compile; a schema
   no rule names. The test also runs
   `check-spec` on `specs/linear-course/1`, which must pass.

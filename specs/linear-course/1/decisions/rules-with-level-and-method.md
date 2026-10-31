@@ -135,3 +135,6 @@ GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
 - No teacher conforms today, since no fresh test exists: that is the target of #222.
 - In French, « schéma » means a drawing or a JSON Schema; the repository, in English, says
   `diagram` and `schema`.
+- Amended 2026-10-31 (#329): the closed list of categories gains `spec`, the category of the
+  rules on the spec itself, held in `rules/spec.yaml` (its language packs, the slugs of its
+  protocol, its rule files and schemas); decision `spec-files-and-alpha-version`, amended.

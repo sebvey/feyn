@@ -56,6 +56,12 @@ groups:
           The level, method and category of a rule shall be values of the closed lists of
           `SPEC.md` sections 4 to 6: for a rule of the protocol, a family; for a rule on the
           spec itself, `spec`.
+      - id: protocol-group-in-protocol
+        level: requirement
+        check: rule-files
+        text: >-
+          A group of `rules/protocol.yaml` shall have an `id`, the slug of a group of
+          `PROTOCOL.md`.
       - id: rule-ids-unique
         level: requirement
         check: rule-files

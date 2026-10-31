@@ -1,0 +1,2 @@
+check: rule-files
+message: id "welcome" is not a group of PROTOCOL.md

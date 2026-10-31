@@ -144,6 +144,10 @@ groups:
         text: >-
           The body of `concept.md` shall have no stances section: `stances` and `neighbors` are
           the one place for the concept's stances and neighbours.
+        why: >-
+          Without it, the migration wrote the stances twice, in the frontmatter and in a body
+          section, and the two copies drifted (concept 9 prototype; decision
+          stances-in-frontmatter-only).
       - id: subconcept-sections-follow-tree
         level: requirement
         check: concept-folder
@@ -405,6 +409,10 @@ groups:
         text: >-
           The source cell of a claim shall hold reference ids `[S1]`, separated by commas, or
           the `markers.course` word; nothing else: no free text, no path to another concept.
+        why: >-
+          Without it, the agent that wrote concept 9 gave free text as sources, « fil rouge »
+          and « aucune » (decision where-a-claim-goes, superseded by
+          sources-trace-the-concept).
       - id: claim-verified-cell-filled
         level: requirement
         check: sources

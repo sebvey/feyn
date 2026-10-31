@@ -235,7 +235,7 @@ are those of `COURSE.md`.
 | `typography` | `writing` | recommendation | test | reports | no banned character of the language pack in course text | 1 |
 | `domain-first-sentence-standalone` | `writing` | recommendation | test | reports | the first sentence of each paragraph of « Le fil des concepts » does not open with a word of `checks.anaphora` | 4, 7 |
 | `rule-slugs` (`check-spec`) | `spec` | requirement | test | blocks | `PROTOCOL.md` names each of its rules and groups by a slug defined once; `PROTOCOL.md`, `SPEC.md`, `COURSE.md` and `decisions/` cite them by a defined slug, never by a number or a range | `PROTOCOL.md` |
-| `rule-files` (`check-spec`) | `spec` | requirement | test | blocks | `rules/*.yaml`: required fields, closed lists (levels, methods, categories, families), ids unique across the files, every check named exists, one category and one level per check; each schema of `schemas/` compiles under `Ajv2020` and is named by one rule of `rules/course.yaml` | `SPEC.md` 2, 4 to 6 |
+| `rule-files` (`check-spec`) | `spec` | requirement | test | blocks | `rules/*.yaml`: required fields, closed lists (levels, methods, categories, families), a group of the protocol is a group of `PROTOCOL.md`, ids unique across the files, every check named exists, one category and one level per check; each schema of `schemas/` compiles under `Ajv2020` and is named by one rule of `rules/course.yaml` | `SPEC.md` 2, 4 to 6 |
 | `taught-check` | `pedagogy` | recommendation | analysis | reports | no case asks what the learner has not yet been taught | 3.3 |
 
 **`taught-check`** is not a script: it is an agent workflow (`.claude/workflows/taught-check.js`),

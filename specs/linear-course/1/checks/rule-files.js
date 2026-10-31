@@ -10,6 +10,8 @@
 //   - the closed lists of SPEC.md sections 4 to 6: the levels, the methods (a rule of the
 //     protocol: demonstration), the categories of a course, the families of the protocol, `spec`
 //     for the rules on the spec itself;
+//   - a group of rules/protocol.yaml has an `id`, the slug of a group of PROTOCOL.md (a heading
+//     "### <title> (`<slug>`)" of a rule family "## <n>. ...", as rule-slugs reads it);
 //   - the ids of rules and groups are unique across the three files;
 //   - a check named exists, as a script of this folder (`<check>.js`) or an agent workflow of
 //     the repository (`.claude/workflows/<check>.js`);
@@ -19,6 +21,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('./lib/yaml-lines');
+const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
 
 const LEVELS = ['requirement', 'recommendation', 'permission'];
@@ -49,8 +52,24 @@ function checkExists(id) {
   return fs.existsSync(path.join(__dirname, id + '.js')) || fs.existsSync(path.join(WORKFLOWS, id + '.js'));
 }
 
+// the group slugs PROTOCOL.md defines, in its rule families; null when PROTOCOL.md is missing
+function protocolGroups(ctx) {
+  const text = ctx.read('PROTOCOL.md');
+  if (text === null) return null;
+  const { sections } = mdlib.sections(mdlib.split(text).body, 2);
+  const groups = new Set();
+  for (const s of sections.filter((x) => /^\d+\.\s/.test(x.title))) {
+    for (const l of s.lines) {
+      const g = !l.code && /^###\s+.+?\s+\(`([^`]+)`\)\s*$/.exec(l.t);
+      if (g) groups.add(g[1]);
+    }
+  }
+  return groups;
+}
+
 function run(ctx) {
   const out = [];
+  const pgroups = protocolGroups(ctx);
   const ids = new Map(); // id -> "file:line"
   const checks = new Map(); // check -> { category, level, at }
   const courseTexts = []; // [{ text, file, line }] of rules/course.yaml
@@ -79,8 +98,12 @@ function run(ctx) {
       for (const k of Object.keys(g)) if (!GROUP_KEYS.includes(k)) out.push(fail(file, yaml.lineOf(g, k, gl), `group ${gi + 1}: unknown key "${k}"`));
       if (g.id !== undefined) {
         if (typeof g.id !== 'string' || !GROUP_SLUG.test(g.id)) out.push(fail(file, yaml.lineOf(g, 'id', gl), `group ${gi + 1}: id must be a slug, one to five lowercase words joined by hyphens`));
-        else unique(g.id, yaml.lineOf(g, 'id', gl), 'group');
-      }
+        else {
+          unique(g.id, yaml.lineOf(g, 'id', gl), 'group');
+          // PROTOCOL.md missing is rule-slugs' failure, not this one's
+          if (file === 'rules/protocol.yaml' && pgroups && !pgroups.has(g.id)) out.push(fail(file, yaml.lineOf(g, 'id', gl), `group ${gi + 1}: id "${g.id}" is not a group of PROTOCOL.md: a group of the protocol is a group of PROTOCOL.md, its slug as its id`));
+        }
+      } else if (file === 'rules/protocol.yaml') out.push(fail(file, gl, `group ${gi + 1}: id is mandatory in the protocol, the slug of its group of PROTOCOL.md`));
       if (g.category !== undefined) closed(g, 'category', g.category, spec.categories, 'category', gl);
       if (g.method !== undefined) closed(g, 'method', g.method, spec.methods, 'method', gl);
       if (!Array.isArray(g.rules) || g.rules.length === 0) { out.push(fail(file, yaml.lineOf(g, 'rules', gl), `group ${gi + 1}: rules must be a non-empty list`)); return; }
