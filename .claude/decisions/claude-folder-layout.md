@@ -41,6 +41,7 @@ owns it.
   Edit or Write. The first two are `feyn-backlog-analyst` (`/feyn-triage`) and
   `feyn-pr-reviewer` (`/feyn-pr-review`, `deliver-slice.js`, `/feyn-deliver-epic`); the
   Reviewer brief section of `feyn-pr-review/SKILL.md` moved into the latter, which is now the
-  example of a reused brief. A brief written for one spawn stays in its skill or workflow. A
-  session sees an agent file added to `.claude/agents/` during it, with no restart (Claude
-  Code, observed 2026-10-31, #373).
+  example of a reused brief. A brief written for one spawn stays in its skill or workflow.
+- Amended 2026-10-31 (#373): the #368 amendment marked that a session loads `.claude/agents/`
+  only at its start; a run disproved it. A session sees an agent file added to
+  `.claude/agents/` during it, with no restart (Claude Code, observed 2026-10-31, #373).
