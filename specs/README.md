@@ -31,25 +31,16 @@ that reports is printed and leaves 0; `--category` selects checks by category.
 
 ## Versions
 
-A spec version is tagged `<name>/vX.Y.Z`.
+A spec version is tagged `<name>/vX.Y.Z`. From the MAJOR's tag on, the bump of a spec change
+is written in the levels of the rules of a course (requirement, recommendation), as the
+MAJOR's `SPEC.md` writes it (`linear-course`: sections 4 and 8):
 
 | Bump | When |
 |---|---|
-| MAJOR | the structure changes (files, fields, mandatory sections); a conformity check added or made stricter; an optional field made mandatory; a quality check moved to conformity |
-| MINOR | an optional element; a protocol rule added, changed or renamed (the old slug is burnt); a conformity check made looser or moved to quality; a quality check added or made stricter; a language-pack key added or renamed, every pack updated |
+| MAJOR | the structure changes (files, fields, mandatory sections); a requirement added or made stricter; an optional field made mandatory; a recommendation made a requirement |
+| MINOR | an optional element; a protocol rule added, changed or renamed (the old slug is burnt); a requirement made looser or made a recommendation; a recommendation added or made stricter; a language-pack key added or renamed, every pack updated |
 | PATCH | wording; a false positive lifted |
 
 A MAJOR lives while a served course version declares it, a course tag included; then it is
 archived. Tooling reads every live MAJOR. An old MAJOR receives bug fixes only, as a PATCH,
 never a tightening; a bug fix is ported to every live MAJOR.
-
-## Check families
-
-| | Conformity check | Quality check |
-|---|---|---|
-| Says | the course is consumable: the site builds, the teacher teaches, identifiers resolve | the course is good: term order, captions, lengths |
-| Run by | the machine on every change: `/feyn-pull-request`, CI, the builds | its scripts in the same run of `specs/check-course`; taught-check on demand, by agents |
-| Result | a `fail` blocks the merge and the builds | findings, triaged into course issues; a `fail` leaves the exit code 0 |
-
-Which family a check is in follows from its rules (the MAJOR's `SPEC.md`, section 7): a check
-that verifies requirements by test blocks, any other reports.

@@ -396,9 +396,9 @@ Body, all mandatory, in this order (`course-files`):
    concept of the domain serves, in order, without giving the answer.
 
 **First sentence**: it ends with `.`, `?` or `!` within 300 characters of the lead, so that
-the site can show it (`domain-first-sentence`, a conformity check), and does not open with a
+the site can show it (`domain-first-sentence`, which blocks), and does not open with a
 word of the language pack's `checks.anaphora` list (French: « Il », « Elle », « Ce », « Cette »,
-« Puis »…), so that it stands alone (`domain-first-sentence-standalone`, a quality check).
+« Puis »…), so that it stands alone (`domain-first-sentence-standalone`, which reports).
 
 ## 5. Course files
 
@@ -452,7 +452,7 @@ welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases l
   tells the senses of a homonym apart; review does. A variant belongs to one row: no two rows
   hold the same variant, case ignored, its qualifier included (`course-files`).
 
-  **Order** (`glossary-order`, a quality check: it reports, it does not block): a term is used
+  **Order** (`glossary-order`, a reporting check: it does not block): a term is used
   after its defining concept, in course order. The scope is the reader text, the
   `concept.md` of each concept: its body and its frontmatter (the texts of `stances` and
   `neighbors`, the `title` and `caption` of `diagrams`); `teaching.md` is not read. Every use

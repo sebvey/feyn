@@ -40,3 +40,7 @@ no class: `- file or area: what changes`.
   by category, `--list` prints each check with its category and severity; `--quality` is gone, a
   usage error naming its replacement; `test-fixtures` runs each fixture once and checks the exit
   code against the severity (#331).
+- `COURSE.md`, `checks/`, `lang/`: the words of the frame replace the two check families in
+  three lines of `COURSE.md` (otherwise as moved), the comments of the checks and of the
+  language pack and its fixtures: a check blocks or reports; `checks/README.md` names the removed
+  flag `--quality`; no behaviour changes (#333).
