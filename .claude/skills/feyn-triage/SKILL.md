@@ -35,7 +35,7 @@ briefed with one skipped #318 without a word).
 > this issue still deserve to exist, in this form? Only then: what in it is wrong? Find what
 > changed yourself: `git log origin/main --since=<the issue's updatedAt>`, the files and issues
 > it cites (`git log origin/main -- <file>`, `mise exec -- gh issue view <m>`), the epics it
-> could belong to (`mise exec -- gh issue list --label epic --state all`).
+> could belong to (`mise exec -- gh issue list --label epic --state all --limit 200`).
 >
 > An issue is stale when it no longer deserves to exist in this form: done, moot, a need that
 > is gone, the work of an epic, a list of several observations, a duplicate, or a body the
@@ -56,21 +56,22 @@ issue is either reported, sound, or named as not treated.
 
 ## 2. The working list
 
-The pass keeps its list in a file `feyn-triage-<date>.md` in the session's scratchpad (Claude
-Code's temporary folder of the work session, given in its environment): not in the repository,
-and not in Claude's memory folder. One line per stale issue, in the agent's order,
+The pass keeps its list in a file `feyn-triage-<date>.md` in the work session's scratchpad (Claude
+Code's temporary folder of the work session, given in its environment): not in the repository, and
+not in Claude's memory folder. One line per stale issue, in the agent's order,
 `#<n> <title> · <verdict proposed> · <status>`, the status being `pending`, `presented`,
-`awaiting maintainer action`, `decided: <decision>` or `executed`.
+`awaiting maintainer action: <what>`, `left open: <why>`, `decided: <decision>` or `executed`.
 
 The list is used, not only written:
-- before presenting an item, reread it: the next item is the first line not `executed`, an item
-  left open by the maintainer skipped;
+- before presenting an item, reread it: a line `awaiting maintainer action` stops the pass on
+  that item (step 3); otherwise the next item is the first line neither `executed` nor
+  `left open`;
 - after each step of an item (presented, decided, executed), write its status;
 - the progress line counts its `executed` lines over its lines.
 
-The scratchpad goes with the session: no purge step. A pass resumed in another session does not
-find the list, and that is accepted: it starts from a new analysis (step 1), where the issues
-already treated no longer come up as stale.
+The scratchpad goes with the work session: no purge step. A pass resumed in another work session
+does not find the list, and that is accepted: it starts from a new analysis (step 1), where the
+issues already treated no longer come up as stale.
 
 ## 3. One item at a time
 
@@ -81,9 +82,10 @@ One item per message, under its own level-2 heading:
   1;
 - one recommendation, with its reason.
 
-The next item is presented only when this one is executed, or left open by the maintainer. An
-item that waits on an action of the maintainer (a label, a merge, an answer elsewhere) is still
-open: say what it waits on, and present nothing else.
+The next item is presented only when this one is executed, or left open by the maintainer
+(status `left open: <why>`, skipped from then on). An item that waits on an action of the
+maintainer (a label, a merge, an answer elsewhere) is `awaiting maintainer action: <what>`: say
+what it waits on, and present nothing else.
 
 A requirement added to an epic's Done when, by a fold or otherwise, is the maintainer's decision:
 propose it as an option, never write it on the strength of another decision.
@@ -119,5 +121,5 @@ counts (stale, executed by verdict, left open with why, not treated by the agent
 created, and the observations the pass raised on its own way of working.
 
 When the maintainer stops the pass ("on s'arrête là"), that message also says, in short, what the
-list held and is lost with the session: the items treated, and the items left with their proposed
-verdict.
+list held and is lost with the work session: the items treated, and the items left with their
+proposed verdict.

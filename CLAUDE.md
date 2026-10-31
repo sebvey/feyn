@@ -56,8 +56,8 @@ workflow, up to the hand-over of its PR to `main`; a direct delivery is made wit
 `/feyn-issue-branch` and `/feyn-pull-request`. `/feyn-brainstorm` runs a brainstorm with the
 maintainer and ends it in a proposal. `/feyn-triage` runs a pass on the Backlog with the
 maintainer. Load the one that matches the request. The other `feyn-` skills are the work-cycle
-tooling: called by them, and loaded directly for a one-off act. A work session starts with an
-issue number. How the work is organised (epics, slices, observations, milestones, the
+tooling: called by them, and loaded directly for a one-off act. A delivery work session starts
+with an issue number. How the work is organised (epics, slices, observations, milestones, the
 Project's views): `docs/contributing.md`, "How the work is organised".
 
 ## Non-negotiable rules
