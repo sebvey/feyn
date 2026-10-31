@@ -55,6 +55,8 @@ pushes, and opens the PR with the title `<type>(<area>): <summary>`, which becom
 on `main`. The body starts with `Closes #n` (or `Refs #n` when the PR is one step of the issue),
 then, under `##` headings, Context, Issues, Changes, Checks and Review first, within the limits of
 `/feyn-pull-request` step 5, so that the maintainer gets back into the subject from the PR alone.
+The detail the body leaves out (choices and their options ruled out, findings left, the detail of
+the checks) goes in one PR comment, "Review notes", out of the squash commit.
 Checks counts the Done when verdicts (`met`, `not met`, `deviation`) without restating the
 statements, and says why for each `not met` or `deviation`; on every PR, unless the maintainer
 asked for one without a review or named its slice a direct delivery, the fresh-agent reviewer of

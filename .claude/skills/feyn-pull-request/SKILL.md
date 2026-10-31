@@ -43,13 +43,13 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    `<type>` is the `type:` label, `<area>` the `area:` label, both without their prefix
    (`course(course:parcours-po): write the cases of concept 9`). Summary: imperative,
    lowercase, no final period, under 72 characters for the whole title.
-5. **Body**, from the PR body template [pr-body.md](../../reference/pr-body.md). It is read by
-   a maintainer who reviews many PRs on many subjects and must get back into this one from the
-   PR alone; it is also the squash commit message on `main`. 30 lines at most, blank lines and
-   the awaiting section excluded. The sections, in this order, each an `##` heading except the
-   `Closes` line; a line of `pr-body.md` that does not apply is dropped (the awaiting section
-   outside a draft, `Not verified:` with nothing unverified), and the body carries no HTML
-   comment:
+5. **Body**, from the first part of the PR body template
+   [pr-body.md](../../reference/pr-body.md). It is read by a maintainer who reviews many PRs on
+   many subjects and must get back into this one from the PR alone; it is also the squash
+   commit message on `main`. 30 lines at most, blank lines and the awaiting section excluded.
+   The sections, in this order, each an `##` heading except the `Closes` line; a line of
+   `pr-body.md` that does not apply is dropped (the awaiting section outside a draft,
+   `Not verified:` with nothing unverified), and the body carries no HTML comment:
    - **Awaiting the maintainer**, only when the branch leaves a decision to the maintainer
      (a draft, step 6), first because it is the action: the question, the options, the
      recommendation. Removed once the answer is applied.
@@ -88,10 +88,27 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
        maintainer asked for a PR without a review.
      - `Not verified:` one line, if anything.
    - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a
-     deviation, a choice the contributor made, a sensitive spot.
+     deviation, a choice the contributor made, a sensitive spot. The last one ends with a
+     pointer to the "Review notes" comment when the PR has one, not a bullet of its own.
 
    No signature or generated-by line: the squash takes the body as the commit message on
-   `main`; the `Co-Authored-By` trailer on the commits is enough.
+   `main`; the `Co-Authored-By` trailer on the commits is enough. `.claude/settings.json` sets
+   `"attribution": { "pr": "" }`, which hides the PR attribution and keeps the commit trailer
+   (Claude Code, documented 2026-10-31, #375). That it also removes the system reminder that
+   asks for the line is not verified: this sentence stays until a run of the agent workflow
+   `deliver-slice.js` shows its agents no longer receive that reminder.
+
+   Before each `gh pr create`, and each `gh pr edit` of the body, count its lines (blank lines
+   and the awaiting section excluded) and the bullets of Review first: over 30 lines or over 3
+   bullets, the detail moves to "Review notes".
+
+   **Review notes**: one PR comment for the detail the body leaves out, which the squash does
+   not keep and GitHub keeps with the PR, from the second part of
+   [pr-body.md](../../reference/pr-body.md): the choices with their options ruled out, the
+   non-blocking findings left with their reason, the detail of the checks, the evidence for
+   what stays unsure. Posted once the PR is open (step 6), always under the agent workflow
+   `deliver-slice.js`, otherwise when the PR has such detail. Its contributor writes it, the
+   corrector of a review updates it: one comment, edited in place, never a second one.
 6. **Open it**:
    - `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`; with a
      decision awaited, add `--draft` (no label on the PR: the draft already keeps it from
@@ -107,7 +124,11 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      lists the PR when it says `Closes #<n>`; a `Refs` PR: it lists nothing, since the branch
      is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
      list the PR: rerun once. PR still missing on a `Closes` PR, or listed on a `Refs` PR (a
-     closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`).
+     closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`);
+   - post "Review notes" (step 5): `mise exec -- gh pr comment <pr> --body-file <file>`. To
+     update it, find its id
+     (`mise exec -- gh api repos/sebvey/feyn/issues/<pr>/comments --jq '.[] | select(.body | startswith("## Review notes")) | .id'`),
+     then `mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> -X PATCH -F body=@<file>`.
 7. **Fresh-agent review**, on the direct path. On a direct delivery, `/feyn-pr-review` does
    not run and the line is already in Checks (step 5): skip to step 8; the rest of this step
    applies to the other PRs. Under the agent workflow `deliver-slice.js` (`/feyn-deliver`,
@@ -118,7 +139,9 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    - remove the reviewer's worktree when `/feyn-pr-review` returns one, as `/feyn-pr-review`
      step 2 says;
    - apply the blocking findings, and the non-blocking ones worth fixing; commit, push, and
-     update the body (`mise exec -- gh pr edit <pr> --body-file <file>`);
+     update the body (`mise exec -- gh pr edit <pr> --body-file <file>`); the non-blocking
+     findings left go in "Review notes" with their reason (step 6), one in Review first only
+     when it needs the maintainer's decision;
    - check each fix in the diff (`mise exec -- gh pr diff <pr>`);
    - add to Checks `Fresh-agent review: <N> blocking findings, fixed.` or
      `Fresh-agent review: no blocking finding.` (step 5).

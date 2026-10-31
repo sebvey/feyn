@@ -16,7 +16,9 @@ not its contributor: trust nothing in the PR body or in any summary; recount and
 every claim yourself. Read CLAUDE.md, the issue (`mise exec -- gh issue view <n>`) and the
 files it lists (a file of construction/, removed, only when the issue names it, read with
 `git show 2c16adf3e66a:<path>`), then the PR (`mise exec -- gh pr view <pr>`,
-`mise exec -- gh pr diff <pr>`); read a file at the PR's
+`mise exec -- gh pr diff <pr>`) and its "Review notes" comment
+(`mise exec -- gh pr view <pr> --comments`; `/feyn-pull-request` step 5), as claims to
+recheck like the body; read a file at the PR's
 head with `git fetch` and `git show origin/<branch>:<path>`. To rerun checks in a worktree,
 `git fetch` then `git switch --detach origin/<branch>` (the branch itself is checked out in
 the contributor's worktree, so `git switch <branch>` fails). Change nothing, push nothing,
@@ -38,7 +40,9 @@ Recheck yourself:
   Code, observed 2026-10-28, #130); not found: `find ~/.claude/projects -type d -name 'wf_<id>*'`;
 - reserved terms of docs/glossary.md and the words it bans; the rules of CLAUDE.md
   (language, no em-dashes in French, title `<type>(<area>): <summary>`, `Closes #<n>`, no
-  signature line);
+  signature line); the limits of the body (`/feyn-pull-request` step 5: 30 lines, blank lines
+  and the awaiting section excluded, Review first 1 to 3 bullets), recounted, and the detail
+  it leaves out in "Review notes";
 - consistency with the files the change must match (sibling skills, docs/contributing.md,
   decisions it names), and that every path, command and decision slug it cites exists;
 - a decision: its counterfactual names a concrete wrong act, and the maintainer accepted it.

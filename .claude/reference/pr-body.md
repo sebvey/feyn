@@ -30,3 +30,27 @@ Closes #<n>   (or Refs #<n>)
 ## Review first
 
 - <where the maintainer's judgment is needed>
+- <the last one, at most the third>. Detail: the "Review notes" comment.
+
+---
+
+<Second part, never in the body: the "Review notes" comment, posted on the PR (/feyn-pull-request
+steps 5 and 6). No limit of lines; a section with nothing to say is dropped.>
+
+## Review notes
+
+### Choices
+
+- <a choice the issue did not settle, or a counterfactual proposed>: <the options ruled out, why>
+
+### Findings left
+
+- <a non-blocking finding of the review, left>: <its reason>
+
+### Checks
+
+- <a check>: <its detail: what ran, the counts, a failure of a reporting check>
+
+### Unsure
+
+- <what stays unsure>: <the evidence gathered, what would settle it>
