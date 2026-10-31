@@ -53,7 +53,7 @@ const REPORT = A.report || `construction/notes/S1-10-${NN}-report.md`
 // falls back to pwd, logged after the scope step.
 const DEST_ROOT = DEST.startsWith('/') && DEST.endsWith(`/courses/${A.course}/`) ? DEST.slice(0, -`courses/${A.course}/`.length) : ''
 if (DEST.startsWith('/') && !DEST_ROOT && DEST.includes('/courses/')) throw new Error(`args.dest ${DEST} is under a courses/ folder but is not <repository>/courses/${A.course}: the spec root cannot be told from it; pass <repository>/courses/${A.course}`)
-const CONCEPT_CHECKS = 'course-yaml,concept-folder,conventions,svg-contract,sources'
+const CONCEPT_CHECKS = 'course-yaml,concept-folder,case-contract,conventions,svg-contract,sources'
 
 // ROOT: the run's repository root, absolute, with a final slash (#178): DEST_ROOT below, else the pwd
 // the scope agent returns. Empty for the scope prompt (paths relative to the working directory); set
@@ -166,7 +166,7 @@ M8 Quick test. « Le test rapide »: the CF question (or the <Reflexe> slot when
 blockquote, then the <Reflexe> note as at most one paragraph; what only CF adds goes in that paragraph.
 M9 Teaching notes. teaching.md: CF « Sous-concepts » becomes « Consignes », verbatim. Its one \
 addition (ruling B on #23): when a case of « Banque d'exemples » is not cited in it by its title in « » \
-(concept-folder requires every case cited), « Consignes » ends with one citation line, a paragraph of \
+(case-contract requires every case cited), « Consignes » ends with one citation line, a paragraph of \
 its own, in this form and no other: \`Cas de la banque : pour <id>, « <title> », « <title> » et \
 « <title> » ; pour <id>, « <title> ».\`: one « pour <id> » per sub-concept that has an uncited case \
 (<id> as the case heading's parenthesis gives it, its qualifier dropped), in bank order, the groups \
@@ -785,7 +785,7 @@ if (!checks) throw new Error('Checks agent returned nothing')
 // A per-concept check that fails fails the run, whatever the file (a broken language pack is reported
 // against course.yaml). A course-yaml failure is excused only when it names neither this
 // concept nor the language pack; a check with no line at all fails the run.
-const PER_CONCEPT = ['concept-folder', 'conventions', 'svg-contract', 'sources']
+const PER_CONCEPT = ['concept-folder', 'case-contract', 'conventions', 'svg-contract', 'sources']
 const checkLines = checks.output.split('\n').map(l => l.trim()).filter(Boolean)
 const blocking = [], excused = []
 for (const id of CONCEPT_CHECKS.split(',')) {

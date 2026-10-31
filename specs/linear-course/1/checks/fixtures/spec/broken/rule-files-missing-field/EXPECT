@@ -1,0 +1,2 @@
+check: rule-files
+message: rule course-id-equals-folder: level is mandatory

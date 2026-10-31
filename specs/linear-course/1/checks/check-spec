@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 'use strict';
 // check-spec [<spec-dir>] [--only <id>[,<id>...]] [--list]
-// The checks of the spec's own files (PROTOCOL.md, SPEC.md, COURSE.md, decisions/), not of a course.
+// The checks of the spec's own files (PROTOCOL.md, SPEC.md, COURSE.md, decisions/, rules/,
+// schemas/), not of a course.
 // <spec-dir> defaults to the folder above this script (specs/linear-course/1).
 const fs = require('fs');
 const path = require('path');
 require('./lib/deps').need();
 
-const CHECKS = ['rule-slugs'];
+const CHECKS = ['rule-slugs', 'rule-files'];
 
 function usage(code) {
   const out = code ? console.error : console.log;

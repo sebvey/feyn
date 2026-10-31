@@ -1,0 +1,2 @@
+check: rule-files
+message: category "onboarding" is not one of "session-start"

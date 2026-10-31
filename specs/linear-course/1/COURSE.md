@@ -16,7 +16,10 @@ present. The check named verifies it, at the level and severity `SPEC.md` sectio
 check; its form is checked where that check says so, reviewed otherwise.
 "Optional" means it may be absent, a permission, and when present it follows the rule given.
 Every rule names the check that verifies it by test, in backquotes (`SPEC.md` section 10 gives
-its level); a rule with no check id is verified by inspection, the review.
+its level); a rule with no check id is verified by inspection, the review. The rules the checks
+verify are also data in `rules/course.yaml`, each with its level, category and method, and the
+tables of sections 2 and 3.1 are the schemas `schemas/course.schema.yaml` and
+`schemas/concept-frontmatter.schema.yaml` (#329).
 
 ## 1. The course folder
 
@@ -218,7 +221,7 @@ In this order (`concept-folder`):
 1. « Consignes » (`instructions`), mandatory: the order of teaching and the split into
    messages, which case to pose at which sub-concept and which as fallback, the
    cross-references not to re-teach, the concept's own vigilance points. Every case of the bank
-   is cited here by its title in « » (`concept-folder`; « » and “ ” count as the same quotes,
+   is cited here by its title in « » (`case-contract`; « » and “ ” count as the same quotes,
    spaces inside them ignored).
 2. « Faits du fil rouge utilisés » (`storyline_facts`), optional: the storyline facts the cases
    use, and what the storyline leaves unfixed.
@@ -234,7 +237,7 @@ unfolding (who says what, when), never a new fact (review).
 
 A **case** heading is `### <title> (<sub-concept>)`. The parenthesis holds the sub-concept id
 and at most one **qualifier**, before or after the id, separated by a comma: `(9a1, rechange)`,
-`(aparté, 11a)`; nothing else (`concept-folder`). The qualifier is a value of the language
+`(aparté, 11a)`; nothing else (`case-contract`). The qualifier is a value of the language
 pack's `qualifiers` group and gives the case its type:
 
 | Type | Qualifier (key) | The teacher poses it |
@@ -246,11 +249,11 @@ pack's `qualifiers` group and gives the case its type:
 
 The case's **title**, its identifier, is the heading without the parenthesis; titles are unique
 in the concept. The sub-concept is one of the concept's, at any level; every leaf sub-concept
-has at least one case (`concept-folder`).
+has at least one case (`case-contract`).
 
 A case is a list of fields, each item opening with `**<label>** :`, its text on the same line
 or in a nested list; only the « Question » label may carry a qualifier of its own before the
-colon (« **Question**, en deux parties : ») (`concept-folder`):
+colon (« **Question**, en deux parties : ») (`case-contract`):
 
 | Field (key) | Presence | May contain | Who reads it | When the teacher uses it |
 |---|---|---|---|---|

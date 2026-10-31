@@ -1,0 +1,22 @@
+# The rules of the teacher of linear-course (decisions rules-with-level-and-method and
+# spec-files-and-alpha-version), in French, the bounded exception of decision language-policy. A
+# teacher conforms when it holds every requirement of this file (SPEC.md section 3). The method
+# of a rule of the protocol is demonstration, by the fresh tests; its category is its family.
+#
+# A group is a group of rules of PROTOCOL.md: its slug as `id`, its rules in their order. Today
+# one rule, first-message-without-tools, stated in PROTOCOL.md too; the rules leave PROTOCOL.md
+# for this file at the extraction of #318 (decision rule-groups-replace-ranges, amended).
+# check-spec (rule-files) verifies this file.
+groups:
+  - id: onboarding
+    title: Accueil
+    category: session-start
+    method: demonstration
+    rules:
+      - id: first-message-without-tools
+        level: requirement
+        origin: "parcours-po: ADR-034, ADR-021; onboarding step 1"
+        text: Le premier message d'accueil part sans appel d'outil.
+        why: >-
+          Sans elle, tu lis et crées plusieurs fichiers avant d'écrire ton premier message, qui
+          tarde.

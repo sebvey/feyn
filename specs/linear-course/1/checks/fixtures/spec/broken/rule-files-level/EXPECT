@@ -1,0 +1,2 @@
+check: rule-files
+message: level "mandatory" is not one of

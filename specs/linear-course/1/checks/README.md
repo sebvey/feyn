@@ -1,12 +1,16 @@
 # Checks of `linear-course`
 
-Scripts that verify a course against `COURSE.md` (listed in `SPEC.md` section 10), run by
-`check-course`, and the spec's own files (`PROTOCOL.md`, `SPEC.md`, `COURSE.md`, `decisions/`), run
-by `check-spec`. Node 20 or later, CommonJS, run under `mise exec` like every tool here, with the
-dependencies of `package.json` (decision `checks-use-ajv-and-yaml`): the course's YAML is read by
-the package `yaml` in YAML 1.2 mode, through `lib/yaml-lines.js`, which keeps the line of each key
-and item so a failure points at `file:line`; Markdown and SVG are read by the small readers in
-`lib/` (`md.js`, `xml.js`), which cover the subset the spec uses.
+Scripts that verify a course against `COURSE.md` and `rules/course.yaml` (listed in `SPEC.md`
+section 10), run by `check-course`, and the spec's own files (`PROTOCOL.md`, `SPEC.md`,
+`COURSE.md`, `decisions/`, `rules/`, `schemas/`), run by `check-spec`. Node 20 or later, CommonJS,
+run under `mise exec` like every tool here, with the dependencies of `package.json` (decision
+`checks-use-ajv-and-yaml`): the course's YAML is read by the package `yaml` in YAML 1.2 mode,
+through `lib/yaml-lines.js`, which keeps the line of each key and item so a failure points at
+`file:line`; ajv compiles the schemas of `schemas/` through its class `Ajv2020` (JSON Schema
+2020-12); Markdown and SVG are read by the small readers in `lib/` (`md.js`, `xml.js`), which
+cover the subset the spec uses. Each rule of `rules/*.yaml` names in `check` the script that
+verifies it; `course-yaml` and `concept-folder` verify the two schema rules with their own code
+until `check-course` reads the rules (#317).
 
 ## Install
 
@@ -50,7 +54,7 @@ installed.
 |---|---|
 | `--quality` | runs the quality checks instead of the conformity checks |
 | `--only <id>[,<id>]` | runs those checks of the mode only (repeatable); an unknown id, or an id of the other mode, is a usage error |
-| `--concept <number>` | the per-concept checks (`concept-folder`, `conventions`, `svg-contract`, `sources`, `glossary-order`) look at that concept only, and `course-yaml` demands only that concept's folder and does not look for unlisted folders in `concepts/`: for a migration in progress, when the other concept folders do not exist yet |
+| `--concept <number>` | the per-concept checks (`concept-folder`, `case-contract`, `conventions`, `svg-contract`, `sources`, `glossary-order`) look at that concept only, and `course-yaml` demands only that concept's folder and does not look for unlisted folders in `concepts/`: for a migration in progress, when the other concept folders do not exist yet |
 | `--lang-dir <dir>` | reads the language pack `<dir>/<language>.yaml` instead of this MAJOR's `lang/` (also `LINEAR_COURSE_LANG_DIR`) |
 | `--list` | prints the check ids of the mode |
 
@@ -64,7 +68,8 @@ its mode in this order.
 | Id | Family | Script | Verifies (COURSE.md) |
 |---|---|---|---|
 | `course-yaml` | conformity | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/` (not looked for under `--concept`), spec declared, pack present (2; `SPEC.md` 8) |
-| `concept-folder` | conformity | `concept-folder.js` | files, sections and their order, the column count of the `sources.md` tables, frontmatter (`verified` parallel to `refs`, absent without `refs`), sub-concept sections, « Objectif », cases (in the heading, at most one qualifier, a value of the pack's `qualifiers`; a qualifier on « Question » only), leaf coverage, citation in « Consignes » (3, 7) |
+| `concept-folder` | conformity | `concept-folder.js` | files, sections and their order, the column count of the `sources.md` tables, frontmatter (`verified` parallel to `refs`, absent without `refs`), sub-concept sections, « Objectif » (3) |
+| `case-contract` | conformity | `case-contract.js` | the cases of `teaching.md`: in the heading, a sub-concept of the concept and at most one qualifier, a value of the pack's `qualifiers`; titles unique in the concept; fields (known labels, a qualifier on « Question » only, the mandatory ones once and in order); leaf coverage; citation in « Consignes » (3.3, 7). Split from `concept-folder` (#329): the `pedagogy` part of the concept folder |
 | `conventions` | conformity | `conventions.js` | reader-text conventions of `concept.md`; plain Markdown in every course file (1, 3.5) |
 | `svg-contract` | conformity | `svg-contract.js` | every diagram against the drawing contract, a root `<defs>` accepted; declared and present diagrams (3.1, 6.1) |
 | `sources` | conformity | `sources.js` | no introduction; in each « Affirmations » row of five cells (the column count is `concept-folder`'s): section anchors that exist in `concept.md`, a source cell of reference ids or the `markers.course` word, a verification (empty for a « cours » claim only), a nature (`markers` consensus, school, course, or `natures.fact`); reference ids, links (one URL or empty), types, dates; every id cited exists, every reference is cited by a claim or a frontmatter item; « Non vérifié » entries open with their section (3.1, 3.4) |
@@ -96,14 +101,15 @@ mise exec -- specs/linear-course/1/checks/check-spec
 mise exec -- specs/linear-course/1/checks/check-spec <spec-dir> --only rule-slugs
 ```
 
-`check-spec` checks the spec's own files, not a course: `PROTOCOL.md`, `SPEC.md`, `COURSE.md`
-and `decisions/` of `<spec-dir>` (default: this MAJOR's folder, `specs/linear-course/1`). Same
+`check-spec` checks the spec's own files, not a course: `PROTOCOL.md`, `SPEC.md`, `COURSE.md`,
+`decisions/`, `rules/` and `schemas/` of `<spec-dir>` (default: this MAJOR's folder, `specs/linear-course/1`). Same
 output, exit codes and `--only`, `--list` as `check-course`; the file in a failure line is
 relative to `<spec-dir>`. It has one mode: its checks are conformity checks.
 
 | Id | Family | Script | Verifies |
 |---|---|---|---|
 | `rule-slugs` | conformity | `rule-slugs.js` | every rule and every group of rules of `PROTOCOL.md` is named by a slug, defined once in one namespace; every rule or group cited in `PROTOCOL.md`, `SPEC.md`, `COURSE.md` and `decisions/` is cited by a slug that is defined, a group as a group and a rule as a rule; none is named or cited by a number, no range « `a` à `b` » (decisions `rules-named-by-slug`, `rule-groups-replace-ranges`) |
+| `rule-files` | conformity | `rule-files.js` | `rules/course.yaml`, `rules/protocol.yaml` and `rules/spec.yaml` exist; a group has a non-empty `rules` list and may declare `id`, `title`, `category`, `method`; a rule has `id` (a slug), `level`, `category` and `method` (on the rule or its group), `text`, optional `check` and `why`, and in the protocol `origin`, no other key; a group of `rules/protocol.yaml` has an `id` that is a group of `PROTOCOL.md`; the closed lists (levels, methods, the categories of a course, the families of the protocol, `spec`; a rule of the protocol is a demonstration); ids of rules and groups unique across the three files; every check named exists (`checks/<id>.js` or `.claude/workflows/<id>.js`); one category and one level per check; each `schemas/*.schema.yaml` compiles under `Ajv2020` and is named by the text of one rule of `rules/course.yaml`, and a schema named there exists (`SPEC.md` 2, 4 to 6) |
 
 A rule's slug is defined by a line of a rule family (`## <n>. …`) that opens on `**<slug>** `, or
 by a table row of a family whose first cell is `**<slug>**` (the save-point table); a group's slug
@@ -138,7 +144,9 @@ lists, and a run must run the checks of its mode and no other.
   English cell, and earlier uses silenced by a concept reference, one of them to an annex
   sub-concept; in `sources.md`, a claim on two anchors, a « cours » claim with no verification,
   a `fait` claim on « Approfondissement », « Non vérifié » entries anchored to a sub-concept and
-  to the stances, stance items with `verified`); every check of both modes passes.
+  to the stances, stance items with `verified`); every check of both modes passes, and its
+  `course.yaml` and the frontmatter of each `concept.md` are valid against `schemas/` under
+  `Ajv2020`.
 - `fixtures/broken/<name>/`: a copy of it with one defect; its `EXPECT` file names the check
   that must fail, in its mode, and the message it must give. No other check of either mode may
   fail (the test says so), except for the broken language pack.
@@ -152,10 +160,14 @@ lists, and a run must run the checks of its mode and no other.
   `fixtures/lang-no-anaphora/`: the pack without the optional `checks.anaphora`; `valid/` with it
   passes the conformity mode, and the quality mode fails `domain-first-sentence-standalone` only.
 - `fixtures/spec/valid/`: a minimal spec (`PROTOCOL.md`, `SPEC.md`, `COURSE.md`, one
-  decision); every `check-spec` check passes. `fixtures/spec/broken/<name>/`: a copy of it with
-  one defect and its `EXPECT` file (a missing slug, a duplicate slug, a rule cited by number, a
-  missing group, a group whose slug is a rule's, a range, a range in `COURSE.md`, a group cited
-  as a rule). The test also runs
+  decision, the three rule files with a rule of each method, one schema); every `check-spec`
+  check passes. `fixtures/spec/broken/<name>/`: a copy of it with one defect and its `EXPECT`
+  file; no other `check-spec` check may fail. For `rule-slugs`: a missing slug, a duplicate
+  slug, a rule cited by number, a missing group, a group whose slug is a rule's, a range, a range
+  in `COURSE.md`, a group cited as a rule. For `rule-files`: a missing level; a level, a method, a
+  category and a family off their lists; a protocol group that `PROTOCOL.md` does not define; an id in two rule files; a check that does not exist; a
+  check over two categories; a check over two levels; a schema that does not compile; a schema
+  no rule names. The test also runs
   `check-spec` on `specs/linear-course/1`, which must pass.
 - `fixtures/dispatcher/<name>/`: a `course.yaml` that `specs/check-course` refuses, `other-spec`
   (an unknown spec, `other@1`) and `unknown-major` (`linear-course@9`); the test also runs
@@ -164,4 +176,5 @@ lists, and a run must run the checks of its mode and no other.
 The fixtures are plain files: change `valid/` and the broken copies together, then run the
 test. A new check adds a script, a line in the list of its mode in `check-course` (or in
 `check-spec` for a check of the spec's own files), a row above with its family, a row in
-`SPEC.md` section 10 and a broken fixture.
+`SPEC.md` section 10, the rules it verifies in `rules/*.yaml` (their `check`) and a broken
+fixture.

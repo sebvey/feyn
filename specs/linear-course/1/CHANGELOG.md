@@ -26,3 +26,10 @@ no class: `- file or area: what changes`.
 - `SPEC.md`, `PROTOCOL.md`: version `1.0.0-alpha`, "draft" gone (#323).
 - `checks/`: the checks read YAML with the package `yaml` (YAML 1.2), installed by `npm ci` from
   `checks/package.json`; `lib/yaml.js` removed; the same failures at the same `file:line` (#327).
+- `rules/`, `schemas/`, `checks/`: the rules the checks verify as data in `rules/course.yaml`,
+  one rule per method, `rules/protocol.yaml` (one rule) and `rules/spec.yaml` (the rules on the
+  spec itself, category `spec`; decisions `spec-files-and-alpha-version` and `rules-with-level-and-method` amended); the tables of
+  `COURSE.md` 2 and 3.1 as `schemas/course.schema.yaml` and
+  `schemas/concept-frontmatter.schema.yaml`; `concept-folder` split, its cases part now
+  `case-contract` (`pedagogy`), the same failures at the same `file:line`; `check-spec`'s new
+  `rule-files` validates the rule files and the schemas, with ajv (`Ajv2020`) (#329).

@@ -1,0 +1,581 @@
+# The rules of a course of linear-course (decisions rules-with-level-and-method and
+# spec-files-and-alpha-version): the rules the checks of a course verify, taught-check included,
+# and one rule verified by inspection, the review. A course conforms when it holds every
+# requirement of this file, whatever its method (SPEC.md section 3). The tables of fields are the
+# schemas of schemas/, each one rule here. The other rules of COURSE.md join this file at the
+# extraction of #318.
+#
+# A rule: id (a slug), level, category, method, check (the check that implements the method,
+# when one exists), text, why (optional: what a competent model does without the rule, as
+# observed). A group declares category and method once for its rules; a rule may override them.
+# check-spec (rule-files) verifies this file.
+groups:
+  - title: course.yaml (COURSE.md section 2)
+    category: structure
+    method: test
+    rules:
+      - id: course-yaml-valid-against-schema
+        level: requirement
+        check: course-yaml
+        text: >-
+          `course.yaml` shall be valid against `schemas/course.schema.yaml`: the fields of the
+          course, of a domain entry, of a concept entry and of a sub-concept node, their presence
+          and their form.
+      - id: course-id-equals-folder
+        level: requirement
+        check: course-yaml
+        text: The course `id` shall equal the folder name.
+      - id: language-pack-exists
+        level: requirement
+        check: course-yaml
+        text: "`lang/<language>.yaml` shall exist for the course `language`."
+      - id: course-yaml-paths-exist
+        level: requirement
+        check: course-yaml
+        text: >-
+          The paths of `course.yaml` shall exist in the course folder: `site.icon`, `storyline`,
+          `glossary`, the `file` of each domain and the `dir` of each concept.
+      - id: domain-file-named-by-number
+        level: requirement
+        check: course-yaml
+        text: A domain's `file` shall be `domains/<number>-<slug>.md`, of its own number and slug.
+      - id: domains-numbered-in-order
+        level: requirement
+        check: course-yaml
+        text: The domains shall be numbered 1, 2, 3… in list order.
+      - id: concept-dir-named-by-number
+        level: requirement
+        check: course-yaml
+        text: >-
+          A concept's `dir` shall be `concepts/<NN>-<slug>`, `NN` its number on two digits; an
+          annex keeps its number (`concepts/A1-<slug>`).
+      - id: subconcept-ids-in-order
+        level: requirement
+        check: course-yaml
+        text: >-
+          A first-level sub-concept id shall be the concept number and a letter, from `a` in
+          order; a second-level id, its parent's id and a digit, from `1` in order.
+      - id: course-identifiers-unique
+        level: requirement
+        check: course-yaml
+        text: Concept numbers and sub-concept ids shall be unique.
+      - id: concepts-in-course-order
+        level: requirement
+        check: course-yaml
+        text: >-
+          The concepts shall come in course order: numbered concepts by increasing number, then
+          the annexes.
+      - id: concept-in-one-domain
+        level: requirement
+        check: course-yaml
+        text: >-
+          Every numbered concept shall belong to exactly one domain, and a domain shall list
+          only concepts of `concepts`.
+      - id: domain-concepts-consecutive
+        level: requirement
+        check: course-yaml
+        text: Each domain's concepts shall be consecutive and follow the previous domain's.
+      - id: annexes-in-no-domain
+        level: requirement
+        check: course-yaml
+        text: Annexes shall belong to no domain.
+      - id: annexes-are-a-numbers
+        level: requirement
+        check: course-yaml
+        text: "`annexes` shall list exactly the `A` numbers of the concepts."
+      - id: prerequisite-comes-earlier
+        level: requirement
+        check: course-yaml
+        text: >-
+          A prerequisite shall be an existing numbered concept that comes earlier (any numbered
+          concept for an annex).
+      - id: concept-folders-listed
+        level: requirement
+        check: course-yaml
+        text: Every folder of `concepts/` shall be the `dir` of a concept entry.
+
+  - title: The concept folder (COURSE.md section 3)
+    category: structure
+    method: test
+    rules:
+      - id: concept-folder-files
+        level: requirement
+        check: concept-folder
+        text: >-
+          A concept folder shall hold `concept.md`, `teaching.md`, `sources.md` and its `.svg`
+          diagrams, and nothing else.
+      - id: concept-sections-in-order
+        level: requirement
+        check: concept-folder
+        text: >-
+          The sections of `concept.md`, `teaching.md` and `sources.md` shall be `##` headings
+          whose text is the language pack's heading, in the order given, the mandatory ones
+          present, and no other `##` section shall exist.
+      - id: teaching-sources-no-h1
+        level: requirement
+        check: concept-folder
+        text: "`teaching.md` and `sources.md` shall have no H1: the title is in `course.yaml`."
+      - id: teaching-sources-no-frontmatter
+        level: requirement
+        check: concept-folder
+        text: >-
+          `teaching.md` and `sources.md` shall have no frontmatter: course Markdown has YAML
+          frontmatter where stated only.
+      - id: concept-frontmatter-valid-against-schema
+        level: requirement
+        check: concept-folder
+        text: >-
+          The frontmatter of `concept.md` shall be valid against
+          `schemas/concept-frontmatter.schema.yaml`: its keys, an item and a diagram entry,
+          their presence and their form.
+      - id: item-text-inline-markdown
+        level: requirement
+        check: concept-folder
+        text: "The `text` of a frontmatter item shall be inline Markdown: bold and italics only."
+      - id: verified-parallel-to-refs
+        level: requirement
+        check: concept-folder
+        text: >-
+          An item's `verified` shall be present when `refs` is not empty and absent otherwise,
+          a list parallel to `refs`, one entry per reference in the same order.
+      - id: no-stances-section
+        level: requirement
+        check: concept-folder
+        text: >-
+          The body of `concept.md` shall have no stances section: `stances` and `neighbors` are
+          the one place for the concept's stances and neighbours.
+        why: >-
+          Without it, the migration wrote the stances twice, in the frontmatter and in a body
+          section, and the two copies drifted (concept 9 prototype; decision
+          stances-in-frontmatter-only).
+      - id: subconcept-sections-follow-tree
+        level: requirement
+        check: concept-folder
+        text: >-
+          `concept.md` shall hold one section per first-level sub-concept, in `course.yaml`
+          order, and inside each, one `###` section per second-level sub-concept.
+      - id: objective-restated-verbatim
+        level: requirement
+        check: concept-folder
+        text: >-
+          « Objectif » shall be the concept's `objective`, verbatim, give or take line breaks,
+          written with a capital first letter and ending with a period where the field ends
+          with no `.`, `!` or `?`.
+      - id: sources-tables-five-columns
+        level: requirement
+        check: concept-folder
+        text: >-
+          « Affirmations » and « Références » of `sources.md` shall each hold one table of
+          five columns.
+
+  - title: The cases of teaching.md (COURSE.md section 3.3)
+    category: pedagogy
+    rules:
+      - id: case-heading-form
+        level: requirement
+        method: test
+        check: case-contract
+        text: >-
+          A case heading shall be `### <title> (<sub-concept>)`, the parenthesis holding a
+          sub-concept id of the concept, at any level, and at most one qualifier, before or
+          after the id, separated by a comma; nothing else.
+      - id: case-qualifier-from-pack
+        level: requirement
+        method: test
+        check: case-contract
+        text: A case's qualifier shall be a value of the language pack's `qualifiers` group.
+      - id: case-titles-unique
+        level: requirement
+        method: test
+        check: case-contract
+        text: Case titles shall be unique in the concept.
+      - id: case-fields-labelled
+        level: requirement
+        method: test
+        check: case-contract
+        text: >-
+          A case shall be a list of fields, each item opening with `**<label>** :`, the label
+          one of the language pack's `case_fields`.
+      - id: field-qualifier-on-question-only
+        level: requirement
+        method: test
+        check: case-contract
+        text: Only the « Question » label may carry a qualifier of its own before the colon.
+      - id: case-mandatory-fields
+        level: requirement
+        method: test
+        check: case-contract
+        text: >-
+          A case shall hold « Situation », « Question », « Réponse attendue » and « Erreurs
+          fréquentes », and no field twice.
+      - id: case-fields-in-order
+        level: requirement
+        method: test
+        check: case-contract
+        text: >-
+          The four mandatory fields of a case shall come in the order of the table, the
+          optional fields before « Situation » before it, and « Ce qui marche » last.
+      - id: leaf-has-a-case
+        level: requirement
+        method: test
+        check: case-contract
+        text: Every leaf sub-concept shall have at least one case.
+      - id: case-cited-in-instructions
+        level: requirement
+        method: test
+        check: case-contract
+        text: >-
+          Every case of the bank shall be cited in « Consignes » by its title in « » (« » and
+          “ ” count as the same quotes, spaces inside them ignored).
+      - id: case-restates-storyline-facts-only
+        level: requirement
+        method: inspection
+        text: >-
+          A case shall restate only the storyline facts listed in « Faits du fil rouge
+          utilisés »; it adds the unfolding (who says what, when), never a new fact.
+      - id: case-asks-what-was-taught
+        level: recommendation
+        method: analysis
+        check: taught-check
+        text: >-
+          A case should ask only what the learner has been taught before it, on the course
+          path.
+
+  - title: Reader-text conventions (COURSE.md sections 1 and 3.5)
+    category: writing
+    method: test
+    rules:
+      - id: plain-markdown
+        level: requirement
+        check: conventions
+        text: >-
+          Course Markdown shall be plain CommonMark: no HTML, no MDX `import` or `export`, no
+          `:::` directive; a concept file has no H1 and no `####` or deeper heading.
+      - id: subconcept-section-form
+        level: requirement
+        check: conventions
+        text: >-
+          A sub-concept section shall be `## <id> <title>`, then one paragraph entirely in
+          italics, the promise; a first-level sub-concept with children holds nothing else, one
+          without children holds its reader text after the promise.
+      - id: leaf-heading-form
+        level: requirement
+        check: conventions
+        text: A leaf heading shall be `### <id> <title>`, then the reader text.
+      - id: heading-title-from-course-yaml
+        level: requirement
+        check: conventions
+        text: The `<title>` of a sub-concept heading shall equal its `title` in `course.yaml`.
+      - id: concept-reference-resolves
+        level: requirement
+        check: conventions
+        text: >-
+          A concept reference shall name an existing concept or sub-concept of the course; a
+          reference to an annex, an annex number or the sub-concept id of an annex.
+      - id: stance-marker-plain-text
+        level: requirement
+        check: conventions
+        text: >-
+          A stance marker shall be plain text right after the claim it qualifies; no link
+          reference definition carries a marker's label.
+      - id: storyline-blockquote-form
+        level: requirement
+        check: conventions
+        text: >-
+          In the sub-concept sections, a blockquote shall be a storyline blockquote, its first
+          line starting with `**Fil rouge :**` (`markers.storyline`).
+      - id: diagram-image-form
+        level: requirement
+        check: conventions
+        text: >-
+          A diagram image shall be `![<title>](<file>)` alone in its paragraph, `<file>` a
+          declared diagram and `<title>` its declared `title`; each declared diagram appears
+          once in the body.
+      - id: pitfalls-form
+        level: requirement
+        check: conventions
+        text: >-
+          « Pièges » shall be one bulleted list, each item opening with the pitfall in bold.
+      - id: quick-test-form
+        level: requirement
+        check: conventions
+        text: >-
+          « Le test rapide » shall be one blockquote (the question), then at most one paragraph
+          (the note).
+
+  - title: Domain files and typography (COURSE.md sections 1 and 4)
+    category: writing
+    method: test
+    rules:
+      - id: domain-first-sentence-ends
+        level: requirement
+        check: domain-first-sentence
+        text: >-
+          The first sentence of each paragraph of « Le fil des concepts », after the lead, shall
+          end with `.`, `?` or `!` within 300 characters of the lead.
+      - id: domain-first-sentence-stands-alone
+        level: recommendation
+        check: domain-first-sentence-standalone
+        text: >-
+          The first sentence of each paragraph of « Le fil des concepts », after the lead, should
+          not open with a word of the language pack's `checks.anaphora` list.
+      - id: no-banned-character
+        level: recommendation
+        check: typography
+        text: Course text should not use the banned characters of the language pack.
+
+  - title: Diagrams (COURSE.md sections 3.1 and 6.1)
+    category: diagrams
+    method: test
+    rules:
+      - id: diagrams-declared-and-present
+        level: requirement
+        check: svg-contract
+        text: >-
+          Every declared diagram file shall exist, its `subconcept` shall be a sub-concept of
+          the concept, and every SVG of the folder shall be declared.
+      - id: svg-file-form
+        level: requirement
+        check: svg-contract
+        text: >-
+          A diagram shall be `<stem>.svg`, the stem lowercase ASCII words joined by hyphens;
+          well-formed XML; 32 KB at most.
+      - id: svg-frame
+        level: requirement
+        check: svg-contract
+        text: The root `<svg>` shall have `xmlns` and a `viewBox`, and no `width` or `height`.
+      - id: svg-colour
+        level: requirement
+        check: svg-contract
+        text: >-
+          The root shall have `fill="currentColor"`; every `fill` and `stroke` is `currentColor`
+          or `none`; no other colour value, no `style` attribute, no `<style>` element; the only
+          classes are `primary`, `secondary` and `muted`.
+      - id: svg-text
+        level: requirement
+        check: svg-contract
+        text: >-
+          Words shall be `<text>` (and `<tspan>`), never paths, with at least one `<text>`;
+          fonts only by the attribute `font-family` with generic families, no font file, no
+          `@font-face`.
+      - id: svg-accessibility
+        level: requirement
+        check: svg-contract
+        text: >-
+          The root shall have `role="img"` and `aria-labelledby` naming its `<title>` (and
+          `<desc>` if present); `<title>` is the root's first child and equals the frontmatter
+          `title`; their ids start with the stem.
+      - id: svg-groups
+        level: requirement
+        check: svg-contract
+        text: >-
+          Every drawn child of the root shall be a `<g>` with an `id` `<sub-concept>-<element>`,
+          unique across the concept's diagrams; a `<defs>` may sit at the root beside them.
+      - id: svg-forbidden-elements
+        level: requirement
+        check: svg-contract
+        text: >-
+          A diagram shall hold no `<script>`, no `on*` attribute, no `<image>`, no
+          `<foreignObject>`, no `href` or `xlink:href` not starting with `#`, and no external
+          resource.
+
+  - title: sources.md (COURSE.md section 3.4)
+    category: sources
+    method: test
+    rules:
+      - id: sources-no-introduction
+        level: requirement
+        check: sources
+        text: "`sources.md` shall have no introduction: it opens on « Affirmations »."
+      - id: claim-states-claim
+        level: requirement
+        check: sources
+        text: A row of « Affirmations » shall state the claim in a few words.
+      - id: claim-section-exists
+        level: requirement
+        check: sources
+        text: >-
+          The section cell of a claim shall hold sub-concept ids and fixed sections by their
+          pack value, separated by commas, each existing in `concept.md`.
+      - id: stance-sourced-in-item
+        level: requirement
+        check: sources
+        text: >-
+          A stance or a neighbour shall be sourced in its frontmatter item, never by a row of
+          « Affirmations ».
+      - id: claim-source-cell-form
+        level: requirement
+        check: sources
+        text: >-
+          The source cell of a claim shall hold reference ids `[S1]`, separated by commas, or
+          the `markers.course` word; nothing else: no free text, no path to another concept.
+        why: >-
+          Without it, the agent that wrote concept 9 gave free text as sources, « fil rouge »
+          and « aucune » (decision where-a-claim-goes, superseded by
+          sources-trace-the-concept).
+      - id: claim-verified-cell-filled
+        level: requirement
+        check: sources
+        text: The verified cell of a claim shall be empty only for a « cours » claim.
+      - id: claim-nature-closed
+        level: requirement
+        check: sources
+        text: >-
+          The nature of a claim shall be `consensus`, `école`, `cours` (`markers.consensus`,
+          `markers.school`, `markers.course`) or `fait` (`natures.fact`).
+      - id: reference-id-form
+        level: requirement
+        check: sources
+        text: >-
+          A reference id shall be `S<n>`, optionally followed by a lowercase letter, unique in
+          the concept.
+      - id: reference-names-source
+        level: requirement
+        check: sources
+        text: The source cell of a reference shall name the source (author, title, date).
+      - id: reference-link-one-url
+        level: requirement
+        check: sources
+        text: >-
+          The link of a reference shall be one URL or empty: a second place is a second
+          reference.
+      - id: reference-type-from-pack
+        level: requirement
+        check: sources
+        text: >-
+          The type of a reference shall be one or more of `primary`, `secondary`, `marketing`,
+          written as the language pack's words and separated by commas, then an optional remark
+          in parentheses.
+      - id: reference-consulted-date
+        level: requirement
+        check: sources
+        text: The « consulted on » cell of a reference shall start with `YYYY-MM-DD`.
+      - id: unverified-entry-anchored
+        level: requirement
+        check: sources
+        text: >-
+          Each entry of « Non vérifié » shall open with its section, in the forms of the section
+          column or `headings.stances`, then « : ».
+      - id: cited-ids-exist
+        level: requirement
+        check: sources
+        text: >-
+          Every id cited (frontmatter `refs`, source column) shall exist in « Références ».
+      - id: every-reference-cited
+        level: requirement
+        check: sources
+        text: Every reference shall be cited by a claim or a frontmatter item.
+      - id: reader-files-cite-no-reference
+        level: requirement
+        check: sources
+        text: >-
+          `concept.md` and `teaching.md` shall cite no reference: references live in the
+          frontmatter `refs` and in `sources.md`.
+
+  - title: Domain files and course files (COURSE.md sections 4 and 5)
+    category: structure
+    method: test
+    rules:
+      - id: course-files-present
+        level: requirement
+        check: course-files
+        text: "`plan.md`, `glossary.md`, `storyline.md` and `CHANGELOG.md` shall exist."
+      - id: domain-files-listed
+        level: requirement
+        check: course-files
+        text: Every file of `domains/` shall be the `file` of a domain of `course.yaml`.
+      - id: domain-frontmatter-description
+        level: requirement
+        check: course-files
+        text: >-
+          The frontmatter of a domain file shall be `description`, one sentence for the site,
+          and nothing else.
+      - id: domain-file-no-h1
+        level: requirement
+        check: course-files
+        text: A domain file shall have no H1.
+      - id: domain-sections-in-order
+        level: requirement
+        check: course-files
+        text: >-
+          The body of a domain file shall be « Le problème », « Le fil des concepts », « D'où
+          l'on vient, où l'on va », « Un cas qui traverse le domaine », all mandatory and not
+          empty, in this order.
+      - id: concept-thread-paragraphs
+        level: requirement
+        check: course-files
+        text: >-
+          « Le fil des concepts » shall hold one paragraph per concept of the domain, in order,
+          opening with `**<number>. <concept title>.**`, the title as in `course.yaml`; a domain
+          of one concept, one paragraph for the concept, then one per first-level sub-concept,
+          opening with `**<id>. <title>.**`.
+      - id: plan-audience-first
+        level: requirement
+        check: course-files
+        text: >-
+          The first `##` section of `plan.md` shall be « Public cible », the full audience
+          prose.
+      - id: plan-onboarding-section
+        level: requirement
+        check: course-files
+        text: >-
+          `plan.md` shall have one section « Accueil »: one paragraph giving the teacher's
+          posture, then a numbered list of the onboarding questions, which ends the section.
+      - id: onboarding-question-form
+        level: requirement
+        check: course-files
+        text: >-
+          An onboarding question shall be `<n>. **<question label>** : <question>`, at least
+          one, the question labels distinct.
+      - id: glossary-table-four-columns
+        level: requirement
+        check: course-files
+        text: >-
+          `glossary.md` shall hold one table, before any `##` section, of four columns, each row
+          with a term.
+      - id: glossary-defining-concept-form
+        level: requirement
+        check: course-files
+        text: >-
+          The fourth cell of a glossary row shall be one concept number of `course.yaml`, the
+          defining concept.
+      - id: glossary-variant-in-one-row
+        level: requirement
+        check: course-files
+        text: >-
+          A variant shall belong to one row: no two rows hold the same variant, case ignored,
+          its qualifier included.
+      - id: glossary-avoid-section
+        level: requirement
+        check: course-files
+        text: >-
+          The only `##` section of `glossary.md` shall be « Termes à éviter », one table of
+          three columns.
+      - id: changelog-unreleased-first
+        level: requirement
+        check: course-files
+        text: The first `##` section of `CHANGELOG.md` shall be « Non publié ».
+      - id: changelog-release-sections
+        level: requirement
+        check: course-files
+        text: >-
+          After « Non publié », `CHANGELOG.md` shall hold one section per release, newest
+          first, `## X.Y.Z, YYYY-MM-DD`.
+      - id: changelog-entry-form
+        level: requirement
+        check: course-files
+        text: >-
+          A changelog entry shall be one line `- MAJOR|MINOR|PATCH, <where> : <what>`.
+
+  - title: The glossary in course order (COURSE.md section 5)
+    category: pedagogy
+    method: test
+    rules:
+      - id: glossary-term-after-defining-concept
+        level: recommendation
+        check: glossary-order
+        text: >-
+          A glossary term should be used after its defining concept, in course order, in the
+          `concept.md` of each concept, its body and its frontmatter; before it, only in a
+          sentence that carries a concept reference to the defining concept or to one of its
+          sub-concepts.
