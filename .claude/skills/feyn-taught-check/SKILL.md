@@ -32,5 +32,5 @@ several minutes is stalled, not blocked: wait (Claude Code, observed 2026-10-29,
   an issue (`/feyn-issue observation`), not a fix here.
 - The PR summarises them under Changes, within `/feyn-pull-request` step 5's limits: one bullet for the
   findings fixed, with their count, one for the findings deferred, with their issue numbers;
-  the workflow's result goes on a line of its own in Checks, `taught-check: <result>` (an
-  agent workflow, not a check: not on the `Checks run:` line).
+  the workflow's result goes on a line of its own in Checks, `taught-check: <result>` (a
+  check run by agents, not a script: not on the `Checks run:` line).
