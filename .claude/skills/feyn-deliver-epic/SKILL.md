@@ -19,8 +19,9 @@ merges the epic PR. Nothing is spawned and no run launched before the maintainer
 
 The rule of `/feyn-deliver`, "Progress": while runs are in flight, at most three lines per
 message (what just finished, what runs now, what is awaited from the maintainer). After each
-slice merged, the progress report of step 2.7 is that message, in four lines: the one exception
-(maintainer, 2026-10-31). The full report comes once, at the hand-over (step 5).
+slice merged, the progress report of step 2.7 is that message, in four lines (maintainer,
+2026-10-31). The other exception: new open questions, one line each (step 3). The full report
+comes once, at the hand-over (step 5).
 
 ## 1. Take the epic
 
@@ -30,8 +31,9 @@ slice merged, the progress report of step 2.7 is that message, in four lines: th
   progress. In progress: resume it, from its integration branch
   (`git ls-remote --heads origin '*/<epic>-*'`) and the last line of its plan comment.
 - The integration branch `<type>/<epic>-<slug>` (the epic's `type:` label, three to five words of
-  its title), cut from `origin/main` without touching the checkout: `git fetch`, then
-  `git push origin origin/main:refs/heads/<branch>`.
+  its title; `<integration branch>` in the commands, a slice's own branch being
+  `<slice branch>`), cut from `origin/main` without touching the checkout: `git fetch`, then
+  `git push origin origin/main:refs/heads/<integration branch>`.
 - The plan comment, as [contributing](../../../docs/contributing.md), "How the work is
   organised", moment 1, says: a Delivery line naming the integration branch, the slices envisaged
   in order with the words "an estimate" (debrief rule 6: #317 planned five slices and delivered
@@ -45,12 +47,13 @@ One at a time, the next one only (rules of the cycle):
 
 1. **Pose** it: `/feyn-issue slice #<epic> <observation>`, from the plan comment's
    `Next slice to pose`.
-2. **`main` moved** (`git fetch`, then `git merge-base --is-ancestor origin/main origin/<branch>`
-   fails): merge it in, never rebase, in a detached worktree of the scratchpad, never from the
-   local integration branch, stale once a slice is merged
-   (`git worktree add --detach <path> origin/<branch>`, `git -C <path> merge origin/main`,
-   `git -C <path> push origin HEAD:<branch>`, `git worktree remove <path>`). A conflict outside
-   the epic's files: tell the maintainer.
+2. **`main` moved** (`git fetch`, then
+   `git merge-base --is-ancestor origin/main origin/<integration branch>` fails): merge it in,
+   never rebase, in a detached worktree of the scratchpad, never from the local integration
+   branch, stale once a slice is merged
+   (`git worktree add --detach <path> origin/<integration branch>`,
+   `git -C <path> merge origin/main`, `git -C <path> push origin HEAD:<integration branch>`,
+   `git worktree remove <path>`). A conflict outside the epic's files: tell the maintainer.
 3. **Run** `.claude/workflows/deliver-slice.js` in epic mode (its `whenToUse` gives the args:
    `issue`, `epic`, `base` the integration branch, `type`, `area`, `work` when the slice needs
    guidance beyond its To do), with `scriptPath` absolute. A first run in a work session: its
@@ -78,16 +81,17 @@ One at a time, the next one only (rules of the cycle):
    `git -C <path> status --porcelain` must show nothing but `node_modules`; anything else: stop
    and show it. Then `git worktree remove --force <path>` (an untracked `node_modules` makes a
    plain remove refuse), `git branch -D worktree-wf_<run id>-<n>`, and the local slice branch,
-   `git branch -D <branch>`, once `mise exec -- gh pr view <pr> --json state` reads `MERGED`.
-   The remote slice branch goes with the merge; still there
-   (`git ls-remote --heads origin <branch>`): tell the maintainer.
+   `git branch -D <slice branch>`, once `mise exec -- gh pr view <pr> --json state` reads
+   `MERGED`. The remote slice branch goes with the merge; still there
+   (`git ls-remote --heads origin <slice branch>`): tell the maintainer.
    A PR not merged (`needs-orchestrator`, `blocked`, `failed`, before a rerun), as `/feyn-deliver`
    step 2.2 does: before each removal, after `git fetch`, the worktree's `HEAD` is on the PR's
-   branch on `origin` (`git -C <path> branch -r --contains HEAD` names `origin/<branch>`; not
-   there: stop and show it); the worktrees gone, move the local slice branch to the PR's head,
-   which a corrector's push (`git push origin HEAD:<branch>`, from a detached `HEAD`) does not
-   move: `git branch -f <branch> origin/<branch>`. The rerun's contributor switches to it and
-   its push is a fast-forward. A run that opened no PR: as `/feyn-deliver` step 2.2 says, with
+   branch on `origin` (`git -C <path> branch -r --contains HEAD` names `origin/<slice branch>`;
+   not there: stop and show it); the worktrees gone, move the local slice branch to the PR's
+   head, which a corrector's push (`git push origin HEAD:<slice branch>`, from a detached
+   `HEAD`) does not move: `git branch -f <slice branch> origin/<slice branch>`, never the
+   integration branch. The rerun's contributor switches to it and its push is a fast-forward.
+   A run that opened no PR: as `/feyn-deliver` step 2.2 says, with
    `origin/<integration branch>` in place of `origin/main`.
 6. **Two lines on the plan comment** ([project.md](../../reference/project.md), "Epics", "The
    plan comment": find it, read it into a file, append, PATCH it): `#<n> (PR #<pr>): <what it
@@ -114,10 +118,11 @@ its creation, [contributing](../../../docs/contributing.md), "How the work is or
 2) is delivered by the orchestrator itself, in the work session, with no workflow run and no
 fresh-agent review, in place of steps 2.3 to 2.5:
 - `/feyn-issue-branch <n>`, its branch cut from the integration branch (its step 3:
-  `git switch -c <type>/<n>-<slug> origin/<branch>`), then the edit;
-- `/feyn-pull-request`, its PR to the integration branch (its step 6: `--base <branch>`), its
-  Checks saying `Fresh-agent review: none, direct delivery.`, and without its step 8: a slice
-  never goes Ready for review;
+  `git switch -c <type>/<n>-<slug> origin/<integration branch>`), then the edit;
+- `/feyn-pull-request`, the integration branch standing in for `main` throughout (its diff in
+  step 2, its PR in step 6: `--base <integration branch>`), its Checks saying
+  `Fresh-agent review: none, direct delivery.`, and without its step 8: a slice never goes
+  Ready for review;
 - the merge, as the workflow's Merge stage does: `mise exec -- gh pr merge <pr> --squash
   --match-head-commit <head sha>`, close the slice
   ([project.md](../../reference/project.md), "Delivery on an integration branch") and check it
@@ -133,11 +138,12 @@ maintainer, reaches the maintainer as an open question, never only as a line of 
   ([project.md](../../reference/project.md), "Delivery on an integration branch"), and a comment
   on the epic, numbered, each with its recommendation, ending "Answer here; the plan comment
   records the answer.";
-- at once too, in the work session: tell the maintainer each open question with its
-  recommendation, in the next message (step 2.7's report when a slice was just merged, three
-  lines otherwise), since the comment on the epic notifies nobody: the orchestrator posts it
-  from the maintainer's own account, and GitHub notifies nobody of their own comment (debrief
-  rule 2);
+- at once too, in the work session: tell the maintainer each new open question with its
+  recommendation, one line each, `#<slice>: <the choice>; recommended: <the recommendation>`,
+  then the link to the comment on the epic, in the next message (after step 2.7's report when
+  a slice was just merged): the other exception to the line cap ("Progress"), since the
+  comment on the epic notifies nobody: the orchestrator posts it from the maintainer's own
+  account, and GitHub notifies nobody of their own comment (debrief rule 2);
 - answered on the epic: the line `Answered: <the answer> (<date>)` right under its
   `Open question:` line, and apply the answer, by a slice (posed next) when it needs work;
 - the count: the plan comment's lines starting with `Open question:` that no `Answered:` line
@@ -146,11 +152,12 @@ maintainer, reaches the maintainer as an open question, never only as a line of 
 ## 4. Review of the whole branch
 
 When the last slice is merged and `main` merged in: a fresh agent (`Agent`, `isolation:
-"worktree"`, model `opus`) reviews `origin/main...origin/<branch>` against the epic's Done when,
-statement by statement, with the "Reviewer brief" of `/feyn-pr-review` adapted (the branch in
-place of a PR, the epic in place of an issue, `git switch --detach origin/<branch>`), and lists
-every structural choice it finds in the diff that the plan comment holds neither as open nor as
-answered. A blocking finding: a slice fixes it (step 2), then a fresh agent verifies the fix, as
+"worktree"`, model `opus`) reviews `origin/main...origin/<integration branch>` against the
+epic's Done when, statement by statement, with the "Reviewer brief" of `/feyn-pr-review`
+adapted (the branch in place of a PR, the epic in place of an issue,
+`git switch --detach origin/<integration branch>`), and lists every structural choice it finds
+in the diff that the plan comment holds neither as open nor as answered. A blocking finding: a
+slice fixes it (step 2), then a fresh agent verifies the fix, as
 `/feyn-pr-review` step 4 verifies corrections. A structural choice: an open question (step 3).
 Clean its worktree as `/feyn-pr-review` step 2 says for a reviewer's `agent-<id>` worktree
 (`TaskStop`, then unlock and remove).
@@ -160,7 +167,7 @@ Clean its worktree as `/feyn-pr-review` step 2 says for a reviewer's `agent-<id>
 When no open question remains and every slice is closed and Done
 ([project.md](../../reference/project.md), "Epics", the slices and their count):
 1. Check each statement of the epic's Done when yourself (a command, a file), not from a review.
-2. Open the epic PR: `mise exec -- gh pr create --base main --head <branch>`, title
+2. Open the epic PR: `mise exec -- gh pr create --base main --head <integration branch>`, title
    `<type>(<area>): <summary>`, body starting with `Closes #<epic>`, then the sections of
    `/feyn-pull-request` step 5, Issues listing every slice with its PR. Set the epic Ready for
    review ([project.md](../../reference/project.md), "Commands").
@@ -184,10 +191,11 @@ When no open question remains and every slice is closed and Done
    tell the maintainer.
 2. The epic is closed and Done (`mise exec -- gh issue view <epic> --json state,projectItems`);
    not Done after a few seconds: set it ([project.md](../../reference/project.md), "Commands").
-3. `git pull --ff-only` on `main`; the local integration branch, `git branch -D <branch>` if
-   it exists (`git branch --list <branch>`: step 1 creates none); the remote one goes with the
-   merge (checked as in step 2.5). Every worktree and `worktree-*` branch of the epic's runs is
-   gone (`git worktree list`, `git branch --list 'worktree-*'`).
+3. `git pull --ff-only` on `main`; the local integration branch,
+   `git branch -D <integration branch>` if it exists (`git branch --list <integration branch>`:
+   step 1 creates none); the remote one goes with the merge (checked as in step 2.5). Every
+   worktree and `worktree-*` branch of the epic's runs is gone (`git worktree list`,
+   `git branch --list 'worktree-*'`).
 4. The issues the epic blocked that are now free: as `/feyn-merge-cleanup` step 7, "The issues
    it blocked", for the epic.
 

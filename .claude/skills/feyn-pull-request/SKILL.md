@@ -24,7 +24,8 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    "deviation", with why (step 5). The Done when is not edited after `/feyn-issue-branch`; a change to it
    amends the open PR's body as well.
 2. **Checks.** Run the ones that exist for what the branch touches
-   (`git diff --name-only main...HEAD`):
+   (`git diff --name-only main...HEAD`; a slice of an epic:
+   `git diff --name-only origin/<integration branch>...HEAD`):
    - a course `courses/<id>/`: the check runner of the spec it declares
      (`course-specs/check-course courses/<id>`);
    - `site/` or a course: `astro check` and the site build, from `site/`;
