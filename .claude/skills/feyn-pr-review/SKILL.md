@@ -34,9 +34,9 @@ A new `Agent` with `subagent_type: "feyn-pr-reviewer"` (the project subagent of
 `opus`), never the contributor and never resumed from it, named `reviewer-<pr>` (its `name`,
 for step 4). Its prompt names the PR, its branch (`headRefName`), the issue, and what the
 caller passes, "none" for each input it does not pass; the brief itself is in the agent's file,
-not in the prompt. A work session loads `.claude/agents/` at its start: an agent file added or
-changed during the session is not seen until the next one (Claude Code, documented 2026-10-31,
-#368). The inputs:
+not in the prompt. A work session sees an agent file added to `.claude/agents/` during it (a
+`git pull` that brings one), with no restart (Claude Code, observed 2026-10-31, #373). The
+inputs:
 - **Checks to rerun.** A PR with any check or fixture runner to rerun (a course, `site/`,
   `course-specs/check-course`, `course-specs/*/*/checks/` in `mise exec -- gh pr diff <pr>
   --name-only`): the reviewer gets

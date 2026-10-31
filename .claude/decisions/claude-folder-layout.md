@@ -42,4 +42,5 @@ owns it.
   `feyn-pr-reviewer` (`/feyn-pr-review`, `deliver-slice.js`, `/feyn-deliver-epic`); the
   Reviewer brief section of `feyn-pr-review/SKILL.md` moved into the latter, which is now the
   example of a reused brief. A brief written for one spawn stays in its skill or workflow. A
-  session loads `.claude/agents/` at its start (Claude Code, documented 2026-10-31, #368).
+  session sees an agent file added to `.claude/agents/` during it, with no restart (Claude
+  Code, observed 2026-10-31, #373).

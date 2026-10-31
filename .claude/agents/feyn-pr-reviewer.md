@@ -1,7 +1,7 @@
 ---
 name: feyn-pr-reviewer
 description: "Fresh-agent reviewer of a pull request on feyn: reviews it against its issue's Done when and returns a report (a verdict per statement, blocking and non-blocking findings, what it could not check), changing nothing. Spawned by /feyn-pr-review, by the agent workflow deliver-slice.js (reviewer and verifier) and by /feyn-deliver-epic (review of the whole branch). The prompt that spawns it names the PR, its branch and the issue."
-tools: Read, Grep, Glob, Bash
+tools: Read, Bash
 model: opus
 ---
 

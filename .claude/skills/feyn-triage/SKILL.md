@@ -25,9 +25,9 @@ Spawn one fresh agent of the project subagent `feyn-backlog-analyst`
 `Agent` with `subagent_type: "feyn-backlog-analyst"` and the prompt "Analyse the Backlog of
 feyn as your brief says." Nothing more: it is given no list of recent changes, which would
 steer what it sees (on 2026-10-31, an agent briefed with one skipped #318 without a word). Its
-brief lives in its file, not here; a change to it is made there. A work session loads
-`.claude/agents/` at its start: an agent file added or changed during the session is not seen
-until the next one (Claude Code, documented 2026-10-31, #368).
+brief lives in its file, not here; a change to it is made there. A work session sees an agent
+file added to `.claude/agents/` during it (a `git pull` that brings one), with no restart
+(Claude Code, observed 2026-10-31, #373).
 
 Check what it returns before using it: each proof is named and can be opened, and every Backlog
 issue is either reported, sound, or named as not treated.
