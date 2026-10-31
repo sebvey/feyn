@@ -32,3 +32,9 @@ how the teacher teaches.
 - Issue #125 gives every rule its slug, splits the eleven rules the study of issue #122 named,
   and lands before the `linear-course/v1.0.0` tag.
 - A test or a document never cites a rule by its position.
+- Amended 2026-10-31 (#322): the slug becomes the `id` of the rule in the rule files
+  (decision `rules-with-level-and-method`): the protocol's rules move from `PROTOCOL.md` to
+  `rules/protocol.yaml` at the extraction of #318, their slugs kept; the rules of
+  `rules/course.yaml` are named the same way. A rule id is unique across the rule files
+  (two, `rules/course.yaml` and `rules/protocol.yaml`; #339) and never reused; the check
+  `rule-slugs` reads the rule files once the rules are there.

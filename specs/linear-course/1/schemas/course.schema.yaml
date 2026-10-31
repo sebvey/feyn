@@ -1,0 +1,179 @@
+# The tables of COURSE.md section 2: the fields of course.yaml, of a domain entry, of a concept
+# entry and of a sub-concept node, their presence and their form. What a table does not say
+# (unique numbers, course order, the partition into domains, paths that exist) is a rule of
+# rules/course.yaml, verified by course-yaml.
+$schema: https://json-schema.org/draft/2020-12/schema
+title: course.yaml
+type: object
+required: [id, spec, language, title, audience, storyline, glossary, domains, concepts]
+additionalProperties: false
+properties:
+  id:
+    description: the course id, lowercase ASCII words joined by hyphens, equal to the folder name
+    $ref: '#/$defs/slug'
+  spec:
+    description: "linear-course@<MAJOR>: the spec MAJOR the course follows"
+    type: string
+    pattern: '^linear-course@\d+$'
+  language:
+    description: ISO 639-1 code of the language spoken to the learner
+    type: string
+    pattern: '^[a-z]{2}$'
+  title:
+    description: the course title
+    $ref: '#/$defs/text'
+  subtitle:
+    description: one line under the title on the site
+    $ref: '#/$defs/text'
+  audience:
+    description: one sentence for the site home and previews
+    $ref: '#/$defs/text'
+  site:
+    description: the course's look on the site; omitted keys take the site's defaults
+    type: object
+    additionalProperties: false
+    properties:
+      icon:
+        description: >-
+          path, relative to the course folder, of an SVG used as the course's mark and favicon
+        $ref: '#/$defs/text'
+      color:
+        description: the course's accent colour
+        type: string
+        pattern: '^#[0-9a-fA-F]{6}$'
+  storyline:
+    description: path of the storyline file
+    const: storyline.md
+  glossary:
+    description: path of the course glossary
+    const: glossary.md
+  domains:
+    description: the domains, in course order
+    type: array
+    minItems: 1
+    items:
+      $ref: '#/$defs/domain'
+  concepts:
+    description: every numbered concept and annex, in course order
+    type: array
+    minItems: 1
+    items:
+      $ref: '#/$defs/concept'
+  annexes:
+    description: numbers of the concepts that are annexes; absent means none
+    type: array
+    items:
+      type: string
+      pattern: '^A\d+$'
+$defs:
+  text:
+    type: string
+    pattern: '\S'
+  slug:
+    description: lowercase ASCII words joined by hyphens
+    type: string
+    pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+  minutes:
+    description: minutes of conversation with the teacher, low estimate
+    type: integer
+    minimum: 1
+  concept-number:
+    description: >-
+      0, 1... for a numbered concept, A1, A2... for an annex; an unquoted integer is read as
+      its decimal string
+    anyOf:
+      - type: integer
+        minimum: 0
+      - type: string
+        pattern: '^(\d+|A\d+)$'
+  domain:
+    type: object
+    required: [number, slug, title, objective, duration_min, file, concepts]
+    additionalProperties: false
+    properties:
+      number:
+        description: integer; the domains are numbered 1, 2, 3... in list order
+        type: integer
+        minimum: 1
+      slug:
+        $ref: '#/$defs/slug'
+      title:
+        description: the domain title
+        $ref: '#/$defs/text'
+      objective:
+        description: what the learner can do at the end of the domain, one sentence
+        $ref: '#/$defs/text'
+      duration_min:
+        $ref: '#/$defs/minutes'
+      file:
+        description: "domains/<number>-<slug>.md"
+        type: string
+        pattern: '^domains/\d+-[a-z0-9]+(-[a-z0-9]+)*\.md$'
+      concepts:
+        description: the numbers of the domain's concepts, in course order
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/$defs/concept-number'
+  concept:
+    type: object
+    required: [number, slug, title, objective, prerequisites, dir, subconcepts]
+    additionalProperties: false
+    properties:
+      number:
+        $ref: '#/$defs/concept-number'
+      slug:
+        $ref: '#/$defs/slug'
+      title:
+        description: the concept title
+        $ref: '#/$defs/text'
+      objective:
+        description: what the learner can do after the concept, one sentence
+        $ref: '#/$defs/text'
+      prerequisites:
+        description: numbers of the concepts the learner must have validated first; [] for none
+        type: array
+        items:
+          $ref: '#/$defs/concept-number'
+      duration_min:
+        $ref: '#/$defs/minutes'
+      dir:
+        description: "concepts/<NN>-<slug>, NN the number on two digits; an annex keeps its number"
+        type: string
+        pattern: '^concepts/(\d{2,}|A\d+)-[a-z0-9]+(-[a-z0-9]+)*$'
+      subconcepts:
+        description: the concept's sub-concept tree, non-empty
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/$defs/subconcept'
+  subconcept:
+    description: a first-level node, the concept number and a letter (9a, A2a)
+    type: object
+    required: [id, title]
+    additionalProperties: false
+    properties:
+      id:
+        type: string
+        pattern: '^(\d+|A\d+)[a-z]$'
+      title:
+        description: the sub-concept title, as its heading in concept.md writes it
+        $ref: '#/$defs/text'
+      children:
+        description: second-level nodes, 9 at most; the tree has two levels at most
+        type: array
+        minItems: 1
+        maxItems: 9
+        items:
+          $ref: '#/$defs/child'
+  child:
+    description: a second-level node, its parent's id and a digit (9a1)
+    type: object
+    required: [id, title]
+    additionalProperties: false
+    properties:
+      id:
+        type: string
+        pattern: '^(\d+|A\d+)[a-z][1-9]$'
+      title:
+        $ref: '#/$defs/text'

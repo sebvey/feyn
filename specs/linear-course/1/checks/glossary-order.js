@@ -1,5 +1,5 @@
 'use strict';
-// A term of the course glossary is used after its defining concept (SPEC.md section 6):
+// A term of the course glossary is used after its defining concept (COURSE.md section 5):
 // every use in a concept.md, body and frontmatter, before the defining concept fails, unless its
 // sentence carries a concept reference to that concept. Each comma variant of the term cell is
 // matched, whole word, case ignored; a row whose term cell has a parenthesis (a sense
@@ -7,7 +7,7 @@
 const mdlib = require('./lib/md');
 const glossary = require('./lib/glossary');
 const refs = require('./lib/refs');
-const yaml = require('./lib/yaml');
+const yaml = require('./lib/yaml-lines');
 const { fail } = require('./lib/course');
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

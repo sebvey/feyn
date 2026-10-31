@@ -1,0 +1,2 @@
+check: language-pack-keys
+message: lang/fr.yaml:37 missing key headings.bank

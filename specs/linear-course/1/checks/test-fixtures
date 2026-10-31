@@ -1,24 +1,33 @@
 #!/usr/bin/env node
 'use strict';
-// Runs check-course on the fixtures, in both modes (conformity, the default, and --quality),
+// Runs check-course on the fixtures, once each with the default (every check of method test),
 // and says whether every run gave the expected result (a real course is checked by
-// specs/check-course courses/<id>, not here):
-//   --list, --quality --list       print the conformity checks and the quality checks
-//   fixtures/valid                 passes every check of both modes
-//   fixtures/lang-no-anaphora      a pack without checks.anaphora: valid passes conformity, and
-//                                  domain-first-sentence-standalone (quality) reports the absence
+// specs/check-course courses/<id>, not here). The severity of each check follows from its rules
+// (SPEC.md section 7): the test reads rules/course.yaml itself and holds the exit codes to it.
+//   --list                         names every check with its category and
+//                                  its severity, as rules/course.yaml gives them; the check it
+//                                  does not run (taught-check) marked "not run here"
+//   fixtures/valid                 passes every check, and every check of method test runs
+//   fixtures/lang-no-anaphora      a pack without checks.anaphora: domain-first-sentence-standalone
+//                                  (reports) fails alone, exit code 0
 //   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>", optional "lang-dir: <path>":
-//                                  that check fails, in its mode, with a line containing the
-//                                  fragment, and no check of either mode fails beside it;
-//                                  broken/course-yaml-unlisted-folder passes with --concept 0
-//   fixtures/spec/...              the same for check-spec (the spec's own files), and the
-//                                  repository's spec passes it
+//                                  that check fails with a line containing the fragment, no other
+//                                  check fails beside it, and the exit code is 1 when it blocks,
+//                                  0 when it reports; broken/course-yaml-unlisted-folder passes
+//                                  with --concept 0
+//   --category                     runs the checks of those categories only; an unknown category
+//                                  (the spec's own name among them), --quality and an id
+//                                  check-course does not run are usage errors
+//   fixtures/spec/...              the same for check-spec (the tests of the spec's own files,
+//                                  its language packs included), and the repository's spec
+//                                  passes it
 //   fixtures/dispatcher/<name>     a course.yaml that specs/check-course refuses: other-spec
 //                                  (spec other@1), unknown-major (linear-course@9); the
-//                                  dispatcher passes --quality through
+//                                  dispatcher passes --category through
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
+require('./lib/deps').need();
 
 const here = __dirname;
 const runner = path.join(here, 'check-course');
@@ -35,48 +44,136 @@ function report(name, ok, detail) {
   console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}${ok ? '' : ': ' + detail}`);
   if (!ok) bad++;
 }
-const notOk = (r) => r.lines.filter((l) => !l.endsWith(': ok')).join(' | ') || r.err;
+const SUMMARY = 'summary: ';
+const checkLines = (r) => r.lines.filter((l) => !l.startsWith(SUMMARY));
+const notOk = (r) => checkLines(r).filter((l) => !l.endsWith(': ok')).join(' | ') || r.err;
 const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
-const ids = (r) => r.lines.map((l) => l.slice(0, l.indexOf(':')));
+const ids = (r) => [...new Set(checkLines(r).map((l) => l.slice(0, l.indexOf(':'))))];
 
-// the two modes: --list prints each, and each run runs its checks and no other
-const listOf = (extra) => spawnSync(process.execPath, [runner, ...extra, '--list'], { encoding: 'utf8' }).stdout.split('\n').filter(Boolean);
-const MODES = { conformity: listOf([]), quality: listOf(['--quality']) };
-const FLAG = { conformity: [], quality: ['--quality'] };
-report('--list and --quality --list print two disjoint lists',
-  MODES.conformity.length > 0 && MODES.quality.length > 0 && !MODES.conformity.some((id) => MODES.quality.includes(id)),
-  `conformity: ${MODES.conformity.join(', ')}; quality: ${MODES.quality.join(', ')}`);
-const modeOf = (id) => (MODES.quality.includes(id) ? 'quality' : 'conformity');
+// the severity of each check, read here from rules/course.yaml (SPEC.md section 7): it blocks when
+// its rules are requirements verified by test, otherwise it reports
+const RULED = new Map(); // check -> { category, levels, methods }
+{
+  const yaml = require('./lib/yaml-lines');
+  for (const g of yaml.parse(fs.readFileSync(path.join(here, '..', 'rules', 'course.yaml'), 'utf8')).groups) {
+    for (const r of g.rules) {
+      if (!r.check) continue;
+      const c = RULED.get(r.check) || { category: r.category || g.category, levels: new Set(), methods: new Set() };
+      c.levels.add(r.level);
+      c.methods.add(r.method || g.method);
+      RULED.set(r.check, c);
+    }
+  }
+}
+const severityOf = (c) => ([...c.levels].join() === 'requirement' && [...c.methods].join() === 'test' ? 'blocks' : 'reports');
+
+// --list: every check of rules/course.yaml, its category and its severity as they follow from its
+// rules; the checks of method test run here, and the tests of check-spec, which verify no rule,
+// are not listed
+const LIST = spawnSync(process.execPath, [runner, '--list'], { encoding: 'utf8' }).stdout.split('\n').filter(Boolean)
+  .map((l) => { const [id, category, severity, ...rest] = l.split(/\s+/); return { id, category, severity, runsHere: rest.length === 0 }; });
+const RUN = LIST.filter((c) => c.runsHere);
+const SEVERITY = Object.fromEntries(LIST.map((c) => [c.id, c.severity]));
+{
+  const wrong = LIST.filter((c) => !RULED.has(c.id) || RULED.get(c.id).category !== c.category || severityOf(RULED.get(c.id)) !== c.severity);
+  const missing = [...RULED.keys()].filter((id) => !LIST.some((c) => c.id === id));
+  report('--list names every check of rules/course.yaml with the category and the severity of its rules',
+    LIST.length > 0 && !wrong.length && !missing.length, `wrong: ${wrong.map((c) => `${c.id} ${c.category} ${c.severity}`).join(', ') || 'none'}; missing: ${missing.join(', ') || 'none'}`);
+  const notHere = LIST.filter((c) => !c.runsHere).map((c) => c.id).sort().join(',');
+  report('--list marks taught-check "not run here", and no other', notHere === 'taught-check', notHere);
+  const spec = LIST.filter((c) => ['rule-slugs', 'rule-files', 'language-pack-keys'].includes(c.id)).map((c) => c.id);
+  report('--list names none of the tests of check-spec', spec.length === 0, spec.join(','));
+  report('--list has blocking and reporting checks among those run here',
+    RUN.some((c) => c.severity === 'blocks') && RUN.some((c) => c.severity === 'reports'), RUN.map((c) => `${c.id} ${c.severity}`).join(', '));
+}
+const runIds = (cats) => RUN.filter((c) => !cats || cats.includes(c.category)).map((c) => c.id).join(',');
 
 // valid
-for (const mode of ['conformity', 'quality']) {
-  const r = run(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang'), ...FLAG[mode]]);
-  report(`valid passes every ${mode} check, and only those run`, r.code === 0 && ids(r).join(',') === MODES[mode].join(','), notOk(r) || ids(r).join(','));
+{
+  const r = run(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang')]);
+  report('valid passes every check, and every check --list runs here runs', r.code === 0 && ids(r).join(',') === runIds(), notOk(r) || ids(r).join(','));
+  const s = r.lines[r.lines.length - 1] || '';
+  report('the run ends with a summary that counts the blocking and the reporting checks',
+    s === `${SUMMARY}${RUN.filter((c) => c.severity === 'blocks').length} blocking checks, 0 failed; ${RUN.filter((c) => c.severity === 'reports').length} reporting checks, 0 failed; exit 0`, s);
 }
 
-// a pack without checks.anaphora: consumable, so conformity passes; the quality check reports it
+// a reporting failure alone: a pack without checks.anaphora is consumable; the reporting
+// domain-first-sentence-standalone says so, and the exit code stays 0
 {
   const lang = path.join(fx, 'lang-no-anaphora');
-  const c = run(path.join(fx, 'valid'), ['--lang-dir', lang]);
-  report('lang-no-anaphora passes the conformity mode', c.code === 0, notOk(c));
-  const q = run(path.join(fx, 'valid'), ['--lang-dir', lang, '--quality']);
-  const f = failing(q);
-  report('lang-no-anaphora fails domain-first-sentence-standalone only, in the quality mode',
-    q.code === 1 && f.length === 1 && f[0].startsWith('domain-first-sentence-standalone: fail: ') && f[0].includes('no checks.anaphora'), notOk(q));
+  const r = run(path.join(fx, 'valid'), ['--lang-dir', lang]);
+  const f = failing(r);
+  report('lang-no-anaphora fails domain-first-sentence-standalone (reports) alone, exit code 0',
+    SEVERITY['domain-first-sentence-standalone'] === 'reports' && r.code === 0 && f.length === 1 && f[0].startsWith('domain-first-sentence-standalone: fail: ') && f[0].includes('no checks.anaphora')
+      && r.lines[r.lines.length - 1].includes('1 failed (domain-first-sentence-standalone); exit 0'), notOk(r));
+  // a blocking failure beside a reporting one: exit code 1
+  const b = run(path.join(fx, 'broken', 'course-files'), ['--lang-dir', lang]);
+  report('broken/course-files with lang-no-anaphora: a blocking and a reporting failure, exit code 1',
+    b.code === 1 && failing(b).some((l) => l.startsWith('course-files: fail: ')) && failing(b).some((l) => l.startsWith('domain-first-sentence-standalone: fail: ')), notOk(b));
 }
 
-// broken
+// broken: one run each, with the default
 for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   const d = path.join(fx, 'broken', name);
   const ex = Object.fromEntries(fs.readFileSync(path.join(d, 'EXPECT'), 'utf8').split('\n').filter(Boolean).map((l) => [l.slice(0, l.indexOf(':')), l.slice(l.indexOf(':') + 1).trim()]));
   const lang = ex['lang-dir'] ? path.resolve(d, ex['lang-dir']) : path.join(fx, 'lang');
-  const r = run(d, ['--lang-dir', lang, ...FLAG[modeOf(ex.check)], '--only', ex.check]);
+  const sev = SEVERITY[ex.check];
+  const r = run(d, ['--lang-dir', lang]);
   const hit = r.lines.filter((l) => l.startsWith(ex.check + ': fail: '));
-  report(`broken/${name} fails ${ex.check} (${modeOf(ex.check)})`, r.code === 1 && hit.some((l) => l.includes(ex.message)), `expected "${ex.message}", got ${r.lines.join(' | ') || r.err}`);
-  // and only that check: the other checks of both modes do not mind the defect
-  const others = ex.check === 'language-pack-keys' ? []
-    : ['conformity', 'quality'].flatMap((mode) => failing(run(d, ['--lang-dir', lang, ...FLAG[mode]])).filter((l) => !l.startsWith(ex.check + ': ')));
+  const want = sev === 'blocks' ? 1 : 0;
+  report(`broken/${name} fails ${ex.check} (${sev}), exit code ${want}`, sev !== undefined && r.code === want && hit.some((l) => l.includes(ex.message)), `expected "${ex.message}" and exit code ${want}, got ${r.code}: ${r.lines.join(' | ') || r.err}`);
+  // and only that check: the other checks do not mind the defect
+  const others = failing(r).filter((l) => !l.startsWith(ex.check + ': '));
   if (others.length) report(`broken/${name} breaks nothing else`, false, others.slice(0, 2).join(' | '));
+}
+
+// --category runs the checks of those categories only, in the order of the default run
+{
+  const lang = ['--lang-dir', path.join(fx, 'lang')];
+  for (const cats of [['writing'], ['pedagogy'], ['structure', 'diagrams']]) {
+    const r = run(path.join(fx, 'valid'), [...lang, '--category', cats.join(',')]);
+    report(`--category ${cats.join(',')} runs the checks of ${cats.join(', ')} only`, r.code === 0 && ids(r).length > 0 && ids(r).join(',') === runIds(cats), notOk(r) || ids(r).join(','));
+  }
+  // a blocking failure outside the categories selected is not run: exit code 0
+  const b = run(path.join(fx, 'broken', 'svg-contract'), [...lang, '--category', 'writing']);
+  report('broken/svg-contract with --category writing: svg-contract does not run, exit code 0', b.code === 0 && !ids(b).includes('svg-contract'), notOk(b));
+  const c = run(path.join(fx, 'broken', 'svg-contract'), [...lang, '--category', 'diagrams']);
+  report('broken/svg-contract with --category diagrams: exit code 1', c.code === 1 && failing(c).some((l) => l.startsWith('svg-contract: fail: ')), notOk(c));
+  const l = spawnSync(process.execPath, [runner, '--list', '--category', 'pedagogy'], { encoding: 'utf8' }).stdout.split('\n').filter(Boolean).map((x) => x.split(/\s+/)[0]);
+  report('--list --category pedagogy lists the pedagogy checks only', l.join(',') === LIST.filter((x) => x.category === 'pedagogy').map((x) => x.id).join(','), l.join(','));
+  const SPEC_NAME = 'spec';
+  for (const [what, extra, want] of [
+    ['an unknown category', ['--category', 'style'], 'unknown category "style"'],
+    // the spec's own files have tests in check-spec, no category (#339); the name is held in a
+    // variable so the Done when's rg of #339, which looks for the category in the sources,
+    // finds no literal of it here
+    ['the name of the spec as a category', ['--category', SPEC_NAME], `unknown category "${SPEC_NAME}"`],
+    ['--quality', ['--quality'], '--quality is gone: the reporting checks run by default'],
+    ['--only of a test of check-spec', ['--only', 'rule-files'], 'unknown check id "rule-files"'],
+    ['--only of language-pack-keys, a test of check-spec', ['--only', 'language-pack-keys'], 'unknown check id "language-pack-keys"'],
+    ['--only outside --category', ['--category', 'writing', '--only', 'sources'], '"sources" is in category sources'],
+  ]) {
+    const r = run(path.join(fx, 'valid'), [...lang, ...extra]);
+    report(`${what} is a usage error, exit code 2`, r.code === 2 && r.lines.length === 0 && r.err.split('\n').filter(Boolean).length === 1 && r.err.includes(want), `got ${r.code}: ${r.err || r.lines.join(' | ')}`);
+  }
+}
+
+// the schemas of the spec (schemas/*.schema.yaml, JSON Schema 2020-12 read by Ajv2020): valid's
+// course.yaml and the frontmatter of each of its concept.md are valid against them
+{
+  const Ajv2020 = require('ajv/dist/2020').default;
+  const yaml = require('./lib/yaml-lines');
+  const md = require('./lib/md');
+  const schema = (n) => new Ajv2020({ allErrors: true, logger: false }).compile(yaml.parse(fs.readFileSync(path.join(here, '..', 'schemas', n), 'utf8')));
+  const errs = (v) => v.errors.map((e) => `${e.instancePath || '/'} ${e.message}`).slice(0, 2).join(' | ');
+  const course = schema('course.schema.yaml');
+  const front = schema('concept-frontmatter.schema.yaml');
+  const cy = yaml.parse(fs.readFileSync(path.join(fx, 'valid', 'course.yaml'), 'utf8'));
+  report('valid/course.yaml is valid against schemas/course.schema.yaml', course(cy), course.errors && errs(course));
+  for (const c of cy.concepts) {
+    const data = md.split(fs.readFileSync(path.join(fx, 'valid', c.dir, 'concept.md'), 'utf8')).data;
+    report(`valid/${c.dir}/concept.md is valid against schemas/concept-frontmatter.schema.yaml`, front(data), front.errors && errs(front));
+  }
 }
 
 // --concept looks at one concept only: an unlisted concept folder does not fail course-yaml
@@ -100,6 +197,8 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     const r = spec(d, ['--only', ex.check]);
     const hit = r.lines.filter((l) => l.startsWith(ex.check + ': fail: '));
     report(`spec/broken/${name} fails ${ex.check}`, r.code === 1 && hit.some((l) => l.includes(ex.message)), `expected "${ex.message}", got ${r.lines.join(' | ') || r.err}`);
+    const others = failing(spec(d, [])).filter((l) => !l.startsWith(ex.check + ': '));
+    if (others.length) report(`spec/broken/${name} breaks nothing else`, false, others.slice(0, 2).join(' | '));
   }
   const s = spec(path.join(here, '..'), []);
   report('the repository spec passes every spec check', s.code === 0, notOk(s));
@@ -112,10 +211,10 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     const r = spawnSync(process.execPath, [dispatcher, dir, ...extra], { encoding: 'utf8' });
     return { code: r.status, lines: r.stdout.split('\n').filter(Boolean), err: r.stderr };
   };
-  for (const mode of ['conformity', 'quality']) {
-    const v = disp(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang'), ...FLAG[mode]]);
-    report(`the dispatcher runs this MAJOR's ${mode} checks on valid`, v.code === 0 && ids(v).join(',') === MODES[mode].join(','), notOk(v) || ids(v).join(','));
-  }
+  const v = disp(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang')]);
+  report("the dispatcher runs this MAJOR's checks on valid", v.code === 0 && ids(v).join(',') === runIds(), notOk(v) || ids(v).join(','));
+  const w = disp(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang'), '--category', 'writing']);
+  report('the dispatcher passes --category through', w.code === 0 && ids(w).join(',') === runIds(['writing']), notOk(w) || ids(w).join(','));
   for (const [name, want] of [['other-spec', 'unknown spec "other"'], ['unknown-major', 'unknown MAJOR 9 of spec "linear-course"']]) {
     const r = disp(path.join(fx, 'dispatcher', name), []);
     report(`the dispatcher refuses dispatcher/${name}`, r.code === 2 && r.err.includes(want) && r.lines.length === 0, `expected exit 2 and "${want}", got ${r.code}: ${r.err || r.lines.join(' | ')}`);

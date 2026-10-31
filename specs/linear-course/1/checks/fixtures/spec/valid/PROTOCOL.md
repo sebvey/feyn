@@ -33,6 +33,7 @@ in rule `second-rule`.
 | Key | French value | Used in |
 |---|---|---|
 | `phrases.example` | « Exemple » | `first-rule`, `save-next-step` |
+| `learner_says.stop` | list: « on s'arrête », « fin de session » | `save-points` |
 
 ## Inherited from parcours-po
 

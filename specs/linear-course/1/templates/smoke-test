@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 // Smoke run of the templates (task S1-06): builds a course from them with every placeholder
-// filled with a dummy value, then runs check-course on it in both modes. Two courses: with a
-// diagram, and without (the `diagrams` key and the image line deleted, as the concept template
+// filled with a dummy value, then runs check-course on it once, with the default (every check of
+// method test, the blocking and the reporting ones), each of which must pass. Two courses: with
+// a diagram, and without (the `diagrams` key and the image line deleted, as the concept template
 // says).
 //   mise exec -- specs/linear-course/1/templates/smoke-test [--keep]
 // The learner/ templates have no check: they are only scanned for unreplaced placeholders.
@@ -90,6 +91,7 @@ const DUMMY = {
   'a storyline situation where each concept of the domain serves, in order, without giving the answer': 'Régis veut une carte : qui décide ?',
   'an introduction (optional)': 'Un terme par notion.',
   'course term': 'Rôle',
+  'variant': 'Rôles',
   'english term': 'role',
   'definition': 'Ce que fait une personne dans l\'équipe',
   'term to avoid': 'Truc',
@@ -129,6 +131,8 @@ function stripHeader(name, text) {
 function fill(name, text) {
   text = stripHeader(name, text);
   if (name.endsWith('.svg')) text = text.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  // an optional part of a cell (`[, <variant>]`) is filled too
+  text = text.replace(/\[(, <[^>\n]+>)\]/g, '$1');
   const keys = Object.keys(DUMMY).sort((a, b) => b.length - a.length);
   for (const k of keys) text = text.split('<' + k + '>').join(DUMMY[k]);
   return text;
@@ -165,13 +169,12 @@ function build(withDiagram) {
 }
 for (const withDiagram of [true, false]) {
   const { tmp, course } = build(withDiagram);
-  for (const mode of ['conformity', 'quality']) {
-    const r = spawnSync(process.execPath, [path.join(spec, 'checks', 'check-course'), course, '--lang-dir', lang, ...(mode === 'quality' ? ['--quality'] : [])], { encoding: 'utf8' });
-    const notOk = r.stdout.split('\n').filter((l) => l && !l.endsWith(': ok'));
-    const ok = r.status === 0 && !notOk.length;
-    console.log(`${ok ? 'ok  ' : 'FAIL'} templates ${withDiagram ? 'with' : 'without'} a diagram pass every ${mode} check${ok ? '' : ': ' + (notOk.join(' | ') || r.stderr)}`);
-    if (!ok) bad++;
-  }
+  // a reporting failure leaves the exit code 0: the test reads the failure lines, not the code alone
+  const r = spawnSync(process.execPath, [path.join(spec, 'checks', 'check-course'), course, '--lang-dir', lang], { encoding: 'utf8' });
+  const notOk = r.stdout.split('\n').filter((l) => l && !l.endsWith(': ok') && !l.startsWith('summary: '));
+  const ok = r.status === 0 && !notOk.length;
+  console.log(`${ok ? 'ok  ' : 'FAIL'} templates ${withDiagram ? 'with' : 'without'} a diagram pass every check, blocking and reporting${ok ? '' : ': ' + (notOk.join(' | ') || r.stderr)}`);
+  if (!ok) bad++;
   if (keep) console.log('kept: ' + tmp); else fs.rmSync(tmp, { recursive: true, force: true });
 }
 if (list) {

@@ -1,5 +1,5 @@
 <!--
-  Template of a diagram (SPEC.md section 7). Copy it to the concept folder as <stem>.svg,
+  Template of a diagram (COURSE.md section 6). Copy it to the concept folder as <stem>.svg,
   replace every placeholder (written &lt;like this&gt; because the file is XML), delete this comment.
   Rules: no width or height on the root; fill and stroke are currentColor or none (shades by
   fill-opacity, stroke-opacity, opacity); only the classes primary, secondary, muted; no style

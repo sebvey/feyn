@@ -1,7 +1,7 @@
 'use strict';
 // Markdown helpers: frontmatter, headings, sections, tables, paragraphs. CommonMark only
 // as far as the course conventions need; fenced code is skipped.
-const yaml = require('./yaml');
+const yaml = require('./yaml-lines');
 
 // -> { data, error, body (array of {n, t, code}), bodyLine }
 function split(text) {

@@ -1,5 +1,5 @@
 # French language pack of `linear-course`: everything that depends on the language spoken to the
-# learner, and nothing else. The keys are those of SPEC.md section 9 and of the "Keys and
+# learner, and nothing else. The keys are those of COURSE.md section 7 and of the "Keys and
 # parameters" tables of PROTOCOL.md (`language-pack-keys` verifies them); `site` holds the labels
 # of the site, read by the site engine. A value with a slot, `{n}`, `{title}`, is filled by whoever
 # reads it. Typography of these values: space before « : », « ; », « ? », « ! », quotes « »;
@@ -81,18 +81,18 @@ markers:
 
 # The nature of a claim of `sources.md` that is not a stance marker: what a source says with no
 # stance (a tool's default, a date, a figure). The other natures are the markers consensus,
-# school, course (SPEC.md 4.4). Read by `sources` only: never a marker of the reader text.
+# school, course (COURSE.md 3.4). Read by `sources` only: never a marker of the reader text.
 natures:
   fact: "fait"
 
-# The qualifiers a case heading may carry, at most one, and no other word (SPEC.md 4.3).
+# The qualifiers a case heading may carry, at most one, and no other word (COURSE.md 3.3).
 qualifiers:
   fallback: "rechange"
   practice: "entraînement"
   aside: "aparté"
 
 # The words of a concept reference in reader text: « concept 4 », « concepts 5 et 7b »,
-# « annexe A2 » (SPEC.md 4.5).
+# « annexe A2 » (COURSE.md 3.5).
 concept_refs:
   concept: "concept"
   concepts: "concepts"
@@ -141,7 +141,7 @@ typography:
   banned: ["—", "→", "←", "↔", "↑", "↓", "↕", "↗", "↘", "↖", "↙", "↦", "↳", "↪", "⇒", "⇐", "⇔", "⇨", "⟶", "⟵", "⟷", "⟹", "⟸", "⟺", "➜", "➔", "➝", "➞", "➡", "⬅", "⬆", "⬇", "->", "<-", "=>"]
 
 # Words a domain paragraph's first sentence does not open with (`domain-first-sentence-standalone`,
-# a quality check; optional).
+# a reporting check; optional).
 checks:
   anaphora: ["Il", "Elle", "Ils", "Elles", "Ce", "Cet", "Cette", "Ces", "Puis", "Celui", "Celle", "Ceux", "Celles", "Cela", "Ça"]
 

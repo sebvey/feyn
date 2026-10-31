@@ -1,0 +1,32 @@
+# fixture: the rules of a course
+groups:
+  - title: course.yaml
+    category: structure
+    method: test
+    rules:
+      - id: course-yaml-valid-against-schema
+        level: requirement
+        check: course-yaml
+        text: "`course.yaml` shall be valid against `schemas/course.schema.yaml`."
+      - id: course-id-equals-folder
+        level: requirement
+        check: course-yaml
+        text: The course `id` shall equal the folder name.
+  - title: The cases
+    category: cases
+    rules:
+      - id: leaf-has-a-case
+        level: requirement
+        method: test
+        check: case-contract
+        text: Every leaf sub-concept shall have at least one case.
+      - id: case-restates-storyline-facts-only
+        level: requirement
+        method: inspection
+        text: A case shall restate only the storyline facts.
+      - id: case-asks-what-was-taught
+        level: recommendation
+        method: analysis
+        check: taught-check
+        text: A case should ask only what the learner has been taught before it.
+        why: A case asks what a later concept teaches.

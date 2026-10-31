@@ -33,3 +33,9 @@ This replaces the two ranges of the rule `new-or-returning-learner` (« règles
 - Moving a rule under another heading changes its group; a test that cites a group follows it.
 - A rule inserted under a heading joins its group, as a move does; the diff shows it under the
   heading.
+- Amended 2026-10-31 (#322): once the protocol's rules are in `rules/protocol.yaml` (#318,
+  decision `spec-files-and-alpha-version`), a group is data in that file, its slug and the
+  order of its rules included, no longer a `###` heading of `PROTOCOL.md`; its Purpose
+  paragraph goes to the description. A group may declare the category and method of its rules
+  once (decision `rules-with-level-and-method`). A set of rules is still cited by its group,
+  never by a range.

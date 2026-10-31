@@ -1,7 +1,7 @@
 'use strict';
-// Conformity: the first sentence of each paragraph of « Le fil des concepts » ends within 300
-// characters of the lead, so that the site can show it on the domain page (SPEC.md section 5).
-// The opening anaphora is the quality check domain-first-sentence-standalone.
+// Blocks: the first sentence of each paragraph of « Le fil des concepts » ends within 300
+// characters of the lead, so that the site can show it on the domain page (COURSE.md section 4).
+// The opening anaphora is domain-first-sentence-standalone, which reports.
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
 
@@ -26,7 +26,7 @@ function paragraphs(ctx) {
 
 function unusable(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
-  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see language-pack-keys')];
+  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see COURSE.md section 7')];
   return null;
 }
 

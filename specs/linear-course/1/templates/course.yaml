@@ -1,4 +1,4 @@
-# Template of courses/<id>/course.yaml (SPEC.md section 3). Copy it to the course folder.
+# Template of courses/<id>/course.yaml (COURSE.md section 2). Copy it to the course folder.
 #
 # How to use: replace every <placeholder>; delete these header lines; keep the comments that
 # help, they are YAML and harmless. Repeat the domain block per domain and the concept block

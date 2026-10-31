@@ -1,10 +1,10 @@
 'use strict';
-// sources.md (SPEC.md section 4.4) and the frontmatter refs (4.1): no introduction; the five
+// sources.md (COURSE.md section 3.4) and the frontmatter refs (3.1): no introduction; the five
 // columns of « Affirmations » (section anchors that exist in concept.md, a source cell of
 // reference ids or the markers.course word, a verification, a nature); « Références » (ids,
 // one URL or no link, types, dates); « Non vérifié » entries anchored; every id cited exists,
 // every reference is cited.
-const yaml = require('./lib/yaml');
+const yaml = require('./lib/yaml-lines');
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
 
@@ -163,7 +163,7 @@ function checkConcept(ctx, c, out) {
 
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
-  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see language-pack-keys')];
+  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see COURSE.md section 7')];
   const out = [];
   for (const c of ctx.selected()) checkConcept(ctx, c, out);
   return out;

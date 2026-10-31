@@ -1,3 +1,0 @@
-check: language-pack-keys
-message: group "natures" is missing
-lang-dir: ../../lang-broken-natures

@@ -1,7 +1,7 @@
 'use strict';
-// Quality: the first sentence of each paragraph of « Le fil des concepts » does not open with a
-// word of the language pack's checks.anaphora list, so that it stands alone (SPEC.md section 5).
-// The terminator is the conformity check domain-first-sentence.
+// Reports: the first sentence of each paragraph of « Le fil des concepts » does not open with a
+// word of the language pack's checks.anaphora list, so that it stands alone (COURSE.md section 4).
+// The terminator is domain-first-sentence, which blocks.
 const { fail } = require('./lib/course');
 const { paragraphs, unusable } = require('./domain-first-sentence');
 

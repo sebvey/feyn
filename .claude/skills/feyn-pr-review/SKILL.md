@@ -91,7 +91,9 @@ Recheck yourself:
   file; a count, recount it); the PR gives only the verdict counts and why a statement is not
   met or deviates, and those you check too;
 - the checks /feyn-pull-request requires for what the PR touches
-  (`mise exec -- gh pr diff <pr> --name-only`), rerun them;
+  (`mise exec -- gh pr diff <pr> --name-only`), rerun them; `specs/check-course` prints the
+  failures of the reporting checks too, with exit code 0: one the PR adds is a non-blocking
+  finding;
 - evidence from an agent-workflow run
   (<run ids wf_<id> and transcript directory, or "none">): read the run's transcripts and check what its agents actually read and did, not only what
   they output. The directory moves with the work session's working directory (Claude Code,

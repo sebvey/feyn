@@ -1,10 +1,10 @@
 'use strict';
-// Every diagram against the drawing contract (SPEC.md section 7.1); declared and present
-// diagrams match (section 4.1).
+// Every diagram against the drawing contract (COURSE.md section 6.1); declared and present
+// diagrams match (section 3.1).
 const fs = require('fs');
 const path = require('path');
 const xml = require('./lib/xml');
-const yaml = require('./lib/yaml');
+const yaml = require('./lib/yaml-lines');
 const { fail } = require('./lib/course');
 
 const CLASSES = new Set(['primary', 'secondary', 'muted']);

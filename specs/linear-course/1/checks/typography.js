@@ -4,7 +4,7 @@ const { fail } = require('./lib/course');
 
 function run(ctx) {
   if (!ctx.packOk || !ctx.pack.typography || !Array.isArray(ctx.pack.typography.banned)) {
-    return [fail('course.yaml', 1, 'the language pack has no typography.banned list: see language-pack-keys')];
+    return [fail('course.yaml', 1, 'the language pack has no typography.banned list: see COURSE.md section 7')];
   }
   const banned = ctx.pack.typography.banned.filter((b) => typeof b === 'string' && b !== '');
   const out = [];

@@ -1,7 +1,7 @@
 'use strict';
-// The reader-text conventions of concept.md (SPEC.md section 4.5); plain Markdown in every
-// course file (section 2).
-const yaml = require('./lib/yaml');
+// The reader-text conventions of concept.md (COURSE.md section 3.5); plain Markdown in every
+// course file (section 1).
+const yaml = require('./lib/yaml-lines');
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
 const { parser: refParser } = require('./lib/refs');
@@ -175,7 +175,7 @@ function checkConcept(ctx, c, out, all) {
 
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
-  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see language-pack-keys')];
+  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see COURSE.md section 7')];
   const out = [];
   for (const c of ctx.selected()) checkConcept(ctx, c, out);
   // the other course files: plain Markdown (concept folders are checked above)

@@ -1,7 +1,7 @@
 # linear-course: the protocol
 
 The pedagogical protocol of `linear-course`, the part of the spec the teacher executes: rules
-named by slug, in nine families. It has the version of the spec (`SPEC.md`, 1.0.0, draft); adding or
+named by slug, in nine families. It has the version of the spec (`SPEC.md`, 1.0.0-alpha); adding or
 changing a rule is a spec MINOR (`SPEC.md` section 8). The classroom build puts it in the
 teacher's `CLAUDE.md`, beside the teacher template, the language pack and the parameters.
 
@@ -32,13 +32,13 @@ this file is in English.
   only the rules where the old teacher was seen drifting in a test or a teaching session, and
   the four rules the base adds for what the spec holds and the old teacher never read.
 - A family (`##`) and a group (`###`) open with a `**Purpose.**` paragraph, then a table of
-  their readers (Reader, Needs, When), the form of `SPEC.md`. "Keys and parameters" and
+  their readers (Reader, Needs, When), the form of `COURSE.md`. "Keys and parameters" and
   "Inherited from parcours-po" are reference tables, not rules: they have none.
 - A rule is named by a slug, as a decision is (decision `rules-named-by-slug`): two to five
   words, lowercase, joined by hyphens, naming the behaviour, in English in every language of the
   protocol. The rule shows it in bold at its start, `**one-question-per-message**`; a row of the
   save-point table shows it in its first cell. Another rule cites it in code,
-  « (règle `one-question-per-message`) », as do the tables, `SPEC.md`, decisions and tests. A
+  « (règle `one-question-per-message`) », as do the tables, `SPEC.md`, `COURSE.md`, decisions and tests. A
   rule has no number: its order and its family may change, its slug does not.
 - A rule is cited by its slug; a removed rule's slug is never reused.
 - A group of rules is a `###` heading inside a family: its title, then its slug in code between
@@ -189,7 +189,7 @@ which places the domain in the course and announces its concepts, without teachi
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | what to say before the first concept of a domain, and in what form | before the first concept of a domain, on the course path or during practice |
-| the creator (human or agent) | what the teacher takes from the domain file (`SPEC.md` section 5) | writing or changing a domain file |
+| the creator (human or agent) | what the teacher takes from the domain file (`COURSE.md` section 4) | writing or changing a domain file |
 | fresh tests | the presentation's parts, length and ending | a scenario that crosses into a new domain |
 | the maintainer | what a domain presentation says | a change to domain files or to their presentation |
 
@@ -223,7 +223,7 @@ by a case, tested by one question, and corrected until the answer shows understa
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | how to pose a case, judge an answer, follow up and move on | each message on the course path |
-| the creator (human or agent) | how the teacher uses « Consignes », a case and each of its fields, so as to write what serves it (`SPEC.md` 4.3) | writing a concept's teaching notes |
+| the creator (human or agent) | how the teacher uses « Consignes », a case and each of its fields, so as to write what serves it (`COURSE.md` 3.3) | writing a concept's teaching notes |
 | fresh tests | one sub-concept and one question per message, the follow-ups, the validation | most scenarios |
 | the maintainer | the core of the protocol, which most user stories touch | a change to how a sub-concept is taught |
 
@@ -320,7 +320,7 @@ typography and terms, and when a diagram is shown, so that a message reads at a 
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | the form every message takes | each message |
-| the creator (human or agent) | the terms of the course glossary and the diagrams the teacher shows (`SPEC.md` sections 6 and 7) | writing the glossary, declaring a diagram |
+| the creator (human or agent) | the terms of the course glossary and the diagrams the teacher shows (`COURSE.md` sections 5 and 6) | writing the glossary, declaring a diagram |
 | fresh tests | forms a script or a reader can check: length, quote, links, banned characters | every scenario |
 | the maintainer | the forms the language pack fills | a change to the pack or to a message form |
 
@@ -397,7 +397,7 @@ named by their role, and the teacher improvises around it without changing it.
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | where examples, actors and facts come from, and how an actor is named | each example and each case |
-| the creator (human or agent) | what the storyline must hold for the teacher not to invent, and what « Faits du fil rouge utilisés » is for (`SPEC.md` 4.3) | writing `storyline.md` and the teaching notes |
+| the creator (human or agent) | what the storyline must hold for the teacher not to invent, and what « Faits du fil rouge utilisés » is for (`COURSE.md` 3.3) | writing `storyline.md` and the teaching notes |
 | fresh tests | actors named with their role, facts taken from the storyline | every scenario with a case |
 | the maintainer | what the storyline is to the teacher | a change to the storyline's form |
 
@@ -439,7 +439,7 @@ it answers « d'où ça vient ? » from what the concept sources, never from ref
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | the stance of a claim, and where its source and what is not verified are written | each claim with a stance; on the learner's request |
-| the creator (human or agent) | that the teacher answers from `stances`, `refs` and `verified` of `concept.md` and from `sources.md` (`SPEC.md` 4.1 and 4.4), so that what is not sourced there cannot be said | writing a concept and its sources |
+| the creator (human or agent) | that the teacher answers from `stances`, `refs` and `verified` of `concept.md` and from `sources.md` (`COURSE.md` 3.1 and 3.4), so that what is not sourced there cannot be said | writing a concept and its sources |
 | fresh tests | the stance said, the source given as described, the unverified part told | a scenario where the learner asks where a claim comes from |
 | the maintainer | the link between the sources of a concept and what the teacher says of them | a change to `sources.md` or the frontmatter |
 
@@ -480,7 +480,7 @@ learner back to the course path without imposing it.
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | how to run a practice, a skip or an aside, and when to read « Approfondissement » | on the learner's request; after an aside |
-| the creator (human or agent) | what practice cases, aside cases and « Approfondissement » are for (`SPEC.md` 4.2 and 4.3) | writing a concept and its teaching notes |
+| the creator (human or agent) | what practice cases, aside cases and « Approfondissement » are for (`COURSE.md` 3.2 and 3.3) | writing a concept and its teaching notes |
 | fresh tests | practice cases chosen and counted, skips noted, the offer to come back to the course path | a scenario where the learner practises, skips or digresses |
 | the maintainer | what the learner may ask beside the course path | a change to practice, skips or asides |
 
@@ -550,7 +550,7 @@ in the next teaching session, knows where the learner stands and what to watch f
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | the save points, what each writes and where, and the commit | each save point |
-| the creator (human or agent) | that learner memory cites the course's identifiers (concept numbers, case titles: `SPEC.md` section 3) | changing an identifier |
+| the creator (human or agent) | that learner memory cites the course's identifiers (concept numbers, case titles: `COURSE.md` section 2) | changing an identifier |
 | fresh tests | the files of `learner/` after a save point, and the commits | every scenario that crosses a save point |
 | the maintainer | the memory files and their headings, which the learner templates and the language pack share | a change to learner memory or its templates |
 
@@ -648,11 +648,12 @@ son énoncé, vigilances du prochain concept ; corrige ce qui est absent ou ambi
 ## Keys and parameters
 
 Every key and parameter the rules use, in one place: `lang/fr.yaml` is written from this list,
-and `language-pack-keys` verifies that each key exists in the course's pack. The French values are
-today's teacher's (`parcours-po`, `CLAUDE.md` and `learner-onboarding`), given for reference; the
-pack is the source. A value marked *model* is a pattern the teacher follows, not a fixed string.
+and `language-pack-keys` (`check-spec`) verifies that each key exists in every pack of `lang/`.
+The French values are today's teacher's (`parcours-po`, `CLAUDE.md` and `learner-onboarding`),
+given for reference; the pack is the source. A value marked *model* is a pattern the teacher
+follows, not a fixed string.
 
-**Language pack, groups of `SPEC.md` section 9 used here**
+**Language pack, groups of `COURSE.md` section 7 used here**
 
 | Key | French value | Used in |
 |---|---|---|
@@ -668,9 +669,9 @@ pack is the source. A value marked *model* is a pattern the teacher follows, not
 | `headings.storyline_facts` | « Faits du fil rouge utilisés » | `storyline-facts-section-unsaid` |
 | `case_fields.usage` | « Usage » | `case-usage-respected` |
 | `case_fields.explanation` | « Explication » | `explanation-from-case` |
-| `qualifiers.fallback` | « rechange » (`SPEC.md` 4.3) | `follow-concept-instructions` |
-| `qualifiers.practice` | « entraînement » (`SPEC.md` 4.3) | `practice-cases-chosen` |
-| `qualifiers.aside` | « aparté » (`SPEC.md` 4.3) | `asides-welcome` |
+| `qualifiers.fallback` | « rechange » (`COURSE.md` 3.3) | `follow-concept-instructions` |
+| `qualifiers.practice` | « entraînement » (`COURSE.md` 3.3) | `practice-cases-chosen` |
+| `qualifiers.aside` | « aparté » (`COURSE.md` 3.3) | `asides-welcome` |
 | `typography.banned` | the banned characters (French: em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 
 **Language pack, groups the protocol adds**
@@ -783,9 +784,9 @@ its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step 
 | `one-sub-concept-per-message` | none | « La boucle du cours », « Un seul concept par message » |
 | `correction-opens-message` | none | idem |
 | `never-ask-if-understood` | none | idem |
-| `follow-concept-instructions` | none | the concept files' « Sous-concepts » section, now « Consignes »; the qualifier is `SPEC.md` 4.3's |
-| `case-usage-respected` | none | new: the base reads the case field « Usage » of `SPEC.md` 4.3 (#218) |
-| `explanation-from-case` | none | new: the base reads the case field « Explication » of `SPEC.md` 4.3, else the reader text (#218) |
+| `follow-concept-instructions` | none | the concept files' « Sous-concepts » section, now « Consignes »; the qualifier is `COURSE.md` 3.3's |
+| `case-usage-respected` | none | new: the base reads the case field « Usage » of `COURSE.md` 3.3 (#218) |
+| `explanation-from-case` | none | new: the base reads the case field « Explication » of `COURSE.md` 3.3, else the reader text (#218) |
 | `examples-from-bank` | none | « Pars de la banque d'exemples » |
 | `one-question-per-message` | 065 | « Une question par message » |
 | `several-questions-announced` | 065 | idem |
@@ -820,7 +821,7 @@ its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step 
 | `course-language-typography` | none | « Style » (« -> » no longer allowed: French text has no arrows) |
 | `one-term-per-notion` | none | « Style » (the glossary's term: new, as `plan.md` says) |
 | `diagram-only-on-request` | 075 | diagram bullet |
-| `requested-diagram-shown` | 075 | idem; the declared diagram, on the leaf or a parent sub-concept, is new (`SPEC.md` section 7) |
+| `requested-diagram-shown` | 075 | idem; the declared diagram, on the leaf or a parent sub-concept, is new (`COURSE.md` section 6) |
 | `diagram-not-displayable` | none | new: the fallback where a diagram cannot show (design: `show-diagram`) |
 | `examples-from-storyline` | 009 | storyline bullet |
 | `change-situation-not-business` | none | idem |
@@ -829,16 +830,16 @@ its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step 
 | `same-role-actors-grouped` | 060 | idem |
 | `storyline-role-in-parentheses` | 060 | idem |
 | `learner-never-decides-facts` | 009 | `CLAUDE.md` opening |
-| `storyline-facts-section-unsaid` | none | new: the base reads « Faits du fil rouge utilisés » of `SPEC.md` 4.3 (#218) |
-| `stances-told-apart` | 016 | consensus bullet (the course's own choice, third stance of `SPEC.md` 4.1: new); the hint « à présenter comme tels » from the old concept files' « Consensus et choix d'école » section (#97) |
+| `storyline-facts-section-unsaid` | none | new: the base reads « Faits du fil rouge utilisés » of `COURSE.md` 3.3 (#218) |
+| `stances-told-apart` | 016 | consensus bullet (the course's own choice, third stance of `COURSE.md` 3.1: new); the hint « à présenter comme tels » from the old concept files' « Consensus et choix d'école » section (#97) |
 | `no-references-of-your-own` | 016 | sources bullet |
-| `origin-from-sources-file` | 027, 016 | idem; the frontmatter `refs` and `verified` of a stance or a neighbour are new (`SPEC.md` 4.1) |
-| `unverified-part-told` | 027 | idem; the entry found by its section is new (`SPEC.md` 4.4) |
+| `origin-from-sources-file` | 027, 016 | idem; the frontmatter `refs` and `verified` of a stance or a neighbour are new (`COURSE.md` 3.1) |
+| `unverified-part-told` | 027 | idem; the entry found by its section is new (`COURSE.md` 3.4) |
 | `unsourced-origin-from-memory` | 024 | idem |
 | `verification-result-told` | 024 | idem |
 | `domain-practised-in-order` | 040 | « Creuser ou sauter » (« creuser » is now « s'entraîner ») |
 | `validated-concept-practised` | 040 | idem |
-| `practice-cases-chosen` | 040 | idem; the qualifier is `SPEC.md` 4.3's |
+| `practice-cases-chosen` | 040 | idem; the qualifier is `COURSE.md` 3.3's |
 | `practice-case-closed` | 040 | idem |
 | `concept-practised-after-two-cases` | 040 | idem |
 | `practice-noted-in-next-step` | 040 | idem |
@@ -847,8 +848,8 @@ its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step 
 | `skip-on-request` | 061 | idem |
 | `missing-prerequisite-told` | 073, 061 | idem |
 | `untaught-notion-offered` | 073 | idem |
-| `asides-welcome` | none | « Hors de la boucle » (refocusing moved here from the second bullet); the qualifier is `SPEC.md` 4.3's |
-| `deepening-read-in-aside` | none | new: the base reads « Approfondissement » of `SPEC.md` 4.2 (#218) |
+| `asides-welcome` | none | « Hors de la boucle » (refocusing moved here from the second bullet); the qualifier is `COURSE.md` 3.3's |
+| `deepening-read-in-aside` | none | new: the base reads « Approfondissement » of `COURSE.md` 3.2 (#218) |
 | `past-concepts-revisited` | none | idem |
 | `course-path-offered-after-aside` | none | idem |
 | `course-form-requests` | 032 | « Tenir la mémoire à jour », last paragraph |

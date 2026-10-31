@@ -1,8 +1,8 @@
 'use strict';
 // plan.md, glossary.md, CHANGELOG.md and the domain files: presence, frontmatter, sections,
-// leads, no unlisted domain file (SPEC.md sections 5 and 6); « Accueil » of plan.md and its
+// leads, no unlisted domain file (COURSE.md sections 4 and 5); « Accueil » of plan.md and its
 // questions.
-const yaml = require('./lib/yaml');
+const yaml = require('./lib/yaml-lines');
 const mdlib = require('./lib/md');
 const glossary = require('./lib/glossary');
 const { fail } = require('./lib/course');
@@ -39,7 +39,7 @@ function onboarding(secs, title) {
 
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
-  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see language-pack-keys')];
+  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see COURSE.md section 7')];
   const H = (k) => ctx.word('headings', k) || k;
   const out = [];
   const numbers = ctx.allNumbers();

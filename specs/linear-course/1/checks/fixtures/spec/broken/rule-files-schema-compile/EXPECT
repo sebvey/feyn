@@ -1,0 +1,2 @@
+check: rule-files
+message: does not compile under Ajv2020

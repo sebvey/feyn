@@ -1,0 +1,2 @@
+check: rule-files
+message: method "review" is not one of

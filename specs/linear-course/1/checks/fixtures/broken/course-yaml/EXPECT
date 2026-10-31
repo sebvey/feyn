@@ -1,2 +1,2 @@
 check: course-yaml
-message: prerequisite 2 does not come earlier
+message: course.yaml:47 concept 1: prerequisite 2 does not come earlier

@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 'use strict';
 // check-spec [<spec-dir>] [--only <id>[,<id>...]] [--list]
-// The checks of the spec's own files (PROTOCOL.md, SPEC.md, decisions/), not of a course.
+// The tests of the spec's own files (PROTOCOL.md, SPEC.md, COURSE.md, decisions/, rules/,
+// schemas/, lang/), not of a course: they verify no rule, carry no category and no level, and
+// each failure blocks (exit code 1; decision rules-with-level-and-method, amended by #339).
 // <spec-dir> defaults to the folder above this script (specs/linear-course/1).
 const fs = require('fs');
 const path = require('path');
+require('./lib/deps').need();
 
-const CHECKS = ['rule-slugs'];
+const CHECKS = ['rule-slugs', 'rule-files', 'language-pack-keys'];
 
 function usage(code) {
   const out = code ? console.error : console.log;

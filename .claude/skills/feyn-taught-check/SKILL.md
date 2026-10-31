@@ -8,9 +8,9 @@ argument-hint: "<course id> [from <concept>] [to <concept>]"
 
 One job: run the agent workflow `feyn-taught-check-workflow` (`taught-check.js` of
 `.claude/workflows/`) and handle what it finds.
-It is a quality check, run on demand, not mandatory before the merge (`SPEC.md` section 10):
-after a change to what is taught (teaching notes, a sub-concept, an order), or when the
-maintainer asks.
+It is a reporting check (a `pedagogy` recommendation, by analysis), run on demand, not
+mandatory before the merge (`SPEC.md` section 10): after a change to what is taught (teaching
+notes, a sub-concept, an order), or when the maintainer asks.
 
 ## 1. Run
 
@@ -32,5 +32,5 @@ several minutes is stalled, not blocked: wait (Claude Code, observed 2026-10-29,
   an issue (`/feyn-issue observation`), not a fix here.
 - The PR summarises them under Changes, within `/feyn-pull-request` step 5's limits: one bullet for the
   findings fixed, with their count, one for the findings deferred, with their issue numbers;
-  the workflow's result goes on a line of its own in Checks, `taught-check: <result>` (an
-  agent workflow, not a check: not on the `Checks run:` line).
+  the workflow's result goes on a line of its own in Checks, `taught-check: <result>` (a
+  check run by agents, not a script: not on the `Checks run:` line).
