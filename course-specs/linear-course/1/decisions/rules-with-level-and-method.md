@@ -72,10 +72,12 @@ For a rule of the protocol, the category is its family (the nine families): no s
 taxonomy without a use.
 
 **Conformance clause** (D14). Two classes of products: the **course**, its diagrams included,
-and the **teacher**. The language pack is not a product: it lives in the spec's folder, written
-by the spec's authors, and its consistency is the spec's own (`check-spec`,
-`language-pack-keys`): a rule on the pack sits with the spec's own rules, never in
-`rules/course.yaml`, and counts toward no course's conformance. A course conforms when it holds every requirement of
+and the **teacher**; a rule binds a product. The language pack is not a product: it lives in
+the spec's folder, written by the spec's authors, and its consistency is the spec's own. The
+spec's own files (the rule files, the schemas, the slugs of the protocol, the language packs)
+are verified by the tests of `check-spec` (`rule-files`, `rule-slugs`, `language-pack-keys`),
+which are not rules: they carry no category and no level, each failure blocks `check-spec`, and
+none counts toward a course's conformance. A course conforms when it holds every requirement of
 `rules/course.yaml`, whatever its method; the blocking checks are a necessary condition, not a
 sufficient one; the review and taught-check do the rest, and a course tag certifies the whole.
 A teacher conforms when it holds every requirement of `rules/protocol.yaml`; the method of a
@@ -131,21 +133,16 @@ GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
 - `check-spec` verifies the rule files: required fields, closed lists, one category and one
   level per check.
 - The bump table of the spec is written in levels: a recommendation of `rules/course.yaml`
-  made a requirement is a MAJOR (decision `versioned-objects-and-spec-layout`, amended).
+  made a requirement is a MAJOR (decision `versioned-objects-and-spec-layout`).
 - No teacher conforms today, since no fresh test exists: that is the target of #222.
 - In French, « schéma » means a drawing or a JSON Schema; the repository, in English, says
   `diagram` and `schema`.
-- Amended 2026-10-31 (#329), reversed by #339: the closed list of categories had gained a
-  category for rules on the spec itself, held in a third rule file (its language packs, the
-  slugs of its protocol, its rule files and schemas); decision `spec-files-and-alpha-version`,
-  amended.
 - Amended 2026-10-31 (#339): a rule binds a product, a course or a teacher. The consistency of
   the spec's own files (the rule files, the schemas, the slugs of the protocol, the language
   packs) is verified by the tests of `check-spec` (`rule-files`, `rule-slugs`,
   `language-pack-keys`), which are not rules: they carry no category and no level, and each
   failure blocks `check-spec`. The categories are those of a course and the families of the
-  protocol; where the conformance clause above puts a rule on the pack with the spec's own
-  rules, read that the pack is tested by `check-spec`, by no rule. Without this, a contributor
+  protocol. Without this, a contributor
   applies "every check verifies a rule" to a check of the spec's files and writes a rule file
   and a category for them, as #329 did (a third rule file in `rules/`, a sixth category named
   after the spec, and a marker exported by `language-pack-keys` so that `check-course` ran it

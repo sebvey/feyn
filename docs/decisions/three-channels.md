@@ -19,15 +19,16 @@ A build is served from one of three channels, the same for the site and the clas
 
 Prod is a tag, so `main` can move every day without reaching the learner. `main` is always
 buildable (spec checks green, site builds), since it is the next channel. One branch per issue,
-merged into `main` by PR with a squash; no long-lived branch besides `main`. The preview is the
-next channel with one more prefix: one mechanism, not three.
+merged into `main` by PR with a squash; no long-lived branch besides `main` but the integration
+branch of an epic (decision `epic-on-integration-branch`), which is not a channel. The preview
+is the next channel with one more prefix: one mechanism, not three.
 
 ## Options ruled out
 
 - A permanent channel per branch: the per-PR preview covers the need (a reviewer who did not
   write the change sees it built) and dies with the PR.
-- `develop` or an integration branch: they exist to keep unfinished code away from prod, which
-  the course tag already does.
+- `develop` or an integration branch to keep unfinished code away from prod: the course tag
+  already does it.
 
 ## Consequences
 

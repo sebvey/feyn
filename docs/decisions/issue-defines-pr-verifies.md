@@ -10,14 +10,14 @@ Done when while the branch is open, and the reviewer would no longer know which 
 the work is held to.
 
 The Done when is written once, in the issue; it is the contract. The PR does not define, it
-reports: `/finish` rereads the issue's Done when, checks each statement against the branch,
-and writes in the PR body's Checks section one line per issue that counts the verdicts
+reports: `/feyn-pull-request` rereads the issue's Done when, checks each statement against the
+branch, and writes in the PR body's Checks section one line per issue that counts the verdicts
 (`met`, `not met`, `deviation`), without restating the statements; only a `not met` or a
-`deviation` gets a line saying why. The proof of each statement is not in the PR: on a PR
-that goes through `/orchestrate`, the fresh-agent reviewer reruns every statement of the
-issue itself (decision `fresh-agent-review-before-maintainer`). When the issue and the PR
-disagree, the issue wins and the PR says why it deviates. The Done when is not edited after
-`/start`; a change to it amends the open PR's body as well.
+`deviation` gets a line saying why. The proof of each statement is not in the PR: the
+fresh-agent reviewer (`/feyn-pr-review`) reruns every statement of the issue itself (decision
+`fresh-agent-review-before-maintainer`). When the issue and the PR disagree, the issue wins and
+the PR says why it deviates. The Done when is not edited after `/feyn-issue-branch`; a change
+to it amends the open PR's body as well.
 
 `Closes #n` when the PR ends the issue; `Refs #n` when the PR is one step of it (the issue
 stays open and its Development section shows nothing; never link the PR there by hand). A
@@ -27,12 +27,5 @@ linked PR closes its issue at the merge (GitHub, documented 2026-10-28, #71).
 
 - The PR stays short and names only what does not hold; the reviewer holds the diff to the
   issue's statements, not to proof lines the contributor chose.
-- Amended 2026-10-28 (#123): the PR gave each statement with its verdict and proof; it now
-  gives the counts and a line per `not met` or `deviation`.
-- Amended 2026-10-28 (#71): a `Refs` PR could be linked by hand in the issue's Development
-  section; a linked PR closes its issue at the merge. The branch is no longer linked to the
-  issue either (decision `no-branch-link`).
-- Issue #61 makes `/finish` write the verdicts; the PR's `Closes #n` links it to its issue,
-  nothing links the branch.
-- Amended 2026-10-29 (#248): the fresh-agent reviewer reruns every statement on every PR,
-  through `/feyn-pr-review`, not only on a PR that goes through `/orchestrate`.
+- Issue #61 makes `/feyn-pull-request` write the verdicts; the PR's `Closes #n` links it to its
+  issue, nothing links the branch (decision `no-branch-link`).

@@ -15,10 +15,12 @@ would show two versions of the same stance.
 The stances and neighbours of a concept live in the frontmatter of `concept.md` only: `stances`
 (consensus, school, course) and `neighbors` (`SPEC.md` 4.1). The body has no « Consensus et
 choix d'école » section; the site renders them from the frontmatter under `headings.stances`,
-and `concept-folder` fails a concept that still has the section. `headings.stances` stays in the
-language pack as that heading and as the section a `sources.md` claim names for a stance or a
-neighbour; the site builds those rows (`SPEC.md` 4.4). This replaces the mandatory body section
-of `SPEC.md` 4.2 and its review-only rule « says nothing the frontmatter contradicts ».
+and `concept-folder` fails a concept that still has the section. A stance or a neighbour is
+sourced in its own item, `refs` and `verified` (`SPEC.md` 4.1); no « Affirmations » row of
+`sources.md` names it. `headings.stances` stays in the language pack as that heading and as
+the section a « Non vérifié » entry names for a stance or a neighbour. This replaces the
+mandatory body section of `SPEC.md` 4.2 and its review-only rule « says nothing the frontmatter
+contradicts ».
 
 ## Options ruled out
 
@@ -33,9 +35,3 @@ of `SPEC.md` 4.2 and its review-only rule « says nothing the frontmatter contra
   hint « à présenter comme tels » the old concept files had in that section: « Présente les
   choix du cours comme tels : des choix du cours, qu'aucune source n'énonce tels quels. »
   `SPEC.md` 4.1 `stances.course` says the same.
-- Decision `reader-facing-and-teacher-only-files`: its one filter includes `headings.stances`.
-- Amended 2026-10-30 (#217): a stance or a neighbour is sourced in its own item, `refs` and
-  `verified` (`SPEC.md` 4.1); no « Affirmations » row of `sources.md` names it any more.
-  `headings.stances` stays as the site's heading and as the section a « Non vérifié » entry
-  names for a stance or a neighbour. The one filter the last consequence speaks of is gone
-  (decision `reader-facing-and-teacher-only-files`, amended).

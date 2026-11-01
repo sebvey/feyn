@@ -54,3 +54,6 @@ no class: `- file or area: what changes`.
   `checks-use-ajv-and-yaml`, `spec-files-and-alpha-version`.
 - `decisions/`: decision `one-diagram-style` amended, the workflow `migrate-concept` it names
   removed and read in the history (#365).
+- `decisions/`, `rules/`: the mechanism-only "Amended" lines of the live decisions folded into
+  their bodies, the lines of #329 reversed by #339 removed; the lines that stay record a change
+  of scope (decision `decision-format`, #370).
