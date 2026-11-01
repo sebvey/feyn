@@ -62,12 +62,13 @@ not hold.
    `whenToUse`, `scriptPath` absolute), in observation mode: `issue`, `type` and `area` (the
    issue's labels without their prefix), no `epic`, no `base`; `work` only when the issue needs
    guidance beyond its To do. `work` stands on its own: the workflow's agents get it in their
-   prompt and do not see the conversation. It states the request restated (what to change,
-   why) and dated ("asked by the maintainer on <date>"), never points to the conversation nor
-   quotes it, and ends by asking the contributor to record it in "Delivery notes" (Choices, or
-   a deviation when it departs from the Done when); no comment is posted on the issue or the PR
-   to carry it. Beyond the request, it cites only what an agent can read itself (repository
-   files on `main`, issues and their comments, PRs). A note that changes the issue's Done when
+   prompt and do not see the conversation, so it never points to the conversation nor quotes
+   it. When `work` carries a maintainer's request, it states it restated (what to change, why)
+   and dated ("asked by the maintainer on <date>"), and ends by asking the contributor to
+   record it in "Delivery notes" (Choices, or a deviation when it departs from the Done when);
+   no comment is posted on the issue or the PR to carry it. Beyond such a request, `work` cites
+   only what an agent can read itself (repository files on `main`, issues and their comments,
+   PRs). A note that changes the issue's Done when
    before the run is written into the issue's body
    (`mise exec -- gh issue edit <n> --body-file <file>`), not into a comment.
    While a run is launched or running, no `cd`: absolute paths and `git -C <path>`.
