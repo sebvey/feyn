@@ -24,8 +24,9 @@ While the cycle runs, each message to the maintainer holds at most three lines: 
 finished (one fact: a count, a verdict, a PR number), what runs now, and what is awaited from
 the maintainer, if anything (asked by the maintainer on 2026-10-28, #184). No report per agent,
 no announcement of a review before it exists, no repeat of the previous message. Findings,
-counts and before/after go in the PR or the issue, and the message links them. The full report
-comes once, at the hand-over (step 5).
+counts and before/after go in the PR or the issue, and the message links them. The PR is the
+report: its body and its "Delivery notes" comment; the hand-over (step 5) notifies what they do
+not hold.
 
 ## 1. Before the run
 
@@ -48,7 +49,7 @@ comes once, at the hand-over (step 5).
 - A decision the issue asks for: did the maintainer accept its counterfactual in this
   work session? Then `work` (step 2) gives it verbatim, with the date. Otherwise the contributor
   proposes the counterfactual and lists it in the Choices of "Delivery notes" and in the PR's
-  Review first, and the hand-over names it. A choice the issue does not settle goes to Choices
+  Review first, which step 3 checks. A choice the issue does not settle goes to Choices
   only, unless it needs the maintainer's judgment.
 - A Done when that needs an agent-workflow run: the workflow's contributor has no Workflow tool;
   it makes the run possible and names the exact script and arguments in its `unsure`. Step 3
@@ -89,9 +90,12 @@ Every field, never only `status`:
   moving its overflow to that comment, never by dropping it. Keep your own check of the
   sensitive points in the diff (`mise exec -- gh pr diff <pr>`): a counterfactual, a Done when
   count, a command that touches `main` or a remote branch, the title.
-- `deviations`, whatever the status: each is named to the maintainer at the hand-over (step 5),
-  with its options ruled out and its cost of going back; `choicesMade` that add structure (a new
-  file, a category, a marker, an exception to a principle) too.
+- `deviations`, whatever the status, and the `choicesMade` that add structure (a new file, a
+  category, a marker, an exception to a principle): each is named in the PR's Review first (one
+  bullet can name several), its options ruled out and its cost of going back in "Delivery
+  notes". One missing is added by a rerun (step 4) or by your own edit of the body
+  (`mise exec -- gh pr edit <pr> --body-file <file>`, within its limits) and of "Delivery notes"
+  (in place, `/feyn-pull-request` step 6); the notification (step 5) names that edit.
 - `unsure` that names an agent-workflow run the Done when needs: ask the maintainer for a
   go-ahead for that run, then run it; then a new run of the workflow (step 4) with `work`
   giving the run ids `wf_<id>`, their transcript directory and the result: its contributor
@@ -124,11 +128,19 @@ Mark the PR ready, the review and the corrections being done: `mise exec -- gh p
 Then, for a `Closes` PR only (a `Refs` issue stays In progress), set the issue Ready for review
 ([project.md](../../reference/project.md), "Commands":
 `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`).
-Then reply with, one line each: the PR URL and title; the Status; the review (the result's
-`reviewLine`, the rounds of corrections); what the maintainer should look at first (the PR's
-Review first); each deviation and each structural choice of step 3, with its options ruled out
-and its cost of going back; where to merge, as `/feyn-deliver-epic` step 5.4 gives it: the PR
-page, "Squash and merge". The merge is the maintainer's.
+Then notify the maintainer. The PR is the report: the reply does not restate its body nor its
+"Delivery notes" (the review, Review first, the deviations and the choices are there; the
+Status and the path to merge the maintainer knows). At most three lines:
+- the PR, its link and its title, ready to merge;
+- what the PR does not hold: what you did on it after the run (a line added to Checks, a body
+  or "Delivery notes" edited at step 3), or an anomaly of the run or of its clean-up; or
+  "nothing outside the PR";
+- that the work session cleans up once the PR is merged (step 6), so the maintainer keeps it
+  open.
+
+A finding outside the PR that calls for follow-up work (a stale section of another file, an
+issue to open) is not prose in the notification: it goes to the maintainer as a question with
+buttons, the recommended option first. The merge is the maintainer's.
 
 ## 6. After the merge
 
