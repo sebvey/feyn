@@ -53,10 +53,13 @@ Before writing, list every decision and grep them for the decision's key words:
 `find . -path '*/decisions/*.md' -not -path '*/node_modules/*' -not -path './.claude/worktrees/*'`,
 then `grep -ril --include='*.md' --exclude-dir=worktrees "<key word>" docs course-specs courses teacher site .claude | grep /decisions/`
 (quoted globs: zsh stops on a pattern that matches nothing; `.claude/worktrees/` holds the
-copies of other branches). A neighbour on the same point, in any of the `decisions/` folders:
-show it, and ask whether the new one supersedes it, changes it (step 6 instead), or is distinct
-(say why in one line). Same slug already
-taken in any folder: the same decision exists; stop. One exception: the same slug in two MAJORs
+copies of other branches). A match whose frontmatter has `status: superseded` is history, not
+a neighbour (`grep -l '^status: superseded' <matches>` lists them): skip it, and say so in one
+line, naming it with its `superseded-by`, the live decision to read instead. A neighbour on the
+same point, in any of the `decisions/` folders: show it, and ask whether the new one supersedes
+it, changes it (step 6 instead), or is distinct (say why in one line). Same slug already
+taken in any folder, a superseded decision's included (its slug stays taken): the same decision
+exists; stop. One exception: the same slug in two MAJORs
 of one spec (`course-specs/<name>/1/decisions/<slug>.md`,
 `course-specs/<name>/2/decisions/<slug>.md`) is one decision, copied with the tree or ported as
 a bug fix (decision `versioned-objects-and-spec-layout`), not a collision; a decision written
