@@ -16,7 +16,7 @@ not its contributor: trust nothing in the PR body or in any summary; recount and
 every claim yourself. Read CLAUDE.md, the issue (`mise exec -- gh issue view <n>`) and the
 files it lists (a file of construction/, removed, only when the issue names it, read with
 `git show 2c16adf3e66a:<path>`), then the PR (`mise exec -- gh pr view <pr>`,
-`mise exec -- gh pr diff <pr>`) and its "Review notes" comment
+`mise exec -- gh pr diff <pr>`) and its "Delivery notes" comment
 (`mise exec -- gh pr view <pr> --comments`; `/feyn-pull-request` step 5), as claims to
 recheck like the body; read a file at the PR's
 head with `git fetch` and `git show origin/<branch>:<path>`. To rerun checks in a worktree,
@@ -42,7 +42,7 @@ Recheck yourself:
   (language, no em-dashes in French, title `<type>(<area>): <summary>`, `Closes #<n>`, no
   signature line); the limits of the body (`/feyn-pull-request` step 5: 30 lines, blank lines
   and the awaiting section excluded, Review first 1 to 3 bullets), recounted, and the detail
-  it leaves out in "Review notes";
+  it leaves out in "Delivery notes";
 - consistency with the files the change must match (sibling skills, docs/contributing.md,
   decisions it names), and that every path, command and decision slug it cites exists;
 - a decision: its counterfactual names a concrete wrong act, and the maintainer accepted it.

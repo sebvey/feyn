@@ -89,7 +89,7 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      - `Not verified:` one line, if anything.
    - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a
      deviation, a choice the contributor made, a sensitive spot. The last one ends with a
-     pointer to the "Review notes" comment when the PR has one, not a bullet of its own.
+     pointer to the "Delivery notes" comment when the PR has one, not a bullet of its own.
 
    No signature or generated-by line: the squash takes the body as the commit message on
    `main`; the `Co-Authored-By` trailer on the commits is enough. `.claude/settings.json` sets
@@ -100,9 +100,9 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
 
    Before each `gh pr create`, and each `gh pr edit` of the body, count its lines (blank lines
    and the awaiting section excluded) and the bullets of Review first: over 30 lines or over 3
-   bullets, the detail moves to "Review notes".
+   bullets, the detail moves to "Delivery notes".
 
-   **Review notes**: one PR comment for the detail the body leaves out, which the squash does
+   **Delivery notes**: one PR comment for the detail the body leaves out, which the squash does
    not keep and GitHub keeps with the PR, from the second part of
    [pr-body.md](../../reference/pr-body.md): the choices with their options ruled out, the
    non-blocking findings left with their reason, the detail of the checks, the evidence for
@@ -125,8 +125,8 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
      list the PR: rerun once. PR still missing on a `Closes` PR, or listed on a `Refs` PR (a
      closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`);
-   - "Review notes" (step 5): look it up first
-     (`mise exec -- gh api --paginate repos/sebvey/feyn/issues/<pr>/comments --jq '.[] | select(.body | startswith("## Review notes")) | .id'`).
+   - "Delivery notes" (step 5): look it up first
+     (`mise exec -- gh api --paginate repos/sebvey/feyn/issues/<pr>/comments --jq '.[] | select(.body | startswith("## Delivery notes")) | .id'`).
      No id: post it (`mise exec -- gh pr comment <pr> --body-file <file>`). One id: update it
      in place (`mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> -X PATCH -F body=@<file>`),
      never a second one. Two ids or more: stop, edit none, and report them.
@@ -141,7 +141,7 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      step 2 says;
    - apply the blocking findings, and the non-blocking ones worth fixing; commit, push, and
      update the body (`mise exec -- gh pr edit <pr> --body-file <file>`); the non-blocking
-     findings left go in "Review notes" with their reason (step 6), one in Review first only
+     findings left go in "Delivery notes" with their reason (step 6), one in Review first only
      when it needs the maintainer's decision;
    - check each fix in the diff (`mise exec -- gh pr diff <pr>`);
    - add to Checks `Fresh-agent review: <N> blocking findings, fixed.` or
