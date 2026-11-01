@@ -12,9 +12,10 @@ this skill applies it.
 
 ## 1. The counterfactual, or nothing
 
-Ask for it if it was not given: "Without this, an agent would…", followed by a concrete wrong
-act an agent would do (a file it would write, a command it would run, a choice it would make)
-and what that act breaks.
+Ask for it if it was not given: "Without this, <who acts> would…", naming who would act (an
+agent, the common case, or a contributor, the teacher, a workflow, the maintainer…), followed
+by a concrete wrong act they would do (a file written, a command run, a choice made) and what
+that act breaks.
 
 **Refuse**, and write nothing, when the answer is missing, or names no act ("without this,
 things would be unclear", "it is better", a restatement of the decision). Say in one line what

@@ -13,7 +13,7 @@
 <!-- Numbered, one point each, in bold then its content, as the maintainer validated it.
      Each point ends with "Why: …" and then "Rejected: <the alternative weighed>, because …",
      or "Rejected: none weighed.": it feeds the counterfactual `/feyn-decision` asks for a decision
-     ("Without this, an agent would…"). -->
+     ("Without this, <who acts> would…"). -->
 
 ### Open questions
 

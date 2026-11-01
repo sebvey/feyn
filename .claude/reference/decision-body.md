@@ -5,7 +5,8 @@ status: accepted
 area: repo
 ---
 
-Without this, an agent would <a concrete wrong act>, so <what it breaks>.
+Without this, <who acts: an agent, a contributor, the teacher, a workflow, the maintainer…>
+would <a concrete wrong act>, so <what it breaks>.
 
 <The decision in one paragraph: what is decided, where it applies, what it replaces.>
 

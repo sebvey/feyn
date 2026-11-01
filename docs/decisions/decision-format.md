@@ -14,8 +14,10 @@ identifier, cited as "decision two-versioned-objects". Its frontmatter holds `da
 (the originating issue number, or `null`), `status` (`accepted` or `superseded`), followed,
 only when superseded, by `superseded-by: <slug>` (the decision that replaces it), and `area`
 (the area it binds). After the frontmatter, the first line is the **counterfactual**, "Without
-this, an agent would…"; then the decision in one paragraph. Optional headings, only when they
-add: options ruled out, consequences. No index: `ls` and the frontmatter suffice.
+this, <who acts> would…": it names who would act (an agent, the common case, or a
+contributor, the teacher, a workflow, the maintainer…), then a concrete wrong act and what it
+breaks; then the decision in one paragraph. Optional headings, only when they add: options
+ruled out, consequences. No index: `ls` and the frontmatter suffice.
 
 A live decision states what holds today; git keeps the before. A mechanism of it that changes
 (a skill or a path renamed, a file moved, a step that now runs elsewhere, a tool removed) is
@@ -50,6 +52,8 @@ counterfactual, picks the folder, checks for a neighbouring slug.
 - An "Amended" line for every mechanism change, the rest of the body untouched (the rule until
   #370): each stale sentence stays beside its correction, and the before is already in git
   (decision `construction-in-history`).
+- "Without this, an agent would…" as the only form (the rule until #378): it leaves out the
+  teacher, a contributor, the maintainer or a workflow, whom a decision can bind as well.
 
 ## Consequences
 
@@ -58,3 +62,8 @@ counterfactual, picks the folder, checks for a neighbouring slug.
   a mechanism the decision no longer has (`construction-in-history` told a new run of a removed
   workflow to restore its files, and only the line below said it was gone) and must reconcile
   the two. The mechanism-only lines of the live decisions were folded into their bodies.
+- Amended 2026-11-01 (#378): the counterfactual names who acts ("Without this, <who acts>
+  would…"), an agent being the common case, not the only one. Without this, a contributor
+  writing a decision that binds the teacher, a workflow or the maintainer would force it into
+  "an agent would…" or see it refused, though what the counterfactual must hold is a concrete
+  wrong act, not its subject. The bodies of the existing decisions are left as they are.
