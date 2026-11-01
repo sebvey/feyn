@@ -47,7 +47,9 @@ comes once, at the hand-over (step 5).
   Two issues that share a file run one after the other (the second after the first is merged).
 - A decision the issue asks for: did the maintainer accept its counterfactual in this
   work session? Then `work` (step 2) gives it verbatim, with the date. Otherwise the contributor
-  proposes the counterfactual and lists it in the PR's Review first, and the hand-over names it.
+  proposes the counterfactual and lists it in the Choices of "Review notes" and in the PR's
+  Review first, and the hand-over names it. A choice the issue does not settle goes to Choices
+  only, unless it needs the maintainer's judgment.
 - A Done when that needs an agent-workflow run: the workflow's contributor has no Workflow tool;
   it makes the run possible and names the exact script and arguments in its `unsure`. Step 3
   reads it.
@@ -80,8 +82,9 @@ Every field, never only `status`:
   (`mise exec -- gh pr view <pr> --json title,isDraft,body`), its title follows
   `<type>(<area>): <summary>`, the body starts with `Closes #<n>`, then has the sections of
   `/feyn-pull-request` step 5 in order (Context, Issues, Changes, Checks, Review first) within
-  its limits (30 lines, blank lines excluded; Review first 1 to 3 bullets), no signature line;
-  its `reviewLine` is in the PR's Checks, as `/feyn-deliver-epic` step 2.4 says for `merged`;
+  its limits (30 lines, blank lines and the awaiting section excluded; Review first 1 to 3
+  bullets), no signature line; its `reviewLine` is in the PR's Checks, as `/feyn-deliver-epic`
+  step 2.4 says for `merged`;
   the PR has one "Review notes" comment (`mise exec -- gh pr view <pr> --comments`,
   `/feyn-pull-request` step 5), which holds the detail: a body over its limits is fixed by
   moving its overflow to that comment, never by dropping it. Keep your own check of the
