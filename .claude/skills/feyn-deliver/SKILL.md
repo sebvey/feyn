@@ -130,13 +130,22 @@ Then, for a `Closes` PR only (a `Refs` issue stays In progress), set the issue R
 `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`).
 Then notify the maintainer. The PR is the report: the reply does not restate its body nor its
 "Delivery notes" (the review, Review first, the deviations and the choices are there; the
-Status and the path to merge the maintainer knows). At most three lines:
-- the PR, its link and its title, ready to merge;
-- what the PR does not hold: what you did on it after the run (a line added to Checks, a body
-  or "Delivery notes" edited at step 3), or an anomaly of the run or of its clean-up; or
-  "nothing outside the PR";
-- that the work session cleans up once the PR is merged (step 6), so the maintainer keeps it
-  open.
+Status and the path to merge the maintainer knows). It has this exact form, written in the
+language of the conversation, and nothing more (asked by the maintainer on 2026-11-01, #381):
+
+```
+## PR ready to merge
+
+- **PR**: sebvey/feyn#<pr>
+- **To read**: the PR's body and its "Delivery notes"
+- **Outside the PR**: <what you did on it after the run, or an anomaly of the run or its clean-up; or "nothing">
+- **After the merge**: <clean-up (step 6), then the next topic if one is set>
+```
+
+The PR is named only by its bare reference `sebvey/feyn#<pr>`, never in the heading nor as a
+Markdown link: the app renders that reference once, with the PR's state. "Outside the PR" is
+what the PR does not hold: a line you added to Checks, a body or "Delivery notes" edited at
+step 3, an anomaly of the run or of its clean-up.
 
 A finding outside the PR that calls for follow-up work (a stale section of another file, an
 issue to open) is not prose in the notification: it goes to the maintainer as a question with
