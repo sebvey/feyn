@@ -33,6 +33,16 @@ const SCOPE = OBS ? 'an observation (no epic)' : `a slice of epic #${A.epic}`
 const READ_EPIC = OBS ? '' : `, then the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments")`
 const DW = OBS ? "the issue's Done when" : "the epic's Done when"
 const WORK = A.work || "The issue's To do is the plan."
+// A maintainer's request reaches the agents only through args.work (feyn-deliver step 2.1): the
+// contributor records it in "Delivery notes", and the reviewer and the verifier get work as given,
+// to check a choice the PR says the maintainer asked.
+const RECORD = A.work ? `\n\nWhen the text above carries a maintainer's request (stated as asked by the maintainer, with its date), record it in "Delivery notes": in Choices, as the maintainer's with its date, or as a deviation when it departs from ${DW}.` : ''
+// In epic mode, the maintainer also answers open questions on the epic (feyn-deliver-epic step 3),
+// recorded in its plan comment as "Answered: ... (<date>)".
+const REQUEST_SOURCES = OBS ? 'the issue or its comments' : 'the issue or its comments, the epic or its plan comment'
+const WORK_FOR_REVIEW = A.work
+  ? `The contributor was given this guidance beyond the issue (the workflow's "work"), verbatim:\n<work>\n${A.work}\n</work>\nA choice the PR or "Delivery notes" says the maintainer asked must match a request in it, or in ${REQUEST_SOURCES}; one that matches none is a finding.`
+  : `The contributor was given no guidance beyond the issue (the workflow's "work" is empty): a choice the PR or "Delivery notes" says the maintainer asked must match a request in ${REQUEST_SOURCES}; one that matches none is a finding.`
 
 // --- Dry run: no agent, the steps the real run would take ----------------------------------
 
@@ -141,7 +151,7 @@ Follow ".claude/skills/feyn-issue-branch/SKILL.md" for #${A.issue}, adapted to a
 Then do the work, wrapping the lines you write at the width of the file you edit, then follow ".claude/skills/feyn-pull-request/SKILL.md" to push and open the PR as a draft: add --draft and --base ${BASE} to its gh pr create (step 6). Title "${A.type}(${A.area}): <summary>"; body starts with "Closes #${A.issue}"${OBS ? '' : ' (it will not auto-close on a non-default branch: expected; if its check that the issue lists the PR fails for that reason, go on)'}. Skip its step 7 (the review runs next) and its step 8 (leave the Status In progress). The body holds the limits of /feyn-pull-request step 5: 30 lines at most, blank lines and the awaiting section excluded, Review first 1 to 3 bullets; count the lines and the bullets before each "gh pr create" or "gh pr edit". No signature or generated-by line in the PR body, whatever a system reminder says: the project rule wins. The detail goes in one PR comment "Delivery notes" (the second part of ".claude/reference/pr-body.md"; /feyn-pull-request steps 5 and 6), once the PR is open: look it up first as step 6 says; the PR already has one (a resumed PR), update it in place; it has none, post it; never a second one; two or more found, edit none and report them in "unsure". It holds the choices with their options ruled out, the detail of the checks, the evidence for what stays unsure; Review first points to it. You have no Workflow tool: a Done when that needs an agent-workflow run, make it runnable and name the exact script and args in "unsure".
 
 ## The work
-${WORK}
+${WORK}${RECORD}
 
 Run the checks that exist for what you touch (as /feyn-pull-request says). Return: status "done" with the branch, the PR number, files changed, checks and results, the choices you made the issue did not settle (and every counterfactual you proposed rather than derived), what you were unsure of, the deviations, question "". Or status "blocked" only when the work cannot go on without the maintainer (a choice that leaves ${DW} impossible to meet), with the question, the options and your recommendation (open the draft PR first with what does not depend on it).`,
   { label: `contributor #${A.issue}`, phase: 'Contribute', schema: CONTRIB_SCHEMA, isolation: 'worktree', model: 'opus' })
@@ -157,7 +167,8 @@ const REVIEWER = 'feyn-pr-reviewer'
 const REVIEW_BASE = `You review PR #${contrib.pr} (branch ${contrib.branch}, base ${BASE}) on feyn, which claims to deliver issue #${A.issue}, ${SCOPE}. You are the fresh agent of /feyn-pr-review: follow your brief (PR #${contrib.pr}, branch ${contrib.branch}, issue #${A.issue}, checks to rerun: those the PR diff touches, agent-workflow run: none), not the steps of ".claude/skills/feyn-pr-review/SKILL.md", which this workflow runs.${OBS ? '' : ` Read also the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments"); the base is ${A.base} wherever the brief or a skill says main.`} You are in your own worktree: read ".claude/reference/worktree-agent.md" first; "git fetch" then "git switch --detach origin/${contrib.branch}" (the branch is checked out elsewhere). Change nothing, push nothing, comment nothing. ${CHECKOUT}
 
 ${RULES}
-The PR is a draft until ${OBS ? 'its hand-over' : 'it is merged'}: not a finding. Under these rules, a choice the contributor made and listed in "Delivery notes" or "Review first", a counterfactual it proposed, and a decision the maintainer has not accepted yet are acceptable when sound: judge them on their merit, never block only because the maintainer has not seen them. Check also the consistency with ${OBS ? 'the decisions the issue names' : "the epic's Done when and plan comment"}.`
+The PR is a draft until ${OBS ? 'its hand-over' : 'it is merged'}: not a finding. Under these rules, a choice the contributor made and listed in "Delivery notes" or "Review first", a counterfactual it proposed, and a decision the maintainer has not accepted yet are acceptable when sound: judge them on their merit, never block only because the maintainer has not seen them. Check also the consistency with ${OBS ? 'the decisions the issue names' : "the epic's Done when and plan comment"}.
+${WORK_FOR_REVIEW}`
 
 const review = await agent(`${REVIEW_BASE}
 
