@@ -58,8 +58,8 @@ a neighbour (`grep -l '^status: superseded' <matches>` lists them): skip it, and
 line, naming it with its `superseded-by`, the live decision to read instead. A neighbour on the
 same point, in any of the `decisions/` folders: show it, and ask whether the new one supersedes
 it, changes it (step 6 instead), or is distinct (say why in one line). Same slug already
-taken in any folder, a superseded decision's included (its slug stays taken): the same decision
-exists; stop. One exception: the same slug in two MAJORs
+taken in any folder, by a live or a superseded decision (a superseded slug stays taken): the
+same decision exists; stop. One exception: the same slug in two MAJORs
 of one spec (`course-specs/<name>/1/decisions/<slug>.md`,
 `course-specs/<name>/2/decisions/<slug>.md`) is one decision, copied with the tree or ported as
 a bug fix (decision `versioned-objects-and-spec-layout`), not a collision; a decision written
