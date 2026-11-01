@@ -125,10 +125,11 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
      list the PR: rerun once. PR still missing on a `Closes` PR, or listed on a `Refs` PR (a
      closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`);
-   - post "Review notes" (step 5): `mise exec -- gh pr comment <pr> --body-file <file>`. To
-     update it, find its id
-     (`mise exec -- gh api repos/sebvey/feyn/issues/<pr>/comments --jq '.[] | select(.body | startswith("## Review notes")) | .id'`),
-     then `mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> -X PATCH -F body=@<file>`.
+   - "Review notes" (step 5): look it up first
+     (`mise exec -- gh api --paginate repos/sebvey/feyn/issues/<pr>/comments --jq '.[] | select(.body | startswith("## Review notes")) | .id'`).
+     No id: post it (`mise exec -- gh pr comment <pr> --body-file <file>`). One id: update it
+     in place (`mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> -X PATCH -F body=@<file>`),
+     never a second one. Two ids or more: stop, edit none, and report them.
 7. **Fresh-agent review**, on the direct path. On a direct delivery, `/feyn-pr-review` does
    not run and the line is already in Checks (step 5): skip to step 8; the rest of this step
    applies to the other PRs. Under the agent workflow `deliver-slice.js` (`/feyn-deliver`,
