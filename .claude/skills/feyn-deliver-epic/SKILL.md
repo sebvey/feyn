@@ -56,9 +56,8 @@ One at a time, the next one only (rules of the cycle):
    `git worktree remove <path>`). A conflict outside the epic's files: tell the maintainer.
 3. **Run** `.claude/workflows/deliver-slice.js` in epic mode (its `whenToUse` gives the args:
    `issue`, `epic`, `base` the integration branch, `type`, `area`, `work` when the slice needs
-   guidance beyond its To do), with `scriptPath` absolute. A first run in a work session: its
-   `dryRun` first. A direct slice is not run: "A direct slice", below, replaces steps 2.3 to
-   2.5.
+   guidance beyond its To do), with `scriptPath` absolute. A direct slice is not run: "A direct
+   slice", below, replaces steps 2.3 to 2.5.
 4. **Read the result**, every field, never only `status`:
    - `merged`: its `reviewLine` must be in the PR's Checks
      (`mise exec -- gh pr view <pr> --json body`); missing, add it

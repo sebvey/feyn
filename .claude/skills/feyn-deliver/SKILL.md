@@ -57,11 +57,10 @@ comes once, at the hand-over (step 5).
 ## 2. The run
 
 1. **Run** `.claude/workflows/deliver-slice.js` as `/feyn-deliver-epic` step 2.3 says (its
-   `whenToUse`, `scriptPath` absolute, its `dryRun` first in a work session), in observation
-   mode: `issue`, `type` and `area` (the issue's labels without their prefix), no `epic`, no
-   `base`; `work` only when the issue needs guidance beyond its To do. `work` cites only what an
-   agent can read itself (repository files on `main`, issues and their comments, PRs): a
-   maintainer's note goes into the issue first.
+   `whenToUse`, `scriptPath` absolute), in observation mode: `issue`, `type` and `area` (the
+   issue's labels without their prefix), no `epic`, no `base`; `work` only when the issue needs
+   guidance beyond its To do. `work` cites only what an agent can read itself (repository files
+   on `main`, issues and their comments, PRs): a maintainer's note goes into the issue first.
    While a run is launched or running, no `cd`: absolute paths and `git -C <path>`.
 2. **Clean the run** as `/feyn-deliver-epic` step 2.5 says for its worktrees and their
    `worktree-wf_<run id>-<n>` branches, with one more check before each removal, since the PR is
