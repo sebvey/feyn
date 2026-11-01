@@ -47,7 +47,8 @@ not hold.
 - Several numbers: one run per issue, in parallel, only when their To do touch distinct files.
   Two issues that share a file run one after the other (the second after the first is merged).
 - A decision the issue asks for: did the maintainer accept its counterfactual in this
-  work session? Then `work` (step 2) gives it verbatim, with the date. Otherwise the contributor
+  work session? Then `work` (step 2) gives it as accepted, verbatim, with the date: its exact
+  wording is the decision's, the one thing `work` does not restate. Otherwise the contributor
   proposes the counterfactual and lists it in the Choices of "Delivery notes" and in the PR's
   Review first, which step 3 checks. A choice the issue does not settle goes to Choices
   only, unless it needs the maintainer's judgment.
@@ -60,8 +61,16 @@ not hold.
 1. **Run** `.claude/workflows/deliver-slice.js` as `/feyn-deliver-epic` step 2.3 says (its
    `whenToUse`, `scriptPath` absolute), in observation mode: `issue`, `type` and `area` (the
    issue's labels without their prefix), no `epic`, no `base`; `work` only when the issue needs
-   guidance beyond its To do. `work` cites only what an agent can read itself (repository files
-   on `main`, issues and their comments, PRs): a maintainer's note goes into the issue first.
+   guidance beyond its To do. `work` stands on its own: the workflow's agents get it in their
+   prompt and do not see the conversation, so it never points to the conversation nor quotes
+   it. When `work` carries a maintainer's request, it states it restated (what to change, why)
+   and dated ("asked by the maintainer on <date>"), and ends by asking the contributor to
+   record it in "Delivery notes" (Choices, or a deviation when it departs from the Done when);
+   no comment is posted on the issue or the PR to carry it. Beyond such a request, `work` cites
+   only what an agent can read itself (repository files on `main`, issues and their comments,
+   PRs). A note that changes the issue's Done when
+   before the run is written into the issue's body
+   (`mise exec -- gh issue edit <n> --body-file <file>`), not into a comment.
    While a run is launched or running, no `cd`: absolute paths and `git -C <path>`.
 2. **Clean the run** as `/feyn-deliver-epic` step 2.5 says for its worktrees and their
    `worktree-wf_<run id>-<n>` branches, with one more check before each removal, since the PR is
@@ -113,10 +122,11 @@ which step 2.2 moved to the PR's head, a fresh agent reviews it, and step 2.2 cl
   (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`) and relay the question, the
   options and the recommendation. The maintainer answers with a comment on the issue and removes
   the label; check it is gone (`mise exec -- gh issue view <n> --json labels`), then rerun with
-  the answer quoted in `work`.
+  the answer restated in `work` (step 2.1), which names that comment (its URL).
 - **A late finding or a decision after the hand-over.** The maintainer can ask for a correction,
-  refuse or settle a choice while the PR awaits the merge: rerun with the maintainer's words
-  quoted in `work`.
+  refuse or settle a choice while the PR awaits the merge: rerun with the maintainer's request
+  restated in `work` (step 2.1), in place of their words quoted; the contributor records it in
+  "Delivery notes" (Choices, or a deviation when it departs from the Done when).
 - **The Status.** A correction asked on a delivered PR: set the issue back to In progress
   ([project.md](../../reference/project.md), "Commands") and turn the PR back into a draft
   (`mise exec -- gh pr ready --undo <pr>`); the renewed hand-over (step 5) marks it ready and
