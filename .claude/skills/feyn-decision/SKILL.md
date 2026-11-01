@@ -12,7 +12,7 @@ this skill applies it.
 
 ## 1. The counterfactual, or nothing
 
-Ask for it if it was not given: "Without this, <who acts> would…", naming who would act (an
+Ask for it if it was not given: `Without this, <who acts> would…`, naming who would act (an
 agent, the common case, or a contributor, the teacher, a workflow, the maintainer…), followed
 by a concrete wrong act they would do (a file written, a command run, a choice made) and what
 that act breaks.

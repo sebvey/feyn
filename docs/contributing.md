@@ -265,7 +265,7 @@ on 2026-10-31 (Claude Code, observed 2026-10-31, #345).
 ## Decisions and vocabulary
 
 A choice that spans several files or is costly to undo becomes a decision file, counterfactual
-first ("Without this, <who acts> would…", an agent being the common case, followed by a
+first (`Without this, <who acts> would…`, an agent being the common case, followed by a
 concrete wrong act), in the `decisions/` folder of the area it binds:
 the agentic layer's (`.claude/`, `.github/`) in `.claude/decisions/`, two areas or more and the
 repository's in `docs/decisions/`; `/feyn-decision` writes it and refuses one without a
