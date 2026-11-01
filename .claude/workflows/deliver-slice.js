@@ -36,10 +36,13 @@ const WORK = A.work || "The issue's To do is the plan."
 // A maintainer's request reaches the agents only through args.work (feyn-deliver step 2.1): the
 // contributor records it in "Delivery notes", and the reviewer and the verifier get work as given,
 // to check a choice the PR says the maintainer asked.
-const RECORD = A.work ? `\n\nA maintainer's request the text above carries (asked by the maintainer, dated), record it in "Delivery notes": in Choices, as the maintainer's with its date, or as a deviation when it departs from ${DW}.` : ''
+const RECORD = A.work ? `\n\nWhen the text above carries a maintainer's request (stated as asked by the maintainer, with its date), record it in "Delivery notes": in Choices, as the maintainer's with its date, or as a deviation when it departs from ${DW}.` : ''
+// In epic mode, the maintainer also answers open questions on the epic (feyn-deliver-epic step 3),
+// recorded in its plan comment as "Answered: ... (<date>)".
+const REQUEST_SOURCES = OBS ? 'the issue or its comments' : 'the issue or its comments, the epic or its plan comment'
 const WORK_FOR_REVIEW = A.work
-  ? `The contributor was given this guidance beyond the issue (the workflow's "work"), verbatim:\n<work>\n${A.work}\n</work>\nA choice the PR or "Delivery notes" says the maintainer asked must match a request in it, or in the issue or its comments; one that matches none is a finding.`
-  : 'The contributor was given no guidance beyond the issue (the workflow\'s "work" is empty): a choice the PR or "Delivery notes" says the maintainer asked must match a request in the issue or its comments; one that matches none is a finding.'
+  ? `The contributor was given this guidance beyond the issue (the workflow's "work"), verbatim:\n<work>\n${A.work}\n</work>\nA choice the PR or "Delivery notes" says the maintainer asked must match a request in it, or in ${REQUEST_SOURCES}; one that matches none is a finding.`
+  : `The contributor was given no guidance beyond the issue (the workflow's "work" is empty): a choice the PR or "Delivery notes" says the maintainer asked must match a request in ${REQUEST_SOURCES}; one that matches none is a finding.`
 
 // --- Dry run: no agent, the steps the real run would take ----------------------------------
 
