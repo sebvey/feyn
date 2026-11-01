@@ -22,8 +22,9 @@ description. A group may declare the category and method of its rules once (deci
 `new-or-returning-learner` (« règles `first-message-without-tools` à
 `first-concept-next-message` », « la reprise, `resume-opening-sentence` à
 `pending-question-retaught` »), which became groups `onboarding` and `resume` over the same
-rules. A structure decision, accepted by the maintainer on 2026-10-28 (PR #133): it changes how rules are cited, not how the teacher teaches. Neighbour: decision
-`rules-named-by-slug`, distinct (it names one rule; this names a set of rules).
+rules. A structure decision, accepted by the maintainer on 2026-10-28 (PR #133): it changes how
+rules are cited, not how the teacher teaches. Neighbour: decision `rules-named-by-slug`,
+distinct (it names one rule; this names a set of rules).
 
 ## Options ruled out
 

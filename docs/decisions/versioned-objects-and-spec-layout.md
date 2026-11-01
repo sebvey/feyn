@@ -58,5 +58,5 @@ archived repository. This replaces decision `two-versioned-objects`.
 - A tooling change alters the whole site without any bump; this cost is accepted.
 - A course MAJOR may invalidate learner memory: the classroom build refuses that update unless
   told otherwise. During 0.x this protection is weak, and that is assumed.
-- A MAJOR copies the whole tree, so stricter or new conformity checks are batched into one
+- A MAJOR copies the whole tree, so new or stricter requirements are batched into one
   MAJOR; tooling cost grows with each live MAJOR.

@@ -24,8 +24,9 @@ while it still holds (an exception added, a case it now covers or no longer cove
 in the body too, and gets one line `- Amended <date> (#<n>): …` under a `## Consequences`
 heading, added when the file has none, saying what changed and why. A decision that no longer
 holds is superseded (`status: superseded` and `superseded-by: <slug>`), never amended. A
-superseded decision, an "Amended" line and a released CHANGELOG entry are history: a later
-change leaves them as they are.
+superseded decision and a released CHANGELOG entry are history: a later change leaves them as
+they are. An "Amended" line keeps its account of the change of scope; a mechanism it names that
+changes is corrected in place, as in the body.
 
 A decision lives in the `decisions/` folder of the most local area it binds:
 `course-specs/<name>/<MAJOR>/decisions/` (a new MAJOR copies them under the same slugs),

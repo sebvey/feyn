@@ -1,13 +1,14 @@
 ---
 name: feyn-decision
-description: "Tooling of the work cycle, called by `/feyn-triage` and by the contributor of the agent workflow deliver-slice.js: write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or refuse it when no counterfactual is named or the entry bar is not met. Use for \"/feyn-decision <the decision, in a sentence>\"."
+description: "Tooling of the work cycle, called by `/feyn-triage` and by the contributor of the agent workflow deliver-slice.js: write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or change a live decision in place, or refuse a new one when no counterfactual is named or the entry bar is not met. Use for \"/feyn-decision <the decision, in a sentence>\"."
 argument-hint: "<the decision, in a sentence>"
 ---
 
 # /feyn-decision
 
-One job: turn a choice into a decision file, or say why it does not deserve one. The format
-is `docs/decisions/decision-format.md`; this skill applies it.
+One job: write or change a decision: turn a choice into a decision file, or say why it does not
+deserve one, or keep a live decision current. The format is `docs/decisions/decision-format.md`;
+this skill applies it.
 
 ## 1. The counterfactual, or nothing
 
@@ -91,5 +92,6 @@ A live decision states what holds today; git keeps the before (decision `decisio
   what changed and why;
 - the choice no longer holds: supersede it (step 5), never amend it.
 
-A superseded decision, an "Amended" line and a released CHANGELOG entry are history: leave them
-as they are. Commit on the current issue branch, as in step 5.
+A superseded decision and a released CHANGELOG entry are history: leave them as they are. An
+"Amended" line keeps its account of the change of scope; correct in place a mechanism it names
+that changes, as in the body. Commit on the current issue branch, as in step 5.
