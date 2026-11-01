@@ -20,7 +20,7 @@ that act breaks.
 **Refuse**, and write nothing, when the answer is missing, or names no act ("without this,
 things would be unclear", "it is better", a restatement of the decision). Say in one line what
 is missing, and propose a counterfactual of your own for the maintainer to accept or correct;
-a decision is written only on a counterfactual he gave or accepted.
+a decision is written only on a counterfactual the maintainer gave or accepted.
 
 ## 2. The entry bar
 
