@@ -17,7 +17,8 @@ the same file as ordinary Markdown. A new construct gets a natural Markdown form
 and its check, and a site plugin; a directive would need this decision and the `conventions`
 check to change, and none of today's constructs needs one. This replaces the MDX bodies of
 `parcours-po-website` and their nine constructs. This decision binds the course side; how the
-site maps each convention is the site's decision `markdown-conventions-mapped-by-plugins`.
+site maps each convention is a site decision, `markdown-conventions-mapped-by-plugins`, not
+written yet: it comes with the site epic #223.
 
 ## Options ruled out
 
@@ -29,5 +30,3 @@ site maps each convention is the site's decision `markdown-conventions-mapped-by
 
 - The visual work of the site is kept; only where its structure comes from changes, at the
   cost of a plugin layer in `site/`.
-- Amended 2026-10-30 (#216): the site's decision `markdown-conventions-mapped-by-plugins` does
-  not exist yet; it is written with the site epic #223.

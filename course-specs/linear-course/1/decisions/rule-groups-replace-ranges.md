@@ -14,12 +14,17 @@ heading, and keep their own slugs, with no prefix. A group's slug has the form o
 (decision `rules-named-by-slug`), except that one word is enough, and shares their namespace:
 no group and no rule have the same slug. A group is cited in code after « groupe » or « group »;
 the check `rule-slugs` verifies that every cited group exists and that no slug is defined twice.
-This replaces the two ranges of the rule `new-or-returning-learner` (« règles
-`first-message-without-tools` à `first-concept-next-message` », « la reprise,
-`resume-opening-sentence` à `pending-question-retaught` »), which became groups `onboarding` and
-`resume` over the same rules. A structure decision, accepted by the maintainer on 2026-10-28 (PR
-#133): it changes how rules are cited, not how the teacher teaches. Neighbour: decision
-`rules-named-by-slug`, distinct (it names one rule; this names a set of rules).
+Once the protocol's rules are in `rules/protocol.yaml` (the extraction of #318, decision
+`spec-files-and-alpha-version`), a group is data in that file, its slug and the order of its
+rules included, no longer a `###` heading of `PROTOCOL.md`; its Purpose paragraph goes to the
+description. A group may declare the category and method of its rules once (decision
+`rules-with-level-and-method`). This replaces the two ranges of the rule
+`new-or-returning-learner` (« règles `first-message-without-tools` à
+`first-concept-next-message` », « la reprise, `resume-opening-sentence` à
+`pending-question-retaught` »), which became groups `onboarding` and `resume` over the same
+rules. A structure decision, accepted by the maintainer on 2026-10-28 (PR #133): it changes how
+rules are cited, not how the teacher teaches. Neighbour: decision `rules-named-by-slug`,
+distinct (it names one rule; this names a set of rules).
 
 ## Options ruled out
 
@@ -33,9 +38,3 @@ This replaces the two ranges of the rule `new-or-returning-learner` (« règles
 - Moving a rule under another heading changes its group; a test that cites a group follows it.
 - A rule inserted under a heading joins its group, as a move does; the diff shows it under the
   heading.
-- Amended 2026-10-31 (#322): once the protocol's rules are in `rules/protocol.yaml` (#318,
-  decision `spec-files-and-alpha-version`), a group is data in that file, its slug and the
-  order of its rules included, no longer a `###` heading of `PROTOCOL.md`; its Purpose
-  paragraph goes to the description. A group may declare the category and method of its rules
-  once (decision `rules-with-level-and-method`). A set of rules is still cited by its group,
-  never by a range.

@@ -19,9 +19,11 @@ splitting), **Done when** (two or three coarse verifiable statements), **Out of 
 line, naming the epic that takes it). **No done-when, no epic**: what cannot get one is an
 observation to triage, or a label; a heap of issues with no common objective has no parent.
 An epic is split **one slice at a time, when it is taken**: no To do, no sub-issue posed in
-advance; a slice is an ordinary issue (`/ticket`) attached to it, and its plan is a **plan
-comment** rewritten at each slice. It is **Ready** when nothing blocks it (no open issue among
-its blocked-by links) and its five sections are written; the maintainer sets Ready at triage.
+advance; a slice is an ordinary issue (`/feyn-issue`) attached to it, and its plan is a **plan
+comment** rewritten at each slice, which also holds the epic's open questions. It is **Ready**
+when nothing blocks it (no open issue among its blocked-by links) and its five sections are
+written; the maintainer sets Ready at triage. An epic is delivered on an integration branch,
+validated by the maintainer's merge of its epic PR (decision `epic-on-integration-branch`).
 An epic may span releases and may target a milestone. A milestone is a **release target**,
 created when a release is in sight: named after the tag that closes it
 (`linear-course/v1.0.0`), it holds the slices that must close before that tag. Tooling has no
@@ -44,14 +46,10 @@ epic, their bodies kept as material; `stage-1` is renamed `linear-course/v1.0.0`
 - The epics of 2026-10-29: #220 the `linear-course` spec v1; #221 `parcours-po` conformity
   (blocked by #29); #222 the teacher and #223 the site (blocked by #221); #224 course quality
   (blocked by #222); #228 the work organisation.
-- `construction/` no longer ends "at stage 4"; its fate is observation #232.
+- `construction/` is removed; the plan of 2026-10-27 and its stage files are read at
+  `2c16adf3e66a` (`git show 2c16adf3e66a:construction/plan/<file>`; decision
+  `construction-in-history`).
 - Amended 2026-10-29 (#229): "theme" became "epic" (label renamed, #220 to #224 retitled);
   added the entry rule, the Definition of Ready, the plan comment, the milestone an epic may
   target; #225 (the flow and the tooling) dissolved as a heap, its six issues back in the
   Backlog without a parent.
-- Amended 2026-10-31 (#344): the plan comment also holds the epic's open questions, and the
-  epic is delivered on an integration branch, validated by the maintainer's merge of its epic PR
-  (decision `epic-on-integration-branch`).
-- Amended 2026-10-31 (#232): `construction/` is removed; the plan of 2026-10-27 and its stage
-  files are read at `2c16adf3e66a` (`git show 2c16adf3e66a:construction/plan/<file>`; decision
-  `construction-in-history`).

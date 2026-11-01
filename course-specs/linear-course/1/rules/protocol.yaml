@@ -5,7 +5,7 @@
 #
 # A group is a group of rules of PROTOCOL.md: its slug as `id`, its rules in their order. Today
 # one rule, first-message-without-tools, stated in PROTOCOL.md too; the rules leave PROTOCOL.md
-# for this file at the extraction of #318 (decision rule-groups-replace-ranges, amended).
+# for this file at the extraction of #318 (decision rule-groups-replace-ranges).
 # check-spec (rule-files) verifies this file.
 groups:
   - id: onboarding

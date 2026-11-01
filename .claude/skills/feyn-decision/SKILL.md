@@ -1,13 +1,14 @@
 ---
 name: feyn-decision
-description: "Tooling of the work cycle, called by `/feyn-triage` and by the contributor of the agent workflow deliver-slice.js: write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or refuse it when no counterfactual is named or the entry bar is not met. Use for \"/feyn-decision <the decision, in a sentence>\"."
+description: "Tooling of the work cycle, called by `/feyn-triage` and by the contributor of the agent workflow deliver-slice.js: write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or change a live decision in place, or refuse a new one when no counterfactual is named or the entry bar is not met. Use for \"/feyn-decision <the decision, in a sentence>\"."
 argument-hint: "<the decision, in a sentence>"
 ---
 
 # /feyn-decision
 
-One job: turn a choice into a decision file, or say why it does not deserve one. The format
-is `docs/decisions/decision-format.md`; this skill applies it.
+One job: write or change a decision: turn a choice into a decision file, or say why it does not
+deserve one, or keep a live decision current. The format is `docs/decisions/decision-format.md`;
+this skill applies it.
 
 ## 1. The counterfactual, or nothing
 
@@ -52,8 +53,8 @@ Before writing, list every decision and grep them for the decision's key words:
 then `grep -ril --include='*.md' --exclude-dir=worktrees "<key word>" docs course-specs courses teacher site .claude | grep /decisions/`
 (quoted globs: zsh stops on a pattern that matches nothing; `.claude/worktrees/` holds the
 copies of other branches). A neighbour on the same point, in any of the `decisions/` folders:
-show it, and ask whether the new one supersedes it, amends it (an "Amended" line in that file
-instead, as `decision-format` says), or is distinct (say why in one line). Same slug already
+show it, and ask whether the new one supersedes it, changes it (step 6 instead), or is distinct
+(say why in one line). Same slug already
 taken in any folder: the same decision exists; stop. One exception: the same slug in two MAJORs
 of one spec (`course-specs/<name>/1/decisions/<slug>.md`,
 `course-specs/<name>/2/decisions/<slug>.md`) is one decision, copied with the tree or ported as
@@ -68,6 +69,8 @@ From [decision-body.md](../../reference/decision-body.md), at `<folder>/<slug>.m
   `spec:<name>`, `course:<id>`);
 - first line of the body: the counterfactual, as accepted;
 - then the decision in one paragraph: what is decided, where it applies, what it replaces;
+  name the choice rather than its files, skills or steps where the choice allows (a skill
+  renamed or a file moved then leaves the decision true);
 - optional sections only when they add: "Options ruled out", "Consequences";
 - under 40 lines. Reserved terms of `docs/glossary.md`; "decision" in the text, never "ADR".
 
@@ -77,3 +80,18 @@ add `superseded-by: <slug>` on the line after it (decision `decision-format`).
 Commit it on the current issue branch (`git add <file>`,
 `git commit -m "decide <slug>"`); on `main`, stop and propose `/feyn-issue` first:
 a decision lands through a PR like the rest. Reply with the path and the counterfactual.
+
+## 6. Change a live decision
+
+A live decision states what holds today; git keeps the before (decision `decision-format`):
+- a mechanism of it that changes (a skill or a path renamed, a file moved, a step that now runs
+  elsewhere, a tool removed): correct its body in place, with no "Amended" line;
+- the scope of the choice that changes while it still holds (an exception added, a case it now
+  covers or no longer covers): write it in the body too, and add one line
+  `- Amended <date> (#<n>): …` under `## Consequences` (the heading added when missing), saying
+  what changed and why;
+- the choice no longer holds: supersede it (step 5), never amend it.
+
+A superseded decision and a released CHANGELOG entry are history: leave them as they are. An
+"Amended" line keeps its account of the change of scope; correct in place a mechanism it names
+that changes, as in the body. Commit on the current issue branch, as in step 5.

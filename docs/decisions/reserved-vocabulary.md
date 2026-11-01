@@ -14,8 +14,9 @@ feyn. The generic words in its "Not" column are not used for that meaning, in co
 skills, issues, labels and decisions. Each glossary applies in its own files: the
 repository glossary in repository files, a course glossary (`courses/<id>/glossary.md`) in that
 course's files; a word may be reserved in both with two meanings, and a repository text that
-means the course's sense cites it as such. The repository glossary names the course's French
-section headings in English for talking about them.
+means the course's sense cites it as such; Scrum vocabulary is available to the repository
+("epic", decision `themes-and-release-milestones`). The repository glossary names the course's
+French section headings in English for talking about them.
 
 A new term enters by a PR that adds its row and, in the same PR, replaces the banned words
 already in use.
@@ -24,12 +25,10 @@ already in use.
 
 - A vocabulary only holds if something enforces it: `/health` greps the repository docs,
   skills and issue titles for the banned words and flags them. It reports, it does not block.
-- Names follow the terms: `feyn-site` (site), the agent workflow `course-batch` (batch), the
-  labels `area:…`, `type:…`.
+- Names follow the terms: `feyn-site` (site), the agent workflows `feyn-<script>-workflow`
+  (`feyn-course-batch-workflow`, batch), the labels `area:…`, `type:…`.
 - The old `ecoles` of `parcours-po` became `stances` and `neighbors`.
 - Amended 2026-10-29 (#229): each glossary applies in its own files, the repository's in
   repository files and a course's in its course files; a word may be reserved in both with two
   meanings; a repository text that means the course's sense cites it as such; Scrum vocabulary
   is available to the repository ("epic", decision `themes-and-release-milestones`).
-- Amended 2026-10-30 (#252): the agent workflows are named `feyn-<script>-workflow`
-  (`feyn-course-batch-workflow`).

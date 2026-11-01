@@ -23,14 +23,17 @@ An issue, a PR or a decision in English that quotes the course quotes it in Fren
 translates it. French text uses no em-dashes and no arrows. What the teacher says to the
 learner comes from the course and the language pack.
 
-One bounded exception: the protocol of `linear-course` is written in French first. The old
-teacher was instructed and corrected in French, and stages 1 and 2 already change the structure
-of its instructions and its harness; a change of language at the same time would leave a drift
-with no known cause. The protocol switches to English at stage 2, once the fresh tests are
-green: a translation that changes no protocol rule, a spec MINOR, accepted when every test
-scenario gives the same result on two classrooms built from the two branches (A/B). The phrases
-the learner sees are literal in the language pack from the start, so the switch touches
-instructions only.
+A maintainer phrasing quoted in a skill description's "Use for" may be in French, as a quote
+from course material is; everything else in a skill stays in English.
+
+One bounded exception: the protocol of `linear-course` is written in French. The old teacher
+was instructed and corrected in French, and its v1 is a base inherited from `parcours-po`,
+changed by user story; a change of language at the same time would leave a drift with no known
+cause. The exception stays until a teacher or a course of another language needs the
+translation: a translation that changes no protocol rule, a spec MINOR, accepted when every
+test scenario gives the same result on two classrooms built from the two branches (A/B). The
+phrases the learner sees are literal in the language pack from the start, so the switch
+touches instructions only.
 
 ## Consequences
 

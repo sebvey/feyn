@@ -18,7 +18,7 @@ readable in one colour; the composition; the text a diagram holds). The style is
 diagrams to draw, not for compatibility with older ones: it holds principles, not a table of
 colours. It binds every writer of a diagram, and a review checks it; the drawing contract of
 section 7.1 stays the only part a script checks. A migrated diagram is drawn anew under it from
-an inventory of what the old one shows, not transcribed (`migrate-concept`, M11). The meaning of
+an inventory of what the old one shows, not transcribed. The meaning of
 the classes and this counterfactual were accepted by the maintainer on 2026-10-28 (work session,
 « Je valide le sens des trois classes », « Contrefactuel validé »).
 
@@ -32,12 +32,9 @@ the classes and this counterfactual were accepted by the maintainer on 2026-10-2
 
 ## Consequences
 
-- The diagrams of concepts 0 to 5 and 9, migrated before this, are redrawn under the style (#180);
-  `course-batch` follows it for new diagrams.
+- The diagrams of concepts 0 to 5 and 9, migrated before this, are not redrawn under the style:
+  #180, which planned it, was closed not planned. `course-batch` follows it for new diagrams.
 - A drawing no longer keeps the old composition: the review judges whether it carries the same
-  information, and the maintainer validates each before and after (#180).
+  information.
 - Amended 2026-10-30 (#216): #180 was closed not planned: no redraw of the diagrams of concepts
   0 to 5 and 9, migrated before this decision, is planned.
-- Amended 2026-10-31 (#365): the agent workflow `migrate-concept` is removed, its migration
-  done; its step M11 is read in the history at `0f1b6dd4fc27`:
-  `git show 0f1b6dd4fc27:.claude/workflows/migrate-concept.js`.
