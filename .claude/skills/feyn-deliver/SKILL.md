@@ -1,19 +1,20 @@
 ---
 name: feyn-deliver
-description: "Deliver a Ready observation on feyn (an issue with no parent epic), from Ready to the maintainer's merge: run it through the agent workflow feyn-deliver-slice-workflow in observation mode (a contributor agent opens the PR to main, a fresh agent reviews it against the Done when, corrections verified by a fresh agent), read its result, clean the run, hand the PR over to the maintainer, who merges, then clean up after the merge. A slice of an epic, direct or not, goes to /feyn-deliver-epic; the direct delivery of an observation is unchanged. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"/feyn-deliver 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\"."
+description: "Deliver a Ready story without an epic on feyn (a story with no parent epic), from Ready to the maintainer's merge: run it through the agent workflow feyn-deliver-story-workflow with no epic (a contributor agent opens the PR to main, a fresh agent reviews it against the Done when, corrections verified by a fresh agent), read its result, clean the run, hand the PR over to the maintainer, who merges, then clean up after the merge. A story under an epic, direct or not, goes to /feyn-deliver-epic; the direct delivery of a story without an epic is unchanged. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"livre la story 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"deliver story 240\", \"/feyn-deliver 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\"."
 argument-hint: "<issue number> [<issue number>…]"
 ---
 
 # /feyn-deliver <n> [<n>…]
 
-One job: drive observation n from Ready to merged without doing the issue's changes in the
-work session that runs it. That work session is the orchestrator: it runs the agent workflow
-`.claude/workflows/deliver-slice.js` in observation mode, reads its result, cleans the run and
-hands over; the workflow's agents contribute, review and correct, the maintainer merges. Every
-PR is reviewed by a fresh agent before it reaches the maintainer (decision
-`fresh-agent-review-before-maintainer`). An observation stays one PR to `main`, merged by the
-maintainer (decision `epic-on-integration-branch`); the slices of an epic are delivered by
-`/feyn-deliver-epic`, which this skill cites rather than repeats where the two runs are the same.
+One job: drive story n, a story without an epic, from Ready to merged without doing the story's
+changes in the work session that runs it. That work session is the orchestrator: it runs the
+agent workflow `.claude/workflows/deliver-story.js` with no epic, reads its result, cleans the
+run and hands over; the workflow's agents contribute, review and correct, the maintainer merges.
+Every PR is reviewed by a fresh agent before it reaches the maintainer (decision
+`fresh-agent-review-before-maintainer`). A story without an epic stays one PR to `main`, merged
+by the maintainer (decisions `epic-on-integration-branch`, `story-with-or-without-an-epic`); the
+stories of an epic are delivered by `/feyn-deliver-epic`, which this skill cites rather than
+repeats where the two runs are the same.
 
 Nothing is spawned and no run launched before the maintainer's go-ahead: they say "deliver",
 "go", or name the issue, in the work session.
@@ -31,15 +32,15 @@ not hold.
 ## 1. Before the run
 
 - Read each issue (`mise exec -- gh issue view <n>`).
-- **A slice of an epic**, direct or not. Its parent
+- **A story under an epic**, direct or not. Its parent
   (`mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`; HTTP 404: none)
-  carries the label `epic`: refuse in one line, "#<n> is a slice of epic #<epic>:
-  `/feyn-deliver-epic <epic>` delivers it" (a direct slice included, its step 2, "A direct
-  slice"), and run nothing for that issue.
-- **A direct delivery.** An observation whose To do opens with the line "Direct delivery"
+  carries the label `epic`: refuse in one line, "#<n> is a story of epic #<epic>:
+  `/feyn-deliver-epic <epic>` delivers it" (a direct story included, its step 2, "A direct
+  story"), and run nothing for that issue.
+- **A direct delivery.** A story whose To do opens with the line "Direct delivery"
   (named `direct` by the maintainer at its creation, [contributing](../../../docs/contributing.md),
   "How the work is organised", moment 2) stops the cycle for that issue, before the refusals
-  below: reply "this observation is delivered as a direct delivery (`/feyn-issue-branch`, the
+  below: reply "this story is delivered as a direct delivery (`/feyn-issue-branch`, the
   edit, `/feyn-pull-request`): nothing to spawn", and spawn nothing.
 - Then the refusals of `/feyn-issue-branch` step 1 apply: name the reason and stop for that
   issue. Except In progress: the run resumes it, its contributor taking the issue's branch and
@@ -58,8 +59,8 @@ not hold.
 
 ## 2. The run
 
-1. **Run** `.claude/workflows/deliver-slice.js` as `/feyn-deliver-epic` step 2.3 says (its
-   `whenToUse`, `scriptPath` absolute), in observation mode: `issue`, `type` and `area` (the
+1. **Run** `.claude/workflows/deliver-story.js` as `/feyn-deliver-epic` step 2.3 says (its
+   `whenToUse`, `scriptPath` absolute), with no epic: `issue`, `type` and `area` (the
    issue's labels without their prefix), no `epic`, no `base`; `work` only when the issue needs
    guidance beyond its To do. `work` stands on its own: the workflow's agents get it in their
    prompt and do not see the conversation, so it never points to the conversation nor quotes
