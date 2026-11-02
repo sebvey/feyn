@@ -36,6 +36,7 @@ The files of the spec are split by class of products (section 3), plus the frame
 | `teacher/rules.yaml` | the rules of the teacher, in French |
 | `course/schemas/*.schema.yaml` | the tables of fields of `course/README.md`, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` |
 | `CHANGELOG.md` | the changes of the spec, an « Unreleased » section until the tag |
+| `spec.yaml` | the declaration of this MAJOR: `name`, `major`, `version`, and `directives`, the MAJOR of `spec-directives/` whose tests verify these files and whose `lib/` and package the checks load |
 | `course/checks/` | the check scripts, their fixtures and `course/checks/README.md` (how to run them) |
 | `lang/<code>.yaml` | the language packs |
 | `course/templates/` | the course templates |
@@ -205,12 +206,14 @@ method and the severity that follows (section 7); and the tests of the spec's ow
 | the reviewer | which rules a script already verified, so the review reads the rest | reviewing a change |
 | the maintainer | the reported findings to triage into course issues | on demand |
 
-Node scripts in `course/checks/`, one per id, with the dependencies of `course/checks/package.json`
-installed by `npm ci` (decision `checks-use-ajv-and-yaml`); `course/checks/README.md` gives how to
-install and run them, their options and fixtures. `course-specs/check-course <course-dir>` runs this
-folder's `course/checks/check-course` on a course. `course/checks/check-spec` runs the tests of the
-spec's own files (`teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/`,
-`course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `lang/`), not a course.
+Node scripts in `course/checks/`, one per id, with the `lib/` and the dependencies of the
+directives MAJOR that `spec.yaml` declares (`spec-directives/1/package.json`, installed by
+`npm ci`; decision `checks-use-ajv-and-yaml`); `course/checks/README.md` gives how to install and
+run them, their options and fixtures. `course-specs/check-course <course-dir>` runs this folder's
+`course/checks/check-course` on a course. `spec-directives/check-spec <this folder>` runs the tests
+of the spec's own files (`teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/`,
+`course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `lang/`), not a course: they are the
+directives' (`spec-directives/1/tests/`).
 
 `check-course` takes its checks from `course/rules.yaml`: by default it runs, in one run, every
 check of method test, blocking and reporting, and `--category <c>[,<c>...]` runs the checks of

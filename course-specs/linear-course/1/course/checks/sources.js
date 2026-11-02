@@ -4,9 +4,10 @@
 // reference ids or the markers.course word, a verification, a nature); « Références » (ids, one URL
 // or no link, types, dates); « Non vérifié » entries anchored; every id cited exists, every
 // reference is cited.
-const yaml = require('./lib/yaml-lines');
-const mdlib = require('./lib/md');
-const { fail } = require('./lib/course');
+const directives = require('./directives');
+const yaml = directives.lib('yaml-lines');
+const mdlib = directives.lib('md');
+const { fail } = directives.lib('course');
 
 const REF = /^S\d+[a-z]?$/;
 const CITED = /\bS\d+[a-z]?\b/g;

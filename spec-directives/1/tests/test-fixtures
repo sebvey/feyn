@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+'use strict';
+// Runs check-spec (the tests of a spec's own files, its language packs included) on the fixtures,
+// and says whether every run gave the expected result (the course fixtures are tested by
+// course-specs/<name>/<MAJOR>/course/checks/test-fixtures).
+//   fixtures/valid                 a model spec MAJOR that passes every test
+//   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>": that test fails with a
+//                                  line containing the fragment, and no other test fails beside it
+//   fixtures/checks/               the stubs of the check scripts the fixtures' rules name
+//                                  (check-spec --checks-dir)
+//   the repository's specs         every spec MAJOR of course-specs/ whose spec.yaml declares this
+//                                  directives MAJOR passes spec-directives/check-spec
+const fs = require('fs');
+const path = require('path');
+const { spawnSync } = require('child_process');
+require('../lib/deps').need();
+
+const here = __dirname;
+const fx = path.join(here, 'fixtures');
+// here is spec-directives/<MAJOR>/tests
+const MAJOR = path.basename(path.resolve(here, '..'));
+const repo = path.resolve(here, '..', '..', '..');
+let bad = 0;
+
+function report(name, ok, detail) {
+  console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}${ok ? '' : ': ' + detail}`);
+  if (!ok) bad++;
+}
+const spawn = (script, dir, extra) => {
+  const r = spawnSync(process.execPath, [script, dir, ...extra], { encoding: 'utf8' });
+  return { code: r.status, lines: r.stdout.split('\n').filter(Boolean), err: r.stderr };
+};
+const notOk = (r) => r.lines.filter((l) => !l.endsWith(': ok')).join(' | ') || r.err;
+const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
+
+// the fixtures: valid passes, broken/<name> fails as its EXPECT says
+{
+  const checksDir = ['--checks-dir', path.join(fx, 'checks')];
+  const spec = (dir, extra) => spawn(path.join(here, 'check-spec'), dir, [...checksDir, ...extra]);
+  const v = spec(path.join(fx, 'valid'), []);
+  report('valid passes every spec check', v.code === 0, notOk(v));
+  for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
+    const d = path.join(fx, 'broken', name);
+    const ex = Object.fromEntries(fs.readFileSync(path.join(d, 'EXPECT'), 'utf8').split('\n').filter(Boolean).map((l) => [l.slice(0, l.indexOf(':')), l.slice(l.indexOf(':') + 1).trim()]));
+    const r = spec(d, ['--only', ex.check]);
+    const hit = r.lines.filter((l) => l.startsWith(ex.check + ': fail: '));
+    report(`broken/${name} fails ${ex.check}`, r.code === 1 && hit.some((l) => l.includes(ex.message)), `expected "${ex.message}", got ${r.lines.join(' | ') || r.err}`);
+    const others = failing(spec(d, [])).filter((l) => !l.startsWith(ex.check + ': '));
+    if (others.length) report(`broken/${name} breaks nothing else`, false, others.slice(0, 2).join(' | '));
+  }
+}
+
+// the repository's specs: each spec MAJOR that declares this directives MAJOR passes, through the
+// dispatcher spec-directives/check-spec
+{
+  const specs = path.join(repo, 'course-specs');
+  const isDir = (p) => { try { return fs.statSync(p).isDirectory(); } catch (e) { return false; } };
+  const declaring = [];
+  for (const name of fs.readdirSync(specs).filter((n) => isDir(path.join(specs, n))).sort()) {
+    for (const m of fs.readdirSync(path.join(specs, name)).filter((n) => /^\d+$/.test(n)).sort()) {
+      let text = '';
+      try { text = fs.readFileSync(path.join(specs, name, m, 'spec.yaml'), 'utf8'); } catch (e) { continue; }
+      if (text.split('\n').some((l) => new RegExp(`^directives\\s*:\\s*['"]?${MAJOR}['"]?\\s*(#.*)?$`).test(l))) declaring.push(`${name}/${m}`);
+    }
+  }
+  if (!declaring.length) report(`a spec MAJOR of course-specs/ declares directives ${MAJOR}`, false, 'none found');
+  for (const s of declaring) {
+    const r = spawn(path.join(repo, 'spec-directives', 'check-spec'), path.join(specs, s), []);
+    report(`the repository spec ${s} passes every spec check`, r.code === 0, notOk(r));
+  }
+}
+console.log(bad ? `${bad} unexpected result(s)` : 'all as expected');
+process.exit(bad ? 1 : 0);

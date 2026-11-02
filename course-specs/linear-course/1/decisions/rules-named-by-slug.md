@@ -17,11 +17,11 @@ between rules, `SPEC.md`, the decisions of this spec, the "Used in" column of "K
 parameters", the "Inherited from parcours-po" table, the fresh tests, and the English
 translation of S2-09 (same slugs, not same numbers). The order of the rules and their sections
 are then free: a rule moves without changing its name. A split rule gets two slugs; a removed
-rule's slug is never reused. A check of `course-specs/linear-course/1/course/checks/`, `rule-slugs`,
-verifies that every cited slug exists and that none is duplicated; it reads the rule files once
-the rules are there. This replaces the numbers `1.1` to `9.5`
-and the header line "Rule numbers are cited by tests and by S2-09: a removed rule leaves its
-number unused". It is a structure decision, taken on argument: it changes how rules are named,
+rule's slug is never reused. A test of the spec's own files, `rule-slugs` (`check-spec`, of the
+directives the spec follows), verifies that every cited slug exists and that none is
+duplicated; it reads the rule files once the rules are there. This replaces the numbers `1.1` to
+`9.5` and the header line "Rule numbers are cited by tests and by S2-09: a removed rule leaves
+its number unused". It is a structure decision, taken on argument: it changes how rules are named,
 not how the teacher teaches.
 
 ## Options ruled out

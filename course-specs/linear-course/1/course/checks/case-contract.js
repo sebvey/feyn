@@ -4,8 +4,9 @@
 // qualifier of the closed list), titles unique in the concept, fields (known labels, a qualifier on
 // « Question » only, the mandatory fields once and in order), coverage of leaves, citation of every
 // case in « Consignes ». The sections of `teaching.md` and their order are `concept-folder`'s.
-const mdlib = require('./lib/md');
-const { fail } = require('./lib/course');
+const directives = require('./directives');
+const mdlib = directives.lib('md');
+const { fail } = directives.lib('course');
 
 function quotesNorm(s) {
   return s.replace(/[«»“”"]/g, '"').replace(/\s+/g, '');

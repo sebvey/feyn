@@ -20,8 +20,8 @@
 // and so does a range, « `a` à `b` » or « `a` to `b` », in teacher/README.md, SPEC.md or
 // course/README.md (decision rule-groups-replace-ranges). decisions/ are not read for ranges: they
 // record history and quote the ranges they replaced.
-const mdlib = require('./lib/md');
-const { fail } = require('./lib/course');
+const mdlib = require('../lib/md');
+const { fail } = require('../lib/course');
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){1,4}$/;
 const GROUP_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){0,4}$/;

@@ -63,3 +63,10 @@ no class: `- file or area: what changes`.
   the spec, its checks and the decisions `checks-use-ajv-and-yaml`, `rule-groups-replace-ranges`,
   `rules-named-by-slug`, `rules-with-level-and-method`, `spec-files-and-alpha-version`,
   `stances-in-frontmatter-only` (#455).
+- `spec.yaml`, `course/checks/`, `decisions/`: `spec.yaml` declares the MAJOR (`name`, `major`,
+  `directives: 1`, `version: 1.0.0-alpha`); the tests of the spec's own files (`check-spec`,
+  `rule-slugs`, `rule-files`, `language-pack-keys`, their fixtures), `lib/` and the package move
+  to the spec directives, `spec-directives/1/`, run by `spec-directives/check-spec`; the checks
+  load `lib/`, `yaml` and `ajv` from the directives MAJOR that `spec.yaml` declares;
+  `test-fixtures` split in two; no rule changes; decisions `checks-use-ajv-and-yaml` and
+  `rules-named-by-slug` updated (#459).

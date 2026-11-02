@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+'use strict';
+// check-spec <spec MAJOR folder> [<the options of the directives MAJOR's check-spec>]
+// Reads `directives: <MAJOR>` in <spec MAJOR folder>/spec.yaml and runs
+// spec-directives/<MAJOR>/tests/check-spec on that folder with the same arguments, its output and
+// exit code unchanged: the tests of a spec's own files, which belong to the directives the spec
+// follows. Refuses (exit 2, one line) a folder with no spec.yaml, a spec.yaml with no
+// `directives` line, and a directives MAJOR with no folder here.
+// spec.yaml is read by a line scan, as course-specs/check-course reads course.yaml: the YAML reader
+// is the directives' own package, which this script does not load.
+const fs = require('fs');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+const DIRECTIVES = __dirname;
+
+function usage(code) {
+  const out = code ? console.error : console.log;
+  out('usage: check-spec <spec MAJOR folder> [--only <id>[,<id>...]] [--checks-dir <dir>]');
+  out('runs spec-directives/<MAJOR>/tests/check-spec for the directives MAJOR that');
+  out('<spec MAJOR folder>/spec.yaml declares (directives: <MAJOR>), with the same arguments');
+  process.exit(code);
+}
+function refuse(message) {
+  console.error(`check-spec: ${message}`);
+  process.exit(2);
+}
+
+const VALUED = new Set(['--only', '--checks-dir']);
+const args = process.argv.slice(2);
+let dir = null;
+for (let i = 0; i < args.length; i++) {
+  const a = args[i];
+  if (a === '--help' || a === '-h') usage(0);
+  else if (VALUED.has(a)) i++;
+  else if (!a.startsWith('-') && dir === null) dir = a;
+}
+if (dir === null) usage(2);
+
+const file = path.join(dir, 'spec.yaml');
+let text;
+try { text = fs.readFileSync(file, 'utf8'); } catch (e) { refuse(`cannot read ${file}`); }
+const line = text.split('\n').find((l) => /^directives\s*:/.test(l));
+const major = line && line.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2');
+if (!line || !/^\d+$/.test(major)) refuse(`${file} declares no directives MAJOR (directives: <MAJOR>)`);
+const runner = path.join(DIRECTIVES, major, 'tests', 'check-spec');
+if (!fs.existsSync(runner)) {
+  const isDir = (p) => { try { return fs.statSync(p).isDirectory(); } catch (e) { return false; } };
+  const majors = fs.readdirSync(DIRECTIVES).filter((d) => /^\d+$/.test(d) && isDir(path.join(DIRECTIVES, d))).sort();
+  refuse(`unknown directives MAJOR ${major} in ${file} (known: ${majors.join(', ') || 'none'})`);
+}
+
+const r = spawnSync(process.execPath, [runner, ...args], { stdio: 'inherit' });
+if (r.error) refuse(`cannot run ${runner}: ${r.error.message}`);
+process.exit(r.status === null ? 1 : r.status);

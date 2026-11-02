@@ -4,11 +4,12 @@
 // sentence carries a concept reference to that concept. Each comma variant of the term cell is
 // matched, whole word, case ignored; a row whose term cell has a parenthesis (a sense
 // qualifier) is skipped.
-const mdlib = require('./lib/md');
-const glossary = require('./lib/glossary');
-const refs = require('./lib/refs');
-const yaml = require('./lib/yaml-lines');
-const { fail } = require('./lib/course');
+const directives = require('./directives');
+const mdlib = directives.lib('md');
+const glossary = directives.lib('glossary');
+const refs = directives.lib('refs');
+const yaml = directives.lib('yaml-lines');
+const { fail } = directives.lib('course');
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 

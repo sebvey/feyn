@@ -5,20 +5,23 @@
 // it verifies requirements by test, otherwise it reports. teacher/rules.yaml is the teacher's and
 // names no check of a course; the tests of the spec's own files are check-spec's and verify no rule.
 //
-// A check runs on a course (`check-course`) when its method is test and its script is in this
-// folder; a check of another method (taught-check, an agent workflow) is not run by a script of
-// this folder.
+// A check runs on a course (`check-course`) when its method is test and its script is in the
+// spec MAJOR's course/checks/; a check of another method (taught-check, an agent workflow) is not
+// run by a script of that folder.
 const fs = require('fs');
 const path = require('path');
 const yaml = require('./yaml-lines');
 
-const CHECKS = path.join(__dirname, '..');
+// here is spec-directives/<MAJOR>/lib
+const WORKFLOWS = path.resolve(__dirname, '..', '..', '..', '.claude', 'workflows');
 const FILE = 'course/rules.yaml';
 
 class RulesError extends Error {}
 
-// specDir: the MAJOR's folder (two folders above course/checks/)
-function load(specDir = path.join(CHECKS, '..', '..')) {
+// CHECKS: the course/checks/ folder of the spec MAJOR whose rules are read (the MAJOR's folder is
+// two above it)
+function load(CHECKS) {
+  const specDir = path.join(CHECKS, '..', '..');
   const byId = new Map();
   const categories = [];
   let doc;
@@ -46,7 +49,7 @@ function load(specDir = path.join(CHECKS, '..', '..')) {
     else {
       c.runsHere = false;
       if (byTest) c.how = `no script course/checks/${c.id}.js`;
-      else if (fs.existsSync(path.resolve(CHECKS, '..', '..', '..', '..', '..', '.claude', 'workflows', c.id + '.js'))) c.how = `${c.methods.join(', ')}, the agent workflow .claude/workflows/${c.id}.js`;
+      else if (fs.existsSync(path.join(WORKFLOWS, c.id + '.js'))) c.how = `${c.methods.join(', ')}, the agent workflow .claude/workflows/${c.id}.js`;
       else c.how = c.methods.join(', ');
     }
   }

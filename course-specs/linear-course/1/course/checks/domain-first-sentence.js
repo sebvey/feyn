@@ -3,8 +3,9 @@
 // characters of the lead, so that the site can show it on the domain page
 // (course/README.md section 4). The opening anaphora is domain-first-sentence-standalone, which
 // reports.
-const mdlib = require('./lib/md');
-const { fail } = require('./lib/course');
+const directives = require('./directives');
+const mdlib = directives.lib('md');
+const { fail } = directives.lib('course');
 
 // Each paragraph of « Le fil des concepts » of every domain file: { file, line, rest }, rest being
 // the paragraph's text after its bold lead. Shared with domain-first-sentence-standalone.
