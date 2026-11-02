@@ -5,15 +5,15 @@ section 10), run by `check-course`; the tests of the spec's own files (`teacher/
 `SPEC.md`, `course/README.md`, `decisions/`, `course/rules.yaml`, `teacher/rules.yaml`,
 `course/schemas/`, `lang/`, `spec.yaml`, `CHANGELOG.md`), run by `spec-directives/check-spec`,
 belong to the spec directives this MAJOR follows (`spec-directives/1/tests/`) and are described
-below. Node 20 or later, CommonJS, run under `mise exec` like every tool here, with the `lib/` and the dependencies of the
-directives MAJOR that the MAJOR's `spec.yaml` declares (`directives: 1`, so
+below. Node 20 or later, CommonJS, run under `mise exec` like every tool here, with the `lib/` and
+the dependencies of the directives MAJOR that the MAJOR's `spec.yaml` declares (`directives: 1`, so
 `spec-directives/1/package.json`; decision `checks-use-ajv-and-yaml`): `directives.js` reads that
 line and loads them through a `createRequire` on that `package.json`. The course's YAML is read by
 the package `yaml` in YAML 1.2 mode, through `lib/yaml-lines.js`, which keeps the line of each key
 and item so a failure points at `file:line`; ajv compiles the schemas of `course/schemas/` through
 its class `Ajv2020` (JSON Schema 2020-12); Markdown and SVG are read by the small readers in `lib/`
-(`md.js`, `xml.js`), which cover the subset the spec uses. Each rule of `course/rules.yaml` names
-in `check` the script that verifies it, and `check-course` takes its checks from there
+(`md.js`, `xml.js`), which cover the subset the spec uses. Each rule of `course/rules.yaml` names in
+`check` the script that verifies it, and `check-course` takes its checks from there
 (`lib/rules.js`); `course-yaml` and `concept-folder` verify the two schema rules with their own
 code, not through ajv.
 
@@ -52,10 +52,10 @@ code 0. The blocking checks run first, then the reporting ones, each in the orde
 
 A check runs on a course when its method is test and its script is in this folder. The tests of
 `check-spec` (`rule-slugs`, `rule-files`, `language-pack-keys`, `spec-yaml`) verify no rule:
-`check-course` neither runs nor lists them. A check of another method is not run here: `taught-check`
-(analysis) is an agent workflow, run through `/feyn-taught-check`, and a rule verified by
-inspection has no check, the review reads it. `--list` names every check, the ones not run here
-with how they run.
+`check-course` neither runs nor lists them. A check of another method is not run here:
+`taught-check` (analysis) is an agent workflow, run through `/feyn-taught-check`, and a rule
+verified by inspection has no check, the review reads it. `--list` names every check, the ones not
+run here with how they run.
 
 `course-specs/check-course` reads `spec: linear-course@<MAJOR>` in the course's `course.yaml` and
 runs `course-specs/linear-course/<MAJOR>/course/checks/check-course` with the same arguments; it
@@ -117,11 +117,11 @@ mise exec -- spec-directives/check-spec <spec-dir> --only rule-slugs
 ```
 
 `spec-directives/check-spec <spec-dir>` reads `directives: <MAJOR>` in `<spec-dir>/spec.yaml` and
-runs `spec-directives/<MAJOR>/tests/check-spec` on it, which runs the tests of the spec's own
-files, not a course: `teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/`,
-`course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `lang/`, `spec.yaml` and
-`CHANGELOG.md` of `<spec-dir>`. A `<spec-dir>` with no `spec.yaml`, or a `directives` MAJOR with
-no folder, is refused (exit code 2, one line). Same output and `--only` as `check-course`, with no summary line and a `--list` of ids
+runs `spec-directives/<MAJOR>/tests/check-spec` on it, which runs the tests of the spec's own files,
+not a course: `teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/`, `course/rules.yaml`,
+`teacher/rules.yaml`, `course/schemas/`, `lang/`, `spec.yaml` and `CHANGELOG.md` of `<spec-dir>`. A
+`<spec-dir>` with no `spec.yaml`, or a `directives` MAJOR with no folder, is refused (exit code 2,
+one line). Same output and `--only` as `check-course`, with no summary line and a `--list` of ids
 alone; the file in a failure line is relative to `<spec-dir>`. Its tests are not rules (decision
 `rules-with-level-and-method`, amended by #339): they carry no category and no level, and each
 failure blocks `check-spec` (exit code 1). Their list is written in
@@ -207,19 +207,19 @@ an id of a test of `check-spec` and an id outside `--category` are usage errors 
   « Unreleased »); every `check-spec` test passes, the check scripts its rules name found in
   `fixtures/checks/` (stubs, through `--checks-dir`). `fixtures/broken/<name>/` there: a copy of it
   with one defect and its `EXPECT` file; no other `check-spec` test may fail. The copies for
-  `rule-slugs` and `rule-files` have no `lang/`, so `language-pack-keys` has no pack to test
-  there. For `language-pack-keys`: a key of `course/README.md` section 7 missing, a group missing
+  `rule-slugs` and `rule-files` have no `lang/`, so `language-pack-keys` has no pack to test there.
+  For `language-pack-keys`: a key of `course/README.md` section 7 missing, a group missing
   (`natures`), a key of `teacher/README.md` missing, a list key of `teacher/README.md` given as a
   string. For `spec-yaml`: `spec.yaml` missing, a key missing, a `version` whose MAJOR is not
-  `major`, an alpha `version` over a released first section of `CHANGELOG.md`, a released
-  `version` that differs from the version of that section. For `rule-slugs`: a missing slug, a
-  duplicate slug, a rule cited by number, a missing group, a group whose slug is a rule's, a
-  range, a range in `course/README.md`, a group cited as a rule. For `rule-files`: a missing level; a level, a method, a category and a family off their lists; a
-  protocol group that `teacher/README.md` does not define; an id in both rule files; a check that
-  does not exist; a check over two categories; a check over two levels; a schema that does not
-  compile; a schema no rule names. The test also runs `spec-directives/check-spec` on each spec
-  MAJOR of `course-specs/` whose `spec.yaml` declares `directives: 1` (`linear-course/1`), which
-  must pass.
+  `major`, an alpha `version` over a released first section of `CHANGELOG.md`, a released `version`
+  that differs from the version of that section. For `rule-slugs`: a missing slug, a duplicate slug,
+  a rule cited by number, a missing group, a group whose slug is a rule's, a range, a range in
+  `course/README.md`, a group cited as a rule. For `rule-files`: a missing level; a level, a method,
+  a category and a family off their lists; a protocol group that `teacher/README.md` does not
+  define; an id in both rule files; a check that does not exist; a check over two categories; a
+  check over two levels; a schema that does not compile; a schema no rule names. The test also runs
+  `spec-directives/check-spec` on each spec MAJOR of `course-specs/` whose `spec.yaml` declares
+  `directives: 1` (`linear-course/1`), which must pass.
 - `fixtures/dispatcher/<name>/`: a `course.yaml` that `course-specs/check-course` refuses,
   `other-spec` (an unknown spec, `other@1`) and `unknown-major` (`linear-course@9`); the test also
   runs `course-specs/check-course` on `valid/`, with the default and with `--category writing`,

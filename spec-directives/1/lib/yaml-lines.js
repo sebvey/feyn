@@ -2,11 +2,14 @@
 // YAML 1.2 through the `yaml` package (decision `checks-use-ajv-and-yaml`), turned into plain
 // values. `lines` maps every map / sequence to the line (1-based, shifted by `lineOffset`) of
 // each of its keys / items, from the package's node ranges and its LineCounter, so checks can
-// point at a line: a key's line, or for a block sequence item the line of its "-".
+// point at a line: a key's line, or for a block sequence item the line of its "-". `sources`
+// keeps the source text of each scalar value of a map, for a check that needs the literal (YAML
+// reads `1.0` as the number 1).
 
 const YAML = require('yaml');
 
 const lines = new WeakMap();
+const sources = new WeakMap();
 
 class YamlError extends Error {
   constructor(message, line) {
@@ -52,12 +55,15 @@ function parse(text, opts = {}) {
   function map(pairs) {
     const obj = {};
     const ln = {};
+    const src = {};
     for (const pair of pairs) {
       const key = String(YAML.isScalar(pair.key) ? pair.key.value : pair.key);
       if (pair.key && pair.key.range) ln[key] = lineAt(pair.key.range[0]);
+      if (YAML.isScalar(pair.value) && pair.value.range) src[key] = text.slice(pair.value.range[0], pair.value.range[1]);
       obj[key] = value(pair.value);
     }
     lines.set(obj, ln);
+    sources.set(obj, src);
     return obj;
   }
 
@@ -70,4 +76,10 @@ function lineOf(container, key, fallback) {
   return (m && m[key]) || fallback || 1;
 }
 
-module.exports = { parse, lineOf, YamlError };
+// source text of the scalar value of `key` in a parsed map; null when it is not a scalar
+function sourceOf(container, key) {
+  const m = container && typeof container === 'object' ? sources.get(container) : null;
+  return m && key in m ? m[key] : null;
+}
+
+module.exports = { parse, lineOf, sourceOf, YamlError };

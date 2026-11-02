@@ -3,11 +3,12 @@
 // rules-with-level-and-method, spec-files-and-alpha-version): the declaration of the spec MAJOR,
 // spec.yaml, held to its CHANGELOG.md.
 //   - spec.yaml exists and is a map of exactly four keys: `name`, `major`, `directives`, `version`;
-//   - `name` is a slug, `major` and `directives` are positive integers, `version` is
-//     `MAJOR.MINOR.PATCH` with an optional `-alpha`, and the MAJOR of `version` is `major`;
+//   - `name` is a slug, `major` and `directives` are positive integers written as such (not `1.0`),
+//     `version` is `MAJOR.MINOR.PATCH` with an optional `-alpha`, and the MAJOR of `version` is
+//     `major`;
 //   - `version` agrees with the first `## ` section of CHANGELOG.md: during the alpha (`version` is
 //     `<MAJOR>.0.0-alpha`) that section is « Unreleased »; otherwise it names `version`
-//     (`## 1.0.0`, a date after the version allowed).
+//     (`## 1.0.0`, a date after the version allowed); an `-alpha` on another version fails.
 // Each failure names spec.yaml and the line of the key at fault. The test names no list of one
 // spec: it verifies the model of a spec MAJOR, common to every spec.
 const yaml = require('../lib/yaml-lines');
@@ -19,7 +20,8 @@ const KEYS = ['name', 'major', 'directives', 'version'];
 const VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-alpha)?$/;
 const UNRELEASED = 'Unreleased';
 
-const positive = (v) => Number.isInteger(v) && v > 0;
+// a positive integer written as one: YAML reads `1.0` as the number 1, so the literal is checked too
+const positive = (spec, k) => Number.isInteger(spec[k]) && spec[k] > 0 && /^[1-9]\d*$/.test(yaml.sourceOf(spec, k) || '');
 
 // the first `## ` heading of CHANGELOG.md outside a fenced block: { title, line } or null
 function firstSection(text) {
@@ -42,6 +44,9 @@ function changelog(ctx, version, m, at) {
   if (version === `${m[1]}.0.0-alpha`) {
     return first.title === UNRELEASED ? []
       : [fail(F, at, `version ${version} is an alpha: ${where} must be « ${UNRELEASED} », not "${first.title}"`)];
+  }
+  if (m[4]) {
+    return [fail(F, at, `version ${version}: an alpha is <MAJOR>.0.0-alpha only (${m[1]}.0.0-alpha)`)];
   }
   if (first.title === UNRELEASED) {
     return [fail(F, at, `version ${version} is not an alpha (${m[1]}.0.0-alpha): ${where} must name it, not « ${UNRELEASED} »`)];
@@ -69,7 +74,7 @@ function run(ctx) {
     out.push(fail(F, at('name'), `name ${JSON.stringify(spec.name)} is not a slug (lowercase words joined by hyphens)`));
   }
   for (const k of ['major', 'directives']) {
-    if (k in spec && !positive(spec[k])) out.push(fail(F, at(k), `${k} ${JSON.stringify(spec[k])} is not a positive integer`));
+    if (k in spec && !positive(spec, k)) out.push(fail(F, at(k), `${k} ${yaml.sourceOf(spec, k) || JSON.stringify(spec[k])} is not a positive integer`));
   }
   if (!('version' in spec)) return out;
   const version = spec.version;
@@ -78,7 +83,7 @@ function run(ctx) {
     out.push(fail(F, at('version'), `version ${JSON.stringify(version)} is not MAJOR.MINOR.PATCH with an optional -alpha`));
     return out;
   }
-  if (positive(spec.major) && Number(m[1]) !== spec.major) {
+  if (positive(spec, 'major') && Number(m[1]) !== spec.major) {
     out.push(fail(F, at('version'), `the MAJOR of version ${version} is ${m[1]}, not major ${spec.major}`));
   }
   out.push(...changelog(ctx, version, m, at('version')));
