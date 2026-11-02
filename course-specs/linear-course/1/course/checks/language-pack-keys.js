@@ -1,7 +1,8 @@
 'use strict';
 // A test of the spec's own files, run by check-spec (not a rule: decision
 // rules-with-level-and-method, amended by #339): every language pack of lang/ holds every key of
-// course/README.md section 7 and every key teacher/README.md uses. A spec folder with no pack has none to test.
+// course/README.md section 7 and every key teacher/README.md uses. A spec folder with no pack has
+// none to test.
 const yaml = require('./lib/yaml-lines');
 const { fail } = require('./lib/course');
 
@@ -20,9 +21,9 @@ const LISTS = { typography: 'banned' };
 // domain-first-sentence-standalone, a reporting check of a course, reports its absence.
 
 
-// The keys teacher/README.md uses: a row of its "Keys and parameters" tables (`| `group.key` | ...`; a value
-// cell that opens on "list" is a list) or a `{group.key}` in a rule. Section 9's keys come first.
-// teacher/README.md missing gives no key: that is rule-slugs' failure.
+// The keys teacher/README.md uses: a row of its "Keys and parameters" tables (`| `group.key` |
+// ...`; a value cell that opens on "list" is a list) or a `{group.key}` in a rule. Section 9's keys
+// come first. teacher/README.md missing gives no key: that is rule-slugs' failure.
 const NOT_PACK = new Set(['course', 'classroom', 'group']); // parameters, and the notation's own example
 
 function protocolKeys(text) {

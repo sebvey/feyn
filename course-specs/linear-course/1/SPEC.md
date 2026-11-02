@@ -19,8 +19,8 @@ It holds for every course language: what depends on the language spoken to the l
 the **language pack** `lang/<code>.yaml` (phrases, typography, headings, markers, site labels),
 whose keys `course/README.md` section 7 names. French values are quoted for reference.
 
-Out of scope here: the learner memory files (the protocol, and `teacher/templates/learner/`), how the
-site and the classroom build (their own folders).
+Out of scope here: the learner memory files (the protocol, and `teacher/templates/learner/`), how
+the site and the classroom build (their own folders).
 
 ## 2. Files
 
@@ -43,21 +43,21 @@ The files of the spec are split by class of products (section 3), plus the frame
 
 A rule file is a list of groups, each a list of rules; a rule has an `id` (a slug), a `level`
 (section 4), a `category` (section 6), a `method` (section 5), a `check` when one implements the
-method, a `text` and, where an observed counterfactual exists, a `why`; a rule of the protocol
-also has an `origin`. A group may declare `category` and `method` once for its rules, and a rule
-may override them; a group of `teacher/rules.yaml` is a group of `teacher/README.md`, its slug as its
+method, a `text` and, where an observed counterfactual exists, a `why`; a rule of the protocol also
+has an `origin`. A group may declare `category` and `method` once for its rules, and a rule may
+override them; a group of `teacher/rules.yaml` is a group of `teacher/README.md`, its slug as its
 `id` (decision `rule-groups-replace-ranges`). A rule binds a product (section 3), so the rule files
 are two, `course/rules.yaml` and `teacher/rules.yaml`. The spec's own files (the rule files, the
-schemas, the slugs of the protocol, the language packs) are verified by the tests of
-`check-spec`, which are not rules (section 10).
+schemas, the slugs of the protocol, the language packs) are verified by the tests of `check-spec`,
+which are not rules (section 10).
 
 `course/rules.yaml` holds the rules the checks of a course verify, taught-check included, and one
 rule verified by inspection, the review; `course/schemas/course.schema.yaml` and
-`course/schemas/concept-frontmatter.schema.yaml` are the tables of `course/README.md` sections 2 and 3.1
-(#329). The other rules of a course leave `course/README.md` for `course/rules.yaml`, and the rules of
-the protocol leave `teacher/README.md` for `teacher/rules.yaml`, which holds one today, in #318.
-Until that extraction, `course/README.md` and `teacher/README.md` keep their verbal forms of obligation, read
-as `course/README.md` says in its opening.
+`course/schemas/concept-frontmatter.schema.yaml` are the tables of `course/README.md` sections 2 and
+3.1 (#329). The other rules of a course leave `course/README.md` for `course/rules.yaml`, and the
+rules of the protocol leave `teacher/README.md` for `teacher/rules.yaml`, which holds one today, in
+#318. Until that extraction, `course/README.md` and `teacher/README.md` keep their verbal forms of
+obligation, read as `course/README.md` says in its opening.
 
 **Language exception.** The rules of `teacher/README.md` are written in French, a bounded exception
 to the language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited
@@ -69,10 +69,10 @@ of another language needs the translation, a spec MINOR that removes this paragr
 
 Two classes of products: the **course**, its diagrams included, and the **teacher**.
 
-- A course conforms when it holds every requirement of its rules (`course/rules.yaml`, and
-  until #318 the rest of `course/README.md`), whatever the method that verifies each one. The blocking
-  checks are a necessary condition, not a sufficient one: the review and taught-check do the
-  rest, and a course tag certifies the whole.
+- A course conforms when it holds every requirement of its rules (`course/rules.yaml`, and until
+  #318 the rest of `course/README.md`), whatever the method that verifies each one. The blocking
+  checks are a necessary condition, not a sufficient one: the review and taught-check do the rest,
+  and a course tag certifies the whole.
 - A teacher conforms when it holds every requirement of the protocol (`teacher/rules.yaml`,
   and until #318 the rest of `teacher/README.md`); the method of a rule of the protocol is
   demonstration, by the fresh tests. No teacher conforms yet, since no fresh test exists.
@@ -204,12 +204,12 @@ method and the severity that follows (section 7); and the tests of the spec's ow
 | the reviewer | which rules a script already verified, so the review reads the rest | reviewing a change |
 | the maintainer | the reported findings to triage into course issues | on demand |
 
-Node scripts in `course/checks/`, one per id, with the dependencies of `course/checks/package.json` installed
-by `npm ci` (decision `checks-use-ajv-and-yaml`); `course/checks/README.md` gives how to install and run
-them, their options and fixtures. `course-specs/check-course <course-dir>` runs this folder's
-`course/checks/check-course` on a course. `course/checks/check-spec` runs the tests of the spec's own files
-(`teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/`, `rules/`, `course/schemas/`, `lang/`), not a
-course.
+Node scripts in `course/checks/`, one per id, with the dependencies of `course/checks/package.json`
+installed by `npm ci` (decision `checks-use-ajv-and-yaml`); `course/checks/README.md` gives how to
+install and run them, their options and fixtures. `course-specs/check-course <course-dir>` runs this
+folder's `course/checks/check-course` on a course. `course/checks/check-spec` runs the tests of the
+spec's own files (`teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/`,
+`course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `lang/`), not a course.
 
 `check-course` takes its checks from `course/rules.yaml`: by default it runs, in one run, every
 check of method test, blocking and reporting, and `--category <c>[,<c>...]` runs the checks of

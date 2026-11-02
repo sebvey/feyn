@@ -1,10 +1,9 @@
 'use strict';
-// The contract of a case (course/README.md section 3.3), the `pedagogy` part of the concept folder split
-// from `concept-folder` (#329): case headings (a sub-concept of the concept and at most one
-// qualifier of the closed list), titles unique in the concept, fields (known labels, a qualifier
-// on « Question » only, the mandatory fields once and in order), coverage of leaves, citation of
-// every case in « Consignes ». The sections of `teaching.md` and their order are
-// `concept-folder`'s.
+// The contract of a case (course/README.md section 3.3), the `pedagogy` part of the concept folder
+// split from `concept-folder` (#329): case headings (a sub-concept of the concept and at most one
+// qualifier of the closed list), titles unique in the concept, fields (known labels, a qualifier on
+// « Question » only, the mandatory fields once and in order), coverage of leaves, citation of every
+// case in « Consignes ». The sections of `teaching.md` and their order are `concept-folder`'s.
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
 

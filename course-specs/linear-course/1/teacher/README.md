@@ -34,12 +34,12 @@ this file is in English.
 - A family (`##`) and a group (`###`) open with a `**Purpose.**` paragraph, then a table of
   their readers (Reader, Needs, When), the form of `course/README.md`. "Keys and parameters" and
   "Inherited from parcours-po" are reference tables, not rules: they have none.
-- A rule is named by a slug, as a decision is (decision `rules-named-by-slug`): two to five
-  words, lowercase, joined by hyphens, naming the behaviour, in English in every language of the
-  protocol. The rule shows it in bold at its start, `**one-question-per-message**`; a row of the
-  save-point table shows it in its first cell. Another rule cites it in code,
-  « (règle `one-question-per-message`) », as do the tables, `SPEC.md`, `course/README.md`, decisions and tests. A
-  rule has no number: its order and its family may change, its slug does not.
+- A rule is named by a slug, as a decision is (decision `rules-named-by-slug`): two to five words,
+  lowercase, joined by hyphens, naming the behaviour, in English in every language of the protocol.
+  The rule shows it in bold at its start, `**one-question-per-message**`; a row of the save-point
+  table shows it in its first cell. Another rule cites it in code, « (règle
+  `one-question-per-message`) », as do the tables, `SPEC.md`, `course/README.md`, decisions and
+  tests. A rule has no number: its order and its family may change, its slug does not.
 - A rule is cited by its slug; a removed rule's slug is never reused.
 - A group of rules is a `###` heading inside a family: its title, then its slug in code between
   parentheses, « ### Accueil (`onboarding`) » (decision `rule-groups-replace-ranges`). Its slug
@@ -728,7 +728,8 @@ follows, not a fixed string.
 | `typography.rules` | the typography the teacher writes by: space before « : », « ; », « ? », « ! »; quotes « ». It does not repeat the ban: `typography.banned` holds the banned characters (em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 
 The headings, statuses and line formats of the `memory_headings`, `status` and `memory` groups are
-those of `teacher/templates/learner/`: a pack and the learner templates of its language change together.
+those of `teacher/templates/learner/`: a pack and the learner templates of its language change
+together.
 
 **Course parameters** (from `course.yaml`, injected by the classroom build)
 

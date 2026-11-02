@@ -9,8 +9,8 @@
 //     `origin`; no other key;
 //   - the closed lists of SPEC.md sections 4 to 6: the levels, the methods (a rule of the
 //     protocol: demonstration), the categories of a course, the families of the protocol;
-//   - a group of teacher/rules.yaml has an `id`, the slug of a group of teacher/README.md (a heading
-//     "### <title> (`<slug>`)" of a rule family "## <n>. ...", as rule-slugs reads it);
+//   - a group of teacher/rules.yaml has an `id`, the slug of a group of teacher/README.md (a
+//     heading "### <title> (`<slug>`)" of a rule family "## <n>. ...", as rule-slugs reads it);
 //   - the ids of rules and groups are unique across the two files;
 //   - a check named exists, as a script of this folder (`<check>.js`) or an agent workflow of
 //     the repository (`.claude/workflows/<check>.js`);
@@ -50,7 +50,8 @@ function checkExists(id) {
   return fs.existsSync(path.join(__dirname, id + '.js')) || fs.existsSync(path.join(WORKFLOWS, id + '.js'));
 }
 
-// the group slugs teacher/README.md defines, in its rule families; null when teacher/README.md is missing
+// the group slugs teacher/README.md defines, in its rule families; null when teacher/README.md is
+// missing
 function protocolGroups(ctx) {
   const text = ctx.read('teacher/README.md');
   if (text === null) return null;

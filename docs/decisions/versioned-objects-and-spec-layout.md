@@ -8,19 +8,19 @@ area: repo
 Without this, an agent would drop `@1` support when `@2` appears, or open a MAJOR for a bug
 fix.
 
-Two objects are versioned, a course and a spec, in semver; everything else is tooling. A spec
-is the contract for a type of course, kept in one folder per MAJOR,
-`course-specs/<name>/<MAJOR>/` (`1/`, not `v1/`), which holds `SPEC.md` (the frame, decision
-`spec-files-and-alpha-version`), `COURSE.md` (what a course is), `PROTOCOL.md` (the protocol),
-`rules/` (the rules as data), `schemas/`, `README.md`, `checks/` (its checks and their
-fixtures), `decisions/`, `lang/` (the language packs), `templates/` (the course templates) and
-`CHANGELOG.md`. A new MAJOR copies the tree of the previous one, its decisions under the same
-slugs; a MAJOR in preparation carries `<MAJOR>.0.0-alpha` until its tag, with no prerelease
-number nor tag. A course declares the MAJOR it follows (`spec: linear-course@1`);
-`course-specs/check-course <course>` reads it and runs `course-specs/<name>/<MAJOR>/checks`,
-refusing an unknown spec or MAJOR. A spec version is tagged `<name>/vX.Y.Z`, a course version
-`<id>/vX.Y.Z`; the bump table reads in levels for the rules of a course (decision
-`rules-with-level-and-method`):
+Two objects are versioned, a course and a spec, in semver; everything else is tooling. A spec is the
+contract for a type of course, kept in one folder per MAJOR, `course-specs/<name>/<MAJOR>/` (`1/`,
+not `v1/`), which holds `SPEC.md` (the frame, decision `spec-files-and-alpha-version`), `README.md`,
+one folder per product, `course/` (`README.md`, what a course is; `rules.yaml`, the rules as data;
+`schemas/`; `templates/`, the course templates; `checks/`, its checks and their fixtures) and
+`teacher/` (`README.md`, the protocol; `rules.yaml`; `templates/learner/`), then `decisions/`,
+`lang/` (the language packs) and `CHANGELOG.md`. A new MAJOR copies the tree of the previous one,
+its decisions under the same slugs; a MAJOR in preparation carries `<MAJOR>.0.0-alpha` until its
+tag, with no prerelease number nor tag. A course declares the MAJOR it follows
+(`spec: linear-course@1`); `course-specs/check-course <course>` reads it and runs
+`course-specs/<name>/<MAJOR>/course/checks`, refusing an unknown spec or MAJOR. A spec version is
+tagged `<name>/vX.Y.Z`, a course version `<id>/vX.Y.Z`; the bump table reads in levels for the rules
+of a course (decision `rules-with-level-and-method`):
 
 | Object | MAJOR | MINOR | PATCH |
 |---|---|---|---|

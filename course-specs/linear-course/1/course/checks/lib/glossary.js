@@ -1,5 +1,6 @@
 'use strict';
-// The course glossary's table (course/README.md section 5), read by `course-files` and `glossary-order`.
+// The course glossary's table (course/README.md section 5), read by `course-files` and
+// `glossary-order`.
 const mdlib = require('./md');
 
 // The term cell: one term or its variants, separated by commas (a comma inside a parenthesis

@@ -1,6 +1,6 @@
 'use strict';
-// plan.md, glossary.md, CHANGELOG.md and the domain files: presence, frontmatter, sections,
-// leads, no unlisted domain file (course/README.md sections 4 and 5); « Accueil » of plan.md and its
+// plan.md, glossary.md, CHANGELOG.md and the domain files: presence, frontmatter, sections, leads,
+// no unlisted domain file (course/README.md sections 4 and 5); « Accueil » of plan.md and its
 // questions.
 const yaml = require('./lib/yaml-lines');
 const mdlib = require('./lib/md');

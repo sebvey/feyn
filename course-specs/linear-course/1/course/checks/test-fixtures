@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 'use strict';
-// Runs check-course on the fixtures, once each with the default (every check of method test),
-// and says whether every run gave the expected result (a real course is checked by
+// Runs check-course on the fixtures, once each with the default (every check of method test), and
+// says whether every run gave the expected result (a real course is checked by
 // course-specs/check-course courses/<id>, not here). The severity of each check follows from its
-// rules (SPEC.md section 7): the test reads course/rules.yaml itself and holds the exit codes to it.
+// rules (SPEC.md section 7): the test reads course/rules.yaml itself and holds the exit codes to
+// it.
 //   --list                         names every check with its category and
 //                                  its severity, as course/rules.yaml gives them; the check it
 //                                  does not run (taught-check) marked "not run here"
@@ -159,8 +160,8 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   }
 }
 
-// the schemas of the spec (course/schemas/*.schema.yaml, JSON Schema 2020-12 read by Ajv2020): valid's
-// course.yaml and the frontmatter of each of its concept.md are valid against them
+// the schemas of the spec (course/schemas/*.schema.yaml, JSON Schema 2020-12 read by Ajv2020):
+// valid's course.yaml and the frontmatter of each of its concept.md are valid against them
 {
   const Ajv2020 = require('ajv/dist/2020').default;
   const yaml = require('./lib/yaml-lines');

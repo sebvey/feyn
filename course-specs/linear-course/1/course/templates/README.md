@@ -12,7 +12,10 @@ file is, which course/README.md section binds it, and the rules a check enforces
 | `domain.md` | `courses/<id>/domains/<N>-<slug>.md` | 4 |
 | `concept.md`, `teaching.md`, `sources.md` | the same names in `courses/<id>/concepts/<NN>-<slug>/` | 3 |
 | `diagram.svg` | `<stem>.svg` in a concept folder, optional | 6 |
-| `learner/{apprenant,observations,parcours}.md` | a learner's memory files, ported from the old course; no check reads them | protocol |
+
+The templates of a learner's memory files are the teacher's, in `teacher/templates/learner/`
+(`apprenant.md`, `observations.md`, `parcours.md`), ported from the old course: no check reads
+them, the smoke run only scans them for unreplaced placeholders.
 
 The headings and markers in the templates are the French language pack's (`lang/fr.yaml`): a
 course in another language translates them from its own pack. Each template shows one domain,

@@ -229,8 +229,8 @@ In this order (`concept-folder`):
 4. « Schéma » (`drawing`), optional: the drawing instruction (metaphor, what it shows) behind
    the concept's diagrams.
 
-`teaching.md` never overrides a protocol rule: it says what to teach, `teacher/README.md` says how and
-when (« Schéma » says what to draw, not when to send a diagram); a « Consignes » that
+`teaching.md` never overrides a protocol rule: it says what to teach, `teacher/README.md` says how
+and when (« Schéma » says what to draw, not when to send a diagram); a « Consignes » that
 contradicts a rule is a defect of the concept (review). A case restates only the storyline facts
 listed in « Faits du fil rouge utilisés », which takes them from `storyline.md`; it adds the
 unfolding (who says what, when), never a new fact (review).

@@ -1,9 +1,9 @@
 'use strict';
-// sources.md (course/README.md section 3.4) and the frontmatter refs (3.1): no introduction; the five
-// columns of « Affirmations » (section anchors that exist in concept.md, a source cell of
-// reference ids or the markers.course word, a verification, a nature); « Références » (ids,
-// one URL or no link, types, dates); « Non vérifié » entries anchored; every id cited exists,
-// every reference is cited.
+// sources.md (course/README.md section 3.4) and the frontmatter refs (3.1): no introduction; the
+// five columns of « Affirmations » (section anchors that exist in concept.md, a source cell of
+// reference ids or the markers.course word, a verification, a nature); « Références » (ids, one URL
+// or no link, types, dates); « Non vérifié » entries anchored; every id cited exists, every
+// reference is cited.
 const yaml = require('./lib/yaml-lines');
 const mdlib = require('./lib/md');
 const { fail } = require('./lib/course');
