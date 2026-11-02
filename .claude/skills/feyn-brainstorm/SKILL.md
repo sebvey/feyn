@@ -11,7 +11,8 @@ defined, each an issue in Status Option with the body of its kind (decision
 `brainstorm-ends-in-options`). What was settled lives in those work items: what is not in
 them is lost. The maintainer commits an option (sets it Ready) at a triage, never during the
 brainstorm (decision `idea-and-option-before-ready`). Besides the options, a brainstorm may
-leave an idea (step 4); it creates nothing else (no decision, no edit of the repository).
+create the idea it opens from (step 1) or leave one (step 4); it creates nothing else (no
+decision, no edit of the repository).
 
 ## 1. What it opens from
 
@@ -71,8 +72,11 @@ disposable once the options exist.
    `story-with-or-without-an-epic`), an **epic** when it takes more, never cut into stories
    here (an epic is cut when taken, decision `themes-and-release-milestones`). A story goes
    under an open epic only when it is the next one that epic's plan comment names, as at a
-   triage (`/feyn-triage`, step 4). Each is written from the template of its kind, every
-   comment replaced, with its `type:` label:
+   triage (`/feyn-triage`, step 4). Work of an open epic that is not its next story is no
+   option: its settled points go into that epic's Material when the epic is still an option
+   (refined in place, step 4), otherwise into an idea naming that epic (`/feyn-issue idea
+   <finding>`; [contributing](../../../docs/contributing.md), Policies). Each is written from
+   the template of its kind, every comment replaced, with its `type:` label:
    - a story, from [story-body.md](../../reference/story-body.md): the points it settled go in
      its Context, each with its why and the alternative rejected; the Context's last line is
      the origin: "From idea #<n>." when the brainstorm opened from an idea, "Story of epic
