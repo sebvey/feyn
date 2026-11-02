@@ -118,7 +118,8 @@ a twin", finds it, it goes on to create them, the triaged issue left as it is an
   from it (`/feyn-brainstorm`, which is then its triage).
 
 **An issue of the old format** (in Idea, its body already defining a work: a Done when, a To
-do; decision `idea-is-never-converted`): never rewritten in place. It is recreated as a story or
+do; decision `idea-is-never-converted`; an issue numbered below #424, the epic PR of epic #392,
+#425 excepted, `/feyn-issue`, "Read an issue"): never rewritten in place. It is recreated as a story or
 an epic, or several, as for an idea above, with `/feyn-issue`, the work it defines restated in
 the new work item's form, Option or Ready as the maintainer says. Its blocked-by links, both
 ways ([project.md](../../reference/project.md), "Dependencies", Read), are set again on the new
