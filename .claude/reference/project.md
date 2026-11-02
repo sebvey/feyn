@@ -153,13 +153,14 @@ read from the Project on 2026-11-02 (the query of the views, "The Project workfl
 | Ideas | `status:Idea` | | Labels, Updated |
 | Options | `status:Option` | | Labels |
 | Ready | `status:Ready label:story` | Parent issue | Assignees, Status, Linked pull requests, Sub-issues progress |
-| In progress | `status:"In progress","Ready for review" label:story` | | Linked pull requests, Sub-issues progress |
+| In progress | `status:"In progress","Ready for review" label:story` | Status | Linked pull requests, Sub-issues progress |
 | Overview | `label:epic,story no:parent-issue is:open` | Status | Labels, Milestone, Sub-issues progress |
 
 Ideas is the triage inbox; Options is what waits for the maintainer's commitment; Ready groups
-the stories by epic, those with none under "No Parent issue"; In progress shows the stories In
-progress and Ready for review; Overview shows every open work item with no parent, the epics
-whatever their Status and the stories without an epic, grouped by Status.
+the stories by epic, those with none under "No Parent issue"; In progress groups its stories
+by Status (In progress, the agents' work; Ready for review, what awaits the maintainer's merge);
+Overview shows every open work item with no parent, the epics whatever their Status and the
+stories without an epic, grouped by Status.
 
 The epics of 2026-10-29: #220 the `linear-course` spec v1; #221 `parcours-po` conformity;
 #222 the teacher; #223 the site; #224 `parcours-po`, first quality campaign; #228 the work
