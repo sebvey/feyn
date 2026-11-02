@@ -22,9 +22,8 @@ widespread sources: common agile and GitHub vocabulary for epic and story, Steya
 Kanban for idea and option. "Slice", "observation" as a kind and "proposal" go, in the labels,
 the skills and the glossary; the terms of feyn's own mechanisms, which the frame does not name,
 stay: epic PR, integration branch, plan comment, open question, direct delivery, work session.
-The label `proposal` is deleted at the merge of the epic PR that lands this frame; the closed
-proposals keep their title "Proposal: …", which suffices to find them. This replaces the
-vocabulary of slices, observations and proposals, and the reference to Scrum vocabulary.
+This replaces the vocabulary of slices, observations and proposals, and the reference to Scrum
+vocabulary.
 
 ## Options ruled out
 

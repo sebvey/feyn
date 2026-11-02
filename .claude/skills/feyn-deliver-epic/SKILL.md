@@ -172,11 +172,8 @@ When no open question remains and every story is closed and Done
 1. Check each statement of the epic's Done when yourself (a command, a file), not from a review.
 2. Open the epic PR: `mise exec -- gh pr create --base main --head <integration branch>`, title
    `<type>(<area>): <summary>`, body starting with `Closes #<epic>`, then the sections of
-   `/feyn-pull-request` step 5, Issues listing every story with its PR. For epic #392, its
-   body lists the maintainer's acts at the merge ([project.md](../../reference/project.md),
-   "Acts at the merge of epic #392", cited here, not copied) as its last step, to be done in
-   one sitting right after the merge, never before. Set the epic Ready for review
-   ([project.md](../../reference/project.md), "Commands").
+   `/feyn-pull-request` step 5, Issues listing every story with its PR. Set the epic Ready for
+   review ([project.md](../../reference/project.md), "Commands").
 3. The hand-over message (debrief rule 5), in this order, every issue and PR number with its
    title:
    - **In short**: where the epic stands, what is awaited from the maintainer, the link to the epic PR;
@@ -188,8 +185,7 @@ When no open question remains and every story is closed and Done
    - **Choices made without the maintainer**: the open questions and their answers, then the
      other choices of the runs, grouped;
    - **Off the epic**: the ideas opened, what was seen and left;
-   - **After the merge**: what step 6 will do, and what the merge frees; for epic #392, the
-     maintainer's acts at the merge and their check by the orchestrator, step 6.5.
+   - **After the merge**: what step 6 will do, and what the merge frees.
 4. The merge is the maintainer's: the PR page, "Squash and merge".
 
 ## 6. After the maintainer's merge
@@ -205,14 +201,6 @@ When no open question remains and every story is closed and Done
    `git branch --list 'worktree-*'`).
 4. The issues the epic blocked that are now free: as `/feyn-merge-cleanup` step 7, "The issues
    it blocked", for the epic.
-5. Epic #392 only: the maintainer does the acts at its merge in one sitting
-   ([project.md](../../reference/project.md), "Acts at the merge of epic #392"); once they say
-   the acts are done, check each act that section lists yourself, with the commands and queries
-   it gives (the Status field's options and the views in one query, the labels, the open issues
-   with their parent and their Status; the Status the Project workflow "Item added to project"
-   sets is read in the web interface, so ask the maintainer what it shows). Do none of the acts:
-   they are the maintainer's. Reply with one line per act, done or not; an act not done: name
-   it, with its path in the web interface or, for Option's id, the direct story that writes it.
 
 ## Tool behaviours
 

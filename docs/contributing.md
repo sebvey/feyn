@@ -257,10 +257,11 @@ Two glossaries, each at home: the repository glossary applies in repository file
 in that course's files, so the frame's vocabulary (epic, story) is available to the repository
 even where a course teaches those words in its own sense ([`glossary.md`](glossary.md)).
 
-The Project has one view per stage of the flow, all tables: Ideas (the triage inbox), Options
-(what waits for the maintainer's commitment), Epics (every open epic, whatever its Status),
-Ready (the Ready stories, grouped by epic) and In progress (In progress and Ready for review,
-epics and stories). Their filters, groupings and fields are in
+The Project has one view per stage of the flow and one overview, all tables: Ideas (the triage
+inbox), Options (what waits for the maintainer's commitment), Ready (the Ready stories, grouped
+by epic), In progress (the stories In progress and Ready for review) and Overview (every open
+work item with no parent, grouped by Status: the epics, whatever their Status, and the stories
+without an epic). Their filters, groupings and fields are in
 [`.claude/reference/project.md`](../.claude/reference/project.md), "The views". Why: decisions
 `themes-and-release-milestones`, `epic-on-integration-branch`, `kind-label-per-work-item`.
 
@@ -300,13 +301,14 @@ epics and stories). Their filters, groupings and fields are in
 In the web interface, the Project's views. First what waits for the maintainer: the search
 `label:blocked:maintainer` in the issue list; the PR list shows the draft PRs (a PR under
 `/feyn-deliver` is also a draft until its review is done: not one to answer); the Ready for
-review items of the In progress view, a story's PR or an epic's epic PR waiting for the merge;
-the open questions of the epics In progress, in their plan comments. Then the In progress view
-(what moves on its own), then Ready (what can be taken), then Options (what to commit or
-close), then Ideas (what to triage). An unblock is a comment on the issue that says what was
-validated, then the label removed: the comment is the trace a fresh agent reads; an open
-question is answered by a comment on the epic. Why: decisions `blocked-is-a-label-not-a-state`,
-`project-status-not-state-labels`, `idea-and-option-before-ready`, `epic-on-integration-branch`.
+review items, a story's PR in the In progress view or an epic's epic PR in Overview, waiting for
+the merge; the open questions of the epics In progress, in their plan comments. Then the In
+progress view (what moves on its own), then Ready (what can be taken), then Options (what to
+commit or close), then Ideas (what to triage). An unblock is a comment on the issue that says
+what was validated, then the label removed: the comment is the trace a fresh agent reads; an
+open question is answered by a comment on the epic. Why: decisions
+`blocked-is-a-label-not-a-state`, `project-status-not-state-labels`,
+`idea-and-option-before-ready`, `epic-on-integration-branch`.
 
 ## Tool behaviours
 

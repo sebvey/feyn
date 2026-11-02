@@ -33,14 +33,6 @@ the work items created from it; on an option, the last line of its body "Refined
 (triage)" or "Refined <YYYY-MM-DD> (brainstorm)", the date its body was last reworked, from
 which you read what changed (`git log origin/main --since=<that date>`).
 
-Until the merge of epic #392 the Project has neither Idea nor Option and still says Backlog:
-read the items whose `status` is `Backlog` instead, each as the merge will place it
-(`.claude/reference/project.md`, "Acts at the merge of epic #392", step 5): an epic as an
-option; an issue with a parent epic as a story of that epic, or, its epic in Backlog, as
-folded into that epic; any other issue as an idea. The
-open epics whose Status is Done (archived, which `gh project item-list` leaves out) become
-options only at the merge: do not read them until then.
-
 An issue is stale when it no longer deserves to exist in this form: done, moot, a need that
 is gone, the work of an epic, a duplicate, an option that holds several work items or that
 the repository no longer matches, or an issue of the old format. An idea's form is never

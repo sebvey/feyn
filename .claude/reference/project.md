@@ -8,16 +8,15 @@ nothing else (decisions `idea-and-option-before-ready`, `project-status-not-stat
 | Status | Means | Set by | Option id |
 |---|---|---|---|
 | Idea | an idea: an issue with no kind holding a finding, to triage; never converted, the triage creates from it the work items it calls for, then closes it | Project workflow "Item added to project", on every issue added | `c1d0b0c3` |
-| Option | a work item, epic or story, defined and not committed: the body of its kind, Done when included; until Ready its kind and body may change | `/feyn-issue` on a work item it creates at a triage or asked directly by the maintainer, unless the maintainer says it is committed; always on one a brainstorm creates | `<option-id-at-merge>` |
+| Option | a work item, epic or story, defined and not committed: the body of its kind, Done when included; until Ready its kind and body may change | `/feyn-issue` on a work item it creates at a triage or asked directly by the maintainer, unless the maintainer says it is committed; always on one a brainstorm creates | `985f6b35` |
 | Ready | committed, free to take: the **commitment point**, where the form freezes and the Done when becomes the contract (decision `issue-defines-pr-verifies`) | the maintainer, committing an option; `/feyn-issue` at creation, at a triage or asked directly, when the maintainer says the work item is committed, and on a story posed by the orchestrator of a taken epic | `be2d48d7` |
 | In progress | a branch exists | `/feyn-issue-branch` (no Project workflow fires on a branch); `/feyn-deliver` step 4 when a correction is asked on a delivered PR | `be703c13` |
 | Ready for review | the work claims done, the maintainer reviews and concludes: a story without an epic whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none, direct delivery.` (the maintainer merges), an epic whose epic PR is handed over (the maintainer verifies its Done when and merges the epic PR); a story of an epic never has it ("Epics", "Delivery on an integration branch") | `/feyn-pull-request` step 8 (`/feyn-deliver` step 5 when it runs the cycle); for an epic, its orchestrator at the hand-over of the epic PR (`/feyn-deliver-epic` step 5) | `deab4f08` |
 | Done | closed (the close reason stays on GitHub) | Project workflow "Item closed"; `/feyn-merge-cleanup` only when that Project workflow is off; for a story of an epic, its orchestrator when it merges the story into the integration branch and closes it | `9e81e5a6` |
 
-`<option-id-at-merge>` is Option's id, written here once the maintainer adds Option ("Acts at
-the merge of epic #392"). No Status says a decision is awaited: the label `blocked:maintainer`
-carries it, on any Status (decision `blocked-is-a-label-not-a-state`). A story is a work item
-with or without a parent epic (decision `story-with-or-without-an-epic`; "Epics").
+No Status says a decision is awaited: the label `blocked:maintainer` carries it, on any Status
+(decision `blocked-is-a-label-not-a-state`). A story is a work item with or without a parent
+epic (decision `story-with-or-without-an-epic`; "Epics").
 
 Project id `PVT_kwHOADOnU84Bo8V6`, Status field id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`.
 
@@ -45,7 +44,8 @@ the Project's views and `gh project item-list`; the maintainer turned it off on 
 It shows only the names and on or off; the filter and the Status each sets are read in the web
 interface (Project feyn, menu ⋯, Workflows) (GitHub, observed 2026-10-28, #71). The views and
 the Status field's options, with their ids, in one query:
-`mise exec -- gh api graphql -f query='query{user(login:"sebvey"){projectV2(number:4){views(first:20){nodes{name number layout filter}} field(name:"Status"){... on ProjectV2SingleSelectField{options{id name}}}}}}'`.
+`mise exec -- gh api graphql -f query='query{user(login:"sebvey"){projectV2(number:4){views(first:20){nodes{name number layout filter groupByFields(first:5){nodes{... on ProjectV2FieldCommon{name}}} fields(first:20){nodes{... on ProjectV2FieldCommon{name}}}}} field(name:"Status"){... on ProjectV2SingleSelectField{options{id name}}}}}}'`
+(each view with its filter, its grouping and its fields).
 
 ## Commands
 
@@ -145,19 +145,22 @@ sub-issues are closed.
   same workflow, its PR to `main`.
 
 **The views**, set by the maintainer in the web interface (Project feyn, a view's menu:
-filter, Layout, Group by, Fields), one per stage of the flow, all tables:
+filter, Layout, Group by, Fields), one per stage of the flow and one overview, all tables, as
+read from the Project on 2026-11-02 (the query of the views, "The Project workflows"):
 
 | View | Filter | Grouped by | Fields beside Title |
 |---|---|---|---|
 | Ideas | `status:Idea` | | Labels, Updated |
-| Options | `status:Option` | | Labels, Parent issue, Updated |
-| Epics | `label:epic is:open` | | Status, Sub-issues progress, Milestone |
-| Ready | `status:Ready label:story` | Parent issue | Labels, Linked pull requests |
-| In progress | `status:"In progress","Ready for review"` | | Status, Labels, Linked pull requests, Sub-issues progress |
+| Options | `status:Option` | | Labels |
+| Ready | `status:Ready label:story` | Parent issue | Assignees, Status, Linked pull requests, Sub-issues progress |
+| In progress | `status:"In progress","Ready for review" label:story` | Status | Linked pull requests, Sub-issues progress |
+| Overview | `label:epic,story no:parent-issue is:open` | Status | Labels, Milestone, Sub-issues progress |
 
 Ideas is the triage inbox; Options is what waits for the maintainer's commitment; Ready groups
-the stories by epic, those with none under "No Parent issue"; Epics shows every open epic
-whatever its Status; In progress shows epics and stories.
+the stories by epic, those with none under "No Parent issue"; In progress groups its stories
+by Status (In progress, the agents' work; Ready for review, what awaits the maintainer's merge);
+Overview shows every open work item with no parent, the epics whatever their Status and the
+stories without an epic, grouped by Status.
 
 The epics of 2026-10-29: #220 the `linear-course` spec v1; #221 `parcours-po` conformity;
 #222 the teacher; #223 the site; #224 `parcours-po`, first quality campaign; #228 the work
@@ -182,55 +185,3 @@ is closed. Two issues that only edit the same file are not linked.
 - **Set** "n is blocked by b": the link takes b's database id, not its number:
   `mise exec -- gh api -X POST repos/sebvey/feyn/issues/<n>/dependencies/blocked_by -F issue_id=$(mise exec -- gh api repos/sebvey/feyn/issues/<b> --jq .id)`.
 - **Remove** it: `mise exec -- gh api -X DELETE repos/sebvey/feyn/issues/<n>/dependencies/blocked_by/<database id of b>`.
-
-## Acts at the merge of epic #392
-
-The maintainer's acts on the Project and the labels, done in one sitting right after merging
-the epic PR of epic #392 into `main`, never before (epic #392, points 10 and 14): until then
-the skills on `main` read the Project as it was on 2026-11-02, with the Statuses Backlog and
-Needs Decision, no Option and no label `story`, and would stop working on the new ones.
-`/feyn-deliver-epic` step 6.5 checks each act after that merge, doing none of them. In order:
-
-1. **The Status field** (Project feyn, menu ⋯, Settings, field Status): rename Backlog to Idea,
-   which keeps its id `c1d0b0c3` and its items (never delete and recreate it: new ids, and a
-   behaviour on the items nobody verified); add Option, placed between Idea and Ready; remove
-   Needs Decision (it held no item on 2026-11-02).
-2. **"Item added to project"** (menu ⋯, Workflows): check it now sets Idea, and set it if it
-   shows no Status.
-3. **Option's id**: read it with the query of the views and the Status field
-   ("The Project workflows"), and write it into this file in place of `<option-id-at-merge>`,
-   by a direct story to `main`.
-4. **The labels** (repository, Issues, Labels; or the commands):
-   `mise exec -- gh label create story --description "A story: a unit of work delivered in one PR, with or without an epic"`;
-   `mise exec -- gh label edit epic --description "An epic: an objective that closes, delivered in stories split one at a time"`;
-   `mise exec -- gh label delete proposal --yes` (the closed proposals keep their title
-   "Proposal: …", which finds them).
-5. **Every open issue placed** by the rule of point 10, mechanical, with no judgement on the
-   body. List them, number, parent epic, kind label:
-   `mise exec -- gh api --paginate 'repos/sebvey/feyn/issues?state=open&per_page=100' --jq '.[] | select(.pull_request | not) | [.number, ((.parent_issue_url // "") | split("/") | last), ([.labels[].name] | map(select(. == "epic" or . == "story")) | join(","))] | @tsv'`,
-   and each one's Status with `gh issue view <n> --json projectItems` ("Commands"; it shows
-   the archived items `gh project item-list` leaves out). Then:
-
-   | Open issue | Becomes |
-   |---|---|
-   | no kind label, a parent epic taken (Ready or In progress) | label `story`, Status kept |
-   | no kind label, a parent epic not taken (Idea or Option, Backlog before step 1; #314, child of #318, on 2026-11-02) | folded into its epic's Material, then closed as completed naming the epic |
-   | no kind label, no parent, in Idea (Backlog before step 1) | Idea, no label: the triage reads it in the old format |
-   | no kind label, no parent, Ready, In progress or Ready for review | label `story`, Status kept |
-   | `epic`, in Idea (Backlog before step 1), or open with the Status Done (#220, #221 on 2026-11-02, both archived) | Status Option |
-   | `epic`, Ready or In progress | kept |
-
-   The label: `mise exec -- gh issue edit <n> --add-label story`, or the issue's page, sidebar
-   Labels. The Status: `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Option`,
-   or the item's Status cell in a view. The fold: what the sub-issue holds goes into its
-   epic's Material (the epic's page, menu ⋯ of the body, Edit), then
-   `mise exec -- gh issue close <n> --reason completed --comment "Folded into epic #<epic>, its Material."`.
-   An archived item is restored first (Project feyn, menu
-   ⋯, Archived items, Restore); whether it is archived:
-   `mise exec -- gh api graphql -f query='query{repository(owner:"sebvey",name:"feyn"){issue(number:<n>){projectItems(first:5,includeArchived:true){nodes{isArchived}}}}}'`. An old issue already recreated at a triage as a work item: its
-   blocked-by links set again on the new work item ("Dependencies", Set).
-6. **The views**, remade to the set of "The views" above. What exists on 2026-11-02, all
-   tables: Backlog (`status:Backlog`, fields Labels, Updated), Ready (`status:Ready`, grouped by
-   Parent issue), In progress (`-status:Backlog,Done`) and View 10 (`392`, made for one look).
-   Backlog becomes Ideas, Ready and In progress take their new filter, Options and Epics are
-   added, View 10 is deleted.
