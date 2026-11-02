@@ -60,8 +60,8 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
    closes.
    - **The parent.** `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
      prints the parent's number; HTTP 404 « No parent issue found »: no parent, skip to the
-     next bullet. A parent with the label `epic`: the issue is a story of an epic, which this
-     skill does not clean up; say so and name `/feyn-deliver-epic <epic>`. Any other parent
+     next bullet. A parent with the label `kind:epic`: the issue is a story of an epic, which
+     this skill does not clean up; say so and name `/feyn-deliver-epic <epic>`. Any other parent
      (`mise exec -- gh api repos/sebvey/feyn/issues/<parent> --jq '[.state, .sub_issues_summary]'`):
      no plan comment and no Status; it is done when, open, its `sub_issues_summary` shows every
      sub-issue closed. A parent done: the reply ends with one line, its number and title, its

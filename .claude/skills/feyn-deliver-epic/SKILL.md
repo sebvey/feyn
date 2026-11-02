@@ -26,7 +26,7 @@ comes once, at the hand-over (step 5).
 ## 1. Take the epic
 
 - Read it: `mise exec -- gh issue view <epic> --comments`. Refuse in one line, changing nothing,
-  when it has no label `epic`, no Done when, an open blocker
+  when it has no label `kind:epic`, no Done when, an open blocker
   ([project.md](../../reference/project.md), "Dependencies"), or a Status other than Ready or In
   progress. In progress: resume it, from its integration branch
   (`git ls-remote --heads origin '*/<epic>-*'`) and the last line of its plan comment.

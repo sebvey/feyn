@@ -58,8 +58,8 @@ options, with their ids:
   (HTTP 404 « No parent issue found » when it has none); an epic's stories and their count:
   `mise exec -- gh api repos/sebvey/feyn/issues/<epic>/sub_issues --jq '.[] | [.number, .state, .title] | @tsv'`
   and `mise exec -- gh api repos/sebvey/feyn/issues/<epic> --jq .sub_issues_summary`.
-  The epics: `mise exec -- gh issue list --label epic --json number,title --jq '.[] | [.number, .title] | @tsv'`;
-  the stories: the same with `--label story`.
+  The epics: `mise exec -- gh issue list --label kind:epic --json number,title --jq '.[] | [.number, .title] | @tsv'`;
+  the stories: the same with `--label kind:story`.
 - **Attach** a story to its epic (the link takes the story's database id, not its number):
   `mise exec -- gh api -X POST repos/sebvey/feyn/issues/<epic>/sub_issues -F sub_issue_id=$(mise exec -- gh api repos/sebvey/feyn/issues/<n> --jq .id)`.
 - **Detach**: `mise exec -- gh api -X DELETE repos/sebvey/feyn/issues/<epic>/sub_issue -F sub_issue_id=<database id>`
