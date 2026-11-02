@@ -74,9 +74,10 @@ disposable once the options exist.
    under an open epic only when it is the next one that epic's plan comment names, as at a
    triage (`/feyn-triage`, step 4). Work of an open epic that is not its next story is no
    option: its settled points go into that epic's Material when the epic is still an option
-   (refined in place, step 4), otherwise into an idea naming that epic (`/feyn-issue idea
-   <finding>`; [contributing](../../../docs/contributing.md), Policies). Each is written from
-   the template of its kind, every comment replaced, with its `type:` label:
+   (refined in place, as step 4.4 says for an option), otherwise into an idea naming that epic
+   (`/feyn-issue idea <finding>`; [contributing](../../../docs/contributing.md), Policies).
+   Each is written from the template of its kind, every comment replaced, with its `type:`
+   label:
    - a story, from [story-body.md](../../reference/story-body.md): the points it settled go in
      its Context, each with its why and the alternative rejected; the Context's last line is
      the origin: "From idea #<n>." when the brainstorm opened from an idea, "Story of epic
@@ -99,7 +100,11 @@ disposable once the options exist.
 5. **Close the idea** it opened from, if any, as completed, naming the options created: it was
    that idea's triage (decision `brainstorm-ends-in-options`):
    `mise exec -- gh issue close <n> --reason completed --comment "Brainstormed <YYYY-MM-DD>: <the options created from it, each #<m>>."`.
-   An idea from which the brainstorm created no option stays open, in Idea.
+   An idea whose settled points all went into an open epic (step 4.3) is closed the same way,
+   folded into that epic, as at a triage (`/feyn-triage`, step 4):
+   `--comment "Brainstormed <YYYY-MM-DD>: folded into epic #<e>."`, naming the idea created
+   for it, if any. Any other idea from which the brainstorm created no option stays open, in
+   Idea.
 6. Delete the working file.
 
 ## 5. Reply
