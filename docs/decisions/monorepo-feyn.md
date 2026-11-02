@@ -16,11 +16,11 @@ only, never edited by hand). `feyn` was created empty: the git history of `parco
 not carry over. The two old repositories are frozen, then archived; they are read, never
 written to.
 
-The root holds two files, `CLAUDE.md` and `README.md`, plus dotfiles; `docs/` holds three
-things, `decisions/`, `glossary.md` and `contributing.md`. Anything more at the root or in
-`docs/` needs a decision here. A document that describes one area lives in that area's folder
-(`site/docs/`, `teacher/README.md`), and there is no `CLAUDE.md` per folder: skills carry the
-detail.
+The root holds two files, `CLAUDE.md` and `README.md`, plus dotfiles; `docs/` holds four
+things, `decisions/`, `glossary.md`, `contributing.md` and `kanban.md`. Anything more at the
+root or in `docs/` needs a decision here. A document that describes one area lives in that
+area's folder (`site/docs/`, `teacher/README.md`), and there is no `CLAUDE.md` per folder:
+skills carry the detail.
 
 ## Options ruled out
 
@@ -34,3 +34,8 @@ detail.
 - A change that spans a spec and a course is one PR, reviewed once.
 - Two courses evolve in parallel on branches touching `courses/a/` and `courses/b/`, without
   conflict.
+- Amended 2026-11-02 (#393): `docs/` admits a fourth file, `kanban.md`, the reference of the
+  frame of the work (Kanban, with ADR and GitHub flow), which says what the frame is while
+  `contributing.md` says how feyn applies it. Without it, the frame would live in
+  `contributing.md`, mixing the general with the particular in a file that changes at every
+  retouch, or outside the repository only.

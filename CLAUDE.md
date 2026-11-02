@@ -11,7 +11,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `courses/` | one folder per course, `courses/<id>/` (first: `parcours-po`) |
 | `teacher/` | teacher template, teacher skills, classroom build script |
 | `site/` | the site engine (Astro); reads `courses/` directly |
-| `docs/` | `decisions/`, `glossary.md`, `contributing.md` |
+| `docs/` | `decisions/`, `glossary.md`, `contributing.md`, `kanban.md` (the frame of the work) |
 | `.claude/` | `skills/` (the HOW), `agents/` (project subagents), `workflows/`, `reference/` (the WHAT), `decisions/`; decision `claude-folder-layout` |
 | `.github/` | issue template and CI workflows |
 
