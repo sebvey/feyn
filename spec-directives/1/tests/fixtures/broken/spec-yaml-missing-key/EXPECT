@@ -1,0 +1,2 @@
+check: spec-yaml
+message: missing key directives

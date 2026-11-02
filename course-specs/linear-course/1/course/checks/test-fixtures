@@ -81,7 +81,7 @@ const SEVERITY = Object.fromEntries(LIST.map((c) => [c.id, c.severity]));
     LIST.length > 0 && !wrong.length && !missing.length, `wrong: ${wrong.map((c) => `${c.id} ${c.category} ${c.severity}`).join(', ') || 'none'}; missing: ${missing.join(', ') || 'none'}`);
   const notHere = LIST.filter((c) => !c.runsHere).map((c) => c.id).sort().join(',');
   report('--list marks taught-check "not run here", and no other', notHere === 'taught-check', notHere);
-  const spec = LIST.filter((c) => ['rule-slugs', 'rule-files', 'language-pack-keys'].includes(c.id)).map((c) => c.id);
+  const spec = LIST.filter((c) => ['rule-slugs', 'rule-files', 'language-pack-keys', 'spec-yaml'].includes(c.id)).map((c) => c.id);
   report('--list names none of the tests of check-spec', spec.length === 0, spec.join(','));
   report('--list has blocking and reporting checks among those run here',
     RUN.some((c) => c.severity === 'blocks') && RUN.some((c) => c.severity === 'reports'), RUN.map((c) => `${c.id} ${c.severity}`).join(', '));
