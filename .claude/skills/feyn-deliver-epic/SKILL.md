@@ -47,9 +47,10 @@ One at a time, the next one only (rules of the cycle):
 
 1. **Pose** it: `/feyn-issue story #<epic> <what>`, from the plan comment's
    `Next story to pose`. A story of the epic that a triage or a brainstorm created is born
-   Option (`/feyn-triage` step 4, `/feyn-brainstorm` step 4.3): it is not committed, and
-   `/feyn-issue-branch` refuses it. The orchestrator poses it as next only once the maintainer
-   sets it Ready, and asks them to; it poses no twin of it.
+   Option (by default at a triage, always from a brainstorm: `/feyn-triage` step 4,
+   `/feyn-brainstorm` step 4.4): it is not committed, and `/feyn-issue-branch` refuses it. The
+   orchestrator asks the maintainer to set it Ready, then names it as `Next story to pose`
+   once they have, without running `/feyn-issue`: it poses no twin of it.
 2. **`main` moved** (`git fetch`, then
    `git merge-base --is-ancestor origin/main origin/<integration branch>` fails): merge it in,
    never rebase, in a detached worktree of the scratchpad, never from the local integration
@@ -171,10 +172,10 @@ When no open question remains and every story is closed and Done
 1. Check each statement of the epic's Done when yourself (a command, a file), not from a review.
 2. Open the epic PR: `mise exec -- gh pr create --base main --head <integration branch>`, title
    `<type>(<area>): <summary>`, body starting with `Closes #<epic>`, then the sections of
-   `/feyn-pull-request` step 5, Issues listing every story with its PR. The epic PR of epic
-   #392 ends with the maintainer's acts at the merge as its last step, to be done in one
-   sitting right after the merge, never before ([project.md](../../reference/project.md), "Acts
-   at the merge of epic #392", cited, not copied). Set the epic Ready for review
+   `/feyn-pull-request` step 5, Issues listing every story with its PR. For epic #392, its
+   body lists the maintainer's acts at the merge ([project.md](../../reference/project.md),
+   "Acts at the merge of epic #392", cited here, not copied) as its last step, to be done in
+   one sitting right after the merge, never before. Set the epic Ready for review
    ([project.md](../../reference/project.md), "Commands").
 3. The hand-over message (debrief rule 5), in this order, every issue and PR number with its
    title:
