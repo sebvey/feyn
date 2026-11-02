@@ -75,6 +75,9 @@ statements, and says why for each `not met` or `deviation`; on every PR, unless 
 asked for one without a review or named its story a direct delivery, the fresh-agent reviewer of
 `/feyn-pr-review` reruns every statement. The PR never redefines the Done when; the issue wins,
 and the PR says why it deviates.
+A statement the PR makes false anywhere in the repository, a live decision included, is corrected
+in that PR, never left nor sent to a follow-up issue, and the review blocks on one left
+(decision `pr-corrects-what-it-makes-false`).
 Once the PR is open, `/feyn-pull-request` checks that the issue lists it (a `Refs` PR: it lists
 nothing). A branch that leaves a decision to the maintainer opens as a draft PR, with
 `blocked:maintainer` on its issue only, and an "Awaiting the maintainer" section above
@@ -96,7 +99,8 @@ work is organised", moment 2). This is the path of a story without an epic. A st
 takes another: its PR targets the epic's integration branch, is reviewed by a fresh agent and
 merged by the orchestrator, and what reaches the maintainer is the epic PR;
 `/feyn-deliver-epic <epic>` runs it ("How the work is organised", moment 2). Why: decisions
-`issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`, `epic-on-integration-branch`.
+`issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`,
+`epic-on-integration-branch`, `pr-corrects-what-it-makes-false`.
 
 ## How the work is organised
 

@@ -45,6 +45,11 @@ Recheck yourself:
   it leaves out in "Delivery notes";
 - consistency with the files the change must match (sibling skills, docs/contributing.md,
   decisions it names), and that every path, command and decision slug it cites exists;
+- the statements the change makes false anywhere in the repository (grep for what it renames,
+  moves, removes or changes): one left, a live decision included, is a blocking finding,
+  whatever reason the PR gives (decision `pr-corrects-what-it-makes-false`); a superseded
+  decision and a released CHANGELOG entry are history, not findings; a change to a live
+  decision's choice that the PR's Review first does not name is a blocking finding too;
 - a decision: its counterfactual names a concrete wrong act, and the maintainer accepted it.
 
 A draft PR: under the agent workflow every PR is a draft until its hand-over, which is not a

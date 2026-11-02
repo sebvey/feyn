@@ -13,9 +13,9 @@ two live decisions it made false, handed over first with them).
 
 A change corrects in its own PR every statement it makes false, anywhere in the repository: a
 skill, a reference, a doc, a comment in a script, a live decision. It is never left with a
-reason, never sent to a follow-up. A live decision is corrected through `/feyn-decision` step 6
-(a mechanism in place, a change of scope with its "Amended" line) or superseded through its
-step 5 when its choice no longer holds; the contributor of a delivery does it, being one of
+reason, never sent to a follow-up issue. A live decision is corrected through `/feyn-decision`
+step 6 (a mechanism in place, a change of scope with its "Amended" line) or superseded through
+its step 5 when its choice no longer holds; the contributor of a delivery does it, being one of
 that skill's callers. A change to a live decision's choice, not to a mechanism it names, goes
 up into the PR's Review first, as the maintainer's to accept. History is not a statement to
 correct: a superseded decision and a released CHANGELOG entry stay as they are (decision
@@ -26,7 +26,7 @@ the fresh-agent review; a run whose result leaves one is rerun, not handed over.
 
 - A follow-up issue for each statement made false: between the merge and that issue's
   delivery, `main` holds the false statement, and an agent reads it as true (a decision is read
-  as what holds today); the follow-up also costs a cycle for a correction the PR's author is
+  as what holds today); that issue also costs a cycle for a correction the PR's author is
   best placed to make, having just changed what the statement describes.
 - A statement left with a reason, as a non-blocking finding: the reason does not travel with
   the statement, and the reader of the file sees only the false text.
