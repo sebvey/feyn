@@ -13,9 +13,9 @@ parent epic with no done-when, as #225 was.
 
 Work is framed by **epics** and released by **milestones**. An epic is an objective that closes:
 an issue labelled `kind:epic`, titled "Epic: …", parent of its stories (GitHub sub-issues). Its
-body has five sections, in order, and nothing else: **Objective** (what is true when it is done, two
-to four lines), **Why now** (what it unblocks), **Material** (what is read when splitting and
-what was settled; decision `brainstorm-ends-in-options`), **Done when** (two or three coarse
+body has five sections, in order, and nothing else: **Objective** (what is true when it is done,
+two to four lines), **Why now** (what it unblocks), **Material** (what is read when splitting
+and what was settled; decision `brainstorm-ends-in-options`), **Done when** (two or three coarse
 verifiable statements), **Out of scope** (one line, naming the epic that takes it).
 **No done-when, no epic**: what cannot get one is an idea to triage, or a label; a heap of
 issues with no common objective has no parent. An epic is split **one story at a time, when it
