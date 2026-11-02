@@ -261,9 +261,10 @@ The Project has one view per stage of the flow and one overview, all tables: Ide
 inbox), Options (what waits for the maintainer's commitment), Ready (the Ready stories, grouped
 by epic), In progress (the stories In progress and Ready for review) and Overview (every open
 work item with no parent, grouped by Status: the epics, whatever their Status, and the stories
-without an epic). Their filters, groupings and fields are in
-[`.claude/reference/project.md`](../.claude/reference/project.md), "The views". Why: decisions
-`themes-and-release-milestones`, `epic-on-integration-branch`, `kind-label-per-work-item`.
+without an epic). Their filters, groupings and fields are read with the query of
+[`.claude/reference/project.md`](../.claude/reference/project.md), "The Project workflows", that
+reads the views. Why: decisions `themes-and-release-milestones`, `epic-on-integration-branch`,
+`kind-label-per-work-item`.
 
 ## Status and labels
 
@@ -283,9 +284,8 @@ without an epic). Their filters, groupings and fields are in
   `/feyn-deliver` (a correction asked on a delivered PR returns the story to In progress,
   `/feyn-deliver` step 4); the orchestrator of an epic sets a story Done when it merges it into
   the integration branch, and the epic Ready for review when it hands over the epic PR.
-  `.claude/reference/project.md` says who sets each Status. There are no state labels. Why:
-  decisions `project-status-not-state-labels`, `idea-and-option-before-ready`,
-  `epic-on-integration-branch`.
+  There are no state labels. Why: decisions `project-status-not-state-labels`,
+  `idea-and-option-before-ready`, `epic-on-integration-branch`.
 - `epic`, `story`: the kind labels, exactly one on a work item, set by `/feyn-issue` at its
   creation and changed with the kind while the work item is an option; none on an idea, whose
   Status says what it is. The views filter on them. Why: decision `kind-label-per-work-item`.

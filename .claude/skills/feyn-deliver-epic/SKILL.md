@@ -8,10 +8,9 @@ argument-hint: "<epic number>"
 
 One job: deliver epic `<epic>` on its integration branch, as decision
 `epic-on-integration-branch` says; the commands are in [project.md](../../reference/project.md),
-"Epics", "Delivery on an integration branch", cited here, not copied. The work session is the
-orchestrator: it poses the stories, runs the workflow, reads its results, writes the plan comment
-and the open questions; agents do the stories' work, the maintainer answers open questions and
-merges the epic PR. Nothing is spawned and no run launched before the maintainer's go-ahead
+"Epics", cited here, not copied. The work session is the orchestrator: it poses the stories,
+runs the workflow, reads its results, writes the plan comment and the open questions; agents do
+the stories' work, the maintainer answers open questions and merges the epic PR. Nothing is spawned and no run launched before the maintainer's go-ahead
 (they say "deliver", "go", or name the epic); that go-ahead covers the stories of this epic. A
 "debrief rule" is one of the rules of the debrief of #317, listed in the Material of epic #342.
 
@@ -128,7 +127,7 @@ fresh-agent review, in place of steps 2.3 to 2.5:
   Ready for review;
 - the merge, as the workflow's Merge stage does: `mise exec -- gh pr merge <pr> --squash
   --match-head-commit <head sha>`, close the story
-  ([project.md](../../reference/project.md), "Delivery on an integration branch") and check it
+  ([project.md](../../reference/project.md), "Epics", Close) and check it
   is Done; then `git switch main` and `git branch -D <type>/<n>-<slug>`; then steps 2.6 and 2.7.
 
 ## 3. Open questions
@@ -138,7 +137,7 @@ maintainer, reaches the maintainer as an open question, never only as a line of 
 (debrief rules 1 and 2):
 - at once, and the work goes on: the line `Open question: <the choice>, <the options ruled
   out>, <the cost of going back> (#<story>)` on the plan comment
-  ([project.md](../../reference/project.md), "Delivery on an integration branch"), and a comment
+  ([contributing](../../../docs/contributing.md), "How the work is organised"), and a comment
   on the epic, numbered, each with its recommendation, ending "Answer here; the plan comment
   records the answer.";
 - at once too, in the work session: tell the maintainer each new open question with its
