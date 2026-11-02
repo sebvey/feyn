@@ -85,7 +85,9 @@ propose it as a choice, never write it on the strength of another decision.
 ## 4. Execute the decision
 
 As the maintainer decided, then the working list. Which form an issue is in is read as
-`/feyn-issue` reads it ([its skill](../feyn-issue/SKILL.md), "Read an issue").
+`/feyn-issue` reads it ([its skill](../feyn-issue/SKILL.md), "Read an issue"). The issue being
+triaged is not a twin of the work items created from it: when `/feyn-issue`'s step 2, "Look for
+a twin", finds it, it goes on to create them, the triaged issue left as it is and closed after.
 
 **An idea:**
 - **create the work items**: each with `/feyn-issue` in the form the maintainer chose,
@@ -127,7 +129,9 @@ work item (Set); then it is closed as completed with a comment naming what repla
 - **merge**: the option it goes into gets what it lacked (refine, above), then close it with a
   comment naming that option;
 - **split**: one option per work item it holds (`/feyn-issue`, Option by default as above),
-  each citing it, then close it with a comment naming them;
+  each citing it, then close it with a comment naming them; a story created this way ends its
+  Context with the origin line of the option it splits ("From idea #<n>.", "Story of epic
+  #<n>." or "From a brainstorm with the maintainer, <date>."), never a new form;
 - **fold into an epic** or **close**: as for an idea, above.
 
 A duplicate comment (posted twice by mistake) is hidden as duplicate, never deleted: on its
