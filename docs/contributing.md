@@ -260,8 +260,8 @@ even where a course teaches those words in its own sense ([`glossary.md`](glossa
 The Project has one view per stage of the flow and one overview, all tables: Ideas (the triage
 inbox), Options (what waits for the maintainer's commitment), Ready (the Ready stories, grouped
 by epic), In progress (the stories In progress and Ready for review) and Overview (every open
-work item with no parent: the epics, whatever their Status, and the stories without an epic).
-Their filters, groupings and fields are in
+work item with no parent, grouped by Status: the epics, whatever their Status, and the stories
+without an epic). Their filters, groupings and fields are in
 [`.claude/reference/project.md`](../.claude/reference/project.md), "The views". Why: decisions
 `themes-and-release-milestones`, `epic-on-integration-branch`, `kind-label-per-work-item`.
 

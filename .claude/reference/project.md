@@ -44,7 +44,8 @@ the Project's views and `gh project item-list`; the maintainer turned it off on 
 It shows only the names and on or off; the filter and the Status each sets are read in the web
 interface (Project feyn, menu ⋯, Workflows) (GitHub, observed 2026-10-28, #71). The views and
 the Status field's options, with their ids, in one query:
-`mise exec -- gh api graphql -f query='query{user(login:"sebvey"){projectV2(number:4){views(first:20){nodes{name number layout filter}} field(name:"Status"){... on ProjectV2SingleSelectField{options{id name}}}}}}'`.
+`mise exec -- gh api graphql -f query='query{user(login:"sebvey"){projectV2(number:4){views(first:20){nodes{name number layout filter groupByFields(first:5){nodes{... on ProjectV2FieldCommon{name}}} fields(first:20){nodes{... on ProjectV2FieldCommon{name}}}}} field(name:"Status"){... on ProjectV2SingleSelectField{options{id name}}}}}}'`
+(each view with its filter, its grouping and its fields).
 
 ## Commands
 
@@ -145,22 +146,20 @@ sub-issues are closed.
 
 **The views**, set by the maintainer in the web interface (Project feyn, a view's menu:
 filter, Layout, Group by, Fields), one per stage of the flow and one overview, all tables, as
-read from the Project on 2026-11-02 (the query of "The Project workflows", with
-`groupByFields(first:5){nodes{... on ProjectV2FieldCommon{name}}}` and
-`fields(first:20){nodes{... on ProjectV2FieldCommon{name}}}` added to the views):
+read from the Project on 2026-11-02 (the query of the views, "The Project workflows"):
 
 | View | Filter | Grouped by | Fields beside Title |
 |---|---|---|---|
 | Ideas | `status:Idea` | | Labels, Updated |
-| Options | `status:Option` | | Status |
+| Options | `status:Option` | | Labels |
 | Ready | `status:Ready label:story` | Parent issue | Assignees, Status, Linked pull requests, Sub-issues progress |
-| In progress | `status:"In progress","Ready for review" label:story` | | Assignees, Status, Linked pull requests, Sub-issues progress |
-| Overview | `label:epic,story no:parent-issue is:open` | | Status, Labels, Milestone, Sub-issues progress |
+| In progress | `status:"In progress","Ready for review" label:story` | | Linked pull requests, Sub-issues progress |
+| Overview | `label:epic,story no:parent-issue is:open` | Status | Labels, Milestone, Sub-issues progress |
 
 Ideas is the triage inbox; Options is what waits for the maintainer's commitment; Ready groups
 the stories by epic, those with none under "No Parent issue"; In progress shows the stories In
 progress and Ready for review; Overview shows every open work item with no parent, the epics
-whatever their Status and the stories without an epic.
+whatever their Status and the stories without an epic, grouped by Status.
 
 The epics of 2026-10-29: #220 the `linear-course` spec v1; #221 `parcours-po` conformity;
 #222 the teacher; #223 the site; #224 `parcours-po`, first quality campaign; #228 the work
