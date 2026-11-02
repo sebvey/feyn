@@ -4,8 +4,8 @@ Version 1.0.0-alpha: binding from the tag `linear-course/v1.0.0` (section 8). Th
 frame of the spec: what it covers, which files hold what, when a product conforms, the levels,
 methods and categories a rule carries, how the severity of a check follows from them, the
 versions, the normative references and the list of checks. It holds no rule on a course or on
-the teacher: what a course is, is in `COURSE.md`; the protocol the teacher executes, in
-`PROTOCOL.md`. The frame is decision `rules-with-level-and-method` (the rule model, levels,
+the teacher: what a course is, is in `course/README.md`; the protocol the teacher executes, in
+`teacher/README.md`. The frame is decision `rules-with-level-and-method` (the rule model, levels,
 methods, severity, categories, conformance clause, normative references) and decision
 `spec-files-and-alpha-version` (the files and the version), whose reasons are not restated here.
 
@@ -17,10 +17,10 @@ message, a **storyline** the cases live in. A course that does not fit this shap
 spec. The spec fixes what a course contains, how the teacher teaches it, and how it is checked.
 It holds for every course language: what depends on the language spoken to the learner is in
 the **language pack** `lang/<code>.yaml` (phrases, typography, headings, markers, site labels),
-whose keys `COURSE.md` section 7 names. French values are quoted for reference.
+whose keys `course/README.md` section 7 names. French values are quoted for reference.
 
-Out of scope here: the learner memory files (the protocol, and `templates/learner/`), how the
-site and the classroom build (their own folders).
+Out of scope here: the learner memory files (the protocol, and `teacher/templates/learner/`), how
+the site and the classroom build (their own folders).
 
 ## 2. Files
 
@@ -30,36 +30,37 @@ The files of the spec are split by class of products (section 3), plus the frame
 | File | Holds |
 |---|---|
 | `SPEC.md` | the frame: this file |
-| `COURSE.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the language pack keys |
-| `PROTOCOL.md` | the protocol of the teacher: purpose, notation, rules named by slug, keys and parameters |
-| `rules/course.yaml` | the rules of a course, in English |
-| `rules/protocol.yaml` | the rules of the teacher, in French |
-| `schemas/*.schema.yaml` | the tables of fields of `COURSE.md`, as JSON Schema 2020-12 written in YAML, each one rule of `rules/course.yaml` |
+| `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the language pack keys |
+| `teacher/README.md` | the protocol of the teacher: purpose, notation, rules named by slug, keys and parameters |
+| `course/rules.yaml` | the rules of a course, in English |
+| `teacher/rules.yaml` | the rules of the teacher, in French |
+| `course/schemas/*.schema.yaml` | the tables of fields of `course/README.md`, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` |
 | `CHANGELOG.md` | the changes of the spec, an « Unreleased » section until the tag |
-| `checks/` | the check scripts, their fixtures and `checks/README.md` (how to run them) |
+| `course/checks/` | the check scripts, their fixtures and `course/checks/README.md` (how to run them) |
 | `lang/<code>.yaml` | the language packs |
-| `templates/` | the course templates |
+| `course/templates/` | the course templates |
+| `teacher/templates/learner/` | the templates of the learner memory files |
 | `decisions/` | the decisions of this spec |
 
 A rule file is a list of groups, each a list of rules; a rule has an `id` (a slug), a `level`
 (section 4), a `category` (section 6), a `method` (section 5), a `check` when one implements the
-method, a `text` and, where an observed counterfactual exists, a `why`; a rule of the protocol
-also has an `origin`. A group may declare `category` and `method` once for its rules, and a rule
-may override them; a group of `rules/protocol.yaml` is a group of `PROTOCOL.md`, its slug as its
+method, a `text` and, where an observed counterfactual exists, a `why`; a rule of the protocol also
+has an `origin`. A group may declare `category` and `method` once for its rules, and a rule may
+override them; a group of `teacher/rules.yaml` is a group of `teacher/README.md`, its slug as its
 `id` (decision `rule-groups-replace-ranges`). A rule binds a product (section 3), so the rule files
-are two, `rules/course.yaml` and `rules/protocol.yaml`. The spec's own files (the rule files, the
-schemas, the slugs of the protocol, the language packs) are verified by the tests of
-`check-spec`, which are not rules (section 10).
+are two, `course/rules.yaml` and `teacher/rules.yaml`. The spec's own files (the rule files, the
+schemas, the slugs of the protocol, the language packs) are verified by the tests of `check-spec`,
+which are not rules (section 10).
 
-`rules/course.yaml` holds the rules the checks of a course verify, taught-check included, and one
-rule verified by inspection, the review; `schemas/course.schema.yaml` and
-`schemas/concept-frontmatter.schema.yaml` are the tables of `COURSE.md` sections 2 and 3.1
-(#329). The other rules of a course leave `COURSE.md` for `rules/course.yaml`, and the rules of
-the protocol leave `PROTOCOL.md` for `rules/protocol.yaml`, which holds one today, in #318.
-Until that extraction, `COURSE.md` and `PROTOCOL.md` keep their verbal forms of obligation, read
-as `COURSE.md` says in its opening.
+`course/rules.yaml` holds the rules the checks of a course verify, taught-check included, and one
+rule verified by inspection, the review; `course/schemas/course.schema.yaml` and
+`course/schemas/concept-frontmatter.schema.yaml` are the tables of `course/README.md` sections 2 and
+3.1 (#329). The other rules of a course leave `course/README.md` for `course/rules.yaml`, and the
+rules of the protocol leave `teacher/README.md` for `teacher/rules.yaml`, which holds one today, in
+#318. Until that extraction, `course/README.md` and `teacher/README.md` keep their verbal forms of
+obligation, read as `course/README.md` says in its opening.
 
-**Language exception.** The rules of `PROTOCOL.md` are written in French, a bounded exception
+**Language exception.** The rules of `teacher/README.md` are written in French, a bounded exception
 to the language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited
 from `parcours-po`, whose teacher was instructed and corrected in French. It changes by user
 story, its fresh tests come with the teacher, and the exception stays until a teacher or a course
@@ -69,12 +70,12 @@ of another language needs the translation, a spec MINOR that removes this paragr
 
 Two classes of products: the **course**, its diagrams included, and the **teacher**.
 
-- A course conforms when it holds every requirement of its rules (`rules/course.yaml`, and
-  until #318 the rest of `COURSE.md`), whatever the method that verifies each one. The blocking
-  checks are a necessary condition, not a sufficient one: the review and taught-check do the
-  rest, and a course tag certifies the whole.
-- A teacher conforms when it holds every requirement of the protocol (`rules/protocol.yaml`,
-  and until #318 the rest of `PROTOCOL.md`); the method of a rule of the protocol is
+- A course conforms when it holds every requirement of its rules (`course/rules.yaml`, and until
+  #318 the rest of `course/README.md`), whatever the method that verifies each one. The blocking
+  checks are a necessary condition, not a sufficient one: the review and taught-check do the rest,
+  and a course tag certifies the whole.
+- A teacher conforms when it holds every requirement of the protocol (`teacher/rules.yaml`,
+  and until #318 the rest of `teacher/README.md`); the method of a rule of the protocol is
   demonstration, by the fresh tests. No teacher conforms yet, since no fresh test exists.
 - Recommendations are outside conformance.
 
@@ -108,7 +109,7 @@ rewritten or removed.
 
 | Method | What it does | What implements it in feyn |
 |---|---|---|
-| test | a deterministic run says yes or no | the scripts of `checks/` |
+| test | a deterministic run says yes or no | the scripts of `course/checks/` |
 | analysis | reasoning over the whole course | taught-check (an agent workflow) |
 | inspection | a reading, by a human or an agent | the review |
 | demonstration | the system runs and is observed | the fresh tests of the teacher |
@@ -125,8 +126,8 @@ A rule of a course has a category, from a closed list, extended when needed:
 | `sources` | does every claim trace back to a source? |
 | `diagrams` | do the drawings follow their contract? |
 
-For a rule of the protocol, the category is its family (the nine families of `PROTOCOL.md`),
-written in `rules/protocol.yaml` as a slug of its title, in their order: `session-start`,
+For a rule of the protocol, the category is its family (the nine families of `teacher/README.md`),
+written in `teacher/rules.yaml` as a slug of its title, in their order: `session-start`,
 `domain-presentation`, `loop`, `message-form`, `storyline`, `stances-and-sources`,
 `practice-skip-asides`, `learner-memory`, `stop`. No other category exists: the tests of the
 spec's own files verify no rule and carry none (section 10).
@@ -175,7 +176,7 @@ A course declares the MAJOR it follows: `spec: linear-course@1`. `course-specs/c
 it and runs this MAJOR's checks (section 10).
 
 A course has its own version, tagged `<id>/vX.Y.Z` and recorded in its `CHANGELOG.md`: MAJOR
-when an identifier changes (`COURSE.md` section 2) or the course moves to a new spec MAJOR,
+when an identifier changes (`course/README.md` section 2) or the course moves to a new spec MAJOR,
 MINOR when what is taught changes (a case, a sub-concept, a stance, a duration), PATCH for
 wording. A course in 0.x can still change anything, identifiers included.
 
@@ -204,14 +205,14 @@ method and the severity that follows (section 7); and the tests of the spec's ow
 | the reviewer | which rules a script already verified, so the review reads the rest | reviewing a change |
 | the maintainer | the reported findings to triage into course issues | on demand |
 
-Node scripts in `checks/`, one per id, with the dependencies of `checks/package.json` installed
-by `npm ci` (decision `checks-use-ajv-and-yaml`); `checks/README.md` gives how to install and run
-them, their options and fixtures. `course-specs/check-course <course-dir>` runs this folder's
-`checks/check-course` on a course. `checks/check-spec` runs the tests of the spec's own files
-(`PROTOCOL.md`, `SPEC.md`, `COURSE.md`, `decisions/`, `rules/`, `schemas/`, `lang/`), not a
-course.
+Node scripts in `course/checks/`, one per id, with the dependencies of `course/checks/package.json`
+installed by `npm ci` (decision `checks-use-ajv-and-yaml`); `course/checks/README.md` gives how to
+install and run them, their options and fixtures. `course-specs/check-course <course-dir>` runs this
+folder's `course/checks/check-course` on a course. `course/checks/check-spec` runs the tests of the
+spec's own files (`teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/`,
+`course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `lang/`), not a course.
 
-`check-course` takes its checks from `rules/course.yaml`: by default it runs, in one run, every
+`check-course` takes its checks from `course/rules.yaml`: by default it runs, in one run, every
 check of method test, blocking and reporting, and `--category <c>[,<c>...]` runs the checks of
 those categories only, a closed list (the categories of a course, an unknown one a usage error).
 A check of another method is not run by a script: `check-course --list` names it, with how it
@@ -226,10 +227,10 @@ check of either severity crashes, 0 otherwise (a reporting check that fails leav
 usage error, when the rule files cannot be read or when the dependencies are not installed.
 
 The category, level and method of each check below are those of the rules it verifies, in
-`rules/course.yaml` (the `check` of each rule); `rule-files` verifies that a check has one
+`course/rules.yaml` (the `check` of each rule); `rule-files` verifies that a check has one
 category and one level. A rule that no check implements yet is verified by
 its method alone: the review for an inspection, the fresh tests for a demonstration. The sections
-are those of `COURSE.md`.
+are those of `course/README.md`.
 
 | Id | Category | Level | Method | Severity | Verifies | Sections |
 |---|---|---|---|---|---|---|
@@ -254,6 +255,6 @@ category and no level, and each failure blocks `check-spec` (exit code 1).
 
 | Id | Verifies | Reads |
 |---|---|---|
-| `rule-slugs` | `PROTOCOL.md` names each of its rules and groups by a slug defined once; `PROTOCOL.md`, `SPEC.md`, `COURSE.md` and `decisions/` cite them by a defined slug, never by a number or a range | `PROTOCOL.md`, `SPEC.md`, `COURSE.md`, `decisions/` |
-| `rule-files` | `rules/course.yaml` and `rules/protocol.yaml`: required fields, closed lists (levels, methods, the categories of a course, the families of the protocol), a group of the protocol is a group of `PROTOCOL.md`, ids unique across the two files, every check named exists, one category and one level per check; each schema of `schemas/` compiles under `Ajv2020` and is named by one rule of `rules/course.yaml` | `rules/`, `schemas/`, `PROTOCOL.md` |
-| `language-pack-keys` | every pack of `lang/` holds every key of `COURSE.md` section 7 and every key `PROTOCOL.md` uses: a key a non-empty string, a list a non-empty list of strings | `lang/`, `PROTOCOL.md` |
+| `rule-slugs` | `teacher/README.md` names each of its rules and groups by a slug defined once; `teacher/README.md`, `SPEC.md`, `course/README.md` and `decisions/` cite them by a defined slug, never by a number or a range | `teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/` |
+| `rule-files` | `course/rules.yaml` and `teacher/rules.yaml`: required fields, closed lists (levels, methods, the categories of a course, the families of the protocol), a group of the protocol is a group of `teacher/README.md`, ids unique across the two files, every check named exists, one category and one level per check; each schema of `course/schemas/` compiles under `Ajv2020` and is named by one rule of `course/rules.yaml` | `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `teacher/README.md` |
+| `language-pack-keys` | every pack of `lang/` holds every key of `course/README.md` section 7 and every key `teacher/README.md` uses: a key a non-empty string, a list a non-empty list of strings | `lang/`, `teacher/README.md` |

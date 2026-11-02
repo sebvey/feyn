@@ -1,2 +1,0 @@
-check: rule-files
-message: no rule of rules/course.yaml names this schema

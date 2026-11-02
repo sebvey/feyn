@@ -57,3 +57,9 @@ no class: `- file or area: what changes`.
 - `decisions/`, `rules/`: the mechanism-only "Amended" lines of the live decisions folded into
   their bodies, the lines of #329 reversed by #339 removed; the lines that stay record a change
   of scope (decision `decision-format`, #370).
+- folder, `decisions/`: the MAJOR is cut by product, `course/` (`README.md`, formerly
+  `COURSE.md`; `rules.yaml`; `schemas/`; `templates/`; `checks/`) and `teacher/` (`README.md`,
+  formerly `PROTOCOL.md`; `rules.yaml`; `templates/learner/`); no rule changes; paths updated in
+  the spec, its checks and the decisions `checks-use-ajv-and-yaml`, `rule-groups-replace-ranges`,
+  `rules-named-by-slug`, `rules-with-level-and-method`, `spec-files-and-alpha-version`,
+  `stances-in-frontmatter-only` (#455).

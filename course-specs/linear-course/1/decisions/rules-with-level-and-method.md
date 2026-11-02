@@ -48,7 +48,7 @@ even before its check exists; a rule that no method could verify is rewritten or
 
 | Method | What it does | What implements it in feyn |
 |---|---|---|
-| test | a deterministic run says yes or no | the scripts of `checks/` |
+| test | a deterministic run says yes or no | the scripts of `course/checks/` |
 | analysis | reasoning over the whole course | taught-check (an agent workflow) |
 | inspection | a reading, by a human or an agent | the review |
 | demonstration | the system runs and is observed | the fresh tests of the teacher |
@@ -78,9 +78,9 @@ spec's own files (the rule files, the schemas, the slugs of the protocol, the la
 are verified by the tests of `check-spec` (`rule-files`, `rule-slugs`, `language-pack-keys`),
 which are not rules: they carry no category and no level, each failure blocks `check-spec`, and
 none counts toward a course's conformance. A course conforms when it holds every requirement of
-`rules/course.yaml`, whatever its method; the blocking checks are a necessary condition, not a
+`course/rules.yaml`, whatever its method; the blocking checks are a necessary condition, not a
 sufficient one; the review and taught-check do the rest, and a course tag certifies the whole.
-A teacher conforms when it holds every requirement of `rules/protocol.yaml`; the method of a
+A teacher conforms when it holds every requirement of `teacher/rules.yaml`; the method of a
 rule of the protocol is demonstration, by the fresh tests (D8). Recommendations are outside conformance (the ISO sense of "should"). The word
 "conformity" (ISO) stays; "conformance clause" names the section, after the W3C QA Framework,
 whose idea ISO shares.
@@ -132,7 +132,7 @@ GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
   and taught-check.
 - `check-spec` verifies the rule files: required fields, closed lists, one category and one
   level per check.
-- The bump table of the spec is written in levels: a recommendation of `rules/course.yaml`
+- The bump table of the spec is written in levels: a recommendation of `course/rules.yaml`
   made a requirement is a MAJOR (decision `versioned-objects-and-spec-layout`).
 - No teacher conforms today, since no fresh test exists: that is the target of #222.
 - In French, « schéma » means a drawing or a JSON Schema; the repository, in English, says

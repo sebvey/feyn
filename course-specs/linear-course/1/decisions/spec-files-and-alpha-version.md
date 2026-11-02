@@ -11,29 +11,30 @@ numbering the spec `1.0.0` while its content changes from commit to commit, or m
 `0.y.z` and rename `1/` and `@1` twice (working notes D6, D13).
 
 The files of `linear-course` are split by class of products (decision
-`rules-with-level-and-method`), plus the frame. `SPEC.md` holds the frame: scope, conformance
-clause, levels, methods, categories, how severity follows, versions, the normative references,
-the list of checks; it holds no rule. `COURSE.md` describes
-what a course is (today's `SPEC.md` sections 2 to 7 and 9, the language pack and the diagrams
-included); its rules are in `rules/course.yaml`, in English, and its tables of fields
-(`course.yaml`, the `concept.md` frontmatter, the keys of the pack) are schemas in
-`schemas/*.schema.yaml`, JSON Schema 2020-12 written in YAML, each schema counting as one rule
-("`course.yaml` is valid against its schema"); the rule file keeps what a schema cannot say
-(the order of the glossary, the contract of a case, the sources). `PROTOCOL.md` describes the
-protocol of the teacher (Purpose, notation, keys and parameters); its rules are in
-`rules/protocol.yaml`, in French, the bounded exception of decision `language-policy`. The rule
-files are these two; the spec's own files are verified by the tests of `check-spec`, which are
-not rules (decision `rules-with-level-and-method`). A
-description (`SPEC.md`, `COURSE.md`, `PROTOCOL.md`) is informative: it explains and cites rule
+`rules-with-level-and-method`), plus the frame; each product has its folder, `course/` and
+`teacher/`, which holds its description (its `README.md`), its rules (its `rules.yaml`) and its
+own files. `SPEC.md` holds the frame: scope, conformance clause, levels, methods, categories, how
+severity follows, versions, the normative references, the list of checks; it holds no rule.
+`course/README.md` describes what a course is (today's `SPEC.md` sections 2 to 7 and 9, the
+language pack and the diagrams included); its rules are in `course/rules.yaml`, in English, and
+its tables of fields (`course.yaml`, the `concept.md` frontmatter, the keys of the pack) are
+schemas in `course/schemas/*.schema.yaml`, JSON Schema 2020-12 written in YAML, each schema
+counting as one rule ("`course.yaml` is valid against its schema"); the rule file keeps what a
+schema cannot say (the order of the glossary, the contract of a case, the sources).
+`teacher/README.md` describes the protocol of the teacher (Purpose, notation, keys and
+parameters); its rules are in `teacher/rules.yaml`, in French, the bounded exception of decision
+`language-policy`. The rule files are these two; the spec's own files are verified by the tests
+of `check-spec`, which are not rules (decision `rules-with-level-and-method`). A description
+(`SPEC.md`, `course/README.md`, `teacher/README.md`) is informative: it explains and cites rule
 ids, and never uses the verbal forms of obligation; the rule files are normative. "teacher"
-stays the name of the class of products, "protocol" the name of its file and description.
-The version: a MAJOR in preparation carries `<MAJOR>.0.0-alpha` in its folder until its tag,
-with no prerelease number and no prerelease tag; `linear-course` is `1.0.0-alpha` in `1/` until
-`linear-course/v1.0.0`. "draft" leaves `SPEC.md` and `PROTOCOL.md`: it is the reserved term for
-a PR. `course-specs/linear-course/1/CHANGELOG.md` takes the form of a course's changelog (one
-line per entry, ranked by bump, the convention of Changesets, named in the description), with
-an "Unreleased" section that becomes `1.0.0` at the tag; during the alpha, entries carry no
-bump class.
+stays the name of the class of products, "protocol" the name of its rules and of their
+description.
+The version: a MAJOR in preparation carries `<MAJOR>.0.0-alpha` in its folder until its tag, with no
+prerelease number and no prerelease tag; `linear-course` is `1.0.0-alpha` in `1/` until
+`linear-course/v1.0.0`. "draft" leaves `SPEC.md` and `teacher/README.md`: it is the reserved term
+for a PR. `course-specs/linear-course/1/CHANGELOG.md` takes the form of a course's changelog (one
+line per entry, ranked by bump, the convention of Changesets, named in the description), with an
+"Unreleased" section that becomes `1.0.0` at the tag; during the alpha, entries carry no bump class.
 
 ## Options ruled out
 
@@ -63,9 +64,8 @@ bump class.
 
 - Nothing reads the spec yet, so breaking its number costs nothing; the choice was made on the
   debt (D13).
-- The risk of drift between a description and its rules is held by the writing rule above,
-  which `check-spec` can verify (D6). `COURSE.md` keeps its verbal forms of obligation until
-  the extraction of #318 sorts each sentence into a rule or description (maintainer,
-  2026-10-31).
-- The protocol's rules leave `PROTOCOL.md` for `rules/protocol.yaml` at that extraction; the
+- The risk of drift between a description and its rules is held by the writing rule above, which
+  `check-spec` can verify (D6). `course/README.md` keeps its verbal forms of obligation until the
+  extraction of #318 sorts each sentence into a rule or description (maintainer, 2026-10-31).
+- The protocol's rules leave `teacher/README.md` for `teacher/rules.yaml` at that extraction; the
   teacher's `CLAUDE.md` is then generated by the classroom build (D8).
