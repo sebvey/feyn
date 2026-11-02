@@ -64,7 +64,10 @@ of the old format for a defect:
   It tells an Observation section with a Done when (the old format) from an idea's
   Observation, which comes with no Done when. An issue of the old format placed in Idea at the
   merge of epic #392 may carry a `type:` label: read it as such and leave the label, the triage
-  setting the type on the work items it creates. Any other body: its sections in order.
+  setting the type on the work items it creates. An issue numbered below #424, the epic PR of
+  epic #392, was written in the old format (the `issue-body.md` format), its epic's own stories
+  included: read it as such, never correct it; #425, which wrote this threshold, is the one
+  exception above it, written in the new form. Any other body: its sections in order.
 
 ## Create an issue
 
