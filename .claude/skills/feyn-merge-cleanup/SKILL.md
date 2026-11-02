@@ -77,8 +77,8 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      of them); it prints nothing when there is none. Name each at the end of the same reply,
      one line each, as now free, with its Status ([project.md](../../reference/project.md),
      "Commands"): free to take when Ready, to commit when Option, to triage when Idea.
-8. **The acts at the merge of epic #392**, only after the merge of its epic PR (step 1), once
-   the maintainer says they are done: check each act that
+8. **The acts at the merge of epic #392.** Reached only from step 1: a run that finished
+   step 7 stops there. Once the maintainer says the acts are done, check each act that
    [project.md](../../reference/project.md), "Acts at the merge of epic #392", lists, with the
    commands and queries it gives (the Status field's options and the views in one query, the
    labels, the open issues and their Status; the Project workflow's Status set is read in the
