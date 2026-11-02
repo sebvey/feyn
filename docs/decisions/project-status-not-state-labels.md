@@ -24,10 +24,12 @@ is awaited: the label `blocked:maintainer` carries it, on any Status (decision
 Project's built-in workflows carry what GitHub sees happen: "Auto-add to project" adds new and
 updated open issues, "Item added to project" sets Idea, "Item closed" sets Done, whatever closed
 the issue. The skills set what only they know: `/feyn-issue` sets Option on a work item it
-creates, or Ready when the maintainer says it is committed; `/feyn-issue-branch` refuses an
-issue in Done, or in In progress with a branch, and sets In progress; `/feyn-pull-request` on
-the direct path, and `/feyn-deliver` or `/feyn-deliver-epic` at the hand-over, set Ready for
-review; `/feyn-merge-cleanup` reads the workflows and sets Done only when "Item closed" is off.
+creates, or Ready when the maintainer says it is committed, and Ready on a story posed by the
+orchestrator of a taken epic (decision `idea-and-option-before-ready`); `/feyn-issue-branch`
+refuses an issue in Done, or in In progress with a branch, and sets In progress;
+`/feyn-pull-request` on the direct path, and `/feyn-deliver` or `/feyn-deliver-epic` at the
+hand-over, set Ready for review; `/feyn-merge-cleanup` reads the workflows and sets Done only
+when "Item closed" is off.
 The names, ids, workflows, views and commands live in `.claude/reference/project.md`. The kind
 (`epic`, `story`; decision `kind-label-per-work-item`), `type:`, `area:` and
 `blocked:maintainer` stay labels. The maintainer works in the web interface: the Project's views
@@ -43,4 +45,4 @@ The names, ids, workflows, views and commands live in `.claude/reference/project
   `gh project` calls in three skills, and an issue closed by a merged PR stayed In progress
   until `/finish after-merge` ran (#64, #125, #128, #22).
 - Done only when closed by a PR ("Pull request merged"): an issue closed as not planned or as a
-  duplicate would stay In progress or Idea.
+  duplicate would stay in its Status (In progress, Idea or Option).
