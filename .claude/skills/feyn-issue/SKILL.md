@@ -34,8 +34,9 @@ three forms, `idea <finding>`, `story [#<epic>] [direct] <what>`, `epic <objecti
    (Where, What, Why; Where and Why for an idea) as the first line, then the rest; for a story,
    its Context in one sentence with its origin line, its To do as a short list, naming the line
    "Direct delivery" when it opens the To do; for an idea, its Observation in one sentence; the
-   Done when as written; the Status (from `projectItems`); the labels (kind, type, area,
-   `blocked:maintainer`); what blocks it and what it blocks, open ones first
+   Done when as written (a story, an epic, a body of the old format; an idea has none); the
+   Status (from `projectItems`); the labels (kind, type, area, `blocked:maintainer`); what
+   blocks it and what it blocks, open ones first
    ([project.md](../../reference/project.md), "Dependencies"); open or closed, and by which PR;
    what the comments added or changed; its epic for a story, its stories and plan comment for
    an epic ([project.md](../../reference/project.md), "Epics"). Say plainly when a section of
