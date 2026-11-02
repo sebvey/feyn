@@ -2,27 +2,27 @@
 
 `linear-course`, MAJOR 1. No version of it is tagged yet.
 
-The spec carries a version `MAJOR.MINOR.PATCH` (see `SPEC.md`, section 8): `1.0.0-alpha` until
-the tag `linear-course/v1.0.0`, when « Unreleased » becomes `1.0.0`. From the tag on, the bump
-table of `SPEC.md` section 8 classes each change, and the entries are ranked by bump, as
-Changesets does.
+The spec carries a version `MAJOR.MINOR.PATCH` (see `spec-directives/1/README.md`, section 6):
+`1.0.0-alpha` until the tag `linear-course/v1.0.0`, when « Unreleased » becomes `1.0.0`. From the
+tag on, the bump table of `spec-directives/1/README.md` section 6 classes each change, and the
+entries are ranked by bump, as Changesets does.
 
 One line per change: `- CLASS, file or area: what changes`. During the alpha, an entry carries
 no class: `- file or area: what changes`.
 
 ## Unreleased
 
-- `decisions/`: the frame of the spec as three decisions (#322): `rules-with-level-and-method`
+- `decisions/`: the model of the spec as three decisions (#322): `rules-with-level-and-method`
   (the rule as the unit, with a level from ISO/IEC Directives Part 2, a method from
   ISO/IEC/IEEE 29148, a category; the severity of a check derived; the conformance clause; the
   normative references), `spec-files-and-alpha-version` (the files by class of products, the
   version `1.0.0-alpha`, this changelog), `checks-use-ajv-and-yaml` (the checks take ajv and the
   `yaml` package); `versioned-objects-and-spec-layout`, `rules-named-by-slug` and
   `rule-groups-replace-ranges` amended.
-- `SPEC.md`, `COURSE.md`: `SPEC.md` becomes the frame (scope, files, conformance, levels,
-  methods, categories, severity, versions, normative references, the checks with their category,
-  level, method and severity); sections 2 to 7 and 9 move to `COURSE.md` as written, renumbered
-  1 to 7 (#323). `check-spec`'s `rule-slugs` reads `COURSE.md` too.
+- `SPEC.md`, `COURSE.md`: `SPEC.md` becomes the spec's description (scope, files, conformance,
+  levels, methods, categories, severity, versions, normative references, the checks with their
+  category, level, method and severity); sections 2 to 7 and 9 move to `COURSE.md` as written,
+  renumbered 1 to 7 (#323). `check-spec`'s `rule-slugs` reads `COURSE.md` too.
 - `SPEC.md`, `PROTOCOL.md`: version `1.0.0-alpha`, "draft" gone (#323).
 - `checks/`: the checks read YAML with the package `yaml` (YAML 1.2), installed by `npm ci` from
   `checks/package.json`; `lib/yaml.js` removed; the same failures at the same `file:line` (#327).
@@ -40,7 +40,7 @@ no class: `- file or area: what changes`.
   by category, `--list` prints each check with its category and severity; `--quality` is gone, a
   usage error naming its replacement; `test-fixtures` runs each fixture once and checks the exit
   code against the severity (#331).
-- `COURSE.md`, `checks/`, `lang/`: the words of the frame replace the two check families in
+- `COURSE.md`, `checks/`, `lang/`: the words of the rule model replace the two check families in
   three lines of `COURSE.md` (otherwise as moved), the comments of the checks and of the
   language pack and its fixtures: a check blocks or reports; `checks/README.md` names the removed
   flag `--quality`; no behaviour changes (#333).
@@ -72,3 +72,15 @@ no class: `- file or area: what changes`.
   `rules-named-by-slug` updated (#459).
 - `spec.yaml`: the test `spec-yaml` of the directives verifies it and holds `version` to this
   changelog's first section, « Unreleased » until the tag (#461).
+- `SPEC.md`, `README.md`, `decisions/`: `SPEC.md` is split and removed: what says how a spec is
+  written and read (what a rule file holds, the conformance clause, the levels, the methods, the
+  severity, the versions, the normative references of the rule model) moves to the spec
+  directives, `spec-directives/1/README.md`; the scope, the files, the categories, the normative
+  references of the rules and the list of checks move to this MAJOR's `README.md`, which
+  `rule-slugs` reads in its place; the tests of the spec's own files are described there too, the
+  checks' README keeping a pointer; no rule changes; the citations of `SPEC.md` updated in the
+  spec, its checks and the decisions
+  `domains-partition-the-course`, `markdown-conventions-not-mdx`, `one-diagram-style`,
+  `reader-facing-and-teacher-only-files`, `rules-named-by-slug`, `rules-with-level-and-method`,
+  `sources-trace-the-concept`, `spec-files-and-alpha-version`, `stances-in-frontmatter-only`,
+  `svg-only-diagrams` (#463).

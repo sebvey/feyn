@@ -4,8 +4,8 @@
 // says whether every run gave the expected result (a real course is checked by
 // course-specs/check-course courses/<id>, not here; the tests of the spec's own files, check-spec,
 // are tested by spec-directives/<MAJOR>/tests/test-fixtures). The severity of each check follows
-// from its rules (SPEC.md section 7): the test reads course/rules.yaml itself and holds the exit
-// codes to it.
+// from its rules (spec-directives/1/README.md section 5): the test reads course/rules.yaml itself
+// and holds the exit codes to it.
 //   --list                         names every check with its category and
 //                                  its severity, as course/rules.yaml gives them; the check it
 //                                  does not run (taught-check) marked "not run here"
@@ -50,8 +50,8 @@ const notOk = (r) => checkLines(r).filter((l) => !l.endsWith(': ok')).join(' | '
 const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
 const ids = (r) => [...new Set(checkLines(r).map((l) => l.slice(0, l.indexOf(':'))))];
 
-// the severity of each check, read here from course/rules.yaml (SPEC.md section 7): it blocks when
-// its rules are requirements verified by test, otherwise it reports
+// the severity of each check, read here from course/rules.yaml (spec-directives/1/README.md
+// section 5): it blocks when its rules are requirements verified by test, otherwise it reports
 const RULED = new Map(); // check -> { category, levels, methods }
 {
   const yaml = directives.lib('yaml-lines');

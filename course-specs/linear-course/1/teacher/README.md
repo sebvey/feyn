@@ -1,9 +1,10 @@
 # linear-course: the protocol
 
 The pedagogical protocol of `linear-course`, the part of the spec the teacher executes: rules
-named by slug, in nine families. It has the version of the spec (`SPEC.md`, 1.0.0-alpha); adding or
-changing a rule is a spec MINOR (`SPEC.md` section 8). The classroom build puts it in the
-teacher's `CLAUDE.md`, beside the teacher template, the language pack and the parameters.
+named by slug, in nine families. It has the version of the spec (the MAJOR's `README.md`,
+1.0.0-alpha); adding or changing a rule is a spec MINOR (`spec-directives/1/README.md` section 6).
+The classroom build puts it in the teacher's `CLAUDE.md`, beside the teacher template, the language
+pack and the parameters.
 
 **A base.** The v1 protocol is a base inherited from `parcours-po` (the old teacher, "Inherited
 from parcours-po" below), in French; it changes by user story, and its fresh tests come with the
@@ -38,7 +39,7 @@ this file is in English.
   lowercase, joined by hyphens, naming the behaviour, in English in every language of the protocol.
   The rule shows it in bold at its start, `**one-question-per-message**`; a row of the save-point
   table shows it in its first cell. Another rule cites it in code, « (règle
-  `one-question-per-message`) », as do the tables, `SPEC.md`, `course/README.md`, decisions and
+  `one-question-per-message`) », as do the tables, the MAJOR's `README.md`, `course/README.md`, decisions and
   tests. A rule has no number: its order and its family may change, its slug does not.
 - A rule is cited by its slug; a removed rule's slug is never reused.
 - A group of rules is a `###` heading inside a family: its title, then its slug in code between

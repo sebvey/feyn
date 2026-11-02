@@ -1,7 +1,8 @@
 # The rules of the teacher of linear-course (decisions rules-with-level-and-method and
 # spec-files-and-alpha-version), in French, the bounded exception of decision language-policy. A
-# teacher conforms when it holds every requirement of this file (SPEC.md section 3). The method
-# of a rule of the protocol is demonstration, by the fresh tests; its category is its family.
+# teacher conforms when it holds every requirement of this file (spec-directives/1/README.md section
+# 2). The method of a rule of the protocol is demonstration, by the fresh tests; its category is its
+# family.
 #
 # A group is a group of rules of teacher/README.md: its slug as `id`, its rules in their order.
 # Today one rule, first-message-without-tools, stated in teacher/README.md too; the rules leave

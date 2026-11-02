@@ -1,25 +1,26 @@
 # linear-course: the course
 
 What a course of `linear-course` is: its folder, `course.yaml`, the concept folder, the domain
-files, the course files, the diagrams and the language pack keys. The frame (scope, conformance,
-levels, methods, categories, severity, versions, checks) is `SPEC.md`; the protocol the teacher
-executes is `teacher/README.md`. Sections 1 to 7 are sections 2 to 7 and 9 of `SPEC.md` before the
-split (#323), moved as written.
+files, the course files, the diagrams and the language pack keys. The scope, the files, the
+categories and the checks are the MAJOR's `README.md`; conformance, levels, methods, severity and
+versions are the spec directives, `spec-directives/1/README.md`; the protocol the teacher executes
+is `teacher/README.md`. Sections 1 to 7 are sections 2 to 7 and 9 of the spec's description before
+the split (#323, read at `9c691da^:specs/linear-course/1/SPEC.md`), moved as written.
 
 Each concept is one source: its folder holds **reader-facing** files (the site builds them, the
 teacher reads them) and one **teacher-only** file (the teacher reads it, the site never builds
 it). The site and the classroom are builds of the course, without rewriting.
 
 **Until the extraction of the rules (#318).** This file keeps its verbal forms of obligation,
-read in the levels of `SPEC.md` (section 4). "Mandatory" means a requirement: the element is
-present. The check named verifies it, at the level and severity `SPEC.md` section 10 gives that
-check; its form is checked where that check says so, reviewed otherwise.
-"Optional" means it may be absent, a permission, and when present it follows the rule given.
-Every rule names the check that verifies it by test, in backquotes (`SPEC.md` section 10 gives
-its level); a rule with no check id is verified by inspection, the review. The rules the checks
-verify are also data in `course/rules.yaml`, each with its level, category and method, and the
-tables of sections 2 and 3.1 are the schemas `course/schemas/course.schema.yaml` and
-`course/schemas/concept-frontmatter.schema.yaml` (#329).
+read in the levels of the spec directives (`spec-directives/1/README.md` section 3).
+"Mandatory" means a requirement: the element is present. The check named verifies it, at the
+level and severity the MAJOR's `README.md` section 5 gives that check; its form is checked where
+that check says so, reviewed otherwise. "Optional" means it may be absent, a permission, and when
+present it follows the rule given. Every rule names the check that verifies it by test, in
+backquotes (the MAJOR's `README.md` section 5 gives its level); a rule with no check id is verified
+by inspection, the review. The rules the checks verify are also data in `course/rules.yaml`, each
+with its level, category and method, and the tables of sections 2 and 3.1 are the schemas
+`course/schemas/course.schema.yaml` and `course/schemas/concept-frontmatter.schema.yaml` (#329).
 
 ## 1. The course folder
 
@@ -66,7 +67,7 @@ Read by the site, the classroom build and the checks (`course-yaml` for every ru
 | Field | Presence | Meaning |
 |---|---|---|
 | `id` | mandatory | the course id: lowercase ASCII words joined by hyphens, equal to the folder name |
-| `spec` | mandatory | `linear-course@<MAJOR>`: the spec MAJOR the course follows (`SPEC.md` section 8) |
+| `spec` | mandatory | `linear-course@<MAJOR>`: the spec MAJOR the course follows (`spec-directives/1/README.md` section 6) |
 | `language` | mandatory | ISO 639-1 code of the language spoken to the learner; `lang/<language>.yaml` exists |
 | `title` | mandatory | the course title |
 | `subtitle` | optional | one line under the title on the site |
@@ -129,7 +130,8 @@ Rules:
 
 **Identifiers.** Concept numbers, sub-concept ids, case titles (section 3.3), domain numbers and
 their concepts, concept `dir` and domain `file` names are the course's identifiers: learner
-memory and site addresses cite them. Changing one is a course MAJOR (`SPEC.md` section 8).
+memory and site addresses cite them. Changing one is a course MAJOR
+(`spec-directives/1/README.md` section 6).
 
 ## 3. The concept folder
 

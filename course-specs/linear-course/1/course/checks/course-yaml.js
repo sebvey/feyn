@@ -1,8 +1,8 @@
 'use strict';
 // course.yaml: fields, identifiers, order, partition into domains, annexes, prerequisites, paths,
 // no unlisted concept folder, spec declared, language pack present (course/README.md section 2,
-// SPEC.md section 8). An unknown spec or MAJOR is refused by course-specs/check-course, before
-// these checks run.
+// spec-directives/1/README.md section 6). An unknown spec or MAJOR is refused by
+// course-specs/check-course, before these checks run.
 const path = require('path');
 const directives = require('./directives');
 const yaml = directives.lib('yaml-lines');

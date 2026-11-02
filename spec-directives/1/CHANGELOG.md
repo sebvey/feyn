@@ -23,3 +23,9 @@ no class: `- file or area: what changes`.
   section of its `CHANGELOG.md`: « Unreleased » during the alpha (`<MAJOR>.0.0-alpha`), the
   version itself after the tag; every fixture gains a `spec.yaml` and a `CHANGELOG.md`, and five
   broken fixtures show its failures (#461).
+- `README.md`: the directives, split from `course-specs/linear-course/1/SPEC.md`: what a rule
+  file holds, the conformance clause, the levels, the methods, the severity, the versions (a
+  spec's, with its bump table, and the directives' own, with theirs), the normative references of
+  the rule model, and the tests of a spec's own files (formerly described in the spec's
+  `course/checks/README.md`), which cite idea #453; `rule-slugs` reads a spec MAJOR's `README.md`
+  in place of `SPEC.md`, and the fixtures carry `README.md` where they carried `SPEC.md` (#463).

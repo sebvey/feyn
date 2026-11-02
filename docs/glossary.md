@@ -18,6 +18,7 @@ the English terms below are how we talk about them in code, docs and issues.
 |---|---|---|
 | **feyn** | the monorepo and the project | "the platform", "the system" |
 | **spec** | the contract of a *type of course*: the shape of its courses (structure, drawing contract, checks) and the generic way to teach every course of the type, its **protocol**. Named: `linear-course`. Versioned, one folder per MAJOR in `course-specs/<name>/<MAJOR>/` | "specification" for anything else; never "spec" for an issue or a design |
+| **spec directives** | what says how a spec is written and read: the rule model, levels, methods, severity, conformance clause, versions, their normative references, and the tests of a spec's files; one folder per MAJOR under `spec-directives/`, versioned like a spec (`spec-directives/1/README.md`); a spec MAJOR declares the one it follows in its `spec.yaml` | "frame" (the frame of the work is Kanban), "framework", "metamodel" |
 | **course** | what one course teaches and how to teach it: its reader-facing files (what it teaches) and its teacher-only files (how to teach it, `teaching.md`), in `courses/<id>/`, identified by its **course id** (`parcours-po`) | "content" (banned as a noun for the course), "material", "data" |
 | **build** (noun and verb) | producing an output from a course: the **site build**, the **classroom build**. Builds have no version of their own | "render", "generate", "export", "compile", "publish" (a release, below) |
 | **site** | the published website and its engine (`site/`) | "website", "web", "pages" |
@@ -72,7 +73,8 @@ the English terms below are how we talk about them in code, docs and issues.
 
 ## Rules and checks
 
-The frame of a spec, its `SPEC.md` sections 3 to 7 and 10 (decision `rules-with-level-and-method`).
+The **spec directives** (`spec-directives/1/README.md`) and, for the categories and the checks of a
+spec, the `README.md` of its MAJOR (decision `rules-with-level-and-method`).
 
 | Term | Means | Not |
 |---|---|---|
@@ -86,7 +88,7 @@ The frame of a spec, its `SPEC.md` sections 3 to 7 and 10 (decision `rules-with-
 | **severity** | what a check's failure does, derived from its rules, never declared: a check **blocks** when it verifies a requirement by test (a **blocking check**: a `fail` sets exit code 1 of `course-specs/check-course`), and **reports** in every other case (a **reporting check**: a `fail` is printed, leaves the exit code 0, and its findings are triaged into course issues). The field `severity` of a review finding in the agent workflows (`blocking` or `minor`, `course-batch.js` and `taught-check.js` of `.claude/workflows/`) is a finding's weight, not a check's severity | "warning", "soft check", "hard check" |
 | **check** | a verification of a course against its spec, that implements the method of rules of one category and one level: the scripts of a spec MAJOR's `course/checks/` that `check-course` runs (method test) and taught-check (method analysis). Its category and level are its rules', its severity follows from them; `check-course --list` prints each check with its category and severity. The spec's own files are verified by the tests of the spec directives it follows, run by `spec-directives/check-spec` (`rule-slugs`, `rule-files`, `language-pack-keys`, `spec-yaml`), which verify no rule, carry no category and no level, and each failure blocks `check-spec` | "test" (a method, not the check), "lint", "validation" |
 | **taught-check** | the check of a `pedagogy` recommendation by analysis, run by agents: the agent workflow that verifies no case asks what the learner has not yet been taught (`taught-check.js` of `.claude/workflows/`, run on demand through `/feyn-taught-check`); it reports | |
-| **conformity** | the conformance clause (`SPEC.md` section 3): a product, the course (its diagrams included) or the teacher, **conforms** when it holds every requirement of its class, whatever the method that verifies each one. The blocking checks are a necessary condition, not a sufficient one: the review and taught-check do the rest, and a course tag certifies the whole. The language pack is not a product | "conforming" for a course that only passes the blocking checks, "compliance" |
+| **conformity** | the conformance clause (`spec-directives/1/README.md` section 2): a product, the course (its diagrams included) or the teacher, **conforms** when it holds every requirement of its class, whatever the method that verifies each one. The blocking checks are a necessary condition, not a sufficient one: the review and taught-check do the rest, and a course tag certifies the whole. The language pack is not a product | "conforming" for a course that only passes the blocking checks, "compliance" |
 
 ## How we work
 

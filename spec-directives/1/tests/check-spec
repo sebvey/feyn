@@ -2,7 +2,7 @@
 'use strict';
 // check-spec <spec-dir> [--only <id>[,<id>...]] [--checks-dir <dir>]
 // check-spec --list
-// The tests of a spec's own files, of this directives MAJOR (SPEC.md, course/README.md,
+// The tests of a spec's own files, of this directives MAJOR (README.md, course/README.md,
 // course/rules.yaml, course/schemas/, teacher/README.md, teacher/rules.yaml, decisions/, lang/,
 // spec.yaml, CHANGELOG.md), not of a course: they verify no rule, carry no category and no
 // level, and each failure blocks (exit code 1; decision rules-with-level-and-method, amended by

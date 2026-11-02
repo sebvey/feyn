@@ -7,7 +7,8 @@
 //   - a rule has `id` (a slug of two to five words), `level`, `category`, `method` (on the rule
 //     or on its group) and `text`; `check` and `why` are optional; a rule of the protocol also has
 //     `origin`; no other key;
-//   - the closed lists of SPEC.md sections 4 to 6: the levels, the methods (a rule of the
+//   - the closed lists of spec-directives/1/README.md sections 3 and 4 and of the spec MAJOR's
+//     README.md section 3: the levels, the methods (a rule of the
 //     protocol: demonstration), the categories of a course, the families of the protocol;
 //   - a group of teacher/rules.yaml has an `id`, the slug of a group of teacher/README.md (a
 //     heading "### <title> (`<slug>`)" of a rule family "## <n>. ...", as rule-slugs reads it);
@@ -18,6 +19,7 @@
 //   - a check verifies rules of one category and one level;
 //   - each course/schemas/*.schema.yaml compiles under ajv's Ajv2020 (JSON Schema 2020-12), and the
 //     text of exactly one rule of course/rules.yaml names it; a schema named there exists.
+// The categories and the families below are those of linear-course, a named debt: idea #453.
 const fs = require('fs');
 const path = require('path');
 const yaml = require('../lib/yaml-lines');

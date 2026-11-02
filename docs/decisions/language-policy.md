@@ -16,7 +16,7 @@ course (`language: fr` in `course.yaml`), not of the repository.
 |---|---|
 | code, skills, agent workflows, CI workflows, scripts | `concept.md`, `teaching.md`, `sources.md` |
 | root `CLAUDE.md`, teacher template | course glossary, storyline, the course's `plan.md` and `CHANGELOG.md` |
-| `SPEC.md`, repository docs, decisions, issues, labels | diagram text, site labels (through the language pack) |
+| the spec directives, the spec's READMEs, repository docs, decisions, issues, labels | diagram text, site labels (through the language pack) |
 | file and folder names, `course.yaml` keys | what the teacher says, the literal phrases of the language pack |
 
 An issue, a PR or a decision in English that quotes the course quotes it in French and never
