@@ -56,9 +56,9 @@ through the agent workflow `deliver-story.js`, up to the hand-over of its epic P
 `/feyn-deliver <n>` delivers a Ready story without an epic through the same workflow, up to the
 hand-over of its PR to `main`; a direct delivery is made with `/feyn-issue-branch` and
 `/feyn-pull-request`. `/feyn-brainstorm` runs a brainstorm with the maintainer and ends it in
-options. `/feyn-triage` triages the ideas and the options with the maintainer. Load the one
-that matches the request. The other `feyn-` skills are the work-cycle tooling: called by them,
-and loaded directly for a one-off act. A delivery work session starts with an issue number.
+options. `/feyn-triage <n> [<n> …]` triages with the maintainer the ideas and the options they
+name, one at a time. Load the one that matches the request. The other `feyn-` skills are the
+work-cycle tooling: called by them, and loaded directly for a one-off act. A delivery work session starts with an issue number.
 The frame of the work is Kanban, with ADR for the decisions and GitHub flow for the branches
 (`docs/kanban.md`). How feyn applies it (the work items, epics and stories, and the ideas; the
 Statuses from Idea to Done; milestones; the Project's views): `docs/contributing.md`, "How the

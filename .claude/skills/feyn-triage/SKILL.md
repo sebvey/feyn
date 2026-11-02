@@ -1,16 +1,16 @@
 ---
 name: feyn-triage
-description: "Run a triage of feyn with the maintainer (moment 4 of the work cycle, Triage): a fresh agent reads every idea and option against the repository and reports the stale ones with proof and a verdict, then the work session presents them one at a time, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it; an option is committed, refined or closed. Use for \"on trie les idées\", \"triage des idées et des options\", \"triage the ideas and options\", \"run a triage\", \"/feyn-triage\"."
+description: "Triage with the maintainer the ideas and options of feyn they name (moment 4 of the work cycle, Triage): one or more issue numbers, triaged in the order given, one at a time; the work session looks up each one's neighbours (a twin, an epic or an option that covers or overlaps it, an open idea on the same files) and presents it with them, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it; an option is committed, refined or closed. With no number, it asks which issue. Use for \"trie l'idea 431\", \"trie les idées 429 et 431\", \"triage idea 431\", \"triage option 220\", \"/feyn-triage 431\", \"/feyn-triage 429 431\"."
+argument-hint: "<issue number> [<issue number> …]"
 ---
 
-# /feyn-triage
+# /feyn-triage <n> [<n> …]
 
-One job: a triage of the upstream with the maintainer, the ideas and the options, as
+One job: triage with the maintainer the ideas and options they name, one at a time, as
 [contributing](../../../docs/contributing.md), "How the work is organised", moment 4, says. The
-work session runs it: only it has the `Agent` tool that spawns the analysing agent. The agent
-reads, the work session presents and executes, the maintainer decides each item. The commands
-are in [project.md](../../reference/project.md), cited here, not copied. Nothing is executed on
-an item before the maintainer's decision on it.
+work session reads each item and its neighbours, presents it, the maintainer decides, the work
+session executes. The commands are in [project.md](../../reference/project.md), cited here, not
+copied. Nothing is executed on an item before the maintainer's decision on it.
 
 An **idea** (Status Idea) is a finding, never converted: the triage creates from it the work
 items it calls for, then closes it; it never adds a Done when or a To do to it, never edits its
@@ -28,53 +28,71 @@ correct:
   <YYYY-MM-DD> (brainstorm)" (`/feyn-brainstorm`): its body was reworked in place on that date,
   from which what changed in the repository is read.
 
-## Progress
+## 1. The issues named
 
-The rules of `CLAUDE.md`, "Working with the maintainer", hold throughout, the progress line
-included: `Triage: <n>/<N> treated · in progress: #<x>` at the top of each message, computed
-from the working list (step 2).
+The argument is one or more issue numbers, each an idea or an option, triaged in the order
+given. With no number, ask which issue to triage and do nothing until the answer.
 
-## 1. The analysing agent
+Read each one: `mise exec -- gh issue view <n> --json number,title,url,state,labels,body,comments,updatedAt,projectItems`
+(its Status: [project.md](../../reference/project.md), "Commands", Read). One that is closed or
+whose Status is neither Idea nor Option is not triaged: say so in one line, with its Status,
+and go on with the others. Each idea or option named is triaged, whatever it holds: sound or
+stale, it goes through steps 3 and 4.
 
-Spawn one fresh agent of the project subagent `feyn-upstream-analyst`
-([its file](../../agents/feyn-upstream-analyst.md): its brief, read-only tools, model `opus`):
-`Agent` with `subagent_type: "feyn-upstream-analyst"` and the prompt "Analyse the ideas and
-options of feyn as your brief says." Nothing more: it is given no list of recent changes, which
-would steer what it sees (on 2026-10-31, an agent briefed with one skipped #318 without a
-word). Its brief lives in its file, not here; a change to it is made there. A work session sees
-an agent file added to `.claude/agents/` during it (a `git pull` that brings one), with no
-restart (Claude Code, observed 2026-10-31, #373).
+## 2. The working list, with several issues
 
-Check what it returns before using it: each proof is named and can be opened, and every idea
-and option is either reported, sound, or named as not treated.
+With one issue named, the triage keeps no working list and writes no progress line: it is that
+one item, step 3 then step 4.
 
-## 2. The working list
-
-The triage keeps its list in a file `feyn-triage-<date>.md` in the work session's scratchpad
-(Claude Code's temporary folder of the work session, given in its environment): not in the
-repository, and not in Claude's memory folder. One line per stale issue, in the agent's order,
-`#<n> <title> · <idea|option> · <verdict proposed> · <status>`, the status being `pending`,
-`presented`, `awaiting maintainer action: <what>`, `left open: <why>`, `decided: <decision>` or
-`executed`.
+With several, it keeps its list in a file `feyn-triage-<date>.md` in the work session's
+scratchpad (Claude Code's temporary folder of the work session, given in its environment): not
+in the repository, and not in Claude's memory folder. One line per issue, in the order given,
+`#<n> <title> · <idea|option> · <status>`, the status being `pending`, `presented`,
+`awaiting maintainer action: <what>`, `left open: <why>`, `decided: <decision>` or `executed`.
+The rules of `CLAUDE.md`, "Working with the maintainer", for a pass over a list hold then: the
+progress line `Triage: <n>/<N> treated · in progress: #<x>` at the top of each message,
+computed from the list.
 
 The list is used, not only written:
 - before presenting an item, reread it: a line `awaiting maintainer action` stops the triage on
   that item (step 3); otherwise the next item is the first line neither `executed` nor
-  `left open`;
-- after each step of an item (presented, decided, executed), write its status;
+  `left open`;- after each step of an item (presented, decided, executed), write its status;
 - the progress line counts its `executed` lines over its lines.
 
 The scratchpad goes with the work session: no purge step. A triage resumed in another work
-session does not find the list, and that is accepted: it starts from a new analysis (step 1),
-where the issues already treated no longer come up as stale.
+session does not find the list, and that is accepted: the maintainer names the issues left.
 
 ## 3. One item at a time
 
+**Read it against the repository.** What changed since the issue was last updated
+(`git fetch`, then `git log origin/main --since=<its updatedAt>`), the files and issues it cites
+(`git log origin/main -- <file>`, `mise exec -- gh issue view <m>`). Ask first: does it still
+deserve to exist, in this form? An issue in Idea whose body already defines a work (a Done
+when, a To do) is of the old format (step 4).
+
+**Its neighbours**, looked up before it is presented, each command run, not assumed:
+- a **twin**, an open issue on the same point:
+  `mise exec -- gh issue list --state open --search "<two or three key words of its title>" --json number,title --jq '.[] | [.number, .title] | @tsv'`;
+- an **epic or an option** that covers it or that it overlaps: the open items of the Project,
+  with their Status and labels,
+  `mise exec -- gh project item-list 4 --owner sebvey --limit 200 --format json -q '.items[] | select(.status != "Done") | [.content.number, .status, (.labels // [] | join(",")), .content.title] | @tsv'`,
+  then the body of each epic or option whose title or area meets the item's
+  (`mise exec -- gh issue view <m>`);
+- an **open idea on the same files**: for each file or folder the item names,
+  `mise exec -- gh issue list --state open --search "<path> in:body" --json number,title --jq '.[] | [.number, .title] | @tsv'`.
+
+The item itself comes up in these searches: it is not its own neighbour.
+
 One item per message, under its own level-2 heading:
 - its frame in one line: idea or option (epic, story), what it is for, where it belongs;
-- what no longer holds, with the agent's proof (a sound item, step 5: what it calls for);
+- its neighbours, each `#<m> <title>` with what it shares with the item (twin, covers it,
+  overlaps it, same files), or "No neighbour" when the three lookups find none;
+- what it calls for, and what no longer holds, each with its proof (a commit, a file and line,
+  an issue, each named);
 - the choices in a table (choice, what it does, consequence), from the actions of step 4 for
-  its form, the agent's verdicts in the order of step 1;
+  its form, in this order where they apply: close (done, moot, or a duplicate of a twin), fold
+  into an epic, recreate (the old format), merge (into an option), split, refine, create the
+  work items (an idea), commit (an option);
 - one recommendation, with its reason.
 
 The questions the skill asks the maintainer, each before it acts on the answer:
@@ -94,10 +112,11 @@ propose it as a choice, never write it on the strength of another decision.
 
 ## 4. Execute the decision
 
-As the maintainer decided, then the working list. Which form an issue is in is read as
-`/feyn-issue` reads it ([its skill](../feyn-issue/SKILL.md), "Read an issue"). The issue being
-triaged is not a twin of the work items created from it: when `/feyn-issue`'s step 2, "Look for
-a twin", finds it, it goes on to create them, the triaged issue left as it is and closed after.
+As the maintainer decided, then the working list when there is one (step 2). Which form an
+issue is in is read as `/feyn-issue` reads it ([its skill](../feyn-issue/SKILL.md), "Read an
+issue"). The issue being triaged is not a twin of the work items created from it: when
+`/feyn-issue`'s step 2, "Look for a twin", finds it, it goes on to create them, the triaged
+issue left as it is and closed after.
 
 **An idea:**
 - **create the work items**: each with `/feyn-issue` in the form the maintainer chose,
@@ -152,19 +171,14 @@ query='mutation { minimizeComment(input: {subjectId: "<comment node id>", classi
 DUPLICATE}) { clientMutationId } }'`, the node id read with `mise exec -- gh api
 repos/sebvey/feyn/issues/<n>/comments --jq '.[] | [.node_id, .body[:60]] | @tsv'`.
 
-## 5. The sound ideas and options
+## 5. End the triage
 
-The ideas and options the agent found sound are triaged as moment 4 says, under the same
-rules, one item at a time, only when the maintainer asks: the working list then takes them as
-items, each idea for the work items it calls for, each option to commit, refine or close.
+With one issue, the reply that reports the decision executed ends it: what was closed, created
+or changed, each with its link.
 
-## 6. End the triage
-
-When every item is executed or left open, or when the maintainer stops it: one message with the
-counts (stale, executed by action, left open with why, not treated by the agent), the ideas
-closed and the work items created from them, the options committed, and the findings the
-triage raised on its own way of working.
-
-When the maintainer stops the triage ("on s'arrête là"), that message also says, in short, what
-the list held and is lost with the work session: the items treated, and the items left with
-their proposed verdict.
+With several, when every item is executed or left open, or when the maintainer stops it: one
+message with the counts (named, executed by action, left open with why, not triaged with why),
+the ideas closed and the work items created from them, the options committed, and the findings
+the triage raised on its own way of working. When the maintainer stops the triage ("on s'arrête
+là"), that message also says, in short, what the list held and is lost with the work session:
+the items treated, and the items left.
