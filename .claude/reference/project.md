@@ -28,8 +28,8 @@ skill needs to make (decision `project-status-not-state-labels`). Four are on:
 - "Auto-add to project" adds the open issues of `sebvey/feyn` created or updated while it is
   on (filter `is:issue is:open`), never a pull request;
 - "Auto-add sub-issues to project" adds the sub-issues of an issue the Project holds, a story
-  attached to its epic among them; what it adds is read from its name, its settings in the web
-  interface (on, GitHub, observed 2026-11-02, #403);
+  attached to its epic among them; it shows on, and what it adds is read from its name and its
+  settings in the web interface (GitHub, observed 2026-11-02, #403);
 - "Item added to project" sets Idea, whichever workflow or command added the item;
 - "Item closed" sets Done, on issues only.
 

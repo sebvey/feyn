@@ -57,7 +57,9 @@ of the old format for a defect:
   order); the plan's bullets (`- **Observation**: …`); or, created from the old issue form,
   the head under a `### Where, what, why` heading, its `**Where:**` markers possibly absent.
   It tells an Observation section with a Done when (the old format) from an idea's
-  Observation, which comes with no Done when. Any other body: its sections in order.
+  Observation, which comes with no Done when. An issue of the old format placed in Idea at the
+  merge of epic #392 may carry a `type:` label: read it as such and leave the label, the triage
+  setting the type on the work items it creates. Any other body: its sections in order.
 
 ## Create an issue
 
