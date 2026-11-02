@@ -225,16 +225,16 @@ Four moments:
    triage, and closes it as completed when it creates its options, naming them. Why: decision
    `brainstorm-ends-in-options`.
 4. **Triage**, run with `/feyn-triage` on the ideas and the options the maintainer names, one at
-   a time: the work session reads each one against the repository and its neighbours (a twin,
-   an epic or an option that covers or overlaps it, an open idea on the same files), the
-   maintainer decides it, whatever it holds. Each idea is read for what it calls for: the
-   triage creates the work items (stories, under an epic or alone, or an epic), each with the
-   form of its kind and citing the idea, born Option, or Ready on the maintainer's word, then
-   closes the idea as completed, its comment naming them; an idea that calls for nothing is
-   closed as not planned, with the reason. The idea is never converted, its finding stays as written. An issue written before
-   this frame whose body already defines a work (a Done when, a To do) is recreated as a story or
-   an epic and closed, its blocked-by links set again on the new work item. Each option is
-   committed (set Ready) or closed by the maintainer, or kept to refine. Why: decisions
+   a time: the work session reads each one against the repository and its neighbours (a twin, an
+   epic or an option that covers or overlaps it, an open idea on the same files), the maintainer
+   decides it, whatever it holds. Each idea is read for what it calls for: the triage creates
+   the work items (stories, under an epic or alone, or an epic), each with the form of its kind
+   and citing the idea, born Option, or Ready on the maintainer's word, then closes the idea as
+   completed, its comment naming them; an idea that calls for nothing is closed as not planned,
+   with the reason. The idea is never converted, its finding stays as written. An issue written
+   before this frame whose body already defines a work (a Done when, a To do) is recreated as a
+   story or an epic and closed, its blocked-by links set again on the new work item. Each option
+   is committed (set Ready) or closed by the maintainer, or kept to refine. Why: decisions
    `idea-is-never-converted`, `idea-and-option-before-ready`.
 
 **Policies.** The policies of the cycle, written down here as Kanban asks, and in the

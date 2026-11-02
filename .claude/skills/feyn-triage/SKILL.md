@@ -9,8 +9,9 @@ argument-hint: "<issue number> [<issue number> …]"
 One job: triage with the maintainer the ideas and options they name, one at a time, as
 [contributing](../../../docs/contributing.md), "How the work is organised", moment 4, says. The
 work session reads each item and its neighbours, presents it, the maintainer decides, the work
-session executes. The commands are in [project.md](../../reference/project.md), cited here, not
-copied. Nothing is executed on an item before the maintainer's decision on it.
+session executes. The Project's commands are in [project.md](../../reference/project.md), cited
+here, not copied; the neighbour lookups of step 3 are written in step 3. Nothing is executed on
+an item before the maintainer's decision on it.
 
 An **idea** (Status Idea) is a finding, never converted: the triage creates from it the work
 items it calls for, then closes it; it never adds a Done when or a To do to it, never edits its
@@ -56,7 +57,8 @@ computed from the list.
 The list is used, not only written:
 - before presenting an item, reread it: a line `awaiting maintainer action` stops the triage on
   that item (step 3); otherwise the next item is the first line neither `executed` nor
-  `left open`;- after each step of an item (presented, decided, executed), write its status;
+  `left open`;
+- after each step of an item (presented, decided, executed), write its status;
 - the progress line counts its `executed` lines over its lines.
 
 The scratchpad goes with the work session: no purge step. A triage resumed in another work
