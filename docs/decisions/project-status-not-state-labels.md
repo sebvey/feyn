@@ -8,29 +8,31 @@ area: repo
 Without this, an agent would keep setting `state:proposed`, `state:todo` and `state:wip` next
 to the Project's Status, or read a label instead of the Status, and the two would drift apart
 (issue #14 closed with `state:wip` still on it); or it would leave In progress to a Project
-workflow, which no branch fires, and the issue would stay in Backlog after `/feyn-issue-branch`.
+workflow, which no branch fires, and the issue would stay in Ready after `/feyn-issue-branch`.
 
 Where an issue stands is the Status of its item in the Project (the GitHub Project "feyn",
-number 4, owner `sebvey`): Backlog (proposed, to triage), Ready (decided, free to take),
-In progress (a branch exists), Ready for review (the work claims done, the maintainer reviews
-and concludes), Done (closed; the close reason stays on GitHub). Ready for review is an
-observation whose PR is open after the fresh-agent review (the maintainer merges), or an epic
-whose epic PR is handed over (the maintainer verifies its Done when and merges); a slice of an
-epic never has it. A correction asked on a delivered PR returns the issue to In progress, and
-the renewed hand-over sets Ready for review again. Needs Decision stays in the Project, unused
-by the skills: the label `blocked:maintainer` carries a decision awaited (decision
+number 4, owner `sebvey`): Idea (a finding, to triage), Option (a work item defined, not
+committed), Ready (committed, free to take), In progress (a branch exists), Ready for review
+(the work claims done, the maintainer reviews and concludes), Done (closed; the close reason
+stays on GitHub); the stages before Ready are decision `idea-and-option-before-ready`. Ready for
+review is a story without an epic whose PR is open after the fresh-agent review (the maintainer
+merges), or an epic whose epic PR is handed over (the maintainer verifies its Done when and
+merges); a story of an epic never has it. A correction asked on a delivered PR returns the issue
+to In progress, and the renewed hand-over sets Ready for review again. No Status says a decision
+is awaited: the label `blocked:maintainer` carries it, on any Status (decision
 `blocked-is-a-label-not-a-state`). It replaces the three state labels, which are deleted. The
 Project's built-in workflows carry what GitHub sees happen: "Auto-add to project" adds new and
-updated open issues, "Item added to project" sets Backlog, "Item closed" sets Done, whatever
-closed the issue. The skills set what only they know: `/feyn-issue` sets Ready when the
-maintainer said the work is decided; `/feyn-issue-branch` refuses an issue in Done, or in In
-progress with a branch, and sets In progress; `/feyn-pull-request` on the direct path, and
-`/feyn-deliver` or `/feyn-deliver-epic` at the hand-over, set Ready for review;
-`/feyn-merge-cleanup` reads the workflows and sets Done only when "Item closed" is off. The
-names, ids, workflows and commands live in `.claude/reference/project.md`. `type:`, `area:` and
-`blocked:maintainer` stay labels. The maintainer works in the web interface: the Project's
-views Epics, Ready, WIP and Backlog (`docs/contributing.md`, "How the work is organised"), the
-label `blocked:maintainer` first. It supersedes decision `state-labels-until-the-project`.
+updated open issues, "Item added to project" sets Idea, "Item closed" sets Done, whatever closed
+the issue. The skills set what only they know: `/feyn-issue` sets Option on a work item it
+creates, or Ready when the maintainer says it is committed; `/feyn-issue-branch` refuses an
+issue in Done, or in In progress with a branch, and sets In progress; `/feyn-pull-request` on
+the direct path, and `/feyn-deliver` or `/feyn-deliver-epic` at the hand-over, set Ready for
+review; `/feyn-merge-cleanup` reads the workflows and sets Done only when "Item closed" is off.
+The names, ids, workflows, views and commands live in `.claude/reference/project.md`. The kind
+(`epic`, `story`; decision `kind-label-per-work-item`), `type:`, `area:` and
+`blocked:maintainer` stay labels. The maintainer works in the web interface: the Project's views
+(`.claude/reference/project.md`), the label `blocked:maintainer` first. It supersedes decision
+`state-labels-until-the-project`.
 
 ## Options ruled out
 
@@ -41,4 +43,4 @@ label `blocked:maintainer` first. It supersedes decision `state-labels-until-the
   `gh project` calls in three skills, and an issue closed by a merged PR stayed In progress
   until `/finish after-merge` ran (#64, #125, #128, #22).
 - Done only when closed by a PR ("Pull request merged"): an issue closed as not planned or as a
-  duplicate would stay In progress or Backlog.
+  duplicate would stay In progress or Idea.
