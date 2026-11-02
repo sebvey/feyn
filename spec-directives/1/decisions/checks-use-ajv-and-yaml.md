@@ -42,8 +42,8 @@ Node (CommonJS, no `npm install`)" of `course-specs/linear-course/1/checks/READM
 - An `npm ci` step runs before the checks, in CI (#137) and locally (under `mise exec`).
 - The checks are ported to the `yaml` package (#327), and the schemas come with #329. Today a
   failure maps to `file:line` through the `yaml` package's positions alone, kept by
-  `lib/yaml-lines.js` for each key and item; no ajv instance path is mapped: `course-yaml` and
-  `concept-folder` verify the two schema rules with their own code until #336 wires ajv into
+  `lib/yaml-lines.js` for each key and item; no ajv instance path is mapped: in `linear-course`, `course-yaml`
+  and `concept-folder` verify the two schema rules with their own code until #336 wires ajv into
   them; ajv serves today in `rule-files` (`check-spec`), which compiles the schemas, and in
   `test-fixtures`, which validates the valid fixture against them.
 - Amended 2026-11-02 (#465): the decision moves to the spec directives

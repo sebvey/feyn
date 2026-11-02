@@ -5,8 +5,9 @@ status: accepted
 area: spec-directives
 ---
 
-Without this, an agent would keep numbering a spec `1.0.0` while its content changes from commit
-to commit, or move it to `0.y.z` and rename `1/` and `@1` twice (working notes D13).
+Without this, an agent would keep numbering a spec or the directives `1.0.0` while its content
+changes from commit to commit, or move it to `0.y.z` and rename `1/` and `@1` twice (working
+notes D13).
 
 A MAJOR in preparation, of a spec or of the spec directives, carries `<MAJOR>.0.0-alpha` in its
 folder until its tag, with no prerelease number and no prerelease tag: `linear-course` is

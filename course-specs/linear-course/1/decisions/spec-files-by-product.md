@@ -11,7 +11,8 @@ text that explains it, where no check can select it by category or count it (wor
 The files of `linear-course` are split by class of products (decision
 `rules-with-level-and-method`), plus the MAJOR's `README.md`; each product has its folder,
 `course/` and `teacher/`, which holds its description (its `README.md`), its rules (its
-`rules.yaml`) and its own files. The MAJOR's `README.md` holds the scope, the files, the
+`rules.yaml`) and its own files; the MAJOR's `spec.yaml` declares its name, its MAJOR, the MAJOR
+of the spec directives it follows and its version. The MAJOR's `README.md` holds the scope, the files, the
 categories, the normative references of its rules and the list of checks; the spec directives
 (`spec-directives/1/README.md`) hold what a rule file holds, the conformance clause, levels,
 methods, how severity follows, the versions and their normative references; neither holds a rule. `course/README.md`
