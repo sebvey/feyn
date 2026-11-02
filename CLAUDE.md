@@ -54,7 +54,7 @@ through the agent workflow `deliver-slice.js`, up to the hand-over of its epic P
 `/feyn-deliver <n>` delivers a Ready observation (an issue with no parent epic) through the same
 workflow, up to the hand-over of its PR to `main`; a direct delivery is made with
 `/feyn-issue-branch` and `/feyn-pull-request`. `/feyn-brainstorm` runs a brainstorm with the
-maintainer and ends it in a proposal. `/feyn-triage` runs a pass on the Backlog with the
+maintainer and ends it in options. `/feyn-triage` runs a pass on the Backlog with the
 maintainer. Load the one that matches the request. The other `feyn-` skills are the work-cycle
 tooling: called by them, and loaded directly for a one-off act. A delivery work session starts
 with an issue number. How the work is organised (epics, slices, observations, milestones, the
