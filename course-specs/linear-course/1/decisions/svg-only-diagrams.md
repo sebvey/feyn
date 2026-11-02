@@ -10,10 +10,10 @@ which is shorter, or as an Astro component under `site/`, so the desktop panel w
 Mermaid code instead of the drawing, and the teacher could not send a component at all: the
 learner in Claude Code loses the diagram.
 
-A diagram is one SVG file in the concept folder, under the drawing contract (`SPEC.md`
-section 7.1, check `svg-contract`), declared in the frontmatter of `concept.md` with a title (the SVG
+A diagram is one SVG file in the concept folder, under the drawing contract (`course/README.md`
+section 6.1, check `svg-contract`), declared in the frontmatter of `concept.md` with a title (the SVG
 `<title>` and the image alt) and a caption that the teacher says and the site shows as legend
-(`SPEC.md` 4.1, 4.5). Flow diagrams are SVG too: boxes,
+(`course/README.md` 3.1, 3.5). Flow diagrams are SVG too: boxes,
 arrows, `<text>`. Mermaid, site components and Excalidraw are not course sources. This rests on
 the test of 2026-10-26 in Claude Code desktop: an SVG sent to the panel rendered, a Mermaid file
 showed as text. It replaces the 23 Astro diagram components of `parcours-po-website`, which the

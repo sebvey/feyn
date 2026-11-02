@@ -9,8 +9,8 @@ argument-hint: "<course id> [from <concept>] [to <concept>]"
 One job: run the agent workflow `feyn-taught-check-workflow` (`taught-check.js` of
 `.claude/workflows/`) and handle what it finds.
 It is a reporting check (a `pedagogy` recommendation, by analysis), run on demand, not
-mandatory before the merge (`SPEC.md` section 10): after a change to what is taught (teaching
-notes, a sub-concept, an order), or when the maintainer asks.
+mandatory before the merge (`course-specs/linear-course/1/README.md` section 5): after a change to
+what is taught (teaching notes, a sub-concept, an order), or when the maintainer asks.
 
 ## 1. Run
 

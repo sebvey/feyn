@@ -1,0 +1,2 @@
+check: spec-yaml
+message: version 1.1.0 differs from the version the first section of CHANGELOG.md (line 7) names: "1.0.0 - 2026-11-02"

@@ -1,0 +1,4 @@
+# fixture: the declaration of a spec MAJOR in its alpha
+name: fixture-spec
+major: 1
+version: 1.0.0-alpha

@@ -111,6 +111,7 @@ of the old format for a defect:
      | Path | Area label |
      |---|---|
      | `course-specs/<name>/` | `area:spec:<name>` |
+     | `spec-directives/` | `area:spec-directives` |
      | `courses/<id>/` | `area:course:<id>` |
      | `teacher/` | `area:teacher` |
      | `site/` | `area:site` |

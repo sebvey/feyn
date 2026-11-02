@@ -1,0 +1,2 @@
+check: spec-yaml
+message: version 1.0.0-alpha is an alpha: the first section of CHANGELOG.md (line 7) must be « Unreleased », not "1.0.0 - 2026-11-02"

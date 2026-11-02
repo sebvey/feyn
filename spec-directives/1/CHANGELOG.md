@@ -1,0 +1,40 @@
+# Changelog of the spec directives
+
+The spec directives, MAJOR 1. No version of them is tagged yet.
+
+The directives carry a version `MAJOR.MINOR.PATCH`, like a spec (decision
+`alpha-version-until-tag`): `1.0.0-alpha` until the tag `spec-directives/v1.0.0`, when
+« Unreleased » becomes `1.0.0`. From the tag on, each change is classed by its bump, and the
+entries are ranked by bump, as Changesets does.
+
+One line per change: `- CLASS, file or area: what changes`. During the alpha, an entry carries
+no class: `- file or area: what changes`.
+
+## Unreleased
+
+- folder: the directives MAJOR 1 is created, `spec-directives/1/`, run on a spec MAJOR by
+  `spec-directives/check-spec`, which reads the `directives` its `spec.yaml` declares (#459).
+- `tests/`, `lib/`, `package.json`, `package-lock.json`: moved out of
+  `course-specs/linear-course/1/` (formerly its `checks/`): the tests of a spec's own files
+  (`check-spec`, `rule-slugs`, `rule-files`, `language-pack-keys`), their fixtures and their
+  `test-fixtures`, the `lib/` the checks of a spec share, the package (`yaml`, `ajv`) the checks
+  of a spec MAJOR that declares this MAJOR load; no test changes (#459).
+- `tests/`: `spec-yaml`, the fourth test of `check-spec`, verifies a spec MAJOR's `spec.yaml`
+  (`name`, `major`, `directives`, `version`, no other key) and holds `version` to the first
+  section of its `CHANGELOG.md`: « Unreleased » during the alpha (`<MAJOR>.0.0-alpha`), the
+  version itself after the tag; every fixture gains a `spec.yaml` and a `CHANGELOG.md`, and five
+  broken fixtures show its failures (#461).
+- `README.md`: the directives, split from `course-specs/linear-course/1/SPEC.md`: what a rule
+  file holds, the conformance clause, the levels, the methods, the severity, the versions (a
+  spec's, with its bump table, and the directives' own, with theirs), the normative references of
+  the rule model, and the tests of a spec's own files (formerly described in the spec's
+  `course/checks/README.md`), which cite idea #453; `rule-slugs` reads a spec MAJOR's `README.md`
+  in place of `SPEC.md`, and the fixtures carry `README.md` where they carried `SPEC.md` (#463).
+- `decisions/`: the decisions of the directives, moved from
+  `course-specs/linear-course/1/decisions/`: `rules-with-level-and-method` (the rule model, the
+  conformance clause, the tests of a spec's own files) and `checks-use-ajv-and-yaml` (one package
+  per directives MAJOR), their area `spec-directives`; `alpha-version-until-tag`, the alpha part
+  of the spec's `spec-files-and-alpha-version`, split from it (#465).
+- `README.md`: opens with the table Reader, Comes for, Opens over the four readers of a spec,
+  defined in `spec-directives/README.md`, beside it the root README of the directives and their
+  MAJORs (#467).

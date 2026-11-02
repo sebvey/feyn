@@ -1,0 +1,74 @@
+#!/usr/bin/env node
+'use strict';
+// check-spec <spec-dir> [--only <id>[,<id>...]] [--checks-dir <dir>]
+// check-spec --list
+// The tests of a spec's own files, of this directives MAJOR (README.md, course/README.md,
+// course/rules.yaml, course/schemas/, teacher/README.md, teacher/rules.yaml, decisions/, lang/,
+// spec.yaml, CHANGELOG.md), not of a course: they verify no rule, carry no category and no
+// level, and each failure blocks (exit code 1; decision rules-with-level-and-method, amended by
+// #339).
+// <spec-dir>: the folder of a spec MAJOR (course-specs/linear-course/1); spec-directives/check-spec
+// runs this script for a spec MAJOR whose spec.yaml declares this directives MAJOR.
+// --checks-dir: the folder where rule-files looks for the check scripts a rule names, by default
+// <spec-dir>/course/checks (test-fixtures names fixtures/checks/, the stubs of the fixtures).
+const fs = require('fs');
+const path = require('path');
+require('../lib/deps').need();
+
+const CHECKS = ['rule-slugs', 'rule-files', 'language-pack-keys', 'spec-yaml'];
+
+function usage(code) {
+  const out = code ? console.error : console.log;
+  out('usage: check-spec <spec-dir> [--only <id>[,<id>...]] [--checks-dir <dir>]');
+  out('       check-spec --list');
+  out(`checks: ${CHECKS.join(', ')}`);
+  process.exit(code);
+}
+
+const args = process.argv.slice(2);
+let dir = null;
+let checksDir = null;
+const only = [];
+for (let i = 0; i < args.length; i++) {
+  const a = args[i];
+  if (a === '--help' || a === '-h') usage(0);
+  else if (a === '--list') { console.log(CHECKS.join('\n')); process.exit(0); }
+  else if (a === '--only') only.push(...String(args[++i] || '').split(',').filter(Boolean));
+  else if (a.startsWith('--only=')) only.push(...a.slice(7).split(',').filter(Boolean));
+  else if (a === '--checks-dir') checksDir = args[++i] || '';
+  else if (a.startsWith('--checks-dir=')) checksDir = a.slice(13);
+  else if (a.startsWith('-')) { console.error(`unknown option ${a}`); usage(2); }
+  else if (dir === null) dir = a;
+  else usage(2);
+}
+if (dir === null) usage(2);
+for (const id of only) if (!CHECKS.includes(id)) { console.error(`unknown check id "${id}" (known: ${CHECKS.join(', ')})`); process.exit(2); }
+if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) { console.error(`not a directory: ${dir}`); process.exit(2); }
+
+const root = path.resolve(dir);
+const ctx = {
+  root,
+  checks: path.resolve(checksDir === null ? path.join(root, 'course', 'checks') : checksDir),
+  read(rel) {
+    try { return fs.readFileSync(path.join(root, rel), 'utf8'); } catch (e) { return null; }
+  },
+  list(rel) {
+    try { return fs.readdirSync(path.join(root, rel)); } catch (e) { return []; }
+  },
+};
+const run = only.length ? CHECKS.filter((id) => only.includes(id)) : CHECKS;
+let failed = 0;
+for (const id of run) {
+  let failures;
+  try {
+    failures = require('./' + id).run(ctx);
+  } catch (e) {
+    failures = [{ file: 'check-spec', line: 1, message: `the check crashed: ${e.stack.split('\n').slice(0, 3).join(' | ')}` }];
+  }
+  if (!failures.length) console.log(`${id}: ok`);
+  else {
+    failed++;
+    for (const f of failures) console.log(`${id}: fail: ${f.file}:${f.line} ${f.message}`);
+  }
+}
+process.exit(failed ? 1 : 0);
