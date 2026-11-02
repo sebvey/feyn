@@ -9,7 +9,9 @@ Without this, an agent would write a second Done when in the PR body, or edit th
 Done when while the branch is open, and the reviewer would no longer know which of the two
 the work is held to.
 
-The Done when is written once, in the issue; it is the contract. The PR does not define, it
+The Done when is written once, in the issue; from Ready on, it is the contract. The form of a
+work item freezes at Ready, the commitment point: until then, as an option, its kind and body
+may change (decision `idea-and-option-before-ready`). The PR does not define, it
 reports: `/feyn-pull-request` rereads the issue's Done when, checks each statement against the
 branch, and writes in the PR body's Checks section one line per issue that counts the verdicts
 (`met`, `not met`, `deviation`), without restating the statements; only a `not met` or a
@@ -29,3 +31,7 @@ linked PR closes its issue at the merge (GitHub, documented 2026-10-28, #71).
   issue's statements, not to proof lines the contributor chose.
 - Issue #61 makes `/feyn-pull-request` write the verdicts; the PR's `Closes #n` links it to its
   issue, nothing links the branch (decision `no-branch-link`).
+- Amended 2026-11-02 (#395): the contract starts at Ready, where the form of a work item
+  freezes; before it, as an option, its kind and body may change (a story rewritten as an epic,
+  or the reverse). Without this, an agent would hold an option's Done when as frozen and refuse
+  to reshape it, though refining an option is what the stages before commitment are for.

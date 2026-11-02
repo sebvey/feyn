@@ -48,7 +48,7 @@ counterfactual, picks the folder, checks for a neighbouring slug.
   same decision, and the git conflict is then the right signal.
 - The issue number as identifier: it ties a decision to GitHub and forces an issue for a
   decision taken in a PR.
-- "ADR" in paths: it is the known synonym in conversation only.
+- "ADR" in paths: it names the frame's complement, the practice, never one decision.
 - An "Amended" line for every mechanism change, the rest of the body untouched (the rule until
   #370): each stale sentence stays beside its correction, and the before is already in git
   (decision `construction-in-history`).

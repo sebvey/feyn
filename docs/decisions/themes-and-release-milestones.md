@@ -11,22 +11,22 @@ learnt), or open a milestone per epic, so the work would be counted against a pl
 reads any more and a milestone would close on nothing; or frame a heap of tooling issues as a
 parent epic with no done-when, as #225 was.
 
-Work is framed by **epics** and released by **milestones**. An epic is an objective that
-closes: an issue labelled `epic`, titled "Epic: …", parent of its slices (GitHub sub-issues).
-Its body has five sections, in order, and nothing else: **Objective** (what is true when it is
-done, two to four lines), **Why now** (what it unblocks), **Material** (what is read when
-splitting), **Done when** (two or three coarse verifiable statements), **Out of scope** (one
-line, naming the epic that takes it). **No done-when, no epic**: what cannot get one is an
-observation to triage, or a label; a heap of issues with no common objective has no parent.
-An epic is split **one slice at a time, when it is taken**: no To do, no sub-issue posed in
-advance; a slice is an ordinary issue (`/feyn-issue`) attached to it, and its plan is a **plan
-comment** rewritten at each slice, which also holds the epic's open questions. It is **Ready**
-when nothing blocks it (no open issue among its blocked-by links) and its five sections are
-written; the maintainer sets Ready at triage. An epic is delivered on an integration branch,
-validated by the maintainer's merge of its epic PR (decision `epic-on-integration-branch`).
-An epic may span releases and may target a milestone. A milestone is a **release target**,
-created when a release is in sight: named after the tag that closes it
-(`linear-course/v1.0.0`), it holds the slices that must close before that tag. Tooling has no
+Work is framed by **epics** and released by **milestones**. An epic is an objective that closes:
+an issue labelled `epic`, titled "Epic: …", parent of its stories (GitHub sub-issues). Its body
+has five sections, in order, and nothing else: **Objective** (what is true when it is done, two
+to four lines), **Why now** (what it unblocks), **Material** (what is read when splitting and
+what was settled; decision `brainstorm-ends-in-options`), **Done when** (two or three coarse
+verifiable statements), **Out of scope** (one line, naming the epic that takes it).
+**No done-when, no epic**: what cannot get one is an idea to triage, or a label; a heap of
+issues with no common objective has no parent. An epic is split **one story at a time, when it
+is taken**: no To do, no sub-issue posed in advance; a story is posed (`/feyn-issue`) attached
+to it, and its plan is a **plan comment** rewritten at each story, which also holds the epic's
+open questions. It is **Ready** when nothing blocks it (no open issue among its blocked-by
+links) and its five sections are written; the maintainer sets Ready at triage. An epic is
+delivered on an integration branch, validated by the maintainer's merge of its epic PR (decision
+`epic-on-integration-branch`). An epic may span releases and may target a milestone. A milestone
+is a **release target**, created when a release is in sight: named after the tag that closes it
+(`linear-course/v1.0.0`), it holds the stories that must close before that tag. Tooling has no
 version and no milestone. This replaces decision `milestones-per-stage-then-release`: the stage
 plan is abandoned on 2026-10-29, its open issues closed as not planned with a pointer to their
 epic, their bodies kept as material; `stage-1` is renamed `linear-course/v1.0.0`, `stage-2` to

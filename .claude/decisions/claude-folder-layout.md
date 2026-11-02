@@ -13,10 +13,10 @@ the project subagents (Claude Code's custom subagents): one file per agent whose
 from run to run, its frontmatter (`name`, `description`, an explicit `tools` list, `model`) and
 the brief as its system prompt, spawned by name (`subagent_type` of `Agent`, `agentType` of a
 workflow's `agent()`); its `tools` list enforces what the brief only asked, a read-only agent
-gets no Edit or Write (`feyn-pr-reviewer`, `feyn-backlog-analyst`). A session sees an agent file
+gets no Edit or Write (`feyn-pr-reviewer`, `feyn-upstream-analyst`). A session sees an agent file
 added to `agents/` during it, with no restart (Claude Code, observed 2026-10-31, #373).
-`reference/` holds the WHAT, what a thing is or looks like: the body templates
-(`issue-body.md`, `pr-body.md`, …), the Project reference `project.md`, the rules of an agent
+`reference/` holds the WHAT, what a thing is or looks like: the body templates (`story-body.md`,
+`idea-body.md`, `pr-body.md`, …), the Project reference `project.md`, the rules of an agent
 in a worktree (`worktree-agent.md`). `decisions/` holds the decisions that bind the agentic
 layer (decision `decision-format`). A file that says how an actor proceeds belongs to a skill,
 a workflow or an agent; a file that says what a thing is goes to `reference/`; a skill links

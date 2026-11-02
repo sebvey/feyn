@@ -1,6 +1,6 @@
 ---
 name: feyn-pr-review
-description: "Tooling of the work cycle, called by `/feyn-pull-request` on the direct path, its reviewer the project subagent feyn-pr-reviewer, also spawned by the agent workflow deliver-slice.js: a fresh agent reviews a pull request on feyn against its issue's Done when and returns its report (a verdict per statement, blocking and non-blocking findings, what it could not check), changing nothing; it can also review a merged PR after the fact. Use for \"/feyn-pr-review 247\"."
+description: "Tooling of the work cycle, called by `/feyn-pull-request` on the direct path, its reviewer the project subagent feyn-pr-reviewer, also spawned by the agent workflow deliver-story.js: a fresh agent reviews a pull request on feyn against its issue's Done when and returns its report (a verdict per statement, blocking and non-blocking findings, what it could not check), changing nothing; it can also review a merged PR after the fact. Use for \"/feyn-pr-review 247\"."
 argument-hint: "<pr number>"
 ---
 
@@ -9,7 +9,7 @@ argument-hint: "<pr number>"
 One job: have a fresh agent review PR `<pr>` against its issue's Done when, and return its
 report. Every PR is reviewed this way before it reaches the maintainer (decision
 `fresh-agent-review-before-maintainer`): `/feyn-pull-request` runs it on the direct path at its
-step 7; the agent workflow `deliver-slice.js` (under `/feyn-deliver` and `/feyn-deliver-epic`)
+step 7; the agent workflow `deliver-story.js` (under `/feyn-deliver` and `/feyn-deliver-epic`)
 spawns its own reviewers, of the same project subagent `feyn-pr-reviewer`
 ([its file](../../agents/feyn-pr-reviewer.md), which holds the reviewer brief), and follows
 step 4. It
@@ -67,7 +67,7 @@ when it had one, for the caller's clean-up.
 ## 4. Verify the corrections
 
 Once corrections are pushed, a caller that keeps the reviewer resumes it with `SendMessage` to
-its name and this brief (the agent workflow `deliver-slice.js` gives it to a new agent instead,
+its name and this brief (the agent workflow `deliver-story.js` gives it to a new agent instead,
 with the findings), `<range>` being the PR's head the reviewer read, two dots, the new head;
 after a maintainer's answer, the answer quoted follows the brief:
 

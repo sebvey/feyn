@@ -1,6 +1,6 @@
 ---
 name: feyn-taught-check
-description: "Tooling of the work cycle, called by the maintainer and by the contributor of the agent workflow deliver-slice.js after any change to what a concept teaches: run the agent workflow feyn-taught-check-workflow, which reports the cases of a course that ask what the learner has not yet been taught, and triage its findings. Use for \"/feyn-taught-check parcours-po\", \"/feyn-taught-check parcours-po from 9\"."
+description: "Tooling of the work cycle, called by the maintainer and by the contributor of the agent workflow deliver-story.js after any change to what a concept teaches: run the agent workflow feyn-taught-check-workflow, which reports the cases of a course that ask what the learner has not yet been taught, and triage its findings. Use for \"/feyn-taught-check parcours-po\", \"/feyn-taught-check parcours-po from 9\"."
 argument-hint: "<course id> [from <concept>] [to <concept>]"
 ---
 
@@ -29,7 +29,7 @@ several minutes is stalled, not blocked: wait (Claude Code, observed 2026-10-29,
   the issue's branch, whether or not the change caused it, then rerun from the first concept
   fixed. Two rounds at most.
 - A finding whose fix changes what a concept teaches, or one that returns after round two:
-  an issue (`/feyn-issue observation`), not a fix here.
+  an idea (`/feyn-issue idea`), not a fix here.
 - The PR summarises them under Changes, within `/feyn-pull-request` step 5's limits: one bullet for the
   findings fixed, with their count, one for the findings deferred, with their issue numbers;
   the workflow's result goes on a line of its own in Checks, `taught-check: <result>` (a

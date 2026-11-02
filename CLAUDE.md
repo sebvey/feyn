@@ -11,7 +11,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `courses/` | one folder per course, `courses/<id>/` (first: `parcours-po`) |
 | `teacher/` | teacher template, teacher skills, classroom build script |
 | `site/` | the site engine (Astro); reads `courses/` directly |
-| `docs/` | `decisions/`, `glossary.md`, `contributing.md` |
+| `docs/` | `decisions/`, `glossary.md`, `contributing.md`, `kanban.md` (the frame of the work) |
 | `.claude/` | `skills/` (the HOW), `agents/` (project subagents), `workflows/`, `reference/` (the WHAT), `decisions/`; decision `claude-folder-layout` |
 | `.github/` | issue template and CI workflows |
 
@@ -27,7 +27,9 @@ are never translated. French text: no em-dashes, no arrows.
 ## Vocabulary
 
 Reserved terms live in `docs/glossary.md`. A generic word listed as "not" there is not used
-where a reserved term exists.
+where a reserved term exists. Said by the maintainer, such a word is met, before acting, with
+"You said <word>, did you mean <reserved term>?", in the language of the conversation. No skill
+accepts it silently: no alias in a description, no argument read as its replacement.
 
 ## Commands
 
@@ -49,16 +51,18 @@ where a reserved term exists.
 
 ## Skills
 
-`/feyn-deliver-epic <epic>` delivers a Ready epic on its integration branch, slice by slice
-through the agent workflow `deliver-slice.js`, up to the hand-over of its epic PR.
-`/feyn-deliver <n>` delivers a Ready observation (an issue with no parent epic) through the same
-workflow, up to the hand-over of its PR to `main`; a direct delivery is made with
-`/feyn-issue-branch` and `/feyn-pull-request`. `/feyn-brainstorm` runs a brainstorm with the
-maintainer and ends it in a proposal. `/feyn-triage` runs a pass on the Backlog with the
-maintainer. Load the one that matches the request. The other `feyn-` skills are the work-cycle
-tooling: called by them, and loaded directly for a one-off act. A delivery work session starts
-with an issue number. How the work is organised (epics, slices, observations, milestones, the
-Project's views): `docs/contributing.md`, "How the work is organised".
+`/feyn-deliver-epic <epic>` delivers a Ready epic on its integration branch, story by story
+through the agent workflow `deliver-story.js`, up to the hand-over of its epic PR.
+`/feyn-deliver <n>` delivers a Ready story without an epic through the same workflow, up to the
+hand-over of its PR to `main`; a direct delivery is made with `/feyn-issue-branch` and
+`/feyn-pull-request`. `/feyn-brainstorm` runs a brainstorm with the maintainer and ends it in
+options. `/feyn-triage` triages the ideas and the options with the maintainer. Load the one
+that matches the request. The other `feyn-` skills are the work-cycle tooling: called by them,
+and loaded directly for a one-off act. A delivery work session starts with an issue number.
+The frame of the work is Kanban, with ADR for the decisions and GitHub flow for the branches
+(`docs/kanban.md`). How feyn applies it (the work items, epics and stories, and the ideas; the
+Statuses from Idea to Done; milestones; the Project's views): `docs/contributing.md`, "How the
+work is organised".
 
 ## Non-negotiable rules
 
