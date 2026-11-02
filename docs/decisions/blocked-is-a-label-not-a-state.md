@@ -19,8 +19,9 @@ that leaves a decision to the maintainer is a draft, without the label (a PR has
 without the draft such a PR looks mergeable: PRs #102, #103 and #106 had neither); the
 maintainer removes the issue's label, one removal per answer (the label on the PR said nothing
 the draft did not, and cost a second removal). The maintainer's morning walks the Project's
-views (`.claude/reference/project.md`), the label `blocked:maintainer` first (what waits for
-them).
+views (set by the maintainer in the web interface, read with the query of
+`.claude/reference/project.md`, "The Project workflows"), the label `blocked:maintainer` first
+(what waits for them).
 
 ## Options ruled out
 
