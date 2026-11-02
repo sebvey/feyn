@@ -14,7 +14,9 @@ not `v1/`), which holds `SPEC.md` (the frame, decision `spec-files-and-alpha-ver
 one folder per product, `course/` (`README.md`, what a course is; `rules.yaml`, the rules as data;
 `schemas/`; `templates/`, the course templates; `checks/`, its checks and their fixtures) and
 `teacher/` (`README.md`, the protocol; `rules.yaml`; `templates/learner/`), then `decisions/`,
-`lang/` (the language packs) and `CHANGELOG.md`. A new MAJOR copies the tree of the previous one,
+`lang/` (the language packs), `CHANGELOG.md` and `spec.yaml` (`name`, `major`, `version`, and
+`directives`, the MAJOR of `spec-directives/` it follows: the tests of its own files, the `lib/`
+and the package its checks load). A new MAJOR copies the tree of the previous one,
 its decisions under the same slugs; a MAJOR in preparation carries `<MAJOR>.0.0-alpha` until its
 tag, with no prerelease number nor tag. A course declares the MAJOR it follows
 (`spec: linear-course@1`); `course-specs/check-course <course>` reads it and runs

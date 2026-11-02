@@ -85,7 +85,8 @@ function load(dir, opts = {}) {
   ctx.packError = null;
   const lang = ctx.cy && typeof ctx.cy.language === 'string' ? ctx.cy.language : null;
   if (lang) {
-    const dirs = [opts.langDir, process.env.LINEAR_COURSE_LANG_DIR, path.join(__dirname, '..', '..', '..', 'lang')].filter(Boolean);
+    // opts.specLangDir: the lang/ of the spec MAJOR whose checks run (this lib is the directives')
+    const dirs = [opts.langDir, process.env.LINEAR_COURSE_LANG_DIR, opts.specLangDir].filter(Boolean);
     const d = dirs[0];
     const file = path.join(d, lang + '.yaml');
     ctx.packFile = opts.langDir || process.env.LINEAR_COURSE_LANG_DIR ? file : 'lang/' + lang + '.yaml';

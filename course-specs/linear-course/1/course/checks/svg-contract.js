@@ -3,9 +3,10 @@
 // diagrams match (section 3.1).
 const fs = require('fs');
 const path = require('path');
-const xml = require('./lib/xml');
-const yaml = require('./lib/yaml-lines');
-const { fail } = require('./lib/course');
+const directives = require('./directives');
+const xml = directives.lib('xml');
+const yaml = directives.lib('yaml-lines');
+const { fail } = directives.lib('course');
 
 const CLASSES = new Set(['primary', 'secondary', 'muted']);
 const GENERIC = new Set(['system-ui', 'sans-serif', 'serif', 'monospace']);

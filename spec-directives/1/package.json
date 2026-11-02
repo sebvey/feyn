@@ -1,7 +1,7 @@
 {
-  "name": "linear-course-1-checks",
+  "name": "spec-directives-1",
   "private": true,
-  "description": "The checks of linear-course MAJOR 1 (decision checks-use-ajv-and-yaml)",
+  "description": "The lib and the packages of the spec directives MAJOR 1, which the tests of a spec and the checks of the specs that declare it load (decision checks-use-ajv-and-yaml)",
   "engines": {
     "node": ">=20"
   },

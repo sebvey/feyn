@@ -1,10 +1,11 @@
 'use strict';
 // The reader-text conventions of concept.md (course/README.md section 3.5); plain Markdown in every
 // course file (section 1).
-const yaml = require('./lib/yaml-lines');
-const mdlib = require('./lib/md');
-const { fail } = require('./lib/course');
-const { parser: refParser } = require('./lib/refs');
+const directives = require('./directives');
+const yaml = directives.lib('yaml-lines');
+const mdlib = directives.lib('md');
+const { fail } = directives.lib('course');
+const { parser: refParser } = directives.lib('refs');
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 

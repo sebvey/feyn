@@ -1,6 +1,7 @@
 'use strict';
 // No character the language pack bans (French: em-dash, arrows) in course text.
-const { fail } = require('./lib/course');
+const directives = require('./directives');
+const { fail } = directives.lib('course');
 
 function run(ctx) {
   if (!ctx.packOk || !ctx.pack.typography || !Array.isArray(ctx.pack.typography.banned)) {

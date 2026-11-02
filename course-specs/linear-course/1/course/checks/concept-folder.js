@@ -4,9 +4,10 @@
 // `refs`), one section per sub-concept, « Objectif » equals the objective. The cases of
 // teaching.md (headings, fields, coverage of leaves, citation in « Consignes ») are
 // `case-contract`'s, a `pedagogy` check split from this one (#329).
-const yaml = require('./lib/yaml-lines');
-const mdlib = require('./lib/md');
-const { fail } = require('./lib/course');
+const directives = require('./directives');
+const yaml = directives.lib('yaml-lines');
+const mdlib = directives.lib('md');
+const { fail } = directives.lib('course');
 
 const FILES = ['concept.md', 'teaching.md', 'sources.md'];
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);

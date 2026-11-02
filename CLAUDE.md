@@ -8,6 +8,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | Folder | Holds |
 |---|---|
 | `course-specs/` | the specs, one per type of course (`linear-course`: contract, language packs, checks, templates); rules in `course-specs/README.md` |
+| `spec-directives/` | how a spec is written and read, one folder per MAJOR: the tests of a spec's files (`check-spec`), the `lib/` and the package the checks load |
 | `courses/` | one folder per course, `courses/<id>/` (first: `parcours-po`) |
 | `teacher/` | teacher template, teacher skills, classroom build script |
 | `site/` | the site engine (Astro); reads `courses/` directly |

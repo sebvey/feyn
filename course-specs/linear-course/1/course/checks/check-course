@@ -6,15 +6,18 @@
 // `rules-with-level-and-method`): by default every check of method test that runs on a course, the
 // blocking ones first, then the reporting ones, each in the order of course/rules.yaml. A failure
 // of a blocking check sets exit code 1; a failure of a reporting check is printed and leaves 0.
+// lib/ is the one of the spec directives that spec.yaml declares (./directives.js).
 const path = require('path');
-require('./lib/deps').need();
-const { load } = require('./lib/course');
-const rules = require('./lib/rules');
+const directives = require('./directives');
+const { load } = directives.lib('course');
+const rules = directives.lib('rules');
 
 const QUALITY_GONE = '--quality is gone: the reporting checks run by default, and --category <c> selects checks by category (check-course --list)';
+// the MAJOR's language packs, when neither --lang-dir nor LINEAR_COURSE_LANG_DIR names others
+const LANG = path.join(__dirname, '..', '..', 'lang');
 
 let RULES;
-try { RULES = rules.load(); } catch (e) {
+try { RULES = rules.load(__dirname); } catch (e) {
   if (!(e instanceof rules.RulesError)) throw e;
   console.error(`check-course: ${e.message}`);
   process.exit(2);
@@ -43,7 +46,7 @@ const args = process.argv.slice(2);
 let dir = null;
 const only = [];
 const categories = [];
-const opts = {};
+const opts = { specLangDir: LANG };
 let list = false;
 for (let i = 0; i < args.length; i++) {
   const a = args[i];

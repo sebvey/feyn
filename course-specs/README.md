@@ -13,11 +13,12 @@ One folder per MAJOR, `course-specs/<name>/<MAJOR>/` (`1/`, not `v1/`), holds:
 |---|---|
 | `SPEC.md` | the frame: scope, conformance, levels, methods, categories, severity, versions, checks |
 | `README.md` | the entry to the MAJOR |
-| `course/` | the course, one of the two products: `README.md` (what a course is: its files, fields, diagrams, language pack keys), `rules.yaml` (the rules of a course, as data), `schemas/` (the JSON Schemas of a course's files), `templates/` (the course templates), `checks/` (the checks of a course, the tests of the spec's own files, their fixtures) |
+| `course/` | the course, one of the two products: `README.md` (what a course is: its files, fields, diagrams, language pack keys), `rules.yaml` (the rules of a course, as data), `schemas/` (the JSON Schemas of a course's files), `templates/` (the course templates), `checks/` (the checks of a course, their fixtures) |
 | `teacher/` | the teacher, the other product: `README.md` (the protocol), `rules.yaml` (the rules of the protocol, as data), `templates/learner/` (the templates of learner memory) |
 | `decisions/` | the spec's decisions |
 | `lang/` | the language packs |
 | `CHANGELOG.md` | the changelog of the spec's versions in this MAJOR |
+| `spec.yaml` | `name`, `major`, `version`, and `directives`: the MAJOR of `spec-directives/` it follows, whose tests verify the spec's own files (`spec-directives/check-spec <MAJOR folder>`) and whose `lib/` and package its checks load |
 
 A new MAJOR copies the tree of the previous one, its decisions under the same slugs.
 

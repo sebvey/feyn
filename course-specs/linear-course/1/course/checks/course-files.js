@@ -2,10 +2,11 @@
 // plan.md, glossary.md, CHANGELOG.md and the domain files: presence, frontmatter, sections, leads,
 // no unlisted domain file (course/README.md sections 4 and 5); « Accueil » of plan.md and its
 // questions.
-const yaml = require('./lib/yaml-lines');
-const mdlib = require('./lib/md');
-const glossary = require('./lib/glossary');
-const { fail } = require('./lib/course');
+const directives = require('./directives');
+const yaml = directives.lib('yaml-lines');
+const mdlib = directives.lib('md');
+const glossary = directives.lib('glossary');
+const { fail } = directives.lib('course');
 
 const SEMVER = /^(\d+)\.(\d+)\.(\d+), \d{4}-\d{2}-\d{2}$/;
 
