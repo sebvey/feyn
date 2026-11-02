@@ -1,64 +1,78 @@
 ---
 name: feyn-triage
-description: "Run a pass on the Backlog of feyn with the maintainer (moment 4 of the work cycle, Triage the Backlog): a fresh agent reads every Backlog issue against the repository and reports the stale ones with proof and a verdict, then the work session presents them one at a time, the maintainer decides, and the decision is executed. Use for \"on trie le Backlog\", \"passe sur le Backlog\", \"fais le tri du Backlog\", \"triage the Backlog\", \"Backlog pass\", \"/feyn-triage\"."
+description: "Run a triage of feyn with the maintainer (moment 4 of the work cycle, Triage): a fresh agent reads every idea and option against the repository and reports the stale ones with proof and a verdict, then the work session presents them one at a time, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it; an option is committed, refined or closed. Use for \"on trie les idées\", \"triage des idées et des options\", \"triage the ideas and options\", \"run a triage\", \"/feyn-triage\", and the maintainer's older phrases \"on trie le Backlog\", \"passe sur le Backlog\", \"fais le tri du Backlog\", \"triage the Backlog\", \"Backlog pass\"."
 ---
 
 # /feyn-triage
 
-One job: a pass on the Backlog with the maintainer, as
-[contributing](../../../docs/contributing.md), "How the work is organised", moment 4, says. The work
-session runs it: only it has the `Agent` tool that spawns the analysing agent. The agent reads, the work
-session presents and executes, the maintainer decides each item. The commands are in
-[project.md](../../reference/project.md), cited here, not copied. Nothing is executed on an item
-before the maintainer's decision on it.
+One job: a triage of the upstream with the maintainer, the ideas and the options, as
+[contributing](../../../docs/contributing.md), "How the work is organised", moment 4, says. The
+work session runs it: only it has the `Agent` tool that spawns the analysing agent. The agent
+reads, the work session presents and executes, the maintainer decides each item. The commands
+are in [project.md](../../reference/project.md), cited here, not copied. Nothing is executed on
+an item before the maintainer's decision on it.
+
+An **idea** (Status Idea) is a finding, never converted: the triage creates from it the work
+items it calls for, then closes it; it never adds a Done when or a To do to it, never edits its
+body, never sets a kind or a `type:` label on it (decision `idea-is-never-converted`). An
+**option** (Status Option) is a work item, epic or story, defined and not committed: the triage
+commits it, refines it or closes it (decision `idea-and-option-before-ready`).
 
 ## Progress
 
 The rules of `CLAUDE.md`, "Working with the maintainer", hold throughout, the progress line
-included: `Backlog pass: <n>/<N> treated · in progress: #<x>` at the top of each message,
-computed from the working list (step 2).
+included: `Triage: <n>/<N> treated · in progress: #<x>` at the top of each message, computed
+from the working list (step 2).
 
 ## 1. The analysing agent
 
-Spawn one fresh agent of the project subagent `feyn-backlog-analyst`
-([its file](../../agents/feyn-backlog-analyst.md): its brief, read-only tools, model `opus`):
-`Agent` with `subagent_type: "feyn-backlog-analyst"` and the prompt "Analyse the Backlog of
-feyn as your brief says." Nothing more: it is given no list of recent changes, which would
-steer what it sees (on 2026-10-31, an agent briefed with one skipped #318 without a word). Its
-brief lives in its file, not here; a change to it is made there. A work session sees an agent
-file added to `.claude/agents/` during it (a `git pull` that brings one), with no restart
-(Claude Code, observed 2026-10-31, #373).
+Spawn one fresh agent of the project subagent `feyn-upstream-analyst`
+([its file](../../agents/feyn-upstream-analyst.md): its brief, read-only tools, model `opus`):
+`Agent` with `subagent_type: "feyn-upstream-analyst"` and the prompt "Analyse the ideas and
+options of feyn as your brief says." Nothing more: it is given no list of recent changes, which
+would steer what it sees (on 2026-10-31, an agent briefed with one skipped #318 without a
+word). Its brief lives in its file, not here; a change to it is made there. A work session sees
+an agent file added to `.claude/agents/` during it (a `git pull` that brings one), with no
+restart (Claude Code, observed 2026-10-31, #373).
 
-Check what it returns before using it: each proof is named and can be opened, and every Backlog
-issue is either reported, sound, or named as not treated.
+Check what it returns before using it: each proof is named and can be opened, and every idea
+and option is either reported, sound, or named as not treated.
 
 ## 2. The working list
 
-The pass keeps its list in a file `feyn-triage-<date>.md` in the work session's scratchpad (Claude
-Code's temporary folder of the work session, given in its environment): not in the repository, and
-not in Claude's memory folder. One line per stale issue, in the agent's order,
-`#<n> <title> · <verdict proposed> · <status>`, the status being `pending`, `presented`,
-`awaiting maintainer action: <what>`, `left open: <why>`, `decided: <decision>` or `executed`.
+The triage keeps its list in a file `feyn-triage-<date>.md` in the work session's scratchpad
+(Claude Code's temporary folder of the work session, given in its environment): not in the
+repository, and not in Claude's memory folder. One line per stale issue, in the agent's order,
+`#<n> <title> · <idea|option> · <verdict proposed> · <status>`, the status being `pending`,
+`presented`, `awaiting maintainer action: <what>`, `left open: <why>`, `decided: <decision>` or
+`executed`.
 
 The list is used, not only written:
-- before presenting an item, reread it: a line `awaiting maintainer action` stops the pass on
+- before presenting an item, reread it: a line `awaiting maintainer action` stops the triage on
   that item (step 3); otherwise the next item is the first line neither `executed` nor
   `left open`;
 - after each step of an item (presented, decided, executed), write its status;
 - the progress line counts its `executed` lines over its lines.
 
-The scratchpad goes with the work session: no purge step. A pass resumed in another work session
-does not find the list, and that is accepted: it starts from a new analysis (step 1), where the
-issues already treated no longer come up as stale.
+The scratchpad goes with the work session: no purge step. A triage resumed in another work
+session does not find the list, and that is accepted: it starts from a new analysis (step 1),
+where the issues already treated no longer come up as stale.
 
 ## 3. One item at a time
 
 One item per message, under its own level-2 heading:
-- its frame in one line: what it is for, where it belongs;
-- what no longer holds, with the agent's proof;
-- the options in a table (option, what it does, consequence), the verdicts in the order of step
-  1;
+- its frame in one line: idea or option (epic, story), what it is for, where it belongs;
+- what no longer holds, with the agent's proof (a sound item, step 5: what it calls for);
+- the choices in a table (choice, what it does, consequence), from the actions of step 4 for
+  its form, the agent's verdicts in the order of step 1;
 - one recommendation, with its reason.
+
+The questions the skill asks the maintainer, each before it acts on the answer:
+- for an idea: which work items it calls for, if any (their kind, story or epic; a story
+  alone or under which epic; their cut, one or several), and for each its `type:` label;
+- for each work item it creates: committed now (Ready) or not (Option, the default): ask, and
+  without a clear "committed", create it Option;
+- for an option: commit, refine (what changes), or close (completed or not planned, and why).
 
 The next item is presented only when this one is executed, or left open by the maintainer
 (status `left open: <why>`, skipped from then on). An item that waits on an action of the
@@ -66,21 +80,59 @@ maintainer (a label, a merge, an answer elsewhere) is `awaiting maintainer actio
 what it waits on, and present nothing else.
 
 A requirement added to an epic's Done when, by a fold or otherwise, is the maintainer's decision:
-propose it as an option, never write it on the strength of another decision.
+propose it as a choice, never write it on the strength of another decision.
 
 ## 4. Execute the decision
 
-As the maintainer decided, then the working list:
-- **close**: `mise exec -- gh issue close <n> --reason <completed|"not planned"> --comment
-  "<the reason, with the links: commit, PR, issue>"`;
-- **fold into an epic**: attach it as a slice ([project.md](../../reference/project.md),
-  "Epics") or close it with a comment naming the epic that covers it, as decided;
-- **split**: one observation per item of its list (`/feyn-issue observation <observation>`, each
-  citing the issue), then close it with a comment naming them;
-- **merge**: the issue it goes into gets what it lacked (a revised body, below), then close it
-  with a comment naming that issue;
-- **revise**: edit the body (`mise exec -- gh issue edit <n> --body-file <file>`), ending with
-  the line `Revised <YYYY-MM-DD> (Backlog pass)`.
+As the maintainer decided, then the working list. Which form an issue is in is read as
+`/feyn-issue` reads it ([its skill](../feyn-issue/SKILL.md), "Read an issue"). The issue being
+triaged is not a twin of the work items created from it: when `/feyn-issue`'s step 2, "Look for
+a twin", finds it, it goes on to create them, the triaged issue left as it is and closed after.
+
+**An idea:**
+- **create the work items**: each with `/feyn-issue` in the form the maintainer chose,
+  `story <what>`, `story #<epic> <what>` or `epic <objective>`, its Status Option, or Ready
+  when the maintainer said it is committed (step 3). A story's Context ends with the origin
+  line "From idea #<n>."; an epic's Material cites "idea #<n>". A story under an epic is
+  created only when it is the next one the epic's plan comment names (the policies of
+  [contributing](../../../docs/contributing.md)); otherwise the idea is folded into that epic
+  (below). Then close the idea as completed:
+  `mise exec -- gh issue close <n> --reason completed --comment "Triaged <YYYY-MM-DD>: <the work items created from it, each #<m>>."`;
+- **fold into an epic**: close it as completed with a comment naming the epic that covers it;
+  what the finding adds goes into the epic's Material when the epic is still an option, as
+  decided (a requirement added to its Done when: step 3);
+- **close**: done, moot or a duplicate, as not planned with the reason, or as completed when
+  work already delivered settled it:
+  `mise exec -- gh issue close <n> --reason <completed|"not planned"> --comment "<the reason, with the links: commit, PR, issue>"`;
+- **leave it**: it stays Idea (status `left open: <why>`), for instance to open a brainstorm
+  from it (`/feyn-brainstorm`, which is then its triage).
+
+**An issue of the old format** (in Idea, its body already defining a work: a Done when, a To
+do; decision `idea-is-never-converted`): never rewritten in place. It is recreated as a story or
+an epic, or several, as for an idea above, with `/feyn-issue`, the work it defines restated in
+the new work item's form, Option or Ready as the maintainer says. Its blocked-by links, both
+ways ([project.md](../../reference/project.md), "Dependencies", Read), are set again on the new
+work item (Set); then it is closed as completed with a comment naming what replaces it.
+
+**An option:**
+- **commit**: set its Status to Ready ([project.md](../../reference/project.md), "Commands",
+  Set), on the maintainer's word only, once its Done when is verifiable and no open blocked-by
+  link remains (an epic: its five sections written, [project.md](../../reference/project.md),
+  "Epics", Definition of Ready);
+- **refine**: its body changed (`mise exec -- gh issue edit <n> --body-file <file>`, from the
+  template of its kind), or its kind changed, a story rewritten as an epic or the reverse, in
+  the template of its new kind, its kind label with it
+  (`mise exec -- gh issue edit <n> --remove-label <old kind> --add-label <new kind>`), and its
+  title ("Epic: …" for an epic); a story becoming an epic is detached from its epic, if it had
+  one ([project.md](../../reference/project.md), "Epics", Detach). The body ends with the line
+  `Refined <YYYY-MM-DD> (triage)`. It stays Option;
+- **merge**: the option it goes into gets what it lacked (refine, above), then close it with a
+  comment naming that option;
+- **split**: one option per work item it holds (`/feyn-issue`, Option by default as above),
+  each citing it, then close it with a comment naming them; a story created this way ends its
+  Context with the origin line of the option it splits ("From idea #<n>.", "Story of epic
+  #<n>." or "From a brainstorm with the maintainer, <date>."), never a new form;
+- **fold into an epic** or **close**: as for an idea, above.
 
 A duplicate comment (posted twice by mistake) is hidden as duplicate, never deleted: on its
 page, the comment's menu ⋯, "Hide", reason "Duplicate"; or `mise exec -- gh api graphql -f
@@ -88,16 +140,19 @@ query='mutation { minimizeComment(input: {subjectId: "<comment node id>", classi
 DUPLICATE}) { clientMutationId } }'`, the node id read with `mise exec -- gh api
 repos/sebvey/feyn/issues/<n>/comments --jq '.[] | [.node_id, .body[:60]] | @tsv'`.
 
-## 5. End the pass
+## 5. The sound ideas and options
 
-The sound Backlog issues (an observation to attach, set Ready or make an epic, a proposal to turn
-into work) are routed as moment 4 says, under the same rules, one item at a time, only when the
-maintainer asks: the working list then takes them as items.
+The ideas and options the agent found sound are triaged as moment 4 says, under the same
+rules, one item at a time, only when the maintainer asks: the working list then takes them as
+items, each idea for the work items it calls for, each option to commit, refine or close.
+
+## 6. End the triage
 
 When every item is executed or left open, or when the maintainer stops it: one message with the
-counts (stale, executed by verdict, left open with why, not treated by the agent), the issues
-created, and the observations the pass raised on its own way of working.
+counts (stale, executed by action, left open with why, not treated by the agent), the ideas
+closed and the work items created from them, the options committed, and the findings the
+triage raised on its own way of working.
 
-When the maintainer stops the pass ("on s'arrête là"), that message also says, in short, what the
-list held and is lost with the work session: the items treated, and the items left with their
-proposed verdict.
+When the maintainer stops the triage ("on s'arrête là"), that message also says, in short, what
+the list held and is lost with the work session: the items treated, and the items left with
+their proposed verdict.
