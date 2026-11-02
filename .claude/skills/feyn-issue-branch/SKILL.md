@@ -1,6 +1,6 @@
 ---
 name: feyn-issue-branch
-description: "Tooling of the work cycle, called by the contributor agent of the agent workflow deliver-story.js (under `/feyn-deliver` and `/feyn-deliver-epic`), first: put GitHub issue n on feyn in progress on its own branch. It refuses the issue when a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date main (from its epic's integration branch for a story of an epic), sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
+description: "Tooling of the work cycle, called by the contributor agent of the agent workflow deliver-story.js (under `/feyn-deliver` and `/feyn-deliver-epic`), first: put GitHub issue n on feyn in progress on its own branch. It refuses the issue when it is not committed (Idea or Option), a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date main (from its epic's integration branch for a story of an epic), sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
 argument-hint: "<issue number>"
 ---
 
@@ -21,6 +21,10 @@ Refuse, saying why in one line, and change nothing, when:
 - an issue that blocks it is still open
   ([project.md](../../reference/project.md), "Dependencies"): name each open blocker and stop;
 - the issue is closed, or its Status is Done;
+- its Status is Idea or Option: it is not committed, since Ready is the commitment point
+  (decision `idea-and-option-before-ready`); an idea goes to a triage (`/feyn-triage`), an
+  option waits for the maintainer to commit it (set Ready). Until the merge of epic #392 the
+  Project has neither Idea nor Option and says Backlog: read Backlog as Idea;
 - its Status is already In progress: look for its branch (`git branch --list "*/<n>-*"`)
   and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
   instead. In progress with no branch and no PR is a Status that drifted: say so and go on;

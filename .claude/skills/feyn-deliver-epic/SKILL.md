@@ -181,7 +181,9 @@ When no open question remains and every story is closed and Done
    - **Choices made without the maintainer**: the open questions and their answers, then the
      other choices of the runs, grouped;
    - **Off the epic**: the ideas opened, what was seen and left;
-   - **After the merge**: what step 6 will do, and what the merge frees.
+   - **After the merge**: what step 6 will do, and what the merge frees; for epic #392, the
+     maintainer's acts at the merge and the run of
+     `/feyn-merge-cleanup improvement/392-pose-kanban-frame` that checks them (step 6.5).
 4. The merge is the maintainer's: the PR page, "Squash and merge".
 
 ## 6. After the maintainer's merge
@@ -197,6 +199,10 @@ When no open question remains and every story is closed and Done
    `git branch --list 'worktree-*'`).
 4. The issues the epic blocked that are now free: as `/feyn-merge-cleanup` step 7, "The issues
    it blocked", for the epic.
+5. Epic #392 only: the maintainer does the acts at its merge in one sitting
+   ([project.md](../../reference/project.md), "Acts at the merge of epic #392"); once they say
+   the acts are done, run `/feyn-merge-cleanup improvement/392-pose-kanban-frame` (its step 8),
+   which checks each act, and pass on its lines, an act not done with its path.
 
 ## Tool behaviours
 
