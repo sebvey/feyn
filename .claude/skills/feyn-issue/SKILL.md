@@ -1,6 +1,6 @@
 ---
 name: feyn-issue
-description: "Tooling of the work cycle, called by `/feyn-brainstorm`, `/feyn-triage`, `/feyn-deliver-epic` and the agents of the delivery workflow: create a GitHub issue on feyn from `idea <finding>`, `story [#<epic>] [direct] <what>` or `epic <objective>`, of the kind it is given (no kind given, it asks which and creates nothing; `direct`, for a story only, marks a direct delivery, refused when the work is more than one edit with no behaviour), each from its body template, with its kind label, its type and area labels, its links and its Status in the Project, or read an existing issue and summarise it. Use for \"/feyn-issue 12\", \"/feyn-issue idea <finding>\", \"/feyn-issue story <what>\", \"/feyn-issue story direct <what>\", \"/feyn-issue story #220 <what>\", \"/feyn-issue story #220 direct <what>\", \"/feyn-issue epic <objective>\"."
+description: "Tooling of the work cycle, called by `/feyn-brainstorm`, `/feyn-triage`, `/feyn-refine-option`, `/feyn-deliver-epic` and the agents of the delivery workflow: create a GitHub issue on feyn from `idea <finding>`, `story [#<epic>] [direct] <what>` or `epic <objective>`, of the kind it is given (no kind given, it asks which and creates nothing; `direct`, for a story only, marks a direct delivery, refused when the work is more than one edit with no behaviour), each from its body template, with its kind label, its type and area labels, its links and its Status in the Project, or read an existing issue and summarise it. Use for \"/feyn-issue 12\", \"/feyn-issue idea <finding>\", \"/feyn-issue story <what>\", \"/feyn-issue story direct <what>\", \"/feyn-issue story #220 <what>\", \"/feyn-issue story #220 direct <what>\", \"/feyn-issue epic <objective>\"."
 argument-hint: "<issue number> | idea <finding> | story [#<epic>] [direct] <what> | epic <objective>"
 ---
 
@@ -100,8 +100,8 @@ of the old format for a defect:
      **story** posed by the orchestrator of a taken epic (`/feyn-deliver-epic`) is Ready. Any
      other work item, a story or an epic, is Option, or Ready when the maintainer says it is
      committed; one a brainstorm creates (`/feyn-brainstorm`) is always Option, its commitment
-     decided at a triage. The caller says which: unsure, Option. Option and Ready are set at
-     step 8. No state label: the Status replaced them.
+     decided at an option refinement (`/feyn-refine-option`). The caller says which: unsure,
+     Option. Option and Ready are set at step 8. No state label: the Status replaced them.
    - `type:`, on a story or an epic only: `bug` (something is broken), `course` (course files),
      `decision` (a decision to write), `improvement` (tooling, spec, process). An idea carries
      none: the triage sets the type on the work items it creates from it.

@@ -9,10 +9,10 @@ argument-hint: "[topic | idea number | option number]"
 One job: frame a brainstorm with the maintainer and end it in **options**, the work items it
 defined, each an issue in Status Option with the body of its kind (decision
 `brainstorm-ends-in-options`). What was settled lives in those work items: what is not in
-them is lost. The maintainer commits an option (sets it Ready) at a triage, never during the
-brainstorm (decision `idea-and-option-before-ready`). Besides the options, a brainstorm may
-create the idea it opens from (step 1) or leave one (step 4); it creates nothing else (no
-decision, no edit of the repository).
+them is lost. The maintainer commits an option (sets it Ready) at an option refinement
+(`/feyn-refine-option`), never during the brainstorm (decision `idea-and-option-before-ready`).
+Besides the options, a brainstorm may create the idea it opens from (step 1) or leave one (step
+4); it creates nothing else (no decision, no edit of the repository).
 
 ## 1. What it opens from
 
@@ -20,8 +20,8 @@ The argument is one of three things:
 - **an idea** (an issue in Status Idea): read it first (`/feyn-issue <n>`); its finding is the
   question. The brainstorm is that idea's triage: it ends by closing it (step 4);
 - **an option to rework** (a story or an epic in Status Option): read it first
-  (`/feyn-issue <n>`); its body is the starting point, and the brainstorm refines it, or splits
-  it, as `/feyn-triage` does an option (step 4);
+  (`/feyn-issue <n>`); its body is the starting point, and the brainstorm reworks it, or splits
+  it, as `/feyn-refine-option` does an option (step 4);
 - **a topic**, in a few words.
 
 A brainstorm on the process (a skill, a workflow, a policy, the glossary, `contributing.md`)
@@ -95,8 +95,8 @@ disposable once the options exist.
    issue. The idea the brainstorm opened from is not a twin of the options created from it
    (`/feyn-issue` step 2). An option reworked is refined in place (its body, its kind label and
    title when its kind changes, the line `Refined <YYYY-MM-DD> (brainstorm)` at the end) or
-   split, its parts created and it closed naming them, as `/feyn-triage` step 4 says for an
-   option.
+   split, its parts created and it closed naming them, as `/feyn-refine-option` step 4 says for
+   an option.
 5. **Close the idea** it opened from, if any, as completed, naming the options created: it was
    that idea's triage (decision `brainstorm-ends-in-options`):
    `mise exec -- gh issue close <n> --reason completed --comment "Brainstormed <YYYY-MM-DD>: <the options created from it, each #<m>>."`.
@@ -111,6 +111,7 @@ disposable once the options exist.
 
 One line: each option created, its number, URL, kind and title; the option refined or split,
 the idea closed in favour of them, if any; the idea left, if any; the count of points settled
-and of open questions. What the maintainer does next: a triage commits the options, or
-refines or closes them (`/feyn-triage`; [contributing](../../../docs/contributing.md), "How
-the work is organised", moment 4, Triage).
+and of open questions. What the maintainer does next: an option refinement commits each option,
+or reworks or closes it, one at a time (`/feyn-refine-option`;
+[contributing](../../../docs/contributing.md), "How the work is organised", moment 5, Option
+refinement).

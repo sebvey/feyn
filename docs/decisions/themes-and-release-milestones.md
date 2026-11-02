@@ -22,15 +22,15 @@ issues with no common objective has no parent. An epic is split **one story at a
 is taken**: no To do, no sub-issue posed in advance; a story is posed (`/feyn-issue`) attached
 to it, and its plan is a **plan comment** rewritten at each story, which also holds the epic's
 open questions. It is **Ready** when nothing blocks it (no open issue among its blocked-by
-links) and its five sections are written; the maintainer sets Ready at triage. An epic is
-delivered on an integration branch, validated by the maintainer's merge of its epic PR (decision
-`epic-on-integration-branch`). An epic may span releases and may target a milestone. A milestone
-is a **release target**, created when a release is in sight: named after the tag that closes it
-(`linear-course/v1.0.0`), it holds the stories that must close before that tag. Tooling has no
-version and no milestone. This replaces decision `milestones-per-stage-then-release`: the stage
-plan is abandoned on 2026-10-29, its open issues closed as not planned with a pointer to their
-epic, their bodies kept as material; `stage-1` is renamed `linear-course/v1.0.0`, `stage-2` to
-`stage-4` are closed.
+links) and its five sections are written; the maintainer sets Ready at an option refinement. An
+epic is delivered on an integration branch, validated by the maintainer's merge of its epic PR
+(decision `epic-on-integration-branch`). An epic may span releases and may target a milestone. A
+milestone is a **release target**, created when a release is in sight: named after the tag that
+closes it (`linear-course/v1.0.0`), it holds the stories that must close before that tag.
+Tooling has no version and no milestone. This replaces decision
+`milestones-per-stage-then-release`: the stage plan is abandoned on 2026-10-29, its open issues
+closed as not planned with a pointer to their epic, their bodies kept as material; `stage-1` is
+renamed `linear-course/v1.0.0`, `stage-2` to `stage-4` are closed.
 
 ## Options ruled out
 

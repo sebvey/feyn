@@ -3,7 +3,8 @@
 What the frame of the work on feyn is: Kanban for the flow of work, ADR for the decisions,
 GitHub flow for the branches. This file says what the frame is, and only that; how feyn applies
 it (its workflow, its forms, its tooling) is described in [`contributing.md`](contributing.md).
-The words below are the frame's own; their meaning in the repository is in
+The words below are the frame's own, except where a sentence says how feyn names or applies a
+point of it (Ready, the option refinement); their meaning in the repository is in
 [`glossary.md`](glossary.md).
 
 ## Kanban
@@ -53,6 +54,13 @@ before: deciding what to commit to. The workflow then has two parts, separated b
 **Triage** is the act of reading the ideas that came in and deciding what each one calls for:
 one or several options, or nothing, with the reason. The upstream keeps more options than the
 downstream can deliver, so that the choice at the commitment point is a real one.
+
+A **replenishment** is the Kanban act at the commitment point: a review of all the options
+against the capacity of the downstream, choosing which of them enter it. feyn does not practise
+it: it commits its options one by one. Its act is the **option refinement**: the analysis of
+one named option against the repository (what changed since it was defined, what else covers
+or overlaps it), up to a decision on that option alone: commit it, rework it, merge it, split
+it, fold it into an epic, or close it. Neither word stands for the other.
 
 Kanban names no type of work item. The two used here come from the common vocabulary of agile
 work and of GitHub: an **epic** is a large work item delivered in several parts, a **story** a
