@@ -1,12 +1,12 @@
 ---
 name: feyn-triage
-description: "Triage with the maintainer the ideas and options of feyn they name (moment 4 of the work cycle, Triage): one or more issue numbers, triaged in the order given, one at a time; the work session looks up each one's neighbours (a twin, an epic or an option that covers or overlaps it, an open idea on the same files) and presents it with them, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it; an option is committed, refined or closed. With no number, it asks which issue. Use for \"trie l'idea 431\", \"trie les idées 429 et 431\", \"triage idea 431\", \"triage option 220\", \"/feyn-triage 431\", \"/feyn-triage 429 431\"."
+description: "Triage with the maintainer the ideas of feyn they name (moment 4 of the work cycle, Triage), issues of the old format included: one or more issue numbers, triaged in the order given, one at a time; the work session looks up each one's neighbours (a twin, an epic or an option that covers or overlaps it, an open idea on the same files) and presents it with them, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it. An option is not triaged: it goes to `/feyn-refine-option`. With no number, it asks which idea. Use for \"trie l'idea 431\", \"trie les idées 429 et 431\", \"triage idea 431\", \"/feyn-triage 431\", \"/feyn-triage 429 431\"."
 argument-hint: "<issue number> [<issue number> …]"
 ---
 
 # /feyn-triage <n> [<n> …]
 
-One job: triage with the maintainer the ideas and options they name, one at a time, as
+One job: triage with the maintainer the ideas they name, one at a time, as
 [contributing](../../../docs/contributing.md), "How the work is organised", moment 4, says. The
 work session reads each item and its neighbours, presents it, the maintainer decides, the work
 session executes. The Project's commands are in [project.md](../../reference/project.md), cited
@@ -16,29 +16,27 @@ an item before the maintainer's decision on it.
 An **idea** (Status Idea) is a finding, never converted: the triage creates from it the work
 items it calls for, then closes it; it never adds a Done when or a To do to it, never edits its
 body, never sets a kind or a `type:` label on it (decision `idea-is-never-converted`). An
-**option** (Status Option) is a work item, epic or story, defined and not committed: the triage
-commits it, refines it or closes it (decision `idea-and-option-before-ready`).
+**option** (Status Option) is a work item, epic or story, defined and not committed: it is not
+triaged, its commitment is decided at an option refinement (`/feyn-refine-option`; decision
+`idea-and-option-before-ready`).
 
-**The markers**: four fixed lines say that an issue went through a triage or a brainstorm, each
-written by the act it records and read as a marker, never as content to triage or a defect to
-correct:
-- on a closed idea, its close comment "Triaged <YYYY-MM-DD>: <work items>." (step 4) or
-  "Brainstormed <YYYY-MM-DD>: <options>." (`/feyn-brainstorm`): the idea was triaged, and the
-  work items named come from it;
-- on an option, the last line of its body "Refined <YYYY-MM-DD> (triage)" (step 4) or "Refined
-  <YYYY-MM-DD> (brainstorm)" (`/feyn-brainstorm`): its body was reworked in place on that date,
-  from which what changed in the repository is read.
+**The markers**: two fixed lines, the close comment of an idea, say that it went through a
+triage or a brainstorm, each written by the act it records and read as a marker, never as
+content to triage or a defect to correct: "Triaged <YYYY-MM-DD>: <work items>." (step 4) or
+"Brainstormed <YYYY-MM-DD>: <options>." (`/feyn-brainstorm`): the idea was triaged, and the
+work items named come from it. The markers of an option are `/feyn-refine-option`'s.
 
 ## 1. The issues named
 
-The argument is one or more issue numbers, each an idea or an option, triaged in the order
-given. With no number, ask which issue to triage and do nothing until the answer.
+The argument is one or more issue numbers, each an idea, triaged in the order given. With no
+number, ask which idea to triage and do nothing until the answer.
 
 Read each one: `mise exec -- gh issue view <n> --json number,title,url,state,labels,body,comments,updatedAt,projectItems`
-(its Status: [project.md](../../reference/project.md), "Commands", Read). One that is closed or
-whose Status is neither Idea nor Option is not triaged: say so in one line, with its Status,
-and go on with the others. Each idea or option named is triaged, whatever it holds: sound or
-stale, it goes through steps 3 and 4.
+(its Status: [project.md](../../reference/project.md), "Commands", Read). An option (Status
+Option) is not triaged: say so in one line, name `/feyn-refine-option <n>`, which treats it,
+and go on with the others. One that is closed or whose Status is any other than Idea is not
+triaged either: say so in one line, with its Status, and go on. Each idea named is triaged,
+whatever it holds: sound or stale, it goes through steps 3 and 4.
 
 ## 2. The working list, with several issues
 
@@ -48,7 +46,7 @@ one item, step 3 then step 4.
 With several, it keeps its list in a file `feyn-triage-<date>.md` in the work session's
 scratchpad (Claude Code's temporary folder of the work session, given in its environment): not
 in the repository, and not in Claude's memory folder. One line per issue, in the order given,
-`#<n> <title> · <idea|option> · <status>`, the status being `pending`, `presented`,
+`#<n> <title> · <status>`, the status being `pending`, `presented`,
 `awaiting maintainer action: <what>`, `left open: <why>`, `decided: <decision>` or `executed`.
 The rules of `CLAUDE.md`, "Working with the maintainer", for a pass over a list hold then: the
 progress line `Triage: <n>/<N> treated · in progress: #<x>` at the top of each message,
@@ -86,25 +84,24 @@ when, a To do) is of the old format (step 4).
 The item itself comes up in these searches: it is not its own neighbour.
 
 One item per message, under its own level-2 heading:
-- its frame in one line: idea or option (epic, story), what it is for, where it belongs;
+- its frame in one line: an idea or an issue of the old format, what it is for, where it
+  belongs;
 - its neighbours, each `#<m> <title>` with what it shares with the item (twin, covers it,
   overlaps it, same files), or "No neighbour" when the three lookups find none;
 - what it calls for, and what no longer holds, each with its proof (a commit, a file and line,
   an issue, each named);
 - the choices in a table (choice, what it does, consequence), from the actions of step 4 for
   its form, in this order where they apply: close (done, moot, or a duplicate of a twin), fold
-  into an epic, recreate (the old format), merge (into an option), split, refine, create the
-  work items (an idea), commit (an option);
+  into an epic, recreate (the old format), create the work items;
 - one recommendation, with its reason.
 
 The questions the skill asks the maintainer, each before it acts on the answer:
 - for an idea: which work items it calls for, if any (their kind, story or epic; a story
   alone or under which epic; their cut, one or several), and for each its `type:` label;
 - for each work item it creates: committed now (Ready) or not (Option, the default): ask, and
-  without a clear "committed", create it Option;
-- for an option: commit, refine (what changes), or close (completed or not planned, and why).
+  without a clear "committed", create it Option.
 
-An item the maintainer leaves open stays in its Status, Idea or Option, and the reply says so;
+An item the maintainer leaves open stays Idea, and the reply says so;
 with several issues, its line in the working list becomes `left open: <why>`, skipped from then
 on. The next item is presented only when this one is executed or left open. An item that waits
 on an action of the maintainer (a label, a merge, an answer elsewhere): say what it waits on,
@@ -149,27 +146,6 @@ the new work item's form, Option or Ready as the maintainer says. Its blocked-by
 ways ([project.md](../../reference/project.md), "Dependencies", Read), are set again on the new
 work item (Set); then it is closed as completed with a comment naming what replaces it.
 
-**An option:**
-- **commit**: set its Status to Ready ([project.md](../../reference/project.md), "Commands",
-  Set), on the maintainer's word only, once its Done when is verifiable and no open blocked-by
-  link remains (an epic: its five sections written,
-  [contributing](../../../docs/contributing.md), "How the work is organised");
-- **refine**: its body changed (`mise exec -- gh issue edit <n> --body-file <file>`, from the
-  template of its kind), or its kind changed, a story rewritten as an epic or the reverse, in
-  the template of its new kind, its kind label with it
-  (`mise exec -- gh issue edit <n> --remove-label <old kind> --add-label <new kind>`), and its
-  title ("Epic: …" for an epic); a story becoming an epic is detached from its epic, if it had
-  one ([project.md](../../reference/project.md), "Epics", Detach). The body ends with the line
-  `Refined <YYYY-MM-DD> (triage)`. It stays Option;
-- **merge**: the option it goes into gets what it lacked (refine, above), then close it with a
-  comment naming that option;
-- **split**: one option per work item it holds (`/feyn-issue`, Option by default as above),
-  each citing it, then close it with a comment naming them; a story created this way ends its
-  Context with the origin line of the option it splits ("From idea #<n>.", "Story of epic
-  #<n>.", "From a brainstorm with the maintainer, <date>." or "Asked by the maintainer,
-  <date>."), never a new form;
-- **fold into an epic** or **close**: as for an idea, above.
-
 A duplicate comment (posted twice by mistake) is hidden as duplicate, never deleted: on its
 page, the comment's menu ⋯, "Hide", reason "Duplicate"; or `mise exec -- gh api graphql -f
 query='mutation { minimizeComment(input: {subjectId: "<comment node id>", classifier:
@@ -183,7 +159,7 @@ or changed, each with its link.
 
 With several, when every item is executed or left open, or when the maintainer stops it: one
 message with the counts (named, executed by action, left open with why, not triaged with why),
-the ideas closed and the work items created from them, the options committed, and the findings
-the triage raised on its own way of working. When the maintainer stops the triage ("on s'arrête
-là"), that message also says, in short, what the list held and is lost with the work session:
-the items treated, and the items left.
+the ideas closed and the work items created from them, the options named and sent to
+`/feyn-refine-option`, and the findings the triage raised on its own way of working. When the
+maintainer stops the triage ("on s'arrête là"), that message also says, in short, what the list
+held and is lost with the work session: the items treated, and the items left.

@@ -23,7 +23,8 @@ Refuse, saying why in one line, and change nothing, when:
 - the issue is closed, or its Status is Done;
 - its Status is Idea or Option: it is not committed, since Ready is the commitment point
   (decision `idea-and-option-before-ready`); an idea goes to a triage (`/feyn-triage`), an
-  option waits for the maintainer to commit it (set Ready);
+  option waits for the maintainer to commit it (set Ready) at an option refinement
+  (`/feyn-refine-option`);
 - its Status is already In progress: look for its branch (`git branch --list "*/<n>-*"`)
   and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
   instead. In progress with no branch and no PR is a Status that drifted: say so and go on;
