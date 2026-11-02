@@ -74,11 +74,11 @@ taxonomy without a use.
 **Conformance clause** (D14). Two classes of products: the **course**, its diagrams included,
 and the **teacher**; a rule binds a product. The language pack is not a product: it lives in
 the spec's folder, written by the spec's authors, and its consistency is the spec's own. The
-spec's own files (the rule files, the schemas, the slugs of the protocol, the language packs)
-are verified by the tests of `check-spec` (`rule-files`, `rule-slugs`, `language-pack-keys`),
-which are not rules: they carry no category and no level, each failure blocks `check-spec`, and
-none counts toward a course's conformance. A course conforms when it holds every requirement of
-`course/rules.yaml`, whatever its method; the blocking checks are a necessary condition, not a
+spec's own files (the rule files, the schemas, the slugs of the protocol, the language packs,
+`spec.yaml` and its version) are verified by the tests of `check-spec` (`rule-files`,
+`rule-slugs`, `language-pack-keys`, `spec-yaml`), which are not rules: they carry no category
+and no level, each failure blocks `check-spec`, and none counts toward a course's conformance. A
+course conforms when it holds every requirement of `course/rules.yaml`, whatever its method; the blocking checks are a necessary condition, not a
 sufficient one; the review and taught-check do the rest, and a course tag certifies the whole.
 A teacher conforms when it holds every requirement of `teacher/rules.yaml`; the method of a
 rule of the protocol is demonstration, by the fresh tests (D8). Recommendations are outside conformance (the ISO sense of "should"). The word

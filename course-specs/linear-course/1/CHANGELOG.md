@@ -70,3 +70,5 @@ no class: `- file or area: what changes`.
   load `lib/`, `yaml` and `ajv` from the directives MAJOR that `spec.yaml` declares;
   `test-fixtures` split in two; no rule changes; decisions `checks-use-ajv-and-yaml` and
   `rules-named-by-slug` updated (#459).
+- `spec.yaml`: the test `spec-yaml` of the directives verifies it and holds `version` to this
+  changelog's first section, « Unreleased » until the tag (#461).

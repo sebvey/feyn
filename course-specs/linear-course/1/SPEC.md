@@ -50,8 +50,8 @@ has an `origin`. A group may declare `category` and `method` once for its rules,
 override them; a group of `teacher/rules.yaml` is a group of `teacher/README.md`, its slug as its
 `id` (decision `rule-groups-replace-ranges`). A rule binds a product (section 3), so the rule files
 are two, `course/rules.yaml` and `teacher/rules.yaml`. The spec's own files (the rule files, the
-schemas, the slugs of the protocol, the language packs) are verified by the tests of `check-spec`,
-which are not rules (section 10).
+schemas, the slugs of the protocol, the language packs, `spec.yaml` and its version) are verified
+by the tests of `check-spec`, which are not rules (section 10).
 
 `course/rules.yaml` holds the rules the checks of a course verify, taught-check included, and one
 rule verified by inspection, the review; `course/schemas/course.schema.yaml` and
@@ -82,9 +82,9 @@ Two classes of products: the **course**, its diagrams included, and the **teache
 
 A rule binds a product, a course or a teacher. The language pack is not a product: it lives in
 this folder, written by the spec's authors, and its consistency is the spec's own, like that of
-the rule files, the schemas and the slugs of the protocol: the tests of `check-spec` verify them
-(`language-pack-keys` for the packs), and they are not rules, so they count toward no product's
-conformance (section 10).
+the rule files, the schemas, the slugs of the protocol and `spec.yaml`: the tests of `check-spec`
+verify them (`language-pack-keys` for the packs), and they are not rules, so they count toward no
+product's conformance (section 10).
 
 ## 4. Levels
 
@@ -159,7 +159,8 @@ spec version is tagged `linear-course/vX.Y.Z`.
 **The alpha.** A MAJOR in preparation carries `<MAJOR>.0.0-alpha` in its folder until its tag,
 with no prerelease number and no prerelease tag: this MAJOR is `1.0.0-alpha` in `1/` until
 `linear-course/v1.0.0`. During the alpha, the entries of `CHANGELOG.md` carry no bump class; its
-« Unreleased » section becomes `1.0.0` at the tag.
+« Unreleased » section becomes `1.0.0` at the tag. `spec.yaml` carries the version, and the test
+`spec-yaml` of `check-spec` holds it to `CHANGELOG.md` (section 10).
 
 **The bump of a spec change**, from the tag on, written in levels for the rules of a course:
 
@@ -212,8 +213,8 @@ directives MAJOR that `spec.yaml` declares (`spec-directives/1/package.json`, in
 run them, their options and fixtures. `course-specs/check-course <course-dir>` runs this folder's
 `course/checks/check-course` on a course. `spec-directives/check-spec <this folder>` runs the tests
 of the spec's own files (`teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/`,
-`course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `lang/`), not a course: they are the
-directives' (`spec-directives/1/tests/`).
+`course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `lang/`, `spec.yaml`,
+`CHANGELOG.md`), not a course: they are the directives' (`spec-directives/1/tests/`).
 
 `check-course` takes its checks from `course/rules.yaml`: by default it runs, in one run, every
 check of method test, blocking and reporting, and `--category <c>[,<c>...]` runs the checks of
@@ -261,3 +262,4 @@ category and no level, and each failure blocks `check-spec` (exit code 1).
 | `rule-slugs` | `teacher/README.md` names each of its rules and groups by a slug defined once; `teacher/README.md`, `SPEC.md`, `course/README.md` and `decisions/` cite them by a defined slug, never by a number or a range | `teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/` |
 | `rule-files` | `course/rules.yaml` and `teacher/rules.yaml`: required fields, closed lists (levels, methods, the categories of a course, the families of the protocol), a group of the protocol is a group of `teacher/README.md`, ids unique across the two files, every check named exists, one category and one level per check; each schema of `course/schemas/` compiles under `Ajv2020` and is named by one rule of `course/rules.yaml` | `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `teacher/README.md` |
 | `language-pack-keys` | every pack of `lang/` holds every key of `course/README.md` section 7 and every key `teacher/README.md` uses: a key a non-empty string, a list a non-empty list of strings | `lang/`, `teacher/README.md` |
+| `spec-yaml` | `spec.yaml` holds `name` (a slug), `major` and `directives` (positive integers) and `version` (`MAJOR.MINOR.PATCH`, an optional `-alpha`, its MAJOR `major`), no other key; `version` agrees with the first section of `CHANGELOG.md`: « Unreleased » during the alpha (`<MAJOR>.0.0-alpha`), the version itself after the tag (section 8) | `spec.yaml`, `CHANGELOG.md` |
