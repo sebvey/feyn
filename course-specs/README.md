@@ -1,6 +1,19 @@
 # course-specs
 
+| Reader | Comes for | Opens |
+|---|---|---|
+| creator | the spec a course follows, how to check a course | [`linear-course/1/README.md`](linear-course/1/README.md), [`check-course`](check-course) |
+| builder | the specs, their MAJORs and versions | [Layout](#layout), [Versions](#versions), [`linear-course/1/spec.yaml`](linear-course/1/spec.yaml) |
+| verifier | how the checks of a course are run | [`check-course`](check-course), [`linear-course/1/README.md`](linear-course/1/README.md) section 5 |
+| spec writer | the layout of a spec MAJOR, the bump of a change | [Layout](#layout), [Versions](#versions), [`versioned-objects-and-spec-layout`](../docs/decisions/versioned-objects-and-spec-layout.md), [`spec-directives/`](../spec-directives/README.md) |
+
+The readers are defined in [`spec-directives/README.md`](../spec-directives/README.md#the-readers).
+
 Summary of decision `versioned-objects-and-spec-layout`; if they differ, the decision wins.
+
+Three objects are versioned: a course (`courses/<id>/`), a spec (here) and the spec directives,
+which say how a spec is written and read and live in `spec-directives/`, one folder per MAJOR,
+with the tests of a spec's own files (`spec-directives/README.md`).
 
 A spec is the contract for a type of course. The only spec is `linear-course`; its MAJOR 1
 sits in `course-specs/linear-course/1/`.

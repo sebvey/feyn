@@ -90,3 +90,6 @@ no class: `- file or area: what changes`.
   `spec-files-and-alpha-version` is split: its files part stays here as `spec-files-by-product`,
   its alpha part becomes the directives' decision `alpha-version-until-tag`; the citations follow;
   no rule changes (#465).
+- `README.md`, `course/README.md`, `teacher/README.md`: each opens with the table Reader, Comes
+  for, Opens over the four readers of a spec (the creator, the builder, the verifier, the spec
+  writer), defined in `spec-directives/README.md`; no rule changes (#467).

@@ -1,5 +1,14 @@
 # linear-course, MAJOR 1
 
+| Reader | Comes for | Opens |
+|---|---|---|
+| creator | what a course is, the templates, how to verify | [`course/README.md`](course/README.md), [`course/templates/README.md`](course/templates/README.md), [`course-specs/check-course`](../../check-course) |
+| builder | the shape of a course, of learner memory, the pack keys, the protocol | [`course/README.md`](course/README.md), [`course/schemas/`](course/schemas/), [`linear-course/1/teacher/README.md`](teacher/README.md), [`linear-course/1/teacher/rules.yaml`](teacher/rules.yaml), [`linear-course/1/teacher/templates/learner/`](teacher/templates/learner/), [`lang/fr.yaml`](lang/fr.yaml), [`spec.yaml`](spec.yaml) |
+| verifier | the rules as data, the categories, the checks | [`course/rules.yaml`](course/rules.yaml), [`linear-course/1/teacher/rules.yaml`](teacher/rules.yaml), sections [3](#3-categories) and [5](#5-checks), [`course/checks/README.md`](course/checks/README.md) |
+| spec writer | the files, the references, the decisions, the changelog | sections [2](#2-files) and [4](#4-normative-references), [`decisions/`](decisions/), [`CHANGELOG.md`](CHANGELOG.md), [`spec-directives/1/README.md`](../../../spec-directives/1/README.md) |
+
+The readers are defined in [`spec-directives/README.md`](../../../spec-directives/README.md#the-readers).
+
 The spec of linear introductory courses: ordered domains, ordered concepts with prerequisites,
 sub-concepts taught one per teacher message, a storyline. This folder,
 `course-specs/linear-course/1/`, holds its MAJOR 1, version `1.0.0-alpha` until its tag,

@@ -1,5 +1,14 @@
 # The spec directives, MAJOR 1
 
+| Reader | Comes for | Opens |
+|---|---|---|
+| creator | nothing here: what a course is, in the spec | [`course-specs/linear-course/1/course/README.md`](../../course-specs/linear-course/1/course/README.md) |
+| builder | nothing here: the shape of a course and the protocol, in the spec | [`course-specs/linear-course/1/README.md`](../../course-specs/linear-course/1/README.md) |
+| verifier | conformance, levels, methods, severity | sections [2](#2-conformance), [3](#3-levels), [4](#4-methods), [5](#5-severity) |
+| spec writer | the rule model, the versions, the tests of a spec's files | sections [1](#1-rules), [6](#6-versions), [8](#8-tests); [`decisions/`](decisions/), [`CHANGELOG.md`](CHANGELOG.md), [`tests/`](tests/) |
+
+The readers are defined in [`spec-directives/README.md`](../README.md#the-readers).
+
 Version 1.0.0-alpha: binding from the tag `spec-directives/v1.0.0` (section 6). This file is the
 spec directives: how a spec is written and read: what a rule file holds, when a product conforms,
 the levels and methods a rule carries, how the severity of a check follows from them, the

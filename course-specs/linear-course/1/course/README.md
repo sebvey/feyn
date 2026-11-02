@@ -1,5 +1,14 @@
 # linear-course: the course
 
+| Reader | Comes for | Opens |
+|---|---|---|
+| creator | what a course is, the templates, how to verify | sections [1](#1-the-course-folder) to [7](#7-language-pack-keys), [`templates/README.md`](templates/README.md), [`course-specs/check-course`](../../../check-course) |
+| builder | the shape of a course, the pack keys | sections [1](#1-the-course-folder) to [7](#7-language-pack-keys), [`schemas/`](schemas/) |
+| verifier | the rules of a course as data, the checks, their fixtures | [`rules.yaml`](rules.yaml), [`checks/README.md`](checks/README.md), [`checks/fixtures/`](checks/fixtures/) |
+| spec writer | the rules and schemas of a course, the spec's decisions | [`rules.yaml`](rules.yaml), [`schemas/`](schemas/), [`../decisions/`](../decisions/), [`../CHANGELOG.md`](../CHANGELOG.md) |
+
+The readers are defined in [`spec-directives/README.md`](../../../../spec-directives/README.md#the-readers).
+
 What a course of `linear-course` is: its folder, `course.yaml`, the concept folder, the domain
 files, the course files, the diagrams and the language pack keys. The scope, the files, the
 categories and the checks are the MAJOR's `README.md`; conformance, levels, methods, severity and
