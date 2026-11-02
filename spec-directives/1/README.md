@@ -13,15 +13,16 @@ Version 1.0.0-alpha: binding from the tag `spec-directives/v1.0.0` (section 6). 
 spec directives: how a spec is written and read: what a rule file holds, when a product conforms,
 the levels and methods a rule carries, how the severity of a check follows from them, the
 versions, the normative references and the tests of a spec's own files. It holds no rule on a
-course or on the teacher, and nothing of one spec: the scope, the files, the categories, the list
-of checks and the normative references of `linear-course` are in
-`course-specs/linear-course/1/README.md`. The directives are decision `rules-with-level-and-method`
-(the rule model, levels, methods, severity, conformance clause, normative references; the categories
-are the spec's), decision `alpha-version-until-tag` (the version during the alpha) and decision
-`checks-use-ajv-and-yaml` (the dependencies of `lib/`), in `decisions/` of this MAJOR, whose
-reasons are not restated here; the files of `linear-course` are its decision
-`spec-files-by-product`. A path such as `course/rules.yaml` is relative to the folder of a spec
-MAJOR (`course-specs/linear-course/1/`).
+course or on the teacher. Of the specs, it holds what every spec shares: the bump of a spec
+change and the version of a course (section 6); the paths and tags of `linear-course` it cites
+are examples. What belongs to one spec, the scope, the files, the categories, the list of checks
+and the normative references of `linear-course`, is in `course-specs/linear-course/1/README.md`.
+The directives are decision `rules-with-level-and-method` (the rule model, levels, methods,
+severity, conformance clause, normative references; the categories are the spec's), decision
+`alpha-version-until-tag` (the version during the alpha) and decision `checks-use-ajv-and-yaml`
+(the dependencies of `lib/`), in `decisions/` of this MAJOR, whose reasons are not restated
+here; the files of `linear-course` are its decision `spec-files-by-product`. A path such as
+`course/rules.yaml` is relative to the folder of a spec MAJOR (`course-specs/linear-course/1/`).
 
 - `README.md`: this file, the directives.
 - `CHANGELOG.md`: the changes of the directives, « Unreleased » until the tag.
@@ -190,7 +191,9 @@ not a course: `teacher/README.md`, `README.md`, `course/README.md`, `decisions/`
 `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `lang/`, `spec.yaml` and
 `CHANGELOG.md` of `<spec-dir>`. A `<spec-dir>` with no `spec.yaml`, or a `directives` MAJOR with no
 folder, is refused (exit code 2, one line). Same output and `--only` as `check-course`, with no
-summary line and a `--list` of ids alone; the file in a failure line is relative to `<spec-dir>`.
+summary line and a `--list` of ids alone, after a `<spec-dir>`; `--list` without a folder is the
+MAJOR runner's (`spec-directives/1/tests/check-spec --list`), the dispatcher prints its usage (exit code 2). The file
+in a failure line is relative to `<spec-dir>`.
 Their list is written in `spec-directives/1/tests/check-spec`, their scripts beside it. The dependencies are those of
 this MAJOR, installed by `mise exec -- npm ci --prefix spec-directives/1`
 (`course-specs/linear-course/1/course/checks/README.md`, "Install").

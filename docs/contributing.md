@@ -10,8 +10,9 @@ in [`.claude/decisions/`](../.claude/decisions/); the reserved words are in
 
 ## Where things are
 
-`course-specs/` holds the contracts a course is written against, `courses/` the courses, `teacher/`
-the teacher template, the teacher skills and
+`course-specs/` holds the contracts a course is written against, `spec-directives/` the spec
+directives (how a spec is written and read, the tests of a spec's files, the lib the checks
+load), `courses/` the courses, `teacher/` the teacher template, the teacher skills and
 the classroom build script that turns a course into a classroom, `site/` the engine that
 builds it, `.claude/` the agentic layer, `docs/` what belongs to no single area.
 `construction/`, the design, plan and session notes of the construction, was removed on
@@ -309,8 +310,8 @@ reads the views. Why: decisions `themes-and-release-milestones`, `epic-on-integr
   a draft, which keeps it from being merged); on top of the Status, never instead of it; only
   the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
 - `type:bug`, `type:course`, `type:improvement`, `type:decision`, on a work item only;
-  `area:*` derived from the tree (`spec:<name>`, `course:<id>`, `teacher`, `site`, `agentic`,
-  `repo`), on every issue.
+  `area:*` derived from the tree (`spec:<name>`, `spec-directives`, `course:<id>`, `teacher`,
+  `site`, `agentic`, `repo`), on every issue.
 
 ## The maintainer's morning
 

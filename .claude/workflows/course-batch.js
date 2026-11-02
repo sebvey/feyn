@@ -41,7 +41,7 @@ const SCOUT_SCHEMA = {
   type: 'object',
   properties: {
     spec_dir: { type: 'string', description: 'course-specs/<name>/<MAJOR>/ of the spec and MAJOR that course.yaml declares (spec: <name>@<MAJOR>), ends with /: where you read course/README.md and the templates of course/templates/ (the checks run through course-specs/check-course)' },
-    shared_files: { type: 'array', items: { type: 'string' }, description: 'files every agent of the batch reads: course.yaml, plan.md, storyline.md, glossary.md, course/README.md sections 3 to 5, the course templates, the spec's teacher/README.md (in spec_dir) if it exists, the issue' },
+    shared_files: { type: 'array', items: { type: 'string' }, description: 'files every agent of the batch reads: course.yaml, plan.md, storyline.md, glossary.md, course/README.md sections 3 to 5, the course templates, the teacher/README.md of the spec (in spec_dir) if it exists, the issue' },
     batch_instructions: { type: 'string', description: 'instructions of the issue for the whole batch, copied word for word' },
     concepts: {
       type: 'array',
