@@ -2,8 +2,8 @@
 
 What the frame of the work on feyn is: Kanban for the flow of work, ADR for the decisions,
 GitHub flow for the branches. This file says what the frame is, and only that; how feyn applies
-it (its workflow, its forms, its tooling) is described in [`contributing.md`](contributing.md),
-which points here. The words below are the frame's own; their meaning in the repository is in
+it (its workflow, its forms, its tooling) is described in [`contributing.md`](contributing.md).
+The words below are the frame's own; their meaning in the repository is in
 [`glossary.md`](glossary.md).
 
 ## Kanban
@@ -40,7 +40,7 @@ Kanban as above manages the work once committed. **Upstream Kanban** manages wha
 before: deciding what to commit to. The workflow then has two parts, separated by the
 **commitment point**.
 
-- An **idea** is what enters the upstream: something seen, wished or suggested, not yet shaped
+- An **idea** is what enters the upstream: something seen or suggested, not yet shaped
   into work. Most ideas are cheap and many are dropped.
 - An **option** is a work item defined but not committed: what it would deliver and how its
   completion is checked are known, but nobody has promised to do it. An option has value
