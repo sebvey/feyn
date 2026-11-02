@@ -94,13 +94,13 @@ of the old format for a defect:
      never takes it: `idea direct` or `epic direct` is refused, saying why, and nothing is
      created.
 4. **Pick the Status, the labels and the links.**
-   - Status ([project.md](../../reference/project.md); decision `idea-and-option-before-ready`):
-     an **idea** stays Idea, which a Project workflow sets. A **story** posed by the
-     orchestrator of a taken epic (`/feyn-deliver-epic`) is Ready. Any other work item, a story
-     or an epic, is Option, or Ready when the maintainer says it is committed; one a brainstorm
-     creates (`/feyn-brainstorm`) is always Option, its commitment decided at a triage. The
-     caller says which: unsure, Option. Option and Ready are set at step 8. No state label: the
-     Status replaced them.
+   - Status (decision `idea-and-option-before-ready`): an **idea** stays Idea, which a Project
+     workflow sets ([project.md](../../reference/project.md), "The Project workflows"). A
+     **story** posed by the orchestrator of a taken epic (`/feyn-deliver-epic`) is Ready. Any
+     other work item, a story or an epic, is Option, or Ready when the maintainer says it is
+     committed; one a brainstorm creates (`/feyn-brainstorm`) is always Option, its commitment
+     decided at a triage. The caller says which: unsure, Option. Option and Ready are set at
+     step 8. No state label: the Status replaced them.
    - `type:`, on a story or an epic only: `bug` (something is broken), `course` (course files),
      `decision` (a decision to write), `improvement` (tooling, spec, process). An idea carries
      none: the triage sets the type on the work items it creates from it.

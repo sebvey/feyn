@@ -156,7 +156,8 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    (step 8). Under the agent workflow `deliver-story.js` this rule does not apply: a fresh agent
    of the workflow verifies each round of corrections.
 8. **Ask for review**: set the issue's Status to Ready for review (the work claims done, the
-   maintainer concludes; [project.md](../../reference/project.md)):
+   maintainer concludes: [glossary](../../../docs/glossary.md), row Status; the command:
+   [project.md](../../reference/project.md), "Commands", Set):
    `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
    Only once the `Fresh-agent review:` line is in Checks (step 7), `none, direct delivery`
    included (step 5), or when the maintainer asked for a PR without a review (the reply then
