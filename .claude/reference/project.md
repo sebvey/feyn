@@ -8,8 +8,8 @@ nothing else (decisions `idea-and-option-before-ready`, `project-status-not-stat
 | Status | Means | Set by | Option id |
 |---|---|---|---|
 | Idea | an idea: an issue with no kind holding a finding, to triage; never converted, the triage creates from it the work items it calls for, then closes it | Project workflow "Item added to project", on every issue added | `c1d0b0c3` |
-| Option | a work item, epic or story, defined and not committed: the body of its kind, Done when included; until Ready its kind and body may change | `/feyn-issue` on a work item it creates (at a triage, at the end of a brainstorm, or asked directly by the maintainer), unless the maintainer says it is committed | `<option-id-at-merge>` |
-| Ready | committed, free to take: the **commitment point**, where the form freezes and the Done when becomes the contract (decision `issue-defines-pr-verifies`) | the maintainer, committing an option; `/feyn-issue` at creation when the maintainer says the work item is committed, and on a story posed by the orchestrator of a taken epic | `be2d48d7` |
+| Option | a work item, epic or story, defined and not committed: the body of its kind, Done when included; until Ready its kind and body may change | `/feyn-issue` on a work item it creates at a triage or asked directly by the maintainer, unless the maintainer says it is committed; always on one a brainstorm creates | `<option-id-at-merge>` |
+| Ready | committed, free to take: the **commitment point**, where the form freezes and the Done when becomes the contract (decision `issue-defines-pr-verifies`) | the maintainer, committing an option; `/feyn-issue` at creation, at a triage or asked directly, when the maintainer says the work item is committed, and on a story posed by the orchestrator of a taken epic | `be2d48d7` |
 | In progress | a branch exists | `/feyn-issue-branch` (no Project workflow fires on a branch); `/feyn-deliver` step 4 when a correction is asked on a delivered PR | `be703c13` |
 | Ready for review | the work claims done, the maintainer reviews and concludes: a story without an epic whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none, direct delivery.` (the maintainer merges), an epic whose epic PR is handed over (the maintainer verifies its Done when and merges the epic PR); a story of an epic never has it ("Epics", "Delivery on an integration branch") | `/feyn-pull-request` step 8 (`/feyn-deliver` step 5 when it runs the cycle); for an epic, its orchestrator at the hand-over of the epic PR (`/feyn-deliver-epic` step 5) | `deab4f08` |
 | Done | closed (the close reason stays on GitHub) | Project workflow "Item closed"; `/feyn-merge-cleanup` only when that Project workflow is off; for a story of an epic, its orchestrator when it merges the story into the integration branch and closes it | `9e81e5a6` |
@@ -51,7 +51,7 @@ the Status field's options, with their ids, in one query:
 
 - **Read** an issue's Status: `mise exec -- gh issue view <n> --json projectItems` (the item
   titled `feyn`, its `status.name`; no item means the issue is not in the Project yet; an
-  archived item shows too). Every issue with its Status (archived items left out):
+  archived item shows too, nothing marking it archived). Every issue with its Status (archived items left out):
   `mise exec -- gh project item-list 4 --owner sebvey --limit 200 --format json -q '.items[] | [.content.number, .status] | @tsv'`.
 - **Add** an issue the Project workflow missed (`projectItems` empty):
   `mise exec -- gh project item-add 4 --owner sebvey --url <issue url> --format json -q .id`.
@@ -194,8 +194,7 @@ Needs Decision, no Option and no label `story`, and would stop working on the ne
 1. **The Status field** (Project feyn, menu ⋯, Settings, field Status): rename Backlog to Idea,
    which keeps its id `c1d0b0c3` and its items (never delete and recreate it: new ids, and a
    behaviour on the items nobody verified); add Option, placed between Idea and Ready; remove
-   Needs Decision (it held no item on 2026-11-02); give each option the description of its
-   "Means" above, in short.
+   Needs Decision (it held no item on 2026-11-02).
 2. **"Item added to project"** (menu ⋯, Workflows): check it now sets Idea, and set it if it
    shows no Status.
 3. **Option's id**: read it with the query of the views and the Status field
@@ -216,14 +215,15 @@ Needs Decision, no Option and no label `story`, and would stop working on the ne
    |---|---|
    | no kind label, a parent epic | label `story`, Status kept |
    | no kind label, no parent, in Idea (Backlog before step 1) | Idea, no label: the triage reads it in the old format |
-   | no kind label, no parent, Ready or In progress | label `story`, Status kept |
+   | no kind label, no parent, Ready, In progress or Ready for review | label `story`, Status kept |
    | `epic`, in Idea (Backlog before step 1), or open with the Status Done (#220, #221 on 2026-11-02, both archived) | Status Option |
    | `epic`, Ready or In progress | kept |
 
    The label: `mise exec -- gh issue edit <n> --add-label story`, or the issue's page, sidebar
    Labels. The Status: `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Option`,
    or the item's Status cell in a view. An archived item is restored first (Project feyn, menu
-   ⋯, Archived items, Restore). An old issue already recreated at a triage as a work item: its
+   ⋯, Archived items, Restore); whether it is archived:
+   `mise exec -- gh api graphql -f query='query{repository(owner:"sebvey",name:"feyn"){issue(number:<n>){projectItems(first:5,includeArchived:true){nodes{isArchived}}}}}'`. An old issue already recreated at a triage as a work item: its
    blocked-by links set again on the new work item ("Dependencies", Set).
 6. **The views**, remade to the set of "The views" above. What exists on 2026-11-02, all
    tables: Backlog (`status:Backlog`, fields Labels, Updated), Ready (`status:Ready`, grouped by
