@@ -155,6 +155,14 @@ of the old format for a defect:
        contributor rewrites the history to meet it, as #339's `rg` made its contributor split a
        string and rewrite an amendment (a debrief rule, `/feyn-deliver-epic`). The same holds
        for an epic's Done when.
+     - A story that removes, moves or renames content (a file, a section, a rule) lists in its
+       Context every file that refers to it, and has a To do item that treats each of them.
+       They are found by searching the name of the file touched, not the section's name
+       (`grep -rn '<file name>' .claude docs`), since a citation names the content as often as
+       the heading; live decisions included, since a live decision is corrected in place when
+       a mechanism it names changes (decision `decision-format`), superseded ones excluded
+       (`status: superseded` in their frontmatter). #430's Context, built from the section's
+       name, found one file of the four that cited it.
      - With `direct` (step 3): first hold the Done when to the criterion of a direct delivery,
        one edit with no behaviour, as [contributing](../../../docs/contributing.md), "How the
        work is organised", moment 2, states it. A Done when that asks more: refuse `direct`,
@@ -163,13 +171,15 @@ of the old format for a defect:
        first item: `/feyn-deliver` and `/feyn-pull-request` read it there.
      - Then reread it as the maintainer of the morning, choosing among ten Ready stories: does
        the head say where, what and why in three lines; does the Context open with what is
-       wrong or missing, and end with its origin; does each To do item hold in one line? One
-       no: fix before creating, then reread. The body template `story-body.md` carries the
+       wrong or missing, and end with its origin; does it list the files that refer to content
+       the story removes, moves or renames; does each To do item hold in one line? One no: fix
+       before creating, then reread. The body template `story-body.md` carries the
        same rules.
    - An **epic**, from [epic-body.md](../../reference/epic-body.md): Objective, Why now,
      Material (what is read when splitting it, and what was settled, each point with its why
      and the alternative rejected), Done when, Out of scope; no To do, no story posed in
-     advance.
+     advance. An epic that removes, moves or renames content lists in its Material the files
+     that refer to it, found as for a story (above); the story that removes it treats them.
 6. **Title**, under 70 characters, no issue prefix. A story: imperative, like a commit summary
    ("Fix the caption check on nested groups"). An idea: the finding, stated, not a solution
    ("The caption check misses nested groups"). An epic: "Epic: " and the objective in a few
