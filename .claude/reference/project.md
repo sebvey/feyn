@@ -214,7 +214,7 @@ Needs Decision, no Option and no label `story`, and would stop working on the ne
    | Open issue | Becomes |
    |---|---|
    | no kind label, a parent epic taken (Ready or In progress) | label `story`, Status kept |
-   | no kind label, a parent epic not taken (in Idea, Backlog before step 1; #314, child of #318, on 2026-11-02) | folded into its epic's Material, then closed as completed naming the epic |
+   | no kind label, a parent epic not taken (Idea or Option, Backlog before step 1; #314, child of #318, on 2026-11-02) | folded into its epic's Material, then closed as completed naming the epic |
    | no kind label, no parent, in Idea (Backlog before step 1) | Idea, no label: the triage reads it in the old format |
    | no kind label, no parent, Ready, In progress or Ready for review | label `story`, Status kept |
    | `epic`, in Idea (Backlog before step 1), or open with the Status Done (#220, #221 on 2026-11-02, both archived) | Status Option |

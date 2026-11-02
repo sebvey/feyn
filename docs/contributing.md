@@ -331,7 +331,7 @@ on 2026-10-31 (Claude Code, observed 2026-10-31, #345).
 
 ## Decisions and vocabulary
 
-A choice that spans several files or is costly to undo becomes a decision file, the frame's ADR
+A choice that spans several files or is costly to undo becomes a decision file, under the frame's ADR
 ([`kanban.md`](kanban.md), "ADR"), counterfactual first (`Without this, <who acts> would…`, an
 agent being the common case, followed by a concrete wrong act), in the `decisions/` folder of
 the area it binds:
