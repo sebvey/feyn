@@ -39,6 +39,7 @@ The files of the spec are split by class of products (section 3), plus the frame
 | `course/checks/` | the check scripts, their fixtures and `course/checks/README.md` (how to run them) |
 | `lang/<code>.yaml` | the language packs |
 | `course/templates/` | the course templates |
+| `teacher/templates/learner/` | the templates of the learner memory files |
 | `decisions/` | the decisions of this spec |
 
 A rule file is a list of groups, each a list of rules; a rule has an `id` (a slug), a `level`
@@ -255,5 +256,5 @@ category and no level, and each failure blocks `check-spec` (exit code 1).
 | Id | Verifies | Reads |
 |---|---|---|
 | `rule-slugs` | `teacher/README.md` names each of its rules and groups by a slug defined once; `teacher/README.md`, `SPEC.md`, `course/README.md` and `decisions/` cite them by a defined slug, never by a number or a range | `teacher/README.md`, `SPEC.md`, `course/README.md`, `decisions/` |
-| `rule-files` | `course/rules.yaml` and `teacher/rules.yaml`: required fields, closed lists (levels, methods, the categories of a course, the families of the protocol), a group of the protocol is a group of `teacher/README.md`, ids unique across the two files, every check named exists, one category and one level per check; each schema of `course/schemas/` compiles under `Ajv2020` and is named by one rule of `course/rules.yaml` | `rules/`, `course/schemas/`, `teacher/README.md` |
+| `rule-files` | `course/rules.yaml` and `teacher/rules.yaml`: required fields, closed lists (levels, methods, the categories of a course, the families of the protocol), a group of the protocol is a group of `teacher/README.md`, ids unique across the two files, every check named exists, one category and one level per check; each schema of `course/schemas/` compiles under `Ajv2020` and is named by one rule of `course/rules.yaml` | `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `teacher/README.md` |
 | `language-pack-keys` | every pack of `lang/` holds every key of `course/README.md` section 7 and every key `teacher/README.md` uses: a key a non-empty string, a list a non-empty list of strings | `lang/`, `teacher/README.md` |
