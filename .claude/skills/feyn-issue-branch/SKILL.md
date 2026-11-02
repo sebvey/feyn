@@ -47,9 +47,9 @@ lowercase, joined by hyphens (`course/42-concept-9-cases`).
 
 `git switch -c <type>/<n>-<slug> origin/main`, then `git push -u origin <type>/<n>-<slug>`.
 A story of an epic, a direct story included, starts from the epic's integration branch (the
-Delivery line of its plan comment; [project.md](../../reference/project.md), "Delivery on an
-integration branch"): `origin/<integration branch>` in place of `origin/main`, as the brief of
-the agent workflow `deliver-story.js` or `/feyn-deliver-epic` step 2, "A direct story", says.
+Delivery line of its plan comment; decision `epic-on-integration-branch`):
+`origin/<integration branch>` in place of `origin/main`, as the brief of the agent workflow
+`deliver-story.js` or `/feyn-deliver-epic` step 2, "A direct story", says.
 
 The branch is not linked to the issue: the PR's `Closes #<n>` links them, and a `Refs #<n>`
 PR leaves the issue open (decision `no-branch-link`).

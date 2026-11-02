@@ -128,8 +128,8 @@ work item (Set); then it is closed as completed with a comment naming what repla
 **An option:**
 - **commit**: set its Status to Ready ([project.md](../../reference/project.md), "Commands",
   Set), on the maintainer's word only, once its Done when is verifiable and no open blocked-by
-  link remains (an epic: its five sections written, [project.md](../../reference/project.md),
-  "Epics", Definition of Ready);
+  link remains (an epic: its five sections written,
+  [contributing](../../../docs/contributing.md), "How the work is organised");
 - **refine**: its body changed (`mise exec -- gh issue edit <n> --body-file <file>`, from the
   template of its kind), or its kind changed, a story rewritten as an epic or the reverse, in
   the template of its new kind, its kind label with it
