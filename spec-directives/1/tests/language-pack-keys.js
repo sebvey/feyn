@@ -3,6 +3,7 @@
 // rules-with-level-and-method, amended by #339): every language pack of lang/ holds every key of
 // course/README.md section 7 and every key teacher/README.md uses. A spec folder with no pack has
 // none to test.
+// The pack keys below are those of linear-course, a named debt: idea #453.
 const yaml = require('../lib/yaml-lines');
 const { fail } = require('../lib/course');
 

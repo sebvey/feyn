@@ -11,8 +11,7 @@ One folder per MAJOR, `course-specs/<name>/<MAJOR>/` (`1/`, not `v1/`), holds:
 
 | File or folder | Holds |
 |---|---|
-| `SPEC.md` | the frame: scope, conformance, levels, methods, categories, severity, versions, checks |
-| `README.md` | the entry to the MAJOR |
+| `README.md` | the entry to the MAJOR: scope, files, categories, the normative references of its rules, checks |
 | `course/` | the course, one of the two products: `README.md` (what a course is: its files, fields, diagrams, language pack keys), `rules.yaml` (the rules of a course, as data), `schemas/` (the JSON Schemas of a course's files), `templates/` (the course templates), `checks/` (the checks of a course, their fixtures) |
 | `teacher/` | the teacher, the other product: `README.md` (the protocol), `rules.yaml` (the rules of the protocol, as data), `templates/learner/` (the templates of learner memory) |
 | `decisions/` | the spec's decisions |
@@ -32,7 +31,7 @@ check that reports is printed and leaves 0; `--category` selects checks by categ
 
 A spec version is tagged `<name>/vX.Y.Z`. From the MAJOR's tag on, the bump of a spec change
 is written in the levels of the rules of a course (requirement, recommendation), as the
-MAJOR's `SPEC.md` writes it (`linear-course`: sections 4 and 8):
+spec directives write it (`spec-directives/1/README.md` sections 3 and 6):
 
 | Bump | When |
 |---|---|

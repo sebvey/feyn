@@ -13,8 +13,8 @@ Every rule of `teacher/README.md` is named by a stable slug, as decisions are (d
 (decision `rules-with-level-and-method`), where the protocol's rules move at the extraction of
 #318, their slugs kept, and the rules of `course/rules.yaml` are named the same way. A rule id
 is unique across the two rule files. Every reference cites the slug: cross-references
-between rules, `SPEC.md`, the decisions of this spec, the "Used in" column of "Keys and
-parameters", the "Inherited from parcours-po" table, the fresh tests, and the English
+between rules, the MAJOR's `README.md`, the decisions of this spec, the "Used in" column of
+"Keys and parameters", the "Inherited from parcours-po" table, the fresh tests, and the English
 translation of S2-09 (same slugs, not same numbers). The order of the rules and their sections
 are then free: a rule moves without changing its name. A split rule gets two slugs; a removed
 rule's slug is never reused. A test of the spec's own files, `rule-slugs` (`check-spec`, of the

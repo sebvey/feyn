@@ -1,6 +1,6 @@
 'use strict';
 // Every rule and every group of rules of teacher/README.md is named by a slug, defined once in one
-// namespace, and every rule or group cited in teacher/README.md, SPEC.md, course/README.md and
+// namespace, and every rule or group cited in teacher/README.md, README.md, course/README.md and
 // decisions/ is cited by a slug that is defined (decisions rules-named-by-slug,
 // rule-groups-replace-ranges).
 //
@@ -10,16 +10,17 @@
 // Cited:
 //   - in a rule family, every code span shaped like a rule slug;
 //   - in a table of teacher/README.md, every code span of a "Used in" or "Rule" column;
-//   - outside the rule families (teacher/README.md's other sections, SPEC.md, course/README.md,
+//   - outside the rule families (teacher/README.md's other sections, README.md, course/README.md,
 //     decisions/*.md), the code spans that follow « rule », « rules », « règle » or « règles »,
 //     joined by commas, « and », « to », « et », « à »: each must be a rule;
 //   - everywhere, the code spans that follow « group », « groups », « groupe » or « groupes »: each
 //     must be a group.
 //   - in a rule family too, the code spans after « règle(s) » must be rules.
 // A rule named or cited by its old number (`**1.2**`, « règle 1.2 », « rules 1.1, 1.5 ») fails too,
-// and so does a range, « `a` à `b` » or « `a` to `b` », in teacher/README.md, SPEC.md or
+// and so does a range, « `a` à `b` » or « `a` to `b` », in teacher/README.md, README.md or
 // course/README.md (decision rule-groups-replace-ranges). decisions/ are not read for ranges: they
 // record history and quote the ranges they replaced.
+// The file names it reads are those of linear-course, a named debt: idea #453.
 const mdlib = require('../lib/md');
 const { fail } = require('../lib/course');
 
@@ -29,8 +30,8 @@ const NUMBER = /^\d+\.\d+[a-z]?$/;
 const RULE_WORD = /\b(?:[Rr]ules?|[Rr]ègles?)/;
 const GROUP_WORD = /\b(?:[Gg]roups?|[Gg]roupes?)/;
 const PROTOCOL = 'teacher/README.md';
-// the descriptions read beside teacher/README.md: the frame, and what a course is
-const DESCRIPTIONS = ['SPEC.md', 'course/README.md'];
+// the descriptions read beside teacher/README.md: the spec MAJOR's README, and what a course is
+const DESCRIPTIONS = ['README.md', 'course/README.md'];
 
 const codeSpans = (t) => [...t.matchAll(/`([^`]+)`/g)].map((m) => m[1]);
 
@@ -139,7 +140,8 @@ function run(ctx) {
     }
   }
 
-  // prose outside the rule families, SPEC.md, course/README.md, decisions/*.md: citations led by a word
+  // prose outside the rule families, README.md, course/README.md, decisions/*.md: citations led by
+  // a word
   const prose = [{ file: PROTOCOL, lines: [...pre, ...others.flatMap((s) => s.lines)] }];
   const descriptions = [];
   for (const name of DESCRIPTIONS) {
@@ -174,7 +176,7 @@ function run(ctx) {
     else if (!d) out.push(fail(c.file, c.line, `cites rule "${c.slug}", which teacher/README.md does not define`));
   }
 
-  // ranges, in teacher/README.md, SPEC.md and course/README.md
+  // ranges, in teacher/README.md, README.md and course/README.md
   const ranged = [{ file: PROTOCOL, lines: body }, ...descriptions];
   for (const r of ranged) {
     for (const g of rangeCitations(r.lines)) out.push(fail(r.file, g.line, `cites a range "${g.text}": cite the rules one by one, or the group that holds them`));

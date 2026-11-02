@@ -1,9 +1,9 @@
 # The rules of a course of linear-course (decisions rules-with-level-and-method and
 # spec-files-and-alpha-version): the rules the checks of a course verify, taught-check included, and
 # one rule verified by inspection, the review. A course conforms when it holds every requirement of
-# this file, whatever its method (SPEC.md section 3). The tables of fields are the schemas of
-# course/schemas/, each one rule here. The other rules of course/README.md join this file at the
-# extraction of #318.
+# this file, whatever its method (spec-directives/1/README.md section 2). The tables of fields are
+# the schemas of course/schemas/, each one rule here. The other rules of course/README.md join this
+# file at the extraction of #318.
 #
 # A rule: id (a slug), level, category, method, check (the check that implements the method,
 # when one exists), text, why (optional: what a competent model does without the rule, as

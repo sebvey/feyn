@@ -25,8 +25,8 @@ fused: the **level** of a rule (how binding), its **method** (how one knows it h
 definition of "Mandatory" and "Optional" by the check (`SPEC.md:15-18`) and the undefined
 intermediate levels ("as a rule" `SPEC.md:129`, "expected" 178, "usually" 452, "by default"
 581). The protocol enters the same model (D8), its slugs as ids. The D numbers cite the
-maintainer's working notes on the frame (2026-10-30, outside the repository), transcribed here
-by #322 with their reasons, options ruled out and source checks.
+maintainer's working notes on the spec directives (2026-10-30, outside the repository), transcribed
+here by #322 with their reasons, options ruled out and source checks.
 
 **Levels**, from ISO/IEC Directives Part 2 (2021), clause 7, the one source with official
 English and French forms:
@@ -85,10 +85,10 @@ method of a rule of the protocol is demonstration, by the fresh tests (D8). Reco
 outside conformance (the ISO sense of "should"). The word "conformity" (ISO) stays; "conformance
 clause" names the section, after the W3C QA Framework, whose idea ISO shares.
 
-**Normative references** of the frame, a dated list limited to the standards a rule depends
-on: ISO/IEC Directives Part 2, 9th edition (2021); ISO/IEC/IEEE 29148:2018; SemVer 2.0.0;
-YAML 1.2.2; JSON Schema 2020-12. #318 adds the others as it extracts the rules (CommonMark and
-GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
+**Normative references** of the spec directives, a dated list limited to the standards a rule
+depends on: ISO/IEC Directives Part 2, 9th edition (2021); ISO/IEC/IEEE 29148:2018; SemVer 2.0.0;
+YAML 1.2.2; JSON Schema 2020-12. #318 adds the others as it extracts the rules (CommonMark and GFM
+tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
 
 ## Options ruled out
 

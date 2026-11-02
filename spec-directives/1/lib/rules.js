@@ -1,9 +1,10 @@
 'use strict';
 // The checks of a course as course/rules.yaml gives them (decision `rules-with-level-and-method`):
 // each check named by the `check` of a rule of course/rules.yaml, with the category, the level and
-// the methods of its rules, and the severity that follows (SPEC.md section 7): a check blocks when
-// it verifies requirements by test, otherwise it reports. teacher/rules.yaml is the teacher's and
-// names no check of a course; the tests of the spec's own files are check-spec's and verify no rule.
+// the methods of its rules, and the severity that follows (spec-directives/1/README.md section 5):
+// a check blocks when it verifies requirements by test, otherwise it reports. teacher/rules.yaml is
+// the teacher's and names no check of a course; the tests of the spec's own files are check-spec's
+// and verify no rule.
 //
 // A check runs on a course (`check-course`) when its method is test and its script is in the
 // spec MAJOR's course/checks/; a check of another method (taught-check, an agent workflow) is not

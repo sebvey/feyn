@@ -8,7 +8,8 @@
 # A leaf sub-concept (no `children`) is, as a rule, one teacher message; a node has 9
 # children at most.
 # Identifiers (numbers, sub-concept ids, titles of cases, dir and file names) are cited by
-# learner memory and site addresses: changing one is a course MAJOR (SPEC.md section 8).
+# learner memory and site addresses: changing one is a course MAJOR (spec-directives/1/README.md
+# section 6).
 id: <course-id>
 spec: linear-course@1
 language: fr
