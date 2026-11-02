@@ -6,6 +6,6 @@ feyn is a monorepo of courses taught by a Claude Code teacher and published as a
 
 ## Contributing
 
-1. Every change starts from an issue (Observation, To do, Done when).
+1. Every change starts from an issue: an idea, a story or an epic ([docs/contributing.md](docs/contributing.md), "How the work is organised").
 2. Work on a branch and open a pull request; nothing lands on `main` without one.
 3. The whole flow, the labels and the maintainer's part are in [docs/contributing.md](docs/contributing.md).
