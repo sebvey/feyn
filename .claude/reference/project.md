@@ -1,12 +1,13 @@
 # The Project and its Status
 
 The one place `/feyn-issue`, `/feyn-issue-branch`, `/feyn-pull-request`, `/feyn-merge-cleanup`,
-`/feyn-deliver`, `/feyn-deliver-epic`, `/feyn-triage`, `/feyn-refine-option` and the agent
-workflow `deliver-story.js` take the Project's names, ids and commands from. The **Project** is
-the GitHub Project "feyn", number 4, owner `sebvey`, id `PVT_kwHOADOnU84Bo8V6`; its **Status**
-field, id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`, says where an issue stands, in this order and
-nothing else (decisions `idea-and-option-before-ready`, `project-status-not-state-labels`); what
-each Status means: [glossary](../../docs/glossary.md), row Status.
+`/feyn-deliver-story-alone`, `/feyn-deliver-epic`, `/feyn-triage`, `/feyn-refine-option` and the
+agent workflow `deliver-story.js` take the Project's names, ids and commands from. The
+**Project** is the GitHub Project "feyn", number 4, owner `sebvey`, id `PVT_kwHOADOnU84Bo8V6`;
+its **Status** field, id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`, says where an issue stands, in this
+order and nothing else (decisions `idea-and-option-before-ready`,
+`project-status-not-state-labels`); what each Status means: [glossary](../../docs/glossary.md),
+row Status.
 
 | Status | Option id |
 |---|---|

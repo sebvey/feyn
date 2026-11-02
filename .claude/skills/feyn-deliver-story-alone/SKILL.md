@@ -1,10 +1,10 @@
 ---
-name: feyn-deliver
-description: "Deliver a Ready story without an epic on feyn (a story with no parent epic), from Ready to the maintainer's merge: run it through the agent workflow feyn-deliver-story-workflow with no epic (a contributor agent opens the PR to main, a fresh agent reviews it against the Done when, corrections verified by a fresh agent), read its result, clean the run, hand the PR over to the maintainer, who merges, then clean up after the merge. A story under an epic, direct or not, goes to /feyn-deliver-epic; the direct delivery of a story without an epic is unchanged. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"livre la story 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"deliver story 240\", \"/feyn-deliver 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\"."
+name: feyn-deliver-story-alone
+description: "Deliver a Ready story without an epic on feyn (a story with no parent epic), from Ready to the maintainer's merge: run it through the agent workflow feyn-deliver-story-workflow with no epic (a contributor agent opens the PR to main, a fresh agent reviews it against the Done when, corrections verified by a fresh agent), read its result, clean the run, hand the PR over to the maintainer, who merges, then clean up after the merge. A story under an epic, direct or not, goes to /feyn-deliver-epic; the direct delivery of a story without an epic is unchanged. Several issue numbers run in parallel when their files are distinct. Use for \"traite l'issue 240\", \"traite la 240\", \"prends l'issue 240\", \"livre la story 240\", \"take 240\", \"take issue 240\", \"deliver issue 240\", \"deliver story 240\", \"/feyn-deliver-story-alone 240\", \"run issue 12 through agents\", \"take 12 and 14 in parallel\"."
 argument-hint: "<issue number> [<issue number>…]"
 ---
 
-# /feyn-deliver <n> [<n>…]
+# /feyn-deliver-story-alone <n> [<n>…]
 
 One job: drive story n, a story without an epic, from Ready to merged without doing the story's
 changes in the work session that runs it. That work session is the orchestrator: it runs the

@@ -34,9 +34,9 @@ const SCOPE = ALONE ? 'a story without an epic' : `a story of epic #${A.epic}`
 const READ_EPIC = ALONE ? '' : `, then the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments")`
 const DW = ALONE ? "the issue's Done when" : "the epic's Done when"
 const WORK = A.work || "The issue's To do is the plan."
-// A maintainer's request reaches the agents only through args.work (feyn-deliver step 2.1): the
-// contributor records it in "Delivery notes", and the reviewer and the verifier get work as given,
-// to check a choice the PR says the maintainer asked.
+// A maintainer's request reaches the agents only through args.work (feyn-deliver-story-alone
+// step 2.1): the contributor records it in "Delivery notes", and the reviewer and the verifier
+// get work as given, to check a choice the PR says the maintainer asked.
 const RECORD = A.work ? `\n\nWhen the text above carries a maintainer's request (stated as asked by the maintainer, with its date), record it in "Delivery notes": in Choices, as the maintainer's with its date, or as a deviation when it departs from ${DW}.` : ''
 // In epic mode, the maintainer also answers open questions on the epic (feyn-deliver-epic step 3),
 // recorded in its plan comment as "Answered: ... (<date>)".

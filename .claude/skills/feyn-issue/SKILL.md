@@ -170,7 +170,7 @@ of the old format for a defect:
        work is organised", moment 2, states it. A Done when that asks more: refuse `direct`,
        saying which statement or which file goes beyond it, and create nothing. Otherwise the
        first line of the To do section is the plain line `Direct delivery`, alone, before the
-       first item: `/feyn-deliver` and `/feyn-pull-request` read it there.
+       first item: `/feyn-deliver-story-alone` and `/feyn-pull-request` read it there.
      - Then reread it as the maintainer of the morning, choosing among ten Ready stories: does
        the head say where, what and why in three lines; does the Context open with what is
        wrong or missing, and end with its origin; does it list the files that refer to content

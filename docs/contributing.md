@@ -83,24 +83,25 @@ nothing). A branch that leaves a decision to the maintainer opens as a draft PR,
 `blocked:maintainer` on its issue only, and an "Awaiting the maintainer" section above
 `Closes #n`. The maintainer answers with a comment and removes the label from the issue; only
 then does the agent apply the answer, remove the section and mark the PR ready (under
-`/feyn-deliver`, the orchestrator marks it ready at the hand-over, not the agent). Nothing lands on
-`main` without a PR, the author never merges their own, and `main` is never force-pushed. After
-the merge, `/feyn-merge-cleanup` confirms the change landed, checks the issue's Status is Done
-(the Project workflow "Item closed" sets it; `/feyn-merge-cleanup` sets it only when that Project
-workflow is off; a `Refs` issue stays open and In progress), deletes the local branch, and names
-the issues the closed one blocked that are now free. `/feyn-deliver <n>` runs this whole cycle
-for a story without an epic from one work session, through the agent workflow
-`deliver-story.js` of `.claude/workflows/`: a contributor agent in its own worktree, a review by
-a fresh agent before the PR reaches the maintainer, the PR a draft until that review and its
-corrections are done, the clean-up of the run's worktrees, the hand-over, then the clean-up
-after the merge. On the direct path, without `/feyn-deliver`, `/feyn-pull-request` runs that
-review (`/feyn-pr-review`) before it sets Ready for review, except on a direct delivery ("How the
-work is organised", moment 2). This is the path of a story without an epic. A story of an epic
-takes another: its PR targets the epic's integration branch, is reviewed by a fresh agent and
-merged by the orchestrator, and what reaches the maintainer is the epic PR;
-`/feyn-deliver-epic <epic>` runs it ("How the work is organised", moment 2). Why: decisions
-`issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`,
-`epic-on-integration-branch`, `pr-corrects-what-it-makes-false`.
+`/feyn-deliver-story-alone`, the orchestrator marks it ready at the hand-over, not the agent).
+Nothing lands on `main` without a PR, the author never merges their own, and `main` is never
+force-pushed. After the merge, `/feyn-merge-cleanup` confirms the change landed, checks the
+issue's Status is Done (the Project workflow "Item closed" sets it; `/feyn-merge-cleanup` sets
+it only when that Project workflow is off; a `Refs` issue stays open and In progress), deletes
+the local branch, and names the issues the closed one blocked that are now free.
+`/feyn-deliver-story-alone <n>` runs this whole cycle for a story without an epic from one work
+session, through the agent workflow `deliver-story.js` of `.claude/workflows/`: a contributor
+agent in its own worktree, a review by a fresh agent before the PR reaches the maintainer, the
+PR a draft until that review and its corrections are done, the clean-up of the run's worktrees,
+the hand-over, then the clean-up after the merge. On the direct path, without
+`/feyn-deliver-story-alone`, `/feyn-pull-request` runs that review (`/feyn-pr-review`) before it
+sets Ready for review, except on a direct delivery ("How the work is organised", moment 2). This
+is the path of a story without an epic. A story of an epic takes another: its PR targets the
+epic's integration branch, is reviewed by a fresh agent and merged by the orchestrator, and what
+reaches the maintainer is the epic PR; `/feyn-deliver-epic <epic>` runs it ("How the work is
+organised", moment 2). Why: decisions `issue-defines-pr-verifies`,
+`fresh-agent-review-before-maintainer`, `epic-on-integration-branch`,
+`pr-corrects-what-it-makes-false`.
 
 ## How the work is organised
 
@@ -200,25 +201,26 @@ Five moments:
    the next one (the policies, below), so every delivery leaves them all closed until the next is
    posed.
    **Deliver a story alone**, a story with no parent epic: one PR to `main`, merged by the
-   maintainer, in one of two ways: `/feyn-deliver <n>`, or a direct delivery. `/feyn-deliver <n>`
-   delivers every story without an epic (given a story of an epic, it refuses and names
-   `/feyn-deliver-epic`), through `deliver-story.js` with no epic, except those the maintainer
-   named `direct` at their creation. A **direct delivery** is a story, alone or under an epic, of
-   one edit with no behaviour, named `direct` by the maintainer at its creation
-   (`/feyn-issue story direct <what>`, or `/feyn-issue story #<epic> direct <what>` under an
-   epic), its To do then opening with the line "Direct delivery": no skill, check, decision,
-   agent workflow or course file touched, and no Done when statement that asks more than "this
-   sentence says this" (a wording, a link, a typo, a mechanical rename in one file). The
-   maintainer's work session makes its branch, its edit and its PR with the work-cycle tooling
-   (`/feyn-issue-branch`, `/feyn-pull-request`): no contributor, no fresh-agent review, and the
-   PR's Checks say `Fresh-agent review: none, direct delivery.`. A direct story of an epic is
-   delivered so by its epic's orchestrator (`/feyn-deliver-epic` step 2): its
-   branch is cut from the integration branch, its PR targets it
+   maintainer, in one of two ways: `/feyn-deliver-story-alone <n>`, or a direct delivery.
+   `/feyn-deliver-story-alone <n>` delivers every story without an epic (given a story of an
+   epic, it refuses and names `/feyn-deliver-epic`), through `deliver-story.js` with no epic,
+   except those the maintainer named `direct` at their creation. A **direct delivery** is a
+   story, alone or under an epic, of one edit with no behaviour, named `direct` by the
+   maintainer at its creation (`/feyn-issue story direct <what>`, or `/feyn-issue story #<epic>
+   direct <what>` under an epic), its To do then opening with the line "Direct delivery": no
+   skill, check, decision, agent workflow or course file touched, and no Done when statement
+   that asks more than "this sentence says this" (a wording, a link, a typo, a mechanical rename
+   in one file). The maintainer's work session makes its branch, its edit and its PR with the
+   work-cycle tooling (`/feyn-issue-branch`, `/feyn-pull-request`): no contributor, no
+   fresh-agent review, and the PR's Checks say `Fresh-agent review: none, direct delivery.`. A
+   direct story of an epic is delivered so by its epic's orchestrator (`/feyn-deliver-epic` step
+   2): its branch is cut from the integration branch, its PR targets it
    (`--base <integration branch>`), the orchestrator merges it, and it skips
    `/feyn-pull-request` step 8, so the story never goes Ready for review. Which skill delivers
-   what: `/feyn-deliver-epic` an epic, its stories included, direct ones too; `/feyn-deliver` a
-   story without an epic; the work-cycle tooling the direct delivery of a story without an epic.
-   A story without an epic is Ready for review while its PR awaits the merge.
+   what: `/feyn-deliver-epic` an epic, its stories included, direct ones too;
+   `/feyn-deliver-story-alone` a story without an epic; the work-cycle tooling the direct
+   delivery of a story without an epic. A story without an epic is Ready for review while its PR
+   awaits the merge.
 3. **Brainstorm**: `/feyn-brainstorm` frames a work session with the maintainer on how feyn works
    (the maintainer decides, one point at a time, nothing written in the repository during the
    brainstorm) and ends it in options: it creates the work items it defined, in Status Option,
@@ -294,10 +296,10 @@ reads the views. Why: decisions `themes-and-release-milestones`, `epic-on-integr
   set the rest: `/feyn-issue` Option or Ready for a work item it creates ("How the work is
   organised", the flow), the maintainer Ready when committing an option, `/feyn-issue-branch` In
   progress, `/feyn-pull-request` Ready for review, or the orchestrator at the hand-over under
-  `/feyn-deliver` (a correction asked on a delivered PR returns the story to In progress,
-  `/feyn-deliver` step 4); the orchestrator of an epic sets a story Done when it merges it into
-  the integration branch, and the epic Ready for review when it hands over the epic PR.
-  There are no state labels. Why: decisions `project-status-not-state-labels`,
+  `/feyn-deliver-story-alone` (a correction asked on a delivered PR returns the story to In
+  progress, `/feyn-deliver-story-alone` step 4); the orchestrator of an epic sets a story Done
+  when it merges it into the integration branch, and the epic Ready for review when it hands
+  over the epic PR. There are no state labels. Why: decisions `project-status-not-state-labels`,
   `idea-and-option-before-ready`, `epic-on-integration-branch`.
 - `kind:epic`, `kind:story`: the kind labels, exactly one on a work item, set by `/feyn-issue`
   at its creation and changed with the kind while the work item is an option; none on an idea,
@@ -314,11 +316,11 @@ reads the views. Why: decisions `themes-and-release-milestones`, `epic-on-integr
 
 In the web interface, the Project's views. First what waits for the maintainer: the search
 `label:blocked:maintainer` in the issue list; the PR list shows the draft PRs (a PR under
-`/feyn-deliver` is also a draft until its review is done: not one to answer); the Ready for
-review items, a story's PR in the In progress view or an epic's epic PR in Overview, waiting for
-the merge; the open questions of the epics In progress, in their plan comments. Then the In
-progress view (what moves on its own), then Ready (what can be taken), then Options (what to
-commit or close), then Ideas (what to triage). An unblock is a comment on the issue that says
+`/feyn-deliver-story-alone` is also a draft until its review is done: not one to answer); the
+Ready for review items, a story's PR in the In progress view or an epic's epic PR in Overview,
+waiting for the merge; the open questions of the epics In progress, in their plan comments. Then
+the In progress view (what moves on its own), then Ready (what can be taken), then Options (what
+to commit or close), then Ideas (what to triage). An unblock is a comment on the issue that says
 what was validated, then the label removed: the comment is the trace a fresh agent reads; an
 open question is answered by a comment on the epic. Why: decisions
 `blocked-is-a-label-not-a-state`, `project-status-not-state-labels`,
@@ -340,7 +342,7 @@ every agent in a worktree meets are written once in
 [`.claude/reference/worktree-agent.md`](../.claude/reference/worktree-agent.md), which the
 briefs of those agents name as their first read; that file is their point of use. And a skill
 may group its marks in a last section, `## Tool behaviours`, one line per mark naming its step:
-the step states its rule, the section its proof (as `/feyn-deliver` does).
+the step states its rule, the section its proof (as `/feyn-deliver-story-alone` does).
 `.claude/settings.json` sets `"idleCompaction": false`: an idle compaction replaces a work
 session's history by a summary and erases the material of its debrief, as the maintainer saw
 on 2026-10-31 (Claude Code, observed 2026-10-31, #345).

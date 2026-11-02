@@ -27,9 +27,9 @@ the issue. The skills set what only they know: `/feyn-issue` sets Option on a wo
 creates, or Ready when the maintainer says it is committed, and Ready on a story posed by the
 orchestrator of a taken epic (decision `idea-and-option-before-ready`); `/feyn-issue-branch`
 refuses an issue in Done, or in In progress with a branch, and sets In progress;
-`/feyn-pull-request` on the direct path, and `/feyn-deliver` or `/feyn-deliver-epic` at the
-hand-over, set Ready for review; `/feyn-merge-cleanup` reads the workflows and sets Done only
-when "Item closed" is off.
+`/feyn-pull-request` on the direct path, and `/feyn-deliver-story-alone` or `/feyn-deliver-epic`
+at the hand-over, set Ready for review; `/feyn-merge-cleanup` reads the workflows and sets Done
+only when "Item closed" is off.
 The names, ids, workflows (on or off) and commands live in `.claude/reference/project.md`. The
 kind (`kind:epic`, `kind:story`; decision `kind-label-per-work-item`), `type:`, `area:` and
 `blocked:maintainer` stay labels. The maintainer works in the web interface: the Project's views,
