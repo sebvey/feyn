@@ -10,9 +10,10 @@ One job: deliver epic `<epic>` on its integration branch, as decision
 `epic-on-integration-branch` says; the commands are in [project.md](../../reference/project.md),
 "Epics", cited here, not copied. The work session is the orchestrator: it poses the stories,
 runs the workflow, reads its results, writes the plan comment and the open questions; agents do
-the stories' work, the maintainer answers open questions and merges the epic PR. Nothing is spawned and no run launched before the maintainer's go-ahead
-(they say "deliver", "go", or name the epic); that go-ahead covers the stories of this epic. A
-"debrief rule" is one of the rules of the debrief of #317, listed in the Material of epic #342.
+the stories' work, the maintainer answers open questions and merges the epic PR. Nothing is
+spawned and no run launched before the maintainer's go-ahead (they say "deliver", "go", or name
+the epic); that go-ahead covers the stories of this epic. A "debrief rule" is one of the rules
+of the debrief of #317, listed in the Material of epic #342.
 
 ## Progress
 
