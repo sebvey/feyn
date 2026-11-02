@@ -1,6 +1,5 @@
 name: Idea
 description: "A finding seen in passing, no solution: Where, Why, Observation."
-title: "A finding seen in passing: what is wrong or missing, not the fix"
 body:
   - type: markdown
     attributes:
