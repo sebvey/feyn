@@ -1,17 +1,19 @@
 ---
 name: feyn-merge-cleanup
-description: "Tooling of the work cycle, called by `/feyn-deliver` once the maintainer merged a pull request: confirm the issue branch's change landed on main, delete the local branch, check the issue is closed and Done, and name the issues the merge freed. An observation's PR or a direct delivery to main; a slice of an epic is cleaned up by /feyn-deliver-epic. Use for \"/feyn-merge-cleanup\", \"/feyn-merge-cleanup improvement/12-fix-caption-check\"."
+description: "Tooling of the work cycle, called by `/feyn-deliver` once the maintainer merged a pull request: confirm the issue branch's change landed on main, delete the local branch, check the issue is closed and Done, and name the issues the merge freed. A story without an epic, its PR or its direct delivery to main; a story of an epic is cleaned up by /feyn-deliver-epic; after the merge of the epic PR of epic #392 only, it checks the maintainer's acts at that merge. Use for \"/feyn-merge-cleanup\", \"/feyn-merge-cleanup improvement/12-fix-caption-check\", \"/feyn-merge-cleanup improvement/392-pose-kanban-frame\"."
 argument-hint: "[<issue branch>]"
 ---
 
 # /feyn-merge-cleanup
 
-One job: clean up after the merge into `main` of an issue branch's PR (an observation's, under
-`/feyn-deliver` or on the direct path, or a direct delivery), the moment that follows
-`/feyn-pull-request` and is never in the same turn. It never merges, never deletes a remote
-branch, and writes nothing on GitHub but a Status. A slice of an epic is merged into its epic's
-integration branch, not `main`: `/feyn-deliver-epic` cleans up after it (step 2.5) and writes its
-lines on the plan comment (step 2.6), and cleans up after the merge of the epic PR (step 6).
+One job: clean up after the merge into `main` of an issue branch's PR (a story's without an
+epic, under `/feyn-deliver` or on the direct path, or a direct delivery), the moment that
+follows `/feyn-pull-request` and is never in the same turn. It never merges, never deletes a
+remote branch, and writes nothing on GitHub but a Status. A story of an epic is merged into its
+epic's integration branch, not `main`: `/feyn-deliver-epic` cleans up after it (step 2.5) and
+writes its lines on the plan comment (step 2.6), and cleans up after the merge of the epic PR
+(step 6). The merge of the epic PR of epic #392 is the one exception: given its integration
+branch, this skill checks the maintainer's acts at that merge (step 8).
 
 The branch is the issue branch `<type>/<n>-<slug>` (made by `/feyn-issue-branch`): the one the
 argument names, or else the current branch; `<n>` is the issue. No argument on `main`, or a
@@ -23,8 +25,9 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
 `git branch -d` refuses it. Two separate moves: confirm, then delete.
 
 1. `mise exec -- gh pr view <branch> --json state,mergedAt,title,baseRefName` shows `MERGED`;
-   otherwise stop: nothing to clean. A base other than `main` (a slice's, into its epic's
-   integration branch): stop and name `/feyn-deliver-epic`.
+   otherwise stop: nothing to clean. A base other than `main` (a story of an epic, merged into
+   its integration branch): stop and name `/feyn-deliver-epic`. The branch
+   `improvement/392-pose-kanban-frame` (the epic PR of epic #392): skip to step 8.
 2. `git switch main`, `git pull --ff-only`.
 3. **Confirm** that `main` holds the branch's version of every file it touched (`main` may
    have moved on with other merges, so compare those files only):
@@ -59,8 +62,8 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
    closes.
    - **The parent.** `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
      prints the parent's number; HTTP 404 « No parent issue found »: no parent, skip to the
-     next bullet. A parent with the label `epic`: the issue is a slice, which this skill does
-     not clean up; say so and name `/feyn-deliver-epic <epic>`. Any other parent
+     next bullet. A parent with the label `epic`: the issue is a story of an epic, which this
+     skill does not clean up; say so and name `/feyn-deliver-epic <epic>`. Any other parent
      (`mise exec -- gh api repos/sebvey/feyn/issues/<parent> --jq '[.state, .sub_issues_summary]'`):
      no plan comment and no Status; it is done when, open, its `sub_issues_summary` shows every
      sub-issue closed. A parent done: the reply ends with one line, its number and title, its
@@ -73,4 +76,13 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      (`issue_dependencies_summary.blocked_by` counts its open blockers, `total_blocked_by` all
      of them); it prints nothing when there is none. Name each at the end of the same reply,
      one line each, as now free, with its Status ([project.md](../../reference/project.md),
-     "Commands"): free to take when Ready, still to triage when Backlog.
+     "Commands"): free to take when Ready, to commit when Option, to triage when Idea.
+8. **The acts at the merge of epic #392.** Reached only from step 1: a run that finished
+   step 7 stops there. Once the maintainer says the acts are done, check each act that
+   [project.md](../../reference/project.md), "Acts at the merge of epic #392", lists, with the
+   commands and queries it gives (the Status field's options and the views in one query, the
+   labels, the open issues and their Status; the Project workflow's Status set is read in the
+   web interface, so ask the maintainer what it shows). Reply with one line per act, done or
+   not; an act not done: name it, with its path in the web interface or, for Option's id, the
+   direct story that writes it. Never do an act on the Project or the labels yourself: they are
+   the maintainer's.
