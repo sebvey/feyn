@@ -104,10 +104,12 @@ The questions the skill asks the maintainer, each before it acts on the answer:
   without a clear "committed", create it Option;
 - for an option: commit, refine (what changes), or close (completed or not planned, and why).
 
-The next item is presented only when this one is executed, or left open by the maintainer
-(status `left open: <why>`, skipped from then on). An item that waits on an action of the
-maintainer (a label, a merge, an answer elsewhere) is `awaiting maintainer action: <what>`: say
-what it waits on, and present nothing else.
+An item the maintainer leaves open stays in its Status, Idea or Option, and the reply says so;
+with several issues, its line in the working list becomes `left open: <why>`, skipped from then
+on. The next item is presented only when this one is executed or left open. An item that waits
+on an action of the maintainer (a label, a merge, an answer elsewhere): say what it waits on,
+and present nothing else; with several issues, its line becomes
+`awaiting maintainer action: <what>`.
 
 A requirement added to an epic's Done when, by a fold or otherwise, is the maintainer's decision:
 propose it as a choice, never write it on the strength of another decision.
@@ -135,8 +137,9 @@ issue left as it is and closed after.
 - **close**: done, moot or a duplicate, as not planned with the reason, or as completed when
   work already delivered settled it:
   `mise exec -- gh issue close <n> --reason <completed|"not planned"> --comment "<the reason, with the links: commit, PR, issue>"`;
-- **leave it**: it stays Idea (status `left open: <why>`), for instance to open a brainstorm
-  from it (`/feyn-brainstorm`, which is then its triage).
+- **leave it**: it stays Idea, and the reply says so (with several issues, its line in the
+  working list: `left open: <why>`), for instance to open a brainstorm from it
+  (`/feyn-brainstorm`, which is then its triage).
 
 **An issue of the old format** (in Idea, its body already defining a work: a Done when, a To
 do; decision `idea-is-never-converted`; an issue numbered below #424, the epic PR of epic #392,
