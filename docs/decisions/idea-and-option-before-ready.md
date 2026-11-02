@@ -20,14 +20,12 @@ freezes and the Done when becomes the contract (decision `issue-defines-pr-verif
 Creating and committing are two acts: a work item the triage creates from an idea is born
 Option, or Ready when the maintainer says at its creation that it is committed (the triage
 asks, Option by default); a work item a brainstorm creates is always born Option, its
-commitment decided at a triage; a story the maintainer asks for directly in a work session is
-born Option, or Ready on the maintainer's word; a story posed by the orchestrator of a taken
-epic is born Ready. The flow is Idea, Option, Ready, In progress, Ready for review, Done, and
-nothing else: the Status Needs Decision, present and unused, is removed, and the label
-`blocked:maintainer` says a decision is awaited, on any Status (decision
-`blocked-is-a-label-not-a-state`). The maintainer changes the Project at the merge of the epic
-PR that lands this frame: Backlog renamed Idea, its id and its items kept; Option added; Needs
-Decision removed. This replaces Backlog and Needs Decision.
+commitment decided at a triage; a work item the maintainer asks for directly in a work
+session, a story or an epic, is born Option, or Ready on the maintainer's word; a story posed
+by the orchestrator of a taken epic is born Ready. The flow is Idea, Option, Ready, In
+progress, Ready for review, Done, and nothing else: the Status Needs Decision, present and
+unused, is removed, and the label `blocked:maintainer` says a decision is awaited, on any
+Status (decision `blocked-is-a-label-not-a-state`). This replaces Backlog and Needs Decision.
 
 ## Options ruled out
 

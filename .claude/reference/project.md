@@ -189,7 +189,7 @@ The maintainer's acts on the Project and the labels, done in one sitting right a
 the epic PR of epic #392 into `main`, never before (epic #392, points 10 and 14): until then
 the skills on `main` read the Project as it was on 2026-11-02, with the Statuses Backlog and
 Needs Decision, no Option and no label `story`, and would stop working on the new ones.
-`/feyn-merge-cleanup` checks each act after that merge. In order:
+`/feyn-deliver-epic` step 6.5 checks each act after that merge, doing none of them. In order:
 
 1. **The Status field** (Project feyn, menu ⋯, Settings, field Status): rename Backlog to Idea,
    which keeps its id `c1d0b0c3` and its items (never delete and recreate it: new ids, and a
@@ -213,7 +213,8 @@ Needs Decision, no Option and no label `story`, and would stop working on the ne
 
    | Open issue | Becomes |
    |---|---|
-   | no kind label, a parent epic | label `story`, Status kept |
+   | no kind label, a parent epic taken (Ready or In progress) | label `story`, Status kept |
+   | no kind label, a parent epic not taken (in Idea, Backlog before step 1; #314, child of #318, on 2026-11-02) | folded into its epic's Material, then closed as completed naming the epic |
    | no kind label, no parent, in Idea (Backlog before step 1) | Idea, no label: the triage reads it in the old format |
    | no kind label, no parent, Ready, In progress or Ready for review | label `story`, Status kept |
    | `epic`, in Idea (Backlog before step 1), or open with the Status Done (#220, #221 on 2026-11-02, both archived) | Status Option |
@@ -221,7 +222,10 @@ Needs Decision, no Option and no label `story`, and would stop working on the ne
 
    The label: `mise exec -- gh issue edit <n> --add-label story`, or the issue's page, sidebar
    Labels. The Status: `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value Option`,
-   or the item's Status cell in a view. An archived item is restored first (Project feyn, menu
+   or the item's Status cell in a view. The fold: what the sub-issue holds goes into its
+   epic's Material (the epic's page, menu ⋯ of the body, Edit), then
+   `mise exec -- gh issue close <n> --reason completed --comment "Folded into epic #<epic>, its Material."`.
+   An archived item is restored first (Project feyn, menu
    ⋯, Archived items, Restore); whether it is archived:
    `mise exec -- gh api graphql -f query='query{repository(owner:"sebvey",name:"feyn"){issue(number:<n>){projectItems(first:5,includeArchived:true){nodes{isArchived}}}}}'`. An old issue already recreated at a triage as a work item: its
    blocked-by links set again on the new work item ("Dependencies", Set).

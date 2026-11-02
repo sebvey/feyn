@@ -19,6 +19,11 @@ The argument decides the mode: a number (`12`, `#12`) reads; anything else creat
 three forms, `idea <finding>`, `story [#<epic>] [direct] <what>`, `epic <objective>`:
 - the kind is the first word when it is exactly `idea`, `story` or `epic`; any other first
   word is not a kind (a finding that starts with "stories…" names none);
+- a first word that is an old kind, `slice`, `observation` or `proposal` (words of the "Not"
+  column of `docs/glossary.md`), is never read as its replacement: ask "You said <word>, did
+  you mean <story or idea>?" (story for `slice` and `proposal`, idea for `observation`), in
+  the language of the conversation, and create nothing until the answer (project
+  `CLAUDE.md`, "Vocabulary");
 - `#<epic>` follows the kind for a story attached to an epic, and only for a story; a story
   without it has no parent epic (decision `story-with-or-without-an-epic`);
 - `direct` is the word right after `story` (after `#<epic>` when there is one) when it is
@@ -65,8 +70,8 @@ of the old format for a defect:
 
 1. **Say it back.** Restate in two lines: for an idea, what was seen and where (paths, issue,
    PR, work session); for a story, what it delivers and where it comes from (an idea, its epic,
-   a brainstorm with the maintainer); for an epic, its objective. A finding with no place is not
-   an idea yet: ask where it was seen.
+   a brainstorm with the maintainer, the maintainer's direct request); for an epic, its
+   objective. A finding with no place is not an idea yet: ask where it was seen.
 2. **Look for a twin.** `mise exec -- gh issue list --state open --search "<two or three key words>"`.
    An open issue on the same point: add a comment to it instead
    (`mise exec -- gh issue comment <n> --body-file <file>`) and stop.
@@ -135,11 +140,12 @@ of the old format for a defect:
      alternative rejected, when a brainstorm settled it; no To do), To do (one line per item,
      the how in sub-bullets, numbered when the order matters), Reads only when the work needs
      other files.
-     - The last line of the Context is the origin, in one of the three forms of
+     - The last line of the Context is the origin, in one of the four forms of
        [story-body.md](../../reference/story-body.md): "From idea #<n>." when the story comes
        from an idea, its epic or not; otherwise "Story of epic #<n>." for a story of an epic;
-       otherwise "From a brainstorm with the maintainer, <date>.", which also serves a story
-       the maintainer settles directly in a work session, with neither epic nor idea.
+       otherwise "From a brainstorm with the maintainer, <date>." for a story a brainstorm
+       creates; otherwise "Asked by the maintainer, <date>." for a story the maintainer asks
+       for directly, in a work session, with neither epic nor idea.
      - A Done when statement that searches the repository (an `rg` or a `grep` that must print
        nothing, or only some lines) excludes the history: released CHANGELOG entries, dated
        amendments and superseded decisions (by path or named as exceptions). Otherwise the

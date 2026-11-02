@@ -14,8 +14,7 @@ set by `/feyn-issue` at its creation; the Project's views filter on it. The kind
 body template, the triage path and the delivery workflow, so it reads on the issue itself. An
 idea carries none: its Status says what it is (decision `idea-and-option-before-ready`). Until
 Ready, a work item may change kind (a story rewritten as an epic, or the reverse): its kind
-label changes with it. The label `story` is created, and the label `epic` kept, by the
-maintainer at the merge of the epic PR that lands this frame (epic #392).
+label changes with it.
 
 ## Options ruled out
 

@@ -27,7 +27,9 @@ are never translated. French text: no em-dashes, no arrows.
 ## Vocabulary
 
 Reserved terms live in `docs/glossary.md`. A generic word listed as "not" there is not used
-where a reserved term exists.
+where a reserved term exists. Said by the maintainer, such a word is met, before acting, with
+"You said <word>, did you mean <reserved term>?", in the language of the conversation. No skill
+accepts it silently: no alias in a description, no argument read as its replacement.
 
 ## Commands
 
