@@ -1,6 +1,6 @@
 'use strict';
 // A test of the spec's own files, run by check-spec, which verifies no rule (decisions
-// rules-with-level-and-method, spec-files-and-alpha-version): the declaration of the spec MAJOR,
+// rules-with-level-and-method, alpha-version-until-tag): the declaration of the spec MAJOR,
 // spec.yaml, held to its CHANGELOG.md.
 //   - spec.yaml exists and is a map of exactly four keys: `name`, `major`, `directives`, `version`;
 //   - `name` is a slug, `major` and `directives` are positive integers written as such (not `1.0`),

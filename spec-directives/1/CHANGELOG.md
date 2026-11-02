@@ -2,9 +2,10 @@
 
 The spec directives, MAJOR 1. No version of them is tagged yet.
 
-The directives carry a version `MAJOR.MINOR.PATCH`, like a spec: `1.0.0-alpha` until the tag
-`spec-directives/v1.0.0`, when « Unreleased » becomes `1.0.0`. From the tag on, each change is
-classed by its bump, and the entries are ranked by bump, as Changesets does.
+The directives carry a version `MAJOR.MINOR.PATCH`, like a spec (decision
+`alpha-version-until-tag`): `1.0.0-alpha` until the tag `spec-directives/v1.0.0`, when
+« Unreleased » becomes `1.0.0`. From the tag on, each change is classed by its bump, and the
+entries are ranked by bump, as Changesets does.
 
 One line per change: `- CLASS, file or area: what changes`. During the alpha, an entry carries
 no class: `- file or area: what changes`.
@@ -29,3 +30,8 @@ no class: `- file or area: what changes`.
   the rule model, and the tests of a spec's own files (formerly described in the spec's
   `course/checks/README.md`), which cite idea #453; `rule-slugs` reads a spec MAJOR's `README.md`
   in place of `SPEC.md`, and the fixtures carry `README.md` where they carried `SPEC.md` (#463).
+- `decisions/`: the decisions of the directives, moved from
+  `course-specs/linear-course/1/decisions/`: `rules-with-level-and-method` (the rule model, the
+  conformance clause, the tests of a spec's own files) and `checks-use-ajv-and-yaml` (one package
+  per directives MAJOR), their area `spec-directives`; `alpha-version-until-tag`, the alpha part
+  of the spec's `spec-files-and-alpha-version`, split from it (#465).

@@ -38,6 +38,7 @@ The most local area the decision binds:
 | Binds | Folder |
 |---|---|
 | one spec | `course-specs/<name>/<MAJOR>/decisions/` of each MAJOR it binds: the current one for a new rule, every live MAJOR for a bug fix |
+| the spec directives (the rule model, the conformance clause, the versions, the tooling of the checks) | `spec-directives/<MAJOR>/decisions/` |
 | one course | `courses/<id>/decisions/` |
 | the teacher | `teacher/decisions/` |
 | the site | `site/decisions/` |
@@ -51,7 +52,7 @@ Slug: two to five words, lowercase, hyphens, naming the choice, not the problem
 
 Before writing, list every decision and grep them for the decision's key words:
 `find . -path '*/decisions/*.md' -not -path '*/node_modules/*' -not -path './.claude/worktrees/*'`,
-then `grep -ril --include='*.md' --exclude-dir=worktrees "<key word>" docs course-specs courses teacher site .claude | grep /decisions/`
+then `grep -ril --include='*.md' --exclude-dir=worktrees "<key word>" docs spec-directives course-specs courses teacher site .claude | grep /decisions/`
 (quoted globs: zsh stops on a pattern that matches nothing; `.claude/worktrees/` holds the
 copies of other branches). A match whose frontmatter has `status: superseded` is history, not
 a neighbour (`grep -l '^status: superseded' <matches>` lists them): skip it, and say so in one
@@ -70,7 +71,7 @@ for several MAJORs is one file in each, under one slug.
 From [decision-body.md](../../reference/decision-body.md), at `<folder>/<slug>.md`:
 - `date`: today; `issue`: the issue number the decision comes from, or `null`;
   `status: accepted`; `area`: the area it binds (`repo`, `agentic`, `site`, `teacher`,
-  `spec:<name>`, `course:<id>`);
+  `spec:<name>`, `spec-directives`, `course:<id>`);
 - first line of the body: the counterfactual, as accepted;
 - then the decision in one paragraph: what is decided, where it applies, what it replaces;
   name the choice rather than its files, skills or steps where the choice allows (a skill

@@ -6,14 +6,13 @@ area: spec:linear-course
 ---
 
 Without this, an agent would add a rule as one more sentence of `SPEC.md` prose, beside the
-text that explains it, where no check can select it by category or count it, and would keep
-numbering the spec `1.0.0` while its content changes from commit to commit, or move it to
-`0.y.z` and rename `1/` and `@1` twice (working notes D6, D13).
+text that explains it, where no check can select it by category or count it (working notes D6).
 
 The files of `linear-course` are split by class of products (decision
 `rules-with-level-and-method`), plus the MAJOR's `README.md`; each product has its folder,
 `course/` and `teacher/`, which holds its description (its `README.md`), its rules (its
-`rules.yaml`) and its own files. The MAJOR's `README.md` holds the scope, the files, the
+`rules.yaml`) and its own files; the MAJOR's `spec.yaml` declares its name, its MAJOR, the MAJOR
+of the spec directives it follows and its version. The MAJOR's `README.md` holds the scope, the files, the
 categories, the normative references of its rules and the list of checks; the spec directives
 (`spec-directives/1/README.md`) hold what a rule file holds, the conformance clause, levels,
 methods, how severity follows, the versions and their normative references; neither holds a rule. `course/README.md`
@@ -29,13 +28,9 @@ tests of `check-spec`, which are not rules (decision `rules-with-level-and-metho
 (the spec directives, the MAJOR's `README.md`, `course/README.md`, `teacher/README.md`) is
 informative: it explains and cites rule ids, and never uses the verbal forms of obligation; the rule
 files are normative. "teacher" stays the name of the class of products, "protocol" the name of its
-rules and of their description.
-The version: a MAJOR in preparation carries `<MAJOR>.0.0-alpha` in its folder until its tag, with no
-prerelease number and no prerelease tag; `linear-course` is `1.0.0-alpha` in `1/` until
-`linear-course/v1.0.0`. "draft" leaves the descriptions of the spec: it is the reserved term
-for a PR. `course-specs/linear-course/1/CHANGELOG.md` takes the form of a course's changelog (one
-line per entry, ranked by bump, the convention of Changesets, named in the description), with an
-"Unreleased" section that becomes `1.0.0` at the tag; during the alpha, entries carry no bump class.
+rules and of their description. The version of the MAJOR, `1.0.0-alpha` until its tag, and the
+form of its `CHANGELOG.md` are decision `alpha-version-until-tag` of the spec directives, split
+from this one (formerly `spec-files-and-alpha-version`).
 
 ## Options ruled out
 
@@ -43,28 +38,15 @@ line per entry, ranked by bump, the convention of Changesets, named in the descr
   checks and the course author; the classroom build) nor the same language (D10).
 - One rule per row of a table of fields: hundreds of entries such as "`id` is mandatory"; JSON
   Schema is the standard for it and gives validation and completion in the editor (D7).
-- `0.y.z` while the spec moves: two renamings (`1/` to `0/` and back, `@1` to `@0` and back),
-  and it works once; the prerelease serves again, a `2.0.0-alpha` prepared in `2/` while `1/`
-  serves the courses (D13).
-- A prerelease number (`1.0.0-alpha.N`, `1.0.0-draft.N`): no reader tells two prereleases
-  apart, a course declares only the MAJOR (D13).
-- `rc`: it announces a content almost frozen (D13).
-- Keep a Changelog: feyn ranks entries by bump, which the reviewer checks against the claimed
-  class, and changing it would touch the changelog of `parcours-po` (D13).
 
 ## Sources checked
 
 - The README of `redhat-developer/yaml-language-server`: "Schema definitions can be written
   in JSON (`.json`) or YAML (`.yaml` or `.yml`) format"; it supports draft-04, draft-07,
   2019-09 and 2020-12 (2026-10-30).
-- SemVer 2.0.0, rules 3 and 9: a published version's content never changes; a prerelease
-  follows the patch after a hyphen and precedes the release (read by the second standards run,
-  2026-10-30).
 
 ## Consequences
 
-- Nothing reads the spec yet, so breaking its number costs nothing; the choice was made on the
-  debt (D13).
 - The risk of drift between a description and its rules is held by the writing rule above, which
   `check-spec` can verify (D6). `course/README.md` keeps its verbal forms of obligation until the
   extraction of #318 sorts each sentence into a rule or description (maintainer, 2026-10-31).
@@ -74,3 +56,9 @@ line per entry, ranked by bump, the convention of Changesets, named in the descr
   settles: what holds for every spec (what a rule file holds, conformance, levels, methods,
   severity, versions) moves to the spec directives, what is `linear-course`'s own (scope, files,
   categories, references of its rules, checks) to the MAJOR's `README.md`.
+- Amended 2026-11-02 (#465): `spec-files-and-alpha-version` is split, as Material point 15 of
+  epic #454 settles: its "files of a spec" part stays here, renamed `spec-files-by-product`; its
+  "alpha version" part, which binds the versions of a spec and of the directives alike, becomes
+  decision `alpha-version-until-tag` in `spec-directives/1/decisions/`, with its counterfactual
+  (D13), its options ruled out and its consequences. Without this, a contributor preparing the
+  directives' version would look for the alpha in a decision of `linear-course` it does not bind.

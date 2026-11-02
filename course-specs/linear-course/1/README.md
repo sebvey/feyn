@@ -36,7 +36,7 @@ the site and the classroom build (their own folders).
 ## 2. Files
 
 The files of the spec are split by class of products (`spec-directives/1/README.md` section 2),
-plus this README (decision `spec-files-and-alpha-version`):
+plus this README (decision `spec-files-by-product`):
 
 | File | Holds |
 |---|---|

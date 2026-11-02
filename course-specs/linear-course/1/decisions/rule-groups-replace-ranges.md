@@ -15,7 +15,7 @@ heading, and keep their own slugs, with no prefix. A group's slug has the form o
 no group and no rule have the same slug. A group is cited in code after « groupe » or « group »;
 the check `rule-slugs` verifies that every cited group exists and that no slug is defined twice.
 Once the protocol's rules are in `teacher/rules.yaml` (the extraction of #318, decision
-`spec-files-and-alpha-version`), a group is data in that file, its slug and the order of its
+`spec-files-by-product`), a group is data in that file, its slug and the order of its
 rules included, no longer a `###` heading of `teacher/README.md`; its Purpose paragraph goes to the
 description. A group may declare the category and method of its rules once (decision
 `rules-with-level-and-method`). This replaces the two ranges of the rule
