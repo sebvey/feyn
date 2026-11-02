@@ -136,7 +136,7 @@ mechanisms, which the frame does not name.
 | **template** | always qualified: **course templates** (`course-specs/<name>/<MAJOR>/course/templates/`, model files of a course), **learner templates** (`course-specs/<name>/<MAJOR>/teacher/templates/learner/`, model files of learner memory, in French for now), **teacher template** (`teacher/CLAUDE.template.md`), **issue template**, **body template** (`.claude/reference/*-body.md`: the body of an epic, a story, an idea or a decision, one per form, and the **PR body template**, `.claude/reference/pr-body.md`) | "template" alone, "boilerplate", "scaffold" |
 | **channel** | where a build is served from: **prod** (a course tag), **next** (`main`), **preview** (a PR) | "environment", "stage", "env" |
 | **release** | tagging a course version (`<id>/vX.Y.Z`) and deploying prod; "publish" means a release, never a build | "deploy" alone, "ship" |
-| **course version** / **spec version** | the two versioned objects; tooling has a **commit sha**, no version | "site version", "teacher version" |
+| **course version** / **spec version** | two of the three versioned objects, the third being the **spec directives** (decision `versioned-objects-and-spec-layout`); tooling has a **commit sha**, no version | "site version", "teacher version" |
 | **freeze** | the moment after which the old repositories no longer change; announced by the agent | |
 | **health** | a report on the repository's state; no skill produces it yet | "status", "doctor" |
 | **repository glossary** | this file, `docs/glossary.md` | |

@@ -1,5 +1,5 @@
 # The rules of a course of linear-course (decisions rules-with-level-and-method and
-# spec-files-and-alpha-version): the rules the checks of a course verify, taught-check included, and
+# spec-files-by-product): the rules the checks of a course verify, taught-check included, and
 # one rule verified by inspection, the review. A course conforms when it holds every requirement of
 # this file, whatever its method (spec-directives/1/README.md section 2). The tables of fields are
 # the schemas of course/schemas/, each one rule here. The other rules of course/README.md join this

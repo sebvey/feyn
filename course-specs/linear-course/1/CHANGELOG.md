@@ -2,10 +2,11 @@
 
 `linear-course`, MAJOR 1. No version of it is tagged yet.
 
-The spec carries a version `MAJOR.MINOR.PATCH` (see `spec-directives/1/README.md`, section 6):
-`1.0.0-alpha` until the tag `linear-course/v1.0.0`, when « Unreleased » becomes `1.0.0`. From the
-tag on, the bump table of `spec-directives/1/README.md` section 6 classes each change, and the
-entries are ranked by bump, as Changesets does.
+The spec carries a version `MAJOR.MINOR.PATCH` (see `spec-directives/1/README.md`, section 6,
+and decision `alpha-version-until-tag` of the directives): `1.0.0-alpha` until the tag
+`linear-course/v1.0.0`, when « Unreleased » becomes `1.0.0`. From the tag on, the bump table of
+`spec-directives/1/README.md` section 6 classes each change, and the entries are ranked by bump,
+as Changesets does.
 
 One line per change: `- CLASS, file or area: what changes`. During the alpha, an entry carries
 no class: `- file or area: what changes`.
@@ -84,3 +85,8 @@ no class: `- file or area: what changes`.
   `reader-facing-and-teacher-only-files`, `rules-named-by-slug`, `rules-with-level-and-method`,
   `sources-trace-the-concept`, `spec-files-and-alpha-version`, `stances-in-frontmatter-only`,
   `svg-only-diagrams` (#463).
+- `decisions/`: `rules-with-level-and-method` and `checks-use-ajv-and-yaml` move to the spec
+  directives, `spec-directives/1/decisions/`, since they bind every spec that follows them;
+  `spec-files-and-alpha-version` is split: its files part stays here as `spec-files-by-product`,
+  its alpha part becomes the directives' decision `alpha-version-until-tag`; the citations follow;
+  no rule changes (#465).

@@ -8,13 +8,15 @@ course or on the teacher, and nothing of one spec: the scope, the files, the cat
 of checks and the normative references of `linear-course` are in
 `course-specs/linear-course/1/README.md`. The directives are decision `rules-with-level-and-method`
 (the rule model, levels, methods, severity, conformance clause, normative references; the categories
-are the spec's)
-and decision `spec-files-and-alpha-version` (the files and the version), both in
-`course-specs/linear-course/1/decisions/`, whose reasons are not restated here. A path such as
-`course/rules.yaml` is relative to the folder of a spec MAJOR (`course-specs/linear-course/1/`).
+are the spec's), decision `alpha-version-until-tag` (the version during the alpha) and decision
+`checks-use-ajv-and-yaml` (the dependencies of `lib/`), in `decisions/` of this MAJOR, whose
+reasons are not restated here; the files of `linear-course` are its decision
+`spec-files-by-product`. A path such as `course/rules.yaml` is relative to the folder of a spec
+MAJOR (`course-specs/linear-course/1/`).
 
 - `README.md`: this file, the directives.
 - `CHANGELOG.md`: the changes of the directives, « Unreleased » until the tag.
+- `decisions/`: the decisions of the directives.
 - `tests/`: the tests of a spec's own files, their fixtures and their `test-fixtures` (section 8).
 - `lib/`, `package.json`, `package-lock.json`: the lib the checks of a spec and the tests share,
   and its dependencies (`yaml`, `ajv`), loaded by the checks of a spec MAJOR that declares this
@@ -100,13 +102,14 @@ before it lands and a course runs against the checks of the MAJOR it declares.
 | the creator (human or agent) | the course changes that are a MAJOR (an identifier) | changing a released course |
 | the reviewer | the class a course change claims in `CHANGELOG.md` | reviewing a course change |
 
-The spec's versions and its MAJOR folders are decision `versioned-objects-and-spec-layout`
-(`docs/decisions/versioned-objects-and-spec-layout.md`), summarised in `course-specs/README.md`. A
-spec version is tagged `linear-course/vX.Y.Z`.
+The versions of a spec and of the directives, and their MAJOR folders, are decision
+`versioned-objects-and-spec-layout` (`docs/decisions/versioned-objects-and-spec-layout.md`), the
+spec's summarised in `course-specs/README.md`. A spec version is tagged `linear-course/vX.Y.Z`.
 
-**The alpha.** A MAJOR in preparation carries `<MAJOR>.0.0-alpha` in its folder until its tag,
-with no prerelease number and no prerelease tag: the MAJOR 1 of `linear-course` is `1.0.0-alpha`
-in `1/` until `linear-course/v1.0.0`. During the alpha, the entries of `CHANGELOG.md` carry no
+**The alpha** (decision `alpha-version-until-tag`). A MAJOR in preparation, of a spec or of the
+directives, carries `<MAJOR>.0.0-alpha` in its folder until its tag, with no prerelease number
+and no prerelease tag: the MAJOR 1 of `linear-course` is `1.0.0-alpha` in `1/` until
+`linear-course/v1.0.0`. During the alpha, the entries of `CHANGELOG.md` carry no
 bump class; its « Unreleased » section becomes `1.0.0` at the tag. `spec.yaml` carries the
 version, and the test `spec-yaml` of `check-spec` holds it to `CHANGELOG.md` (section 8).
 
@@ -134,8 +137,9 @@ wording. A course in 0.x can still change anything, identifiers included.
 `spec-directives/`, a tag `spec-directives/vX.Y.Z`, a `CHANGELOG.md`. This MAJOR is `1.0.0-alpha`
 in `1/` until the tag `spec-directives/v1.0.0`, posed with the spec's in #451, when its
 « Unreleased » section becomes `1.0.0`. A spec MAJOR declares the directives MAJOR it follows in
-its `spec.yaml` (`directives`), and its checks load the `lib/` and the package of that MAJOR. The
-bump of a change to the directives, from their tag on:
+its `spec.yaml` (`directives`), and its checks load the `lib/` and the package of that MAJOR; a
+directives MAJOR lives while a live spec MAJOR declares it. The bump of a change to the
+directives, from their tag on:
 
 | Bump | When |
 |---|---|
