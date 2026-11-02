@@ -130,7 +130,9 @@ issue left as it is and closed after.
   `mise exec -- gh issue close <n> --reason completed --comment "Triaged <YYYY-MM-DD>: <the work items created from it, each #<m>>."`;
 - **fold into an epic**: close it as completed with a comment naming the epic that covers it;
   what the finding adds goes into the epic's Material when the epic is still an option, as
-  decided (a requirement added to its Done when: step 3);
+  decided (a requirement added to its Done when: step 3). It is the one write to an option a
+  triage makes: the epic is the idea's destination, not triaged, and its marker is left as it
+  is; any other change to the epic goes to `/feyn-refine-option`;
 - **close**: done, moot or a duplicate, as not planned with the reason, or as completed when
   work already delivered settled it:
   `mise exec -- gh issue close <n> --reason <completed|"not planned"> --comment "<the reason, with the links: commit, PR, issue>"`;

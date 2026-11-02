@@ -3,7 +3,8 @@
 What the frame of the work on feyn is: Kanban for the flow of work, ADR for the decisions,
 GitHub flow for the branches. This file says what the frame is, and only that; how feyn applies
 it (its workflow, its forms, its tooling) is described in [`contributing.md`](contributing.md).
-The words below are the frame's own; their meaning in the repository is in
+The words below are the frame's own, except where a sentence says how feyn names or applies a
+point of it (Ready, the option refinement); their meaning in the repository is in
 [`glossary.md`](glossary.md).
 
 ## Kanban

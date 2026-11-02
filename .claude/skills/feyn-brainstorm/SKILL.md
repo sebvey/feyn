@@ -20,7 +20,7 @@ The argument is one of three things:
 - **an idea** (an issue in Status Idea): read it first (`/feyn-issue <n>`); its finding is the
   question. The brainstorm is that idea's triage: it ends by closing it (step 4);
 - **an option to rework** (a story or an epic in Status Option): read it first
-  (`/feyn-issue <n>`); its body is the starting point, and the brainstorm refines it, or splits
+  (`/feyn-issue <n>`); its body is the starting point, and the brainstorm reworks it, or splits
   it, as `/feyn-refine-option` does an option (step 4);
 - **a topic**, in a few words.
 

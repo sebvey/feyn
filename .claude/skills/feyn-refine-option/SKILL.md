@@ -27,7 +27,8 @@ rewritten in place on that date, from which what changed in the repository is re
 - `Reworked <YYYY-MM-DD> (refinement)`, written by the action rework (step 4);
 - `Refined <YYYY-MM-DD> (brainstorm)`, written by `/feyn-brainstorm`;
 - `Refined <YYYY-MM-DD> (triage)`, on an option reworked before the option refinement had its
-  own skill (#444): read as a marker, never rewritten.
+  own skill (#444): read as a marker, never edited into the new form; a rework replaces it with
+  its own line, as it does any earlier marker.
 
 ## 1. The option named
 
@@ -56,7 +57,9 @@ body names.
    `mise exec -- gh issue view <n> --json body --jq .body | grep -oE '[A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)+/?|[A-Za-z0-9_-]+\.(md|js|mjs|json|ya?ml|ts|astro)' | grep -v '^github\.com/' | sort -u`.
 3. Which of them `origin/main` still holds:
    `git ls-tree -r --name-only origin/main -- <path> …`; a bare file name (no folder) is
-   looked up with `git ls-tree -r --name-only origin/main | grep -F '/<name>'`. A path it no
+   first looked up as a root path (`git ls-tree --name-only origin/main -- <name>`), then, not
+   found there, anywhere, check fixtures left out:
+   `git ls-tree -r --name-only origin/main | grep -E '(^|/)<name>$' | grep -v '/fixtures/'`. A path it no
    longer holds was moved or removed: `git log origin/main --format='%h %ad %s' --date=short -1 -- <path>`
    names the commit.
 4. The commits since its `updatedAt` on those paths:

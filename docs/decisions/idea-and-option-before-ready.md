@@ -14,7 +14,7 @@ The stages before commitment are two Statuses of the Project, in place of Backlo
 the inbox: an issue with no kind, holding a finding, never converted (decision
 `idea-is-never-converted`). **Option** is a work item, epic or story, defined but not committed:
 it has the body of its kind, Done when included, and waits for the maintainer to commit it (set
-Ready) or close it, one option at a time, at an option refinement; until Ready its kind and body
+Ready) or close it, at an option refinement; until Ready its kind and body
 may change, since refining an option is what the upstream is for. **Ready** stays the commitment
 point, where the form freezes and the Done when becomes the contract (decision
 `issue-defines-pr-verifies`). Creating and committing are two acts: a work item the triage
