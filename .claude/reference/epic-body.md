@@ -8,13 +8,16 @@
 
 ### Material
 
-<!-- What to read before posing the first slice: decisions, docs, paths, issues, the
-     maintainer's notes. One per line or one sentence each. -->
+<!-- What is read when splitting the epic into stories, and what was settled. What is read:
+     decisions, docs, paths, issues, the maintainer's notes, one per line or one sentence
+     each. What was settled (by a brainstorm, a triage): numbered, one point each, its
+     content, then "Why: …" and "Rejected: <the alternative weighed>, because …", or
+     "Rejected: none weighed.", so that the epic reads alone. -->
 
 ### Done when
 
 <!-- Two or three coarse statements a reviewer can verify by reading a file or running a
-     command, one per bullet. No Done when, no epic: what cannot get one is an observation. -->
+     command, one per bullet. No Done when, no epic: what cannot get one is an idea. -->
 
 ### Out of scope
 

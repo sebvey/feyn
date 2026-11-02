@@ -1,0 +1,38 @@
+name: Idea
+description: "A finding seen in passing, no solution: Where, Why, Observation."
+body:
+  - type: markdown
+    attributes:
+      value: |
+        An idea is a finding seen in passing, with no solution: no What, no Done when, no To
+        do. The triage weighs it and creates from it the work items it calls for (stories, an
+        epic), then closes it. The Project's workflows add it to the Project and set its
+        Status (Idea).
+
+        After creating the idea, add the `area:` label by hand, the area the Where line names
+        (a form cannot set a label from a field). No `type:` label: the triage sets the type
+        on the work items it creates.
+  - type: textarea
+    id: head
+    attributes:
+      label: Where, why
+      description: >-
+        Two lines, each its own paragraph (a blank line between them): `**Where:**` the area,
+        then at most three words on what is touched, in parentheses; `**Why:**` what the
+        finding breaks or costs, in one sentence.
+      placeholder: |
+        **Where:** agentic (the issue form)
+
+        **Why:** <what the finding breaks or costs>
+    validations:
+      required: true
+  - type: textarea
+    id: observation
+    attributes:
+      label: Observation
+      description: >-
+        The fact first, with its place (path, line, issue, PR); then the other facts, one per
+        line; the history last: the work session or PR where it was seen. Facts only, no
+        solution.
+    validations:
+      required: true
