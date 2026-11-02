@@ -234,8 +234,8 @@ Four moments:
    committed (set Ready) or closed by the maintainer, or kept to refine. Why: decisions
    `idea-is-never-converted`, `idea-and-option-before-ready`.
 
-**Policies.** The rules of the cycle are the workflow's policies, written down here as Kanban
-asks, and in the decisions and the skills:
+**Policies.** The policies of the cycle, written down here as Kanban asks, and in the
+decisions and the skills:
 - The **WIP limit**: one epic In progress at a time per orchestrator (two at most, on disjoint
   files).
 - A story of an epic exists only if it is the next one; a story that reveals work of another
