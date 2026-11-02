@@ -77,8 +77,8 @@ no class: `- file or area: what changes`.
   severity, the versions, the normative references of the rule model) moves to the spec
   directives, `spec-directives/1/README.md`; the scope, the files, the categories, the normative
   references of the rules and the list of checks move to this MAJOR's `README.md`, which
-  `rule-slugs` reads in its place; the tests of the spec's own files are described there too, the
-  checks' README keeping a pointer; no rule changes; the citations of `SPEC.md` updated in the
+  `rule-slugs` reads in its place; the tests of the spec's own files are described in the
+  directives, the checks' README keeping a pointer; no rule changes; the citations of `SPEC.md` updated in the
   spec, its checks and the decisions
   `domains-partition-the-course`, `markdown-conventions-not-mdx`, `one-diagram-style`,
   `reader-facing-and-teacher-only-files`, `rules-named-by-slug`, `rules-with-level-and-method`,

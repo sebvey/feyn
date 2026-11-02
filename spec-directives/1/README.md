@@ -7,7 +7,8 @@ versions, the normative references and the tests of a spec's own files. It holds
 course or on the teacher, and nothing of one spec: the scope, the files, the categories, the list
 of checks and the normative references of `linear-course` are in
 `course-specs/linear-course/1/README.md`. The directives are decision `rules-with-level-and-method`
-(the rule model, levels, methods, severity, categories, conformance clause, normative references)
+(the rule model, levels, methods, severity, conformance clause, normative references; the categories
+are the spec's)
 and decision `spec-files-and-alpha-version` (the files and the version), both in
 `course-specs/linear-course/1/decisions/`, whose reasons are not restated here. A path such as
 `course/rules.yaml` is relative to the folder of a spec MAJOR (`course-specs/linear-course/1/`).
@@ -158,8 +159,9 @@ The standards the rules of one spec depend on are in the README of that spec MAJ
 
 ## 8. Tests
 
-**The tests of `check-spec`** verify the spec's own files. They are not rules: they carry no
-category and no level, and each failure blocks `check-spec` (exit code 1). They carry lists of
+**The tests of `check-spec`** verify the spec's own files. They are not rules (decision
+`rules-with-level-and-method`, amended by #339): they carry no category and no level, and each
+failure blocks `check-spec` (exit code 1). They carry lists of
 `linear-course` (the five categories and the nine families in `rule-files.js`, the pack keys in
 `language-pack-keys.js`, the file names in `rule-slugs.js`): a named debt, idea #453; the lists
 move to `spec.yaml` when a second spec needs them.
@@ -176,9 +178,7 @@ not a course: `teacher/README.md`, `README.md`, `course/README.md`, `decisions/`
 `CHANGELOG.md` of `<spec-dir>`. A `<spec-dir>` with no `spec.yaml`, or a `directives` MAJOR with no
 folder, is refused (exit code 2, one line). Same output and `--only` as `check-course`, with no
 summary line and a `--list` of ids alone; the file in a failure line is relative to `<spec-dir>`.
-Its tests are not rules (decision `rules-with-level-and-method`, amended by #339): they carry no
-category and no level, and each failure blocks `check-spec` (exit code 1). Their list is written
-in `spec-directives/1/tests/check-spec`, their scripts beside it. The dependencies are those of
+Their list is written in `spec-directives/1/tests/check-spec`, their scripts beside it. The dependencies are those of
 this MAJOR, installed by `mise exec -- npm ci --prefix spec-directives/1`
 (`course-specs/linear-course/1/course/checks/README.md`, "Install").
 

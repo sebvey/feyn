@@ -2,8 +2,9 @@
 
 The spec of linear introductory courses: ordered domains, ordered concepts with prerequisites,
 sub-concepts taught one per teacher message, a storyline. This folder,
-`course-specs/linear-course/1/`, holds its MAJOR 1, version `1.0.0-alpha` until its tag; a
-course follows it by declaring `spec: linear-course@1` in its `course.yaml`.
+`course-specs/linear-course/1/`, holds its MAJOR 1, version `1.0.0-alpha` until its tag,
+binding from the tag `linear-course/v1.0.0` (`spec-directives/1/README.md` section 6); a course
+follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 
 - `README.md`: this file: scope, files, categories, normative references, the list of checks.
 - `course/README.md`: what a course is: course structure, reader-text conventions, diagrams (drawing contract and style), language pack keys.

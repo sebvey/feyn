@@ -10,17 +10,18 @@ would choose its own meaning for `primary`, `secondary` and `muted`, and the sam
 drawn in a different colour from one concept to the next: in wave 2 of S1-10, the old main text
 colour became `muted` in concept 2, `primary` in concepts 3 and 4, `secondary` in concept 5.
 
-Every diagram of a course is drawn in one style, `course/README.md` section 6.2: one meaning per
-class (`primary` what the diagram teaches, its focus; `secondary` the contrast, a second element set
+Every diagram of a course is drawn in one style, `course/README.md` section 6.2: one meaning
+per class
+(`primary` what the diagram teaches, its focus; `secondary` the contrast, a second element set
 against the first; `muted` the context and the ordinary text) and six principles (one idea per
 diagram; the roles subject, contrast, context, text; their rendering in class, opacity and form;
 readable in one colour; the composition; the text a diagram holds). The style is written for the
 diagrams to draw, not for compatibility with older ones: it holds principles, not a table of
-colours. It binds every writer of a diagram, and a review checks it; the drawing contract of section
-7.1 stays the only part a script checks. A migrated diagram is drawn anew under it from an inventory
-of what the old one shows, not transcribed. The meaning of the classes and this counterfactual were
-accepted by the maintainer on 2026-10-28 (work session, « Je valide le sens des trois classes », «
-Contrefactuel validé »).
+colours. It binds every writer of a diagram, and a review checks it; the drawing contract of
+section 6.1 stays the only part a script checks. A migrated diagram is drawn anew under it from
+an inventory of what the old one shows, not transcribed. The meaning of
+the classes and this counterfactual were accepted by the maintainer on 2026-10-28 (work session,
+« Je valide le sens des trois classes », « Contrefactuel validé »).
 
 ## Options ruled out
 
