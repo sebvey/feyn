@@ -1,5 +1,14 @@
 # linear-course: the protocol
 
+| Reader | Comes for | Opens |
+|---|---|---|
+| creator | nothing here: what a course is | [`../course/README.md`](../course/README.md), [`../course/templates/README.md`](../course/templates/README.md) |
+| builder | the protocol to inject, learner memory, the keys | sections 1 to 9, [Keys and parameters](#keys-and-parameters), [`rules.yaml`](rules.yaml), [`templates/learner/`](templates/learner/) |
+| verifier | the rules of the protocol as data, their method | [`rules.yaml`](rules.yaml), [`spec-directives/1/README.md`](../../../../spec-directives/1/README.md#2-conformance) section 2 |
+| spec writer | how a rule of the protocol is named and written | the paragraphs above section 1, [`rules.yaml`](rules.yaml), [`../decisions/`](../decisions/), [`../CHANGELOG.md`](../CHANGELOG.md) |
+
+The readers are defined in [`spec-directives/README.md`](../../../../spec-directives/README.md#the-readers).
+
 The pedagogical protocol of `linear-course`, the part of the spec the teacher executes: rules
 named by slug, in nine families. It has the version of the spec (the MAJOR's `README.md`,
 1.0.0-alpha); adding or changing a rule is a spec MINOR (`spec-directives/1/README.md` section 6).

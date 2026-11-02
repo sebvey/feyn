@@ -35,3 +35,6 @@ no class: `- file or area: what changes`.
   conformance clause, the tests of a spec's own files) and `checks-use-ajv-and-yaml` (one package
   per directives MAJOR), their area `spec-directives`; `alpha-version-until-tag`, the alpha part
   of the spec's `spec-files-and-alpha-version`, split from it (#465).
+- `README.md`: opens with the table Reader, Comes for, Opens over the four readers of a spec,
+  defined in `spec-directives/README.md`, beside it the root README of the directives and their
+  MAJORs (#467).
