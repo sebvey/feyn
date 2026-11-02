@@ -26,10 +26,18 @@ issue"): an issue in Idea whose body already defines a work (a Done when, a To d
 old format, written before the body templates of the idea and the story. The old format is
 not a defect to correct in place: it is a reason to recreate the issue (verdict recreate).
 
+Four fixed lines are markers, read as such, never as content or a defect
+(`.claude/skills/feyn-triage/SKILL.md`, "The markers"): on a closed idea, the close comment
+"Triaged <YYYY-MM-DD>: <work items>." or "Brainstormed <YYYY-MM-DD>: <options>.", which names
+the work items created from it; on an option, the last line of its body "Refined <YYYY-MM-DD>
+(triage)" or "Refined <YYYY-MM-DD> (brainstorm)", the date its body was last reworked, from
+which you read what changed (`git log origin/main --since=<that date>`).
+
 Until the merge of epic #392 the Project has neither Idea nor Option and still says Backlog:
 read the items whose `status` is `Backlog` instead, each as the merge will place it
 (`.claude/reference/project.md`, "Acts at the merge of epic #392", step 5): an epic as an
-option; an issue with a parent epic as a story of that epic; any other issue as an idea. The
+option; an issue with a parent epic as a story of that epic, or, its epic in Backlog, as
+folded into that epic; any other issue as an idea. The
 open epics whose Status is Done (archived, which `gh project item-list` leaves out) become
 options only at the merge: do not read them until then.
 

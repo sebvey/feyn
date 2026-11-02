@@ -19,7 +19,8 @@
      alternative rejected, when a brainstorm settled it. Facts and decisions, no To do.
      The last line names the issue the story comes from: "From idea #<n>." or "Story of epic
      #<n>.", or, for a story a brainstorm created with no epic and from no idea, "From a
-     brainstorm with the maintainer, <date>." -->
+     brainstorm with the maintainer, <date>.", or, for a story the maintainer asked for
+     directly with no epic and no idea, "Asked by the maintainer, <date>." -->
 
 ### To do
 

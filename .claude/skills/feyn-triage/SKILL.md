@@ -1,6 +1,6 @@
 ---
 name: feyn-triage
-description: "Run a triage of feyn with the maintainer (moment 4 of the work cycle, Triage): a fresh agent reads every idea and option against the repository and reports the stale ones with proof and a verdict, then the work session presents them one at a time, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it; an option is committed, refined or closed. Use for \"on trie les idées\", \"triage des idées et des options\", \"triage the ideas and options\", \"run a triage\", \"/feyn-triage\", and the maintainer's older phrases \"on trie le Backlog\", \"passe sur le Backlog\", \"fais le tri du Backlog\", \"triage the Backlog\", \"Backlog pass\"."
+description: "Run a triage of feyn with the maintainer (moment 4 of the work cycle, Triage): a fresh agent reads every idea and option against the repository and reports the stale ones with proof and a verdict, then the work session presents them one at a time, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it; an option is committed, refined or closed. Use for \"on trie les idées\", \"triage des idées et des options\", \"triage the ideas and options\", \"run a triage\", \"/feyn-triage\"."
 ---
 
 # /feyn-triage
@@ -17,6 +17,16 @@ items it calls for, then closes it; it never adds a Done when or a To do to it, 
 body, never sets a kind or a `type:` label on it (decision `idea-is-never-converted`). An
 **option** (Status Option) is a work item, epic or story, defined and not committed: the triage
 commits it, refines it or closes it (decision `idea-and-option-before-ready`).
+
+**The markers**: four fixed lines say that an issue went through a triage or a brainstorm, each
+written by the act it records and read as a marker, never as content to triage or a defect to
+correct:
+- on a closed idea, its close comment "Triaged <YYYY-MM-DD>: <work items>." (step 4) or
+  "Brainstormed <YYYY-MM-DD>: <options>." (`/feyn-brainstorm`): the idea was triaged, and the
+  work items named come from it;
+- on an option, the last line of its body "Refined <YYYY-MM-DD> (triage)" (step 4) or "Refined
+  <YYYY-MM-DD> (brainstorm)" (`/feyn-brainstorm`): its body was reworked in place on that date,
+  from which what changed in the repository is read.
 
 ## Progress
 
@@ -131,7 +141,8 @@ work item (Set); then it is closed as completed with a comment naming what repla
 - **split**: one option per work item it holds (`/feyn-issue`, Option by default as above),
   each citing it, then close it with a comment naming them; a story created this way ends its
   Context with the origin line of the option it splits ("From idea #<n>.", "Story of epic
-  #<n>." or "From a brainstorm with the maintainer, <date>."), never a new form;
+  #<n>.", "From a brainstorm with the maintainer, <date>." or "Asked by the maintainer,
+  <date>."), never a new form;
 - **fold into an epic** or **close**: as for an idea, above.
 
 A duplicate comment (posted twice by mistake) is hidden as duplicate, never deleted: on its

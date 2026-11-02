@@ -189,8 +189,7 @@ When no open question remains and every story is closed and Done
      other choices of the runs, grouped;
    - **Off the epic**: the ideas opened, what was seen and left;
    - **After the merge**: what step 6 will do, and what the merge frees; for epic #392, the
-     maintainer's acts at the merge and the run of
-     `/feyn-merge-cleanup improvement/392-pose-kanban-frame` that checks them (step 6.5).
+     maintainer's acts at the merge and their check by the orchestrator, step 6.5.
 4. The merge is the maintainer's: the PR page, "Squash and merge".
 
 ## 6. After the maintainer's merge
@@ -208,8 +207,12 @@ When no open question remains and every story is closed and Done
    it blocked", for the epic.
 5. Epic #392 only: the maintainer does the acts at its merge in one sitting
    ([project.md](../../reference/project.md), "Acts at the merge of epic #392"); once they say
-   the acts are done, run `/feyn-merge-cleanup improvement/392-pose-kanban-frame` (its step 8),
-   which checks each act, and pass on its lines, an act not done with its path.
+   the acts are done, check each act that section lists yourself, with the commands and queries
+   it gives (the Status field's options and the views in one query, the labels, the open issues
+   with their parent and their Status; the Status the Project workflow "Item added to project"
+   sets is read in the web interface, so ask the maintainer what it shows). Do none of the acts:
+   they are the maintainer's. Reply with one line per act, done or not; an act not done: name
+   it, with its path in the web interface or, for Option's id, the direct story that writes it.
 
 ## Tool behaviours
 

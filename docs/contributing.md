@@ -127,8 +127,9 @@ story, or an idea, which has no kind. A work item carries exactly one kind label
   `story`, with or without a parent epic. Under an epic, it is a sub-issue posed only when it is
   the next one, and its PR targets the epic's integration branch; with no epic, its PR targets
   `main` and the maintainer merges it. Its Context restates what the work needs to know and
-  ends with its origin: "From idea #<n>.", "Story of epic #<n>.", or "From a brainstorm with
-  the maintainer, <date>.".
+  ends with its origin: "From idea #<n>.", "Story of epic #<n>.", "From a brainstorm with the
+  maintainer, <date>.", or "Asked by the maintainer, <date>." for a story the maintainer asks
+  for directly, with no epic and no idea.
 - An **idea** is a finding seen in passing, to triage: no solution, no kind label, no `type:`
   label (the triage sets the type on the work items it creates), only its `area:` label. It is
   never converted: the triage creates from it the work items it calls for, each citing it, then
@@ -153,8 +154,9 @@ stages before commitment:
 Creating and committing are two acts. A work item a triage creates from an idea is born Option,
 or Ready when the maintainer says at its creation that it is committed (the triage asks, Option
 by default); a work item a brainstorm creates is always born Option, its commitment decided at a
-triage; a story the maintainer asks for directly in a work session (`/feyn-issue story …`) is
-born Option, or Ready on the maintainer's word; a story posed by the orchestrator of a taken
+triage; a work item the maintainer asks for directly in a work session, a story or an epic
+(`/feyn-issue story …`, `/feyn-issue epic …`), is born Option, or Ready on the maintainer's
+word; a story posed by the orchestrator of a taken
 epic is born Ready. A decision of the maintainer awaited is the label `blocked:maintainer`, on
 any Status, never a Status. Why: decisions `issue-carries-a-work-item-or-an-idea`,
 `story-with-or-without-an-epic`, `kind-label-per-work-item`, `idea-is-never-converted`,
@@ -237,7 +239,8 @@ Four moments:
 **Policies.** The policies of the cycle, written down here as Kanban asks, and in the
 decisions and the skills:
 - The **WIP limit**: one epic In progress at a time per orchestrator (two at most, on disjoint
-  files).
+  files); within an epic, one story at a time; the stories without an epic, no limit beyond
+  distinct files (several run in parallel only when their files are distinct).
 - A story of an epic exists only if it is the next one; a story that reveals work of another
   epic opens an idea, not a story.
 - An open question never stops the work, and the epic PR is handed over only when none remains.
@@ -328,7 +331,7 @@ on 2026-10-31 (Claude Code, observed 2026-10-31, #345).
 
 ## Decisions and vocabulary
 
-A choice that spans several files or is costly to undo becomes a decision file, the frame's ADR
+A choice that spans several files or is costly to undo becomes a decision file, under the frame's ADR
 ([`kanban.md`](kanban.md), "ADR"), counterfactual first (`Without this, <who acts> would…`, an
 agent being the common case, followed by a concrete wrong act), in the `decisions/` folder of
 the area it binds:

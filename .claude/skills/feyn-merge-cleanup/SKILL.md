@@ -1,6 +1,6 @@
 ---
 name: feyn-merge-cleanup
-description: "Tooling of the work cycle, called by `/feyn-deliver` once the maintainer merged a pull request: confirm the issue branch's change landed on main, delete the local branch, check the issue is closed and Done, and name the issues the merge freed. A story without an epic, its PR or its direct delivery to main; a story of an epic is cleaned up by /feyn-deliver-epic; after the merge of the epic PR of epic #392 only, it checks the maintainer's acts at that merge. Use for \"/feyn-merge-cleanup\", \"/feyn-merge-cleanup improvement/12-fix-caption-check\", \"/feyn-merge-cleanup improvement/392-pose-kanban-frame\"."
+description: "Tooling of the work cycle, called by `/feyn-deliver` once the maintainer merged a pull request: confirm the issue branch's change landed on main, delete the local branch, check the issue is closed and Done, and name the issues the merge freed. A story without an epic, its PR or its direct delivery to main; a story of an epic, and an epic PR, are cleaned up by /feyn-deliver-epic. Use for \"/feyn-merge-cleanup\", \"/feyn-merge-cleanup improvement/12-fix-caption-check\"."
 argument-hint: "[<issue branch>]"
 ---
 
@@ -12,8 +12,7 @@ follows `/feyn-pull-request` and is never in the same turn. It never merges, nev
 remote branch, and writes nothing on GitHub but a Status. A story of an epic is merged into its
 epic's integration branch, not `main`: `/feyn-deliver-epic` cleans up after it (step 2.5) and
 writes its lines on the plan comment (step 2.6), and cleans up after the merge of the epic PR
-(step 6). The merge of the epic PR of epic #392 is the one exception: given its integration
-branch, this skill checks the maintainer's acts at that merge (step 8).
+(step 6).
 
 The branch is the issue branch `<type>/<n>-<slug>` (made by `/feyn-issue-branch`): the one the
 argument names, or else the current branch; `<n>` is the issue. No argument on `main`, or a
@@ -26,8 +25,7 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
 
 1. `mise exec -- gh pr view <branch> --json state,mergedAt,title,baseRefName` shows `MERGED`;
    otherwise stop: nothing to clean. A base other than `main` (a story of an epic, merged into
-   its integration branch): stop and name `/feyn-deliver-epic`. The branch
-   `improvement/392-pose-kanban-frame` (the epic PR of epic #392): skip to step 8.
+   its integration branch): stop and name `/feyn-deliver-epic`.
 2. `git switch main`, `git pull --ff-only`.
 3. **Confirm** that `main` holds the branch's version of every file it touched (`main` may
    have moved on with other merges, so compare those files only):
@@ -77,12 +75,3 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
      of them); it prints nothing when there is none. Name each at the end of the same reply,
      one line each, as now free, with its Status ([project.md](../../reference/project.md),
      "Commands"): free to take when Ready, to commit when Option, to triage when Idea.
-8. **The acts at the merge of epic #392.** Reached only from step 1: a run that finished
-   step 7 stops there. Once the maintainer says the acts are done, check each act that
-   [project.md](../../reference/project.md), "Acts at the merge of epic #392", lists, with the
-   commands and queries it gives (the Status field's options and the views in one query, the
-   labels, the open issues and their Status; the Project workflow's Status set is read in the
-   web interface, so ask the maintainer what it shows). Reply with one line per act, done or
-   not; an act not done: name it, with its path in the web interface or, for Option's id, the
-   direct story that writes it. Never do an act on the Project or the labels yourself: they are
-   the maintainer's.
