@@ -142,7 +142,8 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    - apply the blocking findings, and the non-blocking ones worth fixing; commit, push, and
      update the body (`mise exec -- gh pr edit <pr> --body-file <file>`); the non-blocking
      findings left go in "Delivery notes" with their reason (step 6), one in Review first only
-     when it needs the maintainer's decision;
+     when it needs the maintainer's decision; a statement the PR makes false is never left,
+     whatever its label (decision `pr-corrects-what-it-makes-false`);
    - check each fix in the diff (`mise exec -- gh pr diff <pr>`);
    - add to Checks `Fresh-agent review: <N> blocking findings, fixed.` or
      `Fresh-agent review: no blocking finding.` (step 5).

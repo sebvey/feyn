@@ -110,6 +110,9 @@ Every field, never only `status`:
   go-ahead for that run, then run it; then a new run of the workflow (step 4) with `work`
   giving the run ids `wf_<id>`, their transcript directory and the result: its contributor
   applies it and its reviewer reads the transcripts.
+- A statement the PR makes false left in the repository, wherever the result names it (a
+  finding left, `unsure`, a round's `left`), a live decision included: rerun (step 4) with
+  `work` naming it, never handed over with it (decision `pr-corrects-what-it-makes-false`).
 - `needs-orchestrator`, `blocked`, `failed`: as `/feyn-deliver-epic` step 2.4 says, a question
   going to the maintainer as a decision awaited (step 4).
 
@@ -158,9 +161,10 @@ Markdown link: the app renders that reference once, with the PR's state. "Outsid
 what the PR does not hold: a line you added to Checks, a body or "Delivery notes" edited at
 step 3, an anomaly of the run or of its clean-up.
 
-A finding outside the PR that calls for follow-up work (a stale section of another file, an
-issue to open) is not prose in the notification: it goes to the maintainer as a question with
-buttons, the recommended option first. The merge is the maintainer's.
+A finding outside the PR that calls for follow-up work (a stale section the PR did not make
+false, an issue to open) is not prose in the notification: it goes to the maintainer as a
+question with buttons, the recommended option first; one the PR made false is corrected in it
+(step 3). The merge is the maintainer's.
 
 ## 6. After the merge
 

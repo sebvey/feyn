@@ -76,6 +76,10 @@ One at a time, the next one only (rules of the cycle):
    - `blocked`, `failed`, `merge-failed`: `contrib.question`, the `stage` that failed, or the
      merge's `problems`; a question that leaves the epic's Done when impossible goes to the
      maintainer (step 3), the rest is rerun.
+   - A statement the PR makes false left in the repository, wherever the result names it (a
+     finding left, `unsure`, a round's `left`), a live decision included: rerun the workflow
+     with `work` naming it; a story already merged: a story posed at once corrects it (step
+     2.1), before the plan's next one (decision `pr-corrects-what-it-makes-false`).
    - `deviations`, whatever the status: each becomes an open question at once (step 3).
      `choicesMade`: a structural one (a new file, a category, a marker, an exception to a
      principle) too (debrief rule 1); the others wait for the hand-over.
