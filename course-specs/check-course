@@ -69,7 +69,11 @@ function directivesOf(major) {
   const d = l && l.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2');
   if (!l || !/^\d+$/.test(d)) refuse(`${declaration} declares no directives MAJOR (directives: <MAJOR>)`);
   const pkg = path.join(SPECS, '..', 'spec-directives', d);
-  if (!fs.existsSync(path.join(pkg, 'package.json'))) refuse(`unknown directives MAJOR ${d} in ${declaration}`);
+  if (!fs.existsSync(path.join(pkg, 'package.json'))) {
+    const all = path.join(SPECS, '..', 'spec-directives');
+    const majors = (isDir(all) ? known(all) : []).filter((x) => /^\d+$/.test(x));
+    refuse(`unknown directives MAJOR ${d} in ${declaration} (known: ${majors.join(', ') || 'none'})`);
+  }
   return pkg;
 }
 
