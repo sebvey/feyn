@@ -1,18 +1,18 @@
 ---
 name: feyn-merge-cleanup
-description: "Tooling of the work cycle, called by `/feyn-deliver` once the maintainer merged a pull request: confirm the issue branch's change landed on main, delete the local branch, check the issue is closed and Done, and name the issues the merge freed. A story without an epic, its PR or its direct delivery to main; a story of an epic, and an epic PR, are cleaned up by /feyn-deliver-epic. Use for \"/feyn-merge-cleanup\", \"/feyn-merge-cleanup improvement/12-fix-caption-check\"."
+description: "Tooling of the work cycle, called by `/feyn-deliver-story-alone` once the maintainer merged a pull request: confirm the issue branch's change landed on main, delete the local branch, check the issue is closed and Done, and name the issues the merge freed. A story without an epic, its PR or its direct delivery to main; a story of an epic, and an epic PR, are cleaned up by /feyn-deliver-epic. Use for \"/feyn-merge-cleanup\", \"/feyn-merge-cleanup improvement/12-fix-caption-check\"."
 argument-hint: "[<issue branch>]"
 ---
 
 # /feyn-merge-cleanup
 
 One job: clean up after the merge into `main` of an issue branch's PR (a story's without an
-epic, under `/feyn-deliver` or on the direct path, or a direct delivery), the moment that
-follows `/feyn-pull-request` and is never in the same turn. It never merges, never deletes a
-remote branch, and writes nothing on GitHub but a Status. A story of an epic is merged into its
-epic's integration branch, not `main`: `/feyn-deliver-epic` cleans up after it (step 2.5) and
-writes its lines on the plan comment (step 2.6), and cleans up after the merge of the epic PR
-(step 6).
+epic, under `/feyn-deliver-story-alone` or on the direct path, or a direct delivery), the moment
+that follows `/feyn-pull-request` and is never in the same turn. It never merges, never deletes
+a remote branch, and writes nothing on GitHub but a Status. A story of an epic is merged into
+its epic's integration branch, not `main`: `/feyn-deliver-epic` cleans up after it (step 2.5)
+and writes its lines on the plan comment (step 2.6), and cleans up after the merge of the epic
+PR (step 6).
 
 The branch is the issue branch `<type>/<n>-<slug>` (made by `/feyn-issue-branch`): the one the
 argument names, or else the current branch; `<n>` is the issue. No argument on `main`, or a

@@ -1,6 +1,6 @@
 ---
 name: feyn-pull-request
-description: "Tooling of the work cycle, called by the contributor agent of the agent workflow deliver-story.js (under `/feyn-deliver` and `/feyn-deliver-epic`), at the end of the work, and by `/feyn-deliver-epic` for a direct story: turn the current issue branch on feyn into a pull request to main (to its epic's integration branch for a story of an epic), rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, checking the issue lists it, having it reviewed by `/feyn-pr-review` on the direct path (not on a direct delivery), then asking for review. It never merges. Use for \"/feyn-pull-request\"."
+description: "Tooling of the work cycle, called by the contributor agent of the agent workflow deliver-story.js (under `/feyn-deliver-story-alone` and `/feyn-deliver-epic`), at the end of the work, and by `/feyn-deliver-epic` for a direct story: turn the current issue branch on feyn into a pull request to main (to its epic's integration branch for a story of an epic), rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, checking the issue lists it, having it reviewed by `/feyn-pr-review` on the direct path (not on a direct delivery), then asking for review. It never merges. Use for \"/feyn-pull-request\"."
 ---
 
 # /feyn-pull-request
@@ -74,14 +74,14 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
        mark cites the issue. Dropped when there is none.
      - `Fresh-agent review: no blocking finding.` or
        `Fresh-agent review: <N> blocking findings, fixed.`: added after the review, by step 7 on
-       the direct path; under the agent workflow `deliver-story.js` (`/feyn-deliver`,
+       the direct path; under the agent workflow `deliver-story.js` (`/feyn-deliver-story-alone`,
        `/feyn-deliver-epic`), by its corrector, or by the orchestrator when the first review
-       finds nothing to correct (`/feyn-deliver` step 3, `/feyn-deliver-epic` step 2.4); updated,
-       not repeated, after a second review: `<N>` then counts the blocking findings of all the
-       reviews. A decision or a check touched as the review prescribed, without a second review
-       (step 7): `Fresh-agent review: <N> blocking findings, fixed; a decision touched as
-       prescribed, no second review.` (`a check` for a check). On a direct delivery (the
-       issue's To do opens with "Direct delivery",
+       finds nothing to correct (`/feyn-deliver-story-alone` step 3, `/feyn-deliver-epic` step
+       2.4); updated, not repeated, after a second review: `<N>` then counts the blocking
+       findings of all the reviews. A decision or a check touched as the review prescribed,
+       without a second review (step 7): `Fresh-agent review: <N> blocking findings, fixed; a
+       decision touched as prescribed, no second review.` (`a check` for a check). On a direct
+       delivery (the issue's To do opens with "Direct delivery",
        [contributing](../../../docs/contributing.md), "How the work is organised", moment 2):
        `Fresh-agent review: none, direct delivery.`, written here, before the PR opens, since no
        review runs (step 7). It counts within the 30 lines: leave room for it. Absent when the
@@ -115,11 +115,11 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      being merged) and put `blocked:maintainer` on the issue
      (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`). Under the agent
      workflow `deliver-story.js`, `--draft` always: the PR stays a draft until its review and
-     corrections are done, then is marked ready at the hand-over (`/feyn-deliver` step 5) or at
-     the merge of a story of an epic (the workflow's Merge stage). A direct delivery is never
-     a draft. A story of an epic: `--base <integration branch>` in place of `--base main`;
-     its `Closes #<n>` closes nothing on that branch, the orchestrator closes the story at the
-     merge, so the check below may not list the PR: expected;
+     corrections are done, then is marked ready at the hand-over (`/feyn-deliver-story-alone`
+     step 5) or at the merge of a story of an epic (the workflow's Merge stage). A direct
+     delivery is never a draft. A story of an epic: `--base <integration branch>` in place of
+     `--base main`; its `Closes #<n>` closes nothing on that branch, the orchestrator closes the
+     story at the merge, so the check below may not list the PR: expected;
    - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
      lists the PR when it says `Closes #<n>`; a `Refs` PR: it lists nothing, since the branch
      is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
@@ -132,11 +132,11 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      never a second one. Two ids or more: stop, edit none, and report them.
 7. **Fresh-agent review**, on the direct path. On a direct delivery, `/feyn-pr-review` does
    not run and the line is already in Checks (step 5): skip to step 8; the rest of this step
-   applies to the other PRs. Under the agent workflow `deliver-story.js` (`/feyn-deliver`,
-   `/feyn-deliver-epic`), skip this step: the workflow runs the review and the corrections. Run
-   `/feyn-pr-review <pr>`; a draft PR (a decision awaited, step 6) is reviewed now, before the
-   maintainer's answer, and the decision awaiting that answer is not a finding. Then, yourself,
-   since no other agent fixes on the direct path:
+   applies to the other PRs. Under the agent workflow `deliver-story.js`
+   (`/feyn-deliver-story-alone`, `/feyn-deliver-epic`), skip this step: the workflow runs the
+   review and the corrections. Run `/feyn-pr-review <pr>`; a draft PR (a decision awaited, step
+   6) is reviewed now, before the maintainer's answer, and the decision awaiting that answer is
+   not a finding. Then, yourself, since no other agent fixes on the direct path:
    - remove the reviewer's worktree when `/feyn-pr-review` returns one, as `/feyn-pr-review`
      step 2 says;
    - apply the blocking findings, and the non-blocking ones worth fixing; commit, push, and
@@ -162,13 +162,13 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
    Only once the `Fresh-agent review:` line is in Checks (step 7), `none, direct delivery`
    included (step 5), or when the maintainer asked for a PR without a review (the reply then
-   says so); not for a `Refs` PR (the issue stays In progress), not under `/feyn-deliver`,
-   whose orchestrator runs the review and sets it at the hand-over (its step 5), and never for a
-   story of an epic, a direct story included: it never goes Ready for review, its orchestrator
-   merges it into the integration branch (`/feyn-deliver-epic` step 2), and this step stops
-   here. A correction asked on the PR returns the issue to In progress until it is delivered
-   again. Then reply with the PR URL, the title, what the maintainer should look at first (the
-   PR's Review first, in one line), and the merge command:
+   says so); not for a `Refs` PR (the issue stays In progress), not under
+   `/feyn-deliver-story-alone`, whose orchestrator runs the review and sets it at the hand-over
+   (its step 5), and never for a story of an epic, a direct story included: it never goes Ready
+   for review, its orchestrator merges it into the integration branch (`/feyn-deliver-epic` step
+   2), and this step stops here. A correction asked on the PR returns the issue to In progress
+   until it is delivered again. Then reply with the PR URL, the title, what the maintainer
+   should look at first (the PR's Review first, in one line), and the merge command:
    `mise exec -- gh pr merge <pr> --squash --delete-branch`.
    The repository squashes with the PR title and body and allows squash only (GitHub,
    observed 2026-10-28, #135), so the PR title, followed by ` (#<pr>)`, becomes the subject
@@ -177,8 +177,8 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    merge command. The maintainer answers with a comment and removes `blocked:maintainer` from
    the issue: one removal. Then apply the answer, remove the section from the body,
    `mise exec -- gh pr ready <pr>`, and ask for review again (the second-review rule of step 7
-   applies; Ready for review then, as above). Under `/feyn-deliver`, neither: the PR stays a
-   draft, the orchestrator reruns its workflow with the answer, then marks the PR ready and
-   sets Ready for review at its hand-over (its steps 4 and 5). Never
+   applies; Ready for review then, as above). Under `/feyn-deliver-story-alone`, neither: the PR
+   stays a draft, the orchestrator reruns its workflow with the answer, then marks the PR ready
+   and sets Ready for review at its hand-over (its steps 4 and 5). Never
    remove the label yourself; if it is still on the issue, the answer is not given: stop.
 

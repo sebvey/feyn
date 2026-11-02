@@ -1,6 +1,6 @@
 ---
 name: feyn-issue-branch
-description: "Tooling of the work cycle, called by the contributor agent of the agent workflow deliver-story.js (under `/feyn-deliver` and `/feyn-deliver-epic`), first: put GitHub issue n on feyn in progress on its own branch. It refuses the issue when it is not committed (Idea or Option), a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date main (from its epic's integration branch for a story of an epic), sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
+description: "Tooling of the work cycle, called by the contributor agent of the agent workflow deliver-story.js (under `/feyn-deliver-story-alone` and `/feyn-deliver-epic`), first: put GitHub issue n on feyn in progress on its own branch. It refuses the issue when it is not committed (Idea or Option), a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date main (from its epic's integration branch for a story of an epic), sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
 argument-hint: "<issue number>"
 ---
 
@@ -29,7 +29,7 @@ Refuse, saying why in one line, and change nothing, when:
   and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
   instead. In progress with no branch and no PR is a Status that drifted: say so and go on;
 - its Status is Ready for review: its PR awaits the maintainer's merge; name the PR and stop
-  (a correction asked on it goes to that PR, `/feyn-deliver` step 4);
+  (a correction asked on it goes to that PR, `/feyn-deliver-story-alone` step 4);
 - it has no `type:` label, or no Done when: propose the fix (`/feyn-issue <n>` shows what is
   missing) and stop.
 

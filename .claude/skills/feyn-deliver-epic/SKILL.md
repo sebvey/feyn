@@ -17,11 +17,11 @@ of the debrief of #317, listed in the Material of epic #342.
 
 ## Progress
 
-The rule of `/feyn-deliver`, "Progress": while runs are in flight, at most three lines per
-message (what just finished, what runs now, what is awaited from the maintainer). After each
-story merged, the progress report of step 2.7 is that message, in four lines (maintainer,
-2026-10-31). The other exception: new open questions, one line each (step 3). The full report
-comes once, at the hand-over (step 5).
+The rule of `/feyn-deliver-story-alone`, "Progress": while runs are in flight, at most three
+lines per message (what just finished, what runs now, what is awaited from the maintainer).
+After each story merged, the progress report of step 2.7 is that message, in four lines
+(maintainer, 2026-10-31). The other exception: new open questions, one line each (step 3). The
+full report comes once, at the hand-over (step 5).
 
 ## 1. Take the epic
 
@@ -92,15 +92,15 @@ One at a time, the next one only (rules of the cycle):
    `git branch -D <story branch>`, once `mise exec -- gh pr view <pr> --json state` reads
    `MERGED`. The remote story branch goes with the merge; still there
    (`git ls-remote --heads origin <story branch>`): tell the maintainer.
-   A PR not merged (`needs-orchestrator`, `blocked`, `failed`, before a rerun), as `/feyn-deliver`
-   step 2.2 does: before each removal, after `git fetch`, the worktree's `HEAD` is on the PR's
-   branch on `origin` (`git -C <path> branch -r --contains HEAD` names `origin/<story branch>`;
-   not there: stop and show it); the worktrees gone, move the local story branch to the PR's
-   head, which a corrector's push (`git push origin HEAD:<story branch>`, from a detached
-   `HEAD`) does not move: `git branch -f <story branch> origin/<story branch>`, never the
-   integration branch. The rerun's contributor switches to it and its push is a fast-forward.
-   A run that opened no PR: as `/feyn-deliver` step 2.2 says, with
-   `origin/<integration branch>` in place of `origin/main`.
+   A PR not merged (`needs-orchestrator`, `blocked`, `failed`, before a rerun), as
+   `/feyn-deliver-story-alone` step 2.2 does: before each removal, after `git fetch`, the
+   worktree's `HEAD` is on the PR's branch on `origin` (`git -C <path> branch -r --contains
+   HEAD` names `origin/<story branch>`; not there: stop and show it); the worktrees gone, move
+   the local story branch to the PR's head, which a corrector's push (`git push origin
+   HEAD:<story branch>`, from a detached `HEAD`) does not move: `git branch -f <story branch>
+   origin/<story branch>`, never the integration branch. The rerun's contributor switches to it
+   and its push is a fast-forward. A run that opened no PR: as `/feyn-deliver-story-alone` step
+   2.2 says, with `origin/<integration branch>` in place of `origin/main`.
 6. **Two lines on the plan comment** ([project.md](../../reference/project.md), "Epics", "The
    plan comment": find it, read it into a file, append, PATCH it): `#<n> (PR #<pr>): <what it
    delivered, in a few words>`, then `Next story to pose: <the next, from the plan's order>`;
