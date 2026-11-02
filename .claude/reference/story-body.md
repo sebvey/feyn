@@ -19,8 +19,9 @@
      alternative rejected, when a brainstorm settled it. Facts and decisions, no To do.
      A story that removes, moves or renames content (a file, a section, a rule) lists every
      file that refers to it, found by searching the name of the file touched, not the
-     section's name (`grep -rn '<file name>' .claude docs`), live decisions included,
-     superseded ones excluded; the To do has an item that treats each of them.
+     section's name (`grep -rn '<file name>' .claude docs`), and every other name it is
+     cited by (a skill's `/feyn-<name>`), live decisions included, superseded ones
+     excluded; the To do has an item that treats each of them.
      The last line names the issue the story comes from: "From idea #<n>." or "Story of epic
      #<n>.", or, for a story a brainstorm created with no epic and from no idea, "From a
      brainstorm with the maintainer, <date>.", or, for a story the maintainer asked for

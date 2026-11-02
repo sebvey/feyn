@@ -159,10 +159,11 @@ of the old format for a defect:
        Context every file that refers to it, and has a To do item that treats each of them.
        They are found by searching the name of the file touched, not the section's name
        (`grep -rn '<file name>' .claude docs`), since a citation names the content as often as
-       the heading; live decisions included, since a live decision is corrected in place when
-       a mechanism it names changes (decision `decision-format`), superseded ones excluded
-       (`status: superseded` in their frontmatter). #430's Context, built from the section's
-       name, found one file of the four that cited it.
+       the heading, and every other name the file is cited by (a skill's `/feyn-<name>`, not
+       its `SKILL.md`); live decisions included, since a live decision is corrected in place
+       when a mechanism it names changes (decision `decision-format`), superseded ones
+       excluded (`status: superseded` in their frontmatter). #430's Context, built from the
+       section's name, found one file of the four that cited it.
      - With `direct` (step 3): first hold the Done when to the criterion of a direct delivery,
        one edit with no behaviour, as [contributing](../../../docs/contributing.md), "How the
        work is organised", moment 2, states it. A Done when that asks more: refuse `direct`,
