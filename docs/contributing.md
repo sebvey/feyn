@@ -76,7 +76,7 @@ asked for one without a review or named its story a direct delivery, the fresh-a
 `/feyn-pr-review` reruns every statement. The PR never redefines the Done when; the issue wins,
 and the PR says why it deviates.
 A statement the PR makes false anywhere in the repository, a live decision included, is corrected
-in that PR, never left nor sent to a follow-up issue, and the review blocks on one left
+in that PR, never left nor sent to a separate issue, and the review blocks on one left
 (decision `pr-corrects-what-it-makes-false`).
 Once the PR is open, `/feyn-pull-request` checks that the issue lists it (a `Refs` PR: it lists
 nothing). A branch that leaves a decision to the maintainer opens as a draft PR, with
