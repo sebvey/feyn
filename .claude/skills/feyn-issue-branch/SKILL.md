@@ -63,7 +63,7 @@ create a second one.
 Set the Status to In progress ([project.md](../../reference/project.md), "Commands"): no
 Project workflow fires on a branch. An issue not in the Project yet (`projectItems` empty):
 set it as [project.md](../../reference/project.md), "Commands", says under "Set a Status on a new
-item". When the issue's parent is an epic (label `epic`, read as
+item". When the issue's parent is an epic (label `kind:epic`, read as
 [project.md](../../reference/project.md), "Epics", says) not yet In progress, set the epic In
 progress too.
 

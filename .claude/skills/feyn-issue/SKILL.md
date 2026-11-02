@@ -53,10 +53,11 @@ of the old format for a defect:
   `**Why:**`) then Observation. Created from the GitHub issue form
   (`.github/ISSUE_TEMPLATE/idea.yml`), it carries that head under a `### Where, why` heading,
   and its `**Where:**` markers may be absent, since the form's placeholder is not inserted;
-- a **story**, label `story`, from [story-body.md](../../reference/story-body.md): the head
+- a **story**, label `kind:story`, from [story-body.md](../../reference/story-body.md): the head
   (`**Where:**`, `**What:**`, `**Why:**`) then Done when, Context (its last line the origin),
   To do, Reads;
-- an **epic**, label `epic`, the five sections of [epic-body.md](../../reference/epic-body.md);
+- an **epic**, label `kind:epic`, the five sections of
+  [epic-body.md](../../reference/epic-body.md);
 - a body of the **old format**, written before these three templates, read as such: the head
   then Done when, Observation, To do, Reads (a body with no head has its sections in another
   order); the plan's bullets (`- **Observation**: …`); or, created from the old issue form,
@@ -83,9 +84,9 @@ of the old format for a defect:
    by whoever creates the issue ([contributing](../../../docs/contributing.md), "How the work
    is organised").
    - an **idea** holds a finding and no solution: no parent, no kind label, no `type:` label;
-   - a **story** carries the label `story`; it is attached to the epic its argument names right
-     after the kind (`story #220`), or has no parent epic when none is named;
-   - an **epic** carries the label `epic`; it has no parent.
+   - a **story** carries the label `kind:story`; it is attached to the epic its argument
+     names right after the kind (`story #220`), or has no parent epic when none is named;
+   - an **epic** carries the label `kind:epic`; it has no parent.
    - `direct`, right after `story` (`story direct`) or after the epic (`story #220 direct`),
      says the maintainer names this story a **direct delivery**: the maintainer's work session,
      or the orchestrator of its epic, makes the branch, the edit and the PR, with no
@@ -187,8 +188,8 @@ of the old format for a defect:
    words.
 7. **Create** it, one form per command:
    - an idea: `mise exec -- gh issue create --title "<title>" --body-file <file> --label area:<area>`;
-   - a story: `mise exec -- gh issue create --title "<title>" --body-file <file> --label story --label type:<type> --label area:<area>`;
-   - an epic: the same with `--label epic` in place of `--label story`.
+   - a story: `mise exec -- gh issue create --title "<title>" --body-file <file> --label kind:story --label type:<type> --label area:<area>`;
+   - an epic: the same with `--label kind:epic` in place of `--label kind:story`.
 
    Add `--milestone <name>` when the maintainer names one, on a story or on an epic that
    targets a release; never on an idea. It prints the issue URL. One issue per command, never

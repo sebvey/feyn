@@ -34,7 +34,7 @@ not hold.
 - Read each issue (`mise exec -- gh issue view <n>`).
 - **A story under an epic**, direct or not. Its parent
   (`mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`; HTTP 404: none)
-  carries the label `epic`: refuse in one line, "#<n> is a story of epic #<epic>:
+  carries the label `kind:epic`: refuse in one line, "#<n> is a story of epic #<epic>:
   `/feyn-deliver-epic <epic>` delivers it" (a direct story included, its step 2, "A direct
   story"), and run nothing for that issue.
 - **A direct delivery.** A story whose To do opens with the line "Direct delivery"

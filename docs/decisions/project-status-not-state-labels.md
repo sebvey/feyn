@@ -31,7 +31,7 @@ refuses an issue in Done, or in In progress with a branch, and sets In progress;
 hand-over, set Ready for review; `/feyn-merge-cleanup` reads the workflows and sets Done only
 when "Item closed" is off.
 The names, ids, workflows (on or off) and commands live in `.claude/reference/project.md`. The
-kind (`epic`, `story`; decision `kind-label-per-work-item`), `type:`, `area:` and
+kind (`kind:epic`, `kind:story`; decision `kind-label-per-work-item`), `type:`, `area:` and
 `blocked:maintainer` stay labels. The maintainer works in the web interface: the Project's views,
 which the maintainer sets there and an agent reads with the query of
 `.claude/reference/project.md`, "The Project workflows", the label `blocked:maintainer` first. It

@@ -112,9 +112,9 @@ keep their names (epic PR, integration branch, plan comment, open question, dire
 work session). Why: decision `kanban-frame-of-the-work`.
 
 **The work items and the idea.** An issue carries a work item, of one of two kinds, epic or
-story, or an idea, which has no kind. A work item carries exactly one kind label, `epic` or
-`story`, set by `/feyn-issue` at its creation; an idea carries none.
-- An **epic** is an objective that closes: the label `epic`, the title "Epic: …", five
+story, or an idea, which has no kind. A work item carries exactly one kind label, `kind:epic`
+or `kind:story`, set by `/feyn-issue` at its creation; an idea carries none.
+- An **epic** is an objective that closes: the label `kind:epic`, the title "Epic: …", five
   sections in order (Objective, Why now, Material, Done when, Out of scope), the parent of its
   stories. Its Material is what is read when splitting it and what was settled, with its why
   and the alternative rejected. **No Done when, no epic**: what cannot get a Done when is an
@@ -128,12 +128,12 @@ story, or an idea, which has no kind. A work item carries exactly one kind label
   structure (a new file, a category, a marker, an exception to a principle), put to the
   maintainer at once: a line in the plan comment and a comment on the epic.
 - A **story** is a unit of work delivered in one PR, with a verifiable Done when: the label
-  `story`, with or without a parent epic. Under an epic, it is a sub-issue posed only when it is
-  the next one, and its PR targets the epic's integration branch; with no epic, its PR targets
-  `main` and the maintainer merges it. Its Context restates what the work needs to know and
-  ends with its origin: "From idea #<n>.", "Story of epic #<n>.", "From a brainstorm with the
-  maintainer, <date>.", or "Asked by the maintainer, <date>." for a story the maintainer asks
-  for directly, with no epic and no idea.
+  `kind:story`, with or without a parent epic. Under an epic, it is a sub-issue posed only when
+  it is the next one, and its PR targets the epic's integration branch; with no epic, its PR
+  targets `main` and the maintainer merges it. Its Context restates what the work needs to know
+  and ends with its origin: "From idea #<n>.", "Story of epic #<n>.", "From a brainstorm with
+  the maintainer, <date>.", or "Asked by the maintainer, <date>." for a story the maintainer
+  asks for directly, with no epic and no idea.
 - An **idea** is a finding seen in passing, to triage: no solution, no kind label, no `type:`
   label (the triage sets the type on the work items it creates), only its `area:` label. It is
   never converted: the triage creates from it the work items it calls for, each citing it, then
@@ -291,9 +291,10 @@ reads the views. Why: decisions `themes-and-release-milestones`, `epic-on-integr
   the integration branch, and the epic Ready for review when it hands over the epic PR.
   There are no state labels. Why: decisions `project-status-not-state-labels`,
   `idea-and-option-before-ready`, `epic-on-integration-branch`.
-- `epic`, `story`: the kind labels, exactly one on a work item, set by `/feyn-issue` at its
-  creation and changed with the kind while the work item is an option; none on an idea, whose
-  Status says what it is. The views filter on them. Why: decision `kind-label-per-work-item`.
+- `kind:epic`, `kind:story`: the kind labels, exactly one on a work item, set by `/feyn-issue`
+  at its creation and changed with the kind while the work item is an option; none on an idea,
+  whose Status says what it is. The views filter on them. Why: decision
+  `kind-label-per-work-item`.
 - `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is
   a draft, which keeps it from being merged); on top of the Status, never instead of it; only
   the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
