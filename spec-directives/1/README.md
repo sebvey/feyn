@@ -180,7 +180,9 @@ The standards the rules of one spec depend on are in the README of that spec MAJ
 failure blocks `check-spec` (exit code 1). They carry lists of
 `linear-course` (the five categories and the nine families in `rule-files.js`, the keys of section 7 in
 `lexicon-keys.js`, the file names in `rule-slugs.js`): a named debt, idea #453; the lists
-move to `spec.yaml` when a second spec needs them. `composition.js` adds none (idea #485): its
+move to `spec.yaml` when a second spec needs them. The classroom build also reads the nine
+families by category (`FAMILIES`, exported by `rule-files.js`, `classroom-builder/build-classroom`):
+the move carries it. `composition.js` adds none (idea #485): its
 closed lists are the composition model's, and a `from: spec` source is checked against
 `<spec-dir>`, not against a list of file names.
 
