@@ -2,8 +2,8 @@
 
 The purpose of feyn, the yardstick a change is judged by, and the lessons it was built on. It is
 read at the moments where one judges: `/feyn-refine-option` asks it of an option before its
-staleness check, `/feyn-brainstorm` and `/feyn-triage` read it first. It restates no decision: each
-decision keeps its own counterfactual, and this file names a decision by its slug where one
+staleness check, `/feyn-brainstorm` and `/feyn-triage` read it first. It restates no decision:
+each decision keeps its own counterfactual, and this file names a decision by its slug where one
 grounds a point. A change to this file is a decision ([contributing](contributing.md),
 "Policies").
 
