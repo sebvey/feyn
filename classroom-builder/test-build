@@ -66,7 +66,7 @@ check(fs.readdirSync(path.join(out, '.claude', 'skills')).sort().join(',') === s
 const WHEN = {
   onboarding: "un nouvel apprenant, au premier message d'une session de cours",
   resume: "un apprenant qui revient, au premier message d'une session de cours",
-  diagram: "l'apprenant demande un schéma",
+  diagram: "l'apprenant demande un schéma, ou vient le message du sous-concept que nomme le subconcept d'un schéma déclaré par concept.md",
   stop: "l'apprenant dit que la session de cours s'arrête",
 };
 const skillText = {};
@@ -132,12 +132,16 @@ for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf
 for (const [s, at] of where) check(at.length === 1, `rule ${s} is in ${at.length ? at.join(', ') : 'nothing'}, not in exactly one place`);
 const MOMENT_OF = { 'first-message-without-tools': 'onboarding', 'resume-opening-sentence': 'resume', 'requested-diagram-shown': 'diagram', 'diagram-not-displayable': 'diagram', 'stop-opening-sentence': 'stop', 'hurried-departure': 'stop' };
 for (const [s, m] of Object.entries(MOMENT_OF)) check((where.get(s) || [])[0] === skillOf(m), `rule ${s} is not in the skill ${skillOf(m)}`);
-check((where.get('diagram-only-on-request') || [])[0] === 'CLAUDE.md', 'rule diagram-only-on-request is not in CLAUDE.md');
+// the diagram declared for a sub-concept is shown unasked: a permanent rule, so that the teacher knows
+// it at every message, the moment diagram loaded at that sub-concept too (its `when`, in the Moments
+// list of CLAUDE.md)
+check((where.get('declared-diagram-shown') || [])[0] === 'CLAUDE.md', 'rule declared-diagram-shown is not in CLAUDE.md');
+check(claude.includes(`- \`diagram\` (skill \`${skillOf('diagram')}\`): ${WHEN.diagram}.`), 'the Moments list of CLAUDE.md does not load the moment diagram at the sub-concept a diagram declares');
 const order = slugsOf(claude);
 check(order.join(',') === all.filter((s) => where.get(s)[0] === 'CLAUDE.md').join(','), 'the rules of CLAUDE.md are not in the order of teacher/README.md');
 // every family and group heading kept is followed by its Purpose paragraph: in CLAUDE.md, and in the
-// skills that hold a group or a family whole (the diagram rules sit under the heading of family 4,
-// whose Purpose stays in CLAUDE.md)
+// skills that hold a group or a family whole (the diagram rules of the moment sit under the heading of
+// the group `diagrams`, whose Purpose stays in CLAUDE.md with declared-diagram-shown)
 const HEADING = /^(## \d+\. .+|##+ .+ \(`[a-z0-9-]+`\))$/;
 const headingsOf = (text) => {
   const lines = text.split('\n');

@@ -1,0 +1,77 @@
+id: retrieval-at-resume
+title: a returning learner who validated concept 0 in an earlier session, next step concept 1
+learner:
+  apprenant.md: |
+    # L'apprenant
+
+    Surnom : **Sam** (le prof l'appelle ainsi).
+
+    ## Profil
+
+    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
+    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+
+    ## Préférences
+
+    Aucune.
+  observations.md: |
+    # Observations sur Sam
+
+    Une ligne par entrée : `date, [concept], fait : action` (« Acquis » : `[concept] fait (date)`).
+    `[général]` vaut pour tout le cours.
+    Une vigilance surmontée passe en acquis ; une ligne contredite se corrige ou se supprime.
+
+    ## Leviers
+
+    Ce qui marche avec l'apprenant. À lire au démarrage.
+
+    ## Vigilances actives
+
+    Difficultés pas encore surmontées. Avant un concept, lis celles qui portent son numéro.
+
+    ## Acquis
+
+    [0] responsabilités, événements, artefacts, sprint et incrément (2026-11-03)
+  parcours.md: |
+    # Parcours de Sam
+
+    Statut des concepts de la carte du cours (`course.yaml`) : `validé`, `en cours`, `sauté`,
+    `à revoir`. Un concept absent du tableau est à faire.
+
+    ## Prochaine étape
+
+    Concept 1 : Le produit et le rôle du PO (`concepts/01-produit-et-po`), son premier message.
+
+    ## Concepts
+
+    | # | Concept | Statut |
+    |---|---|---|
+    | 0 | Scrum en bref et l'incrément | validé |
+
+    Annexes vues : aucune.
+
+    ## Points annoncés pour plus tard
+
+    Aucun.
+
+    ## Journal
+
+    2026-11-02, session 1 : accueil, concept 0 commencé (l'équipe en bref, les responsabilités).
+    2026-11-03, session 2 : concept 0, 0a2 avec l'exercice « Le sprint raconté par Diego », 0a3, 0b ; concept 0 validé.
+turns:
+  - message: On continue.
+    expect:
+      - act: "before concept 1 (at this turn or the next, after the recap), one practice case of concept 0 from its bank, the one the journal does not name, « « Le sprint est livré » », its question in the quote form; concept 1 not started before it"
+        rules: [earlier-concept-retrieved-at-resume]
+  - message: "Oui."
+    if: next-line
+  - message: "On ne livre pas un sprint, on livre un incrément. La vue n'affiche pas encore l'heure de sa dernière mise à jour, donc elle ne remplit pas la DoD : elle ne fait pas partie de l'incrément. On ne la livre pas et on ne la présente pas à la revue ; elle retourne au backlog produit, où le PO l'ordonne avec le reste."
+    expect:
+      - act: "the answer to the practice case corrected by the loop (validated frankly), then the next step of parcours.md, concept 1, at the same message or on the next line"
+        rules: [earlier-concept-retrieved-at-resume]
+  - message: On s'arrête là.
+    expect:
+      - act: the stop's save point notes the title of the practice case in the journal line of the session
+        rules: [earlier-concept-retrieved-at-resume]
+rules:
+  - earlier-concept-retrieved-at-resume

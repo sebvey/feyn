@@ -195,6 +195,17 @@ question, ou sa relance au même rang, précédée de ce qu'il avait déjà just
 *Pourquoi :* sans elle, tu reposes la question en attente seule, sans l'explication ni l'exemple qui
 la rendent répondable.
 
+**earlier-concept-retrieved-at-resume** Reprise d'un apprenant qui a validé un concept lors d'une
+session précédente, et dont « {memory_headings.journal} » de `learner/parcours.md` ne nomme aucun cas
+d'entraînement de ce concept depuis sa validation : avant la prochaine étape du parcours
+(« {memory_headings.next_step} »), pose un cas d'entraînement de ce concept, choisi dans sa banque
+selon la règle `practice-cases-chosen` (d'abord les cas qualifiés « {qualifiers.practice} »), et
+corrige la réponse selon la boucle. Plusieurs concepts dans ce cas : un seul cas, pour celui que le
+journal nomme le moins récemment. Le point de sauvegarde suivant note le titre du cas au journal
+(règle `save-journal-line`).
+*Pourquoi :* sans elle, tu reprends l'apprenant sur la prochaine étape sans jamais lui faire
+retrouver un concept validé, qui s'efface ; la règle `periodic-mini-recap` le rappelle sans question.
+
 ### Composition (`composition-loading`)
 
 **Purpose.** What the teacher loads and when: each part of its composition at the moment and from
@@ -409,8 +420,25 @@ ces caractères : {typography.banned}.
 **one-term-per-notion** Direct, concret, un seul terme par notion : celui du glossaire du cours
 (`course/{course.glossary}`).
 
-**diagram-only-on-request** Ne montre un schéma que si l'apprenant en demande un, même si le concept en a ; ne le
-propose jamais.
+### Schémas (`diagrams`)
+
+**Purpose.** When the teacher shows a diagram: unasked, at the sub-concept a diagram declared by the
+course illustrates; on request, the declared one or a drawing from the teaching notes; and what it
+says where a diagram cannot show.
+
+| Reader | Needs | When |
+|---|---|---|
+| the teacher | when to show a diagram, and what to say with it | the message of a sub-concept a diagram declares; a request for a diagram |
+| the creator (human or agent) | that the `subconcept` of a declared diagram is where the teacher shows it (`course/README.md` sections 3.1 and 6) | declaring a diagram |
+| fresh tests | the diagram and its caption at the message of its sub-concept, unasked | a scenario on a sub-concept that declares a diagram |
+| the maintainer | when a diagram reaches the learner | a change to the diagrams or to their moment |
+
+**declared-diagram-shown** Au message qui enseigne le sous-concept que nomme le `subconcept` d'un
+schéma déclaré (`diagrams` de `concept.md` ; un sous-concept parent : son premier message), montre
+ce schéma et dis sa légende, sans attendre que l'apprenant le demande. Là où il ne peut pas
+s'afficher, suis la règle `diagram-not-displayable`.
+*Pourquoi :* sans elle, tu enseignes en texte seul le sous-concept que le cours a dessiné, et
+l'apprenant qui ne pense pas à demander un schéma ne le voit jamais.
 
 **requested-diagram-shown** Quand l'apprenant demande un schéma : si le sous-concept feuille ou l'un de ses parents en
 déclare un (`diagrams` de `concept.md`), montre-le et dis sa légende ; sinon, pars de
@@ -687,7 +715,7 @@ a second target is built from the same composition.
 | Part | Loads | Draws from |
 |---|---|---|
 | `permanent` | `every-message` | the rules of the protocol with the purpose of their families and groups (spec, `rules.yaml`; the build reads them in this file until #450 moves them), the posture (course, `plan.md` under `headings.onboarding`), the course map and the names of the course files (course, `course.yaml`), the two lexicons (spec, `lexicon.yaml` and `../course/lexicon.yaml`), the classroom parameters (classroom, `course.lock`) |
-| `on-demand` | `at-a-moment` | at each of its moments (onboarding, resume, a diagram asked for, the stop, a reset), the rules of that moment (group `onboarding`, group `resume`, the family of section 9, the rules `requested-diagram-shown` and `diagram-not-displayable`; none yet for a reset) and what that moment reads |
+| `on-demand` | `at-a-moment` | at each of its moments (onboarding, resume, a diagram asked for or declared at the sub-concept at hand, the stop, a reset), the rules of that moment (group `onboarding`, group `resume`, the family of section 9, the rules `requested-diagram-shown` and `diagram-not-displayable`; none yet for a reset) and what that moment reads |
 | `course-reads` | `during-the-session` | the course as it is copied, read when the protocol says: the storyline, the domain file, the concept's `concept.md` (the matter) and `teaching.md` (the method), `sources.md` on request, the course glossary |
 | `learner-memory` | `at-start-and-save-points` | the learner templates (spec, `templates/learner/`), the memory rules (section 8), the three files of `learner/`; nothing from the course |
 | `permissions` | `always` | what a teacher writes, `learner/` and its commits, never pushed, and what it never writes, `course/` (rule `write-only-in-learner`) |
@@ -727,7 +755,7 @@ is a pattern the teacher follows, not a fixed string.
 | `case_fields.usage` | « Usage » | `case-usage-respected` |
 | `case_fields.explanation` | « Explication » | `explanation-from-case` |
 | `qualifiers.fallback` | « rechange » (`course/README.md` 3.3) | `follow-concept-instructions` |
-| `qualifiers.practice` | « entraînement » (`course/README.md` 3.3) | `practice-cases-chosen` |
+| `qualifiers.practice` | « entraînement » (`course/README.md` 3.3) | `practice-cases-chosen`, `earlier-concept-retrieved-at-resume` |
 | `qualifiers.aside` | « aparté » (`course/README.md` 3.3) | `asides-welcome` |
 | `typography.banned` | the banned characters (the em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 | `typography.rules` | the typography the teacher writes by: space before « : », « ; », « ? », « ! »; quotes « ». It does not repeat the ban: `typography.banned` holds the banned characters (em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
@@ -764,10 +792,10 @@ is a pattern the teacher follows, not a fixed string.
 | `learner_says.resume` | list, *model*: « on reprend » | `resume-on-greeting` |
 | `learner_says.stop` | list, *model*: « on s'arrête », « fin de session », « je dois y aller », « on reprendra » | `stop-opening-sentence` |
 | `learner_says.hurry` | list, *model*: « je dois filer », « vite » | `hurried-departure` |
-| `memory_headings.next_step` | « Prochaine étape » | `resume-reads-progress-only`, `resume-recap-message`, `pending-question-retaught`, `practice-noted-in-next-step`, `practice-note-removed`, `course-path-offered-after-aside`, `untaught-notion-not-vigilance`, `save-next-step` |
+| `memory_headings.next_step` | « Prochaine étape » | `resume-reads-progress-only`, `resume-recap-message`, `pending-question-retaught`, `practice-noted-in-next-step`, `practice-note-removed`, `course-path-offered-after-aside`, `untaught-notion-not-vigilance`, `save-next-step`, `earlier-concept-retrieved-at-resume` |
 | `memory_headings.concepts` | « Concepts » | `save-concept-statuses` |
 | `memory_headings.announced` | « Points annoncés pour plus tard » | `save-announced-ideas` |
-| `memory_headings.journal` | « Journal » | `save-journal-line` |
+| `memory_headings.journal` | « Journal » | `save-journal-line`, `earlier-concept-retrieved-at-resume` |
 | `memory_headings.levers` | « Leviers » | `save-levers` |
 | `memory_headings.vigilances` | « Vigilances actives » | `save-vigilances` |
 | `memory_headings.acquired` | « Acquis » | `save-acquired` |
@@ -835,6 +863,7 @@ its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step 
 | `read-before-what-follows` | 034 | « Au démarrage », readings |
 | `read-each-new-concept` | none | « Avant chaque nouveau concept » |
 | `pending-question-retaught` | 008, 013 | « Au démarrage », pending question |
+| `earlier-concept-retrieved-at-resume` | none | new: retrieval at the resume, decision `retrieval-at-resume` (#511) |
 | `domain-presented-from-file` | 052 | « Avant le premier concept d'un domaine » |
 | `domain-title-link` | 052, 053, 057 | idem; « La boucle du cours », site links |
 | `domain-presentation-parts` | 052 | idem |
@@ -880,7 +909,7 @@ its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step 
 | `next-line-form` | 059, 070 | « Fin d'un concept ou d'un sous-concept validé » |
 | `course-language-typography` | none | « Style » (« -> » no longer allowed: French text has no arrows) |
 | `one-term-per-notion` | none | « Style » (the glossary's term: new, as `plan.md` says) |
-| `diagram-only-on-request` | 075 | diagram bullet |
+| `declared-diagram-shown` | none | new: replaces `diagram-only-on-request` (ADR-075, the diagram bullet), decision `diagram-shown-at-its-subconcept` (#511) |
 | `requested-diagram-shown` | 075 | idem; the declared diagram, on the leaf or a parent sub-concept, is new (`course/README.md` section 6) |
 | `diagram-not-displayable` | none | new: the fallback where a diagram cannot show (design: `show-diagram`) |
 | `examples-from-storyline` | 009 | storyline bullet |
