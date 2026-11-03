@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 require('../lib/deps').need();
 
-const CHECKS = ['rule-slugs', 'rule-files', 'language-pack-keys', 'spec-yaml'];
+const CHECKS = ['rule-slugs', 'rule-files', 'lexicon-keys', 'spec-yaml'];
 
 function usage(code) {
   const out = code ? console.error : console.log;

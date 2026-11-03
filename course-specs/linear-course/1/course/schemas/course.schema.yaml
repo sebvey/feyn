@@ -5,7 +5,7 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: course.yaml
 type: object
-required: [id, spec, language, title, audience, storyline, glossary, domains, concepts]
+required: [id, spec, title, audience, storyline, glossary, domains, concepts]
 additionalProperties: false
 properties:
   id:
@@ -16,9 +16,9 @@ properties:
     type: string
     pattern: '^linear-course@\d+$'
   language:
-    description: ISO 639-1 code of the language spoken to the learner
-    type: string
-    pattern: '^[a-z]{2}$'
+    description: accepted and ignored, not part of the fields of course/README.md section 2 (the
+      language is the spec's, `language` in spec.yaml); courses/parcours-po still declares it until
+      its migration (#487)
   title:
     description: the course title
     $ref: '#/$defs/text'

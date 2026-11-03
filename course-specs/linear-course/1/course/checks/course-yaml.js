@@ -1,6 +1,6 @@
 'use strict';
 // course.yaml: fields, identifiers, order, partition into domains, annexes, prerequisites, paths,
-// no unlisted concept folder, spec declared, language pack present (course/README.md section 2,
+// no unlisted concept folder, spec declared (course/README.md section 2,
 // spec-directives/1/README.md section 6). An unknown spec or MAJOR is refused by
 // course-specs/check-course, before these checks run.
 const path = require('path');
@@ -21,6 +21,8 @@ function run(ctx) {
   const cy = ctx.cy;
   const only = ctx.concept;
 
+  // `language` is accepted and ignored: the language is the spec's (spec.yaml), and
+  // courses/parcours-po, frozen until the tag, still declares it (#487 removes it at its migration)
   const known = new Set(['id', 'spec', 'language', 'title', 'subtitle', 'audience', 'site', 'storyline', 'glossary', 'domains', 'concepts', 'annexes']);
   for (const k of Object.keys(cy)) if (!known.has(k)) bad(cy, k, `unknown field "${k}"`);
 
@@ -29,8 +31,6 @@ function run(ctx) {
   else if (cy.id !== path.basename(ctx.root)) bad(cy, 'id', `id "${cy.id}" must equal the course folder name "${path.basename(ctx.root)}"`);
   if (!isStr(cy.spec)) bad(cy, 'spec', 'spec is mandatory: linear-course@<MAJOR>');
   else if (!/^linear-course@\d+$/.test(cy.spec)) bad(cy, 'spec', `spec "${cy.spec}" must be linear-course@<MAJOR>`);
-  if (!isStr(cy.language) || !/^[a-z]{2}$/.test(cy.language)) bad(cy, 'language', 'language must be an ISO 639-1 code');
-  else if (ctx.packError) bad(cy, 'language', ctx.packError.message);
   for (const k of ['title', 'audience']) if (!isStr(cy[k])) bad(cy, k, `${k} is mandatory`, 1);
   if (cy.subtitle !== undefined && !isStr(cy.subtitle)) bad(cy, 'subtitle', 'subtitle must be a non-empty string');
   if (cy.site !== undefined) {

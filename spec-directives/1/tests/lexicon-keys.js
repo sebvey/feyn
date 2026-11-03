@@ -1,0 +1,116 @@
+'use strict';
+// A test of the spec's own files, run by check-spec (not a rule: decision
+// rules-with-level-and-method, amended by #339): the two lexicons of a spec MAJOR (decision
+// lexicon-not-language-pack of linear-course). course/lexicon.yaml, the lexicon of the course
+// files, holds every key of course/README.md section 7; every key teacher/README.md uses is in
+// one of the two lexicons, course/lexicon.yaml or teacher/lexicon.yaml; a group lives in one of
+// them only. A spec folder with neither lexicon has none to test.
+// The keys of section 7 below are those of linear-course, a named debt: idea #453.
+const yaml = require('../lib/yaml-lines');
+const { fail } = require('../lib/course');
+
+const COURSE = 'course/lexicon.yaml';
+const TEACHER = 'teacher/lexicon.yaml';
+
+const KEYS = {
+  headings: ['objective', 'essentials', 'stances', 'pitfalls', 'quick_test', 'deepening', 'instructions', 'storyline_facts', 'bank', 'drawing',
+    'claims', 'references', 'unverified', 'problem', 'concept_thread', 'from_to', 'crossing_case', 'audience', 'onboarding', 'avoid', 'unreleased'],
+  case_fields: ['usage', 'explanation', 'situation', 'question', 'expected_answer', 'common_mistakes', 'what_works'],
+  qualifiers: ['fallback', 'practice', 'aside'],
+  markers: ['storyline', 'consensus', 'school', 'course'],
+  natures: ['fact'],
+  concept_refs: ['concept', 'concepts', 'and', 'annex'],
+  source_types: ['primary', 'secondary', 'marketing'],
+};
+const LISTS = { typography: 'banned' };
+// checks.anaphora is optional (course/README.md section 7): a lexicon without it is consumable;
+// domain-first-sentence-standalone, a reporting check of a course, reports its absence.
+
+// The keys teacher/README.md uses: a row of its "Keys and parameters" tables (`| `group.key` |
+// ...`; a value cell that opens on "list" is a list) or a `{group.key}` in a rule. Section 9's keys
+// come first. teacher/README.md missing gives no key: that is rule-slugs' failure.
+const NOT_LEXICON = new Set(['course', 'classroom', 'group']); // parameters, and the notation's own example
+
+function protocolKeys(text) {
+  const keys = new Map();
+  for (const line of (text || '').split('\n')) {
+    const row = /^\| `([a-z_]+)\.([a-z_]+)` \| ([^|]*)\|/.exec(line);
+    if (row && !NOT_LEXICON.has(row[1])) keys.set(row[1] + '.' + row[2], /^list\b/.test(row[3].trim()) ? 'list' : 'string');
+  }
+  for (const m of (text || '').matchAll(/\{([a-z_]+)\.([a-z_]+)\}/g)) {
+    if (!NOT_LEXICON.has(m[1]) && !keys.has(m[1] + '.' + m[2])) keys.set(m[1] + '.' + m[2], 'string');
+  }
+  return keys;
+}
+
+const isMap = (v) => !!v && typeof v === 'object' && !Array.isArray(v);
+
+// a value of the kind: a non-empty string, or a non-empty list of strings; a failure or null
+function value(f, lexicon, group, key, kind) {
+  const g = lexicon[group];
+  const v = g[key];
+  const line = yaml.lineOf(g, key, yaml.lineOf(lexicon, group));
+  if (kind === 'list') {
+    if (!Array.isArray(v) || v.length === 0 || v.some((x) => typeof x !== 'string' || x === '')) {
+      return fail(f, line, `missing key ${group}.${key} (a non-empty list of strings)`);
+    }
+  } else if (typeof v !== 'string' || v.trim() === '') {
+    return fail(f, line, `missing key ${group}.${key} (a non-empty string)`);
+  }
+  return null;
+}
+
+// ctx: check-spec's (read and list relative to the spec folder)
+function run(ctx) {
+  const out = [];
+  const files = {};
+  for (const f of [COURSE, TEACHER]) {
+    const text = ctx.read(f);
+    if (text === null) continue;
+    let lexicon;
+    try { lexicon = yaml.parse(text); } catch (e) { out.push(fail(f, e.line || 1, e.message)); files[f] = {}; continue; }
+    if (!isMap(lexicon)) { out.push(fail(f, 1, 'the lexicon is not a map')); files[f] = {}; continue; }
+    files[f] = lexicon;
+  }
+  if (!Object.keys(files).length) return out;
+
+  // the keys of course/README.md section 7, in the lexicon of the course files
+  const course = files[COURSE];
+  if (!course) out.push(fail(COURSE, 1, `${COURSE} is missing: it holds the keys of course/README.md section 7`));
+  else {
+    const need = [...Object.entries(KEYS).flatMap(([g, ks]) => ks.map((k) => [g, k, 'string'])), ...Object.entries(LISTS).map(([g, k]) => [g, k, 'list'])];
+    const missing = new Set();
+    for (const [group, key, kind] of need) {
+      if (!isMap(course[group])) {
+        if (!missing.has(group)) out.push(fail(COURSE, 1, `group "${group}" is missing or is not a map`));
+        missing.add(group);
+        continue;
+      }
+      const f = value(COURSE, course, group, key, kind);
+      if (f) out.push(f);
+    }
+  }
+
+  // a group in one lexicon only
+  const teacher = files[TEACHER] || {};
+  for (const group of Object.keys(teacher)) {
+    if (course && group in course) out.push(fail(TEACHER, yaml.lineOf(teacher, group, 1), `group "${group}" is also in ${COURSE}: a group lives in one lexicon`));
+  }
+
+  // the keys teacher/README.md uses, in either lexicon
+  for (const [full, kind0] of protocolKeys(ctx.read('teacher/README.md'))) {
+    const [group, key] = full.split('.');
+    const kind = LISTS[group] === key ? 'list' : kind0;
+    const f = [TEACHER, COURSE].find((x) => files[x] && isMap(files[x][group]));
+    if (!f) {
+      out.push(fail(TEACHER, 1, `group "${group}" is missing or is not a map (teacher/README.md uses ${full}; in ${TEACHER} or ${COURSE})`));
+      continue;
+    }
+    if (f === COURSE && ((KEYS[group] || []).includes(key) || LISTS[group] === key)) continue; // tested above
+    const v = value(f, files[f], group, key, kind);
+    if (v) out.push(v);
+  }
+  return out;
+}
+
+module.exports = { id: 'lexicon-keys', run, KEYS, protocolKeys };

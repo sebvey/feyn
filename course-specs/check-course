@@ -16,11 +16,11 @@ const { spawnSync } = require('child_process');
 const { createRequire } = require('module');
 
 const SPECS = __dirname;
-const VALUED = new Set(['--category', '--only', '--concept', '--lang-dir']);
+const VALUED = new Set(['--category', '--only', '--concept', '--lexicon']);
 
 function usage(code) {
   const out = code ? console.error : console.log;
-  out('usage: check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>] [--list]');
+  out('usage: check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lexicon <file>] [--list]');
   out('runs course-specs/<name>/<MAJOR>/course/checks/check-course for the spec that <course-dir>/course.yaml declares,');
   out('with the same arguments: every check of method test, a blocking failure exit 1, a reporting one 0;');
   out('--list needs a course, since the checks depend on its MAJOR');

@@ -11,7 +11,7 @@ How to use: copy to domains/<number>-<slug>.md as named in course.yaml, replace 
   `**<number>. <concept title>.**` (title as in course.yaml). A domain of one concept has one
   paragraph for the concept, then one per first-level sub-concept, opening with
   `**<id>. <title>.**`. The first sentence after the lead stands alone: it ends with . ? or !
-  within 300 characters and does not open with a word of the pack's `checks.anaphora` list
+  within 300 characters and does not open with a word of the lexicon's `checks.anaphora` list
   (French: Il, Elle, Ce, Cette, Puis...).
 -->
 ---

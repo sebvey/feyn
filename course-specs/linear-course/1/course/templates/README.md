@@ -17,8 +17,8 @@ The templates of a learner's memory files are the teacher's, in `teacher/templat
 (`apprenant.md`, `observations.md`, `parcours.md`), ported from the old course: no check reads
 them, the smoke run only scans them for unreplaced placeholders.
 
-The headings and markers in the templates are the French language pack's (`lang/fr.yaml`): a
-course in another language translates them from its own pack. Each template shows one domain,
+The headings and markers in the templates are the words of the lexicon of the course files
+(`course/lexicon.yaml`), in French, the language of the spec. Each template shows one domain,
 one concept, one first-level sub-concept with two leaves, two cases: repeat the block.
 
 ## Smoke run

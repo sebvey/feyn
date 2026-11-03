@@ -40,7 +40,7 @@ function onboarding(secs, title) {
 
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
-  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see course/README.md section 7')];
+  if (!ctx.lexiconOk) return [fail(ctx.lexiconFile || 'course/lexicon.yaml', 1, 'the lexicon is unusable: see course/README.md section 7')];
   const H = (k) => ctx.word('headings', k) || k;
   const out = [];
   const numbers = ctx.allNumbers();
