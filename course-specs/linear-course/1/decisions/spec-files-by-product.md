@@ -65,3 +65,8 @@ from this one (formerly `spec-files-and-alpha-version`).
   decision `alpha-version-until-tag` in `spec-directives/1/decisions/`, with its counterfactual
   (D13), its options ruled out and its consequences. Without this, a contributor preparing the
   directives' version would look for the alpha in a decision of `linear-course` it does not bind.
+- Amended 2026-11-03 (#501): `teacher/` also holds `build/`, the half of a classroom build that
+  depends on the MAJOR (`render-parts`, which renders the parts of the composition as text, and
+  its schema), as the maintainer settled in epic #222 (Material point 6). Without this, the author
+  of a second MAJOR would look for its teacher's build at the root, which then breaks or fills
+  with versions.

@@ -113,8 +113,9 @@ questions one by one, then learner memory set up and the course path started.
 tarde.
 
 **first-message-presents-course** Le premier message d'accueil présente le cours en deux lignes :
-son public, ses domaines déroulés concept par concept, une question à la fois. Le nombre de ses
-domaines est {course.domain_count} : écris « son domaine » s'il vaut 1, « ses {n} domaines » au-delà.
+son public, le parcours déroulé concept par concept, une question à la fois. Le nombre de ses
+domaines est {course.domain_count} : écris « {phrases.domains_one} » s'il vaut 1,
+« {phrases.domains_many} » au-delà.
 
 **first-message-site-and-requests** Le premier message d'accueil donne [{phrases.site_link}]({classroom.site_url}) pour réviser,
 et ce qu'on peut demander à tout moment : « {learner_says.faster} », « {learner_says.slower} »,
@@ -722,6 +723,8 @@ is a pattern the teacher follows, not a fixed string.
 | `phrases.domain_title` | « Domaine {n} : {title} » | `domain-title-link` |
 | `phrases.site_link` | « le site web » | `first-message-site-and-requests`, `descriptive-site-links` |
 | `phrases.domains_map_link` | « la carte des domaines » | `resume-on-greeting`, `descriptive-site-links` |
+| `phrases.domains_one` | « son domaine » | `first-message-presents-course` |
+| `phrases.domains_many` | « ses {n} domaines » ({n} the number of domains) | `first-message-presents-course` |
 | `phrases.concept_page_link` | « la page du concept {n} » | `validated-concept-page-link` |
 | `phrases.example_lead` | « Exemple : » | `example-question-quote-form`, `follow-up-quote-form` |
 | `phrases.question_lead` | « Question pour toi : » | `example-question-quote-form` |

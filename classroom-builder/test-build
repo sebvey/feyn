@@ -179,7 +179,8 @@ function ruleBlocks(text) {
 }
 const source = ruleBlocks(protocol.slice(0, protocol.indexOf('\n## Composition')));
 const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const patternOf = (t) => new RegExp('^' + t.split(/\(?(?:« )?\{[a-z_]+\.[a-z_]+\}(?: »)?[.)]?/).map(escape).join('[\\s\\S]+?') + '$');
+// a placeholder as fill() treats it: « {k} » with the period after it, ({k}) with its parentheses, a bare {k}
+const patternOf = (t) => new RegExp('^' + t.split(/« \{[a-z_]+\.[a-z_]+\} »\.?|\(\{[a-z_]+\.[a-z_]+\}\)|\{[a-z_]+\.[a-z_]+\}/).map(escape).join('[\\s\\S]+?') + '$');
 let compared = 0;
 for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
   for (const [slug, built] of ruleBlocks(text)) {

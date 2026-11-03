@@ -123,5 +123,6 @@ no class: `- file or area: what changes`.
   a value already in parentheses inside a link (#501).
 - `teacher/README.md`: wording, `first-message-presents-course` no longer writes « ses
   {course.domain_count} domaines », which read « ses 1 domaines » for a course of one domain: it
-  gives the number and has the teacher write « son domaine » or « ses {n} domaines » by it; a
+  gives the number and has the teacher write `phrases.domains_one` (« son domaine ») or
+  `phrases.domains_many` (« ses {n} domaines ») by it, two keys `teacher/lexicon.yaml` gains; a
   PATCH (#501).

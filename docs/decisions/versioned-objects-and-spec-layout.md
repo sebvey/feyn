@@ -88,3 +88,7 @@ archived repository. This replaces decision `two-versioned-objects`.
   `lib/`, as Material points 6, 7, 10 and 13 of epic #454 settle. Without this, an agent opening
   a spec MAJOR 2 would copy `lib/` and the tests into it, and a change to the rule model would
   have no version that a spec MAJOR can declare.
+- Amended 2026-11-03 (#501): a spec MAJOR's `teacher/` holds `build/`, the half of a classroom
+  build that depends on the MAJOR, versioned with it as `course/checks/` is; `classroom-builder/`
+  keeps the dispatcher and the realisation for Claude Code (epic #222, Material point 6). Without
+  this, a second MAJOR would change the root build instead of writing its own `teacher/build/`.

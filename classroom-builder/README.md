@@ -70,7 +70,7 @@ MAJOR's `render-parts` renders each part as text, and this build realises it in 
 
 Then `course.lock` (`course`, `ref`, `course_sha`, `tooling_sha`, `channel`, `site_url`,
 `built_at`: the course, the tag or branch it was read from, the last commit of the course folder,
-the last commit of `classroom-builder/`, the channel, the site address or `null`, the date in ISO
+the last commit of `classroom-builder/` and of the spec MAJOR's `teacher/build/` taken together, the channel, the site address or `null`, the date in ISO
 8601), and the classroom's own git: `git init` and one commit holding all of it.
 
 The rules' text is the protocol's, verbatim, French, with every placeholder filled by
