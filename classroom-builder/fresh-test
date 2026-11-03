@@ -1,0 +1,476 @@
+#!/usr/bin/env node
+'use strict';
+// fresh-test <course-dir> <scenario id> [--model <model>] [--keep]
+// Runs the teacher on a test scenario of the spec MAJOR the course declares (course-specs/<name>/
+// <MAJOR>/teacher/tests/<id>.yaml) and judges what it did (classroom-builder/README.md, "The fresh
+// tests"):
+//   1. a disposable classroom, build-classroom <course-dir> --channel preview --out <run>/classroom,
+//      with the scenario's learner memory written in learner/ and committed;
+//   2. the teacher: `claude -p` in the classroom, one call per learner message of the scenario, in
+//      one conversation (the first call's session id, then --resume), on Sonnet by default, with a
+//      configuration isolated from the user's (--setting-sources project,local: no ~/.claude/
+//      CLAUDE.md, no user settings, skills or plugins; the authentication is kept), the
+//      classroom's allowed commands passed as --allowedTools (an untrusted folder ignores them);
+//   3. the transcript, every message, tool call and file written under learner/, as JSON in the
+//      run folder, <tmp>/feyn-fresh-test/<course id>-<scenario id>-<stamp>/transcript.json;
+//   4. the judgement, both parts in the run folder's report.md: the script part (the form rules a
+//      program can check, each with its slug and its proof) and the agent part (a fresh
+//      `claude -p` on Sonnet with no tool, prompted by fresh-test-judge.md, which says for each
+//      slug of the scenario observed or not observed with the message that shows it); the report
+//      ends with the verdict per slug;
+//   5. the classroom removed, unless --keep.
+// Exit 0 when every slug of the scenario is observed, 1 otherwise (a slug not observed, a build
+// or a run that failed), 2 a usage error (an unknown scenario or option, a scenario not valid
+// against the MAJOR's teacher/tests/scenario.schema.yaml).
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+const { createRequire } = require('module');
+
+const BUILDER = __dirname;
+const REPO = path.resolve(BUILDER, '..');
+const JUDGE_PROMPT = path.join(BUILDER, 'fresh-test-judge.md');
+const JUDGE_MODEL = 'sonnet';
+const TURN_TIMEOUT_MS = 15 * 60 * 1000;
+// a line of a message wider than this counts as several lines on screen (rule short-messages)
+const SCREEN_WIDTH = 100;
+const MAX_LINES = 15;
+// what links the parent Claude Code session to its children: never passed to the teacher
+const ENV_DROPPED = ['CLAUDE_CODE_SESSION_ID', 'CLAUDE_CODE_HOST_SESSION_ID', 'CLAUDE_CODE_CHILD_SESSION',
+  'CLAUDE_CODE_MESSAGING_SOCKET', 'CLAUDE_CODE_MESSAGING_TOKEN', 'CLAUDE_PID'];
+
+function usage(code) {
+  const out = code ? console.error : console.log;
+  out('usage: fresh-test <course-dir> <scenario id> [--model <model>] [--keep]');
+  out('runs the teacher of <course-dir> on the test scenario <id> of its spec MAJOR (teacher/tests/<id>.yaml)');
+  out('in a disposable classroom, judges the transcript and writes report.md in the run folder it prints;');
+  out('--model: the teacher\'s model (default sonnet); --keep: keep the classroom in the run folder');
+  process.exit(code);
+}
+function refuse(message) {
+  console.error(`fresh-test: ${message}`);
+  process.exit(2);
+}
+function fail(message) {
+  console.error(`fresh-test: ${message}`);
+  process.exit(1);
+}
+
+// ---- arguments
+const opts = { model: 'sonnet', keep: false };
+const positional = [];
+const argv = process.argv.slice(2);
+for (let i = 0; i < argv.length; i++) {
+  const a = argv[i];
+  if (a === '--help' || a === '-h') usage(0);
+  else if (a === '--keep') opts.keep = true;
+  else if (a === '--model') {
+    if (i + 1 >= argv.length) refuse('--model needs a value');
+    opts.model = argv[++i];
+  } else if (a.startsWith('-')) refuse(`unknown option ${a}`);
+  else positional.push(a);
+}
+if (positional.length !== 2) usage(2);
+const courseDir = path.resolve(positional[0]);
+const scenarioId = positional[1];
+if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(scenarioId)) refuse(`"${scenarioId}" is not a scenario id`);
+
+// ---- the spec MAJOR the course declares, its lib, its scenario
+const readOr = (p, what) => {
+  try { return fs.readFileSync(p, 'utf8'); } catch (e) { return refuse(`cannot read ${what || p}`); }
+};
+const courseYaml = readOr(path.join(courseDir, 'course.yaml'), `${courseDir}/course.yaml`);
+const specLine = courseYaml.split('\n').find((l) => /^spec\s*:/.test(l));
+const specMatch = specLine && /^([a-z0-9]+(?:-[a-z0-9]+)*)@(\d+)$/.exec(specLine.replace(/^spec\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2'));
+if (!specMatch) refuse(`${courseDir}/course.yaml declares no spec (spec: <name>@<MAJOR>)`);
+const SPEC = path.join(REPO, 'course-specs', specMatch[1], specMatch[2]);
+const dirLine = readOr(path.join(SPEC, 'spec.yaml')).split('\n').find((l) => /^directives\s*:/.test(l));
+const DIRECTIVES = path.join(REPO, 'spec-directives', (dirLine || '').replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim());
+require(path.join(DIRECTIVES, 'lib', 'deps')).need();
+const yaml = require(path.join(DIRECTIVES, 'lib', 'yaml-lines'));
+const Ajv2020 = createRequire(path.join(DIRECTIVES, 'package.json'))('ajv/dist/2020').default;
+
+const TESTS = path.join(SPEC, 'teacher', 'tests');
+const scenarioFile = path.join(TESTS, `${scenarioId}.yaml`);
+if (!fs.existsSync(scenarioFile)) {
+  const known = (fs.existsSync(TESTS) ? fs.readdirSync(TESTS) : []).filter((n) => n.endsWith('.yaml') && !n.endsWith('.schema.yaml')).map((n) => n.replace(/\.yaml$/, ''));
+  refuse(`no scenario ${scenarioId} in ${path.relative(REPO, TESTS)} (known: ${known.join(', ') || 'none'})`);
+}
+const scenarioText = fs.readFileSync(scenarioFile, 'utf8');
+let scenario;
+try { scenario = yaml.parse(scenarioText); } catch (e) { refuse(`${path.relative(REPO, scenarioFile)}:${e.line || 1} ${e.message}`); }
+const validate = new Ajv2020({ allErrors: true }).compile(yaml.parse(readOr(path.join(TESTS, 'scenario.schema.yaml'))));
+if (!validate(scenario)) refuse(`${path.relative(REPO, scenarioFile)} is not valid against scenario.schema.yaml: ${validate.errors.map((e) => `${e.instancePath || '/'} ${e.message}`).join('; ')}`);
+
+// the words the script part checks, from the two lexicons of the spec
+const teacherLex = yaml.parse(readOr(path.join(SPEC, 'teacher', 'lexicon.yaml')));
+const courseLex = yaml.parse(readOr(path.join(SPEC, 'course', 'lexicon.yaml')));
+const PH = teacherLex.phrases;
+const STOP_WORDS = teacherLex.learner_says.stop.concat(teacherLex.learner_says.hurry);
+const BANNED = courseLex.typography.banned;
+
+// ---- the run folder and the classroom
+const courseId = (/^id\s*:\s*(\S+)/m.exec(courseYaml) || [])[1] || path.basename(courseDir);
+const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+const runDir = path.join(os.tmpdir(), 'feyn-fresh-test', `${courseId}-${scenarioId}-${stamp}`);
+const classroom = path.join(runDir, 'classroom');
+fs.mkdirSync(runDir, { recursive: true });
+fs.writeFileSync(path.join(runDir, 'scenario.yaml'), scenarioText);
+console.error(`fresh-test: run folder ${runDir}`);
+
+const started = Date.now();
+const build = spawnSync(process.execPath, [path.join(BUILDER, 'build-classroom'), courseDir, '--channel', 'preview', '--out', classroom], { encoding: 'utf8' });
+if (build.status !== 0) fail(`the classroom build failed (exit ${build.status}): ${(build.stderr || '').trim()}`);
+const git = (...args) => spawnSync('git', args, { cwd: classroom, encoding: 'utf8' });
+if (scenario.learner !== 'new') {
+  for (const [name, text] of Object.entries(scenario.learner)) fs.writeFileSync(path.join(classroom, 'learner', name), text);
+  git('add', 'learner/');
+  const c = git('commit', '-q', '-m', `fresh-test: the learner memory of scenario ${scenarioId}`);
+  if (c.status !== 0) fail(`cannot commit the learner memory of the scenario: ${(c.stderr || '').trim()}`);
+}
+const settings = JSON.parse(fs.readFileSync(path.join(classroom, '.claude', 'settings.json'), 'utf8'));
+const allowed = (settings.permissions && settings.permissions.allow) || [];
+
+// ---- the teacher, turn by turn in one conversation
+const env = { ...process.env };
+for (const k of ENV_DROPPED) delete env[k];
+const rel = (p) => (typeof p === 'string' && p.startsWith(classroom + path.sep) ? p.slice(classroom.length + 1) : p);
+const clip = (s, n) => (s.length > n ? `${s.slice(0, n)}… (${s.length} characters)` : s);
+const resultText = (c) => (typeof c === 'string' ? c : Array.isArray(c) ? c.map((x) => (x.type === 'text' ? x.text : `[${x.type}]`)).join('\n') : JSON.stringify(c));
+
+function runTurn(message, sessionId) {
+  const args = ['-p', message, '--output-format', 'stream-json', '--verbose', '--model', opts.model,
+    '--setting-sources', 'project,local', '--permission-mode', 'acceptEdits', '--permission-prompts', 'none'];
+  if (sessionId) args.push('--resume', sessionId);
+  if (allowed.length) args.push('--allowedTools', ...allowed);
+  const t0 = Date.now();
+  const r = spawnSync('claude', args, { cwd: classroom, env, encoding: 'utf8', timeout: TURN_TIMEOUT_MS, maxBuffer: 256 * 1024 * 1024 });
+  const turn = { blocks: [], text: '', ms: Date.now() - t0, exit: r.status, error: null, result: null, init: null };
+  if (r.error) turn.error = r.error.message;
+  const tools = new Map();
+  for (const line of (r.stdout || '').split('\n').filter(Boolean)) {
+    let e;
+    try { e = JSON.parse(line); } catch (x) { continue; }
+    if (e.type === 'system' && e.subtype === 'init') {
+      turn.init = { session_id: e.session_id, model: e.model, claude_code_version: e.claude_code_version, cwd: e.cwd, tools: e.tools, skills: e.skills, plugins: (e.plugins || []).map((p) => p.name), permission_mode: e.permissionMode, api_key_source: e.apiKeySource };
+    } else if (e.type === 'assistant' && !e.parent_tool_use_id) {
+      for (const b of e.message.content || []) {
+        if (b.type === 'text' && b.text.trim()) turn.blocks.push({ type: 'text', text: b.text });
+        else if (b.type === 'tool_use') {
+          const tool = { type: 'tool', id: b.id, name: b.name, input: b.input, result: null, is_error: false };
+          tools.set(b.id, tool);
+          turn.blocks.push(tool);
+        }
+      }
+    } else if (e.type === 'user' && !e.parent_tool_use_id) {
+      for (const b of (Array.isArray(e.message.content) ? e.message.content : [])) {
+        if (b.type === 'tool_result' && tools.has(b.tool_use_id)) {
+          const t = tools.get(b.tool_use_id);
+          t.result = clip(resultText(b.content), 4000);
+          t.is_error = !!b.is_error;
+        }
+      }
+    } else if (e.type === 'result') {
+      turn.result = { subtype: e.subtype, is_error: e.is_error, session_id: e.session_id, num_turns: e.num_turns, cost_usd: e.total_cost_usd, duration_ms: e.duration_ms, usage: e.usage, permission_denials: e.permission_denials, result: e.result };
+    }
+  }
+  turn.text = turn.blocks.filter((b) => b.type === 'text').map((b) => b.text.trim()).join('\n\n');
+  if (!turn.result) turn.error = turn.error || `no result from claude -p (exit ${r.status}): ${clip((r.stderr || '').trim(), 1000)}`;
+  else if (turn.result.is_error) turn.error = `claude -p reported an error: ${clip(String(turn.result.result || turn.result.subtype), 1000)}`;
+  return turn;
+}
+
+const endsOnNextLine = (text) => text.includes(PH.continue_prompt);
+const asksQuestion = (text) => text.includes(PH.question_lead);
+const transcript = { scenario: scenarioId, course: courseId, model: opts.model, started: new Date(started).toISOString(), classroom: classroom, session_id: null, init: null, turns: [] };
+let sessionId = null;
+let previous = null;
+let broken = null;
+for (const [i, t] of scenario.turns.entries()) {
+  if (t.if && !(previous && (t.if === 'next-line' ? endsOnNextLine(previous.text) : asksQuestion(previous.text)))) {
+    transcript.turns.push({ index: i + 1, message: t.message, if: t.if, skipped: true });
+    console.error(`fresh-test: turn ${i + 1} skipped (if: ${t.if})`);
+    continue;
+  }
+  console.error(`fresh-test: turn ${i + 1}: ${t.message}`);
+  const turn = runTurn(t.message, sessionId);
+  if (turn.init && !transcript.init) transcript.init = turn.init;
+  sessionId = sessionId || (turn.result && turn.result.session_id) || (turn.init && turn.init.session_id);
+  const record = { index: i + 1, message: t.message, if: t.if || null, skipped: false, ...turn };
+  delete record.init;
+  transcript.turns.push(record);
+  previous = record;
+  if (turn.error) { broken = `turn ${i + 1}: ${turn.error}`; console.error(`fresh-test: ${broken}`); break; }
+}
+transcript.session_id = sessionId;
+transcript.learner = Object.fromEntries(fs.readdirSync(path.join(classroom, 'learner')).sort().map((n) => [n, fs.readFileSync(path.join(classroom, 'learner', n), 'utf8')]));
+transcript.commits = git('log', '--format=%h %s').stdout.trim().split('\n');
+transcript.git_status = git('status', '--porcelain').stdout.trim();
+const sent = transcript.turns.filter((t) => !t.skipped);
+const sum = (f) => sent.reduce((n, t) => n + ((t.result && f(t.result)) || 0), 0);
+transcript.totals = {
+  turns_sent: sent.length, turns_skipped: transcript.turns.length - sent.length,
+  input_tokens: sum((r) => r.usage && r.usage.input_tokens), cache_creation_input_tokens: sum((r) => r.usage && r.usage.cache_creation_input_tokens),
+  cache_read_input_tokens: sum((r) => r.usage && r.usage.cache_read_input_tokens), output_tokens: sum((r) => r.usage && r.usage.output_tokens),
+  cost_usd: sum((r) => r.cost_usd), teacher_ms: sent.reduce((n, t) => n + t.ms, 0),
+};
+fs.writeFileSync(path.join(runDir, 'transcript.json'), JSON.stringify(transcript, null, 2) + '\n');
+
+// ---- the script part: the form rules a program can check, each with its slug and its proof
+const isSkillLoad = (b) => b.type === 'tool' && b.name === 'Skill' && /^feyn-teacher-/.test(String((b.input || {}).skill || ''));
+const realTools = (t) => t.blocks.filter((b) => b.type === 'tool' && !isSkillLoad(b));
+const writes = (t) => t.blocks.filter((b) => b.type === 'tool' && ['Write', 'Edit', 'MultiEdit', 'NotebookEdit'].includes(b.name));
+const bash = (t) => t.blocks.filter((b) => b.type === 'tool' && b.name === 'Bash').map((b) => ({ block: b, cmd: String((b.input || {}).command || '') }));
+const textBefore = (t, tool) => t.blocks.slice(0, t.blocks.indexOf(tool)).filter((b) => b.type === 'text').map((b) => b.text).join('\n');
+const stripCode = (s) => s.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '');
+const ok = (proof) => ({ verdict: 'observed', proof });
+const ko = (proof) => ({ verdict: 'not observed', proof });
+const everyTurn = (f, okProof) => {
+  const bad = sent.map((t) => [t.index, f(t)]).filter(([, p]) => p);
+  return bad.length ? ko(bad.map(([n, p]) => `turn ${n}: ${p}`).join('; ')) : ok(okProof);
+};
+const displayLines = (text) => text.split('\n').filter((l) => l.trim()).reduce((n, l) => n + Math.max(1, Math.ceil(l.length / SCREEN_WIDTH)), 0);
+function quoteProblems(text) {
+  const lines = text.split('\n');
+  const qi = lines.findIndex((l) => l.includes(PH.question_lead));
+  if (qi < 0) return null;
+  const quoted = (l) => /^>/.test(l.trim());
+  const problems = [];
+  if (!quoted(lines[qi]) || !lines[qi].includes(`**${PH.question_lead}**`)) problems.push(`« ${PH.question_lead} » is not a bold line of the quote`);
+  if (!(lines[qi + 1] !== undefined && lines[qi + 1].trim() === '>')) problems.push(`no quoted blank line after « ${PH.question_lead} »`);
+  const ei = lines.findIndex((l) => l.includes(PH.example_lead));
+  if (ei >= 0) {
+    if (ei > qi) problems.push(`« ${PH.example_lead} » comes after the question`);
+    else if (!lines.slice(ei, qi + 1).every(quoted)) problems.push('the example and the question are not in one quote');
+    else if (!lines[ei].includes(`**${PH.example_lead}**`)) problems.push(`« ${PH.example_lead} » is not bold`);
+  }
+  return { example: ei >= 0, problems };
+}
+function questionCount(text) {
+  const lines = text.split('\n');
+  const ei = lines.findIndex((l) => l.includes(PH.example_lead));
+  const qi = lines.findIndex((l) => l.includes(PH.question_lead));
+  const kept = ei >= 0 && qi > ei ? [...lines.slice(0, ei), ...lines.slice(qi)] : lines;
+  let s = stripCode(kept.join('\n')).replace(/«[^»]*»/g, '');
+  for (const p of [PH.continue_prompt, PH.why]) s = s.split(p).join('').split(p.charAt(0).toUpperCase() + p.slice(1)).join('');
+  return (s.match(/\?/g) || []).length;
+}
+const SCRIPT = {
+  'first-message-without-tools': () => {
+    const t = sent[0];
+    if (!t) return ko('no turn ran');
+    const tools = realTools(t);
+    const skills = t.blocks.filter(isSkillLoad).map((b) => b.input.skill);
+    return tools.length ? ko(`turn ${t.index}: ${tools.map((b) => `${b.name} ${rel((b.input || {}).file_path || (b.input || {}).command || '')}`.trim()).join(', ')} before the first message`)
+      : ok(`turn ${t.index}: no tool call${skills.length ? ` but the load of ${skills.join(', ')}` : ''}`);
+  },
+  'short-messages': () => everyTurn((t) => (displayLines(t.text) > MAX_LINES ? `${displayLines(t.text)} lines (a line of more than ${SCREEN_WIDTH} characters counts as several)` : null),
+    `every message at most ${MAX_LINES} lines (longest: ${Math.max(0, ...sent.map((t) => displayLines(t.text)))})`),
+  'example-question-quote-form': () => {
+    const withEx = sent.map((t) => [t, quoteProblems(t.text)]).filter(([, q]) => q && q.example);
+    if (!withEx.length) return ko('no message holds an example and a question');
+    const bad = withEx.filter(([, q]) => q.problems.length);
+    return bad.length ? ko(bad.map(([t, q]) => `turn ${t.index}: ${q.problems.join(', ')}`).join('; ')) : ok(`turns ${withEx.map(([t]) => t.index).join(', ')}: the example and the question in one quote, in its form`);
+  },
+  'follow-up-quote-form': () => {
+    const noEx = sent.map((t) => [t, quoteProblems(t.text)]).filter(([, q]) => q && !q.example);
+    if (!noEx.length) return ko('no message holds a question without an example');
+    const bad = noEx.filter(([, q]) => q.problems.length);
+    return bad.length ? ko(bad.map(([t, q]) => `turn ${t.index}: ${q.problems.join(', ')}`).join('; ')) : ok(`turns ${noEx.map(([t]) => t.index).join(', ')}: the question in the quote form, without an example`);
+  },
+  'descriptive-site-links': () => everyTurn((t) => {
+    const s = stripCode(t.text);
+    const bare = s.replace(/\]\([^)]*\)/g, ']()').match(/https?:\/\/\S+/g);
+    const urlText = [...s.matchAll(/\[([^\]]*)\]\(/g)].filter((m) => /^(https?:\/\/|www\.)/.test(m[1].trim()));
+    return bare ? `a bare address ${bare[0]}` : urlText.length ? `a link whose text is an address: ${urlText[0][1]}` : null;
+  }, 'no bare address, every link text says its page'),
+  'course-language-typography': () => everyTurn((t) => {
+    const s = stripCode(t.text);
+    const found = BANNED.filter((c) => s.includes(c));
+    return found.length ? `banned ${found.map((c) => `« ${c} »`).join(', ')}` : null;
+  }, `none of the ${BANNED.length} banned characters of typography.banned`),
+  'one-question-per-message': () => everyTurn((t) => (questionCount(t.text) > 1 ? `${questionCount(t.text)} « ? » outside « », the example, « ${PH.why} » and « ${PH.continue_prompt} »` : null),
+    'at most one « ? » per message, outside « », the example and the two phrases that are not the question'),
+  'never-ask-if-understood': () => everyTurn((t) => (t.text.toLowerCase().includes(PH.banned_question.toLowerCase()) ? `« ${PH.banned_question} »` : null), `no « ${PH.banned_question} »`),
+  'waiting-sentence-first': () => {
+    const withTools = sent.filter((t) => realTools(t).length);
+    if (!withTools.length) return ko('no reply reads or writes a file');
+    const bad = withTools.filter((t) => !textBefore(t, realTools(t)[0]).trim());
+    return bad.length ? ko(bad.map((t) => `turn ${t.index}: ${realTools(t)[0].name} before any sentence`).join('; ')) : ok(`turns ${withTools.map((t) => t.index).join(', ')}: a sentence before the first tool call`);
+  },
+  'resume-opening-sentence': () => {
+    const t = sent[0];
+    if (!t) return ko('no turn ran');
+    const first = realTools(t)[0];
+    const before = first ? textBefore(t, first) : t.text;
+    return before.includes(PH.resume_opening) ? ok(`turn ${t.index}: « ${PH.resume_opening} » before ${first ? `the first tool call (${first.name})` : 'any tool call'}`) : ko(`turn ${t.index}: « ${PH.resume_opening} » not said before ${first ? `the first tool call (${first.name})` : 'the end of the reply'}`);
+  },
+  'stop-opening-sentence': () => {
+    const t = sent.find((x) => STOP_WORDS.some((w) => x.message.toLowerCase().includes(w)));
+    if (!t) return ko('no learner message stops the session');
+    const first = realTools(t)[0];
+    const before = first ? textBefore(t, first) : t.text;
+    return before.includes(PH.stop_opening) ? ok(`turn ${t.index}: « ${PH.stop_opening} » before ${first ? `the first tool call (${first.name})` : 'any tool call'}`) : ko(`turn ${t.index}: « ${PH.stop_opening} » not said before ${first ? `the first tool call (${first.name})` : 'the end of the reply'}`);
+  },
+  'write-only-in-learner': () => {
+    const all = sent.flatMap((t) => writes(t).map((b) => [t.index, rel(String((b.input || {}).file_path || (b.input || {}).notebook_path || ''))]));
+    if (!all.length) return ko('nothing written');
+    const out = all.filter(([, p]) => !p.startsWith('learner/'));
+    return out.length ? ko(out.map(([n, p]) => `turn ${n}: ${p}`).join('; ')) : ok(`${all.length} writes, all under learner/`);
+  },
+  'write-tool-not-shell': () => {
+    const shell = sent.flatMap((t) => bash(t).filter(({ cmd }) => /learner\//.test(cmd) && !/^\s*git\s+(add|commit|status|diff|log)\b/.test(cmd) && /(>|\btee\b|\bsed\s+-i|\bperl\s+-i|\bmv\b|\bcp\b|\btouch\b)/.test(cmd)).map(({ cmd }) => [t.index, cmd]));
+    const n = sent.reduce((k, t) => k + writes(t).length, 0);
+    if (!n && !shell.length) return ko('nothing written');
+    return shell.length ? ko(shell.map(([i, c]) => `turn ${i}: ${clip(c, 120)}`).join('; ')) : ok(`${n} writes with the write tools, no shell command writes in learner/`);
+  },
+  'one-write-per-file': () => {
+    const bad = [];
+    for (const t of sent) {
+      const count = {};
+      for (const b of writes(t)) { const p = rel(String((b.input || {}).file_path || '')); count[p] = (count[p] || 0) + 1; }
+      for (const [p, k] of Object.entries(count)) if (k > 1) bad.push(`turn ${t.index}: ${p} written ${k} times`);
+    }
+    const n = sent.reduce((k, t) => k + writes(t).length, 0);
+    if (!n) return ko('nothing written');
+    return bad.length ? ko(bad.join('; ')) : ok('each file written once per reply');
+  },
+  'commit-after-save-point': () => {
+    const bad = [];
+    const good = [];
+    for (const t of sent) {
+      const w = writes(t);
+      const pushes = bash(t).filter(({ cmd }) => /\bgit\s+push\b/.test(cmd));
+      if (pushes.length) bad.push(`turn ${t.index}: git push`);
+      if (!w.length) continue;
+      const last = t.blocks.indexOf(w[w.length - 1]);
+      const commit = bash(t).find(({ block, cmd }) => t.blocks.indexOf(block) > last && /\bgit\s+commit\b/.test(cmd) && !block.is_error);
+      if (commit) good.push(`turn ${t.index}: ${clip(commit.cmd, 100)}`);
+      else bad.push(`turn ${t.index}: learner/ written, no git commit after it`);
+    }
+    if (!good.length && !bad.length) return ko('no save point written');
+    return bad.length ? ko(bad.join('; ')) : ok(good.join('; '));
+  },
+  'no-task-list': () => everyTurn((t) => {
+    const lists = t.blocks.filter((b) => b.type === 'tool' && /^(TodoWrite|TaskCreate|TaskUpdate|TaskList)$/.test(b.name));
+    return lists.length ? lists.map((b) => b.name).join(', ') : null;
+  }, 'no task list tool called'),
+};
+const script = {};
+for (const slug of scenario.rules) if (SCRIPT[slug]) script[slug] = broken && !sent.length ? ko('no turn ran') : SCRIPT[slug]();
+
+// ---- the agent part: a fresh claude -p, Sonnet, no tool, prompted by fresh-test-judge.md
+function ruleText(slug) {
+  const files = [path.join(classroom, 'CLAUDE.md'), ...fs.readdirSync(path.join(classroom, '.claude', 'skills')).map((d) => path.join(classroom, '.claude', 'skills', d, 'SKILL.md'))];
+  for (const f of files) {
+    const lines = fs.readFileSync(f, 'utf8').split('\n');
+    const at = lines.findIndex((l) => l.startsWith(`**${slug}** `) || l.startsWith(`| **${slug}** |`));
+    if (at < 0) continue;
+    if (lines[at].startsWith('|')) return lines[at];
+    const out = [lines[at]];
+    for (const l of lines.slice(at + 1)) {
+      if (/^\*\*[a-z0-9-]+\*\*( |$)/.test(l) || /^#/.test(l) || /^\| /.test(l)) break;
+      out.push(l);
+    }
+    while (out.length && !out[out.length - 1].trim()) out.pop();
+    return out.join('\n');
+  }
+  return '(not found in the classroom)';
+}
+function renderTranscript() {
+  return transcript.turns.map((t) => {
+    if (t.skipped) return `### Turn ${t.index}\n\nLearner: ${t.message}\n\n(skipped: the condition « if: ${t.if} » did not hold)`;
+    const body = t.blocks.map((b) => {
+      if (b.type === 'text') return `[teacher's text]\n${b.text.trim()}`;
+      const inp = b.input || {};
+      let head = `[tool ${b.name}]`;
+      if (b.name === 'Skill') head += ` ${inp.skill}`;
+      else if (b.name === 'Read') head += ` ${rel(inp.file_path)}`;
+      else if (b.name === 'Bash') head += ` ${inp.command}`;
+      else if (b.name === 'Write') head += ` ${rel(inp.file_path)}\n${inp.content}`;
+      else if (b.name === 'Edit') head += ` ${rel(inp.file_path)}\n--- old\n${inp.old_string}\n--- new\n${inp.new_string}`;
+      else head += ` ${clip(JSON.stringify(rel(inp)), 400)}`;
+      const res = b.result === null ? '(no result)' : b.name === 'Read' ? `(${String(b.result).split('\n').length} lines read)` : clip(String(b.result), 300);
+      return `${head}\n-> ${b.is_error ? 'error: ' : ''}${res}`;
+    }).join('\n\n');
+    return `### Turn ${t.index}\n\nLearner: ${t.message}\n\n${body}${t.error ? `\n\n(the run stopped here: ${t.error})` : ''}`;
+  }).join('\n\n');
+}
+const JUDGE_SCHEMA = {
+  type: 'object', required: ['verdicts'], additionalProperties: false,
+  properties: { verdicts: { type: 'array', items: { type: 'object', required: ['slug', 'verdict', 'turn', 'evidence'], additionalProperties: false,
+    properties: { slug: { type: 'string' }, verdict: { enum: ['observed', 'not observed'] }, turn: { type: ['integer', 'null'] }, evidence: { type: 'string' } } } } },
+};
+let agent = {};
+let judgeRun = null;
+if (sent.length) {
+  const prompt = fs.readFileSync(JUDGE_PROMPT, 'utf8')
+    .replace('{{scenario}}', '```yaml\n' + scenarioText.trim() + '\n```')
+    .replace('{{rules}}', scenario.rules.map((s) => `- \`${s}\`: ${ruleText(s)}`).join('\n'))
+    .replace('{{transcript}}', renderTranscript())
+    .replace('{{learner}}', Object.entries(transcript.learner).map(([n, t]) => `#### learner/${n}\n\n\`\`\`\n${t.trim()}\n\`\`\``).join('\n\n'))
+    .replace('{{commits}}', '```\n' + transcript.commits.join('\n') + '\n```');
+  fs.writeFileSync(path.join(runDir, 'judge-prompt.md'), prompt);
+  console.error('fresh-test: the judge reads the transcript');
+  const t0 = Date.now();
+  const j = spawnSync('claude', ['-p', '--output-format', 'json', '--model', JUDGE_MODEL, '--setting-sources', 'project', '--tools', '', '--no-session-persistence', '--json-schema', JSON.stringify(JUDGE_SCHEMA)],
+    { cwd: runDir, env, input: prompt, encoding: 'utf8', timeout: TURN_TIMEOUT_MS, maxBuffer: 64 * 1024 * 1024 });
+  judgeRun = { ms: Date.now() - t0, exit: j.status };
+  let out = null;
+  try {
+    const d = JSON.parse(j.stdout);
+    judgeRun.cost_usd = d.total_cost_usd;
+    judgeRun.usage = d.usage;
+    out = d.structured_output || JSON.parse(String(d.result).replace(/^```(?:json)?\s*|\s*```$/g, ''));
+  } catch (e) { judgeRun.error = `the judge gave no verdict: ${clip((j.stdout || j.stderr || '').trim(), 500)}`; }
+  fs.writeFileSync(path.join(runDir, 'judge.json'), JSON.stringify({ run: judgeRun, output: out }, null, 2) + '\n');
+  for (const v of ((out && out.verdicts) || [])) if (scenario.rules.includes(v.slug)) agent[v.slug] = v;
+}
+
+// ---- the verdict per slug, the report
+const verdicts = scenario.rules.map((slug) => {
+  const s = script[slug];
+  const a = agent[slug];
+  const observed = !broken && (!s || s.verdict === 'observed') && a && a.verdict === 'observed';
+  return { slug, script: s ? s.verdict : '', agent: a ? a.verdict : 'no verdict', verdict: observed ? 'observed' : 'not observed' };
+});
+const missed = verdicts.filter((v) => v.verdict !== 'observed');
+const cell = (s) => String(s || '').replace(/\|/g, '\\|').replace(/\n+/g, ' ');
+const T = transcript.totals;
+const report = [
+  `# Fresh test: ${scenarioId} on ${courseId}`,
+  '',
+  scenario.title,
+  '',
+  `- Run: ${transcript.started}, teacher ${opts.model} (${(transcript.init && transcript.init.model) || '?'}), judge ${JUDGE_MODEL}, Claude Code ${(transcript.init && transcript.init.claude_code_version) || '?'}`,
+  `- Turns: ${T.turns_sent} sent, ${T.turns_skipped} skipped; teacher tokens: ${T.input_tokens} input, ${T.cache_creation_input_tokens} cache written, ${T.cache_read_input_tokens} cache read, ${T.output_tokens} output; cost ${T.cost_usd.toFixed(2)} USD${judgeRun && judgeRun.cost_usd ? ` (judge ${judgeRun.cost_usd.toFixed(2)} USD)` : ''}`,
+  `- Time: teacher ${(T.teacher_ms / 1000).toFixed(0)} s${judgeRun ? `, judge ${(judgeRun.ms / 1000).toFixed(0)} s` : ''}, total ${((Date.now() - started) / 1000).toFixed(0)} s`,
+  ...(broken ? [`- The run stopped: ${broken}`] : []),
+  ...(judgeRun && judgeRun.error ? [`- ${judgeRun.error}`] : []),
+  `- Verdict: ${missed.length ? `FAIL, ${missed.length} of ${verdicts.length} not observed (${missed.map((v) => v.slug).join(', ')})` : `PASS, ${verdicts.length} of ${verdicts.length} observed`}`,
+  '',
+  '## Script part',
+  '',
+  '| Slug | Verdict | Proof |',
+  '|---|---|---|',
+  ...Object.entries(script).map(([slug, s]) => `| \`${slug}\` | ${s.verdict} | ${cell(s.proof)} |`),
+  '',
+  '## Agent part',
+  '',
+  '| Slug | Verdict | Turn | Evidence |',
+  '|---|---|---|---|',
+  ...scenario.rules.map((slug) => (agent[slug] ? `| \`${slug}\` | ${agent[slug].verdict} | ${agent[slug].turn === null ? '' : agent[slug].turn} | ${cell(agent[slug].evidence)} |` : `| \`${slug}\` | no verdict | | |`)),
+  '',
+  '## Verdict per slug',
+  '',
+  '| Slug | Script | Agent | Verdict |',
+  '|---|---|---|---|',
+  ...verdicts.map((v) => `| \`${v.slug}\` | ${v.script} | ${v.agent} | ${v.verdict} |`),
+  '',
+].join('\n');
+fs.writeFileSync(path.join(runDir, 'report.md'), report);
+
+if (!opts.keep) fs.rmSync(classroom, { recursive: true, force: true });
+console.log(`fresh-test: ${scenarioId}: ${missed.length ? 'FAIL' : 'PASS'}, ${verdicts.length - missed.length}/${verdicts.length} observed; report ${path.join(runDir, 'report.md')}${opts.keep ? `; classroom kept at ${classroom}` : ''}`);
+process.exit(missed.length ? 1 : 0);

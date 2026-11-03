@@ -322,11 +322,30 @@ const SLOTS = {
   '<dir>': 'the `dir` of the concept at hand in `course/course.yaml`',
   '<file>': 'the `file` of the domain at hand in `course/course.yaml`',
 };
+// A draw from a course file with no slot whose `what` names a heading (`headings.onboarding`) is
+// rendered with the section under that heading, `text`, so that the moment needs no read: the
+// onboarding questions of plan.md reach the onboarding with no tool call before its first message
+// (rule first-message-without-tools; a finding of the fresh test onboarding, #507).
+function section(file, heading) {
+  const lines = read(file).split('\n');
+  const at = lines.findIndex((l) => l.trim() === `## ${heading}`);
+  if (at < 0) fail(`${path.basename(file)} has no heading « ## ${heading} »`);
+  const body = [];
+  for (const l of lines.slice(at + 1)) {
+    if (/^#{1,2} /.test(l)) break;
+    body.push(l);
+  }
+  return body.join('\n').trim();
+}
 function draws(list) {
   return (list || []).map((d) => {
     const source = fill(d.source, 'composition.yaml');
     const where = d.from === 'course' ? `course/${source}` : d.from === 'learner' ? `learner/${source}` : null;
-    return where ? { path: where, what: fillWhat(d.what) } : null;
+    if (!where) return null;
+    const out = { path: where, what: fillWhat(d.what) };
+    const heading = /\bheadings\.([a-z_]+)\b/.exec(d.what);
+    if (d.from === 'course' && heading && !/[<{]/.test(source)) out.text = section(path.join(courseDir, source), lex('headings', heading[1]));
+    return out;
   }).filter(Boolean);
 }
 
