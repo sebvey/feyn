@@ -41,8 +41,8 @@ A decision is written when its counterfactual can be named and it spans several 
 costly to undo; otherwise a comment where it applies, or nothing. Decisions on how the teacher
 teaches (`classroom-builder/` and the spec's protocol) also follow the two-tests rule: they
 enter only after two fresh tests show them necessary or sufficient. A site or structure
-decision is taken on argument. The `/feyn-decision` skill applies this file: it refuses a decision without a
-counterfactual, picks the folder, checks for a neighbouring slug.
+decision is taken on argument. The `/feyn-decision` skill applies this file: it refuses a
+decision without a counterfactual, picks the folder, checks for a neighbouring slug.
 
 ## Options ruled out
 
