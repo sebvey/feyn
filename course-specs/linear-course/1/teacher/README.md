@@ -12,8 +12,8 @@ The readers are defined in [`spec-directives/README.md`](../../../../spec-direct
 The pedagogical protocol of `linear-course`, the part of the spec the teacher executes: rules
 named by slug, in nine families. It has the version of the spec (the MAJOR's `README.md`,
 1.0.0-alpha); adding or changing a rule is a spec MINOR (`spec-directives/1/README.md` section 6).
-The classroom build puts it in the teacher's `CLAUDE.md`, beside the teacher template, the language
-pack and the parameters.
+The classroom build puts it in the teacher's `CLAUDE.md`, beside the teacher template, the two
+lexicons and the parameters.
 
 **A base.** The v1 protocol is a base inherited from `parcours-po` (the old teacher, "Inherited
 from parcours-po" below), in French; it changes by user story, and its fresh tests come with the
@@ -22,16 +22,17 @@ the teacher on, not to this base.
 
 **Language: French, a bounded exception.** The rules (families 1 to 9) are in French, as the
 old teacher they come from was instructed and corrected in French
-(`docs/decisions/language-policy.md`). The exception stays until a teacher or a course of
-another language needs the translation, a spec MINOR: same slugs, same keys. Everything else in
-this file is in English.
+(`docs/decisions/language-policy.md`); French is the language of the spec (`language: fr` in
+`spec.yaml`). A teacher or a course of another language follows another spec, not a translation
+of this one (decision `lexicon-not-language-pack`). Everything else in this file is in English.
 
 **Notation.**
-- `{group.key}` (one dot): a key of the course's language pack, `lang/<language>.yaml`. Every
-  literal phrase the learner sees, every word of the learner a rule reacts to, every heading
-  and value written to learner memory, the typography. The classroom build replaces it with
-  the pack's value (a list as its items in « », separated by commas). All keys are listed in
-  "Keys and parameters" below.
+- `{group.key}` (one dot): a key of one of the two lexicons of the spec: `course/lexicon.yaml`,
+  the words of the course files (`course/README.md` section 7), or `teacher/lexicon.yaml`, the
+  words the teacher says and writes. Every literal phrase the learner sees, every word of the
+  learner a rule reacts to, every heading and value written to learner memory, the typography.
+  The classroom build replaces it with the lexicon's value (a list as its items in « »,
+  separated by commas). All keys are listed in "Keys and parameters" below.
 - `{course.<name>}`: a course parameter, from `course.yaml`; `{classroom.<name>}`: a classroom
   parameter, from `course.lock`. The build replaces them too.
 - `{n}`, `{title}`… (no dot): a slot inside a value, filled by the teacher when it speaks or
@@ -45,7 +46,7 @@ this file is in English.
   their readers (Reader, Needs, When), the form of `course/README.md`. "Keys and parameters" and
   "Inherited from parcours-po" are reference tables, not rules: they have none.
 - A rule is named by a slug, as a decision is (decision `rules-named-by-slug`): two to five words,
-  lowercase, joined by hyphens, naming the behaviour, in English in every language of the protocol.
+  lowercase, joined by hyphens, naming the behaviour, in English whatever the spec's language.
   The rule shows it in bold at its start, `**one-question-per-message**`; a row of the save-point
   table shows it in its first cell. Another rule cites it in code, « (règle
   `one-question-per-message`) », as do the tables, the MAJOR's `README.md`, `course/README.md`, decisions and
@@ -332,7 +333,7 @@ typography and terms, and when a diagram is shown, so that a message reads at a 
 | the teacher | the form every message takes | each message |
 | the creator (human or agent) | the terms of the course glossary and the diagrams the teacher shows (`course/README.md` sections 5 and 6) | writing the glossary, declaring a diagram |
 | fresh tests | forms a script or a reader can check: length, quote, links, banned characters | every scenario |
-| the maintainer | the forms the language pack fills | a change to the pack or to a message form |
+| the maintainer | the forms the teacher's lexicon fills | a change to the lexicon or to a message form |
 
 **short-messages** Reste court : un message se lit d'un coup d'œil, une quinzaine de lignes au plus, accueil
 compris. Ce qui ne tient pas, y compris un sous-concept, se coupe en deux messages, sans se tasser.
@@ -562,7 +563,7 @@ in the next teaching session, knows where the learner stands and what to watch f
 | the teacher | the save points, what each writes and where, and the commit | each save point |
 | the creator (human or agent) | that learner memory cites the course's identifiers (concept numbers, case titles: `course/README.md` section 2) | changing an identifier |
 | fresh tests | the files of `learner/` after a save point, and the commits | every scenario that crosses a save point |
-| the maintainer | the memory files and their headings, which the learner templates and the language pack share | a change to learner memory or its templates |
+| the maintainer | the memory files and their headings, which the learner templates and the teacher's lexicon share | a change to learner memory or its templates |
 
 **write-only-in-learner** Tu n'écris que dans `learner/`, jamais dans `course/` ni ailleurs. Un fait, un acteur ou une
 source du fil rouge qui manque : improvise-le sans le noter (règle `storyline-facts-then-improvised`), ou dis qu'il manque.
@@ -657,15 +658,15 @@ son énoncé, vigilances du prochain concept ; corrige ce qui est absent ou ambi
 
 ## Keys and parameters
 
-Every key and parameter the rules use, in one place: `lang/fr.yaml` is written from this list,
-and `language-pack-keys` (`check-spec`) verifies that each key exists in every pack of `lang/`.
-The French values are today's teacher's (`parcours-po`, `CLAUDE.md` and `learner-onboarding`),
-given for reference; the pack is the source. A value marked *model* is a pattern the teacher
-follows, not a fixed string.
+Every key and parameter the rules use, in one place: the two lexicons, `course/lexicon.yaml` and
+`teacher/lexicon.yaml`, are written from this list, and `lexicon-keys` (`check-spec`) verifies
+that each key exists in one of them. The values are today's teacher's (`parcours-po`, `CLAUDE.md`
+and `learner-onboarding`), given for reference; the lexicon is the source. A value marked *model*
+is a pattern the teacher follows, not a fixed string.
 
-**Language pack, groups of `course/README.md` section 7 used here**
+**`course/lexicon.yaml`, the lexicon of the course files (`course/README.md` section 7): the keys used here**
 
-| Key | French value | Used in |
+| Key | Value | Used in |
 |---|---|---|
 | `headings.onboarding` | « Accueil » (`plan.md`: the posture, then the onboarding questions) | `teacher-posture-from-plan`, `onboarding-questions-announced`, `onboarding-questions-order`, `onboarding-profile-written` |
 | `headings.instructions` | « Consignes » | `follow-concept-instructions` |
@@ -682,11 +683,12 @@ follows, not a fixed string.
 | `qualifiers.fallback` | « rechange » (`course/README.md` 3.3) | `follow-concept-instructions` |
 | `qualifiers.practice` | « entraînement » (`course/README.md` 3.3) | `practice-cases-chosen` |
 | `qualifiers.aside` | « aparté » (`course/README.md` 3.3) | `asides-welcome` |
-| `typography.banned` | the banned characters (French: em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
+| `typography.banned` | the banned characters (the em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
+| `typography.rules` | the typography the teacher writes by: space before « : », « ; », « ? », « ! »; quotes « ». It does not repeat the ban: `typography.banned` holds the banned characters (em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 
-**Language pack, groups the protocol adds**
+**`teacher/lexicon.yaml`, the lexicon of the teacher: the groups the protocol adds**
 
-| Key | French value | Used in |
+| Key | Value | Used in |
 |---|---|---|
 | `phrases.concept_title` | « Concept {n} : {title} » | `concept-title-link` |
 | `phrases.domain_title` | « Domaine {n} : {title} » | `domain-title-link` |
@@ -735,10 +737,9 @@ follows, not a fixed string.
 | `memory.commit_validated` | « concept {n} validé » | `commit-after-save-point` |
 | `memory.commit_stop` | « arrêt » | `commit-after-save-point` |
 | `memory.onboarding` | « accueil » (commit and first journal line) | `commit-after-save-point` |
-| `typography.rules` | the typography the teacher writes by: space before « : », « ; », « ? », « ! »; quotes « ». It does not repeat the ban: `typography.banned` holds the banned characters (em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 
 The headings, statuses and line formats of the `memory_headings`, `status` and `memory` groups are
-those of `teacher/templates/learner/`: a pack and the learner templates of its language change
+those of `teacher/templates/learner/`: `teacher/lexicon.yaml` and the learner templates change
 together.
 
 **Course parameters** (from `course.yaml`, injected by the classroom build)

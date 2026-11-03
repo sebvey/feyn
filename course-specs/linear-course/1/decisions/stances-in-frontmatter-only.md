@@ -17,7 +17,7 @@ The stances and neighbours of a concept live in the frontmatter of `concept.md` 
 choix d'école » section; the site renders them from the frontmatter under `headings.stances`,
 and `concept-folder` fails a concept that still has the section. A stance or a neighbour is
 sourced in its own item, `refs` and `verified` (`course/README.md` 3.1); no « Affirmations » row of
-`sources.md` names it. `headings.stances` stays in the language pack as that heading and as
+`sources.md` names it. `headings.stances` stays in the lexicon of the course files as that heading and as
 the section a « Non vérifié » entry names for a stance or a neighbour. This replaces the
 mandatory body section of `SPEC.md` 4.2 and its review-only rule « says nothing the frontmatter
 contradicts ».

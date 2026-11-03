@@ -145,7 +145,7 @@ const reviewPrompt = (c, kind, round, previous) => {
     : `the FORM:
 - teaching: each sub-concept fits one teacher message under the protocol and the course writing rules; each question tests understanding, never "did you understand?"; a question that tests several points is written in parts, as the template of teaching.md shows; expected answers right and nuanced; common mistakes realistic for the audience of plan.md; conformity to the course templates and course/README.md section 3;
 - overlap: no section that explains uses the situation of a case of the example bank or states its verdict (reader text principles stay general);
-- style: the course writing rules of plan.md and the typography of the language pack.`
+- style: the course writing rules of plan.md and the typography of the lexicon (course/lexicon.yaml of the spec).`
   return `${ROLE}
 
 ${context(c)}

@@ -1,6 +1,6 @@
 'use strict';
 // course.yaml: fields, identifiers, order, partition into domains, annexes, prerequisites, paths,
-// no unlisted concept folder, spec declared (course/README.md section 2,
+// no unlisted concept folder, spec declared, lexicon present (course/README.md section 2,
 // spec-directives/1/README.md section 6). An unknown spec or MAJOR is refused by
 // course-specs/check-course, before these checks run.
 const path = require('path');
@@ -31,6 +31,8 @@ function run(ctx) {
   else if (cy.id !== path.basename(ctx.root)) bad(cy, 'id', `id "${cy.id}" must equal the course folder name "${path.basename(ctx.root)}"`);
   if (!isStr(cy.spec)) bad(cy, 'spec', 'spec is mandatory: linear-course@<MAJOR>');
   else if (!/^linear-course@\d+$/.test(cy.spec)) bad(cy, 'spec', `spec "${cy.spec}" must be linear-course@<MAJOR>`);
+  // the lexicon of the course files, the course/lexicon.yaml of the spec MAJOR (or --lexicon)
+  if (ctx.lexiconError) out.push(fail(ctx.lexiconFile || 'course/lexicon.yaml', ctx.lexiconError.line, ctx.lexiconError.message));
   for (const k of ['title', 'audience']) if (!isStr(cy[k])) bad(cy, k, `${k} is mandatory`, 1);
   if (cy.subtitle !== undefined && !isStr(cy.subtitle)) bad(cy, 'subtitle', 'subtitle must be a non-empty string');
   if (cy.site !== undefined) {

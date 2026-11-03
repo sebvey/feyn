@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-// Runs check-spec (the tests of a spec's own files, its language packs included) on the fixtures,
+// Runs check-spec (the tests of a spec's own files, its lexicons included) on the fixtures,
 // and says whether every run gave the expected result (the course fixtures are tested by
 // course-specs/<name>/<MAJOR>/course/checks/test-fixtures).
 //   fixtures/valid                 a model spec MAJOR that passes every test

@@ -90,8 +90,6 @@ const fs = require('fs');
 if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) refuse(`not a directory: ${dir}`);
 
 const ctx = load(dir, opts);
-// an unusable lexicon is a defect of the spec, or of --lexicon, not of the course
-if (ctx.lexiconError) refuse(`check-course: ${ctx.lexiconError.message} (course/README.md section 7)`);
 const run = ORDERED.filter(inCategories).filter((c) => !only.length || only.includes(c.id));
 const failed = { blocks: [], reports: [] };
 let crashed = false;

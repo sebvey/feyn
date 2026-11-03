@@ -38,3 +38,10 @@ no class: `- file or area: what changes`.
 - `README.md`: opens with the table Reader, Comes for, Opens over the four readers of a spec,
   defined in `spec-directives/README.md`, beside it the root README of the directives and their
   MAJORs (#467).
+- `tests/`, `lib/course.js`: `lexicon-keys` replaces `language-pack-keys`: `course/lexicon.yaml`
+  holds every key of the spec's `course/README.md` section 7, every key its `teacher/README.md`
+  uses is in `course/lexicon.yaml` or `teacher/lexicon.yaml`, and a group lives in one lexicon;
+  `spec-yaml` requires a fifth key, `language`, an ISO 639-1 code; `lib/course.js` loads the
+  lexicon of the course files the checks name (`ctx.lexicon`, formerly `ctx.pack`), no longer a
+  pack chosen by the `language` of `course.yaml`; the fixtures' `lang/fr.yaml` move to the two
+  lexicons, and two broken fixtures show the new failures (#493).

@@ -15,7 +15,7 @@
 //   fixtures/lexicon-no-anaphora.yaml
 //                                  a lexicon without checks.anaphora: domain-first-sentence-standalone
 //                                  (reports) fails alone, exit code 0; a lexicon that does not
-//                                  exist is refused, exit code 2
+//                                  exist fails course-yaml, exit code 1
 //   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>", optional "lexicon: <path>":
 //                                  that check fails with a line containing the fragment, no other
 //                                  check fails beside it, and the exit code is 1 when it blocks,
@@ -116,10 +116,10 @@ const runIds = (cats) => RUN.filter((c) => !cats || cats.includes(c.category)).m
     b.code === 1 && failing(b).some((l) => l.startsWith('course-files: fail: ')) && failing(b).some((l) => l.startsWith('domain-first-sentence-standalone: fail: ')), notOk(b));
 }
 
-// a lexicon that does not exist is a defect of the spec or of --lexicon, not of the course: refused
+// a lexicon that does not exist fails course-yaml (rule lexicon-exists), exit code 1
 {
   const r = run(path.join(fx, 'valid'), ['--lexicon', path.join(fx, 'no-such-lexicon.yaml')]);
-  report('a lexicon that does not exist is refused, exit code 2', r.code === 2 && r.lines.length === 0 && r.err.includes('does not exist'), `got ${r.code}: ${r.err || r.lines.join(' | ')}`);
+  report('a lexicon that does not exist fails course-yaml, exit code 1', r.code === 1 && failing(r).some((l) => l.startsWith('course-yaml: fail: ') && l.includes('does not exist')), notOk(r));
 }
 
 // broken: one run each, with the default
