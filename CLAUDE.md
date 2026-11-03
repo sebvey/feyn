@@ -5,8 +5,8 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 
 ## What feyn is for
 
-- Two products from one source, a course: a teacher that teaches a learner in a Claude Code
-  session, and a site that publishes the course. The teacher justifies the rest.
+- Two products from one source, a course: a teacher that teaches a learner in a teaching
+  session in Claude Code, and a site that publishes the course. The teacher justifies the rest.
 - The yardstick: a change of `linear-course` counts when `courses/po-essai/` (the two-concept
   bench course, #478) follows it in the same PR, its checks pass and the teacher teaches it.
 - Not to lose from sight:

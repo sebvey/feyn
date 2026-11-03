@@ -10,7 +10,7 @@ grounds a point. A change to this file is a decision ([contributing](contributin
 ## Two products, one source
 
 feyn makes two products from one source, a course:
-- a **teacher**, which teaches the course to a learner in a Claude Code session;
+- a **teacher**, which teaches the course to a learner in a teaching session in Claude Code;
 - a **site**, which publishes the course for the reader.
 
 The teacher is the product that justifies the rest. The spec, its checks, the site and the
@@ -29,7 +29,8 @@ Until `po-essai` exists (#478) and a teacher is built from the course (#222), th
 read as far as it reaches: an option says which of the two products consumes it, and how it
 brings the teacher closer. This paragraph expires with them: #478, which creates `po-essai`,
 rewrites it so it no longer names `po-essai` as missing, and #222 removes it, the yardstick then
-read in full.
+read in full. These two edits are the change PR #483 already decided, the exception to the
+policy above: they go through no new decision.
 
 ## The lessons of parcours-po
 
