@@ -31,7 +31,7 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    - a path under `course-specs/linear-course/`: the bench course,
      `course-specs/check-course courses/po-essai` ([contributing](../../../docs/contributing.md),
      "Policies"), even when the change touches no file a course has;
-   - `site/` or a course: `astro check` and the site build, from `site/`;
+   - `site-builder/` or a course: `astro check` and the site build, from `site-builder/`;
    - anything else: the checks its area documents, if any.
 
    No check exists yet for the area: say so in the PR's Checks. A failing blocking check (exit

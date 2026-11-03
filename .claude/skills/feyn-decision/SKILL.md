@@ -27,8 +27,8 @@ a decision is written only on a counterfactual the maintainer gave or accepted.
 A decision is written when it spans several files or is costly to undo. Otherwise refuse and
 propose instead a comment where the choice applies, or nothing.
 
-A decision on how the teacher teaches (`teacher/`, the protocol of a spec) also needs two
-fresh tests that show it necessary or sufficient. Ask for them (which fresh test, what it
+A decision on how the teacher teaches (`classroom-builder/`, the protocol of a spec) also needs
+two fresh tests that show it necessary or sufficient. Ask for them (which fresh test, what it
 showed); without them, refuse and propose the test scenario instead.
 
 ## 3. The folder
@@ -40,8 +40,8 @@ The most local area the decision binds:
 | one spec | `course-specs/<name>/<MAJOR>/decisions/` of each MAJOR it binds: the current one for a new rule, every live MAJOR for a bug fix |
 | the spec directives (the rule model, the conformance clause, the versions, the tooling of the checks) | `spec-directives/<MAJOR>/decisions/` |
 | one course | `courses/<id>/decisions/` |
-| the teacher | `teacher/decisions/` |
-| the site | `site/decisions/` |
+| the teacher | `classroom-builder/decisions/` |
+| the site | `site-builder/decisions/` |
 | the agentic layer (`.claude/`, `.github/`) | `.claude/decisions/` |
 | two areas or more, the repository | `docs/decisions/` |
 

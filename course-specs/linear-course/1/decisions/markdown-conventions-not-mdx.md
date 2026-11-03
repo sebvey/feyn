@@ -29,4 +29,4 @@ it comes with the site epic #223.
 ## Consequences
 
 - The visual work of the site is kept; only where its structure comes from changes, at the
-  cost of a plugin layer in `site/`.
+  cost of a plugin layer in `site-builder/`.

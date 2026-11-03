@@ -6,9 +6,9 @@ area: repo
 ---
 
 Without this, an agent asked to make a concept read better on the site would edit a page or a
-data file under `site/` (or add a site-only override field) instead of `concept.md`, and add a
-stamp to detect drift, so the site and the teacher would show different texts again, as the
-hand-rewritten MDX of `parcours-po-website` did (five realignments in two days).
+data file under `site-builder/` (or add a site-only override field) instead of `concept.md`,
+and add a stamp to detect drift, so the site and the teacher would show different texts again,
+as the hand-rewritten MDX of `parcours-po-website` did (five realignments in two days).
 
 Every course text the site shows and the teacher teaches comes from a course file, without
 rewriting. The site and the classroom are builds of `courses/<id>/`, never edited by hand and

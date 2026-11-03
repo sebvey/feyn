@@ -12,9 +12,9 @@ in [`.claude/decisions/`](../.claude/decisions/); the reserved words are in
 
 `course-specs/` holds the contracts a course is written against, `spec-directives/` the spec
 directives (how a spec is written and read, the tests of a spec's files, the lib the checks
-load), `courses/` the courses, `teacher/` the teacher template, the teacher skills and
-the classroom build script that turns a course into a classroom, `site/` the engine that
-builds it, `.claude/` the agentic layer, `docs/` what belongs to no single area, and
+load), `courses/` the courses, `classroom-builder/` the teacher template, the teacher skills
+and the classroom build script that turns a course into a classroom, `site-builder/` the
+engine that builds it, `.claude/` the agentic layer, `docs/` what belongs to no single area, and
 [`vision.md`](vision.md) what feyn is for (its two products, the yardstick of a change, the
 lessons it was built on).
 `construction/`, the design, plan and session notes of the construction, was removed on

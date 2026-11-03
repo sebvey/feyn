@@ -33,15 +33,15 @@ changes is corrected in place, as in the body.
 A decision lives in the `decisions/` folder of the most local area it binds:
 `course-specs/<name>/<MAJOR>/decisions/` (a new MAJOR copies them under the same slugs); the
 spec directives (the rule model, the conformance clause, the versions, the tooling of the
-checks), `spec-directives/<MAJOR>/decisions/`; `courses/<id>/decisions/`, `teacher/decisions/`,
-`site/decisions/`; the agentic layer (`.claude/`, `.github/`), `.claude/decisions/`; two areas
-or more, `docs/decisions/`.
+checks), `spec-directives/<MAJOR>/decisions/`; `courses/<id>/decisions/`,
+`classroom-builder/decisions/`, `site-builder/decisions/`; the agentic layer (`.claude/`,
+`.github/`), `.claude/decisions/`; two areas or more, `docs/decisions/`.
 
 A decision is written when its counterfactual can be named and it spans several files or is
 costly to undo; otherwise a comment where it applies, or nothing. Decisions on how the teacher
-teaches (`teacher/` and the spec's protocol) also follow the two-tests rule: they enter only
-after two fresh tests show them necessary or sufficient. A site or structure decision is taken
-on argument. The `/feyn-decision` skill applies this file: it refuses a decision without a
+teaches (`classroom-builder/` and the spec's protocol) also follow the two-tests rule: they
+enter only after two fresh tests show them necessary or sufficient. A site or structure
+decision is taken on argument. The `/feyn-decision` skill applies this file: it refuses a decision without a
 counterfactual, picks the folder, checks for a neighbouring slug.
 
 ## Options ruled out
