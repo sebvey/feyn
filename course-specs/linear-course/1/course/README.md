@@ -216,7 +216,7 @@ course), experience (it anticipates the mistakes learners make), anchoring (it l
 storyline) and testability (taught-check and fresh tests cite it by its title). A case is created for one of
 four needs, its **type** (below): one per leaf sub-concept, on the course path; a fallback, when
 the learner fails the first; a practice case, for the learner who wants to practise a validated
-concept; an aside, for a frequent question off the course path. A case is never created for what
+concept, or to retrieve at the resume a concept validated in an earlier session; an aside, for a frequent question off the course path. A case is never created for what
 the reader text does not state: that is a gap of the concept, filled in `concept.md`.
 
 | Reader | Needs | When |
@@ -254,7 +254,7 @@ lexicon's `qualifiers` group and gives the case its type:
 |---|---|---|
 | main | none | at its sub-concept, on the course path, in the order of « Consignes » |
 | fallback | « rechange » (`qualifiers.fallback`) | when the learner fails the case of the same sub-concept; it stands alone: its own situation and question, nothing borrowed from the failed case |
-| practice | « entraînement » (`qualifiers.practice`) | when the learner practises a validated concept, one case per message, without re-explaining (`teacher/README.md`, rules `validated-concept-practised` and `practice-cases-chosen`) |
+| practice | « entraînement » (`qualifiers.practice`) | when the learner practises a validated concept, one case per message, without re-explaining; unasked at the resume, for a concept validated in an earlier session (`teacher/README.md`, rules `validated-concept-practised`, `practice-cases-chosen` and `earlier-concept-retrieved-at-resume`) |
 | aside | « aparté » (`qualifiers.aside`) | in an aside, on a question off the course path (rule `asides-welcome`) |
 
 The case's **title**, its identifier, is the heading without the parenthesis; titles are unique

@@ -21,7 +21,7 @@ names least recently. This is the protocol rule `earlier-concept-retrieved-at-re
 `periodic-mini-recap` is unchanged; practice on request (family 7) too.
 
 The two fresh tests, scenario `retrieval-at-resume` (a returning learner who validated concept 0
-in session 2, next step concept 1, the exercise « Le sprint raconté par Diego » already in the
+in session 2, next step concept 1, the practice case « Le sprint raconté par Diego » already in the
 journal) run with `classroom-builder/fresh-test` on `courses/po-essai`, judged on this rule alone:
 
 - necessary: on a classroom built from the protocol before the rule, the teacher recapped, said

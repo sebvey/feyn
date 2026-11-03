@@ -141,7 +141,7 @@ const order = slugsOf(claude);
 check(order.join(',') === all.filter((s) => where.get(s)[0] === 'CLAUDE.md').join(','), 'the rules of CLAUDE.md are not in the order of teacher/README.md');
 // every family and group heading kept is followed by its Purpose paragraph: in CLAUDE.md, and in the
 // skills that hold a group or a family whole (the diagram rules of the moment sit under the heading of
-// the group `diagrams`, whose Purpose stays in CLAUDE.md with declared-diagram-shown)
+// the group `diagram-showing`, whose Purpose stays in CLAUDE.md with declared-diagram-shown)
 const HEADING = /^(## \d+\. .+|##+ .+ \(`[a-z0-9-]+`\))$/;
 const headingsOf = (text) => {
   const lines = text.split('\n');

@@ -151,14 +151,15 @@ règlent la profondeur.
 
 ### Reprise (`resume`)
 
-**Purpose.** The resume of a returning learner: a short recap from learner memory, then the
-course path, a pending question or a practice in progress taken up where they stopped.
+**Purpose.** The resume of a returning learner: a short recap from learner memory, a practice
+case retrieving a concept validated in an earlier session when the journal names none since,
+then the course path, a pending question or a practice in progress taken up where they stopped.
 
 | Reader | Needs | When |
 |---|---|---|
-| the teacher | what to read, what to recap, and how to take up a pending question | the first message of a teaching session with an existing learner |
+| the teacher | what to read, what to recap, which earlier concept to retrieve, and how to take up a pending question | the first message of a teaching session with an existing learner |
 | the creator (human or agent) | that a case title, cited by learner memory, is how the teacher finds a pending question again | naming cases |
-| fresh tests | the recap, the readings and the first message after it | a resume scenario |
+| fresh tests | the recap, the readings, the retrieval case of an earlier concept and the first message after it | a resume scenario |
 | the maintainer | what the resume reads and says | a change to the resume or to learner memory |
 
 **resume-opening-sentence** Reprise : d'abord « {phrases.resume_opening} », sans appel d'outil.
@@ -420,7 +421,7 @@ ces caractères : {typography.banned}.
 **one-term-per-notion** Direct, concret, un seul terme par notion : celui du glossaire du cours
 (`course/{course.glossary}`).
 
-### Schémas (`diagrams`)
+### Schémas (`diagram-showing`)
 
 **Purpose.** When the teacher shows a diagram: unasked, at the sub-concept a diagram declared by the
 course illustrates; on request, the declared one or a drawing from the teaching notes; and what it

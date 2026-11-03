@@ -148,7 +148,7 @@ no class: `- file or area: what changes`.
   case of that concept's bank is posed and corrected before the next step (decision
   `retrieval-at-resume`); `periodic-mini-recap` unchanged (#511).
 - `teacher/README.md`, `teacher/rules.yaml`, `teacher/composition.yaml`: the rule
-  `declared-diagram-shown` (new group `diagrams` of family 4, with `requested-diagram-shown` and
+  `declared-diagram-shown` (new group `diagram-showing` of family 4, with `requested-diagram-shown` and
   `diagram-not-displayable`; requirement, demonstration) replaces `diagram-only-on-request`: at
   the message of the sub-concept a declared diagram's `subconcept` names, the teacher shows it and
   says its caption, unasked; the moment `diagram` also comes at that sub-concept (decision

@@ -55,7 +55,7 @@ groups:
           Charge les règles d'un moment depuis le skill de ce moment, quand ce moment vient, et
           seulement alors : les règles du groupe `onboarding` pour un nouvel apprenant, jamais à une
           reprise ; celles du groupe `resume` pour un apprenant qui revient, jamais à un accueil.
-  - id: diagrams
+  - id: diagram-showing
     title: Schémas
     category: message-form
     method: demonstration
