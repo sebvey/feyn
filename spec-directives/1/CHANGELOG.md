@@ -48,5 +48,5 @@ no class: `- file or area: what changes`.
 - `tests/`: `composition`, the fifth test of `check-spec`, verifies the form of a spec's
   `teacher/composition.yaml`: exactly five parts by id, a `loads` and a `from` in their closed
   lists, `draws` entries with `from`, `source` and `what`, a `from: spec` source the spec folder
-  holds, the moments of `on-demand`; every fixture gains the composition of `valid/`, and eight
+  holds, the moments of `on-demand`; every fixture gains the composition of `valid/`, and nine
   broken fixtures show its failures (#497).

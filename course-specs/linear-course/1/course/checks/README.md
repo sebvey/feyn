@@ -3,10 +3,10 @@
 Scripts that verify a course against `course/README.md` and `course/rules.yaml` (listed in the
 MAJOR's `README.md` section 5), run by `check-course`; the tests of the spec's own files
 (`teacher/README.md`, `README.md`, `course/README.md`, `decisions/`, `course/rules.yaml`,
-`teacher/rules.yaml`, `course/schemas/`, the two lexicons, `spec.yaml`, `CHANGELOG.md`), run by
-`spec-directives/check-spec`, belong to the spec directives this MAJOR follows
-(`spec-directives/1/tests/`) and are described in `spec-directives/1/README.md` section 8. Node 20
-or later, CommonJS, run under `mise exec` like every tool here, with the `lib/` and the
+`teacher/rules.yaml`, `teacher/composition.yaml`, `course/schemas/`, the two lexicons, `spec.yaml`,
+`CHANGELOG.md`), run by `spec-directives/check-spec`, belong to the spec directives this MAJOR
+follows (`spec-directives/1/tests/`) and are described in `spec-directives/1/README.md` section 8.
+Node 20 or later, CommonJS, run under `mise exec` like every tool here, with the `lib/` and the
 dependencies of the directives MAJOR that the MAJOR's `spec.yaml` declares (`directives: 1`, so
 `spec-directives/1/package.json`; decision `checks-use-ajv-and-yaml`): `directives.js` reads that
 line and loads them through a `createRequire` on that `package.json`. The course's YAML is read by

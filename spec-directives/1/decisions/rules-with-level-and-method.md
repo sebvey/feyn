@@ -76,17 +76,17 @@ no second taxonomy without a use.
 **Conformance clause** (D14). Two classes of products: the **course**, its diagrams included, and
 the **teacher**; a rule binds a product. The lexicons are not products: they live in the spec's
 folder, written by the spec's authors, and their consistency is the spec's own. The spec's own files
-(the rule files, the schemas, the slugs of the protocol, the lexicons, `spec.yaml` and its
-version, the composition of the teacher) are verified by the tests of the directives, run by
-`check-spec` (`rule-files`, `rule-slugs`, `lexicon-keys`, `spec-yaml`, `composition`), which are not rules: they carry no category and
-no level, each failure blocks `check-spec`, and none counts toward a course's conformance. A course
-conforms when it holds every requirement of `course/rules.yaml`, whatever its method; the blocking
-checks are a necessary condition, not a sufficient one; the review and taught-check do the rest,
-and a course tag certifies the whole. A teacher conforms when it holds every requirement of
-`teacher/rules.yaml`; the method of a rule of the protocol is demonstration, by the fresh tests
-(D8). Recommendations are outside conformance (the ISO sense of "should"). The word "conformity"
-(ISO) stays; "conformance clause" names the section, after the W3C QA Framework, whose idea ISO
-shares.
+(the rule files, the schemas, the slugs of the protocol, the lexicons, `spec.yaml` and its version,
+the composition of the teacher) are verified by the tests of the directives, run by `check-spec`
+(`rule-files`, `rule-slugs`, `lexicon-keys`, `spec-yaml`, `composition`), which are not rules: they
+carry no category and no level, each failure blocks `check-spec`, and none counts toward a course's
+conformance. A course conforms when it holds every requirement of `course/rules.yaml`, whatever its
+method; the blocking checks are a necessary condition, not a sufficient one; the review and
+taught-check do the rest, and a course tag certifies the whole. A teacher conforms when it holds
+every requirement of `teacher/rules.yaml`; the method of a rule of the protocol is demonstration, by
+the fresh tests (D8). Recommendations are outside conformance (the ISO sense of "should"). The word
+"conformity" (ISO) stays; "conformance clause" names the section, after the W3C QA Framework, whose
+idea ISO shares.
 
 **Normative references** of the spec directives, a dated list limited to the standards a rule
 depends on: ISO/IEC Directives Part 2, 9th edition (2021); ISO/IEC/IEEE 29148:2018; SemVer 2.0.0;

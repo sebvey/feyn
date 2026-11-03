@@ -271,10 +271,10 @@ fixtures are tested by `course-specs/linear-course/1/course/checks/test-fixtures
   define; an id in both rule files; a check that does not exist; a check over two categories; a
   check over two levels; a schema that does not compile; a schema no rule names. For
   `composition`: `teacher/composition.yaml` missing, four parts, a part with no `draws`, a
-  `loads` and a `from` off their lists, a `from: spec` source the spec folder does not hold, an
-  entry with no `what`, an `on-demand` with no `moments`. The test also runs
-  `spec-directives/check-spec` on each spec MAJOR of `course-specs/` whose `spec.yaml` declares
-  `directives: 1` (`linear-course/1`), which must pass.
+  part with no `loads`, a `loads` and a `from` off their lists, a `from: spec` source the spec
+  folder does not hold, an entry with no `what`, an `on-demand` with no `moments`. The test also
+  runs `spec-directives/check-spec` on each spec MAJOR of `course-specs/` whose `spec.yaml`
+  declares `directives: 1` (`linear-course/1`), which must pass.
 
 The fixtures are plain files: change `valid/` and the broken copies together, then run the test.
 A new test of the spec's own files adds a script, its id in the list of
