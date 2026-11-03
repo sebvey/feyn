@@ -233,27 +233,28 @@ Five moments:
    without deciding its form may leave an idea; one that opens from an idea is that idea's
    triage, and closes it as completed when it creates its options, naming them. Why: decision
    `brainstorm-ends-in-options`.
-4. **Triage**, run with `/feyn-triage` on the ideas the maintainer names, one at a time, and
-   on ideas only: the work session reads each one against the repository and its neighbours (a
-   twin, an epic or an option that covers or overlaps it, an open idea on the same files), the
-   maintainer decides it, whatever it holds. Each idea is read for what it calls for: the triage
-   creates the work items (stories, under an epic or alone, or an epic), each with the form of
-   its kind and citing the idea, born Option, or Ready on the maintainer's word, then closes the
-   idea as completed, its comment naming them; an idea that calls for nothing is closed as not
-   planned, with the reason. The idea is never converted, its finding stays as written. An issue
-   written before this frame whose body already defines a work (a Done when, a To do) is
-   recreated as a story or an epic and closed, its blocked-by links set again on the new work
-   item. Why: decisions `idea-is-never-converted`, `idea-and-option-before-ready`.
+4. **Triage**, run with `/feyn-triage` on the ideas the maintainer names, one at a time, and on
+   ideas only: the work session reads each one against the purpose of feyn
+   ([`vision.md`](vision.md)), the repository and its neighbours (a twin, an epic or an option
+   that covers or overlaps it, an open idea on the same files), the maintainer decides it,
+   whatever it holds. Each idea is read for what it calls for: the triage creates the work items
+   (stories, under an epic or alone, or an epic), each with the form of its kind and citing the
+   idea, born Option, or Ready on the maintainer's word, then closes the idea as completed, its
+   comment naming them; an idea that calls for nothing is closed as not planned, with the
+   reason. The idea is never converted, its finding stays as written. An issue written before
+   this frame whose body already defines a work (a Done when, a To do) is recreated as a story
+   or an epic and closed, its blocked-by links set again on the new work item. Why: decisions
+   `idea-is-never-converted`, `idea-and-option-before-ready`.
 5. **Option refinement**, run with `/feyn-refine-option` on one option the maintainer names: the
    work session first asks which product consumes the option and how it serves the purpose
-   ([`vision.md`](vision.md)), then runs a staleness check (what changed on `origin/main`
-   since the option was last updated, in the files it names) and an overlap check (the open options, epics and committed
-   stories that cover or overlap it, the open ideas on the same files), presents the option
-   with the result of each and its proof, and the maintainer decides it alone: commit (set
-   Ready), rework (its body or its kind rewritten, it stays Option), merge into another option,
-   split, fold into an epic, or close. It is not a replenishment: feyn never reviews the
-   options as a whole, it commits them one by one ([`kanban.md`](kanban.md), "The upstream").
-   Why: decision `idea-and-option-before-ready`.
+   ([`vision.md`](vision.md)), then runs a staleness check (what changed on `origin/main` since
+   the option was last updated, in the files it names) and an overlap check (the open options,
+   epics and committed stories that cover or overlap it, the open ideas on the same files),
+   presents the option with the result of each and its proof, and the maintainer decides it
+   alone: commit (set Ready), rework (its body or its kind rewritten, it stays Option), merge
+   into another option, split, fold into an epic, or close. It is not a replenishment: feyn
+   never reviews the options as a whole, it commits them one by one ([`kanban.md`](kanban.md),
+   "The upstream"). Why: decision `idea-and-option-before-ready`.
 
 **Policies.** The policies of the cycle, written down here as Kanban asks, and in the
 decisions and the skills:

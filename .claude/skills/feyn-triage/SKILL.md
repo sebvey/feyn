@@ -64,8 +64,9 @@ session does not find the list, and that is accepted: the maintainer names the i
 
 ## 3. One item at a time
 
-**Read it against the purpose**, first: [vision.md](../../../docs/vision.md) (what feyn is
-for, the yardstick of a change); does what it calls for serve the teacher or the site, and how?
+**Read it against the purpose**, before anything else: [vision.md](../../../docs/vision.md)
+(what feyn is for, the yardstick of a change); does what it calls for serve the teacher or the
+site, and how?
 
 **Read it against the repository.** What changed since the issue was last updated
 (`git fetch`, then `git log origin/main --since=<its updatedAt>`), the files and issues it cites

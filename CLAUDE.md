@@ -12,7 +12,6 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 - Not to lose from sight:
   - the teacher is the product: a spec no teacher consumes is premature;
   - a thing is written once, in the file of the reader who needs it first;
-  - the generic (the spec) and the specific (the course) stay apart; outputs are builds;
   - small and proven over complete.
 - The long form, with the lessons behind each line: [`docs/vision.md`](docs/vision.md).
 

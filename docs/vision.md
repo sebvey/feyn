@@ -2,7 +2,7 @@
 
 The purpose of feyn, the yardstick a change is judged by, and the lessons it was built on. It is
 read at the moments where one judges: `/feyn-refine-option` asks it of an option before its
-checks, `/feyn-brainstorm` and `/feyn-triage` read it first. It restates no decision: each
+staleness check, `/feyn-brainstorm` and `/feyn-triage` read it first. It restates no decision: each
 decision keeps its own counterfactual, and this file names a decision by its slug where one
 grounds a point. A change to this file is a decision ([contributing](contributing.md),
 "Policies").
@@ -31,7 +31,7 @@ brings the teacher closer.
 
 ## The lessons of parcours-po
 
-feyn was rebuilt from a proof of concept that worked: `parcours-po`, a course of 18 concepts
+feyn was rebuilt from a first project that worked: `parcours-po`, a course of 18 concepts
 and 2 annexes taught in Claude Code, and its site `parcours-po-website`. Three of its couplings
 are what feyn is built against:
 - The site was a copy of the course rewritten by hand and kept in line by sha256 stamps: five

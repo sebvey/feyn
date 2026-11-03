@@ -8,13 +8,14 @@ argument-hint: "<option number>"
 
 One job: the **option refinement** of one option the maintainer names, as
 [contributing](../../../docs/contributing.md), "How the work is organised", says: the work
-session analyses it against the repository, presents it with the result of its checks, the
-maintainer decides, the work session executes. It is not a replenishment: it never reviews the
-Option column as a whole nor chooses among the options which enter Ready; feyn commits its
-options one by one ([kanban](../../../docs/kanban.md), "The upstream"). The Project's commands
-are in [project.md](../../reference/project.md), cited here, not copied; the commands of the
-checks are written in step 2. Nothing is executed on the option before the maintainer's
-decision on it.
+session analyses it against the purpose of feyn (which product consumes it,
+[vision.md](../../../docs/vision.md)) and the repository, presents it with the result of its
+checks, the maintainer decides, the work session executes. It is not a replenishment: it never
+reviews the Option column as a whole nor chooses among the options which enter Ready; feyn
+commits its options one by one ([kanban](../../../docs/kanban.md), "The upstream"). The
+Project's commands are in [project.md](../../reference/project.md), cited here, not copied; the
+commands of the checks are written in step 2. Nothing is executed on the option before the
+maintainer's decision on it.
 
 An **option** (Status Option) is a work item, epic or story, defined and not committed: the
 option refinement commits it, reworks it, merges it, splits it, folds it into an epic or closes
