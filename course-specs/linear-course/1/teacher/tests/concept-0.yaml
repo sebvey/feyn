@@ -1,0 +1,107 @@
+id: concept-0
+title: a learner just onboarded, the loop on concept 0 (a wrong answer, a partial one, a right one)
+learner:
+  apprenant.md: |
+    # L'apprenant
+
+    Surnom : **Sam** (le prof l'appelle ainsi).
+
+    ## Profil
+
+    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
+    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+
+    ## Préférences
+
+    Aucune.
+  observations.md: |
+    # Observations sur Sam
+
+    Une ligne par entrée : `date, [concept], fait : action` (« Acquis » : `[concept] fait (date)`).
+    `[général]` vaut pour tout le cours.
+    Une vigilance surmontée passe en acquis ; une ligne contredite se corrige ou se supprime.
+
+    ## Leviers
+
+    Ce qui marche avec l'apprenant. À lire au démarrage.
+
+    ## Vigilances actives
+
+    Difficultés pas encore surmontées. Avant un concept, lis celles qui portent son numéro.
+
+    ## Acquis
+  parcours.md: |
+    # Parcours de Sam
+
+    Statut des concepts de la carte du cours (`course.yaml`) : `validé`, `en cours`, `sauté`,
+    `à revoir`. Un concept absent du tableau est à faire.
+
+    ## Prochaine étape
+
+    Concept 0 : Scrum en bref et l'incrément (`concepts/00-scrum`), son premier message.
+
+    ## Concepts
+
+    | # | Concept | Statut |
+    |---|---|---|
+
+    Annexes vues : aucune.
+
+    ## Points annoncés pour plus tard
+
+    Aucun.
+
+    ## Journal
+
+    2026-11-02, session 1 : accueil.
+turns:
+  - message: On continue.
+  - message: Oui, vas-y.
+    if: next-line
+    expect:
+      - act: the first message of concept 0 (at this turn or the one before), its title a level-2 link, the stance of the course announced as its teaching notes say, one sub-concept (the team in brief) explained from the case « Qui est le chef de l'équipe vélos ? », the example and the question in one quote, the actors named with their storyline role
+        rules: [concept-title-link, follow-concept-instructions, one-sub-concept-per-message, explanation-from-case, examples-from-bank, case-usage-respected, example-question-quote-form, examples-from-storyline, actor-named-with-role, same-role-actors-grouped, storyline-role-in-parentheses, storyline-facts-section-unsaid, diagram-only-on-request]
+  - message: Scarlette, puisque c'est elle qui organise les réunions.
+    expect:
+      - act: "the answer is wrong (a common mistake of the bank): the follow-up of the bank, « de quoi répond le Scrum Master ? », in the quote form without its example part, no new sub-concept"
+        rules: [wrong-answer-follow-up, common-mistake-not-nuance, follow-up-quote-form, wait-for-understanding, correct-frankly]
+  - message: Le Scrum Master répond de l'efficacité de l'équipe, donc Scarlette n'est pas la cheffe.
+    expect:
+      - act: "the answer is partial (the PO and the Developers are missing): what is right said, then a targeted follow-up on what is missing, in a short message, without explaining the sub-concept again"
+        rules: [partial-answer-follow-up, wait-for-understanding]
+  - message: "Il n'y a pas de chef : l'équipe s'organise elle-même. Moi, le PO, je réponds de la valeur de la plateforme et du backlog ; Dana, Diego et Anna, les Developers, réalisent l'incrément ; Scarlette répond de l'efficacité de l'équipe."
+    expect:
+      - act: the correction opens the message and says frankly that the answer is right, then the next part of the sub-concept (the PO) at the same message if it fits, or the next line; nothing written in learner/ (no save point)
+        rules: [correct-frankly, correction-opens-message, chain-after-validation, write-at-save-points-only]
+rules:
+  - one-sub-concept-per-message
+  - correction-opens-message
+  - never-ask-if-understood
+  - follow-concept-instructions
+  - case-usage-respected
+  - explanation-from-case
+  - examples-from-bank
+  - one-question-per-message
+  - wait-for-understanding
+  - partial-answer-follow-up
+  - common-mistake-not-nuance
+  - wrong-answer-follow-up
+  - correct-frankly
+  - chain-after-validation
+  - short-messages
+  - example-question-quote-form
+  - follow-up-quote-form
+  - concept-title-link
+  - descriptive-site-links
+  - no-task-list
+  - no-end-of-turn-recap
+  - course-language-typography
+  - diagram-only-on-request
+  - examples-from-storyline
+  - storyline-facts-then-improvised
+  - actor-named-with-role
+  - same-role-actors-grouped
+  - storyline-role-in-parentheses
+  - learner-never-decides-facts
+  - storyline-facts-section-unsaid
+  - write-at-save-points-only

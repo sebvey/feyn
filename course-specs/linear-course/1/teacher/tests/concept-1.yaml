@@ -1,0 +1,112 @@
+id: concept-1
+title: the last sub-concept of concept 0 validated, the transition to concept 1 and its loop
+learner:
+  apprenant.md: |
+    # L'apprenant
+
+    Surnom : **Sam** (le prof l'appelle ainsi).
+
+    ## Profil
+
+    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
+    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+
+    ## Préférences
+
+    Aucune.
+  observations.md: |
+    # Observations sur Sam
+
+    Une ligne par entrée : `date, [concept], fait : action` (« Acquis » : `[concept] fait (date)`).
+    `[général]` vaut pour tout le cours.
+    Une vigilance surmontée passe en acquis ; une ligne contredite se corrige ou se supprime.
+
+    ## Leviers
+
+    Ce qui marche avec l'apprenant. À lire au démarrage.
+
+    ## Vigilances actives
+
+    Difficultés pas encore surmontées. Avant un concept, lis celles qui portent son numéro.
+
+    ## Acquis
+  parcours.md: |
+    # Parcours de Sam
+
+    Statut des concepts de la carte du cours (`course.yaml`) : `validé`, `en cours`, `sauté`,
+    `à revoir`. Un concept absent du tableau est à faire.
+
+    ## Prochaine étape
+
+    Concept 0 : Scrum en bref et l'incrément (`concepts/00-scrum`), sous-concept 0b (sprint et
+    incrément) : son message, cas « La vue des stations vides livrée un mercredi ». Le
+    sous-concept 0a (le cadre) est fait.
+
+    ## Concepts
+
+    | # | Concept | Statut |
+    |---|---|---|
+    | 0 | Scrum en bref et l'incrément | en cours |
+
+    Annexes vues : aucune.
+
+    ## Points annoncés pour plus tard
+
+    Aucun.
+
+    ## Journal
+
+    2026-11-02, session 1 : accueil, concept 0 commencé (l'équipe en bref).
+    2026-11-03, session 2 : concept 0, 0a fait (responsabilités, événements, artefacts).
+turns:
+  - message: On continue.
+  - message: Oui.
+    if: next-line
+    expect:
+      - act: the message of 0b (at this turn or the one before), from the case « La vue des stations vides livrée un mercredi », its question in the quote form
+        rules: [one-sub-concept-per-message, example-question-quote-form, examples-from-storyline, actor-named-with-role]
+  - message: "Non, Dana n'a pas raison. Mercredi, c'est un incrément qui a été livré : la plateforme dans un nouvel état utilisable, avec la vue, conforme à la DoD. Le sprint, lui, est une durée : il continue jusqu'à son terme et peut produire d'autres incréments. On peut livrer avant la fin du sprint, la revue n'est pas une porte de mise en production."
+    expect:
+      - act: the answer validated frankly, concept 0 validated, the link of its page on the site
+        rules: [correct-frankly, validated-concept-page-link, descriptive-site-links]
+      - act: "a short sentence before the first tool call, then the save point of a validated concept (the status of concept 0 validated, the next step, the journal line, what is acquired), each file of learner/ written once with the write tool, then a commit « Sam : concept 0 validé », none of it announced"
+        rules: [waiting-sentence-first, save-points, save-concept-statuses, save-next-step, save-journal-line, save-acquired, one-write-per-file, write-tool-not-shell, write-only-in-learner, commit-after-save-point, writes-not-announced]
+      - act: concept.md and teaching.md of concept 1 read; the message ends on the question of concept 1 chained at the same message, or on the next line naming concept 1
+        rules: [read-each-new-concept, chain-after-validation, chained-message-ending]
+  - message: Oui.
+    if: next-line
+    expect:
+      - act: the first message of concept 1 (at this turn or the one before), its title a level-2 link, the sub-concept 1a from the case « Présenter la plateforme à un nouvel arrivant », a new situation in the same business
+        rules: [concept-title-link, one-sub-concept-per-message, change-situation-not-business, examples-from-storyline]
+  - message: La plateforme collecte les relevés des stations dans un entrepôt toutes les 5 minutes, et affiche des vues et des alertes.
+    expect:
+      - act: "the answer restates the technique (a common mistake of the bank): the follow-up « qui s'en sert, et qu'est-ce qui change pour lui ? » or another angle, no new sub-concept"
+        rules: [wrong-answer-follow-up, one-question-per-message]
+rules:
+  - one-sub-concept-per-message
+  - example-question-quote-form
+  - examples-from-storyline
+  - actor-named-with-role
+  - correct-frankly
+  - validated-concept-page-link
+  - descriptive-site-links
+  - waiting-sentence-first
+  - save-points
+  - save-concept-statuses
+  - save-next-step
+  - save-journal-line
+  - save-acquired
+  - one-write-per-file
+  - write-tool-not-shell
+  - write-only-in-learner
+  - commit-after-save-point
+  - writes-not-announced
+  - read-each-new-concept
+  - chain-after-validation
+  - chained-message-ending
+  - concept-title-link
+  - change-situation-not-business
+  - wrong-answer-follow-up
+  - one-question-per-message
+  - short-messages
+  - course-language-typography

@@ -1,0 +1,2 @@
+check: scenarios
+message: "first-rule" is not in the scenario's rules
