@@ -79,6 +79,14 @@ for (const s of skills) {
   check(!PLACEHOLDER.test(t), `skill ${s} keeps a placeholder: ${(PLACEHOLDER.exec(t) || [])[0]}`);
 }
 check(skillText.onboarding.includes('`course/plan.md`'), 'skill onboarding does not name course/plan.md as what it reads');
+// the onboarding questions of plan.md are given in the skill, so that the first message needs no
+// read (rule first-message-without-tools; the fresh test onboarding, #507)
+{
+  const plan = (read(path.join(COURSE, 'plan.md')) || '').split('\n');
+  const at = plan.findIndex((l) => l.trim() === '## Accueil');
+  const questions = plan.slice(at + 1).filter((l, i, a) => /^\d+\.\s/.test(l) && !a.slice(0, i).some((x) => /^## /.test(x)));
+  check(at >= 0 && questions.length > 0 && questions.every((q) => skillText.onboarding.includes(q.trim())), 'skill onboarding does not give the onboarding questions of plan.md');
+}
 check(skillText.resume.includes('`learner/parcours.md`'), 'skill resume does not name learner/parcours.md as what it reads');
 check(skillText.diagram.includes('`course/<dir>/concept.md`') && skillText.diagram.includes('`course/<dir>/teaching.md`'), 'skill diagram does not name concept.md and teaching.md as what it reads');
 check(skillText.stop.includes('`learner/parcours.md`'), 'skill stop does not name learner/parcours.md as what it reads');

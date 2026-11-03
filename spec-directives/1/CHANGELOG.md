@@ -54,3 +54,9 @@ no class: `- file or area: what changes`.
   the classroom build by #499, is held by the spec MAJOR's `teacher/build/render-parts`); section
   2 says a spec MAJOR may hold a `teacher/build/` that renders the parts of the composition, read
   by a classroom build (#501).
+- `tests/`, `README.md`: `scenarios`, the sixth test of `check-spec`, verifies the test
+  scenarios of a spec MAJOR's `teacher/tests/`, when the folder exists: its
+  `scenario.schema.yaml` compiles, every scenario is valid against it and named after its `id`,
+  every slug it names is a rule of the protocol and every slug of an `expect` is in its `rules`;
+  `valid/` gains a scenario, and five broken fixtures show its failures; sections 2 and 4 name
+  the fresh tests (`classroom-builder/fresh-test`) as the implementation of demonstration (#507).

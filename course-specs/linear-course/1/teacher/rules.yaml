@@ -5,10 +5,10 @@
 # family.
 #
 # A group is a group of rules of teacher/README.md: its slug as `id`, its rules in their order.
-# Today two rules, first-message-without-tools and teacher-loads-composition (the rule that makes the
-# composition, teacher/composition.yaml, bear on conformance, #507), each stated in teacher/README.md
-# too; the rules leave teacher/README.md for this file at the extraction of #318 (decision
-# rule-groups-replace-ranges). check-spec (rule-files) verifies this file.
+# Today two rules, first-message-without-tools and teacher-loads-composition (the rule that makes
+# the composition, teacher/composition.yaml, bear on conformance, #507), each stated in
+# teacher/README.md too; the rules leave teacher/README.md for this file at the extraction of #318
+# (decision rule-groups-replace-ranges). check-spec (rule-files) verifies this file.
 groups:
   - id: onboarding
     title: Accueil

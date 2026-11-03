@@ -55,7 +55,9 @@ Two classes of products: the **course**, its diagrams included, and the **teache
   and a course tag certifies the whole.
 - A teacher conforms when it holds every requirement of the protocol (`teacher/rules.yaml`,
   and until #318 the rest of `teacher/README.md`); the method of a rule of the protocol is
-  demonstration, by the fresh tests. No teacher conforms yet, since no fresh test exists.
+  demonstration, by the fresh tests (the test scenarios of the spec MAJOR's `teacher/tests/`, run
+  by `classroom-builder/fresh-test`). No teacher conforms yet: the scenarios cover the rules a
+  session of `po-essai` exercises, not every requirement.
 - Recommendations are outside conformance.
 
 A rule binds a product, a course or a teacher. The lexicons of a spec (`course/lexicon.yaml`, the
@@ -99,7 +101,7 @@ rewritten or removed.
 | test | a deterministic run says yes or no | the scripts of `course/checks/` |
 | analysis | reasoning over the whole course | taught-check (an agent workflow) |
 | inspection | a reading, by a human or an agent | the review |
-| demonstration | the system runs and is observed | the fresh tests of the teacher |
+| demonstration | the system runs and is observed | the fresh tests of the teacher: `classroom-builder/fresh-test` runs the teacher on a test scenario of the spec MAJOR's `teacher/tests/` and judges it, a script and a fresh agent |
 
 ## 5. Severity
 
@@ -190,7 +192,8 @@ move to `spec.yaml` when a second spec needs them. The nine families are also he
 by the spec MAJOR's `teacher/build/render-parts`, which finds a family of the protocol by its
 category: the move carries it, and `rule-files.js` exports nothing. `composition.js` adds none (idea #485): its
 closed lists are the composition model's, and a `from: spec` source is checked against
-`<spec-dir>`, not against a list of file names.
+`<spec-dir>`, not against a list of file names; nor does `scenarios.js`, which reads the schema
+the spec MAJOR's `teacher/tests/` holds.
 
 ```
 mise exec -- spec-directives/check-spec course-specs/linear-course/1
@@ -201,7 +204,7 @@ mise exec -- spec-directives/check-spec <spec-dir> --only rule-slugs
 runs `spec-directives/<MAJOR>/tests/check-spec` on it, which runs the tests of the spec's own files,
 not a course: `teacher/README.md`, `README.md`, `course/README.md`, `decisions/`,
 `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `course/lexicon.yaml`,
-`teacher/lexicon.yaml`, `teacher/composition.yaml`, `spec.yaml` and `CHANGELOG.md` of `<spec-dir>`. A `<spec-dir>` with no `spec.yaml`, or a `directives` MAJOR with no
+`teacher/lexicon.yaml`, `teacher/composition.yaml`, `teacher/tests/`, `spec.yaml` and `CHANGELOG.md` of `<spec-dir>`. A `<spec-dir>` with no `spec.yaml`, or a `directives` MAJOR with no
 folder, is refused (exit code 2, one line). Same output and `--only` as `check-course`, with no
 summary line and a `--list` of ids alone, after a `<spec-dir>`; `--list` without a folder is the
 MAJOR runner's (`spec-directives/1/tests/check-spec --list`), the dispatcher prints its usage (exit code 2). The file
@@ -217,6 +220,7 @@ this MAJOR, installed by `mise exec -- npm ci --prefix spec-directives/1`
 | `lexicon-keys` | `lexicon-keys.js` | `course/lexicon.yaml` holds every key of `course/README.md` section 7; every key `teacher/README.md` uses is in `course/lexicon.yaml` or `teacher/lexicon.yaml`; a group lives in one lexicon only; a key a non-empty string, a list a non-empty list of strings (`course/README.md` 7) | `course/lexicon.yaml`, `teacher/lexicon.yaml`, `teacher/README.md` |
 | `spec-yaml` | `spec-yaml.js` | `spec.yaml` holds `name`, `major`, `directives`, `version` and `language`, no other key; `name` a slug, `major` and `directives` positive integers, `version` `MAJOR.MINOR.PATCH` with an optional `-alpha` and `major` as its MAJOR, `language` an ISO 639-1 code, the language of the spec; `version` agrees with the first `## ` section of `CHANGELOG.md`: « Unreleased » during the alpha (`<MAJOR>.0.0-alpha`), otherwise the section names `version` (`## 1.0.0`, a date after it allowed) (section 6) | `spec.yaml`, `CHANGELOG.md` |
 | `composition` | `composition.js` | `teacher/composition.yaml` exists and holds exactly five parts, ids `permanent`, `on-demand`, `course-reads`, `learner-memory`, `permissions`; a part has `loads`, one of `every-message`, `at-a-moment`, `during-the-session`, `at-start-and-save-points`, `always`, and `draws`, a non-empty list whose entries have `from`, one of `spec`, `course`, `learner`, `classroom`, `source` and `what`; a `from: spec` source is a file or folder of `<spec-dir>`; `on-demand` has `moments`, each with `id`, `when`, a list `rules` and `draws`; the form only, never the sense, which the fresh tests judge | `teacher/composition.yaml` |
+| `scenarios` | `scenarios.js` | when `teacher/tests/` exists: `teacher/tests/scenario.schema.yaml` compiles under `Ajv2020`; every other `*.yaml` of the folder, a test scenario, is valid against it and its `id` is its file name; every slug it names, in `rules` and in the `rules` of an `expect`, is a rule of the protocol (`teacher/README.md`, `teacher/rules.yaml`), and every slug of an `expect` is in its `rules`; the form only, never what a run shows, which `classroom-builder/fresh-test` judges | `teacher/tests/`, `teacher/README.md`, `teacher/rules.yaml` |
 
 `lexicon-keys` tests `course/lexicon.yaml` of `<spec-dir>` against the keys of `course/README.md`
 section 7, and both lexicons against every key `teacher/README.md` uses: a row of the lexicon

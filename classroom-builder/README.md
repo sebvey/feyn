@@ -4,8 +4,9 @@ Builds a classroom from a course: everything that makes the teacher, the teacher
 (`CLAUDE.template.md`), the classroom build (`build-classroom`), which builds the teacher skills of
 the moments into the classroom from the composition, and its test (`test-build`), the fresh tests
 (`fresh-test`, which runs the teacher on a test scenario and judges it, with its judge's prompt
-`fresh-test-judge.md`), and the decisions about teacher behaviour (`classroom-builder/decisions/`). `classroom-builder/skills/` is kept for a
-teacher skill written by hand, if one comes; it holds none and the build does not read it. The classroom itself is built outside this repository from these
+`fresh-test-judge.md`), and the decisions about teacher behaviour (`classroom-builder/decisions/`).
+`classroom-builder/skills/` is kept for a teacher skill written by hand, if one comes; it holds none
+and the build does not read it. The classroom itself is built outside this repository from these
 files and a course; it is rebuilt, never edited by hand (decision `one-source-two-builds`).
 
 ## The two halves
@@ -82,7 +83,8 @@ teacher template is English and holds the frame only, no rule (decision `languag
 
 `mise exec -- classroom-builder/test-build` builds `courses/po-essai` into temporary folders and
 checks what a command can check: the files of each part, `diff -r` of the course copy, the learner
-templates, the skills `feyn-teacher-<moment>` and their descriptions, the « Moments » list naming
+templates, the skills `feyn-teacher-<moment>` and their descriptions, the onboarding questions of
+`plan.md` given in the onboarding skill, the « Moments » list naming
 them, no placeholder left, each rule of the protocol once in `CLAUDE.md` or in one skill, in the
 protocol's order and verbatim but for its placeholders, each family and group heading followed by
 its Purpose, the three spots of the filling (no « ((site », no period after a phrase that ends
@@ -129,15 +131,15 @@ mise exec -- classroom-builder/fresh-test <course-dir> <scenario id> [--model <m
      characters counting as several), `example-question-quote-form` and `follow-up-quote-form`
      (the quote's form), `descriptive-site-links` (no bare address), `course-language-typography`
      (no character of `typography.banned`), `one-question-per-message` (the quoted question counts
-     one, and no other « ? » outside « », the example, `phrases.why` and `phrases.continue_prompt`), `never-ask-if-understood`,
-     `waiting-sentence-first`, `resume-opening-sentence` and `stop-opening-sentence` (a sentence
+     one, and no other « ? » outside « », the example, `phrases.why` and
+     `phrases.continue_prompt`), `never-ask-if-understood`, `waiting-sentence-first`, `resume-opening-sentence` and `stop-opening-sentence` (a sentence
      before the first tool call), `write-only-in-learner`, `write-tool-not-shell`,
      `one-write-per-file`, `commit-after-save-point` and `no-task-list` (the tool calls);
    - the **agent** part is a fresh `claude -p` on Sonnet with no tool (`--tools ""`), prompted by
      `fresh-test-judge.md` with the scenario, the rules as the classroom holds them, the
      transcript and `learner/` (with, for context, the rules those rules cite or rely on, as
-     `what-counts-as-one-question` for `one-question-per-message`): for each slug of the scenario, observed or not observed, with the
-     turn and the passage that shows it; it changes nothing;
+     `what-counts-as-one-question` for `one-question-per-message`): for each slug of the scenario,
+     observed or not observed, with the turn and the passage that shows it; it changes nothing;
    - the report ends with the verdict per slug: observed when the agent says so and the script,
      where it checks the slug, too.
 5. The classroom is removed, unless `--keep`.
