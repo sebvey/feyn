@@ -3,7 +3,7 @@
 | Reader | Comes for | Opens |
 |---|---|---|
 | creator | what a course is, the templates, how to verify | [`course/README.md`](course/README.md), [`course/templates/README.md`](course/templates/README.md), [`course-specs/check-course`](../../check-course) |
-| builder | the shape of a course, of learner memory, the lexicons, the protocol | [`course/README.md`](course/README.md), [`course/schemas/`](course/schemas/), [`linear-course/1/teacher/README.md`](teacher/README.md), [`linear-course/1/teacher/rules.yaml`](teacher/rules.yaml), [`linear-course/1/teacher/templates/learner/`](teacher/templates/learner/), [`course/lexicon.yaml`](course/lexicon.yaml), [`teacher/lexicon.yaml`](teacher/lexicon.yaml), [`spec.yaml`](spec.yaml) |
+| builder | the shape of a course, of learner memory, the lexicons, the protocol | [`course/README.md`](course/README.md), [`course/schemas/`](course/schemas/), [`linear-course/1/teacher/README.md`](teacher/README.md), [`linear-course/1/teacher/rules.yaml`](teacher/rules.yaml), [`teacher/composition.yaml`](teacher/composition.yaml), [`linear-course/1/teacher/templates/learner/`](teacher/templates/learner/), [`course/lexicon.yaml`](course/lexicon.yaml), [`teacher/lexicon.yaml`](teacher/lexicon.yaml), [`spec.yaml`](spec.yaml) |
 | verifier | the rules as data, the conformance clause, the categories, the checks | [`course/rules.yaml`](course/rules.yaml), [`linear-course/1/teacher/rules.yaml`](teacher/rules.yaml), sections [3](#3-categories) and [5](#5-checks), [`course/checks/README.md`](course/checks/README.md), [`spec-directives/1/README.md`](../../../spec-directives/1/README.md#2-conformance) sections 2 to 5 |
 | spec writer | the files, the references, the decisions, the changelog | sections [2](#2-files) and [4](#4-normative-references), [`decisions/`](decisions/), [`CHANGELOG.md`](CHANGELOG.md), [`spec-directives/1/README.md`](../../../spec-directives/1/README.md) |
 
@@ -18,6 +18,7 @@ follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 - `README.md`: this file: scope, files, categories, normative references, the list of checks.
 - `course/README.md`: what a course is: course structure, reader-text conventions, diagrams (drawing contract and style), the lexicon of the course files.
 - `teacher/README.md`: the pedagogical protocol the teacher executes.
+- `teacher/composition.yaml`: the composition of the teacher, its five parts, when each loads and what each draws from (section 2).
 - `CHANGELOG.md`: the changes of the spec, « Unreleased » until the tag.
 - `spec.yaml`: the declaration of this MAJOR, its version, its language (`fr`) and the MAJOR of the spec directives it follows (`spec-directives/1/`: the tests of these files, run by `spec-directives/check-spec course-specs/linear-course/1`, and the `lib/` and package the checks load).
 - `course/lexicon.yaml`: the lexicon of the course files, the one source of the words the checks, the classroom build and the site recognise in a course file (headings, case fields, qualifiers, markers, natures, concept references, source types, typography); `teacher/lexicon.yaml`: the words the teacher says and writes.
@@ -126,8 +127,8 @@ directives MAJOR that `spec.yaml` declares (`spec-directives/1/package.json`, in
 run them, their options and fixtures. `course-specs/check-course <course-dir>` runs this folder's
 `course/checks/check-course` on a course. `spec-directives/check-spec <this folder>` runs the tests
 of the spec's own files (`teacher/README.md`, `README.md`, `course/README.md`, `decisions/`,
-`course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, the two lexicons, `spec.yaml`,
-`CHANGELOG.md`), not a course: they are the directives' (`spec-directives/1/tests/`).
+`course/rules.yaml`, `teacher/rules.yaml`, `teacher/composition.yaml`, `course/schemas/`, the
+two lexicons, `spec.yaml`, `CHANGELOG.md`), not a course: they are the directives' (`spec-directives/1/tests/`).
 
 `check-course` takes its checks from `course/rules.yaml`: by default it runs, in one run, every
 check of method test, blocking and reporting, and `--category <c>[,<c>...]` runs the checks of

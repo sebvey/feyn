@@ -77,8 +77,8 @@ no second taxonomy without a use.
 the **teacher**; a rule binds a product. The lexicons are not products: they live in the spec's
 folder, written by the spec's authors, and their consistency is the spec's own. The spec's own files
 (the rule files, the schemas, the slugs of the protocol, the lexicons, `spec.yaml` and its
-version) are verified by the tests of the directives, run by `check-spec` (`rule-files`,
-`rule-slugs`, `lexicon-keys`, `spec-yaml`), which are not rules: they carry no category and
+version, the composition of the teacher) are verified by the tests of the directives, run by
+`check-spec` (`rule-files`, `rule-slugs`, `lexicon-keys`, `spec-yaml`, `composition`), which are not rules: they carry no category and
 no level, each failure blocks `check-spec`, and none counts toward a course's conformance. A course
 conforms when it holds every requirement of `course/rules.yaml`, whatever its method; the blocking
 checks are a necessary condition, not a sufficient one; the review and taught-check do the rest,
