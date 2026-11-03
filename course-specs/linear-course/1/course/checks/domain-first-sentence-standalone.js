@@ -1,6 +1,6 @@
 'use strict';
 // Reports: the first sentence of each paragraph of « Le fil des concepts » does not open with a
-// word of the language pack's checks.anaphora list, so that it stands alone (course/README.md
+// word of the lexicon's checks.anaphora list, so that it stands alone (course/README.md
 // section 4). The terminator is domain-first-sentence, which blocks.
 const directives = require('./directives');
 const { fail } = directives.lib('course');
@@ -9,9 +9,9 @@ const { paragraphs, unusable } = require('./domain-first-sentence');
 function run(ctx) {
   const u = unusable(ctx);
   if (u) return u;
-  const list = ctx.pack.checks && ctx.pack.checks.anaphora;
+  const list = ctx.lexicon.checks && ctx.lexicon.checks.anaphora;
   if (!Array.isArray(list) || list.length === 0 || list.some((w) => typeof w !== 'string' || w === '')) {
-    return [fail(ctx.packFile, 1, 'no checks.anaphora in the language pack (a non-empty list of strings): the opening anaphora cannot be checked')];
+    return [fail(ctx.lexiconFile, 1, 'no checks.anaphora in the lexicon (a non-empty list of strings): the opening anaphora cannot be checked')];
   }
   const ana = list.map((w) => w.toLowerCase());
   const out = [];

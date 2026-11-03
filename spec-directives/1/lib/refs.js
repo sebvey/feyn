@@ -1,12 +1,12 @@
 'use strict';
-// Concept references of the reader text (course/README.md section 3.5): the words of the pack group
+// Concept references of the reader text (course/README.md section 3.5): the words of the lexicon group
 // concept_refs, then concept numbers or sub-concept ids. One grammar, read by `conventions`
 // (each id exists) and `glossary-order` (a concept reference silences a forward use).
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const ID = '(?:A\\d+|\\d+)(?:[a-z]\\d?)?';
 
-// -> (text) => [{ index, word, list, ids, annex }], or null when the pack lacks the words.
+// -> (text) => [{ index, word, list, ids, annex }], or null when the lexicon lacks the words.
 // `annex` is true for a concept reference made with concept_refs.annex.
 function parser(ctx) {
   const refWord = ctx.word('concept_refs', 'concept');

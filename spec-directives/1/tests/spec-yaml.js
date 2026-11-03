@@ -2,10 +2,11 @@
 // A test of the spec's own files, run by check-spec, which verifies no rule (decisions
 // rules-with-level-and-method, alpha-version-until-tag): the declaration of the spec MAJOR,
 // spec.yaml, held to its CHANGELOG.md.
-//   - spec.yaml exists and is a map of exactly four keys: `name`, `major`, `directives`, `version`;
+//   - spec.yaml exists and is a map of exactly five keys: `name`, `major`, `directives`, `version`,
+//     `language`;
 //   - `name` is a slug, `major` and `directives` are positive integers written as such (not `1.0`),
 //     `version` is `MAJOR.MINOR.PATCH` with an optional `-alpha`, and the MAJOR of `version` is
-//     `major`;
+//     `major`; `language` is an ISO 639-1 code (two lowercase letters), the language of the spec;
 //   - `version` agrees with the first `## ` section of CHANGELOG.md: during the alpha (`version` is
 //     `<MAJOR>.0.0-alpha`) that section is « Unreleased »; otherwise it names `version`
 //     (`## 1.0.0`, a date after the version allowed); an `-alpha` on another version fails.
@@ -15,7 +16,8 @@ const yaml = require('../lib/yaml-lines');
 const { fail, SLUG } = require('../lib/course');
 
 const F = 'spec.yaml';
-const KEYS = ['name', 'major', 'directives', 'version'];
+const KEYS = ['name', 'major', 'directives', 'version', 'language'];
+const LANGUAGE = /^[a-z]{2}$/;
 // SemVer 2.0.0 numbers (no leading zero), with the one prerelease the alpha allows
 const VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-alpha)?$/;
 const UNRELEASED = 'Unreleased';
@@ -59,7 +61,7 @@ function changelog(ctx, version, m, at) {
 // ctx: check-spec's (read and list relative to the spec folder)
 function run(ctx) {
   const text = ctx.read(F);
-  if (text === null) return [fail(F, 1, 'spec.yaml is missing: a spec MAJOR declares name, major, directives and version')];
+  if (text === null) return [fail(F, 1, 'spec.yaml is missing: a spec MAJOR declares name, major, directives, version and language')];
   let spec;
   try { spec = yaml.parse(text); } catch (e) { return [fail(F, e.line || 1, e.message)]; }
   if (!spec || typeof spec !== 'object' || Array.isArray(spec)) return [fail(F, 1, 'spec.yaml is not a map')];
@@ -75,6 +77,9 @@ function run(ctx) {
   }
   for (const k of ['major', 'directives']) {
     if (k in spec && !positive(spec, k)) out.push(fail(F, at(k), `${k} ${yaml.sourceOf(spec, k) || JSON.stringify(spec[k])} is not a positive integer`));
+  }
+  if ('language' in spec && (typeof spec.language !== 'string' || !LANGUAGE.test(spec.language))) {
+    out.push(fail(F, at('language'), `language ${JSON.stringify(spec.language)} is not an ISO 639-1 code (two lowercase letters)`));
   }
   if (!('version' in spec)) return out;
   const version = spec.version;

@@ -1,13 +1,13 @@
 'use strict';
-// No character the language pack bans (French: em-dash, arrows) in course text.
+// No character the lexicon bans (`typography.banned`: em-dash, arrows) in course text.
 const directives = require('./directives');
 const { fail } = directives.lib('course');
 
 function run(ctx) {
-  if (!ctx.packOk || !ctx.pack.typography || !Array.isArray(ctx.pack.typography.banned)) {
-    return [fail('course.yaml', 1, 'the language pack has no typography.banned list: see course/README.md section 7')];
+  if (!ctx.lexiconOk || !ctx.lexicon.typography || !Array.isArray(ctx.lexicon.typography.banned)) {
+    return [fail(ctx.lexiconFile || 'course/lexicon.yaml', 1, 'the lexicon has no typography.banned list: see course/README.md section 7')];
   }
-  const banned = ctx.pack.typography.banned.filter((b) => typeof b === 'string' && b !== '');
+  const banned = ctx.lexicon.typography.banned.filter((b) => typeof b === 'string' && b !== '');
   const out = [];
   for (const file of [...ctx.mdFiles(), 'course.yaml']) {
     const text = ctx.read(file);

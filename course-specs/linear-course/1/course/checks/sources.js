@@ -19,7 +19,7 @@ const FIXED = ['essentials', 'pitfalls', 'quick_test', 'deepening'];
 const short = (s) => (s.length > 50 ? s.slice(0, 50) + '…' : s);
 
 // the anchors of concept.md: the ids of its sub-concept headings, and its fixed sections by
-// their pack value (« Objectif » is not one: it states what the learner will do, not a claim)
+// their lexicon value (« Objectif » is not one: it states what the learner will do, not a claim)
 function anchorsOf(ctx, c, H) {
   const set = new Set();
   const cm = ctx.md(c.dir + '/concept.md');
@@ -67,7 +67,7 @@ function checkConcept(ctx, c, out) {
       if (source === '') out.push(fail(sf, r.line, `reference ${id}: the source column is empty`));
       if (link !== '' && !URL.test(link)) out.push(fail(sf, r.line, `reference ${id}: the link "${short(link)}" must be one URL (http or https) or empty; a second place is a second reference`));
       const words = type.replace(/\(.*$/, '').split(',').map((w) => w.trim()).filter(Boolean);
-      const allowed = Object.values((ctx.pack && ctx.pack.source_types) || {});
+      const allowed = Object.values((ctx.lexicon && ctx.lexicon.source_types) || {});
       if (!words.length || words.some((w) => !allowed.includes(w))) out.push(fail(sf, r.line, `reference ${id}: type "${type}" must be one or more of ${allowed.join(', ')}, separated by commas`));
       if (!/^\d{4}-\d{2}-\d{2}/.test(on)) out.push(fail(sf, r.line, `reference ${id}: "consulted on" must start with YYYY-MM-DD, found "${on}"`));
     }
@@ -164,7 +164,7 @@ function checkConcept(ctx, c, out) {
 
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
-  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see course/README.md section 7')];
+  if (!ctx.lexiconOk) return [fail(ctx.lexiconFile || 'course/lexicon.yaml', 1, 'the lexicon is unusable: see course/README.md section 7')];
   const out = [];
   for (const c of ctx.selected()) checkConcept(ctx, c, out);
   return out;

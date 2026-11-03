@@ -3,7 +3,7 @@
 | Reader | Comes for | Opens |
 |---|---|---|
 | creator | what a course is, the templates, how to verify | [`course/README.md`](course/README.md), [`course/templates/README.md`](course/templates/README.md), [`course-specs/check-course`](../../check-course) |
-| builder | the shape of a course, of learner memory, the pack keys, the protocol | [`course/README.md`](course/README.md), [`course/schemas/`](course/schemas/), [`linear-course/1/teacher/README.md`](teacher/README.md), [`linear-course/1/teacher/rules.yaml`](teacher/rules.yaml), [`linear-course/1/teacher/templates/learner/`](teacher/templates/learner/), [`lang/fr.yaml`](lang/fr.yaml), [`spec.yaml`](spec.yaml) |
+| builder | the shape of a course, of learner memory, the lexicons, the protocol | [`course/README.md`](course/README.md), [`course/schemas/`](course/schemas/), [`linear-course/1/teacher/README.md`](teacher/README.md), [`linear-course/1/teacher/rules.yaml`](teacher/rules.yaml), [`linear-course/1/teacher/templates/learner/`](teacher/templates/learner/), [`course/lexicon.yaml`](course/lexicon.yaml), [`teacher/lexicon.yaml`](teacher/lexicon.yaml), [`spec.yaml`](spec.yaml) |
 | verifier | the rules as data, the conformance clause, the categories, the checks | [`course/rules.yaml`](course/rules.yaml), [`linear-course/1/teacher/rules.yaml`](teacher/rules.yaml), sections [3](#3-categories) and [5](#5-checks), [`course/checks/README.md`](course/checks/README.md), [`spec-directives/1/README.md`](../../../spec-directives/1/README.md#2-conformance) sections 2 to 5 |
 | spec writer | the files, the references, the decisions, the changelog | sections [2](#2-files) and [4](#4-normative-references), [`decisions/`](decisions/), [`CHANGELOG.md`](CHANGELOG.md), [`spec-directives/1/README.md`](../../../spec-directives/1/README.md) |
 
@@ -16,11 +16,11 @@ binding from the tag `linear-course/v1.0.0` (`spec-directives/1/README.md` secti
 follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 
 - `README.md`: this file: scope, files, categories, normative references, the list of checks.
-- `course/README.md`: what a course is: course structure, reader-text conventions, diagrams (drawing contract and style), language pack keys.
+- `course/README.md`: what a course is: course structure, reader-text conventions, diagrams (drawing contract and style), the lexicon of the course files.
 - `teacher/README.md`: the pedagogical protocol the teacher executes.
 - `CHANGELOG.md`: the changes of the spec, « Unreleased » until the tag.
-- `spec.yaml`: the declaration of this MAJOR, its version and the MAJOR of the spec directives it follows (`spec-directives/1/`: the tests of these files, run by `spec-directives/check-spec course-specs/linear-course/1`, and the `lib/` and package the checks load).
-- `lang/<code>.yaml`: the language packs (phrases, typography, headings, markers, site labels).
+- `spec.yaml`: the declaration of this MAJOR, its version, its language (`fr`) and the MAJOR of the spec directives it follows (`spec-directives/1/`: the tests of these files, run by `spec-directives/check-spec course-specs/linear-course/1`, and the `lib/` and package the checks load).
+- `course/lexicon.yaml`: the lexicon of the course files, the one source of the words the checks, the classroom build and the site recognise in a course file (headings, case fields, qualifiers, markers, natures, concept references, source types, typography); `teacher/lexicon.yaml`: the words the teacher says and writes.
 - `course/checks/`: the check scripts; `course-specs/check-course <course-dir>` runs on a course that declares this MAJOR the checks of the rule files, those that block and those that report, `--category` selecting by category (section 5).
 - `course/templates/`: the course templates; `decisions/`: the decisions of this spec.
 
@@ -35,9 +35,11 @@ tests of these files) is the spec directives this MAJOR follows, `spec-directive
 **domains**, ordered **concepts** with prerequisites, **sub-concepts** taught one per teacher
 message, a **storyline** the cases live in. A course that does not fit this shape needs another
 spec. The spec fixes what a course contains, how the teacher teaches it, and how it is checked.
-It holds for every course language: what depends on the language spoken to the learner is in
-the **language pack** `lang/<code>.yaml` (phrases, typography, headings, markers, site labels),
-whose keys `course/README.md` section 7 names. French values are quoted for reference.
+The spec is French (`language: fr` in `spec.yaml`): its courses, its lexicons and its protocol
+are in French, and a course of another language follows another spec, not a translation of this
+one (decision `lexicon-not-language-pack`). The words a program recognises in a course file are
+written once, in the **lexicon** `course/lexicon.yaml`, whose keys `course/README.md` section 7
+names; the words the teacher says and writes, in `teacher/lexicon.yaml`.
 
 Out of scope here: the learner memory files (the protocol, and `teacher/templates/learner/`), how
 the site and the classroom build (their own folders).
@@ -50,15 +52,16 @@ plus this README (decision `spec-files-by-product`):
 | File | Holds |
 |---|---|
 | `README.md` | this file: scope, files, categories, normative references, the list of checks |
-| `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the language pack keys |
+| `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the lexicon of the course files |
 | `teacher/README.md` | the protocol of the teacher: purpose, notation, rules named by slug, keys and parameters |
 | `course/rules.yaml` | the rules of a course, in English |
 | `teacher/rules.yaml` | the rules of the teacher, in French |
 | `course/schemas/*.schema.yaml` | the tables of fields of `course/README.md`, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` |
 | `CHANGELOG.md` | the changes of the spec, an « Unreleased » section until the tag |
-| `spec.yaml` | the declaration of this MAJOR: `name`, `major`, `version`, and `directives`, the MAJOR of `spec-directives/` whose tests verify these files and whose `lib/` and package the checks load |
+| `spec.yaml` | the declaration of this MAJOR: `name`, `major`, `version`, `language`, and `directives`, the MAJOR of `spec-directives/` whose tests verify these files and whose `lib/` and package the checks load |
 | `course/checks/` | the check scripts, their fixtures and `course/checks/README.md` (how to run them) |
-| `lang/<code>.yaml` | the language packs |
+| `course/lexicon.yaml` | the lexicon of the course files (`course/README.md` section 7) |
+| `teacher/lexicon.yaml` | the lexicon of the teacher, the words it says and writes (`teacher/README.md`, "Keys and parameters") |
 | `course/templates/` | the course templates |
 | `teacher/templates/learner/` | the templates of the learner memory files |
 | `decisions/` | the decisions of this spec |
@@ -73,11 +76,12 @@ rules of the protocol leave `teacher/README.md` for `teacher/rules.yaml`, which 
 #318. Until that extraction, `course/README.md` and `teacher/README.md` keep their verbal forms of
 obligation, read as `course/README.md` says in its opening.
 
-**Language exception.** The rules of `teacher/README.md` are written in French, a bounded exception
-to the language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited
-from `parcours-po`, whose teacher was instructed and corrected in French. It changes by user
-story, its fresh tests come with the teacher, and the exception stays until a teacher or a course
-of another language needs the translation, a spec MINOR that removes this paragraph.
+**Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language
+of its courses, of its lexicons and of the rules of `teacher/README.md`, a bounded exception to the
+language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited from
+`parcours-po`, whose teacher was instructed and corrected in French. It changes by user story, its
+fresh tests come with the teacher. A teacher or a course of another language follows another spec,
+not a translation of this one (decision `lexicon-not-language-pack`).
 
 ## 3. Categories
 
@@ -121,7 +125,7 @@ directives MAJOR that `spec.yaml` declares (`spec-directives/1/package.json`, in
 run them, their options and fixtures. `course-specs/check-course <course-dir>` runs this folder's
 `course/checks/check-course` on a course. `spec-directives/check-spec <this folder>` runs the tests
 of the spec's own files (`teacher/README.md`, `README.md`, `course/README.md`, `decisions/`,
-`course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `lang/`, `spec.yaml`,
+`course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, the two lexicons, `spec.yaml`,
 `CHANGELOG.md`), not a course: they are the directives' (`spec-directives/1/tests/`).
 
 `check-course` takes its checks from `course/rules.yaml`: by default it runs, in one run, every
@@ -146,7 +150,7 @@ are those of `course/README.md`.
 
 | Id | Category | Level | Method | Severity | Verifies | Sections |
 |---|---|---|---|---|---|---|
-| `course-yaml` | `structure` | requirement | test | blocks | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/`, spec declared (`course-specs/check-course` refuses an unknown spec or MAJOR), language pack present | 2; `spec-directives/1/README.md` 6 |
+| `course-yaml` | `structure` | requirement | test | blocks | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/`, spec declared (`course-specs/check-course` refuses an unknown spec or MAJOR); a missing lexicon, a tooling error (no rule) | 2; `spec-directives/1/README.md` 6 |
 | `concept-folder` | `structure` | requirement | test | blocks | the folder's files; the three files' sections and their order, the column count of the `sources.md` tables; frontmatter keys, `verified` parallel to `refs`; one section per sub-concept; « Objectif » equals `objective` | 3 |
 | `case-contract` | `pedagogy` | requirement | test | blocks | case headings and their qualifier, titles unique in the concept, fields, a qualifier on « Question » only, coverage of leaves, citation in « Consignes » | 3.3, 7 |
 | `conventions` | `writing` | requirement | test | blocks | the reader-text conventions of `concept.md`; plain Markdown in course files | 1, 3.5 |
@@ -155,7 +159,7 @@ are those of `course/README.md`.
 | `course-files` | `structure` | requirement | test | blocks | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md` (four columns, one defining concept per row, a variant in one row), `CHANGELOG.md`, domain files: presence, no unlisted file in `domains/`, frontmatter, sections, leads | 4, 5 |
 | `domain-first-sentence` | `writing` | requirement | test | blocks | the first sentence of each paragraph of « Le fil des concepts » ends within 300 characters of the lead | 4 |
 | `glossary-order` | `pedagogy` | recommendation | test | reports | no glossary term used in a `concept.md`, body or frontmatter, before its defining concept, unless its sentence carries a concept reference to that concept; each comma variant matched, a qualified row skipped | 5 |
-| `typography` | `writing` | recommendation | test | reports | no banned character of the language pack in course text | 1 |
+| `typography` | `writing` | recommendation | test | reports | no banned character of the lexicon in course text | 1 |
 | `domain-first-sentence-standalone` | `writing` | recommendation | test | reports | the first sentence of each paragraph of « Le fil des concepts » does not open with a word of `checks.anaphora` | 4, 7 |
 | `taught-check` | `pedagogy` | recommendation | analysis | reports | no case asks what the learner has not yet been taught | 3.3 |
 

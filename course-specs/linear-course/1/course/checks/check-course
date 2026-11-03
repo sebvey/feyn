@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-// check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>]
+// check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lexicon <file>]
 // check-course [--category <c>[,<c>...]] --list
 // The checks, their category and their severity come from course/rules.yaml (lib/rules.js; decision
 // `rules-with-level-and-method`): by default every check of method test that runs on a course, the
@@ -13,8 +13,8 @@ const { load } = directives.lib('course');
 const rules = directives.lib('rules');
 
 const QUALITY_GONE = '--quality is gone: the reporting checks run by default, and --category <c> selects checks by category (check-course --list)';
-// the MAJOR's language packs, when neither --lang-dir nor LINEAR_COURSE_LANG_DIR names others
-const LANG = path.join(__dirname, '..', '..', 'lang');
+// the lexicon of the course files of this MAJOR, unless --lexicon names another (the fixtures')
+const LEXICON = path.join(__dirname, '..', 'lexicon.yaml');
 
 let RULES;
 try { RULES = rules.load(__dirname); } catch (e) {
@@ -27,7 +27,7 @@ const ORDERED = [...HERE.filter((c) => c.severity === 'blocks'), ...HERE.filter(
 
 function usage(code) {
   const out = code ? console.error : console.log;
-  out('usage: check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lang-dir <dir>]');
+  out('usage: check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lexicon <file>]');
   out('       check-course [--category <c>[,<c>...]] --list');
   out('runs every check of method test of course/rules.yaml; a failure of a blocking check sets exit code 1,');
   out('a failure of a reporting check leaves it 0');
@@ -46,7 +46,7 @@ const args = process.argv.slice(2);
 let dir = null;
 const only = [];
 const categories = [];
-const opts = { specLangDir: LANG };
+const opts = { specLexicon: LEXICON };
 let list = false;
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
@@ -59,8 +59,8 @@ for (let i = 0; i < args.length; i++) {
   else if (a.startsWith('--only=')) only.push(...ids(a.slice(7)));
   else if (a === '--concept') opts.concept = args[++i];
   else if (a.startsWith('--concept=')) opts.concept = a.slice(10);
-  else if (a === '--lang-dir') opts.langDir = path.resolve(args[++i] || '');
-  else if (a.startsWith('--lang-dir=')) opts.langDir = path.resolve(a.slice(11));
+  else if (a === '--lexicon') opts.lexicon = path.resolve(args[++i] || '');
+  else if (a.startsWith('--lexicon=')) opts.lexicon = path.resolve(a.slice(10));
   else if (a.startsWith('-')) { console.error(`unknown option ${a}`); usage(2); }
   else if (dir === null) dir = a;
   else usage(2);

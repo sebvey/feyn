@@ -18,7 +18,7 @@ single concept file of `parcours-po`, where the bank sat beside the reader text 
 alignment stamp. No filter inside a file: the site builds every « Affirmations » row of
 `sources.md` and the « Références »; no row is teacher-only, since `sources.md` traces the body
 of `concept.md` only (decision `sources-trace-the-concept`). « Non vérifié » is the one
-section-level exclusion, by its pack heading (`course/README.md` 3.4).
+section-level exclusion, by its lexicon heading (`course/README.md` 3.4).
 
 ## Options ruled out
 

@@ -18,7 +18,7 @@ the protocol reaches the teacher verbatim through the classroom build.
 - **creator**: a human or an agent who makes a course; comes for what a course is, the
   templates, and how to verify a course.
 - **builder**: whoever writes the classroom build or the site build, a consumer of courses; comes
-  for the shape of a course, of learner memory and the language pack keys, and, for the
+  for the shape of a course, of learner memory and the lexicons of the spec, and, for the
   classroom, the protocol to inject.
 - **verifier**: the checks, the reviewer and the fresh tests, which make a verdict; comes for the
   rules as data, the conformance clause and the fixtures.

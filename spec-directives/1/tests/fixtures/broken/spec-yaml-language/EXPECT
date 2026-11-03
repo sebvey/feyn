@@ -1,0 +1,2 @@
+check: spec-yaml
+message: spec.yaml:6 language "french" is not an ISO 639-1 code

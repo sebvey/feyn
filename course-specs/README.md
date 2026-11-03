@@ -25,12 +25,11 @@ One folder per MAJOR, `course-specs/<name>/<MAJOR>/` (`1/`, not `v1/`), holds:
 | File or folder | Holds |
 |---|---|
 | `README.md` | the entry to the MAJOR: scope, files, categories, the normative references of its rules, checks |
-| `course/` | the course, one of the two products: `README.md` (what a course is: its files, fields, diagrams, language pack keys), `rules.yaml` (the rules of a course, as data), `schemas/` (the JSON Schemas of a course's files), `templates/` (the course templates), `checks/` (the checks of a course, their fixtures) |
-| `teacher/` | the teacher, the other product: `README.md` (the protocol), `rules.yaml` (the rules of the protocol, as data), `templates/learner/` (the templates of learner memory) |
+| `course/` | the course, one of the two products: `README.md` (what a course is: its files, fields, diagrams, the lexicon of the course files), `lexicon.yaml` (the words of the course files), `rules.yaml` (the rules of a course, as data), `schemas/` (the JSON Schemas of a course's files), `templates/` (the course templates), `checks/` (the checks of a course, their fixtures) |
+| `teacher/` | the teacher, the other product: `README.md` (the protocol), `rules.yaml` (the rules of the protocol, as data), `templates/learner/` (the templates of learner memory), `lexicon.yaml` (the words the teacher says and writes) |
 | `decisions/` | the spec's decisions |
-| `lang/` | the language packs |
 | `CHANGELOG.md` | the changelog of the spec's versions in this MAJOR |
-| `spec.yaml` | `name`, `major`, `version`, and `directives`: the MAJOR of `spec-directives/` it follows, whose tests verify the spec's own files (`spec-directives/check-spec <MAJOR folder>`) and whose `lib/` and package its checks load |
+| `spec.yaml` | `name`, `major`, `version`, `language` (the language of the spec, its courses and its protocol: a course of another language follows another spec), and `directives`: the MAJOR of `spec-directives/` it follows, whose tests verify the spec's own files (`spec-directives/check-spec <MAJOR folder>`) and whose `lib/` and package its checks load |
 
 A new MAJOR copies the tree of the previous one, its decisions under the same slugs.
 
@@ -49,7 +48,7 @@ spec directives write it (`spec-directives/1/README.md` sections 3 and 6):
 | Bump | When |
 |---|---|
 | MAJOR | the structure changes (files, fields, mandatory sections); a requirement added or made stricter; an optional field made mandatory; a recommendation made a requirement |
-| MINOR | an optional element; a protocol rule added, changed or renamed (the old slug is burnt); a requirement made looser or made a recommendation; a recommendation added or made stricter; a language-pack key added or renamed, every pack updated |
+| MINOR | an optional element; a protocol rule added, changed or renamed (the old slug is burnt); a requirement made looser or made a recommendation; a recommendation added or made stricter; a lexicon key added or renamed |
 | PATCH | wording; a false positive lifted |
 
 A MAJOR lives while a served course version declares it, a course tag included; then it is

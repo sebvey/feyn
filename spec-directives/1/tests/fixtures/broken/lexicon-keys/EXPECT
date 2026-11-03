@@ -1,0 +1,2 @@
+check: lexicon-keys
+message: course/lexicon.yaml:5 missing key headings.bank

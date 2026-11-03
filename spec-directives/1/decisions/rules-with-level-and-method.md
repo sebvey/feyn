@@ -74,11 +74,11 @@ For a rule of the protocol, the category is its family (the nine families of `li
 no second taxonomy without a use.
 
 **Conformance clause** (D14). Two classes of products: the **course**, its diagrams included, and
-the **teacher**; a rule binds a product. The language pack is not a product: it lives in the spec's
-folder, written by the spec's authors, and its consistency is the spec's own. The spec's own files
-(the rule files, the schemas, the slugs of the protocol, the language packs, `spec.yaml` and its
+the **teacher**; a rule binds a product. The lexicons are not products: they live in the spec's
+folder, written by the spec's authors, and their consistency is the spec's own. The spec's own files
+(the rule files, the schemas, the slugs of the protocol, the lexicons, `spec.yaml` and its
 version) are verified by the tests of the directives, run by `check-spec` (`rule-files`,
-`rule-slugs`, `language-pack-keys`, `spec-yaml`), which are not rules: they carry no category and
+`rule-slugs`, `lexicon-keys`, `spec-yaml`), which are not rules: they carry no category and
 no level, each failure blocks `check-spec`, and none counts toward a course's conformance. A course
 conforms when it holds every requirement of `course/rules.yaml`, whatever its method; the blocking
 checks are a necessary condition, not a sufficient one; the review and taught-check do the rest,
@@ -142,9 +142,9 @@ and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
 - In French, « schéma » means a drawing or a JSON Schema; the repository, in English, says
   `diagram` and `schema`.
 - Amended 2026-10-31 (#339): a rule binds a product, a course or a teacher. The consistency of
-  the spec's own files (the rule files, the schemas, the slugs of the protocol, the language
-  packs) is verified by the tests of `check-spec` (`rule-files`, `rule-slugs`,
-  `language-pack-keys`), which are not rules: they carry no category and no level, and each
+  the spec's own files (the rule files, the schemas, the slugs of the protocol, the
+  lexicons) is verified by the tests of `check-spec` (`rule-files`, `rule-slugs`,
+  `lexicon-keys`), which are not rules: they carry no category and no level, and each
   failure blocks `check-spec`. The categories are those of a course and the families of the
   protocol. Without this, a contributor
   applies "every check verifies a rule" to a check of the spec's files and writes a rule file

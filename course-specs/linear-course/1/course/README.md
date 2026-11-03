@@ -2,15 +2,15 @@
 
 | Reader | Comes for | Opens |
 |---|---|---|
-| creator | what a course is, the templates, how to verify | sections [1](#1-the-course-folder) to [7](#7-language-pack-keys), [`templates/README.md`](templates/README.md), [`course-specs/check-course`](../../../check-course) |
-| builder | the shape of a course, the pack keys | sections [1](#1-the-course-folder) to [7](#7-language-pack-keys), [`schemas/`](schemas/) |
+| creator | what a course is, the templates, how to verify | sections [1](#1-the-course-folder) to [7](#7-the-lexicon-of-the-course-files), [`templates/README.md`](templates/README.md), [`course-specs/check-course`](../../../check-course) |
+| builder | the shape of a course, the lexicon of the course files | sections [1](#1-the-course-folder) to [7](#7-the-lexicon-of-the-course-files), [`schemas/`](schemas/) |
 | verifier | the rules of a course as data, the checks, their fixtures | [`rules.yaml`](rules.yaml), [`checks/README.md`](checks/README.md), [`checks/fixtures/`](checks/fixtures/) |
 | spec writer | the rules and schemas of a course, the spec's decisions | [`rules.yaml`](rules.yaml), [`schemas/`](schemas/), [`../decisions/`](../decisions/), [`../CHANGELOG.md`](../CHANGELOG.md) |
 
 The readers are defined in [`spec-directives/README.md`](../../../../spec-directives/README.md#the-readers).
 
 What a course of `linear-course` is: its folder, `course.yaml`, the concept folder, the domain
-files, the course files, the diagrams and the language pack keys. The scope, the files, the
+files, the course files, the diagrams and the lexicon of the course files. The scope, the files, the
 categories and the checks are the MAJOR's `README.md`; conformance, levels, methods, severity and
 versions are the spec directives, `spec-directives/1/README.md`; the protocol the teacher executes
 is `teacher/README.md`. Sections 1 to 7 are sections 2 to 7 and 9 of the spec's description before
@@ -55,8 +55,8 @@ courses/<id>/
 ```
 
 Course Markdown is plain CommonMark with YAML frontmatter where stated: no HTML, no MDX, no
-remark directive (`conventions`). Course text follows the typography of the language pack;
-its banned characters (French: em-dash, arrows) fail the check (`typography`).
+remark directive (`conventions`). Course text follows the typography of the lexicon;
+its banned characters (`typography.banned`: em-dash, arrows) fail the check (`typography`).
 
 ## 2. `course.yaml`
 
@@ -77,7 +77,6 @@ Read by the site, the classroom build and the checks (`course-yaml` for every ru
 |---|---|---|
 | `id` | mandatory | the course id: lowercase ASCII words joined by hyphens, equal to the folder name |
 | `spec` | mandatory | `linear-course@<MAJOR>`: the spec MAJOR the course follows (`spec-directives/1/README.md` section 6) |
-| `language` | mandatory | ISO 639-1 code of the language spoken to the learner; `lang/<language>.yaml` exists |
 | `title` | mandatory | the course title |
 | `subtitle` | optional | one line under the title on the site |
 | `audience` | mandatory | one sentence for the site home and previews; the full prose is in `plan.md` |
@@ -153,7 +152,7 @@ concepts/09-decoupage-vertical/
 ```
 
 Nothing else sits in a concept folder (`concept-folder`). The three Markdown files have no H1:
-the title is in `course.yaml`. Sections are `##` headings whose text is the language pack's
+the title is in `course.yaml`. Sections are `##` headings whose text is the lexicon's
 heading, in the order given, and no other `##` section exists (`concept-folder`).
 
 ### 3.1 `concept.md` frontmatter
@@ -248,8 +247,8 @@ unfolding (who says what, when), never a new fact (review).
 
 A **case** heading is `### <title> (<sub-concept>)`. The parenthesis holds the sub-concept id
 and at most one **qualifier**, before or after the id, separated by a comma: `(9a1, rechange)`,
-`(aparté, 11a)`; nothing else (`case-contract`). The qualifier is a value of the language
-pack's `qualifiers` group and gives the case its type:
+`(aparté, 11a)`; nothing else (`case-contract`). The qualifier is a value of the
+lexicon's `qualifiers` group and gives the case its type:
 
 | Type | Qualifier (key) | The teacher poses it |
 |---|---|---|
@@ -303,7 +302,7 @@ first, or no claim to source. `concept.md` and `teaching.md` cite no reference: 
 in the frontmatter `refs` and here (`sources`).
 
 The site builds every row of « Affirmations » and « Références »: no row is teacher-only.
-« Non vérifié » is the one section never built (by its pack heading); the classroom copies the
+« Non vérifié » is the one section never built (by its lexicon heading); the classroom copies the
 whole file.
 
 The file has no H1 and no introduction: it opens on « Affirmations » (`sources`). In this order
@@ -312,7 +311,7 @@ The file has no H1 and no introduction: it opens on « Affirmations » (`sources
 1. « Affirmations » (`claims`), mandatory: one table, five columns in this order:
    - **claim**: the claim in a few words;
    - **section**: where `concept.md` makes it: sub-concept ids (`4b`, `9a1`) and fixed sections
-     by their pack value, « L'essentiel », « Pièges », « Le test rapide », « Approfondissement »
+     by their lexicon value, « L'essentiel », « Pièges », « Le test rapide », « Approfondissement »
      (`headings.essentials`, `pitfalls`, `quick_test`, `deepening`), several separated by
      commas, never a heading's text; each exists in `concept.md` (`sources`). « Objectif » is
      not one: it states what the learner will do, not a claim;
@@ -337,7 +336,7 @@ The file has no H1 and no introduction: it opens on « Affirmations » (`sources
    **link**, one URL or empty: a second place is a second reference, never a second URL nor a
    path to a repository file (`sources`); **type**, how much to trust it and how to name it: one
    or more of `primary` (the text itself), `secondary` (someone reporting it), `marketing` (a
-   vendor's or a training's page), written as the language pack's words and separated by
+   vendor's or a training's page), written as the lexicon's words and separated by
    commas, then an optional remark in parentheses (« primaire, marketing (aimant à
    prospects) »); **consulted on**, when this reference was read for this concept: it starts
    with `YYYY-MM-DD`. References are per concept: each concept cites its own.
@@ -408,7 +407,7 @@ Body, all mandatory, in this order (`course-files`):
 
 **First sentence**: it ends with `.`, `?` or `!` within 300 characters of the lead, so that
 the site can show it (`domain-first-sentence`, which blocks), and does not open with a
-word of the language pack's `checks.anaphora` list (French: « Il », « Elle », « Ce », « Cette »,
+word of the lexicon's `checks.anaphora` list (« Il », « Elle », « Ce », « Cette »,
 « Puis »…), so that it stands alone (`domain-first-sentence-standalone`, which reports).
 
 ## 5. Course files
@@ -474,8 +473,8 @@ welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases l
   followed by a space or the end of its block; « : » and « ; » do not end it. A paragraph, a
   blockquote, a list item, a heading, a table row and a frontmatter text are blocks, and a
   sentence never crosses one.
-- **`storyline.md`**: the storyline, free prose in the course language, read by the teacher and
-  shown by the site. The cases take their actors and facts from it, without contradicting it
+- **`storyline.md`**: the storyline, free prose in the language of the spec, read by the teacher
+  and shown by the site. The cases take their actors and facts from it, without contradicting it
   (review).
 - **`CHANGELOG.md`** (`course-files`): an optional introduction; a section « Non publié »
   (`unreleased`), mandatory, possibly empty; then one section per release, newest first,
@@ -583,21 +582,26 @@ and the ordinary text.
    form or opacity must be named. No teaching sentence: that is the `caption`. No decoration,
    icon or gradient.
 
-## 7. Language pack keys
+## 7. The lexicon of the course files
 
-**Purpose.** The words that depend on the course language, named by key so that this file, the
-checks and the protocol hold for every language.
+**Purpose.** The words a program must recognise in a course file (a heading, a case field, a
+qualifier, a marker, a nature, a concept reference, a source type, a banned character), written
+once, in `course/lexicon.yaml`, and named by key: the checks, the classroom build and the site
+read them there, and none writes them again (decision `lexicon-not-language-pack`).
 
 | Reader | Needs | When |
 |---|---|---|
-| the creator (human or agent) | the headings, case field labels, qualifiers, markers and natures to write, in the course language | writing any course file |
-| the maintainer | the keys a new language's pack must hold | adding a language |
+| the creator (human or agent) | the headings, case field labels, qualifiers, markers and natures to write | writing any course file |
+| the writer of a program that recognises a word of the course files (a check, the classroom build, the site) | the key that names the word, its group, and the file to read it from, `course/lexicon.yaml` | writing or changing that program |
 
-The language pack of the course language holds every key below, `checks.anaphora` excepted,
-which is optional; `language-pack-keys` verifies it, with the keys `teacher/README.md` uses. French
-values, for reference:
+`course/lexicon.yaml` holds every key below, `checks.anaphora` excepted, which is optional;
+`lexicon-keys`, a test of `check-spec`, verifies it. A missing or unreadable `course/lexicon.yaml`
+is a tooling error, not a defect of the course nor a rule: `course-yaml` fails on it (exit 1),
+and `lexicon-keys` fails on it beside a `teacher/lexicon.yaml`. A program reads a word by its
+key, never as a literal of its own. The words the teacher says and writes are the other lexicon,
+`teacher/lexicon.yaml` (`teacher/README.md`, "Keys and parameters"). The values:
 
-| Group | Keys and French values |
+| Group | Keys and values |
 |---|---|
 | `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (the site's heading for the frontmatter stances, and the section a « Non vérifié » entry of `sources.md` names for a stance or a neighbour: no `concept.md` section has it), `pitfalls` « Pièges », `quick_test` « Le test rapide », `deepening` « Approfondissement »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
 | `case_fields` | `usage` « Usage », `explanation` « Explication », `situation` « Situation », `question` « Question », `expected_answer` « Réponse attendue », `common_mistakes` « Erreurs fréquentes », `what_works` « Ce qui marche » |
@@ -606,5 +610,5 @@ values, for reference:
 | `natures` | `fact` « fait »: the nature of a `sources.md` claim that a source states with no stance (3.4); the other natures are the stance markers `consensus`, `school`, `course`. Read by `sources` only: never a marker of the reader text, which `conventions` checks |
 | `concept_refs` | `concept` « concept », `concepts` « concepts », `and` « et », `annex` « annexe »: the words of a concept reference (3.5) |
 | `source_types` | `primary` « primaire », `secondary` « secondaire », `marketing` « marketing » |
-| `typography` | `banned`: the characters course text never uses (French: em-dash, arrows) |
+| `typography` | `banned`: the characters course text never uses (the em-dash, the arrows) |
 | `checks` | `anaphora`, optional: the words a domain paragraph's first sentence does not open with; without it, `domain-first-sentence-standalone` fails |

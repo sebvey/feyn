@@ -17,7 +17,6 @@ const here = __dirname;
 // here is course-specs/<name>/<MAJOR>/course/templates
 const spec = path.resolve(here, '..', '..');
 const teacher = path.join(spec, 'teacher', 'templates');
-const lang = fs.existsSync(path.join(spec, 'lang', 'fr.yaml')) ? path.join(spec, 'lang') : path.join(spec, 'course', 'checks', 'fixtures', 'lang');
 
 // placeholder -> dummy value (the French words are course text)
 const DUMMY = {
@@ -174,7 +173,7 @@ function build(withDiagram) {
 for (const withDiagram of [true, false]) {
   const { tmp, course } = build(withDiagram);
   // a reporting failure leaves the exit code 0: the test reads the failure lines, not the code alone
-  const r = spawnSync(process.execPath, [path.join(spec, 'course', 'checks', 'check-course'), course, '--lang-dir', lang], { encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [path.join(spec, 'course', 'checks', 'check-course'), course], { encoding: 'utf8' });
   const notOk = r.stdout.split('\n').filter((l) => l && !l.endsWith(': ok') && !l.startsWith('summary: '));
   const ok = r.status === 0 && !notOk.length;
   console.log(`${ok ? 'ok  ' : 'FAIL'} templates ${withDiagram ? 'with' : 'without'} a diagram pass every check, blocking and reporting${ok ? '' : ': ' + (notOk.join(' | ') || r.stderr)}`);

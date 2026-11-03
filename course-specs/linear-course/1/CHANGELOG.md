@@ -93,3 +93,18 @@ no class: `- file or area: what changes`.
 - `README.md`, `course/README.md`, `teacher/README.md`: each opens with the table Reader, Comes
   for, Opens over the four readers of a spec (the creator, the builder, the verifier, the spec
   writer), defined in `spec-directives/README.md`; no rule changes (#467).
+- `spec.yaml`, `lang/`, `course/`, `teacher/`: the language is the spec's, `language: fr` in
+  `spec.yaml`, no longer a field of `course.yaml` (`course-yaml` accepts a `language` key and
+  ignores it, for `courses/parcours-po` until its migration); the language pack `lang/fr.yaml`
+  becomes two lexicons, `course/lexicon.yaml` (the words of the course files: headings, case
+  fields, qualifiers, markers, natures, concept references, source types, typography, the word
+  lists of the checks) and `teacher/lexicon.yaml` (phrases, learner words, memory, statuses); its
+  `site` group leaves the spec; `check-course --lexicon <file>` replaces `--lang-dir` and
+  `LINEAR_COURSE_LANG_DIR`; `course/README.md` section 7 becomes « The lexicon of the course
+  files »; the rule `language-pack-exists` is removed (the lexicon is a file of the spec, which
+  no course can break: a missing or unreadable lexicon fails `course-yaml` as a tooling error,
+  and `lexicon-keys` of `check-spec` tests the file), `case-qualifier-from-pack` and
+  `reference-type-from-pack` become `case-qualifier-from-lexicon` and
+  `reference-type-from-lexicon`, their texts naming the lexicon; decision
+  `lexicon-not-language-pack` written, `language-policy` amended; no protocol rule text changes
+  (#493).

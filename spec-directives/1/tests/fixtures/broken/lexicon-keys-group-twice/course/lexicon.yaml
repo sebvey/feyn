@@ -1,0 +1,84 @@
+# A lexicon with one defect: the group status, the teacher lexicon's, is here too. Otherwise the
+# course lexicon of the spec fixture (valid/course/lexicon.yaml).
+
+# Section titles of the course files.
+headings:
+  objective: "Objectif"
+  essentials: "L'essentiel"
+  stances: "Consensus et choix d'école"
+  pitfalls: "Pièges"
+  quick_test: "Le test rapide"
+  deepening: "Approfondissement"
+  instructions: "Consignes"
+  storyline_facts: "Faits du fil rouge utilisés"
+  bank: "Banque d'exemples"
+  drawing: "Schéma"
+  claims: "Affirmations"
+  references: "Références"
+  unverified: "Non vérifié"
+  problem: "Le problème"
+  concept_thread: "Le fil des concepts"
+  from_to: "D'où l'on vient, où l'on va"
+  crossing_case: "Un cas qui traverse le domaine"
+  audience: "Public cible"
+  onboarding: "Accueil"
+  avoid: "Termes à éviter"
+  unreleased: "Non publié"
+
+# Labels of the fields of a case of `teaching.md`.
+case_fields:
+  usage: "Usage"
+  explanation: "Explication"
+  situation: "Situation"
+  question: "Question"
+  expected_answer: "Réponse attendue"
+  common_mistakes: "Erreurs fréquentes"
+  what_works: "Ce qui marche"
+
+# Words of the reader text: the storyline lead `**Fil rouge :**` and the stance markers `[cours]`,
+# `[école]`, `[consensus]`.
+markers:
+  storyline: "Fil rouge"
+  consensus: "consensus"
+  school: "école"
+  course: "cours"
+
+# The nature of a claim of `sources.md` that is not a stance marker: what a source says with no
+# stance (a tool's default, a date, a figure). The other natures are the markers consensus,
+# school, course (course/README.md 3.4). Read by `sources` only: never a marker of the reader text.
+natures:
+  fact: "fait"
+
+# The qualifiers a case heading may carry, at most one, and no other word (course/README.md 3.3).
+qualifiers:
+  fallback: "rechange"
+  practice: "entraînement"
+  aside: "aparté"
+
+# The words of a concept reference in reader text: « concept 4 », « concepts 5 et 7b »,
+# « annexe A2 » (course/README.md 3.5).
+concept_refs:
+  concept: "concept"
+  concepts: "concepts"
+  and: "et"
+  annex: "annexe"
+
+source_types:
+  primary: "primaire"
+  secondary: "secondaire"
+  marketing: "marketing"
+
+# `rules`: what the teacher does, as a clause of a sentence (no final period). `banned`: the
+# characters course text never uses, the em-dash and the arrows (the ASCII `->`, `<-` and `=>` included).
+typography:
+  rules: "espace avant « : », « ; », « ? » et « ! » ; guillemets « »"
+  banned: ["—", "→", "←", "↔", "↑", "↓", "↕", "↗", "↘", "↖", "↙", "↦", "↳", "↪", "⇒", "⇐", "⇔", "⇨", "⟶", "⟵", "⟷", "⟹", "⟸", "⟺", "➜", "➔", "➝", "➞", "➡", "⬅", "⬆", "⬇", "->", "<-", "=>"]
+
+# Words a domain paragraph's first sentence does not open with (`domain-first-sentence-standalone`,
+# a reporting check; optional).
+checks:
+  anaphora: ["Il", "Elle", "Ils", "Elles", "Ce", "Cet", "Cette", "Ces", "Puis", "Celui", "Celle", "Ceux", "Celles", "Cela", "Ça"]
+
+# Concept statuses in `learner/parcours.md`.
+status:
+  validated: "validé"

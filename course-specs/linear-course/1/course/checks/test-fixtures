@@ -10,9 +10,13 @@
 //                                  its severity, as course/rules.yaml gives them; the check it
 //                                  does not run (taught-check) marked "not run here"
 //   fixtures/valid                 passes every check, and every check of method test runs
-//   fixtures/lang-no-anaphora      a pack without checks.anaphora: domain-first-sentence-standalone
-//                                  (reports) fails alone, exit code 0
-//   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>", optional "lang-dir: <path>":
+//   fixtures/lexicon.yaml          the lexicon of every run (--lexicon), with the values of the
+//                                  spec's own course/lexicon.yaml
+//   fixtures/lexicon-no-anaphora.yaml
+//                                  a lexicon without checks.anaphora: domain-first-sentence-standalone
+//                                  (reports) fails alone, exit code 0; a lexicon that does not
+//                                  exist fails course-yaml, exit code 1
+//   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>", optional "lexicon: <path>":
 //                                  that check fails with a line containing the fragment, no other
 //                                  check fails beside it, and the exit code is 1 when it blocks,
 //                                  0 when it reports; broken/course-yaml-unlisted-folder passes
@@ -81,7 +85,7 @@ const SEVERITY = Object.fromEntries(LIST.map((c) => [c.id, c.severity]));
     LIST.length > 0 && !wrong.length && !missing.length, `wrong: ${wrong.map((c) => `${c.id} ${c.category} ${c.severity}`).join(', ') || 'none'}; missing: ${missing.join(', ') || 'none'}`);
   const notHere = LIST.filter((c) => !c.runsHere).map((c) => c.id).sort().join(',');
   report('--list marks taught-check "not run here", and no other', notHere === 'taught-check', notHere);
-  const spec = LIST.filter((c) => ['rule-slugs', 'rule-files', 'language-pack-keys', 'spec-yaml'].includes(c.id)).map((c) => c.id);
+  const spec = LIST.filter((c) => ['rule-slugs', 'rule-files', 'lexicon-keys', 'spec-yaml'].includes(c.id)).map((c) => c.id);
   report('--list names none of the tests of check-spec', spec.length === 0, spec.join(','));
   report('--list has blocking and reporting checks among those run here',
     RUN.some((c) => c.severity === 'blocks') && RUN.some((c) => c.severity === 'reports'), RUN.map((c) => `${c.id} ${c.severity}`).join(', '));
@@ -90,35 +94,41 @@ const runIds = (cats) => RUN.filter((c) => !cats || cats.includes(c.category)).m
 
 // valid
 {
-  const r = run(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang')]);
+  const r = run(path.join(fx, 'valid'), ['--lexicon', path.join(fx, 'lexicon.yaml')]);
   report('valid passes every check, and every check --list runs here runs', r.code === 0 && ids(r).join(',') === runIds(), notOk(r) || ids(r).join(','));
   const s = r.lines[r.lines.length - 1] || '';
   report('the run ends with a summary that counts the blocking and the reporting checks',
     s === `${SUMMARY}${RUN.filter((c) => c.severity === 'blocks').length} blocking checks, 0 failed; ${RUN.filter((c) => c.severity === 'reports').length} reporting checks, 0 failed; exit 0`, s);
 }
 
-// a reporting failure alone: a pack without checks.anaphora is consumable; the reporting
+// a reporting failure alone: a lexicon without checks.anaphora is consumable; the reporting
 // domain-first-sentence-standalone says so, and the exit code stays 0
 {
-  const lang = path.join(fx, 'lang-no-anaphora');
-  const r = run(path.join(fx, 'valid'), ['--lang-dir', lang]);
+  const lexicon = path.join(fx, 'lexicon-no-anaphora.yaml');
+  const r = run(path.join(fx, 'valid'), ['--lexicon', lexicon]);
   const f = failing(r);
-  report('lang-no-anaphora fails domain-first-sentence-standalone (reports) alone, exit code 0',
+  report('lexicon-no-anaphora fails domain-first-sentence-standalone (reports) alone, exit code 0',
     SEVERITY['domain-first-sentence-standalone'] === 'reports' && r.code === 0 && f.length === 1 && f[0].startsWith('domain-first-sentence-standalone: fail: ') && f[0].includes('no checks.anaphora')
       && r.lines[r.lines.length - 1].includes('1 failed (domain-first-sentence-standalone); exit 0'), notOk(r));
   // a blocking failure beside a reporting one: exit code 1
-  const b = run(path.join(fx, 'broken', 'course-files'), ['--lang-dir', lang]);
-  report('broken/course-files with lang-no-anaphora: a blocking and a reporting failure, exit code 1',
+  const b = run(path.join(fx, 'broken', 'course-files'), ['--lexicon', lexicon]);
+  report('broken/course-files with lexicon-no-anaphora: a blocking and a reporting failure, exit code 1',
     b.code === 1 && failing(b).some((l) => l.startsWith('course-files: fail: ')) && failing(b).some((l) => l.startsWith('domain-first-sentence-standalone: fail: ')), notOk(b));
+}
+
+// a lexicon that does not exist fails course-yaml as a tooling error (no rule), exit code 1
+{
+  const r = run(path.join(fx, 'valid'), ['--lexicon', path.join(fx, 'no-such-lexicon.yaml')]);
+  report('a lexicon that does not exist fails course-yaml as a tooling error, exit code 1', r.code === 1 && failing(r).some((l) => l.startsWith('course-yaml: fail: ') && l.includes('tooling error') && l.includes("the spec's lexicon is missing") && l.includes('does not exist') && l.includes('course/README.md section 7')), notOk(r));
 }
 
 // broken: one run each, with the default
 for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   const d = path.join(fx, 'broken', name);
   const ex = Object.fromEntries(fs.readFileSync(path.join(d, 'EXPECT'), 'utf8').split('\n').filter(Boolean).map((l) => [l.slice(0, l.indexOf(':')), l.slice(l.indexOf(':') + 1).trim()]));
-  const lang = ex['lang-dir'] ? path.resolve(d, ex['lang-dir']) : path.join(fx, 'lang');
+  const lexicon = ex.lexicon ? path.resolve(d, ex.lexicon) : path.join(fx, 'lexicon.yaml');
   const sev = SEVERITY[ex.check];
-  const r = run(d, ['--lang-dir', lang]);
+  const r = run(d, ['--lexicon', lexicon]);
   const hit = r.lines.filter((l) => l.startsWith(ex.check + ': fail: '));
   const want = sev === 'blocks' ? 1 : 0;
   report(`broken/${name} fails ${ex.check} (${sev}), exit code ${want}`, sev !== undefined && r.code === want && hit.some((l) => l.includes(ex.message)), `expected "${ex.message}" and exit code ${want}, got ${r.code}: ${r.lines.join(' | ') || r.err}`);
@@ -129,15 +139,15 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
 
 // --category runs the checks of those categories only, in the order of the default run
 {
-  const lang = ['--lang-dir', path.join(fx, 'lang')];
+  const lexicon = ['--lexicon', path.join(fx, 'lexicon.yaml')];
   for (const cats of [['writing'], ['pedagogy'], ['structure', 'diagrams']]) {
-    const r = run(path.join(fx, 'valid'), [...lang, '--category', cats.join(',')]);
+    const r = run(path.join(fx, 'valid'), [...lexicon, '--category', cats.join(',')]);
     report(`--category ${cats.join(',')} runs the checks of ${cats.join(', ')} only`, r.code === 0 && ids(r).length > 0 && ids(r).join(',') === runIds(cats), notOk(r) || ids(r).join(','));
   }
   // a blocking failure outside the categories selected is not run: exit code 0
-  const b = run(path.join(fx, 'broken', 'svg-contract'), [...lang, '--category', 'writing']);
+  const b = run(path.join(fx, 'broken', 'svg-contract'), [...lexicon, '--category', 'writing']);
   report('broken/svg-contract with --category writing: svg-contract does not run, exit code 0', b.code === 0 && !ids(b).includes('svg-contract'), notOk(b));
-  const c = run(path.join(fx, 'broken', 'svg-contract'), [...lang, '--category', 'diagrams']);
+  const c = run(path.join(fx, 'broken', 'svg-contract'), [...lexicon, '--category', 'diagrams']);
   report('broken/svg-contract with --category diagrams: exit code 1', c.code === 1 && failing(c).some((l) => l.startsWith('svg-contract: fail: ')), notOk(c));
   const l = spawnSync(process.execPath, [runner, '--list', '--category', 'pedagogy'], { encoding: 'utf8' }).stdout.split('\n').filter(Boolean).map((x) => x.split(/\s+/)[0]);
   report('--list --category pedagogy lists the pedagogy checks only', l.join(',') === LIST.filter((x) => x.category === 'pedagogy').map((x) => x.id).join(','), l.join(','));
@@ -150,10 +160,10 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     ['the name of the spec as a category', ['--category', SPEC_NAME], `unknown category "${SPEC_NAME}"`],
     ['--quality', ['--quality'], '--quality is gone: the reporting checks run by default'],
     ['--only of a test of check-spec', ['--only', 'rule-files'], 'unknown check id "rule-files"'],
-    ['--only of language-pack-keys, a test of check-spec', ['--only', 'language-pack-keys'], 'unknown check id "language-pack-keys"'],
+    ['--only of lexicon-keys, a test of check-spec', ['--only', 'lexicon-keys'], 'unknown check id "lexicon-keys"'],
     ['--only outside --category', ['--category', 'writing', '--only', 'sources'], '"sources" is in category sources'],
   ]) {
-    const r = run(path.join(fx, 'valid'), [...lang, ...extra]);
+    const r = run(path.join(fx, 'valid'), [...lexicon, ...extra]);
     report(`${what} is a usage error, exit code 2`, r.code === 2 && r.lines.length === 0 && r.err.split('\n').filter(Boolean).length === 1 && r.err.includes(want), `got ${r.code}: ${r.err || r.lines.join(' | ')}`);
   }
 }
@@ -178,7 +188,7 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
 
 // --concept looks at one concept only: an unlisted concept folder does not fail course-yaml
 {
-  const r = run(path.join(fx, 'broken', 'course-yaml-unlisted-folder'), ['--lang-dir', path.join(fx, 'lang'), '--only', 'course-yaml', '--concept', '0']);
+  const r = run(path.join(fx, 'broken', 'course-yaml-unlisted-folder'), ['--lexicon', path.join(fx, 'lexicon.yaml'), '--only', 'course-yaml', '--concept', '0']);
   report('broken/course-yaml-unlisted-folder passes course-yaml with --concept 0', r.code === 0, notOk(r));
 }
 
@@ -190,9 +200,9 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     const r = spawnSync(process.execPath, [dispatcher, dir, ...extra], { encoding: 'utf8' });
     return { code: r.status, lines: r.stdout.split('\n').filter(Boolean), err: r.stderr };
   };
-  const v = disp(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang')]);
+  const v = disp(path.join(fx, 'valid'), ['--lexicon', path.join(fx, 'lexicon.yaml')]);
   report("the dispatcher runs this MAJOR's checks on valid", v.code === 0 && ids(v).join(',') === runIds(), notOk(v) || ids(v).join(','));
-  const w = disp(path.join(fx, 'valid'), ['--lang-dir', path.join(fx, 'lang'), '--category', 'writing']);
+  const w = disp(path.join(fx, 'valid'), ['--lexicon', path.join(fx, 'lexicon.yaml'), '--category', 'writing']);
   report('the dispatcher passes --category through', w.code === 0 && ids(w).join(',') === runIds(['writing']), notOk(w) || ids(w).join(','));
   for (const [name, want] of [['other-spec', 'unknown spec "other"'], ['unknown-major', 'unknown MAJOR 9 of spec "linear-course"']]) {
     const r = disp(path.join(fx, 'dispatcher', name), []);

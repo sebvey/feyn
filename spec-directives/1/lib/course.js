@@ -1,5 +1,6 @@
 'use strict';
-// Loads a course folder for the checks: course.yaml, language pack, concept index, files.
+// Loads a course folder for the checks: course.yaml, the lexicon of the course files, concept
+// index, files.
 const fs = require('fs');
 const path = require('path');
 const yaml = require('./yaml-lines');
@@ -79,29 +80,32 @@ function load(dir, opts = {}) {
   }
   ctx.usable = !!(ctx.cy && Array.isArray(ctx.cy.concepts) && Array.isArray(ctx.cy.domains));
 
-  // language pack
-  ctx.pack = null;
-  ctx.packFile = null;
-  ctx.packError = null;
-  const lang = ctx.cy && typeof ctx.cy.language === 'string' ? ctx.cy.language : null;
-  if (lang) {
-    // opts.specLangDir: the lang/ of the spec MAJOR whose checks run (this lib is the directives')
-    const dirs = [opts.langDir, process.env.LINEAR_COURSE_LANG_DIR, opts.specLangDir].filter(Boolean);
-    const d = dirs[0];
-    const file = path.join(d, lang + '.yaml');
-    ctx.packFile = opts.langDir || process.env.LINEAR_COURSE_LANG_DIR ? file : 'lang/' + lang + '.yaml';
-    if (!fs.existsSync(file)) ctx.packError = { line: 1, message: `language pack ${ctx.packFile} does not exist` };
+  // the lexicon of the course files: the course/lexicon.yaml of the spec MAJOR whose checks run
+  // (opts.specLexicon; this lib is the directives'), or the file --lexicon names (opts.lexicon).
+  // The course names no language: the language is the spec's (spec.yaml).
+  ctx.lexicon = null;
+  ctx.lexiconFile = null;
+  ctx.lexiconError = null;
+  const file = opts.lexicon || opts.specLexicon;
+  if (!file) ctx.lexiconError = { line: 1, message: 'no lexicon given (check-course passes course/lexicon.yaml of its spec MAJOR)' };
+  else {
+    ctx.lexiconFile = opts.lexicon ? file : 'course/lexicon.yaml';
+    if (!fs.existsSync(file)) ctx.lexiconError = { line: 1, message: `the lexicon ${ctx.lexiconFile} does not exist` };
     else {
       try {
-        ctx.pack = yaml.parse(fs.readFileSync(file, 'utf8'));
+        ctx.lexicon = yaml.parse(fs.readFileSync(file, 'utf8'));
+        if (!ctx.lexicon || typeof ctx.lexicon !== 'object' || Array.isArray(ctx.lexicon)) {
+          ctx.lexiconError = { line: 1, message: `the lexicon ${ctx.lexiconFile} is not a map` };
+          ctx.lexicon = null;
+        }
       } catch (e) {
-        ctx.packError = { line: e.line || 1, message: e.message };
+        ctx.lexiconError = { line: e.line || 1, message: `the lexicon ${ctx.lexiconFile}: ${e.message}` };
       }
     }
   }
-  ctx.packOk = !!(ctx.pack && typeof ctx.pack === 'object');
+  ctx.lexiconOk = !!ctx.lexicon;
   ctx.word = (group, key) => {
-    const g = ctx.pack && ctx.pack[group];
+    const g = ctx.lexicon && ctx.lexicon[group];
     return g && typeof g[key] === 'string' ? g[key] : null;
   };
 

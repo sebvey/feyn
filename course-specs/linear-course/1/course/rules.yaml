@@ -25,10 +25,6 @@ groups:
         level: requirement
         check: course-yaml
         text: The course `id` shall equal the folder name.
-      - id: language-pack-exists
-        level: requirement
-        check: course-yaml
-        text: "`lang/<language>.yaml` shall exist for the course `language`."
       - id: course-yaml-paths-exist
         level: requirement
         check: course-yaml
@@ -109,7 +105,7 @@ groups:
         check: concept-folder
         text: >-
           The sections of `concept.md`, `teaching.md` and `sources.md` shall be `##` headings
-          whose text is the language pack's heading, in the order given, the mandatory ones
+          whose text is the lexicon's heading, in the order given, the mandatory ones
           present, and no other `##` section shall exist.
       - id: teaching-sources-no-h1
         level: requirement
@@ -179,11 +175,11 @@ groups:
           A case heading shall be `### <title> (<sub-concept>)`, the parenthesis holding a
           sub-concept id of the concept, at any level, and at most one qualifier, before or
           after the id, separated by a comma; nothing else.
-      - id: case-qualifier-from-pack
+      - id: case-qualifier-from-lexicon
         level: requirement
         method: test
         check: case-contract
-        text: A case's qualifier shall be a value of the language pack's `qualifiers` group.
+        text: A case's qualifier shall be a value of the lexicon's `qualifiers` group.
       - id: case-titles-unique
         level: requirement
         method: test
@@ -195,7 +191,7 @@ groups:
         check: case-contract
         text: >-
           A case shall be a list of fields, each item opening with `**<label>** :`, the label
-          one of the language pack's `case_fields`.
+          one of the lexicon's `case_fields`.
       - id: field-qualifier-on-question-only
         level: requirement
         method: test
@@ -318,11 +314,11 @@ groups:
         check: domain-first-sentence-standalone
         text: >-
           The first sentence of each paragraph of « Le fil des concepts », after the lead, should
-          not open with a word of the language pack's `checks.anaphora` list.
+          not open with a word of the lexicon's `checks.anaphora` list.
       - id: no-banned-character
         level: recommendation
         check: typography
-        text: Course text should not use the banned characters of the language pack.
+        text: Course text should not use the banned characters of the lexicon.
 
   - title: Diagrams (course/README.md sections 3.1 and 6.1)
     category: diagrams
@@ -396,7 +392,7 @@ groups:
         check: sources
         text: >-
           The section cell of a claim shall hold sub-concept ids and fixed sections by their
-          pack value, separated by commas, each existing in `concept.md`.
+          lexicon value, separated by commas, each existing in `concept.md`.
       - id: stance-sourced-in-item
         level: requirement
         check: sources
@@ -439,12 +435,12 @@ groups:
         text: >-
           The link of a reference shall be one URL or empty: a second place is a second
           reference.
-      - id: reference-type-from-pack
+      - id: reference-type-from-lexicon
         level: requirement
         check: sources
         text: >-
           The type of a reference shall be one or more of `primary`, `secondary`, `marketing`,
-          written as the language pack's words and separated by commas, then an optional remark
+          written as the lexicon's words and separated by commas, then an optional remark
           in parentheses.
       - id: reference-consulted-date
         level: requirement

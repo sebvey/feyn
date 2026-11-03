@@ -14,9 +14,10 @@ is tooling. A spec is the contract for a type of course, kept in one folder per 
 categories and checks, decision `spec-files-by-product`), one folder per product, `course/`
 (`README.md`, what a course is; `rules.yaml`, the rules as data; `schemas/`; `templates/`, the
 course templates; `checks/`, its checks and their fixtures) and `teacher/` (`README.md`, the
-protocol; `rules.yaml`; `templates/learner/`), then `decisions/`, `lang/` (the language packs),
-`CHANGELOG.md` and `spec.yaml` (`name`, `major`, `version`, and `directives`, the MAJOR of the
-spec directives it follows). The spec directives say how a spec is written and read (what a rule
+protocol; `rules.yaml`; `templates/learner/`), then `decisions/`,
+`CHANGELOG.md` and `spec.yaml` (`name`, `major`, `version`, `language`, and `directives`, the
+MAJOR of the spec directives it follows); each product folder also holds its lexicon,
+`lexicon.yaml` (decision `lexicon-not-language-pack`). The spec directives say how a spec is written and read (what a rule
 file holds, the conformance clause, the levels, the methods, the versions); they live in
 `spec-directives/`, which holds the dispatcher `check-spec <spec MAJOR folder>` (it reads the
 MAJOR's `spec.yaml` and runs the tests of the directives MAJOR declared) and one folder per MAJOR,
@@ -37,7 +38,7 @@ tagged `<name>/vX.Y.Z`, a directives version `spec-directives/vX.Y.Z`, a course 
 | Object | MAJOR | MINOR | PATCH |
 |---|---|---|---|
 | course `courses/<id>/` | identifiers change (concept and sub-concept numbers, case titles that learner memory cites), or the spec MAJOR changes | what is taught changes (case, sub-concept, stance, duration) | wording |
-| spec `course-specs/<name>/` | the structure changes (files, fields, mandatory sections); a requirement added or made stricter; an optional field made mandatory; a recommendation made a requirement | an optional element; a protocol rule added, changed or renamed (the old slug is burnt); a requirement made looser or made a recommendation; a recommendation added or made stricter; a language-pack key added or renamed, every pack updated | wording; a false positive lifted |
+| spec `course-specs/<name>/` | the structure changes (files, fields, mandatory sections); a requirement added or made stricter; an optional field made mandatory; a recommendation made a requirement | an optional element; a protocol rule added, changed or renamed (the old slug is burnt); a requirement made looser or made a recommendation; a recommendation added or made stricter; a lexicon key added or renamed | wording; a false positive lifted |
 | spec directives `spec-directives/` | a rule file that validated stops validating (a field made mandatory, a closed list narrowed) | a field, a level or a method added | wording |
 
 A spec MAJOR lives while a served course version declares it, a course tag included, then is

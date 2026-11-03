@@ -5,8 +5,8 @@ status: accepted
 area: spec:linear-course
 ---
 
-Without this, S1-05 would write « s'il est ou va être PO d'un produit » into `lang/fr.yaml` as
-a generic phrase of the pack, and the classroom build of any other course would make the
+Without this, S1-05 would write « s'il est ou va être PO d'un produit » into `teacher/lexicon.yaml`
+as a generic phrase of the teacher's lexicon, and the classroom build of any other course would make the
 teacher ask the learner what they know of Scrum.
 
 The onboarding questions and the teacher's posture belong to the course, not to the protocol:

@@ -30,10 +30,10 @@ function checkConcept(ctx, c, out) {
   if (bank) {
     const caseSecs = mdlib.sections(bank.lines, 3).sections;
     const titles = new Map();
-    const fieldLabels = Object.entries((ctx.pack && ctx.pack.case_fields) || {});
+    const fieldLabels = Object.entries((ctx.lexicon && ctx.lexicon.case_fields) || {});
     const keyOf = (lab) => (fieldLabels.find(([, v]) => v === lab) || [])[0];
-    // the qualifiers: a closed list, the pack's `qualifiers` values (course/README.md 3.3)
-    const quals = Object.values((ctx.pack && ctx.pack.qualifiers) || {}).filter((v) => typeof v === 'string');
+    // the qualifiers: a closed list, the lexicon's `qualifiers` values (course/README.md 3.3)
+    const quals = Object.values((ctx.lexicon && ctx.lexicon.qualifiers) || {}).filter((v) => typeof v === 'string');
     const qualList = quals.map((q) => `« ${q} »`).join(', ');
     for (const cs of caseSecs) {
       const m = /^(.*\S)\s*\(([^()]*)\)\s*$/.exec(cs.title);
@@ -96,7 +96,7 @@ function checkConcept(ctx, c, out) {
 
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
-  if (!ctx.packOk) return [fail('course.yaml', 1, 'the language pack is unusable: see course/README.md section 7')];
+  if (!ctx.lexiconOk) return [fail(ctx.lexiconFile || 'course/lexicon.yaml', 1, 'the lexicon is unusable: see course/README.md section 7')];
   const out = [];
   for (const c of ctx.selected()) checkConcept(ctx, c, out);
   return out;
