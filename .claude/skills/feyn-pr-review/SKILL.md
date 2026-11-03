@@ -38,7 +38,8 @@ not in the prompt. A work session sees an agent file added to `.claude/agents/` 
 `git pull` that brings one), with no restart (Claude Code, observed 2026-10-31, #373). The
 inputs:
 - **Checks to rerun.** A PR with any check or fixture runner to rerun (a course, `site/`,
-  `course-specs/check-course`, `course-specs/*/*/course/checks/`, `spec-directives/` in
+  `course-specs/check-course`, `course-specs/*/*/course/checks/`, `spec-directives/`,
+  `course-specs/linear-course/` (the bench course `po-essai`, `/feyn-pull-request` step 2) in
   `mise exec -- gh pr diff <pr> --name-only`): the reviewer gets
   `isolation: "worktree"`, and its brief has it check out the PR head detached. Its worktree
   holds no issue branch (`.claude/worktrees/agent-<id>`, on a branch `worktree-agent-<id>`);
