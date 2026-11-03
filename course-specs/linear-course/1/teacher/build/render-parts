@@ -330,16 +330,18 @@ function draws(list) {
   }).filter(Boolean);
 }
 
-// ---- the permissions: the classroom draws of the part, `may be written` or `read only`
+// ---- the permissions: the classroom draws of the part, « peut s'écrire » (may be written, « se
+// commite »: committed, « ne se pousse jamais »: never pushed) or « en lecture seule » (read only);
+// the `what` texts are French (decision language-policy)
 const permissions = { writable: [], read_only: [], commit: false, push: false };
 for (const d of parts.get('permissions').draws || []) {
   if (d.from !== 'classroom') continue;
-  if (/^may be written/.test(d.what)) {
+  if (/^peut s'écrire/.test(d.what)) {
     permissions.writable.push(d.source);
-    if (/\bcommitted\b/.test(d.what)) permissions.commit = true;
-    if (/\bpushed\b/.test(d.what) && !/\bnever pushed\b/.test(d.what)) permissions.push = true;
-  } else if (/^read only/.test(d.what)) permissions.read_only.push(d.source);
-  else fail(`composition.yaml: permissions: ${d.source} is neither « may be written » nor « read only »`);
+    if (/se commite/.test(d.what)) permissions.commit = true;
+    if (/se pousse/.test(d.what) && !/ne se pousse jamais/.test(d.what)) permissions.push = true;
+  } else if (/^en lecture seule/.test(d.what)) permissions.read_only.push(d.source);
+  else fail(`composition.yaml: permissions: ${d.source} is neither « peut s'écrire » nor « en lecture seule »`);
 }
 
 // ---- the parts

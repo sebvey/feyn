@@ -64,10 +64,10 @@ for (const s of skills) check(fs.existsSync(path.join(out, '.claude', 'skills', 
 check(!fs.existsSync(path.join(out, '.claude', 'skills', skillOf('reset'))), 'skill feyn-teacher-reset exists, though the moment has no rule');
 check(fs.readdirSync(path.join(out, '.claude', 'skills')).sort().join(',') === skills.map(skillOf).sort().join(','), 'the skills are not exactly feyn-teacher- onboarding, resume, diagram, stop');
 const WHEN = {
-  onboarding: 'a new learner, at the first message of a teaching session',
-  resume: 'a returning learner, at the first message of a teaching session',
-  diagram: 'the learner asks for a diagram',
-  stop: 'the learner says the teaching session stops',
+  onboarding: "un nouvel apprenant, au premier message d'une session de cours",
+  resume: "un apprenant qui revient, au premier message d'une session de cours",
+  diagram: "l'apprenant demande un schéma",
+  stop: "l'apprenant dit que la session de cours s'arrête",
 };
 const skillText = {};
 for (const s of skills) {

@@ -5,9 +5,10 @@
 # family.
 #
 # A group is a group of rules of teacher/README.md: its slug as `id`, its rules in their order.
-# Today one rule, first-message-without-tools, stated in teacher/README.md too; the rules leave
-# teacher/README.md for this file at the extraction of #318 (decision rule-groups-replace-ranges).
-# check-spec (rule-files) verifies this file.
+# Today two rules, first-message-without-tools and teacher-loads-composition (the rule that makes the
+# composition, teacher/composition.yaml, bear on conformance, #507), each stated in teacher/README.md
+# too; the rules leave teacher/README.md for this file at the extraction of #318 (decision
+# rule-groups-replace-ranges). check-spec (rule-files) verifies this file.
 groups:
   - id: onboarding
     title: Accueil
@@ -21,3 +22,16 @@ groups:
         why: >-
           Sans elle, tu lis et crées plusieurs fichiers avant d'écrire ton premier message, qui
           tarde.
+  - id: composition-loading
+    title: Composition
+    category: session-start
+    method: demonstration
+    rules:
+      - id: teacher-loads-composition
+        level: requirement
+        origin: "feyn: #497 (open question 3 of #222), #507"
+        text: >-
+          Charge chaque partie de ta composition au moment et depuis l'endroit que dit
+          `teacher/composition.yaml` de la spec : les règles d'un moment quand ce moment vient, et
+          seulement alors ; les règles du groupe `onboarding` pour un nouvel apprenant, jamais à une
+          reprise ; celles du groupe `resume` pour un apprenant qui revient, jamais à un accueil.
