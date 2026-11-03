@@ -108,3 +108,9 @@ no class: `- file or area: what changes`.
   `reference-type-from-lexicon`, their texts naming the lexicon; decision
   `lexicon-not-language-pack` written, `language-policy` amended; no protocol rule text changes
   (#493).
+- `teacher/`: the composition of the teacher as data, `teacher/composition.yaml`: five parts
+  (`permanent`, `on-demand`, `course-reads`, `learner-memory`, `permissions`), each with when it
+  loads and what it draws from the spec, the course, learner memory and the classroom, with no
+  term of a target; `teacher/README.md` gains the section "Composition" that describes it, and
+  its reader table names it; `composition`, a test of `check-spec`, verifies its form; no rule
+  changes (#497).

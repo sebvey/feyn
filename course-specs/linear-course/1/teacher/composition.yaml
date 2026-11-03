@@ -1,0 +1,156 @@
+# The composition of the teacher of linear-course: the five parts a teacher is made of, each by
+# when it is loaded and what it draws from, as data (decision spec-files-by-product). The classroom
+# build reads it to know what goes into each part; the fresh tests judge a teacher against it, on
+# what it loads and when. teacher/README.md, "Composition", describes it. It names no mechanism of
+# a target: how a part is realised is the classroom build's (classroom-builder/).
+#
+# A part: `id`, `loads`, `draws`; the part `on-demand` adds `moments`.
+# `loads`, when the part is loaded, one of:
+#   every-message             present at every message of the teacher
+#   at-a-moment               loaded when one of its moments comes, and only then
+#   during-the-session        read by the teacher during a teaching session, when the protocol says
+#   at-start-and-save-points  read at the start of a teaching session, written at each save point
+#   always                    in force from the classroom build on, whatever the teacher does
+# `draws`, a list of entries, each `from`, `source` and `what`. `from`, where the source lives, one
+# of:
+#   spec       a file or folder of this spec MAJOR (course-specs/linear-course/1/)
+#   course     a file of the course folder, copied as is into the classroom's course/
+#   learner    a file of learner memory, the classroom's learner/
+#   classroom  a file or folder the classroom build makes
+# `source`, the file or folder read, relative to its `from`: `{course.<name>}` is a course
+# parameter (teacher/README.md, "Keys and parameters"), `<dir>` the `dir` of the concept at hand in
+# course.yaml, `<file>` the `file` of the domain at hand. `what`, what is drawn, in a few words; a
+# lexicon key (`headings.onboarding`) names a heading of a course file.
+# A moment of `on-demand`: `id`, `when`, `rules` (the slugs of the groups, families or rules of the
+# protocol loaded at that moment, a family by its category in teacher/rules.yaml; empty while the
+# protocol has none for it) and `draws`, as a part's.
+#
+# The rules of the protocol are named by their file, teacher/rules.yaml; until #450 moves them
+# there, the classroom build reads them in teacher/README.md (the `**slug** text` lines, by family
+# and group). spec-directives/1/tests/composition.js (check-spec) verifies the form of this file,
+# never its sense, which the fresh tests judge.
+parts:
+  - id: permanent
+    loads: every-message
+    draws:
+      - from: spec
+        source: teacher/rules.yaml
+        what: the rules of the protocol and the purpose of their families and groups, except the rules another part loads
+      - from: course
+        source: plan.md
+        what: the posture, the paragraph under headings.onboarding
+      - from: course
+        source: course.yaml
+        what: the course map, a projection of its domains and concepts
+      - from: course
+        source: course.yaml
+        what: the names of the course files (storyline, glossary, domain files, concept folders)
+      - from: spec
+        source: teacher/lexicon.yaml
+        what: the phrases and words of the teacher the rules name by key
+      - from: spec
+        source: course/lexicon.yaml
+        what: the words of the course files the rules name by key
+      - from: classroom
+        source: course.lock
+        what: the classroom parameters, site_url and the site addresses, the channel
+
+  - id: on-demand
+    loads: at-a-moment
+    draws:
+      - from: spec
+        source: teacher/rules.yaml
+        what: the rules of each moment below
+    moments:
+      - id: onboarding
+        when: a new learner, at the first message of a teaching session
+        rules: [onboarding]
+        draws:
+          - from: course
+            source: plan.md
+            what: the onboarding questions under headings.onboarding
+      - id: resume
+        when: a returning learner, at the first message of a teaching session
+        rules: [resume]
+        draws:
+          - from: learner
+            source: parcours.md
+            what: where the learner stands, the next step and a pending question
+      - id: diagram
+        when: the learner asks for a diagram
+        rules: [requested-diagram-shown, diagram-not-displayable]
+        draws:
+          - from: course
+            source: <dir>/concept.md
+            what: the diagrams the concept declares, their title and caption
+          - from: course
+            source: <dir>/teaching.md
+            what: the drawing instruction under headings.drawing, when no diagram is declared
+      - id: stop
+        when: the learner says the teaching session stops
+        rules: [stop]
+        draws:
+          - from: learner
+            source: parcours.md
+            what: learner memory reread as the next teacher reads it
+      - id: reset
+        when: the learner asks to start the course over
+        rules: []
+        draws:
+          - from: spec
+            source: teacher/templates/learner/
+            what: the learner templates learner memory returns to
+
+  - id: course-reads
+    loads: during-the-session
+    draws:
+      - from: course
+        source: "{course.storyline}"
+        what: the storyline
+      - from: course
+        source: <file>
+        what: the domain file of the domain at hand
+      - from: course
+        source: <dir>/concept.md
+        what: the matter of the concept at hand
+      - from: course
+        source: <dir>/teaching.md
+        what: the method, how to teach the concept at hand
+      - from: course
+        source: <dir>/sources.md
+        what: the sources of the concept, on request
+      - from: course
+        source: "{course.glossary}"
+        what: the terms of the course, one per notion
+
+  - id: learner-memory
+    loads: at-start-and-save-points
+    draws:
+      - from: spec
+        source: teacher/templates/learner/
+        what: the learner templates, the form of learner memory
+      - from: spec
+        source: teacher/rules.yaml
+        what: the memory rules, the family learner-memory (teacher/README.md section 8)
+      - from: learner
+        source: apprenant.md
+        what: the learner's profile and preferences
+      - from: learner
+        source: parcours.md
+        what: the course path, the concept statuses and the next step
+      - from: learner
+        source: observations.md
+        what: the levers, the vigilances and what is acquired
+
+  - id: permissions
+    loads: always
+    draws:
+      - from: spec
+        source: teacher/rules.yaml
+        what: the rule write-only-in-learner
+      - from: classroom
+        source: learner/
+        what: may be written, and committed to the classroom's git, never pushed
+      - from: classroom
+        source: course/
+        what: read only, never written

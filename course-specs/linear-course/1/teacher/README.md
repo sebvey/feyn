@@ -3,8 +3,8 @@
 | Reader | Comes for | Opens |
 |---|---|---|
 | creator | nothing here: what a course is | [`../course/README.md`](../course/README.md), [`../course/templates/README.md`](../course/templates/README.md) |
-| builder | the protocol to inject, learner memory, the keys | sections 1 to 9, [Keys and parameters](#keys-and-parameters), [`rules.yaml`](rules.yaml), [`templates/learner/`](templates/learner/) |
-| verifier | the rules of the protocol as data, their method | [`rules.yaml`](rules.yaml), [`spec-directives/1/README.md`](../../../../spec-directives/1/README.md#2-conformance) section 2 |
+| builder | the composition of the teacher, the protocol to inject, learner memory, the keys | [Composition](#composition), [`composition.yaml`](composition.yaml), sections 1 to 9, [Keys and parameters](#keys-and-parameters), [`rules.yaml`](rules.yaml), [`templates/learner/`](templates/learner/) |
+| verifier | the rules of the protocol as data, their method; what a teacher loads and when | [`rules.yaml`](rules.yaml), [`spec-directives/1/README.md`](../../../../spec-directives/1/README.md#2-conformance) section 2, [Composition](#composition) |
 | spec writer | how a rule of the protocol is named and written | the paragraphs above section 1, [`rules.yaml`](rules.yaml), [`../decisions/`](../decisions/), [`../CHANGELOG.md`](../CHANGELOG.md) |
 
 The readers are defined in [`spec-directives/README.md`](../../../../spec-directives/README.md#the-readers).
@@ -43,8 +43,8 @@ of this one (decision `lexicon-not-language-pack`). Everything else in this file
   only the rules where the old teacher was seen drifting in a test or a teaching session, and
   the four rules the base adds for what the spec holds and the old teacher never read.
 - A family (`##`) and a group (`###`) open with a `**Purpose.**` paragraph, then a table of
-  their readers (Reader, Needs, When), the form of `course/README.md`. "Keys and parameters" and
-  "Inherited from parcours-po" are reference tables, not rules: they have none.
+  their readers (Reader, Needs, When), the form of `course/README.md`. "Composition", "Keys and
+  parameters" and "Inherited from parcours-po" describe and list, hold no rule, and have none.
 - A rule is named by a slug, as a decision is (decision `rules-named-by-slug`): two to five words,
   lowercase, joined by hyphens, naming the behaviour, in English whatever the spec's language.
   The rule shows it in bold at its start, `**one-question-per-message**`; a row of the save-point
@@ -655,6 +655,30 @@ son énoncé, vigilances du prochain concept ; corrige ce qui est absent ou ambi
 étape.
 
 **hurried-departure** Départ pressé (« {learner_says.hurry} ») : mêmes étapes, sans les commenter.
+
+## Composition
+
+The composition of the teacher is what a teacher is made of, beside how it behaves (the
+protocol): five parts, each defined by when it is loaded and what it draws from the spec, the
+course, learner memory and the classroom. It is data, in [`composition.yaml`](composition.yaml),
+whose header names the closed lists of `loads` and `from`; this section describes it. It names no
+mechanism of a target: how a part is realised is the classroom build's (`classroom-builder/`), so
+a second target is built from the same composition.
+
+| Part | Loads | Draws from |
+|---|---|---|
+| `permanent` | `every-message` | the rules of the protocol with the purpose of their families and groups (spec, `rules.yaml`; the build reads them in this file until #450 moves them), the posture (course, `plan.md` under `headings.onboarding`), the course map and the names of the course files (course, `course.yaml`), the two lexicons (spec, `lexicon.yaml` and `../course/lexicon.yaml`), the classroom parameters (classroom, `course.lock`) |
+| `on-demand` | `at-a-moment` | at each of its moments (onboarding, resume, a diagram asked for, the stop, a reset), the rules of that moment (group `onboarding`, group `resume`, the family of section 9, the rules `requested-diagram-shown` and `diagram-not-displayable`; none yet for a reset) and what that moment reads |
+| `course-reads` | `during-the-session` | the course as it is copied, read when the protocol says: the storyline, the domain file, the concept's `concept.md` (the matter) and `teaching.md` (the method), `sources.md` on request, the course glossary |
+| `learner-memory` | `at-start-and-save-points` | the learner templates (spec, `templates/learner/`), the memory rules (section 8), the three files of `learner/`; nothing from the course |
+| `permissions` | `always` | what a teacher writes, `learner/` and its commits, never pushed, and what it never writes, `course/` (rule `write-only-in-learner`) |
+
+Two readers come to it. The builder, who writes the classroom build: the build reads
+`composition.yaml` to know which part gets what, as the checks read `rules.yaml`. The fresh tests:
+they judge a teacher on what it loads and when (a teacher that loads the onboarding at every
+message does not match the composition, and the fresh tests flag it). `composition`
+(`check-spec`, `spec-directives/1/README.md` section 8) tests the form of the file, never its
+sense.
 
 ## Keys and parameters
 
