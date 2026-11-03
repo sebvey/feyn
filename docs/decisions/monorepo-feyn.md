@@ -19,8 +19,8 @@ written to.
 The root holds two files, `CLAUDE.md` and `README.md`, plus dotfiles; `docs/` holds four
 things, `decisions/`, `glossary.md`, `contributing.md` and `kanban.md`. Anything more at the
 root or in `docs/` needs a decision here. A document that describes one area lives in that
-area's folder (`site/docs/`, `teacher/README.md`), and there is no `CLAUDE.md` per folder:
-skills carry the detail.
+area's folder (`site-builder/docs/`, `classroom-builder/README.md`), and there is no
+`CLAUDE.md` per folder: skills carry the detail.
 
 ## Options ruled out
 

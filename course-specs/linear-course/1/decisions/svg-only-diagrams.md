@@ -6,9 +6,9 @@ area: spec:linear-course
 ---
 
 Without this, an agent drawing a flow diagram (the life of a story) would write it in Mermaid,
-which is shorter, or as an Astro component under `site/`, so the desktop panel would show the
-Mermaid code instead of the drawing, and the teacher could not send a component at all: the
-learner in Claude Code loses the diagram.
+which is shorter, or as an Astro component under `site-builder/`, so the desktop panel would
+show the Mermaid code instead of the drawing, and the teacher could not send a component at all:
+the learner in Claude Code loses the diagram.
 
 A diagram is one SVG file in the concept folder, under the drawing contract (`course/README.md`
 section 6.1, check `svg-contract`), declared in the frontmatter of `concept.md` with a title (the SVG

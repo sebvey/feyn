@@ -20,7 +20,7 @@ phrases, what the learner says and the teacher reacts to, the lines and headings
 memory, the concept statuses) are the teacher's lexicon, `teacher/lexicon.yaml`. The two files
 are cut by product (decision `spec-files-by-product`). This replaces the one file of words per
 language code, loaded through the `language` of `course.yaml`, and its `site` group, whose
-labels no engine read: the site's labels are born in `site/` with its engine.
+labels no engine read: the site's labels are born in `site-builder/` with its engine.
 
 ## Options ruled out
 

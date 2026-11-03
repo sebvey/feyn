@@ -113,8 +113,8 @@ of the old format for a defect:
      | `course-specs/<name>/` | `area:spec:<name>` |
      | `spec-directives/` | `area:spec-directives` |
      | `courses/<id>/` | `area:course:<id>` |
-     | `teacher/` | `area:teacher` |
-     | `site/` | `area:site` |
+     | `classroom-builder/` | `area:teacher` |
+     | `site-builder/` | `area:site` |
      | `.claude/`, `.github/` | `area:agentic` |
      | root files, `docs/` | `area:repo` |
 
