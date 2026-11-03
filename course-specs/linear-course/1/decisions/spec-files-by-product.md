@@ -23,7 +23,10 @@ frontmatter) are schemas in `course/schemas/*.schema.yaml`, JSON Schema
 schema"); the rule file keeps what a schema cannot say (the order of the glossary, the contract of a
 case, the sources). `teacher/README.md` describes the protocol of the teacher (Purpose, notation,
 keys and parameters); its rules are in `teacher/rules.yaml`, in French, the bounded exception of
-decision `language-policy`. The rule files are these two; the spec's own files are verified by the
+decision `language-policy`; `teacher/` also holds the composition of the teacher
+(`composition.yaml`) and its build, `teacher/build/`, the half of a classroom build that depends
+on the MAJOR, which renders the parts of the composition as text for `classroom-builder/` to
+realise. The rule files are these two; the spec's own files are verified by the
 tests of `check-spec`, which are not rules (decision `rules-with-level-and-method`). A description
 (the spec directives, the MAJOR's `README.md`, `course/README.md`, `teacher/README.md`) is
 informative: it explains and cites rule ids, and never uses the verbal forms of obligation; the rule
@@ -62,3 +65,8 @@ from this one (formerly `spec-files-and-alpha-version`).
   decision `alpha-version-until-tag` in `spec-directives/1/decisions/`, with its counterfactual
   (D13), its options ruled out and its consequences. Without this, a contributor preparing the
   directives' version would look for the alpha in a decision of `linear-course` it does not bind.
+- Amended 2026-11-03 (#501): `teacher/` also holds `build/`, the half of a classroom build that
+  depends on the MAJOR (`render-parts`, which renders the parts of the composition as text, and
+  its schema), as the maintainer settled in epic #222 (Material point 6). Without this, the author
+  of a second MAJOR would look for its teacher's build at the root, which then breaks or fills
+  with versions.

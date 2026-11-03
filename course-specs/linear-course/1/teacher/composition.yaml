@@ -1,6 +1,7 @@
 # The composition of the teacher of linear-course: the five parts a teacher is made of, each by
 # when it is loaded and what it draws from, as data (decision spec-files-by-product). The classroom
-# build reads it to know what goes into each part; the fresh tests judge a teacher against it, on
+# build reads it to know what goes into each part (teacher/build/render-parts renders the parts as
+# text, classroom-builder/ realises them); the fresh tests judge a teacher against it, on
 # what it loads and when. teacher/README.md, "Composition", describes it. It names no mechanism of
 # a target: how a part is realised is the classroom build's (classroom-builder/).
 #
@@ -26,8 +27,8 @@
 # protocol has none for it) and `draws`, as a part's.
 #
 # The rules of the protocol are named by their file, teacher/rules.yaml; until #450 moves them
-# there, the classroom build reads them in teacher/README.md (the `**slug** text` lines, by family
-# and group). spec-directives/1/tests/composition.js (check-spec) verifies the form of this file,
+# there, teacher/build/render-parts reads them in teacher/README.md (the `**slug** text` lines, by
+# family and group). spec-directives/1/tests/composition.js (check-spec) verifies the form of this file,
 # never its sense, which the fresh tests judge.
 parts:
   - id: permanent

@@ -66,6 +66,12 @@ consistency is the spec's own, like that of the rule files, the schemas, the slu
 (`lexicon-keys` for the lexicons), and they are not rules, so they count toward no product's
 conformance (section 8).
 
+A spec MAJOR may also hold `teacher/build/`, the half of a classroom build that depends on the
+MAJOR (the form of its protocol, of its composition, its lexicon keys): a script that renders the
+parts of the composition of the teacher as text for a course, one document whose shape a schema of
+that folder fixes, read by a classroom build, which realises the parts for its target
+(`classroom-builder/`). It is the spec's tooling, as its checks are: neither a product nor a rule.
+
 ## 3. Levels
 
 A rule has a level, from ISO/IEC Directives Part 2, clause 7. The level is a field of the rule,
@@ -180,9 +186,9 @@ The standards the rules of one spec depend on are in the README of that spec MAJ
 failure blocks `check-spec` (exit code 1). They carry lists of
 `linear-course` (the five categories and the nine families in `rule-files.js`, the keys of section 7 in
 `lexicon-keys.js`, the file names in `rule-slugs.js`): a named debt, idea #453; the lists
-move to `spec.yaml` when a second spec needs them. The classroom build also reads the nine
-families by category (`FAMILIES`, exported by `rule-files.js`, `classroom-builder/build-classroom`):
-the move carries it. `composition.js` adds none (idea #485): its
+move to `spec.yaml` when a second spec needs them. The nine families are also held, by category,
+by the spec MAJOR's `teacher/build/render-parts`, which finds a family of the protocol by its
+category: the move carries it, and `rule-files.js` exports nothing. `composition.js` adds none (idea #485): its
 closed lists are the composition model's, and a `from: spec` source is checked against
 `<spec-dir>`, not against a list of file names.
 

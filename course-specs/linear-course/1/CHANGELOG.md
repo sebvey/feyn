@@ -114,3 +114,15 @@ no class: `- file or area: what changes`.
   term of a target; `teacher/README.md` gains the section "Composition" that describes it, and
   its reader table names it; `composition`, a test of `check-spec`, verifies its form; no rule
   changes (#497).
+- `teacher/build/`: the half of the classroom build that depends on this MAJOR, `render-parts`,
+  which renders the five parts of `teacher/composition.yaml` as text for a course from the
+  protocol, the composition, the two lexicons, the learner templates and the course, printed as
+  one JSON document whose shape `parts.schema.yaml` fixes, with its `test-render` and its
+  `README.md`; `classroom-builder/build-classroom` runs it and realises the parts. The filling
+  drops the period after a « » phrase that ends with one and keeps one pair of parentheses around
+  a value already in parentheses inside a link (#501).
+- `teacher/README.md`: wording, `first-message-presents-course` no longer writes « ses
+  {course.domain_count} domaines », which read « ses 1 domaines » for a course of one domain: it
+  gives the number and has the teacher write `phrases.domains_one` (« son domaine ») or
+  `phrases.domains_many` (« ses {n} domaines ») by it, two keys `teacher/lexicon.yaml` gains; a
+  PATCH (#501).

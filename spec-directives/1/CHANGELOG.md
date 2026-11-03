@@ -50,3 +50,7 @@ no class: `- file or area: what changes`.
   lists, `draws` entries with `from`, `source` and `what`, a `from: spec` source the spec folder
   holds, the moments of `on-demand`; every fixture gains the composition of `valid/`, and nine
   broken fixtures show its failures (#497).
+- `tests/`, `README.md`: `rule-files.js` exports nothing (the list of the families, exported for
+  the classroom build by #499, is held by the spec MAJOR's `teacher/build/render-parts`); section
+  2 says a spec MAJOR may hold a `teacher/build/` that renders the parts of the composition, read
+  by a classroom build (#501).
