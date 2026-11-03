@@ -2,8 +2,8 @@
 
 1. **1a Le produit : problème, utilisateurs, valeur.** Décrire la plateforme par ce qu'elle
    change pour qui, pas par sa technique ; les consommateurs de données sont des
-   utilisateurs. L'objectif produit et la mesure du résultat viennent plus
-   tard dans le parcours : ici, on s'arrête à « ce qui change pour une personne nommée ». La valeur est ce
+   utilisateurs. L'objectif produit et la mesure du résultat viennent plus tard dans le
+   parcours : ici, on s'arrête à « ce qui change pour une personne nommée ». La valeur est ce
    que l'utilisateur ou l'organisation gagne (du temps, une meilleure décision, un risque évité).
    Exemple : Étienne fait chaque matin le point sur l'état du réseau avant d'envoyer les
    régulateurs ; il est l'utilisateur, et ce que ce point change pour lui, le PO le précise avec
@@ -16,8 +16,8 @@
    leurs besoins et convainquent le PO ; le sponsor est le responsable qui porte le budget du
    produit et porte plus haut les obstacles qui dépassent le PO, sans ordonner le backlog. Le concept 0 a situé les trois responsabilités de
    l'équipe Scrum ; ici, on dit qui décide. Arbitrer entre parties prenantes et escalader
-   viennent plus tard dans le parcours. Rappel de 0a2 : les Developers choisissent les éléments avec le
-   PO ; 1b y ajoute la quantité. En 15 lignes, s'en tenir au PO face aux Developers, avec la
+   viennent plus tard dans le parcours. Rappel de 0a2 : les Developers choisissent les
+   éléments avec le PO ; 1b y ajoute la quantité. En 15 lignes, s'en tenir au PO face aux Developers, avec la
    définition des parties prenantes en une ligne ; le comité et la délégation viennent par
    l'exemple ou la relance. Exemple de fournisseur de données : Sid, le DSI, qui donne les
    accès aux données des systèmes.
@@ -66,8 +66,8 @@ Cas de la banque : pour 1a, « Présenter la plateforme à un nouvel arrivant »
   s'ordonnent avec ceux d'Étienne ; la justesse et la fraîcheur (l'âge des données quand on les
   lit) des données livrées comptent pour elle autant qu'un écran pour Étienne. Nuance : Diego n'a
   pas tout faux, une même équipe peut être à la fois utilisatrice de la plateforme et équipe
-  voisine dont dépend une partie du travail (une dépendance, vue plus tard dans le parcours) ; dans les deux cas, c'est une partie
-  prenante. Faire des consommateurs de données des utilisateurs est un choix du cours,
+  voisine dont dépend une partie du travail (une dépendance, vue plus tard dans le parcours) ;
+  dans les deux cas, c'est une partie prenante. Faire des consommateurs de données des utilisateurs est un choix du cours,
   appuyé sur le data mesh (choix d'école de Dehghani).
 - **Erreurs fréquentes** : réserver « utilisateur » aux humains devant un écran. Répondre que
   les utilisateurs sont les abonnés : ils profitent de la plateforme à travers l'appli, mais le
@@ -138,7 +138,8 @@ Cas de la banque : pour 1a, « Présenter la plateforme à un nouvel arrivant »
   pour l'équipe appli : des consommateurs de données, vus en 1a) : tout utilisateur est une
   partie prenante. Nuance : Odile est le sponsor (elle porte le budget de la plateforme et porte
   plus haut les obstacles qui dépassent le PO) ; l'ordre, lui, reste au PO, et un obstacle qui
-  le dépasse se porte plus haut (l'escalade, vue plus tard dans le parcours), ce qui n'a rien d'un vote à chaque sprint.
+  le dépasse se porte plus haut (l'escalade, vue plus tard dans le parcours), ce qui n'a rien
+  d'un vote à chaque sprint.
 - **Erreurs fréquentes** : accepter le vote « pour être juste ». Relancer : « si l'ordre se
   révèle mauvais, qui en répond ? ». À l'inverse, ordonner sans
   écouter ni expliquer. Douter : « le PO peut-il vraiment ordonner seul si les demandeurs ne

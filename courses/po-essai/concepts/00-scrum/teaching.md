@@ -73,8 +73,8 @@
 - **Explication** : le PO répond de la valeur du produit. Il répond aussi du backlog produit :
   formuler l'objectif produit et le faire connaître ; créer les éléments du backlog (toute entrée
   du backlog, quelle que soit sa taille ; détaillés plus tard dans le parcours) et les rendre
-  clairs ; les ordonner ; veiller à ce que le backlog soit transparent, visible et compris. Il peut faire ce
-  travail ou le confier à d'autres ; il en reste responsable. C'est une seule personne, pas un
+  clairs ; les ordonner ; veiller à ce que le backlog soit transparent, visible et compris. Il
+  peut faire ce travail ou le confier à d'autres ; il en reste responsable. C'est une seule personne, pas un
   comité. Qui veut changer le backlog doit convaincre le PO, et l'organisation respecte ses
   décisions, visibles dans le contenu et l'ordre du backlog.
 - **Situation** : après une tournée avec Théo (technicien de maintenance), Diego (data
@@ -105,8 +105,8 @@
   que soit leur métier : le mot « developers » n'exclut aucune compétence. Ils répondent de quatre
   choses : créer le backlog de sprint, leur plan pour le sprint (détaillé en 0a3) ; la qualité, en
   respectant la Definition of Done (DoD), les exigences de qualité de l'équipe (reprise en 0a3,
-  détaillée plus tard dans le parcours) ; adapter leur plan chaque jour vers l'objectif de sprint (ce que le
-  sprint vise, fixé à son début, détaillé en 0a3) ; se tenir responsables les uns envers les
+  détaillée plus tard dans le parcours) ; adapter leur plan chaque jour vers l'objectif de
+  sprint (ce que le sprint vise, fixé à son début, détaillé en 0a3) ; se tenir responsables les uns envers les
   autres. Comment transformer un élément du backlog en incrément, eux seuls le décident.
 - **Situation** : dans l'équipe vélos, Dana et Diego (data engineers) construisent les
   pipelines ; Anna (analyste) calcule les indicateurs (les valeurs que la plateforme calcule pour ses
