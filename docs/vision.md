@@ -20,8 +20,8 @@ and several learners come after, and are judged the same way.
 
 ## The yardstick
 
-A change of `linear-course` counts when the bench course `courses/po-essai/` (two concepts,
-created by #478) follows it in the same PR, its checks pass on it, and the teacher teaches it.
+A change of `linear-course` counts when the bench course `courses/po-essai/` (two concepts)
+follows it in the same PR, its checks pass on it, and the teacher teaches it.
 Small and proven over complete: a change proven on two real concepts is worth more than a
 complete spec judged on paper.
 

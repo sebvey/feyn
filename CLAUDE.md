@@ -8,7 +8,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 - Two products from one source, a course: a teacher that teaches a learner in a teaching
   session in Claude Code, and a site that publishes the course. The teacher justifies the rest.
 - The yardstick: a change of `linear-course` counts when `courses/po-essai/` (the two-concept
-  bench course, #478) follows it in the same PR, its checks pass and the teacher teaches it.
+  bench course) follows it in the same PR, its checks pass and the teacher teaches it.
 - Not to lose from sight:
   - the teacher is the product: a spec no teacher consumes is premature;
   - a thing is written once, in the file of the reader who needs it first;
