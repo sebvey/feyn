@@ -116,7 +116,10 @@ An option the maintainer leaves open stays Option, and the reply says so. An opt
 on an action of the maintainer (a label, a merge, an answer elsewhere): say what it waits on.
 
 A requirement added to an epic's Done when, by a fold or otherwise, is the maintainer's decision:
-propose it as a choice, never write it on the strength of another decision.
+propose it as a choice, never write it on the strength of another decision. An epic or a story
+whose body names `courses/po-essai/` and whose Done when does not state that it records its
+judgement calls in the Material of the migration epic #487: propose that line as such a choice
+([contributing](../../../docs/contributing.md), "Policies").
 
 ## 4. Execute the decision
 
@@ -127,7 +130,10 @@ As the maintainer decided. Which form an issue is in is read as `/feyn-issue` re
   Set), on the maintainer's word only, once its Done when is verifiable and no open blocked-by
   link remains ([project.md](../../reference/project.md), "Dependencies", Read; an epic: its
   five sections written, [contributing](../../../docs/contributing.md), "How the work is
-  organised");
+  organised"); an epic or a story whose body names `courses/po-essai/`, also once its Done when
+  states that the Material of the migration epic #487 holds its judgement calls (the line
+  proposed at step 3 when it was missing, written only on the maintainer's word, never on the
+  skill's own authority);
 - **rework**: its body rewritten (`mise exec -- gh issue edit <n> --body-file <file>`, from the
   template of its kind), or its kind changed, a story rewritten as an epic or the reverse, in
   the template of its new kind, its kind label with it
