@@ -595,8 +595,10 @@ read them there, and none writes them again (decision `lexicon-not-language-pack
 | the writer of a program that recognises a word of the course files (a check, the classroom build, the site) | the key that names the word, its group, and the file to read it from, `course/lexicon.yaml` | writing or changing that program |
 
 `course/lexicon.yaml` holds every key below, `checks.anaphora` excepted, which is optional;
-`lexicon-keys`, a test of `check-spec`, verifies it. A program reads a word by its key, never as a
-literal of its own. The words the teacher says and writes are the other lexicon,
+`lexicon-keys`, a test of `check-spec`, verifies it. A missing or unreadable `course/lexicon.yaml`
+is a tooling error, not a defect of the course nor a rule: `course-yaml` fails on it (exit 1),
+and `lexicon-keys` fails on it beside a `teacher/lexicon.yaml`. A program reads a word by its
+key, never as a literal of its own. The words the teacher says and writes are the other lexicon,
 `teacher/lexicon.yaml` (`teacher/README.md`, "Keys and parameters"). The values:
 
 | Group | Keys and values |
