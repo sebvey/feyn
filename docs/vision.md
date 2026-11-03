@@ -27,7 +27,9 @@ complete spec judged on paper.
 
 Until `po-essai` exists (#478) and a teacher is built from the course (#222), the yardstick is
 read as far as it reaches: an option says which of the two products consumes it, and how it
-brings the teacher closer.
+brings the teacher closer. This paragraph expires with them: #478, which creates `po-essai`,
+rewrites it so it no longer names `po-essai` as missing, and #222 removes it, the yardstick then
+read in full.
 
 ## The lessons of parcours-po
 
