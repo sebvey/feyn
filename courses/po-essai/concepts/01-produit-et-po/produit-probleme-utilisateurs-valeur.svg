@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 660" fill="currentColor" role="img" aria-labelledby="produit-probleme-utilisateurs-valeur-titre produit-probleme-utilisateurs-valeur-desc" font-family="sans-serif">
+  <title id="produit-probleme-utilisateurs-valeur-titre">Un produit se décrit par un problème, des utilisateurs et une valeur ; trois acteurs se partagent les décisions</title>
+  <desc id="produit-probleme-utilisateurs-valeur-desc">
+    En haut, un triangle : le produit est au centre, relié à trois cases, Problème (ce que le produit retire aux utilisateurs),
+    Valeur (ce que les utilisateurs y gagnent) et Utilisateurs. Sous Utilisateurs, deux familles :
+    ceux qui regardent les vues (Étienne, les régulateurs) et les consommateurs de données (un service d'analyse, un organisme).
+    En bas, un tableau « qui tranche quoi » en trois colonnes. Le PO répond de la valeur et décide du quoi, de l'ordre et du pourquoi ; c'est une seule personne.
+    Les Developers décident du comment et du coût, et choisissent le travail du sprint avec le PO.
+    Les parties prenantes font valoir leurs besoins et convainquent le PO.
+    Légende : le PO représente les parties prenantes dans le backlog et répond de la valeur.
+  </desc>
+  <g id="1a-rayons" class="muted" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="2.5">
+    <line x1="258" y1="128" x2="200" y2="66"/>
+    <line x1="342" y1="128" x2="400" y2="66"/>
+    <line x1="300" y1="196" x2="300" y2="236"/>
+  </g>
+  <g id="1a-produit" class="primary">
+    <circle cx="300" cy="150" r="46" fill="currentColor" fill-opacity="0.3"/>
+    <text x="300" y="157" text-anchor="middle" font-size="19" font-weight="700">Produit</text>
+  </g>
+  <g id="1a-probleme">
+    <rect class="muted" x="30" y="24" width="170" height="50" rx="8" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="115" y="56" text-anchor="middle" font-size="19" font-weight="650">Problème</text>
+    <text class="muted" x="115" y="98" text-anchor="middle" font-size="16">ce que le produit</text>
+    <text class="muted" x="115" y="118" text-anchor="middle" font-size="16">retire aux utilisateurs</text>
+  </g>
+  <g id="1a-valeur">
+    <rect class="muted" x="400" y="24" width="170" height="50" rx="8" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="485" y="56" text-anchor="middle" font-size="19" font-weight="650">Valeur</text>
+    <text class="muted" x="485" y="98" text-anchor="middle" font-size="16">ce que les utilisateurs</text>
+    <text class="muted" x="485" y="118" text-anchor="middle" font-size="16">y gagnent</text>
+  </g>
+  <g id="1a-utilisateurs">
+    <rect class="muted" x="215" y="236" width="170" height="50" rx="8" fill="currentColor" fill-opacity="0.12" stroke="none"/>
+    <rect class="primary" x="215" y="236" width="170" height="50" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.3" stroke-width="2.5"/>
+    <text x="300" y="268" text-anchor="middle" font-size="19" font-weight="650">Utilisateurs</text>
+  </g>
+  <g id="1a-familles">
+    <line class="muted" x1="260" y1="286" x2="161" y2="330" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="2"/>
+    <line class="muted" x1="340" y1="286" x2="439" y2="330" fill="none" stroke="currentColor" stroke-opacity="0.75" stroke-width="2"/>
+    <rect class="secondary" x="30" y="330" width="262" height="62" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="2"/>
+    <text x="161" y="357" text-anchor="middle" font-size="17" font-weight="650">Regardent les vues</text>
+    <text class="muted" x="161" y="379" text-anchor="middle" font-size="16">Étienne, les régulateurs</text>
+    <rect class="secondary" x="308" y="330" width="262" height="62" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.85" stroke-width="2"/>
+    <text x="439" y="357" text-anchor="middle" font-size="17" font-weight="650">Consomment des données</text>
+    <text class="muted" x="439" y="379" text-anchor="middle" font-size="16">service d'analyse, organisme</text>
+  </g>
+  <g id="1b-titre">
+    <text x="30" y="440" font-size="19" font-weight="650">Qui tranche quoi</text>
+  </g>
+  <g id="1b-po">
+    <rect class="primary" x="30" y="456" width="176" height="36" rx="6" fill="currentColor" fill-opacity="0.3"/>
+    <text class="primary" x="118" y="480" text-anchor="middle" font-size="18" font-weight="700">PO</text>
+    <rect class="muted" x="30" y="492" width="176" height="106" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="40" y="518" font-size="16">répond de la valeur</text>
+    <text x="40" y="540" font-size="16">le quoi, l'ordre,</text>
+    <text x="40" y="562" font-size="16">le pourquoi</text>
+    <text x="40" y="584" font-size="16">une seule personne</text>
+  </g>
+  <g id="1b-developers">
+    <rect class="primary" x="212" y="456" width="176" height="36" rx="6" fill="currentColor" fill-opacity="0.3"/>
+    <text class="primary" x="300" y="480" text-anchor="middle" font-size="18" font-weight="700">Developers</text>
+    <rect class="muted" x="212" y="492" width="176" height="106" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="222" y="518" font-size="16">le comment, le coût</text>
+    <text x="222" y="540" font-size="16">ils choisissent le</text>
+    <text x="222" y="562" font-size="16">travail du sprint</text>
+    <text x="222" y="584" font-size="16">avec le PO</text>
+  </g>
+  <g id="1b-parties-prenantes">
+    <rect class="primary" x="394" y="456" width="176" height="36" rx="6" fill="currentColor" fill-opacity="0.3"/>
+    <text class="primary" x="482" y="480" text-anchor="middle" font-size="18" font-weight="700">Parties prenantes</text>
+    <rect class="muted" x="394" y="492" width="176" height="106" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="404" y="518" font-size="16">font valoir leurs</text>
+    <text x="404" y="540" font-size="16">besoins et</text>
+    <text x="404" y="562" font-size="16">convainquent le PO</text>
+  </g>
+  <g id="1b-legende" class="muted">
+    <text x="30" y="624" font-size="16">Le PO représente les parties prenantes dans</text>
+    <text x="30" y="644" font-size="16">le backlog et répond de la valeur.</text>
+  </g>
+</svg>

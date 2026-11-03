@@ -1,0 +1,46 @@
+id: po-essai
+spec: linear-course@1
+language: fr
+title: "Parcours PO, deux concepts d'essai"
+subtitle: "Les deux premiers concepts du Parcours PO, sur lesquels chaque changement de la spec est essayé."
+audience: "Un développeur ou un profil data (data engineer, analyste), à l'aise avec la technique et débutant en gestion de produit, qui devient Product Owner d'un produit data et veut de bonnes bases pour tenir le rôle dans une équipe Scrum ou proche."
+storyline: storyline.md
+glossary: glossary.md
+domains:
+  - number: 1
+    slug: frame
+    title: "Le cadre"
+    objective: "Décrire un produit data par le problème, les utilisateurs et la valeur, et dire qui tranche quoi entre PO et Developers."
+    duration_min: 90
+    file: domains/1-frame.md
+    concepts: [0, 1]
+concepts:
+  - number: "0"
+    slug: scrum
+    title: "Scrum en bref et l'incrément"
+    objective: "situer les trois responsabilités de Scrum (Product Owner, Scrum Master, Developers), le sprint et ses quatre événements, les trois artefacts et leurs engagements ; distinguer le sprint, une durée, de l'incrément, le produit dans un nouvel état utilisable"
+    prerequisites: []
+    dir: concepts/00-scrum
+    subconcepts:
+      - id: 0a
+        title: "Le cadre"
+        children:
+          - id: 0a1
+            title: "Trois responsabilités"
+          - id: 0a2
+            title: "Le sprint et ses quatre événements"
+          - id: 0a3
+            title: "Trois artefacts, trois engagements"
+      - id: 0b
+        title: "Sprint et incrément"
+  - number: "1"
+    slug: produit-et-po
+    title: "Le produit et le rôle du PO"
+    objective: "décrire un produit par le problème qu'il résout, ses utilisateurs et la valeur qu'ils en tirent, et dire qui tranche quoi entre le PO, les Developers et les parties prenantes"
+    prerequisites: [0]
+    dir: concepts/01-produit-et-po
+    subconcepts:
+      - id: 1a
+        title: "Le produit : problème, utilisateurs, valeur"
+      - id: 1b
+        title: "Qui tranche quoi"
