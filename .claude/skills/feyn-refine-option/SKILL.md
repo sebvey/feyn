@@ -1,6 +1,6 @@
 ---
 name: feyn-refine-option
-description: "Run with the maintainer the option refinement of feyn (a moment of the work cycle of its own): one named option, an epic or a story in Status Option, analysed against the repository (a staleness check and an overlap check, each run as a command, their results presented with their proof), then decided on its own: commit (set Ready), rework, merge, split, fold into an epic, close; the decision is executed. An idea is not treated here: it goes to `/feyn-triage`. It never reviews the Option column as a whole. With no number, it asks which option. Use for \"raffine l'option 435\", \"refine option 435\", \"/feyn-refine-option 435\"."
+description: "Run with the maintainer the option refinement of feyn (a moment of the work cycle of its own): one named option, an epic or a story in Status Option, analysed against the purpose of feyn (which product consumes it) and the repository (a staleness check and an overlap check, each run as a command, their results presented with their proof), then decided on its own: commit (set Ready), rework, merge, split, fold into an epic, close; the decision is executed. An idea is not treated here: it goes to `/feyn-triage`. It never reviews the Option column as a whole. With no number, it asks which option. Use for \"raffine l'option 435\", \"refine option 435\", \"/feyn-refine-option 435\"."
 argument-hint: "<option number>"
 ---
 
@@ -47,6 +47,14 @@ An option named is refined whatever it holds: sound or stale, it goes through st
 
 ## 2. The checks, before it is presented
 
+**Purpose**, first, before the staleness check: read
+[vision.md](../../../docs/vision.md) and answer two questions from the option's body, each
+with the line it rests on: which product consumes the option (the teacher, the site, or
+neither: then which of them it serves, through what), and how it serves the purpose, measured
+by the yardstick (for a change of `linear-course`: does `courses/po-essai/` follow it in the
+same PR, and does the teacher teach it). An option that names no product it serves says so;
+it is not refused here, the answer goes to the maintainer with the rest (step 3).
+
 Each command run, not assumed; the option itself comes up in these lookups: it is not its own
 neighbour.
 
@@ -84,6 +92,8 @@ open ideas on the same files.
 
 One message, under its own level-2 heading:
 - its frame in one line: epic or story, what it is for, where it belongs;
+- **Purpose**: the product that consumes it and how it serves the purpose, each with its line,
+  or "Names no product it serves";
 - **Staleness**: the paths read; the commits since its `updatedAt` on them, each `<hash> <date>
   <subject>` with what it changed for the option, or "No commit on <paths> since <date>"; the
   paths `origin/main` no longer holds, with the commit; the issues cited closed since;

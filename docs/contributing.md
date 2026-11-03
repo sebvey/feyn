@@ -14,7 +14,9 @@ in [`.claude/decisions/`](../.claude/decisions/); the reserved words are in
 directives (how a spec is written and read, the tests of a spec's files, the lib the checks
 load), `courses/` the courses, `teacher/` the teacher template, the teacher skills and
 the classroom build script that turns a course into a classroom, `site/` the engine that
-builds it, `.claude/` the agentic layer, `docs/` what belongs to no single area.
+builds it, `.claude/` the agentic layer, `docs/` what belongs to no single area, and
+[`vision.md`](vision.md) what feyn is for (its two products, the yardstick of a change, the
+lessons it was built on).
 `construction/`, the design, plan and session notes of the construction, was removed on
 2026-10-31: its files are read at `2c16adf3e66a` (`git show 2c16adf3e66a:construction/<path>`).
 `.claude/` has five folders: `skills/` the HOW (one folder per skill, its `SKILL.md`
@@ -243,8 +245,9 @@ Five moments:
    recreated as a story or an epic and closed, its blocked-by links set again on the new work
    item. Why: decisions `idea-is-never-converted`, `idea-and-option-before-ready`.
 5. **Option refinement**, run with `/feyn-refine-option` on one option the maintainer names: the
-   work session runs a staleness check (what changed on `origin/main` since the option was last
-   updated, in the files it names) and an overlap check (the open options, epics and committed
+   work session first asks which product consumes the option and how it serves the purpose
+   ([`vision.md`](vision.md)), then runs a staleness check (what changed on `origin/main`
+   since the option was last updated, in the files it names) and an overlap check (the open options, epics and committed
    stories that cover or overlap it, the open ideas on the same files), presents the option
    with the result of each and its proof, and the maintainer decides it alone: commit (set
    Ready), rework (its body or its kind rewritten, it stays Option), merge into another option,
@@ -261,6 +264,8 @@ decisions and the skills:
   epic opens an idea, not a story.
 - An open question never stops the work, and the epic PR is handed over only when none remains.
 - A story without an epic is never delivered on an integration branch.
+- A change to [`vision.md`](vision.md) is a decision (`/feyn-decision`), never an edit in
+  passing.
 - **A process change comes from an observed problem.** After epic #392, which lands this frame,
   a change to the process (a skill, a workflow, a policy, the glossary, this file) enters only by
   an idea that names the problem observed and where it was seen (a delivery, a debrief, a triage,
