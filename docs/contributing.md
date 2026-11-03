@@ -333,6 +333,11 @@ reads the views. Why: decisions `themes-and-release-milestones`, `epic-on-integr
 - `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is
   a draft, which keeps it from being merged); on top of the Status, never instead of it; only
   the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
+- `stale`: an idea or an option posed before the frame of 2026-11-03 ([`vision.md`](vision.md)),
+  to re-read against it before it is taken; the triage or the option refinement that re-reads
+  it removes the label when the item holds, as written or reworked, or closes the item naming
+  what replaced it. A mark, not a state: the Status still says where the item stands. Why:
+  decision `project-status-not-state-labels`; a label nobody removes marks nothing (idea #477).
 - `type:bug`, `type:course`, `type:improvement`, `type:decision`, on a work item only;
   `area:*` derived from the tree (`spec:<name>`, `spec-directives`, `course:<id>`, `teacher`,
   `site`, `agentic`, `repo`), on every issue.
