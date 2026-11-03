@@ -676,8 +676,9 @@ a second target is built from the same composition.
 Two readers come to it. The builder, who writes the classroom build: the build reads
 `composition.yaml` to know which part gets what, as the checks read `rules.yaml`. The fresh tests:
 they judge a teacher on what it loads and when (a teacher that loads the onboarding at every
-message does not conform). `composition` (`check-spec`, `spec-directives/1/README.md` section 8)
-tests the form of the file, never its sense.
+message does not match the composition, and the fresh tests flag it). `composition`
+(`check-spec`, `spec-directives/1/README.md` section 8) tests the form of the file, never its
+sense.
 
 ## Keys and parameters
 

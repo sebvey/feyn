@@ -157,3 +157,8 @@ and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
   directives, not `linear-course` alone; the categories and the families stay each spec's.
   Without this, a contributor writing a second spec would read the rule model as a decision of
   `linear-course` and copy it into the new spec, two copies that drift.
+- Amended 2026-11-03 (#497): the composition of the teacher (`teacher/composition.yaml`) joins
+  the spec's own files that the tests of `check-spec` verify, by the test `composition`, which is
+  not a rule: it checks the form of the file, and the file's consistency counts toward no
+  product's conformance. Without this, a contributor reads the composition as a rule of the teacher and
+  gives it a category and a level, or leaves its test outside the clause.

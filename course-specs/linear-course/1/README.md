@@ -17,7 +17,7 @@ follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 
 - `README.md`: this file: scope, files, categories, normative references, the list of checks.
 - `course/README.md`: what a course is: course structure, reader-text conventions, diagrams (drawing contract and style), the lexicon of the course files.
-- `teacher/README.md`: the pedagogical protocol the teacher executes.
+- `teacher/README.md`: the pedagogical protocol the teacher executes, and the description of its composition.
 - `teacher/composition.yaml`: the composition of the teacher, its five parts, when each loads and what each draws from (section 2).
 - `CHANGELOG.md`: the changes of the spec, « Unreleased » until the tag.
 - `spec.yaml`: the declaration of this MAJOR, its version, its language (`fr`) and the MAJOR of the spec directives it follows (`spec-directives/1/`: the tests of these files, run by `spec-directives/check-spec course-specs/linear-course/1`, and the `lib/` and package the checks load).
@@ -54,7 +54,7 @@ plus this README (decision `spec-files-by-product`):
 |---|---|
 | `README.md` | this file: scope, files, categories, normative references, the list of checks |
 | `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the lexicon of the course files |
-| `teacher/README.md` | the protocol of the teacher: purpose, notation, rules named by slug, keys and parameters |
+| `teacher/README.md` | the protocol of the teacher: purpose, notation, rules named by slug, the composition, keys and parameters |
 | `course/rules.yaml` | the rules of a course, in English |
 | `teacher/rules.yaml` | the rules of the teacher, in French |
 | `teacher/composition.yaml` | the composition of the teacher: its five parts, when each loads and what each draws from (`teacher/README.md`, "Composition") |
