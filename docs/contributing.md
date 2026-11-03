@@ -269,10 +269,10 @@ decisions and the skills:
   `courses/po-essai/` follows it in the same PR, `course-specs/check-course courses/po-essai`
   passing on it; `/feyn-pull-request` runs that check on every PR that touches
   `course-specs/linear-course/`. The exception: a change that touches no file a course has (a
-  decision, the CHANGELOG, prose of a README that sets no rule, the spec directives) needs no
-  change of `po-essai`, and its PR still runs the check and says so in its Checks. Why: without
-  it a spec story closes with the bench behind, and the bench stops proving anything within a
-  week (the frame of 2026-11-03). From idea #477; the yardstick it applies:
+  decision, the CHANGELOG, prose of a README that sets no rule) needs no change of `po-essai`,
+  and its PR still runs the check and says so in its Checks. Why: without it a spec story
+  closes with the bench behind, and the bench stops proving anything within a week (the frame
+  of 2026-11-03). From idea #477; the yardstick it applies:
   [`vision.md`](vision.md), "The yardstick".
 - A change to [`vision.md`](vision.md) is a decision (`/feyn-decision`), never an edit in
   passing.

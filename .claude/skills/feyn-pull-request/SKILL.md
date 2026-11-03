@@ -37,9 +37,10 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    No check exists yet for the area: say so in the PR's Checks. A failing blocking check (exit
    code 1; the summary line of `check-course` names it) is fixed before the PR opens; one that
    cannot be fixed here is named in the PR's Checks and in Review first. A failing blocking
-   check on `po-essai` is fixed before the PR opens, as for a course PR: the PR does not open
-   on it. A failing reporting check leaves the exit code 0 and blocks nothing: its failures are
-   findings, and the Checks line gives their count by check.
+   check on `po-essai` is always fixed before the PR opens: unlike a course PR, it has no such
+   escape, since a spec change is done only with the bench passing. A failing reporting check
+   leaves the exit code 0 and blocks nothing: its failures are findings, and the Checks line
+   gives their count by check.
 3. **Commit and push.** Nothing left uncommitted that belongs to the issue
    (`git status --porcelain`), then
    `git push -u origin <branch>`.
