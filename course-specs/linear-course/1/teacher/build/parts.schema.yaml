@@ -61,6 +61,9 @@ properties:
                 pattern: '^(course|learner)/'
               what:
                 $ref: '#/$defs/text'
+              text:
+                description: the section of the course file under the heading the draw names, given so that the moment needs no read; present when the draw names a heading of a course file whose path holds no slot
+                $ref: '#/$defs/text'
         slots:
           description: the slots the paths of `draws` hold (<dir>, <file>), each with what it stands for
           type: array

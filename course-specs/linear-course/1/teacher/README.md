@@ -195,6 +195,22 @@ question, ou sa relance au même rang, précédée de ce qu'il avait déjà just
 *Pourquoi :* sans elle, tu reposes la question en attente seule, sans l'explication ni l'exemple qui
 la rendent répondable.
 
+### Composition (`composition-loading`)
+
+**Purpose.** What the teacher loads and when: each part of its composition at the moment and from
+the place `composition.yaml` gives it, so that the rules of a moment hold at that moment only and a
+teacher that loads them elsewhere does not conform.
+
+| Reader | Needs | When |
+|---|---|---|
+| the teacher | when the rules of a moment are loaded, and when they are not | each moment of a teaching session |
+| fresh tests | what the teacher loads, and when: no onboarding act in a resume, no resume act in an onboarding | the onboarding and resume scenarios |
+| the maintainer | that the composition bears on the conformance of a teacher | a change to the composition |
+
+**teacher-loads-composition** Charge les règles d'un moment depuis le skill de ce moment, quand ce
+moment vient, et seulement alors : les règles du groupe `onboarding` pour un nouvel apprenant, jamais
+à une reprise ; celles du groupe `resume` pour un apprenant qui revient, jamais à un accueil.
+
 ## 2. Présentation d'un domaine
 
 **Purpose.** How the teacher opens a domain: a short presentation drawn from the domain file,
@@ -679,9 +695,10 @@ a second target is built from the same composition.
 Two readers come to it. The builder, who writes the classroom build: its half that depends on this
 MAJOR, [`build/render-parts`](build/README.md), reads `composition.yaml` to render each part as
 text, as the checks read `rules.yaml`, and the half at the root (`classroom-builder/`) realises
-the parts for its target. The fresh tests:
-they judge a teacher on what it loads and when (a teacher that loads the onboarding at every
-message does not match the composition, and the fresh tests flag it). `composition`
+the parts for its target. The fresh tests ([`tests/`](tests/README.md)):
+they judge a teacher on what it loads and when, by the rule `teacher-loads-composition` (group
+`composition-loading`), a requirement of method demonstration: a teacher that loads the onboarding
+at every message, or the resume for a new learner, does not conform. `composition`
 (`check-spec`, `spec-directives/1/README.md` section 8) tests the form of the file, never its
 sense.
 

@@ -322,24 +322,45 @@ const SLOTS = {
   '<dir>': 'the `dir` of the concept at hand in `course/course.yaml`',
   '<file>': 'the `file` of the domain at hand in `course/course.yaml`',
 };
+// A draw from a course file with no slot whose `what` names a heading (`headings.onboarding`) is
+// rendered with the section under that heading, `text`, so that the moment needs no read: the
+// onboarding questions of plan.md reach the onboarding with no tool call before its first message
+// (rule first-message-without-tools; a finding of the fresh test onboarding, #507).
+function section(file, heading) {
+  const lines = read(file).split('\n');
+  const at = lines.findIndex((l) => l.trim() === `## ${heading}`);
+  if (at < 0) fail(`${path.basename(file)} has no heading « ## ${heading} »`);
+  const body = [];
+  for (const l of lines.slice(at + 1)) {
+    if (/^#{1,2} /.test(l)) break;
+    body.push(l);
+  }
+  return body.join('\n').trim();
+}
 function draws(list) {
   return (list || []).map((d) => {
     const source = fill(d.source, 'composition.yaml');
     const where = d.from === 'course' ? `course/${source}` : d.from === 'learner' ? `learner/${source}` : null;
-    return where ? { path: where, what: fillWhat(d.what) } : null;
+    if (!where) return null;
+    const out = { path: where, what: fillWhat(d.what) };
+    const heading = /\bheadings\.([a-z_]+)\b/.exec(d.what);
+    if (d.from === 'course' && heading && !/[<{]/.test(source)) out.text = section(path.join(courseDir, source), lex('headings', heading[1]));
+    return out;
   }).filter(Boolean);
 }
 
-// ---- the permissions: the classroom draws of the part, `may be written` or `read only`
+// ---- the permissions: the classroom draws of the part, « peut s'écrire » (may be written, « se
+// commite »: committed, « ne se pousse jamais »: never pushed) or « en lecture seule » (read only);
+// the `what` texts are French (decision language-policy)
 const permissions = { writable: [], read_only: [], commit: false, push: false };
 for (const d of parts.get('permissions').draws || []) {
   if (d.from !== 'classroom') continue;
-  if (/^may be written/.test(d.what)) {
+  if (/^peut s'écrire/.test(d.what)) {
     permissions.writable.push(d.source);
-    if (/\bcommitted\b/.test(d.what)) permissions.commit = true;
-    if (/\bpushed\b/.test(d.what) && !/\bnever pushed\b/.test(d.what)) permissions.push = true;
-  } else if (/^read only/.test(d.what)) permissions.read_only.push(d.source);
-  else fail(`composition.yaml: permissions: ${d.source} is neither « may be written » nor « read only »`);
+    if (/se commite/.test(d.what)) permissions.commit = true;
+    if (/se pousse/.test(d.what) && !/ne se pousse jamais/.test(d.what)) permissions.push = true;
+  } else if (/^en lecture seule/.test(d.what)) permissions.read_only.push(d.source);
+  else fail(`composition.yaml: permissions: ${d.source} is neither « peut s'écrire » nor « en lecture seule »`);
 }
 
 // ---- the parts

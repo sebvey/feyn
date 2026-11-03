@@ -138,7 +138,9 @@ and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
   lists, one category and one level per check.
 - The bump table of the spec is written in levels: a recommendation of `course/rules.yaml`
   made a requirement is a MAJOR (decision `versioned-objects-and-spec-layout`).
-- No teacher conforms today, since no fresh test exists: that is the target of #222.
+- No teacher conforms today: the fresh tests (`classroom-builder/fresh-test` on the test
+  scenarios of the spec MAJOR's `teacher/tests/`, #507) cover the rules a session of `po-essai`
+  exercises, not every requirement; the rest is the target of #222.
 - In French, « schéma » means a drawing or a JSON Schema; the repository, in English, says
   `diagram` and `schema`.
 - Amended 2026-10-31 (#339): a rule binds a product, a course or a teacher. The consistency of

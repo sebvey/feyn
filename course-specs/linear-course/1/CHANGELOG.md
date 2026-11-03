@@ -126,3 +126,19 @@ no class: `- file or area: what changes`.
   gives the number and has the teacher write `phrases.domains_one` (« son domaine ») or
   `phrases.domains_many` (« ses {n} domaines ») by it, two keys `teacher/lexicon.yaml` gains; a
   PATCH (#501).
+- `teacher/tests/`: the test scenarios of the teacher, one YAML file each, whose form
+  `scenario.schema.yaml` fixes (`id`, `title`, `learner`, `turns` with their `expect` and an
+  optional `if`, `rules`), and five scenarios for `courses/po-essai`: `onboarding`, `concept-0`,
+  `stop`, `resume`, `concept-1`; `README.md` lists the rules of the families 1, 3, 4, 5, 8 and 9
+  no scenario names, and why; `classroom-builder/fresh-test` runs them (#507).
+- `teacher/rules.yaml`, `teacher/README.md`: the rule `teacher-loads-composition` (group
+  `composition-loading` of family 1, requirement, demonstration): the teacher loads each part of
+  its composition when and from where `composition.yaml` says, so that a teacher that loads the
+  onboarding at every message does not conform; "Composition" says so (#507).
+- `teacher/composition.yaml`: the `what` and `when` texts in French, since the teacher skills
+  print them (decision `language-policy`); `teacher/build/render-parts` reads the permissions in
+  French (« peut s'écrire », « en lecture seule ») (#507).
+- `teacher/build/`: a moment's draw from a course file with no slot that names a heading
+  (`headings.onboarding`) carries the section under it, `text` (`parts.schema.yaml`), so that
+  the onboarding questions of `plan.md` reach the onboarding skill and its first message needs no
+  read (#507).

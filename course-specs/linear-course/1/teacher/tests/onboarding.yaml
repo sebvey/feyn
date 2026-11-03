@@ -1,0 +1,67 @@
+id: onboarding
+title: a new learner, the onboarding up to the first message of concept 0
+learner: new
+turns:
+  - message: Bonjour
+    expect:
+      - act: the onboarding skill is loaded, not the resume one; no file is read or written before the first message
+        rules: [new-or-returning-learner, teacher-loads-composition, first-message-without-tools]
+      - act: the first message presents the course in two lines, its audience, the course path concept by concept, « son domaine » (one domain)
+        rules: [first-message-presents-course, teacher-posture-from-plan]
+      - act: the site link and what the learner may ask at any time
+        rules: [first-message-site-and-requests, descriptive-site-links]
+      - act: the number of onboarding questions announced (three), and the first one asked alone, how the learner wants to be called
+        rules: [onboarding-questions-announced, onboarding-questions-order, several-questions-announced, one-question-per-message]
+  - message: Appelle-moi Sam.
+    expect:
+      - act: the teacher calls the learner Sam, reacts in one sentence, asks the second question (the role), and writes nothing in learner/
+        rules: [react-to-each-onboarding-answer, onboarding-questions-order, write-at-save-points-only]
+  - message: Je suis data engineer, et je vais devenir PO de la plateforme de données de mon équipe le mois prochain.
+    expect:
+      - act: a reaction in one sentence, then the third question (what the learner knows of Scrum and product management), nothing written in learner/
+        rules: [react-to-each-onboarding-answer, onboarding-questions-order, write-at-save-points-only]
+  - message: J'ai lu le Scrum Guide il y a longtemps, mais je n'ai jamais tenu de backlog ni écrit de user story.
+    expect:
+      - act: before any tool call, one or two sentences on what the answers change, then « Je mets en place le cours. »
+        rules: [onboarding-closing-sentence, waiting-sentence-first]
+      - act: "the save point of the onboarding, each file of learner/ written once with the write tool, the nickname set, the profile one line per question of plan.md, the journal line and the next step, then a commit « Sam : accueil »"
+        rules: [save-points, onboarding-files-set-up, onboarding-profile-written, save-journal-line, save-next-step, reread-before-writing, one-write-per-file, write-tool-not-shell, write-only-in-learner, commit-after-save-point]
+      - act: after reading the storyline, the domain file and the files of concept 0, a message opening on « C'est prêt, on démarre. », the storyline in two lines, the first domain, ending on the next line; the writes not announced
+        rules: [onboarding-ready-message, next-line-form, writes-not-announced]
+  - message: Oui, on y va.
+    if: next-line
+    expect:
+      - act: the first message of concept 0 comes now, not before
+        rules: [first-concept-next-message]
+rules:
+  - teacher-posture-from-plan
+  - new-or-returning-learner
+  - teacher-loads-composition
+  - first-message-without-tools
+  - first-message-presents-course
+  - first-message-site-and-requests
+  - onboarding-questions-announced
+  - onboarding-questions-order
+  - several-questions-announced
+  - react-to-each-onboarding-answer
+  - onboarding-closing-sentence
+  - onboarding-ready-message
+  - first-concept-next-message
+  - one-question-per-message
+  - short-messages
+  - descriptive-site-links
+  - waiting-sentence-first
+  - next-line-form
+  - course-language-typography
+  - write-only-in-learner
+  - write-at-save-points-only
+  - one-write-per-file
+  - save-points
+  - save-next-step
+  - save-journal-line
+  - onboarding-files-set-up
+  - onboarding-profile-written
+  - reread-before-writing
+  - write-tool-not-shell
+  - commit-after-save-point
+  - writes-not-announced

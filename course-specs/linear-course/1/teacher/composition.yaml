@@ -20,11 +20,13 @@
 #   classroom  a file or folder the classroom build makes
 # `source`, the file or folder read, relative to its `from`: `{course.<name>}` is a course
 # parameter (teacher/README.md, "Keys and parameters"), `<dir>` the `dir` of the concept at hand in
-# course.yaml, `<file>` the `file` of the domain at hand. `what`, what is drawn, in a few words; a
-# lexicon key (`headings.onboarding`) names a heading of a course file.
-# A moment of `on-demand`: `id`, `when`, `rules` (the slugs of the groups, families or rules of the
-# protocol loaded at that moment, a family by its category in teacher/rules.yaml; empty while the
-# protocol has none for it) and `draws`, as a part's.
+# course.yaml, `<file>` the `file` of the domain at hand. `what`, what is drawn, in a few words, in
+# French, since the teacher skills print it (decision language-policy); a lexicon key
+# (`headings.onboarding`) names a heading of a course file.
+# A moment of `on-demand`: `id`, `when` (in French, as `what`: the description of its teacher skill
+# prints it), `rules` (the slugs of the groups, families or rules of the protocol loaded at that
+# moment, a family by its category in teacher/rules.yaml; empty while the protocol has none for it)
+# and `draws`, as a part's.
 #
 # The rules of the protocol are named by their file, teacher/rules.yaml; until #450 moves them
 # there, teacher/build/render-parts reads them in teacher/README.md (the `**slug** text` lines, by
@@ -36,122 +38,122 @@ parts:
     draws:
       - from: spec
         source: teacher/rules.yaml
-        what: the rules of the protocol and the purpose of their families and groups, except the rules another part loads
+        what: les règles du protocole et le but de leurs familles et de leurs groupes, sauf les règles qu'une autre partie charge
       - from: course
         source: plan.md
-        what: the posture, the paragraph under headings.onboarding
+        what: la posture, le paragraphe sous headings.onboarding
       - from: course
         source: course.yaml
-        what: the course map, a projection of its domains and concepts
+        what: la carte du cours, une projection de ses domaines et de ses concepts
       - from: course
         source: course.yaml
-        what: the names of the course files (storyline, glossary, domain files, concept folders)
+        what: les noms des fichiers du cours (fil rouge, glossaire, fiches de domaine, dossiers de concept)
       - from: spec
         source: teacher/lexicon.yaml
-        what: the phrases and words of the teacher the rules name by key
+        what: les phrases et les mots du professeur que les règles nomment par clé
       - from: spec
         source: course/lexicon.yaml
-        what: the words of the course files the rules name by key
+        what: les mots des fichiers du cours que les règles nomment par clé
       - from: classroom
         source: course.lock
-        what: the classroom parameters, site_url and the site addresses, the channel
+        what: les paramètres de la classe, site_url et les adresses du site, le canal
 
   - id: on-demand
     loads: at-a-moment
     draws:
       - from: spec
         source: teacher/rules.yaml
-        what: the rules of each moment below
+        what: les règles de chaque moment ci-dessous
     moments:
       - id: onboarding
-        when: a new learner, at the first message of a teaching session
+        when: un nouvel apprenant, au premier message d'une session de cours
         rules: [onboarding]
         draws:
           - from: course
             source: plan.md
-            what: the onboarding questions under headings.onboarding
+            what: les questions d'accueil sous headings.onboarding
       - id: resume
-        when: a returning learner, at the first message of a teaching session
+        when: un apprenant qui revient, au premier message d'une session de cours
         rules: [resume]
         draws:
           - from: learner
             source: parcours.md
-            what: where the learner stands, the next step and a pending question
+            what: où en est l'apprenant, la prochaine étape et une question en attente
       - id: diagram
-        when: the learner asks for a diagram
+        when: l'apprenant demande un schéma
         rules: [requested-diagram-shown, diagram-not-displayable]
         draws:
           - from: course
             source: <dir>/concept.md
-            what: the diagrams the concept declares, their title and caption
+            what: les schémas que le concept déclare, leur titre et leur légende
           - from: course
             source: <dir>/teaching.md
-            what: the drawing instruction under headings.drawing, when no diagram is declared
+            what: la consigne de dessin sous headings.drawing, quand aucun schéma n'est déclaré
       - id: stop
-        when: the learner says the teaching session stops
+        when: l'apprenant dit que la session de cours s'arrête
         rules: [stop]
         draws:
           - from: learner
             source: parcours.md
-            what: learner memory reread as the next teacher reads it
+            what: la mémoire de l'apprenant relue comme le prochain professeur la lit
       - id: reset
-        when: the learner asks to start the course over
+        when: l'apprenant demande à reprendre le cours au début
         rules: []
         draws:
           - from: spec
             source: teacher/templates/learner/
-            what: the learner templates learner memory returns to
+            what: les modèles de l'apprenant, où revient la mémoire de l'apprenant
 
   - id: course-reads
     loads: during-the-session
     draws:
       - from: course
         source: "{course.storyline}"
-        what: the storyline
+        what: le fil rouge
       - from: course
         source: <file>
-        what: the domain file of the domain at hand
+        what: la fiche du domaine en cours
       - from: course
         source: <dir>/concept.md
-        what: the matter of the concept at hand
+        what: la matière du concept en cours
       - from: course
         source: <dir>/teaching.md
-        what: the method, how to teach the concept at hand
+        what: la méthode, comment enseigner le concept en cours
       - from: course
         source: <dir>/sources.md
-        what: the sources of the concept, on request
+        what: les sources du concept, à la demande
       - from: course
         source: "{course.glossary}"
-        what: the terms of the course, one per notion
+        what: les termes du cours, un par notion
 
   - id: learner-memory
     loads: at-start-and-save-points
     draws:
       - from: spec
         source: teacher/templates/learner/
-        what: the learner templates, the form of learner memory
+        what: les modèles de l'apprenant, la forme de la mémoire de l'apprenant
       - from: spec
         source: teacher/rules.yaml
-        what: the memory rules, the family learner-memory (teacher/README.md section 8)
+        what: les règles de mémoire, la famille learner-memory (teacher/README.md, famille 8)
       - from: learner
         source: apprenant.md
-        what: the learner's profile and preferences
+        what: le profil et les préférences de l'apprenant
       - from: learner
         source: parcours.md
-        what: the course path, the concept statuses and the next step
+        what: le parcours, le statut des concepts et la prochaine étape
       - from: learner
         source: observations.md
-        what: the levers, the vigilances and what is acquired
+        what: les leviers, les vigilances et les acquis
 
   - id: permissions
     loads: always
     draws:
       - from: spec
         source: teacher/rules.yaml
-        what: the rule write-only-in-learner
+        what: la règle write-only-in-learner
       - from: classroom
         source: learner/
-        what: may be written, and committed to the classroom's git, never pushed
+        what: peut s'écrire, se commite dans le git de la classe, ne se pousse jamais
       - from: classroom
         source: course/
-        what: read only, never written
+        what: en lecture seule, ne s'écrit jamais

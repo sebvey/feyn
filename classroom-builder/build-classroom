@@ -150,7 +150,11 @@ const skillName = (m) => `feyn-teacher-${m.id}`;
 const hasRules = (m) => m.rules.trim() !== '';
 function skill(m) {
   const description = `Load at this moment of a teaching session: ${m.when}. Holds the rules of the moment ${m.id}.`;
-  const reads = m.draws.map((d) => `- \`${d.path}\`: ${d.what}`);
+  // a draw given as text (the section of a course file under a heading) is written out, so that
+  // the moment needs no read of that file
+  const reads = m.draws.map((d) => (d.text
+    ? `- \`${d.path}\`: ${d.what}, given here (no need to read the file):\n\n${d.text.split('\n').map((l) => (l.trim() ? `  ${l}` : '')).join('\n')}\n`
+    : `- \`${d.path}\`: ${d.what}`));
   const uses = m.slots.length ? ['', ...m.slots.map((s) => `\`${s.slot}\` is ${s.meaning}.`)] : [];
   return [
     '---',
