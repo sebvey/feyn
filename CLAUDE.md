@@ -21,7 +21,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 |---|---|
 | `course-specs/` | the specs, one per type of course (`linear-course`: contract, language packs, checks, templates); rules in `course-specs/README.md` |
 | `spec-directives/` | the spec directives, one folder per MAJOR; `README.md` defines the four readers of a spec; the tests of a spec's files (`check-spec`), the `lib/` and the package the checks load, the directives' `decisions/` |
-| `courses/` | one folder per course, `courses/<id>/` (first: `parcours-po`) |
+| `courses/` | one folder per course, `courses/<id>/` (first: `parcours-po`; `po-essai`, the bench course every spec change is tried on) |
 | `teacher/` | teacher template, teacher skills, classroom build script |
 | `site/` | the site engine (Astro); reads `courses/` directly |
 | `docs/` | `vision.md` (what feyn is for), `decisions/`, `glossary.md`, `contributing.md`, `kanban.md` (the frame of the work) |

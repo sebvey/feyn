@@ -265,6 +265,15 @@ decisions and the skills:
   epic opens an idea, not a story.
 - An open question never stops the work, and the epic PR is handed over only when none remains.
 - A story without an epic is never delivered on an integration branch.
+- **A spec change carries the bench course.** A change of `linear-course` is done only when
+  `courses/po-essai/` follows it in the same PR, `course-specs/check-course courses/po-essai`
+  passing on it; `/feyn-pull-request` runs that check on every PR that touches
+  `course-specs/linear-course/`. The exception: a change that touches no file a course has (a
+  decision, the CHANGELOG, prose of a README that sets no rule, the spec directives) needs no
+  change of `po-essai`, and its PR still runs the check and says so in its Checks. Why: without
+  it a spec story closes with the bench behind, and the bench stops proving anything within a
+  week (the frame of 2026-11-03). From idea #477; the yardstick it applies:
+  [`vision.md`](vision.md), "The yardstick".
 - A change to [`vision.md`](vision.md) is a decision (`/feyn-decision`), never an edit in
   passing.
 - **A process change comes from an observed problem.** After epic #392, which lands this frame,

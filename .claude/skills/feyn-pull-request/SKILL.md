@@ -28,14 +28,18 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    `git diff --name-only origin/<integration branch>...HEAD`):
    - a course `courses/<id>/`: the check runner of the spec it declares
      (`course-specs/check-course courses/<id>`);
+   - a path under `course-specs/linear-course/`: the bench course,
+     `course-specs/check-course courses/po-essai` ([contributing](../../../docs/contributing.md),
+     "Policies"), even when the change touches no file a course has;
    - `site/` or a course: `astro check` and the site build, from `site/`;
    - anything else: the checks its area documents, if any.
 
    No check exists yet for the area: say so in the PR's Checks. A failing blocking check (exit
    code 1; the summary line of `check-course` names it) is fixed before the PR opens; one that
-   cannot be fixed here is named in the PR's Checks and in Review first. A failing reporting
-   check leaves the exit code 0 and blocks nothing: its failures are findings, and the Checks
-   line gives their count by check.
+   cannot be fixed here is named in the PR's Checks and in Review first. A failing blocking
+   check on `po-essai` is fixed before the PR opens, as for a course PR: the PR does not open
+   on it. A failing reporting check leaves the exit code 0 and blocks nothing: its failures are
+   findings, and the Checks line gives their count by check.
 3. **Commit and push.** Nothing left uncommitted that belongs to the issue
    (`git status --porcelain`), then
    `git push -u origin <branch>`.
