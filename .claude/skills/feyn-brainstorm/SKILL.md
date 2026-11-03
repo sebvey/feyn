@@ -16,6 +16,10 @@ Besides the options, a brainstorm may create the idea it opens from (step 1) or 
 
 ## 1. What it opens from
 
+Before anything else, read [vision.md](../../../docs/vision.md): what feyn is for, the
+yardstick of a change and the lessons it was built on are what the brainstorm weighs each point
+against.
+
 The argument is one of three things:
 - **an idea** (an issue in Status Idea): read it first (`/feyn-issue <n>`); its finding is the
   question. The brainstorm is that idea's triage: it ends by closing it (step 4);

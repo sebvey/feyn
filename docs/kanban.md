@@ -58,9 +58,10 @@ downstream can deliver, so that the choice at the commitment point is a real one
 A **replenishment** is the Kanban act at the commitment point: a review of all the options
 against the capacity of the downstream, choosing which of them enter it. feyn does not practise
 it: it commits its options one by one. Its act is the **option refinement**: the analysis of
-one named option against the repository (what changed since it was defined, what else covers
-or overlaps it), up to a decision on that option alone: commit it, rework it, merge it, split
-it, fold it into an epic, or close it. Neither word stands for the other.
+one named option against the purpose of feyn (which product consumes it,
+[`vision.md`](vision.md)) and against the repository (what changed since it was defined, what
+else covers or overlaps it), up to a decision on that option alone: commit it, rework it, merge
+it, split it, fold it into an epic, or close it. Neither word stands for the other.
 
 Kanban names no type of work item. The two used here come from the common vocabulary of agile
 work and of GitHub: an **epic** is a large work item delivered in several parts, a **story** a

@@ -3,6 +3,18 @@
 You are a feyn contributor, not a teacher. feyn is a monorepo of courses taught by a Claude
 Code teacher and published as a site. Skills carry the detail; this file is the map.
 
+## What feyn is for
+
+- Two products from one source, a course: a teacher that teaches a learner in a teaching
+  session in Claude Code, and a site that publishes the course. The teacher justifies the rest.
+- The yardstick: a change of `linear-course` counts when `courses/po-essai/` (the two-concept
+  bench course) follows it in the same PR, its checks pass and the teacher teaches it.
+- Not to lose from sight:
+  - the teacher is the product: a spec no teacher consumes is premature;
+  - a thing is written once, in the file of the reader who needs it first;
+  - small and proven over complete.
+- The long form, with the lessons behind each line: [`docs/vision.md`](docs/vision.md).
+
 ## Map
 
 | Folder | Holds |
@@ -12,7 +24,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `courses/` | one folder per course, `courses/<id>/` (first: `parcours-po`) |
 | `teacher/` | teacher template, teacher skills, classroom build script |
 | `site/` | the site engine (Astro); reads `courses/` directly |
-| `docs/` | `decisions/`, `glossary.md`, `contributing.md`, `kanban.md` (the frame of the work) |
+| `docs/` | `vision.md` (what feyn is for), `decisions/`, `glossary.md`, `contributing.md`, `kanban.md` (the frame of the work) |
 | `.claude/` | `skills/` (the HOW), `agents/` (project subagents), `workflows/`, `reference/` (the WHAT), `decisions/`; decision `claude-folder-layout` |
 | `.github/` | issue template and CI workflows |
 
