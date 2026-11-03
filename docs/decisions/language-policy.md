@@ -9,17 +9,21 @@ Without this, an agent would translate a French quote of the course into English
 skill or a decision in French because the course is French, or write a course file in English
 because the repository is.
 
-English everywhere, except what touches French course files. Language is a property of a
-spec, declared once (`language: fr` in the `spec.yaml` of its MAJOR), and so of the courses that
-follow it, not of the repository. A course of another language follows another spec, not a
-translation of this one (decision `lexicon-not-language-pack`).
+English everywhere, except what speaks to the learner, to the teacher or to the author of a
+French course. Language is a property of a spec, declared once (`language: fr` in the
+`spec.yaml` of its MAJOR), and so of the courses that follow it, not of the repository. A course
+of another language follows another spec, not a translation of this one (decision
+`lexicon-not-language-pack`). A spec speaks the language of its courses to its two human
+readers, the teacher and the course author: every file of the spec MAJOR they read is in that
+language; what speaks to the tooling and the maintainer only stays English.
 
 | English | French (for a French spec) |
 |---|---|
 | code, skills, agent workflows, CI workflows, scripts | `concept.md`, `teaching.md`, `sources.md` |
 | root `CLAUDE.md`, teacher template | course glossary, storyline, the course's `plan.md` and `CHANGELOG.md` |
-| the spec directives, the spec's READMEs, repository docs, decisions, issues, labels | diagram text, the site's labels |
-| file and folder names, `course.yaml` keys, the keys of the lexicons | what the teacher says, the words of the lexicons (`course/lexicon.yaml`, `teacher/lexicon.yaml`) |
+| the spec directives, repository docs, decisions (the spec's `decisions/` included), issues, labels | diagram text, the site's labels |
+| the spec's `CHANGELOG.md`; file and folder names, `course.yaml` keys, the keys of the lexicons, the ids and slugs of the rule files, the keys of `composition.yaml` | what the teacher says, the words of the lexicons (`course/lexicon.yaml`, `teacher/lexicon.yaml`) |
+| the checks' code, the schemas' structure | the spec's texts for the teacher and the author: `teacher/README.md` (the protocol, its purposes and tables), `teacher/composition.yaml` (its `what` texts), `course/README.md`, the `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml`, the descriptions of `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md` |
 
 An issue, a PR or a decision in English that quotes the course quotes it in French and never
 translates it. French text uses no em-dashes and no arrows. What the teacher says to the
@@ -28,12 +32,16 @@ learner comes from the course and the teacher's lexicon.
 A maintainer phrasing quoted in a skill description's "Use for" may be in French, as a quote
 from course material is; everything else in a skill stays in English.
 
-One bounded exception: the protocol of `linear-course` is written in French. The old teacher
-was instructed and corrected in French, and its v1 is a base inherited from `parcours-po`,
-changed by user story; a change of language at the same time would leave a drift with no known
-cause. `linear-course` is a French spec: its protocol is not translated, and a teacher or a
-course of another language follows another spec, with its own protocol and lexicons. The
-phrases the learner sees are literal in the teacher's lexicon, `teacher/lexicon.yaml`.
+The protocol of `linear-course` is written in French by this rule, not by exception: the spec
+is French, so are its protocol, its purposes and every text its teacher or its course author
+reads. It was first kept French as a bounded exception, because the old teacher was instructed
+and corrected in French and its v1 is a base inherited from `parcours-po`, changed by user
+story; the rule above absorbs that exception. A teacher or a course of another language
+follows another spec, with its own protocol and lexicons. The phrases the learner sees are
+literal in the teacher's lexicon, `teacher/lexicon.yaml`. The spec's texts written in English
+before 2026-11-03 are translated as the stories that rewrite them pass (epic #450 for the two
+READMEs and the rule files, story #505 for the checks' messages and the schemas' descriptions,
+epic #222 for `composition.yaml`), never twice.
 
 ## Consequences
 
@@ -52,3 +60,16 @@ phrases the learner sees are literal in the teacher's lexicon, `teacher/lexicon.
   paragraph on the translation of the protocol as a spec MINOR, A/B-tested on two classrooms, and
   the same point of the amendment of 2026-10-30: the protocol of `linear-course` stays French. The
   language pack becomes the two lexicons of the spec (maintainer, 2026-11-03, idea #492).
+- Amended 2026-11-03 (#504): a spec speaks the language of its courses to the teacher and to the
+  course author: every file of the spec MAJOR they read is in that language, `teacher/README.md`
+  (the protocol, its purposes and tables), `teacher/composition.yaml`, `course/README.md`, the
+  `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml`, the descriptions of
+  `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md`; what speaks to
+  the tooling and the maintainer only stays English: the spec directives, the spec's
+  `decisions/` and `CHANGELOG.md`, the keys, ids and slugs of the YAML files, the code. The
+  bounded exception on the protocol's French (2026-10-27, amended 2026-10-30) is absorbed: the
+  protocol is French as the rest of its spec. Why: the teacher of `po-essai` ran on a prompt
+  mixing English purposes and French rules, and the author of a French course read an English
+  spec with French headings in it (idea #503). The texts written in English before this date are
+  translated by the stories that rewrite them (#450, #505, #222), never twice (maintainer,
+  2026-11-03).
