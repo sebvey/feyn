@@ -70,9 +70,8 @@ families no scenario names, and why:
 | `periodic-mini-recap` | comes every 3 or 4 validated concepts; `po-essai` has two |
 | `adapt-to-pace-requests` | no learner message asks « plus vite », « plus lent », « exemple » or « exercice » |
 | `classroom-exchanges-exempt` | no learner message is about the classroom itself |
-| `concept-reference-form` | a reference to another concept is the teacher's choice, not a fixed act of the path |
+| `concept-reference-form` | a conditional rule: it acts only when the teacher refers to another concept, which no fixed message makes it do, so a scenario naming it would be judged on an act that may not come |
 | `site-pages-not-files` | no learner message asks where to review |
-| `one-term-per-notion` | judged against the course glossary, which the judge does not read |
 | `requested-diagram-shown`, `diagram-not-displayable` | the moment `diagram`: no learner message asks for a diagram |
 | `cut-loses-unsaved-state` | needs a cut between two save points |
 | `save-announced-ideas` | no idea is announced for a later concept on the path (the stance of concept 0 is noted only for a learner without sprints) |

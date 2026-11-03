@@ -409,6 +409,18 @@ function judgedRules() {
   }
   return [...judged, ...(context.size ? ['', 'For context only, not judged (rules the rules above cite or rely on):', '', ...[...context].map((c) => `- \`${c}\`: ${ruleText(c)}`)] : [])].join('\n');
 }
+// the course files a judged rule is held against, given to the judge for context:
+// one-term-per-notion, the course glossary (course.yaml `glossary`, copied in the classroom's course/)
+const courseGlossary = String((yaml.parse(courseYaml) || {}).glossary || '');
+const RULE_FILES = { 'one-term-per-notion': courseGlossary ? [path.join('course', courseGlossary)] : [] };
+function judgedFiles() {
+  const files = [...new Set(scenario.rules.flatMap((s) => RULE_FILES[s] || []))];
+  return files.map((f) => {
+    let text;
+    try { text = fs.readFileSync(path.join(classroom, f), 'utf8'); } catch (e) { text = '(not found in the classroom)'; }
+    return `\n## ${f}, for context (the rules above are judged against it)\n\n\`\`\`\n${text.trim()}\n\`\`\`\n`;
+  }).join('');
+}
 function renderTranscript() {
   return transcript.turns.map((t) => {
     if (t.skipped) return `### Turn ${t.index}\n\nLearner: ${t.message}\n\n(skipped: the condition « if: ${t.if} » did not hold)`;
@@ -439,6 +451,7 @@ if (sent.length) {
   const prompt = fs.readFileSync(JUDGE_PROMPT, 'utf8')
     .replace('{{scenario}}', '```yaml\n' + scenarioText.trim() + '\n```')
     .replace('{{rules}}', judgedRules())
+    .replace('{{files}}', () => judgedFiles())
     .replace('{{transcript}}', renderTranscript())
     .replace('{{learner}}', Object.entries(transcript.learner).map(([n, t]) => `#### learner/${n}\n\n\`\`\`\n${t.trim()}\n\`\`\``).join('\n\n'))
     .replace('{{commits}}', '```\n' + transcript.commits.join('\n') + '\n```');

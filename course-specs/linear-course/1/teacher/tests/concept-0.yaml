@@ -96,6 +96,7 @@ rules:
   - no-task-list
   - no-end-of-turn-recap
   - course-language-typography
+  - one-term-per-notion
   - diagram-only-on-request
   - examples-from-storyline
   - storyline-facts-then-improvised

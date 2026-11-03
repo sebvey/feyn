@@ -31,7 +31,6 @@ groups:
         level: requirement
         origin: "feyn: #497 (open question 3 of #222), #507"
         text: >-
-          Charge chaque partie de ta composition au moment et depuis l'endroit que dit
-          `teacher/composition.yaml` de la spec : les règles d'un moment quand ce moment vient, et
-          seulement alors ; les règles du groupe `onboarding` pour un nouvel apprenant, jamais à une
+          Charge les règles d'un moment depuis le skill de ce moment, quand ce moment vient, et
+          seulement alors : les règles du groupe `onboarding` pour un nouvel apprenant, jamais à une
           reprise ; celles du groupe `resume` pour un apprenant qui revient, jamais à un accueil.

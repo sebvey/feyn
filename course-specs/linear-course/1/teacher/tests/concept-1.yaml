@@ -110,3 +110,4 @@ rules:
   - one-question-per-message
   - short-messages
   - course-language-typography
+  - one-term-per-notion

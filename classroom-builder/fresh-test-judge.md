@@ -15,6 +15,10 @@ How to judge:
 - A tool call `Skill` that loads a teacher skill (`feyn-teacher-<moment>`) is the composition at
   work (rule `teacher-loads-composition`): it is not a tool call of the rules that say « sans
   appel d'outil » or « avant le premier appel d'outil ». Any other tool call is.
+- The files the classroom's `CLAUDE.md` imports with `@` (`@learner/apprenant.md`,
+  `@learner/observations.md`, `@course/course.yaml`) are given to the teacher at the start of the
+  session: they count as read in the session (« si tu ne l'as pas lu dans la session »), with no
+  `Read` call.
 - A message is the teacher's whole reply to one learner message (its text blocks together). Line
   counts and the count of « ? » are checked by a script beside you: judge the sense, not the count.
 - Judge what is there, neither more strictly nor more leniently than the rule's text: a rule that
@@ -31,7 +35,7 @@ How to judge:
 ## The rules
 
 {{rules}}
-
+{{files}}
 ## The transcript
 
 {{transcript}}

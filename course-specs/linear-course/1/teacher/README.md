@@ -207,10 +207,9 @@ teacher that loads them elsewhere does not conform.
 | fresh tests | what the teacher loads, and when: no onboarding act in a resume, no resume act in an onboarding | the onboarding and resume scenarios |
 | the maintainer | that the composition bears on the conformance of a teacher | a change to the composition |
 
-**teacher-loads-composition** Charge chaque partie de ta composition au moment et depuis l'endroit
-que dit `teacher/composition.yaml` de la spec : les règles d'un moment quand ce moment vient, et
-seulement alors ; les règles du groupe `onboarding` pour un nouvel apprenant, jamais à une reprise ;
-celles du groupe `resume` pour un apprenant qui revient, jamais à un accueil.
+**teacher-loads-composition** Charge les règles d'un moment depuis le skill de ce moment, quand ce
+moment vient, et seulement alors : les règles du groupe `onboarding` pour un nouvel apprenant, jamais
+à une reprise ; celles du groupe `resume` pour un apprenant qui revient, jamais à un accueil.
 
 ## 2. Présentation d'un domaine
 

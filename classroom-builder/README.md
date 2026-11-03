@@ -150,7 +150,7 @@ A tool call `Skill` that loads a teacher skill is the composition at work (rule
 
 Exit 0 when every slug of the scenario is observed, 1 otherwise (a slug not observed, a build or a
 run that failed), 2 a usage error (an unknown scenario or option, a scenario not valid against the
-MAJOR's `scenario.schema.yaml`). A run costs real tokens (the five scenarios of `po-essai`: about
-2 USD and two minutes each, judge included, on Sonnet, 2026-11-03): it runs on a change to what
+MAJOR's `scenario.schema.yaml`). A run costs real tokens (the five scenarios of `po-essai`: 0.5
+to 2 USD and one to two minutes each, judge included, on Sonnet, 2026-11-03): it runs on a change to what
 the teacher is made of, not on every commit. Claude Code keeps each teacher conversation under
 `~/.claude/projects/`, as it does any session's.
