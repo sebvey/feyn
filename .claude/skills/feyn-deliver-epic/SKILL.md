@@ -55,7 +55,7 @@ One at a time, the next one only (rules of the cycle):
 2. **`main` moved** (`git fetch`, then
    `git merge-base --is-ancestor origin/main origin/<integration branch>` fails): merge it in,
    never rebase, in a detached worktree of the scratchpad, never from the local integration
-   branch, stale once a story is merged
+   branch, out of date once a story is merged
    (`git worktree add --detach <path> origin/<integration branch>`,
    `git -C <path> merge origin/main`, `git -C <path> push origin HEAD:<integration branch>`,
    `git worktree remove <path>`). A conflict outside the epic's files: tell the maintainer.

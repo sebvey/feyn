@@ -66,7 +66,10 @@ session does not find the list, and that is accepted: the maintainer names the i
 
 **Read it against the purpose**, before anything else: [vision.md](../../../docs/vision.md)
 (what feyn is for, the yardstick of a change); does what it calls for serve the teacher or the
-site, and how?
+site, and how? An item labelled `stale` (posed before the frame of 2026-11-03) is, in this same
+reading, re-read against that frame: against `vision.md` (the purpose, the yardstick, the
+lessons) and against what replaced its frame since it was posed (a decision, a PR, a skill,
+each named); it is not a second reading, and the maintainer decides whether it still holds.
 
 **Read it against the repository.** What changed since the issue was last updated
 (`git fetch`, then `git log origin/main --since=<its updatedAt>`), the files and issues it cites
@@ -90,6 +93,8 @@ The item itself comes up in these searches: it is not its own neighbour.
 One item per message, under its own level-2 heading:
 - its frame in one line: an idea or an issue of the old format, what it is for, where it
   belongs;
+- an item labelled `stale`: whether it still holds against `vision.md`, as written, reworked,
+  or not at all (what replaced it), with its proof;
 - its neighbours, each `#<m> <title>` with what it shares with the item (twin, covers it,
   overlaps it, same files), or "No neighbour" when the three lookups find none;
 - what it calls for, and what no longer holds, each with its proof (a commit, a file and line,
@@ -122,6 +127,11 @@ issue is in is read as `/feyn-issue` reads it ([its skill](../feyn-issue/SKILL.m
 issue"). The issue being triaged is not a twin of the work items created from it: when
 `/feyn-issue`'s step 2, "Look for a twin", finds it, it goes on to create them, the triaged
 issue left as it is and closed after.
+
+An item labelled `stale` (step 3): the act that executes the decision removes the label when
+the item holds, as written or reworked (`mise exec -- gh issue edit <n> --remove-label stale`),
+before it is closed; when it no longer holds, its close comment names what replaced it. An item
+left open keeps the label: it has not been decided.
 
 **An idea:**
 - **create the work items**: each with `/feyn-issue` in the form the maintainer chose,

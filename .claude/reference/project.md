@@ -19,7 +19,10 @@ row Status.
 | Done | `9e81e5a6` |
 
 No Status says a decision is awaited: the label `blocked:maintainer` carries it, on any Status
-(decision `blocked-is-a-label-not-a-state`).
+(decision `blocked-is-a-label-not-a-state`). No Status says an item was posed before the frame
+of 2026-11-03 (`docs/vision.md`): the label `stale` carries it, on an issue in Idea or Option, removed
+by `/feyn-triage` or `/feyn-refine-option` when they re-read the item (decision
+`project-status-not-state-labels`).
 
 ## The Project workflows
 

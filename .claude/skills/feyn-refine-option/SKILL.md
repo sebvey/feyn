@@ -1,6 +1,6 @@
 ---
 name: feyn-refine-option
-description: "Run with the maintainer the option refinement of feyn (a moment of the work cycle of its own): one named option, an epic or a story in Status Option, analysed against the purpose of feyn (which product consumes it) and the repository (a staleness check and an overlap check, each run as a command, their results presented with their proof), then decided on its own: commit (set Ready), rework, merge, split, fold into an epic, close; the decision is executed. An idea is not treated here: it goes to `/feyn-triage`. It never reviews the Option column as a whole. With no number, it asks which option. Use for \"raffine l'option 435\", \"refine option 435\", \"/feyn-refine-option 435\"."
+description: "Run with the maintainer the option refinement of feyn (a moment of the work cycle of its own): one named option, an epic or a story in Status Option, analysed against the purpose of feyn (which product consumes it) and the repository (a staleness check and an overlap check, each run as a command, their results presented with their proof; an option labelled `stale` re-read against `vision.md`), then decided on its own: commit (set Ready), rework, merge, split, fold into an epic, close; the decision is executed. An idea is not treated here: it goes to `/feyn-triage`. It never reviews the Option column as a whole. With no number, it asks which option. Use for \"raffine l'option 435\", \"refine option 435\", \"/feyn-refine-option 435\"."
 argument-hint: "<option number>"
 ---
 
@@ -54,7 +54,11 @@ with the line it rests on: which product consumes the option (the teacher, the s
 neither: then which of them it serves, through what), and how it serves the purpose, measured
 by the yardstick (for a change of `linear-course`: does `courses/po-essai/` follow it in the
 same PR, and does the teacher teach it). An option that names no product it serves says so;
-it is not refused here, the answer goes to the maintainer with the rest (step 3).
+it is not refused here, the answer goes to the maintainer with the rest (step 3). An option
+labelled `stale` (posed before the frame of 2026-11-03) is, in this same reading, re-read
+against that frame: against `vision.md` (the purpose, the yardstick, the lessons) and against
+what replaced its frame since it was posed (a decision, a PR, a skill, each named); it is not a
+second reading, and the maintainer decides whether it still holds.
 
 Each command run, not assumed; the option itself comes up in these lookups: it is not its own
 neighbour.
@@ -94,7 +98,8 @@ open ideas on the same files.
 One message, under its own level-2 heading:
 - its frame in one line: epic or story, what it is for, where it belongs;
 - **Purpose**: the product that consumes it and how it serves the purpose, each with its line,
-  or "Names no product it serves";
+  or "Names no product it serves"; an option labelled `stale`: also whether it still holds
+  against `vision.md`, as written, reworked, or not at all (what replaced it), with its proof;
 - **Staleness**: the paths read; the commits since its `updatedAt` on them, each `<hash> <date>
   <subject>` with what it changed for the option, or "No commit on <paths> since <date>"; the
   paths `origin/main` no longer holds, with the commit; the issues cited closed since;
@@ -126,6 +131,11 @@ added to its Done when, the maintainer's decision too
 
 As the maintainer decided. Which form an issue is in is read as `/feyn-issue` reads it
 ([its skill](../feyn-issue/SKILL.md), "Read an issue").
+
+An option labelled `stale` (step 2): commit and rework remove the label with the act, since it
+holds as written or reworked (`mise exec -- gh issue edit <n> --remove-label stale`); merge,
+split, fold and close close it, and the close comment names what replaced it. An option left
+open keeps the label: it has not been decided.
 
 - **commit**: set its Status to Ready ([project.md](../../reference/project.md), "Commands",
   Set), on the maintainer's word only, once its Done when is verifiable and no open blocked-by

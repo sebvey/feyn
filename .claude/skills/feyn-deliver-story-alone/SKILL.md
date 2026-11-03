@@ -161,7 +161,7 @@ Markdown link: the app renders that reference once, with the PR's state. "Outsid
 what the PR does not hold: a line you added to Checks, a body or "Delivery notes" edited at
 step 3, an anomaly of the run or of its clean-up.
 
-A finding outside the PR that calls for follow-up work (a stale section the PR did not make
+A finding outside the PR that calls for follow-up work (an outdated section the PR did not make
 false, an issue to open) is not prose in the notification: it goes to the maintainer as a
 question with buttons, the recommended option first; one the PR made false is corrected in it
 (step 3). The merge is the maintainer's.
