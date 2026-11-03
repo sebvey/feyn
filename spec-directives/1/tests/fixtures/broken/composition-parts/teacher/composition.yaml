@@ -1,0 +1,47 @@
+# fixture: a composition of the teacher in its form, five parts; on-demand with two moments.
+parts:
+  - id: permanent
+    loads: every-message
+    draws:
+      - from: spec
+        source: teacher/rules.yaml
+        what: the rules of the protocol
+      - from: spec
+        source: teacher/README.md
+        what: the purpose of the families
+      - from: classroom
+        source: course.lock
+        what: the classroom parameters
+  - id: on-demand
+    loads: at-a-moment
+    draws:
+      - from: spec
+        source: teacher/
+        what: the rules of each moment
+    moments:
+      - id: onboarding
+        when: a new learner
+        rules: [onboarding]
+        draws:
+          - from: course
+            source: plan.md
+            what: the onboarding questions
+      - id: reset
+        when: the learner starts over
+        rules: []
+        draws:
+          - from: spec
+            source: teacher/README.md
+            what: the protocol
+  - id: course-reads
+    loads: during-the-session
+    draws:
+      - from: course
+        source: <dir>/concept.md
+        what: the matter
+  - id: learner-memory
+    loads: at-start-and-save-points
+    draws:
+      - from: learner
+        source: parcours.md
+        what: the course path

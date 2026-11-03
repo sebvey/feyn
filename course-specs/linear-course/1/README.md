@@ -56,6 +56,7 @@ plus this README (decision `spec-files-by-product`):
 | `teacher/README.md` | the protocol of the teacher: purpose, notation, rules named by slug, keys and parameters |
 | `course/rules.yaml` | the rules of a course, in English |
 | `teacher/rules.yaml` | the rules of the teacher, in French |
+| `teacher/composition.yaml` | the composition of the teacher: its five parts, when each loads and what each draws from (`teacher/README.md`, "Composition") |
 | `course/schemas/*.schema.yaml` | the tables of fields of `course/README.md`, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` |
 | `CHANGELOG.md` | the changes of the spec, an « Unreleased » section until the tag |
 | `spec.yaml` | the declaration of this MAJOR: `name`, `major`, `version`, `language`, and `directives`, the MAJOR of `spec-directives/` whose tests verify these files and whose `lib/` and package the checks load |

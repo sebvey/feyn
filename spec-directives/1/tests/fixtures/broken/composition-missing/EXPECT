@@ -1,0 +1,2 @@
+check: composition
+message: teacher/composition.yaml is missing

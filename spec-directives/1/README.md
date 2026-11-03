@@ -179,7 +179,9 @@ The standards the rules of one spec depend on are in the README of that spec MAJ
 failure blocks `check-spec` (exit code 1). They carry lists of
 `linear-course` (the five categories and the nine families in `rule-files.js`, the keys of section 7 in
 `lexicon-keys.js`, the file names in `rule-slugs.js`): a named debt, idea #453; the lists
-move to `spec.yaml` when a second spec needs them.
+move to `spec.yaml` when a second spec needs them. `composition.js` adds none (idea #485): its
+closed lists are the composition model's, and a `from: spec` source is checked against
+`<spec-dir>`, not against a list of file names.
 
 ```
 mise exec -- spec-directives/check-spec course-specs/linear-course/1
@@ -190,7 +192,7 @@ mise exec -- spec-directives/check-spec <spec-dir> --only rule-slugs
 runs `spec-directives/<MAJOR>/tests/check-spec` on it, which runs the tests of the spec's own files,
 not a course: `teacher/README.md`, `README.md`, `course/README.md`, `decisions/`,
 `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `course/lexicon.yaml`,
-`teacher/lexicon.yaml`, `spec.yaml` and `CHANGELOG.md` of `<spec-dir>`. A `<spec-dir>` with no `spec.yaml`, or a `directives` MAJOR with no
+`teacher/lexicon.yaml`, `teacher/composition.yaml`, `spec.yaml` and `CHANGELOG.md` of `<spec-dir>`. A `<spec-dir>` with no `spec.yaml`, or a `directives` MAJOR with no
 folder, is refused (exit code 2, one line). Same output and `--only` as `check-course`, with no
 summary line and a `--list` of ids alone, after a `<spec-dir>`; `--list` without a folder is the
 MAJOR runner's (`spec-directives/1/tests/check-spec --list`), the dispatcher prints its usage (exit code 2). The file
@@ -205,6 +207,7 @@ this MAJOR, installed by `mise exec -- npm ci --prefix spec-directives/1`
 | `rule-files` | `rule-files.js` | `course/rules.yaml` and `teacher/rules.yaml` exist; a group has a non-empty `rules` list and may declare `id`, `title`, `category`, `method`; a rule has `id` (a slug), `level`, `category` and `method` (on the rule or its group), `text`, optional `check` and `why`, and in the protocol `origin`, no other key; a group of `teacher/rules.yaml` has an `id` that is a group of `teacher/README.md`; the closed lists (levels, methods, the categories of a course, the families of the protocol; a rule of the protocol is a demonstration); ids of rules and groups unique across the two files; every check named exists (`course/checks/<id>.js` of `<spec-dir>`, or of the folder `--checks-dir` names, or `.claude/workflows/<id>.js`); one category and one level per check; each `course/schemas/*.schema.yaml` compiles under `Ajv2020` and is named by the text of one rule of `course/rules.yaml`, and a schema named there exists (sections 1, 3 and 4; the spec MAJOR's `README.md` sections 2 and 3) | `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `teacher/README.md` |
 | `lexicon-keys` | `lexicon-keys.js` | `course/lexicon.yaml` holds every key of `course/README.md` section 7; every key `teacher/README.md` uses is in `course/lexicon.yaml` or `teacher/lexicon.yaml`; a group lives in one lexicon only; a key a non-empty string, a list a non-empty list of strings (`course/README.md` 7) | `course/lexicon.yaml`, `teacher/lexicon.yaml`, `teacher/README.md` |
 | `spec-yaml` | `spec-yaml.js` | `spec.yaml` holds `name`, `major`, `directives`, `version` and `language`, no other key; `name` a slug, `major` and `directives` positive integers, `version` `MAJOR.MINOR.PATCH` with an optional `-alpha` and `major` as its MAJOR, `language` an ISO 639-1 code, the language of the spec; `version` agrees with the first `## ` section of `CHANGELOG.md`: « Unreleased » during the alpha (`<MAJOR>.0.0-alpha`), otherwise the section names `version` (`## 1.0.0`, a date after it allowed) (section 6) | `spec.yaml`, `CHANGELOG.md` |
+| `composition` | `composition.js` | `teacher/composition.yaml` exists and holds exactly five parts, ids `permanent`, `on-demand`, `course-reads`, `learner-memory`, `permissions`; a part has `loads`, one of `every-message`, `at-a-moment`, `during-the-session`, `at-start-and-save-points`, `always`, and `draws`, a non-empty list whose entries have `from`, one of `spec`, `course`, `learner`, `classroom`, `source` and `what`; a `from: spec` source is a file or folder of `<spec-dir>`; `on-demand` has `moments`, each with `id`, `when`, a list `rules` and `draws`; the form only, never the sense, which the fresh tests judge | `teacher/composition.yaml` |
 
 `lexicon-keys` tests `course/lexicon.yaml` of `<spec-dir>` against the keys of `course/README.md`
 section 7, and both lexicons against every key `teacher/README.md` uses: a row of the lexicon
@@ -250,9 +253,11 @@ fixtures are tested by `course-specs/linear-course/1/course/checks/test-fixtures
   each method, one schema, `course/lexicon.yaml` (the course fixtures' lexicon) and
   `teacher/lexicon.yaml` (the spec's, plus the key of its `teacher/README.md`), `spec.yaml` at
   `1.0.0-alpha`, a `CHANGELOG.md` whose first section is
-  « Unreleased »); every `check-spec` test passes, the check scripts its rules name found in
+  « Unreleased », a `teacher/composition.yaml` of five parts whose `from: spec` sources are files
+  every copy holds); every `check-spec` test passes, the check scripts its rules name found in
   `fixtures/checks/` (stubs, through `--checks-dir`). `fixtures/broken/<name>/` there: a copy of it
-  with one defect and its `EXPECT` file; no other `check-spec` test may fail. The copies for
+  with one defect and its `EXPECT` file; no other `check-spec` test may fail. Every copy holds the
+  composition of `valid/`, except a copy whose defect is in it. The copies for
   `rule-slugs` and `rule-files` have no lexicon, so `lexicon-keys` has none to test there.
   For `lexicon-keys`: a key of `course/README.md` section 7 missing, a group missing
   (`natures`), a key of `teacher/README.md` missing, a list key of `teacher/README.md` given as a
@@ -264,7 +269,10 @@ fixtures are tested by `course-specs/linear-course/1/course/checks/test-fixtures
   `course/README.md`, a group cited as a rule. For `rule-files`: a missing level; a level, a method,
   a category and a family off their lists; a protocol group that `teacher/README.md` does not
   define; an id in both rule files; a check that does not exist; a check over two categories; a
-  check over two levels; a schema that does not compile; a schema no rule names. The test also runs
+  check over two levels; a schema that does not compile; a schema no rule names. For
+  `composition`: `teacher/composition.yaml` missing, four parts, a part with no `draws`, a
+  `loads` and a `from` off their lists, a `from: spec` source the spec folder does not hold, an
+  entry with no `what`, an `on-demand` with no `moments`. The test also runs
   `spec-directives/check-spec` on each spec MAJOR of `course-specs/` whose `spec.yaml` declares
   `directives: 1` (`linear-course/1`), which must pass.
 
