@@ -1,0 +1,427 @@
+#!/usr/bin/env node
+'use strict';
+// build-classroom <course-dir> [--out <dir>] [--channel next|prod|preview] [--site-url <base>] [--force]
+// Builds a classroom outside the repository from a course: each part of the composition of the
+// spec MAJOR the course declares (course-specs/<name>/<MAJOR>/teacher/composition.yaml) realised
+// in Claude Code (classroom-builder/README.md):
+//   permanent       CLAUDE.md, from CLAUDE.template.md, the protocol, the lexicons, the course
+//   on-demand       .claude/skills/<moment>/SKILL.md, one per moment that has rules
+//   course-reads    course/, the course folder copied as is
+//   learner-memory  learner/, the learner templates of the spec
+//   permissions     .claude/settings.json
+// then course.lock and the classroom's own git, one commit holding all of it.
+// The protocol is read in teacher/README.md (the `**slug** text` rules by family and group) until
+// #450 moves it to teacher/rules.yaml. Exit 0 built, 1 an input the build cannot read, 2 a usage
+// error or a refused target.
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+const BUILDER = __dirname;
+const REPO = path.resolve(BUILDER, '..');
+const CHANNELS = ['next', 'prod', 'preview'];
+const UNPUBLISHED = '(site non publié)';
+
+function usage(code) {
+  const out = code ? console.error : console.log;
+  out('usage: build-classroom <course-dir> [--out <dir>] [--channel next|prod|preview] [--site-url <base>] [--force]');
+  out('builds the classroom of <course-dir> at <dir>, by default ~/classrooms/<course id>-next/ (channel next)');
+  out('or ~/classrooms/<course id>/ (channel prod); a target that exists and is not empty is refused');
+  out('unless --force, which empties it first; without --site-url the site addresses are « (site non publié) »');
+  process.exit(code);
+}
+function refuse(message) {
+  console.error(`build-classroom: ${message}`);
+  process.exit(2);
+}
+function fail(message) {
+  console.error(`build-classroom: ${message}`);
+  process.exit(1);
+}
+
+// ---- arguments
+const opts = { force: false, channel: null, out: null, siteUrl: null };
+let courseDir = null;
+const argv = process.argv.slice(2);
+for (let i = 0; i < argv.length; i++) {
+  const a = argv[i];
+  const value = () => {
+    if (i + 1 >= argv.length) refuse(`${a} needs a value`);
+    return argv[++i];
+  };
+  if (a === '--help' || a === '-h') usage(0);
+  else if (a === '--force') opts.force = true;
+  else if (a === '--out') opts.out = value();
+  else if (a === '--channel') opts.channel = value();
+  else if (a === '--site-url') opts.siteUrl = value();
+  else if (a.startsWith('-')) refuse(`unknown option ${a}`);
+  else if (courseDir === null) courseDir = a;
+  else refuse(`one course folder only (got ${courseDir} and ${a})`);
+}
+if (courseDir === null) usage(2);
+const channel = opts.channel || 'next';
+if (!CHANNELS.includes(channel)) refuse(`channel "${channel}" is not one of ${CHANNELS.join(', ')}`);
+if (channel === 'preview' && !opts.out) refuse('channel preview has no default folder: give --out');
+courseDir = path.resolve(courseDir);
+
+const read = (p) => {
+  try { return fs.readFileSync(p, 'utf8'); } catch (e) { return fail(`cannot read ${path.relative(process.cwd(), p) || p}`); }
+};
+
+// ---- the spec MAJOR the course declares, its directives' package and lib
+const courseYamlText = read(path.join(courseDir, 'course.yaml'));
+const specLine = courseYamlText.split('\n').find((l) => /^spec\s*:/.test(l));
+const specRef = specLine && specLine.replace(/^spec\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2');
+const specMatch = specRef && /^([a-z0-9]+(?:-[a-z0-9]+)*)@(\d+)$/.exec(specRef);
+if (!specMatch) fail(`${courseDir}/course.yaml declares no spec (spec: <name>@<MAJOR>)`);
+const SPEC = path.join(REPO, 'course-specs', specMatch[1], specMatch[2]);
+if (!fs.existsSync(path.join(SPEC, 'spec.yaml'))) fail(`no spec MAJOR at ${path.relative(REPO, SPEC)}`);
+const dirLine = read(path.join(SPEC, 'spec.yaml')).split('\n').find((l) => /^directives\s*:/.test(l));
+const directives = dirLine && dirLine.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
+if (!/^\d+$/.test(directives || '')) fail(`${path.relative(REPO, SPEC)}/spec.yaml declares no directives MAJOR`);
+const DIRECTIVES = path.join(REPO, 'spec-directives', directives);
+require(path.join(DIRECTIVES, 'lib', 'deps')).need();
+const yaml = require(path.join(DIRECTIVES, 'lib', 'yaml-lines'));
+// the families of the protocol by category, in the order of teacher/README.md (## 1. to ## 9.)
+const { FAMILIES } = require(path.join(DIRECTIVES, 'tests', 'rule-files'));
+
+const parseYaml = (p) => {
+  try { return yaml.parse(read(p)); } catch (e) { return fail(`${path.relative(REPO, p)}: ${e.message}`); }
+};
+const course = parseYaml(path.join(courseDir, 'course.yaml'));
+const composition = parseYaml(path.join(SPEC, 'teacher', 'composition.yaml'));
+const lexicons = [parseYaml(path.join(SPEC, 'teacher', 'lexicon.yaml')), parseYaml(path.join(SPEC, 'course', 'lexicon.yaml'))];
+const protocolText = read(path.join(SPEC, 'teacher', 'README.md'));
+const LEARNER_TEMPLATES = path.join(SPEC, 'teacher', 'templates', 'learner');
+const template = read(path.join(BUILDER, 'CLAUDE.template.md'));
+if (typeof course.id !== 'string' || !course.id) fail('course.yaml has no id');
+const parts = new Map((composition.parts || []).map((p) => [p.id, p]));
+for (const id of ['permanent', 'on-demand', 'course-reads', 'learner-memory', 'permissions']) {
+  if (!parts.has(id)) fail(`composition.yaml has no part ${id}`);
+}
+
+// ---- the target folder
+const out = path.resolve(opts.out || path.join(os.homedir(), 'classrooms', channel === 'prod' ? course.id : `${course.id}-next`));
+if (fs.existsSync(out)) {
+  if (!fs.statSync(out).isDirectory()) refuse(`${out} exists and is not a folder`);
+  if (fs.readdirSync(out).length) {
+    if (!opts.force) refuse(`${out} exists and is not empty (learner memory may live there): give --force to rebuild it`);
+    fs.rmSync(out, { recursive: true, force: true });
+    console.error(`build-classroom: --force: ${out} emptied`);
+  }
+}
+
+// ---- git facts of the sources
+function git(cwd, ...args) {
+  const r = spawnSync('git', args, { cwd, encoding: 'utf8' });
+  return r.status === 0 ? r.stdout.trim() : null;
+}
+const tag = git(courseDir, 'describe', '--tags', '--exact-match', '--match', `${course.id}/v*`, 'HEAD');
+const branch = git(courseDir, 'rev-parse', '--abbrev-ref', 'HEAD');
+const ref = tag || (branch && branch !== 'HEAD' ? branch : git(courseDir, 'rev-parse', 'HEAD'));
+const courseSha = git(courseDir, 'log', '-1', '--format=%H', '--', '.');
+const toolingSha = git(BUILDER, 'log', '-1', '--format=%H', '--', '.');
+if (!courseSha) fail(`${courseDir} is not in a git repository with a commit`);
+if (git(courseDir, 'status', '--porcelain', '--', '.')) {
+  console.error('build-classroom: the course folder has uncommitted changes: course_sha is its last commit, not what is copied');
+}
+
+// ---- the classroom parameters (course.lock) and the course parameters (course.yaml)
+let site = null;
+if (opts.siteUrl) site = opts.siteUrl.endsWith('/') ? opts.siteUrl : opts.siteUrl + '/';
+const PARAMS = {
+  course: {
+    title: course.title,
+    domain_count: String((course.domains || []).length),
+    storyline: course.storyline,
+    glossary: course.glossary,
+  },
+  classroom: site
+    ? { site_url: site, domains_url: `${site}domaines/`, domain_url: `${site}domaines/{n}/`, concept_url: `${site}concepts/{nn}/` }
+    : { site_url: UNPUBLISHED, domains_url: UNPUBLISHED, domain_url: UNPUBLISHED, concept_url: UNPUBLISHED },
+};
+
+// a placeholder {group.key}: a course or classroom parameter, or a key of one of the two lexicons;
+// a list value is its items in « », separated by commas, and replaces the « » around the
+// placeholder when there are some
+const quote = (v) => `« ${v} »`;
+function valueOf(group, key, where) {
+  if (group === 'course' || group === 'classroom') {
+    const v = PARAMS[group][key];
+    if (typeof v !== 'string' || !v) fail(`${where}: {${group}.${key}} is not a ${group} parameter`);
+    return v;
+  }
+  for (const lex of lexicons) {
+    if (lex[group] && Object.prototype.hasOwnProperty.call(lex[group], key)) return lex[group][key];
+  }
+  return fail(`${where}: {${group}.${key}} is in neither lexicon`);
+}
+function fill(text, where) {
+  return text
+    .replace(/« \{([a-z_]+)\.([a-z_]+)\} »/g, (m, g, k) => {
+      const v = valueOf(g, k, where);
+      return Array.isArray(v) ? v.map(quote).join(', ') : quote(v);
+    })
+    .replace(/\{([a-z_]+)\.([a-z_]+)\}/g, (m, g, k) => {
+      const v = valueOf(g, k, where);
+      return Array.isArray(v) ? v.map(quote).join(', ') : String(v);
+    });
+}
+// a bare lexicon key in a `what` of the composition (`headings.onboarding`): its value in « »
+const fillWhat = (what) => what.replace(/\b(headings|case_fields|qualifiers)\.([a-z_]+)\b/g, (m, g, k) => quote(valueOf(g, k, 'composition.yaml')));
+
+// ---- the protocol: families "## <n>. <title>", groups "### <title> (`<id>`)", each with its
+// **Purpose.** paragraph, then rules opening on "**<slug>** ", each up to the next rule or heading
+// (its « Pourquoi » line, a code block, the save-point table included); the reader tables are
+// for the readers of the spec and are left out
+function parseProtocol(text) {
+  const families = [];
+  let family = null;
+  let section = null; // the family or the group the lines go to
+  let rule = null;
+  let fence = false;
+  let inPurpose = false;
+  const close = () => {
+    if (rule) {
+      while (rule.lines.length && rule.lines[rule.lines.length - 1].trim() === '') rule.lines.pop();
+      rule.text = rule.lines.join('\n');
+    }
+    rule = null;
+  };
+  for (const line of text.split('\n')) {
+    if (!fence) {
+      const fam = /^## (\d+)\. (.+)$/.exec(line);
+      const grp = /^### (.+) \(`([a-z0-9]+(?:-[a-z0-9]+)*)`\)$/.exec(line);
+      if (/^## /.test(line) && !fam) { close(); family = null; section = null; continue; }
+      if (fam) {
+        close();
+        const n = Number(fam[1]);
+        family = { kind: 'family', n, heading: line, category: FAMILIES[n - 1], purpose: [], rules: [], groups: [] };
+        families.push(family);
+        section = family;
+        inPurpose = false;
+        continue;
+      }
+      if (grp && family) {
+        close();
+        section = { kind: 'group', id: grp[2], heading: line, purpose: [], rules: [], family };
+        family.groups.push(section);
+        inPurpose = false;
+        continue;
+      }
+    }
+    if (!section) continue;
+    if (/^```/.test(line)) fence = !fence;
+    const start = !fence && /^\*\*([a-z0-9]+(?:-[a-z0-9]+)*)\*\* /.exec(line);
+    if (start) {
+      close();
+      inPurpose = false;
+      rule = { slug: start[1], lines: [line], section };
+      section.rules.push(rule);
+      continue;
+    }
+    if (rule) { rule.lines.push(line); continue; }
+    if (line.startsWith('**Purpose.**')) inPurpose = true;
+    if (inPurpose) {
+      if (line.trim() === '') inPurpose = false;
+      else section.purpose.push(line);
+    }
+  }
+  close();
+  return families;
+}
+const families = parseProtocol(protocolText);
+if (!families.length) fail(`${path.relative(REPO, SPEC)}/teacher/README.md holds no rule family`);
+const allRules = families.flatMap((f) => [...f.rules, ...f.groups.flatMap((g) => g.rules)]);
+const ruleBySlug = new Map(allRules.map((r) => [r.slug, r]));
+const groupById = new Map(families.flatMap((f) => f.groups).map((g) => [g.id, g]));
+const familyByCategory = new Map(families.filter((f) => f.category).map((f) => [f.category, f]));
+
+// ---- the moments: a moment's rules name a group by its id, a family by its category, or rules
+const moments = (parts.get('on-demand').moments || []).map((m) => {
+  const units = (m.rules || []).map((name) => {
+    if (groupById.has(name)) return { kind: 'group', group: groupById.get(name) };
+    if (familyByCategory.has(name)) return { kind: 'family', family: familyByCategory.get(name) };
+    if (ruleBySlug.has(name)) return { kind: 'rule', rule: ruleBySlug.get(name) };
+    return fail(`composition.yaml: moment ${m.id} names ${name}, neither a group, a family nor a rule of the protocol`);
+  });
+  const slugs = new Set();
+  for (const u of units) {
+    if (u.kind === 'group') u.group.rules.forEach((r) => slugs.add(r.slug));
+    if (u.kind === 'family') [...u.family.rules, ...u.family.groups.flatMap((g) => g.rules)].forEach((r) => slugs.add(r.slug));
+    if (u.kind === 'rule') slugs.add(u.rule.slug);
+  }
+  return { ...m, units, slugs };
+});
+const onDemand = new Set(moments.flatMap((m) => [...m.slugs]));
+
+const ruleText = (r) => fill(r.text, `rule ${r.slug}`);
+const purposeText = (s) => fill(s.purpose.join('\n'), s.heading);
+const blocks = (list) => list.filter(Boolean).join('\n\n');
+
+// the permanent protocol: every rule no moment loads, in the order of teacher/README.md, each
+// family and group with a rule left preceded by its heading and its Purpose paragraph
+function permanentProtocol() {
+  const out = [];
+  for (const f of families) {
+    const own = f.rules.filter((r) => !onDemand.has(r.slug));
+    const groups = f.groups.map((g) => ({ g, rules: g.rules.filter((r) => !onDemand.has(r.slug)) })).filter((x) => x.rules.length);
+    if (!own.length && !groups.length) continue;
+    out.push(blocks([f.heading, purposeText(f), ...own.map(ruleText)]));
+    for (const { g, rules } of groups) out.push(blocks([g.heading, purposeText(g), ...rules.map(ruleText)]));
+  }
+  return out.join('\n\n');
+}
+
+// ---- the course: posture, map, files
+const lex = (group, key) => valueOf(group, key, 'the classroom build');
+const slot = (pattern, values) => pattern.replace(/\{([a-z]+)\}/g, (m, k) => (k in values ? String(values[k]) : m));
+function posture() {
+  const plan = read(path.join(courseDir, 'plan.md')).split('\n');
+  const heading = `## ${lex('headings', 'onboarding')}`;
+  const at = plan.findIndex((l) => l.trim() === heading);
+  if (at < 0) fail(`plan.md has no heading « ${heading} »`);
+  const para = [];
+  for (const l of plan.slice(at + 1)) {
+    if (l.trim() === '' && para.length) break;
+    if (l.trim() === '') continue;
+    if (/^(#|\d+\.\s|[-*]\s)/.test(l)) break;
+    para.push(l);
+  }
+  if (!para.length) fail(`plan.md has no posture paragraph under « ${heading} »`);
+  return para.join('\n');
+}
+const concepts = new Map((course.concepts || []).map((c) => [String(c.number), c]));
+const conceptTitle = (c) => slot(lex('phrases', 'concept_title'), { n: c.number, title: c.title });
+const domainTitle = (d) => slot(lex('phrases', 'domain_title'), { n: d.number, title: d.title });
+function courseMap() {
+  return (course.domains || []).map((d) => [
+    `- ${domainTitle(d)}`,
+    ...(d.concepts || []).map((n) => {
+      const c = concepts.get(String(n));
+      if (!c) fail(`course.yaml: domain ${d.number} names concept ${n}, which is not in concepts`);
+      return `  - ${conceptTitle(c)} (\`${c.dir}\`)`;
+    }),
+  ].join('\n')).join('\n');
+}
+function courseFiles() {
+  const lines = [
+    '- `course/course.yaml`: the course map in full (prerequisites, sub-concepts)',
+    '- `course/plan.md`: the posture, the target audience, the onboarding questions and the stances',
+    `- \`course/${course.storyline}\`: the storyline`,
+    `- \`course/${course.glossary}\`: the glossary, one term per notion`,
+    ...(course.domains || []).map((d) => `- \`course/${d.file}\`: the domain file of ${domainTitle(d)}`),
+    ...(course.concepts || []).map((c) => `- \`course/${c.dir}/\`: ${conceptTitle(c)}, \`concept.md\` (the matter), \`teaching.md\` (the method), \`sources.md\` (the sources)`),
+  ];
+  return lines.join('\n');
+}
+
+// ---- the skills of the moments
+const draws = (list) => (list || []).map((d) => {
+  const source = fill(d.source, 'composition.yaml');
+  const where = d.from === 'course' ? `course/${source}` : d.from === 'learner' ? `learner/${source}` : null;
+  return where ? `- \`${where}\`: ${fillWhat(d.what)}` : null;
+}).filter(Boolean);
+function skill(m) {
+  const description = `Load at this moment of a teaching session: ${m.when}. Holds the rules of the moment ${m.id}.`;
+  const body = [];
+  for (const u of m.units) {
+    if (u.kind === 'group') body.push(blocks([u.group.heading.replace(/^###/, '##'), purposeText(u.group), ...u.group.rules.map(ruleText)]));
+    if (u.kind === 'family') {
+      const f = u.family;
+      body.push(blocks([f.heading, purposeText(f), ...f.rules.map(ruleText)]));
+      for (const g of f.groups) body.push(blocks([g.heading, purposeText(g), ...g.rules.map(ruleText)]));
+    }
+    if (u.kind === 'rule') {
+      const s = u.rule.section;
+      const heading = s.kind === 'group' ? s.heading.replace(/^###/, '##') : s.heading;
+      const prev = body.length && body[body.length - 1].startsWith(heading + '\n') ? body.pop() : heading;
+      body.push(blocks([prev, ruleText(u.rule)]));
+    }
+  }
+  const reads = draws(m.draws);
+  const uses = reads.some((l) => l.includes('<dir>')) ? ['', '`<dir>` is the `dir` of the concept at hand in `course/course.yaml`.'] : [];
+  return [
+    '---',
+    `name: ${m.id}`,
+    `description: ${JSON.stringify(description)}`,
+    '---',
+    '',
+    `# ${m.id}`,
+    '',
+    `The moment: ${m.when}. Its rules below hold beside those of \`CLAUDE.md\`.`,
+    '',
+    ...(reads.length ? ['What it reads:', '', ...reads, ...uses, ''] : []),
+    body.join('\n\n'),
+    '',
+  ].join('\n');
+}
+const withRules = moments.filter((m) => m.units.length);
+const momentList = moments.map((m) => (m.units.length
+  ? `- \`${m.id}\` (skill \`${m.id}\`): ${m.when}.`
+  : `- \`${m.id}\`: ${m.when}; no rule yet, no skill.`)).join('\n');
+
+// ---- CLAUDE.md
+const claude = template
+  .replace(/^<!--[\s\S]*?-->\n/, '')
+  .replace(/\{\{([a-z_]+)\}\}/g, (m, k) => {
+    const v = {
+      course_title: course.title,
+      spec: specRef,
+      posture: posture(),
+      course_map: courseMap(),
+      course_files: courseFiles(),
+      moments: momentList,
+      protocol: permanentProtocol(),
+    }[k];
+    if (v === undefined) fail(`CLAUDE.template.md: unknown slot {{${k}}}`);
+    return v;
+  });
+
+// ---- write the classroom
+fs.mkdirSync(out, { recursive: true });
+fs.writeFileSync(path.join(out, 'CLAUDE.md'), claude.replace(/\n*$/, '\n'));
+fs.cpSync(courseDir, path.join(out, 'course'), { recursive: true });
+fs.mkdirSync(path.join(out, 'learner'));
+for (const f of fs.readdirSync(LEARNER_TEMPLATES).filter((x) => x.endsWith('.md')).sort()) {
+  fs.copyFileSync(path.join(LEARNER_TEMPLATES, f), path.join(out, 'learner', f));
+}
+for (const m of withRules) {
+  fs.mkdirSync(path.join(out, '.claude', 'skills', m.id), { recursive: true });
+  fs.writeFileSync(path.join(out, '.claude', 'skills', m.id, 'SKILL.md'), skill(m));
+}
+// part permissions: learner/ written and committed, never pushed; course/ never written
+const settings = {
+  permissions: {
+    allow: ['Bash(git add learner/)', 'Bash(git commit:*)'],
+    deny: ['Edit(course/**)', 'Write(course/**)', 'Bash(git push:*)'],
+  },
+};
+fs.mkdirSync(path.join(out, '.claude'), { recursive: true });
+fs.writeFileSync(path.join(out, '.claude', 'settings.json'), JSON.stringify(settings, null, 2) + '\n');
+const lock = {
+  course: course.id,
+  ref,
+  course_sha: courseSha,
+  tooling_sha: toolingSha,
+  channel,
+  site_url: site,
+  built_at: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
+};
+fs.writeFileSync(path.join(out, 'course.lock'), [
+  '# The record of this classroom (classroom-builder/build-classroom): the course, the ref and the',
+  '# commit it was read from, the commit of the build, the channel, the site address, the date.',
+  ...Object.entries(lock).map(([k, v]) => `${k}: ${v === null ? 'null' : JSON.stringify(v)}`),
+  '',
+].join('\n'));
+
+// ---- the classroom's own git, one commit
+const run = (...args) => {
+  const r = spawnSync('git', args, { cwd: out, encoding: 'utf8' });
+  if (r.status !== 0) fail(`git ${args.join(' ')} failed in ${out}: ${(r.stderr || '').trim()}`);
+};
+run('init', '-q', '-b', 'main');
+run('add', '-A');
+run('commit', '-q', '-m', `classroom ${course.id}: built from ${ref} at ${courseSha.slice(0, 12)}`);
+console.log(`build-classroom: ${out} built (${course.id}, channel ${channel}, ${withRules.length} skills)`);

@@ -23,7 +23,7 @@ the English terms below are how we talk about them in code, docs and issues.
 | **build** (noun and verb) | producing an output from a course: the **site build**, made by `site-builder/`, the **classroom build**, made by `classroom-builder/`. Builds have no version of their own | "render", "generate", "export", "compile", "publish" (a release, below) |
 | **site** | the published website and its engine (`site-builder/`) | "website", "web", "pages" |
 | **teacher** | the generic Claude Code agent that teaches: a `CLAUDE.md` built from the teacher template (`classroom-builder/`), the protocol and the lexicons of its spec, as the **composition** of its spec says | "prof", "tutor", "coach", "agent" alone |
-| **classroom** | the folder built outside the repo by `classroom-builder/`, where the teacher runs: course copy, `course.lock`, `learner/`, its own git; what it gives the teacher, part by part, is the **composition** | "workspace", "instance", "environment" |
+| **classroom** | the folder built outside the repo by `classroom-builder/`, where the teacher runs: `CLAUDE.md`, the skills of the moments and the permissions (`.claude/`), course copy, `course.lock`, `learner/`, its own git; what it gives the teacher, part by part, is the **composition** | "workspace", "instance", "environment" |
 | **learner** | the person being taught; **learner memory** = `learner/` | "student", "user" |
 | **maintainer** | Seb: owns decisions, releases, freezes | "owner", "admin" |
 | **contributor** | anyone who delivers an issue by PR (course files or code) | "author", "developer" |

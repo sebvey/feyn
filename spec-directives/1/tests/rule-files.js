@@ -20,6 +20,8 @@
 //   - each course/schemas/*.schema.yaml compiles under ajv's Ajv2020 (JSON Schema 2020-12), and the
 //     text of exactly one rule of course/rules.yaml names it; a schema named there exists.
 // The categories and the families below are those of linear-course, a named debt: idea #453.
+// FAMILIES is exported for the classroom build (classroom-builder/build-classroom), which finds a
+// family of the protocol by its category, so the list is written once.
 const fs = require('fs');
 const path = require('path');
 const yaml = require('../lib/yaml-lines');
@@ -167,4 +169,4 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'rule-files', run };
+module.exports = { id: 'rule-files', run, FAMILIES };
