@@ -44,7 +44,7 @@ Read it: `mise exec -- gh issue view <n> --json number,title,url,state,labels,bo
 - closed, or any Status other than Option and Idea: not refined; say so in one line, with its
   Status.
 
-An option named is refined whatever it holds: sound or stale, it goes through steps 2 to 4.
+An option named is refined whatever it holds: sound or outdated, it goes through steps 2 to 4.
 
 ## 2. The checks, before it is presented
 

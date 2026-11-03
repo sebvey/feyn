@@ -36,7 +36,7 @@ Read each one: `mise exec -- gh issue view <n> --json number,title,url,state,lab
 Option) is not triaged: say so in one line, name `/feyn-refine-option <n>`, which treats it,
 and go on with the others. One that is closed or whose Status is any other than Idea is not
 triaged either: say so in one line, with its Status, and go on. Each idea named is triaged,
-whatever it holds: sound or stale, it goes through steps 3 and 4.
+whatever it holds: sound or outdated, it goes through steps 3 and 4.
 
 ## 2. The working list, with several issues
 
