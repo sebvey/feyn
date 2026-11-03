@@ -135,7 +135,14 @@ const allowed = (settings.permissions && settings.permissions.allow) || [];
 // ---- the teacher, turn by turn in one conversation
 const env = { ...process.env };
 for (const k of ENV_DROPPED) delete env[k];
-const rel = (p) => (typeof p === 'string' && p.startsWith(classroom + path.sep) ? p.slice(classroom.length + 1) : p);
+// a path of a tool call, relative to the classroom; the teacher sees the classroom by its real path
+// (macOS: /var/folders is /private/var/folders)
+const classroomReal = fs.realpathSync(classroom);
+const rel = (p) => {
+  if (typeof p !== 'string') return p;
+  for (const root of [classroomReal, classroom]) if (p.startsWith(root + path.sep)) return p.slice(root.length + 1);
+  return p;
+};
 const clip = (s, n) => (s.length > n ? `${s.slice(0, n)}… (${s.length} characters)` : s);
 const resultText = (c) => (typeof c === 'string' ? c : Array.isArray(c) ? c.map((x) => (x.type === 'text' ? x.text : `[${x.type}]`)).join('\n') : JSON.stringify(c));
 
@@ -247,14 +254,24 @@ function quoteProblems(text) {
   }
   return { example: ei >= 0, problems };
 }
+// the « ? » of a message: the question of the quote (from phrases.question_lead to the end of the
+// quote) counts as one, whatever its sentences (a question of the bank may hold two); the example
+// part, the « » quotations, phrases.why and phrases.continue_prompt count none
 function questionCount(text) {
   const lines = text.split('\n');
   const ei = lines.findIndex((l) => l.includes(PH.example_lead));
   const qi = lines.findIndex((l) => l.includes(PH.question_lead));
-  const kept = ei >= 0 && qi > ei ? [...lines.slice(0, ei), ...lines.slice(qi)] : lines;
+  let kept = lines;
+  let quoted = 0;
+  if (qi >= 0 && /^>/.test(lines[qi].trim())) {
+    let end = qi + 1;
+    while (end < lines.length && /^>/.test(lines[end].trim())) end++;
+    if (lines.slice(qi + 1, end).join(' ').includes('?')) quoted = 1;
+    kept = [...lines.slice(0, ei >= 0 && ei < qi ? ei : qi), ...lines.slice(end)];
+  }
   let s = stripCode(kept.join('\n')).replace(/«[^»]*»/g, '');
   for (const p of [PH.continue_prompt, PH.why]) s = s.split(p).join('').split(p.charAt(0).toUpperCase() + p.slice(1)).join('');
-  return (s.match(/\?/g) || []).length;
+  return quoted + (s.match(/\?/g) || []).length;
 }
 const SCRIPT = {
   'first-message-without-tools': () => {
@@ -290,8 +307,8 @@ const SCRIPT = {
     const found = BANNED.filter((c) => s.includes(c));
     return found.length ? `banned ${found.map((c) => `« ${c} »`).join(', ')}` : null;
   }, `none of the ${BANNED.length} banned characters of typography.banned`),
-  'one-question-per-message': () => everyTurn((t) => (questionCount(t.text) > 1 ? `${questionCount(t.text)} « ? » outside « », the example, « ${PH.why} » and « ${PH.continue_prompt} »` : null),
-    'at most one « ? » per message, outside « », the example and the two phrases that are not the question'),
+  'one-question-per-message': () => everyTurn((t) => (questionCount(t.text) > 1 ? `${questionCount(t.text)} questions (the quoted question counts one; « ? » outside « », the example, « ${PH.why} » and « ${PH.continue_prompt} »)` : null),
+    'at most one question per message: the quoted question counts one, and no other « ? » outside « », the example and the two phrases that are not the question'),
   'never-ask-if-understood': () => everyTurn((t) => (t.text.toLowerCase().includes(PH.banned_question.toLowerCase()) ? `« ${PH.banned_question} »` : null), `no « ${PH.banned_question} »`),
   'waiting-sentence-first': () => {
     const withTools = sent.filter((t) => realTools(t).length);
@@ -378,6 +395,20 @@ function ruleText(slug) {
   }
   return '(not found in the classroom)';
 }
+// the rules judged, then for context the rules they cite (« règle `x` ») or rely on, not judged:
+// one-question-per-message relies on what-counts-as-one-question, which says the next line's
+// phrases.continue_prompt is not the question of the message
+const RELIES_ON = { 'one-question-per-message': ['what-counts-as-one-question'] };
+function judgedRules() {
+  const judged = scenario.rules.map((s) => `- \`${s}\`: ${ruleText(s)}`);
+  const context = new Set();
+  for (const s of scenario.rules) {
+    for (const c of [...(RELIES_ON[s] || []), ...[...ruleText(s).matchAll(/`([a-z0-9]+(?:-[a-z0-9]+){1,4})`/g)].map((m) => m[1])]) {
+      if (!scenario.rules.includes(c) && ruleText(c) !== '(not found in the classroom)') context.add(c);
+    }
+  }
+  return [...judged, ...(context.size ? ['', 'For context only, not judged (rules the rules above cite or rely on):', '', ...[...context].map((c) => `- \`${c}\`: ${ruleText(c)}`)] : [])].join('\n');
+}
 function renderTranscript() {
   return transcript.turns.map((t) => {
     if (t.skipped) return `### Turn ${t.index}\n\nLearner: ${t.message}\n\n(skipped: the condition « if: ${t.if} » did not hold)`;
@@ -407,7 +438,7 @@ let judgeRun = null;
 if (sent.length) {
   const prompt = fs.readFileSync(JUDGE_PROMPT, 'utf8')
     .replace('{{scenario}}', '```yaml\n' + scenarioText.trim() + '\n```')
-    .replace('{{rules}}', scenario.rules.map((s) => `- \`${s}\`: ${ruleText(s)}`).join('\n'))
+    .replace('{{rules}}', judgedRules())
     .replace('{{transcript}}', renderTranscript())
     .replace('{{learner}}', Object.entries(transcript.learner).map(([n, t]) => `#### learner/${n}\n\n\`\`\`\n${t.trim()}\n\`\`\``).join('\n\n'))
     .replace('{{commits}}', '```\n' + transcript.commits.join('\n') + '\n```');
