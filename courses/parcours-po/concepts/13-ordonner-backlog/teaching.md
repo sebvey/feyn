@@ -226,7 +226,7 @@ du fil rouge.
 
 ## Schéma
 
-Les schémas déclarés, un par sous-concept qui en a un, et la métaphore pour ceux qui n'en ont pas. Tu ne montres un schéma que si l'apprenant le demande.
+Les schémas déclarés, un par sous-concept qui en a un, et la métaphore pour ceux qui n'en ont pas.
 
 **13a1, les quatre critères (aucun schéma déclaré : la métaphore reste pour toi).** Une colonne
 de quatre cartes, une par place, pas de cartes côte à côte. À droite de chaque carte, quatre

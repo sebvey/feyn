@@ -60,7 +60,7 @@ turns:
     if: next-line
     expect:
       - act: the first message of concept 0 (at this turn or the one before), its title a level-2 link, the stance of the course announced as its teaching notes say, one sub-concept (the team in brief) explained from the case « Qui est le chef de l'équipe vélos ? », the example and the question in one quote, the actors named with their storyline role
-        rules: [concept-title-link, follow-concept-instructions, one-sub-concept-per-message, explanation-from-case, examples-from-bank, case-usage-respected, example-question-quote-form, examples-from-storyline, actor-named-with-role, same-role-actors-grouped, storyline-role-in-parentheses, storyline-facts-section-unsaid, diagram-only-on-request]
+        rules: [concept-title-link, follow-concept-instructions, one-sub-concept-per-message, explanation-from-case, examples-from-bank, case-usage-respected, example-question-quote-form, examples-from-storyline, actor-named-with-role, same-role-actors-grouped, storyline-role-in-parentheses, storyline-facts-section-unsaid]
   - message: Scarlette, puisque c'est elle qui organise les réunions.
     expect:
       - act: "the answer is wrong (a common mistake of the bank): the follow-up of the bank, « de quoi répond le Scrum Master ? », in the quote form without its example part, no new sub-concept"
@@ -97,7 +97,6 @@ rules:
   - no-end-of-turn-recap
   - course-language-typography
   - one-term-per-notion
-  - diagram-only-on-request
   - examples-from-storyline
   - storyline-facts-then-improvised
   - actor-named-with-role

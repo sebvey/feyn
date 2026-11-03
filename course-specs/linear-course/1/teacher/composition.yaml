@@ -80,12 +80,12 @@ parts:
             source: parcours.md
             what: où en est l'apprenant, la prochaine étape et une question en attente
       - id: diagram
-        when: l'apprenant demande un schéma
+        when: l'apprenant demande un schéma, ou vient le message du sous-concept que nomme le subconcept d'un schéma déclaré par concept.md
         rules: [requested-diagram-shown, diagram-not-displayable]
         draws:
           - from: course
             source: <dir>/concept.md
-            what: les schémas que le concept déclare, leur titre et leur légende
+            what: les schémas que le concept déclare, leur titre, leur légende et le sous-concept qu'ils illustrent
           - from: course
             source: <dir>/teaching.md
             what: la consigne de dessin sous headings.drawing, quand aucun schéma n'est déclaré

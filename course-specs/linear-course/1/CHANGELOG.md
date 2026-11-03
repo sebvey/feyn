@@ -142,3 +142,17 @@ no class: `- file or area: what changes`.
   (`headings.onboarding`) carries the section under it, `text` (`parts.schema.yaml`), so that
   the onboarding questions of `plan.md` reach the onboarding skill and its first message needs no
   read (#507).
+- `teacher/README.md`, `teacher/rules.yaml`: the rule `earlier-concept-retrieved-at-resume`
+  (group `resume`, requirement, demonstration): at the resume of a learner who validated a
+  concept in an earlier session and whose journal names no practice case of it since, a practice
+  case of that concept's bank is posed and corrected before the next step (decision
+  `retrieval-at-resume`); `periodic-mini-recap` unchanged (#511).
+- `teacher/README.md`, `teacher/rules.yaml`, `teacher/composition.yaml`: the rule
+  `declared-diagram-shown` (new group `diagram-showing` of family 4, with `requested-diagram-shown` and
+  `diagram-not-displayable`; requirement, demonstration) replaces `diagram-only-on-request`: at
+  the message of the sub-concept a declared diagram's `subconcept` names, the teacher shows it and
+  says its caption, unasked; the moment `diagram` also comes at that sub-concept (decision
+  `diagram-shown-at-its-subconcept`) (#511).
+- `teacher/tests/`: the scenarios `retrieval-at-resume` and `declared-diagram`, the two tests of
+  each decision, each naming only its decision's rule; `concept-0` no longer names
+  `diagram-only-on-request` (#511).

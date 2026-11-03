@@ -5,9 +5,10 @@
 # family.
 #
 # A group is a group of rules of teacher/README.md: its slug as `id`, its rules in their order.
-# Today two rules, first-message-without-tools and teacher-loads-composition (the rule that makes
-# the composition, teacher/composition.yaml, bear on conformance, #507), each stated in
-# teacher/README.md too; the rules leave teacher/README.md for this file at the extraction of #318
+# Today four rules, first-message-without-tools, teacher-loads-composition (the rule that makes
+# the composition, teacher/composition.yaml, bear on conformance, #507),
+# earlier-concept-retrieved-at-resume and declared-diagram-shown (the two teacher behaviour
+# decisions of #511), each stated in teacher/README.md too; the rules leave teacher/README.md for this file at the extraction of #318
 # (decision rule-groups-replace-ranges). check-spec (rule-files) verifies this file.
 groups:
   - id: onboarding
@@ -22,6 +23,26 @@ groups:
         why: >-
           Sans elle, tu lis et crées plusieurs fichiers avant d'écrire ton premier message, qui
           tarde.
+  - id: resume
+    title: Reprise
+    category: session-start
+    method: demonstration
+    rules:
+      - id: earlier-concept-retrieved-at-resume
+        level: requirement
+        origin: "feyn: #511 (decision retrieval-at-resume)"
+        text: >-
+          Reprise d'un apprenant qui a validé un concept lors d'une session précédente, et dont
+          « {memory_headings.journal} » de `learner/parcours.md` ne nomme aucun cas d'entraînement de
+          ce concept depuis sa validation : avant la prochaine étape du parcours
+          (« {memory_headings.next_step} »), pose un cas d'entraînement de ce concept, choisi dans sa
+          banque selon la règle `practice-cases-chosen` (d'abord les cas qualifiés
+          « {qualifiers.practice} »), et corrige la réponse selon la boucle. Plusieurs concepts dans
+          ce cas : un seul cas, pour celui que le journal nomme le moins récemment. Le point de
+          sauvegarde suivant note le titre du cas au journal (règle `save-journal-line`).
+        why: >-
+          Sans elle, tu reprends l'apprenant sur la prochaine étape sans jamais lui faire retrouver
+          un concept validé, qui s'efface ; la règle `periodic-mini-recap` le rappelle sans question.
   - id: composition-loading
     title: Composition
     category: session-start
@@ -34,3 +55,19 @@ groups:
           Charge les règles d'un moment depuis le skill de ce moment, quand ce moment vient, et
           seulement alors : les règles du groupe `onboarding` pour un nouvel apprenant, jamais à une
           reprise ; celles du groupe `resume` pour un apprenant qui revient, jamais à un accueil.
+  - id: diagram-showing
+    title: Schémas
+    category: message-form
+    method: demonstration
+    rules:
+      - id: declared-diagram-shown
+        level: requirement
+        origin: "feyn: #511 (decision diagram-shown-at-its-subconcept), replaces diagram-only-on-request (parcours-po: ADR-075)"
+        text: >-
+          Au message qui enseigne le sous-concept que nomme le `subconcept` d'un schéma déclaré
+          (`diagrams` de `concept.md` ; un sous-concept parent : son premier message), montre ce
+          schéma et dis sa légende, sans attendre que l'apprenant le demande. Là où il ne peut pas
+          s'afficher, suis la règle `diagram-not-displayable`.
+        why: >-
+          Sans elle, tu enseignes en texte seul le sous-concept que le cours a dessiné, et
+          l'apprenant qui ne pense pas à demander un schéma ne le voit jamais.

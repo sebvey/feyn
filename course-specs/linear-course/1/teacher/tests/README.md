@@ -51,12 +51,16 @@ transcript.
 | [`stop`](stop.yaml) | a learner in concept 0 | « on continue », a two-part question, then « on s'arrête » : the save, the next step written with the pending question, the commit, the two-line reply |
 | [`resume`](resume.yaml) | a returning learner with a pending question | the resume: the opening sentence, the recap from memory, the reply to a greeting, then the pending question taught again |
 | [`concept-1`](concept-1.yaml) | a learner at the last sub-concept of concept 0 | concept 0 validated (its save point and commit), the transition to concept 1, its first sub-concept and a follow-up |
+| [`retrieval-at-resume`](retrieval-at-resume.yaml) | a returning learner who validated concept 0 in an earlier session, next step concept 1 | the two tests of decision `retrieval-at-resume`: a practice case of concept 0 posed and corrected before concept 1, then its title in the journal at the stop |
+| [`declared-diagram`](declared-diagram.yaml) | a learner at sub-concept 0b of concept 0, which declares a diagram | the two tests of decision `diagram-shown-at-its-subconcept`: the message of 0b shows its diagram and says its caption, though the learner never asks |
 
 ## The rules covered
 
 The rules of the families 1, 3, 4, 5, 8 and 9 that a session of `po-essai` exercises on the path
-of the five scenarios (a new learner, concept 0, a stop, a resume, concept 1) are each named by at
-least one scenario; the families 2 (the domain presentation), 6 (stances and sources) and 7
+of the first five scenarios (a new learner, concept 0, a stop, a resume, concept 1) are each named
+by at least one scenario. The two scenarios of a teacher behaviour decision (`retrieval-at-resume`,
+`declared-diagram`) name only the rules of their decision, so that their exit code says whether the
+decision's rule holds, whatever the other rules do; the families 2 (the domain presentation), 6 (stances and sources) and 7
 (practice, skips, asides) are left to the scenarios that will ask for them. The rules of those six
 families no scenario names, and why:
 
@@ -72,7 +76,8 @@ families no scenario names, and why:
 | `classroom-exchanges-exempt` | no learner message is about the classroom itself |
 | `concept-reference-form` | a conditional rule: it acts only when the teacher refers to another concept, which no fixed message makes it do, so a scenario naming it would be judged on an act that may not come |
 | `site-pages-not-files` | no learner message asks where to review |
-| `requested-diagram-shown`, `diagram-not-displayable` | the moment `diagram`: no learner message asks for a diagram |
+| `requested-diagram-shown` | the moment `diagram` on request: no learner message asks for a diagram |
+| `diagram-not-displayable` | the classroom of a fresh test cannot show a diagram, so `declared-diagram` exercises it, but names only the rule of its decision, `declared-diagram-shown`, whose text cites it (the judge reads it for context) |
 | `cut-loses-unsaved-state` | needs a cut between two save points |
 | `save-announced-ideas` | no idea is announced for a later concept on the path (the stance of concept 0 is noted only for a learner without sprints) |
 | `save-levers`, `save-vigilances`, `save-preferences` | a lever, a vigilance or a preference is the teacher's judgement of the learner, not a fixed act |
