@@ -5,9 +5,11 @@
 // of the composition, the course copy (diff -r), the learner templates, the permissions, the
 // skills of the moments, the built CLAUDE.md (no placeholder left, the rules verbatim but for their
 // placeholders, each rule of the protocol in CLAUDE.md or in one skill, once, each family and group
-// heading followed by its Purpose), the teacher template (no rule text),
-// course.lock, the classroom's git (one commit, clean), the default folders of the channels (under
-// a temporary HOME), the refusal of a non-empty target and --force, --site-url.
+// heading followed by its Purpose), the three spots of the filling (no doubled parenthesis, no
+// period after a phrase that ends with one, the plural of the domains), the teacher template (no
+// rule text), course.lock, the classroom's git (one commit, clean), the default folders of the
+// channels (under a temporary HOME), the refusal of a non-empty target and --force, --site-url, and
+// the dispatcher's refusal of a spec MAJOR with no teacher/build/ or of an unknown MAJOR.
 // Exit 0 when every check passes, 1 otherwise; one line per failure.
 const fs = require('fs');
 const os = require('os');
@@ -55,11 +57,12 @@ for (const f of ['apprenant.md', 'observations.md', 'parcours.md']) {
 }
 check(fs.readdirSync(path.join(out, 'learner')).length === 3, 'learner/ holds other files than the three templates');
 
-// the skills: one per moment that has rules
+// the skills: one per moment that has rules, named feyn-teacher-<moment>
 const skills = ['onboarding', 'resume', 'diagram', 'stop'];
-for (const s of skills) check(fs.existsSync(path.join(out, '.claude', 'skills', s, 'SKILL.md')), `skill ${s} is missing`);
-check(!fs.existsSync(path.join(out, '.claude', 'skills', 'reset')), 'skill reset exists, though the moment has no rule');
-check(fs.readdirSync(path.join(out, '.claude', 'skills')).sort().join(',') === [...skills].sort().join(','), 'the skills are not exactly onboarding, resume, diagram, stop');
+const skillOf = (s) => `feyn-teacher-${s}`;
+for (const s of skills) check(fs.existsSync(path.join(out, '.claude', 'skills', skillOf(s), 'SKILL.md')), `skill ${skillOf(s)} is missing`);
+check(!fs.existsSync(path.join(out, '.claude', 'skills', skillOf('reset'))), 'skill feyn-teacher-reset exists, though the moment has no rule');
+check(fs.readdirSync(path.join(out, '.claude', 'skills')).sort().join(',') === skills.map(skillOf).sort().join(','), 'the skills are not exactly feyn-teacher- onboarding, resume, diagram, stop');
 const WHEN = {
   onboarding: 'a new learner, at the first message of a teaching session',
   resume: 'a returning learner, at the first message of a teaching session',
@@ -68,10 +71,10 @@ const WHEN = {
 };
 const skillText = {};
 for (const s of skills) {
-  const t = read(path.join(out, '.claude', 'skills', s, 'SKILL.md')) || '';
+  const t = read(path.join(out, '.claude', 'skills', skillOf(s), 'SKILL.md')) || '';
   skillText[s] = t;
   const fm = /^---\nname: ([^\n]+)\ndescription: ([^\n]+)\n---\n/.exec(t);
-  check(fm && fm[1] === s, `skill ${s}: no frontmatter with name ${s}`);
+  check(fm && fm[1] === skillOf(s), `skill ${skillOf(s)}: no frontmatter with name ${skillOf(s)}`);
   check(fm && fm[2].includes(WHEN[s]), `skill ${s}: its description does not say when it is used (${WHEN[s]})`);
   check(!PLACEHOLDER.test(t), `skill ${s} keeps a placeholder: ${(PLACEHOLDER.exec(t) || [])[0]}`);
 }
@@ -93,13 +96,26 @@ for (const f of ['course/storyline.md', 'course/glossary.md', 'course/domains/1-
 check(claude.includes('channel\n`next`') || claude.includes('channel `next`'), 'CLAUDE.md does not state the channel next');
 check(claude.includes('\n@course/course.yaml\n'), 'CLAUDE.md does not import course/course.yaml');
 check(claude.includes('(site non publié)') && !claude.includes('http'), 'CLAUDE.md: without --site-url, the site addresses are not « (site non publié) »');
+// the « Moments » list names each teacher skill
+for (const s of skills) check(claude.includes(`- \`${s}\` (skill \`${skillOf(s)}\`): `), `CLAUDE.md: the « Moments » list does not name the skill ${skillOf(s)}`);
+check(claude.includes('- `reset`: ') && !claude.includes(skillOf('reset')), 'CLAUDE.md: the « Moments » list names a skill for reset');
+
+// the three spots of the filling, in CLAUDE.md and in the skills
+for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
+  check(!text.includes('((site'), `${name}: a link reads « ((site non publié)) », a doubled parenthesis`);
+  const doubled = text.split('\n').find((l) => /\. »\.|\.\./.test(l));
+  check(!doubled, `${name}: a period follows a phrase that ends with one: ${doubled}`);
+  check(!/ses \d+ domaines/.test(text), `${name}: the count of domains reads « ses <number> domaines » whatever the number`);
+}
+check(claude.includes('](site non publié)'), 'CLAUDE.md: a link does not read « (site non publié) » once');
+check(skillText.stop.includes('« Je sauvegarde ta progression, un instant. »\n') || skillText.stop.includes('« Je sauvegarde ta progression, un instant. » '), 'skill feyn-teacher-stop: the stop phrase is not followed by the rule\'s text without a second period');
 
 // every rule of the protocol, once, in CLAUDE.md or in the skill of its moment
 const protocol = read(path.join(SPEC, 'teacher', 'README.md'));
 const slugsOf = (text) => text.split('\n').map((l) => /^\*\*([a-z0-9-]+)\*\* /.exec(l)).filter(Boolean).map((m) => m[1]);
 const all = slugsOf(protocol.slice(0, protocol.indexOf('\n## Composition')));
 const where = new Map(all.map((s) => [s, []]));
-for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [s, skillText[s]])]) {
+for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
   for (const s of slugsOf(text)) {
     if (!where.has(s)) check(false, `${name} holds a rule ${s} the protocol does not`);
     else where.get(s).push(name);
@@ -107,7 +123,7 @@ for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [s, skil
 }
 for (const [s, at] of where) check(at.length === 1, `rule ${s} is in ${at.length ? at.join(', ') : 'nothing'}, not in exactly one place`);
 const MOMENT_OF = { 'first-message-without-tools': 'onboarding', 'resume-opening-sentence': 'resume', 'requested-diagram-shown': 'diagram', 'diagram-not-displayable': 'diagram', 'stop-opening-sentence': 'stop', 'hurried-departure': 'stop' };
-for (const [s, m] of Object.entries(MOMENT_OF)) check((where.get(s) || [])[0] === m, `rule ${s} is not in the skill ${m}`);
+for (const [s, m] of Object.entries(MOMENT_OF)) check((where.get(s) || [])[0] === skillOf(m), `rule ${s} is not in the skill ${skillOf(m)}`);
 check((where.get('diagram-only-on-request') || [])[0] === 'CLAUDE.md', 'rule diagram-only-on-request is not in CLAUDE.md');
 const order = slugsOf(claude);
 check(order.join(',') === all.filter((s) => where.get(s)[0] === 'CLAUDE.md').join(','), 'the rules of CLAUDE.md are not in the order of teacher/README.md');
@@ -138,7 +154,9 @@ const protocolHeadings = headingsOf(protocol.slice(0, protocol.indexOf("\n## Com
 check(headingCount === protocolHeadings, `${headingCount} family and group headings in CLAUDE.md and the skills, not the ${protocolHeadings} of the protocol`);
 
 // each rule as built is the protocol's text, verbatim but for its placeholders: a rule block runs from
-// its **slug** line to the next rule or heading, as the build cuts it
+// its **slug** line to the next rule or heading, as the build cuts it; a placeholder stands for its
+// value, a period after its » included (dropped when the value ends with one), its parentheses
+// included (one pair kept when the value has its own)
 function ruleBlocks(text) {
   const blocks = new Map();
   let cur = null;
@@ -161,9 +179,9 @@ function ruleBlocks(text) {
 }
 const source = ruleBlocks(protocol.slice(0, protocol.indexOf('\n## Composition')));
 const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const patternOf = (t) => new RegExp('^' + t.split(/(?:« )?\{[a-z_]+\.[a-z_]+\}(?: »)?/).map(escape).join('[\\s\\S]+?') + '$');
+const patternOf = (t) => new RegExp('^' + t.split(/\(?(?:« )?\{[a-z_]+\.[a-z_]+\}(?: »)?[.)]?/).map(escape).join('[\\s\\S]+?') + '$');
 let compared = 0;
-for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [s, skillText[s]])]) {
+for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
   for (const [slug, built] of ruleBlocks(text)) {
     if (!source.has(slug)) continue;
     compared++;
@@ -240,6 +258,23 @@ const prod = build(['courses/po-essai', '--channel', 'prod'], env);
 check(prod.status === 0 && fs.existsSync(path.join(home, 'classrooms', 'po-essai', 'CLAUDE.md')), '--channel prod does not give ~/classrooms/po-essai/');
 check((read(path.join(home, 'classrooms', 'po-essai', 'course.lock')) || '').includes('channel: "prod"'), 'course.lock: channel is not prod');
 check(/channel prod is built from a course tag/.test(prod.stderr), '--channel prod from a branch builds without a warning');
+
+// the dispatcher: an unknown MAJOR, and a MAJOR with no teacher/build/ (a copy of the build in a
+// repository of its own, whose spec MAJOR holds spec.yaml alone), are refused, exit 2
+const courseAt = (dir, spec) => {
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'course.yaml'), `id: x\nspec: ${spec}\n`);
+  return dir;
+};
+const unknown = build([courseAt(path.join(tmp, 'major-9'), 'linear-course@9'), '--out', path.join(tmp, 'out-9')]);
+check(unknown.status === 2 && /unknown spec MAJOR linear-course@9/.test(unknown.stderr), `an unknown MAJOR is not refused with exit 2: ${unknown.status} ${(unknown.stderr || '').trim()}`);
+const bare = path.join(tmp, 'bare-repo');
+fs.mkdirSync(path.join(bare, 'classroom-builder'), { recursive: true });
+fs.mkdirSync(path.join(bare, 'course-specs', 'linear-course', '1'), { recursive: true });
+fs.copyFileSync(BUILD, path.join(bare, 'classroom-builder', 'build-classroom'));
+fs.copyFileSync(path.join(SPEC, 'spec.yaml'), path.join(bare, 'course-specs', 'linear-course', '1', 'spec.yaml'));
+const noBuild = spawnSync(process.execPath, [path.join(bare, 'classroom-builder', 'build-classroom'), courseAt(path.join(bare, 'course'), 'linear-course@1'), '--out', path.join(tmp, 'out-bare')], { encoding: 'utf8' });
+check(noBuild.status === 2 && /has no teacher\/build\/render-parts/.test(noBuild.stderr) && !fs.existsSync(path.join(tmp, 'out-bare')), `a MAJOR with no teacher/build/ is not refused with exit 2: ${noBuild.status} ${(noBuild.stderr || '').trim()}`);
 
 fs.rmSync(tmp, { recursive: true, force: true });
 for (const f of failures) console.error(`test-build: ${f}`);

@@ -113,7 +113,8 @@ questions one by one, then learner memory set up and the course path started.
 tarde.
 
 **first-message-presents-course** Le premier message d'accueil présente le cours en deux lignes :
-son public, ses {course.domain_count} domaines déroulés concept par concept, une question à la fois.
+son public, ses domaines déroulés concept par concept, une question à la fois. Le nombre de ses
+domaines est {course.domain_count} : écris « son domaine » s'il vaut 1, « ses {n} domaines » au-delà.
 
 **first-message-site-and-requests** Le premier message d'accueil donne [{phrases.site_link}]({classroom.site_url}) pour réviser,
 et ce qu'on peut demander à tout moment : « {learner_says.faster} », « {learner_says.slower} »,
@@ -674,8 +675,10 @@ a second target is built from the same composition.
 | `learner-memory` | `at-start-and-save-points` | the learner templates (spec, `templates/learner/`), the memory rules (section 8), the three files of `learner/`; nothing from the course |
 | `permissions` | `always` | what a teacher writes, `learner/` and its commits, never pushed, and what it never writes, `course/` (rule `write-only-in-learner`) |
 
-Two readers come to it. The builder, who writes the classroom build: the build reads
-`composition.yaml` to know which part gets what, as the checks read `rules.yaml`. The fresh tests:
+Two readers come to it. The builder, who writes the classroom build: its half that depends on this
+MAJOR, [`build/render-parts`](build/README.md), reads `composition.yaml` to render each part as
+text, as the checks read `rules.yaml`, and the half at the root (`classroom-builder/`) realises
+the parts for its target. The fresh tests:
 they judge a teacher on what it loads and when (a teacher that loads the onboarding at every
 message does not match the composition, and the fresh tests flag it). `composition`
 (`check-spec`, `spec-directives/1/README.md` section 8) tests the form of the file, never its

@@ -14,7 +14,9 @@ is tooling. A spec is the contract for a type of course, kept in one folder per 
 categories and checks, decision `spec-files-by-product`), one folder per product, `course/`
 (`README.md`, what a course is; `rules.yaml`, the rules as data; `schemas/`; `templates/`, the
 course templates; `checks/`, its checks and their fixtures) and `teacher/` (`README.md`, the
-protocol; `rules.yaml`; `templates/learner/`), then `decisions/`,
+protocol; `rules.yaml`; `composition.yaml`; `templates/learner/`; `build/`, the half of a
+classroom build that depends on the MAJOR, which renders the parts of the composition as text),
+then `decisions/`,
 `CHANGELOG.md` and `spec.yaml` (`name`, `major`, `version`, `language`, and `directives`, the
 MAJOR of the spec directives it follows); each product folder also holds its lexicon,
 `lexicon.yaml` (decision `lexicon-not-language-pack`). The spec directives say how a spec is written and read (what a rule

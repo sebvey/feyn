@@ -19,6 +19,7 @@ follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 - `course/README.md`: what a course is: course structure, reader-text conventions, diagrams (drawing contract and style), the lexicon of the course files.
 - `teacher/README.md`: the pedagogical protocol the teacher executes, and the description of its composition.
 - `teacher/composition.yaml`: the composition of the teacher, its five parts, when each loads and what each draws from (section 2).
+- `teacher/build/`: the half of a classroom build that depends on this MAJOR, `render-parts`, which renders the five parts of the composition as text for a course, one JSON document whose shape `parts.schema.yaml` fixes (`teacher/build/README.md`).
 - `CHANGELOG.md`: the changes of the spec, « Unreleased » until the tag.
 - `spec.yaml`: the declaration of this MAJOR, its version, its language (`fr`) and the MAJOR of the spec directives it follows (`spec-directives/1/`: the tests of these files, run by `spec-directives/check-spec course-specs/linear-course/1`, and the `lib/` and package the checks load).
 - `course/lexicon.yaml`: the lexicon of the course files, the one source of the words the checks, the classroom build and the site recognise in a course file (headings, case fields, qualifiers, markers, natures, concept references, source types, typography); `teacher/lexicon.yaml`: the words the teacher says and writes.
@@ -43,7 +44,8 @@ written once, in the **lexicon** `course/lexicon.yaml`, whose keys `course/READM
 names; the words the teacher says and writes, in `teacher/lexicon.yaml`.
 
 Out of scope here: the learner memory files (the protocol, and `teacher/templates/learner/`), how
-the site and the classroom build (their own folders).
+the site builds, and how a classroom realises the parts of the teacher for its target (their own
+folders); what this MAJOR renders for a classroom build is `teacher/build/`.
 
 ## 2. Files
 
@@ -58,6 +60,7 @@ plus this README (decision `spec-files-by-product`):
 | `course/rules.yaml` | the rules of a course, in English |
 | `teacher/rules.yaml` | the rules of the teacher, in French |
 | `teacher/composition.yaml` | the composition of the teacher: its five parts, when each loads and what each draws from (`teacher/README.md`, "Composition") |
+| `teacher/build/` | `render-parts`, which renders the five parts of the composition as text for a course (the half of a classroom build that depends on this MAJOR, read by `classroom-builder/`), `parts.schema.yaml` (the shape of its output), `test-render`, `README.md` |
 | `course/schemas/*.schema.yaml` | the tables of fields of `course/README.md`, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` |
 | `CHANGELOG.md` | the changes of the spec, an « Unreleased » section until the tag |
 | `spec.yaml` | the declaration of this MAJOR: `name`, `major`, `version`, `language`, and `directives`, the MAJOR of `spec-directives/` whose tests verify these files and whose `lib/` and package the checks load |

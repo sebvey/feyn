@@ -1,0 +1,157 @@
+# The shape of what render-parts prints (README.md, this folder): the five parts of
+# teacher/composition.yaml rendered as text for one course, the contract between this spec MAJOR
+# and a classroom build, which validates the document against this schema before it writes a
+# classroom. Every text is final: no {group.key}, {course.<name>} nor {classroom.<name>} is left;
+# a slot without a dot ({n}, {title}) is the teacher's to fill and stays.
+$schema: https://json-schema.org/draft/2020-12/schema
+title: the rendered parts of the composition
+type: object
+required: [spec, permanent, moments, learner_templates, permissions, params]
+additionalProperties: false
+properties:
+  spec:
+    description: "<name>@<MAJOR>: the spec MAJOR that rendered the parts"
+    type: string
+    pattern: '^linear-course@1$'
+  permanent:
+    description: the part permanent, present at every message of the teacher
+    type: object
+    required: [protocol, posture, course_map, course_files]
+    additionalProperties: false
+    properties:
+      protocol:
+        description: every rule of the protocol no moment loads, in the order of teacher/README.md, each family and group that keeps a rule preceded by its heading and its Purpose paragraph (Markdown)
+        $ref: '#/$defs/text'
+      posture:
+        description: the paragraph of the course's plan.md under its onboarding heading
+        $ref: '#/$defs/text'
+      course_map:
+        description: each domain, then its concepts, number, title and dir (a Markdown list)
+        $ref: '#/$defs/text'
+      course_files:
+        description: the files of the course, as paths in the classroom's course/, each with what it holds (a Markdown list)
+        $ref: '#/$defs/text'
+  moments:
+    description: the part on-demand, one entry per moment of composition.yaml, in its order
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [id, when, draws, slots, rules]
+      additionalProperties: false
+      properties:
+        id:
+          description: the moment's id in composition.yaml
+          type: string
+          pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+        when:
+          description: when the moment comes, from its `when`
+          $ref: '#/$defs/text'
+        draws:
+          description: what the moment reads, from the course and learner memory
+          type: array
+          items:
+            type: object
+            required: [path, what]
+            additionalProperties: false
+            properties:
+              path:
+                description: the path in the classroom, under course/ or learner/, a slot of `slots` included
+                type: string
+                pattern: '^(course|learner)/'
+              what:
+                $ref: '#/$defs/text'
+        slots:
+          description: the slots the paths of `draws` hold (<dir>, <file>), each with what it stands for
+          type: array
+          items:
+            type: object
+            required: [slot, meaning]
+            additionalProperties: false
+            properties:
+              slot:
+                type: string
+                pattern: '^<[a-z]+>$'
+              meaning:
+                $ref: '#/$defs/text'
+        rules:
+          description: the rules of the moment under the headings of their family or group, with the Purpose of a group or family loaded whole (Markdown); empty when the moment has no rule yet
+          type: string
+          not:
+            $ref: '#/$defs/placeholder'
+  learner_templates:
+    description: the part learner-memory, the learner templates, each the text learner memory starts from
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [name, text]
+      additionalProperties: false
+      properties:
+        name:
+          description: the file name in learner/
+          type: string
+          pattern: '^[a-z0-9-]+\.md$'
+        text:
+          type: string
+  permissions:
+    description: the part permissions, folders of the classroom
+    type: object
+    required: [writable, read_only, commit, push]
+    additionalProperties: false
+    properties:
+      writable:
+        description: the folders the teacher may write
+        $ref: '#/$defs/folders'
+      read_only:
+        description: the folders the teacher never writes
+        $ref: '#/$defs/folders'
+      commit:
+        description: whether what is written is committed to the classroom's git
+        type: boolean
+      push:
+        description: whether the classroom's git may be pushed
+        type: boolean
+  params:
+    description: the parameters the rendering used
+    type: object
+    required: [course, classroom]
+    additionalProperties: false
+    properties:
+      course:
+        description: the course parameters, from course.yaml (teacher/README.md, "Keys and parameters"), and the course id
+        type: object
+        required: [id, title, domain_count, storyline, glossary]
+        additionalProperties: false
+        properties:
+          id: { type: string, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' }
+          title: { $ref: '#/$defs/text' }
+          domain_count: { type: string, pattern: '^\d+$' }
+          storyline: { $ref: '#/$defs/text' }
+          glossary: { $ref: '#/$defs/text' }
+      classroom:
+        description: the classroom parameters (teacher/README.md, "Keys and parameters"), « (site non publié) » with no site address, and the channel
+        type: object
+        required: [site_url, domains_url, domain_url, concept_url, channel]
+        additionalProperties: false
+        properties:
+          site_url: { $ref: '#/$defs/text' }
+          domains_url: { $ref: '#/$defs/text' }
+          domain_url: { $ref: '#/$defs/text' }
+          concept_url: { $ref: '#/$defs/text' }
+          channel: { $ref: '#/$defs/text' }
+$defs:
+  placeholder:
+    description: a text that keeps a placeholder of the spec, {group.key}
+    type: string
+    pattern: '\{[a-z_]+\.[a-z_]+\}'
+  text:
+    type: string
+    minLength: 1
+    not:
+      $ref: '#/$defs/placeholder'
+  folders:
+    type: array
+    items:
+      type: string
+      pattern: '^[a-z0-9-]+/$'
