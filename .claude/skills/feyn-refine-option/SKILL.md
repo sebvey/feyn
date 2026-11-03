@@ -118,7 +118,8 @@ on an action of the maintainer (a label, a merge, an answer elsewhere): say what
 A requirement added to an epic's Done when, by a fold or otherwise, is the maintainer's decision:
 propose it as a choice, never write it on the strength of another decision. An epic or a story
 whose body names `courses/po-essai/` and whose Done when does not state that it records its
-judgement calls in the Material of the migration epic #487: propose that line as such a choice
+judgement calls in the Material of the migration epic #487: propose that line as a requirement
+added to its Done when, the maintainer's decision too
 ([contributing](../../../docs/contributing.md), "Policies").
 
 ## 4. Execute the decision
