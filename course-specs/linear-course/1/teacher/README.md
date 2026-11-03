@@ -12,8 +12,9 @@ The readers are defined in [`spec-directives/README.md`](../../../../spec-direct
 The pedagogical protocol of `linear-course`, the part of the spec the teacher executes: rules
 named by slug, in nine families. It has the version of the spec (the MAJOR's `README.md`,
 1.0.0-alpha); adding or changing a rule is a spec MINOR (`spec-directives/1/README.md` section 6).
-The classroom build puts it in the teacher's `CLAUDE.md`, beside the teacher template, the two
-lexicons and the parameters.
+The classroom build puts the rules of each part where the [Composition](#composition) says: the
+permanent ones in the teacher's instructions, those of a moment loaded at that moment, beside the
+teacher template, the two lexicons and the parameters.
 
 **A base.** The v1 protocol is a base inherited from `parcours-po` (the old teacher, "Inherited
 from parcours-po" below), in French; it changes by user story, and its fresh tests come with the

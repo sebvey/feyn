@@ -107,6 +107,8 @@ if (fs.existsSync(out)) {
   if (!fs.statSync(out).isDirectory()) refuse(`${out} exists and is not a folder`);
   if (fs.readdirSync(out).length) {
     if (!opts.force) refuse(`${out} exists and is not empty (learner memory may live there): give --force to rebuild it`);
+    // --force empties a classroom only: a folder with no course.lock may be anything (a typo of --out)
+    if (!fs.existsSync(path.join(out, 'course.lock'))) refuse(`${out} is not empty and holds no course.lock, so it is not a classroom: --force refused`);
     fs.rmSync(out, { recursive: true, force: true });
     console.error(`build-classroom: --force: ${out} emptied`);
   }
@@ -123,6 +125,9 @@ const ref = tag || (branch && branch !== 'HEAD' ? branch : git(courseDir, 'rev-p
 const courseSha = git(courseDir, 'log', '-1', '--format=%H', '--', '.');
 const toolingSha = git(BUILDER, 'log', '-1', '--format=%H', '--', '.');
 if (!courseSha) fail(`${courseDir} is not in a git repository with a commit`);
+if (channel === 'prod' && !tag) {
+  console.error(`build-classroom: channel prod is built from a course tag ${course.id}/v* (decision three-channels); this build reads ${ref}`);
+}
 if (git(courseDir, 'status', '--porcelain', '--', '.')) {
   console.error('build-classroom: the course folder has uncommitted changes: course_sha is its last commit, not what is copied');
 }
@@ -369,6 +374,7 @@ const claude = template
     const v = {
       course_title: course.title,
       spec: specRef,
+      channel,
       posture: posture(),
       course_map: courseMap(),
       course_files: courseFiles(),

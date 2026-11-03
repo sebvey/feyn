@@ -1,9 +1,10 @@
 # classroom-builder
 
 Builds a classroom from a course: everything that makes the teacher, the teacher template
-(`CLAUDE.template.md`), the teacher skills (`classroom-builder/skills/`), the classroom build
-(`build-classroom`) and its test (`test-build`), and the decisions about teacher behaviour
-(`classroom-builder/decisions/`). The classroom itself is built outside this repository from these
+(`CLAUDE.template.md`), the classroom build (`build-classroom`), which builds the teacher skills of
+the moments into the classroom from the composition, and its test (`test-build`), and the decisions
+about teacher behaviour (`classroom-builder/decisions/`). `classroom-builder/skills/` is kept for a
+teacher skill written by hand, if one comes; it holds none and the build does not read it. The classroom itself is built outside this repository from these
 files and a course; it is rebuilt, never edited by hand (decision `one-source-two-builds`).
 
 ## The command
@@ -26,7 +27,11 @@ mise exec -- classroom-builder/build-classroom <course-dir> [--out <dir>] [--cha
   Without it, `site_url` is `null` in `course.lock` and the four classroom parameters read
   « (site non publié) », so that no rule points at a dead address.
 - `--force`: a target that exists and is not empty is refused, since learner memory may live
-  there; `--force` empties it, learner memory included, and builds again.
+  there; `--force` empties it, learner memory included, and builds again, but only a classroom (a
+  folder holding `course.lock`): any other non-empty folder is refused even with `--force`.
+
+`--channel prod` built from something other than a course tag `<id>/v*` (decision
+`three-channels`) builds, with a warning: `course.lock` records the `ref` it was read from.
 
 Exit 0 built, 1 an input the build cannot read (a placeholder no lexicon holds, a moment naming
 an unknown rule), 2 a usage error or a refused target.
@@ -38,8 +43,8 @@ build realises each part in Claude Code.
 
 | Part | In the classroom |
 |---|---|
-| `permanent` | `CLAUDE.md`, from `CLAUDE.template.md`: the posture (the paragraph of `plan.md` under « Accueil »), the course map (each domain, then its concepts, number, title and `dir`, in the words of `phrases.domain_title` and `phrases.concept_title`), the names of the course files, the list of the moments and their skills, then every rule of the protocol that no moment loads, in the order of `teacher/README.md`, each family and group that keeps a rule preceded by its heading and its Purpose paragraph (the reader tables are the spec's readers', left out). `@learner/apprenant.md` and `@learner/observations.md` are imported at the start, as the rules say they are given |
-| `on-demand` | `.claude/skills/<moment id>/SKILL.md`, one per moment that has rules (none for `reset` while it has none): its description says when it is used, from the moment's `when`; its body names what the moment reads (its `draws`) and holds its rules, a group by its id, a family by its category (the list `FAMILIES` of `spec-directives/1/tests/rule-files.js`), or rules by slug |
+| `permanent` | `CLAUDE.md`, from `CLAUDE.template.md`: the course and its channel (from `course.lock`), the posture (the paragraph of `plan.md` under « Accueil »), the course map (each domain, then its concepts, number, title and `dir`, in the words of `phrases.domain_title` and `phrases.concept_title`), the names of the course files, the list of the moments and their skills, then every rule of the protocol that no moment loads, in the order of `teacher/README.md`, each family and group that keeps a rule preceded by its heading and its Purpose paragraph (the reader tables are the spec's readers', left out). `@learner/apprenant.md`, `@learner/observations.md` and `@course/course.yaml` are imported at the start, as the rules say they are given (« fourni au démarrage ») |
+| `on-demand` | `.claude/skills/<moment id>/SKILL.md`, one per moment that has rules (none for `reset` while it has none): its description says when it is used, from the moment's `when`; its body names what the moment reads (its `draws`) and holds its rules, a group by its id, a family by its category (the list `FAMILIES` of `spec-directives/1/tests/rule-files.js`, a debt named in `spec-directives/1/README.md` section 8), or rules by slug |
 | `course-reads` | `course/`, the course folder copied as is |
 | `learner-memory` | `learner/`, the three learner templates copied as is |
 | `permissions` | `.claude/settings.json`: allows `git add learner/` and `git commit`, denies `Edit` and `Write` under `course/` and `git push` |
@@ -61,7 +66,8 @@ the frame only, no rule (decision `language-policy`).
 `mise exec -- classroom-builder/test-build` builds `courses/po-essai` into temporary folders and
 checks what a command can check: the files of each part, `diff -r` of the course copy, the learner
 templates, the skills and their descriptions, no placeholder left, each rule of the protocol once
-in `CLAUDE.md` or in one skill and in the protocol's order, the template without rule text, the
+in `CLAUDE.md` or in one skill, in the protocol's order and verbatim but for its placeholders, each
+family and group heading followed by its Purpose, the template without rule text, the
 permissions, the fields of `course.lock`, one commit and a clean classroom git, the refusal of a
-non-empty target and `--force`, `--site-url`, and the default folders of the channels (under a
+non-empty target and `--force` (and its refusal of a folder that is not a classroom), `--site-url`, and the default folders of the channels (under a
 temporary `HOME`). Exit 0 when every check passes.

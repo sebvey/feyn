@@ -3,8 +3,9 @@
 // test-build: builds courses/po-essai (the bench course) with classroom-builder/build-classroom into
 // temporary folders and checks what a command can check of the classroom: the files of each part
 // of the composition, the course copy (diff -r), the learner templates, the permissions, the
-// skills of the moments, the generated CLAUDE.md (no placeholder left, the rules verbatim, each
-// rule of the protocol in CLAUDE.md or in one skill, once), the teacher template (no rule text),
+// skills of the moments, the built CLAUDE.md (no placeholder left, the rules verbatim but for their
+// placeholders, each rule of the protocol in CLAUDE.md or in one skill, once, each family and group
+// heading followed by its Purpose), the teacher template (no rule text),
 // course.lock, the classroom's git (one commit, clean), the default folders of the channels (under
 // a temporary HOME), the refusal of a non-empty target and --force, --site-url.
 // Exit 0 when every check passes, 1 otherwise; one line per failure.
@@ -79,7 +80,7 @@ check(skillText.resume.includes('`learner/parcours.md`'), 'skill resume does not
 check(skillText.diagram.includes('`course/<dir>/concept.md`') && skillText.diagram.includes('`course/<dir>/teaching.md`'), 'skill diagram does not name concept.md and teaching.md as what it reads');
 check(skillText.stop.includes('`learner/parcours.md`'), 'skill stop does not name learner/parcours.md as what it reads');
 
-// the generated CLAUDE.md
+// the built CLAUDE.md
 const claude = read(path.join(out, 'CLAUDE.md')) || '';
 check(!PLACEHOLDER.test(claude), `CLAUDE.md keeps a placeholder: ${(PLACEHOLDER.exec(claude) || [])[0]}`);
 check(claude.split("Pars de la banque d'exemples").length - 1 === 1, "CLAUDE.md does not hold « Pars de la banque d'exemples » once");
@@ -89,6 +90,8 @@ check(claude.includes('Domaine 1 : Le cadre') && claude.includes("Concept 0 : Sc
 for (const f of ['course/storyline.md', 'course/glossary.md', 'course/domains/1-frame.md', 'course/concepts/00-scrum/', 'course/concepts/01-produit-et-po/']) {
   check(claude.includes('`' + f + '`'), `CLAUDE.md does not name the course file ${f}`);
 }
+check(claude.includes('channel\n`next`') || claude.includes('channel `next`'), 'CLAUDE.md does not state the channel next');
+check(claude.includes('\n@course/course.yaml\n'), 'CLAUDE.md does not import course/course.yaml');
 check(claude.includes('(site non publié)') && !claude.includes('http'), 'CLAUDE.md: without --site-url, the site addresses are not « (site non publié) »');
 
 // every rule of the protocol, once, in CLAUDE.md or in the skill of its moment
@@ -108,10 +111,66 @@ for (const [s, m] of Object.entries(MOMENT_OF)) check((where.get(s) || [])[0] ==
 check((where.get('diagram-only-on-request') || [])[0] === 'CLAUDE.md', 'rule diagram-only-on-request is not in CLAUDE.md');
 const order = slugsOf(claude);
 check(order.join(',') === all.filter((s) => where.get(s)[0] === 'CLAUDE.md').join(','), 'the rules of CLAUDE.md are not in the order of teacher/README.md');
-for (const h of ['## 1. Démarrage de session', '## 8. Mémoire de l\'apprenant']) {
-  const at = claude.indexOf(h + '\n');
-  check(at >= 0 && claude.slice(at + h.length + 1).replace(/^\n+/, '').startsWith('**Purpose.**'), `CLAUDE.md: ${h} is not followed by its Purpose paragraph`);
+// every family and group heading kept is followed by its Purpose paragraph: in CLAUDE.md, and in the
+// skills that hold a group or a family whole (the diagram rules sit under the heading of family 4,
+// whose Purpose stays in CLAUDE.md)
+const HEADING = /^(## \d+\. .+|##+ .+ \(`[a-z0-9-]+`\))$/;
+const headingsOf = (text) => {
+  const lines = text.split('\n');
+  let fence = false;
+  const found = [];
+  lines.forEach((l, i) => {
+    if (/^```/.test(l)) fence = !fence;
+    if (!fence && HEADING.test(l)) found.push(i);
+  });
+  return { lines, found };
+};
+let headingCount = 0;
+for (const [name, text] of [['CLAUDE.md', claude], ['onboarding', skillText.onboarding], ['resume', skillText.resume], ['stop', skillText.stop]]) {
+  const { lines, found } = headingsOf(text);
+  for (const i of found) {
+    headingCount++;
+    const next = lines.slice(i + 1).find((l) => l.trim() !== '') || '';
+    check(next.startsWith('**Purpose.**'), `${name}: ${lines[i]} is not followed by its Purpose paragraph`);
+  }
 }
+const protocolHeadings = headingsOf(protocol.slice(0, protocol.indexOf("\n## Composition"))).found.length;
+check(headingCount === protocolHeadings, `${headingCount} family and group headings in CLAUDE.md and the skills, not the ${protocolHeadings} of the protocol`);
+
+// each rule as built is the protocol's text, verbatim but for its placeholders: a rule block runs from
+// its **slug** line to the next rule or heading, as the build cuts it
+function ruleBlocks(text) {
+  const blocks = new Map();
+  let cur = null;
+  let fence = false;
+  const close = () => {
+    if (!cur) return;
+    while (cur.lines.length && cur.lines[cur.lines.length - 1].trim() === '') cur.lines.pop();
+    blocks.set(cur.slug, cur.lines.join('\n'));
+    cur = null;
+  };
+  for (const l of text.split('\n')) {
+    if (!fence && /^#/.test(l)) { close(); continue; }
+    const m = !fence && /^\*\*([a-z0-9-]+)\*\* /.exec(l);
+    if (/^```/.test(l)) fence = !fence;
+    if (m) { close(); cur = { slug: m[1], lines: [l] }; continue; }
+    if (cur) cur.lines.push(l);
+  }
+  close();
+  return blocks;
+}
+const source = ruleBlocks(protocol.slice(0, protocol.indexOf('\n## Composition')));
+const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const patternOf = (t) => new RegExp('^' + t.split(/(?:« )?\{[a-z_]+\.[a-z_]+\}(?: »)?/).map(escape).join('[\\s\\S]+?') + '$');
+let compared = 0;
+for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [s, skillText[s]])]) {
+  for (const [slug, built] of ruleBlocks(text)) {
+    if (!source.has(slug)) continue;
+    compared++;
+    check(patternOf(source.get(slug)).test(built), `${name}: rule ${slug} is not the protocol's text with its placeholders filled`);
+  }
+}
+check(compared === all.length, `${compared} rules compared with the protocol, not ${all.length}`);
 check(!claude.includes('## 9. Arrêt') && !claude.includes('(`onboarding`)') && !claude.includes('(`resume`)'), 'CLAUDE.md holds a family or group a moment loads whole');
 check(claude.includes('| **save-next-step** |'), 'CLAUDE.md lacks the save-point table');
 
@@ -127,6 +186,7 @@ const deny = (settings.permissions && settings.permissions.deny) || [];
 check(allow.includes('Bash(git add learner/)'), 'settings.json does not allow git add learner/');
 check(allow.some((a) => /^Bash\(git commit/.test(a)), 'settings.json does not allow git commit');
 check(deny.includes('Edit(course/**)') && deny.includes('Write(course/**)'), 'settings.json does not deny Edit and Write under course/');
+check(deny.some((d) => /^Bash\(git push/.test(d)), 'settings.json does not deny git push');
 
 // course.lock
 const lockText = read(path.join(out, 'course.lock')) || '';
@@ -161,6 +221,12 @@ check(forced.status === 0, `--force exits ${forced.status}: ${(forced.stderr || 
 const lock2 = read(path.join(out, 'course.lock')) || '';
 check(lock2.includes('site_url: "https://example.org/feyn/next/po-essai/"'), 'course.lock: site_url is not the --site-url base');
 const claude2 = read(path.join(out, 'CLAUDE.md')) || '';
+// --force empties a classroom only: a non-empty folder with no course.lock is refused
+const notClassroom = path.join(tmp, 'not-a-classroom');
+fs.mkdirSync(notClassroom);
+fs.writeFileSync(path.join(notClassroom, 'keep.txt'), 'kept\n');
+const refused = build(['courses/po-essai', '--out', notClassroom, '--force']);
+check(refused.status === 2 && /not a classroom/.test(refused.stderr) && read(path.join(notClassroom, 'keep.txt')) === 'kept\n', '--force empties a folder that holds no course.lock');
 check(claude2.includes('](https://example.org/feyn/next/po-essai/concepts/{nn}/)') && !claude2.includes('(site non publié)'), 'CLAUDE.md: --site-url does not give the site addresses');
 check(git(out, 'log', '--oneline').stdout.trim().split('\n').length === 1, 'the rebuilt classroom has not exactly one commit');
 
@@ -173,6 +239,7 @@ check(next.status === 0 && fs.existsSync(path.join(home, 'classrooms', 'po-essai
 const prod = build(['courses/po-essai', '--channel', 'prod'], env);
 check(prod.status === 0 && fs.existsSync(path.join(home, 'classrooms', 'po-essai', 'CLAUDE.md')), '--channel prod does not give ~/classrooms/po-essai/');
 check((read(path.join(home, 'classrooms', 'po-essai', 'course.lock')) || '').includes('channel: "prod"'), 'course.lock: channel is not prod');
+check(/channel prod is built from a course tag/.test(prod.stderr), '--channel prod from a branch builds without a warning');
 
 fs.rmSync(tmp, { recursive: true, force: true });
 for (const f of failures) console.error(`test-build: ${f}`);
