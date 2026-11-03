@@ -22,7 +22,10 @@
 ### Done when
 
 <!-- Two or three coarse statements a reviewer can verify by reading a file or running a
-     command, one per bullet. No Done when, no epic: what cannot get one is an idea. -->
+     command, one per bullet. No Done when, no epic: what cannot get one is an idea. An
+     epic that changes `courses/po-essai/` carries the statement that each judgement call it
+     makes is an entry of the Material of the migration epic #487 (`docs/contributing.md`,
+     "Policies"). -->
 
 ### Out of scope
 

@@ -274,6 +274,15 @@ decisions and the skills:
   closes with the bench behind, and the bench stops proving anything within a week (the frame
   of 2026-11-03). From idea #477; the yardstick it applies:
   [`vision.md`](vision.md), "The yardstick".
+- **A change to the bench records its judgement calls.** An epic or a story that changes
+  `courses/po-essai/` records each judgement call it makes (what was decided, why, the
+  alternative rejected) as an entry of the Material of the migration epic #487, and its Done
+  when states it; `/feyn-refine-option` proposes that line before it commits such a work item.
+  The exception: a change to `po-essai` that makes no call; its entry in #487 says so in one
+  line. Why: these calls are the only part of the migration of `parcours-po` that no file of
+  the tree holds; left in each PR's "Delivery notes", the migration rereads every PR, and a
+  policy alone is read once, where a Done when line is verified by a fresh reviewer at every
+  story. From idea #486; it feeds epic #487, its Material.
 - A change to [`vision.md`](vision.md) is a decision (`/feyn-decision`), never an edit in
   passing.
 - **A process change comes from an observed problem.** After epic #392, which lands this frame,
