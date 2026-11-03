@@ -91,7 +91,7 @@ those `check-course --list` prints, from the rules, in the order of the run.
 
 | Id | Category, severity | Script | Verifies (course/README.md) |
 |---|---|---|---|
-| `course-yaml` | `structure`, blocks | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/` (not looked for under `--concept`), spec declared, lexicon present; a `language` key accepted and ignored (`courses/parcours-po` has one until its migration, #487) (2; `spec-directives/1/README.md` 6) |
+| `course-yaml` | `structure`, blocks | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/` (not looked for under `--concept`), spec declared; a missing or unreadable lexicon, a tooling error (no rule: the lexicon is the spec's, `lexicon-keys` of `check-spec` tests it); a `language` key accepted and ignored (`courses/parcours-po` has one until its migration, #487) (2; `spec-directives/1/README.md` 6) |
 | `concept-folder` | `structure`, blocks | `concept-folder.js` | files, sections and their order, the column count of the `sources.md` tables, frontmatter (`verified` parallel to `refs`, absent without `refs`), sub-concept sections, « Objectif » (3) |
 | `case-contract` | `pedagogy`, blocks | `case-contract.js` | the cases of `teaching.md`: in the heading, a sub-concept of the concept and at most one qualifier, a value of the lexicon's `qualifiers`; titles unique in the concept; fields (known labels, a qualifier on « Question » only, the mandatory ones once and in order); leaf coverage; citation in « Consignes » (3.3, 7). Split from `concept-folder` (#329): the `pedagogy` part of the concept folder |
 | `conventions` | `writing`, blocks | `conventions.js` | reader-text conventions of `concept.md`; plain Markdown in every course file (1, 3.5) |
@@ -154,7 +154,7 @@ among them), the flag `--quality`, removed, an id of a test of `check-spec` and 
   `checks.anaphora`; `valid/` with it fails `domain-first-sentence-standalone` only, a reporting
   check, so with exit code 0 (a reporting failure alone); `broken/course-files` with it fails a
   blocking and a reporting check, exit code 1. A `--lexicon` that does not exist fails
-  `course-yaml`, exit code 1.
+  `course-yaml` as a tooling error (no rule), exit code 1.
 - `fixtures/dispatcher/<name>/`: a `course.yaml` that `course-specs/check-course` refuses,
   `other-spec` (an unknown spec, `other@1`) and `unknown-major` (`linear-course@9`); the test also
   runs `course-specs/check-course` on `valid/`, with the default and with `--category writing`,

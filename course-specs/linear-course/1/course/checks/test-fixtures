@@ -116,10 +116,10 @@ const runIds = (cats) => RUN.filter((c) => !cats || cats.includes(c.category)).m
     b.code === 1 && failing(b).some((l) => l.startsWith('course-files: fail: ')) && failing(b).some((l) => l.startsWith('domain-first-sentence-standalone: fail: ')), notOk(b));
 }
 
-// a lexicon that does not exist fails course-yaml (rule lexicon-exists), exit code 1
+// a lexicon that does not exist fails course-yaml as a tooling error (no rule), exit code 1
 {
   const r = run(path.join(fx, 'valid'), ['--lexicon', path.join(fx, 'no-such-lexicon.yaml')]);
-  report('a lexicon that does not exist fails course-yaml, exit code 1', r.code === 1 && failing(r).some((l) => l.startsWith('course-yaml: fail: ') && l.includes('does not exist')), notOk(r));
+  report('a lexicon that does not exist fails course-yaml as a tooling error, exit code 1', r.code === 1 && failing(r).some((l) => l.startsWith('course-yaml: fail: ') && l.includes('tooling error') && l.includes("the spec's lexicon is missing") && l.includes('does not exist') && l.includes('course/README.md section 7')), notOk(r));
 }
 
 // broken: one run each, with the default

@@ -101,8 +101,10 @@ no class: `- file or area: what changes`.
   lists of the checks) and `teacher/lexicon.yaml` (phrases, learner words, memory, statuses); its
   `site` group leaves the spec; `check-course --lexicon <file>` replaces `--lang-dir` and
   `LINEAR_COURSE_LANG_DIR`; `course/README.md` section 7 becomes « The lexicon of the course
-  files »; the rule `language-pack-exists` becomes `lexicon-exists`, `case-qualifier-from-pack`
-  and `reference-type-from-pack` become `case-qualifier-from-lexicon` and
+  files »; the rule `language-pack-exists` is removed (the lexicon is a file of the spec, which
+  no course can break: a missing or unreadable lexicon fails `course-yaml` as a tooling error,
+  and `lexicon-keys` of `check-spec` tests the file), `case-qualifier-from-pack` and
+  `reference-type-from-pack` become `case-qualifier-from-lexicon` and
   `reference-type-from-lexicon`, their texts naming the lexicon; decision
   `lexicon-not-language-pack` written, `language-policy` amended; no protocol rule text changes
   (#493).

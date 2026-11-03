@@ -25,12 +25,6 @@ groups:
         level: requirement
         check: course-yaml
         text: The course `id` shall equal the folder name.
-      - id: lexicon-exists
-        level: requirement
-        check: course-yaml
-        text: >-
-          The lexicon of the course files, `course/lexicon.yaml` of the spec MAJOR the course
-          follows, shall exist and be a map: the words of the course files are read there.
       - id: course-yaml-paths-exist
         level: requirement
         check: course-yaml

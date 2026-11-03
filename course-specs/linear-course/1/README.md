@@ -150,7 +150,7 @@ are those of `course/README.md`.
 
 | Id | Category | Level | Method | Severity | Verifies | Sections |
 |---|---|---|---|---|---|---|
-| `course-yaml` | `structure` | requirement | test | blocks | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/`, spec declared (`course-specs/check-course` refuses an unknown spec or MAJOR), lexicon present | 2; `spec-directives/1/README.md` 6 |
+| `course-yaml` | `structure` | requirement | test | blocks | `course.yaml` fields, identifiers, order, partition into domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/`, spec declared (`course-specs/check-course` refuses an unknown spec or MAJOR); a missing lexicon, a tooling error (no rule) | 2; `spec-directives/1/README.md` 6 |
 | `concept-folder` | `structure` | requirement | test | blocks | the folder's files; the three files' sections and their order, the column count of the `sources.md` tables; frontmatter keys, `verified` parallel to `refs`; one section per sub-concept; « Objectif » equals `objective` | 3 |
 | `case-contract` | `pedagogy` | requirement | test | blocks | case headings and their qualifier, titles unique in the concept, fields, a qualifier on « Question » only, coverage of leaves, citation in « Consignes » | 3.3, 7 |
 | `conventions` | `writing` | requirement | test | blocks | the reader-text conventions of `concept.md`; plain Markdown in course files | 1, 3.5 |
