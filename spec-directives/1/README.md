@@ -42,8 +42,8 @@ counterfactual exists, a `why`; a rule of the protocol also has an `origin`. A g
 `teacher/rules.yaml` is a group of `teacher/README.md`, its slug as its `id` (decision
 `rule-groups-replace-ranges`). A rule binds a product (section 2), so the rule files are two,
 `course/rules.yaml` and `teacher/rules.yaml`. The spec's own files (the rule files, the schemas,
-the slugs of the protocol, the lexicons, `spec.yaml` and its version) are verified by the
-tests of `check-spec`, which are not rules (section 8).
+the slugs of the protocol, the lexicons, `spec.yaml` and its version, the composition of the
+teacher) are verified by the tests of `check-spec`, which are not rules (section 8).
 
 ## 2. Conformance
 
@@ -61,9 +61,10 @@ Two classes of products: the **course**, its diagrams included, and the **teache
 A rule binds a product, a course or a teacher. The lexicons of a spec (`course/lexicon.yaml`, the
 words of the course files; `teacher/lexicon.yaml`, the words the teacher says and writes) are not
 products: they live in the folder of the spec MAJOR, written by the spec's authors, and their
-consistency is the spec's own, like that of the rule files, the schemas, the slugs of the protocol
-and `spec.yaml`: the tests of `check-spec` verify them (`lexicon-keys` for the lexicons), and they
-are not rules, so they count toward no product's conformance (section 8).
+consistency is the spec's own, like that of the rule files, the schemas, the slugs of the protocol,
+`spec.yaml` and the composition of the teacher: the tests of `check-spec` verify them
+(`lexicon-keys` for the lexicons), and they are not rules, so they count toward no product's
+conformance (section 8).
 
 ## 3. Levels
 
