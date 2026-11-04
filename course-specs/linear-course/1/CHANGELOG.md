@@ -196,6 +196,6 @@ no class: `- file or area: what changes`.
   `markdown-conventions-not-mdx`, `one-diagram-style`, `sources-trace-the-concept`,
   `stances-in-frontmatter-only` and `spec-files-by-product` point to the rules where they pointed
   to the prose (#533).
-- `course/README.md`: the headings of sections 3 (3.1 to 3.5), 6 (6.1, 6.2) and 7, and its title,
-  in French, as those of sections 1, 2, 4 and 5; the numbers unchanged; the links of its reader
-  table to section 7 follow the new anchor (#535).
+- `course/README.md`: the headings of sections 3 (3, 3.1, 3.2, 3.5), 6 (6, 6.1, 6.2) and 7,
+  and its title, in French, as those of sections 1, 2, 4 and 5; 3.3 and 3.4, file names, and
+  the numbers unchanged; the links of its reader table to section 7 follow the new anchor (#535).
