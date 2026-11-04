@@ -76,3 +76,9 @@ no class: `- file or area: what changes`.
 - `tests/`: `rule-files` fails a group of `course/rules.yaml` without a `purpose` (the fixture
   `broken/rule-files-purpose-missing`; every fixture's `course/rules.yaml` gains one); a group of
   `teacher/rules.yaml` may still lack one; `README.md` sections 1 and 8 say so (#533).
+- `tests/`: `rule-files` fails a group of `teacher/rules.yaml` without a `purpose` (the fixture
+  `broken/rule-files-teacher-purpose-missing`; every fixture's `teacher/rules.yaml` gains one),
+  accepts as the `id` of a group of `teacher/rules.yaml` the category of a family as well as a
+  group of `teacher/README.md` (the fixture `broken/rule-files-protocol-group` fails an id that is
+  neither), and accepts a rule of the protocol without `origin`; `README.md` sections 1 and 8 and
+  decision `rules-with-level-and-method` say so (#552).

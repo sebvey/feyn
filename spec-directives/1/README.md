@@ -37,12 +37,12 @@ here; the files of `linear-course` are its decision `spec-files-by-product`. A p
 A rule file is a list of groups, each a list of rules; a rule has an `id` (a slug), a `level`
 (section 3), a `category` (`course-specs/linear-course/1/README.md` section 3), a `method`
 (section 4), a `check` when one implements the method, a `text` and, where an observed
-counterfactual exists, a `why`; a rule of the protocol also has an `origin`. A group has a
-`purpose`, what the group is for (a group of `teacher/rules.yaml` may lack one until the protocol's
-rules move there), and may declare `category` and `method` once for its rules, and a rule may
-override them; a group of
+counterfactual exists, a `why`; a rule of the protocol may also have an `origin`, the feyn issue
+or decision it comes from, where one is named. A group has a `purpose`, what the group is for, and
+may declare `category` and `method` once for its rules, and a rule may override them; a group of
 `teacher/rules.yaml` is a group of `teacher/README.md`, its slug as its `id` (decision
-`rule-groups-replace-ranges`). A rule binds a product (section 2), so the rule files are two,
+`rule-groups-replace-ranges`), or the rules placed directly under a family, its category as its
+`id`. A rule binds a product (section 2), so the rule files are two,
 `course/rules.yaml` and `teacher/rules.yaml`. The spec's own files (the rule files, the schemas,
 the slugs of the protocol, the lexicons, `spec.yaml` and its version, the composition of the
 teacher and its test scenarios) are verified by the tests of `check-spec`, which are not rules
@@ -218,7 +218,7 @@ this MAJOR, installed by `mise exec -- npm ci --prefix spec-directives/1`
 | Id | Script | Verifies | Reads |
 |---|---|---|---|
 | `rule-slugs` | `rule-slugs.js` | every rule and every group of rules of `teacher/README.md` is named by a slug, defined once in one namespace; every rule or group cited in `teacher/README.md`, `README.md`, `course/README.md` and `decisions/` (where a decision cites none, decision `decision-format`) is cited by a slug that is defined, a group as a group and a rule as a rule; none is named or cited by a number, no range « `a` à `b` » (decisions `rules-named-by-slug`, `rule-groups-replace-ranges`) | `teacher/README.md`, `README.md`, `course/README.md`, `decisions/` |
-| `rule-files` | `rule-files.js` | `course/rules.yaml` and `teacher/rules.yaml` exist; a group has a non-empty `rules` list and may declare `id`, `title`, `purpose` (a non-empty string), `category`, `method`; a group of `course/rules.yaml` has a `purpose`; a rule has `id` (a slug), `level`, `category` and `method` (on the rule or its group), `text`, optional `check` and `why`, and in the protocol `origin`, no other key; a group of `teacher/rules.yaml` has an `id` that is a group of `teacher/README.md`; the closed lists (levels, methods, the categories of a course, the families of the protocol; a rule of the protocol is a demonstration); ids of rules and groups unique across the two files; every check named exists (`course/checks/<id>.js` of `<spec-dir>`, or of the folder `--checks-dir` names, or `.claude/workflows/<id>.js`); one category and one level per check; each `course/schemas/*.schema.yaml` compiles under `Ajv2020` and is named by the text of one rule of `course/rules.yaml`, and a schema named there exists (sections 1, 3 and 4; the spec MAJOR's `README.md` sections 2 and 3) | `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `teacher/README.md` |
+| `rule-files` | `rule-files.js` | `course/rules.yaml` and `teacher/rules.yaml` exist; a group has a non-empty `rules` list and a `purpose` (a non-empty string), and may declare `id`, `title`, `category`, `method`; a rule has `id` (a slug), `level`, `category` and `method` (on the rule or its group), `text`, optional `check` and `why`, and in the protocol an optional `origin` (a non-empty string), no other key; a group of `teacher/rules.yaml` has an `id` that is a group of `teacher/README.md` or the category of a family; the closed lists (levels, methods, the categories of a course, the families of the protocol; a rule of the protocol is a demonstration); ids of rules and groups unique across the two files; every check named exists (`course/checks/<id>.js` of `<spec-dir>`, or of the folder `--checks-dir` names, or `.claude/workflows/<id>.js`); one category and one level per check; each `course/schemas/*.schema.yaml` compiles under `Ajv2020` and is named by the text of one rule of `course/rules.yaml`, and a schema named there exists (sections 1, 3 and 4; the spec MAJOR's `README.md` sections 2 and 3) | `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `teacher/README.md` |
 | `lexicon-keys` | `lexicon-keys.js` | `course/lexicon.yaml` holds every key of `course/README.md` section 7; every key `teacher/README.md` uses is in `course/lexicon.yaml` or `teacher/lexicon.yaml`; a group lives in one lexicon only; a key a non-empty string, a list a non-empty list of strings (`course/README.md` 7) | `course/lexicon.yaml`, `teacher/lexicon.yaml`, `teacher/README.md` |
 | `spec-yaml` | `spec-yaml.js` | `spec.yaml` holds `name`, `major`, `directives`, `version` and `language`, no other key; `name` a slug, `major` and `directives` positive integers, `version` `MAJOR.MINOR.PATCH` with an optional `-alpha` and `major` as its MAJOR, `language` an ISO 639-1 code, the language of the spec; `version` agrees with the first `## ` section of `CHANGELOG.md`: « Unreleased » during the alpha (`<MAJOR>.0.0-alpha`), otherwise the section names `version` (`## 1.0.0`, a date after it allowed) (section 6) | `spec.yaml`, `CHANGELOG.md` |
 | `composition` | `composition.js` | `teacher/composition.yaml` exists and holds exactly five parts, ids `permanent`, `on-demand`, `course-reads`, `learner-memory`, `permissions`; a part has `loads`, one of `every-message`, `at-a-moment`, `during-the-session`, `at-start-and-save-points`, `always`, and `draws`, a non-empty list whose entries have `from`, one of `spec`, `course`, `learner`, `classroom`, `source` and `what`; a `from: spec` source is a file or folder of `<spec-dir>`; `on-demand` has `moments`, each with `id`, `when`, a list `rules` and `draws`; the form only, never the sense, which the fresh tests judge | `teacher/composition.yaml` |
@@ -283,10 +283,11 @@ fixtures are tested by `course-specs/linear-course/1/course/checks/test-fixtures
   that differs from the version of that section. For `rule-slugs`: a missing slug, a duplicate slug,
   a rule cited by number, a missing group, a group whose slug is a rule's, a range, a range in
   `course/README.md`, a group cited as a rule. For `rule-files`: a missing level; a level, a method,
-  a category and a family off their lists; a protocol group that `teacher/README.md` does not
-  define; an id in both rule files; a check that does not exist; a check over two categories; a
-  check over two levels; a schema that does not compile; a schema no rule names; an empty group
-  `purpose`; a group of `course/rules.yaml` without one. For
+  a category and a family off their lists; a protocol group id that is neither a group of
+  `teacher/README.md` nor the category of a family; an id in both rule files; a check that does
+  not exist; a check over two categories; a check over two levels; a schema that does not
+  compile; a schema no rule names; an empty group `purpose`; a group of `course/rules.yaml`
+  without one; a group of `teacher/rules.yaml` without one. For
   `composition`: `teacher/composition.yaml` missing, four parts, a part with no `draws`, a
   part with no `loads`, a `loads` and a `from` off their lists, a `from: spec` source the spec
   folder does not hold, an entry with no `what`, an `on-demand` with no `moments`. For `scenarios`:

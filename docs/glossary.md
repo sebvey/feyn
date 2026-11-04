@@ -404,7 +404,7 @@ where the concept is implemented, stored, read or written (decision `glossary-by
 
 ### protocol rule
 
-- means: a rule of the protocol: it binds the teacher, belongs to a family and a group, and has, beside the fields of every rule, an origin
+- means: a rule of the protocol: it binds the teacher, belongs to a family and a group, and has, beside the fields of every rule, an origin where a feyn issue or decision is its source
 - en: protocol rule
 - fr: « règle du protocole »
 - not to confuse with: [rule](#rule), [protocol](#protocol)

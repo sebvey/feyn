@@ -1,2 +1,2 @@
 check: rule-files
-message: id "welcome" is not a group of teacher/README.md
+message: id "welcome" is neither a group of teacher/README.md nor the category of a family

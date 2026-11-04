@@ -1,0 +1,2 @@
+check: rule-files
+message: group 1: purpose is mandatory in teacher/rules.yaml

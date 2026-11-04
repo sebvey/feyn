@@ -210,3 +210,9 @@ no class: `- file or area: what changes`.
   never « fil » alone, which stays only in « fil rouge » (the storyline) and « Le fil des
   concepts »; « au fil du cours » becomes « en cours de route »; no rule changes what it asks
   (#539).
+- `teacher/rules.yaml`: every rule of the protocol, each rule of `teacher/README.md` in its
+  order, copied with its text and its « Pourquoi » line as `why`; one group per family, its
+  category as `id`, for the rules placed directly under it, then one per group of the family; each
+  group's `purpose` in French; an `origin` only where a feyn issue or decision is the source;
+  `teacher/README.md` unchanged, still read by the programs until it is cut; no rule changes what
+  it asks (#552).

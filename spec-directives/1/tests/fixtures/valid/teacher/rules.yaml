@@ -1,4 +1,5 @@
-# fixture: the rules of the teacher
+# fixture: the rules of the teacher; the second group is a family, its category as its id, and its
+# rule has no origin
 groups:
   - id: onboarding
     title: Accueil
@@ -10,3 +11,12 @@ groups:
         level: requirement
         origin: "new"
         text: Le premier message part sans appel d'outil.
+  - id: learner-memory
+    title: Mémoire
+    purpose: Le professeur écrit la mémoire de l'apprenant.
+    category: learner-memory
+    method: demonstration
+    rules:
+      - id: save-points
+        level: requirement
+        text: Après l'accueil, les points de sauvegarde.

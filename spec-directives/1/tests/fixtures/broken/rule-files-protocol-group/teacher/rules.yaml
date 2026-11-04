@@ -2,6 +2,7 @@
 groups:
   - id: welcome
     title: Accueil
+    purpose: Le professeur accueille un nouvel apprenant.
     category: session-start
     method: demonstration
     rules:
