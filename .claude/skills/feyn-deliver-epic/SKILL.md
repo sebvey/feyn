@@ -46,7 +46,7 @@ One at a time, the next one only (rules of the cycle):
 1. **Pose** it: `/feyn-issue story #<epic> <what>`, from the plan comment's
    `Next story to pose`. A story of the epic that a triage or a brainstorm created is born
    Option (by default at a triage, always from a brainstorm: `/feyn-triage` step 4,
-   `/feyn-brainstorm` step 4.4): it is not committed, and `/feyn-issue-branch` refuses it. The
+   `/feyn-brainstorm` moment 4): it is not committed, and `/feyn-issue-branch` refuses it. The
    orchestrator asks the maintainer to commit it (set Ready, at an option refinement,
    `/feyn-refine-option`), then names it as `Next story to pose` once they have, without
    running `/feyn-issue`: it poses no twin of it.
