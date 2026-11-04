@@ -1,7 +1,7 @@
 # A lexicon with one defect: no phrases.example (a key of the fixture's teacher/README.md).
 # Otherwise the teacher lexicon of the spec fixture (valid/teacher/lexicon.yaml).
 
-# Literal phrases the teacher says (teacher/README.md, "Keys and parameters").
+# Literal phrases the teacher says (teacher/README.md, « Clés et paramètres »).
 phrases:
   concept_title: "Concept {n} : {title}"
   domain_title: "Domaine {n} : {title}"

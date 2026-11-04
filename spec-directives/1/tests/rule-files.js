@@ -11,9 +11,10 @@
 //   - the closed lists of spec-directives/1/README.md sections 3 and 4 and of the spec MAJOR's
 //     README.md section 3: the levels, the methods (a rule of the
 //     protocol: demonstration), the categories of a course, the families of the protocol;
-//   - a group of teacher/rules.yaml has an `id`: the slug of a group of teacher/README.md (a
-//     heading "### <title> (`<slug>`)" of a rule family "## <n>. ...", as rule-slugs reads it), or
-//     the category of a family, the group of the rules placed directly under that family;
+//   - a group of teacher/rules.yaml has an `id` and a `category`, its family: a family is the group
+//     whose id is its category, holding the rules placed directly under the family; any other group
+//     belongs to the family of its category, whose group comes before it in the file (the order
+//     teacher/build/render-parts renders);
 //   - the ids of rules and groups are unique across the two files;
 //   - a check named exists, as a script of the spec MAJOR's course/checks/ (`<check>.js`; the
 //     folder that check-spec's --checks-dir names, when given) or an agent workflow of the
@@ -21,18 +22,16 @@
 //   - a check verifies rules of one category and one level;
 //   - each course/schemas/*.schema.yaml compiles under ajv's Ajv2020 (JSON Schema 2020-12), and the
 //     text of exactly one rule of course/rules.yaml names it; a schema named there exists.
-// The categories and the families below are those of linear-course, a named debt: idea #485
-// (course-specs/linear-course/1/teacher/build/render-parts holds the families too).
+// The categories and the families below are those of linear-course, a named debt: idea #485.
 const fs = require('fs');
 const path = require('path');
 const yaml = require('../lib/yaml-lines');
-const mdlib = require('../lib/md');
 const { fail } = require('../lib/course');
 
 const LEVELS = ['requirement', 'recommendation', 'permission'];
 const METHODS = ['test', 'analysis', 'inspection', 'demonstration'];
 const COURSE_CATEGORIES = ['structure', 'pedagogy', 'writing', 'sources', 'diagrams'];
-// the nine families of teacher/README.md, in its order (## 1. to ## 9.)
+// the nine families of the protocol (the spec MAJOR's README.md section 3)
 const FAMILIES = ['session-start', 'domain-presentation', 'loop', 'message-form', 'storyline',
   'stances-and-sources', 'practice-skip-asides', 'learner-memory', 'stop'];
 // optional: the keys a rule of the file may add, each a non-empty string when present
@@ -57,25 +56,9 @@ function checkExists(ctx, id) {
   return fs.existsSync(path.join(ctx.checks, id + '.js')) || fs.existsSync(path.join(WORKFLOWS, id + '.js'));
 }
 
-// the group slugs teacher/README.md defines, in its rule families; null when teacher/README.md is
-// missing
-function protocolGroups(ctx) {
-  const text = ctx.read('teacher/README.md');
-  if (text === null) return null;
-  const { sections } = mdlib.sections(mdlib.split(text).body, 2);
-  const groups = new Set();
-  for (const s of sections.filter((x) => /^\d+\.\s/.test(x.title))) {
-    for (const l of s.lines) {
-      const g = !l.code && /^###\s+.+?\s+\(`([^`]+)`\)\s*$/.exec(l.t);
-      if (g) groups.add(g[1]);
-    }
-  }
-  return groups;
-}
-
 function run(ctx) {
   const out = [];
-  const pgroups = protocolGroups(ctx);
+  const families = new Set(); // the families of teacher/rules.yaml met so far, by category
   const ids = new Map(); // id -> "file:line"
   const checks = new Map(); // check -> { category, level, at }
   const courseTexts = []; // [{ text, file, line }] of course/rules.yaml
@@ -106,10 +89,14 @@ function run(ctx) {
         if (typeof g.id !== 'string' || !GROUP_SLUG.test(g.id)) out.push(fail(file, yaml.lineOf(g, 'id', gl), `group ${gi + 1}: id must be a slug, one to five lowercase words joined by hyphens`));
         else {
           unique(g.id, yaml.lineOf(g, 'id', gl), 'group');
-          // teacher/README.md missing is rule-slugs' failure, not this one's
-          if (file === 'teacher/rules.yaml' && pgroups && !pgroups.has(g.id) && !FAMILIES.includes(g.id)) out.push(fail(file, yaml.lineOf(g, 'id', gl), `group ${gi + 1}: id "${g.id}" is neither a group of teacher/README.md nor the category of a family: a group of the protocol is a group of teacher/README.md, its slug as its id, or the rules placed directly under a family, its category as its id`));
+          // a category off the list fails below
+          if (file === 'teacher/rules.yaml' && FAMILIES.includes(g.category)) {
+            if (g.id === g.category) families.add(g.category);
+            else if (!families.has(g.category)) out.push(fail(file, yaml.lineOf(g, 'id', gl), `group ${gi + 1}: group "${g.id}" belongs to the family ${g.category}, whose group does not come before it: a family is the group whose id is its category, and its groups follow it`));
+          }
         }
-      } else if (file === 'teacher/rules.yaml') out.push(fail(file, gl, `group ${gi + 1}: id is mandatory in the protocol, the slug of its group of teacher/README.md or the category of its family`));
+      } else if (file === 'teacher/rules.yaml') out.push(fail(file, gl, `group ${gi + 1}: id is mandatory in the protocol, its slug or the category of its family`));
+      if (file === 'teacher/rules.yaml' && g.category === undefined) out.push(fail(file, gl, `group ${gi + 1}: category is mandatory on a group of the protocol, its family`));
       if (g.purpose !== undefined && !isStr(g.purpose)) out.push(fail(file, yaml.lineOf(g, 'purpose', gl), `group ${gi + 1}: purpose must be a non-empty string`));
       else if (g.purpose === undefined) out.push(fail(file, gl, `group ${gi + 1}: purpose is mandatory in ${file}, what the group is for`));
       if (g.category !== undefined) closed(g, 'category', g.category, spec.categories, 'category', gl);

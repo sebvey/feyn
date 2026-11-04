@@ -40,9 +40,9 @@ A rule file is a list of groups, each a list of rules; a rule has an `id` (a slu
 counterfactual exists, a `why`; a rule of the protocol may also have an `origin`, the feyn issue
 or decision it comes from, where one is named. A group has a `purpose`, what the group is for, and
 may declare `category` and `method` once for its rules, and a rule may override them; a group of
-`teacher/rules.yaml` is a group of `teacher/README.md`, its slug as its `id` (decision
-`rule-groups-replace-ranges`), or the rules placed directly under a family, its category as its
-`id`. A rule binds a product (section 2), so the rule files are two,
+`teacher/rules.yaml` is a family, its category as its `id`, holding the rules placed directly under
+the family, or a group of that family, its slug as its `id` (decision
+`rule-groups-replace-ranges`), which follows the family in the file. A rule binds a product (section 2), so the rule files are two,
 `course/rules.yaml` and `teacher/rules.yaml`. The spec's own files (the rule files, the schemas,
 the slugs of the protocol, the lexicons, `spec.yaml` and its version, the composition of the
 teacher and its test scenarios) are verified by the tests of `check-spec`, which are not rules
@@ -217,17 +217,18 @@ this MAJOR, installed by `mise exec -- npm ci --prefix spec-directives/1`
 
 | Id | Script | Verifies | Reads |
 |---|---|---|---|
-| `rule-slugs` | `rule-slugs.js` | every rule and every group of rules of `teacher/README.md` is named by a slug, defined once in one namespace; every rule or group cited in `teacher/README.md`, `README.md`, `course/README.md` and `decisions/` (where a decision cites none, decision `decision-format`) is cited by a slug that is defined, a group as a group and a rule as a rule; none is named or cited by a number, no range « `a` à `b` » (decisions `rules-named-by-slug`, `rule-groups-replace-ranges`) | `teacher/README.md`, `README.md`, `course/README.md`, `decisions/` |
-| `rule-files` | `rule-files.js` | `course/rules.yaml` and `teacher/rules.yaml` exist; a group has a non-empty `rules` list and a `purpose` (a non-empty string), and may declare `id`, `title`, `category`, `method`; a rule has `id` (a slug), `level`, `category` and `method` (on the rule or its group), `text`, optional `check` and `why`, and in the protocol an optional `origin` (a non-empty string), no other key; a group of `teacher/rules.yaml` has an `id` that is a group of `teacher/README.md` or the category of a family; the closed lists (levels, methods, the categories of a course, the families of the protocol; a rule of the protocol is a demonstration); ids of rules and groups unique across the two files; every check named exists (`course/checks/<id>.js` of `<spec-dir>`, or of the folder `--checks-dir` names, or `.claude/workflows/<id>.js`); one category and one level per check; each `course/schemas/*.schema.yaml` compiles under `Ajv2020` and is named by the text of one rule of `course/rules.yaml`, and a schema named there exists (sections 1, 3 and 4; the spec MAJOR's `README.md` sections 2 and 3) | `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/`, `teacher/README.md` |
-| `lexicon-keys` | `lexicon-keys.js` | `course/lexicon.yaml` holds every key of `course/README.md` section 7; every key `teacher/README.md` uses is in `course/lexicon.yaml` or `teacher/lexicon.yaml`; a group lives in one lexicon only; a key a non-empty string, a list a non-empty list of strings (`course/README.md` 7) | `course/lexicon.yaml`, `teacher/lexicon.yaml`, `teacher/README.md` |
+| `rule-slugs` | `rule-slugs.js` | every rule and every group of rules of `teacher/rules.yaml` is named by a slug, defined once in one namespace; every rule or group cited in the `text` and `why` of `teacher/rules.yaml`, in `teacher/README.md`, `README.md`, `course/README.md` and `decisions/` (where a decision cites none, decision `decision-format`) is cited by a slug that is defined, a group as a group and a rule as a rule; none is named or cited by a number, no range « `a` à `b` » (decisions `rules-named-by-slug`, `rule-groups-replace-ranges`) | `teacher/rules.yaml`, `teacher/README.md`, `README.md`, `course/README.md`, `decisions/` |
+| `rule-files` | `rule-files.js` | `course/rules.yaml` and `teacher/rules.yaml` exist; a group has a non-empty `rules` list and a `purpose` (a non-empty string), and may declare `id`, `title`, `category`, `method`; a rule has `id` (a slug), `level`, `category` and `method` (on the rule or its group), `text`, optional `check` and `why`, and in the protocol an optional `origin` (a non-empty string), no other key; a group of `teacher/rules.yaml` has an `id` and a `category`, and is a family (its `id` its category) or a group of a family whose group comes before it; the closed lists (levels, methods, the categories of a course, the families of the protocol; a rule of the protocol is a demonstration); ids of rules and groups unique across the two files; every check named exists (`course/checks/<id>.js` of `<spec-dir>`, or of the folder `--checks-dir` names, or `.claude/workflows/<id>.js`); one category and one level per check; each `course/schemas/*.schema.yaml` compiles under `Ajv2020` and is named by the text of one rule of `course/rules.yaml`, and a schema named there exists (sections 1, 3 and 4; the spec MAJOR's `README.md` sections 2 and 3) | `course/rules.yaml`, `teacher/rules.yaml`, `course/schemas/` |
+| `lexicon-keys` | `lexicon-keys.js` | `course/lexicon.yaml` holds every key of `course/README.md` section 7; every key the protocol uses (`teacher/README.md`, `teacher/rules.yaml`) is in `course/lexicon.yaml` or `teacher/lexicon.yaml`; a group lives in one lexicon only; a key a non-empty string, a list a non-empty list of strings (`course/README.md` 7) | `course/lexicon.yaml`, `teacher/lexicon.yaml`, `teacher/README.md`, `teacher/rules.yaml` |
 | `spec-yaml` | `spec-yaml.js` | `spec.yaml` holds `name`, `major`, `directives`, `version` and `language`, no other key; `name` a slug, `major` and `directives` positive integers, `version` `MAJOR.MINOR.PATCH` with an optional `-alpha` and `major` as its MAJOR, `language` an ISO 639-1 code, the language of the spec; `version` agrees with the first `## ` section of `CHANGELOG.md`: « Unreleased » during the alpha (`<MAJOR>.0.0-alpha`), otherwise the section names `version` (`## 1.0.0`, a date after it allowed) (section 6) | `spec.yaml`, `CHANGELOG.md` |
 | `composition` | `composition.js` | `teacher/composition.yaml` exists and holds exactly five parts, ids `permanent`, `on-demand`, `course-reads`, `learner-memory`, `permissions`; a part has `loads`, one of `every-message`, `at-a-moment`, `during-the-session`, `at-start-and-save-points`, `always`, and `draws`, a non-empty list whose entries have `from`, one of `spec`, `course`, `learner`, `classroom`, `source` and `what`; a `from: spec` source is a file or folder of `<spec-dir>`; `on-demand` has `moments`, each with `id`, `when`, a list `rules` and `draws`; the form only, never the sense, which the fresh tests judge | `teacher/composition.yaml` |
-| `scenarios` | `scenarios.js` | when `teacher/tests/` exists: `teacher/tests/scenario.schema.yaml` compiles under `Ajv2020`; every other `*.yaml` of the folder, a test scenario, is valid against it and its `id` is its file name; every slug it names, in `rules` and in the `rules` of an `expect`, is a rule of the protocol (`teacher/README.md`, `teacher/rules.yaml`), and every slug of an `expect` is in its `rules`; the form only, never what a run shows, which `classroom-builder/fresh-test` judges | `teacher/tests/`, `teacher/README.md`, `teacher/rules.yaml` |
+| `scenarios` | `scenarios.js` | when `teacher/tests/` exists: `teacher/tests/scenario.schema.yaml` compiles under `Ajv2020`; every other `*.yaml` of the folder, a test scenario, is valid against it and its `id` is its file name; every slug it names, in `rules` and in the `rules` of an `expect`, is a rule of the protocol (`teacher/rules.yaml`), and every slug of an `expect` is in its `rules`; the form only, never what a run shows, which `classroom-builder/fresh-test` judges | `teacher/tests/`, `teacher/rules.yaml` |
 
 `lexicon-keys` tests `course/lexicon.yaml` of `<spec-dir>` against the keys of `course/README.md`
-section 7, and both lexicons against every key `teacher/README.md` uses: a row of the lexicon
-tables of its "Keys and parameters" section, or a `{group.key}` in a rule (the test reads the
-`teacher/README.md` of `<spec-dir>`, so a new key there is required of the lexicons at once); a
+section 7, and both lexicons against every key the protocol uses: a row of the lexicon tables of
+the « Clés et paramètres » section of `teacher/README.md` (a value that opens on « liste » is a
+list), or a `{group.key}` in a `purpose`, a `text` or a `why` of `teacher/rules.yaml` (the test
+reads the files of `<spec-dir>`, so a new key there is required of the lexicons at once); a
 group lives in one lexicon only. A key is a non-empty string; the
 lists (`typography.banned`, the `learner_says` lists) are non-empty lists of strings.
 `checks.anaphora` is optional: `domain-first-sentence-standalone` reads it. A `<spec-dir>` with
@@ -236,23 +237,22 @@ neither lexicon has none to test. A course's checks read the spec's `course/lexi
 section 7" when it is unusable; a lexicon given with `--lexicon` lies outside the spec, so no test
 verifies its keys.
 
-A rule's slug is defined by a line of a rule family (`## <n>. …`) that opens on `**<slug>** `, or by
-a table row of a family whose first cell is `**<slug>**` (the save-point table); a group's slug by a
-heading of a family, « ### <title> (`<slug>`) » (one to five words). The `**Purpose.**` paragraph
-that opens a family or a group defines nothing. Rules and groups share one namespace: a slug is
-defined once. A rule is cited by a code span: in a rule family, every code span shaped like a slug
-(two to five lowercase words joined by hyphens); in the tables of `teacher/README.md`, every code
-span of a "Used in" or "Rule" column; elsewhere, the code spans that follow « rule », « rules »,
-« règle » or « règles », joined by commas, « and », « to », « et », « à » (« rules `a`, `b` and
-`c` »). A check id or a decision slug in code is not a rule, as long as no such word leads it.
-Everywhere, the code spans that follow « group », « groups », « groupe » or « groupes » must be
-groups, and those that follow « rule(s) » or « règle(s) » must be rules. A range, « `a` à `b` » or
-« `a` to `b` », fails in `teacher/README.md`, `README.md` and `course/README.md`; `decisions/` are
-not read for ranges, since a decision cites no rule id (decision `decision-format`).
+A rule's slug is defined by the `id` of a rule of `teacher/rules.yaml`, a group's slug by the `id`
+of a group (one to five words; a family is the group whose `id` is its category). Rules and groups
+share one namespace: a slug is defined once. A rule is cited by a code span: in the tables of
+`teacher/README.md`, every code span of a "Used in" or "Rule" column; in the `text` and `why` of a
+rule of `teacher/rules.yaml`, in `teacher/README.md`, `README.md`, `course/README.md` and
+`decisions/`, the code spans that follow « rule », « rules », « règle » or « règles », joined by
+commas, « and », « to », « et », « à » (« rules `a`, `b` and `c` »). A check id or a decision
+slug in code is not a rule, as long as no such word leads it. Everywhere, the code spans that
+follow « group », « groups », « groupe » or « groupes » must be groups, and those that follow
+« rule(s) » or « règle(s) » must be rules. A range, « `a` à `b` » or « `a` to `b` », fails in
+`teacher/rules.yaml`, `teacher/README.md`, `README.md` and `course/README.md`; `decisions/` are not
+read for ranges, since a decision cites no rule id (decision `decision-format`).
 
 Known limits:
 - A code span after « group » that names something other than a rule group fails as a missing group.
-- A `####` heading inside a family is neither a group nor read by the check: the rules under it stay in the group above.
+- A code span in the `text` of a rule that no « règle » or « groupe » leads is not read as a citation.
 
 **The fixtures.**
 
@@ -265,14 +265,17 @@ fixtures are tested by `course-specs/linear-course/1/course/checks/test-fixtures
 
 - `spec-directives/1/tests/fixtures/valid/`: a minimal spec (`teacher/README.md` with a string key
   and a list key, `README.md`, `course/README.md`, one decision, the two rule files with a rule of
-  each method, one schema, `course/lexicon.yaml` (the course fixtures' lexicon) and
-  `teacher/lexicon.yaml` (the spec's, plus the key of its `teacher/README.md`), `spec.yaml` at
+  each method, `teacher/rules.yaml` with two families and a group, one schema,
+  `course/lexicon.yaml` (the course fixtures' lexicon) and `teacher/lexicon.yaml` (the spec's,
+  plus the key of its `teacher/README.md`), `spec.yaml` at
   `1.0.0-alpha`, a `CHANGELOG.md` whose first section is
   « Unreleased », a `teacher/composition.yaml` of five parts whose `from: spec` sources are files
   every copy holds, a `teacher/tests/` with `scenario.schema.yaml` and one test scenario); every
   `check-spec` test passes, the check scripts its rules name found in `fixtures/checks/` (stubs,
   through `--checks-dir`). `fixtures/broken/<name>/` there: a copy of it
-  with one defect and its `EXPECT` file; no other `check-spec` test may fail. Every copy holds the
+  with one defect and its `EXPECT` file; no other `check-spec` test may fail, but those its
+  `also:` line names, which the same defect fails (a slug defined twice in `teacher/rules.yaml`
+  fails `rule-slugs` and `rule-files`). Every copy holds the
   composition of `valid/`, except a copy whose defect is in it. The copies for
   `rule-slugs` and `rule-files` have no lexicon, so `lexicon-keys` has none to test there.
   For `lexicon-keys`: a key of `course/README.md` section 7 missing, a group missing
@@ -282,9 +285,10 @@ fixtures are tested by `course-specs/linear-course/1/course/checks/test-fixtures
   `major`, an alpha `version` over a released first section of `CHANGELOG.md`, a released `version`
   that differs from the version of that section. For `rule-slugs`: a missing slug, a duplicate slug,
   a rule cited by number, a missing group, a group whose slug is a rule's, a range, a range in
-  `course/README.md`, a group cited as a rule. For `rule-files`: a missing level; a level, a method,
-  a category and a family off their lists; a protocol group id that is neither a group of
-  `teacher/README.md` nor the category of a family; an id in both rule files; a check that does
+  `course/README.md`, a group cited as a rule, a « Used in » cell of `teacher/README.md` citing a
+  slug `teacher/rules.yaml` does not define. For `rule-files`: a missing level; a level, a method,
+  a category and a family off their lists; a protocol group before the group of its family; an id
+  in both rule files; a check that does
   not exist; a check over two categories; a check over two levels; a schema that does not
   compile; a schema no rule names; an empty group `purpose`; a group of `course/rules.yaml`
   without one; a group of `teacher/rules.yaml` without one. For

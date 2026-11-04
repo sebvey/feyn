@@ -23,7 +23,7 @@ language; what speaks to the tooling and the maintainer only stays English.
 | root `CLAUDE.md`, teacher template | course glossary, storyline, the course's `plan.md` and `CHANGELOG.md` |
 | the spec directives, repository docs, decisions (the spec's `decisions/` included), issues, labels | diagram text, the site's labels |
 | the spec's `CHANGELOG.md`; file and folder names, `course.yaml` keys, the keys of the lexicons, the ids and slugs of the rule files, the keys of `composition.yaml` | what the teacher says, the words of the lexicons (`course/lexicon.yaml`, `teacher/lexicon.yaml`) |
-| the checks' code, the schemas' structure | the spec's texts for the teacher and the author: `teacher/README.md` (the protocol, its purposes and tables), `teacher/composition.yaml` (its `what` texts), `course/README.md`, the `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml`, the descriptions of `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md` |
+| the checks' code, the schemas' structure | the spec's texts for the teacher and the author: `teacher/README.md` (how a rule of the protocol is written, its tables), `teacher/composition.yaml` (its `what` texts), `course/README.md`, the `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml` and the `purpose` of their groups, the descriptions of `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md` |
 
 An issue, a PR or a decision in English that quotes the course quotes it in French and never
 translates it. French text uses no em-dashes and no arrows. What the teacher says to the
@@ -62,9 +62,10 @@ epic #222 for `composition.yaml`), never twice.
   language pack becomes the two lexicons of the spec (maintainer, 2026-11-03, idea #492).
 - Amended 2026-11-03 (#504): a spec speaks the language of its courses to the teacher and to the
   course author: every file of the spec MAJOR they read is in that language, `teacher/README.md`
-  (the protocol, its purposes and tables), `teacher/composition.yaml`, `course/README.md`, the
-  `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml`, the descriptions of
-  `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md`; what speaks to
+  (how a rule of the protocol is written, its tables), `teacher/composition.yaml`,
+  `course/README.md`, the `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml` and the
+  `purpose` of their groups, the descriptions of `course/schemas/`, the messages of
+  `course/checks/`, the MAJOR's `README.md`; what speaks to
   the tooling and the maintainer only stays English: the spec directives, the spec's
   `decisions/` and `CHANGELOG.md`, the keys, ids and slugs of the YAML files, the code. The
   bounded exception on the protocol's French (2026-10-27, amended 2026-10-30) is absorbed: the

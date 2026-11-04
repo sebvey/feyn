@@ -1,0 +1,2 @@
+check: rule-slugs
+message: teacher/README.md:10 cites rule "third-rule", which teacher/rules.yaml does not define

@@ -13,7 +13,7 @@ Ce qu'est un cours de `linear-course` : son dossier, `course.yaml`, le dossier d
 fichiers de domaine, les fichiers du cours, les schémas et le lexique des fichiers du cours. La
 portée, les fichiers, les catégories et les checks sont le `README.md` de la MAJOR ; la
 conformité, les niveaux, les méthodes, la sévérité et les versions sont les directives de spec,
-`spec-directives/1/README.md` ; le protocole que le professeur exécute est `teacher/README.md`.
+`spec-directives/1/README.md` ; le protocole que le professeur exécute est `teacher/rules.yaml`.
 
 Les règles d'un cours, celles que la revue vérifie comprises, sont les données de
 [`rules.yaml`](rules.yaml), un groupe par section qui en énonce, chacun avec son `purpose` ; les
@@ -100,7 +100,7 @@ une re-vérification est un changement de `concept.md`.
 Le corps de `concept.md` est le texte lecteur du concept. La section d'un sous-concept feuille
 tient le **texte lecteur** de la feuille : l'explication telle qu'un lecteur du site la lit. Le
 site construit « Approfondissement » comme le reste du fichier ; quand le professeur le lit,
-`teacher/README.md` le dit.
+`teacher/rules.yaml` le dit.
 
 Ses règles sont le groupe « Le corps de concept.md » de [`rules.yaml`](rules.yaml).
 
@@ -118,7 +118,7 @@ cas emploient, sa banque d'exemples, faite de **cas**, et sa consigne de dessin.
 
 Le **titre** d'un cas, son identifiant, est son titre `###` sans la parenthèse ; la parenthèse
 nomme son sous-concept et, au besoin, son **qualificatif**, qui lui donne son type. Quand le
-professeur pose chaque type, `teacher/README.md` le dit :
+professeur pose chaque type, `teacher/rules.yaml` le dit :
 
 | Type | Qualificatif (clé) | Le cas sert |
 |---|---|---|
@@ -147,7 +147,7 @@ Les règles de `teaching.md` sont le groupe « Le fichier teaching.md » de
 | Reader | Needs | When |
 |---|---|---|
 | the site reader | to know the course is grounded; where to read further; which claim is consensus, school or the course's choice | reading a concept |
-| the teacher | the source as described, to answer « d'où ça vient ? », and what is not verified (`teacher/README.md`, rules `origin-from-sources-file` and `unverified-part-told`) | on the learner's request |
+| the teacher | the source as described, to answer « d'où ça vient ? », and what is not verified (`teacher/rules.yaml`, rules `origin-from-sources-file` and `unverified-part-told`) | on the learner's request |
 | the creator (human or agent) | what to source and what not to; where to put what could not be confirmed | writing the concept |
 | the reviewer | that a claim is backed by what it cites: the quotation, the place | reviewing a change |
 | the maintainer | when a source changes or a section is rewritten, what to re-verify; when it was consulted | months later |
@@ -272,7 +272,7 @@ reconnaît dans un fichier du cours (un titre, un champ de cas, un qualificatif,
 nature, une référence de concept, un type de source, un caractère banni) et les nomme par clé :
 les checks, le build de la classe et le site les y lisent, par leur clé, et aucun ne les écrit à
 nouveau (décision `lexicon-not-language-pack`). Les mots que le professeur dit et écrit sont
-l'autre lexique, `teacher/lexicon.yaml` (`teacher/README.md`, « Keys and parameters »).
+l'autre lexique, `teacher/lexicon.yaml` (`teacher/README.md`, « Clés et paramètres »).
 
 Cette section n'énonce aucune règle d'un cours : le lexique est un fichier de la spec.
 `course/lexicon.yaml` tient chaque clé ci-dessous, `checks.anaphora` au choix ; `lexicon-keys`,

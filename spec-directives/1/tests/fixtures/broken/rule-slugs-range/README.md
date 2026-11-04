@@ -1,4 +1,4 @@
 # fixture: the spec
 
-The protocol (`teacher/README.md`, rules `first-rule` to `save-points`) is read by the
+The protocol (`teacher/rules.yaml`, rules `first-rule` to `save-points`) is read by the
 classroom build; the group `onboarding` welcomes a new learner. A check id in code is not a rule: `course-files`.

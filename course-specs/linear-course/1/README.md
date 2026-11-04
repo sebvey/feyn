@@ -17,7 +17,7 @@ follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 
 - `README.md`: this file: scope, files, categories, normative references, the list of checks.
 - `course/README.md`: what a course is: course structure, reader-text conventions, diagrams (drawing contract and style), the lexicon of the course files.
-- `teacher/README.md`: the pedagogical protocol the teacher executes, and the description of its composition.
+- `teacher/README.md`: how a rule of the protocol is written (its notation, its writing rules), the description of the composition of the teacher, the keys and parameters; `teacher/rules.yaml`: the rules of the protocol the teacher executes.
 - `teacher/composition.yaml`: the composition of the teacher, its five parts, when each loads and what each draws from (section 2).
 - `teacher/build/`: the half of a classroom build that depends on this MAJOR, `render-parts`, which renders the five parts of the composition as text for a course, one JSON document whose shape `parts.schema.yaml` fixes (`teacher/build/README.md`).
 - `teacher/tests/`: the test scenarios of the teacher, one YAML file each, whose form `scenario.schema.yaml` fixes, run by `classroom-builder/fresh-test` (`teacher/tests/README.md`).
@@ -28,7 +28,7 @@ follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 - `course/templates/`: the course templates; `decisions/`: the decisions of this spec.
 
 This file holds no rule on a course or on the teacher: what a course is, is in
-`course/README.md`; the protocol the teacher executes, in `teacher/README.md`. How a spec is
+`course/README.md`; the protocol the teacher executes, in `teacher/rules.yaml`. How a spec is
 written and read (what a rule file holds, conformance, levels, methods, severity, versions, the
 tests of these files) is the spec directives this MAJOR follows, `spec-directives/1/README.md`.
 
@@ -59,9 +59,9 @@ plus this README (decision `spec-files-by-product`):
 |---|---|
 | `README.md` | this file: scope, files, categories, normative references, the list of checks |
 | `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the lexicon of the course files |
-| `teacher/README.md` | the protocol of the teacher: purpose, notation, rules named by slug, the composition, keys and parameters |
+| `teacher/README.md` | how a rule of the protocol is written: its notation, its writing rules; the composition; the keys and parameters |
 | `course/rules.yaml` | the rules of a course, in French, one group per section of `course/README.md` that states rules, each with its `purpose` |
-| `teacher/rules.yaml` | the rules of the teacher, in French |
+| `teacher/rules.yaml` | the rules of the protocol, in French, one group per family and per group of a family, each with its `purpose` |
 | `teacher/composition.yaml` | the composition of the teacher: its five parts, when each loads and what each draws from (`teacher/README.md`, "Composition") |
 | `teacher/tests/` | the test scenarios of the teacher (`README.md`: the format, the rules each covers and those none covers), `scenario.schema.yaml` (their form), one YAML file per scenario, run by `classroom-builder/fresh-test` and verified in form by `check-spec` (`scenarios`) |
 | `teacher/build/` | `render-parts`, which renders the five parts of the composition as text for a course (the half of a classroom build that depends on this MAJOR, read by `classroom-builder/`), `parts.schema.yaml` (the shape of its output), `test-render`, `README.md` |
@@ -70,7 +70,7 @@ plus this README (decision `spec-files-by-product`):
 | `spec.yaml` | the declaration of this MAJOR: `name`, `major`, `version`, `language`, and `directives`, the MAJOR of `spec-directives/` whose tests verify these files and whose `lib/` and package the checks load |
 | `course/checks/` | the check scripts, their fixtures and `course/checks/README.md` (how to run them) |
 | `course/lexicon.yaml` | the lexicon of the course files (`course/README.md` section 7) |
-| `teacher/lexicon.yaml` | the lexicon of the teacher, the words it says and writes (`teacher/README.md`, "Keys and parameters") |
+| `teacher/lexicon.yaml` | the lexicon of the teacher, the words it says and writes (`teacher/README.md`, « Clés et paramètres ») |
 | `course/templates/` | the course templates |
 | `teacher/templates/learner/` | the templates of the learner memory files |
 | `decisions/` | the decisions of this spec |
@@ -86,7 +86,7 @@ until that extraction, `teacher/README.md` keeps its verbal forms of obligation,
 levels of the spec directives (`spec-directives/1/README.md` section 3).
 
 **Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language of
-its courses, of its lexicons and of the rules of `teacher/README.md`, a bounded exception to the
+its courses, of its lexicons and of the rules of `teacher/rules.yaml`, a bounded exception to the
 language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited from the
 founding course, whose teacher was instructed and corrected in French. It changes by user story,
 its fresh tests come with the teacher. A teacher or a course of another language follows another
@@ -104,7 +104,7 @@ A rule of a course has a category, from a closed list, extended when needed:
 | `sources` | does every claim trace back to a source? |
 | `diagrams` | do the drawings follow their contract? |
 
-For a rule of the protocol, the category is its family (the nine families of `teacher/README.md`),
+For a rule of the protocol, the category is its family (the nine families of `teacher/rules.yaml`),
 written in `teacher/rules.yaml` as a slug of its title, in their order: `session-start`,
 `domain-presentation`, `loop`, `message-form`, `storyline`, `stances-and-sources`,
 `practice-skip-asides`, `learner-memory`, `stop`. No other category exists: the tests of the

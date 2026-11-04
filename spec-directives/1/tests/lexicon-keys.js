@@ -2,8 +2,8 @@
 // A test of the spec's own files, run by check-spec (not a rule: decision
 // rules-with-level-and-method, amended by #339): the two lexicons of a spec MAJOR (decision
 // lexicon-not-language-pack of linear-course). course/lexicon.yaml, the lexicon of the course
-// files, holds every key of course/README.md section 7; every key teacher/README.md uses is in
-// one of the two lexicons, course/lexicon.yaml or teacher/lexicon.yaml; a group lives in one of
+// files, holds every key of course/README.md section 7; every key the protocol uses is in one of
+// the two lexicons, course/lexicon.yaml or teacher/lexicon.yaml; a group lives in one of
 // them only. A spec folder with neither lexicon has none to test.
 // The keys of section 7 below are those of linear-course, a named debt: idea #485.
 const yaml = require('../lib/yaml-lines');
@@ -26,21 +26,44 @@ const LISTS = { typography: 'banned' };
 // checks.anaphora is optional (course/README.md section 7): a lexicon without it is consumable;
 // domain-first-sentence-standalone, a reporting check of a course, reports its absence.
 
-// The keys teacher/README.md uses: a row of its "Keys and parameters" tables (`| `group.key` |
-// ...`; a value cell that opens on "list" is a list) or a `{group.key}` in a rule. Section 9's keys
-// come first. teacher/README.md missing gives no key: that is rule-slugs' failure.
+// The keys the protocol uses: a row of the « Clés et paramètres » tables of teacher/README.md
+// (`| `group.key` | ...`; a value cell that opens on « liste » or "list" is a list), the one read of
+// teacher/README.md left in the tests of check-spec for what the protocol holds (rule-slugs reads
+// it only for the citations it makes), then a `{group.key}` in a `purpose`, a `text` or a `why` of
+// teacher/rules.yaml. A file missing gives no key: rule-slugs reports it.
 const NOT_LEXICON = new Set(['course', 'classroom', 'group']); // parameters, and the notation's own example
 
-function protocolKeys(text) {
+// readme: the text of teacher/README.md; texts: the purposes, texts and whys of teacher/rules.yaml
+function protocolKeys(readme, texts) {
   const keys = new Map();
-  for (const line of (text || '').split('\n')) {
+  for (const line of (readme || '').split('\n')) {
     const row = /^\| `([a-z_]+)\.([a-z_]+)` \| ([^|]*)\|/.exec(line);
-    if (row && !NOT_LEXICON.has(row[1])) keys.set(row[1] + '.' + row[2], /^list\b/.test(row[3].trim()) ? 'list' : 'string');
+    if (row && !NOT_LEXICON.has(row[1])) keys.set(row[1] + '.' + row[2], /^liste?\b/.test(row[3].trim()) ? 'list' : 'string');
   }
-  for (const m of (text || '').matchAll(/\{([a-z_]+)\.([a-z_]+)\}/g)) {
-    if (!NOT_LEXICON.has(m[1]) && !keys.has(m[1] + '.' + m[2])) keys.set(m[1] + '.' + m[2], 'string');
+  for (const t of texts || []) {
+    for (const m of t.matchAll(/\{([a-z_]+)\.([a-z_]+)\}/g)) {
+      if (!NOT_LEXICON.has(m[1]) && !keys.has(m[1] + '.' + m[2])) keys.set(m[1] + '.' + m[2], 'string');
+    }
   }
   return keys;
+}
+
+// the purposes, texts and whys of teacher/rules.yaml; none when it is missing or broken (rule-files
+// and rule-slugs report it)
+function protocolTexts(raw) {
+  if (raw === null) return [];
+  let doc;
+  try { doc = yaml.parse(raw); } catch (e) { return []; }
+  const texts = [];
+  for (const g of (isMap(doc) && Array.isArray(doc.groups) ? doc.groups : [])) {
+    if (!isMap(g)) continue;
+    if (typeof g.purpose === 'string') texts.push(g.purpose);
+    for (const r of (Array.isArray(g.rules) ? g.rules : [])) {
+      if (!isMap(r)) continue;
+      for (const k of ['text', 'why']) if (typeof r[k] === 'string') texts.push(r[k]);
+    }
+  }
+  return texts;
 }
 
 const isMap = (v) => !!v && typeof v === 'object' && !Array.isArray(v);
@@ -97,13 +120,13 @@ function run(ctx) {
     if (course && group in course) out.push(fail(TEACHER, yaml.lineOf(teacher, group, 1), `group "${group}" is also in ${COURSE}: a group lives in one lexicon`));
   }
 
-  // the keys teacher/README.md uses, in either lexicon
-  for (const [full, kind0] of protocolKeys(ctx.read('teacher/README.md'))) {
+  // the keys the protocol uses, in either lexicon
+  for (const [full, kind0] of protocolKeys(ctx.read('teacher/README.md'), protocolTexts(ctx.read('teacher/rules.yaml')))) {
     const [group, key] = full.split('.');
     const kind = LISTS[group] === key ? 'list' : kind0;
     const f = [TEACHER, COURSE].find((x) => files[x] && isMap(files[x][group]));
     if (!f) {
-      out.push(fail(TEACHER, 1, `group "${group}" is missing or is not a map (teacher/README.md uses ${full}; in ${TEACHER} or ${COURSE})`));
+      out.push(fail(TEACHER, 1, `group "${group}" is missing or is not a map (the protocol uses ${full}; in ${TEACHER} or ${COURSE})`));
       continue;
     }
     if (f === COURSE && ((KEYS[group] || []).includes(key) || LISTS[group] === key)) continue; // tested above
