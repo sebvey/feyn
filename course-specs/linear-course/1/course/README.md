@@ -9,32 +9,24 @@
 
 The readers are defined in [`spec-directives/README.md`](../../../../spec-directives/README.md#the-readers).
 
-What a course of `linear-course` is: its folder, `course.yaml`, the concept folder, the domain
-files, the course files, the diagrams and the lexicon of the course files. The scope, the files, the
-categories and the checks are the MAJOR's `README.md`; conformance, levels, methods, severity and
-versions are the spec directives, `spec-directives/1/README.md`; the protocol the teacher executes
-is `teacher/README.md`. Sections 1 to 7 are sections 2 to 7 and 9 of the spec's description before
-the split (#323, read at `9c691da^:specs/linear-course/1/SPEC.md`), moved as written; sections
-1, 2, 4 and 5 were cut since to what states no rule, their rules moved to `course/rules.yaml`
-(#524, #531).
+Ce qu'est un cours de `linear-course` : son dossier, `course.yaml`, le dossier de concept, les
+fichiers de domaine, les fichiers du cours, les schémas et le lexique des fichiers du cours. La
+portée, les fichiers, les catégories et les checks sont le `README.md` de la MAJOR ; la
+conformité, les niveaux, les méthodes, la sévérité et les versions sont les directives de spec,
+`spec-directives/1/README.md` ; le protocole que le professeur exécute est `teacher/README.md`.
 
-Each concept is one source: its folder holds **reader-facing** files (the site builds them, the
-teacher reads them) and one **teacher-only** file (the teacher reads it, the site never builds
-it). The site and the classroom are builds of the course, without rewriting.
+Les règles d'un cours, celles que la revue vérifie comprises, sont les données de
+[`rules.yaml`](rules.yaml), un groupe par section qui en énonce, chacun avec son `purpose` ; les
+tables de champs sont les schémas de [`schemas/`](schemas/). Chaque section tient sa table des
+lecteurs quand elle en a une, ce qui n'énonce aucune règle (l'arborescence d'un cours, ce à quoi
+sert un fichier, une notation) et un renvoi à son groupe de `rules.yaml` et, pour une table de
+champs, à son schéma (#524, #531, #533). Les sections 1 à 7 viennent des sections 2 à 7 et 9 de la description de la
+spec avant la séparation (#323, lue à `9c691da^:specs/linear-course/1/SPEC.md`).
 
-**Until the extraction of the rules (#318).** Sections 1, 2, 4 and 5 are a description, in
-French: their rules, those the review verifies included, are data in `course/rules.yaml`, each
-section pointing to its group. Sections 3, 6 and 7 keep their verbal forms of obligation, read in
-the levels of the spec directives (`spec-directives/1/README.md` section 3).
-"Mandatory" means a requirement: the element is present. The check named verifies it, at the
-level and severity the MAJOR's `README.md` section 5 gives that check; its form is checked where
-that check says so, reviewed otherwise. "Optional" means it may be absent, a permission, and when
-present it follows the rule given. Every rule names the check that verifies it by test, in
-backquotes (the MAJOR's `README.md` section 5 gives its level); a rule with no check id is verified
-by inspection, the review. The rules the checks verify are also data in `course/rules.yaml`, each
-with its level, category and method, and the fields of `course.yaml` and the table of section
-3.1 are the schemas `course/schemas/course.schema.yaml` and
-`course/schemas/concept-frontmatter.schema.yaml` (#329).
+Chaque concept est une source : son dossier tient des fichiers **côté lecteur** (reader-facing :
+le site les construit, le professeur les lit) et un fichier **professeur seul** (teacher-only : le
+professeur le lit, le site ne le construit pas). Le site et la classe sont des builds du cours,
+sans réécriture.
 
 ## 1. Le dossier du cours
 
@@ -82,79 +74,35 @@ les citent. En changer un est une MAJOR du cours (`spec-directives/1/README.md` 
 
 ```
 concepts/09-decoupage-vertical/
-  concept.md         mandatory   reader-facing: built by the site, read by the teacher
-  teaching.md        mandatory   teacher-only: teaching notes, example bank included; never built
-  sources.md         mandatory   reader-facing: built by the site, « Non vérifié » excepted (3.4)
-  <stem>.svg         optional    reader-facing: one file per diagram (section 6)
+  concept.md         côté lecteur : le site le construit, le professeur le lit
+  teaching.md        professeur seul : notes d'enseignement, banque d'exemples comprise ; le site ne le construit pas
+  sources.md         côté lecteur : le site le construit, « Non vérifié » excepté (3.4)
+  <stem>.svg         côté lecteur : un fichier par schéma (section 6)
 ```
 
-Nothing else sits in a concept folder (`concept-folder`). The three Markdown files have no H1:
-the title is in `course.yaml`. Sections are `##` headings whose text is the lexicon's
-heading, in the order given, and no other `##` section exists (`concept-folder`).
+Les règles du dossier de concept sont le groupe « Le dossier de concept » de
+[`rules.yaml`](rules.yaml).
 
 ### 3.1 `concept.md` frontmatter
 
-| Key | Presence | Meaning |
-|---|---|---|
-| `description` | mandatory | one sentence for the site (search engines, previews) |
-| `stances` | mandatory | the standing of the concept's claims, three keys, each a list of items, possibly empty |
-| `stances.consensus` | mandatory | what is accepted, and by which text (the Scrum Guide, established practice) |
-| `stances.school` | mandatory | school of thought: a named author's or current's choice |
-| `stances.course` | mandatory | the course's own choices, which no source states as such (an item may cite the sources it comes close to) |
-| `neighbors` | optional | neighbouring notions not to confuse with this concept: a list of items |
-| `diagrams` | optional | the concept's diagrams, a list (below) |
+Ses champs sont décrits par le schéma
+[`schemas/concept-frontmatter.schema.yaml`](schemas/concept-frontmatter.schema.yaml) ; ses règles
+sont le groupe « Le frontmatter de concept.md » de [`rules.yaml`](rules.yaml).
 
-`stances` and `neighbors` are the one place for the concept's stances and neighbours: the body has no stances
-section (`concept-folder`), and the site renders them from the frontmatter, under the heading
-`headings.stances`. The reader text may still mark a claim with a stance marker (section 3.5).
-
-An **item**: `text` (mandatory, inline Markdown: bold and italics only), `author` (optional;
-expected on consensus and school items: the text or author the claim belongs to), `refs`
-(mandatory, possibly empty: reference ids of `sources.md`, `sources`), `verified` (mandatory
-when `refs` is not empty, absent otherwise: a list parallel to `refs`, one entry per reference
-in the same order, each the shortest quotation that settles the item, between « », and its
-place in parentheses, as the verified column of 3.4; `concept-folder` fails a `verified` whose
-length differs from `refs`). A stance or a neighbour is sourced in its item, never by a row of
-« Affirmations »: the proof sits beside what it proves. `verified` is audit material, like
-« Affirmations »; a re-verification is a change of `concept.md`.
-
-A **diagram** entry, all keys mandatory: `file` (the SVG's file name), `title` (one line: the
-SVG `<title>` and the image alt), `caption` (what the diagram shows: the teacher says it, the
-site shows it as the legend), `subconcept` (the id of the sub-concept it illustrates). Every
-declared file exists and every SVG of the folder is declared (`svg-contract`).
+Le site rend les positions et les voisins depuis le frontmatter, sous le titre
+`headings.stances`. `verified` est un matériau d'audit, comme « Affirmations » de `sources.md` :
+une re-vérification est un changement de `concept.md`.
 
 ### 3.2 `concept.md` body
 
-In this order (`concept-folder`):
+Le corps de `concept.md` est le texte lecteur du concept. La section d'un sous-concept feuille
+tient le **texte lecteur** de la feuille : l'explication telle qu'un lecteur du site la lit. Le
+site construit « Approfondissement » comme le reste du fichier ; quand le professeur le lit,
+`teacher/README.md` le dit.
 
-1. « Objectif » (`objective`), mandatory: the concept's `objective`, verbatim, give or take line
-   breaks, written with a capital first letter and ending with a period where the field ends
-   with no `.`, `!` or `?` (`concept-folder`).
-2. « L'essentiel » (`essentials`), mandatory: the definition and why it matters, a few lines;
-   may hold a diagram image.
-3. The sub-concept sections, mandatory: one per first-level sub-concept, in `course.yaml` order,
-   and inside each, one per second-level sub-concept (`concept-folder`; form in section 3.5).
-   A leaf section holds the leaf's **reader text**: the explanation as a site reader reads it.
-4. « Pièges » (`pitfalls`), mandatory: the pitfalls of the whole concept.
-5. « Le test rapide » (`quick_test`), mandatory: the quick test of the whole concept.
-6. « Approfondissement » (`deepening`), optional: more matter on the concept, beyond what its
-   sub-concept sections teach, for the learner who asks to go further. Its claims are sourced in
-   `sources.md` like any other (3.4), and the site builds it like the rest of the file. The
-   teacher reads it in an aside, on the learner's request (`teacher/README.md`, rule
-   `deepening-read-in-aside`), never on the course path; no case, of any type, relies on it.
+Ses règles sont le groupe « Le corps de concept.md » de [`rules.yaml`](rules.yaml).
 
 ### 3.3 `teaching.md`
-
-**Purpose.** `teaching.md` holds what the teacher needs beyond the reader text, above all the
-**cases**. A case is the prepared question of the loop: the teacher poses it at a sub-concept and
-corrects the answer. It gives coverage (every leaf sub-concept has one, checked), the course's
-own position (its expected answer is the stance the concept states: consensus, school or
-course), experience (it anticipates the mistakes learners make), anchoring (it lives in the
-storyline) and testability (taught-check and fresh tests cite it by its title). A case is created for one of
-four needs, its **type** (below): one per leaf sub-concept, on the course path; a fallback, when
-the learner fails the first; a practice case, for the learner who wants to practise a validated
-concept, or to retrieve at the resume a concept validated in an earlier session; an aside, for a frequent question off the course path. A case is never created for what
-the reader text does not state: that is a gap of the concept, filled in `concept.md`.
 
 | Reader | Needs | When |
 |---|---|---|
@@ -163,64 +111,36 @@ the reader text does not state: that is a gap of the concept, filled in `concept
 | the creator (human or agent) | when to create a case, and what each of its fields may contain | writing or changing a concept's teaching notes |
 | taught-check | what each case asks, against what the learner was taught before it | after a change to what a concept teaches |
 
-In this order (`concept-folder`):
+`teaching.md` est le fichier du professeur seul : ses consignes, les faits du fil rouge que ses
+cas emploient, sa banque d'exemples, faite de **cas**, et sa consigne de dessin.
 
-1. « Consignes » (`instructions`), mandatory: the order of teaching and the split into
-   messages, which case to pose at which sub-concept and which as fallback, the
-   cross-references not to re-teach, the concept's own vigilance points. Every case of the bank
-   is cited here by its title in « » (`case-contract`; « » and “ ” count as the same quotes,
-   spaces inside them ignored).
-2. « Faits du fil rouge utilisés » (`storyline_facts`), optional: the storyline facts the cases
-   use, and what the storyline leaves unfixed.
-3. « Banque d'exemples » (`bank`), mandatory: the example bank, one `###` per case.
-4. « Schéma » (`drawing`), optional: the drawing instruction (metaphor, what it shows) behind
-   the concept's diagrams.
+Le **titre** d'un cas, son identifiant, est son titre `###` sans la parenthèse ; la parenthèse
+nomme son sous-concept et, au besoin, son **qualificatif**, qui lui donne son type. Quand le
+professeur pose chaque type, `teacher/README.md` le dit :
 
-`teaching.md` never overrides a protocol rule: it says what to teach, `teacher/README.md` says how
-and when (« Schéma » says what to draw, not when to send a diagram); a « Consignes » that
-contradicts a rule is a defect of the concept (review). A case restates only the storyline facts
-listed in « Faits du fil rouge utilisés », which takes them from `storyline.md`; it adds the
-unfolding (who says what, when), never a new fact (review).
-
-A **case** heading is `### <title> (<sub-concept>)`. The parenthesis holds the sub-concept id
-and at most one **qualifier**, before or after the id, separated by a comma: `(9a1, rechange)`,
-`(aparté, 11a)`; nothing else (`case-contract`). The qualifier is a value of the
-lexicon's `qualifiers` group and gives the case its type:
-
-| Type | Qualifier (key) | The teacher poses it |
+| Type | Qualificatif (clé) | Le cas sert |
 |---|---|---|
-| main | none | at its sub-concept, on the course path, in the order of « Consignes » |
-| fallback | « rechange » (`qualifiers.fallback`) | when the learner fails the case of the same sub-concept; it stands alone: its own situation and question, nothing borrowed from the failed case |
-| practice | « entraînement » (`qualifiers.practice`) | when the learner practises a validated concept, one case per message, without re-explaining; unasked at the resume, for a concept validated in an earlier session (`teacher/README.md`, rules `validated-concept-practised`, `practice-cases-chosen` and `earlier-concept-retrieved-at-resume`) |
-| aside | « aparté » (`qualifiers.aside`) | in an aside, on a question off the course path (rule `asides-welcome`) |
+| principal | aucun | au sous-concept qu'il porte, sur le parcours, dans l'ordre de « Consignes » |
+| rechange | « rechange » (`qualifiers.fallback`) | quand l'apprenant échoue au cas du même sous-concept |
+| entraînement | « entraînement » (`qualifiers.practice`) | quand l'apprenant s'exerce sur un concept validé ou, à la reprise, sur un concept validé lors d'une séance précédente |
+| aparté | « aparté » (`qualifiers.aside`) | en aparté, sur une question hors du parcours |
 
-The case's **title**, its identifier, is the heading without the parenthesis; titles are unique
-in the concept. The sub-concept is one of the concept's, at any level; every leaf sub-concept
-has at least one case (`case-contract`).
+Les champs d'un cas, dont les libellés sont les `case_fields` du lexique, et qui lit chacun :
 
-A case is a list of fields, each item opening with `**<label>** :`, its text on the same line
-or in a nested list; only the « Question » label may carry a qualifier of its own before the
-colon (« **Question**, en deux parties : ») (`case-contract`):
+| Champ (clé) | Qui le lit |
+|---|---|
+| « Usage » (`usage`) | le professeur |
+| « Explication » (`explanation`) | le professeur, puis l'apprenant |
+| « Situation » (`situation`) | le professeur, puis l'apprenant |
+| « Question » (`question`) | le professeur, puis l'apprenant ; taught-check |
+| « Réponse attendue » (`expected_answer`) | le professeur ; taught-check |
+| « Erreurs fréquentes » (`common_mistakes`) | le professeur |
+| « Ce qui marche » (`what_works`) | le professeur |
 
-| Field (key) | Presence | May contain | Who reads it | When the teacher uses it |
-|---|---|---|---|---|
-| « Usage » (`usage`) | optional | when to pose the case, for a case off the course path: a fallback, a practice case, an aside | the teacher | choosing the next case |
-| « Explication » (`explanation`) | optional | what the teacher says before the case: the source of its explanation of the sub-concept; without it, the teacher explains from the leaf's reader text | the teacher, then the learner | in the message that poses the case, before the situation |
-| « Situation » (`situation`) | mandatory | the actors and the storyline facts posed up front, and the unfolding (who says what, when) | the teacher, then the learner | in the message that poses the case, before the question |
-| « Question » (`question`) | mandatory | the question the case asks | the teacher, then the learner; taught-check | at the end of the message that poses the case |
-| « Réponse attendue » (`expected_answer`) | mandatory | the right answer with its nuances: the course's position as `concept.md` states it | the teacher; taught-check | correcting the learner's answer |
-| « Erreurs fréquentes » (`common_mistakes`) | mandatory | frequent answers and how to correct them, follow-ups inline | the teacher | correcting a partial or wrong answer, and in its follow-ups |
-| « Ce qui marche » (`what_works`) | optional | a wording or follow-up a teacher saw work; empty in a new course; the maintainer adds it from what the teacher notes in learner memory (`teacher/README.md`, rule `save-levers`) | the teacher | posing the case and correcting the answer |
-
-The optional fields before « Situation » come in any order; the four mandatory fields come in
-the order of the table; « Ce qui marche » comes last.
+Les règles de `teaching.md` sont le groupe « Le fichier teaching.md » de
+[`rules.yaml`](rules.yaml).
 
 ### 3.4 `sources.md`
-
-**Purpose.** `sources.md` shows that the concept is grounded, and lets anyone trace a claim of
-its body to what it rests on. « Références » serves the site reader first; « Affirmations »
-serves the audit (the reviewer, the maintainer, the teacher on request). Traceability is worth
-its re-verification, not its volume.
 
 | Reader | Needs | When |
 |---|---|---|
@@ -230,83 +150,30 @@ its re-verification, not its volume.
 | the reviewer | that a claim is backed by what it cites: the quotation, the place | reviewing a change |
 | the maintainer | when a source changes or a section is rewritten, what to re-verify; when it was consulted | months later |
 
-Only `concept.md` is sourced. « Affirmations » covers the verifiable claims of its body (a
-definition, a date, a figure, a quotation, what a guide says or does not say). Not a row: a
-storyline fact (invented, in `storyline.md`), a teaching device (an invented example, a
-deduction of a case), a stance or a neighbour (sourced in its frontmatter item, 3.1), a wording
-of the course. A claim only `teaching.md` states is a gap of the concept, added to `concept.md`
-first, or no claim to source. `concept.md` and `teaching.md` cite no reference: references live
-in the frontmatter `refs` and here (`sources`).
+`sources.md` trace le corps de `concept.md` : « Affirmations » relie chaque affirmation à ce qui
+l'établit, « Références » décrit les sources, « Non vérifié » dit ce qu'aucune source consultée
+ne confirme. Le site construit chaque ligne de « Affirmations » et de « Références » ; « Non
+vérifié » est la seule section qu'il ne construit pas, reconnue par son titre du lexique ; la
+classe copie le fichier entier.
 
-The site builds every row of « Affirmations » and « Références »: no row is teacher-only.
-« Non vérifié » is the one section never built (by its lexicon heading); the classroom copies the
-whole file.
-
-The file has no H1 and no introduction: it opens on « Affirmations » (`sources`). In this order
-(`concept-folder`):
-
-1. « Affirmations » (`claims`), mandatory: one table, five columns in this order:
-   - **claim**: the claim in a few words;
-   - **section**: where `concept.md` makes it: sub-concept ids (`4b`, `9a1`) and fixed sections
-     by their lexicon value, « L'essentiel », « Pièges », « Le test rapide », « Approfondissement »
-     (`headings.essentials`, `pitfalls`, `quick_test`, `deepening`), several separated by
-     commas, never a heading's text; each exists in `concept.md` (`sources`). « Objectif » is
-     not one: it states what the learner will do, not a claim;
-   - **source**: reference ids `[S1]`, separated by commas, or the `markers.course` word
-     (« cours ») for a claim the course makes by its own choice; nothing else: no free text, no
-     path to another concept, whose verification each concept repeats with its own reference
-     (`sources`);
-   - **verified**: per reference of the source cell, in the same order, the shortest quotation
-     that settles the claim, between « », then its place in parentheses (section, page,
-     heading); for an absence, « absent de » and the place searched; for a « cours » claim, one
-     line saying what it follows from, or nothing. No reasoning, no pointer to « Non vérifié »:
-     what cannot be quoted goes there (review). The cell is empty only for a « cours » claim
-     (`sources`);
-   - **nature**, mandatory: `consensus`, `école`, `cours` (the stance markers
-     `markers.consensus`, `markers.school`, `markers.course`) or `fait` (`natures.fact`: what a
-     source states with no stance, a tool's default, a date, a figure) (`sources`). A claim the
-     reader text marks with a stance marker has that marker's nature; a « cours » source has
-     nature `cours` (review).
-2. « Références » (`references`), mandatory: one table, five columns in this order: **id**
-   (`S<n>`, optionally a lowercase letter: `S5b`), unique; **source** (author, title, date: how
-   the teacher names it; a description repeated from another concept is copied identically);
-   **link**, one URL or empty: a second place is a second reference, never a second URL nor a
-   path to a repository file (`sources`); **type**, how much to trust it and how to name it: one
-   or more of `primary` (the text itself), `secondary` (someone reporting it), `marketing` (a
-   vendor's or a training's page), written as the lexicon's words and separated by
-   commas, then an optional remark in parentheses (« primaire, marketing (aimant à
-   prospects) »); **consulted on**, when this reference was read for this concept: it starts
-   with `YYYY-MM-DD`. References are per concept: each concept cites its own.
-3. « Non vérifié » (`unverified`), mandatory, possibly empty: a list; each entry opens with its
-   section, in the forms of the section column or `headings.stances` (« Consensus et choix
-   d'école ») for a stance or a neighbour, then « : » (`sources`), then what no consulted source
-   confirms, why, and, when useful, the instruction that follows (« écrire X, pas Y »). It holds
-   no trace of a removed claim: git history is the trace.
-
-Rules (`sources`): every id cited (frontmatter `refs`, source column) exists in « Références »;
-every reference is cited by a claim or a frontmatter item.
+Les règles de `sources.md` sont le groupe « Le fichier sources.md » de [`rules.yaml`](rules.yaml).
 
 ### 3.5 Reader-text conventions
 
-The structure of `concept.md` is plain Markdown under these conventions. The site maps each to
-its HTML and classes; the teacher reads them as ordinary Markdown. Failure messages name the
-convention.
+La structure de `concept.md` est du Markdown simple sous des conventions : le site fait de
+chacune son HTML et ses classes, le professeur les lit comme du Markdown ordinaire. Hors d'elles
+(gras, italique, listes, paragraphes, catalogues en gras), le texte est du Markdown ordinaire.
 
-| Convention | Form in `concept.md` | Check |
-|---|---|---|
-| sub-concept section | `## <id> <title>` (first level), then one paragraph entirely in italics: the **promise**; a first-level sub-concept with children holds nothing else; one without children holds its reader text after the promise | `conventions` |
-| leaf heading | `### <id> <title>` (second level), then the reader text | `conventions` |
-| heading title | the `<title>` of a sub-concept heading equals the `title` of `course.yaml` | `conventions` |
-| concept reference | plain text `concept 4`, `concept 8a2`, `(concept 17)`, `concepts 5 et 7b`: the word (`concept_refs.concept`, plural `concept_refs.concepts`, list joined by `concept_refs.and`) then concept numbers or sub-concept ids; each names an existing concept or sub-concept of the course. To an annex, `annexe A2`, `annexe A2b`: the word `concept_refs.annex` then an annex number or the sub-concept id of an annex, which exists in the course. A bare id with no such word (`qu'en 9a`) is plain text and is not linked | `conventions` |
-| stance marker | `[cours]`, `[école]`, `[consensus]` (`markers.course`, `markers.school`, `markers.consensus`) right after the claim it qualifies; no link reference definition carries a marker's label | `conventions` |
-| storyline blockquote | a blockquote whose first line starts with `**Fil rouge :**` (`markers.storyline`); in the sub-concept sections, no other blockquote | `conventions` |
-| diagram image | `![<title>](<file>)` alone in its paragraph, `<file>` a declared diagram and `<title>` its declared `title`; each declared diagram appears once in the body; the caption comes from the frontmatter. The image sits in the section of its `subconcept` (one of its `###` sections included) or in « L'essentiel » (review) | `conventions` |
-| pitfalls | « Pièges » is one bulleted list, each item opening with the pitfall in bold | `conventions` |
-| quick test | « Le test rapide » is one blockquote (the question), then at most one paragraph (the note) | `conventions` |
-| plain Markdown | no H1, no `####` or deeper heading, no HTML tag, no MDX `import`/`export` or component, no `:::` directive | `conventions` |
+Une **référence de concept** est du texte simple : le mot `concept_refs.concept` (au pluriel
+`concept_refs.concepts`, une liste jointe par `concept_refs.and`) puis des numéros de concept ou
+des ids de sous-concept, `concept 4`, `concept 8a2`, `(concept 17)`, `concepts 5 et 7b` ; vers
+une annexe, le mot `concept_refs.annex` puis un numéro d'annexe ou l'id d'un sous-concept
+d'annexe, `annexe A2`, `annexe A2b`. Un id nu sans ce mot (`qu'en 9a`) est du texte simple, sans
+lien. Un **marqueur de position** est `[cours]`, `[école]` ou `[consensus]`
+(`markers.course`, `markers.school`, `markers.consensus`).
 
-Everything else (bold, italics, lists, paragraphs, catalogues in bold) is ordinary Markdown.
-In `teaching.md`, concept references follow the same form, not checked.
+Les règles de ces conventions sont le groupe « Les conventions du texte lecteur » de
+[`rules.yaml`](rules.yaml).
 
 ## 4. Fichiers de domaine
 
@@ -344,9 +211,6 @@ Les règles de ces fichiers sont le groupe « Les fichiers du cours » de [`rule
 
 ## 6. Diagrams
 
-**Purpose.** A diagram shows in one drawing what a sub-concept teaches. One SVG serves every
-place the learner meets it, so it is complete on its own and no consumer asks it to change.
-
 | Reader | Needs | When |
 |---|---|---|
 | the learner | a drawing readable on the site in both themes and in the desktop panel; in the terminal, its caption and the site link | at the sub-concept it illustrates |
@@ -355,18 +219,18 @@ place the learner meets it, so it is complete on its own and no consumer asks it
 | the teacher | the same property, in the desktop panel | sending a diagram |
 | the reviewer | the style and the match with the caption, which no script checks | reviewing a diagram |
 
-A **diagram** is one SVG in the concept folder, declared in `diagrams` (section 3.1). It serves
-both builds: the site shows it, the teacher sends it to the desktop panel and says its caption;
-in the terminal, the teacher says the caption and gives the site link. A consumer displays the
-SVG so that `currentColor` follows the colour of the text around it, and may tint the three
-classes of 6.1, never must. Section 6.1 is the drawing contract, checked by `svg-contract`
-where a script can tell, by review otherwise; section 6.2 is the style every diagram of a course
-shares, for the writers and the reviews.
+Un **schéma** est un SVG du dossier de concept, déclaré dans `diagrams` (section 3.1), qui
+montre en un dessin ce qu'un sous-concept enseigne. Un même SVG sert chaque endroit où
+l'apprenant le rencontre, complet par lui-même : le site le montre ; le professeur l'envoie au
+panneau du bureau et en dit la légende ; dans le terminal, le professeur dit la légende et donne
+le lien du site. Un consommateur affiche le SVG de sorte que `currentColor` suive la couleur du
+texte qui l'entoure ; il peut teinter les trois classes `primary`, `secondary` et `muted`, sans y
+être tenu, et aucun ne demande au SVG de changer.
+
+La section 6.1 est le contrat de dessin ; la section 6.2, le style que partagent les schémas
+d'un cours.
 
 ### 6.1 Drawing contract
-
-**Purpose.** The rules that keep one SVG safe and readable in every consumer: `svg-contract`
-checks what a script can tell, a review the rest (below).
 
 | Reader | Needs | When |
 |---|---|---|
@@ -375,101 +239,55 @@ checks what a script can tell, a review the rest (below).
 | the teacher | an SVG the desktop panel shows as it is | sending a diagram |
 | the learner | with a screen reader, the title and description of the drawing | reading a concept on the site |
 
-- **File**: `<stem>.svg`, the stem lowercase ASCII words joined by hyphens; well-formed XML;
-  32 KB at most.
-- **Frame**: the root `<svg>` has `xmlns` and a `viewBox`, and no `width` or `height`.
-- **Colour**: the root has `fill="currentColor"`. Every `fill` and `stroke` is `currentColor`
-  or `none`; shades come from `fill-opacity`, `stroke-opacity` and `opacity`. No other colour
-  value (hex, `rgb()`, named), no `style` attribute, no `<style>` element. The only classes are
-  `primary`, `secondary` and `muted`: a consumer's stylesheet may set their `color` (and the
-  dark theme's), which re-tints `currentColor`. Outside the site (desktop panel, any viewer) the
-  drawing stays readable in one colour.
-- **Text**: words are `<text>` (and `<tspan>`), never paths; the diagram has at least one
-  `<text>`. Fonts: only the attribute `font-family` with generic families (`system-ui`,
-  `sans-serif`, `serif`, `monospace`); no font file, no `@font-face`.
-- **Accessibility**: the root has `role="img"` and `aria-labelledby` naming its `<title>` (and
-  `<desc>` if present). `<title>` is the root's first child and equals the frontmatter `title`;
-  `<desc>`, optional, describes the drawing for screen readers. Their ids start with the stem
-  (`gateau-titre`).
-- **Groups**: every drawn child of the root is a `<g>` with an `id`; a `<defs>`, which is not
-  drawn, may sit at the root beside them, and what it holds follows this contract. Group ids are
-  `<sub-concept>-<element>`: a sub-concept id of the concept, a hyphen, lowercase ASCII letters
-  and digits joined by hyphens (`9a1-couches`, `9a1-tranche-1`); never a bare sub-concept id, which is the reader-text
-  anchor. Ids are unique across the concept's diagrams.
-- **Forbidden**: `<script>`, `on*` attributes, `<image>`, `<foreignObject>`, any `href` or
-  `xlink:href` not starting with `#`, any external resource.
+Les nuances d'un schéma viennent de `fill-opacity`, `stroke-opacity` et `opacity`. La feuille de
+style d'un consommateur peut fixer la `color` des trois classes (et celle du thème sombre), ce
+qui reteinte `currentColor`. `<desc>` décrit le dessin pour les lecteurs d'écran. L'id d'un
+`<g>`, de la forme `<sub-concept>-<element>` (`9a1-couches`, `9a1-tranche-1`), se distingue de
+l'id nu d'un sous-concept, l'ancre du texte lecteur.
 
-Nothing checks that the drawing says what its caption says: a review does.
+Les règles du contrat de dessin sont le groupe « Le contrat de dessin » de
+[`rules.yaml`](rules.yaml).
 
 ### 6.2 Style
-
-**Purpose.** One meaning per class and six principles, so that the same role looks the same from
-one concept to the next, whoever draws it.
 
 | Reader | Needs | When |
 |---|---|---|
 | the creator (human or agent) | which class and opacity each role takes, what a diagram holds | drawing or redrawing a diagram |
 | the reviewer | the principles a diagram is judged against | reviewing a diagram |
 
-Every diagram of a course is drawn in one style, whoever draws it (a migration, `course-batch`,
-a contributor): the same role takes the same class from one concept to the next (decision
-`one-diagram-style`). It is written for the diagrams to draw, not for compatibility with older
-ones: six principles. No script checks it: a review does.
+Le style est écrit pour les schémas à dessiner, pas pour la compatibilité avec les anciens
+(décision `one-diagram-style`).
 
-Each class means one thing in every diagram: **`primary`** what the diagram teaches, its focus;
-**`secondary`** the contrast, a second element set against the first; **`muted`** the context
-and the ordinary text.
-
-1. **One idea per diagram.** A diagram shows what its caption says; a caption that needs two
-   sentences means two diagrams.
-2. **Roles.** A diagram has a subject, at most one contrast, a context and text. A series is the
-   subject in levels; a state (done, not done, refused) is said by form.
-3. **Rendering of the roles.**
-   - subject: `primary`, opacity 1;
-   - series: `primary` at falling opacity (1, 0.7, 0.4);
-   - contrast: `secondary`;
-   - context: `muted`, a low opacity for fills, a middle one for lines;
-   - text: `muted`, opacity 1; `primary` only when the word is the subject;
-   - state: solid for done, dashed for not done or uncertain, struck for refused.
-
-   In one colour, nothing is more marked than the subject; the contrast differs from the subject
-   by opacity or form, not by hue alone.
-4. **Readable in one colour.** Opacity and form carry every distinction, never the hue alone.
-   Text is always legible: never knocked out of a fill, never on a fill darker than itself.
-5. **Composition.** The `viewBox` is 600 units wide by default. The diagram reads left to right
-   or top to bottom; it holds few elements, with space between them. Its text is in the
-   course's words, never under 14 units.
-6. **Text the diagram holds.** Its labels, and a key (a sample and a word) when a distinction of
-   form or opacity must be named. No teaching sentence: that is the `caption`. No decoration,
-   icon or gradient.
+Les règles du style sont le groupe « Le style des schémas » de [`rules.yaml`](rules.yaml).
 
 ## 7. The lexicon of the course files
-
-**Purpose.** The words a program must recognise in a course file (a heading, a case field, a
-qualifier, a marker, a nature, a concept reference, a source type, a banned character), written
-once, in `course/lexicon.yaml`, and named by key: the checks, the classroom build and the site
-read them there, and none writes them again (decision `lexicon-not-language-pack`).
 
 | Reader | Needs | When |
 |---|---|---|
 | the creator (human or agent) | the headings, case field labels, qualifiers, markers and natures to write | writing any course file |
 | the writer of a program that recognises a word of the course files (a check, the classroom build, the site) | the key that names the word, its group, and the file to read it from, `course/lexicon.yaml` | writing or changing that program |
 
-`course/lexicon.yaml` holds every key below, `checks.anaphora` excepted, which is optional;
-`lexicon-keys`, a test of `check-spec`, verifies it. A missing or unreadable `course/lexicon.yaml`
-is a tooling error, not a defect of the course nor a rule: `course-yaml` fails on it (exit 1),
-and `lexicon-keys` fails on it beside a `teacher/lexicon.yaml`. A program reads a word by its
-key, never as a literal of its own. The words the teacher says and writes are the other lexicon,
-`teacher/lexicon.yaml` (`teacher/README.md`, "Keys and parameters"). The values:
+Le lexique des fichiers du cours, `course/lexicon.yaml`, écrit une fois les mots qu'un programme
+reconnaît dans un fichier du cours (un titre, un champ de cas, un qualificatif, un marqueur, une
+nature, une référence de concept, un type de source, un caractère banni) et les nomme par clé :
+les checks, le build de la classe et le site les y lisent, par leur clé, et aucun ne les écrit à
+nouveau (décision `lexicon-not-language-pack`). Les mots que le professeur dit et écrit sont
+l'autre lexique, `teacher/lexicon.yaml` (`teacher/README.md`, « Keys and parameters »).
 
-| Group | Keys and values |
+Cette section n'énonce aucune règle d'un cours : le lexique est un fichier de la spec.
+`course/lexicon.yaml` tient chaque clé ci-dessous, `checks.anaphora` au choix ; `lexicon-keys`,
+un test de `check-spec`, le vérifie. Un `course/lexicon.yaml` absent ou illisible est une erreur
+d'outillage, ni un défaut du cours ni une règle : `course-yaml` échoue dessus (code de sortie 1),
+et `lexicon-keys` échoue dessus à côté d'un `teacher/lexicon.yaml`. Les valeurs :
+
+| Groupe | Clés et valeurs |
 |---|---|
-| `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (the site's heading for the frontmatter stances, and the section a « Non vérifié » entry of `sources.md` names for a stance or a neighbour: no `concept.md` section has it), `pitfalls` « Pièges », `quick_test` « Le test rapide », `deepening` « Approfondissement »; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma »; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié »; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine »; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
+| `headings` | `objective` « Objectif », `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (le titre du site pour les positions du frontmatter, et la section qu'une entrée de « Non vérifié » de `sources.md` nomme pour une position ou un voisin : aucune section de `concept.md` ne l'a), `pitfalls` « Pièges », `quick_test` « Le test rapide », `deepening` « Approfondissement » ; `instructions` « Consignes », `storyline_facts` « Faits du fil rouge utilisés », `bank` « Banque d'exemples », `drawing` « Schéma » ; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié » ; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine » ; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
 | `case_fields` | `usage` « Usage », `explanation` « Explication », `situation` « Situation », `question` « Question », `expected_answer` « Réponse attendue », `common_mistakes` « Erreurs fréquentes », `what_works` « Ce qui marche » |
-| `qualifiers` | `fallback` « rechange », `practice` « entraînement », `aside` « aparté »: the closed list of a case heading's qualifiers (3.3) |
+| `qualifiers` | `fallback` « rechange », `practice` « entraînement », `aside` « aparté » : la liste fermée des qualificatifs d'un titre de cas (3.3) |
 | `markers` | `storyline` « Fil rouge », `consensus` « consensus », `school` « école », `course` « cours » |
-| `natures` | `fact` « fait »: the nature of a `sources.md` claim that a source states with no stance (3.4); the other natures are the stance markers `consensus`, `school`, `course`. Read by `sources` only: never a marker of the reader text, which `conventions` checks |
-| `concept_refs` | `concept` « concept », `concepts` « concepts », `and` « et », `annex` « annexe »: the words of a concept reference (3.5) |
+| `natures` | `fact` « fait » : la nature d'une affirmation de `sources.md` qu'une source énonce sans position (3.4) ; les autres natures sont les marqueurs de position `consensus`, `school`, `course`. Seul `sources` la lit : ce n'est pas un marqueur du texte lecteur, que `conventions` vérifie |
+| `concept_refs` | `concept` « concept », `concepts` « concepts », `and` « et », `annex` « annexe » : les mots d'une référence de concept (3.5) |
 | `source_types` | `primary` « primaire », `secondary` « secondaire », `marketing` « marketing » |
-| `typography` | `banned`: the characters course text never uses (the em-dash, the arrows) |
-| `checks` | `anaphora`, optional: the words a domain paragraph's first sentence does not open with; without it, `domain-first-sentence-standalone` fails |
+| `typography` | `banned` : les caractères que le texte d'un cours n'emploie pas (le tiret cadratin, les flèches) |
+| `checks` | `anaphora`, au choix : les mots sur lesquels la première phrase d'un paragraphe de domaine ne s'ouvre pas ; sans elle, `domain-first-sentence-standalone` échoue |

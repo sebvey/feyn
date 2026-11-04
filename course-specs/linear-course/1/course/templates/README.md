@@ -3,7 +3,8 @@
 One template per file `course/README.md` defines. Copy one to the course folder, replace every
 `<placeholder>`, delete the header comment (a `#` block in `course.yaml`; a `<!-- -->` block,
 the first thing in the file, elsewhere: course Markdown has no HTML). The header says what the
-file is, which course/README.md section binds it, and the rules a check enforces.
+file is, which course/README.md section describes it (its rules are the groups of
+`course/rules.yaml` that section points to), and the rules a check enforces.
 
 | Template | Becomes | course/README.md |
 |---|---|---|

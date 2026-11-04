@@ -186,3 +186,13 @@ no class: `- file or area: what changes`.
   decisions `domains-partition-the-course` and `markdown-conventions-not-mdx` cite no rule id;
   decision `spec-files-by-product` amended, a section whose rules are in a rule file points to
   their group (#531).
+- `course/rules.yaml`, `course/README.md`: every rule of `course/README.md` sections 3 (3.1 to
+  3.5), 6 (6.1, 6.2) and 7 is data in `course/rules.yaml`, those verified by inspection included
+  (37 new rules), one group per sub-section, each with its `purpose`, in French; « Diagrams »
+  split between sections 3.1 and 6.1; section 7 states no rule of a course; the three sections
+  cut to their reader table, what states no rule and a pointer to their group (section 3.1 to
+  `course/schemas/concept-frontmatter.schema.yaml`), in French; the paragraph « Until the
+  extraction of the rules » removed; no rule changes what it asks; decisions
+  `markdown-conventions-not-mdx`, `one-diagram-style`, `sources-trace-the-concept`,
+  `stances-in-frontmatter-only` and `spec-files-by-product` point to the rules where they pointed
+  to the prose (#533).

@@ -1,0 +1,2 @@
+check: rule-files
+message: group 2: purpose is mandatory in course/rules.yaml

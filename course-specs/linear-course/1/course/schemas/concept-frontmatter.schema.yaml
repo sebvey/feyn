@@ -1,7 +1,7 @@
-# The table of course/README.md section 3.1: the keys of the concept.md frontmatter, an item and a
-# diagram entry, their presence and their form. What the table does not say (verified parallel
-# to refs, an item's text in inline Markdown, a declared diagram that exists) is a rule of
-# course/rules.yaml.
+# The fields of the concept.md frontmatter, to which course/README.md section 3.1 points: its keys,
+# an item and a diagram entry, their presence and their form. What the schema does not say
+# (verified parallel to refs, an item's text in inline Markdown, a declared diagram that exists) is
+# a rule of course/rules.yaml.
 $schema: https://json-schema.org/draft/2020-12/schema
 title: concept.md frontmatter
 type: object
