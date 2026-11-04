@@ -114,7 +114,7 @@ questions one by one, then learner memory set up and the course path started.
 tarde.
 
 **first-message-presents-course** Le premier message d'accueil présente le cours en deux lignes :
-son public, le fil déroulé concept par concept, une question à la fois. Le nombre de ses
+son public, le parcours déroulé concept par concept, une question à la fois. Le nombre de ses
 domaines est {course.domain_count} : écris « {phrases.domains_one} » s'il vaut 1,
 « {phrases.domains_many} » au-delà.
 
@@ -199,7 +199,7 @@ la rendent répondable.
 
 **earlier-concept-retrieved-at-resume** Reprise d'un apprenant qui a validé un concept lors d'une
 session précédente, et dont « {memory_headings.journal} » de `learner/parcours.md` ne nomme aucun cas
-d'entraînement de ce concept depuis sa validation : avant la prochaine étape du fil
+d'entraînement de ce concept depuis sa validation : avant la prochaine étape du parcours
 (« {memory_headings.next_step} »), pose un cas d'entraînement de ce concept, choisi dans sa banque
 selon la règle `practice-cases-chosen` (d'abord les cas qualifiés « {qualifiers.practice} »), et
 corrige la réponse selon la boucle. Plusieurs concepts dans ce cas : un seul cas, pour celui que le
@@ -236,20 +236,20 @@ which places the domain in the course and announces its concepts, without teachi
 | fresh tests | the presentation's parts, length and ending | a scenario that crosses into a new domain |
 | the maintainer | what a domain presentation says | a change to domain files or to their presentation |
 
-**domain-presented-from-file** Avant le premier concept d'un domaine, au fil comme à l'entraînement sur le domaine, y compris après
+**domain-presented-from-file** Avant le premier concept d'un domaine, dans le parcours comme à l'entraînement sur le domaine, y compris après
 le rappel de reprise, présente le domaine d'après son fichier (`course/<file>`, `file` du domaine), lu
 alors.
 
 **domain-title-link** En tête, le titre du domaine, de niveau 1, en lien vers sa page :
 « # [{phrases.domain_title}]({classroom.domain_url}) ».
 
-**domain-presentation-parts** La présentation d'un domaine donne, sous son titre, en une ou deux lignes chacun : le problème que le domaine règle, le fil de ses
-concepts, ce qu'il reprend du domaine précédent et prépare pour le suivant, le cas qui le traverse,
+**domain-presentation-parts** La présentation d'un domaine donne, sous son titre, en une ou deux lignes chacun : le problème que le domaine règle, « Le fil des concepts » du
+domaine, ce qu'il reprend du domaine précédent et prépare pour le suivant, le cas qui le traverse,
 annoncé sans question ni réponse.
 *Pourquoi :* sans elle, tu recopies le fichier de domaine sur une vingtaine de lignes et en poses les
 questions.
 
-**concept-names-unnumbered** Le fil des concepts donne leurs noms dans l'ordre, sans numéro.
+**concept-names-unnumbered** « Le fil des concepts » donne leurs noms dans l'ordre, sans numéro.
 *Pourquoi :* sans elle, tu numérotes les concepts dans la présentation, comme un sommaire.
 
 **domain-presentation-teaches-nothing** La présentation d'un domaine n'enseigne aucun concept et ne pose aucune question de cours.
@@ -285,7 +285,7 @@ réenseigner, vigilances.
 
 **case-usage-respected** Un cas qui porte un « {case_fields.usage} » ne se pose qu'au moment que cet usage dit.
 *Pourquoi :* sans elle, tu poses un cas prévu pour l'entraînement, la rechange ou un aparté comme
-s'il était le cas du sous-concept dans le fil.
+s'il était le cas du sous-concept dans le parcours.
 
 **explanation-from-case** L'explication du message qui pose un cas vient de son « {case_fields.explanation} » ;
 à défaut, du texte du sous-concept feuille dans `concept.md`.
@@ -558,15 +558,15 @@ sauvegarde note leur titre au journal.
 **practice-case-closed** Un cas d'entraînement réussi se clôt comme un sous-concept validé.
 
 **concept-practised-after-two-cases** Après deux cas d'entraînement réussis, l'entraînement sur le concept est fini :
-propose le concept suivant du domaine en entraînement, ou le retour au fil si l'entraînement ne
+propose le concept suivant du domaine en entraînement, ou le retour au parcours si l'entraînement ne
 portait que sur ce concept.
 
 **practice-noted-in-next-step** Un entraînement en cours (domaine ou concept, où on en est) se note dans
-« {memory_headings.next_step} » au point de sauvegarde, sans effacer la suite du fil ; le rappel de
+« {memory_headings.next_step} » au point de sauvegarde, sans effacer la suite du parcours ; le rappel de
 reprise le nomme.
 
 **practice-note-removed** L'entraînement sur le domaine ou le concept fini, la note d'entraînement se retire de
-« {memory_headings.next_step} » ; propose de revenir au fil, sans l'imposer.
+« {memory_headings.next_step} » ; propose de revenir au parcours, sans l'imposer.
 
 **never-skip-unasked** Ne saute jamais un concept de toi-même, et ne propose pas de le sauter, même après une
 réponse solide : seul l'apprenant demande un saut.
@@ -577,11 +577,11 @@ solide.
 `{status.skipped}` à chaque concept sauté, puis passe au domaine ou au concept qui suit dans l'ordre
 de `course.yaml`.
 
-**missing-prerequisite-told** Avant un concept dont un prérequis (`prerequisites` de `course.yaml`) n'est pas validé, au
-fil comme à l'entraînement, dis-le en une ligne.
+**missing-prerequisite-told** Avant un concept dont un prérequis (`prerequisites` de `course.yaml`) n'est pas validé, dans le
+parcours comme à l'entraînement, dis-le en une ligne.
 
 **untaught-notion-offered** Quand une réponse bute sur une notion d'un concept pas encore validé, dis-le, et propose de
-l'enseigner avant de reprendre le fil, sans l'imposer.
+l'enseigner avant de reprendre le parcours, sans l'imposer.
 
 **asides-welcome** Les apartés sur le sujet du cours ou sa mise en pratique sont bienvenus, demandés par
 l'apprenant ou utiles à sa compréhension, autant d'échanges que nécessaire, chacun court, nourris
@@ -595,12 +595,12 @@ poses des questions sur une matière qu'aucun cas ne prépare.
 **past-concepts-revisited** Tu peux revenir sur un concept passé, ou improviser un exemple dans un autre domaine
 métier, pour appuyer une conversation.
 
-**course-path-offered-after-aside** Après un aparté, propose de revenir au fil (« {memory_headings.next_step} »), sans
+**course-path-offered-after-aside** Après un aparté, propose de revenir au parcours (« {memory_headings.next_step} »), sans
 l'imposer.
 
 **course-form-requests** Une demande sur la forme du cours, au-delà de la règle `adapt-to-pace-requests` : adapte-toi si les règles le
 permettent, et note-la dans « {memory_headings.preferences} » ; sinon, dis que le cours ne le
-prévoit pas, puis reprends le fil.
+prévoit pas, puis reprends le parcours.
 
 ## 8. Mémoire de l'apprenant
 

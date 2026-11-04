@@ -122,10 +122,10 @@ professeur pose chaque type, `teacher/README.md` le dit :
 
 | Type | Qualificatif (clé) | Le cas sert |
 |---|---|---|
-| principal | aucun | au sous-concept qu'il porte, au fil, dans l'ordre de « Consignes » |
+| principal | aucun | au sous-concept qu'il porte, dans le parcours, dans l'ordre de « Consignes » |
 | rechange | « rechange » (`qualifiers.fallback`) | quand l'apprenant échoue au cas du même sous-concept |
 | entraînement | « entraînement » (`qualifiers.practice`) | quand l'apprenant s'exerce sur un concept validé ou, à la reprise, sur un concept validé lors d'une session précédente |
-| aparté | « aparté » (`qualifiers.aside`) | en aparté, sur une question hors du fil |
+| aparté | « aparté » (`qualifiers.aside`) | en aparté, sur une question hors du parcours |
 
 Les champs d'un cas, dont les libellés sont les `case_fields` du lexique, et qui lit chacun :
 

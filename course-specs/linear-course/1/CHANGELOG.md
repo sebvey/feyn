@@ -202,7 +202,11 @@ no class: `- file or area: what changes`.
 - `course/README.md`, `course/rules.yaml`, `teacher/README.md`, `teacher/rules.yaml`: the French
   texts take the French word `docs/glossary.md` gives each reserved term: « schéma JSON » for a
   JSON Schema of `course/schemas/`, « schéma » alone being the diagram; « session » for a
-  teaching session (no longer « séance »); « le fil » for the course path (no longer
-  « parcours »); « fichier de domaine » for the domain file (no longer « fiche »); « renvoi »
-  only for a concept reference (a pointer to a group is a « lien »); no rule changes what it
-  asks (#537).
+  teaching session (no longer « séance »); « fichier de domaine » for the domain file (no longer
+  « fiche »); « renvoi » only for a concept reference (a pointer to a group is a « lien »); no
+  rule changes what it asks (#537).
+- `course/README.md`, `course/rules.yaml`, `teacher/README.md`, `teacher/rules.yaml`: the course
+  path is « parcours » (« dans le parcours », « hors du parcours », « revenir au parcours »),
+  never « fil » alone, which stays only in « fil rouge » (the storyline) and « Le fil des
+  concepts »; « au fil du cours » becomes « en cours de route »; no rule changes what it asks
+  (#539).
