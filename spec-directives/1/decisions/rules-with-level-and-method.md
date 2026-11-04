@@ -163,4 +163,4 @@ and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
   gives it a category and a level, or leaves its test outside the clause.
 - Amended 2026-11-04 (#545): the words "conformity" and "conformance clause", and the French
   words of a diagram and of a schema, leave this decision for the glossary, their why in its
-  entries.
+  entries (decision `word-choices-in-the-glossary`).

@@ -45,4 +45,5 @@ with the spec as decision `spec-files-by-product`.
   debt (D13).
 - The directives and the spec are tagged together, the directives first, in #451: a tagged spec
   declares a tagged directives MAJOR, never an alpha (epic #454, Material point 14).
-- Amended 2026-11-04 (#545): the word "draft" leaves this decision for its glossary entry.
+- Amended 2026-11-04 (#545): the word "draft" leaves this decision for its glossary entry
+  (decision `word-choices-in-the-glossary`).

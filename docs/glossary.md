@@ -584,9 +584,7 @@ spec, the `README.md` of its MAJOR (decision `rules-with-level-and-method`).
 The frame of the work is Kanban, with ADR for the decisions and GitHub flow for the branches
 (decision `kanban-frame-of-the-work`): what the frame says is in `docs/kanban.md`, how feyn
 applies it in `docs/contributing.md`. Its words below are the frame's wherever the frame has a
-word; the others name feyn's own mechanisms, which the frame does not name. Why: a word of feyn's
-own beside the frame's, with a table of correspondence, would give one thing two names, and the
-outside reference would no longer open from the word.
+word; the others name feyn's own mechanisms, which the frame does not name.
 
 ### area
 
@@ -615,7 +613,7 @@ outside reference would no longer open from the word.
 - en: epic · rejected: "theme", "subject", "initiative", "stream", "phase"
 - fr: to settle
 - not to confuse with: [story](#story), [milestone](#milestone), [plan comment](#plan-comment), [work item](#work-item)
-- why: Kanban names no type of work item, so epic and story come from the most widespread source, common agile and GitHub vocabulary
+- why: a word of feyn's own beside the frame's, with a table of correspondence, would give one thing two names, and the outside reference would no longer open from the word; Kanban names no type of work item, so epic and story come from the most widespread source, common agile and GitHub vocabulary
 
 ### plan comment
 
@@ -638,7 +636,7 @@ outside reference would no longer open from the word.
 - en: idea · rejected: "observation" for the issue, "Backlog" for its Status, "suggestion"
 - fr: to settle
 - not to confuse with: [option](#option), [work item](#work-item)
-- why: idea and option come from Steyaert's Upstream Kanban, the most widespread source for the stages before commitment, which Kanban does not name; "observation" as a kind, feyn's own word before it, gave the idea a second name
+- why: idea and option come from Steyaert's Upstream Kanban, the most widespread source for the stages before commitment, which Kanban does not name, so the outside reference opens from the word; "observation" as a kind, feyn's own word before it, gave the idea a second name
 
 ### option
 

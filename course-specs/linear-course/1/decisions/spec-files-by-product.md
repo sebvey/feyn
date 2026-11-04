@@ -76,4 +76,4 @@ one (formerly `spec-files-and-alpha-version`).
   contributor extracting a section would restate each rule in the README prose beside the rule
   file, and the two drift.
 - Amended 2026-11-04 (#545): the names "teacher" and "protocol" leave this decision for the
-  glossary.
+  glossary (decision `word-choices-in-the-glossary`).
