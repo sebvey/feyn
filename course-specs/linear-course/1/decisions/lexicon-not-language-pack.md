@@ -6,8 +6,8 @@ area: spec:linear-course
 ---
 
 Without this, the next reader takes `lang/fr.yaml` for a translation file (i18n) and removes it
-or writes its words again in a check, the protocol or the site, which is the coupling of
-`parcours-po`: a word written three times drifts.
+or writes its words again in a check, the protocol or the site, which is the coupling of the
+founding course: a word written three times drifts.
 
 The language is a property of the spec, declared once, `language: fr` in the `spec.yaml` of the
 MAJOR; a course names none, and a course of another language follows another spec, not a

@@ -50,8 +50,9 @@ of this one (decision `lexicon-not-language-pack`). Everything else in this file
   lowercase, joined by hyphens, naming the behaviour, in English whatever the spec's language.
   The rule shows it in bold at its start, `**one-question-per-message**`; a row of the save-point
   table shows it in its first cell. Another rule cites it in code, « (règle
-  `one-question-per-message`) », as do the tables, the MAJOR's `README.md`, `course/README.md`, decisions and
-  tests. A rule has no number: its order and its family may change, its slug does not.
+  `one-question-per-message`) », as do the tables, the MAJOR's `README.md`, `course/README.md` and
+  tests; a decision names the rule by what it asks (decision `decision-format`). A rule has no
+  number: its order and its family may change, its slug does not.
 - A rule is cited by its slug; a removed rule's slug is never reused.
 - A group of rules is a `###` heading inside a family: its title, then its slug in code between
   parentheses, « ### Accueil (`onboarding`) » (decision `rule-groups-replace-ranges`). Its slug

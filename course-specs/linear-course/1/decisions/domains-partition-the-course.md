@@ -18,7 +18,8 @@ order; annexes belong to no domain (`course/README.md` section 2, rules `concept
 a unit of reading and presentation, not of competence: a concept that relies on another domain says
 so as a prerequisite, not as a membership. Domain numbers and their concepts are course identifiers,
 so changing them is a course MAJOR (`course/README.md` section 2, `spec-directives/1/README.md`
-section 6). This replaces the overlapping « objectifs » of `parcours-po` before its 2.0.0.
+section 6). This replaces the overlapping « objectifs » the founding course had before its
+2.0.0.
 
 ## Options ruled out
 

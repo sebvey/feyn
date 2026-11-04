@@ -30,7 +30,7 @@ with the spec as decision `spec-files-by-product`.
   apart, a course declares only the MAJOR (D13).
 - `rc`: it announces a content almost frozen (D13).
 - Keep a Changelog: feyn ranks entries by bump, which the reviewer checks against the claimed
-  class, and changing it would touch the changelog of `parcours-po` (D13).
+  class, and changing it would touch the changelog of a course already written (D13).
 - The alpha left in decision `spec-files-and-alpha-version` of `linear-course`: it binds the
   directives' version too, which no decision of one spec binds (epic #454, Material point 15).
 

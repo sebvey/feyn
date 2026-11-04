@@ -70,3 +70,9 @@ no class: `- file or area: what changes`.
   namespace of the slugs, so a description cites a rule of a course as it cites a rule of the
   protocol (the fixture `broken/rule-slugs-course-duplicate`); `README.md` sections 1 and 8 say so
   (#524).
+- `decisions/`: decision `spec-names-no-course`: the files of a spec, its decisions included, and
+  the decisions of the directives name no course; decisions `alpha-version-until-tag` and
+  `rules-with-level-and-method` state their evidence without naming one (#528).
+- `README.md`, `tests/rule-slugs.js` (comment): `decisions/` are not read for ranges because a
+  decision cites no rule id (decision `decision-format`), no longer because they quote the
+  ranges they replaced (#528).

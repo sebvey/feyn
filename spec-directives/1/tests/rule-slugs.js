@@ -1,10 +1,10 @@
 'use strict';
 // Every rule and every group of rules of teacher/README.md is named by a slug, defined once in one
 // namespace, and every rule or group cited in teacher/README.md, README.md, course/README.md and
-// decisions/ is cited by a slug that is defined (decisions rules-named-by-slug,
-// rule-groups-replace-ranges). The ids of the rules of course/README.md moved to course/rules.yaml
-// are defined there, in the same namespace: a description cites them as it cites a rule of the
-// protocol.
+// decisions/ (where a decision cites none: decision decision-format) is cited by a slug that is
+// defined (decisions rules-named-by-slug, rule-groups-replace-ranges). The ids of the rules of
+// course/README.md moved to course/rules.yaml are defined there, in the same namespace: a
+// description cites them as it cites a rule of the protocol.
 //
 // Defined, in a rule family ("## <n>. ..."): a rule by a line that opens on `**<slug>** `, or by a
 // table row whose first cell is `**<slug>**`; a group by a heading `### <title> (`<slug>`)`. The
@@ -20,8 +20,8 @@
 //   - in a rule family too, the code spans after « règle(s) » must be rules.
 // A rule named or cited by its old number (`**1.2**`, « règle 1.2 », « rules 1.1, 1.5 ») fails too,
 // and so does a range, « `a` à `b` » or « `a` to `b` », in teacher/README.md, README.md or
-// course/README.md (decision rule-groups-replace-ranges). decisions/ are not read for ranges: they
-// record history and quote the ranges they replaced.
+// course/README.md (decision rule-groups-replace-ranges). decisions/ are not read for ranges: a
+// decision cites no rule id (decision decision-format), so a citation there is a slip to catch.
 // The file names it reads are those of linear-course, a named debt: idea #485.
 const mdlib = require('../lib/md');
 const yaml = require('../lib/yaml-lines');

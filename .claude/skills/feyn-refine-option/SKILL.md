@@ -1,6 +1,6 @@
 ---
 name: feyn-refine-option
-description: "Run with the maintainer the option refinement of feyn (a moment of the work cycle of its own): one named option, an epic or a story in Status Option, analysed against the purpose of feyn (which product consumes it) and the repository (a staleness check and an overlap check, each run as a command, their results presented with their proof; an option labelled `stale` re-read against `vision.md`), then decided on its own: commit (set Ready), rework, merge, split, fold into an epic, close; the decision is executed. An idea is not treated here: it goes to `/feyn-triage`. It never reviews the Option column as a whole. With no number, it asks which option. Use for \"raffine l'option 435\", \"refine option 435\", \"/feyn-refine-option 435\"."
+description: "Run with the maintainer the option refinement of feyn (a moment of the work cycle of its own): one named option, an epic or a story in Status Option, analysed against the purpose of feyn (which product consumes it) and the repository (a staleness check and an overlap check, each run as a command, their results presented with their proof; an option labelled `stale` re-read against `vision.md`), then decided on its own: commit (set Ready), rework, brainstorm (what it builds on has changed), merge, split, fold into an epic, close; the decision is executed. An idea is not treated here: it goes to `/feyn-triage`. It never reviews the Option column as a whole. With no number, it asks which option. Use for \"raffine l'option 435\", \"refine option 435\", \"/feyn-refine-option 435\"."
 argument-hint: "<option number>"
 ---
 
@@ -18,15 +18,16 @@ commands of the checks are written in step 2. Nothing is executed on the option 
 maintainer's decision on it.
 
 An **option** (Status Option) is a work item, epic or story, defined and not committed: the
-option refinement commits it, reworks it, merges it, splits it, folds it into an epic or closes
-it (decision `idea-and-option-before-ready`). An **idea** (Status Idea) is not an option: it is
-triaged (`/feyn-triage`), never refined here.
+option refinement commits it, reworks it, opens a brainstorm from it, merges it, splits it,
+folds it into an epic or closes it (decision `idea-and-option-before-ready`). An **idea**
+(Status Idea) is not an option: it is triaged (`/feyn-triage`), never refined here.
 
 **The markers**: fixed lines, the last line of an option's body, each written by the act it
 records and read as a marker, never as content to refine or a defect to correct; its body was
 rewritten in place on that date, from which what changed in the repository is read:
 - `Reworked <YYYY-MM-DD> (refinement)`, written by the action rework (step 4);
-- `Refined <YYYY-MM-DD> (brainstorm)`, written by `/feyn-brainstorm`;
+- `Refined <YYYY-MM-DD> (brainstorm)`, written by `/feyn-brainstorm` when it reworks the option
+  it opened from (its moment 4);
 - `Refined <YYYY-MM-DD> (triage)`, on an option reworked before the option refinement had its
   own skill (#444): read as a marker, never edited into the new form; a rework replaces it with
   its own line, as it does any earlier marker.
@@ -110,12 +111,15 @@ One message, under its own level-2 heading:
   line, an issue, each named);
 - the choices in a table (choice, what it does, consequence), from the actions of step 4, in
   this order where they apply: close (done, moot, or a duplicate of a twin), fold into an epic,
-  merge (into another option), split, rework, commit;
+  merge (into another option), split, brainstorm, rework, commit. **Brainstorm** applies when
+  the staleness check finds that what the option builds on has changed (a product delivered, a
+  file removed, a decision replaced), each change named with its proof: rewriting its body
+  would rework it on a basis that no longer holds, so the choice comes before rework;
 - one recommendation, with its reason.
 
 The question the skill asks the maintainer, before it acts on the answer: commit, rework (what
-changes), merge (into which option), split (into which work items), fold (into which epic), or
-close (completed or not planned, and why).
+changes), brainstorm, merge (into which option), split (into which work items), fold (into which
+epic), or close (completed or not planned, and why).
 
 An option the maintainer leaves open stays Option, and the reply says so. An option that waits
 on an action of the maintainer (a label, a merge, an answer elsewhere): say what it waits on.
@@ -135,7 +139,7 @@ As the maintainer decided. Which form an issue is in is read as `/feyn-issue` re
 An option labelled `stale` (step 2): commit and rework remove the label with the act, since it
 holds as written or reworked (`mise exec -- gh issue edit <n> --remove-label stale`); merge,
 split, fold and close close it, and the close comment names what replaced it. An option left
-open keeps the label: it has not been decided.
+open, or sent to a brainstorm, keeps the label: it has not been decided.
 
 - **commit**: set its Status to Ready ([project.md](../../reference/project.md), "Commands",
   Set), on the maintainer's word only, once its Done when is verifiable and no open blocked-by
@@ -152,6 +156,9 @@ open keeps the label: it has not been decided.
   title ("Epic: …" for an epic); a story becoming an epic is detached from its epic, if it had
   one ([project.md](../../reference/project.md), "Epics", Detach). The body ends with the line
   `Reworked <YYYY-MM-DD> (refinement)`, in place of any earlier marker. It stays Option;
+- **brainstorm**: nothing written on the option, which stays Option, its label `stale` kept
+  until the brainstorm reworks or replaces it; the option refinement ends, and
+  `/feyn-brainstorm <n>` opens from the option, with the changes the staleness check found;
 - **merge**: the option it goes into gets what it lacked (rework, above), then close it as
   completed with a comment naming that option;
 - **split**: one option per work item it holds (`/feyn-issue`, Option unless the maintainer
@@ -179,4 +186,6 @@ repos/sebvey/feyn/issues/<n>/comments --jq '.[] | [.node_id, .body[:60]] | @tsv'
 ## 5. End it
 
 The reply that reports the decision executed ends the option refinement: what was committed,
-reworked, closed or created, each with its link; the other numbers named, if any (step 1).
+reworked, closed or created, each with its link; the other numbers named, if any (step 1). A
+brainstorm decided: the reply names `/feyn-brainstorm <n>`, which the same work session runs
+on the maintainer's word.

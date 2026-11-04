@@ -14,7 +14,7 @@ A concept's visibility is carried by its files (`course/README.md` section 3): `
 `sources.md` and the diagrams are reader-facing, the site builds them and the teacher reads
 them; `teaching.md` is teacher-only, the teacher reads it and the site never builds it. The
 reader text and the teaching notes (example bank included) never share a file. This replaces the
-single concept file of `parcours-po`, where the bank sat beside the reader text under one
+single concept file of the founding course, where the bank sat beside the reader text under one
 alignment stamp. No filter inside a file: the site builds every « Affirmations » row of
 `sources.md` and the « Références »; no row is teacher-only, since `sources.md` traces the body
 of `concept.md` only (decision `sources-trace-the-concept`). « Non vérifié » is the one

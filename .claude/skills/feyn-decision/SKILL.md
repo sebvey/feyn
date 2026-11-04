@@ -77,6 +77,10 @@ From [decision-body.md](../../reference/decision-body.md), at `<folder>/<slug>.m
   name the choice rather than its files, skills or steps where the choice allows (a skill
   renamed or a file moved then leaves the decision true);
 - optional sections only when they add: "Options ruled out", "Consequences";
+- before writing, two checks on the whole text, an "Amended" line excepted: no rule id, of a
+  rule or of a group of rules, the rule named by what it asks (decision `decision-format`); in a
+  decision of a spec or of the spec directives, no course named, its evidence stated for any
+  course (decision `spec-names-no-course`). A line that fails is rewritten before the file is;
 - under 40 lines. Reserved terms of `docs/glossary.md`; "decision" in the text for one
   decision, never "ADR" (nor in a path): "ADR" names the frame's complement, the practice
   of recording decisions (`docs/kanban.md`, "ADR"; decision `kanban-frame-of-the-work`).
@@ -101,4 +105,5 @@ A live decision states what holds today; git keeps the before (decision `decisio
 
 A superseded decision and a released CHANGELOG entry are history: leave them as they are. An
 "Amended" line keeps its account of the change of scope; correct in place a mechanism it names
-that changes, as in the body. Commit on the current issue branch, as in step 5.
+that changes, as in the body. The text written passes the two checks of step 5. Commit on the
+current issue branch, as in step 5.

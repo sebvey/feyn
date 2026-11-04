@@ -23,7 +23,7 @@ triaged, its commitment is decided at an option refinement (`/feyn-refine-option
 **The markers**: two fixed lines, the close comment of an idea, say that it went through a
 triage or a brainstorm, each written by the act it records and read as a marker, never as
 content to triage or a defect to correct: "Triaged <YYYY-MM-DD>: <work items>." (step 4) or
-"Brainstormed <YYYY-MM-DD>: <options>." (`/feyn-brainstorm`): the idea was triaged, and the
+"Brainstormed <YYYY-MM-DD>: <work items>." (`/feyn-brainstorm`): the idea was triaged, and the
 work items named come from it. The markers of an option are `/feyn-refine-option`'s.
 
 ## 1. The issues named
