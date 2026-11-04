@@ -46,12 +46,15 @@ checks), `spec-directives/<MAJOR>/decisions/`; `courses/<id>/decisions/`,
 `.github/`), `.claude/decisions/`; two areas or more, `docs/decisions/`.
 
 A decision is written when its counterfactual can be named and it spans several files or is
-costly to undo; otherwise a comment where it applies, or nothing. Decisions on how the teacher
-teaches (`classroom-builder/` and the spec's protocol) also follow the two-tests rule: they
-enter only after two fresh tests show them necessary or sufficient. A site or structure
-decision is taken on argument. The `/feyn-decision` skill applies this file: it refuses a
-decision without a counterfactual, picks the folder, checks for a neighbouring slug, and checks
-that the text cites no rule id and, in a spec, names no course.
+costly to undo; otherwise a comment where it applies, or nothing. A choice that changes only
+words is a glossary entry, never a decision, whatever it spans (decision
+`word-choices-in-the-glossary`). Decisions on how the teacher teaches (`classroom-builder/` and
+the spec's protocol) also follow the two-tests rule: they enter only after two fresh tests show
+them necessary or sufficient. A site or structure decision is taken on argument. The
+`/feyn-decision` skill applies this file: it refuses a decision without a counterfactual and a
+choice that changes only words, picks the folder, checks for a neighbouring slug, and checks
+that the text cites no rule id, in a spec names no course, and uses the glossary's terms
+without defining them.
 
 ## Options ruled out
 
@@ -83,3 +86,7 @@ that the text cites no rule id and, in a spec, names no course.
   merges rules; story #524 had added rule ids to two decisions). The live decisions and the
   glossary that cited one were rewritten to name the rule by what it asks; decision
   `rules-named-by-slug` no longer lists the decisions among the references to a slug.
+- Amended 2026-11-04 (#543): a choice that changes only words is no longer written as a
+  decision, even when it spans several files; it is a glossary entry, its why in the entry's
+  `why` (decision `word-choices-in-the-glossary`). Without this, a contributor reads the bar
+  of a decision as met by a renaming across many files and records a word choice in two places.

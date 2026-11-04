@@ -77,11 +77,12 @@ maintainer, subject by subject, and ends it in a plan of work items posed throug
 the cycle. `/feyn-triage <n> [<n> …]` triages with the maintainer the ideas they name, one at a
 time. `/feyn-refine-option <n>` runs with the maintainer the option refinement of one option, up
 to its commitment, rework or close. Load the one that matches the request. The other `feyn-`
-skills are the work-cycle tooling: called by them, and loaded directly for a one-off act. A
-delivery work session starts with an issue number. The frame of the work is Kanban, with ADR
-for the decisions and GitHub flow for the branches (`docs/kanban.md`). How feyn applies it (the
-work items, epics and stories, and the ideas; the Statuses from Idea to Done; milestones; the
-Project's views): `docs/contributing.md`, "How the work is organised".
+skills are the work-cycle tooling: called by them, and loaded directly for a one-off act.
+`/feyn-decision` writes or changes a decision; `/feyn-glossary-entry` adds or changes a glossary
+entry. A delivery work session starts with an issue number. The frame of the work is Kanban,
+with ADR for the decisions and GitHub flow for the branches (`docs/kanban.md`). How feyn applies
+it (the work items, epics and stories, and the ideas; the Statuses from Idea to Done; milestones;
+the Project's views): `docs/contributing.md`, "How the work is organised".
 
 ## Non-negotiable rules
 
