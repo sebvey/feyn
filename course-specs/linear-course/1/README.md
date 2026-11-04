@@ -85,12 +85,12 @@ rules of the protocol leave `teacher/README.md` for `teacher/rules.yaml`, in #31
 extraction, `course/README.md` and `teacher/README.md` keep their verbal forms of obligation, read
 as `course/README.md` says in its opening.
 
-**Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language
-of its courses, of its lexicons and of the rules of `teacher/README.md`, a bounded exception to the
-language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited from
-the founding course, whose teacher was instructed and corrected in French. It changes by user story, its
-fresh tests come with the teacher. A teacher or a course of another language follows another spec,
-not a translation of this one (decision `lexicon-not-language-pack`).
+**Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language of
+its courses, of its lexicons and of the rules of `teacher/README.md`, a bounded exception to the
+language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited from the
+founding course, whose teacher was instructed and corrected in French. It changes by user story,
+its fresh tests come with the teacher. A teacher or a course of another language follows another
+spec, not a translation of this one (decision `lexicon-not-language-pack`).
 
 ## 3. Categories
 

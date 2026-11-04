@@ -15,14 +15,15 @@ heading, and keep their own slugs, with no prefix. A group's slug has the form o
 no group and no rule have the same slug. A group is cited in code after « groupe » or « group »;
 the check `rule-slugs` verifies that every cited group exists and that no slug is defined twice.
 Once the protocol's rules are in `teacher/rules.yaml` (the extraction of #318, decision
-`spec-files-by-product`), a group is data in that file, its slug and the order of its
-rules included, no longer a `###` heading of `teacher/README.md`; its Purpose paragraph goes to the
+`spec-files-by-product`), a group is data in that file, its slug and the order of its rules
+included, no longer a `###` heading of `teacher/README.md`; its Purpose paragraph goes to the
 description. A group may declare the category and method of its rules once (decision
 `rules-with-level-and-method`). This replaces the two ranges of slugs that the protocol's rule
-telling a new learner from a returning one cited, one over the rules of the onboarding and one
-over those of the resume, which became two groups over the same rules. A structure decision, accepted by the maintainer on 2026-10-28 (PR #133): it changes how
-rules are cited, not how the teacher teaches. Neighbour: decision `rules-named-by-slug`,
-distinct (it names one rule; this names a set of rules).
+telling a new learner from a returning one cited, one over the rules of the onboarding and one over
+those of the resume, which became two groups over the same rules. A structure decision, accepted by
+the maintainer on 2026-10-28 (PR #133): it changes how rules are cited, not how the teacher
+teaches. Neighbour: decision `rules-named-by-slug`, distinct (it names one rule; this names a set
+of rules).
 
 ## Options ruled out
 

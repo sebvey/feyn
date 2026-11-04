@@ -13,12 +13,12 @@ Course Markdown is plain CommonMark with YAML frontmatter: no HTML, no MDX, no r
 (`course/README.md` section 1). The structure the site needs comes from the reader-text conventions
 of `course/README.md` 3.5 (sub-concept headings, concept references, stance markers, storyline
 blockquote, diagram images, pitfalls, quick test), enforced by the `conventions` check; the teacher
-reads the same file as ordinary Markdown. A new construct gets a natural Markdown form, added to 3.5
-and its check, and a site plugin; a directive would need this decision and the `conventions` check
-to change, and none of today's constructs needs one. This replaces the MDX bodies of the site
-repository that preceded feyn and their nine constructs. This decision binds the course side; how the site
-maps each convention is a site decision, `markdown-conventions-mapped-by-plugins`, not written yet:
-it comes with the site epic #223.
+reads the same file as ordinary Markdown. A new construct gets a natural Markdown form, added to
+3.5 and its check, and a site plugin; a directive would need this decision and the `conventions`
+check to change, and none of today's constructs needs one. This replaces the MDX bodies of the site
+repository that preceded feyn and their nine constructs. This decision binds the course side; how
+the site maps each convention is a site decision, `markdown-conventions-mapped-by-plugins`, not
+written yet: it comes with the site epic #223.
 
 ## Options ruled out
 

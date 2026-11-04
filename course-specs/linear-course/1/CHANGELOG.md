@@ -171,3 +171,5 @@ no class: `- file or area: what changes`.
   no rule id (decisions `spec-names-no-course` of the directives and `decision-format`); section
   2 names the founding course by its role; `rules-named-by-slug` amended, a decision no longer
   cites a slug (#528).
+- `teacher/README.md`: the list of the files that cite a rule by its slug no longer names the
+  decisions, which name a rule by what it asks (decision `decision-format`) (#528).

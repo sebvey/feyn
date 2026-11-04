@@ -11,17 +11,17 @@ once the course renames that sub-concept or is archived, as the founding course 
 evidence points at nothing, and the spec reads as bound to one course though it generalises
 what a course taught.
 
-The files of a spec, its decisions included, name no course: no course id, no path to the
-folder of one course (`courses/<id>/`, a pattern, names none). A spec generalises what a course
-taught; what a course showed enters the spec stated for any course of its type. The evidence of
-a spec decision, a fresh test included, is stated without naming a course ("on a two-concept
-course", "a learner at the second sub-concept of the first concept"), with no marker pointing
-at a course or at a version of it. The same holds for the decisions of the spec directives. Two
-lines keep their words: an "Amended" line keeps its account of the change of scope (decision
-`decision-format`), and a superseded decision or a released CHANGELOG entry is history. The
-repository's own decisions (`docs/decisions/`) may name a course; the bench course, on which
-every spec change is tried, is a policy of the repository (`docs/contributing.md`, "Policies"),
-outside the spec.
+The files of a spec, its decisions included, name no course: no course id, no path to the folder
+of one course (a pattern of that folder, naming none, is allowed). A spec generalises what a
+course taught; what a course showed enters the spec stated for any course of its type. The
+evidence of a spec decision, a fresh test included, is stated without naming a course ("on a
+two-concept course", "a learner at the second sub-concept of the first concept"), with no marker
+pointing at a course or at a version of it. The same holds for the decisions of the spec
+directives. Two lines keep their words: an "Amended" line keeps its account of the change of
+scope (decision `decision-format`), and a superseded decision or a released CHANGELOG entry is
+history. The repository's own decisions (`docs/decisions/`) may name a course; the bench course,
+on which every spec change is tried, is a policy of the repository (`docs/contributing.md`,
+"Policies"), outside the spec.
 
 ## Options ruled out
 
