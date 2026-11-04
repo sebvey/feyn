@@ -25,13 +25,6 @@ follows it in the same PR, its checks pass on it, and the teacher teaches it.
 Small and proven over complete: a change proven on two real concepts is worth more than a
 complete spec judged on paper.
 
-Until a teacher is built from the course (#222), the yardstick is read as far as it reaches:
-an option says which of the two products consumes it, and how it brings the teacher closer.
-This paragraph expires with it: #478, which created `po-essai`, rewrote it so it no longer
-names `po-essai` as missing, and #222 removes it, the yardstick then read in full. These two
-edits are the change PR #483 already decided, the exception to the policy above: they go
-through no new decision.
-
 ## The lessons of parcours-po
 
 feyn was rebuilt from a first project that worked: `parcours-po`, a course of 18 concepts
