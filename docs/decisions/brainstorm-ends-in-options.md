@@ -17,9 +17,9 @@ with its why and the alternative rejected, goes in the epic's Material or the st
 The epic's Material is therefore what is read when splitting and what was settled, no longer a
 reading list only. The same plan reworks or replaces the option the brainstorm opened from, and
 comments the neighbours whose work it changes; it may leave the maintainer a working notebook
-(the order, the command for each item, what is the maintainer's), outside the repository. A
-brainstorm that settles nothing creates nothing; one that surfaces a finding without deciding
-its form may leave an idea; one that opens from an idea (decision
+(the order, the command for each item, what is the maintainer's), not versioned (`tmp/`,
+which git ignores). A brainstorm that settles nothing creates nothing; one that surfaces a
+finding without deciding its form may leave an idea; one that opens from an idea (decision
 `process-change-from-an-observed-problem`) is that idea's triage, and closes it as completed
 when it poses its plan, naming the work items. This replaces the proposal: no proposal issue,
 no label `proposal`, no proposal template, no "Proposed next". An option is what a proposal

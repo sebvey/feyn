@@ -1,6 +1,6 @@
 ---
 name: feyn-brainstorm
-description: "Run a brainstorm with the maintainer on feyn (a spec, a product, the process), subject by subject, and end it in a plan of work items posed through the skills of the cycle: a working folder `tmp/<slug>/` (a README, one file per subject), an inventory of the real object, measured, one subject per message decided and written before the next, a review on a support, a pass on what was missed, then the output (the blocks of work, what becomes the option it opened from, the decisions to write, the order with the neighbours), the posing (options created, the option it opened from reworked or replaced, neighbours commented), a notebook for the maintainer and an optional review by a fresh agent. It opens from an option whose refinement found its basis changed, an idea (it is then that idea's triage) or the maintainer's subject. Use for \"on brainstorme sur la structure du cours\", \"brainstorm option 475\", \"brainstorm idea 12\", \"let's brainstorm the skills\", \"on passe à l'output\", \"/feyn-brainstorm\"."
+description: "Run a brainstorm with the maintainer on feyn (a spec, a product, the process), subject by subject, and end it in a plan of work items posed through the skills of the cycle: a working folder `tmp/<slug>/`, an inventory of the real object, the subjects decided one by one, a review on a support, a pass on what was missed, the output and its posing (options created, the option it opened from reworked or replaced, neighbours commented), a notebook for the maintainer and an optional review by a fresh agent. It opens from an option whose refinement found its basis changed, an idea (it is then that idea's triage) or the maintainer's subject. Use for \"on brainstorme sur la structure du cours\", \"brainstorm option 475\", \"brainstorm idea 12\", \"let's brainstorm the skills\", \"on passe à l'output\", \"/feyn-brainstorm\"."
 argument-hint: "[subject | idea number | option number]"
 ---
 
@@ -44,9 +44,9 @@ ask which problem was observed, and where. Named: create the idea (`/feyn-issue 
 
 Then create the working folder `tmp/<slug>/` at the repository root (slug: two or three words of
 the subject) with its `README.md`, and send its frame as the first message: the goal, the
-constraints, the process (the five moments, one subject per message), the first list of
-subjects. The maintainer corrects it before the inventory starts. The folder is written in the
-language of the conversation.
+constraints, the process (the five moments), the first list of subjects. The maintainer
+corrects it before the inventory starts. The folder is written in the language of the
+conversation.
 
 The skeleton of `README.md`:
 
@@ -66,8 +66,7 @@ date, "not versioned".>
 
 ## The process
 
-<the five moments, one subject per message, a gap found becomes a subject inserted, the
-output last.>
+<the five moments, the subjects in the table's order, the output last.>
 
 ## The subjects
 
@@ -96,23 +95,20 @@ holds, for whom, with counts, and write it as a support the maintainer reads lin
 
 ## 2. The subjects
 
-One subject per message, in the order of the README's table. A subject's message, and its file
-`<nn>-<slug>.md`:
-- **its frame**, four questions answered: what the thing is; what it holds today (measured
-  where it can be); who reads it (a program, an agent, the teacher, the site, the maintainer:
-  checked in the code, not assumed); what the earlier subjects already changed there;
-- **the options** in a table: option, what it says, consequence;
-- **one recommendation**, with its reason;
-- **one question**.
+The subjects are treated in the order of the README's table, each in its file
+`<nn>-<slug>.md`, and put to the maintainer in the form their `CLAUDE.md` gives a decision. What
+the brainstorm adds to that form: the subject's frame answers four questions, what the thing
+is; what it holds today (measured where it can be); who reads it (a program, an agent, the
+teacher, the site, the maintainer: checked in the code, not assumed); what the earlier subjects
+already changed there.
 
 The maintainer decides. The decision is written in the subject's file before the next subject
 opens (decided, why, rejected), its state set to decided in the README's table, and one line
 added to the README's summary. A subject left open stays open in the table, with what it waits
 on.
 
-A gap found during a subject (a question no subject holds, an object the frame forgot) becomes
-a subject inserted: the next free number, a line in the table, placed in the order it will be
-treated. The output is always the last subject.
+A gap found during a subject enters the README's table as the maintainer's `CLAUDE.md` says a
+gap enters a plan. The output is always the last subject.
 
 The skeleton of a subject file:
 
@@ -144,15 +140,10 @@ State: <open | in progress | decided (<date>)>
 <what this subject taught about the object, one line each; none: the section is dropped.>
 ```
 
-A decided file holds the current state only: a decision changed by a later subject is rewritten
-in place, never kept beside its earlier form.
-
-The decisions of the project are read as a history with its justifications, not as
-constraints: a decision that a subject touches is reread with its counterfactual, and the
-subject proposes to replace or amend it when its reason no longer holds (on 2026-11-04,
-`reader-facing-and-teacher-only-files`, `spec-files-by-product` and
-`versioned-objects-and-spec-layout`). The replacement is a decision to write, carried by a
-work item (moment 4).
+A decision of the project that a subject touches is weighed as the maintainer's `CLAUDE.md`
+says (on 2026-11-04, `reader-facing-and-teacher-only-files`, `spec-files-by-product` and
+`versioned-objects-and-spec-layout` were replaced); its replacement or amendment is a decision
+to write, carried by a work item (moment 4).
 
 ## 3. The review on a support
 
@@ -202,9 +193,16 @@ naming the folder.
   the rework; or closed as completed, its comment naming the work items that replace it.
 - A neighbour: a comment naming what the plan changes for it, the work item that changes it, and
   what its own refinement should correct; it is refined later at its own option refinement.
+- Work of an open epic that is not its next story: no option; what the folder decided for it
+  goes into that epic's Material while the epic is an option (reworked as
+  `/feyn-refine-option` step 4 does it), otherwise into an idea naming that epic
+  (`/feyn-issue idea <finding>`; [contributing](../../../docs/contributing.md), Policies).
 - A finding the brainstorm did not decide: an idea (`/feyn-issue idea <finding>`).
 - The idea it opened from, if any, closed as completed, being its triage:
-  `mise exec -- gh issue close <n> --reason completed --comment "Brainstormed <YYYY-MM-DD>: <the work items, each #<m>>."`.
+  `mise exec -- gh issue close <n> --reason completed --comment "Brainstormed <YYYY-MM-DD>: <the work items, each #<m>>."`;
+  an idea whose decisions all went into an open epic is closed the same way, folded into that
+  epic, as at a triage (`/feyn-triage`, step 4): `--comment "Brainstormed <YYYY-MM-DD>: folded
+  into epic #<e>."`, naming the idea created for it, if any.
 
 A brainstorm that decided nothing poses nothing: it says so, and the idea or the option it
 opened from stays as it is.

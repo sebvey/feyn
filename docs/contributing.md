@@ -227,10 +227,10 @@ Five moments:
    delivery of a story without an epic. A story without an epic is Ready for review while its PR
    awaits the merge.
 3. **Brainstorm**: `/feyn-brainstorm` runs a work session with the maintainer on feyn, subject
-   by subject, in a working folder outside the repository (the maintainer decides each subject,
-   nothing written in the repository during the brainstorm). It opens from an option whose
-   option refinement found that what it builds on has changed, from an idea, or from the
-   maintainer's subject, and ends in a plan of work items posed through the skills of the
+   by subject, in a working folder not versioned (`tmp/`, which git ignores; the maintainer
+   decides each subject, nothing written in the repository during the brainstorm). It opens
+   from an option whose option refinement found that what it builds on has changed, from an
+   idea, or from the maintainer's subject, and ends in a plan of work items posed through the skills of the
    cycle: it creates the work items it defined, in Status Option, an epic or a story by size,
    each with the body of its kind, what was settled subject by subject, with its why and the
    alternative rejected, going in the epic's Material or the story's Context; it reworks or
