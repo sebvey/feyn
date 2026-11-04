@@ -17,8 +17,8 @@ categories, the normative references of its rules and the list of checks; the sp
 (`spec-directives/1/README.md`) hold what a rule file holds, the conformance clause, levels,
 methods, how severity follows, the versions and their normative references; neither holds a rule. `course/README.md`
 describes what a course is (the lexicon of the course files and the diagrams included); its rules are in
-`course/rules.yaml`, in English, and its tables of fields (`course.yaml`, the `concept.md`
-frontmatter) are schemas in `course/schemas/*.schema.yaml`, JSON Schema
+`course/rules.yaml`, in the language of the spec (decision `language-policy`), and its tables of
+fields (`course.yaml`, the `concept.md` frontmatter) are schemas in `course/schemas/*.schema.yaml`, JSON Schema
 2020-12 written in YAML, each schema counting as one rule ("`course.yaml` is valid against its
 schema"); the rule file keeps what a schema cannot say (the order of the glossary, the contract of a
 case, the sources). `teacher/README.md` describes the protocol of the teacher (Purpose, notation,

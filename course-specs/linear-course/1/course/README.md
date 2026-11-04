@@ -2,8 +2,8 @@
 
 | Reader | Comes for | Opens |
 |---|---|---|
-| creator | what a course is, the templates, how to verify | sections [1](#1-the-course-folder) to [7](#7-the-lexicon-of-the-course-files), [`templates/README.md`](templates/README.md), [`course-specs/check-course`](../../../check-course) |
-| builder | the shape of a course, the lexicon of the course files | sections [1](#1-the-course-folder) to [7](#7-the-lexicon-of-the-course-files), [`schemas/`](schemas/) |
+| creator | what a course is, the templates, how to verify | sections [1](#1-le-dossier-du-cours) to [7](#7-the-lexicon-of-the-course-files), [`templates/README.md`](templates/README.md), [`course-specs/check-course`](../../../check-course) |
+| builder | the shape of a course, the lexicon of the course files | sections [1](#1-le-dossier-du-cours) to [7](#7-the-lexicon-of-the-course-files), [`schemas/`](schemas/) |
 | verifier | the rules of a course as data, the checks, their fixtures | [`rules.yaml`](rules.yaml), [`checks/README.md`](checks/README.md), [`checks/fixtures/`](checks/fixtures/) |
 | spec writer | the rules and schemas of a course, the spec's decisions | [`rules.yaml`](rules.yaml), [`schemas/`](schemas/), [`../decisions/`](../decisions/), [`../CHANGELOG.md`](../CHANGELOG.md) |
 
@@ -14,14 +14,17 @@ files, the course files, the diagrams and the lexicon of the course files. The s
 categories and the checks are the MAJOR's `README.md`; conformance, levels, methods, severity and
 versions are the spec directives, `spec-directives/1/README.md`; the protocol the teacher executes
 is `teacher/README.md`. Sections 1 to 7 are sections 2 to 7 and 9 of the spec's description before
-the split (#323, read at `9c691da^:specs/linear-course/1/SPEC.md`), moved as written.
+the split (#323, read at `9c691da^:specs/linear-course/1/SPEC.md`), moved as written; sections
+1, 2, 4 and 5 were rewritten since, their rules moved to `course/rules.yaml` (#524).
 
 Each concept is one source: its folder holds **reader-facing** files (the site builds them, the
 teacher reads them) and one **teacher-only** file (the teacher reads it, the site never builds
 it). The site and the classroom are builds of the course, without rewriting.
 
-**Until the extraction of the rules (#318).** This file keeps its verbal forms of obligation,
-read in the levels of the spec directives (`spec-directives/1/README.md` section 3).
+**Until the extraction of the rules (#318).** Sections 1, 2, 4 and 5 are a description, in
+French: their rules, those the review verifies included, are data in `course/rules.yaml`, which
+they cite by id. Sections 3, 6 and 7 keep their verbal forms of obligation, read in the levels of
+the spec directives (`spec-directives/1/README.md` section 3).
 "Mandatory" means a requirement: the element is present. The check named verifies it, at the
 level and severity the MAJOR's `README.md` section 5 gives that check; its form is checked where
 that check says so, reviewed otherwise. "Optional" means it may be absent, a permission, and when
@@ -31,10 +34,7 @@ by inspection, the review. The rules the checks verify are also data in `course/
 with its level, category and method, and the tables of sections 2 and 3.1 are the schemas
 `course/schemas/course.schema.yaml` and `course/schemas/concept-frontmatter.schema.yaml` (#329).
 
-## 1. The course folder
-
-**Purpose.** The tree a course is made of: every build and every check finds a file by its
-place in it, and the section each line names gives the file's form.
+## 1. Le dossier du cours
 
 | Reader | Needs | When |
 |---|---|---|
@@ -44,25 +44,27 @@ place in it, and the section each line names gives the file's form.
 
 ```
 courses/<id>/
-  course.yaml          mandatory   identity, domains, concepts, sub-concepts (section 2)
-  plan.md              mandatory   prose: audience, onboarding, stances, writing rules (section 5)
-  glossary.md          mandatory   the course glossary (section 5)
-  storyline.md         mandatory   the storyline (section 5)
-  CHANGELOG.md         mandatory   the course changelog (section 5)
-  domains/N-slug.md    mandatory   one domain file per domain (section 4)
-  concepts/NN-slug/    mandatory   one concept folder per numbered concept and annex (section 3)
-  decisions/           optional    the course's decisions; no build reads it
+  course.yaml          identité, domaines, concepts, sous-concepts (section 2)
+  plan.md              prose : public, accueil, partis pris, règles d'écriture (section 5)
+  glossary.md          le glossaire du cours (section 5)
+  storyline.md         le fil rouge (section 5)
+  CHANGELOG.md         le journal des versions du cours (section 5)
+  domains/N-slug.md    un fichier de domaine par domaine (section 4)
+  concepts/NN-slug/    un dossier de concept par concept numéroté et par annexe (section 3)
+  decisions/           les décisions du cours ; aucun build ne le lit
 ```
 
-Course Markdown is plain CommonMark with YAML frontmatter where stated: no HTML, no MDX, no
-remark directive (`conventions`). Course text follows the typography of the lexicon;
-its banned characters (`typography.banned`: em-dash, arrows) fail the check (`typography`).
+Un cours tient chaque fichier et chaque dossier de cet arbre (règles `course-yaml-present`,
+`course-files-present`, `course-yaml-paths-exist`, `domain-files-listed`,
+`concept-folders-listed`) ; `decisions/` est le seul au choix de l'auteur (règle
+`course-decisions-folder`).
+
+Le Markdown d'un cours est du CommonMark simple, avec un frontmatter YAML là où la spec le dit
+(règle `plain-markdown`, vérifiée par le check `conventions`). Le texte d'un cours suit la
+typographie du lexique ; le check `typography` signale ses caractères interdits
+(`typography.banned` : le tiret cadratin, les flèches) (règle `no-banned-character`).
 
 ## 2. `course.yaml`
-
-**Purpose.** The map of the course: its identity, its domains, its concepts in course order with
-their prerequisites and sub-concept trees, and the identifiers that learner memory and site
-addresses cite.
 
 | Reader | Needs | When |
 |---|---|---|
@@ -71,75 +73,86 @@ addresses cite.
 | the site | titles, objectives, durations, the order of the pages and their addresses | at each build |
 | the maintainer | the identifiers whose change is a course MAJOR (below) | classing a course change |
 
-Read by the site, the classroom build and the checks (`course-yaml` for every rule here).
+Le site, le build de la classe et les checks lisent `course.yaml` ; le check `course-yaml` en
+vérifie les règles de méthode test.
 
-| Field | Presence | Meaning |
+Les tableaux qui suivent sont le schéma `course/schemas/course.schema.yaml` (règle
+`course-yaml-valid-against-schema`). La colonne « Présent » dit si un cours conforme tient
+toujours le champ, ou si le champ est au choix de l'auteur.
+
+| Champ | Présent | Sens |
 |---|---|---|
-| `id` | mandatory | the course id: lowercase ASCII words joined by hyphens, equal to the folder name |
-| `spec` | mandatory | `linear-course@<MAJOR>`: the spec MAJOR the course follows (`spec-directives/1/README.md` section 6) |
-| `title` | mandatory | the course title |
-| `subtitle` | optional | one line under the title on the site |
-| `audience` | mandatory | one sentence for the site home and previews; the full prose is in `plan.md` |
-| `site` | optional | the course's look on the site; omitted keys take the site's defaults |
-| `site.icon` | optional | path, relative to the course folder, of an SVG used as the course's mark and favicon |
-| `site.color` | optional | the course's accent colour, `#rrggbb` |
-| `storyline` | mandatory | path of the storyline file: `storyline.md` |
-| `glossary` | mandatory | path of the course glossary: `glossary.md` |
-| `domains` | mandatory | the domains, in course order (below) |
-| `concepts` | mandatory | every numbered concept and annex, in course order (below) |
-| `annexes` | optional | numbers of the concepts that are annexes; absent means none |
+| `id` | toujours | l'id du cours : des mots ASCII en minuscules reliés par des tirets, égal au nom du dossier (règle `course-id-equals-folder`) |
+| `spec` | toujours | `linear-course@<MAJOR>` : la MAJOR de la spec que le cours suit (`spec-directives/1/README.md` section 6) |
+| `title` | toujours | le titre du cours |
+| `subtitle` | au choix | une ligne sous le titre, sur le site |
+| `audience` | toujours | une phrase pour l'accueil du site et les aperçus ; la prose complète est dans `plan.md` |
+| `site` | au choix | l'allure du cours sur le site ; une clé omise prend la valeur par défaut du site |
+| `site.icon` | au choix | le chemin, relatif au dossier du cours, d'un SVG qui sert de marque et de favicon au cours |
+| `site.color` | au choix | la couleur d'accent du cours, `#rrggbb` |
+| `storyline` | toujours | le chemin du fil rouge : `storyline.md` |
+| `glossary` | toujours | le chemin du glossaire du cours : `glossary.md` |
+| `domains` | toujours | les domaines, dans l'ordre du cours (ci-dessous) |
+| `concepts` | toujours | chaque concept numéroté et chaque annexe, dans l'ordre du cours (ci-dessous) |
+| `annexes` | au choix | les numéros des concepts qui sont des annexes ; absent, aucun |
 
-A **domain** entry:
+Une entrée de **domaine** :
 
-| Field | Presence | Meaning |
+| Champ | Présent | Sens |
 |---|---|---|
-| `number` | mandatory | integer; the domains are numbered 1, 2, 3… in list order |
-| `slug` | mandatory | lowercase ASCII words joined by hyphens |
-| `title` | mandatory | the domain title |
-| `objective` | mandatory | what the learner can do at the end of the domain, one sentence |
-| `duration_min` | mandatory | minutes of conversation with the teacher, low estimate, asides excluded |
-| `file` | mandatory | `domains/<number>-<slug>.md`; the file exists |
-| `concepts` | mandatory | the numbers of the domain's concepts, in course order |
+| `number` | toujours | un entier ; les domaines sont numérotés 1, 2, 3… dans l'ordre de la liste |
+| `slug` | toujours | des mots ASCII en minuscules reliés par des tirets |
+| `title` | toujours | le titre du domaine |
+| `objective` | toujours | ce que l'apprenant sait faire à la fin du domaine, en une phrase |
+| `duration_min` | toujours | les minutes de conversation avec le professeur, estimation basse, apartés exclus |
+| `file` | toujours | `domains/<number>-<slug>.md` ; le fichier existe |
+| `concepts` | toujours | les numéros des concepts du domaine, dans l'ordre du cours |
 
-A **concept** entry (annexes included):
+Une entrée de **concept** (annexes comprises) :
 
-| Field | Presence | Meaning |
+| Champ | Présent | Sens |
 |---|---|---|
-| `number` | mandatory | the concept's identifier: `0`, `1`… for a numbered concept, `A1`, `A2`… for an annex; a string (an unquoted integer is read as its decimal string) |
-| `slug` | mandatory | lowercase ASCII words joined by hyphens |
-| `title` | mandatory | the concept title |
-| `objective` | mandatory | what the learner can do after the concept, one sentence; restated in « Objectif » (section 3.2) |
-| `prerequisites` | mandatory | numbers of the concepts the learner must have validated first; `[]` for none |
-| `duration_min` | optional | minutes of conversation with the teacher, low estimate |
-| `dir` | mandatory | `concepts/<NN>-<slug>`, `NN` the number on two digits (`09`); an annex keeps its number (`concepts/A1-<slug>`); the folder exists |
-| `subconcepts` | mandatory | the concept's sub-concept tree, non-empty (below) |
+| `number` | toujours | l'identifiant du concept : `0`, `1`… pour un concept numéroté, `A1`, `A2`… pour une annexe ; une chaîne (un entier sans guillemets se lit comme sa chaîne décimale) |
+| `slug` | toujours | des mots ASCII en minuscules reliés par des tirets |
+| `title` | toujours | le titre du concept |
+| `objective` | toujours | ce que l'apprenant sait faire après le concept, en une phrase ; repris dans « Objectif » (section 3.2) |
+| `prerequisites` | toujours | les numéros des concepts que l'apprenant a validés avant ; `[]` pour aucun |
+| `duration_min` | au choix | les minutes de conversation avec le professeur, estimation basse |
+| `dir` | toujours | `concepts/<NN>-<slug>`, `NN` le numéro sur deux chiffres (`09`) ; une annexe garde son numéro (`concepts/A1-<slug>`) ; le dossier existe |
+| `subconcepts` | toujours | l'arbre des sous-concepts du concept, non vide (ci-dessous) |
 
-A **sub-concept** node:
+Un nœud de **sous-concept** :
 
-| Field | Presence | Meaning |
+| Champ | Présent | Sens |
 |---|---|---|
-| `id` | mandatory | first level: the concept number and a letter, from `a` in order (`9a`, `9b`, `A2a`); second level: its parent's id and a digit, from `1` in order (`9a1`, `9a2`) |
-| `title` | mandatory | the sub-concept title, as its heading in `concept.md` writes it |
-| `children` | optional | second-level nodes, 9 at most (a child id ends in one digit); the tree has two levels at most |
+| `id` | toujours | au premier niveau, le numéro du concept suivi d'une lettre, à partir de `a`, dans l'ordre (`9a`, `9b`, `A2a`) ; au second niveau, l'id de son parent suivi d'un chiffre, à partir de `1`, dans l'ordre (`9a1`, `9a2`) |
+| `title` | toujours | le titre du sous-concept, tel que son titre de section dans `concept.md` l'écrit |
+| `children` | au choix | les nœuds de second niveau, 9 au plus (l'id d'un enfant finit par un chiffre) ; l'arbre a deux niveaux au plus |
 
-A node without `children` is a **leaf sub-concept**: as a rule, one teacher message with one
-question. The teacher cuts a leaf too big for one message (`teacher/README.md`, rule
-`short-messages`); its « Consignes » (section 3.3) may say how.
+Un nœud sans `children` est un **sous-concept feuille** : un message du professeur avec une question
+(règle `leaf-fits-one-message`). Le professeur découpe une feuille trop grande pour un message
+(`teacher/README.md`, règle `short-messages`) ; les « Consignes » du concept (section 3.3) disent
+comment, s'il y a lieu. L'`audience`, l'`objective` d'un domaine et celui d'un concept tiennent
+chacun en une phrase (règle `summaries-in-one-sentence`).
 
-Rules:
-- concept numbers and sub-concept ids are unique; the concepts come in course order: numbered
-  concepts by increasing number, then the annexes;
-- every numbered concept belongs to exactly one domain; each domain's concepts are consecutive
-  and follow the previous domain's; annexes belong to no domain and are exactly the `A`
-  numbers;
-- a prerequisite is an existing numbered concept that comes earlier (any numbered concept for
-  an annex);
-- every folder of `concepts/` is the `dir` of a concept entry.
+Ce que les tableaux ne disent pas, le check `course-yaml` le vérifie :
+- l'unicité des numéros de concept et des ids de sous-concept (règle `course-identifiers-unique`)
+  et l'ordre du cours, les concepts numérotés par numéro croissant puis les annexes (règle
+  `concepts-in-course-order`), avec la forme des ids (règles `subconcept-ids-in-order`,
+  `domains-numbered-in-order`) ;
+- le partage en domaines : chaque concept numéroté dans un seul domaine, les concepts de chaque
+  domaine consécutifs, les annexes hors de tout domaine et désignées par `annexes` (règles
+  `concept-in-one-domain`, `domain-concepts-consecutive`, `annexes-in-no-domain`,
+  `annexes-are-a-numbers`) ;
+- les prérequis, des concepts numérotés qui viennent avant (règle `prerequisite-comes-earlier`) ;
+- les chemins : les fichiers et dossiers nommés existent, un dossier de `concepts/` par entrée
+  de concept, chacun nommé par son numéro (règles `course-yaml-paths-exist`,
+  `concept-folders-listed`, `domain-file-named-by-number`, `concept-dir-named-by-number`).
 
-**Identifiers.** Concept numbers, sub-concept ids, case titles (section 3.3), domain numbers and
-their concepts, concept `dir` and domain `file` names are the course's identifiers: learner
-memory and site addresses cite them. Changing one is a course MAJOR
-(`spec-directives/1/README.md` section 6).
+**Identifiants.** Les numéros de concept, les ids de sous-concept, les titres de cas
+(section 3.3), les numéros de domaine et leurs concepts, les noms `dir` des concepts et `file`
+des domaines sont les identifiants du cours : la mémoire de l'apprenant et les adresses du site
+les citent. En changer un est une MAJOR du cours (`spec-directives/1/README.md` section 6).
 
 ## 3. The concept folder
 
@@ -371,11 +384,7 @@ convention.
 Everything else (bold, italics, lists, paragraphs, catalogues in bold) is ordinary Markdown.
 In `teaching.md`, concept references follow the same form, not checked.
 
-## 4. Domain files
-
-**Purpose.** A domain file is the way into a domain: the problem it settles, how its concepts
-follow one another, where it sits in the course, and a storyline situation that crosses it. The
-same text serves the reader and the teacher.
+## 4. Fichiers de domaine
 
 | Reader | Needs | When |
 |---|---|---|
@@ -383,38 +392,40 @@ same text serves the reader and the teacher.
 | the teacher | what it says to present the domain (`domain-presented-from-file`) | before the first concept of a domain |
 | the creator (human or agent) | what each section says, and that it teaches no concept | writing or changing a domain |
 
-`domains/<number>-<slug>.md`, one per domain of `course.yaml`, and no other file in `domains/`
-(`course-files`). Reader-facing:
-the site builds it, the teacher reads it. It holds no text for the teacher only: its whole text
-is for the reader. It teaches no concept and makes no claim that a concept of the domain does
-not make: it has no sources file. No H1.
+`domains/<number>-<slug>.md`, un par domaine de `course.yaml`, et aucun autre fichier dans
+`domains/` (règles `domain-file-named-by-number`, `course-yaml-paths-exist`,
+`domain-files-listed`). Côté lecteur : le site le construit, le professeur le lit, et tout son texte
+est pour le lecteur (règle `domain-text-for-reader`). Il n'enseigne aucun concept et n'affirme
+rien qu'un concept du domaine n'affirme pas ; il n'a donc pas de fichier de sources (règle
+`domain-teaches-no-concept`). Il n'a pas de H1 (règle `domain-file-no-h1`).
 
-Frontmatter: `description` (mandatory, one sentence for the site), nothing else; number, title,
-objective and duration are in `course.yaml` (`course-files`).
+Son frontmatter tient `description`, une phrase pour le site, et rien d'autre (règle
+`domain-frontmatter-description`) ; le numéro, le titre, l'objectif et la durée du domaine sont
+dans `course.yaml`.
 
-Body, all mandatory, in this order (`course-files`):
+Son corps tient quatre sections, dans cet ordre (règle `domain-sections-in-order`), chacune avec
+sa part (règle `domain-section-content`) :
 
-1. « Le problème » (`problem`): the difficulty met without the domain's concepts.
-2. « Le fil des concepts » (`concept_thread`): one short paragraph per concept of the domain,
-   in order, opening with `**<number>. <concept title>.**`, the title as in `course.yaml`
-   (`course-files`). A domain of one concept has one paragraph for the concept, then one per
-   first-level sub-concept, opening with `**<id>. <title>.**`. Each paragraph's first sentence
-   after the lead stands alone, so that a consumer can show it alone (below).
-3. « D'où l'on vient, où l'on va » (`from_to`): what the previous domain gives this one, and
-   what this one gives the next.
-4. « Un cas qui traverse le domaine » (`crossing_case`): a storyline situation where each
-   concept of the domain serves, in order, without giving the answer.
+1. « Le problème » (`problem`) : la difficulté rencontrée sans les concepts du domaine.
+2. « Le fil des concepts » (`concept_thread`) : un court paragraphe par concept du domaine, dans
+   l'ordre, ouvert par `**<number>. <concept title>.**`, le titre tel que dans `course.yaml` ;
+   un domaine d'un seul concept a un paragraphe pour le concept, puis un par sous-concept de
+   premier niveau, ouvert par `**<id>. <title>.**` (règle `concept-thread-paragraphs`). La
+   première phrase de chaque paragraphe, après l'amorce, se lit seule, pour qu'un consommateur
+   la montre seule (ci-dessous).
+3. « D'où l'on vient, où l'on va » (`from_to`) : ce que le domaine précédent donne à celui-ci,
+   et ce que celui-ci donne au suivant.
+4. « Un cas qui traverse le domaine » (`crossing_case`) : une situation du fil rouge où chaque
+   concept du domaine sert, dans l'ordre, sans donner la réponse.
 
-**First sentence**: it ends with `.`, `?` or `!` within 300 characters of the lead, so that
-the site can show it (`domain-first-sentence`, which blocks), and does not open with a
-word of the lexicon's `checks.anaphora` list (« Il », « Elle », « Ce », « Cette »,
-« Puis »…), so that it stands alone (`domain-first-sentence-standalone`, which reports).
+**Première phrase** : elle finit par `.`, `?` ou `!` dans les 300 caractères qui suivent
+l'amorce, pour que le site la montre (règle `domain-first-sentence-ends`, vérifiée par le check
+`domain-first-sentence`, qui bloque), et ne s'ouvre pas sur un mot de la liste `checks.anaphora`
+du lexique (« Il », « Elle », « Ce », « Cette », « Puis »…), pour qu'elle se lise seule (règle
+`domain-first-sentence-stands-alone`, vérifiée par le check `domain-first-sentence-standalone`,
+qui signale).
 
-## 5. Course files
-
-**Purpose.** The files that hold what spans the whole course: who it is for and how the teacher
-welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases live in
-(`storyline.md`), its history (`CHANGELOG.md`).
+## 5. Fichiers du cours
 
 | Reader | Needs | When |
 |---|---|---|
@@ -423,63 +434,75 @@ welcomes a learner (`plan.md`), its terms (`glossary.md`), the world its cases l
 | the creator (human or agent) | the terms to use and the defining concept of each, the storyline facts a case may draw on | writing a concept or a case |
 | the maintainer | what changed in each course version | each release |
 
-- **`plan.md`** (`course-files`): a first `##` section « Public cible » (`audience`, mandatory),
-  the full audience prose; a `##` section « Accueil » (`onboarding`, mandatory), what the
-  teacher takes from the course to welcome a new learner: one paragraph giving the teacher's
-  posture (« Posture : Product Owner senior qui forme l'apprenant. »), then a numbered list of
-  the onboarding questions, at least one, each `<n>. **<question label>** : <question>`, the
-  question labels distinct; the list ends the section, nothing follows it (`course-files`).
-  The protocol asks the learner's nickname first, then these questions in their order, and
-  says where the answers go (`teacher/README.md`, rules `teacher-posture-from-plan`,
-  `onboarding-questions-announced`, `onboarding-questions-order` and `onboarding-profile-written`);
-  a question on pace does not belong here, the teacher adjusts the pace as the course goes. Then
-  optional `##` sections the teacher reads: the course's stances
-  (« Parti pris : une équipe en sprints »), its own writing rules. An H1 is allowed.
-- **`glossary.md`** (`course-files`): an optional introduction; one table, before any `##`
-  section, of four columns in this order (`course-files` checks their count; this file names
-  them by their meaning, and their header text is the course's, « Concept » or « Défini dans »):
-  1. the course term, in the **term cell** (below);
-  2. its English term, empty when the term has no useful English equivalent or when the course
-     term already is the English word;
-  3. the definition;
-  4. the **defining concept**: one concept number of `course.yaml`, the concept a learner
-     opens to dig into the term: the one whose reader text teaches it (its objective or one of
-     its sub-concepts is about it), not one that uses it or defines it in passing with a
-     concept reference to another concept (`course-files` checks the form; review checks the
-     choice). Two concepts that teach the term as deeply usually mean two terms, in two rows;
-     otherwise the defining concept is the first in course order. A term no concept teaches is
-     a gap of the course (its explanation enters a concept) or leaves the glossary. The
-     definition sums up the defining concept's reader text and states nothing it does not. No
-     list of the concepts that use the term: a script or the site computes it from the
-     variants.
+- **`plan.md`** : une première section `##` « Public cible » (`audience`), la prose complète du
+  public (règle `plan-audience-first`) ; une section `##` « Accueil » (`onboarding`), ce que le
+  professeur prend du cours pour accueillir un nouvel apprenant : un paragraphe qui donne la
+  posture du professeur (« Posture : Product Owner senior qui forme l'apprenant. »), puis la liste
+  numérotée des questions d'accueil, au moins une, chacune `<n>. **<question label>** : <question>`, les
+  libellés distincts ; la liste clôt la section (règles `plan-onboarding-section`,
+  `onboarding-question-form`). Le protocole demande d'abord le pseudo de l'apprenant, puis ces
+  questions dans leur ordre, et dit où vont les réponses (`teacher/README.md`, règles
+  `teacher-posture-from-plan`, `onboarding-questions-announced`, `onboarding-questions-order` et
+  `onboarding-profile-written`). Aucune question ne porte sur le rythme : le professeur ajuste le
+  rythme au fil du cours (règle `onboarding-asks-no-pace`). Viennent ensuite, au choix de
+  l'auteur, des sections `##` que le professeur lit : les partis pris du cours (« Parti pris : une
+  équipe en sprints »), ses propres règles d'écriture ; et un H1 (règle
+  `plan-optional-sections`).
+- **`glossary.md`** : une introduction et un H1, au choix de l'auteur (règle
+  `glossary-intro-and-h1`) ; un tableau, avant toute section `##`, de quatre colonnes dans cet
+  ordre (règle `glossary-table-four-columns` ; ce fichier les nomme par leur sens, et le texte de
+  leur en-tête est celui du cours, « Concept » ou « Défini dans ») :
+  1. le terme du cours, dans la **cellule du terme** (ci-dessous) ;
+  2. son terme anglais, vide quand le terme n'a pas d'équivalent anglais utile ou quand le terme
+     du cours est déjà le mot anglais (règle `glossary-english-term`) ;
+  3. la définition, qui résume le texte lecteur du concept de définition et n'affirme rien qu'il
+     n'affirme pas (règle `glossary-definition-from-concept`) ;
+  4. le **concept de définition** : un numéro de concept de `course.yaml` (règle
+     `glossary-defining-concept-form`), le concept qu'un apprenant ouvre pour creuser le terme,
+     celui dont le texte lecteur l'enseigne (son objectif ou l'un de ses sous-concepts en traite),
+     pas un concept qui l'emploie ou le définit en passant avec une référence de concept vers un
+     autre (règle `glossary-defining-concept-teaches`). Deux concepts qui enseignent le terme
+     aussi à fond font d'ordinaire deux termes, sur deux lignes ; sinon le concept de définition
+     est le premier dans l'ordre du cours. Un concept du cours enseigne chaque terme du glossaire
+     (règle `glossary-term-taught`) : un terme qu'aucun concept n'enseigne est un manque du cours
+     (son explication entre dans un concept) ou quitte le glossaire. Le glossaire ne liste pas les
+     concepts qui emploient un terme : un script ou le site le calcule à partir des variantes
+     (règle `glossary-no-usage-list`).
 
-  Optionally a section « Termes à éviter » (`avoid`): one table, three columns: the term to
-  avoid, what to say instead, why. An H1 is allowed. The site reads the first table as is.
+  Une section « Termes à éviter » (`avoid`) complète le glossaire au choix de l'auteur : un
+  tableau de trois colonnes, le terme à éviter, ce qu'il faut dire à la place, pourquoi (règle
+  `glossary-avoid-section`). Le site lit le premier tableau tel quel.
 
-  **Term cell**: one term, or its variants separated by commas (« Product Owner, PO »), each
-  matched whole word, case ignored. A parenthesis is a sense qualifier (« État (d'un
-  élément) »): a row whose term cell has one is skipped by the order check, since no script
-  tells the senses of a homonym apart; review does. A variant belongs to one row: no two rows
-  hold the same variant, case ignored, its qualifier included (`course-files`).
+  **Cellule du terme** : un terme, ou ses variantes séparées par des virgules (« Product Owner,
+  PO »), chacune reconnue en mot entier, casse ignorée. Une parenthèse est un qualificatif de sens
+  (« État (d'un élément) »). Une variante appartient à une seule ligne : deux lignes ne tiennent
+  pas la même variante, casse ignorée, qualificatif compris (règle `glossary-variant-in-one-row`).
 
-  **Order** (`glossary-order`, a reporting check: it does not block): a term is used
-  after its defining concept, in course order. The scope is the reader text, the
-  `concept.md` of each concept: its body and its frontmatter (the texts of `stances` and
-  `neighbors`, the `title` and `caption` of `diagrams`); `teaching.md` is not read. Every use
-  counts, not only the first. In the `concept.md` of a concept that comes before the defining
-  concept, a term is used only in a sentence that carries a concept reference (3.5) to the
-  defining concept or to one of its sub-concepts (« annexe A2 », « annexe A2b » for an annex),
-  or that defines the term in passing (review). A sentence ends at « . », « ? », « ! » or « … »
-  followed by a space or the end of its block; « : » and « ; » do not end it. A paragraph, a
-  blockquote, a list item, a heading, a table row and a frontmatter text are blocks, and a
-  sentence never crosses one.
-- **`storyline.md`**: the storyline, free prose in the language of the spec, read by the teacher
-  and shown by the site. The cases take their actors and facts from it, without contradicting it
-  (review).
-- **`CHANGELOG.md`** (`course-files`): an optional introduction; a section « Non publié »
-  (`unreleased`), mandatory, possibly empty; then one section per release, newest first,
-  `## X.Y.Z, YYYY-MM-DD`. An entry is one line `- MAJOR|MINOR|PATCH, <where> : <what>`. A last
-  free paragraph is allowed (the line that links the course to its history before 0.1.0).
+  **Ordre** : un terme est employé après son concept de définition, dans l'ordre du cours (règle
+  `glossary-term-after-defining-concept`, vérifiée par le check `glossary-order`, qui signale sans
+  bloquer). Le check lit le texte lecteur, le `concept.md` de chaque concept : son corps et son
+  frontmatter (les textes de `stances` et de `neighbors`, le `title` et la `caption` de
+  `diagrams`) ; il ne lit pas `teaching.md`. Chaque emploi compte, pas seulement le premier. Dans
+  le `concept.md` d'un concept qui vient avant le concept de définition, le terme figure dans une
+  phrase qui porte une référence de concept (section 3.5) vers le concept de définition ou vers
+  l'un de ses sous-concepts (« annexe A2 », « annexe A2b » pour une annexe), ou, ce que la revue
+  vérifie, dans une phrase qui le définit en passant (règle `term-defined-in-passing`). Une phrase
+  finit à « . », « ? », « ! » ou « … » suivi d'une espace ou de la fin de son bloc ; « : » et
+  « ; » ne la finissent pas. Un paragraphe, une citation, un élément de liste, un titre, une ligne
+  de tableau et un texte de frontmatter sont des blocs, et une phrase ne franchit pas un bloc.
+  Le check saute la ligne dont la cellule du terme porte un qualificatif de sens, faute qu'un
+  script distingue les sens d'un homonyme ; la revue vérifie son ordre (règle
+  `qualified-term-order-reviewed`).
+- **`storyline.md`** : le fil rouge, en prose libre, que le professeur lit et que le site montre.
+  Il est écrit dans la langue de la spec (règle `storyline-in-spec-language`). Il nomme le rôle
+  que l'apprenant y tient (règle `storyline-names-learner-role`). Les cas y prennent leurs
+  acteurs et leurs faits, sans le contredire (règle `cases-follow-storyline`).
+- **`CHANGELOG.md`** : une section « Non publié » (`unreleased`), vide s'il n'y a rien à
+  publier, d'abord (règle `changelog-unreleased-first`) ; puis une section par version publiée,
+  la plus récente d'abord, `## X.Y.Z, YYYY-MM-DD` (règle `changelog-release-sections`). Une entrée
+  est une ligne `- MAJOR|MINOR|PATCH, <where> : <what>` (règle `changelog-entry-form`). Une
+  introduction et un dernier paragraphe libre (la ligne qui relie le cours à son histoire d'avant
+  0.1.0) complètent le fichier au choix de l'auteur (règle `changelog-intro-and-closing`).
 
 ## 6. Diagrams
 

@@ -65,3 +65,8 @@ no class: `- file or area: what changes`.
   `scenarios`; decision `rules-with-level-and-method` points to section 8 for the tests of
   `check-spec` instead of naming them, and says where the rest of the teacher's conformance goes
   now (#515).
+- `tests/`: `rule-files` accepts a group `purpose`, a non-empty string, on both rule files (the
+  fixture `broken/rule-files-purpose`); `rule-slugs` defines the ids of `course/rules.yaml` in the
+  namespace of the slugs, so a description cites a rule of a course as it cites a rule of the
+  protocol (the fixture `broken/rule-slugs-course-duplicate`); `README.md` sections 1 and 8 say so
+  (#524).

@@ -60,7 +60,7 @@ plus this README (decision `spec-files-by-product`):
 | `README.md` | this file: scope, files, categories, normative references, the list of checks |
 | `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the lexicon of the course files |
 | `teacher/README.md` | the protocol of the teacher: purpose, notation, rules named by slug, the composition, keys and parameters |
-| `course/rules.yaml` | the rules of a course, in English |
+| `course/rules.yaml` | the rules of a course; the groups of `course/README.md` sections 1, 2, 4 and 5 in French, each with its `purpose`, the others still in English, without one |
 | `teacher/rules.yaml` | the rules of the teacher, in French |
 | `teacher/composition.yaml` | the composition of the teacher: its five parts, when each loads and what each draws from (`teacher/README.md`, "Composition") |
 | `teacher/tests/` | the test scenarios of the teacher (`README.md`: the format, the rules each covers and those none covers), `scenario.schema.yaml` (their form), one YAML file per scenario, run by `classroom-builder/fresh-test` and verified in form by `check-spec` (`scenarios`) |
@@ -77,13 +77,15 @@ plus this README (decision `spec-files-by-product`):
 
 What a rule file holds is the directives' (`spec-directives/1/README.md` section 1).
 
-`course/rules.yaml` holds the rules the checks of a course verify, taught-check included, and one
-rule verified by inspection, the review; `course/schemas/course.schema.yaml` and
-`course/schemas/concept-frontmatter.schema.yaml` are the tables of `course/README.md` sections 2 and
-3.1 (#329). The other rules of a course leave `course/README.md` for `course/rules.yaml`, and the
-rules of the protocol leave `teacher/README.md` for `teacher/rules.yaml`, in #318. Until that
-extraction, `course/README.md` and `teacher/README.md` keep their verbal forms of obligation, read
-as `course/README.md` says in its opening.
+`course/rules.yaml` holds every rule of `course/README.md` sections 1, 2, 4 and 5, those verified
+by inspection (the review) included, and of its other sections the rules the checks of a course
+verify, taught-check included, and one rule verified by inspection;
+`course/schemas/course.schema.yaml` and `course/schemas/concept-frontmatter.schema.yaml` are the
+tables of `course/README.md` sections 2 and 3.1 (#329). The other rules of a course leave
+`course/README.md` for `course/rules.yaml`, and the rules of the protocol leave `teacher/README.md`
+for `teacher/rules.yaml`, in #318. Until that extraction, `course/README.md` sections 3, 6 and 7
+and `teacher/README.md` keep their verbal forms of obligation, read as `course/README.md` says in
+its opening.
 
 **Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language
 of its courses, of its lexicons and of the rules of `teacher/README.md`, a bounded exception to the
