@@ -1,0 +1,2 @@
+check: course-yaml
+message: course.yaml:3 unknown field "language"

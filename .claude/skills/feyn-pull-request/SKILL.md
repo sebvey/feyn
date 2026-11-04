@@ -40,16 +40,18 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    No check exists yet for the area: say so in the PR's Checks. A failing blocking check (exit
    code 1; the summary line of `check-course` names it) is fixed before the PR opens; one that
    cannot be fixed here is named in the PR's Checks and in Review first. A failing blocking
-   check on `po-essai` is always fixed before the PR opens: unlike a course PR, it has no such
-   escape, since a spec change is done only with the bench passing. A failing reporting check
-   leaves the exit code 0 and blocks nothing: its failures are findings, and the Checks line
-   gives their count by check.
+   check on `po-essai` is always fixed before a PR to `main` opens: unlike a course PR, it has
+   no such escape, since a spec change is done only with the bench passing in the PR that lands
+   on `main`; a story's PR to its epic's integration branch may leave it failing, named in its
+   Checks, the epic PR fixing it ([contributing](../../../docs/contributing.md), "Policies").
+   A failing reporting check leaves the exit code 0 and blocks nothing: its failures are
+   findings, and the Checks line gives their count by check.
 3. **Commit and push.** Nothing left uncommitted that belongs to the issue
    (`git status --porcelain`), then
    `git push -u origin <branch>`.
 4. **Title**: `<type>(<area>): <summary>`, which becomes the squash commit on `main`.
    `<type>` is the `type:` label, `<area>` the `area:` label, both without their prefix
-   (`course(course:parcours-po): write the cases of concept 9`). Summary: imperative,
+   (`course(course:po-essai): write the cases of concept 1`). Summary: imperative,
    lowercase, no final period, under 72 characters for the whole title.
 5. **Body**, from the first part of the PR body template
    [pr-body.md](../../reference/pr-body.md). It is read by a maintainer who reviews many PRs on

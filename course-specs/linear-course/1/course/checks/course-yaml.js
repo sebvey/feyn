@@ -24,9 +24,7 @@ function run(ctx) {
   const cy = ctx.cy;
   const only = ctx.concept;
 
-  // `language` is accepted and ignored: the language is the spec's (spec.yaml), and
-  // courses/parcours-po, frozen until the tag, still declares it (#487 removes it at its migration)
-  const known = new Set(['id', 'spec', 'language', 'title', 'subtitle', 'audience', 'site', 'storyline', 'glossary', 'domains', 'concepts', 'annexes']);
+  const known = new Set(['id', 'spec', 'title', 'subtitle', 'audience', 'site', 'storyline', 'glossary', 'domains', 'concepts', 'annexes']);
   for (const k of Object.keys(cy)) if (!known.has(k)) bad(cy, k, `unknown field "${k}"`);
 
   // identity

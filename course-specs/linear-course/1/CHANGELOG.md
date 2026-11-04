@@ -163,3 +163,7 @@ no class: `- file or area: what changes`.
   header of `teacher/rules.yaml` no longer count the rules of `teacher/rules.yaml`, and
   `course/checks/README.md` points to `spec-directives/1/README.md` section 8 for the tests of
   `check-spec` (#515).
+- `course/checks/`, `course/schemas/course.schema.yaml`: a `language` key in `course.yaml` fails
+  `course-yaml` as an unknown field, the tolerance kept for the founding course gone with it
+  (decision `parcours-po-archived`); the fixture `broken/course-yaml-language`; the checks'
+  README names `courses/po-essai` as the real course a change of the spec is run on (#521).

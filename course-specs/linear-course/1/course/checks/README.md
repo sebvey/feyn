@@ -91,7 +91,7 @@ those `check-course --list` prints, from the rules, in the order of the run.
 
 | Id | Category, severity | Script | Verifies (course/README.md) |
 |---|---|---|---|
-| `course-yaml` | `structure`, blocks | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/` (not looked for under `--concept`), spec declared; a missing or unreadable lexicon, a tooling error (no rule: the lexicon is the spec's, `lexicon-keys` of `check-spec` tests it); a `language` key accepted and ignored (`courses/parcours-po` has one until its migration, #487) (2; `spec-directives/1/README.md` 6) |
+| `course-yaml` | `structure`, blocks | `course-yaml.js` | fields, identifiers, order, domains, annexes, prerequisites, at most 9 children per node, paths, no unlisted folder in `concepts/` (not looked for under `--concept`), spec declared; a missing or unreadable lexicon, a tooling error (no rule: the lexicon is the spec's, `lexicon-keys` of `check-spec` tests it) (2; `spec-directives/1/README.md` 6) |
 | `concept-folder` | `structure`, blocks | `concept-folder.js` | files, sections and their order, the column count of the `sources.md` tables, frontmatter (`verified` parallel to `refs`, absent without `refs`), sub-concept sections, « Objectif » (3) |
 | `case-contract` | `pedagogy`, blocks | `case-contract.js` | the cases of `teaching.md`: in the heading, a sub-concept of the concept and at most one qualifier, a value of the lexicon's `qualifiers`; titles unique in the concept; fields (known labels, a qualifier on « Question » only, the mandatory ones once and in order); leaf coverage; citation in « Consignes » (3.3, 7). Split from `concept-folder` (#329): the `pedagogy` part of the concept folder |
 | `conventions` | `writing`, blocks | `conventions.js` | reader-text conventions of `concept.md`; plain Markdown in every course file (1, 3.5) |
@@ -146,7 +146,7 @@ among them), the flag `--quality`, removed, an id of a test of `check-spec` and 
   that must fail and the message it must give, with the exit code its severity gives. No other
   check may fail (the test says so).
   `broken/course-yaml-unlisted-folder` also runs with `--concept 0`, where `course-yaml` passes.
-- No real course is a fixture: `course-specs/check-course courses/parcours-po` checks the real
+- No real course is a fixture: `course-specs/check-course courses/po-essai` checks the bench
   course, and a change to the spec reports its new failures there.
 - `fixtures/lexicon.yaml`: the lexicon every run of the fixtures reads (`--lexicon`): the groups
   of `course/README.md` section 7, with the values of the spec's `course/lexicon.yaml`; change both

@@ -123,7 +123,7 @@ on an action of the maintainer (a label, a merge, an answer elsewhere): say what
 A requirement added to an epic's Done when, by a fold or otherwise, is the maintainer's decision:
 propose it as a choice, never write it on the strength of another decision. An epic or a story
 whose body names `courses/po-essai/` and whose Done when does not state that it records its
-judgement calls in the Material of the migration epic #487: propose that line as a requirement
+judgement calls in the Material of the re-creation epic #520: propose that line as a requirement
 added to its Done when, the maintainer's decision too
 ([contributing](../../../docs/contributing.md), "Policies").
 
@@ -142,7 +142,7 @@ open keeps the label: it has not been decided.
   link remains ([project.md](../../reference/project.md), "Dependencies", Read; an epic: its
   five sections written, [contributing](../../../docs/contributing.md), "How the work is
   organised"); an epic or a story whose body names `courses/po-essai/`, also once its Done when
-  states that the Material of the migration epic #487 holds its judgement calls (the line
+  states that the Material of the re-creation epic #520 holds its judgement calls (the line
   proposed at step 3 when it was missing, written only on the maintainer's word, never on the
   skill's own authority);
 - **rework**: its body rewritten (`mise exec -- gh issue edit <n> --body-file <file>`, from the
