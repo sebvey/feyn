@@ -85,8 +85,12 @@ const SEVERITY = Object.fromEntries(LIST.map((c) => [c.id, c.severity]));
     LIST.length > 0 && !wrong.length && !missing.length, `wrong: ${wrong.map((c) => `${c.id} ${c.category} ${c.severity}`).join(', ') || 'none'}; missing: ${missing.join(', ') || 'none'}`);
   const notHere = LIST.filter((c) => !c.runsHere).map((c) => c.id).sort().join(',');
   report('--list marks taught-check "not run here", and no other', notHere === 'taught-check', notHere);
-  const spec = LIST.filter((c) => ['rule-slugs', 'rule-files', 'lexicon-keys', 'spec-yaml'].includes(c.id)).map((c) => c.id);
-  report('--list names none of the tests of check-spec', spec.length === 0, spec.join(','));
+  // the ids of the tests of check-spec, read from its --list, not copied here
+  const specTests = spawnSync(process.execPath, [path.join(repo, 'spec-directives', '1', 'tests', 'check-spec'), '--list'], { encoding: 'utf8' })
+    .stdout.split('\n').filter(Boolean);
+  const spec = LIST.filter((c) => specTests.includes(c.id)).map((c) => c.id);
+  report('--list names none of the tests of check-spec', specTests.length > 0 && spec.length === 0,
+    `check-spec --list: ${specTests.join(',') || 'nothing'}; named: ${spec.join(',') || 'none'}`);
   report('--list has blocking and reporting checks among those run here',
     RUN.some((c) => c.severity === 'blocks') && RUN.some((c) => c.severity === 'reports'), RUN.map((c) => `${c.id} ${c.severity}`).join(', '));
 }

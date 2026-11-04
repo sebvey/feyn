@@ -21,10 +21,10 @@
 # `source`, the file or folder read, relative to its `from`: `{course.<name>}` is a course
 # parameter (teacher/README.md, "Keys and parameters"), `<dir>` the `dir` of the concept at hand in
 # course.yaml, `<file>` the `file` of the domain at hand. `what`, what is drawn, in a few words, in
-# French, since the teacher prints it (decision language-policy); a lexicon key
+# French, since the teacher reads it (decision language-policy); a lexicon key
 # (`headings.onboarding`) names a heading of a course file.
-# A moment of `on-demand`: `id`, `when` (in French, as `what`: the teacher prints it as the
-# moment's description), `rules` (the slugs of the groups, families or rules of the protocol loaded at that
+# A moment of `on-demand`: `id`, `when` (in French, as `what`: the teacher reads it to recognise
+# the moment), `rules` (the slugs of the groups, families or rules of the protocol loaded at that
 # moment, a family by its category in teacher/rules.yaml; empty while the protocol has none for it)
 # and `draws`, as a part's.
 #

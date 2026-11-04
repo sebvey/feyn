@@ -43,7 +43,8 @@ counterfactual exists, a `why`; a rule of the protocol also has an `origin`. A g
 `rule-groups-replace-ranges`). A rule binds a product (section 2), so the rule files are two,
 `course/rules.yaml` and `teacher/rules.yaml`. The spec's own files (the rule files, the schemas,
 the slugs of the protocol, the lexicons, `spec.yaml` and its version, the composition of the
-teacher and its test scenarios) are verified by the tests of `check-spec`, which are not rules (section 8).
+teacher and its test scenarios) are verified by the tests of `check-spec`, which are not rules
+(section 8).
 
 ## 2. Conformance
 
@@ -267,8 +268,9 @@ fixtures are tested by `course-specs/linear-course/1/course/checks/test-fixtures
   `teacher/lexicon.yaml` (the spec's, plus the key of its `teacher/README.md`), `spec.yaml` at
   `1.0.0-alpha`, a `CHANGELOG.md` whose first section is
   « Unreleased », a `teacher/composition.yaml` of five parts whose `from: spec` sources are files
-  every copy holds, a `teacher/tests/` with `scenario.schema.yaml` and one test scenario); every `check-spec` test passes, the check scripts its rules name found in
-  `fixtures/checks/` (stubs, through `--checks-dir`). `fixtures/broken/<name>/` there: a copy of it
+  every copy holds, a `teacher/tests/` with `scenario.schema.yaml` and one test scenario); every
+  `check-spec` test passes, the check scripts its rules name found in `fixtures/checks/` (stubs,
+  through `--checks-dir`). `fixtures/broken/<name>/` there: a copy of it
   with one defect and its `EXPECT` file; no other `check-spec` test may fail. Every copy holds the
   composition of `valid/`, except a copy whose defect is in it. The copies for
   `rule-slugs` and `rule-files` have no lexicon, so `lexicon-keys` has none to test there.

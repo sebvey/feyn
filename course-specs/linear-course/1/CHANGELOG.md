@@ -159,7 +159,7 @@ no class: `- file or area: what changes`.
 - `teacher/README.md`, `teacher/rules.yaml`, `teacher/composition.yaml`: the protocol names no
   Claude Code mechanism: `teacher-loads-composition` no longer says where the rules of a moment
   are loaded from, `classroom-exchanges-exempt` says « ses outils » for « les skills », the
-  comments of `composition.yaml` say the teacher prints the French texts; `README.md` and the
+  comments of `composition.yaml` say the teacher reads the French texts; `README.md` and the
   header of `teacher/rules.yaml` no longer count the rules of `teacher/rules.yaml`, and
   `course/checks/README.md` points to `spec-directives/1/README.md` section 8 for the tests of
   `check-spec` (#515).
