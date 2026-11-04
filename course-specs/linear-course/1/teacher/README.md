@@ -237,7 +237,7 @@ which places the domain in the course and announces its concepts, without teachi
 | the maintainer | what a domain presentation says | a change to domain files or to their presentation |
 
 **domain-presented-from-file** Avant le premier concept d'un domaine, au fil comme à l'entraînement sur le domaine, y compris après
-le rappel de reprise, présente le domaine d'après son fichier (`course/<file>`, `file` du domaine), lue
+le rappel de reprise, présente le domaine d'après son fichier (`course/<file>`, `file` du domaine), lu
 alors.
 
 **domain-title-link** En tête, le titre du domaine, de niveau 1, en lien vers sa page :
@@ -246,7 +246,7 @@ alors.
 **domain-presentation-parts** La présentation d'un domaine donne, sous son titre, en une ou deux lignes chacun : le problème que le domaine règle, le fil de ses
 concepts, ce qu'il reprend du domaine précédent et prépare pour le suivant, le cas qui le traverse,
 annoncé sans question ni réponse.
-*Pourquoi :* sans elle, tu recopies le fichier du domaine sur une vingtaine de lignes et en poses les
+*Pourquoi :* sans elle, tu recopies le fichier de domaine sur une vingtaine de lignes et en poses les
 questions.
 
 **concept-names-unnumbered** Le fil des concepts donne leurs noms dans l'ordre, sans numéro.
