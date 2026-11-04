@@ -16,8 +16,8 @@ section 6.1, check `svg-contract`), declared in the frontmatter of `concept.md` 
 (`course/README.md` 3.1, 3.5). Flow diagrams are SVG too: boxes,
 arrows, `<text>`. Mermaid, site components and Excalidraw are not course sources. This rests on
 the test of 2026-10-26 in Claude Code desktop: an SVG sent to the panel rendered, a Mermaid file
-showed as text. It replaces the 23 Astro diagram components of `parcours-po-website`, which the
-teacher could not show.
+showed as text. It replaces the 23 Astro diagram components of the site repository that
+preceded feyn, which the teacher could not show.
 
 ## Options ruled out
 
@@ -29,5 +29,4 @@ teacher could not show.
 - An SVG is longer to write than Mermaid; the contract and its check make an agent's SVG
   reliable.
 - When the teacher shows a diagram is not this decision's: decision
-  `diagram-shown-at-its-subconcept` and protocol rules `declared-diagram-shown`,
-  `requested-diagram-shown` and `diagram-not-displayable` settle it.
+  `diagram-shown-at-its-subconcept` and the protocol's rules on diagrams settle it.

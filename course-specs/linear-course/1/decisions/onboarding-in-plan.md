@@ -12,12 +12,12 @@ teacher ask the learner what they know of Scrum.
 The onboarding questions and the teacher's posture belong to the course, not to the protocol:
 `plan.md` has a mandatory « Accueil » section (`headings.onboarding`) giving the posture in a
 paragraph, then the questions as a numbered list, each `**<label>** : <question>`; the protocol
-reads it (rules `teacher-posture-from-plan`, `onboarding-questions-announced`,
-`onboarding-questions-order` and `onboarding-profile-written`) and keeps only what every course
-shares: the nickname question, first, and no question on pace. Each answer goes to `learner/apprenant.md` as
-`- <label> : <answer>`, in the learner's words. This replaces the generic wording PR #86 put in
-rules `teacher-posture-from-plan` and `onboarding-questions-order`, and the two fixed memory
-headings « Rôle » and « Avant le parcours ».
+reads it (its rules on the posture, on announcing and ordering the questions and on writing the
+learner's profile) and keeps only what every course shares: the nickname question, first, and no
+question on pace. Each answer goes to `learner/apprenant.md` as `- <label> : <answer>`, in the
+learner's words. This replaces the generic wording PR #86 put in the protocol's rules on the
+posture and on the order of the questions, and the two fixed memory headings « Rôle » and « Avant
+le parcours ».
 
 ## Options ruled out
 
@@ -28,5 +28,6 @@ headings « Rôle » and « Avant le parcours ».
 
 ## Consequences
 
-- The `course-files` check requires the section; `courses/parcours-po/plan.md` gets the old
-  posture and questions word for word (#87, which blocks S1-05 and S2-01).
+- The `course-files` check requires the section; the `plan.md` of the course then in the
+  repository gets the old posture and questions word for word (#87, which blocks S1-05 and
+  S2-01).

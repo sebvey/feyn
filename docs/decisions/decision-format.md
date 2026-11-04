@@ -19,6 +19,14 @@ contributor, the teacher, a workflow, the maintainer…), then a concrete wrong 
 breaks; then the decision in one paragraph. Optional headings, only when they add: options
 ruled out, consequences. No index: `ls` and the frontmatter suffice.
 
+A decision, in any `decisions/` folder, and `docs/glossary.md` cite no rule id: neither the id of
+a rule of a spec nor that of a group of rules. A rule id changes faster than they do, since rules
+are renamed, merged and regrouped while the decision still holds. A decision names the rule it
+settles by what it asks ("the protocol rule that shows a declared diagram at its
+sub-concept"); the rule points to the decision, in its `origin` or its `why`, not the reverse.
+A decision of a spec or of the spec directives also names no course (decision
+`spec-names-no-course`).
+
 A live decision states what holds today; git keeps the before. A mechanism of it that changes
 (a skill or a path renamed, a file moved, a step that now runs elsewhere, a tool removed) is
 corrected in place in its body, with no "Amended" line. A change of the scope of the choice
@@ -42,7 +50,8 @@ costly to undo; otherwise a comment where it applies, or nothing. Decisions on h
 teaches (`classroom-builder/` and the spec's protocol) also follow the two-tests rule: they
 enter only after two fresh tests show them necessary or sufficient. A site or structure
 decision is taken on argument. The `/feyn-decision` skill applies this file: it refuses a
-decision without a counterfactual, picks the folder, checks for a neighbouring slug.
+decision without a counterfactual, picks the folder, checks for a neighbouring slug, and checks
+that the text cites no rule id and, in a spec, names no course.
 
 ## Options ruled out
 
@@ -69,3 +78,8 @@ decision without a counterfactual, picks the folder, checks for a neighbouring s
   writing a decision that binds the teacher, a workflow or the maintainer would force it into
   "an agent would…" or see it refused, though what the counterfactual must hold is a concrete
   wrong act, not its subject. The bodies of the existing decisions are left as they are.
+- Amended 2026-11-04 (#528): a decision and the glossary cite no rule id, nor a group's. Without
+  this, a decision cites rules that a later renaming or merge has removed (epic #451 renames and
+  merges rules; story #524 had added rule ids to two decisions). The live decisions and the
+  glossary that cited one were rewritten to name the rule by what it asks; decision
+  `rules-named-by-slug` no longer lists the decisions among the references to a slug.

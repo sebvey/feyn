@@ -167,3 +167,9 @@ no class: `- file or area: what changes`.
   `course-yaml` as an unknown field, the tolerance kept for the founding course gone with it
   (decision `parcours-po-archived`); the fixture `broken/course-yaml-language`; the checks'
   README names `courses/po-essai` as the real course a change of the spec is run on (#521).
+- `decisions/`, `README.md`: the decisions state their evidence without naming a course and cite
+  no rule id (decisions `spec-names-no-course` of the directives and `decision-format`); section
+  2 names the founding course by its role; `rules-named-by-slug` amended, a decision no longer
+  cites a slug (#528).
+- `teacher/README.md`: the list of the files that cite a rule by its slug no longer names the
+  decisions, which name a rule by what it asks (decision `decision-format`) (#528).
