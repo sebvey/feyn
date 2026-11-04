@@ -98,7 +98,8 @@ Every field, never only `status`:
   applied, by a rerun when the PR must change, and the maintainer informed; the rest, costly to
   undo or foundational, is named in the PR's Review first (one bullet can name several), its
   options ruled out and its cost of going back in "Delivery notes": the maintainer decides it
-  by the merge, and the hand-over does not wait for an answer. One missing is added by a rerun
+  by the merge, and the hand-over does not wait for an answer; a choice that is neither stays
+  in "Delivery notes". One missing is added by a rerun
   (step 4) or by your own edit of the body
   (`mise exec -- gh pr edit <pr> --body-file <file>`, within its limits) and of "Delivery notes"
   (in place, `/feyn-pull-request` step 6); the notification (step 5) names that edit.
