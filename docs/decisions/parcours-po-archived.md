@@ -11,11 +11,11 @@ finding `courses/parcours-po/` gone, would conclude that the founding course, it
 its cases are lost, when an issue or a decision cites one of its paths.
 
 `courses/parcours-po/` (the founding course, 18 concepts and 2 annexes) is removed from the
-tree on 2026-11-04. It is archived at the tag `parcours-po/v0-fondateur`, which points at the
-last commit of `main` that holds it:
+tree on 2026-11-04. It is archived at the tag `parcours-po/v0-fondateur`, which points at a
+commit of `main` that holds it, set before the merge:
 `git show parcours-po/v0-fondateur:courses/parcours-po/<path>` prints a file, and
 `git ls-tree -r --name-only parcours-po/v0-fondateur courses/parcours-po/` lists them. A path `courses/parcours-po/<path>` cited in an issue, a decision or a spec file is
-read there. The archived course is the raw material of its re-creation through the creation
+read there. The archived course is the source its re-creation reads through the creation
 path of the spec, concept by concept (epic #520), not a course of the tree: no check, no build
 and no policy reads it. `po-essai` stays the bench course every spec change is tried on. The
 precedent is decision `construction-in-history` (a folder removed, its files read in the history

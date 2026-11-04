@@ -95,7 +95,7 @@ no class: `- file or area: what changes`.
   writer), defined in `spec-directives/README.md`; no rule changes (#467).
 - `spec.yaml`, `lang/`, `course/`, `teacher/`: the language is the spec's, `language: fr` in
   `spec.yaml`, no longer a field of `course.yaml` (`course-yaml` accepts a `language` key and
-  ignores it, for `courses/parcours-po` until its migration); the language pack `lang/fr.yaml`
+  ignores it, for `courses/parcours-po` until its migration; removed by #521, below); the language pack `lang/fr.yaml`
   becomes two lexicons, `course/lexicon.yaml` (the words of the course files: headings, case
   fields, qualifiers, markers, natures, concept references, source types, typography, the word
   lists of the checks) and `teacher/lexicon.yaml` (phrases, learner words, memory, statuses); its
