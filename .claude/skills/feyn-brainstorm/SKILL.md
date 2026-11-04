@@ -95,20 +95,21 @@ holds, for whom, with counts, and write it as a support the maintainer reads lin
 
 ## 2. The subjects
 
-The subjects are treated in the order of the README's table, each in its file
-`<nn>-<slug>.md`, and put to the maintainer in the form their `CLAUDE.md` gives a decision. What
-the brainstorm adds to that form: the subject's frame answers four questions, what the thing
-is; what it holds today (measured where it can be); who reads it (a program, an agent, the
-teacher, the site, the maintainer: checked in the code, not assumed); what the earlier subjects
-already changed there.
+The subjects are treated in the order of the README's table, each in its file `<nn>-<slug>.md`,
+and put to the maintainer in the form `CLAUDE.md`, "Working with the maintainer", gives a
+decision. What the brainstorm adds to that form: the subject's frame answers four questions,
+what the thing is; what it holds today (measured where it can be); who reads it (a program, an
+agent, the teacher, the site, the maintainer: checked in the code, not assumed); what the
+earlier subjects already changed there.
 
 The maintainer decides. The decision is written in the subject's file before the next subject
 opens (decided, why, rejected), its state set to decided in the README's table, and one line
 added to the README's summary. A subject left open stays open in the table, with what it waits
 on.
 
-A gap found during a subject enters the README's table as the maintainer's `CLAUDE.md` says a
-gap enters a plan. The output is always the last subject.
+A gap found during a subject enters the README's table as the maintainer's rules say a gap
+enters a plan (`CLAUDE.md`, "Working with the maintainer"). The output is always the last
+subject.
 
 The skeleton of a subject file:
 
@@ -140,8 +141,9 @@ State: <open | in progress | decided (<date>)>
 <what this subject taught about the object, one line each; none: the section is dropped.>
 ```
 
-A decision of the project that a subject touches is weighed as the maintainer's `CLAUDE.md`
-says (on 2026-11-04, `reader-facing-and-teacher-only-files`, `spec-files-by-product` and
+A decision of the project that a subject touches is weighed as the maintainer's rules say
+(`CLAUDE.md`, "Working with the maintainer"; on 2026-11-04,
+`reader-facing-and-teacher-only-files`, `spec-files-by-product` and
 `versioned-objects-and-spec-layout` were replaced); its replacement or amendment is a decision
 to write, carried by a work item (moment 4).
 

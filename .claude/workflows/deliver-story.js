@@ -39,7 +39,8 @@ const WORK = A.work || "The issue's To do is the plan."
 // get work as given, to check a choice the PR says the maintainer asked.
 const RECORD = A.work ? `\n\nWhen the text above carries a maintainer's request (stated as asked by the maintainer, with its date), record it in "Delivery notes": in Choices, as the maintainer's with its date, or as a deviation when it departs from ${DW}.` : ''
 // In epic mode, the maintainer also answers open questions on the epic (feyn-deliver-epic step 3),
-// recorded in its plan comment as "Answered: ... (<date>)".
+// or in the work session, recorded in the log of its plan comment as
+// "Answered: ... (the maintainer, <where>, <date>)".
 const REQUEST_SOURCES = ALONE ? 'the issue or its comments' : 'the issue or its comments, the epic or its plan comment'
 const WORK_FOR_REVIEW = A.work
   ? `The contributor was given this guidance beyond the issue (the workflow's "work"), verbatim:\n<work>\n${A.work}\n</work>\nA choice the PR or "Delivery notes" says the maintainer asked must match a request in it, or in ${REQUEST_SOURCES}; one that matches none is a finding.`

@@ -166,7 +166,7 @@ open, or sent to a brainstorm, keeps the label: it has not been decided.
   them; a story created this way ends its Context with the origin line of the option it splits
   ("From idea #<n>.", "Story of epic #<n>.", "From a brainstorm with the maintainer, <date>."
   or "Asked by the maintainer, <date>."), never a new form. A story under an epic is created
-  only when it is the next one the epic's plan comment names (the policies of
+  only when it is the next one the epic's plan comment marks (the policies of
   [contributing](../../../docs/contributing.md)); otherwise that part is folded into the epic
   (below). The option split is not a twin of its parts: when `/feyn-issue`'s step 2, "Look for
   a twin", finds it, it goes on to create them;

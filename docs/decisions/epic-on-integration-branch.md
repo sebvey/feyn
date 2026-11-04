@@ -15,9 +15,12 @@ is a PR to that branch: reviewed by a fresh agent, merged (squash) by the orches
 closes the story (`Closes` does not close an issue on a branch other than `main`) and sets it
 Done. `main` is merged into the branch when it moves, never rebased. A choice that departs from
 the epic's Done when or adds structure (a new file, a category, a marker, an exception to a
-principle) becomes at once an **open question** to the maintainer, a line in the plan comment
-and a comment on the epic, and the work goes on; the maintainer answers on the epic, and the
-orchestrator applies the answer, by a story when it needs work. When the last story is merged, a
+principle) is sorted at once, and the work goes on: one a decision, the epic's Material, a rule,
+an answer of the maintainer or a story of the plan already settles is applied and the maintainer
+informed; the rest, costly to undo or foundational, becomes an **open question** to the
+maintainer, a line in the plan comment and a comment on the epic. The maintainer answers on the
+epic or in the work session, the orchestrator records the answer at once in the plan comment
+and applies it, by a story when it needs work. When the last story is merged, a
 fresh agent reviews the whole branch against the epic's Done when; the **epic PR**, from the
 integration branch to `main` with `Closes #<epic>`, is handed over only when no open question
 remains. The maintainer validates the whole by merging the epic PR into `main` (squash), which
@@ -37,3 +40,7 @@ to `main` with one merge by the maintainer per story.
 - Amends `three-channels` (one more branch outlives an issue),
   `fresh-agent-review-before-maintainer` (the epic PR reaches the maintainer) and
   `themes-and-release-milestones` (the plan comment holds the open questions).
+- Amended 2026-11-04 (#550): a departure is sorted before it becomes an open question, and an
+  answer may come in the work session. In the delivery of epic #450, every departure became a
+  question: about half of the maintainer's 17 answers restated a rule, a decision or a planned
+  story that already settled it.
