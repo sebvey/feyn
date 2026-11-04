@@ -108,7 +108,7 @@ concept is stored, read or written (decision `glossary-by-concept`).
 
 - means: the build of a classroom from a course and its spec MAJOR, made in two halves: the spec MAJOR renders the parts of the **composition** as text, and the repository's classroom builder realises them in Claude Code. Rendering the parts as text is a step of the classroom build, not a build
 - en: classroom build
-- fr: to settle
+- fr: « build de la classe »
 - not to confuse with: [build](#build), [site build](#site-build), [classroom](#classroom), [composition](#composition)
 
 ### site
@@ -278,14 +278,14 @@ concept is stored, read or written (decision `glossary-by-concept`).
 - means: a case qualified « rechange »: posed when the learner fails the case of a leaf sub-concept, self-contained (its own situation and its own question)
 - en: fallback case
 - fr: « cas de rechange »
-- not to confuse with: [practice case](#practice-case), [aside case](#aside-case)
+- not to confuse with: [case](#case), [practice case](#practice-case), [aside case](#aside-case)
 
 ### aside case
 
 - means: a case qualified « aparté »: for a frequent question outside the course path
 - en: aside case
 - fr: « aparté »
-- not to confuse with: [practice case](#practice-case), [fallback case](#fallback-case), [course path](#course-path)
+- not to confuse with: [case](#case), [practice case](#practice-case), [fallback case](#fallback-case), [course path](#course-path)
 
 ### example
 
@@ -477,7 +477,7 @@ concept is stored, read or written (decision `glossary-by-concept`).
 - means: what a teacher is made of, beside how it behaves: five parts, each defined by when it loads and what it draws from the spec, the course, learner memory and the classroom; described by the spec with no Claude Code term: its realisation is the classroom build's
 - en: composition · rejected: "architecture", "the instructions"
 - fr: « composition »
-- not to confuse with: [protocol](#protocol), [classroom build](#classroom-build)
+- not to confuse with: [protocol](#protocol), [classroom build](#classroom-build), [teacher skill](#teacher-skill), [teacher template](#teacher-template)
 
 ### mini-recap
 

@@ -36,4 +36,4 @@ text that means the course's sense says so; the frame's vocabulary is available 
   mean <term>?", no skill accepting a rejected word silently (`CLAUDE.md`, "Vocabulary").
 - Names follow the terms: labels `area:…`, `type:…`; agent workflows `feyn-<script>-workflow`.
 - It supersedes `reserved-vocabulary`, whose reservation and two glossaries it carries over.
-- Amended 2026-11-04 (#541): one entry per concept with no exception, the code key dropped.
+- Amended 2026-11-04 (#541): one entry per concept, no code key, files named only as the concept.
