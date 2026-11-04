@@ -108,8 +108,8 @@ added to the README's summary. A subject left open stays open in the table, with
 on.
 
 A gap found during a subject enters the README's table as the maintainer's rules say a gap
-enters a plan (`CLAUDE.md`, "Working with the maintainer"). The output is always the last
-subject.
+enters a plan (`CLAUDE.md`, "Working with the maintainer": their "Plans and working
+files"). The output is always the last subject.
 
 The skeleton of a subject file:
 
@@ -142,7 +142,7 @@ State: <open | in progress | decided (<date>)>
 ```
 
 A decision of the project that a subject touches is weighed as the maintainer's rules say
-(`CLAUDE.md`, "Working with the maintainer"; on 2026-11-04,
+(`CLAUDE.md`, "Working with the maintainer": their "Plans and working files"; on 2026-11-04,
 `reader-facing-and-teacher-only-files`, `spec-files-by-product` and
 `versioned-objects-and-spec-layout` were replaced); its replacement or amendment is a decision
 to write, carried by a work item (moment 4).

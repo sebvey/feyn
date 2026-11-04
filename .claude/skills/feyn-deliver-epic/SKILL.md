@@ -90,8 +90,8 @@ One at a time, the next one only (rules of the cycle):
    - `deviations`, whatever the status, and the `choicesMade` that add structure (a new file,
      a category, a marker, an exception to a principle): each is sorted at once (step 3); the
      other choices stay in its PR's "Delivery notes".
-5. **Clean the run**, the steps of both delivery skills (`/feyn-deliver-story-alone` cites
-   them), `<base>` being the integration branch, or `main` for a story without an epic.
+5. **Clean the run**, the steps of both delivery skills, `<base>` being the integration branch,
+   or `main` for a story without an epic.
    `git worktree list --porcelain` lists the run's worktrees,
    `.claude/worktrees/wf_<run id>-<n>`. A locked one: its agent still runs, wait. For each:
    - `git -C <path> status --porcelain` shows nothing but `node_modules`; anything else: stop
