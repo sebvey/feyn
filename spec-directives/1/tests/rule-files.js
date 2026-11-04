@@ -4,7 +4,7 @@
 //   - course/rules.yaml and teacher/rules.yaml exist, each a map whose one key
 //     `groups` is a non-empty list; a group has `rules`, a non-empty list, and may declare `id`
 //     (a group slug), `title`, `purpose` (what the group is for, a non-empty string), `category`
-//     and `method`;
+//     and `method`; a group of course/rules.yaml has a `purpose`;
 //   - a rule has `id` (a slug of two to five words), `level`, `category`, `method` (on the rule
 //     or on its group) and `text`; `check` and `why` are optional; a rule of the protocol also has
 //     `origin`; no other key;
@@ -34,9 +34,11 @@ const COURSE_CATEGORIES = ['structure', 'pedagogy', 'writing', 'sources', 'diagr
 // the nine families of teacher/README.md, in its order (## 1. to ## 9.)
 const FAMILIES = ['session-start', 'domain-presentation', 'loop', 'message-form', 'storyline',
   'stances-and-sources', 'practice-skip-asides', 'learner-memory', 'stop'];
+// purpose: whether every group declares a `purpose`; the groups of teacher/rules.yaml gain theirs
+// when the protocol's rules move there
 const FILES = {
-  'course/rules.yaml': { categories: COURSE_CATEGORIES, methods: METHODS, extra: [] },
-  'teacher/rules.yaml': { categories: FAMILIES, methods: ['demonstration'], extra: ['origin'] },
+  'course/rules.yaml': { categories: COURSE_CATEGORIES, methods: METHODS, extra: [], purpose: true },
+  'teacher/rules.yaml': { categories: FAMILIES, methods: ['demonstration'], extra: ['origin'], purpose: false },
 };
 const RULE_KEYS = ['id', 'level', 'category', 'method', 'check', 'text', 'why'];
 const GROUP_KEYS = ['id', 'title', 'purpose', 'category', 'method', 'rules'];
@@ -109,6 +111,7 @@ function run(ctx) {
         }
       } else if (file === 'teacher/rules.yaml') out.push(fail(file, gl, `group ${gi + 1}: id is mandatory in the protocol, the slug of its group of teacher/README.md`));
       if (g.purpose !== undefined && !isStr(g.purpose)) out.push(fail(file, yaml.lineOf(g, 'purpose', gl), `group ${gi + 1}: purpose must be a non-empty string`));
+      else if (g.purpose === undefined && spec.purpose) out.push(fail(file, gl, `group ${gi + 1}: purpose is mandatory in ${file}, what the group is for`));
       if (g.category !== undefined) closed(g, 'category', g.category, spec.categories, 'category', gl);
       if (g.method !== undefined) closed(g, 'method', g.method, spec.methods, 'method', gl);
       if (!Array.isArray(g.rules) || g.rules.length === 0) { out.push(fail(file, yaml.lineOf(g, 'rules', gl), `group ${gi + 1}: rules must be a non-empty list`)); return; }

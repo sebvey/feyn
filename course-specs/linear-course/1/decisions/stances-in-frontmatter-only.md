@@ -35,4 +35,4 @@ contradicts ».
   carries over, not decides, the hint « à présenter comme tels » the old concept files had in
   that section: « Présente les choix du cours comme tels : des choix du cours, qu'aucune source
   n'énonce tels quels. »
-  `course/README.md` 3.1 `stances.course` says the same.
+  The schema of the `concept.md` frontmatter, at `stances.course`, says the same.

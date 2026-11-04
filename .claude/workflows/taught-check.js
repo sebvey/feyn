@@ -81,7 +81,7 @@ const CHECKS = `The seven checks:
 
 What the learner has received at a point of the course: the preceding units of the inventory and, for the case, its « Explication » (or the leaf's reader text when the case has none), its « Situation » and its « Question ». They are not assumed to read the storyline, the glossary or the rest of teaching.md, even though the site shows the first two. Out of scope: prerequisites a learner skipped at their own request.
 The « Réponse attendue » and « Erreurs fréquentes » fields of a case are the teacher's.
-The « Approfondissement » section of concept.md (headings.deepening, course-specs/linear-course/1/course/README.md 3.2) is never taught matter: the teacher reads it only in an aside, on the learner's request, never on the course path, and no case of any type relies on it. A case whose expected answer needs it asks what the learner has not been taught: it is a finding (check 2).`
+The « Approfondissement » section of concept.md (headings.deepening; the rules of course-specs/linear-course/1/course/rules.yaml that course/README.md 3.2 points to) is never taught matter: the teacher reads it only in an aside, on the learner's request, never on the course path, and no case of any type relies on it. A case whose expected answer needs it asks what the learner has not been taught: it is a finding (check 2).`
 
 // --- Scope -----------------------------------------------------------------------------
 

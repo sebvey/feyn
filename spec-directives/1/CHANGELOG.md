@@ -73,3 +73,6 @@ no class: `- file or area: what changes`.
 - `README.md`, `tests/rule-slugs.js` (comment): `decisions/` are not read for ranges because a
   decision cites no rule id (decision `decision-format`), no longer because they quote the
   ranges they replaced (#528).
+- `tests/`: `rule-files` fails a group of `course/rules.yaml` without a `purpose` (the fixture
+  `broken/rule-files-purpose-missing`; every fixture's `course/rules.yaml` gains one); a group of
+  `teacher/rules.yaml` may still lack one; `README.md` sections 1 and 8 say so (#533).

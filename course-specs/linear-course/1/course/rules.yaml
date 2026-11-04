@@ -1,16 +1,16 @@
 # Les règles d'un cours de linear-course (decisions rules-with-level-and-method and
-# spec-files-by-product): the rules of course/README.md sections 1, 2, 4 and 5, those the checks
-# verify and those verified by inspection, the review; and of its other sections, the rules the
-# checks verify, taught-check included, and one rule verified by inspection. A course conforms when
-# it holds every requirement of this file, whatever its method (spec-directives/1/README.md section
-# 2). The tables of fields are the schemas of course/schemas/, each one rule here. The other rules
-# of course/README.md join this file at the extraction of #318.
+# spec-files-by-product): every rule of a course, those the checks verify, taught-check
+# included, and those verified by inspection, the review; one group per section or sub-section
+# of course/README.md that points to rules, in its order (section 6 points to the groups of 6.1 and
+# 6.2; section 7 states no rule of a course). A course conforms when it holds every requirement of
+# this file, whatever its method (spec-directives/1/README.md section 2). The tables of fields are
+# the schemas of course/schemas/, each one rule here.
 #
-# A group: title, purpose (what the group is for, optional), category and method (declared once
-# for its rules; a rule may override them), rules. A rule: id (a slug), level, category, method,
-# check (the check that implements the method, when one exists), text, why (optional: what a
-# competent model does without the rule, as observed). The texts of the groups of sections 1, 2, 4
-# and 5 are French, the language of the spec (decision language-policy).
+# A group: title, purpose (what the group is for), category and method (declared once for its
+# rules; a rule may override them), rules. A rule: id (a slug), level, category, method, check
+# (the check that implements the method, when one exists), text, why (optional: what a competent
+# model does without the rule, as observed). The texts are French, the language of the spec
+# (decision language-policy).
 # check-spec (rule-files) verifies this file.
 groups:
   - title: Le dossier du cours (course/README.md section 1)
@@ -154,7 +154,10 @@ groups:
           Il convient qu'un sous-concept feuille, un nœud sans `children`, tienne en un message du
           professeur avec une question.
 
-  - title: The concept folder (course/README.md section 3)
+  - title: Le dossier de concept (course/README.md section 3)
+    purpose: >-
+      Les fichiers dont un concept est fait et la forme commune de leurs sections : chaque concept
+      est une source, que le site construit et que le professeur lit, sans réécriture.
     category: structure
     method: test
     rules:
@@ -162,146 +165,474 @@ groups:
         level: requirement
         check: concept-folder
         text: >-
-          A concept folder shall hold `concept.md`, `teaching.md`, `sources.md` and its `.svg`
-          diagrams, and nothing else.
+          Un dossier de concept doit tenir `concept.md`, `teaching.md`, `sources.md` et ses
+          schémas `.svg`, et rien d'autre.
       - id: concept-sections-in-order
         level: requirement
         check: concept-folder
         text: >-
-          The sections of `concept.md`, `teaching.md` and `sources.md` shall be `##` headings
-          whose text is the lexicon's heading, in the order given, the mandatory ones
-          present, and no other `##` section shall exist.
+          Les sections fixes de `concept.md`, `teaching.md` et `sources.md` doivent être des
+          titres `##` dont le texte est le titre du lexique, dans cet ordre, toutes présentes sauf
+          celles dites au choix, et aucune autre section `##` ne doit exister : pour `concept.md`,
+          « Objectif », « L'essentiel », les sections de sous-concept, « Pièges », « Le test
+          rapide », puis « Approfondissement » au choix ; pour `teaching.md`, « Consignes »,
+          « Faits du fil rouge utilisés » au choix, « Banque d'exemples », « Schéma » au choix ;
+          pour `sources.md`, « Affirmations », « Références », « Non vérifié ».
       - id: teaching-sources-no-h1
         level: requirement
         check: concept-folder
-        text: "`teaching.md` and `sources.md` shall have no H1: the title is in `course.yaml`."
+        text: >-
+          `teaching.md` et `sources.md` ne doivent pas avoir de H1 : le titre est dans
+          `course.yaml`.
       - id: teaching-sources-no-frontmatter
         level: requirement
         check: concept-folder
         text: >-
-          `teaching.md` and `sources.md` shall have no frontmatter: course Markdown has YAML
-          frontmatter where stated only.
+          `teaching.md` et `sources.md` ne doivent pas avoir de frontmatter : le Markdown d'un
+          cours n'a de frontmatter YAML que là où la spec le dit.
+
+  - title: Le frontmatter de concept.md (course/README.md section 3.1)
+    purpose: >-
+      Ce que le concept déclare en tête de `concept.md` : sa description pour le site, ses
+      positions et ses voisins, chacun sourcé dans son propre élément, la preuve à côté de ce
+      qu'elle prouve, et ses schémas.
+    category: structure
+    method: test
+    rules:
       - id: concept-frontmatter-valid-against-schema
         level: requirement
         check: concept-folder
         text: >-
-          The frontmatter of `concept.md` shall be valid against
-          `course/schemas/concept-frontmatter.schema.yaml`: its keys, an item and a diagram entry,
-          their presence and their form.
+          Le frontmatter de `concept.md` doit être valide selon
+          `course/schemas/concept-frontmatter.schema.yaml` : ses clés, un élément et une entrée de
+          schéma, leur présence et leur forme.
       - id: item-text-inline-markdown
         level: requirement
         check: concept-folder
-        text: "The `text` of a frontmatter item shall be inline Markdown: bold and italics only."
+        text: >-
+          Le `text` d'un élément du frontmatter doit être du Markdown en ligne : gras et italique
+          seulement.
+      - id: stance-item-has-author
+        level: recommendation
+        category: sources
+        method: inspection
+        text: >-
+          Il convient qu'un élément de `stances.consensus` ou de `stances.school` ait un
+          `author` : le texte ou l'auteur à qui l'affirmation appartient.
       - id: verified-parallel-to-refs
         level: requirement
         check: concept-folder
         text: >-
-          An item's `verified` shall be present when `refs` is not empty and absent otherwise,
-          a list parallel to `refs`, one entry per reference in the same order.
+          Le `verified` d'un élément doit être présent quand `refs` n'est pas vide et absent
+          sinon : une liste parallèle à `refs`, une entrée par référence, dans le même ordre.
+      - id: item-verified-quotes-source
+        level: requirement
+        category: sources
+        method: inspection
+        text: >-
+          Chaque entrée de `verified` doit être la plus courte citation qui établit l'élément,
+          entre « », puis sa place entre parenthèses, comme la cellule de vérification d'une ligne
+          de « Affirmations ».
       - id: no-stances-section
         level: requirement
         check: concept-folder
         text: >-
-          The body of `concept.md` shall have no stances section: `stances` and `neighbors` are
-          the one place for the concept's stances and neighbours.
+          Le corps de `concept.md` ne doit pas avoir de section de positions : `stances` et
+          `neighbors` sont le seul endroit des positions et des voisins du concept.
         why: >-
-          Without it, the migration wrote the stances twice, in the frontmatter and in a body
-          section, and the two copies drifted (concept 9 prototype; decision
+          Sans elle, la migration écrivait les positions deux fois, dans le frontmatter et dans
+          une section du corps, et les deux copies divergeaient (prototype du concept 9 ; décision
           stances-in-frontmatter-only).
-      - id: subconcept-sections-follow-tree
-        level: requirement
-        check: concept-folder
+      - id: reader-text-stance-markers
+        level: permission
+        category: writing
+        method: inspection
         text: >-
-          `concept.md` shall hold one section per first-level sub-concept, in `course.yaml`
-          order, and inside each, one `###` section per second-level sub-concept.
+          Le texte lecteur peut marquer une affirmation d'un marqueur de position, en plus des
+          positions du frontmatter.
+      - id: diagrams-declared-and-present
+        level: requirement
+        category: diagrams
+        check: svg-contract
+        text: >-
+          Chaque fichier de schéma déclaré doit exister, son `subconcept` doit être un
+          sous-concept du concept, et chaque SVG du dossier doit être déclaré.
+
+  - title: Le corps de concept.md (course/README.md section 3.2)
+    purpose: >-
+      Le texte lecteur du concept, dans un ordre fixe : son objectif, l'essentiel, une section par
+      sous-concept, ses pièges et son test rapide, puis, pour l'apprenant qui veut aller plus
+      loin, un approfondissement.
+    category: pedagogy
+    method: inspection
+    rules:
       - id: objective-restated-verbatim
         level: requirement
+        category: structure
+        method: test
         check: concept-folder
         text: >-
-          « Objectif » shall be the concept's `objective`, verbatim, give or take line breaks,
-          written with a capital first letter and ending with a period where the field ends
-          with no `.`, `!` or `?`.
-      - id: sources-tables-five-columns
+          « Objectif » doit être l'`objective` du concept, mot pour mot, aux sauts de ligne près,
+          écrit avec une majuscule initiale et fini par un point quand le champ ne finit ni par
+          `.`, ni par `!`, ni par `?`.
+      - id: essentials-define-concept
         level: requirement
+        text: >-
+          « L'essentiel » doit donner la définition du concept et ce qui la rend importante, en
+          quelques lignes.
+      - id: subconcept-sections-follow-tree
+        level: requirement
+        category: structure
+        method: test
         check: concept-folder
         text: >-
-          « Affirmations » and « Références » of `sources.md` shall each hold one table of
-          five columns.
+          `concept.md` doit tenir une section par sous-concept de premier niveau, dans l'ordre de
+          `course.yaml`, et dans chacune une section `###` par sous-concept de second niveau.
+      - id: pitfalls-whole-concept
+        level: requirement
+        text: « Pièges » doit porter sur le concept entier.
+      - id: quick-test-whole-concept
+        level: requirement
+        text: « Le test rapide » doit porter sur le concept entier.
+      - id: deepening-beyond-subconcepts
+        level: requirement
+        text: >-
+          « Approfondissement » doit tenir de la matière en plus sur le concept, au-delà de ce
+          qu'enseignent ses sections de sous-concept, pour l'apprenant qui demande à aller plus
+          loin.
+      - id: no-case-relies-on-deepening
+        level: requirement
+        text: >-
+          Aucun cas, de quelque type qu'il soit, ne doit reposer sur « Approfondissement ».
 
-  - title: The cases of teaching.md (course/README.md section 3.3)
+  - title: Le fichier teaching.md (course/README.md section 3.3)
+    purpose: >-
+      `teaching.md` tient ce dont le professeur a besoin au-delà du texte lecteur, avant tout les
+      cas. Un cas est la question préparée de la boucle : le professeur la pose à un sous-concept
+      et corrige la réponse. Il apporte la couverture (chaque sous-concept feuille en a un,
+      vérifié), la position propre du cours (sa réponse attendue est la position que le concept
+      énonce : consensus, école ou cours), l'expérience (il anticipe les erreurs des apprenants),
+      l'ancrage (il vit dans le fil rouge) et la testabilité (taught-check et les fresh tests le
+      citent par son titre). Un cas répond à l'un de quatre besoins, son type : un par
+      sous-concept feuille, sur le parcours ; un cas de rechange, quand l'apprenant échoue au
+      premier ; un cas d'entraînement, pour l'apprenant qui veut s'exercer sur un concept validé,
+      ou pour retrouver à la reprise un concept validé lors d'une séance précédente ; un aparté,
+      pour une question fréquente hors du parcours.
     category: pedagogy
     rules:
-      - id: case-heading-form
+      - id: case-within-reader-text
         level: requirement
-        method: test
-        check: case-contract
+        method: inspection
         text: >-
-          A case heading shall be `### <title> (<sub-concept>)`, the parenthesis holding a
-          sub-concept id of the concept, at any level, and at most one qualifier, before or
-          after the id, separated by a comma; nothing else.
-      - id: case-qualifier-from-lexicon
+          Un cas ne doit porter que sur ce que le texte lecteur énonce : ce que le texte lecteur
+          n'énonce pas est une lacune du concept, comblée dans `concept.md`.
+      - id: instructions-content
         level: requirement
-        method: test
-        check: case-contract
-        text: A case's qualifier shall be a value of the lexicon's `qualifiers` group.
-      - id: case-titles-unique
-        level: requirement
-        method: test
-        check: case-contract
-        text: Case titles shall be unique in the concept.
-      - id: case-fields-labelled
-        level: requirement
-        method: test
-        check: case-contract
+        method: inspection
         text: >-
-          A case shall be a list of fields, each item opening with `**<label>** :`, the label
-          one of the lexicon's `case_fields`.
-      - id: field-qualifier-on-question-only
-        level: requirement
-        method: test
-        check: case-contract
-        text: Only the « Question » label may carry a qualifier of its own before the colon.
-      - id: case-mandatory-fields
-        level: requirement
-        method: test
-        check: case-contract
-        text: >-
-          A case shall hold « Situation », « Question », « Réponse attendue » and « Erreurs
-          fréquentes », and no field twice.
-      - id: case-fields-in-order
-        level: requirement
-        method: test
-        check: case-contract
-        text: >-
-          The four mandatory fields of a case shall come in the order of the table, the
-          optional fields before « Situation » before it, and « Ce qui marche » last.
-      - id: leaf-has-a-case
-        level: requirement
-        method: test
-        check: case-contract
-        text: Every leaf sub-concept shall have at least one case.
+          « Consignes » doit donner l'ordre d'enseignement et le découpage en messages, quel cas
+          poser à quel sous-concept et lequel en rechange, les renvois à ne pas réenseigner et les
+          points de vigilance propres au concept.
       - id: case-cited-in-instructions
         level: requirement
         method: test
         check: case-contract
         text: >-
-          Every case of the bank shall be cited in « Consignes » by its title in « » (« » and
-          “ ” count as the same quotes, spaces inside them ignored).
+          Chaque cas de la banque doit être cité dans « Consignes » par son titre entre « » (« »
+          et “ ” comptent comme les mêmes guillemets, les espaces à l'intérieur ignorées).
+      - id: storyline-facts-section-content
+        level: requirement
+        method: inspection
+        text: >-
+          « Faits du fil rouge utilisés » doit tenir les faits de `storyline.md` que les cas
+          emploient, et ce que le fil rouge laisse non fixé.
+      - id: drawing-section-content
+        level: requirement
+        method: inspection
+        text: >-
+          « Schéma » doit tenir la consigne de dessin derrière les schémas du concept : la
+          métaphore, ce qu'elle montre.
+      - id: teaching-contradicts-no-protocol
+        level: requirement
+        method: inspection
+        text: >-
+          `teaching.md` ne doit contredire aucune règle du protocole : il dit quoi enseigner, le
+          protocole dit comment et quand (« Schéma » dit quoi dessiner, pas quand envoyer un
+          schéma) ; une « Consignes » qui contredit une règle est un défaut du concept.
       - id: case-restates-storyline-facts-only
         level: requirement
         method: inspection
         text: >-
-          A case shall restate only the storyline facts listed in « Faits du fil rouge
-          utilisés »; it adds the unfolding (who says what, when), never a new fact.
+          Un cas ne doit reprendre que les faits du fil rouge listés dans « Faits du fil rouge
+          utilisés » ; il ajoute le déroulé (qui dit quoi, quand), jamais un fait nouveau.
+      - id: case-heading-form
+        level: requirement
+        method: test
+        check: case-contract
+        text: >-
+          Le titre d'un cas doit être `### <title> (<sub-concept>)`, la parenthèse tenant un id
+          de sous-concept du concept, de n'importe quel niveau, et au plus un qualificatif, avant
+          ou après l'id, séparé par une virgule ; rien d'autre.
+      - id: case-qualifier-from-lexicon
+        level: requirement
+        method: test
+        check: case-contract
+        text: Le qualificatif d'un cas doit être une valeur du groupe `qualifiers` du lexique.
+      - id: fallback-case-stands-alone
+        level: requirement
+        method: inspection
+        text: >-
+          Un cas de rechange doit se suffire : sa propre situation et sa propre question, rien
+          d'emprunté au cas échoué.
+      - id: case-titles-unique
+        level: requirement
+        method: test
+        check: case-contract
+        text: Les titres des cas doivent être uniques dans le concept.
+      - id: leaf-has-a-case
+        level: requirement
+        method: test
+        check: case-contract
+        text: Chaque sous-concept feuille doit avoir au moins un cas.
+      - id: case-fields-labelled
+        level: requirement
+        method: test
+        check: case-contract
+        text: >-
+          Un cas doit être une liste de champs, chaque élément ouvert par `**<label>** :`, le
+          libellé l'un des `case_fields` du lexique, son texte sur la même ligne ou dans une liste
+          imbriquée.
+      - id: field-qualifier-on-question-only
+        level: requirement
+        method: test
+        check: case-contract
+        text: >-
+          Seul le libellé « Question » peut porter un qualificatif à lui avant les deux-points
+          (« **Question**, en deux parties : »).
+      - id: case-mandatory-fields
+        level: requirement
+        method: test
+        check: case-contract
+        text: >-
+          Un cas doit tenir « Situation », « Question », « Réponse attendue » et « Erreurs
+          fréquentes », et aucun champ deux fois.
+      - id: case-optional-fields
+        level: permission
+        method: inspection
+        text: Un cas peut tenir « Usage », « Explication » et « Ce qui marche ».
+      - id: case-fields-in-order
+        level: requirement
+        method: test
+        check: case-contract
+        text: >-
+          Les quatre champs requis d'un cas doivent venir dans l'ordre « Situation », « Question »,
+          « Réponse attendue », « Erreurs fréquentes », « Usage » et « Explication » avant eux, dans
+          n'importe quel ordre, et « Ce qui marche » en dernier.
+      - id: case-field-content
+        level: requirement
+        method: inspection
+        text: >-
+          Chaque champ d'un cas doit tenir ce que son libellé annonce : « Usage », quand poser un
+          cas hors du parcours (rechange, entraînement, aparté) ; « Explication », ce que le
+          professeur dit avant le cas, la source de son explication du sous-concept ;
+          « Situation », les acteurs et les faits du fil rouge posés d'emblée, et le déroulé (qui
+          dit quoi, quand) ; « Question », la question que pose le cas ; « Réponse attendue », la
+          bonne réponse avec ses nuances, la position du cours telle que `concept.md` l'énonce ;
+          « Erreurs fréquentes », les réponses fréquentes et comment les corriger, relances
+          comprises ; « Ce qui marche », une formulation ou une relance qu'un professeur a vue
+          marcher.
+      - id: what-works-from-observation
+        level: requirement
+        method: inspection
+        text: >-
+          « Ce qui marche » doit être vide dans un nouveau cours : le mainteneur l'ajoute à partir
+          de ce que le professeur note dans la mémoire de l'apprenant.
       - id: case-asks-what-was-taught
         level: recommendation
         method: analysis
         check: taught-check
         text: >-
-          A case should ask only what the learner has been taught before it, on the course
-          path.
+          Il convient qu'un cas ne demande que ce que l'apprenant a appris avant lui, sur le
+          parcours.
 
-  - title: Reader-text conventions (course/README.md section 3.5)
+  - title: Le fichier sources.md (course/README.md section 3.4)
+    purpose: >-
+      `sources.md` montre que le concept est fondé, et permet à chacun de remonter d'une
+      affirmation de son corps à ce sur quoi elle repose. « Références » sert d'abord le lecteur
+      du site ; « Affirmations » sert l'audit (le relecteur, le mainteneur, le professeur sur
+      demande). La traçabilité vaut par sa re-vérification, pas par son volume.
+    category: sources
+    method: test
+    rules:
+      - id: body-claims-in-claims
+        level: requirement
+        method: inspection
+        text: >-
+          Seul `concept.md` est sourcé : « Affirmations » doit couvrir les affirmations
+          vérifiables de son corps (une définition, une date, un chiffre, une citation, ce qu'un
+          guide dit ou ne dit pas).
+      - id: claims-hold-no-device
+        level: requirement
+        method: inspection
+        text: >-
+          Une ligne de « Affirmations » ne doit porter ni un fait du fil rouge (inventé, dans
+          `storyline.md`), ni un procédé d'enseignement (un exemple inventé, la déduction d'un
+          cas), ni une formulation du cours.
+      - id: stance-sourced-in-item
+        level: requirement
+        check: sources
+        text: >-
+          Une position ou un voisin doit être sourcé dans son élément du frontmatter, jamais par
+          une ligne de « Affirmations ».
+      - id: teaching-claim-to-concept
+        level: requirement
+        method: inspection
+        text: >-
+          Une affirmation que seul `teaching.md` fait est une lacune du concept : elle doit
+          d'abord être ajoutée à `concept.md`, ou n'est pas une affirmation à sourcer.
+      - id: reader-files-cite-no-reference
+        level: requirement
+        check: sources
+        text: >-
+          `concept.md` et `teaching.md` ne doivent citer aucune référence : les références vivent
+          dans les `refs` du frontmatter et dans `sources.md`.
+      - id: sources-no-introduction
+        level: requirement
+        check: sources
+        text: >-
+          `sources.md` ne doit pas avoir d'introduction : il s'ouvre sur « Affirmations ».
+      - id: sources-tables-five-columns
+        level: requirement
+        category: structure
+        check: concept-folder
+        text: >-
+          « Affirmations » et « Références » de `sources.md` doivent tenir chacune un tableau de
+          cinq colonnes, dans cet ordre : pour « Affirmations », affirmation, section, source,
+          vérifié, nature ; pour « Références », id, source, lien, type, consulté le.
+      - id: claim-states-claim
+        level: requirement
+        check: sources
+        text: Une ligne de « Affirmations » doit énoncer l'affirmation en quelques mots.
+      - id: claim-section-exists
+        level: requirement
+        check: sources
+        text: >-
+          La cellule section d'une affirmation doit tenir des ids de sous-concept et des sections
+          fixes par leur valeur du lexique (« L'essentiel », « Pièges », « Le test rapide »,
+          « Approfondissement »), séparés par des virgules, jamais le texte d'un titre, chacun
+          existant dans `concept.md`. « Objectif » n'en est pas une : il énonce ce que
+          l'apprenant fera, pas une affirmation.
+      - id: claim-source-cell-form
+        level: requirement
+        check: sources
+        text: >-
+          La cellule source d'une affirmation doit tenir des ids de référence `[S1]`, séparés par
+          des virgules, ou le mot `markers.course` ; rien d'autre : pas de texte libre, pas de
+          chemin vers un autre concept.
+        why: >-
+          Sans elle, l'agent qui écrivait le concept 9 donnait du texte libre pour source,
+          « fil rouge » et « aucune » (décision where-a-claim-goes, remplacée par
+          sources-trace-the-concept).
+      - id: claim-verified-cell-filled
+        level: requirement
+        check: sources
+        text: >-
+          La cellule vérifié d'une affirmation ne doit être vide que pour une affirmation
+          « cours ».
+      - id: claim-verified-cell-form
+        level: requirement
+        method: inspection
+        text: >-
+          La cellule vérifié doit tenir, par référence de la cellule source et dans le même
+          ordre, la plus courte citation qui établit l'affirmation, entre « », puis sa place
+          entre parenthèses (section, page, titre) ; pour une absence, « absent de » et la place
+          cherchée ; pour une affirmation « cours », une ligne qui dit d'où elle découle, ou
+          rien ; aucun raisonnement, aucun renvoi à « Non vérifié » : ce qui ne peut être cité va
+          dans « Non vérifié ».
+      - id: claim-nature-closed
+        level: requirement
+        check: sources
+        text: >-
+          La nature d'une affirmation doit être `consensus`, `école`, `cours`
+          (`markers.consensus`, `markers.school`, `markers.course`) ou `fait` (`natures.fact`).
+      - id: claim-nature-matches-marker
+        level: requirement
+        method: inspection
+        text: >-
+          Une affirmation que le texte lecteur marque d'un marqueur de position doit avoir la
+          nature de ce marqueur ; une source « cours » doit avoir la nature `cours`.
+      - id: reference-id-form
+        level: requirement
+        check: sources
+        text: >-
+          L'id d'une référence doit être `S<n>`, suivi au choix d'une lettre minuscule, unique
+          dans le concept.
+      - id: reference-names-source
+        level: requirement
+        check: sources
+        text: La cellule source d'une référence doit nommer la source (auteur, titre, date).
+      - id: reference-description-copied
+        level: requirement
+        method: inspection
+        text: >-
+          La description d'une source reprise d'un autre concept doit être copiée à l'identique.
+      - id: reference-link-one-url
+        level: requirement
+        check: sources
+        text: >-
+          Le lien d'une référence doit être une URL ou vide : une seconde place est une seconde
+          référence.
+      - id: reference-type-from-lexicon
+        level: requirement
+        check: sources
+        text: >-
+          Le type d'une référence doit être un ou plusieurs de `primary`, `secondary`,
+          `marketing`, écrits comme les mots du lexique et séparés par des virgules, puis au
+          choix une remarque entre parenthèses.
+      - id: reference-consulted-date
+        level: requirement
+        check: sources
+        text: La cellule « consulté le » d'une référence doit commencer par `YYYY-MM-DD`.
+      - id: references-per-concept
+        level: requirement
+        method: inspection
+        text: >-
+          Les références doivent être propres au concept : chaque concept cite les siennes.
+      - id: unverified-entry-anchored
+        level: requirement
+        check: sources
+        text: >-
+          Chaque entrée de « Non vérifié » doit s'ouvrir sur sa section, sous les formes de la
+          colonne section ou `headings.stances`, puis « : ».
+      - id: unverified-entry-content
+        level: requirement
+        method: inspection
+        text: >-
+          « Non vérifié » doit être une liste, vide au besoin ; chaque entrée dit, après sa
+          section, ce qu'aucune source consultée ne confirme, pourquoi et, au besoin, la consigne
+          qui suit (« écrire X, pas Y »).
+      - id: unverified-keeps-no-removed
+        level: requirement
+        method: inspection
+        text: >-
+          « Non vérifié » ne doit garder aucune trace d'une affirmation retirée : l'historique git
+          en est la trace.
+      - id: cited-ids-exist
+        level: requirement
+        check: sources
+        text: >-
+          Chaque id cité (`refs` du frontmatter, colonne source) doit exister dans « Références ».
+      - id: every-reference-cited
+        level: requirement
+        check: sources
+        text: >-
+          Chaque référence doit être citée par une affirmation ou un élément du frontmatter.
+
+  - title: Les conventions du texte lecteur (course/README.md section 3.5)
+    purpose: >-
+      Les conventions sous lesquelles la structure de `concept.md` reste du Markdown simple : le
+      site fait de chacune son HTML et ses classes, le professeur les lit comme du Markdown
+      ordinaire, et un message d'échec nomme la convention.
     category: writing
     method: test
     rules:
@@ -309,201 +640,67 @@ groups:
         level: requirement
         check: conventions
         text: >-
-          A sub-concept section shall be `## <id> <title>`, then one paragraph entirely in
-          italics, the promise; a first-level sub-concept with children holds nothing else, one
-          without children holds its reader text after the promise.
+          Une section de sous-concept doit être `## <id> <title>`, puis un paragraphe tout en
+          italique, la promesse ; un sous-concept de premier niveau qui a des enfants ne tient
+          rien d'autre, un sans enfant tient son texte lecteur après la promesse.
       - id: leaf-heading-form
         level: requirement
         check: conventions
-        text: A leaf heading shall be `### <id> <title>`, then the reader text.
+        text: Un titre de feuille doit être `### <id> <title>`, puis le texte lecteur.
       - id: heading-title-from-course-yaml
         level: requirement
         check: conventions
-        text: The `<title>` of a sub-concept heading shall equal its `title` in `course.yaml`.
+        text: >-
+          Le `<title>` d'un titre de sous-concept doit être égal à son `title` dans
+          `course.yaml`.
       - id: concept-reference-resolves
         level: requirement
         check: conventions
         text: >-
-          A concept reference shall name an existing concept or sub-concept of the course; a
-          reference to an annex, an annex number or the sub-concept id of an annex.
+          Une référence de concept doit nommer un concept ou un sous-concept existant du cours ;
+          une référence à une annexe, un numéro d'annexe ou l'id d'un sous-concept d'annexe.
+      - id: teaching-concept-reference-form
+        level: requirement
+        method: inspection
+        text: >-
+          Dans `teaching.md`, une référence de concept doit suivre la même forme que dans
+          `concept.md`.
       - id: stance-marker-plain-text
         level: requirement
         check: conventions
         text: >-
-          A stance marker shall be plain text right after the claim it qualifies; no link
-          reference definition carries a marker's label.
+          Un marqueur de position doit être du texte simple juste après l'affirmation qu'il
+          qualifie ; aucune définition de référence de lien ne porte l'étiquette d'un marqueur.
       - id: storyline-blockquote-form
         level: requirement
         check: conventions
         text: >-
-          In the sub-concept sections, a blockquote shall be a storyline blockquote, its first
-          line starting with `**Fil rouge :**` (`markers.storyline`).
+          Dans les sections de sous-concept, une citation en bloc doit être une citation du fil
+          rouge, sa première ligne commençant par `**Fil rouge :**` (`markers.storyline`).
       - id: diagram-image-form
         level: requirement
         check: conventions
         text: >-
-          A diagram image shall be `![<title>](<file>)` alone in its paragraph, `<file>` a
-          declared diagram and `<title>` its declared `title`; each declared diagram appears
-          once in the body.
+          Une image de schéma doit être `![<title>](<file>)` seule dans son paragraphe, `<file>`
+          un schéma déclaré et `<title>` son `title` déclaré ; chaque schéma déclaré apparaît une
+          fois dans le corps.
+      - id: diagram-image-placed
+        level: requirement
+        method: inspection
+        text: >-
+          Une image de schéma doit se trouver dans la section de son `subconcept` (l'une de ses
+          sections `###` comprise) ou dans « L'essentiel ».
       - id: pitfalls-form
         level: requirement
         check: conventions
         text: >-
-          « Pièges » shall be one bulleted list, each item opening with the pitfall in bold.
+          « Pièges » doit être une liste à puces, chaque élément ouvert par le piège en gras.
       - id: quick-test-form
         level: requirement
         check: conventions
         text: >-
-          « Le test rapide » shall be one blockquote (the question), then at most one paragraph
-          (the note).
-
-  - title: Diagrams (course/README.md sections 3.1 and 6.1)
-    category: diagrams
-    method: test
-    rules:
-      - id: diagrams-declared-and-present
-        level: requirement
-        check: svg-contract
-        text: >-
-          Every declared diagram file shall exist, its `subconcept` shall be a sub-concept of
-          the concept, and every SVG of the folder shall be declared.
-      - id: svg-file-form
-        level: requirement
-        check: svg-contract
-        text: >-
-          A diagram shall be `<stem>.svg`, the stem lowercase ASCII words joined by hyphens;
-          well-formed XML; 32 KB at most.
-      - id: svg-frame
-        level: requirement
-        check: svg-contract
-        text: The root `<svg>` shall have `xmlns` and a `viewBox`, and no `width` or `height`.
-      - id: svg-colour
-        level: requirement
-        check: svg-contract
-        text: >-
-          The root shall have `fill="currentColor"`; every `fill` and `stroke` is `currentColor`
-          or `none`; no other colour value, no `style` attribute, no `<style>` element; the only
-          classes are `primary`, `secondary` and `muted`.
-      - id: svg-text
-        level: requirement
-        check: svg-contract
-        text: >-
-          Words shall be `<text>` (and `<tspan>`), never paths, with at least one `<text>`;
-          fonts only by the attribute `font-family` with generic families, no font file, no
-          `@font-face`.
-      - id: svg-accessibility
-        level: requirement
-        check: svg-contract
-        text: >-
-          The root shall have `role="img"` and `aria-labelledby` naming its `<title>` (and
-          `<desc>` if present); `<title>` is the root's first child and equals the frontmatter
-          `title`; their ids start with the stem.
-      - id: svg-groups
-        level: requirement
-        check: svg-contract
-        text: >-
-          Every drawn child of the root shall be a `<g>` with an `id` `<sub-concept>-<element>`,
-          unique across the concept's diagrams; a `<defs>` may sit at the root beside them.
-      - id: svg-forbidden-elements
-        level: requirement
-        check: svg-contract
-        text: >-
-          A diagram shall hold no `<script>`, no `on*` attribute, no `<image>`, no
-          `<foreignObject>`, no `href` or `xlink:href` not starting with `#`, and no external
-          resource.
-
-  - title: sources.md (course/README.md section 3.4)
-    category: sources
-    method: test
-    rules:
-      - id: sources-no-introduction
-        level: requirement
-        check: sources
-        text: "`sources.md` shall have no introduction: it opens on « Affirmations »."
-      - id: claim-states-claim
-        level: requirement
-        check: sources
-        text: A row of « Affirmations » shall state the claim in a few words.
-      - id: claim-section-exists
-        level: requirement
-        check: sources
-        text: >-
-          The section cell of a claim shall hold sub-concept ids and fixed sections by their
-          lexicon value, separated by commas, each existing in `concept.md`.
-      - id: stance-sourced-in-item
-        level: requirement
-        check: sources
-        text: >-
-          A stance or a neighbour shall be sourced in its frontmatter item, never by a row of
-          « Affirmations ».
-      - id: claim-source-cell-form
-        level: requirement
-        check: sources
-        text: >-
-          The source cell of a claim shall hold reference ids `[S1]`, separated by commas, or
-          the `markers.course` word; nothing else: no free text, no path to another concept.
-        why: >-
-          Without it, the agent that wrote concept 9 gave free text as sources, « fil rouge »
-          and « aucune » (decision where-a-claim-goes, superseded by
-          sources-trace-the-concept).
-      - id: claim-verified-cell-filled
-        level: requirement
-        check: sources
-        text: The verified cell of a claim shall be empty only for a « cours » claim.
-      - id: claim-nature-closed
-        level: requirement
-        check: sources
-        text: >-
-          The nature of a claim shall be `consensus`, `école`, `cours` (`markers.consensus`,
-          `markers.school`, `markers.course`) or `fait` (`natures.fact`).
-      - id: reference-id-form
-        level: requirement
-        check: sources
-        text: >-
-          A reference id shall be `S<n>`, optionally followed by a lowercase letter, unique in
-          the concept.
-      - id: reference-names-source
-        level: requirement
-        check: sources
-        text: The source cell of a reference shall name the source (author, title, date).
-      - id: reference-link-one-url
-        level: requirement
-        check: sources
-        text: >-
-          The link of a reference shall be one URL or empty: a second place is a second
-          reference.
-      - id: reference-type-from-lexicon
-        level: requirement
-        check: sources
-        text: >-
-          The type of a reference shall be one or more of `primary`, `secondary`, `marketing`,
-          written as the lexicon's words and separated by commas, then an optional remark
-          in parentheses.
-      - id: reference-consulted-date
-        level: requirement
-        check: sources
-        text: The « consulted on » cell of a reference shall start with `YYYY-MM-DD`.
-      - id: unverified-entry-anchored
-        level: requirement
-        check: sources
-        text: >-
-          Each entry of « Non vérifié » shall open with its section, in the forms of the section
-          column or `headings.stances`, then « : ».
-      - id: cited-ids-exist
-        level: requirement
-        check: sources
-        text: >-
-          Every id cited (frontmatter `refs`, source column) shall exist in « Références ».
-      - id: every-reference-cited
-        level: requirement
-        check: sources
-        text: Every reference shall be cited by a claim or a frontmatter item.
-      - id: reader-files-cite-no-reference
-        level: requirement
-        check: sources
-        text: >-
-          `concept.md` and `teaching.md` shall cite no reference: references live in the
-          frontmatter `refs` and in `sources.md`.
+          « Le test rapide » doit être une citation en bloc (la question), puis au plus un
+          paragraphe (la note).
 
   - title: Les fichiers de domaine (course/README.md section 4)
     purpose: >-
@@ -748,3 +945,119 @@ groups:
         text: >-
           `CHANGELOG.md` peut avoir une introduction et, en dernier, un paragraphe libre (la ligne
           qui relie le cours à son histoire d'avant 0.1.0).
+
+  - title: Le contrat de dessin (course/README.md section 6.1)
+    purpose: >-
+      Les règles qui gardent un SVG sûr et lisible chez chacun de ses consommateurs :
+      `svg-contract` vérifie ce qu'un script peut dire, une revue le reste.
+    category: diagrams
+    method: test
+    rules:
+      - id: svg-file-form
+        level: requirement
+        check: svg-contract
+        text: >-
+          Un schéma doit être `<stem>.svg`, le radical en mots ASCII minuscules joints par des
+          traits d'union ; du XML bien formé ; 32 Ko au plus.
+      - id: svg-frame
+        level: requirement
+        check: svg-contract
+        text: >-
+          La racine `<svg>` doit avoir `xmlns` et un `viewBox`, et ni `width` ni `height`.
+      - id: svg-colour
+        level: requirement
+        check: svg-contract
+        text: >-
+          La racine doit avoir `fill="currentColor"` ; chaque `fill` et chaque `stroke` est
+          `currentColor` ou `none` ; aucune autre valeur de couleur, aucun attribut `style`, aucun
+          élément `<style>` ; les seules classes sont `primary`, `secondary` et `muted`.
+      - id: svg-text
+        level: requirement
+        check: svg-contract
+        text: >-
+          Les mots doivent être des `<text>` (et des `<tspan>`), jamais des tracés, avec au moins
+          un `<text>` ; les polices seulement par l'attribut `font-family` avec des familles
+          génériques (`system-ui`, `sans-serif`, `serif`, `monospace`), aucun fichier de police,
+          aucun `@font-face`.
+      - id: svg-accessibility
+        level: requirement
+        check: svg-contract
+        text: >-
+          La racine doit avoir `role="img"` et `aria-labelledby` nommant son `<title>` (et sa
+          `<desc>` si elle est là) ; `<title>` est le premier enfant de la racine et égal au
+          `title` du frontmatter ; leurs ids commencent par le radical.
+      - id: svg-groups
+        level: requirement
+        check: svg-contract
+        text: >-
+          Chaque enfant dessiné de la racine doit être un `<g>` d'`id` `<sub-concept>-<element>` :
+          un id de sous-concept du concept, un trait d'union, des lettres ASCII minuscules et des
+          chiffres joints par des traits d'union (`9a1-couches`, `9a1-tranche-1`), jamais un id
+          de sous-concept nu, qui est l'ancre du texte lecteur ; cet id est unique parmi les
+          schémas du concept. Un `<defs>`, qui n'est pas dessiné, peut se tenir à la racine à
+          côté d'eux, et ce qu'il tient suit ce contrat.
+      - id: svg-forbidden-elements
+        level: requirement
+        check: svg-contract
+        text: >-
+          Un schéma ne doit tenir aucun `<script>`, aucun attribut `on*`, aucune `<image>`, aucun
+          `<foreignObject>`, aucun `href` ni `xlink:href` qui ne commence pas par `#`, et aucune
+          ressource externe.
+      - id: diagram-shows-caption
+        level: requirement
+        method: inspection
+        text: Un schéma doit montrer ce que dit sa légende.
+
+  - title: Le style des schémas (course/README.md section 6.2)
+    purpose: >-
+      Une signification par classe et six principes, pour qu'un même rôle ait le même aspect d'un
+      concept à l'autre, quel que soit qui dessine.
+    category: diagrams
+    method: inspection
+    rules:
+      - id: class-meanings
+        level: requirement
+        text: >-
+          Chaque classe doit signifier la même chose dans chaque schéma d'un cours : `primary` ce
+          que le schéma enseigne, son foyer ; `secondary` le contraste, un second élément opposé
+          au premier ; `muted` le contexte et le texte ordinaire.
+      - id: one-idea-per-diagram
+        level: requirement
+        text: >-
+          Un schéma doit porter une seule idée : une légende qui demande deux phrases fait deux
+          schémas.
+      - id: diagram-roles
+        level: requirement
+        text: >-
+          Un schéma doit avoir un sujet, au plus un contraste, un contexte et du texte ; une série
+          est le sujet en niveaux ; un état (fait, pas fait, refusé) se dit par la forme.
+      - id: role-rendering
+        level: requirement
+        text: >-
+          Chaque rôle doit être rendu ainsi : le sujet en `primary`, opacité 1 ; une série en
+          `primary` à opacité décroissante (1, 0.7, 0.4) ; le contraste en `secondary` ; le
+          contexte en `muted`, une opacité basse pour les remplissages, moyenne pour les traits ;
+          le texte en `muted`, opacité 1, `primary` seulement quand le mot est le sujet ; l'état
+          plein pour fait, en tirets pour pas fait ou incertain, barré pour refusé. En une
+          couleur, rien n'est plus marqué que le sujet ; le contraste diffère du sujet par
+          l'opacité ou la forme, pas par la teinte seule.
+      - id: readable-in-one-colour
+        level: requirement
+        text: >-
+          L'opacité et la forme doivent porter chaque distinction, jamais la teinte seule ; le
+          texte reste toujours lisible : jamais en réserve dans un remplissage, jamais sur un
+          remplissage plus sombre que lui.
+      - id: diagram-default-width
+        level: recommendation
+        text: Il convient que le `viewBox` d'un schéma fasse 600 unités de large.
+      - id: diagram-composition
+        level: requirement
+        text: >-
+          Un schéma doit se lire de gauche à droite ou de haut en bas, et tenir peu d'éléments,
+          espacés ; son texte est dans les mots du cours, jamais sous 14 unités.
+      - id: diagram-text-content
+        level: requirement
+        text: >-
+          Le texte d'un schéma doit se limiter à ses étiquettes et, quand une distinction de forme
+          ou d'opacité doit être nommée, à une clé (un échantillon et un mot) ; aucune
+          phrase d'enseignement, qui est la `caption` ; aucune décoration, icône ni dégradé.

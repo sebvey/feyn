@@ -1,6 +1,7 @@
 # fixture: the rules of a course
 groups:
   - title: course.yaml
+    purpose: The map of the course.
     category: structure
     method: test
     rules:
@@ -13,6 +14,7 @@ groups:
         check: course-yaml
         text: The course `id` shall equal the folder name.
   - title: The cases
+    purpose: The prepared questions of the loop.
     category: pedagogy
     rules:
       - id: leaf-has-a-case

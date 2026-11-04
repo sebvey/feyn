@@ -1,6 +1,7 @@
 # fixture: the rules of a course
 groups:
   - title: course.yaml
+    purpose: The map of the course.
     category: structure
     method: test
     rules:
@@ -17,6 +18,7 @@ groups:
         check: course-yaml
         text: A course should have a `subtitle`.
   - title: The cases
+    purpose: The prepared questions of the loop.
     category: pedagogy
     rules:
       - id: leaf-has-a-case
