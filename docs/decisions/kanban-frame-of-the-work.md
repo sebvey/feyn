@@ -5,8 +5,9 @@ status: accepted
 area: repo
 ---
 
-Without this, a contributor would redesign the process anew at each brainstorm, with no named
-frame to apply and no outside reference to check a change against.
+Without this, a contributor would add a step or a status of the work at a brainstorm with no
+outside reference to check it against, so the process would drift from one session to the next
+and each change be argued from scratch.
 
 The work on feyn is organised by Kanban (the Kanban Method, as the Kanban Guide of 2020 sums it
 up), with two named complements: ADR for the decisions (the `decisions/` folders, decision
