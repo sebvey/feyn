@@ -36,8 +36,10 @@ labels no engine read: the site's labels are born in `site-builder/` with its en
   is superseded; the protocol of `linear-course` stays French.
 - The protocol keeps its `{phrases.*}` keys, which the classroom build substitutes; the move of
   the groups changed no rule text.
-- `courses/parcours-po/course.yaml` keeps its `language` key until its migration (#487);
-  `course-yaml` accepts it and ignores it.
+- A `language` key in `course.yaml` fails `course-yaml` as an unknown field.
+- Amended 2026-11-04 (#521): `course-yaml` no longer accepts and ignores a `language` key, a
+  tolerance kept for `courses/parcours-po/course.yaml` until its migration; the course is
+  archived instead (decision `parcours-po-archived`).
 - Amended 2026-11-04 (#515): the `{phrases.*}` keys stay, as the maintainer answered open
   question 6 of epic #222 on 2026-11-03 once a classroom was built: writing the phrases in French
   in the protocol would rewrite every placeholder, and the spots that read worse than a key are

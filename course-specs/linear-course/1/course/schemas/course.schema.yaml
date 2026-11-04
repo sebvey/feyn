@@ -15,10 +15,6 @@ properties:
     description: "linear-course@<MAJOR>: the spec MAJOR the course follows"
     type: string
     pattern: '^linear-course@\d+$'
-  language:
-    description: accepted and ignored, not part of the fields of course/README.md section 2 (the
-      language is the spec's, `language` in spec.yaml); courses/parcours-po still declares it until
-      its migration (#487)
   title:
     description: the course title
     $ref: '#/$defs/text'

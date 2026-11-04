@@ -48,6 +48,9 @@ Hence three lessons:
 - **Outputs are builds**: the site and the classroom are produced from the course by scripts,
   never edited by hand (decision `one-source-two-builds`).
 
+The course itself is archived at the tag `parcours-po/v0-fondateur` and re-created through the
+creation path (epic #520; decision `parcours-po-archived`).
+
 ## The lesson of feyn's first month
 
 Stated by the maintainer on 2026-11-03: the spec was aimed too big, with nothing concrete to

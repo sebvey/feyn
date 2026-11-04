@@ -19,6 +19,8 @@ no single area, and [`vision.md`](vision.md) what feyn is for (its two products,
 a change, the lessons it was built on).
 `construction/`, the design, plan and session notes of the construction, was removed on
 2026-10-31: its files are read at `2c16adf3e66a` (`git show 2c16adf3e66a:construction/<path>`).
+`courses/parcours-po/`, the founding course, was removed on 2026-11-04: its files are read at
+the tag `parcours-po/v0-fondateur` (decision `parcours-po-archived`).
 `.claude/` has five folders: `skills/` the HOW (one folder per skill, its `SKILL.md`
 and its briefs), `agents/` the project subagents (an agent whose brief is reused from run to
 run, spawned by name, its tools limited by its file), `workflows/` the agent workflows, `reference/` the WHAT (what a thing is or looks
@@ -266,23 +268,28 @@ decisions and the skills:
 - An open question never stops the work, and the epic PR is handed over only when none remains.
 - A story without an epic is never delivered on an integration branch.
 - **A spec change carries the bench course.** A change of `linear-course` is done only when
-  `courses/po-essai/` follows it in the same PR, `course-specs/check-course courses/po-essai`
-  passing on it; `/feyn-pull-request` runs that check on every PR that touches
+  `courses/po-essai/` follows it in the PR that lands on `main`: a story's PR for a story
+  without an epic, the epic PR for a story of an epic, so that `po-essai` may lag between two
+  stories of an integration branch; `course-specs/check-course courses/po-essai` passes on it,
+  and `/feyn-pull-request` runs that check on every PR that touches
   `course-specs/linear-course/`. The exception: a change that touches no file a course has (a
   decision, the CHANGELOG, prose of a README that sets no rule) needs no change of `po-essai`,
   and its PR still runs the check and says so in its Checks. Why: without it a spec story
   closes with the bench behind, and the bench stops proving anything within a week (the frame
-  of 2026-11-03). From idea #477; the yardstick it applies:
+  of 2026-11-03); read at the PR that lands on `main`, it costs one migration of the bench per
+  epic, not one per story, the epic PR proving the change once with its checks and a teaching
+  session (the maintainer, 2026-11-04, #521). From idea #477; the yardstick it applies:
   [`vision.md`](vision.md), "The yardstick".
 - **A change to the bench records its judgement calls.** An epic or a story that changes
   `courses/po-essai/` records each judgement call it makes (what was decided, why, the
-  alternative rejected) as an entry of the Material of the migration epic #487, and its Done
+  alternative rejected) as an entry of the Material of the re-creation epic #520, and its Done
   when states it; `/feyn-refine-option` proposes that line before it commits such a work item.
-  The exception: a change to `po-essai` that makes no call; its entry in #487 says so in one
-  line. Why: these calls are the only part of the migration of `parcours-po` that no file of
-  the tree holds; left in each PR's "Delivery notes", the migration rereads every PR, and a
-  policy alone is read once, where a Done when line is verified by a fresh reviewer at every
-  story. From idea #486; it feeds epic #487, its Material.
+  The exception: a change to `po-essai` that makes no call; its entry in #520 says so in one
+  line. Why: these calls are the only part of the re-creation of the founding course that no
+  file of the tree holds; left in each PR's "Delivery notes", the re-creation rereads every
+  PR, and a policy alone is read once, where a Done when line is verified by a fresh reviewer
+  at every story. From idea #486; it feeds epic #520, its Material (the founding course is
+  archived: decision `parcours-po-archived`).
 - A change to [`vision.md`](vision.md) is a decision (`/feyn-decision`), never an edit in
   passing.
 - **A process change comes from an observed problem.** After epic #392, which lands this frame,

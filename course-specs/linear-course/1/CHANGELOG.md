@@ -95,7 +95,7 @@ no class: `- file or area: what changes`.
   writer), defined in `spec-directives/README.md`; no rule changes (#467).
 - `spec.yaml`, `lang/`, `course/`, `teacher/`: the language is the spec's, `language: fr` in
   `spec.yaml`, no longer a field of `course.yaml` (`course-yaml` accepts a `language` key and
-  ignores it, for `courses/parcours-po` until its migration); the language pack `lang/fr.yaml`
+  ignores it, for `courses/parcours-po` until its migration; removed by #521, below); the language pack `lang/fr.yaml`
   becomes two lexicons, `course/lexicon.yaml` (the words of the course files: headings, case
   fields, qualifiers, markers, natures, concept references, source types, typography, the word
   lists of the checks) and `teacher/lexicon.yaml` (phrases, learner words, memory, statuses); its
@@ -163,3 +163,7 @@ no class: `- file or area: what changes`.
   header of `teacher/rules.yaml` no longer count the rules of `teacher/rules.yaml`, and
   `course/checks/README.md` points to `spec-directives/1/README.md` section 8 for the tests of
   `check-spec` (#515).
+- `course/checks/`, `course/schemas/course.schema.yaml`: a `language` key in `course.yaml` fails
+  `course-yaml` as an unknown field, the tolerance kept for the founding course gone with it
+  (decision `parcours-po-archived`); the fixture `broken/course-yaml-language`; the checks'
+  README names `courses/po-essai` as the real course a change of the spec is run on (#521).
