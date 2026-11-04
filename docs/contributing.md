@@ -130,13 +130,11 @@ or `kind:story`, set by `/feyn-issue` at its creation; an idea carries none.
   `main` when the epic is taken and named like an issue branch after the epic
   (`<type>/<epic>-<slug>`), into which its stories are merged; its **epic PR**, from that branch
   to `main` with `Closes #<epic>`, is how the maintainer validates the whole. An **open
-  question** is a choice of a story that departs from its epic's Done when (a story without an
-  epic: its own) or adds structure (a new file, a category, a marker, an exception to a
-  principle), that nothing already settles (a decision, the epic's Material or the issue's
-  Context, a rule, an answer of the maintainer, a story of the plan) and that is costly to undo
-  or foundational, put to the maintainer at once: under an epic, a line in the plan comment's
-  log and a comment on the epic; for a story without an epic, an `Open question:` comment on
-  the issue.
+  question** is a choice of a story of an epic that departs from the epic's Done when or adds
+  structure (a new file, a category, a marker, an exception to a principle), that nothing
+  already settles (a decision, the epic's Material, a rule, an answer of the maintainer, a story
+  of the plan) and that is costly to undo or foundational, put to the maintainer at once: a line
+  in the plan comment's log and a comment on the epic.
 - A **story** is a unit of work delivered in one PR, with a verifiable Done when: the label
   `kind:story`, with or without a parent epic. Under an epic, it is a sub-issue posed only when
   it is the next one, and its PR targets the epic's integration branch; with no epic, its PR
@@ -221,9 +219,7 @@ Five moments:
    maintainer, in one of two ways: `/feyn-deliver-story-alone <n>`, or a direct delivery.
    `/feyn-deliver-story-alone <n>` delivers every story without an epic (given a story of an
    epic, it refuses and names `/feyn-deliver-epic`), through `deliver-story.js` with no epic,
-   except those the maintainer named `direct` at their creation; its PR is handed over only
-   once each of its open questions is answered (`/feyn-deliver-story-alone`, step 4). A
-   **direct delivery** is a
+   except those the maintainer named `direct` at their creation. A **direct delivery** is a
    story, alone or under an epic, of one edit with no behaviour, named `direct` by the
    maintainer at its creation (`/feyn-issue story direct <what>`, or `/feyn-issue story #<epic>
    direct <what>` under an epic), its To do then opening with the line "Direct delivery": no
@@ -284,8 +280,7 @@ decisions and the skills:
   distinct files (several run in parallel only when their files are distinct).
 - A story of an epic exists only if it is the next one; a story that reveals work of another
   epic opens an idea, not a story.
-- An open question never stops the work, and the epic PR, or the PR of a story without an epic,
-  is handed over only when none remains.
+- An open question never stops the work, and the epic PR is handed over only when none remains.
 - A story without an epic is never delivered on an integration branch.
 - **A spec change carries the bench course.** A change of `linear-course` is done only when
   `courses/po-essai/` follows it in the PR that lands on `main`: a story's PR for a story
@@ -376,13 +371,12 @@ In the web interface, the Project's views. First what waits for the maintainer: 
 `/feyn-deliver-story-alone` is also a draft until its review is done: not one to answer); the
 Ready for review items, a story's PR in the In progress view or an epic's epic PR in Overview,
 waiting for the merge; the open questions of the epics In progress, in their plan comments'
-logs, and of the stories without an epic, in `Open question:` comments on their issues. Then the
-In progress view (what moves on its own), then Ready (what can be taken), then Options (what to
-commit or close), then Ideas (what to triage). An unblock is a comment on the issue that says
-what was validated, then the label removed: the comment is the trace a fresh agent reads; an
-open question is answered by a comment on the epic (on the issue, for a story without an epic),
-or in the work session. Why: decisions `blocked-is-a-label-not-a-state`,
-`project-status-not-state-labels`, `idea-and-option-before-ready`, `epic-on-integration-branch`.
+logs. Then the In progress view (what moves on its own), then Ready (what can be taken), then
+Options (what to commit or close), then Ideas (what to triage). An unblock is a comment on the
+issue that says what was validated, then the label removed: the comment is the trace a fresh
+agent reads; an open question is answered by a comment on the epic, or in the work session. Why:
+decisions `blocked-is-a-label-not-a-state`, `project-status-not-state-labels`,
+`idea-and-option-before-ready`, `epic-on-integration-branch`.
 
 ## Tool behaviours
 

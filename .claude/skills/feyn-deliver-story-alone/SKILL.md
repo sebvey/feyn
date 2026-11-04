@@ -23,8 +23,8 @@ Nothing is spawned and no run launched before the maintainer's go-ahead: they sa
 
 While the cycle runs, each progress message to the maintainer holds at most three lines: what
 just finished, what runs now, what is awaited from them, if anything. That bound holds for
-progress messages only: a decision put to the maintainer takes the form of step 4, "Open
-question". No report per agent, no repeat of the previous message. The PR
+progress messages only: a decision put to the maintainer takes the form of step 4, "Decision
+awaited". No report per agent, no repeat of the previous message. The PR
 is the report: its body and its "Delivery notes" comment; the hand-over (step 5) notifies what
 they do not hold.
 
@@ -91,17 +91,17 @@ Every field, never only `status`:
   sensitive points in the diff (`mise exec -- gh pr diff <pr>`): a counterfactual, a Done when
   count, a command that touches `main` or a remote branch, the title.
 - `deviations`, whatever the status, and the `choicesMade` that add structure (a new file, a
-  category, a marker, an exception to a principle): each is named in the PR's Review first (one
-  bullet can name several), its options ruled out and its cost of going back in "Delivery
-  notes". One missing is added by a rerun (step 4) or by your own edit of the body
+  category, a marker, an exception to a principle): each is sorted as `/feyn-deliver-epic`
+  step 3, "The sort", says, the issue standing for the epic (its Done when and Context for the
+  epic's Objective and Material, `work` for the orchestrator's brief, no plan): a contradiction
+  in `work` is fixed by a rerun (step 4) and the maintainer informed; one already settled is
+  applied, by a rerun when the PR must change, and the maintainer informed; the rest, costly to
+  undo or foundational, is named in the PR's Review first (one bullet can name several), its
+  options ruled out and its cost of going back in "Delivery notes": the maintainer decides it
+  by the merge, and the hand-over does not wait for an answer. One missing is added by a rerun
+  (step 4) or by your own edit of the body
   (`mise exec -- gh pr edit <pr> --body-file <file>`, within its limits) and of "Delivery notes"
-  (in place, `/feyn-pull-request` step 6); the notification (step 5) names that edit. Each is
-  then sorted as `/feyn-deliver-epic` step 3, "The sort", says, the issue standing for the
-  epic (its Done when and Context for the epic's Objective and Material, `work` for the
-  orchestrator's brief, no plan): a contradiction in `work` is fixed by a rerun (step 4) and the
-  maintainer informed; one already settled is applied, by a rerun when the PR must change, and
-  the maintainer informed; the rest, costly to undo or foundational, becomes an open question
-  (step 4).
+  (in place, `/feyn-pull-request` step 6); the notification (step 5) names that edit.
 - `unsure` that names an agent-workflow run the Done when needs: ask the maintainer for a
   go-ahead for that run, then run it; then a new run of the workflow (step 4) with `work`
   giving the run ids `wf_<id>`, their transcript directory and the result: its contributor
@@ -112,27 +112,22 @@ Every field, never only `status`:
 - `needs-orchestrator`, `blocked`, `failed`: as `/feyn-deliver-epic` step 2.4 says, a question
   going to the maintainer as a decision awaited (step 4).
 
-## 4. Reruns: corrections, open questions, decision awaited
+## 4. Reruns: corrections, decision awaited
 
 Every change to the PR after a run goes through a new run of the workflow on the same issue,
 with `work` naming the change: its contributor resumes the PR from the local issue branch,
 which step 2.2 moved to the PR's head, a fresh agent reviews it, and step 2.2 cleans the run.
-- **Open question.** One the sort of step 3 leaves: the trace is a comment on the issue,
-  `Open question: <the choice>, <the options ruled out>, <the cost of going back>`, with its
-  recommendation (a defect carries what `/feyn-deliver-epic` step 3 lists); the decision is the
-  message in the work session, one question at a time, in the form `CLAUDE.md`, "Working with
-  the maintainer", gives, with the link to that comment. The PR is handed over (step 5) once
-  each is answered and applied.
 - **Decision awaited.** A run `blocked` on a choice only the maintainer can make (its
   `contrib.question`): put `blocked:maintainer` on the issue
   (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`), post the question on the
-  issue and put it to the maintainer as an open question is. The maintainer answers with a
-  comment on the issue or in the work session, and removes the label; check it is gone
-  (`mise exec -- gh issue view <n> --json labels`), then rerun with the answer restated in
-  `work` (step 2.1), which names the comment that holds it (its URL).
-- **An answer in the work session**, to an open question or a decision awaited, is recorded at
-  once on the issue: a comment `Answered: <the answer> (the maintainer, in the work session,
-  <date>)`, which links the question's comment.
+  issue, with its recommendation, and put it to the maintainer in the work session, in the form
+  `CLAUDE.md`, "Working with the maintainer", gives, with the link to that comment. The
+  maintainer answers with a comment on the issue or in the work session, and removes the label;
+  check it is gone (`mise exec -- gh issue view <n> --json labels`), then rerun with the answer
+  restated in `work` (step 2.1), which names the comment that holds it (its URL).
+- **An answer in the work session** to a decision awaited is recorded at once on the issue: a
+  comment `Answered: <the answer> (the maintainer, in the work session, <date>)`, which links
+  the question's comment.
 - **A late finding or a decision after the hand-over.** The maintainer can ask for a correction,
   refuse or settle a choice while the PR awaits the merge: rerun with the maintainer's request
   restated in `work` (step 2.1), in place of their words quoted; the contributor records it in
