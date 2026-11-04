@@ -48,9 +48,9 @@ scratchpad (Claude Code's temporary folder of the work session, given in its env
 in the repository, and not in Claude's memory folder. One line per issue, in the order given,
 `#<n> <title> · <status>`, the status being `pending`, `presented`,
 `awaiting maintainer action: <what>`, `left open: <why>`, `decided: <decision>` or `executed`.
-The rules of `CLAUDE.md`, "Working with the maintainer", for a pass over a list hold then: the
-progress line `Triage: <n>/<N> treated · in progress: #<x>` at the top of each message,
-computed from the list.
+The maintainer's rules for a pass over a list (`CLAUDE.md`, "Working with the maintainer") hold
+then: the progress line `Triage: <n>/<N> treated · in progress: #<x>` at the top of each
+message, computed from the list.
 
 The list is used, not only written:
 - before presenting an item, reread it: a line `awaiting maintainer action` stops the triage on
@@ -138,7 +138,7 @@ left open keeps the label: it has not been decided.
   `story <what>`, `story #<epic> <what>` or `epic <objective>`, its Status Option, or Ready
   when the maintainer said it is committed (step 3). A story's Context ends with the origin
   line "From idea #<n>."; an epic's Material cites "idea #<n>". A story under an epic is
-  created only when it is the next one the epic's plan comment names (the policies of
+  created only when it is the next one the epic's plan comment marks (the policies of
   [contributing](../../../docs/contributing.md)); otherwise the idea is folded into that epic
   (below). Then close the idea as completed:
   `mise exec -- gh issue close <n> --reason completed --comment "Triaged <YYYY-MM-DD>: <the work items created from it, each #<m>>."`;

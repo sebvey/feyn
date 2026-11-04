@@ -754,7 +754,7 @@ word; the others name feyn's own mechanisms, which the frame does not name.
 
 ### open question
 
-- means: a choice of a story of an epic that departs from the epic's Done when or adds structure (a new file, a category, a marker, an exception to a principle), put to the maintainer at once as a line of the plan comment and a comment on the epic; the work goes on, and the epic PR is handed over only when none remains
+- means: a choice of a story of an epic that departs from the epic's Done when or adds structure (a new file, a category, a marker, an exception to a principle), that nothing already settles (a decision, the epic's Material, a rule, an answer of the maintainer, a story of the plan) and that is costly to undo or foundational, put to the maintainer at once as a line of the plan comment's log and a comment on the epic; the work goes on, and the epic PR is handed over only when none remains
 - en: open question · rejected: "pending decision", "escalation", "blocker"
 - fr: to settle
 - not to confuse with: [blocked](#blocked), [plan comment](#plan-comment)

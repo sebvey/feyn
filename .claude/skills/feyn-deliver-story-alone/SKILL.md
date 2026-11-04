@@ -21,9 +21,10 @@ Nothing is spawned and no run launched before the maintainer's go-ahead: they sa
 
 ## Progress
 
-While the cycle runs, each message to the maintainer speaks plainly (`CLAUDE.md`, "Working
-with the maintainer"), in at most three lines: what just finished, what runs now, what is
-awaited from them, if anything. No report per agent, no repeat of the previous message. The PR
+While the cycle runs, each progress message to the maintainer holds at most three lines: what
+just finished, what runs now, what is awaited from them, if anything. That bound holds for
+progress messages only: a decision put to the maintainer takes the form of step 4, "Decision
+awaited". No report per agent, no repeat of the previous message. The PR
 is the report: its body and its "Delivery notes" comment; the hand-over (step 5) notifies what
 they do not hold.
 
@@ -71,17 +72,8 @@ they do not hold.
    the run is written into the issue's body
    (`mise exec -- gh issue edit <n> --body-file <file>`), not into a comment.
    While a run is launched or running, no `cd`: absolute paths and `git -C <path>`.
-2. **Clean the run** as `/feyn-deliver-epic` step 2.5 says for its worktrees and their
-   `worktree-wf_<run id>-<n>` branches, with one more check before each removal, since the PR is
-   not merged yet: after `git fetch`, the worktree's `HEAD` is on the PR's branch on `origin`
-   (`git -C <path> branch -r --contains HEAD` names `origin/<branch>`); not there: stop and show
-   it. A run that opened no PR (`pr` 0, a `blocked` or `failed` run) has no branch to test: a
-   worktree whose `HEAD` adds nothing to `origin/main` (`git -C <path> log origin/main..HEAD`
-   prints nothing) is removed after the status check; one with commits stays, named to the
-   maintainer with the run's status. Then, when the PR exists, move the local issue branch to
-   its head, which a corrector's push (`git push origin HEAD:<branch>`, from a detached `HEAD`)
-   does not move: `git branch -f <branch> origin/<branch>`, its worktree being gone. The local
-   issue branch stays: `/feyn-merge-cleanup` deletes it after the merge (step 6).
+2. **Clean the run** as `/feyn-deliver-epic` step 2.5 says, `main` as its base and the PR not
+   merged yet.
 
 ## 3. Read the result
 
@@ -99,9 +91,16 @@ Every field, never only `status`:
   sensitive points in the diff (`mise exec -- gh pr diff <pr>`): a counterfactual, a Done when
   count, a command that touches `main` or a remote branch, the title.
 - `deviations`, whatever the status, and the `choicesMade` that add structure (a new file, a
-  category, a marker, an exception to a principle): each is named in the PR's Review first (one
-  bullet can name several), its options ruled out and its cost of going back in "Delivery
-  notes". One missing is added by a rerun (step 4) or by your own edit of the body
+  category, a marker, an exception to a principle): each is sorted as `/feyn-deliver-epic`
+  step 3, "The sort", says, the issue standing for the epic (its Done when and Context for the
+  epic's Objective and Material, `work` for the orchestrator's brief, no plan): a contradiction
+  in `work` is fixed by a rerun (step 4) and the maintainer informed; one already settled is
+  applied, by a rerun when the PR must change, and the maintainer informed; the rest, costly to
+  undo or foundational, is named in the PR's Review first (one bullet can name several), its
+  options ruled out and its cost of going back in "Delivery notes": the maintainer decides it
+  by the merge, and the hand-over does not wait for an answer; a choice that is neither stays
+  in "Delivery notes". One missing is added by a rerun
+  (step 4) or by your own edit of the body
   (`mise exec -- gh pr edit <pr> --body-file <file>`, within its limits) and of "Delivery notes"
   (in place, `/feyn-pull-request` step 6); the notification (step 5) names that edit.
 - `unsure` that names an agent-workflow run the Done when needs: ask the maintainer for a
@@ -121,10 +120,15 @@ with `work` naming the change: its contributor resumes the PR from the local iss
 which step 2.2 moved to the PR's head, a fresh agent reviews it, and step 2.2 cleans the run.
 - **Decision awaited.** A run `blocked` on a choice only the maintainer can make (its
   `contrib.question`): put `blocked:maintainer` on the issue
-  (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`) and relay the question, the
-  options and the recommendation. The maintainer answers with a comment on the issue and removes
-  the label; check it is gone (`mise exec -- gh issue view <n> --json labels`), then rerun with
-  the answer restated in `work` (step 2.1), which names that comment (its URL).
+  (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`), post the question on the
+  issue, with its recommendation, and put it to the maintainer in the work session, in the form
+  `CLAUDE.md`, "Working with the maintainer", gives, with the link to that comment. The
+  maintainer answers with a comment on the issue or in the work session, and removes the label;
+  check it is gone (`mise exec -- gh issue view <n> --json labels`), then rerun with the answer
+  restated in `work` (step 2.1), which names the comment that holds it (its URL).
+- **An answer in the work session** to a decision awaited is recorded at once on the issue: a
+  comment `Answered: <the answer> (the maintainer, in the work session, <date>)`, which links
+  the question's comment.
 - **A late finding or a decision after the hand-over.** The maintainer can ask for a correction,
   refuse or settle a choice while the PR awaits the merge: rerun with the maintainer's request
   restated in `work` (step 2.1), in place of their words quoted; the contributor records it in

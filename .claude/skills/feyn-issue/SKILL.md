@@ -155,7 +155,7 @@ of the old format for a defect:
        nothing, or only some lines) excludes the history: released CHANGELOG entries, dated
        amendments and superseded decisions (by path or named as exceptions). Otherwise the
        contributor rewrites the history to meet it, as #339's `rg` made its contributor split a
-       string and rewrite an amendment (a debrief rule, `/feyn-deliver-epic`). The same holds
+       string and rewrite an amendment (a rule of the debrief of epic #317). The same holds
        for an epic's Done when.
      - A story that removes, moves or renames content (a file, a section, a rule) lists in its
        Context every file that refers to it, and has a To do item that treats each of them.
