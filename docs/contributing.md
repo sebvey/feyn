@@ -226,15 +226,19 @@ Five moments:
    `/feyn-deliver-story-alone` a story without an epic; the work-cycle tooling the direct
    delivery of a story without an epic. A story without an epic is Ready for review while its PR
    awaits the merge.
-3. **Brainstorm**: `/feyn-brainstorm` frames a work session with the maintainer on how feyn works
-   (the maintainer decides, one point at a time, nothing written in the repository during the
-   brainstorm) and ends it in options: it creates the work items it defined, in Status Option,
-   an epic or a story by size, each with the body of its kind, what was settled point by point,
-   with its why and the alternative rejected, going in the epic's Material or the story's
-   Context. A brainstorm that settles nothing creates nothing; one that surfaces a finding
-   without deciding its form may leave an idea; one that opens from an idea is that idea's
-   triage, and closes it as completed when it creates its options, naming them. Why: decision
-   `brainstorm-ends-in-options`.
+3. **Brainstorm**: `/feyn-brainstorm` runs a work session with the maintainer on feyn, subject
+   by subject, in a working folder outside the repository (the maintainer decides each subject,
+   nothing written in the repository during the brainstorm). It opens from an option whose
+   option refinement found that what it builds on has changed, from an idea, or from the
+   maintainer's subject, and ends in a plan of work items posed through the skills of the
+   cycle: it creates the work items it defined, in Status Option, an epic or a story by size,
+   each with the body of its kind, what was settled subject by subject, with its why and the
+   alternative rejected, going in the epic's Material or the story's Context; it reworks or
+   replaces the option it opened from, comments the neighbours whose work it changes, and may
+   leave the maintainer a working notebook. A brainstorm that settles nothing creates nothing;
+   one that surfaces a finding without deciding its form may leave an idea; one that opens from
+   an idea is that idea's triage, and closes it as completed when it poses its plan, naming the
+   work items. Why: decision `brainstorm-ends-in-options`.
 4. **Triage**, run with `/feyn-triage` on the ideas the maintainer names, one at a time, and on
    ideas only: the work session reads each one against the purpose of feyn
    ([`vision.md`](vision.md)), the repository and its neighbours (a twin, an epic or an option
@@ -253,8 +257,9 @@ Five moments:
    the option was last updated, in the files it names) and an overlap check (the open options,
    epics and committed stories that cover or overlap it, the open ideas on the same files),
    presents the option with the result of each and its proof, and the maintainer decides it
-   alone: commit (set Ready), rework (its body or its kind rewritten, it stays Option), merge
-   into another option, split, fold into an epic, or close. It is not a replenishment: feyn
+   alone: commit (set Ready), rework (its body or its kind rewritten, it stays Option),
+   brainstorm (what it builds on has changed: a brainstorm opens from it, moment 3), merge into
+   another option, split, fold into an epic, or close. It is not a replenishment: feyn
    never reviews the options as a whole, it commits them one by one ([`kanban.md`](kanban.md),
    "The upstream"). Why: decision `idea-and-option-before-ready`.
 
