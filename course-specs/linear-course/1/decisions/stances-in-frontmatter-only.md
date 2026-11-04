@@ -31,7 +31,8 @@ contradicts ».
 
 ## Consequences
 
-- Rule `stances-told-apart` of `teacher/README.md` reads the frontmatter `stances` and carries over, not decides, the
-  hint « à présenter comme tels » the old concept files had in that section: « Présente les
-  choix du cours comme tels : des choix du cours, qu'aucune source n'énonce tels quels. »
+- The protocol's rule that tells the course's stances apart reads the frontmatter `stances` and
+  carries over, not decides, the hint « à présenter comme tels » the old concept files had in
+  that section: « Présente les choix du cours comme tels : des choix du cours, qu'aucune source
+  n'énonce tels quels. »
   `course/README.md` 3.1 `stances.course` says the same.

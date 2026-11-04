@@ -9,7 +9,7 @@ Without this, an agent would cite rules by a range "X à Y" whose content change
 
 A set of rules of `teacher/README.md` is cited by a named group, never by a range of slugs. A group
 is a `###` heading inside a family, its title then its slug in code between parentheses
-(« ### Accueil (`onboarding`) »); its rules are the ones under the heading, up to the next
+(« ### <title> (`<slug>`) »); its rules are the ones under the heading, up to the next
 heading, and keep their own slugs, with no prefix. A group's slug has the form of a rule's slug
 (decision `rules-named-by-slug`), except that one word is enough, and shares their namespace:
 no group and no rule have the same slug. A group is cited in code after « groupe » or « group »;
@@ -18,11 +18,9 @@ Once the protocol's rules are in `teacher/rules.yaml` (the extraction of #318, d
 `spec-files-by-product`), a group is data in that file, its slug and the order of its
 rules included, no longer a `###` heading of `teacher/README.md`; its Purpose paragraph goes to the
 description. A group may declare the category and method of its rules once (decision
-`rules-with-level-and-method`). This replaces the two ranges of the rule
-`new-or-returning-learner` (« règles `first-message-without-tools` à
-`first-concept-next-message` », « la reprise, `resume-opening-sentence` à
-`pending-question-retaught` »), which became groups `onboarding` and `resume` over the same
-rules. A structure decision, accepted by the maintainer on 2026-10-28 (PR #133): it changes how
+`rules-with-level-and-method`). This replaces the two ranges of slugs that the protocol's rule
+telling a new learner from a returning one cited, one over the rules of the onboarding and one
+over those of the resume, which became two groups over the same rules. A structure decision, accepted by the maintainer on 2026-10-28 (PR #133): it changes how
 rules are cited, not how the teacher teaches. Neighbour: decision `rules-named-by-slug`,
 distinct (it names one rule; this names a set of rules).
 

@@ -65,3 +65,6 @@ no class: `- file or area: what changes`.
   `scenarios`; decision `rules-with-level-and-method` points to section 8 for the tests of
   `check-spec` instead of naming them, and says where the rest of the teacher's conformance goes
   now (#515).
+- `decisions/`: decision `spec-names-no-course`: the files of a spec, its decisions included, and
+  the decisions of the directives name no course; decisions `alpha-version-until-tag` and
+  `rules-with-level-and-method` state their evidence without naming one (#528).
