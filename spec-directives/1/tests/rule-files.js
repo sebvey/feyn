@@ -4,15 +4,16 @@
 //   - course/rules.yaml and teacher/rules.yaml exist, each a map whose one key
 //     `groups` is a non-empty list; a group has `rules`, a non-empty list, and may declare `id`
 //     (a group slug), `title`, `purpose` (what the group is for, a non-empty string), `category`
-//     and `method`; a group of course/rules.yaml has a `purpose`;
+//     and `method`; every group of either file has a `purpose`;
 //   - a rule has `id` (a slug of two to five words), `level`, `category`, `method` (on the rule
-//     or on its group) and `text`; `check` and `why` are optional; a rule of the protocol also has
-//     `origin`; no other key;
+//     or on its group) and `text`; `check` and `why` are optional; a rule of the protocol may also
+//     have `origin`, a non-empty string; no other key;
 //   - the closed lists of spec-directives/1/README.md sections 3 and 4 and of the spec MAJOR's
 //     README.md section 3: the levels, the methods (a rule of the
 //     protocol: demonstration), the categories of a course, the families of the protocol;
-//   - a group of teacher/rules.yaml has an `id`, the slug of a group of teacher/README.md (a
-//     heading "### <title> (`<slug>`)" of a rule family "## <n>. ...", as rule-slugs reads it);
+//   - a group of teacher/rules.yaml has an `id`: the slug of a group of teacher/README.md (a
+//     heading "### <title> (`<slug>`)" of a rule family "## <n>. ...", as rule-slugs reads it), or
+//     the category of a family, the group of the rules placed directly under that family;
 //   - the ids of rules and groups are unique across the two files;
 //   - a check named exists, as a script of the spec MAJOR's course/checks/ (`<check>.js`; the
 //     folder that check-spec's --checks-dir names, when given) or an agent workflow of the
@@ -34,11 +35,10 @@ const COURSE_CATEGORIES = ['structure', 'pedagogy', 'writing', 'sources', 'diagr
 // the nine families of teacher/README.md, in its order (## 1. to ## 9.)
 const FAMILIES = ['session-start', 'domain-presentation', 'loop', 'message-form', 'storyline',
   'stances-and-sources', 'practice-skip-asides', 'learner-memory', 'stop'];
-// purpose: whether every group declares a `purpose`; the groups of teacher/rules.yaml gain theirs
-// when the protocol's rules move there
+// optional: the keys a rule of the file may add, each a non-empty string when present
 const FILES = {
-  'course/rules.yaml': { categories: COURSE_CATEGORIES, methods: METHODS, extra: [], purpose: true },
-  'teacher/rules.yaml': { categories: FAMILIES, methods: ['demonstration'], extra: ['origin'], purpose: false },
+  'course/rules.yaml': { categories: COURSE_CATEGORIES, methods: METHODS, optional: [] },
+  'teacher/rules.yaml': { categories: FAMILIES, methods: ['demonstration'], optional: ['origin'] },
 };
 const RULE_KEYS = ['id', 'level', 'category', 'method', 'check', 'text', 'why'];
 const GROUP_KEYS = ['id', 'title', 'purpose', 'category', 'method', 'rules'];
@@ -88,7 +88,7 @@ function run(ctx) {
     if (!isObj(doc)) { out.push(fail(file, 1, 'a rule file is a map whose one key is groups')); continue; }
     for (const k of Object.keys(doc)) if (k !== 'groups') out.push(fail(file, yaml.lineOf(doc, k), `unknown key "${k}": a rule file has groups only`));
     if (!Array.isArray(doc.groups) || doc.groups.length === 0) { out.push(fail(file, yaml.lineOf(doc, 'groups'), 'groups must be a non-empty list')); continue; }
-    const keys = [...RULE_KEYS, ...spec.extra];
+    const keys = [...RULE_KEYS, ...spec.optional];
 
     const unique = (id, line, what) => {
       if (ids.has(id)) out.push(fail(file, line, `${what} id "${id}" is not unique: also at ${ids.get(id)}`));
@@ -107,11 +107,11 @@ function run(ctx) {
         else {
           unique(g.id, yaml.lineOf(g, 'id', gl), 'group');
           // teacher/README.md missing is rule-slugs' failure, not this one's
-          if (file === 'teacher/rules.yaml' && pgroups && !pgroups.has(g.id)) out.push(fail(file, yaml.lineOf(g, 'id', gl), `group ${gi + 1}: id "${g.id}" is not a group of teacher/README.md: a group of the protocol is a group of teacher/README.md, its slug as its id`));
+          if (file === 'teacher/rules.yaml' && pgroups && !pgroups.has(g.id) && !FAMILIES.includes(g.id)) out.push(fail(file, yaml.lineOf(g, 'id', gl), `group ${gi + 1}: id "${g.id}" is neither a group of teacher/README.md nor the category of a family: a group of the protocol is a group of teacher/README.md, its slug as its id, or the rules placed directly under a family, its category as its id`));
         }
-      } else if (file === 'teacher/rules.yaml') out.push(fail(file, gl, `group ${gi + 1}: id is mandatory in the protocol, the slug of its group of teacher/README.md`));
+      } else if (file === 'teacher/rules.yaml') out.push(fail(file, gl, `group ${gi + 1}: id is mandatory in the protocol, the slug of its group of teacher/README.md or the category of its family`));
       if (g.purpose !== undefined && !isStr(g.purpose)) out.push(fail(file, yaml.lineOf(g, 'purpose', gl), `group ${gi + 1}: purpose must be a non-empty string`));
-      else if (g.purpose === undefined && spec.purpose) out.push(fail(file, gl, `group ${gi + 1}: purpose is mandatory in ${file}, what the group is for`));
+      else if (g.purpose === undefined) out.push(fail(file, gl, `group ${gi + 1}: purpose is mandatory in ${file}, what the group is for`));
       if (g.category !== undefined) closed(g, 'category', g.category, spec.categories, 'category', gl);
       if (g.method !== undefined) closed(g, 'method', g.method, spec.methods, 'method', gl);
       if (!Array.isArray(g.rules) || g.rules.length === 0) { out.push(fail(file, yaml.lineOf(g, 'rules', gl), `group ${gi + 1}: rules must be a non-empty list`)); return; }
@@ -135,7 +135,7 @@ function run(ctx) {
         if (!isStr(r.text)) out.push(fail(file, yaml.lineOf(r, 'text', rl), `${name}: text is mandatory`));
         else if (file === 'course/rules.yaml') courseTexts.push({ text: r.text, line: yaml.lineOf(r, 'text', rl) });
         if (r.why !== undefined && !isStr(r.why)) out.push(fail(file, yaml.lineOf(r, 'why', rl), `${name}: why must be a non-empty string`));
-        for (const k of spec.extra) if (!isStr(r[k])) out.push(fail(file, yaml.lineOf(r, k, rl), `${name}: ${k} is mandatory`));
+        for (const k of spec.optional) if (r[k] !== undefined && !isStr(r[k])) out.push(fail(file, yaml.lineOf(r, k, rl), `${name}: ${k} must be a non-empty string`));
         if (r.check !== undefined) {
           const cl = yaml.lineOf(r, 'check', rl);
           // a level or a category that is missing or off the lists already failed above

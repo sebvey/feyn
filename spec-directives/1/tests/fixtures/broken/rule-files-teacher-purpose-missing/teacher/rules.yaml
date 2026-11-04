@@ -1,0 +1,10 @@
+# fixture: the rules of the teacher; the group has no purpose
+groups:
+  - id: onboarding
+    title: Accueil
+    category: session-start
+    method: demonstration
+    rules:
+      - id: first-rule
+        level: requirement
+        text: Le premier message part sans appel d'outil.
