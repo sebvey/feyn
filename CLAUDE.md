@@ -57,6 +57,9 @@ accepts it silently: no alias in a description, no argument read as its replacem
   interface cannot do it.
 - Never ask the maintainer to run a command you can run.
 - Answer in the language of the conversation; the repository stays in English.
+- A message to the maintainer speaks plainly: what happened or what is asked, in everyday
+  words, a concrete example when a choice is asked; no slug, path or number they do not need
+  to act. The detail stays in the issue, the PR or the plan comment, which the message links.
 - No next topic while the previous one is open, a pending maintainer action included.
 - A level-2 heading per topic when a reply holds several topics or opens a new one.
 - A pass over a list opens each message with `<pass>: <n>/<N> treated · in progress: #<x>`.
