@@ -10,7 +10,7 @@ MDX component or a `:::` directive to the spec and to `concept.md`, so the teach
 component markup, and the course could no longer be built without the site's components.
 
 Course Markdown is plain CommonMark with YAML frontmatter: no HTML, no MDX, no remark directive
-(`course/README.md` section 1). The structure the site needs comes from the reader-text conventions
+(`course/README.md` section 1, rule `plain-markdown`). The structure the site needs comes from the reader-text conventions
 of `course/README.md` 3.5 (sub-concept headings, concept references, stance markers, storyline
 blockquote, diagram images, pitfalls, quick test), enforced by the `conventions` check; the teacher
 reads the same file as ordinary Markdown. A new construct gets a natural Markdown form, added to 3.5

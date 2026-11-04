@@ -2,3 +2,4 @@
 
 A concept folder holds the teaching notes the teacher reads (`teacher/README.md`, rule `second-rule`);
 the group `onboarding` reads the course plan. A check id in code is not a rule: `concept-folder`.
+The course id equals its folder name (rule `course-id-equals-folder`).

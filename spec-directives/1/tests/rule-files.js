@@ -3,7 +3,8 @@
 // rules-with-level-and-method, spec-files-by-product): the rule files and the schemas.
 //   - course/rules.yaml and teacher/rules.yaml exist, each a map whose one key
 //     `groups` is a non-empty list; a group has `rules`, a non-empty list, and may declare `id`
-//     (a group slug), `title`, `category` and `method`;
+//     (a group slug), `title`, `purpose` (what the group is for, a non-empty string), `category`
+//     and `method`;
 //   - a rule has `id` (a slug of two to five words), `level`, `category`, `method` (on the rule
 //     or on its group) and `text`; `check` and `why` are optional; a rule of the protocol also has
 //     `origin`; no other key;
@@ -38,7 +39,7 @@ const FILES = {
   'teacher/rules.yaml': { categories: FAMILIES, methods: ['demonstration'], extra: ['origin'] },
 };
 const RULE_KEYS = ['id', 'level', 'category', 'method', 'check', 'text', 'why'];
-const GROUP_KEYS = ['id', 'title', 'category', 'method', 'rules'];
+const GROUP_KEYS = ['id', 'title', 'purpose', 'category', 'method', 'rules'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){1,4}$/;
 const GROUP_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){0,4}$/;
 const SCHEMA_REF = /course\/schemas\/[A-Za-z0-9._-]+\.schema\.yaml/g;
@@ -107,6 +108,7 @@ function run(ctx) {
           if (file === 'teacher/rules.yaml' && pgroups && !pgroups.has(g.id)) out.push(fail(file, yaml.lineOf(g, 'id', gl), `group ${gi + 1}: id "${g.id}" is not a group of teacher/README.md: a group of the protocol is a group of teacher/README.md, its slug as its id`));
         }
       } else if (file === 'teacher/rules.yaml') out.push(fail(file, gl, `group ${gi + 1}: id is mandatory in the protocol, the slug of its group of teacher/README.md`));
+      if (g.purpose !== undefined && !isStr(g.purpose)) out.push(fail(file, yaml.lineOf(g, 'purpose', gl), `group ${gi + 1}: purpose must be a non-empty string`));
       if (g.category !== undefined) closed(g, 'category', g.category, spec.categories, 'category', gl);
       if (g.method !== undefined) closed(g, 'method', g.method, spec.methods, 'method', gl);
       if (!Array.isArray(g.rules) || g.rules.length === 0) { out.push(fail(file, yaml.lineOf(g, 'rules', gl), `group ${gi + 1}: rules must be a non-empty list`)); return; }
