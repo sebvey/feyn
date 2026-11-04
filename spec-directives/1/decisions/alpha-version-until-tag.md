@@ -16,8 +16,7 @@ folder until its tag, with no prerelease number and no prerelease tag: `linear-c
 carries that version, which `check-spec` holds to its changelog. The `CHANGELOG.md` of a spec
 MAJOR and of a directives MAJOR takes the form of a course's changelog (one line per entry, ranked
 by bump, the convention of Changesets, named in its header), with an « Unreleased » section that
-becomes `<MAJOR>.0.0` at the tag; during the alpha, entries carry no bump class. "draft" leaves
-the descriptions of a spec and of the directives: it is the reserved term for a PR. Split from
+becomes `<MAJOR>.0.0` at the tag; during the alpha, entries carry no bump class. Split from
 decision `spec-files-and-alpha-version` (#322, 2026-10-31), whose "files of a spec" part stays
 with the spec as decision `spec-files-by-product`.
 
@@ -46,3 +45,4 @@ with the spec as decision `spec-files-by-product`.
   debt (D13).
 - The directives and the spec are tagged together, the directives first, in #451: a tagged spec
   declares a tagged directives MAJOR, never an alpha (epic #454, Material point 14).
+- Amended 2026-11-04 (#545): the word "draft" leaves this decision for its glossary entry.

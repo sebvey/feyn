@@ -131,7 +131,7 @@ where the concept is implemented, stored, read or written (decision `glossary-by
 - means: the generic Claude Code agent that teaches, with the **teacher skills** of its moments, built from the **teacher template**, the protocol and the lexicons of its spec, as the **composition** of its spec says
 - en: teacher · rejected: "prof", "tutor", "coach", "agent" alone
 - fr: « professeur » · rejected: « prof »
-- not to confuse with: [classroom](#classroom), [composition](#composition), [teacher skill](#teacher-skill), [teacher template](#teacher-template)
+- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template)
 
 ### classroom
 
@@ -366,24 +366,6 @@ where the concept is implemented, stored, read or written (decision `glossary-by
 - fr: « contrat de dessin »
 - not to confuse with: [diagram](#diagram)
 
-### pitfalls
-
-- means: the « Pièges » section of `concept.md`
-- en: pitfalls
-- fr: to settle
-
-### essentials
-
-- means: the « L'essentiel » section of `concept.md`
-- en: essentials
-- fr: to settle
-
-### quick test
-
-- means: the « Le test rapide » section of `concept.md`
-- en: quick test
-- fr: to settle
-
 ### deepening
 
 - means: the optional « Approfondissement » section of `concept.md`: more matter on the concept, sourced like its reader text, built by the site, read by the teacher in an aside on the learner's request; no case relies on it
@@ -418,7 +400,7 @@ where the concept is implemented, stored, read or written (decision `glossary-by
 - means: the pedagogical protocol: the testable teaching rules of a spec, each named by a slug, set in families and **groups**. A rule of it is a **protocol rule**
 - en: protocol · rejected: "the loop", "pedagogy", "rules", "behaviour"
 - fr: « protocole »
-- not to confuse with: [rule](#rule), [composition](#composition), [protocol rule](#protocol-rule), [group](#group)
+- not to confuse with: [teacher](#teacher), [rule](#rule), [composition](#composition), [protocol rule](#protocol-rule), [group](#group)
 
 ### protocol rule
 
@@ -595,13 +577,16 @@ spec, the `README.md` of its MAJOR (decision `rules-with-level-and-method`).
 - means: the conformance clause of the spec directives: a product, the course (its diagrams included) or the teacher, conforms when it holds every requirement of its class, whatever the method that verifies each one. The blocking checks are a necessary condition, not a sufficient one: the review and taught-check do the rest, and a course tag certifies the whole. The lexicons of a spec are not products
 - en: conformity · rejected: "conforming" for a course that only passes the blocking checks, "compliance"
 - fr: « conformité »
+- why: "conformity" is ISO's word; the section that states it is the conformance clause, after the W3C QA Framework, whose idea ISO shares
 
 ## How we work
 
 The frame of the work is Kanban, with ADR for the decisions and GitHub flow for the branches
 (decision `kanban-frame-of-the-work`): what the frame says is in `docs/kanban.md`, how feyn
-applies it in `docs/contributing.md`. Its words below are the frame's; the others name feyn's own
-mechanisms, which the frame does not name.
+applies it in `docs/contributing.md`. Its words below are the frame's wherever the frame has a
+word; the others name feyn's own mechanisms, which the frame does not name. Why: a word of feyn's
+own beside the frame's, with a table of correspondence, would give one thing two names, and the
+outside reference would no longer open from the word.
 
 ### area
 
@@ -630,6 +615,7 @@ mechanisms, which the frame does not name.
 - en: epic · rejected: "theme", "subject", "initiative", "stream", "phase"
 - fr: to settle
 - not to confuse with: [story](#story), [milestone](#milestone), [plan comment](#plan-comment), [work item](#work-item)
+- why: Kanban names no type of work item, so epic and story come from the most widespread source, common agile and GitHub vocabulary
 
 ### plan comment
 
@@ -644,6 +630,7 @@ mechanisms, which the frame does not name.
 - en: story · rejected: "slice", "task", "sub-task"
 - fr: to settle
 - not to confuse with: [epic](#epic), [idea](#idea), [work item](#work-item)
+- why: as for epic, common agile and GitHub vocabulary, Kanban naming no type of work item; "slice", feyn's own word before it, gave the story a second name
 
 ### idea
 
@@ -651,6 +638,7 @@ mechanisms, which the frame does not name.
 - en: idea · rejected: "observation" for the issue, "Backlog" for its Status, "suggestion"
 - fr: to settle
 - not to confuse with: [option](#option), [work item](#work-item)
+- why: idea and option come from Steyaert's Upstream Kanban, the most widespread source for the stages before commitment, which Kanban does not name; "observation" as a kind, feyn's own word before it, gave the idea a second name
 
 ### option
 
@@ -658,6 +646,7 @@ mechanisms, which the frame does not name.
 - en: option · rejected: "proposal", "candidate"
 - fr: to settle
 - not to confuse with: [idea](#idea), [option refinement](#option-refinement)
+- why: as for idea, Steyaert's Upstream Kanban; "proposal", feyn's own word before it, gave the option a second name, and its label was not kept as "historical": a dead label stays in the list at every issue creation, and someone ends up setting it
 
 ### label
 
@@ -728,6 +717,7 @@ mechanisms, which the frame does not name.
 - en: draft · rejected: "WIP" for a draft PR
 - fr: to settle
 - not to confuse with: [WIP limit](#wip-limit)
+- why: "draft" is the term for a PR, so it left the descriptions of a spec and of the spec directives, where it named a MAJOR in preparation, which is an alpha
 
 ### blocked
 
@@ -833,24 +823,17 @@ mechanisms, which the frame does not name.
 
 ### skill
 
-- means: a Claude Code skill of the repository, folder and name prefixed `feyn-`, invoked as `/feyn-<name>` or loaded from its description: a **job skill** or the **work-cycle tooling**; "tooling" alone is the build, site and teacher code. A **teacher skill** is a skill of a classroom, not of the repository
+- means: a Claude Code skill of the repository, folder and name prefixed `feyn-`, invoked as `/feyn-<name>` or loaded from its description: one that does the job of a moment of the work, named by a verb (`feyn-deliver-story-alone`, `feyn-brainstorm`), or the **work-cycle tooling**; "tooling" alone is the build, site and teacher code. A **teacher skill** is a skill of a classroom, not of the repository
 - en: skill · rejected: "command", "prompt", "recipe"
 - fr: to settle
-- not to confuse with: [agent workflow](#agent-workflow), [project subagent](#project-subagent), [job skill](#job-skill), [work-cycle tooling](#work-cycle-tooling), [teacher skill](#teacher-skill)
-
-### job skill
-
-- means: a skill that does the job of one moment of the work, named by a verb (`feyn-deliver-story-alone`, `feyn-brainstorm`)
-- en: job skill
-- fr: to settle
-- not to confuse with: [skill](#skill), [work-cycle tooling](#work-cycle-tooling)
+- not to confuse with: [agent workflow](#agent-workflow), [project subagent](#project-subagent), [work-cycle tooling](#work-cycle-tooling), [teacher skill](#teacher-skill)
 
 ### work-cycle tooling
 
-- means: the skills that are not job skills, called by the job skills or directly for a one-off act, each named by what it produces or handles (`feyn-issue-branch`, `feyn-pull-request`)
+- means: the skills that do no moment of the work on their own, called by the skills that do or directly for a one-off act, each named by what it produces or handles (`feyn-issue-branch`, `feyn-pull-request`)
 - en: work-cycle tooling · rejected: "tooling" alone (the build, site and teacher code)
 - fr: to settle
-- not to confuse with: [skill](#skill), [job skill](#job-skill)
+- not to confuse with: [skill](#skill)
 
 ### teacher skill
 
@@ -889,10 +872,10 @@ mechanisms, which the frame does not name.
 
 ### template
 
-- means: always qualified: a model file, a **course template**, a **learner template**, a **teacher template**, an **issue template** or a **body template**
+- means: always qualified: a model file, a **course template**, a **learner template**, a **teacher template**, a GitHub issue form or a **body template**
 - en: template, always qualified · rejected: "template" alone, "boilerplate", "scaffold"
 - fr: « modèle »
-- not to confuse with: [course template](#course-template), [learner template](#learner-template), [teacher template](#teacher-template), [issue template](#issue-template), [body template](#body-template)
+- not to confuse with: [course template](#course-template), [learner template](#learner-template), [teacher template](#teacher-template), [body template](#body-template)
 
 ### course template
 
@@ -915,19 +898,12 @@ mechanisms, which the frame does not name.
 - fr: to settle
 - not to confuse with: [template](#template), [teacher](#teacher), [composition](#composition)
 
-### issue template
-
-- means: a GitHub issue form of the repository, which a person opening an issue on GitHub fills
-- en: issue template
-- fr: to settle
-- not to confuse with: [template](#template), [body template](#body-template)
-
 ### body template
 
 - means: the body of an epic, a story, an idea, a decision or a PR, one per form, which the work-cycle tooling fills
 - en: body template
 - fr: to settle
-- not to confuse with: [template](#template), [issue template](#issue-template)
+- not to confuse with: [template](#template)
 
 ### channel
 
@@ -956,18 +932,6 @@ mechanisms, which the frame does not name.
 - en: spec version · rejected: "teacher version"
 - fr: to settle
 - not to confuse with: [course version](#course-version)
-
-### freeze
-
-- means: the moment after which the old repositories no longer change; announced by the agent
-- en: freeze
-- fr: to settle
-
-### health
-
-- means: a report on the repository's state; no skill produces it yet
-- en: health · rejected: "status", "doctor"
-- fr: to settle
 
 ### repository glossary
 

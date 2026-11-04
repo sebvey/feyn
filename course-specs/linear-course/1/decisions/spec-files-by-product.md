@@ -26,15 +26,13 @@ keys and parameters); its rules are in `teacher/rules.yaml`, in French, the boun
 decision `language-policy`; `teacher/` also holds what builds and tests the teacher, each file
 described by the MAJOR's `README.md` (section 2). The rule files are these two; the spec's own
 files are verified by the tests of `check-spec`, which are not rules (decision
-`rules-with-level-and-method`). A description
-(the spec directives, the MAJOR's `README.md`, `course/README.md`, `teacher/README.md`) is
-informative: it explains and never uses the verbal forms of obligation; a section of
-`course/README.md` or `teacher/README.md` whose rules are in a rule file points to their group,
-restates none and cites no rule id; the rule files are normative. "teacher" stays the name of the
-class of products, "protocol" the name of its rules and of their description. The version of the
-MAJOR, `1.0.0-alpha` until its tag, and the form of its `CHANGELOG.md` are decision
-`alpha-version-until-tag` of the spec directives, split from this one (formerly
-`spec-files-and-alpha-version`).
+`rules-with-level-and-method`). A description (the spec directives, the MAJOR's `README.md`,
+`course/README.md`, `teacher/README.md`) is informative: it explains and never uses the verbal
+forms of obligation; a section of `course/README.md` or `teacher/README.md` whose rules are in a
+rule file points to their group, restates none and cites no rule id; the rule files are
+normative. The version of the MAJOR, `1.0.0-alpha` until its tag, and the form of its
+`CHANGELOG.md` are decision `alpha-version-until-tag` of the spec directives, split from this
+one (formerly `spec-files-and-alpha-version`).
 
 ## Options ruled out
 
@@ -77,3 +75,5 @@ MAJOR, `1.0.0-alpha` until its tag, and the form of its `CHANGELOG.md` are decis
   ids before, as the maintainer settled in epic #450 (Material point 10). Without this, a
   contributor extracting a section would restate each rule in the README prose beside the rule
   file, and the two drift.
+- Amended 2026-11-04 (#545): the names "teacher" and "protocol" leave this decision for the
+  glossary.
