@@ -28,11 +28,13 @@ described by the MAJOR's `README.md` (section 2). The rule files are these two; 
 files are verified by the tests of `check-spec`, which are not rules (decision
 `rules-with-level-and-method`). A description
 (the spec directives, the MAJOR's `README.md`, `course/README.md`, `teacher/README.md`) is
-informative: it explains and cites rule ids, and never uses the verbal forms of obligation; the rule
-files are normative. "teacher" stays the name of the class of products, "protocol" the name of its
-rules and of their description. The version of the MAJOR, `1.0.0-alpha` until its tag, and the
-form of its `CHANGELOG.md` are decision `alpha-version-until-tag` of the spec directives, split
-from this one (formerly `spec-files-and-alpha-version`).
+informative: it explains and never uses the verbal forms of obligation; a section of
+`course/README.md` or `teacher/README.md` whose rules are in a rule file points to their group,
+restates none and cites no rule id; the rule files are normative. "teacher" stays the name of the
+class of products, "protocol" the name of its rules and of their description. The version of the
+MAJOR, `1.0.0-alpha` until its tag, and the form of its `CHANGELOG.md` are decision
+`alpha-version-until-tag` of the spec directives, split from this one (formerly
+`spec-files-and-alpha-version`).
 
 ## Options ruled out
 
@@ -69,3 +71,7 @@ from this one (formerly `spec-files-and-alpha-version`).
   its schema), as the maintainer settled in epic #222 (Material point 6). Without this, the author
   of a second MAJOR would look for its teacher's build at the root, which then breaks or fills
   with versions.
+- Amended 2026-11-04 (#531): a section of a product's `README.md` whose rules are in its rule
+  file points to their group, restates none and cites no rule id, where a description cited rule
+  ids before, as the maintainer settled in epic #450 (Material point 10). Without this, a rule is
+  written twice, in the rule file and in the prose that restates it, and the two drift.

@@ -1,2 +1,0 @@
-check: rule-slugs
-message: slug "second-rule" is defined twice (first at teacher/README.md

@@ -2,9 +2,7 @@
 // Every rule and every group of rules of teacher/README.md is named by a slug, defined once in one
 // namespace, and every rule or group cited in teacher/README.md, README.md, course/README.md and
 // decisions/ (where a decision cites none: decision decision-format) is cited by a slug that is
-// defined (decisions rules-named-by-slug, rule-groups-replace-ranges). The ids of the rules of
-// course/README.md moved to course/rules.yaml are defined there, in the same namespace: a
-// description cites them as it cites a rule of the protocol.
+// defined (decisions rules-named-by-slug, rule-groups-replace-ranges).
 //
 // Defined, in a rule family ("## <n>. ..."): a rule by a line that opens on `**<slug>** `, or by a
 // table row whose first cell is `**<slug>**`; a group by a heading `### <title> (`<slug>`)`. The
@@ -24,7 +22,6 @@
 // decision cites no rule id (decision decision-format), so a citation there is a slip to catch.
 // The file names it reads are those of linear-course, a named debt: idea #485.
 const mdlib = require('../lib/md');
-const yaml = require('../lib/yaml-lines');
 const { fail } = require('../lib/course');
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){1,4}$/;
@@ -33,7 +30,6 @@ const NUMBER = /^\d+\.\d+[a-z]?$/;
 const RULE_WORD = /\b(?:[Rr]ules?|[Rr]ègles?)/;
 const GROUP_WORD = /\b(?:[Gg]roups?|[Gg]roupes?)/;
 const PROTOCOL = 'teacher/README.md';
-const COURSE_RULES = 'course/rules.yaml';
 // the descriptions read beside teacher/README.md: the spec MAJOR's README, and what a course is
 const DESCRIPTIONS = ['README.md', 'course/README.md'];
 
@@ -127,20 +123,6 @@ function run(ctx) {
     for (const n of numberCitations(s.lines)) out.push(fail(PROTOCOL, n.line, `rule cited by its number "${n.number}": cite its slug`));
   }
 
-  // the rules of course/rules.yaml, in the same namespace; a file missing or unreadable is
-  // rule-files' failure, not this one's
-  const courseRules = ctx.read(COURSE_RULES);
-  let cdoc = null;
-  try { cdoc = courseRules === null ? null : yaml.parse(courseRules); } catch (e) { cdoc = null; }
-  for (const g of (cdoc && Array.isArray(cdoc.groups) ? cdoc.groups : [])) {
-    for (const [ri, r] of (g && Array.isArray(g.rules) ? g.rules : []).entries()) {
-      if (!r || typeof r.id !== 'string' || !SLUG.test(r.id)) continue;
-      const line = yaml.lineOf(g.rules, ri, 1);
-      if (defs.has(r.id)) out.push(fail(COURSE_RULES, line, `slug "${r.id}" is defined twice (first at ${PROTOCOL}:${defs.get(r.id).line})`));
-      else defs.set(r.id, { line, kind: 'rule' });
-    }
-  }
-
   // the tables of the other sections: "Used in" and "Rule" columns
   const others = sections.filter((s) => !family(s));
   for (const s of others) {
@@ -191,7 +173,7 @@ function run(ctx) {
     } else if (d && d.kind === 'group' && c.kind === 'rule') out.push(fail(c.file, c.line, `cites rule "${c.slug}", which is a group: cite it after « groupe » or « group »`));
     else if (NUMBER.test(c.slug)) out.push(fail(c.file, c.line, `rule cited by its number "${c.slug}": cite its slug`));
     else if (!SLUG.test(c.slug)) out.push(fail(c.file, c.line, `rule cited as "${c.slug}", which is not a slug`));
-    else if (!d) out.push(fail(c.file, c.line, `cites rule "${c.slug}", which neither teacher/README.md nor course/rules.yaml defines`));
+    else if (!d) out.push(fail(c.file, c.line, `cites rule "${c.slug}", which teacher/README.md does not define`));
   }
 
   // ranges, in teacher/README.md, README.md and course/README.md

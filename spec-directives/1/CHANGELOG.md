@@ -66,10 +66,7 @@ no class: `- file or area: what changes`.
   `check-spec` instead of naming them, and says where the rest of the teacher's conformance goes
   now (#515).
 - `tests/`: `rule-files` accepts a group `purpose`, a non-empty string, on both rule files (the
-  fixture `broken/rule-files-purpose`); `rule-slugs` defines the ids of `course/rules.yaml` in the
-  namespace of the slugs, so a description cites a rule of a course as it cites a rule of the
-  protocol (the fixture `broken/rule-slugs-course-duplicate`); `README.md` sections 1 and 8 say so
-  (#524).
+  fixture `broken/rule-files-purpose`); `README.md` sections 1 and 8 say so (#524).
 - `decisions/`: decision `spec-names-no-course`: the files of a spec, its decisions included, and
   the decisions of the directives name no course; decisions `alpha-version-until-tag` and
   `rules-with-level-and-method` state their evidence without naming one (#528).

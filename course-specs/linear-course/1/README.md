@@ -80,8 +80,9 @@ What a rule file holds is the directives' (`spec-directives/1/README.md` section
 `course/rules.yaml` holds every rule of `course/README.md` sections 1, 2, 4 and 5, those verified
 by inspection (the review) included, and of its other sections the rules the checks of a course
 verify, taught-check included, and one rule verified by inspection;
-`course/schemas/course.schema.yaml` and `course/schemas/concept-frontmatter.schema.yaml` are the
-tables of `course/README.md` sections 2 and 3.1 (#329). The other rules of a course leave
+`course/schemas/course.schema.yaml` holds the fields of `course.yaml`, and
+`course/schemas/concept-frontmatter.schema.yaml` the table of `course/README.md` section 3.1
+(#329). The other rules of a course leave
 `course/README.md` for `course/rules.yaml`, and the rules of the protocol leave `teacher/README.md`
 for `teacher/rules.yaml`, in #318. Until that extraction, `course/README.md` sections 3, 6 and 7
 and `teacher/README.md` keep their verbal forms of obligation, read as `course/README.md` says in
