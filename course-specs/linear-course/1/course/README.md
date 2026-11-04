@@ -223,9 +223,9 @@ Un **schéma** est un SVG du dossier de concept, déclaré dans `diagrams` (sect
 montre en un dessin ce qu'un sous-concept enseigne. Un même SVG sert chaque endroit où
 l'apprenant le rencontre, complet par lui-même : le site le montre ; le professeur l'envoie au
 panneau du bureau et en dit la légende ; dans le terminal, le professeur dit la légende et donne
-le lien du site. Un consommateur affiche le SVG de sorte que `currentColor` suive la couleur du
-texte qui l'entoure ; il peut teinter les trois classes `primary`, `secondary` et `muted`, sans y
-être tenu, et aucun ne demande au SVG de changer.
+le lien du site. Chacun affiche le SVG tel qu'il est, `currentColor` suivant la couleur du texte
+qui l'entoure ; certains teintent en outre les trois classes `primary`, `secondary` et `muted`,
+et aucun ne demande au SVG de changer.
 
 La section 6.1 est le contrat de dessin ; la section 6.2, le style que partagent les schémas
 d'un cours.
@@ -239,11 +239,9 @@ d'un cours.
 | the teacher | an SVG the desktop panel shows as it is | sending a diagram |
 | the learner | with a screen reader, the title and description of the drawing | reading a concept on the site |
 
-Les nuances d'un schéma viennent de `fill-opacity`, `stroke-opacity` et `opacity`. La feuille de
-style d'un consommateur peut fixer la `color` des trois classes (et celle du thème sombre), ce
-qui reteinte `currentColor`. `<desc>` décrit le dessin pour les lecteurs d'écran. L'id d'un
-`<g>`, de la forme `<sub-concept>-<element>` (`9a1-couches`, `9a1-tranche-1`), se distingue de
-l'id nu d'un sous-concept, l'ancre du texte lecteur.
+Les nuances d'un schéma viennent de `fill-opacity`, `stroke-opacity` et `opacity`. Quand la
+feuille de style d'un consommateur fixe la `color` des trois classes (et celle du thème sombre),
+elle reteinte `currentColor`. `<desc>` décrit le dessin pour les lecteurs d'écran.
 
 Les règles du contrat de dessin sont le groupe « Le contrat de dessin » de
 [`rules.yaml`](rules.yaml).

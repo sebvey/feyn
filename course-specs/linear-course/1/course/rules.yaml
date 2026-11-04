@@ -1,7 +1,7 @@
 # Les règles d'un cours de linear-course (decisions rules-with-level-and-method and
-# spec-files-by-product): every rule of course/README.md, those the checks verify, taught-check
+# spec-files-by-product): every rule of a course, those the checks verify, taught-check
 # included, and those verified by inspection, the review; one group per section or sub-section
-# that states rules, in the order of course/README.md (section 6 points to the groups of 6.1 and
+# of course/README.md that points to rules, in its order (section 6 points to the groups of 6.1 and
 # 6.2; section 7 states no rule of a course). A course conforms when it holds every requirement of
 # this file, whatever its method (spec-directives/1/README.md section 2). The tables of fields are
 # the schemas of course/schemas/, each one rule here.
@@ -518,8 +518,10 @@ groups:
         check: sources
         text: >-
           La cellule section d'une affirmation doit tenir des ids de sous-concept et des sections
-          fixes par leur valeur du lexique, séparés par des virgules, chacun existant dans
-          `concept.md`.
+          fixes par leur valeur du lexique (« L'essentiel », « Pièges », « Le test rapide »,
+          « Approfondissement »), séparés par des virgules, jamais le texte d'un titre, chacun
+          existant dans `concept.md`. « Objectif » n'en est pas une : il énonce ce que
+          l'apprenant fera, pas une affirmation.
       - id: claim-source-cell-form
         level: requirement
         check: sources
@@ -975,7 +977,8 @@ groups:
         text: >-
           Les mots doivent être des `<text>` (et des `<tspan>`), jamais des tracés, avec au moins
           un `<text>` ; les polices seulement par l'attribut `font-family` avec des familles
-          génériques, aucun fichier de police, aucun `@font-face`.
+          génériques (`system-ui`, `sans-serif`, `serif`, `monospace`), aucun fichier de police,
+          aucun `@font-face`.
       - id: svg-accessibility
         level: requirement
         check: svg-contract
@@ -987,9 +990,12 @@ groups:
         level: requirement
         check: svg-contract
         text: >-
-          Chaque enfant dessiné de la racine doit être un `<g>` d'`id` `<sub-concept>-<element>`,
-          unique parmi les schémas du concept ; un `<defs>` peut se tenir à la racine à côté
-          d'eux.
+          Chaque enfant dessiné de la racine doit être un `<g>` d'`id` `<sub-concept>-<element>` :
+          un id de sous-concept du concept, un trait d'union, des lettres ASCII minuscules et des
+          chiffres joints par des traits d'union (`9a1-couches`, `9a1-tranche-1`), jamais un id
+          de sous-concept nu, qui est l'ancre du texte lecteur ; cet id est unique parmi les
+          schémas du concept. Un `<defs>`, qui n'est pas dessiné, peut se tenir à la racine à
+          côté d'eux, et ce qu'il tient suit ce contrat.
       - id: svg-forbidden-elements
         level: requirement
         check: svg-contract
