@@ -16,11 +16,11 @@ only, never edited by hand). `feyn` was created empty: the git history of `parco
 not carry over. The two old repositories are frozen, then archived; they are read, never
 written to.
 
-The root holds two files, `CLAUDE.md` and `README.md`, plus dotfiles; `docs/` holds four
-things, `decisions/`, `glossary.md`, `contributing.md` and `kanban.md`. Anything more at the
-root or in `docs/` needs a decision here. A document that describes one area lives in that
-area's folder (`site-builder/docs/`, `classroom-builder/README.md`), and there is no
-`CLAUDE.md` per folder: skills carry the detail.
+The root holds three files, `CLAUDE.md`, `CLAUDE.local.example.md` and `README.md`, plus
+dotfiles; `docs/` holds four things, `decisions/`, `glossary.md`, `contributing.md` and
+`kanban.md`. Anything more at the root or in `docs/` needs a decision here. A document that
+describes one area lives in that area's folder (`site-builder/docs/`,
+`classroom-builder/README.md`), and there is no `CLAUDE.md` per folder: skills carry the detail.
 
 ## Options ruled out
 
@@ -39,3 +39,8 @@ area's folder (`site-builder/docs/`, `classroom-builder/README.md`), and there i
   `contributing.md` says how feyn applies it. Without it, the frame would live in
   `contributing.md`, mixing the general with the particular in a file that changes at every
   retouch, or outside the repository only.
+- Amended 2026-11-04 (#550): the root admits a third file, `CLAUDE.local.example.md`, the
+  maintainer's working rules as an example for a developer's own `CLAUDE.local.md`, which Claude
+  Code loads beside `CLAUDE.md` and `.gitignore` keeps out. Without it, the skills, which follow
+  the personal instructions of whoever works on feyn, would leave a new developer no model of
+  the rules they were written against.

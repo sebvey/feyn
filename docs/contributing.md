@@ -131,8 +131,10 @@ or `kind:story`, set by `/feyn-issue` at its creation; an idea carries none.
   (`<type>/<epic>-<slug>`), into which its stories are merged; its **epic PR**, from that branch
   to `main` with `Closes #<epic>`, is how the maintainer validates the whole. An **open
   question** is a choice of a story of an epic that departs from the epic's Done when or adds
-  structure (a new file, a category, a marker, an exception to a principle), put to the
-  maintainer at once: a line in the plan comment and a comment on the epic.
+  structure (a new file, a category, a marker, an exception to a principle), that nothing
+  already settles (a decision, the epic's Material, a rule, an answer of the maintainer, a story
+  of the plan) and that is costly to undo or foundational, put to the maintainer at once: a line
+  in the plan comment's log and a comment on the epic.
 - A **story** is a unit of work delivered in one PR, with a verifiable Done when: the label
   `kind:story`, with or without a parent epic. Under an epic, it is a sub-issue posed only when
   it is the next one, and its PR targets the epic's integration branch; with no epic, its PR
@@ -174,37 +176,45 @@ decisions `issue-carries-a-work-item-or-an-idea`, `story-with-or-without-an-epic
 
 Five moments:
 1. **Take an epic**, among the Ready ones: read its Material, pose one or two stories with
-   `/feyn-issue story #<epic>`, each attached to the epic and Ready, and write the epic's
-   **plan comment** (the stories envisaged, in order, in five lines; what is unknown; what was
-   dropped). Whoever takes the epic writes the plan comment, in the work session that takes it,
-   with the command of [`.claude/reference/project.md`](../.claude/reference/project.md),
-   "Epics", "The plan comment" ("Add one"). Whoever takes the epic is its orchestrator: they
-   cut its integration branch from `main` and push it, and deliver every story on it (moment
-   2); `/feyn-deliver-epic <epic>` runs this moment and the next. The epic goes In progress when
-   its first story starts. A story of an epic is created only when it is the next one the plan
-   comment names, or one of the first one or two of an epic with no plan comment yet; otherwise
-   the plan comment is rewritten first. This holds as well for the next story after a delivery
-   and for a story added when the maintainer's check of the epic's Done when fails.
+   `/feyn-issue story #<epic>`, each attached to the epic and Ready, and write the epic's **plan
+   comment**, in two parts: above, the plan, rewritten in place at each change (the stories in
+   their current order, each delivered one ticked with its PR, the next one marked; what is
+   unknown; what was dropped), which is what a resumed epic reads; below, the log, only added to
+   (each delivery, each open question, each answer). Whoever takes the epic writes the plan
+   comment, in the work session that takes it, in the form and with the command of
+   [`.claude/reference/project.md`](../.claude/reference/project.md), "Epics", "The plan
+   comment" ("Add one"); a plan comment in an older form is rewritten in two parts at the next
+   step of its epic. Whoever takes the epic is its orchestrator: they cut its integration branch
+   from `main` and push it, and deliver every story on it (moment 2);
+   `/feyn-deliver-epic <epic>` runs this moment and the next. The epic goes In progress when its
+   first story starts.
+   A story of an epic is created only when it is the next one the plan marks, or one of the
+   first one or two of an epic with no plan comment yet; otherwise the plan is rewritten first.
+   This holds as well for the next story after a delivery and for a story added when the
+   maintainer's check of the epic's Done when fails.
 2. **Deliver a story under an epic**, on the epic's integration branch (decision
    `epic-on-integration-branch`): a contributor agent opens a PR to that branch, a fresh agent
-   reviews it, and the orchestrator merges it (squash), closes the story (`Closes` does not close
-   an issue on a branch other than `main`) and sets it Done; a story of an epic never goes Ready
-   for review, its PR never awaits the maintainer. `main` is merged into the integration branch
-   when it moves, never rebased. A choice of a story that departs from the epic's Done when or
-   adds structure becomes an open question at once, and the work goes on; the maintainer answers
-   on the epic, and the orchestrator adds the answer under its line in the plan comment and
-   applies it, by a story when it needs work. `/feyn-deliver-epic <epic>` runs this delivery,
-   each story through the agent workflow `deliver-story.js` of `.claude/workflows/`. After each
-   merge, two lines go on the plan comment (the story closed, the next to pose; if the next is
-   not obvious, back to moment 1), and the maintainer is told, plainly, what the story changed
-   and what comes next. When the last story is merged, a fresh agent reviews the whole
-   integration branch against the epic's Done when, a story fixes what it finds, and the
-   orchestrator hands over the epic PR once no open question remains: the epic goes Ready for
-   review, the maintainer verifies its Done when and merges the epic PR, which closes the epic,
-   or asks for a story and the epic goes back to In progress. All
-   its sub-issues closed does not mean the epic closes: a story of an epic exists only if it is
-   the next one (the policies, below), so every delivery leaves them all closed until the next is
-   posed.
+   reviews it, and the orchestrator merges it (squash), closes the story (`Closes` does not
+   close an issue on a branch other than `main`) and sets it Done; a story of an epic never goes
+   Ready for review, its PR never awaits the maintainer. `main` is merged into the integration
+   branch when it moves, never rebased. A choice of a story that departs from the epic's Done
+   when or adds structure is sorted at once, and the work goes on: one already settled is
+   applied and the maintainer informed, the rest, costly to undo or foundational, becomes an
+   open question (`/feyn-deliver-epic`, step 3). The maintainer answers on the epic or in the
+   work session; the orchestrator records the answer at once under its line in the plan
+   comment's log (an answer in the work session as `Answered: <the answer> (the maintainer, in
+   the work session, <date>)`) and applies it, by a story when it needs work.
+   `/feyn-deliver-epic <epic>` runs this delivery, each story through the agent workflow
+   `deliver-story.js` of `.claude/workflows/`. After each merge, the plan comment's plan ticks
+   the story and marks the next (if the next is not obvious, back to moment 1), its log gains
+   the delivery, and the maintainer is told what the story changed and what comes next. When the
+   last story is merged, a fresh agent reviews the whole integration branch against the epic's
+   Done when, a story fixes what it finds, and the orchestrator hands over the epic PR once no
+   open question remains: the epic goes Ready for review, the maintainer verifies its Done when
+   and merges the epic PR, which closes the epic, or asks for a story and the epic goes back to
+   In progress. All its sub-issues closed does not mean the epic closes: a story of an epic
+   exists only if it is the next one (the policies, below), so every delivery leaves them all
+   closed until the next is posed.
    **Deliver a story alone**, a story with no parent epic: one PR to `main`, merged by the
    maintainer, in one of two ways: `/feyn-deliver-story-alone <n>`, or a direct delivery.
    `/feyn-deliver-story-alone <n>` delivers every story without an epic (given a story of an
@@ -360,12 +370,12 @@ In the web interface, the Project's views. First what waits for the maintainer: 
 `label:blocked:maintainer` in the issue list; the PR list shows the draft PRs (a PR under
 `/feyn-deliver-story-alone` is also a draft until its review is done: not one to answer); the
 Ready for review items, a story's PR in the In progress view or an epic's epic PR in Overview,
-waiting for the merge; the open questions of the epics In progress, in their plan comments. Then
-the In progress view (what moves on its own), then Ready (what can be taken), then Options (what
-to commit or close), then Ideas (what to triage). An unblock is a comment on the issue that says
-what was validated, then the label removed: the comment is the trace a fresh agent reads; an
-open question is answered by a comment on the epic. Why: decisions
-`blocked-is-a-label-not-a-state`, `project-status-not-state-labels`,
+waiting for the merge; the open questions of the epics In progress, in their plan comments'
+logs. Then the In progress view (what moves on its own), then Ready (what can be taken), then
+Options (what to commit or close), then Ideas (what to triage). An unblock is a comment on the
+issue that says what was validated, then the label removed: the comment is the trace a fresh
+agent reads; an open question is answered by a comment on the epic, or in the work session. Why:
+decisions `blocked-is-a-label-not-a-state`, `project-status-not-state-labels`,
 `idea-and-option-before-ready`, `epic-on-integration-branch`.
 
 ## Tool behaviours

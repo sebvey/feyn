@@ -5,3 +5,4 @@ dist/
 *.local.*
 .claude/worktrees/
 tmp/
+!CLAUDE.local.example.md

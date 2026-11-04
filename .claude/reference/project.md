@@ -71,9 +71,16 @@ options, with their ids:
 - **The plan comment**: the last comment of the epic whose body starts with "**Plan comment**";
   its database id (nothing printed: the epic has none):
   `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<epic>/comments --jq '.[] | select(.body | startswith("**Plan comment**")) | .id' | tail -n 1`.
+  Its two parts: above, the plan, rewritten in place at each change (a line
+  `Delivery: <integration branch>`; `Stories (an estimate):`, the stories in their current
+  order, one per line, each delivered one `- [x] #<n> <title> (PR #<pr>)`, the others
+  `- [ ] <story>`, the next one ending `(next)`; `Unknown:`; `Dropped:`); below, from the line
+  `**Log**`, the log, only added to (a line per delivery,
+  `<date> #<n> (PR #<pr>): <what it delivered>`; per open question, `Open question: …`; per
+  answer, `Answered: …`, right under its question, as `/feyn-deliver-epic` step 3 says).
   Edit it: the PATCH replaces the whole body, so read it first,
-  `mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> --jq .body > <file>`, append to
-  the file, then `mise exec -- gh api -X PATCH repos/sebvey/feyn/issues/comments/<id> -F body=@<file>`.
+  `mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> --jq .body > <file>`, edit the
+  file, then `mise exec -- gh api -X PATCH repos/sebvey/feyn/issues/comments/<id> -F body=@<file>`.
   Add one: `mise exec -- gh issue comment <epic> --body-file <file>`; its body begins with
   `**Plan comment**`, or the lookup never finds it.
 - **Close** a story merged into its epic's integration branch (`Closes #<n>` closes an issue

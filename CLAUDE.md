@@ -52,19 +52,14 @@ accepts it silently: no alias in a description, no argument read as its replacem
 
 ## Working with the maintainer
 
-- For an action the maintainer does themself (merging, labels, repository settings, remote
-  branches, Project), give the path in the GitHub web interface; a command only when the
-  interface cannot do it.
-- Never ask the maintainer to run a command you can run.
-- Answer in the language of the conversation; the repository stays in English.
-- A message to the maintainer speaks plainly: what happened or what is asked, in everyday
-  words, a concrete example when a choice is asked; no slug, path or number they do not need
-  to act. The detail stays in the issue, the PR or the plan comment, which the message links.
-- No next topic while the previous one is open, a pending maintainer action included.
-- A level-2 heading per topic when a reply holds several topics or opens a new one.
-- A pass over a list opens each message with `<pass>: <n>/<N> treated · in progress: #<x>`.
-- A list to work through lives in a file, not in memory.
-- An item's frame (purpose, place) before what is wrong; English not translated systematically.
+- The skills follow the maintainer's personal instructions where they are loaded: their
+  sections "Decisions that are mine" and "Reports and messages", and their other working rules,
+  whatever file holds them (a global `CLAUDE.md`, or a `CLAUDE.local.md` beside this file).
+  `CLAUDE.local.example.md` holds the maintainer's, as an example.
+- Where none is loaded, a decision is put to the maintainer in this form: one subject per
+  message; its frame (what the thing is and where it sits); a real example from the
+  repository; the options in a table; the recommendation first, labelled as such; one
+  question, asked once.
 
 ## Skills
 

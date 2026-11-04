@@ -11,7 +11,7 @@ epic, under `/feyn-deliver-story-alone` or on the direct path, or a direct deliv
 that follows `/feyn-pull-request` and is never in the same turn. It never merges, never deletes
 a remote branch, and writes nothing on GitHub but a Status. A story of an epic is merged into
 its epic's integration branch, not `main`: `/feyn-deliver-epic` cleans up after it (step 2.5)
-and writes its lines on the plan comment (step 2.6), and cleans up after the merge of the epic
+and updates the plan comment (step 2.6), and cleans up after the merge of the epic
 PR (step 6).
 
 The branch is the issue branch `<type>/<n>-<slug>` (made by `/feyn-issue-branch`): the one the
