@@ -76,17 +76,17 @@ no second taxonomy without a use.
 **Conformance clause** (D14). Two classes of products: the **course**, its diagrams included, and
 the **teacher**; a rule binds a product. The lexicons are not products: they live in the spec's
 folder, written by the spec's authors, and their consistency is the spec's own. The spec's own files
-(the rule files, the schemas, the slugs of the protocol, the lexicons, `spec.yaml` and its
-version) are verified by the tests of the directives, run by `check-spec` (`rule-files`,
-`rule-slugs`, `lexicon-keys`, `spec-yaml`), which are not rules: they carry no category and
-no level, each failure blocks `check-spec`, and none counts toward a course's conformance. A course
-conforms when it holds every requirement of `course/rules.yaml`, whatever its method; the blocking
-checks are a necessary condition, not a sufficient one; the review and taught-check do the rest,
-and a course tag certifies the whole. A teacher conforms when it holds every requirement of
-`teacher/rules.yaml`; the method of a rule of the protocol is demonstration, by the fresh tests
-(D8). Recommendations are outside conformance (the ISO sense of "should"). The word "conformity"
-(ISO) stays; "conformance clause" names the section, after the W3C QA Framework, whose idea ISO
-shares.
+(the rule files, the schemas, the slugs of the protocol, the lexicons, `spec.yaml` and its version,
+the composition of the teacher and its test scenarios) are verified by the tests of the
+directives, run by `check-spec` (`spec-directives/1/README.md` section 8), which are not rules: they
+carry no category and no level, each failure blocks `check-spec`, and none counts toward a course's
+conformance. A course conforms when it holds every requirement of `course/rules.yaml`, whatever its
+method; the blocking checks are a necessary condition, not a sufficient one; the review and
+taught-check do the rest, and a course tag certifies the whole. A teacher conforms when it holds
+every requirement of `teacher/rules.yaml`; the method of a rule of the protocol is demonstration, by
+the fresh tests (D8). Recommendations are outside conformance (the ISO sense of "should"). The word
+"conformity" (ISO) stays; "conformance clause" names the section, after the W3C QA Framework, whose
+idea ISO shares.
 
 **Normative references** of the spec directives, a dated list limited to the standards a rule
 depends on: ISO/IEC Directives Part 2, 9th edition (2021); ISO/IEC/IEEE 29148:2018; SemVer 2.0.0;
@@ -138,13 +138,16 @@ and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
   lists, one category and one level per check.
 - The bump table of the spec is written in levels: a recommendation of `course/rules.yaml`
   made a requirement is a MAJOR (decision `versioned-objects-and-spec-layout`).
-- No teacher conforms today, since no fresh test exists: that is the target of #222.
+- No teacher conforms today: the fresh tests (`classroom-builder/fresh-test` on the test
+  scenarios of the spec MAJOR's `teacher/tests/`, #507) cover the rules a session of `po-essai`
+  exercises, not every requirement; the rules they do not observe yet are idea #509, and the
+  extraction of the rules into `teacher/rules.yaml` is epic #450.
 - In French, « schéma » means a drawing or a JSON Schema; the repository, in English, says
   `diagram` and `schema`.
 - Amended 2026-10-31 (#339): a rule binds a product, a course or a teacher. The consistency of
   the spec's own files (the rule files, the schemas, the slugs of the protocol, the
-  lexicons) is verified by the tests of `check-spec` (`rule-files`, `rule-slugs`,
-  `lexicon-keys`), which are not rules: they carry no category and no level, and each
+  lexicons) is verified by the tests of `check-spec` (`spec-directives/1/README.md` section 8),
+  which are not rules: they carry no category and no level, and each
   failure blocks `check-spec`. The categories are those of a course and the families of the
   protocol. Without this, a contributor
   applies "every check verifies a rule" to a check of the spec's files and writes a rule file
@@ -157,3 +160,8 @@ and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
   directives, not `linear-course` alone; the categories and the families stay each spec's.
   Without this, a contributor writing a second spec would read the rule model as a decision of
   `linear-course` and copy it into the new spec, two copies that drift.
+- Amended 2026-11-03 (#497): the composition of the teacher (`teacher/composition.yaml`) joins
+  the spec's own files that the tests of `check-spec` verify, by the test `composition`, which is
+  not a rule: it checks the form of the file, and the file's consistency counts toward no
+  product's conformance. Without this, a contributor reads the composition as a rule of the teacher and
+  gives it a category and a level, or leaves its test outside the clause.

@@ -1,0 +1,97 @@
+id: stop
+title: a learner in concept 0 continues, is asked a two-part question, and stops
+learner:
+  apprenant.md: |
+    # L'apprenant
+
+    Surnom : **Sam** (le prof l'appelle ainsi).
+
+    ## Profil
+
+    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
+    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+
+    ## Préférences
+
+    Aucune.
+  observations.md: |
+    # Observations sur Sam
+
+    Une ligne par entrée : `date, [concept], fait : action` (« Acquis » : `[concept] fait (date)`).
+    `[général]` vaut pour tout le cours.
+    Une vigilance surmontée passe en acquis ; une ligne contredite se corrige ou se supprime.
+
+    ## Leviers
+
+    Ce qui marche avec l'apprenant. À lire au démarrage.
+
+    ## Vigilances actives
+
+    Difficultés pas encore surmontées. Avant un concept, lis celles qui portent son numéro.
+
+    ## Acquis
+  parcours.md: |
+    # Parcours de Sam
+
+    Statut des concepts de la carte du cours (`course.yaml`) : `validé`, `en cours`, `sauté`,
+    `à revoir`. Un concept absent du tableau est à faire.
+
+    ## Prochaine étape
+
+    Concept 0 : Scrum en bref et l'incrément (`concepts/00-scrum`), sous-concept 0a1 (les
+    responsabilités) : le message sur le PO, cas « Diego écrit des éléments du backlog ». Le
+    message sur l'équipe en bref est fait.
+
+    ## Concepts
+
+    | # | Concept | Statut |
+    |---|---|---|
+    | 0 | Scrum en bref et l'incrément | en cours |
+
+    Annexes vues : aucune.
+
+    ## Points annoncés pour plus tard
+
+    Aucun.
+
+    ## Journal
+
+    2026-11-02, session 1 : accueil, concept 0 commencé (l'équipe en bref).
+turns:
+  - message: On continue.
+    expect:
+      - act: the recap, then the reads before what follows, then at the same message the message on the PO if the whole fits in about fifteen lines, otherwise the recap ends on the next line
+        rules: [resume-on-continue]
+  - message: Oui.
+    if: next-line
+    expect:
+      - act: the message on the PO (at this turn or the one before), its two-part question posed in steps, the first part only
+        rules: [multi-part-question-in-steps, one-question-per-message]
+  - message: On s'arrête là pour aujourd'hui.
+    expect:
+      - act: before the first tool call that reads or writes, « Je sauvegarde ta progression, un instant. »
+        rules: [stop-opening-sentence, waiting-sentence-first]
+      - act: the save point with the pending question (the concept's folder, the case title, the question word for word, its part), the journal line of the session, learner/ written with the write tool only
+        rules: [stop-save-point, save-points, save-next-step, save-journal-line, write-tool-not-shell, write-only-in-learner]
+      - act: "learner/parcours.md reread as a fresh agent would read it, then a commit « Sam : arrêt »"
+        rules: [reread-as-next-teacher, commit-after-save-point]
+      - act: a reply in two lines, the progress saved and the next step
+        rules: [stop-reply-two-lines]
+rules:
+  - resume-on-continue
+  - multi-part-question-in-steps
+  - one-question-per-message
+  - short-messages
+  - descriptive-site-links
+  - course-language-typography
+  - waiting-sentence-first
+  - stop-opening-sentence
+  - stop-save-point
+  - save-points
+  - save-next-step
+  - save-journal-line
+  - write-tool-not-shell
+  - write-only-in-learner
+  - reread-as-next-teacher
+  - commit-after-save-point
+  - stop-reply-two-lines

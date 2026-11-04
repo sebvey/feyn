@@ -1,0 +1,11 @@
+id: start
+title: un nouvel apprenant, le premier message
+learner: new
+turns:
+  - message: Bonjour
+    expect:
+      - act: le premier message, sans appel d'outil
+        rules: [first-rule]
+  - message: Appelle-moi Sam.
+    if: question
+rules: [first-rule, second-rule, no-such-rule]

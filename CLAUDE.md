@@ -11,7 +11,8 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
   bench course) follows it in the same PR, its checks pass and the teacher teaches it.
 - Not to lose from sight:
   - the teacher is the product: a spec no teacher consumes is premature;
-  - a thing is written once, in the file of the reader who needs it first;
+  - a thing is written once, in the file of the reader who needs it first; a text neither counts
+    nor copies a list another file holds, it points to that file;
   - small and proven over complete.
 - The long form, with the lessons behind each line: [`docs/vision.md`](docs/vision.md).
 
@@ -22,7 +23,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `course-specs/` | the specs, one per type of course (`linear-course`: contract, lexicons, checks, templates); rules in `course-specs/README.md` |
 | `spec-directives/` | the spec directives, one folder per MAJOR; `README.md` defines the four readers of a spec; the tests of a spec's files (`check-spec`), the `lib/` and the package the checks load, the directives' `decisions/` |
 | `courses/` | one folder per course, `courses/<id>/` (first: `parcours-po`; `po-essai`, the bench course every spec change is tried on) |
-| `classroom-builder/` | teacher template, teacher skills, classroom build script |
+| `classroom-builder/` | teacher template, classroom build script (`build-classroom`: it runs the spec MAJOR's `teacher/build/` and writes the classroom, its teacher skills included) and its test (`test-build`), the fresh tests (`fresh-test`) |
 | `site-builder/` | the site engine (Astro); reads `courses/` directly |
 | `docs/` | `vision.md` (what feyn is for), `decisions/`, `glossary.md`, `contributing.md`, `kanban.md` (the frame of the work) |
 | `.claude/` | `skills/` (the HOW), `agents/` (project subagents), `workflows/`, `reference/` (the WHAT), `decisions/`; decision `claude-folder-layout` |

@@ -12,6 +12,8 @@ phrases:
   domain_title: "Domaine {n} : {title}"
   site_link: "le site web"
   domains_map_link: "la carte des domaines"
+  domains_one: "son domaine"
+  domains_many: "ses {n} domaines"
   concept_page_link: "la page du concept {n}"
   example_lead: "Exemple :"
   question_lead: "Question pour toi :"

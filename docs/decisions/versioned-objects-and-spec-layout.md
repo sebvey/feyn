@@ -12,9 +12,9 @@ Three objects are versioned, a course, a spec and the spec directives, in semver
 is tooling. A spec is the contract for a type of course, kept in one folder per MAJOR,
 `course-specs/<name>/<MAJOR>/` (`1/`, not `v1/`), which holds `README.md` (its scope, files,
 categories and checks, decision `spec-files-by-product`), one folder per product, `course/`
-(`README.md`, what a course is; `rules.yaml`, the rules as data; `schemas/`; `templates/`, the
-course templates; `checks/`, its checks and their fixtures) and `teacher/` (`README.md`, the
-protocol; `rules.yaml`; `templates/learner/`), then `decisions/`,
+(what a course is, its rules and what checks it) and `teacher/` (the protocol and what builds and
+tests the teacher), whose files the MAJOR's `README.md` describes
+(`course-specs/linear-course/1/README.md` section 2), then `decisions/`,
 `CHANGELOG.md` and `spec.yaml` (`name`, `major`, `version`, `language`, and `directives`, the
 MAJOR of the spec directives it follows); each product folder also holds its lexicon,
 `lexicon.yaml` (decision `lexicon-not-language-pack`). The spec directives say how a spec is written and read (what a rule
@@ -86,3 +86,7 @@ archived repository. This replaces decision `two-versioned-objects`.
   `lib/`, as Material points 6, 7, 10 and 13 of epic #454 settle. Without this, an agent opening
   a spec MAJOR 2 would copy `lib/` and the tests into it, and a change to the rule model would
   have no version that a spec MAJOR can declare.
+- Amended 2026-11-03 (#501): a spec MAJOR's `teacher/` holds `build/`, the half of a classroom
+  build that depends on the MAJOR, versioned with it as `course/checks/` is; `classroom-builder/`
+  keeps the dispatcher and the realisation for Claude Code (epic #222, Material point 6). Without
+  this, a second MAJOR would change the root build instead of writing its own `teacher/build/`.

@@ -1,0 +1,69 @@
+id: declared-diagram
+title: a learner at sub-concept 0b of concept 0, which declares a diagram, who never asks for one
+learner:
+  apprenant.md: |
+    # L'apprenant
+
+    Surnom : **Sam** (le prof l'appelle ainsi).
+
+    ## Profil
+
+    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
+    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+
+    ## Préférences
+
+    Aucune.
+  observations.md: |
+    # Observations sur Sam
+
+    Une ligne par entrée : `date, [concept], fait : action` (« Acquis » : `[concept] fait (date)`).
+    `[général]` vaut pour tout le cours.
+    Une vigilance surmontée passe en acquis ; une ligne contredite se corrige ou se supprime.
+
+    ## Leviers
+
+    Ce qui marche avec l'apprenant. À lire au démarrage.
+
+    ## Vigilances actives
+
+    Difficultés pas encore surmontées. Avant un concept, lis celles qui portent son numéro.
+
+    ## Acquis
+  parcours.md: |
+    # Parcours de Sam
+
+    Statut des concepts de la carte du cours (`course.yaml`) : `validé`, `en cours`, `sauté`,
+    `à revoir`. Un concept absent du tableau est à faire.
+
+    ## Prochaine étape
+
+    Concept 0 : Scrum en bref et l'incrément (`concepts/00-scrum`), sous-concept 0b (sprint et
+    incrément) : son message, cas « La vue des stations vides livrée un mercredi ». Le
+    sous-concept 0a (le cadre) est fait.
+
+    ## Concepts
+
+    | # | Concept | Statut |
+    |---|---|---|
+    | 0 | Scrum en bref et l'incrément | en cours |
+
+    Annexes vues : aucune.
+
+    ## Points annoncés pour plus tard
+
+    Aucun.
+
+    ## Journal
+
+    2026-11-02, session 1 : accueil, concept 0 commencé (l'équipe en bref).
+    2026-11-03, session 2 : concept 0, 0a fait (responsabilités, événements, artefacts).
+turns:
+  - message: On continue.
+  - message: Oui.
+    if: next-line
+    expect:
+      - act: "the message of 0b (at this turn or the one before), unasked: the diagram « Un sprint est une durée, un incrément est un état du produit » shown, or, where it cannot show, its caption, that it cannot show here and the concept's page; its caption said"
+        rules: [declared-diagram-shown]
+rules:
+  - declared-diagram-shown

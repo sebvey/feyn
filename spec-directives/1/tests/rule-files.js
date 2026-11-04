@@ -19,7 +19,8 @@
 //   - a check verifies rules of one category and one level;
 //   - each course/schemas/*.schema.yaml compiles under ajv's Ajv2020 (JSON Schema 2020-12), and the
 //     text of exactly one rule of course/rules.yaml names it; a schema named there exists.
-// The categories and the families below are those of linear-course, a named debt: idea #453.
+// The categories and the families below are those of linear-course, a named debt: idea #485
+// (course-specs/linear-course/1/teacher/build/render-parts holds the families too).
 const fs = require('fs');
 const path = require('path');
 const yaml = require('../lib/yaml-lines');

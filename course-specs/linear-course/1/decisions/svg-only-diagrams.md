@@ -28,5 +28,6 @@ teacher could not show.
 
 - An SVG is longer to write than Mermaid; the contract and its check make an agent's SVG
   reliable.
-- When the teacher shows a diagram is not this decision's: protocol rules `diagram-only-on-request`,
+- When the teacher shows a diagram is not this decision's: decision
+  `diagram-shown-at-its-subconcept` and protocol rules `declared-diagram-shown`,
   `requested-diagram-shown` and `diagram-not-displayable` settle it.

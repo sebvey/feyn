@@ -108,3 +108,58 @@ no class: `- file or area: what changes`.
   `reference-type-from-lexicon`, their texts naming the lexicon; decision
   `lexicon-not-language-pack` written, `language-policy` amended; no protocol rule text changes
   (#493).
+- `teacher/`: the composition of the teacher as data, `teacher/composition.yaml`: five parts
+  (`permanent`, `on-demand`, `course-reads`, `learner-memory`, `permissions`), each with when it
+  loads and what it draws from the spec, the course, learner memory and the classroom, with no
+  term of a target; `teacher/README.md` gains the section "Composition" that describes it, and
+  its reader table names it; `composition`, a test of `check-spec`, verifies its form; no rule
+  changes (#497).
+- `teacher/build/`: the half of the classroom build that depends on this MAJOR, `render-parts`,
+  which renders the five parts of `teacher/composition.yaml` as text for a course from the
+  protocol, the composition, the two lexicons, the learner templates and the course, printed as
+  one JSON document whose shape `parts.schema.yaml` fixes, with its `test-render` and its
+  `README.md`; `classroom-builder/build-classroom` runs it and realises the parts. The filling
+  drops the period after a « » phrase that ends with one and keeps one pair of parentheses around
+  a value already in parentheses inside a link (#501).
+- `teacher/README.md`: wording, `first-message-presents-course` no longer writes « ses
+  {course.domain_count} domaines », which read « ses 1 domaines » for a course of one domain: it
+  gives the number and has the teacher write `phrases.domains_one` (« son domaine ») or
+  `phrases.domains_many` (« ses {n} domaines ») by it, two keys `teacher/lexicon.yaml` gains; a
+  PATCH (#501).
+- `teacher/tests/`: the test scenarios of the teacher, one YAML file each, whose form
+  `scenario.schema.yaml` fixes (`id`, `title`, `learner`, `turns` with their `expect` and an
+  optional `if`, `rules`), and five scenarios for `courses/po-essai`: `onboarding`, `concept-0`,
+  `stop`, `resume`, `concept-1`; `README.md` lists the rules of the families 1, 3, 4, 5, 8 and 9
+  no scenario names, and why; `classroom-builder/fresh-test` runs them (#507).
+- `teacher/rules.yaml`, `teacher/README.md`: the rule `teacher-loads-composition` (group
+  `composition-loading` of family 1, requirement, demonstration): the teacher loads each part of
+  its composition when and from where `composition.yaml` says, so that a teacher that loads the
+  onboarding at every message does not conform; "Composition" says so (#507).
+- `teacher/composition.yaml`: the `what` and `when` texts in French, since the teacher skills
+  print them (decision `language-policy`); `teacher/build/render-parts` reads the permissions in
+  French (« peut s'écrire », « en lecture seule ») (#507).
+- `teacher/build/`: a moment's draw from a course file with no slot that names a heading
+  (`headings.onboarding`) carries the section under it, `text` (`parts.schema.yaml`), so that
+  the onboarding questions of `plan.md` reach the onboarding skill and its first message needs no
+  read (#507).
+- `teacher/README.md`, `teacher/rules.yaml`: the rule `earlier-concept-retrieved-at-resume`
+  (group `resume`, requirement, demonstration): at the resume of a learner who validated a
+  concept in an earlier session and whose journal names no practice case of it since, a practice
+  case of that concept's bank is posed and corrected before the next step (decision
+  `retrieval-at-resume`); `periodic-mini-recap` unchanged (#511).
+- `teacher/README.md`, `teacher/rules.yaml`, `teacher/composition.yaml`: the rule
+  `declared-diagram-shown` (new group `diagram-showing` of family 4, with `requested-diagram-shown` and
+  `diagram-not-displayable`; requirement, demonstration) replaces `diagram-only-on-request`: at
+  the message of the sub-concept a declared diagram's `subconcept` names, the teacher shows it and
+  says its caption, unasked; the moment `diagram` also comes at that sub-concept (decision
+  `diagram-shown-at-its-subconcept`) (#511).
+- `teacher/tests/`: the scenarios `retrieval-at-resume` and `declared-diagram`, the two tests of
+  each decision, each naming only its decision's rule; `concept-0` no longer names
+  `diagram-only-on-request` (#511).
+- `teacher/README.md`, `teacher/rules.yaml`, `teacher/composition.yaml`: the protocol names no
+  Claude Code mechanism: `teacher-loads-composition` no longer says where the rules of a moment
+  are loaded from, `classroom-exchanges-exempt` says « ses outils » for « les skills », the
+  comments of `composition.yaml` say the teacher reads the French texts; `README.md` and the
+  header of `teacher/rules.yaml` no longer count the rules of `teacher/rules.yaml`, and
+  `course/checks/README.md` points to `spec-directives/1/README.md` section 8 for the tests of
+  `check-spec` (#515).

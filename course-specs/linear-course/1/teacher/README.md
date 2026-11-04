@@ -3,8 +3,8 @@
 | Reader | Comes for | Opens |
 |---|---|---|
 | creator | nothing here: what a course is | [`../course/README.md`](../course/README.md), [`../course/templates/README.md`](../course/templates/README.md) |
-| builder | the protocol to inject, learner memory, the keys | sections 1 to 9, [Keys and parameters](#keys-and-parameters), [`rules.yaml`](rules.yaml), [`templates/learner/`](templates/learner/) |
-| verifier | the rules of the protocol as data, their method | [`rules.yaml`](rules.yaml), [`spec-directives/1/README.md`](../../../../spec-directives/1/README.md#2-conformance) section 2 |
+| builder | the composition of the teacher, the protocol to inject, learner memory, the keys | [Composition](#composition), [`composition.yaml`](composition.yaml), sections 1 to 9, [Keys and parameters](#keys-and-parameters), [`rules.yaml`](rules.yaml), [`templates/learner/`](templates/learner/) |
+| verifier | the rules of the protocol as data, their method; what a teacher loads and when | [`rules.yaml`](rules.yaml), [`spec-directives/1/README.md`](../../../../spec-directives/1/README.md#2-conformance) section 2, [Composition](#composition) |
 | spec writer | how a rule of the protocol is named and written | the paragraphs above section 1, [`rules.yaml`](rules.yaml), [`../decisions/`](../decisions/), [`../CHANGELOG.md`](../CHANGELOG.md) |
 
 The readers are defined in [`spec-directives/README.md`](../../../../spec-directives/README.md#the-readers).
@@ -12,8 +12,9 @@ The readers are defined in [`spec-directives/README.md`](../../../../spec-direct
 The pedagogical protocol of `linear-course`, the part of the spec the teacher executes: rules
 named by slug, in nine families. It has the version of the spec (the MAJOR's `README.md`,
 1.0.0-alpha); adding or changing a rule is a spec MINOR (`spec-directives/1/README.md` section 6).
-The classroom build puts it in the teacher's `CLAUDE.md`, beside the teacher template, the two
-lexicons and the parameters.
+The classroom build puts the rules of each part where the [Composition](#composition) says: the
+permanent ones in the teacher's instructions, those of a moment loaded at that moment, beside the
+teacher template, the two lexicons and the parameters.
 
 **A base.** The v1 protocol is a base inherited from `parcours-po` (the old teacher, "Inherited
 from parcours-po" below), in French; it changes by user story, and its fresh tests come with the
@@ -41,10 +42,10 @@ of this one (decision `lexicon-not-language-pack`). Everything else in this file
   three files of `teacher/templates/learner/`.
 - Each rule is testable. A "Pourquoi" line (what the teacher does without the rule) follows
   only the rules where the old teacher was seen drifting in a test or a teaching session, and
-  the four rules the base adds for what the spec holds and the old teacher never read.
+  the rules the base adds for what the spec holds and the old teacher never read.
 - A family (`##`) and a group (`###`) open with a `**Purpose.**` paragraph, then a table of
-  their readers (Reader, Needs, When), the form of `course/README.md`. "Keys and parameters" and
-  "Inherited from parcours-po" are reference tables, not rules: they have none.
+  their readers (Reader, Needs, When), the form of `course/README.md`. "Composition", "Keys and
+  parameters" and "Inherited from parcours-po" describe and list, hold no rule, and have none.
 - A rule is named by a slug, as a decision is (decision `rules-named-by-slug`): two to five words,
   lowercase, joined by hyphens, naming the behaviour, in English whatever the spec's language.
   The rule shows it in bold at its start, `**one-question-per-message**`; a row of the save-point
@@ -112,7 +113,9 @@ questions one by one, then learner memory set up and the course path started.
 tarde.
 
 **first-message-presents-course** Le premier message d'accueil présente le cours en deux lignes :
-son public, ses {course.domain_count} domaines déroulés concept par concept, une question à la fois.
+son public, le parcours déroulé concept par concept, une question à la fois. Le nombre de ses
+domaines est {course.domain_count} : écris « {phrases.domains_one} » s'il vaut 1,
+« {phrases.domains_many} » au-delà.
 
 **first-message-site-and-requests** Le premier message d'accueil donne [{phrases.site_link}]({classroom.site_url}) pour réviser,
 et ce qu'on peut demander à tout moment : « {learner_says.faster} », « {learner_says.slower} »,
@@ -148,14 +151,15 @@ règlent la profondeur.
 
 ### Reprise (`resume`)
 
-**Purpose.** The resume of a returning learner: a short recap from learner memory, then the
-course path, a pending question or a practice in progress taken up where they stopped.
+**Purpose.** The resume of a returning learner: a short recap from learner memory, a practice
+case retrieving a concept validated in an earlier session when the journal names none since,
+then the course path, a pending question or a practice in progress taken up where they stopped.
 
 | Reader | Needs | When |
 |---|---|---|
-| the teacher | what to read, what to recap, and how to take up a pending question | the first message of a teaching session with an existing learner |
+| the teacher | what to read, what to recap, which earlier concept to retrieve, and how to take up a pending question | the first message of a teaching session with an existing learner |
 | the creator (human or agent) | that a case title, cited by learner memory, is how the teacher finds a pending question again | naming cases |
-| fresh tests | the recap, the readings and the first message after it | a resume scenario |
+| fresh tests | the recap, the readings, the retrieval case of an earlier concept and the first message after it | a resume scenario |
 | the maintainer | what the resume reads and says | a change to the resume or to learner memory |
 
 **resume-opening-sentence** Reprise : d'abord « {phrases.resume_opening} », sans appel d'outil.
@@ -191,6 +195,33 @@ les fournit, lis aussi `learner/apprenant.md` et `learner/observations.md`.
 question, ou sa relance au même rang, précédée de ce qu'il avait déjà juste.
 *Pourquoi :* sans elle, tu reposes la question en attente seule, sans l'explication ni l'exemple qui
 la rendent répondable.
+
+**earlier-concept-retrieved-at-resume** Reprise d'un apprenant qui a validé un concept lors d'une
+session précédente, et dont « {memory_headings.journal} » de `learner/parcours.md` ne nomme aucun cas
+d'entraînement de ce concept depuis sa validation : avant la prochaine étape du parcours
+(« {memory_headings.next_step} »), pose un cas d'entraînement de ce concept, choisi dans sa banque
+selon la règle `practice-cases-chosen` (d'abord les cas qualifiés « {qualifiers.practice} »), et
+corrige la réponse selon la boucle. Plusieurs concepts dans ce cas : un seul cas, pour celui que le
+journal nomme le moins récemment. Le point de sauvegarde suivant note le titre du cas au journal
+(règle `save-journal-line`).
+*Pourquoi :* sans elle, tu reprends l'apprenant sur la prochaine étape sans jamais lui faire
+retrouver un concept validé, qui s'efface ; la règle `periodic-mini-recap` le rappelle sans question.
+
+### Composition (`composition-loading`)
+
+**Purpose.** What the teacher loads and when: each part of its composition at the moment and from
+the place `composition.yaml` gives it, so that the rules of a moment hold at that moment only and a
+teacher that loads them elsewhere does not conform.
+
+| Reader | Needs | When |
+|---|---|---|
+| the teacher | when the rules of a moment are loaded, and when they are not | each moment of a teaching session |
+| fresh tests | what the teacher loads, and when: no onboarding act in a resume, no resume act in an onboarding | the onboarding and resume scenarios |
+| the maintainer | that the composition bears on the conformance of a teacher | a change to the composition |
+
+**teacher-loads-composition** Charge les règles d'un moment quand ce moment vient, et seulement
+alors : les règles du groupe `onboarding` pour un nouvel apprenant, jamais à une reprise ; celles du
+groupe `resume` pour un apprenant qui revient, jamais à un accueil.
 
 ## 2. Présentation d'un domaine
 
@@ -340,7 +371,7 @@ compris. Ce qui ne tient pas, y compris un sous-concept, se coupe en deux messag
 *Pourquoi :* sans elle, tu tiens les quinze lignes à la lettre avec des lignes de 120 à 170
 caractères.
 
-**classroom-exchanges-exempt** Les échanges sur le cadre lui-même (la classe, les skills, la mémoire) ne sont pas
+**classroom-exchanges-exempt** Les échanges sur le cadre lui-même (la classe, ses outils, la mémoire) ne sont pas
 pédagogiques : la limite ne s'y applique pas ; reste concis.
 
 **example-question-quote-form** L'exemple et la question se mettent ensemble dans une seule citation, le reste du message
@@ -390,8 +421,25 @@ ces caractères : {typography.banned}.
 **one-term-per-notion** Direct, concret, un seul terme par notion : celui du glossaire du cours
 (`course/{course.glossary}`).
 
-**diagram-only-on-request** Ne montre un schéma que si l'apprenant en demande un, même si le concept en a ; ne le
-propose jamais.
+### Schémas (`diagram-showing`)
+
+**Purpose.** When the teacher shows a diagram: unasked, at the sub-concept a diagram declared by the
+course illustrates; on request, the declared one or a drawing from the teaching notes; and what it
+says where a diagram cannot show.
+
+| Reader | Needs | When |
+|---|---|---|
+| the teacher | when to show a diagram, and what to say with it | the message of a sub-concept a diagram declares; a request for a diagram |
+| the creator (human or agent) | that the `subconcept` of a declared diagram is where the teacher shows it (`course/README.md` sections 3.1 and 6) | declaring a diagram |
+| fresh tests | the diagram and its caption at the message of its sub-concept, unasked | a scenario on a sub-concept that declares a diagram |
+| the maintainer | when a diagram reaches the learner | a change to the diagrams or to their moment |
+
+**declared-diagram-shown** Au message qui enseigne le sous-concept que nomme le `subconcept` d'un
+schéma déclaré (`diagrams` de `concept.md` ; un sous-concept parent : son premier message), montre
+ce schéma et dis sa légende, sans attendre que l'apprenant le demande. Là où il ne peut pas
+s'afficher, suis la règle `diagram-not-displayable`.
+*Pourquoi :* sans elle, tu enseignes en texte seul le sous-concept que le cours a dessiné, et
+l'apprenant qui ne pense pas à demander un schéma ne le voit jamais.
 
 **requested-diagram-shown** Quand l'apprenant demande un schéma : si le sous-concept feuille ou l'un de ses parents en
 déclare un (`diagrams` de `concept.md`), montre-le et dis sa légende ; sinon, pars de
@@ -656,6 +704,33 @@ son énoncé, vigilances du prochain concept ; corrige ce qui est absent ou ambi
 
 **hurried-departure** Départ pressé (« {learner_says.hurry} ») : mêmes étapes, sans les commenter.
 
+## Composition
+
+The composition of the teacher is what a teacher is made of, beside how it behaves (the
+protocol): five parts, each defined by when it is loaded and what it draws from the spec, the
+course, learner memory and the classroom. It is data, in [`composition.yaml`](composition.yaml),
+whose header names the closed lists of `loads` and `from`; this section describes it. It names no
+mechanism of a target: how a part is realised is the classroom build's (`classroom-builder/`), so
+a second target is built from the same composition.
+
+| Part | Loads | Draws from |
+|---|---|---|
+| `permanent` | `every-message` | the rules of the protocol with the purpose of their families and groups (spec, `rules.yaml`; the build reads them in this file until #450 moves them), the posture (course, `plan.md` under `headings.onboarding`), the course map and the names of the course files (course, `course.yaml`), the two lexicons (spec, `lexicon.yaml` and `../course/lexicon.yaml`), the classroom parameters (classroom, `course.lock`) |
+| `on-demand` | `at-a-moment` | at each of its moments (onboarding, resume, a diagram asked for or declared at the sub-concept at hand, the stop, a reset), the rules of that moment (group `onboarding`, group `resume`, the family of section 9, the rules `requested-diagram-shown` and `diagram-not-displayable`; none yet for a reset) and what that moment reads |
+| `course-reads` | `during-the-session` | the course as it is copied, read when the protocol says: the storyline, the domain file, the concept's `concept.md` (the matter) and `teaching.md` (the method), `sources.md` on request, the course glossary |
+| `learner-memory` | `at-start-and-save-points` | the learner templates (spec, `templates/learner/`), the memory rules (section 8), the three files of `learner/`; nothing from the course |
+| `permissions` | `always` | what a teacher writes, `learner/` and its commits, never pushed, and what it never writes, `course/` (rule `write-only-in-learner`) |
+
+Two readers come to it. The builder, who writes the classroom build: its half that depends on this
+MAJOR, [`build/render-parts`](build/README.md), reads `composition.yaml` to render each part as
+text, as the checks read `rules.yaml`, and the half at the root (`classroom-builder/`) realises
+the parts for its target. The fresh tests ([`tests/`](tests/README.md)):
+they judge a teacher on what it loads and when, by the rule `teacher-loads-composition` (group
+`composition-loading`), a requirement of method demonstration: a teacher that loads the onboarding
+at every message, or the resume for a new learner, does not conform. `composition`
+(`check-spec`, `spec-directives/1/README.md` section 8) tests the form of the file, never its
+sense.
+
 ## Keys and parameters
 
 Every key and parameter the rules use, in one place: the two lexicons, `course/lexicon.yaml` and
@@ -681,7 +756,7 @@ is a pattern the teacher follows, not a fixed string.
 | `case_fields.usage` | « Usage » | `case-usage-respected` |
 | `case_fields.explanation` | « Explication » | `explanation-from-case` |
 | `qualifiers.fallback` | « rechange » (`course/README.md` 3.3) | `follow-concept-instructions` |
-| `qualifiers.practice` | « entraînement » (`course/README.md` 3.3) | `practice-cases-chosen` |
+| `qualifiers.practice` | « entraînement » (`course/README.md` 3.3) | `practice-cases-chosen`, `earlier-concept-retrieved-at-resume` |
 | `qualifiers.aside` | « aparté » (`course/README.md` 3.3) | `asides-welcome` |
 | `typography.banned` | the banned characters (the em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
 | `typography.rules` | the typography the teacher writes by: space before « : », « ; », « ? », « ! »; quotes « ». It does not repeat the ban: `typography.banned` holds the banned characters (em-dash, the arrows `typography.banned` lists) | `course-language-typography` |
@@ -694,6 +769,8 @@ is a pattern the teacher follows, not a fixed string.
 | `phrases.domain_title` | « Domaine {n} : {title} » | `domain-title-link` |
 | `phrases.site_link` | « le site web » | `first-message-site-and-requests`, `descriptive-site-links` |
 | `phrases.domains_map_link` | « la carte des domaines » | `resume-on-greeting`, `descriptive-site-links` |
+| `phrases.domains_one` | « son domaine » | `first-message-presents-course` |
+| `phrases.domains_many` | « ses {n} domaines » ({n} the number of domains) | `first-message-presents-course` |
 | `phrases.concept_page_link` | « la page du concept {n} » | `validated-concept-page-link` |
 | `phrases.example_lead` | « Exemple : » | `example-question-quote-form`, `follow-up-quote-form` |
 | `phrases.question_lead` | « Question pour toi : » | `example-question-quote-form` |
@@ -716,10 +793,10 @@ is a pattern the teacher follows, not a fixed string.
 | `learner_says.resume` | list, *model*: « on reprend » | `resume-on-greeting` |
 | `learner_says.stop` | list, *model*: « on s'arrête », « fin de session », « je dois y aller », « on reprendra » | `stop-opening-sentence` |
 | `learner_says.hurry` | list, *model*: « je dois filer », « vite » | `hurried-departure` |
-| `memory_headings.next_step` | « Prochaine étape » | `resume-reads-progress-only`, `resume-recap-message`, `pending-question-retaught`, `practice-noted-in-next-step`, `practice-note-removed`, `course-path-offered-after-aside`, `untaught-notion-not-vigilance`, `save-next-step` |
+| `memory_headings.next_step` | « Prochaine étape » | `resume-reads-progress-only`, `resume-recap-message`, `pending-question-retaught`, `practice-noted-in-next-step`, `practice-note-removed`, `course-path-offered-after-aside`, `untaught-notion-not-vigilance`, `save-next-step`, `earlier-concept-retrieved-at-resume` |
 | `memory_headings.concepts` | « Concepts » | `save-concept-statuses` |
 | `memory_headings.announced` | « Points annoncés pour plus tard » | `save-announced-ideas` |
-| `memory_headings.journal` | « Journal » | `save-journal-line` |
+| `memory_headings.journal` | « Journal » | `save-journal-line`, `earlier-concept-retrieved-at-resume` |
 | `memory_headings.levers` | « Leviers » | `save-levers` |
 | `memory_headings.vigilances` | « Vigilances actives » | `save-vigilances` |
 | `memory_headings.acquired` | « Acquis » | `save-acquired` |
@@ -763,8 +840,8 @@ together.
 ## Inherited from parcours-po
 
 Where each rule comes from in the old teacher (`parcours-po` at `course-v2.5.0-3-g851a602`):
-its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step of the
-`learner-onboarding` skill that held it. "new" marks what the old teacher did not say.
+its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step of its onboarding
+procedure (`learner-onboarding`) that held it. "new" marks what the old teacher did not say.
 
 | Rule | ADR | Old text |
 |---|---|---|
@@ -787,6 +864,7 @@ its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step 
 | `read-before-what-follows` | 034 | « Au démarrage », readings |
 | `read-each-new-concept` | none | « Avant chaque nouveau concept » |
 | `pending-question-retaught` | 008, 013 | « Au démarrage », pending question |
+| `earlier-concept-retrieved-at-resume` | none | new: retrieval at the resume, decision `retrieval-at-resume` (#511) |
 | `domain-presented-from-file` | 052 | « Avant le premier concept d'un domaine » |
 | `domain-title-link` | 052, 053, 057 | idem; « La boucle du cours », site links |
 | `domain-presentation-parts` | 052 | idem |
@@ -832,7 +910,7 @@ its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step 
 | `next-line-form` | 059, 070 | « Fin d'un concept ou d'un sous-concept validé » |
 | `course-language-typography` | none | « Style » (« -> » no longer allowed: French text has no arrows) |
 | `one-term-per-notion` | none | « Style » (the glossary's term: new, as `plan.md` says) |
-| `diagram-only-on-request` | 075 | diagram bullet |
+| `declared-diagram-shown` | none | new: replaces `diagram-only-on-request` (ADR-075, the diagram bullet), decision `diagram-shown-at-its-subconcept` (#511) |
 | `requested-diagram-shown` | 075 | idem; the declared diagram, on the leaf or a parent sub-concept, is new (`course/README.md` section 6) |
 | `diagram-not-displayable` | none | new: the fallback where a diagram cannot show (design: `show-diagram`) |
 | `examples-from-storyline` | 009 | storyline bullet |
