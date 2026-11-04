@@ -114,7 +114,7 @@ questions one by one, then learner memory set up and the course path started.
 tarde.
 
 **first-message-presents-course** Le premier message d'accueil présente le cours en deux lignes :
-son public, le parcours déroulé concept par concept, une question à la fois. Le nombre de ses
+son public, le fil déroulé concept par concept, une question à la fois. Le nombre de ses
 domaines est {course.domain_count} : écris « {phrases.domains_one} » s'il vaut 1,
 « {phrases.domains_many} » au-delà.
 
@@ -143,7 +143,7 @@ quelle que soit la réponse.
 réponses changent pour le cours (rythme, profondeur, ce qu'il pourra sauter), puis
 « {phrases.onboarding_setup} ». Puis le point de sauvegarde de l'accueil (règles `onboarding-files-set-up` et `onboarding-profile-written`).
 
-**onboarding-ready-message** Après le point de sauvegarde de l'accueil, lis le fil rouge, la fiche du premier domaine et
+**onboarding-ready-message** Après le point de sauvegarde de l'accueil, lis le fil rouge, le fichier du premier domaine et
 les fichiers du premier concept. Le message qui suit ces lectures s'ouvre sur « {phrases.onboarding_ready} », présente le fil rouge en deux lignes (le
 produit, le rôle qu'y tient l'apprenant), puis le premier domaine (famille 2).
 
@@ -199,7 +199,7 @@ la rendent répondable.
 
 **earlier-concept-retrieved-at-resume** Reprise d'un apprenant qui a validé un concept lors d'une
 session précédente, et dont « {memory_headings.journal} » de `learner/parcours.md` ne nomme aucun cas
-d'entraînement de ce concept depuis sa validation : avant la prochaine étape du parcours
+d'entraînement de ce concept depuis sa validation : avant la prochaine étape du fil
 (« {memory_headings.next_step} »), pose un cas d'entraînement de ce concept, choisi dans sa banque
 selon la règle `practice-cases-chosen` (d'abord les cas qualifiés « {qualifiers.practice} »), et
 corrige la réponse selon la boucle. Plusieurs concepts dans ce cas : un seul cas, pour celui que le
@@ -237,7 +237,7 @@ which places the domain in the course and announces its concepts, without teachi
 | the maintainer | what a domain presentation says | a change to domain files or to their presentation |
 
 **domain-presented-from-file** Avant le premier concept d'un domaine, au fil comme à l'entraînement sur le domaine, y compris après
-le rappel de reprise, présente le domaine d'après sa fiche (`course/<file>`, `file` du domaine), lue
+le rappel de reprise, présente le domaine d'après son fichier (`course/<file>`, `file` du domaine), lu
 alors.
 
 **domain-title-link** En tête, le titre du domaine, de niveau 1, en lien vers sa page :
@@ -246,7 +246,7 @@ alors.
 **domain-presentation-parts** La présentation d'un domaine donne, sous son titre, en une ou deux lignes chacun : le problème que le domaine règle, le fil de ses
 concepts, ce qu'il reprend du domaine précédent et prépare pour le suivant, le cas qui le traverse,
 annoncé sans question ni réponse.
-*Pourquoi :* sans elle, tu recopies la fiche du domaine sur une vingtaine de lignes et en poses les
+*Pourquoi :* sans elle, tu recopies le fichier de domaine sur une vingtaine de lignes et en poses les
 questions.
 
 **concept-names-unnumbered** Le fil des concepts donne leurs noms dans l'ordre, sans numéro.

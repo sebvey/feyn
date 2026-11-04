@@ -314,10 +314,10 @@ groups:
       énonce : consensus, école ou cours), l'expérience (il anticipe les erreurs des apprenants),
       l'ancrage (il vit dans le fil rouge) et la testabilité (taught-check et les fresh tests le
       citent par son titre). Un cas répond à l'un de quatre besoins, son type : un par
-      sous-concept feuille, sur le parcours ; un cas de rechange, quand l'apprenant échoue au
+      sous-concept feuille, au fil ; un cas de rechange, quand l'apprenant échoue au
       premier ; un cas d'entraînement, pour l'apprenant qui veut s'exercer sur un concept validé,
-      ou pour retrouver à la reprise un concept validé lors d'une séance précédente ; un aparté,
-      pour une question fréquente hors du parcours.
+      ou pour retrouver à la reprise un concept validé lors d'une session précédente ; un aparté,
+      pour une question fréquente hors du fil.
     category: pedagogy
     rules:
       - id: case-within-reader-text
@@ -433,7 +433,7 @@ groups:
         method: inspection
         text: >-
           Chaque champ d'un cas doit tenir ce que son libellé annonce : « Usage », quand poser un
-          cas hors du parcours (rechange, entraînement, aparté) ; « Explication », ce que le
+          cas hors du fil (rechange, entraînement, aparté) ; « Explication », ce que le
           professeur dit avant le cas, la source de son explication du sous-concept ;
           « Situation », les acteurs et les faits du fil rouge posés d'emblée, et le déroulé (qui
           dit quoi, quand) ; « Question », la question que pose le cas ; « Réponse attendue », la
@@ -452,8 +452,7 @@ groups:
         method: analysis
         check: taught-check
         text: >-
-          Il convient qu'un cas ne demande que ce que l'apprenant a appris avant lui, sur le
-          parcours.
+          Il convient qu'un cas ne demande que ce que l'apprenant a appris avant lui, au fil.
 
   - title: Le fichier sources.md (course/README.md section 3.4)
     purpose: >-
@@ -547,8 +546,8 @@ groups:
           ordre, la plus courte citation qui établit l'affirmation, entre « », puis sa place
           entre parenthèses (section, page, titre) ; pour une absence, « absent de » et la place
           cherchée ; pour une affirmation « cours », une ligne qui dit d'où elle découle, ou
-          rien ; aucun raisonnement, aucun renvoi à « Non vérifié » : ce qui ne peut être cité va
-          dans « Non vérifié ».
+          rien ; aucun raisonnement, aucune mention de « Non vérifié » : ce qui ne peut être
+          cité va dans « Non vérifié ».
       - id: claim-nature-closed
         level: requirement
         check: sources

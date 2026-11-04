@@ -17,11 +17,12 @@ conformité, les niveaux, les méthodes, la sévérité et les versions sont les
 
 Les règles d'un cours, celles que la revue vérifie comprises, sont les données de
 [`rules.yaml`](rules.yaml), un groupe par section qui en énonce, chacun avec son `purpose` ; les
-tables de champs sont les schémas de [`schemas/`](schemas/). Chaque section tient sa table des
-lecteurs quand elle en a une, ce qui n'énonce aucune règle (l'arborescence d'un cours, ce à quoi
-sert un fichier, une notation) et un renvoi à son groupe de `rules.yaml` et, pour une table de
-champs, à son schéma (#524, #531, #533). Les sections 1 à 7 viennent des sections 2 à 7 et 9 de la description de la
-spec avant la séparation (#323, lue à `9c691da^:specs/linear-course/1/SPEC.md`).
+tables de champs sont les schémas JSON de [`schemas/`](schemas/). Chaque section tient sa table
+des lecteurs quand elle en a une, ce qui n'énonce aucune règle (l'arborescence d'un cours, ce à
+quoi sert un fichier, une notation) et un lien vers son groupe de `rules.yaml` et, pour une table
+de champs, vers son schéma JSON (#524, #531, #533). Les sections 1 à 7 viennent des sections 2
+à 7 et 9 de la description de la spec avant la séparation (#323, lue à
+`9c691da^:specs/linear-course/1/SPEC.md`).
 
 Chaque concept est une source : son dossier tient des fichiers **côté lecteur** (reader-facing :
 le site les construit, le professeur les lit) et un fichier **professeur seul** (teacher-only : le
@@ -62,8 +63,9 @@ Les règles du dossier du cours sont le groupe « Le dossier du cours » de
 
 Le site, le build de la classe et les checks lisent `course.yaml`.
 
-Ses champs sont décrits par le schéma [`schemas/course.schema.yaml`](schemas/course.schema.yaml) ;
-ses règles sont le groupe « Le fichier course.yaml » de [`rules.yaml`](rules.yaml).
+Ses champs sont décrits par le schéma JSON
+[`schemas/course.schema.yaml`](schemas/course.schema.yaml) ; ses règles sont le groupe « Le
+fichier course.yaml » de [`rules.yaml`](rules.yaml).
 
 **Identifiants.** Les numéros de concept, les ids de sous-concept, les titres de cas
 (section 3.3), les numéros de domaine et leurs concepts, les noms `dir` des concepts et `file`
@@ -85,7 +87,7 @@ Les règles du dossier de concept sont le groupe « Le dossier de concept » de
 
 ### 3.1 Le frontmatter de `concept.md`
 
-Ses champs sont décrits par le schéma
+Ses champs sont décrits par le schéma JSON
 [`schemas/concept-frontmatter.schema.yaml`](schemas/concept-frontmatter.schema.yaml) ; ses règles
 sont le groupe « Le frontmatter de concept.md » de [`rules.yaml`](rules.yaml).
 
@@ -120,10 +122,10 @@ professeur pose chaque type, `teacher/README.md` le dit :
 
 | Type | Qualificatif (clé) | Le cas sert |
 |---|---|---|
-| principal | aucun | au sous-concept qu'il porte, sur le parcours, dans l'ordre de « Consignes » |
+| principal | aucun | au sous-concept qu'il porte, au fil, dans l'ordre de « Consignes » |
 | rechange | « rechange » (`qualifiers.fallback`) | quand l'apprenant échoue au cas du même sous-concept |
-| entraînement | « entraînement » (`qualifiers.practice`) | quand l'apprenant s'exerce sur un concept validé ou, à la reprise, sur un concept validé lors d'une séance précédente |
-| aparté | « aparté » (`qualifiers.aside`) | en aparté, sur une question hors du parcours |
+| entraînement | « entraînement » (`qualifiers.practice`) | quand l'apprenant s'exerce sur un concept validé ou, à la reprise, sur un concept validé lors d'une session précédente |
+| aparté | « aparté » (`qualifiers.aside`) | en aparté, sur une question hors du fil |
 
 Les champs d'un cas, dont les libellés sont les `case_fields` du lexique, et qui lit chacun :
 
