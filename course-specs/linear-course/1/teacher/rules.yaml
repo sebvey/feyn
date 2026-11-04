@@ -5,11 +5,9 @@
 # family.
 #
 # A group is a group of rules of teacher/README.md: its slug as `id`, its rules in their order.
-# Today four rules, first-message-without-tools, teacher-loads-composition (the rule that makes
-# the composition, teacher/composition.yaml, bear on conformance, #507),
-# earlier-concept-retrieved-at-resume and declared-diagram-shown (the two teacher behaviour
-# decisions of #511), each stated in teacher/README.md too; the rules leave teacher/README.md for this file at the extraction of #318
-# (decision rule-groups-replace-ranges). check-spec (rule-files) verifies this file.
+# This file holds a part of the rules of the protocol, each stated in teacher/README.md
+# too; the rules leave teacher/README.md for this file at the extraction of #318 (decision
+# rule-groups-replace-ranges). check-spec (rule-files) verifies this file.
 groups:
   - id: onboarding
     title: Accueil
@@ -52,9 +50,9 @@ groups:
         level: requirement
         origin: "feyn: #497 (open question 3 of #222), #507"
         text: >-
-          Charge les règles d'un moment depuis le skill de ce moment, quand ce moment vient, et
-          seulement alors : les règles du groupe `onboarding` pour un nouvel apprenant, jamais à une
-          reprise ; celles du groupe `resume` pour un apprenant qui revient, jamais à un accueil.
+          Charge les règles d'un moment quand ce moment vient, et seulement alors : les règles du
+          groupe `onboarding` pour un nouvel apprenant, jamais à une reprise ; celles du groupe
+          `resume` pour un apprenant qui revient, jamais à un accueil.
   - id: diagram-showing
     title: Schémas
     category: message-form

@@ -42,7 +42,7 @@ of this one (decision `lexicon-not-language-pack`). Everything else in this file
   three files of `teacher/templates/learner/`.
 - Each rule is testable. A "Pourquoi" line (what the teacher does without the rule) follows
   only the rules where the old teacher was seen drifting in a test or a teaching session, and
-  the four rules the base adds for what the spec holds and the old teacher never read.
+  the rules the base adds for what the spec holds and the old teacher never read.
 - A family (`##`) and a group (`###`) open with a `**Purpose.**` paragraph, then a table of
   their readers (Reader, Needs, When), the form of `course/README.md`. "Composition", "Keys and
   parameters" and "Inherited from parcours-po" describe and list, hold no rule, and have none.
@@ -219,9 +219,9 @@ teacher that loads them elsewhere does not conform.
 | fresh tests | what the teacher loads, and when: no onboarding act in a resume, no resume act in an onboarding | the onboarding and resume scenarios |
 | the maintainer | that the composition bears on the conformance of a teacher | a change to the composition |
 
-**teacher-loads-composition** Charge les règles d'un moment depuis le skill de ce moment, quand ce
-moment vient, et seulement alors : les règles du groupe `onboarding` pour un nouvel apprenant, jamais
-à une reprise ; celles du groupe `resume` pour un apprenant qui revient, jamais à un accueil.
+**teacher-loads-composition** Charge les règles d'un moment quand ce moment vient, et seulement
+alors : les règles du groupe `onboarding` pour un nouvel apprenant, jamais à une reprise ; celles du
+groupe `resume` pour un apprenant qui revient, jamais à un accueil.
 
 ## 2. Présentation d'un domaine
 
@@ -371,7 +371,7 @@ compris. Ce qui ne tient pas, y compris un sous-concept, se coupe en deux messag
 *Pourquoi :* sans elle, tu tiens les quinze lignes à la lettre avec des lignes de 120 à 170
 caractères.
 
-**classroom-exchanges-exempt** Les échanges sur le cadre lui-même (la classe, les skills, la mémoire) ne sont pas
+**classroom-exchanges-exempt** Les échanges sur le cadre lui-même (la classe, ses outils, la mémoire) ne sont pas
 pédagogiques : la limite ne s'y applique pas ; reste concis.
 
 **example-question-quote-form** L'exemple et la question se mettent ensemble dans une seule citation, le reste du message
@@ -840,8 +840,8 @@ together.
 ## Inherited from parcours-po
 
 Where each rule comes from in the old teacher (`parcours-po` at `course-v2.5.0-3-g851a602`):
-its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step of the
-`learner-onboarding` skill that held it. "new" marks what the old teacher did not say.
+its ADRs (`maintainer/adr/ADR-nnn`), and the section of `CLAUDE.md` or the step of its onboarding
+procedure (`learner-onboarding`) that held it. "new" marks what the old teacher did not say.
 
 | Rule | ADR | Old text |
 |---|---|---|

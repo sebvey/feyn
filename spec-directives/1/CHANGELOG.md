@@ -60,3 +60,8 @@ no class: `- file or area: what changes`.
   every slug it names is a rule of the protocol and every slug of an `expect` is in its `rules`;
   `valid/` gains a scenario, and five broken fixtures show its failures; sections 2 and 4 name
   the fresh tests (`classroom-builder/fresh-test`) as the implementation of demonstration (#507).
+- `README.md`, `decisions/`: section 1 names the test scenarios among the spec's own files
+  verified; section 8 describes the `teacher/tests/` of `valid/` and the broken fixtures of
+  `scenarios`; decision `rules-with-level-and-method` points to section 8 for the tests of
+  `check-spec` instead of naming them, and says where the rest of the teacher's conformance goes
+  now (#515).

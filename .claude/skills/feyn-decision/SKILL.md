@@ -40,7 +40,7 @@ The most local area the decision binds:
 | one spec | `course-specs/<name>/<MAJOR>/decisions/` of each MAJOR it binds: the current one for a new rule, every live MAJOR for a bug fix |
 | the spec directives (the rule model, the conformance clause, the versions, the tooling of the checks) | `spec-directives/<MAJOR>/decisions/` |
 | one course | `courses/<id>/decisions/` |
-| the teacher | `classroom-builder/decisions/` |
+| the teacher's Claude Code realisation (a rule of the protocol binds one spec) | `classroom-builder/decisions/` |
 | the site | `site-builder/decisions/` |
 | the agentic layer (`.claude/`, `.github/`) | `.claude/decisions/` |
 | two areas or more, the repository | `docs/decisions/` |

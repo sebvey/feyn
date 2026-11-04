@@ -12,11 +12,9 @@ Three objects are versioned, a course, a spec and the spec directives, in semver
 is tooling. A spec is the contract for a type of course, kept in one folder per MAJOR,
 `course-specs/<name>/<MAJOR>/` (`1/`, not `v1/`), which holds `README.md` (its scope, files,
 categories and checks, decision `spec-files-by-product`), one folder per product, `course/`
-(`README.md`, what a course is; `rules.yaml`, the rules as data; `schemas/`; `templates/`, the
-course templates; `checks/`, its checks and their fixtures) and `teacher/` (`README.md`, the
-protocol; `rules.yaml`; `composition.yaml`; `templates/learner/`; `build/`, the half of a
-classroom build that depends on the MAJOR, which renders the parts of the composition as text),
-then `decisions/`,
+(what a course is, its rules and what checks it) and `teacher/` (the protocol and what builds and
+tests the teacher), whose files the MAJOR's `README.md` describes
+(`course-specs/linear-course/1/README.md` section 2), then `decisions/`,
 `CHANGELOG.md` and `spec.yaml` (`name`, `major`, `version`, `language`, and `directives`, the
 MAJOR of the spec directives it follows); each product folder also holds its lexicon,
 `lexicon.yaml` (decision `lexicon-not-language-pack`). The spec directives say how a spec is written and read (what a rule
