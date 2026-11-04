@@ -194,12 +194,12 @@ Five moments:
    applies it, by a story when it needs work. `/feyn-deliver-epic <epic>` runs this delivery,
    each story through the agent workflow `deliver-story.js` of `.claude/workflows/`. After each
    merge, two lines go on the plan comment (the story closed, the next to pose; if the next is
-   not obvious, back to moment 1), and a progress report of four lines goes to the maintainer
-   (stories planned, done, in progress, remaining; open questions). When the last story is
-   merged, a fresh agent reviews the whole integration branch against the epic's Done when, a
-   story fixes what it finds, and the orchestrator hands over the epic PR once no open question
-   remains: the epic goes Ready for review, the maintainer verifies its Done when and merges the
-   epic PR, which closes the epic, or asks for a story and the epic goes back to In progress. All
+   not obvious, back to moment 1), and the maintainer is told, plainly, what the story changed
+   and what comes next. When the last story is merged, a fresh agent reviews the whole
+   integration branch against the epic's Done when, a story fixes what it finds, and the
+   orchestrator hands over the epic PR once no open question remains: the epic goes Ready for
+   review, the maintainer verifies its Done when and merges the epic PR, which closes the epic,
+   or asks for a story and the epic goes back to In progress. All
    its sub-issues closed does not mean the epic closes: a story of an epic exists only if it is
    the next one (the policies, below), so every delivery leaves them all closed until the next is
    posed.

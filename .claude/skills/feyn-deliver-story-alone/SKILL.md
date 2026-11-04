@@ -21,13 +21,11 @@ Nothing is spawned and no run launched before the maintainer's go-ahead: they sa
 
 ## Progress
 
-While the cycle runs, each message to the maintainer holds at most three lines: what just
-finished (one fact: a count, a verdict, a PR number), what runs now, and what is awaited from
-the maintainer, if anything (asked by the maintainer on 2026-10-28, #184). No report per agent,
-no announcement of a review before it exists, no repeat of the previous message. Findings,
-counts and before/after go in the PR or the issue, and the message links them. The PR is the
-report: its body and its "Delivery notes" comment; the hand-over (step 5) notifies what they do
-not hold.
+While the cycle runs, each message to the maintainer speaks plainly (`CLAUDE.md`, "Working
+with the maintainer"), in at most three lines: what just finished, what runs now, what is
+awaited from them, if anything. No report per agent, no repeat of the previous message. The PR
+is the report: its body and its "Delivery notes" comment; the hand-over (step 5) notifies what
+they do not hold.
 
 ## 1. Before the run
 
