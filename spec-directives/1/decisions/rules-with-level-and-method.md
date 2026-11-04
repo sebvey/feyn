@@ -142,8 +142,9 @@ and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
   of the spec MAJOR's `teacher/tests/`, #507) cover the rules a session of a two-concept course
   exercises, not every requirement; the rules they do not observe yet are idea #509, and the
   extraction of the rules into `teacher/rules.yaml` is epic #450.
-- In French, « schéma » means a drawing or a JSON Schema; the repository, in English, says
-  `diagram` and `schema`.
+- In a French text of a spec, « schéma » alone is a diagram and a JSON Schema is « schéma JSON »
+  (`docs/glossary.md`, "French words of a spec"); the repository, in English, says `diagram`
+  and `schema`.
 - Amended 2026-10-31 (#339): a rule binds a product, a course or a teacher. The consistency of
   the spec's own files (the rule files, the schemas, the slugs of the protocol, the
   lexicons) is verified by the tests of `check-spec` (`spec-directives/1/README.md` section 8),

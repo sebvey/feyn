@@ -199,3 +199,10 @@ no class: `- file or area: what changes`.
 - `course/README.md`: the headings of sections 3 (3, 3.1, 3.2, 3.5), 6 (6, 6.1, 6.2) and 7,
   and its title, in French, as those of sections 1, 2, 4 and 5; 3.3 and 3.4, file names, and
   the numbers unchanged; the links of its reader table to section 7 follow the new anchor (#535).
+- `course/README.md`, `course/rules.yaml`, `teacher/README.md`, `teacher/rules.yaml`: the French
+  texts take the French word `docs/glossary.md` gives each reserved term: « schéma JSON » for a
+  JSON Schema of `course/schemas/`, « schéma » alone being the diagram; « session » for a
+  teaching session (no longer « séance »); « le fil » for the course path (no longer
+  « parcours »); « fichier de domaine » for the domain file (no longer « fiche »); « renvoi »
+  only for a concept reference (a pointer to a group is a « lien »); no rule changes what it
+  asks (#537).

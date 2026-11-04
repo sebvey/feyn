@@ -12,6 +12,12 @@ text that speaks of the course's meaning says so ("epic, in the course's sense")
 course files keep their French section headings (« Objectif », « L'essentiel », « Pièges »…);
 the English terms below are how we talk about them in code, docs and issues.
 
+**A spec written in French.** A spec speaks the language of its courses (decision
+`language-policy`): a French text of a spec writes a reserved term with the French word that
+[French words of a spec](#french-words-of-a-spec) gives it, and with no other French word for
+that meaning; the words of that table's "Not" column are banned likewise. The English "Not"
+column of a term binds its English texts.
+
 ## The things we build
 
 | Term | Means | Not |
@@ -50,7 +56,7 @@ the English terms below are how we talk about them in code, docs and issues.
 | **stances** | the standing of each claim of a concept, structured in the frontmatter: **consensus** (Scrum Guide, established practice), **school** (short for school of thought: a named author's or current's choice, « choix d'école »), **course** (this course's own choice, « choix du cours »). A stance is also any stated position of a course (« une équipe en sprints ») | "schools", "opinions", "positions", "status" |
 | **neighbors** | the neighbouring notions not to confuse with the concept (« notions voisines »); a frontmatter key of their own, not a stance | "related", "see also" |
 | **sources** | `sources.md`, which traces the body of `concept.md`: **claims** (« Affirmations »: claim, section, source, verified, **nature**: consensus, school, course, or **fact**, « fait », what a source states with no stance), **references**, **unverified**. A stance or a neighbour is sourced in its frontmatter item: `refs` and `verified`, the quotation and its place per reference | "bibliography", "citations" |
-| **diagram** | an SVG of a concept under the **drawing contract**, with its **caption** | "schema" (data), "figure", "image", "illustration", "schéma" |
+| **diagram** | an SVG of a concept under the **drawing contract**, with its **caption** | "schema" (data), "figure", "image", "illustration" |
 | **drawing contract** | the SVG rules of the spec, the rules of `course/rules.yaml` that `course/README.md` 6.1 points to (viewBox, currentColor, three classes, `<text>`, named groups); the style of 6.2 is not part of it | "style guide" |
 | **pitfalls**, **essentials**, **quick test** | the « Pièges », « L'essentiel », « Le test rapide » sections | |
 | **deepening** | the optional « Approfondissement » section of `concept.md` (`headings.deepening`): more matter on the concept, sourced in `sources.md`, built by the site, read by the teacher in an aside on the learner's request; no case relies on it. Not a **practice case**, which is more practice on what the concept taught | "dig", "reserve" |
@@ -142,3 +148,63 @@ mechanisms, which the frame does not name.
 | **freeze** | the moment after which the old repositories no longer change; announced by the agent | |
 | **health** | a report on the repository's state; no skill produces it yet | "status", "doctor" |
 | **repository glossary** | this file, `docs/glossary.md` | |
+
+## French words of a spec
+
+The French word of each reserved term that a French text of a spec writes (`course/README.md`,
+`course/rules.yaml`, `course/lexicon.yaml`, `teacher/README.md`, `teacher/rules.yaml` of
+`course-specs/linear-course/1/`). A term no French text writes yet has no row: the text that
+first writes it adds its row in the same PR. A heading or a value of a lexicon quoted in « » is a
+word of the course files, not the spec's word for a term: « Schéma », the heading of the drawing
+instruction in `teaching.md`, names that section, not a diagram.
+
+| Term | In a French text of a spec | Not |
+|---|---|---|
+| **spec**, **spec directives** | « spec », « directives de spec » | |
+| **course** | « cours » | |
+| **build** | « build » (noun), « construire » (verb) | |
+| **site** | « site » | |
+| **teacher** | « professeur » | « prof » |
+| **classroom** | « classe » (in the rules of a diagram, « classe » is an SVG class, `primary`, `secondary`, `muted`, not a reserved term) | |
+| **learner**, **learner memory** | « apprenant », « mémoire de l'apprenant » | |
+| **maintainer** | « mainteneur » | |
+| **domain** | « domaine »; its file, « fichier de domaine » | « fiche » |
+| **concept**, **numbered concept** | « concept », « concept numéroté »; its folder, « dossier de concept » | « fiche » |
+| **annex** | « annexe » | |
+| **sub-concept**, **leaf sub-concept** | « sous-concept », « sous-concept feuille » | |
+| **objective** | « objectif » | |
+| **reader text** | « texte lecteur » | |
+| **reader-facing** / **teacher-only** | « côté lecteur » / « professeur seul » | |
+| **teaching notes** | « notes d'enseignement » | |
+| **example bank** | « banque d'exemples », « banque » | |
+| **case** | « cas » | « exemple » |
+| **practice case**, **fallback** case, **aside** case | « cas d'entraînement », « cas de rechange », « aparté » | |
+| **example** | « exemple » | |
+| **follow-up** | « relance » | |
+| **storyline** | « fil rouge » | |
+| **stances** (consensus, school, course) | « positions » (« consensus », « choix d'école », « choix du cours ») | |
+| **neighbors** | « voisins », « notions voisines » | |
+| **sources** (claims, references, fact) | « sources » (« affirmations », « références », « fait ») | |
+| **diagram**, its **caption** | « schéma », « légende » | « diagramme », « figure », « illustration », « croquis », « graphique » |
+| a JSON Schema of `course/schemas/` (not a reserved term: "schema" in English) | « schéma JSON » | « schéma » alone |
+| **drawing contract** | « contrat de dessin » | |
+| **deepening** | « approfondissement » | |
+| **concept reference** | « renvoi » (and nothing else: a pointer to a group or a file is a « lien ») | |
+| **course glossary** | « glossaire du cours » | |
+| **defining concept** | « concept de définition » | |
+| **protocol**, **protocol rule** | « protocole », « règle du protocole » | |
+| **lexicon** | « lexique » | |
+| **teaching session**, **resume**, **onboarding** | « session », « reprise », « accueil » | « séance » |
+| **course path** | « le fil » (« au fil », « hors du fil ») | « parcours » (it stays in the file name `learner/parcours.md`) |
+| **concept status** | « statut » | |
+| **save point** | « point de sauvegarde » | |
+| **composition** | « composition » | |
+| **mini-recap** | « mini-récap » | |
+| **rule**, **level**, **method**, **category** | « règle », « niveau », « méthode », « catégorie » (of a protocol rule, its « famille »); the « premier niveau » of a sub-concept and the level of a heading are not a rule's | |
+| **severity**, **check**, **taught-check** | « sévérité », « check », « taught-check » | |
+| **conformity** | « conformité » | |
+| **review** | « revue » | |
+| **decision** | « décision » | |
+| **fresh test** | « fresh test » | |
+| **template** (learner templates) | « modèle » | |
+| **release**, **course version** | « publier », « version publiée », « version du cours » | |
