@@ -170,8 +170,8 @@ no class: `- file or area: what changes`.
 - `course/rules.yaml`, `course/README.md`: every rule of `course/README.md` sections 1, 2, 4 and
   5 is data in `course/rules.yaml`, those verified by inspection included (21 new rules, the
   learner's role in the storyline among them), in four groups, one per section, each with its
-  `purpose`, in French; those four sections become a French description that cites rule ids,
-  with no Purpose paragraph; `course/templates/storyline.md` has a placeholder for the
+  `purpose`, in French; those four sections become a French description, with no Purpose
+  paragraph; `course/templates/storyline.md` has a placeholder for the
   learner's role; no rule changes what it asks (#524).
 - `decisions/`, `README.md`: the decisions state their evidence without naming a course and cite
   no rule id (decisions `spec-names-no-course` of the directives and `decision-format`); section

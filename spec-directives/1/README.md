@@ -39,12 +39,13 @@ A rule file is a list of groups, each a list of rules; a rule has an `id` (a slu
 (section 4), a `check` when one implements the method, a `text` and, where an observed
 counterfactual exists, a `why`; a rule of the protocol also has an `origin`. A group may declare
 a `purpose`, what the group is for, and `category` and `method` once for its rules, and a rule
-may override them; a group of `teacher/rules.yaml` is a group of `teacher/README.md`, its slug as
-its `id` (decision `rule-groups-replace-ranges`). A rule binds a product (section 2), so the rule
-files are two, `course/rules.yaml` and `teacher/rules.yaml`. The spec's own files (the rule
-files, the schemas, the slugs of the protocol, the lexicons, `spec.yaml` and its version, the
-composition of the teacher and its test scenarios) are verified by the tests of `check-spec`,
-which are not rules (section 8).
+may override them; a group of
+`teacher/rules.yaml` is a group of `teacher/README.md`, its slug as its `id` (decision
+`rule-groups-replace-ranges`). A rule binds a product (section 2), so the rule files are two,
+`course/rules.yaml` and `teacher/rules.yaml`. The spec's own files (the rule files, the schemas,
+the slugs of the protocol, the lexicons, `spec.yaml` and its version, the composition of the
+teacher and its test scenarios) are verified by the tests of `check-spec`, which are not rules
+(section 8).
 
 ## 2. Conformance
 

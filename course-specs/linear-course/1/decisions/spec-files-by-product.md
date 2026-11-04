@@ -73,5 +73,6 @@ MAJOR, `1.0.0-alpha` until its tag, and the form of its `CHANGELOG.md` are decis
   with versions.
 - Amended 2026-11-04 (#531): a section of a product's `README.md` whose rules are in its rule
   file points to their group, restates none and cites no rule id, where a description cited rule
-  ids before, as the maintainer settled in epic #450 (Material point 10). Without this, a rule is
-  written twice, in the rule file and in the prose that restates it, and the two drift.
+  ids before, as the maintainer settled in epic #450 (Material point 10). Without this, a
+  contributor extracting a section would restate each rule in the README prose beside the rule
+  file, and the two drift.
