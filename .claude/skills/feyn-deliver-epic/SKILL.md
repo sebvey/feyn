@@ -18,7 +18,8 @@ of the debrief of #317, listed in the Material of epic #342.
 ## Progress
 
 As `/feyn-deliver-story-alone`, "Progress": each message speaks plainly (`CLAUDE.md`, "Working
-with the maintainer"): what just finished, what comes next, what is awaited from the maintainer.
+with the maintainer"), in at most three lines: what just finished, what runs now, what is
+awaited from the maintainer.
 
 ## 1. Take the epic
 
