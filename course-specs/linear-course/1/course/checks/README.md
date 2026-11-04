@@ -52,9 +52,8 @@ code 0. The blocking checks run first, then the reporting ones, each in the orde
 `course/rules.yaml`; no list of checks is written in `check-course`.
 
 A check runs on a course when its method is test and its script is in this folder. The tests of
-`check-spec` (`rule-slugs`, `rule-files`, `lexicon-keys`, `spec-yaml`, `composition`) verify no
-rule:
-`check-course` neither runs nor lists them. A check of another method is not run here:
+`check-spec` (`spec-directives/1/README.md` section 8) verify no rule: `check-course` neither runs
+nor lists them. A check of another method is not run here:
 `taught-check` (analysis) is an agent workflow, run through `/feyn-taught-check`, and a rule
 verified by inspection has no check, the review reads it. `--list` names every check, the ones not
 run here with how they run.

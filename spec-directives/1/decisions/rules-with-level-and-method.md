@@ -77,8 +77,8 @@ no second taxonomy without a use.
 the **teacher**; a rule binds a product. The lexicons are not products: they live in the spec's
 folder, written by the spec's authors, and their consistency is the spec's own. The spec's own files
 (the rule files, the schemas, the slugs of the protocol, the lexicons, `spec.yaml` and its version,
-the composition of the teacher) are verified by the tests of the directives, run by `check-spec`
-(`rule-files`, `rule-slugs`, `lexicon-keys`, `spec-yaml`, `composition`), which are not rules: they
+the composition of the teacher and its test scenarios) are verified by the tests of the
+directives, run by `check-spec` (`spec-directives/1/README.md` section 8), which are not rules: they
 carry no category and no level, each failure blocks `check-spec`, and none counts toward a course's
 conformance. A course conforms when it holds every requirement of `course/rules.yaml`, whatever its
 method; the blocking checks are a necessary condition, not a sufficient one; the review and
@@ -140,13 +140,14 @@ and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
   made a requirement is a MAJOR (decision `versioned-objects-and-spec-layout`).
 - No teacher conforms today: the fresh tests (`classroom-builder/fresh-test` on the test
   scenarios of the spec MAJOR's `teacher/tests/`, #507) cover the rules a session of `po-essai`
-  exercises, not every requirement; the rest is the target of #222.
+  exercises, not every requirement; the rules they do not observe yet are idea #509, and the
+  extraction of the rules into `teacher/rules.yaml` is epic #450.
 - In French, « schéma » means a drawing or a JSON Schema; the repository, in English, says
   `diagram` and `schema`.
 - Amended 2026-10-31 (#339): a rule binds a product, a course or a teacher. The consistency of
   the spec's own files (the rule files, the schemas, the slugs of the protocol, the
-  lexicons) is verified by the tests of `check-spec` (`rule-files`, `rule-slugs`,
-  `lexicon-keys`), which are not rules: they carry no category and no level, and each
+  lexicons) is verified by the tests of `check-spec` (`spec-directives/1/README.md` section 8),
+  which are not rules: they carry no category and no level, and each
   failure blocks `check-spec`. The categories are those of a course and the families of the
   protocol. Without this, a contributor
   applies "every check verifies a rule" to a check of the spec's files and writes a rule file

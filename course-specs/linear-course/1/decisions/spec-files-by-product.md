@@ -23,11 +23,10 @@ frontmatter) are schemas in `course/schemas/*.schema.yaml`, JSON Schema
 schema"); the rule file keeps what a schema cannot say (the order of the glossary, the contract of a
 case, the sources). `teacher/README.md` describes the protocol of the teacher (Purpose, notation,
 keys and parameters); its rules are in `teacher/rules.yaml`, in French, the bounded exception of
-decision `language-policy`; `teacher/` also holds the composition of the teacher
-(`composition.yaml`) and its build, `teacher/build/`, the half of a classroom build that depends
-on the MAJOR, which renders the parts of the composition as text for `classroom-builder/` to
-realise. The rule files are these two; the spec's own files are verified by the
-tests of `check-spec`, which are not rules (decision `rules-with-level-and-method`). A description
+decision `language-policy`; `teacher/` also holds what builds and tests the teacher, each file
+described by the MAJOR's `README.md` (section 2). The rule files are these two; the spec's own
+files are verified by the tests of `check-spec`, which are not rules (decision
+`rules-with-level-and-method`). A description
 (the spec directives, the MAJOR's `README.md`, `course/README.md`, `teacher/README.md`) is
 informative: it explains and cites rule ids, and never uses the verbal forms of obligation; the rule
 files are normative. "teacher" stays the name of the class of products, "protocol" the name of its

@@ -81,9 +81,9 @@ What a rule file holds is the directives' (`spec-directives/1/README.md` section
 rule verified by inspection, the review; `course/schemas/course.schema.yaml` and
 `course/schemas/concept-frontmatter.schema.yaml` are the tables of `course/README.md` sections 2 and
 3.1 (#329). The other rules of a course leave `course/README.md` for `course/rules.yaml`, and the
-rules of the protocol leave `teacher/README.md` for `teacher/rules.yaml`, which holds two today, in
-#318. Until that extraction, `course/README.md` and `teacher/README.md` keep their verbal forms of
-obligation, read as `course/README.md` says in its opening.
+rules of the protocol leave `teacher/README.md` for `teacher/rules.yaml`, in #318. Until that
+extraction, `course/README.md` and `teacher/README.md` keep their verbal forms of obligation, read
+as `course/README.md` says in its opening.
 
 **Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language
 of its courses, of its lexicons and of the rules of `teacher/README.md`, a bounded exception to the
