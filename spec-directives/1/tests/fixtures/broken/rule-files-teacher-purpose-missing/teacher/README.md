@@ -33,11 +33,3 @@ in rule `second-rule`.
 | Key | French value | Used in |
 |---|---|---|
 | `phrases.example` | « Exemple » | `first-rule`, `save-next-step` |
-
-## Inherited from parcours-po
-
-| Rule | ADR | Old text |
-|---|---|---|
-| `first-rule` | 001 | step 1 (`learner-onboarding`) |
-| `second-rule` | none | idem |
-| `save-points` | none | new |

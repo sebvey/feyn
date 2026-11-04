@@ -3,14 +3,16 @@
 # teacher conforms when it holds every requirement of this file (spec-directives/1/README.md
 # section 2).
 #
-# This file holds every rule of the protocol, copied from teacher/README.md, which states each of
-# them too until story 3b of epic #450 cuts it. The groups follow the order of teacher/README.md:
-# for each family ("## <n>. ..."), a group whose id is the family's category, holding the rules
-# placed directly under the family; then each group of that family ("### <title> (`<slug>`)"),
-# its slug as id. A group: id, title, purpose (what the group is for), category (its family),
-# method (demonstration, by the fresh tests), rules. A rule: id (its slug), level, origin (the
-# feyn issue or decision it comes from, where one is named), text, why (what the teacher does
-# without the rule, where teacher/README.md gives it). check-spec (rule-files) verifies this file.
+# This file holds every rule of teacher/README.md that opens on its slug ("**<slug>** "), copied
+# from teacher/README.md, which states each of them too until story 3b of epic #450 cuts it. The
+# rows of the save-point table of family 8, rules too, stay in teacher/README.md only: story 3b
+# gives them a home before the cut. The groups follow the order of teacher/README.md: for each
+# family ("## <n>. ..."), a group whose id is the family's category, holding the rules placed
+# directly under the family; then each group of that family ("### <title> (`<slug>`)"), its slug as
+# id. A group: id, title, purpose (what the group is for), category (its family), method
+# (demonstration, by the fresh tests), rules. A rule: id (its slug), level, origin (the feyn issue
+# or decision it comes from, where one is named), text, why (what the teacher does without the rule,
+# where teacher/README.md gives it). check-spec (rule-files) verifies this file.
 groups:
   - id: session-start
     title: Démarrage de session

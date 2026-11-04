@@ -7,5 +7,4 @@ groups:
     rules:
       - id: first-rule
         level: requirement
-        origin: "new"
         text: Le premier message part sans appel d'outil.
