@@ -6,8 +6,8 @@
 # annex (an annex is also listed in `annexes`); `<NN>` is the number on two digits (09), an
 # annex keeps its number (A1).
 # A leaf sub-concept (no `children`) is, as a rule, one teacher message (rule
-# leaf-fits-one-message); a node has 9 children at most. The rules of course.yaml are those of
-# course/rules.yaml cited in course/README.md section 2.
+# leaf-fits-one-message); a node has 9 children at most. The rules of course.yaml are the group
+# « Le fichier course.yaml » of course/rules.yaml, to which course/README.md section 2 points.
 # Identifiers (numbers, sub-concept ids, titles of cases, dir and file names) are cited by
 # learner memory and site addresses: changing one is a course MAJOR (spec-directives/1/README.md
 # section 6).

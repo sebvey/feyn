@@ -1,2 +1,2 @@
 check: rule-slugs
-message: decisions/a-decision.md:8 cites rule "third-rule", which neither teacher/README.md nor course/rules.yaml defines
+message: decisions/a-decision.md:8 cites rule "third-rule", which teacher/README.md does not define

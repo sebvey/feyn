@@ -13,13 +13,12 @@ addresses that cite the old domain.
 
 The domains of a `linear-course` course partition its numbered concepts: each concept belongs
 to exactly one domain, a domain's concepts are consecutive, and the domains follow course
-order; annexes belong to no domain (`course/README.md` section 2, rules `concept-in-one-domain`,
-`domain-concepts-consecutive` and `annexes-in-no-domain`, check `course-yaml`). A domain is
-a unit of reading and presentation, not of competence: a concept that relies on another domain says
-so as a prerequisite, not as a membership. Domain numbers and their concepts are course identifiers,
-so changing them is a course MAJOR (`course/README.md` section 2, `spec-directives/1/README.md`
-section 6). This replaces the overlapping « objectifs » the founding course had before its
-2.0.0.
+order; annexes belong to no domain (the rules of `course.yaml` in `course/rules.yaml`, check
+`course-yaml`). A domain is a unit of reading and presentation, not of competence: a concept
+that relies on another domain says so as a prerequisite, not as a membership. Domain numbers and
+their concepts are course identifiers, so changing them is a course MAJOR (`course/README.md`
+section 2, `spec-directives/1/README.md` section 6). This replaces the overlapping « objectifs »
+the founding course had before its 2.0.0.
 
 ## Options ruled out
 

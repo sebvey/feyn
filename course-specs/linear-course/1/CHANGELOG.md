@@ -170,8 +170,8 @@ no class: `- file or area: what changes`.
 - `course/rules.yaml`, `course/README.md`: every rule of `course/README.md` sections 1, 2, 4 and
   5 is data in `course/rules.yaml`, those verified by inspection included (21 new rules, the
   learner's role in the storyline among them), in four groups, one per section, each with its
-  `purpose`, in French; those four sections become a French description that cites rule ids,
-  with no Purpose paragraph; `course/templates/storyline.md` has a placeholder for the
+  `purpose`, in French; those four sections become a French description, with no Purpose
+  paragraph; `course/templates/storyline.md` has a placeholder for the
   learner's role; no rule changes what it asks (#524).
 - `decisions/`, `README.md`: the decisions state their evidence without naming a course and cite
   no rule id (decisions `spec-names-no-course` of the directives and `decision-format`); section
@@ -179,3 +179,10 @@ no class: `- file or area: what changes`.
   cites a slug (#528).
 - `teacher/README.md`: the list of the files that cite a rule by its slug no longer names the
   decisions, which name a rule by what it asks (decision `decision-format`) (#528).
+- `course/README.md`, `decisions/`, `README.md`: sections 1, 2, 4 and 5 of `course/README.md`
+  are cut to their reader table, what states no rule (the tree of a course, the identifiers, what
+  each file is for, the term cell) and a pointer to their group of `course/rules.yaml`, and for
+  section 2 to `course/schemas/course.schema.yaml`; they restate no rule and cite no rule id;
+  decisions `domains-partition-the-course` and `markdown-conventions-not-mdx` cite no rule id;
+  decision `spec-files-by-product` amended, a section whose rules are in a rule file points to
+  their group (#531).

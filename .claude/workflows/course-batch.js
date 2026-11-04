@@ -41,7 +41,7 @@ const SCOUT_SCHEMA = {
   type: 'object',
   properties: {
     spec_dir: { type: 'string', description: 'course-specs/<name>/<MAJOR>/ of the spec and MAJOR that course.yaml declares (spec: <name>@<MAJOR>), ends with /: where you read course/README.md and the templates of course/templates/ (the checks run through course-specs/check-course)' },
-    shared_files: { type: 'array', items: { type: 'string' }, description: 'files every agent of the batch reads: course.yaml, plan.md, storyline.md, glossary.md, course/README.md sections 3 to 5 and the rules of course/rules.yaml they cite, the course templates, the teacher/README.md of the spec (in spec_dir) if it exists, the issue' },
+    shared_files: { type: 'array', items: { type: 'string' }, description: 'files every agent of the batch reads: course.yaml, plan.md, storyline.md, glossary.md, course/README.md sections 3 to 5 and the rules of course/rules.yaml, the course templates, the teacher/README.md of the spec (in spec_dir) if it exists, the issue' },
     batch_instructions: { type: 'string', description: 'instructions of the issue for the whole batch, copied word for word' },
     concepts: {
       type: 'array',
@@ -110,7 +110,7 @@ const WRITE_SCHEMA = {
 phase('Scope')
 const scout = await agent(`${ROLE}
 
-Read ${COURSE}course.yaml (it names the spec: field spec) and the spec's course/README.md, course/rules.yaml (the rules course/README.md cites by id) and course/templates/.\
+Read ${COURSE}course.yaml (it names the spec: field spec) and the spec's course/README.md, course/rules.yaml (the rules of a course, which course/README.md points to by group) and course/templates/.\
 ${A.issue ? ` Read issue #${A.issue} ("mise exec -- gh issue view ${A.issue}") and its parent.` : ''}\
 ${A.concepts ? ` The batch is the concepts ${A.concepts.join(', ')}.` : ' The batch is the concepts the issue asks to write.'}
 
