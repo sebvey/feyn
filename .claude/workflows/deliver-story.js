@@ -66,7 +66,8 @@ if (A.dryRun) {
 const CHECKOUT = 'Never touch the main checkout (the first path "git worktree list" prints): no cd into it, no git switch there; you work only in your own worktree.'
 // Decision pr-corrects-what-it-makes-false: what the PR makes false is corrected in it.
 const MADE_FALSE = 'A statement the change makes false, anywhere in the repository, a live decision included, is corrected in this PR, never left with a reason nor sent to a separate issue (decision pr-corrects-what-it-makes-false): a live decision through /feyn-decision step 6 (step 5 to supersede it); a change to a live decision\'s choice, not to a mechanism it names, goes up into the PR\'s "Review first", as the maintainer\'s to accept. A superseded decision and a released CHANGELOG entry are history: left as they are.'
-// Decision word-choices-in-the-glossary: a skill's body loads only when invoked, so the brief names both.
+// Issue #543: a skill's body loads only when invoked, so the brief names both skills;
+// decision word-choices-in-the-glossary for the word-choice clause.
 const DECISIONS_AND_WORDS = 'A decision you write, new or live, goes through /feyn-decision (step 5 a new one, step 6 a live one); a glossary entry you add or change goes through /feyn-glossary-entry; a choice that changes only words is a glossary entry, never a decision (decision word-choices-in-the-glossary).'
 const DEVIATIONS = `A choice that departs from ${DW} or from a principle of its decisions, or adds structure (a new file, a category, a marker, an exception to a principle), you make it, go on, and report it in "deviations" with the options ruled out and the cost of going back: ${ALONE ? 'name each one in the PR\'s "Review first" (one bullet can name several), its detail in "Delivery notes": the orchestrator checks it is there' : 'the orchestrator turns each into an open question to the maintainer'}.`
 

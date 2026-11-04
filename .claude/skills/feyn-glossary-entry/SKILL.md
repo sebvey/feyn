@@ -32,7 +32,8 @@ the words it uses.
 
 ## Add `<concept>`
 
-1. **The entry bar.** A concept enters when both hold:
+1. **The entry bar**, the glossary's (a decision has its own, the bar of a decision of
+   `/feyn-decision` step 2). A concept enters when both hold:
    - other files name it on their own: a term used, not defined in passing, in at least two
      files of the repository besides the glossary (`grep -rli --include='*.md' --include='*.js'
      --include='*.yaml' --exclude-dir=node_modules --exclude-dir=worktrees "<term>" . | grep -v

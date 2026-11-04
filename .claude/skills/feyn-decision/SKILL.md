@@ -1,6 +1,6 @@
 ---
 name: feyn-decision
-description: "Tooling of the work cycle, called by the contributor of the agent workflow deliver-story.js, by `/feyn-glossary-entry` for a choice that is more than words, and directly for a one-off act: write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or change a live decision in place, or refuse a new one when no counterfactual is named, the entry bar is not met or the choice changes only words (sent to /feyn-glossary-entry). Use for \"/feyn-decision <the decision, in a sentence>\"."
+description: "Tooling of the work cycle, called by the contributor of the agent workflow deliver-story.js, by `/feyn-glossary-entry` for a choice that is more than words, and directly for a one-off act: write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or change a live decision in place, or refuse a new one when no counterfactual is named, the bar of a decision is not met or the choice changes only words (sent to /feyn-glossary-entry). Use for \"/feyn-decision <the decision, in a sentence>\"."
 argument-hint: "<the decision, in a sentence>"
 ---
 
@@ -22,7 +22,7 @@ things would be unclear", "it is better", a restatement of the decision). Say in
 is missing, and propose a counterfactual of your own for the maintainer to accept or correct;
 a decision is written only on a counterfactual the maintainer gave or accepted.
 
-## 2. The entry bar
+## 2. The bar of a decision
 
 A decision is written when it spans several files or is costly to undo. Otherwise refuse and
 propose instead a comment where the choice applies, or nothing.
