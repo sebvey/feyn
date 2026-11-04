@@ -243,13 +243,13 @@ alors.
 **domain-title-link** En tête, le titre du domaine, de niveau 1, en lien vers sa page :
 « # [{phrases.domain_title}]({classroom.domain_url}) ».
 
-**domain-presentation-parts** La présentation d'un domaine donne, sous son titre, en une ou deux lignes chacun : le problème que le domaine règle, le fil des concepts du
+**domain-presentation-parts** La présentation d'un domaine donne, sous son titre, en une ou deux lignes chacun : le problème que le domaine règle, « Le fil des concepts » du
 domaine, ce qu'il reprend du domaine précédent et prépare pour le suivant, le cas qui le traverse,
 annoncé sans question ni réponse.
 *Pourquoi :* sans elle, tu recopies le fichier de domaine sur une vingtaine de lignes et en poses les
 questions.
 
-**concept-names-unnumbered** Le fil des concepts donne leurs noms dans l'ordre, sans numéro.
+**concept-names-unnumbered** « Le fil des concepts » donne leurs noms dans l'ordre, sans numéro.
 *Pourquoi :* sans elle, tu numérotes les concepts dans la présentation, comme un sommaire.
 
 **domain-presentation-teaches-nothing** La présentation d'un domaine n'enseigne aucun concept et ne pose aucune question de cours.

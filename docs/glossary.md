@@ -26,7 +26,8 @@ An entry is a heading, the term, then fixed keys in this order, each on its own 
 A key with nothing to say is left out, `means`, `en` and `fr` excepted. A rejected term is a word
 banned for that concept only: never use it where the concept applies. A word may be preferred for
 one concept and rejected for another; both entries then say so (« schéma »). A neighbouring
-concept is never a rejected term: it is a `not to confuse with` link.
+concept is always a `not to confuse with` link; its term is also a rejected term only when it is
+a wrong name for this concept (**rule** rejects "requirement" and links [requirement](#requirement)).
 
 ## Which designation applies where
 
