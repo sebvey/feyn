@@ -10,7 +10,8 @@ The repository glossary holds the reserved terms of feyn, one entry per concept.
 - the correspondence between the repository's English and the French of a spec;
 - a regular form that a program can read.
 
-Why this form: decision `glossary-by-concept`.
+Why this form: decision `glossary-by-concept`; why a word choice is an entry and not a decision:
+decision `word-choices-in-the-glossary`.
 
 ## Reading an entry
 
@@ -21,6 +22,11 @@ An entry is a heading, the term, then fixed keys in this order, each on its own 
 - `fr`: the preferred French term, then, after ` · rejected: `, its rejected French terms;
   `to settle` when no French text of a spec writes the concept yet.
 - `not to confuse with`: links to the entries of neighbouring concepts.
+- `why`: why this term for the concept, when the choice was discussed or a confusion seen: the
+  terms ruled out and what each would have confused.
+
+The why of a word choice is in its entry's `why`, never in a decision (decision
+`word-choices-in-the-glossary`).
 
 A key with nothing to say is left out, `means`, `en` and `fr` excepted. A rejected term is a word
 banned for that concept only: never use it where the concept applies. A word may be preferred for
@@ -50,9 +56,11 @@ A term in bold in a meaning has its own entry.
 
 A PR adds or changes the entry and, in the same PR, replaces the rejected words in use for that
 concept. The text that first writes a concept in French fills its `fr` in the same PR. An entry
-cites no rule id, of a rule or of a group (decision `decision-format`). A meaning names a file, a
-folder, a key or an identifier only when the concept is that thing, never to say where the
-concept is stored, read or written (decision `glossary-by-concept`).
+cites no rule id, of a rule or of a group (decision `decision-format`), and names no course. A
+meaning cites nothing: no decision, no document (decision `word-choices-in-the-glossary`). It names
+a file, a folder, a key, a command or a skill only when the concept is that thing, never to say
+where the concept is implemented, stored, read or written (decision `glossary-by-concept`).
+`/feyn-glossary-entry` reads, adds and changes an entry.
 
 ## The things we build
 
@@ -85,7 +93,7 @@ concept is stored, read or written (decision `glossary-by-concept`).
 
 ### course id
 
-- means: the slug that identifies a course (`po-essai`): the name of its folder and the first part of the tags of its course versions
+- means: the slug that identifies a course: the name of its folder and the first part of the tags of its course versions
 - en: course id
 - fr: to settle
 - not to confuse with: [course](#course), [course version](#course-version)
@@ -178,7 +186,7 @@ concept is stored, read or written (decision `glossary-by-concept`).
 
 ### concept
 
-- means: a numbered unit of the course (`0`..`17`, `A1`, `A2`), whose files are in its **concept folder**
+- means: a numbered unit of the course (`0`, `1`…, `A1`, `A2`…), whose files are in its **concept folder**
 - en: concept · rejected: "fiche", "lesson", "chapter", "page"
 - fr: « concept » · rejected: « fiche »
 - not to confuse with: [sub-concept](#sub-concept), [numbered concept](#numbered-concept), [annex](#annex), [concept folder](#concept-folder)
@@ -302,14 +310,14 @@ concept is stored, read or written (decision `glossary-by-concept`).
 
 ### storyline
 
-- means: the running world the cases live in (the bike-share operator): `storyline.md` of a course
+- means: the running world the cases live in: `storyline.md` of a course
 - en: storyline · rejected: "red thread", "thread", "fil rouge", "narrative"
 - fr: « fil rouge »
 - not to confuse with: [course path](#course-path)
 
 ### stances
 
-- means: the standing of each claim of a concept: consensus (Scrum Guide, established practice), school (short for school of thought: a named author's or current's choice), course (this course's own choice). A stance is also any stated position of a course (« une équipe en sprints »)
+- means: the standing of each claim of a concept: consensus (an established reference or practice), school (short for school of thought: a named author's or current's choice), course (this course's own choice). A stance is also any stated position of a course (« une équipe en sprints »)
 - en: stances · rejected: "schools", "opinions", "positions", "status"
 - fr: « positions » (« consensus », « choix d'école », « choix du cours »)
 - not to confuse with: [neighbors](#neighbors), [concept status](#concept-status)
@@ -334,6 +342,7 @@ concept is stored, read or written (decision `glossary-by-concept`).
 - en: diagram · rejected: "schema" (a JSON Schema), "figure", "image", "illustration"
 - fr: « schéma » · rejected: « diagramme », « figure », « illustration », « croquis », « graphique »
 - not to confuse with: [schema](#schema), [drawing contract](#drawing-contract), [caption](#caption)
+- why: « schéma » is the courses' own word for a drawing; « diagramme » is a calque that evokes a notation or data and no course uses it; « figure », « illustration », « croquis » and « graphique » name another thing (a numbered figure, a decoration, a sketch, a chart of data); the data sense of « schéma » takes « schéma JSON » so the two never meet
 
 ### caption
 
@@ -348,6 +357,7 @@ concept is stored, read or written (decision `glossary-by-concept`).
 - en: schema
 - fr: « schéma JSON » · rejected: « schéma » alone
 - not to confuse with: [diagram](#diagram)
+- why: « schéma » alone is the diagram, the courses' word; the JSON Schema always takes « schéma JSON », so a French text never leaves the reader to guess which one is meant
 
 ### drawing contract
 
@@ -426,7 +436,7 @@ concept is stored, read or written (decision `glossary-by-concept`).
 
 ### lexicon
 
-- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, case fields, qualifiers, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the classroom build and the site; `teacher/lexicon.yaml`, the words the teacher says and writes. Not a translation file: the language is the spec's (decision `lexicon-not-language-pack`)
+- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, case fields, qualifiers, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the classroom build and the site; `teacher/lexicon.yaml`, the words the teacher says and writes. Not a translation file: the language is the spec's
 - en: lexicon · rejected: "language pack", "i18n", "locale", "strings"
 - fr: « lexique »
 
@@ -457,6 +467,7 @@ concept is stored, read or written (decision `glossary-by-concept`).
 - en: course path · rejected: "main line", "track"
 - fr: « parcours » (« dans le parcours », « hors du parcours », « revenir au parcours ») · rejected: « fil » alone
 - not to confuse with: [storyline](#storyline), the « Le fil des concepts » section of a [domain file](#domain-file)
+- why: « fil » sat next to « fil rouge » (the storyline) and « Le fil des concepts » (a section of a domain file), sometimes in one rule of the protocol, three « fil » a reader or a model could mix; « parcours » is the word the courses and learner memory already use; « progression » is kept for a section of a course's plan, which a planned change of the course files adds
 
 ### concept status
 
@@ -601,21 +612,21 @@ mechanisms, which the frame does not name.
 
 ### issue
 
-- means: the GitHub object; it has no form of its own: it carries a **work item**, of one of two kinds, an **epic** or a **story**, or an **idea**, which has no kind; what it carries gives its body template and its labels (decision `issue-carries-a-work-item-or-an-idea`)
+- means: the GitHub object; it has no form of its own: it carries a **work item**, of one of two kinds, an **epic** or a **story**, or an **idea**, which has no kind; what it carries gives its body template and its labels
 - en: issue · rejected: "ticket", "task"
 - fr: to settle
 - not to confuse with: [work item](#work-item), [epic](#epic), [story](#story), [idea](#idea)
 
 ### work item
 
-- means: what an issue carries when it is work to deliver: an **epic** or a **story**, its kind, with the body of its kind and a Done when; an idea is not one (decision `issue-carries-a-work-item-or-an-idea`)
+- means: what an issue carries when it is work to deliver: an **epic** or a **story**, its kind, with the body of its kind and a Done when; an idea is not one
 - en: work item
 - fr: to settle
 - not to confuse with: [issue](#issue), [idea](#idea), [epic](#epic), [story](#story)
 
 ### epic
 
-- means: a work item: an objective delivered in several stories, which closes on a verifiable Done when (common agile and GitHub vocabulary, `docs/kanban.md`): an issue titled "Epic: …", in five sections (Objective, Why now, Material, Done when, Out of scope), parent of its stories, split one story at a time when taken; its plan is a **plan comment** on it (decision `themes-and-release-milestones`). No Done when, no epic
+- means: a work item: an objective delivered in several stories, which closes on a verifiable Done when (common agile and GitHub vocabulary): an issue titled "Epic: …", in five sections (Objective, Why now, Material, Done when, Out of scope), parent of its stories, split one story at a time when taken; its plan is a **plan comment** on it. No Done when, no epic
 - en: epic · rejected: "theme", "subject", "initiative", "stream", "phase"
 - fr: to settle
 - not to confuse with: [story](#story), [milestone](#milestone), [plan comment](#plan-comment), [work item](#work-item)
@@ -629,28 +640,28 @@ mechanisms, which the frame does not name.
 
 ### story
 
-- means: a work item: a unit of work delivered in one PR, with a verifiable Done when (common agile and GitHub vocabulary, `docs/kanban.md`; a story need not be written as a user story), with or without a parent epic; under an epic, a sub-issue whose PR targets the epic's integration branch; without one, its PR targets `main` and the maintainer merges it (decision `story-with-or-without-an-epic`)
+- means: a work item: a unit of work delivered in one PR, with a verifiable Done when (common agile and GitHub vocabulary; a story need not be written as a user story), with or without a parent epic; under an epic, a sub-issue whose PR targets the epic's integration branch; without one, its PR targets `main` and the maintainer merges it
 - en: story · rejected: "slice", "task", "sub-task"
 - fr: to settle
 - not to confuse with: [epic](#epic), [idea](#idea), [work item](#work-item)
 
 ### idea
 
-- means: what enters the upstream (`docs/kanban.md`): an issue holding a finding and no solution, in three sections (Where, Why, Observation), with no kind, only its area label, in the Status Idea; it is never converted: the triage creates from it the work items it calls for, then closes it (decisions `issue-carries-a-work-item-or-an-idea`, `idea-is-never-converted`). Its Observation is a section, not a kind
+- means: what enters the upstream: an issue holding a finding and no solution, in three sections (Where, Why, Observation), with no kind, only its area label, in the Status Idea; it is never converted: the triage creates from it the work items it calls for, then closes it. Its Observation is a section, not a kind
 - en: idea · rejected: "observation" for the issue, "Backlog" for its Status, "suggestion"
 - fr: to settle
 - not to confuse with: [option](#option), [work item](#work-item)
 
 ### option
 
-- means: a work item, epic or story, defined but not committed (`docs/kanban.md`): it has the body of its kind, Done when included, in the Status Option, and waits for the maintainer to commit it (set Ready) or close it, one option at a time, at an **option refinement**; until Ready its kind and body may change. A work item a triage creates is born Option unless the maintainer commits it at its creation; one a brainstorm creates is always born Option; a work item the maintainer asks for directly, a story or an epic, is born Option, or Ready on their word (decision `idea-and-option-before-ready`)
+- means: a work item, epic or story, defined but not committed: it has the body of its kind, Done when included, in the Status Option, and waits for the maintainer to commit it (set Ready) or close it, one option at a time, at an **option refinement**; until Ready its kind and body may change. A work item a triage creates is born Option unless the maintainer commits it at its creation; one a brainstorm creates is always born Option; a work item the maintainer asks for directly, a story or an epic, is born Option, or Ready on their word
 - en: option · rejected: "proposal", "candidate"
 - fr: to settle
 - not to confuse with: [idea](#idea), [option refinement](#option-refinement)
 
 ### label
 
-- means: always qualified: type (`type:bug`, `type:course`, `type:improvement`, `type:decision`), set on a work item, never on an idea; **area** (`area:<area>`); kind (`kind:epic`, `kind:story`: exactly one on a work item, none on an idea; decision `kind-label-per-work-item`); `blocked:maintainer` (a maintainer decision is awaited; on the issue only); and `stale` (an idea or an option posed before the frame of 2026-11-03, re-read at its triage or option refinement, which removes it). No state label: where an issue stands is its **Status**
+- means: always qualified: type (`type:bug`, `type:course`, `type:improvement`, `type:decision`), set on a work item, never on an idea; **area** (`area:<area>`); kind (`kind:epic`, `kind:story`: exactly one on a work item, none on an idea); `blocked:maintainer` (a maintainer decision is awaited; on the issue only); and `stale` (an idea or an option posed before the frame of 2026-11-03, re-read at its triage or option refinement, which removes it). No state label: where an issue stands is its **Status**
 - en: label
 - fr: to settle
 - not to confuse with: [Status](#status), [category](#category), [area](#area)
@@ -664,49 +675,49 @@ mechanisms, which the frame does not name.
 
 ### Status
 
-- means: the Project's field that says where an issue stands, in this order and nothing else: Idea (an idea, to triage), Option (a work item defined, not committed), Ready (committed, free to take: the **commitment point**), In progress (a branch exists), Ready for review (the work claims done, the maintainer reviews and concludes: a story without an epic whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none, direct delivery.`, which the maintainer merges; an epic whose epic PR is handed over, whose Done when the maintainer verifies before merging it; a story of an epic never has it), Done (closed; the close reason stays on GitHub). A decision awaited is the label `blocked:maintainer`, on any Status (decision `idea-and-option-before-ready`). It replaces the state labels. Written with a capital when it names the field; the lowercase `status` key of a decision's frontmatter is a different, allowed key; an issue's `state` is GitHub's open or closed
+- means: the Project's field that says where an issue stands, in this order and nothing else: Idea (an idea, to triage), Option (a work item defined, not committed), Ready (committed, free to take: the **commitment point**), In progress (a branch exists), Ready for review (the work claims done, the maintainer reviews and concludes: a story without an epic whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none, direct delivery.`, which the maintainer merges; an epic whose epic PR is handed over, whose Done when the maintainer verifies before merging it; a story of an epic never has it), Done (closed; the close reason stays on GitHub). A decision awaited is the label `blocked:maintainer`, on any Status. It replaces the state labels. Written with a capital when it names the field; the lowercase `status` key of a decision's frontmatter is a different, allowed key; an issue's `state` is GitHub's open or closed
 - en: Status · rejected: "state" for where the work stands
 - fr: to settle
 - not to confuse with: [concept status](#concept-status), [label](#label), [blocked](#blocked), [commitment point](#commitment-point)
 
 ### commitment point
 
-- means: where an option is taken and becomes committed work: in feyn, the Status Ready, set by the maintainer, or given at creation to a story posed by the orchestrator of a taken epic; from it the work item's form freezes and its Done when becomes the contract (decision `issue-defines-pr-verifies`). What the frame says: `docs/kanban.md`, "The upstream"
+- means: where an option is taken and becomes committed work: in feyn, the Status Ready, set by the maintainer, or given at creation to a story posed by the orchestrator of a taken epic; from it the work item's form freezes and its Done when becomes the contract
 - en: commitment point
 - fr: to settle
 - not to confuse with: [Status](#status)
 
 ### WIP limit
 
-- means: a limit on the work in progress, the items started and not finished, per Status or for the whole workflow: a new item is pulled only when one leaves. What the frame says: `docs/kanban.md`, "Kanban"; how feyn applies it: `docs/contributing.md`
+- means: a limit on the work in progress, the items started and not finished, per Status or for the whole workflow: a new item is pulled only when one leaves
 - en: WIP limit
 - fr: to settle
 - not to confuse with: [draft](#draft)
 
 ### triage
 
-- means: reading the ideas that came in and deciding what each one calls for: the work items it calls for, each citing it, the idea then closed as completed; or nothing, the idea closed as not planned, with the reason. In feyn, run with the maintainer on the ideas they name, one at a time; an option is not triaged, it goes to an **option refinement**. What the frame says: `docs/kanban.md`, "The upstream"
+- means: reading the ideas that came in and deciding what each one calls for: the work items it calls for, each citing it, the idea then closed as completed; or nothing, the idea closed as not planned, with the reason. In feyn, run with the maintainer on the ideas they name, one at a time; an option is not triaged, it goes to an **option refinement**
 - en: triage · rejected: "Backlog pass", "grooming"
 - fr: to settle
 - not to confuse with: [option refinement](#option-refinement), [brainstorm](#brainstorm)
 
 ### option refinement
 
-- means: the analysis of one named option against the purpose of feyn (which product consumes it, `docs/vision.md`) and against the repository (what changed in the files it names since it was last updated, the work items and ideas that cover or overlap it), up to a decision on it alone: commit it (set Ready), rework it, open a brainstorm from it (what it builds on has changed), merge it, split it, fold it into an epic or close it; run with the maintainer, one option at a time. It never reviews all the options nor chooses among them. What the frame says: `docs/kanban.md`, "The upstream"
+- means: the analysis of one named option against the purpose of feyn (which product consumes it) and against the repository (what changed in the files it names since it was last updated, the work items and ideas that cover or overlap it), up to a decision on it alone: commit it (set Ready), rework it, open a brainstorm from it (what it builds on has changed), merge it, split it, fold it into an epic or close it; run with the maintainer, one option at a time. It never reviews all the options nor chooses among them
 - en: option refinement · rejected: "replenishment", "grooming"
 - fr: to settle
 - not to confuse with: [replenishment](#replenishment), [triage](#triage), [option](#option), [brainstorm](#brainstorm)
 
 ### replenishment
 
-- means: the Kanban review of all the options against the capacity of the downstream, choosing which enter Ready. Not practised in feyn, where a commitment is decided option by option, at an **option refinement**. What the frame says: `docs/kanban.md`, "The upstream"
+- means: the Kanban review of all the options against the capacity of the downstream, choosing which enter Ready. Not practised in feyn, where a commitment is decided option by option, at an **option refinement**
 - en: replenishment
 - fr: to settle
 - not to confuse with: [option refinement](#option-refinement)
 
 ### policy
 
-- means: what the workflow asks, written down where everyone reads it: what an item must hold to enter or leave a Status, the WIP limits, what is done first, who decides what; feyn's are its contributing guide, its decisions and its skills. What the frame says: `docs/kanban.md`, "Kanban"
+- means: what the workflow asks, written down where everyone reads it: what an item must hold to enter or leave a Status, the WIP limits, what is done first, who decides what; feyn's are its contributing guide, its decisions and its skills
 - en: policy · rejected: "rule", "convention"
 - fr: to settle
 - not to confuse with: [rule](#rule)
@@ -720,14 +731,14 @@ mechanisms, which the frame does not name.
 
 ### blocked
 
-- means: two senses, never mixed. "Blocked by #n": a blocked-by link between issues (decision `blocked-by-links-for-dependencies`), lifted when the blocking issue closes. `blocked:maintainer`: a maintainer decision is awaited, on the issue only, lifted when the maintainer removes the label
+- means: two senses, never mixed. "Blocked by #n": a blocked-by link between issues, lifted when the blocking issue closes. `blocked:maintainer`: a maintainer decision is awaited, on the issue only, lifted when the maintainer removes the label
 - en: blocked · rejected: "on hold", "Needs Decision" (a Status removed)
 - fr: to settle
 - not to confuse with: [Status](#status), [open question](#open-question)
 
 ### work session
 
-- means: always qualified: one Claude Code conversation on the feyn repository: a **brainstorm**, the delivery of a story without an epic or of an epic, a triage, an option refinement, a construction task (historical). A construction task left a session note, removed on 2026-10-31 and kept in the history (decision `construction-in-history`)
+- means: always qualified: one Claude Code conversation on the feyn repository: a **brainstorm**, the delivery of a story without an epic or of an epic, a triage, an option refinement, a construction task (historical). A construction task left a session note, removed on 2026-10-31 and kept in the history
 - en: work session · rejected: "session" alone
 - fr: to settle
 - not to confuse with: [teaching session](#teaching-session), [brainstorm](#brainstorm)
@@ -741,7 +752,7 @@ mechanisms, which the frame does not name.
 
 ### integration branch
 
-- means: the branch an epic is delivered on: cut from `main` by the epic's orchestrator when the epic is taken, named like an issue branch after the epic (`<type>/<epic>-<slug>`); each story of the epic is a PR to it, reviewed by a fresh agent and merged by the orchestrator; `main` is merged into it, never rebased; it reaches `main` only by its **epic PR** (decision `epic-on-integration-branch`)
+- means: the branch an epic is delivered on: cut from `main` by the epic's orchestrator when the epic is taken, named like an issue branch after the epic (`<type>/<epic>-<slug>`); each story of the epic is a PR to it, reviewed by a fresh agent and merged by the orchestrator; `main` is merged into it, never rebased; it reaches `main` only by its **epic PR**
 - en: integration branch · rejected: "epic branch", "feature branch", "develop", "staging branch"
 - fr: to settle
 - not to confuse with: [channel](#channel), [epic PR](#epic-pr)
@@ -762,20 +773,20 @@ mechanisms, which the frame does not name.
 
 ### direct delivery
 
-- means: a story, alone or under an epic, of one edit with no behaviour, marked direct by the maintainer at its creation, its To do opening with the line "Direct delivery": the maintainer's work session delivers it without a contributor or a fresh-agent review, and its PR says so (`docs/contributing.md`, moment 2). A delivery policy, not a form. The direct path is another thing: a PR opened outside a delivery through agents, its fresh-agent review included
+- means: a story, alone or under an epic, of one edit with no behaviour, marked direct by the maintainer at its creation, its To do opening with the line "Direct delivery": the maintainer's work session delivers it without a contributor or a fresh-agent review, and its PR says so. A delivery policy, not a form. The direct path is another thing: a PR opened outside a delivery through agents, its fresh-agent review included
 - en: direct delivery · rejected: "direct path"
 - fr: to settle
 
 ### milestone
 
-- means: a release target: named after the tag that closes it (`linear-course/v1.0.0`, `po-essai/v0.2.0`), holding the stories that must close before the tag, created when a release is in sight; an epic may target one; tooling has none
+- means: a release target: named after the tag that closes it (`linear-course/v1.0.0`, `<id>/vX.Y.Z`), holding the stories that must close before the tag, created when a release is in sight; an epic may target one; tooling has none
 - en: milestone · rejected: "sprint", "phase", "version" for the milestone itself
 - fr: to settle
 - not to confuse with: [stage](#stage), [release](#release), [epic](#epic)
 
 ### stage
 
-- means: historical: one of the five milestones of the construction plan of 2026-10-27 (stage 0 to 4), abandoned on 2026-10-29 for epics; the word stays only in the construction files, kept in the history (decision `construction-in-history`), and in old issues
+- means: historical: one of the five milestones of the construction plan of 2026-10-27 (stage 0 to 4), abandoned on 2026-10-29 for epics; the word stays only in the construction files, kept in the history, and in old issues
 - en: stage · rejected: "lot", "phase", "sprint", "iteration"
 - fr: to settle
 - not to confuse with: [milestone](#milestone), [channel](#channel)
@@ -789,9 +800,10 @@ mechanisms, which the frame does not name.
 
 ### decision
 
-- means: a recorded decision: one file by slug in a `decisions/` folder, with its counterfactual. "ADR" names the frame's complement, the practice of recording decisions (`docs/kanban.md`, "ADR"; decision `kanban-frame-of-the-work`)
+- means: a recorded choice of a structure or a process, why it is so and what was ruled out: one file by slug in a `decisions/` folder, with its counterfactual. A choice of words is a glossary entry, not a decision. "ADR" names the frame's complement, the practice of recording decisions
 - en: decision · rejected: "ADR" for one decision or in file names, "RFC", "design doc"
 - fr: « décision »
+- not to confuse with: [repository glossary](#repository-glossary)
 
 ### counterfactual
 
@@ -933,14 +945,14 @@ mechanisms, which the frame does not name.
 
 ### course version
 
-- means: one of the three versioned objects (decision `versioned-objects-and-spec-layout`), with the spec version and the **spec directives**, its tag `<id>/vX.Y.Z`; the site and the tooling have no version, only a commit sha
+- means: one of the three versioned objects, with the spec version and the **spec directives**, its tag `<id>/vX.Y.Z`; the site and the tooling have no version, only a commit sha
 - en: course version · rejected: "site version"
 - fr: « version du cours »
 - not to confuse with: [spec version](#spec-version), [release](#release), [course id](#course-id)
 
 ### spec version
 
-- means: one of the three versioned objects (decision `versioned-objects-and-spec-layout`), with the course version and the **spec directives**, its tag `<name>/vX.Y.Z`; the teacher and the tooling have no version, only a commit sha
+- means: one of the three versioned objects, with the course version and the **spec directives**, its tag `<name>/vX.Y.Z`; the teacher and the tooling have no version, only a commit sha
 - en: spec version · rejected: "teacher version"
 - fr: to settle
 - not to confuse with: [course version](#course-version)
@@ -959,7 +971,7 @@ mechanisms, which the frame does not name.
 
 ### repository glossary
 
-- means: this file, `docs/glossary.md`
+- means: this file: the glossary of the repository's files, one entry per concept: what a word means and which word names a concept
 - en: repository glossary
 - fr: to settle
-- not to confuse with: [course glossary](#course-glossary)
+- not to confuse with: [course glossary](#course-glossary), [decision](#decision)
