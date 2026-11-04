@@ -80,7 +80,7 @@ not restate; the counterfactual is the one accepted at step 1. Name the choice r
 files, skills or steps where the choice allows (a skill renamed or a file moved then leaves the
 decision true). Under 40 lines.
 
-Before writing, three checks on the whole text, an "Amended" line excepted; a line that fails is
+Before writing, four checks on the whole text, an "Amended" line excepted; a line that fails is
 rewritten before the file is:
 - no rule id, of a rule or of a group of rules, the rule named by what it asks (decision
   `decision-format`); in a decision of a spec or of the spec directives, no course named, its
@@ -89,7 +89,12 @@ rewritten before the file is:
   read mode, a rejected word replaced by the entry's term; "decision" for one decision, never
   "ADR" (nor in a path), which names the practice;
 - it names its concepts by their terms and defines none: a definition, or a term the glossary
-  lacks, goes to `/feyn-glossary-entry` (decision `word-choices-in-the-glossary`).
+  lacks, goes to `/feyn-glossary-entry` (decision `word-choices-in-the-glossary`);
+- no sentence chooses, renames or rejects a word ("X stays the name of…", "Y is the term for…",
+  "Z leaves the texts"), which the check above lets through, since such a sentence assigns a word
+  without defining it: it leaves the decision for the `why` of the entry, through
+  `/feyn-glossary-entry` (decision `word-choices-in-the-glossary`), the decision keeping its
+  structure, its files and its steps.
 
 A decision it supersedes: in the same commit, change that file's `status` to `superseded` and
 add `superseded-by: <slug>` on the line after it (decision `decision-format`).
@@ -111,5 +116,7 @@ A live decision states what holds today; git keeps the before (decision `decisio
 
 A superseded decision and a released CHANGELOG entry are history: leave them as they are. An
 "Amended" line keeps its account of the change of scope; correct in place a mechanism it names
-that changes, as in the body. The text written passes the three checks of step 5. Commit on the
-current issue branch, as in step 5.
+that changes, as in the body. The text written passes the four checks of step 5. The fourth runs
+over the whole decision changed, not only the text written: a sentence of it that chooses,
+renames or rejects a word leaves it for the `why` of its entry through `/feyn-glossary-entry`,
+with one "Amended" line saying so. Commit on the current issue branch, as in step 5.

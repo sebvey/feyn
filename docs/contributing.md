@@ -115,7 +115,7 @@ integration branch per epic; [`kanban.md`](kanban.md) says what the frame is (it
 the upstream, ADR, GitHub flow, its sources), and this section how feyn applies it. The words are
 the frame's wherever the frame has one; feyn's own mechanisms, which the frame does not name,
 keep their names (epic PR, integration branch, plan comment, open question, direct delivery,
-work session). Why: decision `kanban-frame-of-the-work`.
+work session). Why the frame: decision `kanban-frame-of-the-work`; why its words: the glossary.
 
 **The work items and the idea.** An issue carries a work item, of one of two kinds, epic or
 story, or an idea, which has no kind. A work item carries exactly one kind label, `kind:epic`
@@ -402,8 +402,7 @@ in place in its body, a change of scope also gets an "Amended" line; one that no
 is superseded. A choice that changes only words (a term chosen, renamed or rejected) is not a
 decision but a glossary entry, its why in the entry's `why`; `/feyn-glossary-entry` writes it.
 Issues, PRs and documents use the reserved terms of the glossary and never the terms its entries
-reject. Why: decisions `decision-format`, `glossary-by-concept`, `word-choices-in-the-glossary`,
-`kanban-frame-of-the-work`.
+reject. Why: decisions `decision-format`, `glossary-by-concept`, `word-choices-in-the-glossary`.
 
 ## Language
 

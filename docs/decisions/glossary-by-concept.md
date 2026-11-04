@@ -19,7 +19,7 @@ key or an identifier only when the concept is that thing (teaching notes, the wh
 ages. Every term of it is reserved: it means one thing in the repository's files, its rejected
 terms not used for that concept. A course glossary applies in its course's files; a word may be
 reserved in both with two meanings, and a repository text that means the course's sense says so;
-the frame's vocabulary is available to the repository (decision `kanban-frame-of-the-work`).
+the frame's vocabulary is available to the repository.
 
 ## Options ruled out
 
