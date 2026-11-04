@@ -5,7 +5,7 @@
 // files, holds every key of course/README.md section 7; every key teacher/README.md uses is in
 // one of the two lexicons, course/lexicon.yaml or teacher/lexicon.yaml; a group lives in one of
 // them only. A spec folder with neither lexicon has none to test.
-// The keys of section 7 below are those of linear-course, a named debt: idea #453.
+// The keys of section 7 below are those of linear-course, a named debt: idea #485.
 const yaml = require('../lib/yaml-lines');
 const { fail } = require('../lib/course');
 

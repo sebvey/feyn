@@ -22,7 +22,7 @@
 // and so does a range, « `a` à `b` » or « `a` to `b` », in teacher/README.md, README.md or
 // course/README.md (decision rule-groups-replace-ranges). decisions/ are not read for ranges: they
 // record history and quote the ranges they replaced.
-// The file names it reads are those of linear-course, a named debt: idea #453.
+// The file names it reads are those of linear-course, a named debt: idea #485.
 const mdlib = require('../lib/md');
 const yaml = require('../lib/yaml-lines');
 const { fail } = require('../lib/course');

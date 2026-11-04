@@ -1,8 +1,9 @@
 <!--
 Template of courses/<id>/storyline.md (course/README.md section 5).
-Free prose in the course language, read by the teacher and shown by the site. It names the role
-the learner holds in it (rule storyline-names-learner-role). The cases take their actors and
-facts from it, without contradicting it (rule cases-follow-storyline).
+Free prose in the language of the spec (rule storyline-in-spec-language), read by the teacher and
+shown by the site. It names the role the learner holds in it (rule storyline-names-learner-role).
+The cases take their actors and facts from it, without contradicting it (rule
+cases-follow-storyline).
 How to use: copy to the course folder, replace every <placeholder>, delete this comment (from
 the opening to the closing mark, marks included).
 -->

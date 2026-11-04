@@ -493,10 +493,10 @@ qui signale).
   Le check saute la ligne dont la cellule du terme porte un qualificatif de sens, faute qu'un
   script distingue les sens d'un homonyme ; la revue vérifie son ordre (règle
   `qualified-term-order-reviewed`).
-- **`storyline.md`** : le fil rouge, en prose libre dans la langue de la spec, que le professeur
-  lit et que le site montre. Il nomme le rôle que l'apprenant y tient (règle
-  `storyline-names-learner-role`). Les cas y prennent leurs acteurs et leurs faits, sans le
-  contredire (règle `cases-follow-storyline`).
+- **`storyline.md`** : le fil rouge, en prose libre, que le professeur lit et que le site montre.
+  Il est écrit dans la langue de la spec (règle `storyline-in-spec-language`). Il nomme le rôle
+  que l'apprenant y tient (règle `storyline-names-learner-role`). Les cas y prennent leurs
+  acteurs et leurs faits, sans le contredire (règle `cases-follow-storyline`).
 - **`CHANGELOG.md`** : une section « Non publié » (`unreleased`), vide s'il n'y a rien à
   publier, d'abord (règle `changelog-unreleased-first`) ; puis une section par version publiée,
   la plus récente d'abord, `## X.Y.Z, YYYY-MM-DD` (règle `changelog-release-sections`). Une entrée

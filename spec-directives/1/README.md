@@ -189,7 +189,7 @@ The standards the rules of one spec depend on are in the README of that spec MAJ
 `rules-with-level-and-method`, amended by #339): they carry no category and no level, and each
 failure blocks `check-spec` (exit code 1). They carry lists of
 `linear-course` (the five categories and the nine families in `rule-files.js`, the keys of section 7 in
-`lexicon-keys.js`, the file names in `rule-slugs.js`): a named debt, idea #453; the lists
+`lexicon-keys.js`, the file names in `rule-slugs.js`): a named debt, idea #485; the lists
 move to `spec.yaml` when a second spec needs them. The nine families are also held, by category,
 by the spec MAJOR's `teacher/build/render-parts`, which finds a family of the protocol by its
 category: the move carries it, and `rule-files.js` exports nothing. `composition.js` adds none (idea #485): its

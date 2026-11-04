@@ -715,6 +715,11 @@ groups:
         category: pedagogy
         method: inspection
         text: "`storyline.md` doit nommer le rôle que l'apprenant y tient."
+      - id: storyline-in-spec-language
+        level: requirement
+        category: writing
+        method: inspection
+        text: "`storyline.md` doit être écrit dans la langue de la spec."
       - id: cases-follow-storyline
         level: requirement
         category: pedagogy

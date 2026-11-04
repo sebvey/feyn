@@ -168,7 +168,7 @@ no class: `- file or area: what changes`.
   (decision `parcours-po-archived`); the fixture `broken/course-yaml-language`; the checks'
   README names `courses/po-essai` as the real course a change of the spec is run on (#521).
 - `course/rules.yaml`, `course/README.md`: every rule of `course/README.md` sections 1, 2, 4 and
-  5 is data in `course/rules.yaml`, those verified by inspection included (20 new rules, the
+  5 is data in `course/rules.yaml`, those verified by inspection included (21 new rules, the
   learner's role in the storyline among them), in four groups, one per section, each with its
   `purpose`, in French; those four sections become a French description that cites rule ids,
   with no Purpose paragraph; `course/templates/storyline.md` has a placeholder for the

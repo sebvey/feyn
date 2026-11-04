@@ -2,7 +2,7 @@
 groups:
   - id: onboarding
     title: Accueil
-    purpose: Le prof accueille un nouvel apprenant.
+    purpose: Le professeur accueille un nouvel apprenant.
     category: session-start
     method: demonstration
     rules:
