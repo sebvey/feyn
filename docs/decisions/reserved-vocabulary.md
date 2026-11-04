@@ -1,7 +1,8 @@
 ---
 date: 2026-10-27
 issue: null
-status: accepted
+status: superseded
+superseded-by: glossary-by-concept
 area: repo
 ---
 

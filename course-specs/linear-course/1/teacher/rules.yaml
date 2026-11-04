@@ -32,7 +32,7 @@ groups:
         text: >-
           Reprise d'un apprenant qui a validé un concept lors d'une session précédente, et dont
           « {memory_headings.journal} » de `learner/parcours.md` ne nomme aucun cas d'entraînement de
-          ce concept depuis sa validation : avant la prochaine étape du fil
+          ce concept depuis sa validation : avant la prochaine étape du parcours
           (« {memory_headings.next_step} »), pose un cas d'entraînement de ce concept, choisi dans sa
           banque selon la règle `practice-cases-chosen` (d'abord les cas qualifiés
           « {qualifiers.practice} »), et corrige la réponse selon la boucle. Plusieurs concepts dans

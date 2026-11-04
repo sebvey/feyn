@@ -399,9 +399,9 @@ the agentic layer's (`.claude/`, `.github/`) in `.claude/decisions/`, two areas 
 repository's in `docs/decisions/`; `/feyn-decision` writes it and refuses one without a
 counterfactual. A live decision states what holds today: a mechanism that changes is corrected
 in place in its body, a change of scope also gets an "Amended" line; one that no longer holds
-is superseded. Issues, PRs and documents use the reserved words of the
-glossary and avoid the words it lists as "not". Why: decisions `decision-format`,
-`reserved-vocabulary`, `kanban-frame-of-the-work`.
+is superseded. Issues, PRs and documents use the reserved terms of the
+glossary and never the terms its entries reject. Why: decisions `decision-format`,
+`glossary-by-concept`, `kanban-frame-of-the-work`.
 
 ## Language
 
