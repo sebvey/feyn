@@ -1,9 +1,9 @@
-# linear-course: the course
+# linear-course : le cours
 
 | Reader | Comes for | Opens |
 |---|---|---|
-| creator | what a course is, the templates, how to verify | sections [1](#1-le-dossier-du-cours) to [7](#7-the-lexicon-of-the-course-files), [`templates/README.md`](templates/README.md), [`course-specs/check-course`](../../../check-course) |
-| builder | the shape of a course, the lexicon of the course files | sections [1](#1-le-dossier-du-cours) to [7](#7-the-lexicon-of-the-course-files), [`schemas/`](schemas/) |
+| creator | what a course is, the templates, how to verify | sections [1](#1-le-dossier-du-cours) to [7](#7-le-lexique-des-fichiers-du-cours), [`templates/README.md`](templates/README.md), [`course-specs/check-course`](../../../check-course) |
+| builder | the shape of a course, the lexicon of the course files | sections [1](#1-le-dossier-du-cours) to [7](#7-le-lexique-des-fichiers-du-cours), [`schemas/`](schemas/) |
 | verifier | the rules of a course as data, the checks, their fixtures | [`rules.yaml`](rules.yaml), [`checks/README.md`](checks/README.md), [`checks/fixtures/`](checks/fixtures/) |
 | spec writer | the rules and schemas of a course, the spec's decisions | [`rules.yaml`](rules.yaml), [`schemas/`](schemas/), [`../decisions/`](../decisions/), [`../CHANGELOG.md`](../CHANGELOG.md) |
 
@@ -70,7 +70,7 @@ ses règles sont le groupe « Le fichier course.yaml » de [`rules.yaml`](rules.
 des domaines sont les identifiants du cours : la mémoire de l'apprenant et les adresses du site
 les citent. En changer un est une MAJOR du cours (`spec-directives/1/README.md` section 6).
 
-## 3. The concept folder
+## 3. Le dossier de concept
 
 ```
 concepts/09-decoupage-vertical/
@@ -83,7 +83,7 @@ concepts/09-decoupage-vertical/
 Les règles du dossier de concept sont le groupe « Le dossier de concept » de
 [`rules.yaml`](rules.yaml).
 
-### 3.1 `concept.md` frontmatter
+### 3.1 Le frontmatter de `concept.md`
 
 Ses champs sont décrits par le schéma
 [`schemas/concept-frontmatter.schema.yaml`](schemas/concept-frontmatter.schema.yaml) ; ses règles
@@ -93,7 +93,7 @@ Le site rend les positions et les voisins depuis le frontmatter, sous le titre
 `headings.stances`. `verified` est un matériau d'audit, comme « Affirmations » de `sources.md` :
 une re-vérification est un changement de `concept.md`.
 
-### 3.2 `concept.md` body
+### 3.2 Le corps de `concept.md`
 
 Le corps de `concept.md` est le texte lecteur du concept. La section d'un sous-concept feuille
 tient le **texte lecteur** de la feuille : l'explication telle qu'un lecteur du site la lit. Le
@@ -158,7 +158,7 @@ classe copie le fichier entier.
 
 Les règles de `sources.md` sont le groupe « Le fichier sources.md » de [`rules.yaml`](rules.yaml).
 
-### 3.5 Reader-text conventions
+### 3.5 Les conventions du texte lecteur
 
 La structure de `concept.md` est du Markdown simple sous des conventions : le site fait de
 chacune son HTML et ses classes, le professeur les lit comme du Markdown ordinaire. Hors d'elles
@@ -209,7 +209,7 @@ ignorée. Une parenthèse est un qualificatif de sens (« État (d'un élément)
 
 Les règles de ces fichiers sont le groupe « Les fichiers du cours » de [`rules.yaml`](rules.yaml).
 
-## 6. Diagrams
+## 6. Les schémas
 
 | Reader | Needs | When |
 |---|---|---|
@@ -230,7 +230,7 @@ et aucun ne demande au SVG de changer.
 La section 6.1 est le contrat de dessin ; la section 6.2, le style que partagent les schémas
 d'un cours.
 
-### 6.1 Drawing contract
+### 6.1 Le contrat de dessin
 
 | Reader | Needs | When |
 |---|---|---|
@@ -246,7 +246,7 @@ elle reteinte `currentColor`. `<desc>` décrit le dessin pour les lecteurs d'éc
 Les règles du contrat de dessin sont le groupe « Le contrat de dessin » de
 [`rules.yaml`](rules.yaml).
 
-### 6.2 Style
+### 6.2 Le style
 
 | Reader | Needs | When |
 |---|---|---|
@@ -258,7 +258,7 @@ Le style est écrit pour les schémas à dessiner, pas pour la compatibilité av
 
 Les règles du style sont le groupe « Le style des schémas » de [`rules.yaml`](rules.yaml).
 
-## 7. The lexicon of the course files
+## 7. Le lexique des fichiers du cours
 
 | Reader | Needs | When |
 |---|---|---|
