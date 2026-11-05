@@ -6,15 +6,15 @@ area: agentic
 ---
 
 Without this, an agent would link the branch to the issue with `gh issue develop`, and a `Refs`
-PR would close its issue at the merge (#24, closed wrongly on 2026-10-27); `/finish` would then
-have to unlink it by GraphQL.
+PR would close its issue at the merge (#24, closed wrongly on 2026-10-27); `/feyn-pull-request`
+would then have to unlink it by GraphQL.
 
-An issue branch is not linked to its issue. `/start` creates it with git
+An issue branch is not linked to its issue. `/feyn-issue-branch` creates it with git
 (`git switch -c <type>/<n>-<slug> origin/main`, `git push -u origin <type>/<n>-<slug>`), and the
 only link between the work and the issue is the PR body: `Closes #n` links the PR to the issue
 and closes it at the merge; `Refs #n` links nothing and leaves the issue open. It replaces the
-link `/start` made with `gh issue develop` and the unlink `/finish` ran before a `Refs` PR
-(PR #103, tested with #109 and PR #110).
+link the old branch skill made with `gh issue develop` and the unlink the old PR skill ran before
+a `Refs` PR (PR #103, tested with #109 and PR #110).
 
 ## Options ruled out
 

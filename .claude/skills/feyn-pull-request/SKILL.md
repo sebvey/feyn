@@ -1,6 +1,6 @@
 ---
 name: feyn-pull-request
-description: "Tooling of the work cycle, called by the contributor agent of the agent workflow deliver-story.js (under `/feyn-deliver-story-alone` and `/feyn-deliver-epic`), at the end of the work, and by `/feyn-deliver-epic` for a direct story: turn the current issue branch on feyn into a pull request to main (to its epic's integration branch for a story of an epic), rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, checking the issue lists it, having it reviewed by `/feyn-pr-review` on the direct path (not on a direct delivery), then asking for review. It never merges. Use for \"/feyn-pull-request\"."
+description: "At the end of the work on an issue, turn the current issue branch on feyn into a pull request to main (to its epic's integration branch for a story of an epic), rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, checking the issue lists it, having it reviewed by `/feyn-pr-review` on the direct path (not on a direct delivery), then asking for review. It never merges. Use for \"/feyn-pull-request\"."
 ---
 
 # /feyn-pull-request

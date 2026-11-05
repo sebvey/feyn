@@ -5,18 +5,19 @@ status: accepted
 area: repo
 ---
 
-Without this, an agent would run `/start 18` (S1-05) while #87 is open: it would write
-`lang/fr.yaml` without `headings.onboarding` and with the keys `memory_headings.role` and
+Without this, an agent would run `/feyn-issue-branch 18` (S1-05) while #87 is open: it would
+write `lang/fr.yaml` without `headings.onboarding` and with the keys `memory_headings.role` and
 `memory_headings.before` that #87 removes, and the key check would break when #87 merges. And a
-night script would run a task whose new blocker is written nowhere in its `depends:` list.
+delivery skill would start a story whose new blocker is written nowhere it reads.
 
 A dependency between issues is a GitHub blocked-by link, and nothing else: one issue is blocked
-by another when it cannot start before the other is closed. `/ticket` asks for the links when it
-creates an issue and shows them when it reads one; `/start` refuses an issue with an open
-blocker; `plan-to-issues` sets the links; the night scripts rely on `/start`'s refusal. This
-replaces the « Depends on: » line of the issue body and the `depends:` lists of the night
-scripts. Two issues that only edit the same file are not linked: they land one after the other,
-which the PR review sees. A block that waits on the maintainer stays the label
+by another when it cannot start before the other is closed. `/feyn-issue` asks for the links when
+it creates a story or an epic and shows them when it reads an issue; `/feyn-issue-branch` refuses
+an issue with an open blocker, and `/feyn-deliver-epic` an epic with one; the skills that pose
+work items set the links through `/feyn-issue`; the delivery skills rely on these refusals. This
+replaces the « Depends on: » line of the issue body and the `depends:` lists of the scripts that
+ran issues unattended. Two issues that only edit the same file are not linked: they land one
+after the other, which the PR review sees. A block that waits on the maintainer stays the label
 `blocked:maintainer` (decision `blocked-is-a-label-not-a-state`).
 
 ## Options ruled out
