@@ -32,7 +32,8 @@ path").
    them (a deviation "wrong command": a line its command catches that its statement's intent
    does not target, [done-when.md](done-when.md)). Fix the brief, the Done when by a dated
    amendment ([done-when.md](done-when.md)), and what the run built on it (a rerun), and inform
-   the maintainer. A story without an epic: a contradiction in `work` is fixed by a rerun alone.
+   the maintainer. A story without an epic: a contradiction in `work` is fixed by a rerun, with no
+   dated amendment, and the maintainer informed.
 2. One already settled by a decision, the epic's Material, a rule (`CLAUDE.md`, a skill, a spec)
    or an answer the maintainer gave: apply it (by a rerun when the PR must change), and inform
    the maintainer.

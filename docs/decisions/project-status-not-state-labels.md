@@ -28,8 +28,8 @@ a work item it creates, Option, or Ready when the maintainer says it is committe
 posed by the orchestrator of a taken epic (decision `idea-and-option-before-ready`);
 `/feyn-issue-branch` refuses an issue in Done, or in In progress with a branch, and sets In
 progress; the hand-over of a PR to the maintainer, on the direct path as under
-`/feyn-deliver-story-alone` or `/feyn-deliver-epic`, sets Ready for review; `/feyn-merge-cleanup` reads the
-workflows and sets Done only when "Item closed" is off.
+`/feyn-deliver-story-alone` or `/feyn-deliver-epic`, sets Ready for review; `/feyn-merge-cleanup`
+reads the workflows and sets Done only when "Item closed" is off.
 The names, ids, workflows (on or off) and commands live in `.claude/reference/project.md`. The
 kind (`kind:epic`, `kind:story`; decision `kind-label-per-work-item`), `type:`, `area:` and
 `blocked:maintainer` stay labels. The maintainer works in the web interface: the Project's views,

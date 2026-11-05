@@ -2,12 +2,12 @@
 
 The one place `/feyn-issue`, `/feyn-issue-branch`, `/feyn-pull-request`, `/feyn-merge-cleanup`,
 `/feyn-deliver-story-alone`, `/feyn-deliver-epic`, `/feyn-triage`, `/feyn-refine-option`, the
-procedures of `reference/` and the agent workflow `deliver-story.js` take the Project's names, ids and commands from, and the
-commands on issues ("Issues"). The **Project** is the GitHub Project "feyn", number 4, owner
-`sebvey`, id `PVT_kwHOADOnU84Bo8V6`; its **Status** field, id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`,
-says where an issue stands, in this order and nothing else (decisions
-`idea-and-option-before-ready`, `project-status-not-state-labels`); what each Status means:
-[glossary](../../docs/glossary.md), row Status.
+procedures of `reference/` and the agent workflow `deliver-story.js` take the Project's names, ids
+and commands from, and the commands on issues ("Issues"). The **Project** is the GitHub Project
+"feyn", number 4, owner `sebvey`, id `PVT_kwHOADOnU84Bo8V6`; its **Status** field, id
+`PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`, says where an issue stands, in this order and nothing else
+(decisions `idea-and-option-before-ready`, `project-status-not-state-labels`); what each Status
+means: [glossary](../../docs/glossary.md), row Status.
 
 | Status | Option id |
 |---|---|
@@ -31,7 +31,7 @@ The output of every GitHub write (`gh issue comment`, `gh issue create`, `gh pr 
 command that prints nothing on success, the value read back (`gh issue view`, `gh pr view`,
 `gh api` without `-X`). Nothing printed and nothing read back, or an error, is a failed write:
 reported, never assumed done. A `gh issue comment` failed silently on an epic's issue (GitHub,
-observed 2026-11-04, #450).
+observed 2026-11-05, #570).
 
 ## The Project workflows
 

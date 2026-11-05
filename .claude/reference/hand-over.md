@@ -24,7 +24,8 @@ integration branch (decision `epic-on-integration-branch`).
 - The `Fresh-agent review:` line is in the PR's Checks (`mise exec -- gh pr view <pr> --json
   body`; its form: `/feyn-pull-request` step 5), `none, direct delivery` on a direct delivery;
   or the maintainer asked for a PR without a review, and the notification says so. An epic PR:
-  the conditions of `/feyn-deliver-epic` step 5.
+  in place of the line, the conditions of `/feyn-deliver-epic` step 5 (no open question, every
+  story closed and Done; its review is the whole branch's, step 4).
 - The issue carries no `blocked:maintainer`: otherwise, "A draft whose decision is awaited".
 
 ## 2. The PR marked ready

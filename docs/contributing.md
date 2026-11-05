@@ -108,9 +108,9 @@ the hand-over, then the clean-up after the merge. On the direct path, without
 which sets Ready for review), except on a direct delivery, handed over with no review ("How the
 work is organised", moment 2). This is the path of a story without an epic. A story of an epic
 takes another: its PR targets the epic's integration branch, is reviewed by a fresh agent and
-merged by the orchestrator, and what reaches the maintainer is the epic PR; `/feyn-deliver-epic <epic>` runs it ("How the work is
-organised", moment 2). Why: decisions `issue-defines-pr-verifies`,
-`fresh-agent-review-before-maintainer`, `epic-on-integration-branch`,
+merged by the orchestrator, and what reaches the maintainer is the epic PR;
+`/feyn-deliver-epic <epic>` runs it ("How the work is organised", moment 2). Why: decisions
+`issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`, `epic-on-integration-branch`,
 `pr-corrects-what-it-makes-false`.
 
 ## How the work is organised
@@ -238,8 +238,8 @@ Five moments:
    (`--base <integration branch>`), the orchestrator merges it, and it has no hand-over, so the
    story never goes Ready for review. Which skill delivers what: `/feyn-deliver-epic` an epic,
    its stories included, direct ones too; `/feyn-deliver-story-alone` a story without an epic;
-   the work-cycle tooling the direct delivery of a story without an epic. A story without an epic is Ready for review while its PR
-   awaits the merge.
+   the work-cycle tooling the direct delivery of a story without an epic. A story without an epic is
+   Ready for review while its PR awaits the merge.
 3. **Brainstorm**: `/feyn-brainstorm` runs a work session with the maintainer on feyn, subject
    by subject, in a working folder not versioned (`tmp/`, which git ignores; the maintainer
    decides each subject, nothing written in the repository during the brainstorm). It opens
@@ -351,10 +351,10 @@ reads the views. Why: decisions `themes-and-release-milestones`, `epic-on-integr
   organised", the flow), the maintainer Ready when committing an option, `/feyn-issue-branch` In
   progress, the hand-over (`.claude/reference/hand-over.md`) Ready for review, on the direct path
   or by the orchestrator under `/feyn-deliver-story-alone` (a correction asked on a delivered PR
-  returns the story to In progress, `/feyn-deliver-story-alone` step 4); the orchestrator of an epic sets a story Done
-  when it merges it into the integration branch, and the epic Ready for review when it hands
-  over the epic PR. There are no state labels. Why: decisions `project-status-not-state-labels`,
-  `idea-and-option-before-ready`, `epic-on-integration-branch`.
+  returns the story to In progress, `/feyn-deliver-story-alone` step 4); the orchestrator of an epic
+  sets a story Done when it merges it into the integration branch, and the epic Ready for review
+  when it hands over the epic PR. There are no state labels. Why: decisions
+  `project-status-not-state-labels`, `idea-and-option-before-ready`, `epic-on-integration-branch`.
 - `kind:epic`, `kind:story`: the kind labels, exactly one on a work item, set by `/feyn-issue`
   at its creation and changed with the kind while the work item is an option; none on an idea,
   whose Status says what it is. The views filter on them. Why: decision
