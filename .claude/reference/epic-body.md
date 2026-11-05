@@ -13,19 +13,17 @@
      each. What was settled (by a brainstorm, a triage): numbered, one point each, its
      content, then "Why: …" and "Rejected: <the alternative weighed>, because …", or
      "Rejected: none weighed.", so that the epic reads alone. An epic that removes, moves or
-     renames content (a file, a section, a rule) lists the files that refer to it, found by
-     searching the name of the file touched, not the section's name
-     (`grep -rn '<file name>' .claude docs`), and every other name it is cited by (a
-     skill's `/feyn-<name>`), live decisions included, superseded ones excluded; the story
-     that removes it treats them. -->
+     renames content (a file, a section, a rule) lists the files that refer to it, found as
+     `.claude/reference/done-when.md` says; the story that removes it treats them. -->
 
 ### Done when
 
 <!-- Two or three coarse statements a reviewer can verify by reading a file or running a
-     command, one per bullet. No Done when, no epic: what cannot get one is an idea. An
-     epic that changes `courses/po-essai/` carries the statement that each judgement call it
-     makes is an entry of the Material of the re-creation epic #520 (`docs/contributing.md`,
-     "Policies"). -->
+     command, one per bullet, each command's baseline on the line under it: the rules of a
+     Done when are `.claude/reference/done-when.md`. No Done when, no epic: what cannot get
+     one is an idea. An epic that changes `courses/po-essai/` carries the statement that each
+     judgement call it makes is an entry of the Material of the re-creation epic #520
+     (`docs/contributing.md`, "Policies"). -->
 
 ### Out of scope
 

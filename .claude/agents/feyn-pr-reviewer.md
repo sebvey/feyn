@@ -29,7 +29,11 @@ The yardstick is the issue's Done when, statement by statement, not the PR's own
 Recheck yourself:
 - each statement of the issue's Done when: find the proof yourself (run a command, read a
   file; a count, recount it); the PR gives only the verdict counts and why a statement is not
-  met or deviates, and those you check too;
+  met or deviates, and those you check too. Its intent prevails over its command
+  (`.claude/reference/done-when.md`): each line changed for a statement was in the baseline
+  under it and serves its intent, a command's output is held to the intent, never read as the
+  verdict (rerunning a wrong command confirms it), and content changed only to satisfy a
+  command is a blocking finding;
 - the checks /feyn-pull-request requires for what the PR touches
   (`mise exec -- gh pr diff <pr> --name-only`), rerun them; `course-specs/check-course` prints the
   failures of the reporting checks too, with exit code 0: one the PR adds is a non-blocking

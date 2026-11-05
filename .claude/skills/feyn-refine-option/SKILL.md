@@ -142,8 +142,12 @@ split, fold and close close it, and the close comment names what replaced it. An
 open, or sent to a brainstorm, keeps the label: it has not been decided.
 
 - **commit**: set its Status to Ready ([project.md](../../reference/project.md), "Commands",
-  Set), on the maintainer's word only, once its Done when is verifiable and no open blocked-by
-  link remains ([project.md](../../reference/project.md), "Dependencies", Read; an epic: its
+  Set), on the maintainer's word only, once its Done when is verifiable by its baselines (a
+  Done when with none gets them first, each command run on `origin/main` and its output
+  written under its statement as a dated amendment, each line checked against the statement's
+  intent, [done-when.md](../../reference/done-when.md); a statement they show wrong is
+  reworked, below, not committed) and no open blocked-by link remains
+  ([project.md](../../reference/project.md), "Dependencies", Read; an epic: its
   five sections written, [contributing](../../../docs/contributing.md), "How the work is
   organised"); an epic or a story whose body names `courses/po-essai/`, also once its Done when
   states that the Material of the re-creation epic #520 holds its judgement calls (the line

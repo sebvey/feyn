@@ -29,6 +29,10 @@ messages only: a decision put to the maintainer takes the form of step 3.
   (`git ls-remote --heads origin '*/<epic>-*'`) and the plan of its plan comment (the story
   marked next). A plan comment in the old form (no `**Log**` line) is rewritten in two parts at
   this step.
+- The epic's Done when, taken for the first time with no baseline under a command: give it its
+  baselines, as a dated amendment of the epic, each output checked against its statement's
+  intent ([done-when.md](../../reference/done-when.md)); a statement they show wrong is put to
+  the maintainer (step 3) before the first story.
 - The integration branch `<type>/<epic>-<slug>` (the epic's `type:` label, three to five words of
   its title; `<integration branch>` in the commands, a story's own branch being
   `<story branch>`), cut from `origin/main` without touching the checkout: `git fetch`, then
@@ -40,7 +44,7 @@ messages only: a decision put to the maintainer takes the form of step 3.
   delivered eight, the first one marked next; Unknown; Dropped), rewritten in place at each
   change; below, the log, only added to.
 - The epic goes In progress with its first story: the contributor sets it (`/feyn-issue-branch`
-  step 4); read it after the first run and set it if it is not.
+  step 5); read it after the first run and set it if it is not.
 
 ## 2. Each story
 
@@ -48,8 +52,11 @@ One at a time, the next one only (rules of the cycle):
 
 1. **Pose** it: `/feyn-issue story #<epic> <what>`, the story the plan marks next. Before
    `/feyn-issue`, check its brief: reread its Done when against itself (two statements that
-   cannot both hold) and against the epic's Objective and Material; check by a command each
-   statement it makes about the repository (`git grep` on `origin/main` and on
+   cannot both hold) and against the epic's Objective and Material; run each command of its Done
+   when on `origin/<integration branch>` and write its baseline under it, as
+   [done-when.md](../../reference/done-when.md) says, each line checked against the statement's
+   intent and what the command cannot see looked for; check by a command each other statement
+   it makes about the repository (`git grep` on `origin/main` and on
    `origin/<integration branch>`, `git ls-tree`); settle in it the form of anything
    foundational (vocabulary, the structure of a file of reference, the teacher's behaviour),
    from the Material or by an open question (step 3), never left to the contributor's choice.
@@ -82,7 +89,11 @@ One at a time, the next one only (rules of the cycle):
      moved it to the PR's head), or report them.
    - `blocked`, `failed`, `merge-failed`: `contrib.question`, the `stage` that failed, or the
      merge's `problems`; a question that leaves the epic's Done when impossible goes to the
-     maintainer (step 3), the rest is rerun.
+     maintainer (step 3), the rest is rerun. A `blocked` from a baseline at the start, changed
+     or showing a statement wrong (`/feyn-issue-branch` step 4): the orchestrator, the story's
+     author, first rewrites the statement and its baseline as a dated amendment of the story
+     ([done-when.md](../../reference/done-when.md)), checked by running the command on the
+     integration branch, since the rerun resumes the branch and skips that step; then reruns.
    - A statement the PR makes false left in the repository, wherever the result names it (a
      finding left, `unsure`, a round's `left`), a live decision included: rerun the workflow
      with `work` naming it; a story already merged: a story posed at once corrects it (step
@@ -143,8 +154,10 @@ fresh-agent review, in place of steps 2.3 to 2.5:
 maintainer, a finding) is sorted at once, before anything reaches the maintainer, and the work
 goes on; it is never left as a line of Review first:
 1. a contradiction in the orchestrator's own brief (a story's Done when against itself, or
-   against the epic's Objective or Material): fix the brief, and what the run built on it (a
-   rerun, step 2.4), and inform the maintainer;
+   against the epic's Objective or Material), a wrong command among them (a deviation "wrong
+   command": a line its command catches that its statement's intent does not target,
+   [done-when.md](../../reference/done-when.md)): fix the brief, the story's Done when by a
+   dated amendment, and what the run built on it (a rerun, step 2.4), and inform the maintainer;
 2. one already settled by a decision, the epic's Material, a rule (`CLAUDE.md`, a skill, a
    spec) or an answer the maintainer gave: apply it, and inform the maintainer;
 3. one a story of the plan makes moot: a line in the plan, under that story;

@@ -1,13 +1,14 @@
 ---
 name: feyn-issue-branch
-description: "Put GitHub issue n on feyn in progress on its own branch, before any work on it. It refuses the issue when it is not committed (Idea or Option), a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date main (from its epic's integration branch for a story of an epic), sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
+description: "Put GitHub issue n on feyn in progress on its own branch, before any work on it. It refuses the issue when it is not committed (Idea or Option), a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date main (from its epic's integration branch for a story of an epic), reruns the commands of its Done when against their baselines (writes them when it has none), sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
 argument-hint: "<issue number>"
 ---
 
 # /feyn-issue-branch <n>
 
-One job: put issue n in progress on its own branch. It writes nothing but the branch and the
-Status; the work itself comes after.
+One job: put issue n in progress on its own branch. It writes nothing but the branch, the
+Status and, for a Done when with no baseline, its baselines (a dated amendment of the issue);
+the work itself comes after.
 
 ## 1. Read the issue
 
@@ -59,7 +60,30 @@ A branch for the issue that already exists (`git branch --list "*/<n>-*"` the lo
 `git ls-remote --heads origin "*/<n>-*"` the remote ones): switch to it and say so, do not
 create a second one.
 
-## 4. Mark it in progress
+## 4. Rerun the Done when
+
+On a branch just created, which holds the base and nothing else yet, run each command of the
+Done when in it ([done-when.md](../../reference/done-when.md); a statement that compares the
+base and the head is run on its base side). A branch resumed skips this step: its start ran it,
+or stopped on it, and then the author's dated amendment, its commands run on the base as
+[done-when.md](../../reference/done-when.md) says, stands in for the rerun.
+- A statement with a baseline: compare the output with it as
+  [done-when.md](../../reference/done-when.md), "The start reruns them", says. Unchanged: go
+  on. An output that changed: stop before step 5.
+- A statement with no baseline (a Done when written before
+  [done-when.md](../../reference/done-when.md), or a statement added since): check its output
+  against the statement's intent as [done-when.md](../../reference/done-when.md) says. All
+  hold, and no output changed: write each missing baseline under its statement, as a dated
+  amendment of the issue (its body edited, `mise exec -- gh issue edit <n> --body-file <file>`).
+  A command too broad or a count that misses content: stop before step 5.
+
+A stop posts nothing on the issue, no baseline included. It names each statement, its baseline
+(or the one it would write) and its output now; the base moved under the statement, or the
+statement is wrong, and its author (the orchestrator for a story of an epic, otherwise the
+maintainer) amends the statement and its baseline in one dated amendment. Under the agent
+workflow `deliver-story.js`, that stop is a `blocked` result, with them in its question.
+
+## 5. Mark it in progress
 
 Set the Status to In progress ([project.md](../../reference/project.md), "Commands"): no
 Project workflow fires on a branch. An issue not in the Project yet (`projectItems` empty):
@@ -68,13 +92,15 @@ item". When the issue's parent is an epic (label `kind:epic`, read as
 [project.md](../../reference/project.md), "Epics", says) not yet In progress, set the epic In
 progress too.
 
-## 5. Restate and plan
+## 6. Restate and plan
 
 Reply with:
 - the branch name;
-- the **Done when**, copied as written: it is the contract `/feyn-pull-request` and the review hold the
-  work to. The body has it as a `### Done when` section or a `- **Done when**:` bullet. It is
-  not edited after `/feyn-issue-branch`; a change to it amends the open PR's body as well;
+- the **Done when**, copied as written, its baselines included: it is the contract
+  `/feyn-pull-request` and the review hold the work to. The body has it as a `### Done when`
+  section or a `- **Done when**:` bullet. It is not edited after `/feyn-issue-branch` but by a
+  dated amendment ([done-when.md](../../reference/done-when.md)), which amends the open PR's
+  body as well;
 - the files the issue says to read, then the plan: what changes, in which files, and how each
   Done when statement will be verified (a command to run, a file to read). One line per item.
 

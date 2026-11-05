@@ -27,9 +27,13 @@ yourself:
 - per decision of the folder: the issue that should carry it (the output subject says which
   work item takes which subject), and whether it carries it, with its why and what was
   rejected (an epic's Material, a story's Context), or loses it, or changes it;
-- per issue, each Done when statement: verifiable by reading a file or running a command, or
-  not; a statement that searches the repository excludes the history (released CHANGELOG
-  entries, dated amendments, superseded decisions);
+- per issue, each Done when statement, held to `.claude/reference/done-when.md`: verifiable by
+  reading a file or running a command, or not; each command rerun on `origin/main` (or the
+  integration branch it names) and its output compared with the baseline under it: a
+  baseline missing, an output that differs (a line number moved is no difference, that file,
+  "The start reruns them"), a line of it the statement's intent does not target, or content
+  the command cannot see; a statement that searches the repository
+  excludes the history, as that file says;
 - per issue, each file it names: on `main` or not; one that is not, said as created by the
   work item, or an error;
 - a contradiction with a live decision (`find . -path '*/decisions/*.md' -not -path
@@ -48,8 +52,10 @@ yourself:
 
 Report, nothing else:
 - Per issue: each decision of the folder it should carry, carried or lost; each Done when
-  statement, verifiable or not; each file it names, on `main` or not.
-- Blocking findings (a decision lost, a Done when statement not verifiable, a contradiction
-  with a live decision or with the tree): the issue, what is wrong, what fixes it.
+  statement, verifiable or not, its baseline confirmed or not; each file it names, on `main` or
+  not.
+- Blocking findings (a decision lost, a Done when statement not verifiable, a command with no
+  baseline or whose output does not serve its statement's intent, a contradiction with a live
+  decision or with the tree): the issue, what is wrong, what fixes it.
 - Non-blocking findings: same format, one line each.
 - What you could not check, and why.

@@ -151,21 +151,14 @@ of the old format for a defect:
        otherwise "From a brainstorm with the maintainer, <date>." for a story a brainstorm
        creates; otherwise "Asked by the maintainer, <date>." for a story the maintainer asks
        for directly, in a work session, with neither epic nor idea.
-     - A Done when statement that searches the repository (an `rg` or a `grep` that must print
-       nothing, or only some lines) excludes the history: released CHANGELOG entries, dated
-       amendments and superseded decisions (by path or named as exceptions). Otherwise the
-       contributor rewrites the history to meet it, as #339's `rg` made its contributor split a
-       string and rewrite an amendment (a rule of the debrief of epic #317). The same holds
-       for an epic's Done when.
+     - The Done when follows [done-when.md](../../reference/done-when.md): each command run
+       on the base, its baseline written under its statement and checked against the
+       statement's intent; a search that excludes the history. The same holds for an epic's
+       Done when.
      - A story that removes, moves or renames content (a file, a section, a rule) lists in its
-       Context every file that refers to it, and has a To do item that treats each of them.
-       They are found by searching the name of the file touched, not the section's name
-       (`grep -rn '<file name>' .claude docs`), since a citation names the content as often as
-       the heading, and every other name the file is cited by (a skill's `/feyn-<name>`, not
-       its `SKILL.md`); live decisions included, since a live decision is corrected in place
-       when a mechanism it names changes (decision `decision-format`), superseded ones
-       excluded (`status: superseded` in their frontmatter). #430's Context, built from the
-       section's name, found one file of the four that cited it.
+       Context every file that refers to it, found as
+       [done-when.md](../../reference/done-when.md) says, and has a To do item that treats each
+       of them.
      - With `direct` (step 3): first hold the Done when to the criterion of a direct delivery,
        one edit with no behaviour, as [contributing](../../../docs/contributing.md), "How the
        work is organised", moment 2, states it. A Done when that asks more: refuse `direct`,
@@ -173,11 +166,11 @@ of the old format for a defect:
        first line of the To do section is the plain line `Direct delivery`, alone, before the
        first item: `/feyn-deliver-story-alone` and `/feyn-pull-request` read it there.
      - Then reread it as the maintainer of the morning, choosing among ten Ready stories: does
-       the head say where, what and why in three lines; does the Context open with what is
-       wrong or missing, and end with its origin; does it list the files that refer to content
-       the story removes, moves or renames; does each To do item hold in one line? One no: fix
-       before creating, then reread. The body template `story-body.md` carries the
-       same rules.
+       the head say where, what and why in three lines; does each command of the Done when
+       carry its baseline; does the Context open with what is wrong or missing, and end with
+       its origin; does it list the files that refer to content the story removes, moves or
+       renames; does each To do item hold in one line? One no: fix before creating, then
+       reread. The body template `story-body.md` carries the same rules.
    - An **epic**, from [epic-body.md](../../reference/epic-body.md): Objective, Why now,
      Material (what is read when splitting it, and what was settled, each point with its why
      and the alternative rejected), Done when, Out of scope; no To do, no story posed in
