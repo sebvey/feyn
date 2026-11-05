@@ -17,8 +17,9 @@ course or on the teacher. Of the specs, it holds what every spec shares: the bum
 change and the version of a course (section 6); the paths and tags of `linear-course` it cites
 are examples. What belongs to one spec, the scope, the files, the categories, the list of checks
 and the normative references of `linear-course`, is in `course-specs/linear-course/1/README.md`.
-The directives are decision `rules-with-level-and-method` (the rule model, levels, methods,
-severity, conformance clause, normative references; the categories are the spec's), decision
+The directives are decision `rules-with-level-and-method` (the rule model, methods), decision
+`levels-from-iso-directives` (levels), decision `severity-from-level-and-method` (severity; the
+categories are the spec's), decision `conformity-by-product` (the conformance clause), decision
 `alpha-version-until-tag` (the version during the alpha) and decision `checks-use-ajv-and-yaml`
 (the dependencies of `lib/`), in `decisions/` of this MAJOR, whose reasons are not restated
 here; the files of `linear-course` are its decision `spec-files-by-product`. A path such as
@@ -173,7 +174,8 @@ directives, from their tag on:
 The standards a rule of the directives depends on, with the edition the directives read:
 
 - ISO/IEC Directives Part 2, 9th edition (2021): the levels (section 3).
-- ISO/IEC/IEEE 29148:2018: the methods (section 4).
+- ISO/IEC/IEEE 29148:2018: the methods (section 4); its text, paid, was not read: the methods
+  were checked against secondary sources.
 - SemVer 2.0.0: the versions (section 6).
 - YAML 1.2.2: the rule files and the schemas.
 - JSON Schema 2020-12: the schemas, read by ajv's class `Ajv2020` (decision
@@ -185,7 +187,7 @@ The standards the rules of one spec depend on are in the README of that spec MAJ
 ## 8. Tests
 
 **The tests of `check-spec`** verify the spec's own files. They are not rules (decision
-`rules-with-level-and-method`, amended by #339): they carry no category and no level, and each
+`conformity-by-product`, amended by #339): they carry no category and no level, and each
 failure blocks `check-spec` (exit code 1). They carry lists of
 `linear-course` (the five categories and the nine families in `rule-files.js`, the keys of section 7 in
 `lexicon-keys.js`, the file names in `rule-slugs.js`): a named debt, idea #485; the lists

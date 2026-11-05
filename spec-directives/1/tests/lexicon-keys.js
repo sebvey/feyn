@@ -1,6 +1,6 @@
 'use strict';
 // A test of the spec's own files, run by check-spec (not a rule: decision
-// rules-with-level-and-method, amended by #339): the two lexicons of a spec MAJOR (decision
+// conformity-by-product, amended by #339): the two lexicons of a spec MAJOR (decision
 // lexicon-not-language-pack of linear-course). course/lexicon.yaml, the lexicon of the course
 // files, holds every key of course/README.md section 7; every key the protocol uses is in one of
 // the two lexicons, course/lexicon.yaml or teacher/lexicon.yaml; a group lives in one of

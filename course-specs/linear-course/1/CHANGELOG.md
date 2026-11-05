@@ -239,3 +239,7 @@ no class: `- file or area: what changes`.
   families, and the header of `course/rules.yaml` opens in English; no rule changes (#560).
 - `teacher/rules.yaml`, `teacher/README.md`: the `origin` field leaves the rules of the protocol,
   its 13 values removed and its description with them; no rule changes what it asks (#565).
+- `decisions/`: `spec-files-by-product` is split, each choice in a decision under 40 lines: the
+  files by product stay, a description pointing to its rules becomes
+  `descriptions-point-to-their-rules`, a table of fields as a schema `field-tables-as-schemas`;
+  the citations follow; no rule changes (#547).

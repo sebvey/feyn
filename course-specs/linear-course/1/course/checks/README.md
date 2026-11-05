@@ -42,7 +42,7 @@ mise exec -- course-specs/linear-course/1/course/checks/check-course --list
 ```
 
 The checks come from the rule file of a course (`spec-directives/1/README.md` section 5;
-decision `rules-with-level-and-method`): `check-course` runs, in one run, every check named by the
+decision `severity-from-level-and-method`): `check-course` runs, in one run, every check named by the
 `check` of a rule of `course/rules.yaml` whose method is test. A check's category and level come
 from its rules, which `rule-files` (`check-spec`) holds to one category and one level per check,
 and its severity follows: it **blocks** when its rules are requirements verified by test,

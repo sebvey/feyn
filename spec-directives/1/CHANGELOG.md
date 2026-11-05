@@ -99,3 +99,9 @@ no class: `- file or area: what changes`.
   fixtures `broken/rule-files-unknown-key` and `broken/rule-files-unknown-key-course`, one per
   file; no other fixture holds one); `README.md` sections 1 and 8 and decision
   `rules-with-level-and-method` no longer describe the field (#565).
+- `decisions/`: `rules-with-level-and-method` is split, each choice in a decision under 40
+  lines: the rule model and the methods stay, the levels become `levels-from-iso-directives`, the
+  severity and the categories `severity-from-level-and-method`, the conformance clause
+  `conformity-by-product`; `alpha-version-until-tag` is shortened; their « Sources checked » are
+  folded into their text or left to the files that cite the source; `README.md` points to each;
+  no rule changes (#547).

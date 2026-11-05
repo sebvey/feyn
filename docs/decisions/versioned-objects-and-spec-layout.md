@@ -33,7 +33,7 @@ MAJOR it follows (`spec: linear-course@1`); `course-specs/check-course <course>`
 `course-specs/<name>/<MAJOR>/course/checks`, refusing an unknown spec or MAJOR. A spec version is
 tagged `<name>/vX.Y.Z`, a directives version `spec-directives/vX.Y.Z`, a course version
 `<id>/vX.Y.Z`; the bump table reads in levels for the rules of a course (decision
-`rules-with-level-and-method`):
+`levels-from-iso-directives`):
 
 | Object | MAJOR | MINOR | PATCH |
 |---|---|---|---|
@@ -45,7 +45,7 @@ A spec MAJOR lives while a served course version declares it, a course tag inclu
 archived; a directives MAJOR lives while a live spec MAJOR declares it. An old MAJOR receives bug
 fixes only (a wrong check, a mistake in the protocol), as a PATCH, never a tightening; a bug fix
 is ported to every live MAJOR. A check takes its category and its severity from the rules it
-verifies (decision `rules-with-level-and-method`): it blocks when it verifies a requirement by
+verifies (decision `severity-from-level-and-method`): it blocks when it verifies a requirement by
 test, otherwise it reports, and checks are selected by category. The machine runs the checks of
 method test on every change (`/feyn-pull-request`, CI, the builds) and a blocking failure blocks;
 taught-check, an analysis run by agents, runs on demand and its findings are triaged into course
