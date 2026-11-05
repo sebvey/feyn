@@ -111,9 +111,25 @@ spec's own files verify no rule and carry none (`spec-directives/1/README.md` se
 
 ## 4. Normative references
 
-The standards a rule of this spec depends on, beyond those of the directives
-(`spec-directives/1/README.md` section 7). #318 adds them as it extracts the rules (CommonMark and
-GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
+The standards a rule of this spec depends on, through its text, its check or a schema it names,
+each with the edition this MAJOR reads and the groups whose rules depend on it: a group of
+`course/rules.yaml` by its title (its groups have no `id`), a group of `teacher/rules.yaml` by its
+`id`. The standards of the rule model itself (the rule files, the levels, the methods, the
+versions of a spec) are the directives' (`spec-directives/1/README.md` section 7); YAML, JSON
+Schema and SemVer are in both lists, there for the rule files and the spec, here for the files and
+the versions of a course.
+
+| Standard | Edition | Groups |
+|---|---|---|
+| [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le frontmatter de concept.md », « Les conventions du texte lecteur »; `domain-presentation`, `message-form` |
+| [GitHub Flavored Markdown, tables](https://github.github.com/gfm/#tables-extension-) | 0.29-gfm (2019-04-06) | « Le fichier sources.md », « Les fichiers du cours » |
+| [YAML](https://yaml.org/spec/1.2.2/) | 1.2.2 (2021-10-01) | « Le fichier course.yaml », « Le dossier de concept », « Le frontmatter de concept.md », « Les fichiers de domaine » |
+| [JSON Schema](https://json-schema.org/draft/2020-12) | 2020-12 | « Le fichier course.yaml », « Le frontmatter de concept.md » |
+| [XML](https://www.w3.org/TR/2008/REC-xml-20081126/) | 1.0, Fifth Edition (2008-11-26) | « Le contrat de dessin » |
+| [SVG](https://www.w3.org/TR/2018/CR-SVG2-20181004/) | SVG 2, Candidate Recommendation (2018-10-04) | « Le contrat de dessin », « Le style des schémas » |
+| [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/) | 1.2 (2023-06-06) | « Le contrat de dessin » |
+| [ISO 8601-1](https://www.iso.org/standard/70907.html) | 2019 | « Le fichier sources.md », « Les fichiers du cours » |
+| [SemVer](https://semver.org/spec/v2.0.0.html) | 2.0.0 | « Les fichiers du cours » |
 
 ## 5. Checks
 
