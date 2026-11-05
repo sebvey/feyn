@@ -62,19 +62,20 @@ create a second one.
 
 ## 4. Rerun the Done when
 
-On a branch just created (not on one resumed, whose start already ran this step), which holds
-the base and nothing else yet, run each command of the Done when in it
-([done-when.md](../../reference/done-when.md); a statement that compares the base and the
-head is run on its base side):
+On a branch just created, which holds the base and nothing else yet, run each command of the
+Done when in it ([done-when.md](../../reference/done-when.md); a statement that compares the
+base and the head is run on its base side). A branch resumed skips this step: its start ran it,
+or stopped on it, and then the author's dated amendment, its commands run on the base as
+[done-when.md](../../reference/done-when.md) says, stands in for the rerun.
 - A statement with a baseline: compare the output with it as
   [done-when.md](../../reference/done-when.md), "The start reruns them", says. Unchanged: go
   on. An output that changed: stop before step 5.
-- A Done when with no baseline (written before
-  [done-when.md](../../reference/done-when.md)): check each output against the statement's
-  intent as [done-when.md](../../reference/done-when.md) says. All hold: write each under its
-  statement, as a dated amendment of the issue (its body edited,
-  `mise exec -- gh issue edit <n> --body-file <file>`). A command too broad or a count that
-  misses content: stop before step 5.
+- A statement with no baseline (a Done when written before
+  [done-when.md](../../reference/done-when.md), or a statement added since): check its output
+  against the statement's intent as [done-when.md](../../reference/done-when.md) says. All
+  hold, and no output changed: write each missing baseline under its statement, as a dated
+  amendment of the issue (its body edited, `mise exec -- gh issue edit <n> --body-file <file>`).
+  A command too broad or a count that misses content: stop before step 5.
 
 A stop posts nothing on the issue, no baseline included. It names each statement, its baseline
 (or the one it would write) and its output now; the base moved under the statement, or the
