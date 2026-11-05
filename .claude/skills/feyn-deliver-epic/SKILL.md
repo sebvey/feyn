@@ -50,7 +50,10 @@ messages only: a decision put to the maintainer takes the form of step 3.
 
 One at a time, the next one only (rules of the cycle):
 
-1. **Pose** it: `/feyn-issue story #<epic> <what>`, the story the plan marks next. Before
+1. **Pose** it: `/feyn-issue story #<epic> <what> --status Ready`, the story the plan marks
+   next. Its Done when carries, copied as written, each statement the epic's Done when sets for
+   every story (the #520 line of an epic that changes `courses/po-essai/`, forgotten for eight
+   stories of epic #450), its command run for the story as below. Before
    `/feyn-issue`, check its brief: reread its Done when against itself (two statements that
    cannot both hold) and against the epic's Objective and Material; run each command of its Done
    when on `origin/<integration branch>` and write its baseline under it, as

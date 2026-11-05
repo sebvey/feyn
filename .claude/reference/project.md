@@ -2,12 +2,12 @@
 
 The one place `/feyn-issue`, `/feyn-issue-branch`, `/feyn-pull-request`, `/feyn-merge-cleanup`,
 `/feyn-deliver-story-alone`, `/feyn-deliver-epic`, `/feyn-triage`, `/feyn-refine-option` and the
-agent workflow `deliver-story.js` take the Project's names, ids and commands from. The
-**Project** is the GitHub Project "feyn", number 4, owner `sebvey`, id `PVT_kwHOADOnU84Bo8V6`;
-its **Status** field, id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`, says where an issue stands, in this
-order and nothing else (decisions `idea-and-option-before-ready`,
-`project-status-not-state-labels`); what each Status means: [glossary](../../docs/glossary.md),
-row Status.
+agent workflow `deliver-story.js` take the Project's names, ids and commands from, and the
+commands on issues ("Issues"). The **Project** is the GitHub Project "feyn", number 4, owner
+`sebvey`, id `PVT_kwHOADOnU84Bo8V6`; its **Status** field, id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`,
+says where an issue stands, in this order and nothing else (decisions
+`idea-and-option-before-ready`, `project-status-not-state-labels`); what each Status means:
+[glossary](../../docs/glossary.md), row Status.
 
 | Status | Option id |
 |---|---|
@@ -55,6 +55,24 @@ options, with their ids:
   times, a few seconds apart (no item yet: add it, once). Idea: set the Status. Still not Idea:
   read the Project workflows ([above](#the-project-workflows)); "Item added to project" off,
   set the Status; on, or the query fails, tell the maintainer and stop.
+
+## Issues
+
+- **Read** an issue, all of it:
+  `mise exec -- gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences,projectItems`.
+- **Search** the open issues by key words (the twin of a new one):
+  `mise exec -- gh issue list --state open --search "<two or three key words>"`.
+- **Comment** on an issue: `mise exec -- gh issue comment <n> --body-file <file>`.
+- **Create** an issue, one form per command; it prints the issue URL:
+  - an idea: `mise exec -- gh issue create --title "<title>" --body-file <file> --label area:<area>`;
+  - a story: `mise exec -- gh issue create --title "<title>" --body-file <file> --label kind:story --label type:<type> --label area:<area>`;
+  - an epic: the same with `--label kind:epic` in place of `--label kind:story`;
+  - with a milestone: `--milestone <name>` added.
+
+  One issue per command, never from a shell function: a `gh issue create` inside a function
+  with `${5:+--milestone "$5"}` failed silently (Claude Code, observed 2026-10-29, #269).
+- **Create a label** missing on GitHub, an area the tree has:
+  `mise exec -- gh label create area:<area> --color 0075ca --description "Area: <area>"`.
 
 ## Epics
 
