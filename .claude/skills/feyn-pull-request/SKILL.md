@@ -6,13 +6,13 @@ argument-hint: "[--base <branch>] [--draft]"
 
 # /feyn-pull-request [--base <branch>] [--draft]
 
-One job: deliver the current issue branch as a pull request to `main` and ask for its review.
-It never merges: the merge belongs to the maintainer. A story of an epic, a direct story
-included, is a pull request to the epic's integration branch, merged by the epic's orchestrator
-(decision `epic-on-integration-branch`; steps 6 and 8). On the direct path (the work session that
-did the work runs it), it has the PR reviewed by a fresh agent, except on a direct delivery
-(step 7). It writes on GitHub: the PR, and the issue set Ready for review (step 8). Once the PR
-is merged, `/feyn-merge-cleanup` cleans up, never in the same turn.
+One job: deliver the current issue branch as a pull request to its base (`main` by default) and
+ask for its review. It never merges: the merge belongs to the maintainer. A story of an epic, a
+direct story included, is a pull request to the epic's integration branch, merged by the epic's
+orchestrator (decision `epic-on-integration-branch`; steps 6 and 8). On the direct path (the
+work session that did the work runs it), it has the PR reviewed by a fresh agent, except on a
+direct delivery (step 7). It writes on GitHub: the PR, and the issue set Ready for review
+(step 8). Once the PR is merged, `/feyn-merge-cleanup` cleans up, never in the same turn.
 
 The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the issue. On
 `main`, or on a branch without an issue number: stop and say so.

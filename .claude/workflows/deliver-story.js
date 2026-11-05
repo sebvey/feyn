@@ -1,7 +1,7 @@
 export const meta = {
   name: 'feyn-deliver-story-workflow',
   description: 'Deliver one story of feyn through agents: contributor, fresh-agent review, corrections, then a merge into the epic\'s integration branch (a story under an epic) or a hand-over (a story without an epic)',
-  whenToUse: 'Run by the orchestrator of an epic for each story of it (epic mode: args.epic and args.base given; decision epic-on-integration-branch), or by whoever delivers a story without an epic (no-epic mode: no args.epic; the PR targets main and the maintainer merges it; decision story-with-or-without-an-epic). args: { issue: <n>, epic?: <n>, base?: "<integration branch>", type: "<type label without type:>", area: "<area label without area:>", work?: "<guidance for the contributor beyond the issue>", dryRun?: true }. dryRun spawns no agent and returns the steps of the mode the args select.',
+  whenToUse: 'Run by the orchestrator of an epic for each story of it (epic mode: args.epic and args.base given; decision epic-on-integration-branch), or by whoever delivers a story without an epic (no-epic mode: no args.epic; the PR targets main and the maintainer merges it; decision story-with-or-without-an-epic). args: { issue: <n>, epic?: <n>, base?: "<integration branch>", work?: "<guidance for the contributor beyond the issue>", dryRun?: true }. dryRun spawns no agent and returns the steps of the mode the args select.',
   phases: [
     { title: 'Contribute', detail: 'a contributor agent in a worktree opens a draft PR to the base' },
     { title: 'Review', detail: 'a fresh agent reviews the PR against the issue\'s Done when' },
@@ -22,7 +22,7 @@ export const meta = {
 // resume one.
 
 const A = args || {}
-for (const k of ['issue', 'type', 'area']) if (!A[k]) throw new Error(`args.${k} missing: args are { issue, epic?, base?, type, area, work?, dryRun? }`)
+if (!A.issue) throw new Error('args.issue missing: args are { issue, epic?, base?, work?, dryRun? }')
 if (A.epic && !A.base) throw new Error('args.base missing: epic mode needs the integration branch of the epic')
 if (A.base && !A.epic) throw new Error('args.epic missing: a base other than main is the integration branch of an epic')
 
