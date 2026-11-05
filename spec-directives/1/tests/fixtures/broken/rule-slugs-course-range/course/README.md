@@ -1,4 +1,4 @@
 # fixture: the course
 
-A concept folder holds the teaching notes the teacher reads (`teacher/README.md`, rules `first-rule`
+A concept folder holds the teaching notes the teacher reads (`teacher/rules.yaml`, rules `first-rule`
 to `save-points`).

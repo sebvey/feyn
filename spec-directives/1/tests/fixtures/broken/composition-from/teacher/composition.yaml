@@ -8,7 +8,7 @@ parts:
         what: the rules of the protocol
       - from: spec
         source: teacher/README.md
-        what: the purpose of the families
+        what: the notation of the protocol
       - from: teacher
         source: course.lock
         what: the classroom parameters
@@ -32,7 +32,7 @@ parts:
         draws:
           - from: spec
             source: teacher/README.md
-            what: the protocol
+            what: the notation of the protocol
   - id: course-reads
     loads: during-the-session
     draws:

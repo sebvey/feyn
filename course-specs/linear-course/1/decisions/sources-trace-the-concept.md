@@ -26,9 +26,9 @@ state goes in « Non vérifié », opening with its section, as what must not be
 with the instruction when useful (« écrire X, pas Y »); the trace of a removed claim is
 dropped, git history holds it. Free text (« aucune », « fil rouge ») and a path to another
 concept are not sources. The site builds every row; « Non vérifié » is the one section never
-built. `course/README.md` 3.1 and 3.4 and the `sources` and `concept-folder` checks carry it (#217,
-triage T04, T05, T07, R-B1, R-B3, R-R2 of 2026-10-29). This replaces decision
-`where-a-claim-goes` (#99).
+built. The rules of `course/rules.yaml` for `course/README.md` 3.1 and 3.4 and the `sources` and
+`concept-folder` checks carry it (#217, triage T04, T05, T07, R-B1, R-B3, R-R2 of 2026-10-29).
+This replaces decision `where-a-claim-goes` (#99).
 
 ## Options ruled out
 

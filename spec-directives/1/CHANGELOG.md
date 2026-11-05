@@ -65,9 +65,37 @@ no class: `- file or area: what changes`.
   `scenarios`; decision `rules-with-level-and-method` points to section 8 for the tests of
   `check-spec` instead of naming them, and says where the rest of the teacher's conformance goes
   now (#515).
+- `tests/`: `rule-files` accepts a group `purpose`, a non-empty string, on both rule files (the
+  fixture `broken/rule-files-purpose`); `README.md` sections 1 and 8 say so (#524).
 - `decisions/`: decision `spec-names-no-course`: the files of a spec, its decisions included, and
   the decisions of the directives name no course; decisions `alpha-version-until-tag` and
   `rules-with-level-and-method` state their evidence without naming one (#528).
 - `README.md`, `tests/rule-slugs.js` (comment): `decisions/` are not read for ranges because a
   decision cites no rule id (decision `decision-format`), no longer because they quote the
   ranges they replaced (#528).
+- `tests/`: `rule-files` fails a group of `course/rules.yaml` without a `purpose` (the fixture
+  `broken/rule-files-purpose-missing`; every fixture's `course/rules.yaml` gains one); a group of
+  `teacher/rules.yaml` may still lack one; `README.md` sections 1 and 8 say so (#533).
+- `tests/`: `rule-files` fails a group of `teacher/rules.yaml` without a `purpose` (the fixture
+  `broken/rule-files-teacher-purpose-missing`; every fixture's `teacher/rules.yaml` gains one),
+  accepts as the `id` of a group of `teacher/rules.yaml` the category of a family as well as a
+  group of `teacher/README.md` (the fixture `broken/rule-files-protocol-group` fails an id that is
+  neither), and accepts a rule of the protocol without `origin`; `README.md` sections 1 and 8 and
+  decision `rules-with-level-and-method` say so (#552).
+- `tests/`: `rule-files`, `rule-slugs`, `lexicon-keys` and `scenarios` read the protocol from
+  `teacher/rules.yaml`: `rule-slugs` defines the slugs of rules and groups from it and checks the
+  citations of its `text` and `why`, every code span shaped like a slug included (the fixture
+  `broken/rule-slugs-text-span`), and of `teacher/README.md` (the fixture
+  `broken/rule-slugs-used-in-missing`); `rule-files` holds a group of `teacher/rules.yaml` to a
+  `category` and to the order of its family (the fixture `broken/rule-files-protocol-group` fails
+  a group before its family); `lexicon-keys` reads the keys of its texts, and of the « Clés et
+  paramètres » tables of `teacher/README.md` (a value « liste » is a list);
+  `test-fixtures` accepts an `also:` line in an `EXPECT` (a slug defined twice fails `rule-slugs`
+  and `rule-files`); every fixture's `teacher/README.md` holds no rule; `README.md` sections 1 and
+  8 say so (#554).
+- `decisions/`: `rules-with-level-and-method` no longer defers the standards of `linear-course` to
+  #318: they are in the README of the spec's MAJOR, each with its edition (#556).
+- `tests/`: `rule-files` fails a rule with an `origin` as an unknown key, in either rule file (the
+  fixtures `broken/rule-files-unknown-key` and `broken/rule-files-unknown-key-course`, one per
+  file; no other fixture holds one); `README.md` sections 1 and 8 and decision
+  `rules-with-level-and-method` no longer describe the field (#565).

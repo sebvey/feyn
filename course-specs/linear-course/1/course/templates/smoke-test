@@ -101,6 +101,7 @@ const DUMMY = {
   'why': 'Trop vague',
   'title of the storyline': 'Fil rouge',
   'who the actors are, what they do, the setting: the facts the cases will draw on': 'Régis, régulateur, veut une carte.',
+  'the role the learner holds in the storyline: who they are in it, what they decide': "L'apprenant y tient le rôle du régulateur qui décide de la carte.",
   'a part of the storyline': 'La carte',
   'facts of this part; say what the storyline leaves unfixed': 'La carte montre les stations.',
   'where': 'tout le cours',

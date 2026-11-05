@@ -167,9 +167,75 @@ no class: `- file or area: what changes`.
   `course-yaml` as an unknown field, the tolerance kept for the founding course gone with it
   (decision `parcours-po-archived`); the fixture `broken/course-yaml-language`; the checks'
   README names `courses/po-essai` as the real course a change of the spec is run on (#521).
+- `course/rules.yaml`, `course/README.md`: every rule of `course/README.md` sections 1, 2, 4 and
+  5 is data in `course/rules.yaml`, those verified by inspection included (21 new rules, the
+  learner's role in the storyline among them), in four groups, one per section, each with its
+  `purpose`, in French; those four sections become a French description, with no Purpose
+  paragraph; `course/templates/storyline.md` has a placeholder for the
+  learner's role; no rule changes what it asks (#524).
 - `decisions/`, `README.md`: the decisions state their evidence without naming a course and cite
   no rule id (decisions `spec-names-no-course` of the directives and `decision-format`); section
   2 names the founding course by its role; `rules-named-by-slug` amended, a decision no longer
   cites a slug (#528).
 - `teacher/README.md`: the list of the files that cite a rule by its slug no longer names the
   decisions, which name a rule by what it asks (decision `decision-format`) (#528).
+- `course/README.md`, `decisions/`, `README.md`: sections 1, 2, 4 and 5 of `course/README.md`
+  are cut to their reader table, what states no rule (the tree of a course, the identifiers, what
+  each file is for, the term cell) and a pointer to their group of `course/rules.yaml`, and for
+  section 2 to `course/schemas/course.schema.yaml`; they restate no rule and cite no rule id;
+  decisions `domains-partition-the-course` and `markdown-conventions-not-mdx` cite no rule id;
+  decision `spec-files-by-product` amended, a section whose rules are in a rule file points to
+  their group (#531).
+- `course/rules.yaml`, `course/README.md`: every rule of `course/README.md` sections 3 (3.1 to
+  3.5), 6 (6.1, 6.2) and 7 is data in `course/rules.yaml`, those verified by inspection included
+  (37 new rules), one group per sub-section, each with its `purpose`, in French; « Diagrams »
+  split between sections 3.1 and 6.1; section 7 states no rule of a course; the three sections
+  cut to their reader table, what states no rule and a pointer to their group (section 3.1 to
+  `course/schemas/concept-frontmatter.schema.yaml`), in French; the paragraph « Until the
+  extraction of the rules » removed; no rule changes what it asks; decisions
+  `markdown-conventions-not-mdx`, `one-diagram-style`, `sources-trace-the-concept`,
+  `stances-in-frontmatter-only` and `spec-files-by-product` point to the rules where they pointed
+  to the prose (#533).
+- `course/README.md`: the headings of sections 3 (3, 3.1, 3.2, 3.5), 6 (6, 6.1, 6.2) and 7,
+  and its title, in French, as those of sections 1, 2, 4 and 5; 3.3 and 3.4, file names, and
+  the numbers unchanged; the links of its reader table to section 7 follow the new anchor (#535).
+- `course/README.md`, `course/rules.yaml`, `teacher/README.md`, `teacher/rules.yaml`: the French
+  texts take the French word `docs/glossary.md` gives each reserved term: « schéma JSON » for a
+  JSON Schema of `course/schemas/`, « schéma » alone being the diagram; « session » for a
+  teaching session (no longer « séance »); « fichier de domaine » for the domain file (no longer
+  « fiche »); « renvoi » only for a concept reference (a pointer to a group is a « lien »); no
+  rule changes what it asks (#537).
+- `course/README.md`, `course/rules.yaml`, `teacher/README.md`, `teacher/rules.yaml`: the course
+  path is « parcours » (« dans le parcours », « hors du parcours », « revenir au parcours »),
+  never « fil » alone, which stays only in « fil rouge » (the storyline) and « Le fil des
+  concepts »; « au fil du cours » becomes « en cours de route »; no rule changes what it asks
+  (#539).
+- `teacher/rules.yaml`: every rule of `teacher/README.md` that opens on its slug, in its order,
+  copied with its text and its « Pourquoi » line as `why` (the eight rows of the save-point table,
+  rules too, stay in `teacher/README.md` only until story 3b of epic #450); one group per family,
+  its category as `id`, for the rules placed directly under it, then one per group of the family;
+  each group's `purpose` in French; an `origin` only where a feyn issue or decision is the source;
+  `teacher/README.md` unchanged, still read by the programs until it is cut; no rule changes what
+  it asks (#552).
+- `teacher/rules.yaml`, `teacher/README.md`, `teacher/build/`, `classroom-builder/test-build`:
+  `teacher/rules.yaml` is the one source of the protocol: the eight rows of the save-point table
+  become rules of the group `learner-memory` (`save-next-step` to `save-preferences`, each
+  « Sous <où>, écris <quoi> »), `save-points` and `stop-save-point` cite them; `render-parts`,
+  `test-render` and `test-build` read the rules, families, groups and purposes from it, the
+  rendered parts unchanged but for the purposes in French, the eight rules and line breaks;
+  `teacher/README.md` is cut to its reader table, an introduction, « Notation », « Règles
+  d'écriture », « Composition » and « Clés et paramètres », in French, no family or group
+  section, no rule, no course named; decisions `rule-groups-replace-ranges`,
+  `rules-named-by-slug` and `spec-files-by-product` amended; no rule changes what it asks (#554).
+- `README.md`, `decisions/`: section 4 names the standards the rules depend on, each with its
+  edition, a link to its text and the groups whose rules depend on it (CommonMark, GFM tables,
+  YAML, JSON Schema, XML, SVG 2, WAI-ARIA, ISO 8601-1, SemVer); decisions
+  `rule-groups-replace-ranges`, `rules-named-by-slug` and `spec-files-by-product` no longer defer
+  to #318 and name epic #450 for the extraction; no rule changes what it asks (#556).
+- `README.md`, `course/README.md`, `teacher/README.md`, `course/rules.yaml`: a group of
+  `course/rules.yaml` is one per section of `course/README.md` that points to rules; the
+  descriptions point to the groups of `teacher/rules.yaml` in place of rule ids or a restated
+  rule (the types of a case, the reader tables, « Composition »), `teacher/README.md` counts no
+  families, and the header of `course/rules.yaml` opens in English; no rule changes (#560).
+- `teacher/rules.yaml`, `teacher/README.md`: the `origin` field leaves the rules of the protocol,
+  its 13 values removed and its description with them; no rule changes what it asks (#565).

@@ -17,7 +17,7 @@ model is the spec directives', so it binds every spec that follows them. A rule 
 slug, decision `rules-named-by-slug`), a `level`, a `category`, a `method`, a `check`
 (optional: the check that implements the method, when one exists), a `why` (optional, on any
 rule: what a competent model does without the rule, as observed in a test or a teaching
-session) and a `text`; a rule of the protocol also has an `origin` and its group and order.
+session) and a `text`; a rule of the protocol also has its group and order.
 `category` and `method` can be declared once for a group of rules and overridden by a rule. The
 level is a field, never a word parsed from the text: the verb of the text matches it, and the
 field is authoritative. Three attributes are kept apart, which the spec fused: the **level** of
@@ -84,15 +84,12 @@ conformance. A course conforms when it holds every requirement of `course/rules.
 method; the blocking checks are a necessary condition, not a sufficient one; the review and
 taught-check do the rest, and a course tag certifies the whole. A teacher conforms when it holds
 every requirement of `teacher/rules.yaml`; the method of a rule of the protocol is demonstration, by
-the fresh tests (D8). Recommendations are outside conformance (the ISO sense of "should"). The word
-"conformity" (ISO) stays; "conformance clause" names the section, after the W3C QA Framework, whose
-idea ISO shares.
+the fresh tests (D8). Recommendations are outside conformance (the ISO sense of "should").
 
 **Normative references** of the spec directives, a dated list limited to the standards a rule
 depends on: ISO/IEC Directives Part 2, 9th edition (2021); ISO/IEC/IEEE 29148:2018; SemVer 2.0.0;
 YAML 1.2.2; JSON Schema 2020-12. The standards the rules of one spec depend on are that spec's,
-in the README of its MAJOR: #318 adds those of `linear-course` as it extracts the rules (CommonMark
-and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
+in the README of its MAJOR, each with its edition.
 
 ## Options ruled out
 
@@ -140,10 +137,7 @@ and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
   made a requirement is a MAJOR (decision `versioned-objects-and-spec-layout`).
 - No teacher conforms today: the fresh tests (`classroom-builder/fresh-test` on the test scenarios
   of the spec MAJOR's `teacher/tests/`, #507) cover the rules a session of a two-concept course
-  exercises, not every requirement; the rules they do not observe yet are idea #509, and the
-  extraction of the rules into `teacher/rules.yaml` is epic #450.
-- In French, « schéma » means a drawing or a JSON Schema; the repository, in English, says
-  `diagram` and `schema`.
+  exercises, not every requirement; the rules they do not observe yet are idea #509.
 - Amended 2026-10-31 (#339): a rule binds a product, a course or a teacher. The consistency of
   the spec's own files (the rule files, the schemas, the slugs of the protocol, the
   lexicons) is verified by the tests of `check-spec` (`spec-directives/1/README.md` section 8),
@@ -165,3 +159,15 @@ and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
   not a rule: it checks the form of the file, and the file's consistency counts toward no
   product's conformance. Without this, a contributor reads the composition as a rule of the teacher and
   gives it a category and a level, or leaves its test outside the clause.
+- Amended 2026-11-04 (#545): the words "conformity" and "conformance clause", and the French
+  words of a diagram and of a schema, leave this decision for the glossary, their why in its
+  entries (decision `word-choices-in-the-glossary`).
+- Amended 2026-11-05 (#552): the `origin` of a rule of the protocol is optional, present where a
+  feyn issue or decision is its source; a rule the base inherited with no such source has none.
+  Without this, every rule of the protocol needs an `origin` and a rule with no feyn source gets
+  one that names a course, which a spec does not (decision `spec-names-no-course`).
+- Amended 2026-11-05 (#565): the `origin` leaves the rules of the protocol, and the rule files
+  accept it no more. It was the provenance of a rule to the course the protocol came from, which
+  a spec no longer names; it covered a few rules, in three forms, and no program read it, while
+  git keeps the issue that wrote each rule. Without this, a contributor fills a field nothing
+  reads, in a form nothing checks, and takes it for the link from a rule to its decision.

@@ -1,7 +1,7 @@
 # Checks of `linear-course`
 
-Scripts that verify a course against `course/README.md` and `course/rules.yaml` (listed in the
-MAJOR's `README.md` section 5), run by `check-course`; the tests of the spec's own files
+Scripts that verify a course against the rules of `course/rules.yaml` (described by
+`course/README.md`; listed in the MAJOR's `README.md` section 5), run by `check-course`; the tests of the spec's own files
 (`teacher/README.md`, `README.md`, `course/README.md`, `decisions/`, `course/rules.yaml`,
 `teacher/rules.yaml`, `teacher/composition.yaml`, `course/schemas/`, the two lexicons, `spec.yaml`,
 `CHANGELOG.md`), run by `spec-directives/check-spec`, belong to the spec directives this MAJOR

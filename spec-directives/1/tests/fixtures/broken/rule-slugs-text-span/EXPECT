@@ -1,0 +1,2 @@
+check: rule-slugs
+message: teacher/rules.yaml:21 cites rule "ghost-rule", which teacher/rules.yaml does not define

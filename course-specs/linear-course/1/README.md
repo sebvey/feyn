@@ -17,7 +17,7 @@ follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 
 - `README.md`: this file: scope, files, categories, normative references, the list of checks.
 - `course/README.md`: what a course is: course structure, reader-text conventions, diagrams (drawing contract and style), the lexicon of the course files.
-- `teacher/README.md`: the pedagogical protocol the teacher executes, and the description of its composition.
+- `teacher/README.md`: how a rule of the protocol is written (its notation, its writing rules), the description of the composition of the teacher, the keys and parameters; `teacher/rules.yaml`: the rules of the protocol the teacher executes.
 - `teacher/composition.yaml`: the composition of the teacher, its five parts, when each loads and what each draws from (section 2).
 - `teacher/build/`: the half of a classroom build that depends on this MAJOR, `render-parts`, which renders the five parts of the composition as text for a course, one JSON document whose shape `parts.schema.yaml` fixes (`teacher/build/README.md`).
 - `teacher/tests/`: the test scenarios of the teacher, one YAML file each, whose form `scenario.schema.yaml` fixes, run by `classroom-builder/fresh-test` (`teacher/tests/README.md`).
@@ -28,7 +28,7 @@ follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 - `course/templates/`: the course templates; `decisions/`: the decisions of this spec.
 
 This file holds no rule on a course or on the teacher: what a course is, is in
-`course/README.md`; the protocol the teacher executes, in `teacher/README.md`. How a spec is
+`course/README.md`; the protocol the teacher executes, in `teacher/rules.yaml`. How a spec is
 written and read (what a rule file holds, conformance, levels, methods, severity, versions, the
 tests of these files) is the spec directives this MAJOR follows, `spec-directives/1/README.md`.
 
@@ -59,34 +59,33 @@ plus this README (decision `spec-files-by-product`):
 |---|---|
 | `README.md` | this file: scope, files, categories, normative references, the list of checks |
 | `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the lexicon of the course files |
-| `teacher/README.md` | the protocol of the teacher: purpose, notation, rules named by slug, the composition, keys and parameters |
-| `course/rules.yaml` | the rules of a course, in English |
-| `teacher/rules.yaml` | the rules of the teacher, in French |
+| `teacher/README.md` | how a rule of the protocol is written: its notation, its writing rules; the composition; the keys and parameters |
+| `course/rules.yaml` | the rules of a course, in French, one group per section of `course/README.md` that points to rules, each with its `purpose` |
+| `teacher/rules.yaml` | the rules of the protocol, in French, one group per family and per group of a family, each with its `purpose` |
 | `teacher/composition.yaml` | the composition of the teacher: its five parts, when each loads and what each draws from (`teacher/README.md`, "Composition") |
 | `teacher/tests/` | the test scenarios of the teacher (`README.md`: the format, the rules each covers and those none covers), `scenario.schema.yaml` (their form), one YAML file per scenario, run by `classroom-builder/fresh-test` and verified in form by `check-spec` (`scenarios`) |
 | `teacher/build/` | `render-parts`, which renders the five parts of the composition as text for a course (the half of a classroom build that depends on this MAJOR, read by `classroom-builder/`), `parts.schema.yaml` (the shape of its output), `test-render`, `README.md` |
-| `course/schemas/*.schema.yaml` | the tables of fields of `course/README.md`, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` |
+| `course/schemas/*.schema.yaml` | the fields of `course.yaml` and of the `concept.md` frontmatter, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` |
 | `CHANGELOG.md` | the changes of the spec, an « Unreleased » section until the tag |
 | `spec.yaml` | the declaration of this MAJOR: `name`, `major`, `version`, `language`, and `directives`, the MAJOR of `spec-directives/` whose tests verify these files and whose `lib/` and package the checks load |
 | `course/checks/` | the check scripts, their fixtures and `course/checks/README.md` (how to run them) |
 | `course/lexicon.yaml` | the lexicon of the course files (`course/README.md` section 7) |
-| `teacher/lexicon.yaml` | the lexicon of the teacher, the words it says and writes (`teacher/README.md`, "Keys and parameters") |
+| `teacher/lexicon.yaml` | the lexicon of the teacher, the words it says and writes (`teacher/README.md`, « Clés et paramètres ») |
 | `course/templates/` | the course templates |
 | `teacher/templates/learner/` | the templates of the learner memory files |
 | `decisions/` | the decisions of this spec |
 
 What a rule file holds is the directives' (`spec-directives/1/README.md` section 1).
 
-`course/rules.yaml` holds the rules the checks of a course verify, taught-check included, and one
-rule verified by inspection, the review; `course/schemas/course.schema.yaml` and
-`course/schemas/concept-frontmatter.schema.yaml` are the tables of `course/README.md` sections 2 and
-3.1 (#329). The other rules of a course leave `course/README.md` for `course/rules.yaml`, and the
-rules of the protocol leave `teacher/README.md` for `teacher/rules.yaml`, in #318. Until that
-extraction, `course/README.md` and `teacher/README.md` keep their verbal forms of obligation, read
-as `course/README.md` says in its opening.
+`course/rules.yaml` holds every rule of a course, those the checks verify, taught-check included,
+and those verified by inspection (the review), one group per section of `course/README.md` that
+points to rules; `course/schemas/course.schema.yaml` holds the fields of `course.yaml`, and
+`course/schemas/concept-frontmatter.schema.yaml` the fields of the `concept.md` frontmatter
+(#329). `teacher/rules.yaml` holds every rule of the protocol (#554); `teacher/README.md` states
+none.
 
 **Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language of
-its courses, of its lexicons and of the rules of `teacher/README.md`, a bounded exception to the
+its courses, of its lexicons and of the rules of `teacher/rules.yaml`, a bounded exception to the
 language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited from the
 founding course, whose teacher was instructed and corrected in French. It changes by user story,
 its fresh tests come with the teacher. A teacher or a course of another language follows another
@@ -104,7 +103,7 @@ A rule of a course has a category, from a closed list, extended when needed:
 | `sources` | does every claim trace back to a source? |
 | `diagrams` | do the drawings follow their contract? |
 
-For a rule of the protocol, the category is its family (the nine families of `teacher/README.md`),
+For a rule of the protocol, the category is its family (the nine families of `teacher/rules.yaml`),
 written in `teacher/rules.yaml` as a slug of its title, in their order: `session-start`,
 `domain-presentation`, `loop`, `message-form`, `storyline`, `stances-and-sources`,
 `practice-skip-asides`, `learner-memory`, `stop`. No other category exists: the tests of the
@@ -112,9 +111,27 @@ spec's own files verify no rule and carry none (`spec-directives/1/README.md` se
 
 ## 4. Normative references
 
-The standards a rule of this spec depends on, beyond those of the directives
-(`spec-directives/1/README.md` section 7). #318 adds them as it extracts the rules (CommonMark and
-GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
+The standards a rule of this spec depends on, through its text, its check or a schema it names,
+each with the edition this MAJOR reads and the groups whose rules depend on it: a group of
+`course/rules.yaml` by its title without its section suffix (its groups have no `id`), a group of
+`teacher/rules.yaml` by its `id`. A group depends on CommonMark when one of its rules requires or
+writes a CommonMark construct (a heading, a link, emphasis, a list, a block quote); naming a
+section by its heading does not count. The standards of the rule model itself (the rule files,
+the levels, the methods, the versions of a spec) are the directives' (`spec-directives/1/README.md`
+section 7); YAML, JSON Schema and SemVer are in both lists, there for the rule files and the spec,
+here for the files and the versions of a course, and their edition is the one the directives give.
+
+| Standard | Edition | Groups |
+|---|---|---|
+| [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le dossier de concept », « Le frontmatter de concept.md », « Le corps de concept.md », « Le fichier teaching.md », « Le fichier sources.md », « Les conventions du texte lecteur », « Les fichiers de domaine », « Les fichiers du cours »; `onboarding`, `resume`, `domain-presentation`, `loop`, `message-form`, `learner-memory` |
+| [GitHub Flavored Markdown, tables](https://github.github.com/gfm/#tables-extension-) | 0.29-gfm (2019-04-06) | « Le fichier sources.md », « Les fichiers du cours » |
+| [YAML](https://yaml.org/) | the directives' (`spec-directives/1/README.md` section 7) | « Le fichier course.yaml », « Le dossier de concept », « Le frontmatter de concept.md », « Les fichiers de domaine » |
+| [JSON Schema](https://json-schema.org/) | the directives' (`spec-directives/1/README.md` section 7) | « Le fichier course.yaml », « Le frontmatter de concept.md » |
+| [XML](https://www.w3.org/TR/2008/REC-xml-20081126/) | 1.0, Fifth Edition (2008-11-26) | « Le contrat de dessin » |
+| [SVG](https://www.w3.org/TR/2018/CR-SVG2-20181004/) | SVG 2, Candidate Recommendation (2018-10-04) | « Le contrat de dessin », « Le style des schémas » |
+| [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/) | 1.2 (2023-06-06) | « Le contrat de dessin » |
+| [ISO 8601-1](https://www.iso.org/standard/70907.html) | 2019 | « Le fichier sources.md », « Les fichiers du cours » |
+| [SemVer](https://semver.org/) | the directives' (`spec-directives/1/README.md` section 7) | « Les fichiers du cours » |
 
 ## 5. Checks
 

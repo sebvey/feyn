@@ -1,2 +1,2 @@
 check: rule-slugs
-message: README.md:4 cites group "welcome", which teacher/README.md does not define
+message: README.md:4 cites group "welcome", which teacher/rules.yaml does not define

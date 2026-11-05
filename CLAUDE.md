@@ -40,8 +40,8 @@ are never translated. French text: no em-dashes, no arrows.
 
 ## Vocabulary
 
-Reserved terms live in `docs/glossary.md`. A generic word listed as "not" there is not used
-where a reserved term exists. Said by the maintainer, such a word is met, before acting, with
+Reserved terms live in `docs/glossary.md`, one entry per concept. A word an entry rejects is not
+used where its concept applies. Said by the maintainer, such a word is met, before acting, with
 "You said <word>, did you mean <reserved term>?", in the language of the conversation. No skill
 accepts it silently: no alias in a description, no argument read as its replacement.
 
@@ -72,11 +72,12 @@ maintainer, subject by subject, and ends it in a plan of work items posed throug
 the cycle. `/feyn-triage <n> [<n> …]` triages with the maintainer the ideas they name, one at a
 time. `/feyn-refine-option <n>` runs with the maintainer the option refinement of one option, up
 to its commitment, rework or close. Load the one that matches the request. The other `feyn-`
-skills are the work-cycle tooling: called by them, and loaded directly for a one-off act. A
-delivery work session starts with an issue number. The frame of the work is Kanban, with ADR
-for the decisions and GitHub flow for the branches (`docs/kanban.md`). How feyn applies it (the
-work items, epics and stories, and the ideas; the Statuses from Idea to Done; milestones; the
-Project's views): `docs/contributing.md`, "How the work is organised".
+skills are the work-cycle tooling: called by them, and loaded directly for a one-off act.
+`/feyn-decision` writes or changes a decision; `/feyn-glossary-entry` adds or changes a glossary
+entry. A delivery work session starts with an issue number. The frame of the work is Kanban,
+with ADR for the decisions and GitHub flow for the branches (`docs/kanban.md`). How feyn applies
+it (the work items, epics and stories, and the ideas; the Statuses from Idea to Done; milestones;
+the Project's views): `docs/contributing.md`, "How the work is organised".
 
 ## Non-negotiable rules
 

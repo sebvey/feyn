@@ -4,9 +4,8 @@
 // The half of a classroom build that depends on this spec MAJOR: it renders the five parts of
 // teacher/composition.yaml as text for a course and prints them to stdout as one JSON document,
 // whose shape parts.schema.yaml fixes and README.md (this folder) describes. It reads the protocol
-// (teacher/README.md, the `**slug** text` rules by family and group with their Purpose, until #450
-// moves them to teacher/rules.yaml), the composition, the two lexicons, the learner templates and
-// the course, and fills every {group.key}, {course.<name>} and {classroom.<name>}. It names no
+// (teacher/rules.yaml, the rules by family and group with their purpose), the composition, the two
+// lexicons, the learner templates and the course, and fills every {group.key}, {course.<name>} and {classroom.<name>}. It names no
 // mechanism of a target: what each part becomes in a classroom is the classroom build's, at the
 // root of the repository. Writes nothing. Exit 0 rendered, 1 an input it cannot read (a
 // placeholder in neither lexicon, a moment naming an unknown rule), 2 a usage error.
@@ -18,11 +17,6 @@ const { createRequire } = require('module');
 const MAJOR = path.resolve(__dirname, '..', '..');
 const REPO = path.resolve(MAJOR, '..', '..', '..');
 const UNPUBLISHED = '(site non publié)';
-// the nine families of teacher/README.md by category, in its order (## 1. to ## 9.): the categories
-// of teacher/rules.yaml (README.md section 3 of this MAJOR); spec-directives/1/tests/rule-files.js
-// holds the same list for its test, a debt named in idea #485
-const FAMILIES = ['session-start', 'domain-presentation', 'loop', 'message-form', 'storyline',
-  'stances-and-sources', 'practice-skip-asides', 'learner-memory', 'stop'];
 const PARTS = ['permanent', 'on-demand', 'course-reads', 'learner-memory', 'permissions'];
 
 function usage(code) {
@@ -85,7 +79,6 @@ const parseYaml = (p) => {
 const course = parseYaml(path.join(courseDir, 'course.yaml'));
 const composition = parseYaml(path.join(MAJOR, 'teacher', 'composition.yaml'));
 const lexicons = [parseYaml(path.join(MAJOR, 'teacher', 'lexicon.yaml')), parseYaml(path.join(MAJOR, 'course', 'lexicon.yaml'))];
-const protocolText = read(path.join(MAJOR, 'teacher', 'README.md'));
 const LEARNER_TEMPLATES = path.join(MAJOR, 'teacher', 'templates', 'learner');
 if (typeof course.id !== 'string' || !course.id) fail('course.yaml has no id');
 if (course.spec !== SPEC) fail(`${rel(courseDir)}/course.yaml declares spec ${course.spec}, not ${SPEC}`);
@@ -150,72 +143,41 @@ function fill(text, where) {
 // a bare key in a `what` of the composition (`headings.onboarding`): its value in « »
 const fillWhat = (what) => what.replace(/\b(headings|case_fields|qualifiers)\.([a-z_]+)\b/g, (m, g, k) => quote(valueOf(g, k, 'composition.yaml')));
 
-// ---- the protocol: families "## <n>. <title>", groups "### <title> (`<id>`)", each with its
-// **Purpose.** paragraph, then rules opening on "**<slug>** ", each up to the next rule or heading
-// (its « Pourquoi » line, a code block, the save-point table included); the reader tables are
-// for the readers of the spec and are left out
-function parseProtocol(text) {
+// ---- the protocol, teacher/rules.yaml, in its order: a family is a group whose id is its
+// category, rendered "## <n>. <title>" (n its rank among the families of the file); another group
+// belongs to the family of its category, which comes before it, rendered "### <title> (`<id>`)";
+// each with its purpose; each rule "**<id>** <text>", its why on a line "*Pourquoi :* <why>"
+function parseProtocol(doc) {
   const families = [];
-  let family = null;
-  let section = null; // the family or the group the lines go to
-  let rule = null;
-  let fence = false;
-  let inPurpose = false;
-  const close = () => {
-    if (rule) {
-      while (rule.lines.length && rule.lines[rule.lines.length - 1].trim() === '') rule.lines.pop();
-      rule.text = rule.lines.join('\n');
+  const byCategory = new Map();
+  for (const g of (doc && Array.isArray(doc.groups) ? doc.groups : [])) {
+    const where = `teacher/rules.yaml: group ${g && g.id}`;
+    if (!g || typeof g.id !== 'string' || typeof g.title !== 'string' || typeof g.purpose !== 'string') {
+      fail(`${where} lacks an id, a title or a purpose (check-spec says more)`);
     }
-    rule = null;
-  };
-  for (const line of text.split('\n')) {
-    if (!fence) {
-      const fam = /^## (\d+)\. (.+)$/.exec(line);
-      const grp = /^### (.+) \(`([a-z0-9]+(?:-[a-z0-9]+)*)`\)$/.exec(line);
-      if (/^## /.test(line) && !fam) { close(); family = null; section = null; continue; }
-      if (fam) {
-        close();
-        const n = Number(fam[1]);
-        family = { kind: 'family', n, heading: line, category: FAMILIES[n - 1], purpose: [], rules: [], groups: [] };
-        families.push(family);
-        section = family;
-        inPurpose = false;
-        continue;
-      }
-      if (grp && family) {
-        close();
-        section = { kind: 'group', id: grp[2], heading: line, purpose: [], rules: [], family };
-        family.groups.push(section);
-        inPurpose = false;
-        continue;
-      }
+    let section;
+    if (g.id === g.category) {
+      section = { kind: 'family', heading: `## ${families.length + 1}. ${g.title}`, category: g.category, purpose: g.purpose, rules: [], groups: [] };
+      families.push(section);
+      byCategory.set(g.category, section);
+    } else {
+      const family = byCategory.get(g.category);
+      if (!family) fail(`${where}: no family of category ${g.category} before it (check-spec says more)`);
+      section = { kind: 'group', id: g.id, heading: `### ${g.title} (\`${g.id}\`)`, purpose: g.purpose, rules: [], family };
+      family.groups.push(section);
     }
-    if (!section) continue;
-    if (/^```/.test(line)) fence = !fence;
-    const start = !fence && /^\*\*([a-z0-9]+(?:-[a-z0-9]+)*)\*\* /.exec(line);
-    if (start) {
-      close();
-      inPurpose = false;
-      rule = { slug: start[1], lines: [line], section };
-      section.rules.push(rule);
-      continue;
-    }
-    if (rule) { rule.lines.push(line); continue; }
-    if (line.startsWith('**Purpose.**')) inPurpose = true;
-    if (inPurpose) {
-      if (line.trim() === '') inPurpose = false;
-      else section.purpose.push(line);
+    for (const r of (Array.isArray(g.rules) ? g.rules : [])) {
+      const text = `**${r.id}** ${r.text}` + (r.why ? `\n*Pourquoi :* ${r.why}` : '');
+      section.rules.push({ slug: r.id, text, section });
     }
   }
-  close();
-  return families;
+  return { families, byCategory };
 }
-const families = parseProtocol(protocolText);
-if (!families.length) fail(`${rel(MAJOR)}/teacher/README.md holds no rule family`);
+const { families, byCategory: familyByCategory } = parseProtocol(parseYaml(path.join(MAJOR, 'teacher', 'rules.yaml')));
+if (!families.length) fail(`${rel(MAJOR)}/teacher/rules.yaml holds no rule family`);
 const allRules = families.flatMap((f) => [...f.rules, ...f.groups.flatMap((g) => g.rules)]);
 const ruleBySlug = new Map(allRules.map((r) => [r.slug, r]));
 const groupById = new Map(families.flatMap((f) => f.groups).map((g) => [g.id, g]));
-const familyByCategory = new Map(families.filter((f) => f.category).map((f) => [f.category, f]));
 
 // ---- the moments: a moment's rules name a group by its id, a family by its category, or rules
 const moments = (parts.get('on-demand').moments || []).map((m) => {
@@ -236,11 +198,11 @@ const moments = (parts.get('on-demand').moments || []).map((m) => {
 const onDemand = new Set(moments.flatMap((m) => [...m.slugs]));
 
 const ruleText = (r) => fill(r.text, `rule ${r.slug}`);
-const purposeText = (s) => fill(s.purpose.join('\n'), s.heading);
+const purposeText = (s) => fill(s.purpose, s.heading);
 const blocks = (list) => list.filter(Boolean).join('\n\n');
 
-// the permanent protocol: every rule no moment loads, in the order of teacher/README.md, each
-// family and group with a rule left preceded by its heading and its Purpose paragraph
+// the permanent protocol: every rule no moment loads, in the order of teacher/rules.yaml, each
+// family and group with a rule left preceded by its heading and its purpose
 function permanentProtocol() {
   const out = [];
   for (const f of families) {

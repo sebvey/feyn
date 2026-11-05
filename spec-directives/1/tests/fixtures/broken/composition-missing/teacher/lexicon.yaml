@@ -2,7 +2,7 @@
 # of the spec's teacher/lexicon.yaml, plus the key the fixture's teacher/README.md adds,
 # phrases.example.
 
-# Literal phrases the teacher says (teacher/README.md, "Keys and parameters").
+# Literal phrases the teacher says (teacher/README.md, « Clés et paramètres »).
 phrases:
   example: "Exemple"
   concept_title: "Concept {n} : {title}"

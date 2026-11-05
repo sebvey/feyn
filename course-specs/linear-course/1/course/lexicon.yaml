@@ -56,7 +56,8 @@ markers:
 natures:
   fact: "fait"
 
-# The qualifiers a case heading may carry, at most one, and no other word (course/README.md 3.3).
+# The qualifiers a case heading may carry, at most one, and no other word (the group of
+# course/rules.yaml for course/README.md section 3.3).
 qualifiers:
   fallback: "rechange"
   practice: "entraînement"

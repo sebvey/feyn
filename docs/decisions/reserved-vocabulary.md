@@ -1,7 +1,8 @@
 ---
 date: 2026-10-27
 issue: null
-status: accepted
+status: superseded
+superseded-by: glossary-by-concept
 area: repo
 ---
 
@@ -32,3 +33,6 @@ already in use.
   repository files and a course's in its course files; a word may be reserved in both with two
   meanings; a repository text that means the course's sense cites it as such; Scrum vocabulary
   is available to the repository ("epic", decision `themes-and-release-milestones`).
+- Amended 2026-11-04 (#537): the repository glossary also gives the French word of each
+  reserved term a French text of a spec writes, with its banned French words; the text that
+  first writes a term in French adds its row in the same PR.

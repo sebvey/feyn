@@ -1,7 +1,7 @@
-# The tables of course/README.md section 2: the fields of course.yaml, of a domain entry, of a
-# concept entry and of a sub-concept node, their presence and their form. What a table does not say
-# (unique numbers, course order, the partition into domains, paths that exist) is a rule of
-# course/rules.yaml, verified by course-yaml.
+# The fields of course.yaml, to which course/README.md section 2 points: those of the course, of a
+# domain entry, of a concept entry and of a sub-concept node, their presence and their form. What
+# the schema does not say (unique numbers, course order, the partition into domains, paths that
+# exist) is a rule of course/rules.yaml, verified by course-yaml.
 $schema: https://json-schema.org/draft/2020-12/schema
 title: course.yaml
 type: object

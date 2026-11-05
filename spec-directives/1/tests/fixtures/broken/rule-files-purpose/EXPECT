@@ -1,0 +1,2 @@
+check: rule-files
+message: group 1: purpose must be a non-empty string

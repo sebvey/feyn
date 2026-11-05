@@ -2,7 +2,7 @@
 # teacher/README.md says list). Otherwise the teacher lexicon of the spec fixture
 # (valid/teacher/lexicon.yaml).
 
-# Literal phrases the teacher says (teacher/README.md, "Keys and parameters").
+# Literal phrases the teacher says (teacher/README.md, « Clés et paramètres »).
 phrases:
   example: "Exemple"
   concept_title: "Concept {n} : {title}"

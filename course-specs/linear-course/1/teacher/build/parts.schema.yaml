@@ -20,7 +20,7 @@ properties:
     additionalProperties: false
     properties:
       protocol:
-        description: every rule of the protocol no moment loads, in the order of teacher/README.md, each family and group that keeps a rule preceded by its heading and its Purpose paragraph (Markdown)
+        description: every rule of the protocol no moment loads, in the order of teacher/rules.yaml, each family and group that keeps a rule preceded by its heading and its purpose (Markdown)
         $ref: '#/$defs/text'
       posture:
         description: the paragraph of the course's plan.md under its onboarding heading
@@ -78,7 +78,7 @@ properties:
               meaning:
                 $ref: '#/$defs/text'
         rules:
-          description: the rules of the moment under the headings of their family or group, with the Purpose of a group or family loaded whole (Markdown); empty when the moment has no rule yet
+          description: the rules of the moment under the headings of their family or group, with the purpose of a group or family loaded whole (Markdown); empty when the moment has no rule yet
           type: string
           not:
             $ref: '#/$defs/placeholder'
@@ -122,7 +122,7 @@ properties:
     additionalProperties: false
     properties:
       course:
-        description: the course parameters, from course.yaml (teacher/README.md, "Keys and parameters"), and the course id
+        description: the course parameters, from course.yaml (teacher/README.md, « Clés et paramètres »), and the course id
         type: object
         required: [id, title, domain_count, storyline, glossary]
         additionalProperties: false
@@ -133,7 +133,7 @@ properties:
           storyline: { $ref: '#/$defs/text' }
           glossary: { $ref: '#/$defs/text' }
       classroom:
-        description: the classroom parameters (teacher/README.md, "Keys and parameters"), « (site non publié) » with no site address, and the channel
+        description: the classroom parameters (teacher/README.md, « Clés et paramètres »), « (site non publié) » with no site address, and the channel
         type: object
         required: [site_url, domains_url, domain_url, concept_url, channel]
         additionalProperties: false

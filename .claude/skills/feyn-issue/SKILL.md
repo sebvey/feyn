@@ -19,8 +19,8 @@ The argument decides the mode: a number (`12`, `#12`) reads; anything else creat
 three forms, `idea <finding>`, `story [#<epic>] [direct] <what>`, `epic <objective>`:
 - the kind is the first word when it is exactly `idea`, `story` or `epic`; any other first
   word is not a kind (a finding that starts with "stories…" names none);
-- a first word that is an old kind, `slice`, `observation` or `proposal` (words of the "Not"
-  column of `docs/glossary.md`), is never read as its replacement: ask "You said <word>, did
+- a first word that is an old kind, `slice`, `observation` or `proposal` (rejected terms
+  of `docs/glossary.md`), is never read as its replacement: ask "You said <word>, did
   you mean <story or idea>?" (story for `slice` and `proposal`, idea for `observation`), in
   the language of the conversation, and create nothing until the answer (project
   `CLAUDE.md`, "Vocabulary");
