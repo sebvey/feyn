@@ -534,9 +534,10 @@ spec, the `README.md` of its MAJOR (decisions `rules-with-level-and-method`,
 ### category
 
 - means: what a rule is about, from a closed list, extended when needed: for a course, structure, pedagogy, writing, sources or diagrams; for a protocol rule, its family (the nine families of the protocol). A check's category is its rules', and checks are selected by it. The tests of the spec directives have none
-- en: category · rejected: "family" for a category of a course, "kind"
+- en: category · rejected: "family" for a category of a course, "kind", "progression" for the category pedagogy
 - fr: « catégorie »; of a protocol rule, its « famille »
 - not to confuse with: [label](#label) (its kind), [group](#group)
+- why: "progression" was ruled out as the name of the category pedagogy: the contract of a case is pedagogical without being an order; « progression » stays the word of a section of a course's plan (see [course path](#course-path))
 
 ### severity
 

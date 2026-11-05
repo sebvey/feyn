@@ -25,4 +25,3 @@ agent workflow together.
 - A check over two categories or two levels: a course author could not run the checks of one
   category without those of another, and a check over a "shall" and a "should" has no severity
   (the convention of Clippy's groups, Ruff's families, pytest's markers).
-- `progression` for `pedagogy`: the contract of a case is pedagogical without being an order.

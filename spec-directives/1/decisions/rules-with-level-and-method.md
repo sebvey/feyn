@@ -28,10 +28,10 @@ failure are kept apart, the severity derived from the other two (decision
 
 ## Consequences
 
-- Amended 2026-11-02 (#465): the decision moves to the spec directives (epic #454, Material
-  point 15): the rule model, the conformance clause and the tests of a spec's own files bind
-  every spec that follows the directives; the categories and the families stay each spec's.
-  Without this, a second spec would copy the rule model of the first, two copies that drift.
+- Amended 2026-11-02 (#465): the decision moves to the spec directives: the rule model, the
+  conformance clause and the tests of a spec's own files bind every spec that follows the
+  directives; the categories and the families stay each spec's. Without this, a contributor
+  writing a second spec would copy the rule model of the first, two copies that drift.
 - Amended 2026-11-05 (#552): the `origin` of a rule of the protocol is optional, present where a
   feyn issue or decision is its source. Without this, every rule of the protocol needs one, and a
   rule with no feyn source gets one that names a course (decision `spec-names-no-course`).
