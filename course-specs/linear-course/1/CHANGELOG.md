@@ -235,5 +235,5 @@ no class: `- file or area: what changes`.
 - `README.md`, `course/README.md`, `teacher/README.md`, `course/rules.yaml`: a group of
   `course/rules.yaml` is one per section of `course/README.md` that points to rules; the
   descriptions point to the groups of `teacher/rules.yaml` in place of rule ids or a restated
-  rule (the types of a case, the reader tables, « Composition »), count no families, and the
-  header of `course/rules.yaml` opens in English; no rule changes (#560).
+  rule (the types of a case, the reader tables, « Composition »), `teacher/README.md` counts no
+  families, and the header of `course/rules.yaml` opens in English; no rule changes (#560).

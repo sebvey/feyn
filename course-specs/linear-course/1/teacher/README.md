@@ -94,7 +94,7 @@ cible se construit depuis la même composition.
 | `on-demand` | `at-a-moment` | à chacun de ses moments (accueil, reprise, un schéma demandé ou déclaré au sous-concept en cours, l'arrêt, une remise à zéro), les règles de ce moment (groupe `onboarding`, groupe `resume`, la famille `stop`, des règles du groupe `diagram-showing` ; aucune encore pour une remise à zéro) et ce que ce moment lit |
 | `course-reads` | `during-the-session` | le cours tel qu'il est copié, lu quand le protocole le dit : le fil rouge, le fichier de domaine, le `concept.md` du concept (la matière) et son `teaching.md` (la méthode), `sources.md` sur demande, le glossaire du cours |
 | `learner-memory` | `at-start-and-save-points` | les modèles de l'apprenant (spec, `templates/learner/`), les règles de la mémoire (la famille `learner-memory`), les trois fichiers de `learner/` ; rien du cours |
-| `permissions` | `always` | ce qu'un professeur écrit, `learner/` et ses commits, et ce qu'il n'écrit jamais, `course/` (groupe `learner-memory`) |
+| `permissions` | `always` | ce qu'un professeur écrit, `learner/` et ses commits, et ce qu'il n'écrit jamais, `course/` (une règle du groupe `learner-memory`) |
 
 Deux lecteurs y viennent. Le builder, qui écrit le build de la classe : sa moitié qui dépend de ce
 MAJOR, [`build/render-parts`](build/README.md), lit `composition.yaml` et `rules.yaml` pour rendre
