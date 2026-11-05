@@ -6,7 +6,7 @@ area: spec:linear-course
 ---
 
 Without this, an agent would write a table of fields of a course (`course.yaml`, the
-`concept.md` frontmatter) as one rule per field, hundreds of entries such as "`id` is
+`concept.md` frontmatter) as one rule per field, dozens of entries such as "`id` is
 mandatory" in `course/rules.yaml`, which no editor validates as the author types.
 
 The tables of fields of a course are schemas in `course/schemas/*.schema.yaml`, JSON Schema
@@ -19,5 +19,5 @@ author gets validation and completion.
 
 ## Options ruled out
 
-- One rule per row of a table of fields: hundreds of entries, no validation nor completion in
+- One rule per row of a table of fields: dozens of entries, no validation nor completion in
   the editor.

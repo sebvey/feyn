@@ -174,7 +174,8 @@ directives, from their tag on:
 The standards a rule of the directives depends on, with the edition the directives read:
 
 - ISO/IEC Directives Part 2, 9th edition (2021): the levels (section 3).
-- ISO/IEC/IEEE 29148:2018: the methods (section 4).
+- ISO/IEC/IEEE 29148:2018: the methods (section 4); its text, paid, was not read: the methods
+  were checked against secondary sources.
 - SemVer 2.0.0: the versions (section 6).
 - YAML 1.2.2: the rule files and the schemas.
 - JSON Schema 2020-12: the schemas, read by ajv's class `Ajv2020` (decision
