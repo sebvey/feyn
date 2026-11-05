@@ -17,7 +17,6 @@ groups:
     rules:
       - id: first-rule
         level: requirement
-        origin: "feyn: #1"
         text: Le premier message part sans appel d'outil.
   - id: learner-memory
     title: Mémoire
