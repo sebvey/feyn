@@ -123,7 +123,7 @@ here for the files and the versions of a course.
 
 | Standard | Edition | Groups |
 |---|---|---|
-| [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le dossier de concept », « Le frontmatter de concept.md », « Le corps de concept.md », « Le fichier teaching.md », « Les conventions du texte lecteur », « Les fichiers de domaine », « Les fichiers du cours »; `onboarding`, `resume`, `domain-presentation`, `loop`, `message-form` |
+| [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le dossier de concept », « Le frontmatter de concept.md », « Le corps de concept.md », « Le fichier teaching.md », « Le fichier sources.md », « Les conventions du texte lecteur », « Les fichiers de domaine », « Les fichiers du cours »; `onboarding`, `resume`, `domain-presentation`, `loop`, `message-form`, `learner-memory` |
 | [GitHub Flavored Markdown, tables](https://github.github.com/gfm/#tables-extension-) | 0.29-gfm (2019-04-06) | « Le fichier sources.md », « Les fichiers du cours » |
 | [YAML](https://yaml.org/spec/1.2.2/) | 1.2.2 (2021-10-01) | « Le fichier course.yaml », « Le dossier de concept », « Le frontmatter de concept.md », « Les fichiers de domaine » |
 | [JSON Schema](https://json-schema.org/draft/2020-12) | 2020-12 | « Le fichier course.yaml », « Le frontmatter de concept.md » |
