@@ -41,7 +41,8 @@
      sub-bullets (commands, secondary paths, what to check on the way). Numbered when the
      order matters. A direct story (one edit with no behaviour, named `direct` at its
      creation) opens this section with the plain line `Direct delivery`, alone, before the
-     first item: `/feyn-deliver-story-alone` and `/feyn-pull-request` read it there. -->
+     first item: `/feyn-issue`, `/feyn-deliver-epic`, `/feyn-deliver-story-alone` and
+     `/feyn-pull-request` read it there. -->
 
 ### Reads
 

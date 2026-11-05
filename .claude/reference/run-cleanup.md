@@ -1,23 +1,25 @@
 # The cleanup of a run
 
 How the worktrees and the local branches a delivery leaves are removed: a workflow run's, a
-reviewer's, the scratch worktree of a merge of `main` into an integration branch, an issue
-branch after its PR. One worktree policy for all of them. When to clean (after each run, after
-a merge) is the caller's step; the caller passes the parameters below. Nothing here deletes a
-remote branch.
+reviewer's, the scratch worktree of a merge of `main` into an integration branch, a Done when's,
+an issue branch after its PR. One worktree policy for all of them. When to clean (after each
+run, after a merge) is the caller's step; the caller passes the parameters below. Nothing here
+deletes a remote branch.
 
 ## The parameters
 
 - **The worktrees**: their paths. A workflow run's are `.claude/worktrees/wf_<run id>-<n>`, on
   a branch `worktree-wf_<run id>-<n>` (`git worktree list --porcelain` lists them); a
   reviewer's, `.claude/worktrees/agent-<id>`, on a branch `worktree-agent-<id>`; the scratch
-  worktree of a merge of `main`, a detached path of the scratchpad, on no branch.
+  worktree of a merge of `main`, a detached path of the scratchpad, on no branch; the worktree
+  a Done when's command runs in ([done-when.md](done-when.md)), detached at the base, on no
+  branch.
 - **The base**, for a run that opened no PR only (step 3): `main`, or the epic's integration
   branch.
 - **The branch on `origin`** the worktrees' `HEAD` must be on: a PR not merged, its head
   branch; the scratch worktree of a merge of `main`, or the reviewer of a whole integration
   branch, that integration branch; a PR merged, none (its branch goes with the merge); a run
-  that opened no PR (`pr` 0), none.
+  that opened no PR (`pr` 0), none; a Done when's worktree, none.
 - **The local branch** the delivery made (an issue branch `<type>/<n>-<slug>`, an integration
   branch), with its PR merged or not; none when the caller cleans worktrees only.
 
@@ -43,8 +45,8 @@ the caller, who tells the maintainer:
    `git branch -D worktree-agent-<id>` (a detached worktree has none).
 
 A worktree already gone needs nothing: a worktree with no change at the end of its agent's turn
-is removed (Claude Code, observed 2026-10-28, #171); a workflow agent's, holding a change, is
-kept after the run (Claude Code, observed 2026-10-31, #348).
+is removed ([worktree-agent.md](worktree-agent.md), "Claude Code behaviours"); a workflow
+agent's, holding a change, is kept after the run (Claude Code, observed 2026-10-31, #348).
 
 ## The local branch
 

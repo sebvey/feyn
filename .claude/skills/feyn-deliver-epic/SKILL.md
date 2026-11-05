@@ -45,7 +45,8 @@ messages only: a decision put to the maintainer takes the form of step 3.
   (steps 2.6, 3 and 5); then the plan (a Delivery line naming the integration branch; the
   stories envisaged in order with the words "an estimate", since #317 planned five and
   delivered eight, the first one marked next; Unknown; Dropped), rewritten in place at each
-  change; below, the log, only added to.
+  change; below, the log, only added to. The comment that adds it and each PATCH that edits it
+  have their output read ([project.md](../../reference/project.md), "GitHub writes").
 - The epic goes In progress with its first story: the contributor sets it (`/feyn-issue-branch`
   step 5); read it after the first run and set it if it is not.
 
@@ -166,9 +167,10 @@ worktree `.claude/worktrees/agent-<id>`, its `HEAD` on the integration branch, n
 When no open question remains and every story is closed and Done
 ([project.md](../../reference/project.md), "Epics", the stories and their count):
 1. Check each statement of the epic's Done when yourself (a command, a file), not from a review.
-2. Open the epic PR: `mise exec -- gh pr create --base main --head <integration branch>`, title
-   `<type>(<area>): <summary>`, body starting with `Closes #<epic>`, then the sections of
-   `/feyn-pull-request` step 5, Issues listing every story with its PR.
+2. Open the epic PR: `git fetch`, `git switch <integration branch>` (a local branch tracking
+   `origin/<integration branch>`, created by the switch when there is none) and
+   `git pull --ff-only`, then `/feyn-pull-request --base main`, its issue the epic (the
+   integration branch is `<type>/<epic>-<slug>`); its step 1 is the check above.
 3. Hand it over as [hand-over.md](../../reference/hand-over.md) says, the path an epic PR: the
    epic Ready for review, the notification. The merge is the maintainer's.
 4. The plan comment head rewritten: the epic PR handed over, the merge awaited from the
@@ -180,9 +182,8 @@ When no open question remains and every story is closed and Done
    tell the maintainer.
 2. The epic is closed and Done (`mise exec -- gh issue view <epic> --json state,projectItems`);
    not Done after a few seconds: set it ([project.md](../../reference/project.md), "Commands").
-3. `git pull --ff-only` on `main`; then the local integration branch, its PR (the epic PR)
-   merged, as [run-cleanup.md](../../reference/run-cleanup.md) says (step 1 creates none: often
-   nothing to do). Every worktree and `worktree-*` branch of the epic's runs is gone
+3. `git switch main`, `git pull --ff-only`; then the local integration branch (step 5.2 created
+   it), its PR (the epic PR) merged, as [run-cleanup.md](../../reference/run-cleanup.md) says. Every worktree and `worktree-*` branch of the epic's runs is gone
    (`git worktree list`, `git branch --list 'worktree-*'`); one left is cleaned the same way,
    its PR merged.
 4. The issues the epic blocked that are now free: as `/feyn-merge-cleanup` step 7, "The issues
