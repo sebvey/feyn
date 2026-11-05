@@ -31,7 +31,7 @@ The checks of a commitment ([commitment.md](../../reference/commitment.md), "The
 
 ## 3. Present it
 
-One message, under its own level-2 heading, the decision put to the maintainer in the form their instructions give (`CLAUDE.md`, "Working with the maintainer"; where none is loaded, the project `CLAUDE.md`'s own form). What it holds:
+One message, under its own level-2 heading, the decision put to the maintainer in the form the maintainer's instructions give a decision. What it holds:
 - its frame in one line: epic or story, what it is for, where it belongs;
 - **Purpose**, **Staleness** and **Overlap**, as their files say (step 2);
 - what it still calls for, and what no longer holds, each with its proof (a commit, a file and line, an issue, each named);

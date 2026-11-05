@@ -22,7 +22,7 @@ Read each one: `mise exec -- gh issue view <n> --json number,title,url,state,lab
 
 With one issue named, the triage keeps no working list and writes no progress line: it is that one item, step 3 then step 4.
 
-With several, it keeps its list in a file `feyn-triage-<date>.md` in the work session's scratchpad (Claude Code's temporary folder of the work session, given in its environment): not in the repository, and not in Claude's memory folder. One line per issue, in the order given, `#<n> <title> · <status>`, the status being `pending`, `presented`, `awaiting maintainer action: <what>`, `left open: <why>`, `decided: <decision>` or `executed`. The maintainer's rules for a pass over a list (`CLAUDE.md`, "Working with the maintainer") hold then: the progress line `Triage: <n>/<N> treated · in progress: #<x>` at the top of each message, computed from the list.
+With several, it keeps its list in a file `feyn-triage-<date>.md` in the work session's scratchpad (Claude Code's temporary folder of the work session, given in its environment): not in the repository, and not in Claude's memory folder. One line per issue, in the order given, `#<n> <title> · <status>`, the status being `pending`, `presented`, `awaiting maintainer action: <what>`, `left open: <why>`, `decided: <decision>` or `executed`. The maintainer's rules for a pass over a list (the maintainer's instructions) hold then: the progress line `Triage: <n>/<N> treated · in progress: #<x>` at the top of each message, computed from the list.
 
 The list is used, not only written:
 - before presenting an item, reread it: a line `awaiting maintainer action` stops the triage on that item (step 3); otherwise the next item is the first line neither `executed` nor `left open`;
@@ -35,7 +35,7 @@ The scratchpad goes with the work session: no purge step. A triage resumed in an
 
 **The checks**, before it is presented: those of a commitment ([commitment.md](../../reference/commitment.md), "The checks"), since a triage may create a work item Ready: the reading against the purpose first ([purpose-reading.md](../../reference/purpose-reading.md), the `stale` reread included), the staleness check, and the neighbours ([neighbours.md](../../reference/neighbours.md), the Status Done left out). Ask first: does it still deserve to exist, in this form? An issue in Idea whose body already defines a work (a Done when, a To do) is of the old format (step 4).
 
-One item per message, under its own level-2 heading, the decision put to the maintainer in the form their instructions give (`CLAUDE.md`, "Working with the maintainer"; where none is loaded, the project `CLAUDE.md`'s own form). What it holds:
+One item per message, under its own level-2 heading, the decision put to the maintainer in the form the maintainer's instructions give a decision. What it holds:
 - its frame in one line: an idea or an issue of the old format, what it is for, where it belongs;
 - what the checks show, as their files say (purpose, staleness, neighbours);
 - what it calls for, and what no longer holds, each with its proof (a commit, a file and line, an issue, each named);
