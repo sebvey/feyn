@@ -1,6 +1,7 @@
 'use strict';
-// A test of the spec's own files, run by check-spec, which verifies no rule (decisions
-// rules-with-level-and-method, spec-files-by-product): the rule files and the schemas.
+// A test of the spec's own files, run by check-spec, which verifies no rule (decision
+// conformity-by-product): the rule files (decisions rules-with-level-and-method,
+// spec-files-by-product) and the schemas (decision field-tables-as-schemas).
 //   - course/rules.yaml and teacher/rules.yaml exist, each a map whose one key
 //     `groups` is a non-empty list; a group has `rules`, a non-empty list, and may declare `id`
 //     (a group slug), `title`, `purpose` (what the group is for, a non-empty string), `category`

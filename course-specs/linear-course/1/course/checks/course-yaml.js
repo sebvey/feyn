@@ -4,7 +4,7 @@
 // spec-directives/1/README.md section 6). An unknown spec or MAJOR is refused by
 // course-specs/check-course, before these checks run. A missing or unreadable lexicon fails
 // here too, as a tooling error of the check, not as a rule: the lexicon is a file of the spec,
-// which no course can break (decision rules-with-level-and-method; lexicon-keys of check-spec
+// which no course can break (decision conformity-by-product; lexicon-keys of check-spec
 // tests it).
 const path = require('path');
 const directives = require('./directives');

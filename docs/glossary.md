@@ -488,7 +488,8 @@ where the concept is implemented, stored, read or written (decision `glossary-by
 ## Rules and checks
 
 The **spec directives** (`spec-directives/1/README.md`) and, for the categories and the checks of a
-spec, the `README.md` of its MAJOR (decision `rules-with-level-and-method`).
+spec, the `README.md` of its MAJOR (decisions `rules-with-level-and-method`,
+`levels-from-iso-directives`, `severity-from-level-and-method` and `conformity-by-product`).
 
 ### rule
 

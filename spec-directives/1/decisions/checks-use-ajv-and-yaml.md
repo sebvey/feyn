@@ -15,7 +15,7 @@ its lockfile per directives MAJOR (`spec-directives/1/`, beside the `lib/` they 
 by `npm ci`, and loaded by the checks of every spec MAJOR that declares that MAJOR in its
 `spec.yaml`, through a `createRequire` on that `package.json`; ajv validates the schemas,
 through the class `Ajv2020` (`ajv/dist/2020`), since the schemas are JSON Schema 2020-12
-(decision `spec-files-by-product`); the package `yaml` (eemeli) reads YAML 1.2.2 in
+(decision `field-tables-as-schemas`); the package `yaml` (eemeli) reads YAML 1.2.2 in
 place of `lib/yaml.js`, which is removed. A failure still points at `file:line`: ajv gives a
 path in the object (`/concepts/3/slug`), the `yaml` package gives the positions in the source,
 and the checks map the one to the other (from #336). The other readers of `lib/` (`md.js`,
