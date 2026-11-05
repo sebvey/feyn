@@ -13,8 +13,8 @@ glossary has this form and holds the word choices is decisions `glossary-by-conc
 before writing.
 
 A choice that changes files, a structure or steps (a file renamed with its term, a section added,
-a step of the work changed) is not a word choice: send it to `/feyn-decision`, and write here only
-the words it uses.
+a moment of the work cycle or a step of a skill changed) is not a word choice: send it to
+`/feyn-decision`, and write here only the words it uses.
 
 ## Read `<word>`
 

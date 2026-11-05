@@ -24,11 +24,12 @@ messages only: a decision put to the maintainer takes the form of step 3.
 
 - Read it: `mise exec -- gh issue view <epic> --comments`. Refuse in one line, changing nothing,
   when it has no label `kind:epic`, no Done when, an open blocker
-  ([project.md](../../reference/project.md), "Dependencies"), or a Status other than Ready or In
-  progress. In progress: resume it, from its integration branch
+  ([project.md](../../reference/project.md), "Dependencies"), or a Status of Idea, Option or
+  Done. In progress: resume it, from its integration branch
   (`git ls-remote --heads origin '*/<epic>-*'`) and the plan of its plan comment (the story
-  marked next). A plan comment in the old form (no `**Log**` line) is rewritten in two parts at
-  this step.
+  marked next). Ready for review (its epic PR handed over, awaiting the maintainer's merge):
+  resume it at step 6, which stops when the epic PR is not merged yet. A plan comment in an
+  older form (no head, or no `**Log**` line) is rewritten in three parts at this step.
 - The epic's Done when, taken for the first time with no baseline under a command: give it its
   baselines, as a dated amendment of the epic, each output checked against its statement's
   intent ([done-when.md](../../reference/done-when.md)); a statement they show wrong is put to
@@ -38,11 +39,14 @@ messages only: a decision put to the maintainer takes the form of step 3.
   `<story branch>`), cut from `origin/main` without touching the checkout: `git fetch`, then
   `git push origin origin/main:refs/heads/<integration branch>`.
 - The plan comment, as [contributing](../../../docs/contributing.md), "How the work is
-  organised", moment 1, says, in the form of [project.md](../../reference/project.md), "Epics",
-  "The plan comment": above, the plan (a Delivery line naming the integration branch; the
+  organised", moment 7, says, in the form of [project.md](../../reference/project.md), "Epics",
+  "The plan comment": first, the plan comment head (where the epic stands, what runs, what
+  awaits the maintainer, what comes next; at most ten lines), rewritten whole at each step
+  (steps 2.6, 3 and 5); then the plan (a Delivery line naming the integration branch; the
   stories envisaged in order with the words "an estimate", since #317 planned five and
   delivered eight, the first one marked next; Unknown; Dropped), rewritten in place at each
-  change; below, the log, only added to.
+  change; below, the log, only added to. The comment that adds it and each PATCH that edits it
+  have their output read ([project.md](../../reference/project.md), "GitHub writes").
 - The epic goes In progress with its first story: the contributor sets it (`/feyn-issue-branch`
   step 5); read it after the first run and set it if it is not.
 
@@ -50,7 +54,10 @@ messages only: a decision put to the maintainer takes the form of step 3.
 
 One at a time, the next one only (rules of the cycle):
 
-1. **Pose** it: `/feyn-issue story #<epic> <what>`, the story the plan marks next. Before
+1. **Pose** it: `/feyn-issue story #<epic> <what> --status Ready`, the story the plan marks
+   next. Its Done when carries, copied as written, each statement the epic's Done when sets for
+   every story (the #520 line of an epic that changes `courses/po-essai/`, forgotten for eight
+   stories of epic #450), its command run for the story as below. Before
    `/feyn-issue`, check its brief: reread its Done when against itself (two statements that
    cannot both hold) and against the epic's Objective and Material; run each command of its Done
    when on `origin/<integration branch>` and write its baseline under it, as
@@ -61,7 +68,7 @@ One at a time, the next one only (rules of the cycle):
    foundational (vocabulary, the structure of a file of reference, the teacher's behaviour),
    from the Material or by an open question (step 3), never left to the contributor's choice.
    A story of the epic that a triage or a brainstorm created is born Option (by default at a
-   triage, always from a brainstorm: `/feyn-triage` step 4, `/feyn-brainstorm` moment 4): it is
+   triage, always from a brainstorm: `/feyn-triage` step 4, `/feyn-brainstorm` step 4): it is
    not committed, and `/feyn-issue-branch` refuses it. The orchestrator asks the maintainer to
    commit it (set Ready, at an option refinement, `/feyn-refine-option`), then marks it next in
    the plan once they have, without running `/feyn-issue`: it poses no twin of it.
@@ -70,16 +77,17 @@ One at a time, the next one only (rules of the cycle):
    never rebase, in a detached worktree of the scratchpad, never from the local integration
    branch, out of date once a story is merged
    (`git worktree add --detach <path> origin/<integration branch>`,
-   `git -C <path> merge origin/main`, `git -C <path> push origin HEAD:<integration branch>`,
-   `git worktree remove <path>`). A conflict outside the epic's files: tell the maintainer.
+   `git -C <path> merge origin/main`, `git -C <path> push origin HEAD:<integration branch>`),
+   then clean that worktree as [run-cleanup.md](../../reference/run-cleanup.md) says (the
+   worktree `<path>`, its `HEAD` on the integration branch, no local branch). A conflict outside
+   the epic's files: tell the maintainer.
 3. **Run** `.claude/workflows/deliver-story.js` in epic mode (its `whenToUse` gives the args:
-   `issue`, `epic`, `base` the integration branch, `type`, `area`, `work` when the story needs
-   guidance beyond its To do), with `scriptPath` absolute. A direct story is not run: "A direct
-   story", below, replaces steps 2.3 to 2.5.
+   `issue`, `epic`, `base` the integration branch, `work` when the story needs guidance beyond
+   its To do), with `scriptPath` absolute. A direct story is not run: "A direct story", below,
+   replaces steps 2.3 to 2.5.
 4. **Read the result**, every field, never only `status`:
-   - `merged`: its `reviewLine` must be in the PR's Checks
-     (`mise exec -- gh pr view <pr> --json body`); missing, add it
-     (`mise exec -- gh pr edit <pr> --body-file <file>`).
+   - `merged`: the workflow wrote its `reviewLine` into the PR's Checks and read it back before
+     the merge; nothing to add.
    - `merged-with-problems`: read its `problems`, a story not closed or not Done, or another
      problem of the merge. Fix it before the next story (close it, set its
      Status, [project.md](../../reference/project.md), "Commands"), or report it to the
@@ -101,95 +109,45 @@ One at a time, the next one only (rules of the cycle):
    - `deviations`, whatever the status, and the `choicesMade` that add structure (a new file,
      a category, a marker, an exception to a principle): each is sorted at once (step 3); the
      other choices stay in its PR's "Delivery notes".
-5. **Clean the run**, the steps of both delivery skills, `<base>` being the integration branch,
-   or `main` for a story without an epic.
-   `git worktree list --porcelain` lists the run's worktrees,
-   `.claude/worktrees/wf_<run id>-<n>`. A locked one: its agent still runs, wait. For each:
-   - `git -C <path> status --porcelain` shows nothing but `node_modules`; anything else: stop
-     and show it.
-   - A PR not merged (a story without an epic, always; here `needs-orchestrator`, `blocked`,
-     `failed`, before a rerun): after `git fetch`, the worktree's `HEAD` is on the PR's branch
-     on `origin` (`git -C <path> branch -r --contains HEAD` names `origin/<story branch>`); not
-     there: stop and show it. A run that opened no PR (`pr` 0): a worktree whose `HEAD` adds
-     nothing to `origin/<base>` (`git -C <path> log origin/<base>..HEAD` prints nothing) is
-     removed; one with commits stays, named to the maintainer with the run's status.
-   - Then `git worktree remove --force <path>` (an untracked `node_modules` makes a plain
-     remove refuse) and `git branch -D worktree-wf_<run id>-<n>`.
-
-   Then the local story branch. A merged PR (`mise exec -- gh pr view <pr> --json state` reads
-   `MERGED`): `git branch -D <story branch>`; the remote one goes with the merge, still there
-   (`git ls-remote --heads origin <story branch>`): tell the maintainer. A PR not merged: move
-   the local story branch to the PR's head, which a corrector's push (`git push origin
-   HEAD:<story branch>`, from a detached `HEAD`) does not move: `git branch -f <story branch>
-   origin/<story branch>`, never the integration branch. The rerun's contributor switches to it
-   and its push is a fast-forward. For a story without an epic, that local branch stays until
-   the merge: `/feyn-merge-cleanup` deletes it (its step 4).
+5. **Clean the run** as [run-cleanup.md](../../reference/run-cleanup.md) says: the run's
+   worktrees `.claude/worktrees/wf_<run id>-<n>`, the integration branch as the base, the
+   local `<story branch>` with the story's PR (`pr`), merged (`merged`,
+   `merged-with-problems`) or not (`needs-orchestrator`, `blocked`, `failed`, `merge-failed`,
+   before a rerun: the worktrees' `HEAD` on `<story branch>`); a run that opened no PR
+   (`pr` 0): no branch on `origin`, its worktrees compared with the base.
 6. **The plan comment** ([project.md](../../reference/project.md), "Epics", "The plan
    comment": find it, read it into a file, edit, PATCH it): in the plan, the story ticked with
    its PR and the next one marked, the plan rewritten first when the next is not obvious or the
    epic needs more stories than it envisaged (step 1); after the last story, the whole-branch
    review marked next (the epic closes only with its epic PR, step 5). In the log, the line
-   `<date> #<n> (PR #<pr>): <what it delivered, in a few words>`.
+   `<date> #<n> (PR #<pr>): <what it delivered, in a few words>`. The head rewritten whole: the
+   story delivered, the next one running or to pose, what awaits the maintainer (an open
+   question, a commitment), what comes next.
 7. **Tell the maintainer** ("Progress"): what the story changed, what comes next, what is
    awaited from them.
 
 **A direct story.** A story whose To do opens with the line "Direct delivery" (named `direct` at
 its creation, [contributing](../../../docs/contributing.md), "How the work is organised", moment
-2) is delivered by the orchestrator itself, in the work session, with no workflow run and no
+5) is delivered by the orchestrator itself, in the work session, with no workflow run and no
 fresh-agent review, in place of steps 2.3 to 2.5:
-- `/feyn-issue-branch <n>`, its branch cut from the integration branch (its step 3:
-  `git switch -c <type>/<n>-<slug> origin/<integration branch>`), then the edit;
-- `/feyn-pull-request`, the integration branch standing in for `main` throughout (its diff in
-  step 2, its PR in step 6: `--base <integration branch>`), its Checks saying
-  `Fresh-agent review: none, direct delivery.`, and without its step 8: a story never goes
-  Ready for review;
+- `/feyn-issue-branch <n> --base <integration branch>`, then the edit;
+- `/feyn-pull-request --base <integration branch>`, its Checks saying
+  `Fresh-agent review: none, direct delivery.`; no hand-over: a story never goes Ready for
+  review;
 - the merge, as the workflow's Merge stage does: `mise exec -- gh pr merge <pr> --squash
   --match-head-commit <head sha>`, close the story
   ([project.md](../../reference/project.md), "Epics", Close) and check it
-  is Done; then `git switch main` and `git branch -D <type>/<n>-<slug>`; then steps 2.6 and 2.7.
+  is Done; then the local branch `<type>/<n>-<slug>`, its PR merged, as
+  [run-cleanup.md](../../reference/run-cleanup.md) says; then steps 2.6 and 2.7.
 
 ## 3. Sorting, open questions, answers
 
-**The sort.** What a run or a review reports (a deviation, a structural choice made without the
-maintainer, a finding) is sorted at once, before anything reaches the maintainer, and the work
-goes on; it is never left as a line of Review first:
-1. a contradiction in the orchestrator's own brief (a story's Done when against itself, or
-   against the epic's Objective or Material), a wrong command among them (a deviation "wrong
-   command": a line its command catches that its statement's intent does not target,
-   [done-when.md](../../reference/done-when.md)): fix the brief, the story's Done when by a
-   dated amendment, and what the run built on it (a rerun, step 2.4), and inform the maintainer;
-2. one already settled by a decision, the epic's Material, a rule (`CLAUDE.md`, a skill, a
-   spec) or an answer the maintainer gave: apply it, and inform the maintainer;
-3. one a story of the plan makes moot: a line in the plan, under that story;
-4. the rest, when it is costly to undo or foundational (vocabulary, the structure of a file of
-   reference, the teacher's behaviour), becomes an open question; a choice that is neither
-   stays in its PR's "Delivery notes".
-
-"Inform" is a line of a progress message ("Progress"), not a question.
-
-**An open question that reports a defect** carries, with it: the correction; the cause (the
-instruction, skill step, brief or missing check that produced it or let it pass); the corrective
-action at that cause, or why it is not worth one (an isolated slip); and how the next occurrence
-will show that it held.
-
-**The trace** is on GitHub, at once: the line `Open question: <the choice>, <the options ruled
-out>, <the cost of going back> (#<story>)` in the log of the plan comment
-([project.md](../../reference/project.md), "Epics", "The plan comment"), and a comment on the
-epic, numbered, with its recommendation, ending "Answer here or in the work session; the plan
-comment records the answer."
-
-**The decision** is the message to the maintainer in the work session (GitHub notifies nobody of
-the maintainer's own comment, which the orchestrator posts): one question at a time, in the form
-`CLAUDE.md`, "Working with the maintainer", gives, with the link to the comment on the epic; the
-next one once it is answered. It is not a progress message.
-
-**The answer**, on the epic or in the work session, is recorded at once: the line
-`Answered: <the answer> (the maintainer, <where>, <date>)`, `<where>` being `on the epic` or
-`in the work session`, right under its `Open question:` line; then the answer is applied, by a
-story (posed next) when it needs work.
-
-**The count**: the log's lines starting with `Open question:` that no `Answered:` line follows.
-The epic PR is not handed over while one remains.
+What a run or a review reports (a deviation, a structural choice made without the maintainer, a
+finding) is sorted at once, as [sort.md](../../reference/sort.md) says, the path an epic: its
+four cases, and for what nothing settles, an open question (its form when it reports a defect,
+its trace on GitHub, the decision put to the maintainer, the answer recorded, the count). An
+open question added to the log, or its answer recorded, rewrites the plan comment head in the
+same edit: what awaits the maintainer.
 
 ## 4. Review of the whole branch
 
@@ -201,21 +159,22 @@ the prompt (the branch in place of a PR, the epic in place of an issue,
 in the diff that the plan comment holds neither as open nor as answered. A blocking finding: a
 story fixes it (step 2), then a fresh agent verifies the fix, as
 `/feyn-pr-review` step 4 verifies corrections. A structural choice: sorted (step 3).
-Clean its worktree as `/feyn-pr-review` step 2 says for a reviewer's `agent-<id>` worktree
-(`TaskStop`, then unlock and remove).
+Clean its worktree as [run-cleanup.md](../../reference/run-cleanup.md) says: the reviewer's
+worktree `.claude/worktrees/agent-<id>`, its `HEAD` on the integration branch, no local branch.
 
 ## 5. The epic PR and the hand-over
 
 When no open question remains and every story is closed and Done
 ([project.md](../../reference/project.md), "Epics", the stories and their count):
 1. Check each statement of the epic's Done when yourself (a command, a file), not from a review.
-2. Open the epic PR: `mise exec -- gh pr create --base main --head <integration branch>`, title
-   `<type>(<area>): <summary>`, body starting with `Closes #<epic>`, then the sections of
-   `/feyn-pull-request` step 5, Issues listing every story with its PR. Set the epic Ready for
-   review ([project.md](../../reference/project.md), "Commands").
-3. Tell the maintainer ("Progress"): the link to the epic PR, what they have to do, what is
-   left outside the epic.
-4. The merge is the maintainer's: the PR page, "Squash and merge".
+2. Open the epic PR: `git fetch`, `git switch <integration branch>` (a local branch tracking
+   `origin/<integration branch>`, created by the switch when there is none) and
+   `git pull --ff-only`, then `/feyn-pull-request --base main`, its issue the epic (the
+   integration branch is `<type>/<epic>-<slug>`); its step 1 is the check above.
+3. Hand it over as [hand-over.md](../../reference/hand-over.md) says, the path an epic PR: the
+   epic Ready for review, the notification. The merge is the maintainer's.
+4. The plan comment head rewritten: the epic PR handed over, the merge awaited from the
+   maintainer, then the cleanup (step 6, which `/feyn-deliver-epic <epic>` resumes).
 
 ## 6. After the maintainer's merge
 
@@ -223,11 +182,11 @@ When no open question remains and every story is closed and Done
    tell the maintainer.
 2. The epic is closed and Done (`mise exec -- gh issue view <epic> --json state,projectItems`);
    not Done after a few seconds: set it ([project.md](../../reference/project.md), "Commands").
-3. `git pull --ff-only` on `main`; the local integration branch,
-   `git branch -D <integration branch>` if it exists (`git branch --list <integration branch>`:
-   step 1 creates none); the remote one goes with the merge (checked as in step 2.5). Every
-   worktree and `worktree-*` branch of the epic's runs is gone (`git worktree list`,
-   `git branch --list 'worktree-*'`).
+3. `git switch main`, `git pull --ff-only`; then the local integration branch (step 5.2
+   created it), its PR (the epic PR) merged, as
+   [run-cleanup.md](../../reference/run-cleanup.md) says. Every worktree and `worktree-*`
+   branch of the epic's runs is gone (`git worktree list`, `git branch --list 'worktree-*'`);
+   one left is cleaned the same way, its PR merged.
 4. The issues the epic blocked that are now free: as `/feyn-merge-cleanup` step 7, "The issues
    it blocked", for the epic.
 
@@ -240,11 +199,6 @@ The behaviours the steps above rely on, one line each with its step
   (Claude Code, observed 2026-10-28, #130).
 - Step 2.3: `Workflow` called by name serves a frozen version of the script, hence `scriptPath`
   absolute (Claude Code, observed 2026-10-29, #269).
-- Step 2.5: a workflow agent spawned with isolation works in `.claude/worktrees/wf_<run id>-<n>`
-  on a branch `worktree-wf_<run id>-<n>`, kept after the run when it holds a change
-  (Claude Code, observed 2026-10-31, #348).
-- Step 2.5: the repository deletes a PR's head branch on its merge
-  (GitHub, observed 2026-10-31, #342).
 - Step 2.4: a Project workflow "Auto-archive items" archived closed slices, whose items then
   left the Project and could not be set Done; it is off since 2026-10-31
   (GitHub, observed 2026-10-31, #317).

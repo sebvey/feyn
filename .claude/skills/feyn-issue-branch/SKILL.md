@@ -1,14 +1,23 @@
 ---
 name: feyn-issue-branch
-description: "Put GitHub issue n on feyn in progress on its own branch, before any work on it. It refuses the issue when it is not committed (Idea or Option), a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date main (from its epic's integration branch for a story of an epic), reruns the commands of its Done when against their baselines (writes them when it has none), sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
-argument-hint: "<issue number>"
+description: "Put GitHub issue n on feyn in progress on its own branch, before any work on it. It refuses the issue when it is not committed (Idea or Option), a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date base (--base <branch>, main by default; its epic's integration branch for a story of an epic), resumes an issue In progress and its branch when run by an agent in its own worktree (--worktree), reruns the commands of its Done when against their baselines (writes them when it has none), sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
+argument-hint: "<issue number> [--base <branch>] [--worktree]"
 ---
 
-# /feyn-issue-branch <n>
+# /feyn-issue-branch <n> [--base <branch>] [--worktree]
 
 One job: put issue n in progress on its own branch. It writes nothing but the branch, the
 Status and, for a Done when with no baseline, its baselines (a dated amendment of the issue);
 the work itself comes after.
+
+Its caller passes its variations as parameters and rewrites none of its steps (decision
+`one-moment-one-file`):
+- `--base <branch>`: the branch the issue branch is cut from, `main` by default. A story of an
+  epic, a direct story included, gives its epic's integration branch (the Delivery line of its
+  plan comment; decision `epic-on-integration-branch`). Steps 2 and 3.
+- `--worktree`: run by an agent in its own worktree (the contributor of the agent workflow
+  `deliver-story.js`), which can neither `git switch main` (it fails in a worktree,
+  [worktree-agent.md](../../reference/worktree-agent.md)) nor ask the maintainer. Steps 1 to 3.
 
 ## 1. Read the issue
 
@@ -28,18 +37,21 @@ Refuse, saying why in one line, and change nothing, when:
   (`/feyn-refine-option`);
 - its Status is already In progress: look for its branch (`git branch --list "*/<n>-*"`)
   and its PR (`mise exec -- gh pr list --search "<n> in:body"`), and propose to resume them
-  instead. In progress with no branch and no PR is a Status that drifted: say so and go on;
+  instead. In progress with no branch and no PR is a Status that drifted: say so and go on.
+  With `--worktree`, not a refusal: resume them, with or without a branch or a PR (the
+  orchestrator or an earlier run set the Status), and go on;
 - its Status is Ready for review: its PR awaits the maintainer's merge; name the PR and stop
   (a correction asked on it goes to that PR, `/feyn-deliver-story-alone` step 4);
 - it has no `type:` label, or no Done when: propose the fix (`/feyn-issue <n>` shows what is
   missing) and stop.
 
-## 2. Start from an up-to-date main
+## 2. Start from an up-to-date base
 
 1. `git status --porcelain` must be empty. Uncommitted work belongs to someone:
    say what is there and stop; never stash, restore or clean it.
-2. `git switch main`, then `git pull --ff-only`. A pull that is not
-   a fast-forward means `main` diverged locally: stop and say so.
+2. `git switch main`, then `git pull --ff-only`, which fetches `origin/<base>` too. A pull that
+   is not a fast-forward means `main` diverged locally: stop and say so. With `--worktree`:
+   `git fetch` only.
 
 ## 3. Create the branch
 
@@ -47,18 +59,15 @@ Name: `<type>/<n>-<slug>`, where `<type>` is the issue's `type:` label without i
 (`bug`, `course`, `improvement`, `decision`) and `<slug>` is three to five words of the title,
 lowercase, joined by hyphens (`course/42-concept-9-cases`).
 
-`git switch -c <type>/<n>-<slug> origin/main`, then `git push -u origin <type>/<n>-<slug>`.
-A story of an epic, a direct story included, starts from the epic's integration branch (the
-Delivery line of its plan comment; decision `epic-on-integration-branch`):
-`origin/<integration branch>` in place of `origin/main`, as the brief of the agent workflow
-`deliver-story.js` or `/feyn-deliver-epic` step 2, "A direct story", says.
+`git switch -c <type>/<n>-<slug> origin/<base>`, then `git push -u origin <type>/<n>-<slug>`.
 
 The branch is not linked to the issue: the PR's `Closes #<n>` links them, and a `Refs #<n>`
 PR leaves the issue open (decision `no-branch-link`).
 
 A branch for the issue that already exists (`git branch --list "*/<n>-*"` the local ones,
 `git ls-remote --heads origin "*/<n>-*"` the remote ones): switch to it and say so, do not
-create a second one.
+create a second one. With `--worktree`: `git switch <that branch>`, then
+`git merge origin/<base>` when it is behind.
 
 ## 4. Rerun the Done when
 

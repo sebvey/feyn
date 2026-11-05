@@ -1,6 +1,6 @@
 ---
 name: feyn-brainstorm
-description: "Run a brainstorm with the maintainer on feyn (a spec, a product, the process), subject by subject, and end it in a plan of work items posed through the skills of the cycle: a working folder `tmp/<slug>/`, an inventory of the real object, the subjects decided one by one, a review on a support, a pass on what was missed, the output and its posing (options created, the option it opened from reworked or replaced, neighbours commented), a notebook for the maintainer and an optional review by a fresh agent. It opens from an option whose refinement found its basis changed, an idea (it is then that idea's triage) or the maintainer's subject. Use for \"on brainstorme sur la structure du cours\", \"brainstorm option 475\", \"brainstorm idea 12\", \"let's brainstorm the skills\", \"on passe à l'output\", \"/feyn-brainstorm\"."
+description: "Run a brainstorm with the maintainer on feyn (a spec, a product, the process), subject by subject, and end it in a plan of work items posed through the skills of the cycle: a working folder `tmp/<slug>/`, an inventory of the real object, the subjects decided one by one, a review on a support, a pass on what was missed, the output and its posing (options created, the option it opened from reworked or replaced, neighbours commented) and an optional review by a fresh agent. It opens from an option whose refinement found its basis changed, an idea (it is then that idea's triage) or the maintainer's subject. Use for \"on brainstorme sur la structure du cours\", \"brainstorm option 475\", \"brainstorm idea 12\", \"let's brainstorm the skills\", \"on passe à l'output\", \"/feyn-brainstorm\"."
 argument-hint: "[subject | idea number | option number]"
 ---
 
@@ -9,18 +9,18 @@ argument-hint: "[subject | idea number | option number]"
 One job: run a brainstorm with the maintainer, subject by subject, and end it in a **plan of
 work items posed through the skills of the cycle** (decision `brainstorm-ends-in-options`):
 options created (`/feyn-issue`), the option it opened from reworked or replaced, a neighbour
-commented, and a notebook left to the maintainer. What survives is in those issues: the
+commented. What survives is in those issues: the
 working folder is not versioned, and what the issues do not carry is lost. The maintainer
 decides every subject; the work session frames, measures, proposes, objects and writes.
 
 What it calls, and nothing else: `/feyn-issue` (a story, an epic, an idea), the rework of an
 option as `/feyn-refine-option` step 4 does it, a comment on an issue
 (`mise exec -- gh issue comment <n> --body-file <file>`), the close of the idea it opened from,
-and the reviewer `feyn-brainstorm-reviewer` (moment 4). It writes nothing in the repository: no
+and the reviewer `feyn-brainstorm-reviewer` (step 4). It writes nothing in the repository: no
 branch, no commit, no edit of a tracked file, no decision (the work items write their decisions
 when delivered). It writes in `tmp/`, which git ignores.
 
-A brainstorm of small scope runs the same five moments, with two or three subjects.
+A brainstorm of small scope runs the same five steps, with two or three subjects.
 
 ## 0. The opening
 
@@ -33,7 +33,7 @@ The argument is one of three things:
   `/feyn-refine-option` step 3): read it (`/feyn-issue <n>`) and the refinement's findings;
   it is the starting point, and the output says what becomes of it;
 - **an idea** (Status Idea): read it (`/feyn-issue <n>`); its finding is the question, and the
-  brainstorm is its triage (moment 4 closes it);
+  brainstorm is its triage (step 4 closes it);
 - **the maintainer's subject**, in a few words.
 
 A brainstorm on the process (a skill, a workflow, a policy, the glossary, `contributing.md`)
@@ -44,7 +44,7 @@ ask which problem was observed, and where. Named: create the idea (`/feyn-issue 
 
 Then create the working folder `tmp/<slug>/` at the repository root (slug: two or three words of
 the subject) with its `README.md`, and send its frame as the first message: the goal, the
-constraints, the process (the five moments), the first list of subjects. The maintainer
+constraints, the process (the five steps), the first list of subjects. The maintainer
 corrects it before the inventory starts. The folder is written in the language of the
 conversation.
 
@@ -66,7 +66,7 @@ date, "not versioned".>
 
 ## The process
 
-<the five moments, the subjects in the table's order, the output last.>
+<the five steps, the subjects in the table's order, the output last.>
 
 ## The subjects
 
@@ -144,15 +144,15 @@ State: <open | in progress | decided (<date>)>
 A decision of the project that a subject touches is weighed as the maintainer's rules say
 (`CLAUDE.md`, "Working with the maintainer": their "Plans and working files"; on 2026-11-04,
 `reader-facing-and-teacher-only-files`, `spec-files-by-product` and
-`versioned-objects-and-spec-layout` were replaced); its replacement or amendment is a decision
-to write, carried by a work item (moment 4).
+`versioned-objects-and-spec-layout` were decided to be replaced, by #475 and #522); its
+replacement or amendment is a decision to write, carried by a work item (step 4).
 
 ## 3. The review on a support
 
 Before the output, the maintainer reviews the whole on a support written in the folder: the
 object as it is, then as it will be, each line marked by the work item that changes it (on
 2026-11-04, the tree of the spec, `arbre-spec.md`). What the review finds opens subjects,
-inserted as moment 2 says.
+inserted as step 2 says.
 
 ## 4. The loups, then the output
 
@@ -185,11 +185,12 @@ it is posed; it is self-sufficient: what the folder decided for it (each decisio
 and what was rejected, in an epic's Material or a story's Context), and at most one sentence
 naming the folder.
 - A work item: `/feyn-issue story <what>`, `/feyn-issue story #<epic> <what>` (only the next
-  story of an open epic) or `/feyn-issue epic <objective>`, born Option (decision
-  `idea-and-option-before-ready`), its origin as `/feyn-issue` writes it for a brainstorm (a
-  story's last line of Context, an epic's Material: the idea it opened from, otherwise the
-  brainstorm with the maintainer and its date); the links the order decided, as `/feyn-issue`
-  sets them.
+  story of an open epic) or `/feyn-issue epic <objective>`, with its parameters:
+  `--status Option`, a work item a brainstorm creates being born Option (decision
+  `idea-and-option-before-ready`); `--origin`, the idea it opened from, otherwise the
+  brainstorm with the maintainer and its date, in the form of its template;
+  `--opened-from #<n>`, the idea or the option it opened from, if any, left out of the twin
+  search. The links the order decided, as `/feyn-issue` sets them.
 - The option it opened from: reworked or split as `/feyn-refine-option` step 4 does it, its
   body ending with the marker `Refined <YYYY-MM-DD> (brainstorm)`, the label `stale` removed by
   the rework; or closed as completed, its comment naming the work items that replace it.
@@ -209,31 +210,6 @@ naming the folder.
 A brainstorm that decided nothing poses nothing: it says so, and the idea or the option it
 opened from stays as it is.
 
-**The notebook**, `tmp/notebook.md`, left to the maintainer: what GitHub does not hold. One
-already there: the brainstorm adds its own section and touches nothing else. The skeleton:
-
-```markdown
-# Notebook: <the plan>
-
-Posed <YYYY-MM-DD>. The order, the items, what does not fit in GitHub; the detail is in each
-issue. Tick at each merge.
-
-## The order
-
-1. [ ] **#<n>** <title> (<Status>)
-   - `<the command that runs it>`
-   - <what is the maintainer's: a tag, a teaching session, a Ready to set>
-
-## Along the way
-
-- <what applies across items: a policy, an idea to triage when an item lands>
-
-## What is posed (<YYYY-MM-DD>)
-
-| Issue | What | Status | Links |
-|---|---|---|---|
-```
-
 **The review**, optional, offered once the posing is done; the maintainer decides. A new
 `Agent` with `subagent_type: "feyn-brainstorm-reviewer"` ([its
 file](../../agents/feyn-brainstorm-reviewer.md): the brief, no Edit or Write tool), never
@@ -248,5 +224,7 @@ The folder stays where it is: the maintainer removes it once the plan no longer 
 ## The reply
 
 The reply that ends the brainstorm: each issue posed, reworked, commented or closed, with its
-link and Status; the notebook's path; the review's result, if it ran. What the maintainer does
-next: the first line of the notebook's order.
+link and Status, in the order the output decided; the review's result, if it ran. What the
+maintainer does next: commit the first work item of that order at its option refinement
+(`/feyn-refine-option <n>`); once committed, the order of the Ready column holds the order of
+the plan, and no file outside GitHub keeps it.

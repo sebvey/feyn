@@ -7,12 +7,13 @@ argument-hint: "[<issue branch>]"
 # /feyn-merge-cleanup
 
 One job: clean up after the merge into `main` of an issue branch's PR (a story's without an
-epic, under `/feyn-deliver-story-alone` or on the direct path, or a direct delivery), the moment
-that follows `/feyn-pull-request` and is never in the same turn. It never merges, never deletes
-a remote branch, and writes nothing on GitHub but a Status. A story of an epic is merged into
-its epic's integration branch, not `main`: `/feyn-deliver-epic` cleans up after it (step 2.5)
-and updates the plan comment (step 2.6), and cleans up after the merge of the epic
-PR (step 6).
+epic, under `/feyn-deliver-story-alone` or on the direct path, or a direct delivery): moment 18
+of the work cycle, after the maintainer's merge (moment 16), never in the same turn as the PR's
+opening ([contributing](../../../docs/contributing.md), "How the work is organised"). It never
+merges, never deletes a remote branch, and writes nothing on GitHub but a Status. A story of an
+epic is merged into its epic's integration branch, not `main`: `/feyn-deliver-epic` cleans up
+after it (step 2.5) and updates the plan comment (step 2.6), and cleans up after the merge of
+the epic PR (step 6).
 
 The branch is the issue branch `<type>/<n>-<slug>` (made by `/feyn-issue-branch`): the one the
 argument names, or else the current branch; `<n>` is the issue. No argument on `main`, or a
@@ -31,11 +32,8 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
    have moved on with other merges, so compare those files only):
    `git diff main <branch> -- $(git diff --name-only $(git merge-base main <branch>) <branch>)`
    must print nothing. Read the result before going on; anything printed: stop and show it.
-4. **Delete**: `git branch -D <branch>` (already gone if the merge ran in this
-   checkout: nothing to do). The remote branch goes with the merge
-   (`mise exec -- gh pr merge --squash --delete-branch`); if it is still there
-   (`git ls-remote --heads origin <branch>`), tell the maintainer. Never delete a
-   remote branch yourself.
+4. **Delete** the local branch as [run-cleanup.md](../../reference/run-cleanup.md) says: the
+   branch `<branch>`, its PR merged, no worktree.
 5. Check the squash commit carries the PR title
    (`git log main -1 --format=%s --grep "(#<pr>)"`); if not, tell the
    maintainer (`main` is never rewritten).

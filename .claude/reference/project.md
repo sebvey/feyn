@@ -1,13 +1,13 @@
 # The Project and its Status
 
 The one place `/feyn-issue`, `/feyn-issue-branch`, `/feyn-pull-request`, `/feyn-merge-cleanup`,
-`/feyn-deliver-story-alone`, `/feyn-deliver-epic`, `/feyn-triage`, `/feyn-refine-option` and the
-agent workflow `deliver-story.js` take the Project's names, ids and commands from. The
-**Project** is the GitHub Project "feyn", number 4, owner `sebvey`, id `PVT_kwHOADOnU84Bo8V6`;
-its **Status** field, id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`, says where an issue stands, in this
-order and nothing else (decisions `idea-and-option-before-ready`,
-`project-status-not-state-labels`); what each Status means: [glossary](../../docs/glossary.md),
-row Status.
+`/feyn-deliver-story-alone`, `/feyn-deliver-epic`, `/feyn-triage`, `/feyn-refine-option`, the
+procedures of `reference/` and the agent workflow `deliver-story.js` take the Project's names, ids
+and commands from, and the commands on issues ("Issues"). The **Project** is the GitHub Project
+"feyn", number 4, owner `sebvey`, id `PVT_kwHOADOnU84Bo8V6`; its **Status** field, id
+`PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`, says where an issue stands, in this order and nothing else
+(decisions `idea-and-option-before-ready`, `project-status-not-state-labels`); what each Status
+means: [glossary](../../docs/glossary.md), row Status.
 
 | Status | Option id |
 |---|---|
@@ -23,6 +23,15 @@ No Status says a decision is awaited: the label `blocked:maintainer` carries it,
 of 2026-11-03 (`docs/vision.md`): the label `stale` carries it, on an issue in Idea or Option, removed
 by `/feyn-triage` or `/feyn-refine-option` when they re-read the item (decision
 `project-status-not-state-labels`).
+
+## GitHub writes
+
+The output of every GitHub write (`gh issue comment`, `gh issue create`, `gh pr create`,
+`gh pr edit`, `gh api -X …`, `gh project item-edit`) is read: a URL or an id printed, or, for a
+command that prints nothing on success, the value read back (`gh issue view`, `gh pr view`,
+`gh api` without `-X`). Nothing printed and nothing read back, or an error, is a failed write:
+reported, never assumed done. A `gh issue comment` failed silently on an epic's issue (GitHub,
+observed 2026-11-05, #570).
 
 ## The Project workflows
 
@@ -56,6 +65,29 @@ options, with their ids:
   read the Project workflows ([above](#the-project-workflows)); "Item added to project" off,
   set the Status; on, or the query fails, tell the maintainer and stop.
 
+## Issues
+
+- **Read** an issue, all of it:
+  `mise exec -- gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences,projectItems`.
+- **Search** the open issues by key words (the twin of a new one):
+  `mise exec -- gh issue list --state open --search "<two or three key words>"`.
+- **Comment** on an issue: `mise exec -- gh issue comment <n> --body-file <file>`.
+- **Hide a duplicate** comment (posted twice by mistake), never deleted: on its page, the
+  comment's menu ⋯, "Hide", reason "Duplicate"; or `mise exec -- gh api graphql -f
+  query='mutation { minimizeComment(input: {subjectId: "<comment node id>", classifier:
+  DUPLICATE}) { clientMutationId } }'`, the node id read with `mise exec -- gh api
+  repos/sebvey/feyn/issues/<n>/comments --jq '.[] | [.node_id, .body[:60]] | @tsv'`.
+- **Create** an issue, one form per command; it prints the issue URL:
+  - an idea: `mise exec -- gh issue create --title "<title>" --body-file <file> --label area:<area>`;
+  - a story: `mise exec -- gh issue create --title "<title>" --body-file <file> --label kind:story --label type:<type> --label area:<area>`;
+  - an epic: the same with `--label kind:epic` in place of `--label kind:story`;
+  - with a milestone: `--milestone <name>` added.
+
+  One issue per command, never from a shell function: a `gh issue create` inside a function
+  with `${5:+--milestone "$5"}` failed silently (Claude Code, observed 2026-10-29, #269).
+- **Create a label** missing on GitHub, an area the tree has:
+  `mise exec -- gh label create area:<area> --color 0075ca --description "Area: <area>"`.
+
 ## Epics
 
 - **Read** a story's epic: `mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`
@@ -71,13 +103,18 @@ options, with their ids:
 - **The plan comment**: the last comment of the epic whose body starts with "**Plan comment**";
   its database id (nothing printed: the epic has none):
   `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<epic>/comments --jq '.[] | select(.body | startswith("**Plan comment**")) | .id' | tail -n 1`.
-  Its two parts: above, the plan, rewritten in place at each change (a line
-  `Delivery: <integration branch>`; `Stories (an estimate):`, the stories in their current
-  order, one per line, each delivered one `- [x] #<n> <title> (PR #<pr>)`, the others
-  `- [ ] <story>`, the next one ending `(next)`; `Unknown:`; `Dropped:`); below, from the line
-  `**Log**`, the log, only added to (a line per delivery,
-  `<date> #<n> (PR #<pr>): <what it delivered>`; per open question, `Open question: …`; per
-  answer, `Answered: …`, right under its question, as `/feyn-deliver-epic` step 3 says).
+  Its three parts, in this order:
+  - the plan comment head, under the line `**Plan comment**`: at most ten lines, which say where
+    the epic stands, what runs, what awaits the maintainer and what comes next; rewritten whole
+    at each moment of its epic, so that it is read at a glance;
+  - the plan, from its line `Delivery: <integration branch>`, rewritten in place at each change
+    (that line; `Stories (an estimate):`, the stories in their current order, one per line, each
+    delivered one `- [x] #<n> <title> (PR #<pr>)`, the others `- [ ] <story>`, the next one
+    ending `(next)`; `Unknown:`; `Dropped:`);
+  - the log, from the line `**Log**`, only added to (a line per delivery,
+    `<date> #<n> (PR #<pr>): <what it delivered>`; per open question, `Open question: …`; per
+    answer, `Answered: …`, right under its question, as [sort.md](sort.md), "An open question",
+    says).
   Edit it: the PATCH replaces the whole body, so read it first,
   `mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> --jq .body > <file>`, edit the
   file, then `mise exec -- gh api -X PATCH repos/sebvey/feyn/issues/comments/<id> -F body=@<file>`.

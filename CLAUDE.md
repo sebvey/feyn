@@ -26,7 +26,7 @@ Code teacher and published as a site. Skills carry the detail; this file is the 
 | `classroom-builder/` | teacher template, classroom build script (`build-classroom`: it runs the spec MAJOR's `teacher/build/` and writes the classroom, its teacher skills included) and its test (`test-build`), the fresh tests (`fresh-test`) |
 | `site-builder/` | the site engine (Astro); reads `courses/` directly |
 | `docs/` | `vision.md` (what feyn is for), `decisions/`, `glossary.md`, `contributing.md`, `kanban.md` (the frame of the work) |
-| `.claude/` | `skills/` (the HOW), `agents/` (project subagents), `workflows/`, `reference/` (the WHAT), `decisions/`; decision `claude-folder-layout` |
+| `.claude/` | `skills/` (the procedures run on their own), `agents/` (project subagents), `workflows/`, `reference/` (what a thing is, and the procedures only ever a step of other skills), `decisions/`; decisions `claude-folder-layout`, `one-moment-one-file` |
 | `.github/` | issue template and CI workflows |
 
 `construction/` (design, plan, notes, scripts of the construction) was removed on 2026-10-31:
@@ -67,17 +67,19 @@ accepts it silently: no alias in a description, no argument read as its replacem
 through the agent workflow `deliver-story.js`, up to the hand-over of its epic PR.
 `/feyn-deliver-story-alone <n>` delivers a Ready story without an epic through the same
 workflow, up to the hand-over of its PR to `main`; a direct delivery is made with
-`/feyn-issue-branch` and `/feyn-pull-request`. `/feyn-brainstorm` runs a brainstorm with the
-maintainer, subject by subject, and ends it in a plan of work items posed through the skills of
-the cycle. `/feyn-triage <n> [<n> …]` triages with the maintainer the ideas they name, one at a
-time. `/feyn-refine-option <n>` runs with the maintainer the option refinement of one option, up
-to its commitment, rework or close. Load the one that matches the request. The other `feyn-`
-skills are the work-cycle tooling: called by them, and loaded directly for a one-off act.
-`/feyn-decision` writes or changes a decision; `/feyn-glossary-entry` adds or changes a glossary
-entry. A delivery work session starts with an issue number. The frame of the work is Kanban,
-with ADR for the decisions and GitHub flow for the branches (`docs/kanban.md`). How feyn applies
-it (the work items, epics and stories, and the ideas; the Statuses from Idea to Done; milestones;
-the Project's views): `docs/contributing.md`, "How the work is organised".
+`/feyn-issue-branch`, `/feyn-pull-request` and the hand-over (`.claude/reference/hand-over.md`).
+`/feyn-brainstorm` runs a brainstorm with the maintainer, subject by subject, and ends it in a
+plan of work items posed through the skills of the cycle. `/feyn-triage <n> [<n> …]` triages with
+the maintainer the ideas they name, one at a time. `/feyn-refine-option <n>` runs with the
+maintainer the option refinement of one option, up to its commitment, rework or close. Load the one
+that matches the request. The other `feyn-` skills are the work-cycle tooling: called by them, and
+loaded directly for a one-off act. `/feyn-decision` writes or changes a decision;
+`/feyn-glossary-entry` adds or changes a glossary entry. A delivery work session starts with an
+issue number. The frame of the work is Kanban, with ADR for the decisions and GitHub flow for the
+branches (`docs/kanban.md`). How feyn applies it (the work items, epics and stories, and the ideas;
+the Statuses from Idea to Done; the moments of the work cycle, each with its one owner, and the
+paths that chain them; milestones; the Project's views): `docs/contributing.md`, "How the work is
+organised".
 
 ## Non-negotiable rules
 

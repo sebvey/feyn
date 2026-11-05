@@ -1,13 +1,15 @@
 ---
 name: feyn-issue
-description: "Create a GitHub issue on feyn from `idea <finding>`, `story [#<epic>] [direct] <what>` or `epic <objective>`, of the kind it is given (no kind given, it asks which and creates nothing; `direct`, for a story only, marks a direct delivery, refused when the work is more than one edit with no behaviour), each from its body template, with its kind label, its type and area labels, its links and its Status in the Project, or read an existing issue and summarise it. Use for \"/feyn-issue 12\", \"/feyn-issue idea <finding>\", \"/feyn-issue story <what>\", \"/feyn-issue story direct <what>\", \"/feyn-issue story #220 <what>\", \"/feyn-issue story #220 direct <what>\", \"/feyn-issue epic <objective>\"."
-argument-hint: "<issue number> | idea <finding> | story [#<epic>] [direct] <what> | epic <objective>"
+description: "Create a GitHub issue on feyn from `idea <finding>`, `story [#<epic>] [direct] <what>` or `epic <objective>`, of the kind it is given (no kind given, it asks which and creates nothing; `direct`, for a story only, marks a direct delivery, refused when the work is more than one edit with no behaviour), each written from its body template, with its kind label, its type and area labels, its links and the Status its caller gives (`--status Option|Ready`, Option by default), its origin line (`--origin`) and the issue it is opened from (`--opened-from #<n>`, left out of the twin search), or read an existing issue and summarise it. Use for \"/feyn-issue 12\", \"/feyn-issue idea <finding>\", \"/feyn-issue story <what>\", \"/feyn-issue story direct <what>\", \"/feyn-issue story #220 <what>\", \"/feyn-issue story #220 direct <what>\", \"/feyn-issue epic <objective>\"."
+argument-hint: "<issue number> | idea <finding> | story [#<epic>] [direct] <what> | epic <objective>, then [--status Option|Ready] [--origin \"<line>\"] [--opened-from #<n>]"
 ---
 
 # /feyn-issue
 
 One job: put an idea or a work item into an issue, or tell what an issue says. It does not
-start the work (that is `/feyn-issue-branch`) and does not fix anything on the way.
+start the work (that is `/feyn-issue-branch`) and does not fix anything on the way. It holds the
+act; the rules of writing a body are in its template, and its GitHub commands in
+[project.md](../../reference/project.md), "Issues".
 
 An issue carries an **idea** (a finding, no kind) or a **work item** of one of two kinds,
 **story** or **epic** (decision `issue-carries-a-work-item-or-an-idea`;
@@ -31,9 +33,21 @@ three forms, `idea <finding>`, `story [#<epic>] [direct] <what>`, `epic <objecti
   when unsure, ask the maintainer and create nothing until the answer;
 - no kind: ask which of the three, and create nothing until the answer.
 
+The caller passes its policy as parameters, after the `<what>`, each at most once; the skill
+applies them and decides none of them:
+- `--status Option` or `--status Ready`, on a work item: the Status it is born with. None given:
+  Option. Which caller gives which is the cycle's rule
+  ([contributing](../../../docs/contributing.md), "How the work is organised", "Creating and
+  committing are two acts"), stated by each caller; the maintainer's word at a direct call,
+  that the work item is committed, is `--status Ready`. An idea takes none: refused, saying why;
+- `--origin "<line>"`, on a story or an epic: its origin, in one of the forms its template
+  gives. None given: the form the template says applies, from what step 1 says back;
+- `--opened-from #<n>`: the issue the caller works from (the idea triaged, the option split,
+  the idea or option a brainstorm opened from), never a twin (step 2).
+
 ## Read an issue
 
-1. `mise exec -- gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences,projectItems`.
+1. Read it ([project.md](../../reference/project.md), "Issues", Read).
 2. Tell its form from its kind label and its sections (below), then answer in at most ten
    lines: the title; what it is (idea, story, epic, or a body of the old format); its head
    (Where, What, Why; Where and Why for an idea) as the first line, then the rest; for a story,
@@ -74,11 +88,14 @@ of the old format for a defect:
 
 1. **Say it back.** Restate in two lines: for an idea, what was seen and where (paths, issue,
    PR, work session); for a story, what it delivers and where it comes from (an idea, its epic,
-   a brainstorm with the maintainer, the maintainer's direct request); for an epic, its
-   objective. A finding with no place is not an idea yet: ask where it was seen.
-2. **Look for a twin.** `mise exec -- gh issue list --state open --search "<two or three key words>"`.
-   An open issue on the same point: add a comment to it instead
-   (`mise exec -- gh issue comment <n> --body-file <file>`) and stop.
+   a brainstorm with the maintainer, the maintainer's direct request: the `--origin` given, if
+   any); for an epic, its objective. A finding with no place is not an idea yet: ask where it
+   was seen.
+2. **Look for a twin**: search the open issues on two or three key words
+   ([project.md](../../reference/project.md), "Issues", Search). The issue given as
+   `--opened-from` is left out: it is where the new one comes from, not a twin. Another open
+   issue on the same point: add a comment to it instead
+   ([project.md](../../reference/project.md), "Issues", Comment) and stop.
 3. **Take the kind given**, the first word of the argument as said above. The skill writes the
    kind it is given and never chooses or changes it: which kind fits which moment is decided
    by whoever creates the issue ([contributing](../../../docs/contributing.md), "How the work
@@ -91,17 +108,14 @@ of the old format for a defect:
      says the maintainer names this story a **direct delivery**: the maintainer's work session,
      or the orchestrator of its epic, makes the branch, the edit and the PR, with no
      contributor and no fresh-agent review ([contributing](../../../docs/contributing.md), "How
-     the work is organised", moment 2). The skill never adds it on its own. An idea or an epic
+     the work is organised", moment 5). The skill never adds it on its own. An idea or an epic
      never takes it: `idea direct` or `epic direct` is refused, saying why, and nothing is
      created.
 4. **Pick the Status, the labels and the links.**
    - Status (decision `idea-and-option-before-ready`): an **idea** stays Idea, which a Project
-     workflow sets ([project.md](../../reference/project.md), "The Project workflows"). A
-     **story** posed by the orchestrator of a taken epic (`/feyn-deliver-epic`) is Ready. Any
-     other work item, a story or an epic, is Option, or Ready when the maintainer says it is
-     committed; one a brainstorm creates (`/feyn-brainstorm`) is always Option, its commitment
-     decided at an option refinement (`/feyn-refine-option`). The caller says which: unsure,
-     Option. Option and Ready are set at step 8. No state label: the Status replaced them.
+     workflow sets ([project.md](../../reference/project.md), "The Project workflows"). A work
+     item, a story or an epic, takes the `--status` its caller gives, Option when none is
+     given; it is set at step 8. No state label: the Status replaced them.
    - `type:`, on a story or an epic only: `bug` (something is broken), `course` (course files),
      `decision` (a decision to write), `improvement` (tooling, spec, process). An idea carries
      none: the triage sets the type on the work items it creates from it.
@@ -119,8 +133,8 @@ of the old format for a defect:
      | root files, `docs/` | `area:repo` |
 
      Paths in two areas: the area that carries the intent; if none does, propose two issues.
-     A label missing on GitHub is created, since the tree says it exists:
-     `mise exec -- gh label create area:<area> --color 0075ca --description "Area: <area>"`.
+     A label missing on GitHub is created, since the tree says it exists
+     ([project.md](../../reference/project.md), "Issues", Create a label).
    - The links, on a story or an epic: which open issues must close before this one can start
      (it is blocked by them), and which open issues cannot start before this one closes (it
      blocks them): those the work names, and those whose work it changes (a file, a key, a
@@ -128,68 +142,24 @@ of the old format for a defect:
      that only edit the same file are not linked. The links go on GitHub, never as a line in
      the body. An idea is no work: it has none.
 5. **Write the body** into a file made with `mktemp` (outside the repository), from the
-   template of its form, each comment of the template replaced.
-   - An **idea**, from [idea-body.md](../../reference/idea-body.md): the head (two lines, each
-     its own paragraph: Where, the area and at most three words on what is touched; Why, what
-     the finding breaks or costs, in one sentence), then Observation (the fact first, with its
-     place: path, line, issue, PR; then the other facts, one per line; the history last: the
-     work session or PR where it was seen). Nothing else: no What, no Done when, no To do, no
-     Reads. Then reread it as the maintainer at a triage: does the Observation open with the
-     fact and its place; did a solution slip in? One no: fix before creating, then reread.
-   - A **story**, from [story-body.md](../../reference/story-body.md): the head (three lines,
-     each its own paragraph: Where, the area and at most three words on what is touched; What
-     it delivers; Why it matters now), then Done when (statements a reviewer can verify by
-     reading or running something), Context (what the work needs to know, restated so that the
-     contributor works from the story alone: first line, what is wrong or missing and where;
-     then the other facts, one short bullet each; what was settled, with its why and the
-     alternative rejected, when a brainstorm settled it; no To do), To do (one line per item,
-     the how in sub-bullets, numbered when the order matters), Reads only when the work needs
-     other files.
-     - The last line of the Context is the origin, in one of the four forms of
-       [story-body.md](../../reference/story-body.md): "From idea #<n>." when the story comes
-       from an idea, its epic or not; otherwise "Story of epic #<n>." for a story of an epic;
-       otherwise "From a brainstorm with the maintainer, <date>." for a story a brainstorm
-       creates; otherwise "Asked by the maintainer, <date>." for a story the maintainer asks
-       for directly, in a work session, with neither epic nor idea.
-     - The Done when follows [done-when.md](../../reference/done-when.md): each command run
-       on the base, its baseline written under its statement and checked against the
-       statement's intent; a search that excludes the history. The same holds for an epic's
-       Done when.
-     - A story that removes, moves or renames content (a file, a section, a rule) lists in its
-       Context every file that refers to it, found as
-       [done-when.md](../../reference/done-when.md) says, and has a To do item that treats each
-       of them.
-     - With `direct` (step 3): first hold the Done when to the criterion of a direct delivery,
-       one edit with no behaviour, as [contributing](../../../docs/contributing.md), "How the
-       work is organised", moment 2, states it. A Done when that asks more: refuse `direct`,
-       saying which statement or which file goes beyond it, and create nothing. Otherwise the
-       first line of the To do section is the plain line `Direct delivery`, alone, before the
-       first item: `/feyn-deliver-story-alone` and `/feyn-pull-request` read it there.
-     - Then reread it as the maintainer of the morning, choosing among ten Ready stories: does
-       the head say where, what and why in three lines; does each command of the Done when
-       carry its baseline; does the Context open with what is wrong or missing, and end with
-       its origin; does it list the files that refer to content the story removes, moves or
-       renames; does each To do item hold in one line? One no: fix before creating, then
-       reread. The body template `story-body.md` carries the same rules.
-   - An **epic**, from [epic-body.md](../../reference/epic-body.md): Objective, Why now,
-     Material (what is read when splitting it, and what was settled, each point with its why
-     and the alternative rejected), Done when, Out of scope; no To do, no story posed in
-     advance. An epic that removes, moves or renames content lists in its Material the files
-     that refer to it, found as for a story (above); the story that removes it treats them.
+   template of its kind, [idea-body.md](../../reference/idea-body.md),
+   [story-body.md](../../reference/story-body.md) or [epic-body.md](../../reference/epic-body.md):
+   its comments hold every rule of writing that kind, its reread included; follow each, then
+   remove it. A story's or an epic's origin is the `--origin` given, otherwise the form its
+   template says applies.
+   - With `direct` (step 3): first hold the Done when to the criterion of a direct delivery,
+     one edit with no behaviour, as [contributing](../../../docs/contributing.md), "How the
+     work is organised", moment 5, states it. A Done when that asks more: refuse `direct`,
+     saying which statement or which file goes beyond it, and create nothing. Otherwise the
+     To do opens with the line its template gives.
 6. **Title**, under 70 characters, no issue prefix. A story: imperative, like a commit summary
    ("Fix the caption check on nested groups"). An idea: the finding, stated, not a solution
    ("The caption check misses nested groups"). An epic: "Epic: " and the objective in a few
    words.
-7. **Create** it, one form per command:
-   - an idea: `mise exec -- gh issue create --title "<title>" --body-file <file> --label area:<area>`;
-   - a story: `mise exec -- gh issue create --title "<title>" --body-file <file> --label kind:story --label type:<type> --label area:<area>`;
-   - an epic: the same with `--label kind:epic` in place of `--label kind:story`.
-
-   Add `--milestone <name>` when the maintainer names one, on a story or on an epic that
-   targets a release; never on an idea. It prints the issue URL. One issue per command, never
-   from a shell function: a `gh issue create` inside a function with
-   `${5:+--milestone "$5"}` failed silently (Claude Code, observed 2026-10-29, #269).
-8. **The Status, when step 4 says Option or Ready.** The Project workflows add the issue and
+7. **Create** it, in the command of its kind ([project.md](../../reference/project.md),
+   "Issues", Create), one issue per command. A milestone when the maintainer names one, on a
+   story or on an epic that targets a release; never on an idea.
+8. **The Status of a work item** (step 4). The Project workflows add the issue and
    set Idea ([project.md](../../reference/project.md)); nothing to do for an idea. Set Option
    or Ready as [project.md](../../reference/project.md), "Commands", says under "Set a Status
    on a new item": it waits for Idea first.

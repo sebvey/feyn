@@ -1,20 +1,29 @@
 ---
 name: feyn-pull-request
-description: "At the end of the work on an issue, turn the current issue branch on feyn into a pull request to main (to its epic's integration branch for a story of an epic), rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, checking the issue lists it, having it reviewed by `/feyn-pr-review` on the direct path (not on a direct delivery), then asking for review. It never merges. Use for \"/feyn-pull-request\"."
+description: "At the end of the work on an issue, turn the current issue branch on feyn, or an epic's integration branch for its epic PR, into a pull request to its base (--base <branch>, main by default; its epic's integration branch for a story of an epic), as a draft with --draft, rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, and checking the issue lists it. It ends when the PR is open, and names what comes next (the fresh-agent review, the corrections, the hand-over). It never merges. Use for \"/feyn-pull-request\"."
+argument-hint: "[--base <branch>] [--draft]"
 ---
 
-# /feyn-pull-request
+# /feyn-pull-request [--base <branch>] [--draft]
 
-One job: deliver the current issue branch as a pull request to `main` and ask for its review.
-It never merges: the merge belongs to the maintainer. A story of an epic, a direct story
-included, is a pull request to the epic's integration branch, merged by the epic's orchestrator
-(decision `epic-on-integration-branch`; steps 6 and 8). On the direct path (the work session that
-did the work runs it), it has the PR reviewed by a fresh agent, except on a direct delivery
-(step 7). It writes on GitHub: the PR, and the issue set Ready for review (step 8). Once the PR
-is merged, `/feyn-merge-cleanup` cleans up, never in the same turn.
+One job: deliver the current issue branch, or an epic's integration branch for its epic PR, as
+a pull request to its base (`main` by default). It ends when the PR is open: the fresh-agent
+review, its corrections and the hand-over to the maintainer are other moments, which "After the
+PR is open" names. It never merges: the merge belongs to the maintainer. A story of an epic, a
+direct story included, is a pull request to the epic's integration branch, merged by the epic's
+orchestrator (decision `epic-on-integration-branch`; step 6). It writes on GitHub: the PR, its
+"Delivery notes", and `blocked:maintainer` on an issue whose decision is awaited (step 6).
 
-The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the issue. On
+The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the issue. An
+epic's integration branch has the same form, `<n>` the epic: its PR is the epic PR. On
 `main`, or on a branch without an issue number: stop and say so.
+
+Its caller passes its variations as parameters and rewrites none of its steps (decision
+`one-moment-one-file`):
+- `--base <branch>`: the branch the PR targets, `main` by default. A story of an epic, a direct
+  story included, gives its epic's integration branch. Steps 2 and 6.
+- `--draft`: the PR opens as a draft, as the agent workflow `deliver-story.js` needs until its
+  review and corrections are done. Step 6.
 
 ## Steps
 
@@ -28,8 +37,7 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    amendment ([done-when.md](../../reference/done-when.md)), which amends the open PR's body as
    well.
 2. **Checks.** Run the ones that exist for what the branch touches
-   (`git diff --name-only main...HEAD`; a story of an epic:
-   `git diff --name-only origin/<integration branch>...HEAD`):
+   (`git diff --name-only origin/<base>...HEAD`):
    - a course `courses/<id>/`: the check runner of the spec it declares
      (`course-specs/check-course courses/<id>`);
    - a path under `course-specs/linear-course/`: the bench course,
@@ -73,7 +81,11 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    - **Context**: 3 to 10 lines of prose for a reader who forgot the subject: the problem, why
      now, what the PR changes overall.
    - **Issues**: one bullet per issue the PR covers, `#<n> <title>: <what this PR does for it>
-     (Closes)` or `(Refs)`. Kept with a single issue.
+     (Closes)` or `(Refs)`. Kept with a single issue. An epic PR (the branch an epic's
+     integration branch, `<n>` the epic): the epic's bullet, then one per story of the epic,
+     `#<story> <title> (PR #<pr>)`. They count within the 30 lines; when they would push the
+     body over, the stories go on one bullet, `Stories: #<story> (PR #<pr>), …`, their titles
+     left to the epic.
    - **Changes**: at most 8 bullets, by intent rather than by file. The detail is the diff.
      Decisions written (`/feyn-decision`) and issues opened on the way are bullets here.
    - **Checks**:
@@ -87,19 +99,19 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
        in a few words, on one line; a longer proof goes in a comment on the issue, and the
        mark cites the issue. Dropped when there is none.
      - `Fresh-agent review: no blocking finding.` or
-       `Fresh-agent review: <N> blocking findings, fixed.`: added after the review, by step 7 on
-       the direct path; under the agent workflow `deliver-story.js` (`/feyn-deliver-story-alone`,
-       `/feyn-deliver-epic`), by its corrector, or by the orchestrator when the first review
-       finds nothing to correct (`/feyn-deliver-story-alone` step 3, `/feyn-deliver-epic` step
-       2.4); updated, not repeated, after a second review: `<N>` then counts the blocking
-       findings of all the reviews. A decision or a check touched as the review prescribed,
-       without a second review (step 7): `Fresh-agent review: <N> blocking findings, fixed; a
-       decision touched as prescribed, no second review.` (`a check` for a check). On a direct
-       delivery (the issue's To do opens with "Direct delivery",
-       [contributing](../../../docs/contributing.md), "How the work is organised", moment 2):
-       `Fresh-agent review: none, direct delivery.`, written here, before the PR opens, since no
-       review runs (step 7). It counts within the 30 lines: leave room for it. Absent when the
-       maintainer asked for a PR without a review.
+       `Fresh-agent review: <N> blocking findings, fixed.`: added after the review, on the direct
+       path by the work session's corrections ([sort.md](../../reference/sort.md), "Corrections
+       on the direct path"); under the agent workflow `deliver-story.js`
+       (`/feyn-deliver-story-alone`, `/feyn-deliver-epic`), by the workflow itself, after its last
+       review or round of corrections; updated, not repeated, after a second review: `<N>` then
+       counts the blocking findings of all the reviews. A decision or a check touched as the
+       review prescribed, without a second review ([sort.md](../../reference/sort.md)):
+       `Fresh-agent review: <N> blocking findings, fixed; a decision touched as prescribed, no
+       second review.` (`a check` for a check). On a direct delivery (the issue's To do opens
+       with "Direct delivery", [contributing](../../../docs/contributing.md), "How the work is
+       organised", moment 5): `Fresh-agent review: none, direct delivery.`, written here, before
+       the PR opens, since no review runs. It counts within the 30 lines: leave room for it.
+       Absent when the maintainer asked for a PR without a review.
      - `Not verified:` one line, if anything.
    - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a
      deviation, a choice the contributor made, a sensitive spot. The last one ends with a
@@ -124,16 +136,16 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    `deliver-story.js`, otherwise when the PR has such detail. Its contributor writes it, the
    corrector of a review updates it: one comment, edited in place, never a second one.
 6. **Open it**:
-   - `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`; with a
+   - `mise exec -- gh pr create --base <base> --title "<title>" --body-file <file>`; with a
      decision awaited, add `--draft` (no label on the PR: the draft already keeps it from
      being merged) and put `blocked:maintainer` on the issue
-     (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`). Under the agent
-     workflow `deliver-story.js`, `--draft` always: the PR stays a draft until its review and
-     corrections are done, then is marked ready at the hand-over (`/feyn-deliver-story-alone`
-     step 5) or at the merge of a story of an epic (the workflow's Merge stage). A direct
-     delivery is never a draft. A story of an epic: `--base <integration branch>` in place of
-     `--base main`; its `Closes #<n>` closes nothing on that branch, the orchestrator closes the
-     story at the merge, so the check below may not list the PR: expected;
+     (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`). Given `--draft` (the
+     agent workflow `deliver-story.js` always gives it), add `--draft`: the PR stays a draft
+     until its review and corrections are done, then is marked ready at the hand-over
+     ([hand-over.md](../../reference/hand-over.md)) or at the merge of a story of an epic (the
+     workflow's Merge stage). A direct delivery is never a draft. A base other than `main` (an
+     epic's integration branch): its `Closes #<n>` closes nothing on that branch, the orchestrator
+     closes the story at the merge, so the check below may not list the PR: expected, go on;
    - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
      lists the PR when it says `Closes #<n>`; a `Refs` PR: it lists nothing, since the branch
      is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
@@ -144,55 +156,24 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
      No id: post it (`mise exec -- gh pr comment <pr> --body-file <file>`). One id: update it
      in place (`mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> -X PATCH -F body=@<file>`),
      never a second one. Two ids or more: stop, edit none, and report them.
-7. **Fresh-agent review**, on the direct path. On a direct delivery, `/feyn-pr-review` does
-   not run and the line is already in Checks (step 5): skip to step 8; the rest of this step
-   applies to the other PRs. Under the agent workflow `deliver-story.js`
-   (`/feyn-deliver-story-alone`, `/feyn-deliver-epic`), skip this step: the workflow runs the
-   review and the corrections. Run `/feyn-pr-review <pr>`; a draft PR (a decision awaited, step
-   6) is reviewed now, before the maintainer's answer, and the decision awaiting that answer is
-   not a finding. Then, yourself, since no other agent fixes on the direct path:
-   - remove the reviewer's worktree when `/feyn-pr-review` returns one, as `/feyn-pr-review`
-     step 2 says;
-   - apply the blocking findings, and the non-blocking ones worth fixing; commit, push, and
-     update the body (`mise exec -- gh pr edit <pr> --body-file <file>`); the non-blocking
-     findings left go in "Delivery notes" with their reason (step 6), one in Review first only
-     when it needs the maintainer's decision; a statement the PR makes false is never left,
-     whatever its label (decision `pr-corrects-what-it-makes-false`);
-   - check each fix in the diff (`mise exec -- gh pr diff <pr>`);
-   - add to Checks `Fresh-agent review: <N> blocking findings, fixed.` or
-     `Fresh-agent review: no blocking finding.` (step 5).
 
-   **A second review**, `/feyn-pr-review <pr>` again, only when the correction goes beyond
-   what the review asked: a change added on your own, or one that changes the meaning of a
-   rule; the line then counts the blocking findings of all the reviews. A change the review
-   prescribed, its text included, decision or check included: check it yourself in the diff
-   against the review's words. The `Fresh-agent review:` line says when a decision or a check
-   was touched without a second review (step 5). The same holds for the maintainer's answer
-   (step 8). Under the agent workflow `deliver-story.js` this rule does not apply: a fresh agent
-   of the workflow verifies each round of corrections.
-8. **Ask for review**: set the issue's Status to Ready for review (the work claims done, the
-   maintainer concludes: [glossary](../../../docs/glossary.md), entry Status; the command:
-   [project.md](../../reference/project.md), "Commands", Set):
-   `mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`.
-   Only once the `Fresh-agent review:` line is in Checks (step 7), `none, direct delivery`
-   included (step 5), or when the maintainer asked for a PR without a review (the reply then
-   says so); not for a `Refs` PR (the issue stays In progress), not under
-   `/feyn-deliver-story-alone`, whose orchestrator runs the review and sets it at the hand-over
-   (its step 5), and never for a story of an epic, a direct story included: it never goes Ready
-   for review, its orchestrator merges it into the integration branch (`/feyn-deliver-epic` step
-   2), and this step stops here. A correction asked on the PR returns the issue to In progress
-   until it is delivered again. Then reply with the PR URL, the title, what the maintainer
-   should look at first (the PR's Review first, in one line), and the merge command:
-   `mise exec -- gh pr merge <pr> --squash --delete-branch`.
-   The repository squashes with the PR title and body and allows squash only (GitHub,
-   observed 2026-10-28, #135), so the PR title, followed by ` (#<pr>)`, becomes the subject
-   on `main`: the command names no subject. Stop there.
-   A draft PR: the issue stays In progress, with its label; name the question instead of the
-   merge command. The maintainer answers with a comment and removes `blocked:maintainer` from
-   the issue: one removal. Then apply the answer, remove the section from the body,
-   `mise exec -- gh pr ready <pr>`, and ask for review again (the second-review rule of step 7
-   applies; Ready for review then, as above). Under `/feyn-deliver-story-alone`, neither: the PR
-   stays a draft, the orchestrator reruns its workflow with the answer, then marks the PR ready
-   and sets Ready for review at its hand-over (its steps 4 and 5). Never
-   remove the label yourself; if it is still on the issue, the answer is not given: stop.
+## After the PR is open
 
+This skill ends here. The path chains the next moments (decision `one-moment-one-file`):
+- **the direct path** (the work session that did the work, outside a delivery through agents):
+  the fresh-agent review, `/feyn-pr-review <pr>` (a draft whose decision is awaited is reviewed
+  now, before the maintainer's answer); its corrections, by the work session, as
+  [sort.md](../../reference/sort.md), "Corrections on the direct path", says; then the hand-over,
+  [hand-over.md](../../reference/hand-over.md), the path "a direct delivery or the direct path";
+- **a direct delivery** of a story without an epic: no review, its Checks say so (step 5): the
+  hand-over at once, [hand-over.md](../../reference/hand-over.md), the same path;
+- **a direct story of an epic**: no review and no hand-over: its orchestrator merges it
+  (`/feyn-deliver-epic` step 2, "A direct story");
+- **under the agent workflow `deliver-story.js`**: the workflow's own stages (review,
+  corrections, then the merge into the integration branch or the hand-over by
+  `/feyn-deliver-story-alone`); the Status stays In progress;
+- **an epic PR**: the hand-over by its orchestrator (`/feyn-deliver-epic` step 5), the whole
+  branch already reviewed (its step 4).
+
+Once the PR is merged, `/feyn-merge-cleanup` cleans up (an epic PR: `/feyn-deliver-epic` step
+6), never in the same turn.

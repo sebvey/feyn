@@ -38,12 +38,13 @@ they do not hold.
   story"), and run nothing for that issue.
 - **A direct delivery.** A story whose To do opens with the line "Direct delivery"
   (named `direct` by the maintainer at its creation, [contributing](../../../docs/contributing.md),
-  "How the work is organised", moment 2) stops the cycle for that issue, before the refusals
-  below: reply "this story is delivered as a direct delivery (`/feyn-issue-branch`, the
-  edit, `/feyn-pull-request`): nothing to spawn", and spawn nothing.
+  "How the work is organised", moment 5) stops the cycle for that issue, before the refusals
+  below: reply "this story is delivered as a direct delivery (`/feyn-issue-branch <n>`, the
+  edit, `/feyn-pull-request`, both with no parameter, then the hand-over of
+  `.claude/reference/hand-over.md`): nothing to spawn", and spawn nothing.
 - Then the refusals of `/feyn-issue-branch` step 1 apply: name the reason and stop for that
   issue. Except In progress: the run resumes it, its contributor taking the issue's branch and
-  PR where they are.
+  PR where they are (`/feyn-issue-branch --worktree`).
 - Several numbers: one run per issue, in parallel, only when their To do touch distinct files.
   Two issues that share a file run one after the other (the second after the first is merged).
 - A decision the issue asks for: did the maintainer accept its counterfactual in this
@@ -59,21 +60,22 @@ they do not hold.
 ## 2. The run
 
 1. **Run** `.claude/workflows/deliver-story.js` as `/feyn-deliver-epic` step 2.3 says (its
-   `whenToUse`, `scriptPath` absolute), with no epic: `issue`, `type` and `area` (the
-   issue's labels without their prefix), no `epic`, no `base`; `work` only when the issue needs
-   guidance beyond its To do. `work` stands on its own: the workflow's agents get it in their
-   prompt and do not see the conversation, so it never points to the conversation nor quotes
-   it. When `work` carries a maintainer's request, it states it restated (what to change, why)
-   and dated ("asked by the maintainer on <date>"); the workflow asks its contributor to record
-   it in "Delivery notes" and gives `work` to its reviewer and verifier, who check a choice said
-   to be the maintainer's against it. No comment is posted on the issue or the PR to carry it.
-   Beyond such a request, `work` cites only what an agent can read itself (repository files on
-   `main`, issues and their comments, PRs). A note that changes the issue's Done when before
-   the run is written into the issue's body
+   `whenToUse`, `scriptPath` absolute), with no epic: `issue`, no `epic`, no `base`; `work` only
+   when the issue needs guidance beyond its To do. `work` stands on its own: the workflow's
+   agents get it in their prompt and do not see the conversation, so it never points to the
+   conversation nor quotes it. When `work` carries a maintainer's request, it states it restated
+   (what to change, why) and dated ("asked by the maintainer on <date>"); the workflow asks its
+   contributor to record it in "Delivery notes" and gives `work` to its reviewer and verifier,
+   who check a choice said to be the maintainer's against it. No comment is posted on the issue
+   or the PR to carry it. Beyond such a request, `work` cites only what an agent can read itself
+   (repository files on `main`, issues and their comments, PRs). A note that changes the issue's
+   Done when before the run is written into the issue's body
    (`mise exec -- gh issue edit <n> --body-file <file>`), not into a comment.
    While a run is launched or running, no `cd`: absolute paths and `git -C <path>`.
-2. **Clean the run** as `/feyn-deliver-epic` step 2.5 says, `main` as its base and the PR not
-   merged yet.
+2. **Clean the run** as [run-cleanup.md](../../reference/run-cleanup.md) says: the run's
+   worktrees `.claude/worktrees/wf_<run id>-<n>`, `main` as the base, the local issue branch
+   with its PR (`pr`) not merged yet, the worktrees' `HEAD` on that branch; a run that opened
+   no PR (`pr` 0): no branch on `origin`, its worktrees compared with the base.
 
 ## 3. Read the result
 
@@ -83,29 +85,17 @@ Every field, never only `status`:
   `<type>(<area>): <summary>`, the body starts with `Closes #<n>`, then has the sections of
   `/feyn-pull-request` step 5 in order (Context, Issues, Changes, Checks, Review first) within
   its limits (30 lines, blank lines and the awaiting section excluded; Review first 1 to 3
-  bullets), no signature line; its `reviewLine` is in the PR's Checks, as `/feyn-deliver-epic`
-  step 2.4 says for `merged`;
+  bullets), no signature line; its `reviewLine` is in the PR's Checks (the workflow wrote it and
+  read it back);
   the PR has one "Delivery notes" comment (`mise exec -- gh pr view <pr> --comments`,
   `/feyn-pull-request` step 5), which holds the detail: a body over its limits is fixed by
   moving its overflow to that comment, never by dropping it. Keep your own check of the
   sensitive points in the diff (`mise exec -- gh pr diff <pr>`): a counterfactual, a Done when
   count, a command that touches `main` or a remote branch, the title.
 - `deviations`, whatever the status, and the `choicesMade` that add structure (a new file, a
-  category, a marker, an exception to a principle): each is sorted as `/feyn-deliver-epic`
-  step 3, "The sort", says, the issue standing for the epic (its Done when and Context for the
-  epic's Objective and Material, `work` for the orchestrator's brief, no plan): a contradiction
-  in `work` is fixed by a rerun (step 4) and the maintainer informed; an instruction deviation
-  in the issue (a deviation "wrong command", or two statements that cannot both hold) corrects
-  its Done when by a dated amendment ([done-when.md](../../reference/done-when.md)), then a
-  rerun (step 4), and the maintainer informed; one already settled is
-  applied, by a rerun when the PR must change, and the maintainer informed; the rest, costly to
-  undo or foundational, is named in the PR's Review first (one bullet can name several), its
-  options ruled out and its cost of going back in "Delivery notes": the maintainer decides it
-  by the merge, and the hand-over does not wait for an answer; a choice that is neither stays
-  in "Delivery notes". One missing is added by a rerun
-  (step 4) or by your own edit of the body
-  (`mise exec -- gh pr edit <pr> --body-file <file>`, within its limits) and of "Delivery notes"
-  (in place, `/feyn-pull-request` step 6); the notification (step 5) names that edit.
+  category, a marker, an exception to a principle): each is sorted as
+  [sort.md](../../reference/sort.md) says, the path a story without an epic, a rerun being
+  step 4.
 - `unsure` that names an agent-workflow run the Done when needs: ask the maintainer for a
   go-ahead for that run, then run it; then a new run of the workflow (step 4) with `work`
   giving the run ids `wf_<id>`, their transcript directory and the result: its contributor
@@ -143,33 +133,9 @@ which step 2.2 moved to the PR's head, a fresh agent reviews it, and step 2.2 cl
 
 ## 5. Hand-over to the maintainer
 
-Mark the PR ready, the review and the corrections being done: `mise exec -- gh pr ready <pr>`.
-Then, for a `Closes` PR only (a `Refs` issue stays In progress), set the issue Ready for review
-([project.md](../../reference/project.md), "Commands":
-`mise exec -- gh project item-edit 4 --owner sebvey --url <issue url> --field Status --value "Ready for review"`).
-Then notify the maintainer. The PR is the report: the reply does not restate its body nor its
-"Delivery notes" (the review, Review first, the deviations and the choices are there; the
-Status and the path to merge the maintainer knows). It has this exact form, written in the
-language of the conversation, and nothing more (asked by the maintainer on 2026-11-01, #381):
-
-```
-## PR ready to merge
-
-- **PR**: sebvey/feyn#<pr>
-- **To read**: the PR's body and its "Delivery notes"
-- **Outside the PR**: <what you did on it after the run, or an anomaly of the run or its clean-up; or "nothing">
-- **After the merge**: <clean-up (step 6), then the next topic if one is set>
-```
-
-The PR is named only by its bare reference `sebvey/feyn#<pr>`, never in the heading nor as a
-Markdown link: the app renders that reference once, with the PR's state. "Outside the PR" is
-what the PR does not hold: a line you added to Checks, a body or "Delivery notes" edited at
-step 3, an anomaly of the run or of its clean-up.
-
-A finding outside the PR that calls for follow-up work (an outdated section the PR did not make
-false, an issue to open) is not prose in the notification: it goes to the maintainer as a
-question with buttons, the recommended option first; one the PR made false is corrected in it
-(step 3). The merge is the maintainer's.
+The review and the corrections being done, hand the PR over as
+[hand-over.md](../../reference/hand-over.md) says, the path a story without an epic, after its
+run: the PR marked ready, the issue Ready for review, the notification in its exact form.
 
 ## 6. After the merge
 
@@ -178,7 +144,8 @@ From the main checkout, on `main`:
 1. `mise exec -- gh pr view <pr> --json state,mergedAt` shows `MERGED`; otherwise stop and tell
    the maintainer.
 2. Nothing of the runs is left: `git worktree list` and `git branch --list 'worktree-wf_*'` show
-   none of their worktrees and branches; one left: clean it as step 2.2 says.
+   none of their worktrees and branches; one left: clean it as
+   [run-cleanup.md](../../reference/run-cleanup.md) says, the PR merged.
 3. `/feyn-merge-cleanup <branch>` for the issue branch: it confirms the change landed, the
    Status, deletes the local branch, and names the issues now free, relayed to the maintainer in
    the clean-up reply.
@@ -186,8 +153,9 @@ From the main checkout, on `main`:
 ## Tool behaviours
 
 The behaviours the steps above rely on, one line each with its step
-([contributing](../../../docs/contributing.md), "Tool behaviours"); those of the run and its
-clean-up are in `/feyn-deliver-epic`, "Tool behaviours" (steps 2.3 and 2.5):
+([contributing](../../../docs/contributing.md), "Tool behaviours"); those of the run are in
+`/feyn-deliver-epic`, "Tool behaviours" (step 2.3), those of its clean-up in
+[run-cleanup.md](../../reference/run-cleanup.md):
 
 - Step 1, an agent-workflow run: a subagent has no Workflow tool
   (Claude Code, observed 2026-10-28, #130).
@@ -195,9 +163,5 @@ clean-up are in `/feyn-deliver-epic`, "Tool behaviours" (steps 2.3 and 2.5):
   (Claude Code, observed 2026-10-28, #130).
 - Step 2.1: a `cd` into a worktree moves the work session even for one command, and a run
   launched then runs its agents there (Claude Code, observed 2026-10-28, #171).
-- Step 2.2: a worktree with no change at the end of its agent's turn is removed
-  (Claude Code, observed 2026-10-28, #171).
-- Step 2.2: the worktree is locked while its agent runs
-  (Claude Code, observed 2026-10-28, #128).
 - Step 6.1: a merge can fail on a GitHub error the maintainer does not see
   (GitHub, observed 2026-10-30, #320).
