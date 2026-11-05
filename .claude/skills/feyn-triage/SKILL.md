@@ -1,6 +1,6 @@
 ---
 name: feyn-triage
-description: "Triage with the maintainer the ideas of feyn they name (moment 2 of the work cycle, Triage), issues of the old format included: one or more issue numbers, triaged in the order given, one at a time; the work session looks up each one's neighbours (a twin, an epic or an option that covers or overlaps it, an open idea on the same files) and presents it with them, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it. An option is not triaged: it goes to `/feyn-refine-option`. With no number, it asks which idea. Use for \"trie l'idea 431\", \"trie les idées 429 et 431\", \"triage idea 431\", \"/feyn-triage 431\", \"/feyn-triage 429 431\"."
+description: "Triage with the maintainer the ideas of feyn they name (moment 2 of the work cycle, Triage): one or more issue numbers, triaged in the order given, one at a time; the work session looks up each one's neighbours (a twin, an epic or an option that covers or overlaps it, an open idea on the same files) and presents it with them, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it. An option is not triaged: it goes to `/feyn-refine-option`. With no number, it asks which idea. Use for \"trie l'idea 431\", \"trie les idées 429 et 431\", \"triage idea 431\", \"/feyn-triage 431\", \"/feyn-triage 429 431\"."
 argument-hint: "<issue number> [<issue number> …]"
 ---
 
@@ -33,13 +33,13 @@ The scratchpad goes with the work session: no purge step. A triage resumed in an
 
 ## 3. One item at a time
 
-**The checks**, before it is presented: those of a commitment ([commitment.md](../../reference/commitment.md), "The checks"), since a triage may create a work item Ready: the reading against the purpose first ([purpose-reading.md](../../reference/purpose-reading.md), the `stale` reread included), the staleness check, and the neighbours ([neighbours.md](../../reference/neighbours.md), the Status Done left out). Ask first: does it still deserve to exist, in this form? An issue in Idea whose body already defines a work (a Done when, a To do) is of the old format (step 4).
+**The checks**, before it is presented: those of a commitment ([commitment.md](../../reference/commitment.md), "The checks"), since a triage may create a work item Ready: the reading against the purpose first ([purpose-reading.md](../../reference/purpose-reading.md), the `stale` reread included), the staleness check, and the neighbours ([neighbours.md](../../reference/neighbours.md), the Status Done left out). Ask first: does it still deserve to exist, in this form?
 
 One item per message, under its own level-2 heading, the decision put to the maintainer in the form the maintainer's instructions give a decision. What it holds:
-- its frame in one line: an idea or an issue of the old format, what it is for, where it belongs;
+- its frame in one line: an idea, what it is for, where it belongs;
 - what the checks show, as their files say (purpose, staleness, neighbours);
 - what it calls for, and what no longer holds, each with its proof (a commit, a file and line, an issue, each named);
-- the options, from the actions of step 4 that apply to its form: close (done, moot, or a duplicate of a twin), fold into an epic, recreate (the old format), create the work items.
+- the options, from the actions of step 4 that apply to its form: close (done, moot, or a duplicate of a twin), fold into an epic, create the work items.
 
 The questions the skill asks the maintainer after that decision, each its own decision, before it acts on the answer:
 - for an idea: which work items it calls for, if any (their kind, story or epic; a story alone or under which epic; their cut, one or several), and for each its `type:` label;
@@ -47,23 +47,19 @@ The questions the skill asks the maintainer after that decision, each its own de
 
 An item the maintainer leaves open stays Idea, and the reply says so; with several issues, its line in the working list becomes `left open: <why>`, skipped from then on. The next item is presented only when this one is executed or left open. An item that waits on an action of the maintainer (a label, a merge, an answer elsewhere): say what it waits on, and present nothing else; with several issues, its line becomes `awaiting maintainer action: <what>`.
 
-A requirement added to an epic's Done when, by a fold or otherwise, is the maintainer's decision: propose it as a choice, never write it on the strength of another decision.
+An epic's Done when gaining a requirement: [commitment.md](../../reference/commitment.md), "The conditions of the act".
 
 ## 4. Execute the decision
 
 As the maintainer decided, then the working list when there is one (step 2). Which form an issue is in is read as `/feyn-issue` reads it ([its skill](../feyn-issue/SKILL.md), "Read an issue").
 
-An item labelled `stale` (step 3): the act that executes the decision removes the label when the item holds, as written or reworked (`mise exec -- gh issue edit <n> --remove-label stale`), before it is closed; when it no longer holds, its close comment names what replaced it. An item left open keeps the label: it has not been decided.
+An item labelled `stale`: [project.md](../../reference/project.md), "Labels that are not a Status".
 
 **An idea:**
 - **create the work items**: each with `/feyn-issue` in the form the maintainer chose, `story <what>`, `story #<epic> <what>` or `epic <objective>`, and its parameters: `--status Option`, or `--status Ready` when the maintainer said it is committed and the conditions of a commitment hold (step 3); `--origin`, the line its template gives for a work item from the idea #<n>; `--opened-from #<n>`, the idea, left out of the twin search. A story under an epic is created only when it is the next one the epic's plan comment marks (the policies of [contributing](../../../docs/contributing.md)); otherwise the idea is folded into that epic (below). Then close the idea as completed: `mise exec -- gh issue close <n> --reason completed --comment "Triaged <YYYY-MM-DD>: <the work items created from it, each #<m>>."`;
-- **fold into an epic**: close it as completed with a comment naming the epic that covers it; what the finding adds goes into the epic's Material when the epic is still an option, as decided (a requirement added to its Done when: step 3). It is the one write to an option a triage makes: the epic is the idea's destination, not triaged, and its marker is left as it is; any other change to the epic goes to `/feyn-refine-option`;
-- **close**: done, moot or a duplicate, as not planned with the reason, or as completed when work already delivered settled it: `mise exec -- gh issue close <n> --reason <completed|"not planned"> --comment "<the reason, with the links: commit, PR, issue>"`;
+- **fold into an epic**: close it as completed with a comment naming the epic that covers it; what the finding adds goes into the epic's Material when the epic is still an option, as decided (a requirement added to its Done when: [commitment.md](../../reference/commitment.md), "The conditions of the act"). It is the one write to an option a triage makes: the epic is the idea's destination, not triaged, and its marker is left as it is; any other change to the epic goes to `/feyn-refine-option`;
+- **close**: done, moot or a duplicate ([project.md](../../reference/project.md), "Issues", Close);
 - **leave it**: it stays Idea, and the reply says so (with several issues, its line in the working list: `left open: <why>`), for instance to open a brainstorm from it (`/feyn-brainstorm`, which is then its triage).
-
-**An issue of the old format** (in Idea, its body already defining a work: a Done when, a To do; decision `idea-is-never-converted`; an issue numbered below #424, the epic PR of epic #392, #425 excepted, `/feyn-issue`, "Read an issue"): never rewritten in place. It is recreated as a story or an epic, or several, as for an idea above, with `/feyn-issue`, the work it defines restated in the new work item's form, `--status Option` or `--status Ready` as the maintainer says and the conditions of a commitment hold (step 3), `--opened-from #<n>`. Its blocked-by links, both ways ([project.md](../../reference/project.md), "Dependencies", Read), are set again on the new work item (Set); then it is closed as completed with a comment naming what replaces it.
-
-A duplicate comment (posted twice by mistake) is hidden, never deleted ([project.md](../../reference/project.md), "Issues", Hide a duplicate).
 
 ## 5. End the triage
 

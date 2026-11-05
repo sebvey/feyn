@@ -102,7 +102,7 @@ State: <open | in progress | decided (<date>)>
 <what this subject taught about the object, one line each; none: the section is dropped.>
 ```
 
-A decision of the project that a subject touches is weighed as the maintainer's rules say (the maintainer's instructions, their "Plans and working files"; on 2026-11-04, `reader-facing-and-teacher-only-files`, `spec-files-by-product` and `versioned-objects-and-spec-layout` were decided to be replaced, by #475 and #522); its replacement or amendment is a decision to write, carried by a work item (step 4).
+A decision of the project that a subject touches is weighed as the maintainer's rules say (the maintainer's instructions, their "Plans and working files"); its replacement or amendment is a decision to write, carried by a work item (step 4).
 
 ## 3. The review on a support
 

@@ -72,4 +72,3 @@ The behaviours the steps above rely on, one line each with its step ([contributi
 
 - Step 2.3: an agent workflow runs only in the work session: a subagent has no Workflow tool (Claude Code, observed 2026-10-28, #130).
 - Step 2.3: `Workflow` called by name serves a frozen version of the script, hence `scriptPath` absolute (Claude Code, observed 2026-10-29, #269).
-- Step 2.4: a Project workflow "Auto-archive items" archived closed slices, whose items then left the Project and could not be set Done; it is off since 2026-10-31 (GitHub, observed 2026-10-31, #317).

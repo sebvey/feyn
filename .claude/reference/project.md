@@ -11,7 +11,9 @@ The one place `/feyn-issue`, `/feyn-issue-branch`, `/feyn-pull-request`, `/feyn-
 | Ready for review | `deab4f08` |
 | Done | `9e81e5a6` |
 
-No Status says a decision is awaited: the label `blocked:maintainer` carries it, on any Status (decision `blocked-is-a-label-not-a-state`). No Status says an item was posed before the frame of 2026-11-03 (`docs/vision.md`): the label `stale` carries it, on an issue in Idea or Option, removed by `/feyn-triage` or `/feyn-refine-option` when they re-read the item (decision `project-status-not-state-labels`).
+## Labels that are not a Status
+
+No Status says a decision is awaited: the label `blocked:maintainer` carries it, on any Status (decision `blocked-is-a-label-not-a-state`). No Status says an item was posed before the frame of 2026-11-03 (`docs/vision.md`): the label `stale` carries it, on an issue in Idea or Option; the act of `/feyn-triage` or `/feyn-refine-option` that executes the decision removes it when the item holds, as written or reworked (`mise exec -- gh issue edit <n> --remove-label stale`); an item closed because it no longer holds has its close comment name what replaced it; an item left open, or sent to a brainstorm, keeps it (decision `project-status-not-state-labels`).
 
 ## GitHub writes
 
@@ -33,6 +35,7 @@ On: "Auto-add to project" (filter `is:issue is:open`, never a pull request), "Au
 - **Read** an issue, all of it: `mise exec -- gh issue view <n> --json number,title,state,labels,milestone,body,comments,closedByPullRequestsReferences,projectItems`.
 - **Search** the open issues by key words (the twin of a new one): `mise exec -- gh issue list --state open --search "<two or three key words>"`.
 - **Comment** on an issue: `mise exec -- gh issue comment <n> --body-file <file>`.
+- **Close** an issue: done, moot or a duplicate, as not planned with the reason, or as completed when work already delivered settled it: `mise exec -- gh issue close <n> --reason <completed|"not planned"> --comment "<the reason, with the links: commit, PR, issue>"`.
 - **Hide a duplicate** comment (posted twice by mistake), never deleted: on its page, the comment's menu ⋯, "Hide", reason "Duplicate"; or `mise exec -- gh api graphql -f query='mutation { minimizeComment(input: {subjectId: "<comment node id>", classifier: DUPLICATE}) { clientMutationId } }'`, the node id read with `mise exec -- gh api repos/sebvey/feyn/issues/<n>/comments --jq '.[] | [.node_id, .body[:60]] | @tsv'`.
 - **Create** an issue, one form per command; it prints the issue URL:
   - an idea: `mise exec -- gh issue create --title "<title>" --body-file <file> --label area:<area>`;
