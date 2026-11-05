@@ -94,7 +94,10 @@ Every field, never only `status`:
   category, a marker, an exception to a principle): each is sorted as `/feyn-deliver-epic`
   step 3, "The sort", says, the issue standing for the epic (its Done when and Context for the
   epic's Objective and Material, `work` for the orchestrator's brief, no plan): a contradiction
-  in `work` is fixed by a rerun (step 4) and the maintainer informed; one already settled is
+  in `work` is fixed by a rerun (step 4) and the maintainer informed; an instruction deviation
+  in the issue (a deviation "wrong command", or two statements that cannot both hold) corrects
+  its Done when by a dated amendment ([done-when.md](../../reference/done-when.md)), then a
+  rerun (step 4), and the maintainer informed; one already settled is
   applied, by a rerun when the PR must change, and the maintainer informed; the rest, costly to
   undo or foundational, is named in the PR's Review first (one bullet can name several), its
   options ruled out and its cost of going back in "Delivery notes": the maintainer decides it

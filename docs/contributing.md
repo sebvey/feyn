@@ -38,7 +38,8 @@ each in the body template of its form, and only its own, in `.claude/reference/`
   no solution, no Done when, no To do;
 - a **story**, [`story-body.md`](../.claude/reference/story-body.md): a head of three lines,
   read to choose among the Ready stories (Where: the area; What it delivers; Why now), then
-  Done when (statements a reviewer can verify by reading a file or running a command), Context
+  Done when (statements a reviewer can verify by reading a file or running a command, each
+  command's baseline under it, [`done-when.md`](../.claude/reference/done-when.md)), Context
   (what the work needs to know, ending with the line naming its origin), To do, Reads;
 - an **epic**, [`epic-body.md`](../.claude/reference/epic-body.md): Objective, Why now,
   Material, Done when, Out of scope.
@@ -59,12 +60,12 @@ created by the skills. Why: decisions `issue-carries-a-work-item-or-an-idea`,
 
 `/feyn-issue-branch <n>` takes a Ready story: it refuses one that carries `blocked:maintainer` or
 has an open blocker (decision `blocked-by-links-for-dependencies`), creates `<type>/<n>-<slug>`
-from an up-to-date `main`, sets its Status to In progress, and restates the Done when as the
-contract the work is held to. It creates the branch with git, not linked to the issue: the PR's
-`Closes #n` links them. One branch per issue; commits on it are free-form, only the PR title
-survives the squash. A story of an epic starts from the epic's integration branch instead of
-`main` ("How the work is organised"). Why: decisions `three-channels`, `no-branch-link`,
-`epic-on-integration-branch`.
+from an up-to-date `main`, reruns the commands of the Done when against their baselines, sets
+its Status to In progress, and restates the Done when as the contract the work is held to. It
+creates the branch with git, not linked to the issue: the PR's `Closes #n` links them. One
+branch per issue; commits on it are free-form, only the PR title survives the squash. A story
+of an epic starts from the epic's integration branch instead of `main` ("How the work is
+organised"). Why: decisions `three-channels`, `no-branch-link`, `epic-on-integration-branch`.
 
 ## A branch becomes a pull request
 

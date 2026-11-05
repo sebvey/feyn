@@ -20,9 +20,13 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
 
 1. **Done when.** Reread the issue's Done when
    (`mise exec -- gh issue view <n> --json title,labels,body`) and check each statement against
-   the branch. One that does not hold: fix it, or report it in the PR's Checks as "not met" or
-   "deviation", with why (step 5). The Done when is not edited after `/feyn-issue-branch`; a change to it
-   amends the open PR's body as well.
+   the branch, its output held to the statement's intent, not read as the verdict
+   ([done-when.md](../../reference/done-when.md)). One that does not hold: fix it, or report it
+   in the PR's Checks as "not met" or "deviation", with why (step 5); a line its command
+   catches that its intent does not target is left as it is, a deviation "wrong command" with
+   the corrected command. The Done when is not edited after `/feyn-issue-branch` but by a dated
+   amendment ([done-when.md](../../reference/done-when.md)), which amends the open PR's body as
+   well.
 2. **Checks.** Run the ones that exist for what the branch touches
    (`git diff --name-only main...HEAD`; a story of an epic:
    `git diff --name-only origin/<integration branch>...HEAD`):

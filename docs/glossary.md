@@ -563,7 +563,7 @@ spec, the `README.md` of its MAJOR (decision `rules-with-level-and-method`).
 - means: a verification of a course against its spec, that implements the method of rules of one category and one level: the scripts run on a course (method test) and taught-check (method analysis). Its category and level are its rules', its severity follows from them. The spec's own files are verified by the tests of the spec directives it follows, which verify no rule, carry no category and no level, and each failure of which blocks
 - en: check · rejected: "test" (a method, not the check), "lint", "validation"
 - fr: « check »
-- not to confuse with: [method](#method), [fresh test](#fresh-test), [rule](#rule), [blocking check](#blocking-check), [reporting check](#reporting-check)
+- not to confuse with: [method](#method), [fresh test](#fresh-test), [rule](#rule), [blocking check](#blocking-check), [reporting check](#reporting-check), [baseline](#baseline)
 
 ### taught-check
 
@@ -818,6 +818,14 @@ word; the others name feyn's own mechanisms, which the frame does not name.
 - means: a reading of a change against the spec by an agent or a human
 - en: review · rejected: "audit", "QA"
 - fr: « revue »
+
+### baseline
+
+- means: the output of the command of a Done when statement, run on the base by whoever writes the statement and written under it with the commit it ran on: the reference the start, the contributor and the review judge the work's output by, each of its lines checked against the statement's intent
+- en: baseline · rejected: "expected output" (the output before the work, not the one the work must reach), "snapshot"
+- fr: to settle
+- not to confuse with: [check](#check)
+- why: "expected output" would read as the target of the work, which is the statement's intent; the baseline is only where the work starts from
 
 ### skill
 

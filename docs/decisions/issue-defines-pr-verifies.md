@@ -18,8 +18,10 @@ branch, and writes in the PR body's Checks section one line per issue that count
 `deviation` gets a line saying why. The proof of each statement is not in the PR: the
 fresh-agent reviewer (`/feyn-pr-review`) reruns every statement of the issue itself (decision
 `fresh-agent-review-before-maintainer`). When the issue and the PR disagree, the issue wins and
-the PR says why it deviates. The Done when is not edited after `/feyn-issue-branch`; a change
-to it amends the open PR's body as well.
+the PR says why it deviates. The Done when is not edited after `/feyn-issue-branch` but by a
+dated amendment of the issue, which amends the open PR's body as well: a baseline added to a
+Done when that has none, and a statement corrected after an instruction deviation found in
+delivery (decision `done-when-run-at-writing`). The issue stays the one contract.
 
 `Closes #n` when the PR ends the issue; `Refs #n` when the PR is one step of it (the issue
 stays open and its Development section shows nothing; never link the PR there by hand). A
@@ -35,3 +37,9 @@ linked PR closes its issue at the merge (GitHub, documented 2026-10-28, #71).
   freezes; before it, as an option, its kind and body may change (a story rewritten as an epic,
   or the reverse). Without this, an agent would hold an option's Done when as frozen and refuse
   to reshape it, though refining an option is what the stages before commitment are for.
+- Amended 2026-11-05 (#569): a committed Done when changes by a dated amendment of the issue in
+  two cases, a baseline added at the first moment that uses it and a statement corrected after
+  an instruction deviation, the open PR's body amended with it. Without this, an agent would
+  read "not edited after the start" as forbidding both, and would either leave a Done when with
+  no baseline or hold the work to a command shown wrong, as #554 was held to a grep that matched
+  « adresse »; the issue stays the one contract, so "the issue wins" still holds.
