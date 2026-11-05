@@ -90,7 +90,8 @@ it acts on the answer:
 - for each work item it creates: committed now (Ready) or not (Option, the default): ask, and
   without a clear "committed", create it Option. Committed, it is created Ready only once the
   conditions of a commitment hold ([commitment.md](../../reference/commitment.md), "The
-  conditions of the act").
+  conditions of the act"); one that does not hold is reported with the creation, and the work
+  item is created Option.
 
 An item the maintainer leaves open stays Idea, and the reply says so;
 with several issues, its line in the working list becomes `left open: <why>`, skipped from then
@@ -140,7 +141,8 @@ left open keeps the label: it has not been decided.
 do; decision `idea-is-never-converted`; an issue numbered below #424, the epic PR of epic #392,
 #425 excepted, `/feyn-issue`, "Read an issue"): never rewritten in place. It is recreated as a story or
 an epic, or several, as for an idea above, with `/feyn-issue`, the work it defines restated in
-the new work item's form, `--status Option` or `--status Ready` as the maintainer says,
+the new work item's form, `--status Option` or `--status Ready` as the maintainer says and the
+conditions of a commitment hold (step 3),
 `--opened-from #<n>`. Its blocked-by links, both
 ways ([project.md](../../reference/project.md), "Dependencies", Read), are set again on the new
 work item (Set); then it is closed as completed with a comment naming what replaces it.

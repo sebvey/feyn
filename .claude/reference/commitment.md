@@ -56,7 +56,10 @@ The item is set Ready ([project.md](project.md), "Commands", Set; a work item cr
   decision, written only on their word.
 
 A condition that does not hold is said in the presentation, with what would make it hold; the
-item is not set Ready until it does.
+item is not set Ready until it does. At a triage, where the conditions are checked once the
+maintainer has said a work item is committed, after the presentation: a condition that does not
+hold is reported with the creation, and the work item is created Option, to be committed at an
+option refinement once it holds.
 
 ## A story posed in a taken epic
 
