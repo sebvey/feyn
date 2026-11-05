@@ -8,11 +8,11 @@ feyn makes two products from one source, a course:
 - a **teacher**, which teaches the course to a learner in a teaching session in Claude Code;
 - a **site**, which publishes the course for the reader.
 
-The teacher is the product that justifies the rest. The spec, its checks, the site and the agentic layer are worth what they bring to a learner taught: a spec that no teacher consumes is premature, and a course is judged only once it is taught. Several courses, other contributors and several learners come after, and are judged the same way.
+The spec, its checks and the agentic layer are worth what they bring to the two products: a spec that no product consumes is premature. Several courses, other contributors and several learners come after, and are judged the same way.
 
 ## The yardstick
 
-A change of `linear-course` counts when the bench course `courses/po-essai/` (two concepts) follows it in the same PR, its checks pass on it, and the teacher teaches it. Small and proven over complete: a change proven on two real concepts is worth more than a complete spec judged on paper.
+A change of `linear-course` counts when the bench course `courses/po-essai/` (two concepts) follows it in the same PR and its checks pass on it. The site is the product being built; the teacher is frozen until the brainstorm on the protocol rules (idea #597), and comes back after it (decision `teacher-frozen-until-the-protocol-brainstorm`). Small and proven over complete: a change proven on two real concepts is worth more than a complete spec judged on paper.
 
 ## The lessons of parcours-po
 

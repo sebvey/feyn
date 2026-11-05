@@ -20,8 +20,6 @@ A decision is written when it spans several files or is costly to undo. Otherwis
 
 A choice that changes only words (a term chosen, renamed or rejected, a French word given to a concept) is not a decision: refuse it and send it to `/feyn-glossary-entry`, its why going in the entry's `why` (decision `word-choices-in-the-glossary`). A choice that changes files, a structure or steps stays here, and names its concepts by their terms without defining them.
 
-A decision on how the teacher teaches (`classroom-builder/`, the protocol of a spec) also needs two fresh tests that show it necessary or sufficient. Ask for them (which fresh test, what it showed); without them, refuse and propose the test scenario instead.
-
 ## 3. The folder
 
 The most local area the decision binds:

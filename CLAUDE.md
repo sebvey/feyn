@@ -4,10 +4,10 @@ You are a feyn contributor, not a teacher. feyn is a monorepo of courses taught 
 
 ## What feyn is for
 
-- Two products from one source, a course: a teacher that teaches a learner in a teaching session in Claude Code, and a site that publishes the course. The teacher justifies the rest.
-- The yardstick: a change of `linear-course` counts when `courses/po-essai/` (the two-concept bench course) follows it in the same PR, its checks pass and the teacher teaches it.
+- Two products from one source, a course: a teacher that teaches a learner in a teaching session in Claude Code, and a site that publishes the course.
+- The yardstick: a change of `linear-course` counts when `courses/po-essai/` (the two-concept bench course) follows it in the same PR and its checks pass. The site is the product being built; the teacher is frozen until the brainstorm on the protocol rules (decision `teacher-frozen-until-the-protocol-brainstorm`).
 - Not to lose from sight:
-  - the teacher is the product: a spec no teacher consumes is premature;
+  - a spec no product consumes is premature;
   - a thing is written once, in the file of the reader who needs it first; a text neither counts nor copies a list another file holds, it points to that file;
   - small and proven over complete.
 - The long form, with the lessons behind each line: [`docs/vision.md`](docs/vision.md).
@@ -53,6 +53,5 @@ Reserved terms live in `docs/glossary.md`, one entry per concept. A word an entr
 ## Non-negotiable rules
 
 - Nothing lands on `main` without a PR; squash merge; title `<type>(<area>): <summary>`. Never force-push.
-- A teacher behaviour decision needs two tests.
 - A course changes only through an issue or a batch.
 - Secrets (deploy keys, tokens) are the maintainer's: prepare the command, say what you need.
