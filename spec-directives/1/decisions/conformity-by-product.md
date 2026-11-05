@@ -35,6 +35,5 @@ conformity of a product.
   tests of `check-spec` verify, by a test that checks the form of the file. Without this, a
   contributor reads the composition as a rule of the teacher and gives it a category and a
   level, or leaves its test outside the clause.
-- Amended 2026-11-04 (#545): the words "conformity" and "conformance clause", and the French
-  words of a diagram and of a schema, leave this decision for the glossary, their why in its
-  entries (decision `word-choices-in-the-glossary`).
+- Amended 2026-11-04 (#545): "conformity", "conformance clause", and the French words of a
+  diagram and of a schema, leave for the glossary (decision `word-choices-in-the-glossary`).

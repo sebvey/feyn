@@ -23,14 +23,12 @@ failure are kept apart, the severity derived from the other two (decision
 - A rule as a sentence of prose, with no identity: 29148 makes the requirement the unit, with
   an identifier and attributes that a test references.
 - "taught-check" as a method: it is the name of a check of the repository, not a method.
-- The protocol kept apart from this model: no build existed yet, so joining cost nothing, and
-  apart it would leave two models of a rule.
+- The protocol kept apart: joining cost nothing before any build; apart, two models of a rule.
 
 ## Consequences
 
-- Amended 2026-11-02 (#465): the decision moves to the spec directives: the rule model, the
-  conformance clause and the tests of a spec's own files bind every spec that follows the
-  directives; the categories and the families stay each spec's. Without this, a contributor
+- Amended 2026-11-02 (#465): the decision moves to the spec directives and binds every spec that
+  follows them; the categories and the families stay each spec's. Without this, a contributor
   writing a second spec would copy the rule model of the first, two copies that drift.
 - Amended 2026-11-05 (#552): the `origin` of a rule of the protocol is optional, present where a
   feyn issue or decision is its source. Without this, every rule of the protocol needs one, and a
@@ -38,3 +36,5 @@ failure are kept apart, the severity derived from the other two (decision
 - Amended 2026-11-05 (#565): the `origin` leaves the rules and the rule files: it tied a rule to
   a course, in three forms, no program read it, and git keeps the issue that wrote each rule.
   Without this, a contributor fills a field nothing reads, taken for the link to a decision.
+- Amended 2026-11-05 (#547): "progression" for the category pedagogy, and "must" for a
+  requirement, leave this decision for the glossary (decision `word-choices-in-the-glossary`).
