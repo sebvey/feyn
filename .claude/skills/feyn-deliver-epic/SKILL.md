@@ -182,10 +182,11 @@ When no open question remains and every story is closed and Done
    tell the maintainer.
 2. The epic is closed and Done (`mise exec -- gh issue view <epic> --json state,projectItems`);
    not Done after a few seconds: set it ([project.md](../../reference/project.md), "Commands").
-3. `git switch main`, `git pull --ff-only`; then the local integration branch (step 5.2 created
-   it), its PR (the epic PR) merged, as [run-cleanup.md](../../reference/run-cleanup.md) says. Every worktree and `worktree-*` branch of the epic's runs is gone
-   (`git worktree list`, `git branch --list 'worktree-*'`); one left is cleaned the same way,
-   its PR merged.
+3. `git switch main`, `git pull --ff-only`; then the local integration branch (step 5.2
+   created it), its PR (the epic PR) merged, as
+   [run-cleanup.md](../../reference/run-cleanup.md) says. Every worktree and `worktree-*`
+   branch of the epic's runs is gone (`git worktree list`, `git branch --list 'worktree-*'`);
+   one left is cleaned the same way, its PR merged.
 4. The issues the epic blocked that are now free: as `/feyn-merge-cleanup` step 7, "The issues
    it blocked", for the epic.
 
