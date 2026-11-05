@@ -62,10 +62,9 @@ epic #222 for `composition.yaml`), never twice.
   language pack becomes the two lexicons of the spec (maintainer, 2026-11-03, idea #492).
 - Amended 2026-11-03 (#504): a spec speaks the language of its courses to the teacher and to the
   course author: every file of the spec MAJOR they read is in that language, `teacher/README.md`
-  (how a rule of the protocol is written, its tables), `teacher/composition.yaml`,
-  `course/README.md`, the `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml` and the
-  `purpose` of their groups, the descriptions of `course/schemas/`, the messages of
-  `course/checks/`, the MAJOR's `README.md`; what speaks to
+  (the protocol, its purposes and tables), `teacher/composition.yaml`, `course/README.md`, the
+  `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml`, the descriptions of
+  `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md`; what speaks to
   the tooling and the maintainer only stays English: the spec directives, the spec's
   `decisions/` and `CHANGELOG.md`, the keys, ids and slugs of the YAML files, the code. The
   bounded exception on the protocol's French (2026-10-27, amended 2026-10-30) is absorbed: the
@@ -74,3 +73,7 @@ epic #222 for `composition.yaml`), never twice.
   spec with French headings in it (idea #503). The texts written in English before this date are
   translated by the stories that rewrite them (#450, #505, #222), never twice (maintainer,
   2026-11-03).
+- Amended 2026-11-05 (#554): the protocol's rules and the purposes of their groups are in
+  `teacher/rules.yaml` only; `teacher/README.md` keeps how a rule of the protocol is written and
+  its tables. The rule is unchanged: the `purpose` of a group is in the language of the spec, as
+  its `text` and `why` are.

@@ -55,10 +55,9 @@ Two classes of products: the **course**, its diagrams included, and the **teache
 - A course conforms when it holds every requirement of its rules (`course/rules.yaml`), whatever
   the method that verifies each one. The blocking checks are a necessary condition, not a
   sufficient one: the review and taught-check do the rest, and a course tag certifies the whole.
-- A teacher conforms when it holds every requirement of the protocol (`teacher/rules.yaml`,
-  and until #318 the rest of `teacher/README.md`); the method of a rule of the protocol is
-  demonstration, by the fresh tests (the test scenarios of the spec MAJOR's `teacher/tests/`, run
-  by `classroom-builder/fresh-test`). No teacher conforms yet: the scenarios cover the rules a
+- A teacher conforms when it holds every requirement of the protocol (`teacher/rules.yaml`);
+  the method of a rule of the protocol is demonstration, by the fresh tests (the test scenarios
+  of the spec MAJOR's `teacher/tests/`, run by `classroom-builder/fresh-test`). No teacher conforms yet: the scenarios cover the rules a
   session of `po-essai` exercises, not every requirement.
 - Recommendations are outside conformance.
 
@@ -286,7 +285,8 @@ fixtures are tested by `course-specs/linear-course/1/course/checks/test-fixtures
   that differs from the version of that section. For `rule-slugs`: a missing slug, a duplicate slug,
   a rule cited by number, a missing group, a group whose slug is a rule's, a range, a range in
   `course/README.md`, a group cited as a rule, a « Used in » cell of `teacher/README.md` citing a
-  slug `teacher/rules.yaml` does not define. For `rule-files`: a missing level; a level, a method,
+  slug `teacher/rules.yaml` does not define, a code span shaped like a slug in the `text` of a
+  rule that no rule defines. For `rule-files`: a missing level; a level, a method,
   a category and a family off their lists; a protocol group before the group of its family; an id
   in both rule files; a check that does
   not exist; a check over two categories; a check over two levels; a schema that does not

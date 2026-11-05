@@ -893,7 +893,7 @@ word; the others name feyn's own mechanisms, which the frame does not name.
 
 - means: the model of the teacher's instructions, part of the Claude Code realisation of the **composition**, filled from the parts the spec MAJOR renders
 - en: teacher template
-- fr: to settle
+- fr: « modèle d'instructions »
 - not to confuse with: [template](#template), [teacher](#teacher), [composition](#composition)
 
 ### body template

@@ -382,9 +382,8 @@ function ruleText(slug) {
   const files = [path.join(classroom, 'CLAUDE.md'), ...fs.readdirSync(path.join(classroom, '.claude', 'skills')).map((d) => path.join(classroom, '.claude', 'skills', d, 'SKILL.md'))];
   for (const f of files) {
     const lines = fs.readFileSync(f, 'utf8').split('\n');
-    const at = lines.findIndex((l) => l.startsWith(`**${slug}** `) || l.startsWith(`| **${slug}** |`));
+    const at = lines.findIndex((l) => l.startsWith(`**${slug}** `));
     if (at < 0) continue;
-    if (lines[at].startsWith('|')) return lines[at];
     const out = [lines[at]];
     for (const l of lines.slice(at + 1)) {
       if (/^\*\*[a-z0-9-]+\*\*( |$)/.test(l) || /^#/.test(l) || /^\| /.test(l)) break;

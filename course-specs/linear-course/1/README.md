@@ -81,9 +81,8 @@ What a rule file holds is the directives' (`spec-directives/1/README.md` section
 and those verified by inspection (the review), one group per section of `course/README.md` that
 states rules; `course/schemas/course.schema.yaml` holds the fields of `course.yaml`, and
 `course/schemas/concept-frontmatter.schema.yaml` the fields of the `concept.md` frontmatter
-(#329). The rules of the protocol leave `teacher/README.md` for `teacher/rules.yaml` in #318;
-until that extraction, `teacher/README.md` keeps its verbal forms of obligation, read in the
-levels of the spec directives (`spec-directives/1/README.md` section 3).
+(#329). `teacher/rules.yaml` holds every rule of the protocol (#554); `teacher/README.md` states
+none.
 
 **Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language of
 its courses, of its lexicons and of the rules of `teacher/rules.yaml`, a bounded exception to the

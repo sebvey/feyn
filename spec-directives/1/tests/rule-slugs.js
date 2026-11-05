@@ -7,8 +7,8 @@
 // Defined, in teacher/rules.yaml: a rule by its `id`, a group by its `id` (a family is a group whose
 // id is its category); each id once, across rules and groups.
 // Cited:
-//   - in the `text` and `why` of a rule of teacher/rules.yaml, the code spans that follow « règle »,
-//     « règles », « groupe » or « groupes »;
+//   - in the `text` and `why` of a rule of teacher/rules.yaml, every code span shaped like a rule
+//     slug, and those that follow « règle(s) » must be rules;
 //   - in a table of teacher/README.md, every code span of a "Used in" or "Rule" column;
 //   - in teacher/README.md, README.md, course/README.md and decisions/*.md, the code spans that
 //     follow « rule », « rules », « règle » or « règles », joined by commas, « and », « to », « et »,
@@ -119,7 +119,10 @@ function run(ctx) {
       const rl = yaml.lineOf(g.rules, ri, gl);
       define(r.id, yaml.lineOf(r, 'id', rl), 'rule');
       for (const k of ['text', 'why']) {
-        if (typeof r[k] === 'string') texts.push(...yamlParagraph(r[k], yaml.lineOf(r, k, rl)));
+        if (typeof r[k] !== 'string') continue;
+        const line = yaml.lineOf(r, k, rl);
+        texts.push(...yamlParagraph(r[k], line));
+        for (const c of codeSpans(r[k])) if (SLUG.test(c)) cites.push({ file: RULES, slug: c, line, kind: 'any' });
       }
     });
   });

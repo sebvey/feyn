@@ -93,7 +93,7 @@ cible se construit depuis la même composition.
 | `permanent` | `every-message` | les règles du protocole avec le `purpose` de leurs familles et de leurs groupes (spec, `rules.yaml`), la posture (cours, `plan.md` sous `headings.onboarding`), la carte du cours et les noms des fichiers du cours (cours, `course.yaml`), les deux lexiques (spec, `lexicon.yaml` et `../course/lexicon.yaml`), les paramètres de la classe (classe, `course.lock`) |
 | `on-demand` | `at-a-moment` | à chacun de ses moments (accueil, reprise, un schéma demandé ou déclaré au sous-concept en cours, l'arrêt, une remise à zéro), les règles de ce moment (groupe `onboarding`, groupe `resume`, la famille `stop`, les règles `requested-diagram-shown` et `diagram-not-displayable` ; aucune encore pour une remise à zéro) et ce que ce moment lit |
 | `course-reads` | `during-the-session` | le cours tel qu'il est copié, lu quand le protocole le dit : le fil rouge, le fichier de domaine, le `concept.md` du concept (la matière) et son `teaching.md` (la méthode), `sources.md` sur demande, le glossaire du cours |
-| `learner-memory` | `at-start-and-save-points` | les modèles de la mémoire de l'apprenant (spec, `templates/learner/`), les règles de la mémoire (la famille `learner-memory`), les trois fichiers de `learner/` ; rien du cours |
+| `learner-memory` | `at-start-and-save-points` | les modèles de l'apprenant (spec, `templates/learner/`), les règles de la mémoire (la famille `learner-memory`), les trois fichiers de `learner/` ; rien du cours |
 | `permissions` | `always` | ce qu'un professeur écrit, `learner/` et ses commits, jamais poussés, et ce qu'il n'écrit jamais, `course/` (règle `write-only-in-learner`) |
 
 Deux lecteurs y viennent. Le builder, qui écrit le build de la classe : sa moitié qui dépend de ce
@@ -190,7 +190,7 @@ pas une chaîne fixe. La colonne « Used in » cite les règles de `rules.yaml` 
 | `memory.onboarding` | « accueil » (le commit et la première ligne du journal) | `commit-after-save-point` |
 
 Les titres, les statuts et les formats de ligne que portent les clés de `memory_headings`, de
-`status` et de `memory` sont ceux de `teacher/templates/learner/` : `teacher/lexicon.yaml` et les modèles de la mémoire de
+`status` et de `memory` sont ceux de `teacher/templates/learner/` : `teacher/lexicon.yaml` et les modèles de
 l'apprenant changent ensemble.
 
 **Paramètres du cours** (tirés de `course.yaml`, injectés par le build de la classe)
