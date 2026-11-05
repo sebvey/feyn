@@ -10,7 +10,7 @@ PR would close its issue at the merge (#24, closed wrongly on 2026-10-27); `/fey
 would then have to unlink it by GraphQL.
 
 An issue branch is not linked to its issue. `/feyn-issue-branch` creates it with git
-(`git switch -c <type>/<n>-<slug> origin/main`, `git push -u origin <type>/<n>-<slug>`), and the
+(`git switch -c <type>/<n>-<slug> origin/<base>`, `git push -u origin <type>/<n>-<slug>`), and the
 only link between the work and the issue is the PR body: `Closes #n` links the PR to the issue
 and closes it at the merge; `Refs #n` links nothing and leaves the issue open. It replaces the
 link the old branch skill made with `gh issue develop` and the unlink the old PR skill ran before

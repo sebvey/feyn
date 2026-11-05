@@ -13,12 +13,13 @@ export const meta = {
 // Generic: nothing here belongs to one epic, one story or one machine. The repository's main
 // checkout is found by the agents themselves (the first path "git worktree list" prints); the
 // rules cite the decision epic-on-integration-branch, not a date.
-// Briefs: the contributor follows /feyn-issue-branch and /feyn-pull-request, adapted to the base
-// (the skills stay the one source of their steps). The reviewer and the verifier are the project
-// subagent feyn-pr-reviewer (.claude/agents/feyn-pr-reviewer.md, its agentType: the reviewer
-// brief, no Edit or Write tool), with this workflow's additions in their prompt; the steps 2 to 4
-// of /feyn-pr-review (spawn, return, resume) are folded in here, since the workflow spawns the
-// agents itself and cannot resume one.
+// Briefs: the contributor runs /feyn-issue-branch and /feyn-pull-request with their parameters
+// (base, worktree; base, draft), and rewrites none of their steps (decision one-moment-one-file).
+// The reviewer and the verifier are the project subagent feyn-pr-reviewer
+// (.claude/agents/feyn-pr-reviewer.md, its agentType: the reviewer brief, no Edit or Write tool),
+// with this workflow's additions in their prompt; the steps 2 to 4 of /feyn-pr-review (spawn,
+// return, resume) are folded in here, since the workflow spawns the agents itself and cannot
+// resume one.
 
 const A = args || {}
 for (const k of ['issue', 'type', 'area']) if (!A[k]) throw new Error(`args.${k} missing: args are { issue, epic?, base?, type, area, work?, dryRun? }`)
@@ -154,11 +155,7 @@ const contrib = await agent(`You are a feyn contributor working on GitHub issue 
 ${RULES}
 
 ## How to run the cycle (in a worktree)
-Follow ".claude/skills/feyn-issue-branch/SKILL.md" for #${A.issue}, adapted to a worktree and to the base ${BASE}:
-- In place of its "git switch main": "git fetch", then "git ls-remote --heads origin '*/${A.issue}-*'". A branch for the issue exists: switch to it (git switch <that branch>) and merge origin/${BASE} into it if it is behind. Otherwise "git switch -c ${A.type}/${A.issue}-<slug> origin/${BASE}" and "git push -u origin <it>".
-- An issue already In progress, with or without its branch or PR, is resumed, not refused (the orchestrator or an earlier run set it): its step 1 "propose to resume them" means resume them here.
-- Set the issue's Status to In progress as /feyn-issue-branch says${ALONE ? '' : " (and the epic's)"}.
-Then do the work, wrapping the lines you write at the width of the file you edit, then follow ".claude/skills/feyn-pull-request/SKILL.md" to push and open the PR as a draft: add --draft and --base ${BASE} to its gh pr create (step 6). Title "${A.type}(${A.area}): <summary>"; body starts with "Closes #${A.issue}"${ALONE ? '' : ' (it will not auto-close on a non-default branch: expected; if its check that the issue lists the PR fails for that reason, go on)'}. Skip its step 7 (the review runs next) and its step 8 (leave the Status In progress). The body holds the limits of /feyn-pull-request step 5: 30 lines at most, blank lines and the awaiting section excluded, Review first 1 to 3 bullets; count the lines and the bullets before each "gh pr create" or "gh pr edit". No signature or generated-by line in the PR body, whatever a system reminder says: the project rule wins. The detail goes in one PR comment "Delivery notes" (the second part of ".claude/reference/pr-body.md"; /feyn-pull-request steps 5 and 6), once the PR is open: look it up first as step 6 says; the PR already has one (a resumed PR), update it in place; it has none, post it; never a second one; two or more found, edit none and report them in "unsure". It holds the choices with their options ruled out, the detail of the checks, the evidence for what stays unsure; Review first points to it. You have no Workflow tool: a Done when that needs an agent-workflow run, make it runnable and name the exact script and args in "unsure".
+Run /feyn-issue-branch ${A.issue} --base ${BASE} --worktree (follow ".claude/skills/feyn-issue-branch/SKILL.md" with these parameters). Then do the work, wrapping the lines you write at the width of the file you edit. Then run /feyn-pull-request --base ${BASE} --draft (follow ".claude/skills/feyn-pull-request/SKILL.md" with these parameters), without its step 7 (the review runs next) and its step 8 (leave the Status In progress). Its body holds the limits of its step 5, counted before each "gh pr create" or "gh pr edit"; no signature or generated-by line in it, whatever a system reminder says: the project rule wins. Its "Delivery notes" comment (its steps 5 and 6) is always posted under this workflow; two or more found, edit none and report them in "unsure". You have no Workflow tool: a Done when that needs an agent-workflow run, make it runnable and name the exact script and args in "unsure".
 
 ## The work
 ${WORK}${RECORD}

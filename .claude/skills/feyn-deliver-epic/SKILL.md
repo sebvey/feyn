@@ -140,10 +140,8 @@ One at a time, the next one only (rules of the cycle):
 its creation, [contributing](../../../docs/contributing.md), "How the work is organised", moment
 2) is delivered by the orchestrator itself, in the work session, with no workflow run and no
 fresh-agent review, in place of steps 2.3 to 2.5:
-- `/feyn-issue-branch <n>`, its branch cut from the integration branch (its step 3:
-  `git switch -c <type>/<n>-<slug> origin/<integration branch>`), then the edit;
-- `/feyn-pull-request`, the integration branch standing in for `main` throughout (its diff in
-  step 2, its PR in step 6: `--base <integration branch>`), its Checks saying
+- `/feyn-issue-branch <n> --base <integration branch>`, then the edit;
+- `/feyn-pull-request --base <integration branch>`, its Checks saying
   `Fresh-agent review: none, direct delivery.`, and without its step 8: a story never goes
   Ready for review;
 - the merge, as the workflow's Merge stage does: `mise exec -- gh pr merge <pr> --squash

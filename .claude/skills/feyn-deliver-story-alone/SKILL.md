@@ -39,11 +39,11 @@ they do not hold.
 - **A direct delivery.** A story whose To do opens with the line "Direct delivery"
   (named `direct` by the maintainer at its creation, [contributing](../../../docs/contributing.md),
   "How the work is organised", moment 2) stops the cycle for that issue, before the refusals
-  below: reply "this story is delivered as a direct delivery (`/feyn-issue-branch`, the
-  edit, `/feyn-pull-request`): nothing to spawn", and spawn nothing.
+  below: reply "this story is delivered as a direct delivery (`/feyn-issue-branch <n>`, the
+  edit, `/feyn-pull-request`, both with no parameter): nothing to spawn", and spawn nothing.
 - Then the refusals of `/feyn-issue-branch` step 1 apply: name the reason and stop for that
   issue. Except In progress: the run resumes it, its contributor taking the issue's branch and
-  PR where they are.
+  PR where they are (`/feyn-issue-branch --worktree`).
 - Several numbers: one run per issue, in parallel, only when their To do touch distinct files.
   Two issues that share a file run one after the other (the second after the first is merged).
 - A decision the issue asks for: did the maintainer accept its counterfactual in this

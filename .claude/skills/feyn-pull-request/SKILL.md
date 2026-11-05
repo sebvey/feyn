@@ -1,9 +1,10 @@
 ---
 name: feyn-pull-request
-description: "At the end of the work on an issue, turn the current issue branch on feyn into a pull request to main (to its epic's integration branch for a story of an epic), rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, checking the issue lists it, having it reviewed by `/feyn-pr-review` on the direct path (not on a direct delivery), then asking for review. It never merges. Use for \"/feyn-pull-request\"."
+description: "At the end of the work on an issue, turn the current issue branch on feyn into a pull request to its base (--base <branch>, main by default; its epic's integration branch for a story of an epic), as a draft with --draft, rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, checking the issue lists it, having it reviewed by `/feyn-pr-review` on the direct path (not on a direct delivery), then asking for review. It never merges. Use for \"/feyn-pull-request\"."
+argument-hint: "[--base <branch>] [--draft]"
 ---
 
-# /feyn-pull-request
+# /feyn-pull-request [--base <branch>] [--draft]
 
 One job: deliver the current issue branch as a pull request to `main` and ask for its review.
 It never merges: the merge belongs to the maintainer. A story of an epic, a direct story
@@ -15,6 +16,13 @@ is merged, `/feyn-merge-cleanup` cleans up, never in the same turn.
 
 The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the issue. On
 `main`, or on a branch without an issue number: stop and say so.
+
+Its caller passes its variations as parameters and rewrites none of its steps (decision
+`one-moment-one-file`):
+- `--base <branch>`: the branch the PR targets, `main` by default. A story of an epic, a direct
+  story included, gives its epic's integration branch. Steps 2 and 6.
+- `--draft`: the PR opens as a draft, as the agent workflow `deliver-story.js` needs until its
+  review and corrections are done. Step 6.
 
 ## Steps
 
@@ -28,8 +36,7 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    amendment ([done-when.md](../../reference/done-when.md)), which amends the open PR's body as
    well.
 2. **Checks.** Run the ones that exist for what the branch touches
-   (`git diff --name-only main...HEAD`; a story of an epic:
-   `git diff --name-only origin/<integration branch>...HEAD`):
+   (`git diff --name-only origin/<base>...HEAD`):
    - a course `courses/<id>/`: the check runner of the spec it declares
      (`course-specs/check-course courses/<id>`);
    - a path under `course-specs/linear-course/`: the bench course,
@@ -124,16 +131,16 @@ The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the i
    `deliver-story.js`, otherwise when the PR has such detail. Its contributor writes it, the
    corrector of a review updates it: one comment, edited in place, never a second one.
 6. **Open it**:
-   - `mise exec -- gh pr create --base main --title "<title>" --body-file <file>`; with a
+   - `mise exec -- gh pr create --base <base> --title "<title>" --body-file <file>`; with a
      decision awaited, add `--draft` (no label on the PR: the draft already keeps it from
      being merged) and put `blocked:maintainer` on the issue
-     (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`). Under the agent
-     workflow `deliver-story.js`, `--draft` always: the PR stays a draft until its review and
-     corrections are done, then is marked ready at the hand-over (`/feyn-deliver-story-alone`
-     step 5) or at the merge of a story of an epic (the workflow's Merge stage). A direct
-     delivery is never a draft. A story of an epic: `--base <integration branch>` in place of
-     `--base main`; its `Closes #<n>` closes nothing on that branch, the orchestrator closes the
-     story at the merge, so the check below may not list the PR: expected;
+     (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`). Given `--draft` (the
+     agent workflow `deliver-story.js` always gives it), add `--draft`: the PR stays a draft
+     until its review and corrections are done, then is marked ready at the hand-over
+     (`/feyn-deliver-story-alone` step 5) or at the merge of a story of an epic (the workflow's
+     Merge stage). A direct delivery is never a draft. A base other than `main` (an epic's
+     integration branch): its `Closes #<n>` closes nothing on that branch, the orchestrator
+     closes the story at the merge, so the check below may not list the PR: expected, go on;
    - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
      lists the PR when it says `Closes #<n>`; a `Refs` PR: it lists nothing, since the branch
      is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
