@@ -11,12 +11,29 @@ Template of courses/<id>/concepts/<NN>-<slug>/concept.md (course/README.md secti
 - « Approfondissement » is optional: more matter for the learner who asks to go further, sourced in sources.md; no case relies on it. To have none, delete the section.
 -->
 ---
-description: "<one sentence for the site>" stances: consensus:
-    - text: "<what is accepted>" author: "<the text or author it belongs to>" refs: [S1] verified: ["<« the shortest quotation » (its place)>"] school:
-    - text: "<a school of thought's choice>" author: "<author or current>" refs: [S2] verified: ["<« the shortest quotation » (its place)>"] course:
-    - text: "<the course's own choice>" refs: [] neighbors:
-  - text: "<a neighbouring notion not to confuse with this concept>" refs: [] diagrams:
-  - file: <diagram-stem>.svg title: "<one line: SVG title and image alt>" caption: "<what the diagram shows, as the teacher says it>" subconcept: <n>a1
+description: "<one sentence for the site>"
+stances:
+  consensus:
+    - text: "<what is accepted>"
+      author: "<the text or author it belongs to>"
+      refs: [S1]
+      verified: ["<« the shortest quotation » (its place)>"]
+  school:
+    - text: "<a school of thought's choice>"
+      author: "<author or current>"
+      refs: [S2]
+      verified: ["<« the shortest quotation » (its place)>"]
+  course:
+    - text: "<the course's own choice>"
+      refs: []
+neighbors:
+  - text: "<a neighbouring notion not to confuse with this concept>"
+    refs: []
+diagrams:
+  - file: <diagram-stem>.svg
+    title: "<one line: SVG title and image alt>"
+    caption: "<what the diagram shows, as the teacher says it>"
+    subconcept: <n>a1
 ---
 
 ## Objectif
