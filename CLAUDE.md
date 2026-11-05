@@ -67,17 +67,18 @@ accepts it silently: no alias in a description, no argument read as its replacem
 through the agent workflow `deliver-story.js`, up to the hand-over of its epic PR.
 `/feyn-deliver-story-alone <n>` delivers a Ready story without an epic through the same
 workflow, up to the hand-over of its PR to `main`; a direct delivery is made with
-`/feyn-issue-branch` and `/feyn-pull-request`. `/feyn-brainstorm` runs a brainstorm with the
-maintainer, subject by subject, and ends it in a plan of work items posed through the skills of
-the cycle. `/feyn-triage <n> [<n> …]` triages with the maintainer the ideas they name, one at a
-time. `/feyn-refine-option <n>` runs with the maintainer the option refinement of one option, up
-to its commitment, rework or close. Load the one that matches the request. The other `feyn-`
-skills are the work-cycle tooling: called by them, and loaded directly for a one-off act.
-`/feyn-decision` writes or changes a decision; `/feyn-glossary-entry` adds or changes a glossary
-entry. A delivery work session starts with an issue number. The frame of the work is Kanban,
-with ADR for the decisions and GitHub flow for the branches (`docs/kanban.md`). How feyn applies
-it (the work items, epics and stories, and the ideas; the Statuses from Idea to Done; milestones;
-the Project's views): `docs/contributing.md`, "How the work is organised".
+`/feyn-issue-branch`, `/feyn-pull-request` and the hand-over (`.claude/reference/hand-over.md`).
+`/feyn-brainstorm` runs a brainstorm with the maintainer, subject by subject, and ends it in a
+plan of work items posed through the skills of the cycle. `/feyn-triage <n> [<n> …]` triages with
+the maintainer the ideas they name, one at a time. `/feyn-refine-option <n>` runs with the
+maintainer the option refinement of one option, up to its commitment, rework or close. Load the one
+that matches the request. The other `feyn-` skills are the work-cycle tooling: called by them, and
+loaded directly for a one-off act. `/feyn-decision` writes or changes a decision;
+`/feyn-glossary-entry` adds or changes a glossary entry. A delivery work session starts with an
+issue number. The frame of the work is Kanban, with ADR for the decisions and GitHub flow for the
+branches (`docs/kanban.md`). How feyn applies it (the work items, epics and stories, and the ideas;
+the Statuses from Idea to Done; milestones; the Project's views): `docs/contributing.md`, "How the
+work is organised".
 
 ## Non-negotiable rules
 

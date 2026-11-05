@@ -49,4 +49,5 @@ Read the report, then every file it changed (never trust the summary).
 Run `mise exec -- course-specs/check-course courses/<id>` on the whole course (its failures
 treated as `/feyn-pull-request` step 2 says, by severity),
 then `/feyn-taught-check` ([feyn-taught-check](../feyn-taught-check/SKILL.md)) from the first
-concept touched, and `/feyn-pull-request`.
+concept touched, and `/feyn-pull-request`, then the moments it names next ("After the PR is
+open": the fresh-agent review, the corrections, the hand-over).

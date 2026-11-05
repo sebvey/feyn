@@ -85,7 +85,7 @@ output now. The author then amends the statement and its baseline in one dated a
   read as the verdict.
 - A wrong command, or any instruction deviation found in delivery, corrects the issue's Done
   when, in an epic as for a story without one: its orchestrator sorts it
-  (`/feyn-deliver-epic` step 3, "The sort", case 1).
+  ([sort.md](sort.md), "The four cases", case 1).
 
 ## A dated amendment
 

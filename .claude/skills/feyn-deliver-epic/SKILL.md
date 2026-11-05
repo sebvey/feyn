@@ -82,9 +82,8 @@ One at a time, the next one only (rules of the cycle):
    its To do), with `scriptPath` absolute. A direct story is not run: "A direct story", below,
    replaces steps 2.3 to 2.5.
 4. **Read the result**, every field, never only `status`:
-   - `merged`: its `reviewLine` must be in the PR's Checks
-     (`mise exec -- gh pr view <pr> --json body`); missing, add it
-     (`mise exec -- gh pr edit <pr> --body-file <file>`).
+   - `merged`: the workflow wrote its `reviewLine` into the PR's Checks and read it back before
+     the merge; nothing to add.
    - `merged-with-problems`: read its `problems`, a story not closed or not Done, or another
      problem of the merge. Fix it before the next story (close it, set its
      Status, [project.md](../../reference/project.md), "Commands"), or report it to the
@@ -127,8 +126,8 @@ its creation, [contributing](../../../docs/contributing.md), "How the work is or
 fresh-agent review, in place of steps 2.3 to 2.5:
 - `/feyn-issue-branch <n> --base <integration branch>`, then the edit;
 - `/feyn-pull-request --base <integration branch>`, its Checks saying
-  `Fresh-agent review: none, direct delivery.`, and without its step 8: a story never goes
-  Ready for review;
+  `Fresh-agent review: none, direct delivery.`; no hand-over: a story never goes Ready for
+  review;
 - the merge, as the workflow's Merge stage does: `mise exec -- gh pr merge <pr> --squash
   --match-head-commit <head sha>`, close the story
   ([project.md](../../reference/project.md), "Epics", Close) and check it
@@ -137,46 +136,10 @@ fresh-agent review, in place of steps 2.3 to 2.5:
 
 ## 3. Sorting, open questions, answers
 
-**The sort.** What a run or a review reports (a deviation, a structural choice made without the
-maintainer, a finding) is sorted at once, before anything reaches the maintainer, and the work
-goes on; it is never left as a line of Review first:
-1. a contradiction in the orchestrator's own brief (a story's Done when against itself, or
-   against the epic's Objective or Material), a wrong command among them (a deviation "wrong
-   command": a line its command catches that its statement's intent does not target,
-   [done-when.md](../../reference/done-when.md)): fix the brief, the story's Done when by a
-   dated amendment, and what the run built on it (a rerun, step 2.4), and inform the maintainer;
-2. one already settled by a decision, the epic's Material, a rule (`CLAUDE.md`, a skill, a
-   spec) or an answer the maintainer gave: apply it, and inform the maintainer;
-3. one a story of the plan makes moot: a line in the plan, under that story;
-4. the rest, when it is costly to undo or foundational (vocabulary, the structure of a file of
-   reference, the teacher's behaviour), becomes an open question; a choice that is neither
-   stays in its PR's "Delivery notes".
-
-"Inform" is a line of a progress message ("Progress"), not a question.
-
-**An open question that reports a defect** carries, with it: the correction; the cause (the
-instruction, skill step, brief or missing check that produced it or let it pass); the corrective
-action at that cause, or why it is not worth one (an isolated slip); and how the next occurrence
-will show that it held.
-
-**The trace** is on GitHub, at once: the line `Open question: <the choice>, <the options ruled
-out>, <the cost of going back> (#<story>)` in the log of the plan comment
-([project.md](../../reference/project.md), "Epics", "The plan comment"), and a comment on the
-epic, numbered, with its recommendation, ending "Answer here or in the work session; the plan
-comment records the answer."
-
-**The decision** is the message to the maintainer in the work session (GitHub notifies nobody of
-the maintainer's own comment, which the orchestrator posts): one question at a time, in the form
-`CLAUDE.md`, "Working with the maintainer", gives, with the link to the comment on the epic; the
-next one once it is answered. It is not a progress message.
-
-**The answer**, on the epic or in the work session, is recorded at once: the line
-`Answered: <the answer> (the maintainer, <where>, <date>)`, `<where>` being `on the epic` or
-`in the work session`, right under its `Open question:` line; then the answer is applied, by a
-story (posed next) when it needs work.
-
-**The count**: the log's lines starting with `Open question:` that no `Answered:` line follows.
-The epic PR is not handed over while one remains.
+What a run or a review reports (a deviation, a structural choice made without the maintainer, a
+finding) is sorted at once, as [sort.md](../../reference/sort.md) says, the path an epic: its
+four cases, and for what nothing settles, an open question (its form when it reports a defect,
+its trace on GitHub, the decision put to the maintainer, the answer recorded, the count).
 
 ## 4. Review of the whole branch
 
@@ -198,11 +161,9 @@ When no open question remains and every story is closed and Done
 1. Check each statement of the epic's Done when yourself (a command, a file), not from a review.
 2. Open the epic PR: `mise exec -- gh pr create --base main --head <integration branch>`, title
    `<type>(<area>): <summary>`, body starting with `Closes #<epic>`, then the sections of
-   `/feyn-pull-request` step 5, Issues listing every story with its PR. Set the epic Ready for
-   review ([project.md](../../reference/project.md), "Commands").
-3. Tell the maintainer ("Progress"): the link to the epic PR, what they have to do, what is
-   left outside the epic.
-4. The merge is the maintainer's: the PR page, "Squash and merge".
+   `/feyn-pull-request` step 5, Issues listing every story with its PR.
+3. Hand it over as [hand-over.md](../../reference/hand-over.md) says, the path an epic PR: the
+   epic Ready for review, the notification. The merge is the maintainer's.
 
 ## 6. After the maintainer's merge
 
