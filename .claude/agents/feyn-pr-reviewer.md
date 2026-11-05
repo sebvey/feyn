@@ -1,6 +1,6 @@
 ---
 name: feyn-pr-reviewer
-description: "Fresh-agent reviewer of a pull request on feyn: reviews it against its issue's Done when and returns a report (a verdict per statement, blocking and non-blocking findings, what it could not check), changing nothing. Spawned by /feyn-pr-review, by the agent workflow deliver-story.js (reviewer and verifier) and by /feyn-deliver-epic (review of the whole branch). The prompt that spawns it names the PR, its branch and the issue."
+description: "Fresh-agent reviewer of a pull request on feyn: reviews it against its issue's Done when and returns a report (a verdict per statement, blocking and non-blocking findings, what it could not check), changing nothing. Spawned by /feyn-pr-review on the direct path and for a merged PR; its body is the review step of feyn-pr-fixer, which the agent workflow deliver-story.js and /feyn-deliver-epic (review of the whole branch) spawn in its place. The prompt that spawns it names the PR, its branch and the issue."
 tools: Read, Bash
 model: opus
 ---
