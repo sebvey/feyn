@@ -1,6 +1,6 @@
 ---
 name: feyn-merge-cleanup
-description: "Tooling of the work cycle, called by `/feyn-deliver-story-alone` once the maintainer merged a pull request: confirm the issue branch's change landed on main, delete the local branch, check the issue is closed and Done, and name the issues the merge freed. A story without an epic, its PR or its direct delivery to main; a story of an epic, and an epic PR, are cleaned up by /feyn-deliver-epic. Use for \"/feyn-merge-cleanup\", \"/feyn-merge-cleanup improvement/12-fix-caption-check\"."
+description: "Once the maintainer merged a pull request, confirm the issue branch's change landed on main, delete the local branch, check the issue is closed and Done, and name the issues the merge freed. A story without an epic, its PR or its direct delivery to main; a story of an epic, and an epic PR, are cleaned up by /feyn-deliver-epic. Use for \"/feyn-merge-cleanup\", \"/feyn-merge-cleanup improvement/12-fix-caption-check\"."
 argument-hint: "[<issue branch>]"
 ---
 

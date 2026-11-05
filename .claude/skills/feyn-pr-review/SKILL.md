@@ -1,6 +1,6 @@
 ---
 name: feyn-pr-review
-description: "Tooling of the work cycle, called by `/feyn-pull-request` on the direct path, its reviewer the project subagent feyn-pr-reviewer, also spawned by the agent workflow deliver-story.js: a fresh agent reviews a pull request on feyn against its issue's Done when and returns its report (a verdict per statement, blocking and non-blocking findings, what it could not check), changing nothing; it can also review a merged PR after the fact. Use for \"/feyn-pr-review 247\"."
+description: "A fresh agent, the project subagent feyn-pr-reviewer, reviews a pull request on feyn against its issue's Done when and returns its report (a verdict per statement, blocking and non-blocking findings, what it could not check), changing nothing; it can also review a merged PR after the fact. Use for \"/feyn-pr-review 247\"."
 argument-hint: "<pr number>"
 ---
 
