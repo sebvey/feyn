@@ -94,4 +94,4 @@ no class: `- file or area: what changes`.
   and `rule-files`); every fixture's `teacher/README.md` holds no rule; `README.md` sections 1 and
   8 say so (#554).
 - `decisions/`: `rules-with-level-and-method` no longer defers the standards of `linear-course` to
-  #318: they are in the README of the spec's MAJOR, each with its edition and its groups (#556).
+  #318: they are in the README of the spec's MAJOR, each with its edition (#556).

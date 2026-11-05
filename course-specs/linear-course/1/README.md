@@ -113,15 +113,17 @@ spec's own files verify no rule and carry none (`spec-directives/1/README.md` se
 
 The standards a rule of this spec depends on, through its text, its check or a schema it names,
 each with the edition this MAJOR reads and the groups whose rules depend on it: a group of
-`course/rules.yaml` by its title (its groups have no `id`), a group of `teacher/rules.yaml` by its
-`id`. The standards of the rule model itself (the rule files, the levels, the methods, the
-versions of a spec) are the directives' (`spec-directives/1/README.md` section 7); YAML, JSON
-Schema and SemVer are in both lists, there for the rule files and the spec, here for the files and
-the versions of a course.
+`course/rules.yaml` by its title without its section suffix (its groups have no `id`), a group of
+`teacher/rules.yaml` by its `id`. A group depends on CommonMark when one of its rules requires or
+writes a CommonMark construct (a heading, a link, emphasis, a list, a block quote); naming a
+section by its heading does not count. The standards of the rule model itself (the rule files,
+the levels, the methods, the versions of a spec) are the directives' (`spec-directives/1/README.md`
+section 7); YAML, JSON Schema and SemVer are in both lists, there for the rule files and the spec,
+here for the files and the versions of a course.
 
 | Standard | Edition | Groups |
 |---|---|---|
-| [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le frontmatter de concept.md », « Les conventions du texte lecteur »; `domain-presentation`, `message-form` |
+| [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le dossier de concept », « Le frontmatter de concept.md », « Le corps de concept.md », « Le fichier teaching.md », « Les conventions du texte lecteur », « Les fichiers de domaine », « Les fichiers du cours »; `onboarding`, `resume`, `domain-presentation`, `loop`, `message-form` |
 | [GitHub Flavored Markdown, tables](https://github.github.com/gfm/#tables-extension-) | 0.29-gfm (2019-04-06) | « Le fichier sources.md », « Les fichiers du cours » |
 | [YAML](https://yaml.org/spec/1.2.2/) | 1.2.2 (2021-10-01) | « Le fichier course.yaml », « Le dossier de concept », « Le frontmatter de concept.md », « Les fichiers de domaine » |
 | [JSON Schema](https://json-schema.org/draft/2020-12) | 2020-12 | « Le fichier course.yaml », « Le frontmatter de concept.md » |
