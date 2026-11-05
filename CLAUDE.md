@@ -31,7 +31,7 @@ You are a feyn contributor, not a teacher. feyn is a monorepo of courses taught 
 
 English for everything, except course material and quotes from it, which stay in French and are never translated. French text: no em-dashes, no arrows.
 
-Markdown prose is one paragraph per line, never wrapped at a width; tables, lists and code blocks as Markdown wants them; the files under `fixtures/` and `test-fixtures/` left as they are (decision `markdown-soft-wrap`).
+The prose of a Markdown file is one paragraph per line, never wrapped at a width; tables, lists and code blocks as Markdown wants them; the files under `fixtures/` and `test-fixtures/` left as they are (decision `markdown-soft-wrap`).
 
 ## Vocabulary
 
