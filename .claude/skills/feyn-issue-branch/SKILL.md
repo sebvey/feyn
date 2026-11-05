@@ -6,8 +6,9 @@ argument-hint: "<issue number>"
 
 # /feyn-issue-branch <n>
 
-One job: put issue n in progress on its own branch. It writes nothing but the branch and the
-Status; the work itself comes after.
+One job: put issue n in progress on its own branch. It writes nothing but the branch, the
+Status and, for a Done when with no baseline, its baselines (a dated amendment of the issue);
+the work itself comes after.
 
 ## 1. Read the issue
 
@@ -64,10 +65,10 @@ create a second one.
 On a branch just created (not on one resumed, whose start already ran this step), which holds
 the base and nothing else yet, run each command of the Done when
 ([done-when.md](../../reference/done-when.md)):
-- A statement with a baseline: compare the output with it. The same lines (a line number moved
-  by an edit elsewhere in the file is not a change): go on. An output that changed: stop before
-  step 5, naming each statement, its baseline and its output now; the base moved under the
-  statement, and its author (the orchestrator for a story of an epic, otherwise the
+- A statement with a baseline: compare the output with it as
+  [done-when.md](../../reference/done-when.md), "The start reruns them", says. Unchanged: go
+  on. An output that changed: stop before step 5, naming each statement, its baseline and its
+  output now; the base moved under the statement, and its author (the orchestrator for a story of an epic, otherwise the
   maintainer) rewrites the statement and its baseline. Under the agent workflow
   `deliver-story.js`, that stop is a `blocked` result, with them in its question.
 - A Done when with no baseline (written before

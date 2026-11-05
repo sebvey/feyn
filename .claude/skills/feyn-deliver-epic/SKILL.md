@@ -89,7 +89,11 @@ One at a time, the next one only (rules of the cycle):
      moved it to the PR's head), or report them.
    - `blocked`, `failed`, `merge-failed`: `contrib.question`, the `stage` that failed, or the
      merge's `problems`; a question that leaves the epic's Done when impossible goes to the
-     maintainer (step 3), the rest is rerun.
+     maintainer (step 3), the rest is rerun. A `blocked` from a changed baseline at the start
+     (`/feyn-issue-branch` step 4): the orchestrator, the story's author, first rewrites the
+     statement and its baseline as a dated amendment of the story
+     ([done-when.md](../../reference/done-when.md)), checked by running the command on the
+     integration branch, since the rerun resumes the branch and skips that step; then reruns.
    - A statement the PR makes false left in the repository, wherever the result names it (a
      finding left, `unsure`, a round's `left`), a live decision included: rerun the workflow
      with `work` naming it; a story already merged: a story posed at once corrects it (step

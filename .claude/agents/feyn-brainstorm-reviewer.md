@@ -30,8 +30,9 @@ yourself:
 - per issue, each Done when statement, held to `.claude/reference/done-when.md`: verifiable by
   reading a file or running a command, or not; each command rerun on `origin/main` (or the
   integration branch it names) and its output compared with the baseline under it: a
-  baseline missing, an output that differs, a line of it the statement's intent does not
-  target, or content the command cannot see; a statement that searches the repository
+  baseline missing, an output that differs (a line number moved is no difference, that file,
+  "The start reruns them"), a line of it the statement's intent does not target, or content
+  the command cannot see; a statement that searches the repository
   excludes the history, as that file says;
 - per issue, each file it names: on `main` or not; one that is not, said as created by the
   work item, or an error;

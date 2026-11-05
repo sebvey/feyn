@@ -17,8 +17,8 @@ gets no Edit or Write (`feyn-pr-reviewer`). A session sees an agent file
 added to `agents/` during it, with no restart (Claude Code, observed 2026-10-31, #373).
 `reference/` holds the WHAT, what a thing is or looks like: the body templates (`story-body.md`,
 `idea-body.md`, `pr-body.md`, …), the Project reference `project.md`, the rules of an agent
-in a worktree (`worktree-agent.md`). `decisions/` holds the decisions that bind the agentic
-layer (decision `decision-format`). A file that says how an actor proceeds belongs to a skill,
+in a worktree (`worktree-agent.md`), the rules of a Done when (`done-when.md`). `decisions/`
+holds the decisions that bind the agentic layer (decision `decision-format`). A file that says how an actor proceeds belongs to a skill,
 a workflow or an agent; a file that says what a thing is goes to `reference/`; a skill links
 another skill's folder for nothing but its `SKILL.md`. It writes down the layout that #240 and
 #251 put in place, and replaces the criterion of proposal #239 (point 12), a file in

@@ -55,7 +55,9 @@ Not before: baselines written on every open item at once would be stale by their
 ## The start reruns them
 
 At the start (`/feyn-issue-branch`), each command is rerun on the base and its output compared
-with its baseline. An output that changed stops the start: the base moved under the statement,
+with its baseline. The same lines are no change: a line number moved by an edit elsewhere in
+the file is tolerated, since a strict compare would stop every start whose file was touched
+above the matched line. An output that changed stops the start: the base moved under the statement,
 and its author (the orchestrator for a story of an epic, otherwise the maintainer) rewrites the
 statement and its baseline before the work begins.
 
