@@ -104,7 +104,7 @@ Its caller passes its variations as parameters and rewrites none of its steps (d
        `Fresh-agent review: <N> blocking findings, fixed; a decision touched as prescribed, no
        second review.` (`a check` for a check). On a direct delivery (the issue's To do opens
        with "Direct delivery", [contributing](../../../docs/contributing.md), "How the work is
-       organised", moment 2): `Fresh-agent review: none, direct delivery.`, written here, before
+       organised", moment 5): `Fresh-agent review: none, direct delivery.`, written here, before
        the PR opens, since no review runs. It counts within the 30 lines: leave room for it.
        Absent when the maintainer asked for a PR without a review.
      - `Not verified:` one line, if anything.
