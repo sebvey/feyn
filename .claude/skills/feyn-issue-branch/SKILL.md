@@ -63,20 +63,24 @@ create a second one.
 ## 4. Rerun the Done when
 
 On a branch just created (not on one resumed, whose start already ran this step), which holds
-the base and nothing else yet, run each command of the Done when
-([done-when.md](../../reference/done-when.md)):
+the base and nothing else yet, run each command of the Done when in it
+([done-when.md](../../reference/done-when.md); a statement that compares the base and the
+head is run on its base side):
 - A statement with a baseline: compare the output with it as
   [done-when.md](../../reference/done-when.md), "The start reruns them", says. Unchanged: go
-  on. An output that changed: stop before step 5, naming each statement, its baseline and its
-  output now; the base moved under the statement, and its author (the orchestrator for a story of an epic, otherwise the
-  maintainer) rewrites the statement and its baseline. Under the agent workflow
-  `deliver-story.js`, that stop is a `blocked` result, with them in its question.
+  on. An output that changed: stop before step 5.
 - A Done when with no baseline (written before
-  [done-when.md](../../reference/done-when.md)): write the output of each command under its
+  [done-when.md](../../reference/done-when.md)): check each output against the statement's
+  intent as [done-when.md](../../reference/done-when.md) says. All hold: write each under its
   statement, as a dated amendment of the issue (its body edited,
-  `mise exec -- gh issue edit <n> --body-file <file>`), each line checked against the
-  statement's intent as [done-when.md](../../reference/done-when.md) says; a command too broad
-  or a count that misses content stops the start in the same way.
+  `mise exec -- gh issue edit <n> --body-file <file>`). A command too broad or a count that
+  misses content: stop before step 5.
+
+A stop posts nothing on the issue, no baseline included. It names each statement, its baseline
+(or the one it would write) and its output now; the base moved under the statement, or the
+statement is wrong, and its author (the orchestrator for a story of an epic, otherwise the
+maintainer) amends the statement and its baseline in one dated amendment. Under the agent
+workflow `deliver-story.js`, that stop is a `blocked` result, with them in its question.
 
 ## 5. Mark it in progress
 

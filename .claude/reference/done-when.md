@@ -12,6 +12,14 @@ story's does. Why: decision `done-when-run-at-writing`.
 - A reviewer verifies it by reading a file or running a command, one statement per bullet.
 - Its command runs on the base: `origin/main`, or the epic's integration branch for a story of
   an epic.
+- Running it on the base: `git grep <pattern> <base>` or `git show <base>:<path>` when that is
+  enough; otherwise a detached worktree at the base (`git worktree add --detach <dir> <base>`),
+  removed after (`git worktree remove <dir>`), with the dependencies the command needs
+  (`node_modules` linked from the main checkout when the lockfile is unchanged). At the start,
+  the branch just created holds the base: the commands run in it.
+- A statement that compares the base and the head (a render before and after, a diff against
+  the base): its baseline is the base side, written as such
+  (`Baseline on <short sha>, base side: …`).
 
 ## The baseline, at writing
 
@@ -57,9 +65,14 @@ Not before: baselines written on every open item at once would be stale by their
 At the start (`/feyn-issue-branch`), each command is rerun on the base and its output compared
 with its baseline. The same lines are no change: a line number moved by an edit elsewhere in
 the file is tolerated, since a strict compare would stop every start whose file was touched
-above the matched line. An output that changed stops the start: the base moved under the statement,
-and its author (the orchestrator for a story of an epic, otherwise the maintainer) rewrites the
-statement and its baseline before the work begins.
+above the matched line. An output that changed stops the start: the base moved under the
+statement, and its author (the orchestrator for a story of an epic, otherwise the maintainer)
+rewrites the statement and its baseline before the work begins.
+
+A start that stops, on an output changed or on a baseline it writes that shows a statement
+wrong, posts nothing on the issue. Its stop message (under the agent workflow, the question of
+its `blocked` result) reports each statement, its baseline (or the one it would write) and its
+output now. The author then amends the statement and its baseline in one dated amendment.
 
 ## The intent prevails over the command
 
