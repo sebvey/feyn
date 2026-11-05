@@ -13,8 +13,8 @@ An issue branch is not linked to its issue. `/feyn-issue-branch` creates it with
 (`git switch -c <type>/<n>-<slug> origin/main`, `git push -u origin <type>/<n>-<slug>`), and the
 only link between the work and the issue is the PR body: `Closes #n` links the PR to the issue
 and closes it at the merge; `Refs #n` links nothing and leaves the issue open. It replaces the
-link the skill that creates the branch made with `gh issue develop` and the unlink the skill that
-opens the PR ran before a `Refs` PR (PR #103, tested with #109 and PR #110).
+link the old branch skill made with `gh issue develop` and the unlink the old PR skill ran before
+a `Refs` PR (PR #103, tested with #109 and PR #110).
 
 ## Options ruled out
 

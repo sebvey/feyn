@@ -6,9 +6,9 @@ area: agentic
 ---
 
 Without this, an agent writing or changing a skill would list in its description the skills,
-agents and workflows that call it, and the list would go stale with each new caller (three
-incomplete, two false on `1494eec`), so the agent that loads the skill from its description
-would read callers that do not call it and miss those that do.
+project subagents and agent workflows that call it, and the list would go stale with each new
+caller (three incomplete, two false on `1494eec`), so the agent that loads the skill from its
+description would read callers that do not call it and miss those that do.
 
 A skill's description says what the skill does, then when to use it, ending on its "Use for …"
 triggers; it names no caller. Claude Code reads the description to decide when to load the
