@@ -106,8 +106,7 @@ options, with their ids:
   Its three parts, in this order:
   - the plan comment head, under the line `**Plan comment**`: at most ten lines, which say where
     the epic stands, what runs, what awaits the maintainer and what comes next; rewritten whole
-    at each step that rewrites the plan or adds to the log, so that it is read at a glance and
-    holds nothing the plan or the log does not;
+    at each step of its epic, so that it is read at a glance;
   - the plan, from its line `Delivery: <integration branch>`, rewritten in place at each change
     (that line; `Stories (an estimate):`, the stories in their current order, one per line, each
     delivered one `- [x] #<n> <title> (PR #<pr>)`, the others `- [ ] <story>`, the next one
@@ -116,9 +115,6 @@ options, with their ids:
     `<date> #<n> (PR #<pr>): <what it delivered>`; per open question, `Open question: …`; per
     answer, `Answered: …`, right under its question, as [sort.md](sort.md), "An open question",
     says).
-
-  A plan comment in an older form (no head, or no `**Log**` line) is rewritten in three parts at
-  the next step of its epic.
   Edit it: the PATCH replaces the whole body, so read it first,
   `mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> --jq .body > <file>`, edit the
   file, then `mise exec -- gh api -X PATCH repos/sebvey/feyn/issues/comments/<id> -F body=@<file>`.

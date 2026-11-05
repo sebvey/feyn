@@ -42,10 +42,10 @@ messages only: a decision put to the maintainer takes the form of step 3.
   organised", moment 1, says, in the form of [project.md](../../reference/project.md), "Epics",
   "The plan comment": first, the plan comment head (where the epic stands, what runs, what
   awaits the maintainer, what comes next; at most ten lines), rewritten whole at each step
-  that rewrites the plan or adds to the log (steps 2.6, 3 and 5); then the plan (a Delivery
-  line naming the integration branch; the stories envisaged in order with the words "an
-  estimate", since #317 planned five and delivered eight, the first one marked next; Unknown;
-  Dropped), rewritten in place at each change; below, the log, only added to.
+  (steps 2.6, 3 and 5); then the plan (a Delivery line naming the integration branch; the
+  stories envisaged in order with the words "an estimate", since #317 planned five and
+  delivered eight, the first one marked next; Unknown; Dropped), rewritten in place at each
+  change; below, the log, only added to.
 - The epic goes In progress with its first story: the contributor sets it (`/feyn-issue-branch`
   step 5); read it after the first run and set it if it is not.
 
