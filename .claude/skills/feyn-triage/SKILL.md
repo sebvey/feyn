@@ -9,9 +9,9 @@ argument-hint: "<issue number> [<issue number> …]"
 One job: triage with the maintainer the ideas they name, one at a time, as
 [contributing](../../../docs/contributing.md), "How the work is organised", moment 4, says. The
 work session reads each item and its neighbours, presents it, the maintainer decides, the work
-session executes. The Project's commands are in [project.md](../../reference/project.md), cited
-here, not copied; the neighbour lookups of step 3 are written in step 3. Nothing is executed on
-an item before the maintainer's decision on it.
+session executes. The Project's commands are in [project.md](../../reference/project.md), the
+checks of step 3 in the files of `reference/` it names, cited here, not copied. Nothing is
+executed on an item before the maintainer's decision on it.
 
 An **idea** (Status Idea) is a finding, never converted: the triage creates from it the work
 items it calls for, then closes it; it never adds a Done when or a To do to it, never edits its
@@ -64,51 +64,33 @@ session does not find the list, and that is accepted: the maintainer names the i
 
 ## 3. One item at a time
 
-**Read it against the purpose**, before anything else: [vision.md](../../../docs/vision.md)
-(what feyn is for, the yardstick of a change); does what it calls for serve the teacher or the
-site, and how? An item labelled `stale` (posed before the frame of 2026-11-03) is, in this same
-reading, re-read against that frame: against `vision.md` (the purpose, the yardstick, the
-lessons) and against what replaced its frame since it was posed (a decision, a PR, a skill,
-each named); it is not a second reading, and the maintainer decides whether it still holds.
+**The checks**, before it is presented: those of a commitment
+([commitment.md](../../reference/commitment.md), "The checks"), since a triage may create a
+work item Ready: the reading against the purpose first
+([purpose-reading.md](../../reference/purpose-reading.md), the `stale` reread included), the
+staleness check, and the neighbours ([neighbours.md](../../reference/neighbours.md), the
+Status Done left out). Ask first: does it still deserve to exist, in this form? An issue in
+Idea whose body already defines a work (a Done when, a To do) is of the old format (step 4).
 
-**Read it against the repository.** What changed since the issue was last updated
-(`git fetch`, then `git log origin/main --since=<its updatedAt>`), the files and issues it cites
-(`git log origin/main -- <file>`, `mise exec -- gh issue view <m>`). Ask first: does it still
-deserve to exist, in this form? An issue in Idea whose body already defines a work (a Done
-when, a To do) is of the old format (step 4).
-
-**Its neighbours**, looked up before it is presented, each command run, not assumed:
-- a **twin**, an open issue on the same point:
-  `mise exec -- gh issue list --state open --search "<two or three key words of its title>" --json number,title --jq '.[] | [.number, .title] | @tsv'`;
-- an **epic or an option** that covers it or that it overlaps: the open items of the Project,
-  with their Status and labels,
-  `mise exec -- gh project item-list 4 --owner sebvey --limit 200 --format json -q '.items[] | select(.status != "Done") | [.content.number, .status, (.labels // [] | join(",")), .content.title] | @tsv'`,
-  then the body of each epic or option whose title or area meets the item's
-  (`mise exec -- gh issue view <m>`);
-- an **open idea on the same files**: for each file or folder the item names,
-  `mise exec -- gh issue list --state open --search "<path> in:body" --json number,title --jq '.[] | [.number, .title] | @tsv'`.
-
-The item itself comes up in these searches: it is not its own neighbour.
-
-One item per message, under its own level-2 heading:
+One item per message, under its own level-2 heading, the decision put to the maintainer in the
+form their instructions give (`CLAUDE.md`, "Working with the maintainer"; where none is loaded,
+the project `CLAUDE.md`'s own form). What it holds:
 - its frame in one line: an idea or an issue of the old format, what it is for, where it
   belongs;
-- an item labelled `stale`: whether it still holds against `vision.md`, as written, reworked,
-  or not at all (what replaced it), with its proof;
-- its neighbours, each `#<m> <title>` with what it shares with the item (twin, covers it,
-  overlaps it, same files), or "No neighbour" when the three lookups find none;
+- what the checks show, as their files say (purpose, staleness, neighbours);
 - what it calls for, and what no longer holds, each with its proof (a commit, a file and line,
   an issue, each named);
-- the choices in a table (choice, what it does, consequence), from the actions of step 4 for
-  its form, in this order where they apply: close (done, moot, or a duplicate of a twin), fold
-  into an epic, recreate (the old format), create the work items;
-- one recommendation, with its reason.
+- the options, from the actions of step 4 that apply to its form: close (done, moot, or a
+  duplicate of a twin), fold into an epic, recreate (the old format), create the work items.
 
-The questions the skill asks the maintainer, each before it acts on the answer:
+The questions the skill asks the maintainer after that decision, each its own decision, before
+it acts on the answer:
 - for an idea: which work items it calls for, if any (their kind, story or epic; a story
   alone or under which epic; their cut, one or several), and for each its `type:` label;
 - for each work item it creates: committed now (Ready) or not (Option, the default): ask, and
-  without a clear "committed", create it Option.
+  without a clear "committed", create it Option. Committed, it is created Ready only once the
+  conditions of a commitment hold ([commitment.md](../../reference/commitment.md), "The
+  conditions of the act").
 
 An item the maintainer leaves open stays Idea, and the reply says so;
 with several issues, its line in the working list becomes `left open: <why>`, skipped from then
@@ -134,7 +116,8 @@ left open keeps the label: it has not been decided.
 **An idea:**
 - **create the work items**: each with `/feyn-issue` in the form the maintainer chose,
   `story <what>`, `story #<epic> <what>` or `epic <objective>`, and its parameters:
-  `--status Option`, or `--status Ready` when the maintainer said it is committed (step 3);
+  `--status Option`, or `--status Ready` when the maintainer said it is committed and the
+  conditions of a commitment hold (step 3);
   `--origin`, the line its template gives for a work item from the idea #<n>;
   `--opened-from #<n>`, the idea, left out of the twin search. A story under an epic is created
   only when it is the next one the epic's plan comment marks (the policies of
@@ -162,11 +145,8 @@ the new work item's form, `--status Option` or `--status Ready` as the maintaine
 ways ([project.md](../../reference/project.md), "Dependencies", Read), are set again on the new
 work item (Set); then it is closed as completed with a comment naming what replaces it.
 
-A duplicate comment (posted twice by mistake) is hidden as duplicate, never deleted: on its
-page, the comment's menu ⋯, "Hide", reason "Duplicate"; or `mise exec -- gh api graphql -f
-query='mutation { minimizeComment(input: {subjectId: "<comment node id>", classifier:
-DUPLICATE}) { clientMutationId } }'`, the node id read with `mise exec -- gh api
-repos/sebvey/feyn/issues/<n>/comments --jq '.[] | [.node_id, .body[:60]] | @tsv'`.
+A duplicate comment (posted twice by mistake) is hidden, never deleted
+([project.md](../../reference/project.md), "Issues", Hide a duplicate).
 
 ## 5. End the triage
 

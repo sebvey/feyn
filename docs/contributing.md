@@ -259,8 +259,9 @@ Five moments:
    that covers or overlaps it, an open idea on the same files), the maintainer decides it,
    whatever it holds. Each idea is read for what it calls for: the triage creates the work items
    (stories, under an epic or alone, or an epic), each with the form of its kind and citing the
-   idea, born Option, or Ready on the maintainer's word, then closes the idea as completed, its
-   comment naming them; an idea that calls for nothing is closed as not planned, with the
+   idea, born Option, or Ready on the maintainer's word once the conditions of a commitment hold
+   ([`commitment.md`](../.claude/reference/commitment.md)), then closes the idea as completed,
+   its comment naming them; an idea that calls for nothing is closed as not planned, with the
    reason. The idea is never converted, its finding stays as written. An issue written before
    this frame whose body already defines a work (a Done when, a To do) is recreated as a story
    or an epic and closed, its blocked-by links set again on the new work item. Why: decisions
@@ -271,9 +272,10 @@ Five moments:
    the option was last updated, in the files it names) and an overlap check (the open options,
    epics and committed stories that cover or overlap it, the open ideas on the same files),
    presents the option with the result of each and its proof, and the maintainer decides it
-   alone: commit (set Ready), rework (its body or its kind rewritten, it stays Option),
-   brainstorm (what it builds on has changed: a brainstorm opens from it, moment 3), merge into
-   another option, split, fold into an epic, or close. It is not a replenishment: feyn
+   alone: commit (set Ready, [`commitment.md`](../.claude/reference/commitment.md)), rework (its
+   body or its kind rewritten, it stays Option), brainstorm (what it builds on has changed: a
+   brainstorm opens from it, moment 3), merge into another option, split, fold into an epic, or
+   close. It is not a replenishment: feyn
    never reviews the options as a whole, it commits them one by one ([`kanban.md`](kanban.md),
    "The upstream"). Why: decision `idea-and-option-before-ready`.
 
@@ -302,7 +304,8 @@ decisions and the skills:
 - **A change to the bench records its judgement calls.** An epic or a story that changes
   `courses/po-essai/` records each judgement call it makes (what was decided, why, the
   alternative rejected) as an entry of the Material of the re-creation epic #520, and its Done
-  when states it; `/feyn-refine-option` proposes that line before it commits such a work item.
+  when states it; the commitment ([`commitment.md`](../.claude/reference/commitment.md))
+  proposes that line before such a work item is set Ready.
   The exception: a change to `po-essai` that makes no call; its entry in #520 says so in one
   line. Why: these calls are the only part of the re-creation of the founding course that no
   file of the tree holds; left in each PR's "Delivery notes", the re-creation rereads every
