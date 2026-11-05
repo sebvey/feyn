@@ -270,10 +270,10 @@ owner holds is read there, not here.
 parameters and rewrites none of their steps (decision `one-moment-one-file`):
 - **An epic**, `/feyn-deliver-epic <epic>`: moment 7; for each story, moment 8, moments 9 to 14
   through `deliver-story.js`, the sort of 13 by the orchestrator, then 17; after the last story,
-  moment 12 on the whole branch, 15 for the epic PR, then 16, 17 and 18. Every story of an epic,
-  a direct one included, is delivered by its orchestrator, and its sub-issues all closed does not
-  mean the epic closes: a story of an epic exists only once it is the next one (the policies,
-  below).
+  moment 12 on the whole branch, 11 for the epic PR, then 15, 16, 17 and 18. Every story of an
+  epic, a direct one included, is delivered by its orchestrator, and its sub-issues all closed
+  does not mean the epic closes: a story of an epic exists only once it is the next one (the
+  policies, below).
 - **A story alone**, a story with no parent epic: one PR to `main`, merged by the maintainer.
   `/feyn-deliver-story-alone <n>` runs moments 9 to 13 through `deliver-story.js` with no epic,
   the sort of 13 itself, then 17 and 15, and after the merge (16), 17 and 18; it delivers every

@@ -65,8 +65,8 @@ form, by path, written in the language of the conversation:
   what the PR does not hold: a line you added to Checks, a body or "Delivery notes" edited after
   the run ([sort.md](sort.md)), an anomaly of the run or of its clean-up. A finding outside the
   PR that calls for follow-up work (an outdated section the PR did not make false, an issue to
-  open) is not prose in the notification: it goes to the maintainer as a question with buttons,
-  the recommended option first; one the PR made false is corrected in it.
+  open) is not prose in the notification: it goes to the maintainer as a decision, in the form
+  `CLAUDE.md`, "Working with the maintainer", gives; one the PR made false is corrected in it.
 - **A direct delivery or the direct path**: the PR URL, the title, what the maintainer should
   look at first (the PR's Review first, in one line), and the merge command:
   `mise exec -- gh pr merge <pr> --squash --delete-branch`. The repository squashes with the PR

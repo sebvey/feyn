@@ -65,7 +65,7 @@ Of an epic only.
   out>, <the cost of going back> (#<story>)` in the log of the plan comment
   ([project.md](project.md), "Epics", "The plan comment"), and a comment on the epic, numbered,
   with its recommendation, ending "Answer here or in the work session; the plan comment records
-  the answer."
+  the answer.", each write's output read ([project.md](project.md), "GitHub writes").
 - **The decision** is the message to the maintainer in the work session (GitHub notifies nobody
   of the maintainer's own comment, which the orchestrator posts): one question at a time, in the
   form `CLAUDE.md`, "Working with the maintainer", gives, with the link to the comment on the
@@ -81,7 +81,8 @@ Of an epic only.
 
 The work session that did the work corrects its PR itself, since no other agent fixes on the
 direct path:
-- remove the reviewer's worktree when `/feyn-pr-review` returns one, as its step 2 says;
+- remove the reviewer's worktree when `/feyn-pr-review` returns one, as
+  [run-cleanup.md](run-cleanup.md) says (that worktree, its `HEAD` on the PR's head branch);
 - apply the blocking findings, and the non-blocking ones worth fixing; commit, push, and update
   the body (`mise exec -- gh pr edit <pr> --body-file <file>`); the non-blocking findings left go
   in "Delivery notes" with their reason (`/feyn-pull-request` step 6), one in Review first only

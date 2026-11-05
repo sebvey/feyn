@@ -15,9 +15,9 @@ story's does. Why: decision `done-when-run-at-writing`.
   an epic.
 - Running it on the base: `git grep <pattern> <base>` or `git show <base>:<path>` when that is
   enough; otherwise a detached worktree at the base (`git worktree add --detach <dir> <base>`),
-  removed after (`git worktree remove <dir>`), with the dependencies the command needs
-  (`node_modules` linked from the main checkout when the lockfile is unchanged). At the start,
-  the branch just created holds the base: the commands run in it.
+  removed after as [run-cleanup.md](run-cleanup.md) says, with the dependencies the command
+  needs (`node_modules` linked from the main checkout when the lockfile is unchanged). At the
+  start, the branch just created holds the base: the commands run in it.
 - A statement that compares the base and the head (a render before and after, a diff against
   the base): its baseline is the base side, written as such
   (`Baseline on <short sha>, base side: …`).

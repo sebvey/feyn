@@ -106,7 +106,7 @@ options, with their ids:
   Its three parts, in this order:
   - the plan comment head, under the line `**Plan comment**`: at most ten lines, which say where
     the epic stands, what runs, what awaits the maintainer and what comes next; rewritten whole
-    at each step of its epic, so that it is read at a glance;
+    at each moment of its epic, so that it is read at a glance;
   - the plan, from its line `Delivery: <integration branch>`, rewritten in place at each change
     (that line; `Stories (an estimate):`, the stories in their current order, one per line, each
     delivered one `- [x] #<n> <title> (PR #<pr>)`, the others `- [ ] <story>`, the next one
