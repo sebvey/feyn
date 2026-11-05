@@ -24,11 +24,12 @@ messages only: a decision put to the maintainer takes the form of step 3.
 
 - Read it: `mise exec -- gh issue view <epic> --comments`. Refuse in one line, changing nothing,
   when it has no label `kind:epic`, no Done when, an open blocker
-  ([project.md](../../reference/project.md), "Dependencies"), or a Status other than Ready or In
-  progress. In progress: resume it, from its integration branch
+  ([project.md](../../reference/project.md), "Dependencies"), or a Status of Idea, Option or
+  Done. In progress: resume it, from its integration branch
   (`git ls-remote --heads origin '*/<epic>-*'`) and the plan of its plan comment (the story
-  marked next). A plan comment in the old form (no `**Log**` line) is rewritten in two parts at
-  this step.
+  marked next). Ready for review (its epic PR handed over, awaiting the maintainer's merge):
+  resume it at step 6, which stops when the epic PR is not merged yet. A plan comment in an
+  older form (no head, or no `**Log**` line) is rewritten in three parts at this step.
 - The epic's Done when, taken for the first time with no baseline under a command: give it its
   baselines, as a dated amendment of the epic, each output checked against its statement's
   intent ([done-when.md](../../reference/done-when.md)); a statement they show wrong is put to
@@ -39,10 +40,12 @@ messages only: a decision put to the maintainer takes the form of step 3.
   `git push origin origin/main:refs/heads/<integration branch>`.
 - The plan comment, as [contributing](../../../docs/contributing.md), "How the work is
   organised", moment 1, says, in the form of [project.md](../../reference/project.md), "Epics",
-  "The plan comment": above, the plan (a Delivery line naming the integration branch; the
-  stories envisaged in order with the words "an estimate", since #317 planned five and
-  delivered eight, the first one marked next; Unknown; Dropped), rewritten in place at each
-  change; below, the log, only added to.
+  "The plan comment": first, the plan comment head (where the epic stands, what runs, what
+  awaits the maintainer, what comes next; at most ten lines), rewritten whole at each step
+  that rewrites the plan or adds to the log (steps 2.6, 3 and 5); then the plan (a Delivery
+  line naming the integration branch; the stories envisaged in order with the words "an
+  estimate", since #317 planned five and delivered eight, the first one marked next; Unknown;
+  Dropped), rewritten in place at each change; below, the log, only added to.
 - The epic goes In progress with its first story: the contributor sets it (`/feyn-issue-branch`
   step 5); read it after the first run and set it if it is not.
 
@@ -116,7 +119,9 @@ One at a time, the next one only (rules of the cycle):
    its PR and the next one marked, the plan rewritten first when the next is not obvious or the
    epic needs more stories than it envisaged (step 1); after the last story, the whole-branch
    review marked next (the epic closes only with its epic PR, step 5). In the log, the line
-   `<date> #<n> (PR #<pr>): <what it delivered, in a few words>`.
+   `<date> #<n> (PR #<pr>): <what it delivered, in a few words>`. The head rewritten whole: the
+   story delivered, the next one running or to pose, what awaits the maintainer (an open
+   question, a commitment), what comes next.
 7. **Tell the maintainer** ("Progress"): what the story changed, what comes next, what is
    awaited from them.
 
@@ -139,7 +144,9 @@ fresh-agent review, in place of steps 2.3 to 2.5:
 What a run or a review reports (a deviation, a structural choice made without the maintainer, a
 finding) is sorted at once, as [sort.md](../../reference/sort.md) says, the path an epic: its
 four cases, and for what nothing settles, an open question (its form when it reports a defect,
-its trace on GitHub, the decision put to the maintainer, the answer recorded, the count).
+its trace on GitHub, the decision put to the maintainer, the answer recorded, the count). An
+open question added to the log, or its answer recorded, rewrites the plan comment head in the
+same edit: what awaits the maintainer.
 
 ## 4. Review of the whole branch
 
@@ -164,6 +171,8 @@ When no open question remains and every story is closed and Done
    `/feyn-pull-request` step 5, Issues listing every story with its PR.
 3. Hand it over as [hand-over.md](../../reference/hand-over.md) says, the path an epic PR: the
    epic Ready for review, the notification. The merge is the maintainer's.
+4. The plan comment head rewritten: the epic PR handed over, the merge awaited from the
+   maintainer, then the cleanup (step 6, which `/feyn-deliver-epic <epic>` resumes).
 
 ## 6. After the maintainer's merge
 

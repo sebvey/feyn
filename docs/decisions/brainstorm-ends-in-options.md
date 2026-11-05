@@ -16,14 +16,13 @@ an epic or a story by size, each with the body of its kind; what was settled sub
 with its why and the alternative rejected, goes in the epic's Material or the story's Context.
 The epic's Material is therefore what is read when splitting and what was settled, no longer a
 reading list only. The same plan reworks or replaces the option the brainstorm opened from, and
-comments the neighbours whose work it changes; it may leave the maintainer a working notebook
-(the order, the command for each item, what is the maintainer's), not versioned (`tmp/`,
-which git ignores). A brainstorm that settles nothing creates nothing; one that surfaces a
-finding without deciding its form may leave an idea; one that opens from an idea (decision
-`process-change-from-an-observed-problem`) is that idea's triage, and closes it as completed
-when it poses its plan, naming the work items. This replaces the proposal: no proposal issue,
-no label `proposal`, no proposal template, no "Proposed next". An option is what a proposal
-was, defined work not committed.
+comments the neighbours whose work it changes; once committed, its work items hold its order
+in the Project's Ready column, and no file outside GitHub keeps it. A brainstorm that settles
+nothing creates nothing; one that surfaces a finding without deciding its form may leave an
+idea; one that opens from an idea (decision `process-change-from-an-observed-problem`) is that
+idea's triage, and closes it as completed when it poses its plan, naming the work items. This
+replaces the proposal: no proposal issue, no label `proposal`, no proposal template, no
+"Proposed next". An option is what a proposal was, defined work not committed.
 
 ## Options ruled out
 
@@ -38,3 +37,6 @@ was, defined work not committed.
   the option it opened from reworked or replaced, a neighbour commented, a notebook left to the
   maintainer; the brainstorm of 2026-11-04 reworked option #475 into epics and a story, which
   options alone did not cover.
+- Amended 2026-11-05 (#588): no notebook left to the maintainer, which made up for a Project not
+  kept in order: its ordered Ready column holds the order. Ruled out: kept by the delivery
+  skills, moved to GitHub.
