@@ -63,6 +63,11 @@ options, with their ids:
 - **Search** the open issues by key words (the twin of a new one):
   `mise exec -- gh issue list --state open --search "<two or three key words>"`.
 - **Comment** on an issue: `mise exec -- gh issue comment <n> --body-file <file>`.
+- **Hide a duplicate** comment (posted twice by mistake), never deleted: on its page, the
+  comment's menu ⋯, "Hide", reason "Duplicate"; or `mise exec -- gh api graphql -f
+  query='mutation { minimizeComment(input: {subjectId: "<comment node id>", classifier:
+  DUPLICATE}) { clientMutationId } }'`, the node id read with `mise exec -- gh api
+  repos/sebvey/feyn/issues/<n>/comments --jq '.[] | [.node_id, .body[:60]] | @tsv'`.
 - **Create** an issue, one form per command; it prints the issue URL:
   - an idea: `mise exec -- gh issue create --title "<title>" --body-file <file> --label area:<area>`;
   - a story: `mise exec -- gh issue create --title "<title>" --body-file <file> --label kind:story --label type:<type> --label area:<area>`;

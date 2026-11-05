@@ -2,8 +2,9 @@
 
 Read by whoever writes a Done when (`/feyn-issue` at a triage, a brainstorm, an option
 refinement, the orchestrator of an epic, the maintainer), by the moments that use one (the
-commitment of an option, `/feyn-refine-option`; the start of a story, `/feyn-issue-branch`; the
-take of an epic, `/feyn-deliver-epic`), by the contributor and by the reviewers
+commitment of a work item, [commitment.md](commitment.md); the start of a story,
+`/feyn-issue-branch`; the take of an epic, `/feyn-deliver-epic`), by the contributor and by the
+reviewers
 (`feyn-pr-reviewer`, `feyn-brainstorm-reviewer`). The Done when of an epic follows them as a
 story's does. Why: decision `done-when-run-at-writing`.
 
