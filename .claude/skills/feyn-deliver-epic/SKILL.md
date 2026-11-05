@@ -110,7 +110,8 @@ One at a time, the next one only (rules of the cycle):
    worktrees `.claude/worktrees/wf_<run id>-<n>`, the integration branch as the base, the
    local `<story branch>` with the story's PR (`pr`), merged (`merged`,
    `merged-with-problems`) or not (`needs-orchestrator`, `blocked`, `failed`, `merge-failed`,
-   before a rerun: the worktrees' `HEAD` on `<story branch>`).
+   before a rerun: the worktrees' `HEAD` on `<story branch>`); a run that opened no PR
+   (`pr` 0): no branch on `origin`, its worktrees compared with the base.
 6. **The plan comment** ([project.md](../../reference/project.md), "Epics", "The plan
    comment": find it, read it into a file, edit, PATCH it): in the plan, the story ticked with
    its PR and the next one marked, the plan rewritten first when the next is not obvious or the

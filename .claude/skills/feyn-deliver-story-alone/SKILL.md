@@ -73,7 +73,8 @@ they do not hold.
    While a run is launched or running, no `cd`: absolute paths and `git -C <path>`.
 2. **Clean the run** as [run-cleanup.md](../../reference/run-cleanup.md) says: the run's
    worktrees `.claude/worktrees/wf_<run id>-<n>`, `main` as the base, the local issue branch
-   with its PR (`pr`) not merged yet, the worktrees' `HEAD` on that branch.
+   with its PR (`pr`) not merged yet, the worktrees' `HEAD` on that branch; a run that opened
+   no PR (`pr` 0): no branch on `origin`, its worktrees compared with the base.
 
 ## 3. Read the result
 
