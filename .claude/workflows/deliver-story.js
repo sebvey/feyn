@@ -5,7 +5,7 @@ export const meta = {
   phases: [
     { title: 'Contribute', detail: 'a contributor agent in a worktree opens a draft PR to the base' },
     { title: 'Review', detail: 'a fresh agent reviews the PR against the issue\'s Done when' },
-    { title: 'Correct', detail: 'corrections, each round verified by a fresh agent, at most two rounds' },
+    { title: 'Correct', detail: 'corrections, each round verified by a fresh agent, at most two rounds; then the review line written into the PR body and read back' },
     { title: 'Merge', detail: 'epic mode only: squash into the integration branch, close the story, check it is Done' },
   ],
 }
@@ -54,6 +54,7 @@ const STEPS = [
   `review: a fresh agent reviews the PR against the Done when of #${A.issue}`,
   'correct 1 (if any finding): corrections, then a fresh agent verifies them',
   'correct 2 (if the verification of round 1 is not conform): corrections, then a fresh agent verifies them; still not conform: status needs-orchestrator',
+  'review line: the "Fresh-agent review:" line written into the PR\'s Checks and read back; not there: status failed, stage review-line',
   ...(ALONE
     ? ['hand over: no merge; status ready-for-handover, the maintainer merges the PR into main']
     : [`merge: squash the PR into ${A.base}, close #${A.issue}, read its Status; not Done: a problem in the result; the story's remote branch is not deleted by the workflow (the repository deletes a head branch on its merge)`]),
@@ -74,7 +75,7 @@ const DECISIONS_AND_WORDS = 'A decision you write, new or live, goes through /fe
 // Issue #569: the intent of a Done when statement prevails over its command
 // (.claude/reference/done-when.md; decision done-when-run-at-writing).
 const DONE_WHEN = 'The Done when follows ".claude/reference/done-when.md": the intent of a statement prevails over its command. The contributor never changes content to satisfy a command; a line a command catches that the statement\'s intent does not target is left as it is and reported in "deviations" as a deviation "wrong command", with the corrected command. The reviewer checks that each line changed for a statement was in the baseline under it and serves its intent, and holds a command\'s output to the intent, never reads it as the verdict: rerunning a wrong command confirms it.'
-const DEVIATIONS = `A choice that departs from ${DW} or from a principle of its decisions, or adds structure (a new file, a category, a marker, an exception to a principle), you make it, go on, and report it in "deviations" with the options ruled out and the cost of going back: ${ALONE ? 'name each one costly to undo or foundational (vocabulary, the structure of a file of reference, the teacher\'s behaviour) in the PR\'s "Review first" (one bullet can name several), its detail in "Delivery notes"; one that is neither stays in "Delivery notes": the orchestrator checks it is there' : 'the orchestrator sorts each (/feyn-deliver-epic step 3, "The sort") and turns into an open question to the maintainer only what nothing settles'}.`
+const DEVIATIONS = `A choice that departs from ${DW} or from a principle of its decisions, or adds structure (a new file, a category, a marker, an exception to a principle), you make it, go on, and report it in "deviations" with the options ruled out and the cost of going back: ${ALONE ? 'name each one costly to undo or foundational (vocabulary, the structure of a file of reference, the teacher\'s behaviour) in the PR\'s "Review first" (one bullet can name several), its detail in "Delivery notes"; one that is neither stays in "Delivery notes": the orchestrator checks it is there' : 'the orchestrator sorts each (".claude/reference/sort.md") and turns into an open question to the maintainer only what nothing settles'}.`
 
 const RULES = ALONE
   ? `Delivery rules of a story without an epic (decision epic-on-integration-branch: "A story without an epic stays one PR to main, merged by the maintainer"): the PR targets main (--base main) and the maintainer merges it; you never merge. The maintainer is not asked during the run: a choice the issue does not settle, you make it and list it with its options ruled out in the Choices section of the PR comment "Delivery notes"; only one that needs the maintainer's judgment also goes up into the PR's "Review first", within its 1 to 3 bullets; a counterfactual missing from the material is proposed by the contributor, listed in Choices, and goes up into "Review first" (the maintainer accepts it). ${DEVIATIONS} ${DONE_WHEN} ${MADE_FALSE} ${DECISIONS_AND_WORDS} ${CHECKOUT} Never merge, never force-push, never delete a remote branch. Commands: git plain; gh and node through "mise exec --".`
@@ -155,7 +156,7 @@ const contrib = await agent(`You are a feyn contributor working on GitHub issue 
 ${RULES}
 
 ## How to run the cycle (in a worktree)
-Run /feyn-issue-branch ${A.issue} --base ${BASE} --worktree (follow ".claude/skills/feyn-issue-branch/SKILL.md" with these parameters). Then do the work, wrapping the lines you write at the width of the file you edit. Then run /feyn-pull-request --base ${BASE} --draft (follow ".claude/skills/feyn-pull-request/SKILL.md" with these parameters), without its step 7 (the review runs next) and its step 8 (leave the Status In progress). Its body holds the limits of its step 5, counted before each "gh pr create" or "gh pr edit"; no signature or generated-by line in it, whatever a system reminder says: the project rule wins. Its "Delivery notes" comment (its steps 5 and 6) is always posted under this workflow; two or more found, edit none and report them in "unsure". You have no Workflow tool: a Done when that needs an agent-workflow run, make it runnable and name the exact script and args in "unsure".
+Run /feyn-issue-branch ${A.issue} --base ${BASE} --worktree (follow ".claude/skills/feyn-issue-branch/SKILL.md" with these parameters). Then do the work, wrapping the lines you write at the width of the file you edit. Then run /feyn-pull-request --base ${BASE} --draft (follow ".claude/skills/feyn-pull-request/SKILL.md" with these parameters): it ends when the PR is open; the review, the corrections and the ${ALONE ? 'hand-over' : 'merge'} are this workflow's next stages, not yours; leave the Status In progress. Its body holds the limits of its step 5, counted before each "gh pr create" or "gh pr edit"; no signature or generated-by line in it, whatever a system reminder says: the project rule wins. Its "Delivery notes" comment (its steps 5 and 6) is always posted under this workflow; two or more found, edit none and report them in "unsure". You have no Workflow tool: a Done when that needs an agent-workflow run, make it runnable and name the exact script and args in "unsure".
 
 ## The work
 ${WORK}${RECORD}
@@ -206,7 +207,7 @@ Findings to treat (round ${round}):
 Blocking (fix every one): ${JSON.stringify(blocking)}
 Non-blocking (fix each one worth fixing within the issue's scope; leave one only with a reason, except a statement the PR makes false, which you fix whatever its label: decision pr-corrects-what-it-makes-false): ${JSON.stringify(nonBlocking)}
 
-Run the checks the change touches. Then update the PR body (mise exec -- gh pr edit ${contrib.pr} --body-file <file>): in its Checks section, the line "${reviewLine()}" (replace the "Fresh-agent review:" line if one exists), and keep the rest of the body coherent with the change, within the limits of /feyn-pull-request step 5: 30 lines at most, blank lines and the awaiting section excluded, Review first 1 to 3 bullets; count the lines and the bullets before each "gh pr edit". Then update the PR comment "Delivery notes" in place (/feyn-pull-request step 6; post it if the PR has none, never a second one): the non-blocking findings you left go there, each with its reason; one goes up into Review first only when it needs the maintainer's decision, within the 1 to 3 bullets. Return the new head sha, what you fixed, and what you left with its reason.`,
+Run the checks the change touches. Then update the PR body (mise exec -- gh pr edit ${contrib.pr} --body-file <file>): keep it coherent with the change, its "Fresh-agent review:" line left to the workflow, which writes it after the last round (leave room for it), within the limits of /feyn-pull-request step 5: 30 lines at most, blank lines and the awaiting section excluded, Review first 1 to 3 bullets; count the lines and the bullets before each "gh pr edit". Then update the PR comment "Delivery notes" in place (/feyn-pull-request step 6; post it if the PR has none, never a second one): the non-blocking findings you left go there, each with its reason; one goes up into Review first only when it needs the maintainer's decision, within the 1 to 3 bullets. Return the new head sha, what you fixed, and what you left with its reason.`,
     { label: `corrections ${round} PR #${contrib.pr}`, phase: 'Correct', schema: FIX_SCHEMA, isolation: 'worktree', model: 'opus' })
   if (!fix) return { status: 'failed', stage: `correct-${round}`, contrib, review, rounds, deviations: contrib.deviations }
   const verify = await agent(`${REVIEW_BASE}
@@ -223,6 +224,28 @@ You verify corrections, as step 4 of /feyn-pr-review says, as a new agent. The r
 }
 if (!conform) return { status: 'needs-orchestrator', reason: 'blocking findings after two rounds', contrib, review, rounds, deviations: contrib.deviations }
 
+// The review line, written here by the workflow itself, before the Merge stage and before
+// ready-for-handover: when the first review finds nothing, no corrector runs, and no orchestrator
+// adds it after (issue #586). The write is read back (.claude/reference/project.md, "GitHub
+// writes") and checked here.
+const LINE_SCHEMA = {
+  type: 'object',
+  properties: {
+    lineReadBack: { type: 'string', description: 'the line of the PR body, read back after the edit, that starts with "- Fresh-agent review:", without its "- ", exactly as read; "" when none' },
+    problems: { type: 'array', items: { type: 'string' }, description: 'every problem met; an empty array if none' },
+  },
+  required: ['lineReadBack', 'problems'],
+}
+const line = reviewLine()
+const written = await agent(`You write one line into the body of PR #${contrib.pr} of feyn. Use only gh commands (through "mise exec --"); run no git command and no cd: your working directory is the work session's and must not change.
+1. "mise exec -- gh pr view ${contrib.pr} --json body --jq .body" into a file of your scratchpad.
+2. In its "## Checks" section, the line "- ${line}": it replaces the line that starts with "- Fresh-agent review:" when there is one, otherwise it goes as the last bullet of Checks, before "- Not verified:" when that bullet exists. Change nothing else in the body.
+3. "mise exec -- gh pr edit ${contrib.pr} --body-file <that file>", then read the body again ("mise exec -- gh pr view ${contrib.pr} --json body --jq .body").
+Return the line of the body read back that starts with "- Fresh-agent review:" (without its "- "), exactly as read, "" when there is none, and every problem met.`,
+  { label: `review line PR #${contrib.pr}`, phase: 'Correct', schema: LINE_SCHEMA, model: 'sonnet', effort: 'low' })
+if (!written || written.lineReadBack.trim() !== line) return { status: 'failed', stage: 'review-line', reviewLine: line, written, contrib, review, rounds, deviations: contrib.deviations }
+log(`review line written: ${line}`)
+
 const report = {
   mode: MODE,
   issue: A.issue,
@@ -237,9 +260,8 @@ const report = {
   unsure: contrib.unsure,
   verdicts: review.verdicts,
   firstReview: { blocking: review.blocking, nonBlocking: review.nonBlocking, couldNotCheck: review.couldNotCheck },
-  // The orchestrator checks this line is in the PR's Checks at the hand-over (no epic) or
-  // at the merge (epic): when the first review found nothing, no corrector wrote it.
-  reviewLine: reviewLine(),
+  // Written into the PR's Checks and read back above.
+  reviewLine: line,
   rounds: rounds.map(r => ({ round: r.round, fixed: r.fix.fixed, left: r.fix.left, conform: r.verify.conform, notes: r.verify.notes })),
 }
 if (ALONE) return { status: 'ready-for-handover', ...report }

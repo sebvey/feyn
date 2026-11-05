@@ -14,9 +14,9 @@ the PR cold, holds the PR to the issue's Done when, and recounts and rechecks ea
 instead of trusting the PR body. It reports blocking and non-blocking findings; the blocking
 ones are fixed before the hand-over. The review is `/feyn-pr-review`. Under
 `/feyn-deliver-story-alone` and `/feyn-deliver-epic`, the agent workflow `deliver-story.js` runs
-it, and a fresh agent verifies each round of corrections. On the direct path,
-`/feyn-pull-request` runs it before Ready for review; the work session that did the work applies
-the findings and checks them in the diff, and a second review runs only when a correction goes
+it, and a fresh agent verifies each round of corrections. On the direct path, the work session
+that did the work runs it once its PR is open, before the hand-over; it applies the findings
+and checks them in the diff, and a second review runs only when a correction goes
 beyond what the review asked. A story of an epic is reviewed so and merged by the orchestrator
 into the epic's integration branch; what reaches the maintainer is the epic PR, after a fresh
 agent reviewed the whole branch (decision `epic-on-integration-branch`). It adds to the

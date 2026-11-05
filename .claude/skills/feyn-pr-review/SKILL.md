@@ -8,13 +8,14 @@ argument-hint: "<pr number>"
 
 One job: have a fresh agent review PR `<pr>` against its issue's Done when, and return its
 report. Every PR is reviewed this way before it reaches the maintainer (decision
-`fresh-agent-review-before-maintainer`): `/feyn-pull-request` runs it on the direct path at its
-step 7; the agent workflow `deliver-story.js` (under `/feyn-deliver-story-alone` and
-`/feyn-deliver-epic`) spawns its own reviewers, of the same project subagent `feyn-pr-reviewer`
+`fresh-agent-review-before-maintainer`): on the direct path, the work session runs it once
+`/feyn-pull-request` has opened the PR ("After the PR is open"); the agent workflow
+`deliver-story.js` (under `/feyn-deliver-story-alone` and `/feyn-deliver-epic`) spawns its own
+reviewers, of the same project subagent `feyn-pr-reviewer`
 ([its file](../../agents/feyn-pr-reviewer.md), which holds the reviewer brief), and follows
-step 4. It
-changes nothing in the repository, pushes nothing, comments nothing on GitHub and sets no
-Status: the caller applies the findings and sets Ready for review.
+step 4. It changes nothing in the repository, pushes nothing, comments nothing on GitHub and
+sets no Status: the caller applies the findings ([sort.md](../../reference/sort.md)) and hands
+the PR over ([hand-over.md](../../reference/hand-over.md)).
 
 ## 1. Read the PR
 

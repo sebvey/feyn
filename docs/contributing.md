@@ -103,11 +103,12 @@ session, through the agent workflow `deliver-story.js` of `.claude/workflows/`: 
 agent in its own worktree, a review by a fresh agent before the PR reaches the maintainer, the
 PR a draft until that review and its corrections are done, the clean-up of the run's worktrees,
 the hand-over, then the clean-up after the merge. On the direct path, without
-`/feyn-deliver-story-alone`, `/feyn-pull-request` runs that review (`/feyn-pr-review`) before it
-sets Ready for review, except on a direct delivery ("How the work is organised", moment 2). This
-is the path of a story without an epic. A story of an epic takes another: its PR targets the
-epic's integration branch, is reviewed by a fresh agent and merged by the orchestrator, and what
-reaches the maintainer is the epic PR; `/feyn-deliver-epic <epic>` runs it ("How the work is
+`/feyn-deliver-story-alone`, the work session runs that review (`/feyn-pr-review`) once
+`/feyn-pull-request` has opened the PR, then hands it over (`.claude/reference/hand-over.md`,
+which sets Ready for review), except on a direct delivery, handed over with no review ("How the
+work is organised", moment 2). This is the path of a story without an epic. A story of an epic
+takes another: its PR targets the epic's integration branch, is reviewed by a fresh agent and
+merged by the orchestrator, and what reaches the maintainer is the epic PR; `/feyn-deliver-epic <epic>` runs it ("How the work is
 organised", moment 2). Why: decisions `issue-defines-pr-verifies`,
 `fresh-agent-review-before-maintainer`, `epic-on-integration-branch`,
 `pr-corrects-what-it-makes-false`.
@@ -234,11 +235,10 @@ Five moments:
    fresh-agent review, and the PR's Checks say `Fresh-agent review: none, direct delivery.`. A
    direct story of an epic is delivered so by its epic's orchestrator (`/feyn-deliver-epic` step
    2): its branch is cut from the integration branch, its PR targets it
-   (`--base <integration branch>`), the orchestrator merges it, and it skips
-   `/feyn-pull-request` step 8, so the story never goes Ready for review. Which skill delivers
-   what: `/feyn-deliver-epic` an epic, its stories included, direct ones too;
-   `/feyn-deliver-story-alone` a story without an epic; the work-cycle tooling the direct
-   delivery of a story without an epic. A story without an epic is Ready for review while its PR
+   (`--base <integration branch>`), the orchestrator merges it, and it has no hand-over, so the
+   story never goes Ready for review. Which skill delivers what: `/feyn-deliver-epic` an epic,
+   its stories included, direct ones too; `/feyn-deliver-story-alone` a story without an epic;
+   the work-cycle tooling the direct delivery of a story without an epic. A story without an epic is Ready for review while its PR
    awaits the merge.
 3. **Brainstorm**: `/feyn-brainstorm` runs a work session with the maintainer on feyn, subject
    by subject, in a working folder not versioned (`tmp/`, which git ignores; the maintainer
@@ -349,9 +349,9 @@ reads the views. Why: decisions `themes-and-release-milestones`, `epic-on-integr
   sub-issues, set Idea when one is added and Done when it closes; the skills and the maintainer
   set the rest: `/feyn-issue` Option or Ready for a work item it creates ("How the work is
   organised", the flow), the maintainer Ready when committing an option, `/feyn-issue-branch` In
-  progress, `/feyn-pull-request` Ready for review, or the orchestrator at the hand-over under
-  `/feyn-deliver-story-alone` (a correction asked on a delivered PR returns the story to In
-  progress, `/feyn-deliver-story-alone` step 4); the orchestrator of an epic sets a story Done
+  progress, the hand-over (`.claude/reference/hand-over.md`) Ready for review, on the direct path
+  or by the orchestrator under `/feyn-deliver-story-alone` (a correction asked on a delivered PR
+  returns the story to In progress, `/feyn-deliver-story-alone` step 4); the orchestrator of an epic sets a story Done
   when it merges it into the integration branch, and the epic Ready for review when it hands
   over the epic PR. There are no state labels. Why: decisions `project-status-not-state-labels`,
   `idea-and-option-before-ready`, `epic-on-integration-branch`.

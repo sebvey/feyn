@@ -1,8 +1,8 @@
 # The Project and its Status
 
 The one place `/feyn-issue`, `/feyn-issue-branch`, `/feyn-pull-request`, `/feyn-merge-cleanup`,
-`/feyn-deliver-story-alone`, `/feyn-deliver-epic`, `/feyn-triage`, `/feyn-refine-option` and the
-agent workflow `deliver-story.js` take the Project's names, ids and commands from, and the
+`/feyn-deliver-story-alone`, `/feyn-deliver-epic`, `/feyn-triage`, `/feyn-refine-option`, the
+procedures of `reference/` and the agent workflow `deliver-story.js` take the Project's names, ids and commands from, and the
 commands on issues ("Issues"). The **Project** is the GitHub Project "feyn", number 4, owner
 `sebvey`, id `PVT_kwHOADOnU84Bo8V6`; its **Status** field, id `PVTSSF_lAHOADOnU84Bo8V6zhnaHqI`,
 says where an issue stands, in this order and nothing else (decisions
@@ -23,6 +23,15 @@ No Status says a decision is awaited: the label `blocked:maintainer` carries it,
 of 2026-11-03 (`docs/vision.md`): the label `stale` carries it, on an issue in Idea or Option, removed
 by `/feyn-triage` or `/feyn-refine-option` when they re-read the item (decision
 `project-status-not-state-labels`).
+
+## GitHub writes
+
+The output of every GitHub write (`gh issue comment`, `gh issue create`, `gh pr create`,
+`gh pr edit`, `gh api -X …`, `gh project item-edit`) is read: a URL or an id printed, or, for a
+command that prints nothing on success, the value read back (`gh issue view`, `gh pr view`,
+`gh api` without `-X`). Nothing printed and nothing read back, or an error, is a failed write:
+reported, never assumed done. A `gh issue comment` failed silently on an epic's issue (GitHub,
+observed 2026-11-04, #450).
 
 ## The Project workflows
 
@@ -100,7 +109,7 @@ options, with their ids:
   `- [ ] <story>`, the next one ending `(next)`; `Unknown:`; `Dropped:`); below, from the line
   `**Log**`, the log, only added to (a line per delivery,
   `<date> #<n> (PR #<pr>): <what it delivered>`; per open question, `Open question: …`; per
-  answer, `Answered: …`, right under its question, as `/feyn-deliver-epic` step 3 says).
+  answer, `Answered: …`, right under its question, as [sort.md](sort.md), "An open question", says).
   Edit it: the PATCH replaces the whole body, so read it first,
   `mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> --jq .body > <file>`, edit the
   file, then `mise exec -- gh api -X PATCH repos/sebvey/feyn/issues/comments/<id> -F body=@<file>`.
