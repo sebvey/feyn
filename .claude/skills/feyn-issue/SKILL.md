@@ -108,7 +108,7 @@ of the old format for a defect:
      says the maintainer names this story a **direct delivery**: the maintainer's work session,
      or the orchestrator of its epic, makes the branch, the edit and the PR, with no
      contributor and no fresh-agent review ([contributing](../../../docs/contributing.md), "How
-     the work is organised", moment 2). The skill never adds it on its own. An idea or an epic
+     the work is organised", moment 5). The skill never adds it on its own. An idea or an epic
      never takes it: `idea direct` or `epic direct` is refused, saying why, and nothing is
      created.
 4. **Pick the Status, the labels and the links.**
@@ -149,7 +149,7 @@ of the old format for a defect:
    template says applies.
    - With `direct` (step 3): first hold the Done when to the criterion of a direct delivery,
      one edit with no behaviour, as [contributing](../../../docs/contributing.md), "How the
-     work is organised", moment 2, states it. A Done when that asks more: refuse `direct`,
+     work is organised", moment 5, states it. A Done when that asks more: refuse `direct`,
      saying which statement or which file goes beyond it, and create nothing. Otherwise the
      To do opens with the line its template gives.
 6. **Title**, under 70 characters, no issue prefix. A story: imperative, like a commit summary

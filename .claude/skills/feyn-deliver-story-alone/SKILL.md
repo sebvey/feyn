@@ -38,7 +38,7 @@ they do not hold.
   story"), and run nothing for that issue.
 - **A direct delivery.** A story whose To do opens with the line "Direct delivery"
   (named `direct` by the maintainer at its creation, [contributing](../../../docs/contributing.md),
-  "How the work is organised", moment 2) stops the cycle for that issue, before the refusals
+  "How the work is organised", moment 5) stops the cycle for that issue, before the refusals
   below: reply "this story is delivered as a direct delivery (`/feyn-issue-branch <n>`, the
   edit, `/feyn-pull-request`, both with no parameter, then the hand-over of
   `.claude/reference/hand-over.md`): nothing to spawn", and spawn nothing.

@@ -1,7 +1,7 @@
 <!-- The body of an epic: every rule of its writing is in this template's comments, followed
      and then removed (each comment replaced by what it asks), whoever writes or rewrites it.
      The five sections below, in order, and nothing else: no To do, no story posed in advance
-     (its stories are posed when it is taken). -->
+     (once it is taken, its stories are posed one at a time, each when it is the next). -->
 
 ### Objective
 

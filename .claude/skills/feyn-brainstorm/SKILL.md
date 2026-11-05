@@ -16,11 +16,11 @@ decides every subject; the work session frames, measures, proposes, objects and 
 What it calls, and nothing else: `/feyn-issue` (a story, an epic, an idea), the rework of an
 option as `/feyn-refine-option` step 4 does it, a comment on an issue
 (`mise exec -- gh issue comment <n> --body-file <file>`), the close of the idea it opened from,
-and the reviewer `feyn-brainstorm-reviewer` (moment 4). It writes nothing in the repository: no
+and the reviewer `feyn-brainstorm-reviewer` (step 4). It writes nothing in the repository: no
 branch, no commit, no edit of a tracked file, no decision (the work items write their decisions
 when delivered). It writes in `tmp/`, which git ignores.
 
-A brainstorm of small scope runs the same five moments, with two or three subjects.
+A brainstorm of small scope runs the same five steps, with two or three subjects.
 
 ## 0. The opening
 
@@ -33,7 +33,7 @@ The argument is one of three things:
   `/feyn-refine-option` step 3): read it (`/feyn-issue <n>`) and the refinement's findings;
   it is the starting point, and the output says what becomes of it;
 - **an idea** (Status Idea): read it (`/feyn-issue <n>`); its finding is the question, and the
-  brainstorm is its triage (moment 4 closes it);
+  brainstorm is its triage (step 4 closes it);
 - **the maintainer's subject**, in a few words.
 
 A brainstorm on the process (a skill, a workflow, a policy, the glossary, `contributing.md`)
@@ -44,7 +44,7 @@ ask which problem was observed, and where. Named: create the idea (`/feyn-issue 
 
 Then create the working folder `tmp/<slug>/` at the repository root (slug: two or three words of
 the subject) with its `README.md`, and send its frame as the first message: the goal, the
-constraints, the process (the five moments), the first list of subjects. The maintainer
+constraints, the process (the five steps), the first list of subjects. The maintainer
 corrects it before the inventory starts. The folder is written in the language of the
 conversation.
 
@@ -66,7 +66,7 @@ date, "not versioned".>
 
 ## The process
 
-<the five moments, the subjects in the table's order, the output last.>
+<the five steps, the subjects in the table's order, the output last.>
 
 ## The subjects
 
@@ -145,14 +145,14 @@ A decision of the project that a subject touches is weighed as the maintainer's 
 (`CLAUDE.md`, "Working with the maintainer": their "Plans and working files"; on 2026-11-04,
 `reader-facing-and-teacher-only-files`, `spec-files-by-product` and
 `versioned-objects-and-spec-layout` were decided to be replaced, by #475 and #522); its
-replacement or amendment is a decision to write, carried by a work item (moment 4).
+replacement or amendment is a decision to write, carried by a work item (step 4).
 
 ## 3. The review on a support
 
 Before the output, the maintainer reviews the whole on a support written in the folder: the
 object as it is, then as it will be, each line marked by the work item that changes it (on
 2026-11-04, the tree of the spec, `arbre-spec.md`). What the review finds opens subjects,
-inserted as moment 2 says.
+inserted as step 2 says.
 
 ## 4. The loups, then the output
 

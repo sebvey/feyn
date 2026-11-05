@@ -131,7 +131,7 @@ where the concept is implemented, stored, read or written (decision `glossary-by
 - means: the generic Claude Code agent that teaches, with the **teacher skills** of its moments, built from the **teacher template**, the protocol and the lexicons of its spec, as the **composition** of its spec says
 - en: teacher · rejected: "prof", "tutor", "coach", "agent" alone
 - fr: « professeur » · rejected: « prof »
-- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template)
+- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment)
 
 ### classroom
 
@@ -470,7 +470,7 @@ where the concept is implemented, stored, read or written (decision `glossary-by
 - means: what a teacher is made of, beside how it behaves: five parts, each defined by when it loads and what it draws from the spec, the course, learner memory and the classroom; described by the spec with no Claude Code term: its realisation is the classroom build's
 - en: composition · rejected: "architecture", "the instructions"
 - fr: « composition »
-- not to confuse with: [protocol](#protocol), [classroom build](#classroom-build), [teacher skill](#teacher-skill), [teacher template](#teacher-template)
+- not to confuse with: [protocol](#protocol), [classroom build](#classroom-build), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment)
 
 ### mini-recap
 
@@ -690,6 +690,14 @@ word; the others name feyn's own mechanisms, which the frame does not name.
 - fr: to settle
 - not to confuse with: [draft](#draft)
 
+### moment
+
+- means: one of the eighteen moments of the work cycle, from an idea noted to the issues a merge frees, numbered in the cycle's order in the contributing guide; each has one owner, which holds its procedure (a skill and its step, a reference file, a body template, the agent workflow; for the merge into `main`, the maintainer), and every other file cites that owner. A path (an epic, a story alone, a direct delivery) chains moments. Not the moments of a teacher's **composition**, which its **teacher skills** carry
+- en: moment · rejected: "step" (a numbered part of a skill or of a reference file, which a moment's owner may be), "phase"
+- fr: to settle
+- not to confuse with: [skill](#skill), [teacher](#teacher), [teacher skill](#teacher-skill), [composition](#composition)
+- why: `feyn-brainstorm` called its own parts "moments" until they became steps, as in every other skill: a step is a part of one owner, a moment a part of the cycle
+
 ### triage
 
 - means: reading the ideas that came in and deciding what each one calls for: the work items it calls for, each citing it, the idea then closed as completed; or nothing, the idea closed as not planned, with the reason. In feyn, run with the maintainer on the ideas they name, one at a time; an option is not triaged, it goes to an **option refinement**
@@ -838,14 +846,14 @@ word; the others name feyn's own mechanisms, which the frame does not name.
 
 ### skill
 
-- means: a Claude Code skill of the repository, folder and name prefixed `feyn-`, invoked as `/feyn-<name>` or loaded from its description: one that does the job of a moment of the work, named by a verb (`feyn-deliver-story-alone`, `feyn-brainstorm`), or the **work-cycle tooling**; "tooling" alone is the build, site and teacher code. A **teacher skill** is a skill of a classroom, not of the repository
+- means: a Claude Code skill of the repository, folder and name prefixed `feyn-`, invoked as `/feyn-<name>` or loaded from its description: one named by a verb, that chains the **moments** of a path (`feyn-deliver-epic`, `feyn-deliver-story-alone`) or owns a moment run with the maintainer (`feyn-triage`, `feyn-brainstorm`, `feyn-refine-option`), or the **work-cycle tooling**; "tooling" alone is the build, site and teacher code. A **teacher skill** is a skill of a classroom, not of the repository
 - en: skill · rejected: "command", "prompt", "recipe"
 - fr: to settle
-- not to confuse with: [agent workflow](#agent-workflow), [project subagent](#project-subagent), [work-cycle tooling](#work-cycle-tooling), [teacher skill](#teacher-skill)
+- not to confuse with: [agent workflow](#agent-workflow), [project subagent](#project-subagent), [work-cycle tooling](#work-cycle-tooling), [teacher skill](#teacher-skill), [moment](#moment)
 
 ### work-cycle tooling
 
-- means: the skills that do no moment of the work on their own, called by the skills that do or directly for a one-off act, each named by what it produces or handles (`feyn-issue-branch`, `feyn-pull-request`)
+- means: the skills that own a **moment** the skills of a path call, also loaded directly for a one-off act, each named by what it produces or handles (`feyn-issue`, the idea noted; `feyn-issue-branch`, the start; `feyn-pull-request`, the PR; `feyn-merge-cleanup`, the freed issues)
 - en: work-cycle tooling · rejected: "tooling" alone (the build, site and teacher code)
 - fr: to settle
 - not to confuse with: [skill](#skill)
@@ -855,7 +863,7 @@ word; the others name feyn's own mechanisms, which the frame does not name.
 - means: a skill of a classroom, one per moment of the **composition** that has rules, named `feyn-teacher-<moment>` (`feyn-teacher-onboarding`, `feyn-teacher-stop`), made by the classroom build; apart from Claude Code's own skills (`/resume`)
 - en: teacher skill
 - fr: to settle
-- not to confuse with: [skill](#skill), [teacher](#teacher), [composition](#composition), [resume](#resume)
+- not to confuse with: [skill](#skill), [teacher](#teacher), [composition](#composition), [resume](#resume), [moment](#moment)
 
 ### agent workflow
 

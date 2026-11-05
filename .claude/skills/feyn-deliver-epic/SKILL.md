@@ -39,7 +39,7 @@ messages only: a decision put to the maintainer takes the form of step 3.
   `<story branch>`), cut from `origin/main` without touching the checkout: `git fetch`, then
   `git push origin origin/main:refs/heads/<integration branch>`.
 - The plan comment, as [contributing](../../../docs/contributing.md), "How the work is
-  organised", moment 1, says, in the form of [project.md](../../reference/project.md), "Epics",
+  organised", moment 7, says, in the form of [project.md](../../reference/project.md), "Epics",
   "The plan comment": first, the plan comment head (where the epic stands, what runs, what
   awaits the maintainer, what comes next; at most ten lines), rewritten whole at each step
   (steps 2.6, 3 and 5); then the plan (a Delivery line naming the integration branch; the
@@ -67,7 +67,7 @@ One at a time, the next one only (rules of the cycle):
    foundational (vocabulary, the structure of a file of reference, the teacher's behaviour),
    from the Material or by an open question (step 3), never left to the contributor's choice.
    A story of the epic that a triage or a brainstorm created is born Option (by default at a
-   triage, always from a brainstorm: `/feyn-triage` step 4, `/feyn-brainstorm` moment 4): it is
+   triage, always from a brainstorm: `/feyn-triage` step 4, `/feyn-brainstorm` step 4): it is
    not committed, and `/feyn-issue-branch` refuses it. The orchestrator asks the maintainer to
    commit it (set Ready, at an option refinement, `/feyn-refine-option`), then marks it next in
    the plan once they have, without running `/feyn-issue`: it poses no twin of it.
@@ -127,7 +127,7 @@ One at a time, the next one only (rules of the cycle):
 
 **A direct story.** A story whose To do opens with the line "Direct delivery" (named `direct` at
 its creation, [contributing](../../../docs/contributing.md), "How the work is organised", moment
-2) is delivered by the orchestrator itself, in the work session, with no workflow run and no
+5) is delivered by the orchestrator itself, in the work session, with no workflow run and no
 fresh-agent review, in place of steps 2.3 to 2.5:
 - `/feyn-issue-branch <n> --base <integration branch>`, then the edit;
 - `/feyn-pull-request --base <integration branch>`, its Checks saying

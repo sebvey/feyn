@@ -27,7 +27,7 @@ records and read as a marker, never as content to refine or a defect to correct;
 rewritten in place on that date, from which what changed in the repository is read:
 - `Reworked <YYYY-MM-DD> (refinement)`, written by the action rework (step 4);
 - `Refined <YYYY-MM-DD> (brainstorm)`, written by `/feyn-brainstorm` when it reworks the option
-  it opened from (its moment 4);
+  it opened from (its step 4);
 - `Refined <YYYY-MM-DD> (triage)`, on an option reworked before the option refinement had its
   own skill (#444): read as a marker, never edited into the new form; a rework replaces it with
   its own line, as it does any earlier marker.

@@ -77,8 +77,9 @@ loaded directly for a one-off act. `/feyn-decision` writes or changes a decision
 `/feyn-glossary-entry` adds or changes a glossary entry. A delivery work session starts with an
 issue number. The frame of the work is Kanban, with ADR for the decisions and GitHub flow for the
 branches (`docs/kanban.md`). How feyn applies it (the work items, epics and stories, and the ideas;
-the Statuses from Idea to Done; milestones; the Project's views): `docs/contributing.md`, "How the
-work is organised".
+the Statuses from Idea to Done; the 18 moments of the work cycle, each with its one owner, and the
+paths that chain them; milestones; the Project's views): `docs/contributing.md`, "How the work is
+organised".
 
 ## Non-negotiable rules
 

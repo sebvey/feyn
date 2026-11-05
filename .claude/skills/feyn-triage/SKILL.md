@@ -1,13 +1,13 @@
 ---
 name: feyn-triage
-description: "Triage with the maintainer the ideas of feyn they name (moment 4 of the work cycle, Triage), issues of the old format included: one or more issue numbers, triaged in the order given, one at a time; the work session looks up each one's neighbours (a twin, an epic or an option that covers or overlaps it, an open idea on the same files) and presents it with them, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it. An option is not triaged: it goes to `/feyn-refine-option`. With no number, it asks which idea. Use for \"trie l'idea 431\", \"trie les idées 429 et 431\", \"triage idea 431\", \"/feyn-triage 431\", \"/feyn-triage 429 431\"."
+description: "Triage with the maintainer the ideas of feyn they name (moment 2 of the work cycle, Triage), issues of the old format included: one or more issue numbers, triaged in the order given, one at a time; the work session looks up each one's neighbours (a twin, an epic or an option that covers or overlaps it, an open idea on the same files) and presents it with them, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it. An option is not triaged: it goes to `/feyn-refine-option`. With no number, it asks which idea. Use for \"trie l'idea 431\", \"trie les idées 429 et 431\", \"triage idea 431\", \"/feyn-triage 431\", \"/feyn-triage 429 431\"."
 argument-hint: "<issue number> [<issue number> …]"
 ---
 
 # /feyn-triage <n> [<n> …]
 
 One job: triage with the maintainer the ideas they name, one at a time, as
-[contributing](../../../docs/contributing.md), "How the work is organised", moment 4, says. The
+[contributing](../../../docs/contributing.md), "How the work is organised", moment 2, says. The
 work session reads each item and its neighbours, presents it, the maintainer decides, the work
 session executes. The Project's commands are in [project.md](../../reference/project.md), the
 checks of step 3 in the files of `reference/` it names, cited here, not copied. Nothing is
