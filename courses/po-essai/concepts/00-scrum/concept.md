@@ -37,9 +37,7 @@ diagrams:
 
 ## Objectif
 
-Situer les trois responsabilités de Scrum (Product Owner, Scrum Master, Developers), le sprint
-et ses quatre événements, les trois artefacts et leurs engagements ; distinguer le sprint, une
-durée, de l'incrément, le produit dans un nouvel état utilisable.
+Situer les trois responsabilités de Scrum (Product Owner, Scrum Master, Developers), le sprint et ses quatre événements, les trois artefacts et leurs engagements ; distinguer le sprint, une durée, de l'incrément, le produit dans un nouvel état utilisable.
 
 ## L'essentiel
 

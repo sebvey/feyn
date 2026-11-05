@@ -11,12 +11,9 @@ The readers are defined in [`spec-directives/README.md`](../spec-directives/READ
 
 Summary of decision `versioned-objects-and-spec-layout`; if they differ, the decision wins.
 
-Three objects are versioned: a course (`courses/<id>/`), a spec (here) and the spec directives,
-which say how a spec is written and read and live in `spec-directives/`, one folder per MAJOR,
-with the tests of a spec's own files (`spec-directives/README.md`).
+Three objects are versioned: a course (`courses/<id>/`), a spec (here) and the spec directives, which say how a spec is written and read and live in `spec-directives/`, one folder per MAJOR, with the tests of a spec's own files (`spec-directives/README.md`).
 
-A spec is the contract for a type of course. The only spec is `linear-course`; its MAJOR 1
-sits in `course-specs/linear-course/1/`.
+A spec is the contract for a type of course. The only spec is `linear-course`; its MAJOR 1 sits in `course-specs/linear-course/1/`.
 
 ## Layout
 
@@ -33,17 +30,11 @@ One folder per MAJOR, `course-specs/<name>/<MAJOR>/` (`1/`, not `v1/`), holds:
 
 A new MAJOR copies the tree of the previous one, its decisions under the same slugs.
 
-A course declares the MAJOR it follows in `course.yaml` (`spec: linear-course@1`).
-`course-specs/check-course <course>` reads it, runs `course-specs/<name>/<MAJOR>/course/checks`, and
-refuses an unknown spec or MAJOR. The MAJOR's `check-course` takes its checks from the MAJOR's rule
-files and runs them in one run: a failure of a check that blocks sets exit code 1, a failure of a
-check that reports is printed and leaves 0; `--category` selects checks by category.
+A course declares the MAJOR it follows in `course.yaml` (`spec: linear-course@1`). `course-specs/check-course <course>` reads it, runs `course-specs/<name>/<MAJOR>/course/checks`, and refuses an unknown spec or MAJOR. The MAJOR's `check-course` takes its checks from the MAJOR's rule files and runs them in one run: a failure of a check that blocks sets exit code 1, a failure of a check that reports is printed and leaves 0; `--category` selects checks by category.
 
 ## Versions
 
-A spec version is tagged `<name>/vX.Y.Z`. From the MAJOR's tag on, the bump of a spec change
-is written in the levels of the rules of a course (requirement, recommendation), as the
-spec directives write it (`spec-directives/1/README.md` sections 3 and 6):
+A spec version is tagged `<name>/vX.Y.Z`. From the MAJOR's tag on, the bump of a spec change is written in the levels of the rules of a course (requirement, recommendation), as the spec directives write it (`spec-directives/1/README.md` sections 3 and 6):
 
 | Bump | When |
 |---|---|
@@ -51,6 +42,4 @@ spec directives write it (`spec-directives/1/README.md` sections 3 and 6):
 | MINOR | an optional element; a protocol rule added, changed or renamed (the old slug is burnt); a requirement made looser or made a recommendation; a recommendation added or made stricter; a lexicon key added or renamed |
 | PATCH | wording; a false positive lifted |
 
-A MAJOR lives while a served course version declares it, a course tag included; then it is
-archived. Tooling reads every live MAJOR. An old MAJOR receives bug fixes only, as a PATCH,
-never a tightening; a bug fix is ported to every live MAJOR.
+A MAJOR lives while a served course version declares it, a course tag included; then it is archived. Tooling reads every live MAJOR. An old MAJOR receives bug fixes only, as a PATCH, never a tightening; a bug fix is ported to every live MAJOR.

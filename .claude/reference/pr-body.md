@@ -2,8 +2,7 @@
 
 <question>
 - <option>
-- <option>
-Recommendation: <option, and why in one line>
+- <option> Recommendation: <option, and why in one line>
 
 Closes #<n>   (or Refs #<n>)
 
@@ -34,8 +33,7 @@ Closes #<n>   (or Refs #<n>)
 
 ---
 
-<Second part, never in the body: the "Delivery notes" comment, posted on the PR (/feyn-pull-request
-steps 5 and 6). No limit of lines; a section with nothing to say is dropped.>
+<Second part, never in the body: the "Delivery notes" comment, posted on the PR (/feyn-pull-request steps 5 and 6). No limit of lines; a section with nothing to say is dropped.>
 
 ## Delivery notes
 

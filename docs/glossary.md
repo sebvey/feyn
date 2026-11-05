@@ -2,16 +2,13 @@
 
 The repository glossary holds the reserved terms of feyn, one entry per concept. It is there for:
 
-- one concept, one term, and one term, one concept: a reserved term means one thing in the
-  repository's files (code, docs, skills, issues, decisions, specs), and its concept takes no
-  other word;
+- one concept, one term, and one term, one concept: a reserved term means one thing in the repository's files (code, docs, skills, issues, decisions, specs), and its concept takes no other word;
 - a shared definition: the maintainer, a contributor and an agent give a term the same meaning;
 - the boundaries between neighbouring concepts: what a term is not, and which entry holds that;
 - the correspondence between the repository's English and the French of a spec;
 - a regular form that a program can read.
 
-Why this form: decision `glossary-by-concept`; why a word choice is an entry and not a decision:
-decision `word-choices-in-the-glossary`.
+Why this form: decision `glossary-by-concept`; why a word choice is an entry and not a decision: decision `word-choices-in-the-glossary`.
 
 ## Reading an entry
 
@@ -19,48 +16,23 @@ An entry is a heading, the term, then fixed keys in this order, each on its own 
 
 - `means`: the definition, in English.
 - `en`: the preferred English term, then, after ` · rejected: `, its rejected English terms.
-- `fr`: the preferred French term, then, after ` · rejected: `, its rejected French terms;
-  `to settle` when no French text of a spec writes the concept yet.
+- `fr`: the preferred French term, then, after ` · rejected: `, its rejected French terms; `to settle` when no French text of a spec writes the concept yet.
 - `not to confuse with`: links to the entries of neighbouring concepts.
-- `why`: why this term for the concept, when the choice was discussed or a confusion seen: the
-  terms ruled out and what each would have confused.
+- `why`: why this term for the concept, when the choice was discussed or a confusion seen: the terms ruled out and what each would have confused.
 
-The why of a word choice is in its entry's `why`, never in a decision (decision
-`word-choices-in-the-glossary`).
+The why of a word choice is in its entry's `why`, never in a decision (decision `word-choices-in-the-glossary`).
 
-A key with nothing to say is left out, `means`, `en` and `fr` excepted. A rejected term is a word
-banned for that concept only: never use it where the concept applies. A word may be preferred for
-one concept and rejected for another; both entries then say so (« schéma »). A neighbouring
-concept is always a `not to confuse with` link; its term is also a rejected term only when it is
-a wrong name for this concept (**rule** rejects "requirement" and links [requirement](#requirement)).
-A term in bold in a meaning has its own entry.
+A key with nothing to say is left out, `means`, `en` and `fr` excepted. A rejected term is a word banned for that concept only: never use it where the concept applies. A word may be preferred for one concept and rejected for another; both entries then say so (« schéma »). A neighbouring concept is always a `not to confuse with` link; its term is also a rejected term only when it is a wrong name for this concept (**rule** rejects "requirement" and links [requirement](#requirement)). A term in bold in a meaning has its own entry.
 
 ## Which designation applies where
 
-- `en` in the repository's English files: code, docs, skills, issues, decisions, and the English
-  texts of a spec.
-- `fr` in a French text of a spec, which speaks the language of its courses (decision
-  `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`,
-  `teacher/README.md`, `teacher/rules.yaml` of `course-specs/linear-course/1/`. A heading or a
-  value of a lexicon quoted in « » is a word of the course files, not the spec's word for a
-  concept: « Schéma », the heading of the drawing instruction in `teaching.md`, names that
-  section, not a diagram.
-- A course glossary in its course. Each course has its own [course glossary](#course-glossary),
-  which belongs to the course, follows the course's language and applies in that course's
-  files. A word may be reserved in both with two meanings (**epic**); a repository text that
-  speaks of the course's meaning says so ("epic, in the course's sense"). French course files
-  keep their French section headings (« Objectif », « L'essentiel », « Pièges »…); the English
-  terms here are how we talk about them in code, docs and issues.
+- `en` in the repository's English files: code, docs, skills, issues, decisions, and the English texts of a spec.
+- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `teacher/README.md`, `teacher/rules.yaml` of `course-specs/linear-course/1/`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Schéma », the heading of the drawing instruction in `teaching.md`, names that section, not a diagram.
+- A course glossary in its course. Each course has its own [course glossary](#course-glossary), which belongs to the course, follows the course's language and applies in that course's files. A word may be reserved in both with two meanings (**epic**); a repository text that speaks of the course's meaning says so ("epic, in the course's sense"). French course files keep their French section headings (« Objectif », « L'essentiel », « Pièges »…); the English terms here are how we talk about them in code, docs and issues.
 
 ## Adding or changing an entry
 
-A PR adds or changes the entry and, in the same PR, replaces the rejected words in use for that
-concept. The text that first writes a concept in French fills its `fr` in the same PR. An entry
-cites no rule id, of a rule or of a group (decision `decision-format`), and names no course. A
-meaning cites nothing: no decision, no document (decision `word-choices-in-the-glossary`). It names
-a file, a folder, a key, a command or a skill only when the concept is that thing, never to say
-where the concept is implemented, stored, read or written (decision `glossary-by-concept`).
-`/feyn-glossary-entry` reads, adds and changes an entry.
+A PR adds or changes the entry and, in the same PR, replaces the rejected words in use for that concept. The text that first writes a concept in French fills its `fr` in the same PR. An entry cites no rule id, of a rule or of a group (decision `decision-format`), and names no course. A meaning cites nothing: no decision, no document (decision `word-choices-in-the-glossary`). It names a file, a folder, a key, a command or a skill only when the concept is that thing, never to say where the concept is implemented, stored, read or written (decision `glossary-by-concept`). `/feyn-glossary-entry` reads, adds and changes an entry.
 
 ## The things we build
 
@@ -487,9 +459,7 @@ where the concept is implemented, stored, read or written (decision `glossary-by
 
 ## Rules and checks
 
-The **spec directives** (`spec-directives/1/README.md`) and, for the categories and the checks of a
-spec, the `README.md` of its MAJOR (decisions `rules-with-level-and-method`,
-`levels-from-iso-directives`, `severity-from-level-and-method` and `conformity-by-product`).
+The **spec directives** (`spec-directives/1/README.md`) and, for the categories and the checks of a spec, the `README.md` of its MAJOR (decisions `rules-with-level-and-method`, `levels-from-iso-directives`, `severity-from-level-and-method` and `conformity-by-product`).
 
 ### rule
 
@@ -583,10 +553,7 @@ spec, the `README.md` of its MAJOR (decisions `rules-with-level-and-method`,
 
 ## How we work
 
-The frame of the work is Kanban, with ADR for the decisions and GitHub flow for the branches
-(decision `kanban-frame-of-the-work`): what the frame says is in `docs/kanban.md`, how feyn
-applies it in `docs/contributing.md`. Its words below are the frame's wherever the frame has a
-word; the others name feyn's own mechanisms, which the frame does not name.
+The frame of the work is Kanban, with ADR for the decisions and GitHub flow for the branches (decision `kanban-frame-of-the-work`): what the frame says is in `docs/kanban.md`, how feyn applies it in `docs/contributing.md`. Its words below are the frame's wherever the frame has a word; the others name feyn's own mechanisms, which the frame does not name.
 
 ### area
 

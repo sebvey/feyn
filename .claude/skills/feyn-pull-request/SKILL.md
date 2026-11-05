@@ -6,174 +6,58 @@ argument-hint: "[--base <branch>] [--draft]"
 
 # /feyn-pull-request [--base <branch>] [--draft]
 
-One job: deliver the current issue branch, or an epic's integration branch for its epic PR, as
-a pull request to its base (`main` by default). It ends when the PR is open: the fresh-agent
-review, its corrections and the hand-over to the maintainer are other moments, which "After the
-PR is open" names. It never merges: the merge belongs to the maintainer. A story of an epic, a
-direct story included, is a pull request to the epic's integration branch, merged by the epic's
-orchestrator (decision `epic-on-integration-branch`; step 6). It writes on GitHub: the PR, its
-"Delivery notes", and `blocked:maintainer` on an issue whose decision is awaited (step 6).
+One job: deliver the current issue branch, or an epic's integration branch for its epic PR, as a pull request to its base (`main` by default). It ends when the PR is open: the fresh-agent review, its corrections and the hand-over to the maintainer are other moments, which "After the PR is open" names. It never merges: the merge belongs to the maintainer. A story of an epic, a direct story included, is a pull request to the epic's integration branch, merged by the epic's orchestrator (decision `epic-on-integration-branch`; step 6). It writes on GitHub: the PR, its "Delivery notes", and `blocked:maintainer` on an issue whose decision is awaited (step 6).
 
-The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the issue. An
-epic's integration branch has the same form, `<n>` the epic: its PR is the epic PR. On
-`main`, or on a branch without an issue number: stop and say so.
+The branch is `<type>/<n>-<slug>` (made by `/feyn-issue-branch`); `<n>` is the issue. An epic's integration branch has the same form, `<n>` the epic: its PR is the epic PR. On `main`, or on a branch without an issue number: stop and say so.
 
-Its caller passes its variations as parameters and rewrites none of its steps (decision
-`one-moment-one-file`):
-- `--base <branch>`: the branch the PR targets, `main` by default. A story of an epic, a direct
-  story included, gives its epic's integration branch. Steps 2 and 6.
-- `--draft`: the PR opens as a draft, as the agent workflow `deliver-story.js` needs until its
-  review and corrections are done. Step 6.
+Its caller passes its variations as parameters and rewrites none of its steps (decision `one-moment-one-file`):
+- `--base <branch>`: the branch the PR targets, `main` by default. A story of an epic, a direct story included, gives its epic's integration branch. Steps 2 and 6.
+- `--draft`: the PR opens as a draft, as the agent workflow `deliver-story.js` needs until its review and corrections are done. Step 6.
 
 ## Steps
 
-1. **Done when.** Reread the issue's Done when
-   (`mise exec -- gh issue view <n> --json title,labels,body`) and check each statement against
-   the branch, its output held to the statement's intent, not read as the verdict
-   ([done-when.md](../../reference/done-when.md)). One that does not hold: fix it, or report it
-   in the PR's Checks as "not met" or "deviation", with why (step 5); a line its command
-   catches that its intent does not target is left as it is, a deviation "wrong command" with
-   the corrected command. The Done when is not edited after `/feyn-issue-branch` but by a dated
-   amendment ([done-when.md](../../reference/done-when.md)), which amends the open PR's body as
-   well.
-2. **Checks.** Run the ones that exist for what the branch touches
-   (`git diff --name-only origin/<base>...HEAD`):
-   - a course `courses/<id>/`: the check runner of the spec it declares
-     (`course-specs/check-course courses/<id>`);
-   - a path under `course-specs/linear-course/`: the bench course,
-     `course-specs/check-course courses/po-essai` ([contributing](../../../docs/contributing.md),
-     "Policies"), even when the change touches no file a course has;
-   - a path under `course-specs/linear-course/1/teacher/`: also the spec's render test,
-     `course-specs/linear-course/1/teacher/build/test-render`, and the classroom build's test,
-     `classroom-builder/test-build`;
+1. **Done when.** Reread the issue's Done when (`mise exec -- gh issue view <n> --json title,labels,body`) and check each statement against the branch, its output held to the statement's intent, not read as the verdict ([done-when.md](../../reference/done-when.md)). One that does not hold: fix it, or report it in the PR's Checks as "not met" or "deviation", with why (step 5); a line its command catches that its intent does not target is left as it is, a deviation "wrong command" with the corrected command. The Done when is not edited after `/feyn-issue-branch` but by a dated amendment ([done-when.md](../../reference/done-when.md)), which amends the open PR's body as well.
+2. **Checks.** Run the ones that exist for what the branch touches (`git diff --name-only origin/<base>...HEAD`):
+   - a course `courses/<id>/`: the check runner of the spec it declares (`course-specs/check-course courses/<id>`);
+   - a path under `course-specs/linear-course/`: the bench course, `course-specs/check-course courses/po-essai` ([contributing](../../../docs/contributing.md), "Policies"), even when the change touches no file a course has;
+   - a path under `course-specs/linear-course/1/teacher/`: also the spec's render test, `course-specs/linear-course/1/teacher/build/test-render`, and the classroom build's test, `classroom-builder/test-build`;
    - `site-builder/` or a course: `astro check` and the site build, from `site-builder/`;
    - anything else: the checks its area documents, if any.
 
-   No check exists yet for the area: say so in the PR's Checks. A failing blocking check (exit
-   code 1; the summary line of `check-course` names it) is fixed before the PR opens; one that
-   cannot be fixed here is named in the PR's Checks and in Review first. A failing blocking
-   check on `po-essai` is always fixed before a PR to `main` opens: unlike a course PR, it has
-   no such escape, since a spec change is done only with the bench passing in the PR that lands
-   on `main`; a story's PR to its epic's integration branch may leave it failing, named in its
-   Checks, the epic PR fixing it ([contributing](../../../docs/contributing.md), "Policies").
-   A failing reporting check leaves the exit code 0 and blocks nothing: its failures are
-   findings, and the Checks line gives their count by check.
-3. **Commit and push.** Nothing left uncommitted that belongs to the issue
-   (`git status --porcelain`), then
-   `git push -u origin <branch>`.
-4. **Title**: `<type>(<area>): <summary>`, which becomes the squash commit on `main`.
-   `<type>` is the `type:` label, `<area>` the `area:` label, both without their prefix
-   (`course(course:po-essai): write the cases of concept 1`). Summary: imperative,
-   lowercase, no final period, under 72 characters for the whole title.
-5. **Body**, from the first part of the PR body template
-   [pr-body.md](../../reference/pr-body.md). It is read by a maintainer who reviews many PRs on
-   many subjects and must get back into this one from the PR alone; it is also the squash
-   commit message on `main`. 30 lines at most, blank lines and the awaiting section excluded.
-   The sections, in this order, each an `##` heading except the `Closes` line; a line of
-   `pr-body.md` that does not apply is dropped (the awaiting section outside a draft,
-   `Not verified:` with nothing unverified), and the body carries no HTML comment:
-   - **Awaiting the maintainer**, only when the branch leaves a decision to the maintainer
-     (a draft, step 6), first because it is the action: the question, the options, the
-     recommendation. Removed once the answer is applied.
-   - `Closes #<n>` (`Refs #<n>` when the PR is one step of the issue) on its own line, first
-     after the awaiting section (the first line of the body when there is none). Several
-     issues: one such line each.
-   - **Context**: 3 to 10 lines of prose for a reader who forgot the subject: the problem, why
-     now, what the PR changes overall.
-   - **Issues**: one bullet per issue the PR covers, `#<n> <title>: <what this PR does for it>
-     (Closes)` or `(Refs)`. Kept with a single issue. An epic PR (the branch an epic's
-     integration branch, `<n>` the epic): the epic's bullet, then one per story of the epic,
-     `#<story> <title> (PR #<pr>)`. They count within the 30 lines; when they would push the
-     body over, the stories go on one bullet, `Stories: #<story> (PR #<pr>), …`, their titles
-     left to the epic.
-   - **Changes**: at most 8 bullets, by intent rather than by file. The detail is the diff.
-     Decisions written (`/feyn-decision`) and issues opened on the way are bullets here.
+   No check exists yet for the area: say so in the PR's Checks. A failing blocking check (exit code 1; the summary line of `check-course` names it) is fixed before the PR opens; one that cannot be fixed here is named in the PR's Checks and in Review first. A failing blocking check on `po-essai` is always fixed before a PR to `main` opens: unlike a course PR, it has no such escape, since a spec change is done only with the bench passing in the PR that lands on `main`; a story's PR to its epic's integration branch may leave it failing, named in its Checks, the epic PR fixing it ([contributing](../../../docs/contributing.md), "Policies"). A failing reporting check leaves the exit code 0 and blocks nothing: its failures are findings, and the Checks line gives their count by check.
+3. **Commit and push.** Nothing left uncommitted that belongs to the issue (`git status --porcelain`), then `git push -u origin <branch>`.
+4. **Title**: `<type>(<area>): <summary>`, which becomes the squash commit on `main`. `<type>` is the `type:` label, `<area>` the `area:` label, both without their prefix (`course(course:po-essai): write the cases of concept 1`). Summary: imperative, lowercase, no final period, under 72 characters for the whole title.
+5. **Body**, from the first part of the PR body template [pr-body.md](../../reference/pr-body.md). It is read by a maintainer who reviews many PRs on many subjects and must get back into this one from the PR alone; it is also the squash commit message on `main`. 30 lines at most, blank lines and the awaiting section excluded. The sections, in this order, each an `##` heading except the `Closes` line; a line of `pr-body.md` that does not apply is dropped (the awaiting section outside a draft, `Not verified:` with nothing unverified), and the body carries no HTML comment:
+   - **Awaiting the maintainer**, only when the branch leaves a decision to the maintainer (a draft, step 6), first because it is the action: the question, the options, the recommendation. Removed once the answer is applied.
+   - `Closes #<n>` (`Refs #<n>` when the PR is one step of the issue) on its own line, first after the awaiting section (the first line of the body when there is none). Several issues: one such line each.
+   - **Context**: 3 to 10 lines of prose for a reader who forgot the subject: the problem, why now, what the PR changes overall.
+   - **Issues**: one bullet per issue the PR covers, `#<n> <title>: <what this PR does for it> (Closes)` or `(Refs)`. Kept with a single issue. An epic PR (the branch an epic's integration branch, `<n>` the epic): the epic's bullet, then one per story of the epic, `#<story> <title> (PR #<pr>)`. They count within the 30 lines; when they would push the body over, the stories go on one bullet, `Stories: #<story> (PR #<pr>), …`, their titles left to the epic.
+   - **Changes**: at most 8 bullets, by intent rather than by file. The detail is the diff. Decisions written (`/feyn-decision`) and issues opened on the way are bullets here.
    - **Checks**:
-     - `Done when #<n>: <count> met[, <count> not met][, <count> deviation].`, one line per
-       issue, from step 1. The statements are not restated (the issue holds them): only a
-       "not met" or a "deviation" gets one sub-bullet, the statement in a few words and why.
-     - `Checks run:` their names and results, on one line (step 2); an area with no check:
-       say so here.
-     - `Behaviours:` the tool behaviours whose mark cites this PR
-       ([contributing](../../../docs/contributing.md), "Tool behaviours"), each with its proof
-       in a few words, on one line; a longer proof goes in a comment on the issue, and the
-       mark cites the issue. Dropped when there is none.
-     - `Fresh-agent review: no blocking finding.` or
-       `Fresh-agent review: <N> blocking findings, fixed.`: added after the review, on the direct
-       path by the work session's corrections ([sort.md](../../reference/sort.md), "Corrections
-       on the direct path"); under the agent workflow `deliver-story.js`
-       (`/feyn-deliver-story-alone`, `/feyn-deliver-epic`), by the workflow itself, after its last
-       review or round of corrections; updated, not repeated, after a second review: `<N>` then
-       counts the blocking findings of all the reviews. A decision or a check touched as the
-       review prescribed, without a second review ([sort.md](../../reference/sort.md)):
-       `Fresh-agent review: <N> blocking findings, fixed; a decision touched as prescribed, no
-       second review.` (`a check` for a check). On a direct delivery (the issue's To do opens
-       with "Direct delivery", [contributing](../../../docs/contributing.md), "How the work is
-       organised", moment 5): `Fresh-agent review: none, direct delivery.`, written here, before
-       the PR opens, since no review runs. It counts within the 30 lines: leave room for it.
-       Absent when the maintainer asked for a PR without a review.
+     - `Done when #<n>: <count> met[, <count> not met][, <count> deviation].`, one line per issue, from step 1. The statements are not restated (the issue holds them): only a "not met" or a "deviation" gets one sub-bullet, the statement in a few words and why.
+     - `Checks run:` their names and results, on one line (step 2); an area with no check: say so here.
+     - `Behaviours:` the tool behaviours whose mark cites this PR ([contributing](../../../docs/contributing.md), "Tool behaviours"), each with its proof in a few words, on one line; a longer proof goes in a comment on the issue, and the mark cites the issue. Dropped when there is none.
+     - `Fresh-agent review: no blocking finding.` or `Fresh-agent review: <N> blocking findings, fixed.`: added after the review, on the direct path by the work session's corrections ([sort.md](../../reference/sort.md), "Corrections on the direct path"); under the agent workflow `deliver-story.js` (`/feyn-deliver-story-alone`, `/feyn-deliver-epic`), by the workflow itself, after its last review or round of corrections; updated, not repeated, after a second review: `<N>` then counts the blocking findings of all the reviews. A decision or a check touched as the review prescribed, without a second review ([sort.md](../../reference/sort.md)): `Fresh-agent review: <N> blocking findings, fixed; a decision touched as prescribed, no second review.` (`a check` for a check). On a direct delivery (the issue's To do opens with "Direct delivery", [contributing](../../../docs/contributing.md), "How the work is organised", moment 5): `Fresh-agent review: none, direct delivery.`, written here, before the PR opens, since no review runs. It counts within the 30 lines: leave room for it. Absent when the maintainer asked for a PR without a review.
      - `Not verified:` one line, if anything.
-   - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a
-     deviation, a choice the contributor made, a sensitive spot. The last one ends with a
-     pointer to the "Delivery notes" comment when the PR has one, not a bullet of its own.
+   - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a deviation, a choice the contributor made, a sensitive spot. The last one ends with a pointer to the "Delivery notes" comment when the PR has one, not a bullet of its own.
 
-   No signature or generated-by line: the squash takes the body as the commit message on
-   `main`; the `Co-Authored-By` trailer on the commits is enough. `.claude/settings.json` sets
-   `"attribution": { "pr": "" }`, which hides the PR attribution and keeps the commit trailer
-   (Claude Code, documented 2026-10-31, #375). That it also removes the system reminder that
-   asks for the line is not verified: this sentence stays until a run of the agent workflow
-   `deliver-story.js` shows its agents no longer receive that reminder.
+   No signature or generated-by line: the squash takes the body as the commit message on `main`; the `Co-Authored-By` trailer on the commits is enough. `.claude/settings.json` sets `"attribution": { "pr": "" }`, which hides the PR attribution and keeps the commit trailer (Claude Code, documented 2026-10-31, #375). That it also removes the system reminder that asks for the line is not verified: this sentence stays until a run of the agent workflow `deliver-story.js` shows its agents no longer receive that reminder.
 
-   Before each `gh pr create`, and each `gh pr edit` of the body, count its lines (blank lines
-   and the awaiting section excluded) and the bullets of Review first: over 30 lines or over 3
-   bullets, the detail moves to "Delivery notes".
+   Before each `gh pr create`, and each `gh pr edit` of the body, count its lines (blank lines and the awaiting section excluded) and the bullets of Review first: over 30 lines or over 3 bullets, the detail moves to "Delivery notes".
 
-   **Delivery notes**: one PR comment for the detail the body leaves out, which the squash does
-   not keep and GitHub keeps with the PR, from the second part of
-   [pr-body.md](../../reference/pr-body.md): the choices with their options ruled out, the
-   non-blocking findings left with their reason, the detail of the checks, the evidence for
-   what stays unsure. Posted once the PR is open (step 6), always under the agent workflow
-   `deliver-story.js`, otherwise when the PR has such detail. Its contributor writes it, the
-   corrector of a review updates it: one comment, edited in place, never a second one.
+   **Delivery notes**: one PR comment for the detail the body leaves out, which the squash does not keep and GitHub keeps with the PR, from the second part of [pr-body.md](../../reference/pr-body.md): the choices with their options ruled out, the non-blocking findings left with their reason, the detail of the checks, the evidence for what stays unsure. Posted once the PR is open (step 6), always under the agent workflow `deliver-story.js`, otherwise when the PR has such detail. Its contributor writes it, the corrector of a review updates it: one comment, edited in place, never a second one.
 6. **Open it**:
-   - `mise exec -- gh pr create --base <base> --title "<title>" --body-file <file>`; with a
-     decision awaited, add `--draft` (no label on the PR: the draft already keeps it from
-     being merged) and put `blocked:maintainer` on the issue
-     (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`). Given `--draft` (the
-     agent workflow `deliver-story.js` always gives it), add `--draft`: the PR stays a draft
-     until its review and corrections are done, then is marked ready at the hand-over
-     ([hand-over.md](../../reference/hand-over.md)) or at the merge of a story of an epic (the
-     workflow's Merge stage). A direct delivery is never a draft. A base other than `main` (an
-     epic's integration branch): its `Closes #<n>` closes nothing on that branch, the orchestrator
-     closes the story at the merge, so the check below may not list the PR: expected, go on;
-   - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences`
-     lists the PR when it says `Closes #<n>`; a `Refs` PR: it lists nothing, since the branch
-     is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to
-     list the PR: rerun once. PR still missing on a `Closes` PR, or listed on a `Refs` PR (a
-     closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`);
-   - "Delivery notes" (step 5): look it up first
-     (`mise exec -- gh api --paginate repos/sebvey/feyn/issues/<pr>/comments --jq '.[] | select(.body | startswith("## Delivery notes")) | .id'`).
-     No id: post it (`mise exec -- gh pr comment <pr> --body-file <file>`). One id: update it
-     in place (`mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> -X PATCH -F body=@<file>`),
-     never a second one. Two ids or more: stop, edit none, and report them.
+   - `mise exec -- gh pr create --base <base> --title "<title>" --body-file <file>`; with a decision awaited, add `--draft` (no label on the PR: the draft already keeps it from being merged) and put `blocked:maintainer` on the issue (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`). Given `--draft` (the agent workflow `deliver-story.js` always gives it), add `--draft`: the PR stays a draft until its review and corrections are done, then is marked ready at the hand-over ([hand-over.md](../../reference/hand-over.md)) or at the merge of a story of an epic (the workflow's Merge stage). A direct delivery is never a draft. A base other than `main` (an epic's integration branch): its `Closes #<n>` closes nothing on that branch, the orchestrator closes the story at the merge, so the check below may not list the PR: expected, go on;
+   - check the issue shows it: `mise exec -- gh issue view <n> --json closedByPullRequestsReferences` lists the PR when it says `Closes #<n>`; a `Refs` PR: it lists nothing, since the branch is not linked to the issue (decision `no-branch-link`). GitHub can take a few seconds to list the PR: rerun once. PR still missing on a `Closes` PR, or listed on a `Refs` PR (a closing keyword left in the body): fix the body (`mise exec -- gh pr edit <pr> --body-file <file>`);
+   - "Delivery notes" (step 5): look it up first (`mise exec -- gh api --paginate repos/sebvey/feyn/issues/<pr>/comments --jq '.[] | select(.body | startswith("## Delivery notes")) | .id'`). No id: post it (`mise exec -- gh pr comment <pr> --body-file <file>`). One id: update it in place (`mise exec -- gh api repos/sebvey/feyn/issues/comments/<id> -X PATCH -F body=@<file>`), never a second one. Two ids or more: stop, edit none, and report them.
 
 ## After the PR is open
 
 This skill ends here. The path chains the next moments (decision `one-moment-one-file`):
-- **the direct path** (the work session that did the work, outside a delivery through agents):
-  the fresh-agent review, `/feyn-pr-review <pr>` (a draft whose decision is awaited is reviewed
-  now, before the maintainer's answer); its corrections, by the work session, as
-  [sort.md](../../reference/sort.md), "Corrections on the direct path", says; then the hand-over,
-  [hand-over.md](../../reference/hand-over.md), the path "a direct delivery or the direct path";
-- **a direct delivery** of a story without an epic: no review, its Checks say so (step 5): the
-  hand-over at once, [hand-over.md](../../reference/hand-over.md), the same path;
-- **a direct story of an epic**: no review and no hand-over: its orchestrator merges it
-  (`/feyn-deliver-epic` step 2, "A direct story");
-- **under the agent workflow `deliver-story.js`**: the workflow's own stages (review,
-  corrections, then the merge into the integration branch or the hand-over by
-  `/feyn-deliver-story-alone`); the Status stays In progress;
-- **an epic PR**: the hand-over by its orchestrator (`/feyn-deliver-epic` step 5), the whole
-  branch already reviewed (its step 4).
+- **the direct path** (the work session that did the work, outside a delivery through agents): the fresh-agent review, `/feyn-pr-review <pr>` (a draft whose decision is awaited is reviewed now, before the maintainer's answer); its corrections, by the work session, as [sort.md](../../reference/sort.md), "Corrections on the direct path", says; then the hand-over, [hand-over.md](../../reference/hand-over.md), the path "a direct delivery or the direct path";
+- **a direct delivery** of a story without an epic: no review, its Checks say so (step 5): the hand-over at once, [hand-over.md](../../reference/hand-over.md), the same path;
+- **a direct story of an epic**: no review and no hand-over: its orchestrator merges it (`/feyn-deliver-epic` step 2, "A direct story");
+- **under the agent workflow `deliver-story.js`**: the workflow's own stages (review, corrections, then the merge into the integration branch or the hand-over by `/feyn-deliver-story-alone`); the Status stays In progress;
+- **an epic PR**: the hand-over by its orchestrator (`/feyn-deliver-epic` step 5), the whole branch already reviewed (its step 4).
 
-Once the PR is merged, `/feyn-merge-cleanup` cleans up (an epic PR: `/feyn-deliver-epic` step
-6), never in the same turn.
+Once the PR is merged, `/feyn-merge-cleanup` cleans up (an epic PR: `/feyn-deliver-epic` step 6), never in the same turn.

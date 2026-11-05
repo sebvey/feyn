@@ -1,437 +1,106 @@
 # Contributing to feyn
 
-How a change happens here, from the first idea to `main`, for a reader who has never opened
-this repository. The work is organised by a named frame, Kanban, with ADR for the decisions and
-GitHub flow for the branches: what the frame is lives in [`kanban.md`](kanban.md), and this file
-says how feyn applies it, in the frame's vocabulary ("How the work is organised"). Every section
-ends with the decision it rests on, in [`docs/decisions/`](decisions/) or, for the agentic layer,
-in [`.claude/decisions/`](../.claude/decisions/); the reserved words are in
-[`glossary.md`](glossary.md).
+How a change happens here, from the first idea to `main`, for a reader who has never opened this repository. The work is organised by a named frame, Kanban, with ADR for the decisions and GitHub flow for the branches: what the frame is lives in [`kanban.md`](kanban.md), and this file says how feyn applies it, in the frame's vocabulary ("How the work is organised"). Every section ends with the decision it rests on, in [`docs/decisions/`](decisions/) or, for the agentic layer, in [`.claude/decisions/`](../.claude/decisions/); the reserved words are in [`glossary.md`](glossary.md).
 
 ## Where things are
 
-`course-specs/` holds the contracts a course is written against, `spec-directives/` the spec
-directives (how a spec is written and read, the tests of a spec's files, the lib the checks
-load), `courses/` the courses, `classroom-builder/` the teacher template, the classroom build
-script that turns a course into a classroom (it writes the teacher skills) and the fresh tests,
-`site-builder/` the engine that builds it, `.claude/` the agentic layer, `docs/` what belongs to
-no single area, and [`vision.md`](vision.md) what feyn is for (its two products, the yardstick of
-a change, the lessons it was built on).
-`construction/`, the design, plan and session notes of the construction, was removed on
-2026-10-31: its files are read at `2c16adf3e66a` (`git show 2c16adf3e66a:construction/<path>`).
-`courses/parcours-po/`, the founding course, was removed on 2026-11-04: its files are read at
-the tag `parcours-po/v0-fondateur` (decision `parcours-po-archived`).
-`.claude/` has five folders: `skills/` the procedures run on their own, by name, as one act (one
-folder per skill, its `SKILL.md` and its briefs), `agents/` the project subagents (an agent
-whose brief is reused from run to run, spawned by name, its tools limited by its file),
-`workflows/` the agent workflows, `reference/` what a thing is or looks like (the body
-templates, the Project reference, the rules of an agent in a worktree) and the procedures that
-are only ever a step of other skills, cited by them, `decisions/` the decisions that bind the
-agentic layer. The procedure of one moment of the work is written in one file, which every
-other file cites. Why: decisions `monorepo-feyn`, `claude-folder-layout`, `one-moment-one-file`,
-`construction-in-history`.
+`course-specs/` holds the contracts a course is written against, `spec-directives/` the spec directives (how a spec is written and read, the tests of a spec's files, the lib the checks load), `courses/` the courses, `classroom-builder/` the teacher template, the classroom build script that turns a course into a classroom (it writes the teacher skills) and the fresh tests, `site-builder/` the engine that builds it, `.claude/` the agentic layer, `docs/` what belongs to no single area, and [`vision.md`](vision.md) what feyn is for (its two products, the yardstick of a change, the lessons it was built on). `construction/`, the design, plan and session notes of the construction, was removed on 2026-10-31: its files are read at `2c16adf3e66a` (`git show 2c16adf3e66a:construction/<path>`). `courses/parcours-po/`, the founding course, was removed on 2026-11-04: its files are read at the tag `parcours-po/v0-fondateur` (decision `parcours-po-archived`). `.claude/` has five folders: `skills/` the procedures run on their own, by name, as one act (one folder per skill, its `SKILL.md` and its briefs), `agents/` the project subagents (an agent whose brief is reused from run to run, spawned by name, its tools limited by its file), `workflows/` the agent workflows, `reference/` what a thing is or looks like (the body templates, the Project reference, the rules of an agent in a worktree) and the procedures that are only ever a step of other skills, cited by them, `decisions/` the decisions that bind the agentic layer. The procedure of one moment of the work is written in one file, which every other file cites. Why: decisions `monorepo-feyn`, `claude-folder-layout`, `one-moment-one-file`, `construction-in-history`.
 
 ## An idea, a story or an epic becomes an issue
 
-GitHub Issues is the only place work is tracked; nothing is tracked in a local file. An issue is
-only the GitHub object: it carries an idea, a story or an epic ("How the work is organised"),
-each in the body template of its form, and only its own, in `.claude/reference/`:
-- an **idea**, [`idea-body.md`](../.claude/reference/idea-body.md): Where (the area), Why (what
-  the finding breaks or costs), Observation (the fact first, with its place), and nothing else:
-  no solution, no Done when, no To do;
-- a **story**, [`story-body.md`](../.claude/reference/story-body.md): a head of three lines,
-  read to choose among the Ready stories (Where: the area; What it delivers; Why now), then
-  Done when (statements a reviewer can verify by reading a file or running a command, each
-  command's baseline under it, [`done-when.md`](../.claude/reference/done-when.md)), Context
-  (what the work needs to know, ending with the line naming its origin), To do, Reads;
-- an **epic**, [`epic-body.md`](../.claude/reference/epic-body.md): Objective, Why now,
-  Material, Done when, Out of scope.
+GitHub Issues is the only place work is tracked; nothing is tracked in a local file. An issue is only the GitHub object: it carries an idea, a story or an epic ("How the work is organised"), each in the body template of its form, and only its own, in `.claude/reference/`:
+- an **idea**, [`idea-body.md`](../.claude/reference/idea-body.md): Where (the area), Why (what the finding breaks or costs), Observation (the fact first, with its place), and nothing else: no solution, no Done when, no To do;
+- a **story**, [`story-body.md`](../.claude/reference/story-body.md): a head of three lines, read to choose among the Ready stories (Where: the area; What it delivers; Why now), then Done when (statements a reviewer can verify by reading a file or running a command, each command's baseline under it, [`done-when.md`](../.claude/reference/done-when.md)), Context (what the work needs to know, ending with the line naming its origin), To do, Reads;
+- an **epic**, [`epic-body.md`](../.claude/reference/epic-body.md): Objective, Why now, Material, Done when, Out of scope.
 
-`/feyn-issue <kind> [#<epic>] [direct] <what>` writes one, of the kind it is given (`idea`,
-`story` with its epic or none, `epic`; no kind, it asks which and creates nothing; `direct`
-names a story for a direct delivery; the rules on which kind, and on `direct`, are under "How
-the work is organised"), with its labels and its blocked-by links; the Project workflows add it
-to the Project in Idea, and `/feyn-issue` sets a work item Option, or Ready when it is committed
-(the stages, under "How the work is organised"); `/feyn-issue <n>` summarises one, its links
-included. In the web interface, the one issue form,
-[`idea.yml`](../.github/ISSUE_TEMPLATE/idea.yml), follows `idea-body.md`, and blank issues are
-disabled: what the maintainer creates by hand is a finding seen in passing, the work items are
-created by the skills. Why: decisions `issue-carries-a-work-item-or-an-idea`,
-`issue-defines-pr-verifies`, `blocked-by-links-for-dependencies`.
+`/feyn-issue <kind> [#<epic>] [direct] <what>` writes one, of the kind it is given (`idea`, `story` with its epic or none, `epic`; no kind, it asks which and creates nothing; `direct` names a story for a direct delivery; the rules on which kind, and on `direct`, are under "How the work is organised"), with its labels and its blocked-by links; the Project workflows add it to the Project in Idea, and `/feyn-issue` sets a work item Option, or Ready when it is committed (the stages, under "How the work is organised"); `/feyn-issue <n>` summarises one, its links included. In the web interface, the one issue form, [`idea.yml`](../.github/ISSUE_TEMPLATE/idea.yml), follows `idea-body.md`, and blank issues are disabled: what the maintainer creates by hand is a finding seen in passing, the work items are created by the skills. Why: decisions `issue-carries-a-work-item-or-an-idea`, `issue-defines-pr-verifies`, `blocked-by-links-for-dependencies`.
 
 ## An issue becomes a branch
 
-`/feyn-issue-branch <n>` takes a Ready story: it refuses one that carries `blocked:maintainer` or
-has an open blocker (decision `blocked-by-links-for-dependencies`), creates `<type>/<n>-<slug>`
-from an up-to-date `main`, reruns the commands of the Done when against their baselines, sets
-its Status to In progress, and restates the Done when as the contract the work is held to. It
-creates the branch with git, not linked to the issue: the PR's `Closes #n` links them. One
-branch per issue; commits on it are free-form, only the PR title survives the squash. A story
-of an epic starts from the epic's integration branch instead of `main` ("How the work is
-organised"). Why: decisions `three-channels`, `no-branch-link`, `epic-on-integration-branch`.
+`/feyn-issue-branch <n>` takes a Ready story: it refuses one that carries `blocked:maintainer` or has an open blocker (decision `blocked-by-links-for-dependencies`), creates `<type>/<n>-<slug>` from an up-to-date `main`, reruns the commands of the Done when against their baselines, sets its Status to In progress, and restates the Done when as the contract the work is held to. It creates the branch with git, not linked to the issue: the PR's `Closes #n` links them. One branch per issue; commits on it are free-form, only the PR title survives the squash. A story of an epic starts from the epic's integration branch instead of `main` ("How the work is organised"). Why: decisions `three-channels`, `no-branch-link`, `epic-on-integration-branch`.
 
 ## A branch becomes a pull request
 
-`/feyn-pull-request` rereads the Done when, runs the checks that exist for what the branch touches,
-pushes, and opens the PR with the title `<type>(<area>): <summary>`, which becomes the squash commit
-on `main`. The body starts with `Closes #n` (or `Refs #n` when the PR is one step of the issue),
-then, under `##` headings, Context, Issues, Changes, Checks and Review first, within the limits of
-`/feyn-pull-request` step 5, so that the maintainer gets back into the subject from the PR alone.
-The detail the body leaves out (choices and their options ruled out, findings left, the detail of
-the checks) goes in one PR comment, "Delivery notes", out of the squash commit.
-Checks counts the Done when verdicts (`met`, `not met`, `deviation`) without restating the
-statements, and says why for each `not met` or `deviation`; on every PR, unless the maintainer
-asked for one without a review or named its story a direct delivery, the fresh-agent reviewer of
-`/feyn-pr-review` reruns every statement. The PR never redefines the Done when; the issue wins,
-and the PR says why it deviates.
-A statement the PR makes false anywhere in the repository, a live decision included, is corrected
-in that PR, never left nor sent to a separate issue, and the review blocks on one left
-(decision `pr-corrects-what-it-makes-false`).
-Once the PR is open, `/feyn-pull-request` checks that the issue lists it (a `Refs` PR: it lists
-nothing). A branch that leaves a decision to the maintainer opens as a draft PR, with
-`blocked:maintainer` on its issue only, and an "Awaiting the maintainer" section above
-`Closes #n`. The maintainer answers with a comment and removes the label from the issue; only
-then does the agent apply the answer, remove the section and mark the PR ready (under
-`/feyn-deliver-story-alone`, the orchestrator marks it ready at the hand-over, not the agent).
-Nothing lands on `main` without a PR, the author never merges their own, and `main` is never
-force-pushed. After the merge, `/feyn-merge-cleanup` confirms the change landed, checks the
-issue's Status is Done (the Project workflow "Item closed" sets it; `/feyn-merge-cleanup` sets
-it only when that Project workflow is off; a `Refs` issue stays open and In progress), deletes
-the local branch, and names the issues the closed one blocked that are now free.
-`/feyn-deliver-story-alone <n>` runs this whole cycle for a story without an epic from one work
-session, through the agent workflow `deliver-story.js` of `.claude/workflows/`: a contributor
-agent in its own worktree, a review by a fresh agent before the PR reaches the maintainer, the
-PR a draft until that review and its corrections are done, the clean-up of the run's worktrees,
-the hand-over, then the clean-up after the merge. On the direct path, without
-`/feyn-deliver-story-alone`, the work session runs that review (`/feyn-pr-review`) once
-`/feyn-pull-request` has opened the PR, then hands it over (`.claude/reference/hand-over.md`,
-which sets Ready for review), except on a direct delivery, handed over with no review ("How the
-work is organised", moment 5 and "The paths"). This is the path of a story without an epic. A
-story of an epic takes another: its PR targets the epic's integration branch, is reviewed by a
-fresh agent and merged by the orchestrator, and what reaches the maintainer is the epic PR;
-`/feyn-deliver-epic <epic>` runs it ("How the work is organised", moments 7 to 18). Why:
-decisions `issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`,
-`epic-on-integration-branch`, `pr-corrects-what-it-makes-false`.
+`/feyn-pull-request` rereads the Done when, runs the checks that exist for what the branch touches, pushes, and opens the PR with the title `<type>(<area>): <summary>`, which becomes the squash commit on `main`. The body starts with `Closes #n` (or `Refs #n` when the PR is one step of the issue), then, under `##` headings, Context, Issues, Changes, Checks and Review first, within the limits of `/feyn-pull-request` step 5, so that the maintainer gets back into the subject from the PR alone. The detail the body leaves out (choices and their options ruled out, findings left, the detail of the checks) goes in one PR comment, "Delivery notes", out of the squash commit. Checks counts the Done when verdicts (`met`, `not met`, `deviation`) without restating the statements, and says why for each `not met` or `deviation`; on every PR, unless the maintainer asked for one without a review or named its story a direct delivery, the fresh-agent reviewer of `/feyn-pr-review` reruns every statement. The PR never redefines the Done when; the issue wins, and the PR says why it deviates. A statement the PR makes false anywhere in the repository, a live decision included, is corrected in that PR, never left nor sent to a separate issue, and the review blocks on one left (decision `pr-corrects-what-it-makes-false`). Once the PR is open, `/feyn-pull-request` checks that the issue lists it (a `Refs` PR: it lists nothing). A branch that leaves a decision to the maintainer opens as a draft PR, with `blocked:maintainer` on its issue only, and an "Awaiting the maintainer" section above `Closes #n`. The maintainer answers with a comment and removes the label from the issue; only then does the agent apply the answer, remove the section and mark the PR ready (under `/feyn-deliver-story-alone`, the orchestrator marks it ready at the hand-over, not the agent). Nothing lands on `main` without a PR, the author never merges their own, and `main` is never force-pushed. After the merge, `/feyn-merge-cleanup` confirms the change landed, checks the issue's Status is Done (the Project workflow "Item closed" sets it; `/feyn-merge-cleanup` sets it only when that Project workflow is off; a `Refs` issue stays open and In progress), deletes the local branch, and names the issues the closed one blocked that are now free. `/feyn-deliver-story-alone <n>` runs this whole cycle for a story without an epic from one work session, through the agent workflow `deliver-story.js` of `.claude/workflows/`: a contributor agent in its own worktree, a review by a fresh agent before the PR reaches the maintainer, the PR a draft until that review and its corrections are done, the clean-up of the run's worktrees, the hand-over, then the clean-up after the merge. On the direct path, without `/feyn-deliver-story-alone`, the work session runs that review (`/feyn-pr-review`) once `/feyn-pull-request` has opened the PR, then hands it over (`.claude/reference/hand-over.md`, which sets Ready for review), except on a direct delivery, handed over with no review ("How the work is organised", moment 5 and "The paths"). This is the path of a story without an epic. A story of an epic takes another: its PR targets the epic's integration branch, is reviewed by a fresh agent and merged by the orchestrator, and what reaches the maintainer is the epic PR; `/feyn-deliver-epic <epic>` runs it ("How the work is organised", moments 7 to 18). Why: decisions `issue-defines-pr-verifies`, `fresh-agent-review-before-maintainer`, `epic-on-integration-branch`, `pr-corrects-what-it-makes-false`.
 
 ## How the work is organised
 
-The frame is Kanban, with ADR for the decisions and GitHub flow for the branches, plus an
-integration branch per epic; [`kanban.md`](kanban.md) says what the frame is (its principles,
-the upstream, ADR, GitHub flow, its sources), and this section how feyn applies it. The words are
-the frame's wherever the frame has one; feyn's own mechanisms, which the frame does not name,
-keep their names (epic PR, integration branch, plan comment, open question, direct delivery,
-work session). Why the frame: decision `kanban-frame-of-the-work`; why its words: the glossary.
+The frame is Kanban, with ADR for the decisions and GitHub flow for the branches, plus an integration branch per epic; [`kanban.md`](kanban.md) says what the frame is (its principles, the upstream, ADR, GitHub flow, its sources), and this section how feyn applies it. The words are the frame's wherever the frame has one; feyn's own mechanisms, which the frame does not name, keep their names (epic PR, integration branch, plan comment, open question, direct delivery, work session). Why the frame: decision `kanban-frame-of-the-work`; why its words: the glossary.
 
-**The work items and the idea.** An issue carries a work item, of one of two kinds, epic or
-story, or an idea, which has no kind. A work item carries exactly one kind label, `kind:epic`
-or `kind:story`, set by `/feyn-issue` at its creation; an idea carries none.
-- An **epic** is an objective that closes: the label `kind:epic`, the title "Epic: …", five
-  sections in order (Objective, Why now, Material, Done when, Out of scope), the parent of its
-  stories. Its Material is what is read when splitting it and what was settled, with its why
-  and the alternative rejected. **No Done when, no epic**: what cannot get a Done when is an
-  idea to triage, or a label. An epic has no To do and no story posed in advance; it is
-  committed (Ready) when its five sections are written and nothing blocks it (no open
-  blocked-by link). An epic is delivered on its **integration branch**, a branch cut from
-  `main` when the epic is taken and named like an issue branch after the epic
-  (`<type>/<epic>-<slug>`), into which its stories are merged; its **epic PR**, from that branch
-  to `main` with `Closes #<epic>`, is how the maintainer validates the whole. An **open
-  question** is a choice of a story of an epic that departs from the epic's Done when or adds
-  structure (a new file, a category, a marker, an exception to a principle), that nothing
-  already settles (a decision, the epic's Material, a rule, an answer of the maintainer, a story
-  of the plan) and that is costly to undo or foundational, put to the maintainer at once: a line
-  in the plan comment's log and a comment on the epic.
-- A **story** is a unit of work delivered in one PR, with a verifiable Done when: the label
-  `kind:story`, with or without a parent epic. Under an epic, it is a sub-issue posed only when
-  it is the next one, and its PR targets the epic's integration branch; with no epic, its PR
-  targets `main` and the maintainer merges it. Its Context restates what the work needs to know
-  and ends with its origin: "From idea #<n>.", "Story of epic #<n>.", "From a brainstorm with
-  the maintainer, <date>.", or "Asked by the maintainer, <date>." for a story the maintainer
-  asks for directly, with no epic and no idea.
-- An **idea** is a finding seen in passing, to triage: no solution, no kind label, no `type:`
-  label (the triage sets the type on the work items it creates), only its `area:` label. It is
-  never converted: the triage creates from it the work items it calls for, each citing it, then
-  closes it.
+**The work items and the idea.** An issue carries a work item, of one of two kinds, epic or story, or an idea, which has no kind. A work item carries exactly one kind label, `kind:epic` or `kind:story`, set by `/feyn-issue` at its creation; an idea carries none.
+- An **epic** is an objective that closes: the label `kind:epic`, the title "Epic: …", five sections in order (Objective, Why now, Material, Done when, Out of scope), the parent of its stories. Its Material is what is read when splitting it and what was settled, with its why and the alternative rejected. **No Done when, no epic**: what cannot get a Done when is an idea to triage, or a label. An epic has no To do and no story posed in advance; it is committed (Ready) when its five sections are written and nothing blocks it (no open blocked-by link). An epic is delivered on its **integration branch**, a branch cut from `main` when the epic is taken and named like an issue branch after the epic (`<type>/<epic>-<slug>`), into which its stories are merged; its **epic PR**, from that branch to `main` with `Closes #<epic>`, is how the maintainer validates the whole. An **open question** is a choice of a story of an epic that departs from the epic's Done when or adds structure (a new file, a category, a marker, an exception to a principle), that nothing already settles (a decision, the epic's Material, a rule, an answer of the maintainer, a story of the plan) and that is costly to undo or foundational, put to the maintainer at once: a line in the plan comment's log and a comment on the epic.
+- A **story** is a unit of work delivered in one PR, with a verifiable Done when: the label `kind:story`, with or without a parent epic. Under an epic, it is a sub-issue posed only when it is the next one, and its PR targets the epic's integration branch; with no epic, its PR targets `main` and the maintainer merges it. Its Context restates what the work needs to know and ends with its origin: "From idea #<n>.", "Story of epic #<n>.", "From a brainstorm with the maintainer, <date>.", or "Asked by the maintainer, <date>." for a story the maintainer asks for directly, with no epic and no idea.
+- An **idea** is a finding seen in passing, to triage: no solution, no kind label, no `type:` label (the triage sets the type on the work items it creates), only its `area:` label. It is never converted: the triage creates from it the work items it calls for, each citing it, then closes it.
 
-A **milestone** is not a work item: it is a release target, named after the tag that closes it
-(`linear-course/v1.0.0`); it holds the stories that must close before the tag, and the epic
-that targets it carries it too; it is created only when a release is in sight. Tooling has
-none.
+A **milestone** is not a work item: it is a release target, named after the tag that closes it (`linear-course/v1.0.0`); it holds the stories that must close before the tag, and the epic that targets it carries it too; it is created only when a release is in sight. Tooling has none.
 
-**The flow.** An issue moves through six Statuses, in this order and nothing else: Idea,
-Option, Ready, In progress, Ready for review, Done. Idea and Option are the upstream, the two
-stages before commitment:
+**The flow.** An issue moves through six Statuses, in this order and nothing else: Idea, Option, Ready, In progress, Ready for review, Done. Idea and Option are the upstream, the two stages before commitment:
 - **Idea** is the inbox: the ideas, to triage.
-- **Option** is a work item, epic or story, defined and not committed: it has the body of its
-  kind, Done when included, and waits for the maintainer to commit it (set Ready) or close it;
-  until then its kind and body may change (a story rewritten as an epic, or the reverse, its
-  kind label with it), since refining an option is what the upstream is for.
-- **Ready** is the **commitment point**: from it the work item's form freezes and its Done when
-  becomes the contract the PR is held to.
+- **Option** is a work item, epic or story, defined and not committed: it has the body of its kind, Done when included, and waits for the maintainer to commit it (set Ready) or close it; until then its kind and body may change (a story rewritten as an epic, or the reverse, its kind label with it), since refining an option is what the upstream is for.
+- **Ready** is the **commitment point**: from it the work item's form freezes and its Done when becomes the contract the PR is held to.
 
-Creating and committing are two acts. A work item a triage creates from an idea is born Option,
-or Ready when the maintainer says at its creation that it is committed (the triage asks, Option
-by default); a work item a brainstorm creates is always born Option, its commitment decided at an
-option refinement; a work item the maintainer asks for directly in a work session, a story or
-an epic (`/feyn-issue story …`, `/feyn-issue epic …`), is born Option, or Ready on the
-maintainer's word; a story posed by the orchestrator of a taken epic is born Ready. A decision
-of the maintainer awaited is the label `blocked:maintainer`, on any Status, never a Status. Why:
-decisions `issue-carries-a-work-item-or-an-idea`, `story-with-or-without-an-epic`,
-`kind-label-per-work-item`, `idea-is-never-converted`, `idea-and-option-before-ready`,
-`issue-defines-pr-verifies`, `themes-and-release-milestones`.
+Creating and committing are two acts. A work item a triage creates from an idea is born Option, or Ready when the maintainer says at its creation that it is committed (the triage asks, Option by default); a work item a brainstorm creates is always born Option, its commitment decided at an option refinement; a work item the maintainer asks for directly in a work session, a story or an epic (`/feyn-issue story …`, `/feyn-issue epic …`), is born Option, or Ready on the maintainer's word; a story posed by the orchestrator of a taken epic is born Ready. A decision of the maintainer awaited is the label `blocked:maintainer`, on any Status, never a Status. Why: decisions `issue-carries-a-work-item-or-an-idea`, `story-with-or-without-an-epic`, `kind-label-per-work-item`, `idea-is-never-converted`, `idea-and-option-before-ready`, `issue-defines-pr-verifies`, `themes-and-release-milestones`.
 
-**The moments.** The work cycle runs in eighteen moments, numbered here in the cycle's order.
-Each has one owner, which holds its procedure (a skill and its step, a file of
-`.claude/reference/`, a body template, the agent workflow; for the merge into `main`, the
-maintainer), and every other file cites that owner rather than restating it (decision
-`one-moment-one-file`). Each item names its owner first, then what the moment does; what the
-owner holds is read there, not here.
-1. **Idea noted**: `/feyn-issue idea` (the act),
-   [`idea-body.md`](../.claude/reference/idea-body.md) (the rules). A finding seen in passing
-   becomes an idea, in Idea; in the web interface, the issue form does the same ("An idea, a
-   story or an epic becomes an issue").
-2. **Triage**: `/feyn-triage`, on the ideas the maintainer names, one at a time, and on ideas
-   only. Each idea is read against the purpose of feyn ([`vision.md`](vision.md)), the
-   repository and its neighbours, and the maintainer decides it: the triage creates the work
-   items it calls for, each citing it, then closes it as completed, or closes it as not planned,
-   with the reason. The idea is never converted, its finding stays as written. An issue written
-   before this frame whose body already defines a work (a Done when, a To do) is recreated as a
-   story or an epic and closed, its blocked-by links set again on the new work item. Why:
-   decisions `idea-is-never-converted`, `idea-and-option-before-ready`.
-3. **Brainstorm**: `/feyn-brainstorm`, a work session with the maintainer on feyn, subject by
-   subject, in a working folder not versioned (`tmp/`, which git ignores). It opens from an
-   option whose refinement found that what it builds on has changed (moment 4), from an idea (it
-   is then that idea's triage, and closes it), or from the maintainer's subject, and ends in a
-   plan of work items posed through the skills of the cycle; one that settles nothing creates
-   nothing. Why: decision `brainstorm-ends-in-options`.
-4. **Option refinement**: `/feyn-refine-option`, on one option the maintainer names: read
-   against the purpose of feyn and the repository (a staleness check, an overlap check), then
-   decided by the maintainer alone: commit (moment 6), rework, brainstorm (moment 3), merge,
-   split, fold into an epic, or close. It is not a replenishment: feyn never reviews the options
-   as a whole, it commits them one by one ([`kanban.md`](kanban.md), "The upstream"). Why:
-   decision `idea-and-option-before-ready`.
-5. **Writing a story or an epic**: [`story-body.md`](../.claude/reference/story-body.md),
-   [`epic-body.md`](../.claude/reference/epic-body.md), citing
-   [`done-when.md`](../.claude/reference/done-when.md): the body of its kind, its Done when with
-   each command's baseline, written by whoever creates it with `/feyn-issue` (a triage, a
-   brainstorm, an option refinement, the orchestrator of an epic at moment 8, the maintainer's
-   request). A **direct delivery** is named here: a story, alone or under an epic, of one edit
-   with no behaviour, named `direct` by the maintainer at its creation (`/feyn-issue story
-   direct <what>`, or `/feyn-issue story #<epic> direct <what>` under an epic), its To do then
-   opening with the line "Direct delivery": no skill, check, decision, agent workflow or course
-   file touched, and no Done when statement that asks more than "this sentence says this" (a
-   wording, a link, a typo, a mechanical rename in one file).
-6. **Commitment (Ready)**: [`commitment.md`](../.claude/reference/commitment.md): on the
-   maintainer's word only, at a triage or an option refinement, its checks run first. A story
-   posed in a taken epic inherits its epic's commitment and goes through moment 5.
-7. **Taking an epic, the plan comment**: `/feyn-deliver-epic` step 1. Whoever takes a Ready epic
-   is its orchestrator: they cut its integration branch from `main`, write its plan comment (its
-   head, its plan, its log: [`project.md`](../.claude/reference/project.md), "Epics", "The plan
-   comment"), and deliver every story on that branch. The epic goes In progress when its first
-   story starts.
-8. **Posing a story of an epic**: `/feyn-deliver-epic` step 2.1, the story written through
-   moment 5. The stories of an epic are posed one at a time: a story of an epic is created only
-   when it is the next one the plan marks, born Ready; otherwise the plan is rewritten first.
-   This holds as well for the next story after a delivery and for a story added when the
-   maintainer's check of the epic's Done when fails.
-9. **Start**: `/feyn-issue-branch` (`--base`, `--worktree`): the issue branch, the Done when's
-   commands rerun against their baselines, the Status In progress ("An issue becomes a branch").
-10. **The contributor's work**: its brief, in the agent workflow `deliver-story.js` and
-    [`worktree-agent.md`](../.claude/reference/worktree-agent.md): a contributor agent does the
-    To do in its own worktree; on the direct path and on a direct delivery, the work session
-    does it.
-11. **The PR**: `/feyn-pull-request` (`--base`, `--draft`): the PR opened, with its body and its
-    "Delivery notes" ("A branch becomes a pull request").
-12. **Review**: the project subagent `feyn-pr-reviewer`, through `/feyn-pr-review`: a fresh
-    agent reviews the PR against its issue's Done when; none on a direct delivery. The whole
-    integration branch of an epic is reviewed so once its last story is merged
-    (`/feyn-deliver-epic` step 4).
-13. **Sorting deviations, corrections**: [`sort.md`](../.claude/reference/sort.md): what a
-    delivery reports (a deviation, a structural choice, a finding) is sorted at once and the
-    work goes on; under an epic, what nothing settles and is costly to undo or foundational
-    becomes an open question, which the maintainer answers on the epic or in the work session.
-14. **Merge into the integration branch**: the agent workflow `deliver-story.js`, its Merge
-    stage (a direct story of an epic: its orchestrator, as that stage does): the story's PR
-    squashed into the integration branch, the story closed (`Closes` does not close an issue on
-    a branch other than `main`) and set Done. A story of an epic never goes Ready for review.
-15. **Hand-over to the maintainer**: [`hand-over.md`](../.claude/reference/hand-over.md): the
-    PR of a story without an epic, or the epic PR once the epic's last story is merged, its
-    whole branch reviewed and no open question left; the story or the epic goes Ready for
-    review.
-16. **Merge into `main`**: the maintainer: they merge the PR (squash), or ask for a correction,
-    or, on an epic PR, for a story, the epic then going back to In progress.
-17. **Cleanup (run, worktrees, branches)**:
-    [`run-cleanup.md`](../.claude/reference/run-cleanup.md): the worktrees and the local
-    branches a run, a review or a merge leaves, removed after each run and after each merge.
-18. **Freed issues**: `/feyn-merge-cleanup`: once a PR is merged into `main`, the change
-    confirmed landed, the issue closed and Done, and the issues it blocked that are now free
-    named.
+**The moments.** The work cycle runs in eighteen moments, numbered here in the cycle's order. Each has one owner, which holds its procedure (a skill and its step, a file of `.claude/reference/`, a body template, the agent workflow; for the merge into `main`, the maintainer), and every other file cites that owner rather than restating it (decision `one-moment-one-file`). Each item names its owner first, then what the moment does; what the owner holds is read there, not here.
+1. **Idea noted**: `/feyn-issue idea` (the act), [`idea-body.md`](../.claude/reference/idea-body.md) (the rules). A finding seen in passing becomes an idea, in Idea; in the web interface, the issue form does the same ("An idea, a story or an epic becomes an issue").
+2. **Triage**: `/feyn-triage`, on the ideas the maintainer names, one at a time, and on ideas only. Each idea is read against the purpose of feyn ([`vision.md`](vision.md)), the repository and its neighbours, and the maintainer decides it: the triage creates the work items it calls for, each citing it, then closes it as completed, or closes it as not planned, with the reason. The idea is never converted, its finding stays as written. An issue written before this frame whose body already defines a work (a Done when, a To do) is recreated as a story or an epic and closed, its blocked-by links set again on the new work item. Why: decisions `idea-is-never-converted`, `idea-and-option-before-ready`.
+3. **Brainstorm**: `/feyn-brainstorm`, a work session with the maintainer on feyn, subject by subject, in a working folder not versioned (`tmp/`, which git ignores). It opens from an option whose refinement found that what it builds on has changed (moment 4), from an idea (it is then that idea's triage, and closes it), or from the maintainer's subject, and ends in a plan of work items posed through the skills of the cycle; one that settles nothing creates nothing. Why: decision `brainstorm-ends-in-options`.
+4. **Option refinement**: `/feyn-refine-option`, on one option the maintainer names: read against the purpose of feyn and the repository (a staleness check, an overlap check), then decided by the maintainer alone: commit (moment 6), rework, brainstorm (moment 3), merge, split, fold into an epic, or close. It is not a replenishment: feyn never reviews the options as a whole, it commits them one by one ([`kanban.md`](kanban.md), "The upstream"). Why: decision `idea-and-option-before-ready`.
+5. **Writing a story or an epic**: [`story-body.md`](../.claude/reference/story-body.md), [`epic-body.md`](../.claude/reference/epic-body.md), citing [`done-when.md`](../.claude/reference/done-when.md): the body of its kind, its Done when with each command's baseline, written by whoever creates it with `/feyn-issue` (a triage, a brainstorm, an option refinement, the orchestrator of an epic at moment 8, the maintainer's request). A **direct delivery** is named here: a story, alone or under an epic, of one edit with no behaviour, named `direct` by the maintainer at its creation (`/feyn-issue story direct <what>`, or `/feyn-issue story #<epic> direct <what>` under an epic), its To do then opening with the line "Direct delivery": no skill, check, decision, agent workflow or course file touched, and no Done when statement that asks more than "this sentence says this" (a wording, a link, a typo, a mechanical rename in one file).
+6. **Commitment (Ready)**: [`commitment.md`](../.claude/reference/commitment.md): on the maintainer's word only, at a triage or an option refinement, its checks run first. A story posed in a taken epic inherits its epic's commitment and goes through moment 5.
+7. **Taking an epic, the plan comment**: `/feyn-deliver-epic` step 1. Whoever takes a Ready epic is its orchestrator: they cut its integration branch from `main`, write its plan comment (its head, its plan, its log: [`project.md`](../.claude/reference/project.md), "Epics", "The plan comment"), and deliver every story on that branch. The epic goes In progress when its first story starts.
+8. **Posing a story of an epic**: `/feyn-deliver-epic` step 2.1, the story written through moment 5. The stories of an epic are posed one at a time: a story of an epic is created only when it is the next one the plan marks, born Ready; otherwise the plan is rewritten first. This holds as well for the next story after a delivery and for a story added when the maintainer's check of the epic's Done when fails.
+9. **Start**: `/feyn-issue-branch` (`--base`, `--worktree`): the issue branch, the Done when's commands rerun against their baselines, the Status In progress ("An issue becomes a branch").
+10. **The contributor's work**: its brief, in the agent workflow `deliver-story.js` and [`worktree-agent.md`](../.claude/reference/worktree-agent.md): a contributor agent does the To do in its own worktree; on the direct path and on a direct delivery, the work session does it.
+11. **The PR**: `/feyn-pull-request` (`--base`, `--draft`): the PR opened, with its body and its "Delivery notes" ("A branch becomes a pull request").
+12. **Review**: the project subagent `feyn-pr-reviewer`, through `/feyn-pr-review`: a fresh agent reviews the PR against its issue's Done when; none on a direct delivery. The whole integration branch of an epic is reviewed so once its last story is merged (`/feyn-deliver-epic` step 4).
+13. **Sorting deviations, corrections**: [`sort.md`](../.claude/reference/sort.md): what a delivery reports (a deviation, a structural choice, a finding) is sorted at once and the work goes on; under an epic, what nothing settles and is costly to undo or foundational becomes an open question, which the maintainer answers on the epic or in the work session.
+14. **Merge into the integration branch**: the agent workflow `deliver-story.js`, its Merge stage (a direct story of an epic: its orchestrator, as that stage does): the story's PR squashed into the integration branch, the story closed (`Closes` does not close an issue on a branch other than `main`) and set Done. A story of an epic never goes Ready for review.
+15. **Hand-over to the maintainer**: [`hand-over.md`](../.claude/reference/hand-over.md): the PR of a story without an epic, or the epic PR once the epic's last story is merged, its whole branch reviewed and no open question left; the story or the epic goes Ready for review.
+16. **Merge into `main`**: the maintainer: they merge the PR (squash), or ask for a correction, or, on an epic PR, for a story, the epic then going back to In progress.
+17. **Cleanup (run, worktrees, branches)**: [`run-cleanup.md`](../.claude/reference/run-cleanup.md): the worktrees and the local branches a run, a review or a merge leaves, removed after each run and after each merge.
+18. **Freed issues**: `/feyn-merge-cleanup`: once a PR is merged into `main`, the change confirmed landed, the issue closed and Done, and the issues it blocked that are now free named.
 
-**The paths**, each a chain of moments, run by a path skill that passes the moments their
-parameters and rewrites none of their steps (decision `one-moment-one-file`):
-- **An epic**, `/feyn-deliver-epic <epic>`: moment 7; for each story, moment 8, moments 9 to 14
-  through `deliver-story.js`, the sort of 13 by the orchestrator, then 17; after the last story,
-  moment 12 on the whole branch, 11 for the epic PR, then 15, 16, 17 and 18. Every story of an
-  epic, a direct one included, is delivered by its orchestrator, and its sub-issues all closed
-  does not mean the epic closes: a story of an epic exists only once it is the next one (the
-  policies, below).
-- **A story alone**, a story with no parent epic: one PR to `main`, merged by the maintainer.
-  `/feyn-deliver-story-alone <n>` runs moments 9 to 13 through `deliver-story.js` with no epic,
-  the sort of 13 itself, then 17 and 15, and after the merge (16), 17 and 18; it delivers every
-  story without an epic but a direct delivery, and refuses a story of an epic, naming
-  `/feyn-deliver-epic`. On the direct path, without it, the work session runs moments 9 to 13
-  itself, then 15, and after the merge 18. A story without an epic is Ready for review while its
-  PR awaits the merge.
-- **A direct delivery**: moment 9, the edit, then 11, its Checks saying `Fresh-agent review:
-  none, direct delivery.`: no contributor, no review. Alone, the maintainer's work session runs
-  them with the work-cycle tooling, then 15 and, after the merge, 18; under an epic, its
-  orchestrator runs them on a branch cut from the integration branch, its PR targeting it
-  (`--base <integration branch>`), then 14 and 17, with no hand-over.
+**The paths**, each a chain of moments, run by a path skill that passes the moments their parameters and rewrites none of their steps (decision `one-moment-one-file`):
+- **An epic**, `/feyn-deliver-epic <epic>`: moment 7; for each story, moment 8, moments 9 to 14 through `deliver-story.js`, the sort of 13 by the orchestrator, then 17; after the last story, moment 12 on the whole branch, 11 for the epic PR, then 15, 16, 17 and 18. Every story of an epic, a direct one included, is delivered by its orchestrator, and its sub-issues all closed does not mean the epic closes: a story of an epic exists only once it is the next one (the policies, below).
+- **A story alone**, a story with no parent epic: one PR to `main`, merged by the maintainer. `/feyn-deliver-story-alone <n>` runs moments 9 to 13 through `deliver-story.js` with no epic, the sort of 13 itself, then 17 and 15, and after the merge (16), 17 and 18; it delivers every story without an epic but a direct delivery, and refuses a story of an epic, naming `/feyn-deliver-epic`. On the direct path, without it, the work session runs moments 9 to 13 itself, then 15, and after the merge 18. A story without an epic is Ready for review while its PR awaits the merge.
+- **A direct delivery**: moment 9, the edit, then 11, its Checks saying `Fresh-agent review: none, direct delivery.`: no contributor, no review. Alone, the maintainer's work session runs them with the work-cycle tooling, then 15 and, after the merge, 18; under an epic, its orchestrator runs them on a branch cut from the integration branch, its PR targeting it (`--base <integration branch>`), then 14 and 17, with no hand-over.
 
-**Policies.** The policies of the cycle, written down here as Kanban asks, and in the
-decisions and the skills:
-- The **WIP limit**: one epic In progress at a time per orchestrator (two at most, on disjoint
-  files); within an epic, one story at a time; the stories without an epic, no limit beyond
-  distinct files (several run in parallel only when their files are distinct).
-- A story of an epic exists only if it is the next one; a story that reveals work of another
-  epic opens an idea, not a story.
+**Policies.** The policies of the cycle, written down here as Kanban asks, and in the decisions and the skills:
+- The **WIP limit**: one epic In progress at a time per orchestrator (two at most, on disjoint files); within an epic, one story at a time; the stories without an epic, no limit beyond distinct files (several run in parallel only when their files are distinct).
+- A story of an epic exists only if it is the next one; a story that reveals work of another epic opens an idea, not a story.
 - An open question never stops the work, and the epic PR is handed over only when none remains.
 - A story without an epic is never delivered on an integration branch.
-- `main` is merged into an integration branch when it moves, never rebased
-  (`/feyn-deliver-epic` step 2.2).
-- **A spec change carries the bench course.** A change of `linear-course` is done only when
-  `courses/po-essai/` follows it in the PR that lands on `main`: a story's PR for a story
-  without an epic, the epic PR for a story of an epic, so that `po-essai` may lag between two
-  stories of an integration branch; `course-specs/check-course courses/po-essai` passes on it,
-  and `/feyn-pull-request` runs that check on every PR that touches
-  `course-specs/linear-course/`. The exception: a change that touches no file a course has (a
-  decision, the CHANGELOG, prose of a README that sets no rule) needs no change of `po-essai`,
-  and its PR still runs the check and says so in its Checks. Why: without it a spec story
-  closes with the bench behind, and the bench stops proving anything within a week (the frame
-  of 2026-11-03); read at the PR that lands on `main`, it costs one migration of the bench per
-  epic, not one per story, the epic PR proving the change once with its checks and a teaching
-  session (the maintainer, 2026-11-04, #521). From idea #477; the yardstick it applies:
-  [`vision.md`](vision.md), "The yardstick".
-- **A change to the bench records its judgement calls.** An epic or a story that changes
-  `courses/po-essai/` records each judgement call it makes (what was decided, why, the
-  alternative rejected) as an entry of the Material of the re-creation epic #520, and its Done
-  when states it; the commitment ([`commitment.md`](../.claude/reference/commitment.md))
-  proposes that line before such a work item is set Ready.
-  The exception: a change to `po-essai` that makes no call; its entry in #520 says so in one
-  line. Why: these calls are the only part of the re-creation of the founding course that no
-  file of the tree holds; left in each PR's "Delivery notes", the re-creation rereads every
-  PR, and a policy alone is read once, where a Done when line is verified by a fresh reviewer
-  at every story. From idea #486; it feeds epic #520, its Material (the founding course is
-  archived: decision `parcours-po-archived`).
-- A change to [`vision.md`](vision.md) is a decision (`/feyn-decision`), never an edit in
-  passing.
-- **A process change comes from an observed problem.** After epic #392, which lands this frame,
-  a change to the process (a skill, a workflow, a policy, the glossary, this file) enters only by
-  an idea that names the problem observed and where it was seen (a delivery, a debrief, a triage,
-  a teaching session), triaged like any other idea; a brainstorm on the process opens from such
-  an idea, never from a wish of design. The change is chosen by two criteria, in order: the
-  smallest change that settles the observed problem, then the standard form when one exists
-  (Kanban, ADR, GitHub flow). Why: decision `process-change-from-an-observed-problem`.
+- `main` is merged into an integration branch when it moves, never rebased (`/feyn-deliver-epic` step 2.2).
+- **A spec change carries the bench course.** A change of `linear-course` is done only when `courses/po-essai/` follows it in the PR that lands on `main`: a story's PR for a story without an epic, the epic PR for a story of an epic, so that `po-essai` may lag between two stories of an integration branch; `course-specs/check-course courses/po-essai` passes on it, and `/feyn-pull-request` runs that check on every PR that touches `course-specs/linear-course/`. The exception: a change that touches no file a course has (a decision, the CHANGELOG, prose of a README that sets no rule) needs no change of `po-essai`, and its PR still runs the check and says so in its Checks. Why: without it a spec story closes with the bench behind, and the bench stops proving anything within a week (the frame of 2026-11-03); read at the PR that lands on `main`, it costs one migration of the bench per epic, not one per story, the epic PR proving the change once with its checks and a teaching session (the maintainer, 2026-11-04, #521). From idea #477; the yardstick it applies: [`vision.md`](vision.md), "The yardstick".
+- **A change to the bench records its judgement calls.** An epic or a story that changes `courses/po-essai/` records each judgement call it makes (what was decided, why, the alternative rejected) as an entry of the Material of the re-creation epic #520, and its Done when states it; the commitment ([`commitment.md`](../.claude/reference/commitment.md)) proposes that line before such a work item is set Ready. The exception: a change to `po-essai` that makes no call; its entry in #520 says so in one line. Why: these calls are the only part of the re-creation of the founding course that no file of the tree holds; left in each PR's "Delivery notes", the re-creation rereads every PR, and a policy alone is read once, where a Done when line is verified by a fresh reviewer at every story. From idea #486; it feeds epic #520, its Material (the founding course is archived: decision `parcours-po-archived`).
+- A change to [`vision.md`](vision.md) is a decision (`/feyn-decision`), never an edit in passing.
+- **A process change comes from an observed problem.** After epic #392, which lands this frame, a change to the process (a skill, a workflow, a policy, the glossary, this file) enters only by an idea that names the problem observed and where it was seen (a delivery, a debrief, a triage, a teaching session), triaged like any other idea; a brainstorm on the process opens from such an idea, never from a wish of design. The change is chosen by two criteria, in order: the smallest change that settles the observed problem, then the standard form when one exists (Kanban, ADR, GitHub flow). Why: decision `process-change-from-an-observed-problem`.
 
-Two glossaries, each at home: the repository glossary applies in repository files, a course's
-in that course's files, so the frame's vocabulary (epic, story) is available to the repository
-even where a course teaches those words in its own sense ([`glossary.md`](glossary.md)).
+Two glossaries, each at home: the repository glossary applies in repository files, a course's in that course's files, so the frame's vocabulary (epic, story) is available to the repository even where a course teaches those words in its own sense ([`glossary.md`](glossary.md)).
 
-The Project has one view per stage of the flow and one overview, all tables: Ideas (the triage
-inbox), Options (what waits for the maintainer's commitment), Ready (the Ready stories, grouped
-by epic), In progress (the stories In progress and Ready for review) and Overview (every open
-work item with no parent, grouped by Status: the epics, whatever their Status, and the stories
-without an epic). Their filters, groupings and fields are read with the query of
-[`.claude/reference/project.md`](../.claude/reference/project.md), "The Project workflows", that
-reads the views. Why: decisions `themes-and-release-milestones`, `epic-on-integration-branch`,
-`kind-label-per-work-item`.
+The Project has one view per stage of the flow and one overview, all tables: Ideas (the triage inbox), Options (what waits for the maintainer's commitment), Ready (the Ready stories, grouped by epic), In progress (the stories In progress and Ready for review) and Overview (every open work item with no parent, grouped by Status: the epics, whatever their Status, and the stories without an epic). Their filters, groupings and fields are read with the query of [`.claude/reference/project.md`](../.claude/reference/project.md), "The Project workflows", that reads the views. Why: decisions `themes-and-release-milestones`, `epic-on-integration-branch`, `kind-label-per-work-item`.
 
 ## Status and labels
 
-- Every issue is an item of the Project (the GitHub Project "feyn", number 4), and its Status says
-  where it stands: Idea (an idea, to triage), Option (a work item defined, not committed), Ready
-  (committed, free to take: the commitment point), In progress (a branch exists), Ready for
-  review (the work claims done, the maintainer reviews and concludes: a story without an epic
-  whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none,
-  direct delivery.`, the maintainer merges; an epic whose epic PR is handed over, the maintainer
-  verifies its Done when and merges the epic PR; a story of an epic never has it), Done (closed;
-  the close reason stays on GitHub). One at a time; no Status says a decision is awaited. The
-  Project workflows add the open issues created or updated while they are on, and their
-  sub-issues, set Idea when one is added and Done when it closes; the skills and the maintainer
-  set the rest: `/feyn-issue` Option or Ready for a work item it creates ("How the work is
-  organised", the flow), the maintainer Ready when committing an option, `/feyn-issue-branch` In
-  progress, the hand-over (`.claude/reference/hand-over.md`) Ready for review, on the direct path
-  or by the orchestrator under `/feyn-deliver-story-alone` (a correction asked on a delivered PR
-  returns the story to In progress, `/feyn-deliver-story-alone` step 4); the orchestrator of an epic
-  sets a story Done when it merges it into the integration branch, and the epic Ready for review
-  when it hands over the epic PR. There are no state labels. Why: decisions
-  `project-status-not-state-labels`, `idea-and-option-before-ready`, `epic-on-integration-branch`.
-- `kind:epic`, `kind:story`: the kind labels, exactly one on a work item, set by `/feyn-issue`
-  at its creation and changed with the kind while the work item is an option; none on an idea,
-  whose Status says what it is. The views filter on them. Why: decision
-  `kind-label-per-work-item`.
-- `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is
-  a draft, which keeps it from being merged); on top of the Status, never instead of it; only
-  the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
-- `stale`: an idea or an option posed before the frame of 2026-11-03 ([`vision.md`](vision.md)),
-  to re-read against it before it is taken; the triage or the option refinement that re-reads
-  it removes the label when the item holds, as written or reworked, or closes the item naming
-  what replaced it. A mark, not a state: the Status still says where the item stands. Why:
-  decision `project-status-not-state-labels`; a label nobody removes marks nothing (idea #477).
-- `type:bug`, `type:course`, `type:improvement`, `type:decision`, on a work item only;
-  `area:*` derived from the tree (`spec:<name>`, `spec-directives`, `course:<id>`, `teacher`,
-  `site`, `agentic`, `repo`), on every issue.
+- Every issue is an item of the Project (the GitHub Project "feyn", number 4), and its Status says where it stands: Idea (an idea, to triage), Option (a work item defined, not committed), Ready (committed, free to take: the commitment point), In progress (a branch exists), Ready for review (the work claims done, the maintainer reviews and concludes: a story without an epic whose PR is open after the fresh-agent review, or with the line `Fresh-agent review: none, direct delivery.`, the maintainer merges; an epic whose epic PR is handed over, the maintainer verifies its Done when and merges the epic PR; a story of an epic never has it), Done (closed; the close reason stays on GitHub). One at a time; no Status says a decision is awaited. The Project workflows add the open issues created or updated while they are on, and their sub-issues, set Idea when one is added and Done when it closes; the skills and the maintainer set the rest: `/feyn-issue` Option or Ready for a work item it creates ("How the work is organised", the flow), the maintainer Ready when committing an option, `/feyn-issue-branch` In progress, the hand-over (`.claude/reference/hand-over.md`) Ready for review, on the direct path or by the orchestrator under `/feyn-deliver-story-alone` (a correction asked on a delivered PR returns the story to In progress, `/feyn-deliver-story-alone` step 4); the orchestrator of an epic sets a story Done when it merges it into the integration branch, and the epic Ready for review when it hands over the epic PR. There are no state labels. Why: decisions `project-status-not-state-labels`, `idea-and-option-before-ready`, `epic-on-integration-branch`.
+- `kind:epic`, `kind:story`: the kind labels, exactly one on a work item, set by `/feyn-issue` at its creation and changed with the kind while the work item is an option; none on an idea, whose Status says what it is. The views filter on them. Why: decision `kind-label-per-work-item`.
+- `blocked:maintainer`: a decision of the maintainer is awaited; on the issue only (its PR is a draft, which keeps it from being merged); on top of the Status, never instead of it; only the maintainer removes it. Why: decision `blocked-is-a-label-not-a-state`.
+- `stale`: an idea or an option posed before the frame of 2026-11-03 ([`vision.md`](vision.md)), to re-read against it before it is taken; the triage or the option refinement that re-reads it removes the label when the item holds, as written or reworked, or closes the item naming what replaced it. A mark, not a state: the Status still says where the item stands. Why: decision `project-status-not-state-labels`; a label nobody removes marks nothing (idea #477).
+- `type:bug`, `type:course`, `type:improvement`, `type:decision`, on a work item only; `area:*` derived from the tree (`spec:<name>`, `spec-directives`, `course:<id>`, `teacher`, `site`, `agentic`, `repo`), on every issue.
 
 ## The maintainer's morning
 
-In the web interface, the Project's views. First what waits for the maintainer: the search
-`label:blocked:maintainer` in the issue list; the PR list shows the draft PRs (a PR under
-`/feyn-deliver-story-alone` is also a draft until its review is done: not one to answer); the
-Ready for review items, a story's PR in the In progress view or an epic's epic PR in Overview,
-waiting for the merge; the open questions of the epics In progress, in their plan comments'
-logs. Then the In progress view (what moves on its own), then Ready (what can be taken), then
-Options (what to commit or close), then Ideas (what to triage). An unblock is a comment on the
-issue that says what was validated, then the label removed: the comment is the trace a fresh
-agent reads; an open question is answered by a comment on the epic, or in the work session. Why:
-decisions `blocked-is-a-label-not-a-state`, `project-status-not-state-labels`,
-`idea-and-option-before-ready`, `epic-on-integration-branch`.
+In the web interface, the Project's views. First what waits for the maintainer: the search `label:blocked:maintainer` in the issue list; the PR list shows the draft PRs (a PR under `/feyn-deliver-story-alone` is also a draft until its review is done: not one to answer); the Ready for review items, a story's PR in the In progress view or an epic's epic PR in Overview, waiting for the merge; the open questions of the epics In progress, in their plan comments' logs. Then the In progress view (what moves on its own), then Ready (what can be taken), then Options (what to commit or close), then Ideas (what to triage). An unblock is a comment on the issue that says what was validated, then the label removed: the comment is the trace a fresh agent reads; an open question is answered by a comment on the epic, or in the work session. Why: decisions `blocked-is-a-label-not-a-state`, `project-status-not-state-labels`, `idea-and-option-before-ready`, `epic-on-integration-branch`.
 
 ## Tool behaviours
 
-The flow relies on how GitHub and Claude Code behave, and these are found in work sessions, then
-lost. A behaviour the flow relies on is written at its point of use (the skill step or document that
-depends on it), in one line ending with a mark `(<tool>, <status> <date>, #<n>)`: `<tool>` is
-`GitHub` or `Claude Code`; `<status>` is `tested` (provoked on purpose), `observed` (seen happen),
-`inferred` (deduced from other facts) or `documented` (stated by the tool's documentation); `<date>`
-is `YYYY-MM-DD`; `#<n>` is the issue or PR that holds the proof: a PR holds it on the `Behaviours:`
-line of its Checks, an issue in a comment (`/feyn-pull-request` step 5). The line goes with its
-step. A line the tool disproves is corrected or removed.
-`grep -rn '(GitHub,\|(Claude Code,' .claude docs` lists them all. There is no
-catalogue of behaviours: it would be read at the wrong moment. Two exceptions: the behaviours
-every agent in a worktree meets are written once in
-[`.claude/reference/worktree-agent.md`](../.claude/reference/worktree-agent.md), which the
-briefs of those agents name as their first read; that file is their point of use. And a skill
-may group its marks in a last section, `## Tool behaviours`, one line per mark naming its step:
-the step states its rule, the section its proof (as `/feyn-deliver-story-alone` does).
-`.claude/settings.json` sets `"idleCompaction": false`: an idle compaction replaces a work
-session's history by a summary and erases the material of its debrief, as the maintainer saw
-on 2026-10-31 (Claude Code, observed 2026-10-31, #345).
+The flow relies on how GitHub and Claude Code behave, and these are found in work sessions, then lost. A behaviour the flow relies on is written at its point of use (the skill step or document that depends on it), in one line ending with a mark `(<tool>, <status> <date>, #<n>)`: `<tool>` is `GitHub` or `Claude Code`; `<status>` is `tested` (provoked on purpose), `observed` (seen happen), `inferred` (deduced from other facts) or `documented` (stated by the tool's documentation); `<date>` is `YYYY-MM-DD`; `#<n>` is the issue or PR that holds the proof: a PR holds it on the `Behaviours:` line of its Checks, an issue in a comment (`/feyn-pull-request` step 5). The line goes with its step. A line the tool disproves is corrected or removed. `grep -rn '(GitHub,\|(Claude Code,' .claude docs` lists them all. There is no catalogue of behaviours: it would be read at the wrong moment. Two exceptions: the behaviours every agent in a worktree meets are written once in [`.claude/reference/worktree-agent.md`](../.claude/reference/worktree-agent.md), which the briefs of those agents name as their first read; that file is their point of use. And a skill may group its marks in a last section, `## Tool behaviours`, one line per mark naming its step: the step states its rule, the section its proof (as `/feyn-deliver-story-alone` does). `.claude/settings.json` sets `"idleCompaction": false`: an idle compaction replaces a work session's history by a summary and erases the material of its debrief, as the maintainer saw on 2026-10-31 (Claude Code, observed 2026-10-31, #345).
 
 ## Decisions and vocabulary
 
-A choice that spans several files or is costly to undo becomes a decision file, under the frame's ADR
-([`kanban.md`](kanban.md), "ADR"), counterfactual first (`Without this, <who acts> would…`, an
-agent being the common case, followed by a concrete wrong act), in the `decisions/` folder of
-the area it binds:
-the agentic layer's (`.claude/`, `.github/`) in `.claude/decisions/`, two areas or more and the
-repository's in `docs/decisions/`; `/feyn-decision` writes it and refuses one without a
-counterfactual. A live decision states what holds today: a mechanism that changes is corrected
-in place in its body, a change of scope also gets an "Amended" line; one that no longer holds
-is superseded. A choice that changes only words (a term chosen, renamed or rejected) is not a
-decision but a glossary entry, its why in the entry's `why`; `/feyn-glossary-entry` writes it.
-Issues, PRs and documents use the reserved terms of the glossary and never the terms its entries
-reject. Why: decisions `decision-format`, `glossary-by-concept`, `word-choices-in-the-glossary`.
+A choice that spans several files or is costly to undo becomes a decision file, under the frame's ADR ([`kanban.md`](kanban.md), "ADR"), counterfactual first (`Without this, <who acts> would…`, an agent being the common case, followed by a concrete wrong act), in the `decisions/` folder of the area it binds: the agentic layer's (`.claude/`, `.github/`) in `.claude/decisions/`, two areas or more and the repository's in `docs/decisions/`; `/feyn-decision` writes it and refuses one without a counterfactual. A live decision states what holds today: a mechanism that changes is corrected in place in its body, a change of scope also gets an "Amended" line; one that no longer holds is superseded. A choice that changes only words (a term chosen, renamed or rejected) is not a decision but a glossary entry, its why in the entry's `why`; `/feyn-glossary-entry` writes it. Issues, PRs and documents use the reserved terms of the glossary and never the terms its entries reject. Why: decisions `decision-format`, `glossary-by-concept`, `word-choices-in-the-glossary`.
 
 ## Language
 
-English everywhere, except course material and quotes from it, which stay in French. Why:
-decision `language-policy`.
+English everywhere, except course material and quotes from it, which stay in French. Why: decision `language-policy`.

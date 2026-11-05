@@ -5,17 +5,9 @@ status: accepted
 area: repo
 ---
 
-Without this, an agent would translate a French quote of the course into English, write a
-skill or a decision in French because the course is French, or write a course file in English
-because the repository is.
+Without this, an agent would translate a French quote of the course into English, write a skill or a decision in French because the course is French, or write a course file in English because the repository is.
 
-English everywhere, except what speaks to the learner, to the teacher or to the author of a
-French course. Language is a property of a spec, declared once (`language: fr` in the
-`spec.yaml` of its MAJOR), and so of the courses that follow it, not of the repository. A course
-of another language follows another spec, not a translation of this one (decision
-`lexicon-not-language-pack`). A spec speaks the language of its courses to its two human
-readers, the teacher and the course author: every file of the spec MAJOR they read is in that
-language; what speaks to the tooling and the maintainer only stays English.
+English everywhere, except what speaks to the learner, to the teacher or to the author of a French course. Language is a property of a spec, declared once (`language: fr` in the `spec.yaml` of its MAJOR), and so of the courses that follow it, not of the repository. A course of another language follows another spec, not a translation of this one (decision `lexicon-not-language-pack`). A spec speaks the language of its courses to its two human readers, the teacher and the course author: every file of the spec MAJOR they read is in that language; what speaks to the tooling and the maintainer only stays English.
 
 | English | French (for a French spec) |
 |---|---|
@@ -25,55 +17,17 @@ language; what speaks to the tooling and the maintainer only stays English.
 | the spec's `CHANGELOG.md`; file and folder names, `course.yaml` keys, the keys of the lexicons, the ids and slugs of the rule files, the keys of `composition.yaml` | what the teacher says, the words of the lexicons (`course/lexicon.yaml`, `teacher/lexicon.yaml`) |
 | the checks' code, the schemas' structure | the spec's texts for the teacher and the author: `teacher/README.md` (how a rule of the protocol is written, its tables), `teacher/composition.yaml` (its `what` texts), `course/README.md`, the `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml` and the `purpose` of their groups, the descriptions of `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md` |
 
-An issue, a PR or a decision in English that quotes the course quotes it in French and never
-translates it. French text uses no em-dashes and no arrows. What the teacher says to the
-learner comes from the course and the teacher's lexicon.
+An issue, a PR or a decision in English that quotes the course quotes it in French and never translates it. French text uses no em-dashes and no arrows. What the teacher says to the learner comes from the course and the teacher's lexicon.
 
-A maintainer phrasing quoted in a skill description's "Use for" may be in French, as a quote
-from course material is; everything else in a skill stays in English.
+A maintainer phrasing quoted in a skill description's "Use for" may be in French, as a quote from course material is; everything else in a skill stays in English.
 
-The protocol of `linear-course` is written in French by this rule, not by exception: the spec
-is French, so are its protocol, its purposes and every text its teacher or its course author
-reads. It was first kept French as a bounded exception, because the old teacher was instructed
-and corrected in French and its v1 is a base inherited from `parcours-po`, changed by user
-story; the rule above absorbs that exception. A teacher or a course of another language
-follows another spec, with its own protocol and lexicons. The phrases the learner sees are
-literal in the teacher's lexicon, `teacher/lexicon.yaml`. The spec's texts written in English
-before 2026-11-03 are translated as the stories that rewrite them pass (epic #450 for the two
-READMEs and the rule files, story #505 for the checks' messages and the schemas' descriptions,
-epic #222 for `composition.yaml`), never twice.
+The protocol of `linear-course` is written in French by this rule, not by exception: the spec is French, so are its protocol, its purposes and every text its teacher or its course author reads. It was first kept French as a bounded exception, because the old teacher was instructed and corrected in French and its v1 is a base inherited from `parcours-po`, changed by user story; the rule above absorbs that exception. A teacher or a course of another language follows another spec, with its own protocol and lexicons. The phrases the learner sees are literal in the teacher's lexicon, `teacher/lexicon.yaml`. The spec's texts written in English before 2026-11-03 are translated as the stories that rewrite them pass (epic #450 for the two READMEs and the rule files, story #505 for the checks' messages and the schemas' descriptions, epic #222 for `composition.yaml`), never twice.
 
 ## Consequences
 
-- A course in another language follows a spec of that language, with its own files and
-  lexicons; nothing else in the repository is translated.
-- Amended 2026-10-29 (#246): a maintainer phrasing quoted in a skill description's "Use for"
-  may be in French, as a quote from course material is; everything else in a skill stays in
-  English.
-- Amended 2026-10-30 (#218): the protocol of `linear-course` 1 does not switch to English at a
-  stage: its v1 is a base inherited from `parcours-po`, in French, changed by user story, and the
-  exception stays until a teacher or a course of another language needs the translation, a spec
-  MINOR. Issue #38 is closed not planned; the translation is a future user story of epic #222.
-- Amended 2026-11-03 (#493): the language is a property of the spec, declared once in its
-  `spec.yaml`, no longer of a course in `course.yaml`, and a course of another language is
-  another spec, not a translation (decision `lexicon-not-language-pack`). This supersedes the
-  paragraph on the translation of the protocol as a spec MINOR, A/B-tested on two classrooms, and
-  the same point of the amendment of 2026-10-30: the protocol of `linear-course` stays French. The
-  language pack becomes the two lexicons of the spec (maintainer, 2026-11-03, idea #492).
-- Amended 2026-11-03 (#504): a spec speaks the language of its courses to the teacher and to the
-  course author: every file of the spec MAJOR they read is in that language, `teacher/README.md`
-  (the protocol, its purposes and tables), `teacher/composition.yaml`, `course/README.md`, the
-  `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml`, the descriptions of
-  `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md`; what speaks to
-  the tooling and the maintainer only stays English: the spec directives, the spec's
-  `decisions/` and `CHANGELOG.md`, the keys, ids and slugs of the YAML files, the code. The
-  bounded exception on the protocol's French (2026-10-27, amended 2026-10-30) is absorbed: the
-  protocol is French as the rest of its spec. Why: the teacher of `po-essai` ran on a prompt
-  mixing English purposes and French rules, and the author of a French course read an English
-  spec with French headings in it (idea #503). The texts written in English before this date are
-  translated by the stories that rewrite them (#450, #505, #222), never twice (maintainer,
-  2026-11-03).
-- Amended 2026-11-05 (#554): the protocol's rules and the purposes of their groups are in
-  `teacher/rules.yaml` only; `teacher/README.md` keeps how a rule of the protocol is written and
-  its tables. The rule is unchanged: the `purpose` of a group is in the language of the spec, as
-  its `text` and `why` are.
+- A course in another language follows a spec of that language, with its own files and lexicons; nothing else in the repository is translated.
+- Amended 2026-10-29 (#246): a maintainer phrasing quoted in a skill description's "Use for" may be in French, as a quote from course material is; everything else in a skill stays in English.
+- Amended 2026-10-30 (#218): the protocol of `linear-course` 1 does not switch to English at a stage: its v1 is a base inherited from `parcours-po`, in French, changed by user story, and the exception stays until a teacher or a course of another language needs the translation, a spec MINOR. Issue #38 is closed not planned; the translation is a future user story of epic #222.
+- Amended 2026-11-03 (#493): the language is a property of the spec, declared once in its `spec.yaml`, no longer of a course in `course.yaml`, and a course of another language is another spec, not a translation (decision `lexicon-not-language-pack`). This supersedes the paragraph on the translation of the protocol as a spec MINOR, A/B-tested on two classrooms, and the same point of the amendment of 2026-10-30: the protocol of `linear-course` stays French. The language pack becomes the two lexicons of the spec (maintainer, 2026-11-03, idea #492).
+- Amended 2026-11-03 (#504): a spec speaks the language of its courses to the teacher and to the course author: every file of the spec MAJOR they read is in that language, `teacher/README.md` (the protocol, its purposes and tables), `teacher/composition.yaml`, `course/README.md`, the `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml`, the descriptions of `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md`; what speaks to the tooling and the maintainer only stays English: the spec directives, the spec's `decisions/` and `CHANGELOG.md`, the keys, ids and slugs of the YAML files, the code. The bounded exception on the protocol's French (2026-10-27, amended 2026-10-30) is absorbed: the protocol is French as the rest of its spec. Why: the teacher of `po-essai` ran on a prompt mixing English purposes and French rules, and the author of a French course read an English spec with French headings in it (idea #503). The texts written in English before this date are translated by the stories that rewrite them (#450, #505, #222), never twice (maintainer, 2026-11-03).
+- Amended 2026-11-05 (#554): the protocol's rules and the purposes of their groups are in `teacher/rules.yaml` only; `teacher/README.md` keeps how a rule of the protocol is written and its tables. The rule is unchanged: the `purpose` of a group is in the language of the spec, as its `text` and `why` are.

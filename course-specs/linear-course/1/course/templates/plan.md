@@ -1,16 +1,7 @@
 <!--
-Template of courses/<id>/plan.md (course/README.md section 5).
-How to use: copy to the course folder, replace every <placeholder>, delete this comment (from
-the opening to the closing mark, marks included: course Markdown has no HTML).
-« Public cible » comes first (rule plan-audience-first). « Accueil »: a paragraph giving the
-teacher's posture, then the onboarding questions as a numbered list, at least one, each
-"<n>. **<question label>** : <question>", question labels distinct; the list ends the section,
-nothing follows it (rules plan-onboarding-section, onboarding-question-form); no question on
-pace (rule onboarding-asks-no-pace). The teacher asks the learner's nickname first, then these
-questions in order, and writes each answer under its question label in learner memory. Other
+Template of courses/<id>/plan.md (course/README.md section 5). How to use: copy to the course folder, replace every <placeholder>, delete this comment (from the opening to the closing mark, marks included: course Markdown has no HTML). « Public cible » comes first (rule plan-audience-first). « Accueil »: a paragraph giving the teacher's posture, then the onboarding questions as a numbered list, at least one, each "<n>. **<question label>** : <question>", question labels distinct; the list ends the section, nothing follows it (rules plan-onboarding-section, onboarding-question-form); no question on pace (rule onboarding-asks-no-pace). The teacher asks the learner's nickname first, then these questions in order, and writes each answer under its question label in learner memory. Other
 ## sections the teacher reads, the course's stances (« Parti pris : ... ») and its own writing
-rules, and an H1 are the author's choice (rule plan-optional-sections). The domains and
-concepts are in course.yaml, not here.
+rules, and an H1 are the author's choice (rule plan-optional-sections). The domains and concepts are in course.yaml, not here.
 -->
 # <course title>
 

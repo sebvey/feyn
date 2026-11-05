@@ -27,25 +27,10 @@
 | S5 | Pichler, « Building a Product Users Want: From Idea to Backlog with the Vision Board », article invité sur le blog de Mike Cohn (Mountain Goat Software), mis à jour le 10 mars 2023 ; le Product Vision Board date de 2011 (romanpichler.com) | https://www.mountaingoatsoftware.com/agile/building-a-product-users-want-from-idea-to-backlog-with-the-vision-board | primaire (l'auteur du tableau) | 2026-10-24 |
 
 ## Non vérifié
-- 1a : **le Lean Canvas de Maurya (2010)**, qui part aussi du problème (cases Problem,
-  Customer Segments, Unique Value Proposition), vu seulement dans des guides de seconde main
-  (lucid.co, visible.vc, consultés le 2026-10-24), pas dans un texte de Maurya. Ne pas le citer
-  comme appui de la grille.
-- Consensus et choix d'école : **le gabarit PDF du Product Vision Board** (questions de la
-  section « Needs ») : copie trouvée, texte non lisible ; la citation de [S5] vient de l'article
-  de Pichler, pas du gabarit.
-- Pièges : **décrire le produit par sa technique est un piège** : aucune source consultée ne
-  l'énonce. Il découle de la définition du Scrum Guide (le produit livre de la valeur à des
-  utilisateurs) et du choix d'école de Pichler ; c'est une pratique du cours, à ne pas
-  présenter comme consensus.
-- Pièges : **le PO obtient les faits du métier des utilisateurs au lieu de les trancher seul** :
-  pratique du cours, sans source consultée.
-- 1b : **le sponsor porte plus haut les obstacles qui dépassent le PO** : définition du sponsor
-  du glossaire, sans source consultée ; la source vient plus tard dans le parcours, avec
-  l'arbitrage et l'escalade.
-- 1b : **une partie prenante inclut les utilisateurs** : définition du glossaire, propre au
-  cours (voir la ligne « Partie prenante »).
-- Consensus et choix d'école : **le propriétaire d'un produit de données doit savoir qui en sont
-  les utilisateurs et comment ils s'en servent** (seconde phrase de l'item de Dehghani) :
-  paraphrase de [S2] relevée le 2026-10-22, sans citation ; la citation de l'item ne confirme
-  que la première phrase.
+- 1a : **le Lean Canvas de Maurya (2010)**, qui part aussi du problème (cases Problem, Customer Segments, Unique Value Proposition), vu seulement dans des guides de seconde main (lucid.co, visible.vc, consultés le 2026-10-24), pas dans un texte de Maurya. Ne pas le citer comme appui de la grille.
+- Consensus et choix d'école : **le gabarit PDF du Product Vision Board** (questions de la section « Needs ») : copie trouvée, texte non lisible ; la citation de [S5] vient de l'article de Pichler, pas du gabarit.
+- Pièges : **décrire le produit par sa technique est un piège** : aucune source consultée ne l'énonce. Il découle de la définition du Scrum Guide (le produit livre de la valeur à des utilisateurs) et du choix d'école de Pichler ; c'est une pratique du cours, à ne pas présenter comme consensus.
+- Pièges : **le PO obtient les faits du métier des utilisateurs au lieu de les trancher seul** : pratique du cours, sans source consultée.
+- 1b : **le sponsor porte plus haut les obstacles qui dépassent le PO** : définition du sponsor du glossaire, sans source consultée ; la source vient plus tard dans le parcours, avec l'arbitrage et l'escalade.
+- 1b : **une partie prenante inclut les utilisateurs** : définition du glossaire, propre au cours (voir la ligne « Partie prenante »).
+- Consensus et choix d'école : **le propriétaire d'un produit de données doit savoir qui en sont les utilisateurs et comment ils s'en servent** (seconde phrase de l'item de Dehghani) : paraphrase de [S2] relevée le 2026-10-22, sans citation ; la citation de l'item ne confirme que la première phrase.
