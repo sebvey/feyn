@@ -138,8 +138,7 @@ in the README of its MAJOR, each with its edition.
   made a requirement is a MAJOR (decision `versioned-objects-and-spec-layout`).
 - No teacher conforms today: the fresh tests (`classroom-builder/fresh-test` on the test scenarios
   of the spec MAJOR's `teacher/tests/`, #507) cover the rules a session of a two-concept course
-  exercises, not every requirement; the rules they do not observe yet are idea #509, and the
-  extraction of the rules into `teacher/rules.yaml` is epic #450.
+  exercises, not every requirement; the rules they do not observe yet are idea #509.
 - Amended 2026-10-31 (#339): a rule binds a product, a course or a teacher. The consistency of
   the spec's own files (the rule files, the schemas, the slugs of the protocol, the
   lexicons) is verified by the tests of `check-spec` (`spec-directives/1/README.md` section 8),

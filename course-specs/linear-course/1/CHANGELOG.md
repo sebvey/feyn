@@ -232,3 +232,8 @@ no class: `- file or area: what changes`.
   YAML, JSON Schema, XML, SVG 2, WAI-ARIA, ISO 8601-1, SemVer); decisions
   `rule-groups-replace-ranges`, `rules-named-by-slug` and `spec-files-by-product` no longer defer
   to #318 and name epic #450 for the extraction; no rule changes what it asks (#556).
+- `README.md`, `course/README.md`, `teacher/README.md`, `course/rules.yaml`: a group of
+  `course/rules.yaml` is one per section of `course/README.md` that points to rules; the
+  descriptions point to the groups of `teacher/rules.yaml` in place of rule ids or a restated
+  rule (the types of a case, the reader tables, « Composition »), count no families, and the
+  header of `course/rules.yaml` opens in English; no rule changes (#560).
