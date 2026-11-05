@@ -12,7 +12,8 @@ remote branch.
   a branch `worktree-wf_<run id>-<n>` (`git worktree list --porcelain` lists them); a
   reviewer's, `.claude/worktrees/agent-<id>`, on a branch `worktree-agent-<id>`; the scratch
   worktree of a merge of `main`, a detached path of the scratchpad, on no branch.
-- **The base**: `main`, or the epic's integration branch.
+- **The base**, for a run that opened no PR only (step 3): `main`, or the epic's integration
+  branch.
 - **The branch on `origin`** the worktrees' `HEAD` must be on: a PR not merged, its head
   branch; the scratch worktree of a merge of `main`, or the reviewer of a whole integration
   branch, that integration branch; a PR merged, none (its branch goes with the merge); a run
@@ -32,10 +33,11 @@ the caller, who tells the maintainer:
 2. **Nothing but `node_modules`**: `git -C <path> status --porcelain` prints nothing, or
    nothing but `node_modules`, which a check links from the main checkout
    ([done-when.md](done-when.md)) and `.gitignore` does not ignore as a link.
-3. **Its `HEAD` on `origin`**, when the caller names a branch on `origin`: after `git fetch`,
-   `git -C <path> branch -r --contains HEAD` names `origin/<that branch>`. A run that opened no
-   PR: a worktree whose `HEAD` adds nothing to the base (`git -C <path> log origin/<base>..HEAD`
-   prints nothing) goes; one with commits stays, named to the maintainer with the run's status.
+3. **Its `HEAD` kept**, when the caller names a branch on `origin` or the run opened no PR.
+   A branch on `origin`: after `git fetch`, `git -C <path> branch -r --contains HEAD` names
+   `origin/<that branch>`. A run that opened no PR: a worktree whose `HEAD` adds nothing to the
+   base (`git -C <path> log origin/<base>..HEAD` prints nothing) goes; one with commits stays,
+   named to the maintainer with the run's status.
 4. **Remove** it: `git worktree remove --force <path>` (an untracked `node_modules` makes a
    plain remove refuse), then its branch, `git branch -D worktree-wf_<run id>-<n>` or
    `git branch -D worktree-agent-<id>` (a detached worktree has none).
