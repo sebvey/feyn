@@ -692,7 +692,7 @@ word; the others name feyn's own mechanisms, which the frame does not name.
 
 ### moment
 
-- means: one of the eighteen moments of the work cycle, from an idea noted to the issues a merge frees, numbered in the cycle's order in the contributing guide; each has one owner, which holds its procedure (a skill and its step, a reference file, a body template, the agent workflow; for the merge into `main`, the maintainer), and every other file cites that owner. A path (an epic, a story alone, a direct delivery) chains moments. Not the moments of a teacher's **composition**, which its **teacher skills** carry
+- means: one of the moments of the work cycle, from an idea noted to the issues a merge frees, numbered in the cycle's order; each has one owner, which holds its procedure (a skill and its step, a reference file, a body template, the agent workflow, or the maintainer), and every other file cites that owner. A path (an epic, a story alone, a direct delivery) chains moments. Not the moments of a teacher's **composition**, which its **teacher skills** carry
 - en: moment · rejected: "step" (a numbered part of a skill or of a reference file, which a moment's owner may be), "phase"
 - fr: to settle
 - not to confuse with: [skill](#skill), [teacher](#teacher), [teacher skill](#teacher-skill), [composition](#composition)
@@ -853,7 +853,7 @@ word; the others name feyn's own mechanisms, which the frame does not name.
 
 ### work-cycle tooling
 
-- means: the skills that own a **moment** the skills of a path call, also loaded directly for a one-off act, each named by what it produces or handles (`feyn-issue`, the idea noted; `feyn-issue-branch`, the start; `feyn-pull-request`, the PR; `feyn-merge-cleanup`, the freed issues)
+- means: the skills called by the path skills or loaded directly for a one-off act, each named by what it produces or handles: those that own a **moment** of a path (`feyn-issue`, the idea noted; `feyn-issue-branch`, the start; `feyn-pull-request`, the PR; `feyn-pr-review`, the review; `feyn-merge-cleanup`, the freed issues) and the others (`feyn-decision`, a decision; `feyn-glossary-entry`, a glossary entry; `feyn-course-batch`, a batch of concepts; `feyn-taught-check`, what a course asks before teaching it)
 - en: work-cycle tooling · rejected: "tooling" alone (the build, site and teacher code)
 - fr: to settle
 - not to confuse with: [skill](#skill)

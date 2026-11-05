@@ -183,8 +183,8 @@ decisions `issue-carries-a-work-item-or-an-idea`, `story-with-or-without-an-epic
 Each has one owner, which holds its procedure (a skill and its step, a file of
 `.claude/reference/`, a body template, the agent workflow; for the merge into `main`, the
 maintainer), and every other file cites that owner rather than restating it (decision
-`one-moment-one-file`). Each item names its
-owner first, then what the moment does; what the owner holds is read there, not here.
+`one-moment-one-file`). Each item names its owner first, then what the moment does; what the
+owner holds is read there, not here.
 1. **Idea noted**: `/feyn-issue idea` (the act),
    [`idea-body.md`](../.claude/reference/idea-body.md) (the rules). A finding seen in passing
    becomes an idea, in Idea; in the web interface, the issue form does the same ("An idea, a
@@ -274,8 +274,8 @@ parameters and rewrites none of their steps (decision `one-moment-one-file`):
   delivered by its orchestrator, and its sub-issues all closed does not mean the epic closes: a
   story of an epic exists only once it is the next one (the policies, below).
 - **A story alone**, a story with no parent epic: one PR to `main`, merged by the maintainer.
-  `/feyn-deliver-story-alone <n>` runs moments 9 to 13 through `deliver-story.js` with no epic,
-  then 17 and 15, and after the merge (16), 17 and 18; it delivers every story without an epic
+  `/feyn-deliver-story-alone <n>` runs moments 9 to 12 through `deliver-story.js` with no epic,
+  13 itself, then 17 and 15, and after the merge (16), 17 and 18; it delivers every story without an epic
   but a direct delivery, and refuses a story of an epic, naming `/feyn-deliver-epic`. On the
   direct path, without it, the work session runs moments 9 to 13 itself, then 15, and after the
   merge 18. A story without an epic is Ready for review while its PR awaits the merge.
@@ -283,7 +283,7 @@ parameters and rewrites none of their steps (decision `one-moment-one-file`):
   none, direct delivery.`: no contributor, no review. Alone, the maintainer's work session runs
   them with the work-cycle tooling, then 15 and, after the merge, 18; under an epic, its
   orchestrator runs them on a branch cut from the integration branch, its PR targeting it
-  (`--base <integration branch>`), then 14, with no hand-over.
+  (`--base <integration branch>`), then 14 and 17, with no hand-over.
 
 **Policies.** The policies of the cycle, written down here as Kanban asks, and in the
 decisions and the skills:
