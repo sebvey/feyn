@@ -182,13 +182,15 @@ decisions `issue-carries-a-work-item-or-an-idea`, `story-with-or-without-an-epic
 Five moments:
 1. **Take an epic**, among the Ready ones: read its Material, pose one or two stories with
    `/feyn-issue story #<epic>`, each attached to the epic and Ready, and write the epic's **plan
-   comment**, in two parts: above, the plan, rewritten in place at each change (the stories in
-   their current order, each delivered one ticked with its PR, the next one marked; what is
-   unknown; what was dropped), which is what a resumed epic reads; below, the log, only added to
-   (each delivery, each open question, each answer). Whoever takes the epic writes the plan
+   comment**, in three parts: first, its head (at most ten lines: where the epic stands, what
+   runs, what awaits the maintainer, what comes next), rewritten whole at each step; then the
+   plan, rewritten in place at each change (the stories in their current order, each delivered
+   one ticked with its PR, the next one marked; what is unknown; what was dropped), which is
+   what a resumed epic reads; below, the log, only added to (each delivery, each open question,
+   each answer). Whoever takes the epic writes the plan
    comment, in the work session that takes it, in the form and with the command of
    [`.claude/reference/project.md`](../.claude/reference/project.md), "Epics", "The plan
-   comment" ("Add one"); a plan comment in an older form is rewritten in two parts at the next
+   comment" ("Add one"); a plan comment in an older form is rewritten in three parts at the next
    step of its epic. Whoever takes the epic is its orchestrator: they cut its integration branch
    from `main` and push it, and deliver every story on it (moment 2);
    `/feyn-deliver-epic <epic>` runs this moment and the next. The epic goes In progress when its
@@ -248,11 +250,11 @@ Five moments:
    cycle: it creates the work items it defined, in Status Option, an epic or a story by size,
    each with the body of its kind, what was settled subject by subject, with its why and the
    alternative rejected, going in the epic's Material or the story's Context; it reworks or
-   replaces the option it opened from, comments the neighbours whose work it changes, and may
-   leave the maintainer a working notebook. A brainstorm that settles nothing creates nothing;
-   one that surfaces a finding without deciding its form may leave an idea; one that opens from
-   an idea is that idea's triage, and closes it as completed when it poses its plan, naming the
-   work items. Why: decision `brainstorm-ends-in-options`.
+   replaces the option it opened from and comments the neighbours whose work it changes; once
+   committed, its work items hold its order in the Ready column. A brainstorm that settles
+   nothing creates nothing; one that surfaces a finding without deciding its form may leave an
+   idea; one that opens from an idea is that idea's triage, and closes it as completed when it
+   poses its plan, naming the work items. Why: decision `brainstorm-ends-in-options`.
 4. **Triage**, run with `/feyn-triage` on the ideas the maintainer names, one at a time, and on
    ideas only: the work session reads each one against the purpose of feyn
    ([`vision.md`](vision.md)), the repository and its neighbours (a twin, an epic or an option

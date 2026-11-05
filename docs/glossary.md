@@ -619,10 +619,17 @@ word; the others name feyn's own mechanisms, which the frame does not name.
 
 ### plan comment
 
-- means: the comment on an epic that holds its plan: the stories envisaged, in order; what is unknown; what was dropped; then, as the epic is delivered, its open questions and their answers. Whoever takes the epic writes it and keeps it current
+- means: the comment on an epic that holds its plan, in three parts: its **plan comment head**; the plan (the stories envisaged, in order; what is unknown; what was dropped), rewritten at each change; the log, only added to, which gains each delivery and, as the epic is delivered, its open questions and their answers. Whoever takes the epic writes it and keeps it current
 - en: plan comment
 - fr: to settle
-- not to confuse with: [epic](#epic), [open question](#open-question)
+- not to confuse with: [epic](#epic), [open question](#open-question), [plan comment head](#plan-comment-head)
+
+### plan comment head
+
+- means: the first part of a **plan comment**, at most ten lines: where the epic stands, what runs, what awaits the maintainer, what comes next; rewritten whole at each step of its epic. It is not the head of an issue body, the lines that open a body template (Where, What, Why), which has no entry
+- en: plan comment head
+- fr: to settle
+- not to confuse with: [plan comment](#plan-comment)
 
 ### story
 
