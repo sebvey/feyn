@@ -269,16 +269,18 @@ owner holds is read there, not here.
 **The paths**, each a chain of moments, run by a path skill that passes the moments their
 parameters and rewrites none of their steps (decision `one-moment-one-file`):
 - **An epic**, `/feyn-deliver-epic <epic>`: moment 7; for each story, moment 8, moments 9 to 14
-  through `deliver-story.js`, then 17; after the last story, moment 12 on the whole branch, 15
-  for the epic PR, then 16, 17 and 18. Every story of an epic, a direct one included, is
-  delivered by its orchestrator, and its sub-issues all closed does not mean the epic closes: a
-  story of an epic exists only once it is the next one (the policies, below).
+  through `deliver-story.js`, the sort of 13 by the orchestrator, then 17; after the last story,
+  moment 12 on the whole branch, 15 for the epic PR, then 16, 17 and 18. Every story of an epic,
+  a direct one included, is delivered by its orchestrator, and its sub-issues all closed does not
+  mean the epic closes: a story of an epic exists only once it is the next one (the policies,
+  below).
 - **A story alone**, a story with no parent epic: one PR to `main`, merged by the maintainer.
-  `/feyn-deliver-story-alone <n>` runs moments 9 to 12 through `deliver-story.js` with no epic,
-  13 itself, then 17 and 15, and after the merge (16), 17 and 18; it delivers every story without an epic
-  but a direct delivery, and refuses a story of an epic, naming `/feyn-deliver-epic`. On the
-  direct path, without it, the work session runs moments 9 to 13 itself, then 15, and after the
-  merge 18. A story without an epic is Ready for review while its PR awaits the merge.
+  `/feyn-deliver-story-alone <n>` runs moments 9 to 13 through `deliver-story.js` with no epic,
+  the sort of 13 itself, then 17 and 15, and after the merge (16), 17 and 18; it delivers every
+  story without an epic but a direct delivery, and refuses a story of an epic, naming
+  `/feyn-deliver-epic`. On the direct path, without it, the work session runs moments 9 to 13
+  itself, then 15, and after the merge 18. A story without an epic is Ready for review while its
+  PR awaits the merge.
 - **A direct delivery**: moment 9, the edit, then 11, its Checks saying `Fresh-agent review:
   none, direct delivery.`: no contributor, no review. Alone, the maintainer's work session runs
   them with the work-cycle tooling, then 15 and, after the merge, 18; under an epic, its
