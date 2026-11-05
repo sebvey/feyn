@@ -31,11 +31,8 @@ Squash makes a new commit on `main`, so git does not see the branch as merged an
    have moved on with other merges, so compare those files only):
    `git diff main <branch> -- $(git diff --name-only $(git merge-base main <branch>) <branch>)`
    must print nothing. Read the result before going on; anything printed: stop and show it.
-4. **Delete**: `git branch -D <branch>` (already gone if the merge ran in this
-   checkout: nothing to do). The remote branch goes with the merge
-   (`mise exec -- gh pr merge --squash --delete-branch`); if it is still there
-   (`git ls-remote --heads origin <branch>`), tell the maintainer. Never delete a
-   remote branch yourself.
+4. **Delete** the local branch as [run-cleanup.md](../../reference/run-cleanup.md) says: the
+   branch `<branch>`, its PR merged, no worktree.
 5. Check the squash commit carries the PR title
    (`git log main -1 --format=%s --grep "(#<pr>)"`); if not, tell the
    maintainer (`main` is never rewritten).

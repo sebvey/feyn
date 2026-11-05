@@ -43,11 +43,9 @@ inputs:
   `mise exec -- gh pr diff <pr> --name-only`): the reviewer gets
   `isolation: "worktree"`, and its brief has it check out the PR head detached. Its worktree
   holds no issue branch (`.claude/worktrees/agent-<id>`, on a branch `worktree-agent-<id>`);
-  the caller removes it once the review and its verification are done: still locked
-  (`locked claude agent agent-<id>`), its agent runs, stop it (`TaskStop`) then
-  `git worktree unlock <path>`; `git -C <path> status --porcelain` must print nothing
-  (anything printed: stop and show it); then `git worktree remove <path>` and
-  `git branch -D worktree-agent-<id>`. That reviewer reads
+  the caller cleans it once the review and its verification are done, as
+  [run-cleanup.md](../../reference/run-cleanup.md) says (that worktree, its `HEAD` on the PR's
+  branch when the PR is not merged, no local branch). That reviewer reads
   [worktree-agent.md](../../reference/worktree-agent.md) first: the rules and the Claude Code
   behaviours of an agent in a worktree (its brief names it).
 - **A draft PR**: under the agent workflow every PR is a draft until its hand-over, which is not

@@ -71,8 +71,10 @@ they do not hold.
    Done when before the run is written into the issue's body
    (`mise exec -- gh issue edit <n> --body-file <file>`), not into a comment.
    While a run is launched or running, no `cd`: absolute paths and `git -C <path>`.
-2. **Clean the run** as `/feyn-deliver-epic` step 2.5 says, `main` as its base and the PR not
-   merged yet.
+2. **Clean the run** as [run-cleanup.md](../../reference/run-cleanup.md) says: the run's
+   worktrees `.claude/worktrees/wf_<run id>-<n>`, `main` as the base, the local issue branch
+   with its PR (`pr`) not merged yet, the worktrees' `HEAD` on that branch; a run that opened
+   no PR (`pr` 0): no branch on `origin`, its worktrees compared with the base.
 
 ## 3. Read the result
 
@@ -177,7 +179,8 @@ From the main checkout, on `main`:
 1. `mise exec -- gh pr view <pr> --json state,mergedAt` shows `MERGED`; otherwise stop and tell
    the maintainer.
 2. Nothing of the runs is left: `git worktree list` and `git branch --list 'worktree-wf_*'` show
-   none of their worktrees and branches; one left: clean it as step 2.2 says.
+   none of their worktrees and branches; one left: clean it as
+   [run-cleanup.md](../../reference/run-cleanup.md) says, the PR merged.
 3. `/feyn-merge-cleanup <branch>` for the issue branch: it confirms the change landed, the
    Status, deletes the local branch, and names the issues now free, relayed to the maintainer in
    the clean-up reply.
@@ -185,8 +188,9 @@ From the main checkout, on `main`:
 ## Tool behaviours
 
 The behaviours the steps above rely on, one line each with its step
-([contributing](../../../docs/contributing.md), "Tool behaviours"); those of the run and its
-clean-up are in `/feyn-deliver-epic`, "Tool behaviours" (steps 2.3 and 2.5):
+([contributing](../../../docs/contributing.md), "Tool behaviours"); those of the run are in
+`/feyn-deliver-epic`, "Tool behaviours" (step 2.3), those of its clean-up in
+[run-cleanup.md](../../reference/run-cleanup.md):
 
 - Step 1, an agent-workflow run: a subagent has no Workflow tool
   (Claude Code, observed 2026-10-28, #130).
@@ -194,9 +198,5 @@ clean-up are in `/feyn-deliver-epic`, "Tool behaviours" (steps 2.3 and 2.5):
   (Claude Code, observed 2026-10-28, #130).
 - Step 2.1: a `cd` into a worktree moves the work session even for one command, and a run
   launched then runs its agents there (Claude Code, observed 2026-10-28, #171).
-- Step 2.2: a worktree with no change at the end of its agent's turn is removed
-  (Claude Code, observed 2026-10-28, #171).
-- Step 2.2: the worktree is locked while its agent runs
-  (Claude Code, observed 2026-10-28, #128).
 - Step 6.1: a merge can fail on a GitHub error the maintainer does not see
   (GitHub, observed 2026-10-30, #320).
