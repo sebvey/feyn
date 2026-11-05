@@ -841,7 +841,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### project subagent
 
-- means: a Claude Code custom subagent, named `feyn-<role>` (`feyn-pr-reviewer`): a reused brief as its system prompt, its tools limited by its frontmatter, spawned by name
+- means: a Claude Code custom subagent, named `feyn-<role>` (`feyn-pr-reviewer`, `feyn-pr-fixer`): a reused brief as its system prompt, its tools limited by its frontmatter, spawned by name
 - en: project subagent · rejected: "persona", "bot"
 - fr: to settle
 - not to confuse with: [skill](#skill)

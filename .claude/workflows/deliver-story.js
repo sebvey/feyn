@@ -1,11 +1,11 @@
 export const meta = {
   name: 'feyn-deliver-story-workflow',
-  description: 'Deliver one story of feyn through agents: contributor, fresh-agent review, corrections, then a merge into the epic\'s integration branch (a story under an epic) or a hand-over (a story without an epic)',
+  description: 'Deliver one story of feyn through agents: contributor, fresh-agent review and its corrections by the same agent, then a merge into the epic\'s integration branch (a story under an epic) or a hand-over (a story without an epic)',
   whenToUse: 'Run by the orchestrator of an epic for each story of it (epic mode: args.epic and args.base given; decision epic-on-integration-branch), or by whoever delivers a story without an epic (no-epic mode: no args.epic; the PR targets main and the maintainer merges it; decision story-with-or-without-an-epic). args: { issue: <n>, epic?: <n>, base?: "<integration branch>", work?: "<guidance for the contributor beyond the issue>", dryRun?: true }. dryRun spawns no agent and returns the steps of the mode the args select.',
   phases: [
     { title: 'Contribute', detail: 'a contributor agent in a worktree opens a draft PR to the base' },
-    { title: 'Review', detail: 'a fresh agent reviews the PR against the issue\'s Done when' },
-    { title: 'Correct', detail: 'corrections, each round verified by a fresh agent, at most two rounds; then the review line written into the PR body and read back' },
+    { title: 'Review', detail: 'the fixer, a fresh agent, reviews the PR against the issue\'s Done when, reports its findings, then corrects what it located and checks each fix in the diff' },
+    { title: 'Review line', detail: 'the review line written into the PR body and read back' },
     { title: 'Merge', detail: 'epic mode only: squash into the integration branch, close the story, check it is Done' },
   ],
 }
@@ -15,11 +15,12 @@ export const meta = {
 // rules cite the decision epic-on-integration-branch, not a date.
 // Briefs: the contributor runs /feyn-issue-branch and /feyn-pull-request with their parameters
 // (base, worktree; base, draft), and rewrites none of their steps (decision one-moment-one-file).
-// The reviewer and the verifier are the project subagent feyn-pr-reviewer
-// (.claude/agents/feyn-pr-reviewer.md, its agentType: the reviewer brief, no Edit or Write tool),
-// with this workflow's additions in their prompt; the steps 2 to 4 of /feyn-pr-review (spawn,
-// return, resume) are folded in here, since the workflow spawns the agents itself and cannot
-// resume one.
+// The review and its corrections are the project subagent feyn-pr-fixer
+// (.claude/agents/feyn-pr-fixer.md, its agentType: the reviewer brief of feyn-pr-reviewer as its
+// review step, then its correction step), with this workflow's additions in its prompt: the agent
+// that located a defect corrects it, and checks each fix in the diff (decision
+// fresh-agent-review-before-maintainer). The steps 2 and 3 of /feyn-pr-review (spawn, return) are
+// folded in here, since the workflow spawns the agent itself.
 
 const A = args || {}
 if (!A.issue) throw new Error('args.issue missing: args are { issue, epic?, base?, work?, dryRun? }')
@@ -36,8 +37,8 @@ const READ_EPIC = ALONE ? '' : `, then the epic and its plan comment ("mise exec
 const DW = ALONE ? "the issue's Done when" : "the epic's Done when"
 const WORK = A.work || "The issue's To do is the plan."
 // A maintainer's request reaches the agents only through args.work (feyn-deliver-story-alone
-// step 2.1): the contributor records it in "Delivery notes", and the reviewer and the verifier
-// get work as given, to check a choice the PR says the maintainer asked.
+// step 2.1): the contributor records it in "Delivery notes", and the fixer gets work as given, to
+// check a choice the PR says the maintainer asked.
 const RECORD = A.work ? `\n\nWhen the text above carries a maintainer's request (stated as asked by the maintainer, with its date), record it in "Delivery notes": in Choices, as the maintainer's with its date, or as a deviation when it departs from ${DW}.` : ''
 // In epic mode, the maintainer also answers open questions on the epic (feyn-deliver-epic step 3),
 // or in the work session, recorded in the log of its plan comment as
@@ -51,9 +52,7 @@ const WORK_FOR_REVIEW = A.work
 
 const STEPS = [
   `contribute: a contributor agent in a worktree takes #${A.issue} on its branch from origin/${BASE}, does the work, opens a draft PR to ${BASE}`,
-  `review: a fresh agent reviews the PR against the Done when of #${A.issue}`,
-  'correct 1 (if any finding): corrections, then a fresh agent verifies them',
-  'correct 2 (if the verification of round 1 is not conform): corrections, then a fresh agent verifies them; still not conform: status needs-orchestrator',
+  `review and fix: the fixer (feyn-pr-fixer, a fresh agent) reviews the PR against the Done when of #${A.issue} and reports its findings, then corrects on the PR's branch the blocking ones it located and the non-blocking ones worth fixing, and checks each fix in the diff; a blocking finding left: status needs-orchestrator`,
   'review line: the "Fresh-agent review:" line written into the PR\'s Checks and read back; not there: status failed, stage review-line',
   ...(ALONE
     ? ['hand over: no merge; status ready-for-handover, the maintainer merges the PR into main']
@@ -103,38 +102,19 @@ const FINDING = {
   required: ['file', 'line', 'what', 'fix'],
 }
 
-const REVIEW_SCHEMA = {
+const FIXER_SCHEMA = {
   type: 'object',
   properties: {
     head: { type: 'string', description: 'the PR head commit sha you reviewed' },
     verdicts: { type: 'array', items: { type: 'object', properties: { statement: { type: 'string' }, verdict: { type: 'string', enum: ['met', 'not met', 'deviation'] }, proof: { type: 'string' } }, required: ['statement', 'verdict', 'proof'] } },
-    blocking: { type: 'array', items: FINDING },
-    nonBlocking: { type: 'array', items: FINDING },
+    blocking: { type: 'array', items: FINDING, description: 'the blocking findings of your review, as found, before any fix' },
+    nonBlocking: { type: 'array', items: FINDING, description: 'the non-blocking findings of your review, as found, before any fix' },
     couldNotCheck: { type: 'string' },
+    newHead: { type: 'string', description: 'the PR head sha after your push; the reviewed head when you pushed nothing' },
+    fixed: { type: 'array', items: { type: 'string' }, description: 'each finding fixed, and how its fix was checked in the diff' },
+    left: { type: 'array', items: { type: 'object', properties: { finding: { type: 'string' }, blocking: { type: 'boolean' }, reason: { type: 'string' } }, required: ['finding', 'blocking', 'reason'] }, description: 'each finding not fixed, blocking or not, with its reason' },
   },
-  required: ['head', 'verdicts', 'blocking', 'nonBlocking', 'couldNotCheck'],
-}
-
-const FIX_SCHEMA = {
-  type: 'object',
-  properties: {
-    head: { type: 'string', description: 'new PR head sha after your push' },
-    fixed: { type: 'array', items: { type: 'string' } },
-    left: { type: 'array', items: { type: 'string' }, description: 'findings left, each with its reason' },
-  },
-  required: ['head', 'fixed', 'left'],
-}
-
-const VERIFY_SCHEMA = {
-  type: 'object',
-  properties: {
-    conform: { type: 'boolean' },
-    head: { type: 'string' },
-    blocking: { type: 'array', items: FINDING },
-    nonBlocking: { type: 'array', items: FINDING },
-    notes: { type: 'string' },
-  },
-  required: ['conform', 'head', 'blocking', 'nonBlocking', 'notes'],
+  required: ['head', 'verdicts', 'blocking', 'nonBlocking', 'couldNotCheck', 'newHead', 'fixed', 'left'],
 }
 
 const MERGE_SCHEMA = {
@@ -170,64 +150,38 @@ log(`PR #${contrib.pr} opened on ${contrib.branch}`)
 
 // ---------- Review
 phase('Review')
-// The project subagent of .claude/agents/ (decision claude-folder-layout).
-const REVIEWER = 'feyn-pr-reviewer'
-const REVIEW_BASE = `You review PR #${contrib.pr} (branch ${contrib.branch}, base ${BASE}) on feyn, which claims to deliver issue #${A.issue}, ${SCOPE}. You are the fresh agent of /feyn-pr-review: follow your brief (PR #${contrib.pr}, branch ${contrib.branch}, issue #${A.issue}, checks to rerun: those the PR diff touches, agent-workflow run: none), not the steps of ".claude/skills/feyn-pr-review/SKILL.md", which this workflow runs.${ALONE ? '' : ` Read also the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments"); the base is ${A.base} wherever the brief or a skill says main.`} You are in your own worktree: read ".claude/reference/worktree-agent.md" first; "git fetch" then "git switch --detach origin/${contrib.branch}" (the branch is checked out elsewhere). Change nothing, push nothing, comment nothing. ${CHECKOUT}
+// The project subagent of .claude/agents/ (decision claude-folder-layout): it reviews as
+// feyn-pr-reviewer does, then corrects what it located. No rounds: what it cannot correct within
+// the issue's scope ends the run in needs-orchestrator.
+const FIXER = 'feyn-pr-fixer'
+const fixer = await agent(`You review PR #${contrib.pr} (branch ${contrib.branch}, base ${BASE}) on feyn, which claims to deliver issue #${A.issue}, ${SCOPE}, then you correct what your review located. You are the fixer of this workflow: follow your brief (PR #${contrib.pr}, branch ${contrib.branch}, base ${BASE}, issue #${A.issue}, checks to rerun: those the PR diff touches, agent-workflow run: none), not the steps of ".claude/skills/feyn-pr-review/SKILL.md", which this workflow runs.${ALONE ? '' : ` Read also the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments"); the base is ${A.base} wherever the brief or a skill says main.`} You are in your own worktree: read ".claude/reference/worktree-agent.md" first; "git fetch" then "git switch --detach origin/${contrib.branch}" (the branch is checked out elsewhere); you commit there and push with "git push origin HEAD:${contrib.branch}". ${CHECKOUT} Never force-push.
 
 ${RULES}
 The PR is a draft until ${ALONE ? 'its hand-over' : 'it is merged'}: not a finding. Under these rules, a choice the contributor made and listed in "Delivery notes" or "Review first", a counterfactual it proposed, and a decision the maintainer has not accepted yet are acceptable when sound: judge them on their merit, never block only because the maintainer has not seen them. Check also the consistency with ${ALONE ? 'the decisions the issue names' : "the epic's Done when and plan comment"}.
-${WORK_FOR_REVIEW}`
+${WORK_FOR_REVIEW}
 
-const review = await agent(`${REVIEW_BASE}
+A blocking finding means the PR must not be ${ALONE ? 'handed over' : 'merged'} as is. In the PR body, the "Fresh-agent review:" line of its Checks is left to the workflow, which writes it after you: leave room for it within the limits of /feyn-pull-request step 5.
 
-Return the head sha you reviewed, a verdict per Done when statement with your own proof, the blocking findings (the PR must not be ${ALONE ? 'handed over' : 'merged'} as is), the non-blocking findings, and what you could not check and why.`,
-  { label: `review PR #${contrib.pr}`, phase: 'Review', schema: REVIEW_SCHEMA, isolation: 'worktree', agentType: REVIEWER, model: 'opus' })
+Return the head sha you reviewed, a verdict per Done when statement with your own proof, the blocking and the non-blocking findings as your review found them (before any fix), what you could not check and why, the new head sha after your push (the reviewed head when you pushed nothing), what you fixed and how you checked it in the diff, and each finding you left, blocking or not, with its reason.`,
+  { label: `fixer PR #${contrib.pr}`, phase: 'Review', schema: FIXER_SCHEMA, isolation: 'worktree', agentType: FIXER, model: 'opus' })
 
-if (!review) return { status: 'failed', stage: 'review', contrib, deviations: contrib.deviations }
-log(`review: ${review.blocking.length} blocking, ${review.nonBlocking.length} non-blocking`)
+if (!fixer) return { status: 'failed', stage: 'review', contrib, deviations: contrib.deviations }
+const head = fixer.newHead || fixer.head
+const blockingLeft = fixer.left.filter(l => l.blocking)
+log(`review: ${fixer.blocking.length} blocking, ${fixer.nonBlocking.length} non-blocking; fixed ${fixer.fixed.length}, left ${fixer.left.length} (${blockingLeft.length} blocking)`)
+const firstReview = { blocking: fixer.blocking, nonBlocking: fixer.nonBlocking, couldNotCheck: fixer.couldNotCheck }
+if (blockingLeft.length) return { status: 'needs-orchestrator', reason: 'blocking findings the fixer left', contrib, verdicts: fixer.verdicts, firstReview, head, fixed: fixer.fixed, left: fixer.left, deviations: contrib.deviations }
 
-// ---------- Correct
-phase('Correct')
-let blocking = review.blocking
-let nonBlocking = review.nonBlocking
-let head = review.head
-const rounds = []
-let conform = blocking.length === 0 && nonBlocking.length === 0
+// ---------- Review line
+phase('Review line')
 // The "Fresh-agent review:" line in /feyn-pull-request's wording (its step 5); <N> counts the
-// blocking findings of all the reviews.
-let blockingTotal = 0
-const reviewLine = () => blockingTotal ? `Fresh-agent review: ${blockingTotal} blocking findings, fixed.` : 'Fresh-agent review: no blocking finding.'
-for (let round = 1; round <= 2 && !conform; round++) {
-  blockingTotal += blocking.length
-  const fix = await agent(`You correct PR #${contrib.pr} (branch ${contrib.branch}, base ${BASE}) on feyn, issue #${A.issue}, after a fresh-agent review. Read the issue, the PR and its diff ("mise exec -- gh pr view ${contrib.pr}", "mise exec -- gh pr diff ${contrib.pr}"). You are in your own worktree: read ".claude/reference/worktree-agent.md" first; "git fetch", then "git switch --detach origin/${contrib.branch}" (the branch is checked out in another worktree), commit there and push with "git push origin HEAD:${contrib.branch}". ${CHECKOUT} Never force-push.
-
-${RULES}
-
-Findings to treat (round ${round}):
-Blocking (fix every one): ${JSON.stringify(blocking)}
-Non-blocking (fix each one worth fixing within the issue's scope; leave one only with a reason, except a statement the PR makes false, which you fix whatever its label: decision pr-corrects-what-it-makes-false): ${JSON.stringify(nonBlocking)}
-
-Run the checks the change touches. Then update the PR body (mise exec -- gh pr edit ${contrib.pr} --body-file <file>): keep it coherent with the change, its "Fresh-agent review:" line left to the workflow, which writes it after the last round (leave room for it), within the limits of /feyn-pull-request step 5: 30 lines at most, blank lines and the awaiting section excluded, Review first 1 to 3 bullets; count the lines and the bullets before each "gh pr edit". Then update the PR comment "Delivery notes" in place (/feyn-pull-request step 6; post it if the PR has none, never a second one): the non-blocking findings you left go there, each with its reason; one goes up into Review first only when it needs the maintainer's decision, within the 1 to 3 bullets. Return the new head sha, what you fixed, and what you left with its reason.`,
-    { label: `corrections ${round} PR #${contrib.pr}`, phase: 'Correct', schema: FIX_SCHEMA, isolation: 'worktree', model: 'opus' })
-  if (!fix) return { status: 'failed', stage: `correct-${round}`, contrib, review, rounds, deviations: contrib.deviations }
-  const verify = await agent(`${REVIEW_BASE}
-
-You verify corrections, as step 4 of /feyn-pr-review says, as a new agent. The reviewed head was ${head}; the corrections are in ${head}..${fix.head}. The findings raised were: blocking ${JSON.stringify(blocking)}; non-blocking ${JSON.stringify(nonBlocking)}. The corrector says it fixed ${JSON.stringify(fix.fixed)} and left ${JSON.stringify(fix.left)}. Recheck each finding against the diff, rerun the Done when statements and checks the corrections touch, read everything in the correction diff beyond the findings. Return conform true when no blocking finding remains and every left non-blocking finding has an acceptable reason; the head you verified; the blocking and non-blocking findings still open or new; notes.`,
-    { label: `verify ${round} PR #${contrib.pr}`, phase: 'Correct', schema: VERIFY_SCHEMA, isolation: 'worktree', agentType: REVIEWER, model: 'opus' })
-  if (!verify) return { status: 'failed', stage: `verify-${round}`, contrib, review, rounds, deviations: contrib.deviations }
-  rounds.push({ round, fix, verify })
-  head = verify.head
-  blocking = verify.blocking
-  nonBlocking = verify.nonBlocking
-  conform = verify.conform && verify.blocking.length === 0
-  log(`round ${round}: conform=${conform}`)
-}
-if (!conform) return { status: 'needs-orchestrator', reason: 'blocking findings after two rounds', contrib, review, rounds, deviations: contrib.deviations }
+// blocking findings of the review, all fixed (none left, checked above).
+const line = fixer.blocking.length ? `Fresh-agent review: ${fixer.blocking.length} blocking findings, fixed.` : 'Fresh-agent review: no blocking finding.'
 
 // The review line, written here by the workflow itself, before the Merge stage and before
-// ready-for-handover: when the first review finds nothing, no corrector runs, and no orchestrator
-// adds it after (issue #586). The write is read back (.claude/reference/project.md, "GitHub
-// writes") and checked here.
+// ready-for-handover: when the review finds nothing, the fixer changes nothing, and no
+// orchestrator adds it after (issue #586). The write is read back (.claude/reference/project.md,
+// "GitHub writes") and checked here.
 const LINE_SCHEMA = {
   type: 'object',
   properties: {
@@ -236,14 +190,13 @@ const LINE_SCHEMA = {
   },
   required: ['lineReadBack', 'problems'],
 }
-const line = reviewLine()
 const written = await agent(`You write one line into the body of PR #${contrib.pr} of feyn. Use only gh commands (through "mise exec --"); run no git command and no cd: your working directory is the work session's and must not change.
 1. "mise exec -- gh pr view ${contrib.pr} --json body --jq .body" into a file of your scratchpad.
 2. In its "## Checks" section, the line "- ${line}": it replaces the line that starts with "- Fresh-agent review:" when there is one, otherwise it goes as the last bullet of Checks, before "- Not verified:" when that bullet exists. Change nothing else in the body.
 3. "mise exec -- gh pr edit ${contrib.pr} --body-file <that file>", then read the body again ("mise exec -- gh pr view ${contrib.pr} --json body --jq .body").
 Return the line of the body read back that starts with "- Fresh-agent review:" (without its "- "), exactly as read, "" when there is none, and every problem met.`,
-  { label: `review line PR #${contrib.pr}`, phase: 'Correct', schema: LINE_SCHEMA, model: 'sonnet', effort: 'low' })
-if (!written || written.lineReadBack.trim() !== line) return { status: 'failed', stage: 'review-line', reviewLine: line, written, contrib, review, rounds, deviations: contrib.deviations }
+  { label: `review line PR #${contrib.pr}`, phase: 'Review line', schema: LINE_SCHEMA, model: 'sonnet', effort: 'low' })
+if (!written || written.lineReadBack.trim() !== line) return { status: 'failed', stage: 'review-line', reviewLine: line, written, contrib, verdicts: fixer.verdicts, firstReview, head, fixed: fixer.fixed, left: fixer.left, deviations: contrib.deviations }
 log(`review line written: ${line}`)
 
 const report = {
@@ -258,11 +211,13 @@ const report = {
   choicesMade: contrib.choicesMade,
   deviations: contrib.deviations,
   unsure: contrib.unsure,
-  verdicts: review.verdicts,
-  firstReview: { blocking: review.blocking, nonBlocking: review.nonBlocking, couldNotCheck: review.couldNotCheck },
+  verdicts: fixer.verdicts,
+  firstReview,
   // Written into the PR's Checks and read back above.
   reviewLine: line,
-  rounds: rounds.map(r => ({ round: r.round, fixed: r.fix.fixed, left: r.fix.left, conform: r.verify.conform, notes: r.verify.notes })),
+  // The fixer's corrections: what it fixed, and what it left with its reason (no blocking one).
+  fixed: fixer.fixed,
+  left: fixer.left,
 }
 if (ALONE) return { status: 'ready-for-handover', ...report }
 
