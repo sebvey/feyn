@@ -39,11 +39,11 @@ they do not hold.
 - **A direct delivery.** A story whose To do opens with the line "Direct delivery"
   (named `direct` by the maintainer at its creation, [contributing](../../../docs/contributing.md),
   "How the work is organised", moment 2) stops the cycle for that issue, before the refusals
-  below: reply "this story is delivered as a direct delivery (`/feyn-issue-branch`, the
-  edit, `/feyn-pull-request`): nothing to spawn", and spawn nothing.
+  below: reply "this story is delivered as a direct delivery (`/feyn-issue-branch <n>`, the
+  edit, `/feyn-pull-request`, both with no parameter): nothing to spawn", and spawn nothing.
 - Then the refusals of `/feyn-issue-branch` step 1 apply: name the reason and stop for that
   issue. Except In progress: the run resumes it, its contributor taking the issue's branch and
-  PR where they are.
+  PR where they are (`/feyn-issue-branch --worktree`).
 - Several numbers: one run per issue, in parallel, only when their To do touch distinct files.
   Two issues that share a file run one after the other (the second after the first is merged).
 - A decision the issue asks for: did the maintainer accept its counterfactual in this
@@ -59,17 +59,16 @@ they do not hold.
 ## 2. The run
 
 1. **Run** `.claude/workflows/deliver-story.js` as `/feyn-deliver-epic` step 2.3 says (its
-   `whenToUse`, `scriptPath` absolute), with no epic: `issue`, `type` and `area` (the
-   issue's labels without their prefix), no `epic`, no `base`; `work` only when the issue needs
-   guidance beyond its To do. `work` stands on its own: the workflow's agents get it in their
-   prompt and do not see the conversation, so it never points to the conversation nor quotes
-   it. When `work` carries a maintainer's request, it states it restated (what to change, why)
-   and dated ("asked by the maintainer on <date>"); the workflow asks its contributor to record
-   it in "Delivery notes" and gives `work` to its reviewer and verifier, who check a choice said
-   to be the maintainer's against it. No comment is posted on the issue or the PR to carry it.
-   Beyond such a request, `work` cites only what an agent can read itself (repository files on
-   `main`, issues and their comments, PRs). A note that changes the issue's Done when before
-   the run is written into the issue's body
+   `whenToUse`, `scriptPath` absolute), with no epic: `issue`, no `epic`, no `base`; `work` only
+   when the issue needs guidance beyond its To do. `work` stands on its own: the workflow's
+   agents get it in their prompt and do not see the conversation, so it never points to the
+   conversation nor quotes it. When `work` carries a maintainer's request, it states it restated
+   (what to change, why) and dated ("asked by the maintainer on <date>"); the workflow asks its
+   contributor to record it in "Delivery notes" and gives `work` to its reviewer and verifier,
+   who check a choice said to be the maintainer's against it. No comment is posted on the issue
+   or the PR to carry it. Beyond such a request, `work` cites only what an agent can read itself
+   (repository files on `main`, issues and their comments, PRs). A note that changes the issue's
+   Done when before the run is written into the issue's body
    (`mise exec -- gh issue edit <n> --body-file <file>`), not into a comment.
    While a run is launched or running, no `cd`: absolute paths and `git -C <path>`.
 2. **Clean the run** as `/feyn-deliver-epic` step 2.5 says, `main` as its base and the PR not
