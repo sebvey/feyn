@@ -12,7 +12,7 @@ rules keep their own slugs, with no prefix. A group's slug has the form of a rul
 (decision `rules-named-by-slug`), except that one word is enough, and shares their namespace:
 no group and no rule have the same slug. A group is cited in code after « groupe » or « group »;
 the check `rule-slugs` verifies that every cited group exists and that no slug is defined twice.
-Since the protocol's rules are in `teacher/rules.yaml` (the extraction of #318, decision
+Since the protocol's rules are in `teacher/rules.yaml` (extracted by epic #450, decision
 `spec-files-by-product`), a group is data in that file, its slug as its `id`, its rules and their
 order included, what it is for in its `purpose` field; a family is the group whose `id` is its
 category, and `teacher/README.md` holds no group. A group may declare the category and method of its rules once (decision

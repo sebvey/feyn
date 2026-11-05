@@ -227,3 +227,8 @@ no class: `- file or area: what changes`.
   d'écriture », « Composition » and « Clés et paramètres », in French, no family or group
   section, no rule, no course named; decisions `rule-groups-replace-ranges`,
   `rules-named-by-slug` and `spec-files-by-product` amended; no rule changes what it asks (#554).
+- `README.md`, `decisions/`: section 4 names the standards the rules depend on, each with its
+  edition, a link to its text and the groups whose rules depend on it (CommonMark, GFM tables,
+  YAML, JSON Schema, XML, SVG 2, WAI-ARIA, ISO 8601-1, SemVer); decisions
+  `rule-groups-replace-ranges`, `rules-named-by-slug` and `spec-files-by-product` no longer defer
+  to #318 and name epic #450 for the extraction; no rule changes what it asks (#556).

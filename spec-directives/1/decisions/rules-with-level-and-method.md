@@ -90,8 +90,7 @@ the fresh tests (D8). Recommendations are outside conformance (the ISO sense of 
 **Normative references** of the spec directives, a dated list limited to the standards a rule
 depends on: ISO/IEC Directives Part 2, 9th edition (2021); ISO/IEC/IEEE 29148:2018; SemVer 2.0.0;
 YAML 1.2.2; JSON Schema 2020-12. The standards the rules of one spec depend on are that spec's,
-in the README of its MAJOR: #318 adds those of `linear-course` as it extracts the rules (CommonMark
-and GFM tables, SVG, WCAG 2.2, CLDR, ISO 639-1, ISO 8601).
+in the README of its MAJOR, each with its edition.
 
 ## Options ruled out
 
