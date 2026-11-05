@@ -7,7 +7,7 @@ area: repo
 
 Without this, an agent would keep wrapping the prose of a Markdown file at 100 columns by habit, and a human editing it would redo the breaks by hand, so the diff of one changed phrase shows the whole paragraph reflowed (PR #445: one phrase, nine lines).
 
-The prose of a Markdown file of the repository is soft-wrapped: one paragraph per line, never wrapped at a width; a list item is one line, its sub-items and its later paragraphs their own lines. The prose inside an HTML comment follows the same rule. Tables, lists, code blocks, frontmatter and headings stay as Markdown wants them; a hard break Markdown means (two trailing spaces) stays. The editor and the renderer (GitHub, the site) wrap the text for the reader. The files under `fixtures/` and `test-fixtures/` are left as they are: their tests cite their line numbers. No tool enforces the rule: it is written once, in `CLAUDE.md`, where every agent reads it.
+The prose of a Markdown file of the repository is soft-wrapped: one paragraph per line, never wrapped at a width; a list item is one line, its sub-items and its later paragraphs their own lines. The prose inside an HTML comment follows the same rule. Tables, lists, code blocks, frontmatter and headings stay as Markdown wants them, and a code block is copied as is, the prose inside it included; a hard break Markdown means (two trailing spaces) stays. The editor and the renderer (GitHub, the site) wrap the text for the reader. The files under `fixtures/` and `test-fixtures/` are left as they are: their tests cite their line numbers. No tool enforces the rule: it is written once, in `CLAUDE.md`, where every agent reads it.
 
 ## Options ruled out
 
