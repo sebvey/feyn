@@ -16,7 +16,7 @@ conformité, les niveaux, les méthodes, la sévérité et les versions sont les
 `spec-directives/1/README.md` ; le protocole que le professeur exécute est `teacher/rules.yaml`.
 
 Les règles d'un cours, celles que la revue vérifie comprises, sont les données de
-[`rules.yaml`](rules.yaml), un groupe par section qui en énonce, chacun avec son `purpose` ; les
+[`rules.yaml`](rules.yaml), un groupe par section qui y renvoie, chacun avec son `purpose` ; les
 tables de champs sont les schémas JSON de [`schemas/`](schemas/). Chaque section tient sa table
 des lecteurs quand elle en a une, ce qui n'énonce aucune règle (l'arborescence d'un cours, ce à
 quoi sert un fichier, une notation) et un lien vers son groupe de `rules.yaml` et, pour une table
@@ -118,14 +118,15 @@ cas emploient, sa banque d'exemples, faite de **cas**, et sa consigne de dessin.
 
 Le **titre** d'un cas, son identifiant, est son titre `###` sans la parenthèse ; la parenthèse
 nomme son sous-concept et, au besoin, son **qualificatif**, qui lui donne son type. Quand le
-professeur pose chaque type, `teacher/rules.yaml` le dit :
+professeur pose chaque type, les groupes `loop` et `practice-skip-asides` de `teacher/rules.yaml`
+le disent :
 
-| Type | Qualificatif (clé) | Le cas sert |
-|---|---|---|
-| principal | aucun | au sous-concept qu'il porte, dans le parcours, dans l'ordre de « Consignes » |
-| rechange | « rechange » (`qualifiers.fallback`) | quand l'apprenant échoue au cas du même sous-concept |
-| entraînement | « entraînement » (`qualifiers.practice`) | quand l'apprenant s'exerce sur un concept validé ou, à la reprise, sur un concept validé lors d'une session précédente |
-| aparté | « aparté » (`qualifiers.aside`) | en aparté, sur une question hors du parcours |
+| Type | Qualificatif (clé) |
+|---|---|
+| principal | aucun |
+| rechange | « rechange » (`qualifiers.fallback`) |
+| entraînement | « entraînement » (`qualifiers.practice`) |
+| aparté | « aparté » (`qualifiers.aside`) |
 
 Les champs d'un cas, dont les libellés sont les `case_fields` du lexique, et qui lit chacun :
 
@@ -147,7 +148,7 @@ Les règles de `teaching.md` sont le groupe « Le fichier teaching.md » de
 | Reader | Needs | When |
 |---|---|---|
 | the site reader | to know the course is grounded; where to read further; which claim is consensus, school or the course's choice | reading a concept |
-| the teacher | the source as described, to answer « d'où ça vient ? », and what is not verified (`teacher/rules.yaml`, rules `origin-from-sources-file` and `unverified-part-told`) | on the learner's request |
+| the teacher | the source as described, to answer « d'où ça vient ? », and what is not verified (`teacher/rules.yaml`, group `stances-and-sources`) | on the learner's request |
 | the creator (human or agent) | what to source and what not to; where to put what could not be confirmed | writing the concept |
 | the reviewer | that a claim is backed by what it cites: the quotation, the place | reviewing a change |
 | the maintainer | when a source changes or a section is rewritten, what to re-verify; when it was consulted | months later |
@@ -182,7 +183,7 @@ Les règles de ces conventions sont le groupe « Les conventions du texte lecteu
 | Reader | Needs | When |
 |---|---|---|
 | the learner | why the domain matters and how its concepts connect | before its concepts |
-| the teacher | what it says to present the domain (`domain-presented-from-file`) | before the first concept of a domain |
+| the teacher | what it says to present the domain (group `domain-presentation`) | before the first concept of a domain |
 | the creator (human or agent) | what each section says, and that it teaches no concept | writing or changing a domain |
 
 Un fichier de domaine, dans `domains/`, est l'entrée d'un domaine, côté lecteur : le site le

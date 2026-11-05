@@ -60,7 +60,7 @@ plus this README (decision `spec-files-by-product`):
 | `README.md` | this file: scope, files, categories, normative references, the list of checks |
 | `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the lexicon of the course files |
 | `teacher/README.md` | how a rule of the protocol is written: its notation, its writing rules; the composition; the keys and parameters |
-| `course/rules.yaml` | the rules of a course, in French, one group per section of `course/README.md` that states rules, each with its `purpose` |
+| `course/rules.yaml` | the rules of a course, in French, one group per section of `course/README.md` that points to rules, each with its `purpose` |
 | `teacher/rules.yaml` | the rules of the protocol, in French, one group per family and per group of a family, each with its `purpose` |
 | `teacher/composition.yaml` | the composition of the teacher: its five parts, when each loads and what each draws from (`teacher/README.md`, "Composition") |
 | `teacher/tests/` | the test scenarios of the teacher (`README.md`: the format, the rules each covers and those none covers), `scenario.schema.yaml` (their form), one YAML file per scenario, run by `classroom-builder/fresh-test` and verified in form by `check-spec` (`scenarios`) |
@@ -79,7 +79,7 @@ What a rule file holds is the directives' (`spec-directives/1/README.md` section
 
 `course/rules.yaml` holds every rule of a course, those the checks verify, taught-check included,
 and those verified by inspection (the review), one group per section of `course/README.md` that
-states rules; `course/schemas/course.schema.yaml` holds the fields of `course.yaml`, and
+points to rules; `course/schemas/course.schema.yaml` holds the fields of `course.yaml`, and
 `course/schemas/concept-frontmatter.schema.yaml` the fields of the `concept.md` frontmatter
 (#329). `teacher/rules.yaml` holds every rule of the protocol (#554); `teacher/README.md` states
 none.

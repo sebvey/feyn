@@ -10,7 +10,7 @@
 The readers are defined in [`spec-directives/README.md`](../../../../spec-directives/README.md#the-readers).
 
 Le protocole pédagogique de `linear-course`, la partie de la spec que le professeur exécute : des
-règles nommées par un slug, en neuf familles, toutes dans [`rules.yaml`](rules.yaml), leur seule
+règles nommées par un slug, en familles, toutes dans [`rules.yaml`](rules.yaml), leur seule
 source. Ce fichier dit comment une règle s'écrit et n'en énonce aucune. Le protocole a la version de
 la spec (le `README.md` du MAJOR) ; ajouter ou changer une règle est un MINOR de la spec
 (`spec-directives/1/README.md` section 6). Le build de la classe place les règles de chaque partie
@@ -91,19 +91,17 @@ cible se construit depuis la même composition.
 | Partie | Se charge | Tire de |
 |---|---|---|
 | `permanent` | `every-message` | les règles du protocole avec le `purpose` de leurs familles et de leurs groupes (spec, `rules.yaml`), la posture (cours, `plan.md` sous `headings.onboarding`), la carte du cours et les noms des fichiers du cours (cours, `course.yaml`), les deux lexiques (spec, `lexicon.yaml` et `../course/lexicon.yaml`), les paramètres de la classe (classe, `course.lock`) |
-| `on-demand` | `at-a-moment` | à chacun de ses moments (accueil, reprise, un schéma demandé ou déclaré au sous-concept en cours, l'arrêt, une remise à zéro), les règles de ce moment (groupe `onboarding`, groupe `resume`, la famille `stop`, les règles `requested-diagram-shown` et `diagram-not-displayable` ; aucune encore pour une remise à zéro) et ce que ce moment lit |
+| `on-demand` | `at-a-moment` | à chacun de ses moments (accueil, reprise, un schéma demandé ou déclaré au sous-concept en cours, l'arrêt, une remise à zéro), les règles de ce moment (groupe `onboarding`, groupe `resume`, la famille `stop`, des règles du groupe `diagram-showing` ; aucune encore pour une remise à zéro) et ce que ce moment lit |
 | `course-reads` | `during-the-session` | le cours tel qu'il est copié, lu quand le protocole le dit : le fil rouge, le fichier de domaine, le `concept.md` du concept (la matière) et son `teaching.md` (la méthode), `sources.md` sur demande, le glossaire du cours |
 | `learner-memory` | `at-start-and-save-points` | les modèles de l'apprenant (spec, `templates/learner/`), les règles de la mémoire (la famille `learner-memory`), les trois fichiers de `learner/` ; rien du cours |
-| `permissions` | `always` | ce qu'un professeur écrit, `learner/` et ses commits, jamais poussés, et ce qu'il n'écrit jamais, `course/` (règle `write-only-in-learner`) |
+| `permissions` | `always` | ce qu'un professeur écrit, `learner/` et ses commits, et ce qu'il n'écrit jamais, `course/` (une règle du groupe `learner-memory`) |
 
 Deux lecteurs y viennent. Le builder, qui écrit le build de la classe : sa moitié qui dépend de ce
 MAJOR, [`build/render-parts`](build/README.md), lit `composition.yaml` et `rules.yaml` pour rendre
 chaque partie en texte, et la moitié à la racine (`classroom-builder/`) réalise les parties pour sa
 cible. Les fresh tests ([`tests/`](tests/README.md)) : ils jugent un professeur sur ce qu'il charge
-et quand, par la règle `teacher-loads-composition` (groupe `composition-loading`), une exigence de
-méthode démonstration : un professeur qui charge l'accueil à chaque message, ou la reprise pour un
-nouvel apprenant, n'est pas conforme. `composition` (`check-spec`, `spec-directives/1/README.md`
-section 8) teste la forme du fichier, jamais son sens.
+et quand, par le groupe `composition-loading`. `composition` (`check-spec`,
+`spec-directives/1/README.md` section 8) teste la forme du fichier, jamais son sens.
 
 ## Clés et paramètres
 
