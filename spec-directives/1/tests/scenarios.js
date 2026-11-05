@@ -8,15 +8,13 @@
 //   - every other `*.yaml` of teacher/tests/ is a scenario: it parses, is valid against the
 //     schema, and its `id` is its file name without .yaml;
 //   - every slug a scenario names, in `rules` and in the `rules` of an `expect`, is a rule of the
-//     protocol: a rule of teacher/README.md (a line `**<slug>** ` or a table row whose first cell
-//     is `**<slug>**`, in a rule family, as rule-slugs reads them) or of teacher/rules.yaml;
+//     protocol: the id of a rule of teacher/rules.yaml;
 //   - every slug of an `expect` is in the scenario's `rules`.
-// It names no file of a spec beyond those its readers name (teacher/README.md, teacher/rules.yaml,
-// teacher/tests/); the debt of idea #485 stays as it is, none added.
+// It names no file of a spec beyond those its readers name (teacher/rules.yaml, teacher/tests/);
+// the debt of idea #485 stays as it is, none added.
 const path = require('path');
 const { createRequire } = require('module');
 const yaml = require('../lib/yaml-lines');
-const mdlib = require('../lib/md');
 const { fail } = require('../lib/course');
 
 const DIR = 'teacher/tests';
@@ -24,21 +22,9 @@ const SCHEMA = `${DIR}/scenario.schema.yaml`;
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
-// the rules of the protocol: those teacher/README.md defines in its rule families, and the ids of
-// the rules of teacher/rules.yaml
+// the rules of the protocol: the ids of the rules of teacher/rules.yaml
 function protocolRules(ctx) {
   const rules = new Set();
-  const text = ctx.read('teacher/README.md');
-  if (text !== null) {
-    const { sections } = mdlib.sections(mdlib.split(text).body, 2);
-    for (const s of sections.filter((x) => /^\d+\.\s/.test(x.title))) {
-      for (const l of s.lines) {
-        if (l.code) continue;
-        const m = /^\*\*([a-z0-9-]+)\*\*(?:\s|$)/.exec(l.t) || /^\|\s*\*\*([a-z0-9-]+)\*\*\s*\|/.exec(l.t);
-        if (m) rules.add(m[1]);
-      }
-    }
-  }
   const raw = ctx.read('teacher/rules.yaml');
   if (raw !== null) {
     try {
@@ -77,13 +63,13 @@ function run(ctx) {
     if (doc.id !== id) out.push(fail(file, yaml.lineOf(doc, 'id', 1), `id "${doc.id}" is not the file name "${id}"`));
     const listed = new Set(doc.rules);
     doc.rules.forEach((slug, i) => {
-      if (!known.has(slug)) out.push(fail(file, yaml.lineOf(doc.rules, i, yaml.lineOf(doc, 'rules', 1)), `rules: "${slug}" is not a rule of the protocol (teacher/README.md, teacher/rules.yaml)`));
+      if (!known.has(slug)) out.push(fail(file, yaml.lineOf(doc.rules, i, yaml.lineOf(doc, 'rules', 1)), `rules: "${slug}" is not a rule of the protocol (teacher/rules.yaml)`));
     });
     doc.turns.forEach((t, ti) => {
       (t.expect || []).forEach((x, xi) => {
         const at = yaml.lineOf(t.expect, xi, yaml.lineOf(doc.turns, ti, 1));
         for (const slug of x.rules) {
-          if (!known.has(slug)) out.push(fail(file, at, `turn ${ti + 1}: "${slug}" is not a rule of the protocol (teacher/README.md, teacher/rules.yaml)`));
+          if (!known.has(slug)) out.push(fail(file, at, `turn ${ti + 1}: "${slug}" is not a rule of the protocol (teacher/rules.yaml)`));
           else if (!listed.has(slug)) out.push(fail(file, at, `turn ${ti + 1}: "${slug}" is not in the scenario's rules, every slug it exercises`));
         }
       });

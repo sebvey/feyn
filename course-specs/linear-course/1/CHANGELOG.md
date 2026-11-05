@@ -217,3 +217,13 @@ no class: `- file or area: what changes`.
   each group's `purpose` in French; an `origin` only where a feyn issue or decision is the source;
   `teacher/README.md` unchanged, still read by the programs until it is cut; no rule changes what
   it asks (#552).
+- `teacher/rules.yaml`, `teacher/README.md`, `teacher/build/`, `classroom-builder/test-build`:
+  `teacher/rules.yaml` is the one source of the protocol: the eight rows of the save-point table
+  become rules of the group `learner-memory` (`save-next-step` to `save-preferences`, each
+  « Sous <où>, écris <quoi> »), `save-points` and `stop-save-point` cite them; `render-parts`,
+  `test-render` and `test-build` read the rules, families, groups and purposes from it, the
+  rendered parts unchanged but for the purposes in French, the eight rules and line breaks;
+  `teacher/README.md` is cut to its reader table, an introduction, « Notation », « Règles
+  d'écriture », « Composition » and « Clés et paramètres », in French, no family or group
+  section, no rule, no course named; decisions `rule-groups-replace-ranges`,
+  `rules-named-by-slug` and `spec-files-by-product` amended; no rule changes what it asks (#554).

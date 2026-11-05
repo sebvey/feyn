@@ -1,7 +1,7 @@
 # The form of a test scenario of linear-course (README.md, this folder): one YAML file per
 # scenario in this folder, named after its id, run by classroom-builder/fresh-test. check-spec
 # (scenarios) validates every scenario of this folder against this schema, and checks that every
-# slug it names is a rule of the protocol (teacher/README.md, teacher/rules.yaml).
+# slug it names is a rule of the protocol (teacher/rules.yaml).
 $schema: https://json-schema.org/draft/2020-12/schema
 title: a test scenario of the teacher
 type: object

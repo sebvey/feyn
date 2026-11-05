@@ -6,6 +6,8 @@
 //   fixtures/valid                 a model spec MAJOR that passes every test
 //   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>": that test fails with a
 //                                  line containing the fragment, and no other test fails beside it
+//                                  but those an "also: <id>[, <id>]" line names, which the same
+//                                  defect fails too (a slug defined twice: rule-slugs and rule-files)
 //   fixtures/checks/               the stubs of the check scripts the fixtures' rules name
 //                                  (check-spec --checks-dir)
 //   the repository's specs         every spec MAJOR of course-specs/ whose spec.yaml declares this
@@ -45,7 +47,8 @@ const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
     const r = spec(d, ['--only', ex.check]);
     const hit = r.lines.filter((l) => l.startsWith(ex.check + ': fail: '));
     report(`broken/${name} fails ${ex.check}`, r.code === 1 && hit.some((l) => l.includes(ex.message)), `expected "${ex.message}", got ${r.lines.join(' | ') || r.err}`);
-    const others = failing(spec(d, [])).filter((l) => !l.startsWith(ex.check + ': '));
+    const also = (ex.also || '').split(',').map((x) => x.trim()).filter(Boolean);
+    const others = failing(spec(d, [])).filter((l) => ![ex.check, ...also].some((c) => l.startsWith(c + ': ')));
     if (others.length) report(`broken/${name} breaks nothing else`, false, others.slice(0, 2).join(' | '));
   }
 }

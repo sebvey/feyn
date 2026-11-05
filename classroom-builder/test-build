@@ -5,7 +5,7 @@
 // of the composition, the course copy (diff -r), the learner templates, the permissions, the
 // skills of the moments, the built CLAUDE.md (no placeholder left, the rules verbatim but for their
 // placeholders, each rule of the protocol in CLAUDE.md or in one skill, once, each family and group
-// heading followed by its Purpose), the three spots of the filling (no doubled parenthesis, no
+// heading followed by its purpose; the protocol read from teacher/rules.yaml), the three spots of the filling (no doubled parenthesis, no
 // period after a phrase that ends with one, the plural of the domains), the teacher template (no
 // rule text), course.lock, the classroom's git (one commit, clean), the default folders of the
 // channels (under a temporary HOME), the refusal of a non-empty target and --force, --site-url, and
@@ -15,6 +15,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const { createRequire } = require('module');
 
 const BUILDER = __dirname;
 const REPO = path.resolve(BUILDER, '..');
@@ -118,10 +119,24 @@ for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf
 check(claude.includes('](site non publié)'), 'CLAUDE.md: a link does not read « (site non publié) » once');
 check(skillText.stop.includes('« Je sauvegarde ta progression, un instant. »\n') || skillText.stop.includes('« Je sauvegarde ta progression, un instant. » '), 'skill feyn-teacher-stop: the stop phrase is not followed by the rule\'s text without a second period');
 
+// the protocol, teacher/rules.yaml, read with the yaml lib of the spec directives the MAJOR declares:
+// its groups (a family is a group whose id is its category), each rule as the build writes it,
+// `**<id>** <text>` and its why on a line `*Pourquoi :* <why>`
+const directivesLine = (read(path.join(SPEC, 'spec.yaml')) || '').split('\n').find((l) => /^directives\s*:/.test(l)) || '';
+const directives = directivesLine.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
+const yaml = createRequire(path.join(REPO, 'spec-directives', directives, 'package.json'))('./lib/yaml-lines');
+const protocol = yaml.parse(read(path.join(SPEC, 'teacher', 'rules.yaml')) || '');
+const groups = protocol.groups;
+const families = groups.filter((g) => g.id === g.category);
+const source = new Map(groups.flatMap((g) => g.rules).map((r) => [r.id, `**${r.id}** ${r.text}` + (r.why ? `\n*Pourquoi :* ${r.why}` : '')]));
+const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+// a text of the protocol as built: a placeholder as fill() treats it (« {k} » with the period after
+// it, ({k}) with its parentheses, a bare {k}) stands for its value
+const patternOf = (t) => new RegExp('^' + t.split(/« \{[a-z_]+\.[a-z_]+\} »\.?|\(\{[a-z_]+\.[a-z_]+\}\)|\{[a-z_]+\.[a-z_]+\}/).map(escape).join('[\\s\\S]+?') + '$');
+
 // every rule of the protocol, once, in CLAUDE.md or in the skill of its moment
-const protocol = read(path.join(SPEC, 'teacher', 'README.md'));
 const slugsOf = (text) => text.split('\n').map((l) => /^\*\*([a-z0-9-]+)\*\* /.exec(l)).filter(Boolean).map((m) => m[1]);
-const all = slugsOf(protocol.slice(0, protocol.indexOf('\n## Composition')));
+const all = [...source.keys()];
 const where = new Map(all.map((s) => [s, []]));
 for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
   for (const s of slugsOf(text)) {
@@ -138,10 +153,10 @@ for (const [s, m] of Object.entries(MOMENT_OF)) check((where.get(s) || [])[0] ==
 check((where.get('declared-diagram-shown') || [])[0] === 'CLAUDE.md', 'rule declared-diagram-shown is not in CLAUDE.md');
 check(claude.includes(`- \`diagram\` (skill \`${skillOf('diagram')}\`): ${WHEN.diagram}.`), 'the Moments list of CLAUDE.md does not load the moment diagram at the sub-concept a diagram declares');
 const order = slugsOf(claude);
-check(order.join(',') === all.filter((s) => where.get(s)[0] === 'CLAUDE.md').join(','), 'the rules of CLAUDE.md are not in the order of teacher/README.md');
-// every family and group heading kept is followed by its Purpose paragraph: in CLAUDE.md, and in the
-// skills that hold a group or a family whole (the diagram rules of the moment sit under the heading of
-// the group `diagram-showing`, whose Purpose stays in CLAUDE.md with declared-diagram-shown)
+check(order.join(',') === all.filter((s) => where.get(s)[0] === 'CLAUDE.md').join(','), 'the rules of CLAUDE.md are not in the order of teacher/rules.yaml');
+// every family and group heading kept is followed by its purpose: in CLAUDE.md, and in the skills
+// that hold a group or a family whole (the diagram rules of the moment sit under the heading of the
+// group `diagram-showing`, whose purpose stays in CLAUDE.md with declared-diagram-shown)
 const HEADING = /^(## \d+\. .+|##+ .+ \(`[a-z0-9-]+`\))$/;
 const headingsOf = (text) => {
   const lines = text.split('\n');
@@ -159,14 +174,16 @@ for (const [name, text] of [['CLAUDE.md', claude], ['onboarding', skillText.onbo
   for (const i of found) {
     headingCount++;
     const next = lines.slice(i + 1).find((l) => l.trim() !== '') || '';
-    check(next.startsWith('**Purpose.**'), `${name}: ${lines[i]} is not followed by its Purpose paragraph`);
+    const grp = /\(`([a-z0-9-]+)`\)$/.exec(lines[i]);
+    const fam = /^## (\d+)\. /.exec(lines[i]);
+    const g = grp ? groups.find((x) => x.id === grp[1]) : fam ? families[Number(fam[1]) - 1] : null;
+    check(g && patternOf(g.purpose).test(next), `${name}: ${lines[i]} is not followed by its purpose`);
   }
 }
-const protocolHeadings = headingsOf(protocol.slice(0, protocol.indexOf("\n## Composition"))).found.length;
-check(headingCount === protocolHeadings, `${headingCount} family and group headings in CLAUDE.md and the skills, not the ${protocolHeadings} of the protocol`);
+check(headingCount === groups.length, `${headingCount} family and group headings in CLAUDE.md and the skills, not the ${groups.length} of the protocol`);
 
-// each rule as built is the protocol's text, verbatim but for its placeholders: a rule block runs from
-// its **slug** line to the next rule or heading, as the build cuts it; a placeholder stands for its
+// each rule as built is the protocol's text, verbatim but for its placeholders: a rule block of the
+// built text runs from its **slug** line to the next rule or heading; a placeholder stands for its
 // value, a period after its » included (dropped when the value ends with one), its parentheses
 // included (one pair kept when the value has its own)
 function ruleBlocks(text) {
@@ -189,10 +206,6 @@ function ruleBlocks(text) {
   close();
   return blocks;
 }
-const source = ruleBlocks(protocol.slice(0, protocol.indexOf('\n## Composition')));
-const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-// a placeholder as fill() treats it: « {k} » with the period after it, ({k}) with its parentheses, a bare {k}
-const patternOf = (t) => new RegExp('^' + t.split(/« \{[a-z_]+\.[a-z_]+\} »\.?|\(\{[a-z_]+\.[a-z_]+\}\)|\{[a-z_]+\.[a-z_]+\}/).map(escape).join('[\\s\\S]+?') + '$');
 let compared = 0;
 for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
   for (const [slug, built] of ruleBlocks(text)) {
@@ -203,7 +216,7 @@ for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf
 }
 check(compared === all.length, `${compared} rules compared with the protocol, not ${all.length}`);
 check(!claude.includes('## 9. Arrêt') && !claude.includes('(`onboarding`)') && !claude.includes('(`resume`)'), 'CLAUDE.md holds a family or group a moment loads whole');
-check(claude.includes('| **save-next-step** |'), 'CLAUDE.md lacks the save-point table');
+check(claude.includes('\n**save-next-step** '), 'CLAUDE.md lacks the save-point rule save-next-step');
 
 // the teacher template: the harness only
 const template = read(path.join(BUILDER, 'CLAUDE.template.md')) || '';

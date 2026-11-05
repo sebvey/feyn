@@ -1,2 +1,2 @@
 check: rule-files
-message: id "welcome" is neither a group of teacher/README.md nor the category of a family
+message: group "onboarding" belongs to the family session-start, whose group does not come before it

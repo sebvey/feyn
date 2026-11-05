@@ -82,3 +82,14 @@ no class: `- file or area: what changes`.
   group of `teacher/README.md` (the fixture `broken/rule-files-protocol-group` fails an id that is
   neither), and accepts a rule of the protocol without `origin`; `README.md` sections 1 and 8 and
   decision `rules-with-level-and-method` say so (#552).
+- `tests/`: `rule-files`, `rule-slugs`, `lexicon-keys` and `scenarios` read the protocol from
+  `teacher/rules.yaml`: `rule-slugs` defines the slugs of rules and groups from it and checks the
+  citations of its `text` and `why`, every code span shaped like a slug included (the fixture
+  `broken/rule-slugs-text-span`), and of `teacher/README.md` (the fixture
+  `broken/rule-slugs-used-in-missing`); `rule-files` holds a group of `teacher/rules.yaml` to a
+  `category` and to the order of its family (the fixture `broken/rule-files-protocol-group` fails
+  a group before its family); `lexicon-keys` reads the keys of its texts, and of the « Clés et
+  paramètres » tables of `teacher/README.md` (a value « liste » is a list);
+  `test-fixtures` accepts an `also:` line in an `EXPECT` (a slug defined twice fails `rule-slugs`
+  and `rule-files`); every fixture's `teacher/README.md` holds no rule; `README.md` sections 1 and
+  8 say so (#554).

@@ -8,7 +8,7 @@ parts:
         what: the rules of the protocol
       - from: spec
         source: teacher/README.md
-        what: the purpose of the families
+        what: the notation of the protocol
       - from: classroom
         source: course.lock
         what: the classroom parameters

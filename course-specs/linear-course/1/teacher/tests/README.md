@@ -10,7 +10,7 @@ The readers are defined in [`spec-directives/README.md`](../../../../../spec-dir
 
 A **test scenario** is a fixed run of a teaching session: the learner memory it starts from, the
 learner's messages in order, the acts the teacher's replies are expected to show and the rules of
-the protocol (`../README.md`, `../rules.yaml`) they exercise. A **fresh test** runs one:
+the protocol (`../rules.yaml`) they exercise. A **fresh test** runs one:
 `mise exec -- classroom-builder/fresh-test <course-dir> <scenario id>` builds a disposable
 classroom from the course, runs the teacher in it turn by turn, and judges the transcript, a
 script for the form rules and a fresh agent for the others, slug by slug
@@ -35,7 +35,7 @@ every scenario against it and checks that every slug it names is a rule of the p
 | `learner` | `new` (the learner templates, as the build writes them), or a map from a file of `learner/` (`apprenant.md`, `parcours.md`, `observations.md`) to its content, written in the classroom and committed before the first turn; a file it does not name keeps its template |
 | `turns` | the learner's messages, in order, each one call of the teacher in one conversation: `message` (in French), an optional `if`, an optional `expect` |
 | `turns[].if` | a branch, since the learner is fixed and the teacher is not: `next-line` sends the message only when the teacher's previous reply ends on the next line (it holds `phrases.continue_prompt`), `question` only when it asks a question (it holds `phrases.question_lead`); otherwise the turn is skipped |
-| `turns[].expect` | the observable acts of the teacher's reply, each `act` (worded as the protocol's reader tables word what the fresh tests observe) and `rules` (the slugs it exercises) |
+| `turns[].expect` | the observable acts of the teacher's reply, each `act` (worded as an act the fresh tests observe) and `rules` (the slugs it exercises) |
 | `rules` | every slug the scenario exercises: each is judged observed or not observed, and the scenario passes when every one is observed |
 
 An act the teacher may do at one turn or the next (a reply that fits in one message or ends on the

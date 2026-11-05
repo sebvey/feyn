@@ -3,16 +3,14 @@
 # teacher conforms when it holds every requirement of this file (spec-directives/1/README.md
 # section 2).
 #
-# This file holds every rule of teacher/README.md that opens on its slug ("**<slug>** "), copied
-# from teacher/README.md, which states each of them too until story 3b of epic #450 cuts it. The
-# rows of the save-point table of family 8, rules too, stay in teacher/README.md only: story 3b
-# gives them a home before the cut. The groups follow the order of teacher/README.md: for each
-# family ("## <n>. ..."), a group whose id is the family's category, holding the rules placed
-# directly under the family; then each group of that family ("### <title> (`<slug>`)"), its slug as
-# id. A group: id, title, purpose (what the group is for), category (its family), method
-# (demonstration, by the fresh tests), rules. A rule: id (its slug), level, origin (the feyn issue
-# or decision it comes from, where one is named), text, why (what the teacher does without the rule,
-# where teacher/README.md gives it). check-spec (rule-files) verifies this file.
+# This file holds every rule of the protocol, its one source: teacher/README.md describes how a
+# rule is written and states none. The families come in their order: for each family, a group
+# whose id is the family's category, holding the rules placed directly under the family; then each
+# group of that family, its slug as id. A group: id, title, purpose (what the group is for),
+# category (its family), method (demonstration, by the fresh tests), rules. A rule: id (its slug),
+# level, origin (the feyn issue or decision it comes from, where one is named), text, why (what the
+# teacher does without the rule, where a drift was seen). check-spec (rule-files, rule-slugs)
+# verifies this file; teacher/build/render-parts renders it for a classroom.
 groups:
   - id: session-start
     title: Démarrage de session
@@ -768,7 +766,59 @@ groups:
         text: >-
           Les points de sauvegarde : la fin de l'accueil ; un concept validé, sauté ou dont
           l'entraînement est fini, dans la réponse qui le clôt ; l'arrêt (famille 9). À chaque
-          point, écris ce qui a changé depuis le précédent, selon le tableau ci-dessous.
+          point, écris ce qui a changé depuis le précédent, selon les règles `save-next-step`,
+          `save-journal-line`, `save-concept-statuses`, `save-announced-ideas`, `save-levers`,
+          `save-vigilances`, `save-acquired` et `save-preferences`.
+      - id: save-next-step
+        level: requirement
+        text: >-
+          Sous « {memory_headings.next_step} » de `learner/parcours.md`, écris où on en est : le
+          concept qui vient, ou l'entraînement en cours (règle `practice-noted-in-next-step`). À
+          l'arrêt seulement, la question en attente : l'énoncé (dossier du concept et titre du cas,
+          ou énoncé complet s'il est improvisé), la question mot pour mot ; pour une relance, son
+          rang (1 ou 2) et ce que l'apprenant a déjà juste ; pour une question en plusieurs temps,
+          la partie posée et ce qu'il a juste aux précédentes. Retire ce qui est fait.
+      - id: save-journal-line
+        level: requirement
+        text: >-
+          Sous « {memory_headings.journal} » de `learner/parcours.md`, écris la ligne de la session,
+          « {memory.journal_line} », créée au premier point de la session, complétée ensuite :
+          concepts vus, titres des cas d'entraînement posés, mini-récap
+          (« {memory.minirecap_entry} »). Une conversation neuve est une session neuve, même après
+          une coupure.
+      - id: save-concept-statuses
+        level: requirement
+        text: >-
+          Sous « {memory_headings.concepts} » de `learner/parcours.md`, écris le statut des concepts
+          qui ont changé (`{status.in_progress}`, `{status.validated}`, `{status.skipped}`,
+          `{status.to_review}`) : la ligne du concept, ajoutée dans l'ordre de `course.yaml` à son
+          premier changement.
+      - id: save-announced-ideas
+        level: requirement
+        text: >-
+          Sous « {memory_headings.announced} » de `learner/parcours.md`, écris les idées annoncées
+          pour un concept à venir, avec son numéro.
+      - id: save-levers
+        level: requirement
+        text: >-
+          Sous « {memory_headings.levers} » de `learner/observations.md`, écris ce qui marche avec
+          l'apprenant : `{memory.observation_line}`.
+      - id: save-vigilances
+        level: requirement
+        text: >-
+          Sous « {memory_headings.vigilances} » de `learner/observations.md`, écris les difficultés
+          pas encore surmontées : `{memory.observation_line}`.
+      - id: save-acquired
+        level: requirement
+        text: >-
+          Sous « {memory_headings.acquired} » de `learner/observations.md`, écris les concepts
+          compris, les vigilances surmontées : `{memory.acquired_line}` ; la vigilance surmontée en
+          sort.
+      - id: save-preferences
+        level: requirement
+        text: >-
+          Sous « {memory_headings.preferences} » de `learner/apprenant.md`, écris les préférences
+          apparues ou changées, avec le fait.
       - id: onboarding-files-set-up
         level: requirement
         text: >-
@@ -844,7 +894,7 @@ groups:
         level: requirement
         text: >-
           Après la phrase d'ouverture de l'arrêt, écris le point de sauvegarde, avec la question en
-          attente s'il y en a une (tableau de la famille 8).
+          attente s'il y en a une (règle `save-next-step`).
       - id: reread-as-next-teacher
         level: requirement
         text: >-

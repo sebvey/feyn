@@ -66,7 +66,7 @@ MAJOR's `render-parts` renders each part as text, and this build realises it in 
 
 | Part | In the classroom |
 |---|---|
-| `permanent` | `CLAUDE.md`, from `CLAUDE.template.md`: the course and its channel (from `course.lock`), then the texts of the document's `permanent`, the posture, the course map, the names of the course files, then the list of the moments and their skills, then the permanent protocol (every rule no moment loads, each family and group preceded by its heading and its Purpose). `@learner/apprenant.md`, `@learner/observations.md` and `@course/course.yaml` are imported at the start, as the rules say they are given (« fourni au démarrage ») |
+| `permanent` | `CLAUDE.md`, from `CLAUDE.template.md`: the course and its channel (from `course.lock`), then the texts of the document's `permanent`, the posture, the course map, the names of the course files, then the list of the moments and their skills, then the permanent protocol (every rule no moment loads, each family and group preceded by its heading and its purpose, from `teacher/rules.yaml`). `@learner/apprenant.md`, `@learner/observations.md` and `@course/course.yaml` are imported at the start, as the rules say they are given (« fourni au démarrage ») |
 | `on-demand` | `.claude/skills/feyn-teacher-<moment id>/SKILL.md`, one per moment of the document's `moments` whose `rules` is not empty (none for `reset` while it has none): its name `feyn-teacher-<moment id>` (the prefix keeps it apart from a skill of Claude Code itself, `/resume`), its description says when it is used, from the moment's `when`; its body names what the moment reads (its `draws` and `slots`, a draw given as `text` written out under its path, so that the onboarding needs no read of `plan.md` before its first message) and holds its `rules` |
 | `course-reads` | `course/`, the course folder copied as is |
 | `learner-memory` | `learner/`, the document's `learner_templates`, each written as is |
@@ -89,7 +89,7 @@ templates, the skills `feyn-teacher-<moment>` and their descriptions, the onboar
 `plan.md` given in the onboarding skill, the « Moments » list naming
 them, no placeholder left, each rule of the protocol once in `CLAUDE.md` or in one skill, in the
 protocol's order and verbatim but for its placeholders, each family and group heading followed by
-its Purpose, the three spots of the filling (no « ((site », no period after a phrase that ends
+its purpose, the three spots of the filling (no « ((site », no period after a phrase that ends
 with one, no « ses <number> domaines »), the template without rule text, the permissions, the
 fields of `course.lock`, one commit and a clean classroom git, the refusal of a non-empty target
 and `--force` (and its refusal of a folder that is not a classroom), `--site-url`, the default

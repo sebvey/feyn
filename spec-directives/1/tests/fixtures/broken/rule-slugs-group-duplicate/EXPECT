@@ -1,2 +1,3 @@
 check: rule-slugs
 message: slug "save-points" is defined twice
+also: rule-files

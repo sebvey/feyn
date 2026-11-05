@@ -1,2 +1,3 @@
 check: rule-slugs
 message: slug "first-rule" is defined twice
+also: rule-files
