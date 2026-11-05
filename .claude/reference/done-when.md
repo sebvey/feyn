@@ -25,9 +25,13 @@ story's does. Why: decision `done-when-run-at-writing`.
 ## The baseline, at writing
 
 - The author runs each command of the Done when on the base and writes its output, the
-  baseline, on the line under the statement:
-  `Baseline on <short sha>: <the output, or its count and the lines that matter>`. The trace
-  makes the check visible: a check done and a check skipped no longer look the same.
+  baseline, on the line under the statement: `Baseline on <short sha>:`, then the output pasted
+  as the command prints it. The trace makes the check visible: a check done and a check skipped
+  no longer look the same.
+- An output too long is abridged by the command itself, written in the statement's command (a
+  `| cut -d: -f1,2`, a `| wc -l`), never by a transcription: on epic #570, two baselines
+  transcribed by hand from a cut output each missed a line (#582, `deliver-story.js:158`; #586,
+  `deliver-story.js:77`), and the start of #582 went on past it.
 - The author checks each line of it against the statement's intent: a line the work must change
   is one the statement targets; a line it must leave is a command too broad (on #554,
   `grep -i 'ADR'` matched « adresse »), corrected before the issue is posed.
@@ -68,7 +72,10 @@ with its baseline. The same lines are no change: a line number moved by an edit 
 the file is tolerated, since a strict compare would stop every start whose file was touched
 above the matched line. An output that changed stops the start: the base moved under the
 statement, and its author (the orchestrator for a story of an epic, otherwise the maintainer)
-rewrites the statement and its baseline before the work begins.
+rewrites the statement and its baseline before the work begins. A line the baseline lacks is a
+changed output, even one the statement targets and the base did not move for: the start stops,
+and its author amends the baseline, since the start cannot tell a line left out of the baseline
+from a line the base gained.
 
 A start that stops, on an output changed or on a baseline it writes that shows a statement
 wrong, posts nothing on the issue. Its stop message (under the agent workflow, the question of
