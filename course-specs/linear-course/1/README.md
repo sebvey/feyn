@@ -119,19 +119,19 @@ writes a CommonMark construct (a heading, a link, emphasis, a list, a block quot
 section by its heading does not count. The standards of the rule model itself (the rule files,
 the levels, the methods, the versions of a spec) are the directives' (`spec-directives/1/README.md`
 section 7); YAML, JSON Schema and SemVer are in both lists, there for the rule files and the spec,
-here for the files and the versions of a course.
+here for the files and the versions of a course, and their edition is the one the directives give.
 
 | Standard | Edition | Groups |
 |---|---|---|
 | [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le dossier de concept », « Le frontmatter de concept.md », « Le corps de concept.md », « Le fichier teaching.md », « Le fichier sources.md », « Les conventions du texte lecteur », « Les fichiers de domaine », « Les fichiers du cours »; `onboarding`, `resume`, `domain-presentation`, `loop`, `message-form`, `learner-memory` |
 | [GitHub Flavored Markdown, tables](https://github.github.com/gfm/#tables-extension-) | 0.29-gfm (2019-04-06) | « Le fichier sources.md », « Les fichiers du cours » |
-| [YAML](https://yaml.org/spec/1.2.2/) | 1.2.2 (2021-10-01) | « Le fichier course.yaml », « Le dossier de concept », « Le frontmatter de concept.md », « Les fichiers de domaine » |
-| [JSON Schema](https://json-schema.org/draft/2020-12) | 2020-12 | « Le fichier course.yaml », « Le frontmatter de concept.md » |
+| [YAML](https://yaml.org/) | the directives' (`spec-directives/1/README.md` section 7) | « Le fichier course.yaml », « Le dossier de concept », « Le frontmatter de concept.md », « Les fichiers de domaine » |
+| [JSON Schema](https://json-schema.org/) | the directives' (`spec-directives/1/README.md` section 7) | « Le fichier course.yaml », « Le frontmatter de concept.md » |
 | [XML](https://www.w3.org/TR/2008/REC-xml-20081126/) | 1.0, Fifth Edition (2008-11-26) | « Le contrat de dessin » |
 | [SVG](https://www.w3.org/TR/2018/CR-SVG2-20181004/) | SVG 2, Candidate Recommendation (2018-10-04) | « Le contrat de dessin », « Le style des schémas » |
 | [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.2/) | 1.2 (2023-06-06) | « Le contrat de dessin » |
 | [ISO 8601-1](https://www.iso.org/standard/70907.html) | 2019 | « Le fichier sources.md », « Les fichiers du cours » |
-| [SemVer](https://semver.org/spec/v2.0.0.html) | 2.0.0 | « Les fichiers du cours » |
+| [SemVer](https://semver.org/) | the directives' (`spec-directives/1/README.md` section 7) | « Les fichiers du cours » |
 
 ## 5. Checks
 
