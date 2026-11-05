@@ -124,9 +124,7 @@ propose it as a choice, never write it on the strength of another decision.
 
 As the maintainer decided, then the working list when there is one (step 2). Which form an
 issue is in is read as `/feyn-issue` reads it ([its skill](../feyn-issue/SKILL.md), "Read an
-issue"). The issue being triaged is not a twin of the work items created from it: when
-`/feyn-issue`'s step 2, "Look for a twin", finds it, it goes on to create them, the triaged
-issue left as it is and closed after.
+issue").
 
 An item labelled `stale` (step 3): the act that executes the decision removes the label when
 the item holds, as written or reworked (`mise exec -- gh issue edit <n> --remove-label stale`),
@@ -135,10 +133,11 @@ left open keeps the label: it has not been decided.
 
 **An idea:**
 - **create the work items**: each with `/feyn-issue` in the form the maintainer chose,
-  `story <what>`, `story #<epic> <what>` or `epic <objective>`, its Status Option, or Ready
-  when the maintainer said it is committed (step 3). A story's Context ends with the origin
-  line "From idea #<n>."; an epic's Material cites "idea #<n>". A story under an epic is
-  created only when it is the next one the epic's plan comment marks (the policies of
+  `story <what>`, `story #<epic> <what>` or `epic <objective>`, and its parameters:
+  `--status Option`, or `--status Ready` when the maintainer said it is committed (step 3);
+  `--origin "From idea #<n>."` for a story, `--origin "Origin: idea #<n>"` for an epic;
+  `--opened-from #<n>`, the idea, left out of the twin search. A story under an epic is created
+  only when it is the next one the epic's plan comment marks (the policies of
   [contributing](../../../docs/contributing.md)); otherwise the idea is folded into that epic
   (below). Then close the idea as completed:
   `mise exec -- gh issue close <n> --reason completed --comment "Triaged <YYYY-MM-DD>: <the work items created from it, each #<m>>."`;
@@ -158,7 +157,8 @@ left open keeps the label: it has not been decided.
 do; decision `idea-is-never-converted`; an issue numbered below #424, the epic PR of epic #392,
 #425 excepted, `/feyn-issue`, "Read an issue"): never rewritten in place. It is recreated as a story or
 an epic, or several, as for an idea above, with `/feyn-issue`, the work it defines restated in
-the new work item's form, Option or Ready as the maintainer says. Its blocked-by links, both
+the new work item's form, `--status Option` or `--status Ready` as the maintainer says,
+`--opened-from #<n>`. Its blocked-by links, both
 ways ([project.md](../../reference/project.md), "Dependencies", Read), are set again on the new
 work item (Set); then it is closed as completed with a comment naming what replaces it.
 

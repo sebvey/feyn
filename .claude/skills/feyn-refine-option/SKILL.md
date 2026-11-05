@@ -165,15 +165,14 @@ open, or sent to a brainstorm, keeps the label: it has not been decided.
   `/feyn-brainstorm <n>` opens from the option, with the changes the staleness check found;
 - **merge**: the option it goes into gets what it lacked (rework, above), then close it as
   completed with a comment naming that option;
-- **split**: one option per work item it holds (`/feyn-issue`, Option unless the maintainer
-  says a part is committed), each citing it, then close it as completed with a comment naming
-  them; a story created this way ends its Context with the origin line of the option it splits
-  ("From idea #<n>.", "Story of epic #<n>.", "From a brainstorm with the maintainer, <date>."
-  or "Asked by the maintainer, <date>."), never a new form. A story under an epic is created
-  only when it is the next one the epic's plan comment marks (the policies of
+- **split**: one option per work item it holds, each citing it, created with `/feyn-issue` and
+  its parameters: `--status Option`, or `--status Ready` when the maintainer says a part is
+  committed; `--origin`, the origin of the option it splits, never a new form;
+  `--opened-from #<n>`, the option, left out of the twin search. Then close the option as
+  completed with a comment naming them. A story under an epic is created only when it is the
+  next one the epic's plan comment marks (the policies of
   [contributing](../../../docs/contributing.md)); otherwise that part is folded into the epic
-  (below). The option split is not a twin of its parts: when `/feyn-issue`'s step 2, "Look for
-  a twin", finds it, it goes on to create them;
+  (below);
 - **fold into an epic**: close it as completed with a comment naming the epic that covers it;
   what it adds goes into the epic's Material when the epic is still an option, as decided (a
   requirement added to its Done when: step 3);
