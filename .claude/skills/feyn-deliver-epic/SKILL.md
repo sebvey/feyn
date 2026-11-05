@@ -73,8 +73,10 @@ One at a time, the next one only (rules of the cycle):
    never rebase, in a detached worktree of the scratchpad, never from the local integration
    branch, out of date once a story is merged
    (`git worktree add --detach <path> origin/<integration branch>`,
-   `git -C <path> merge origin/main`, `git -C <path> push origin HEAD:<integration branch>`,
-   `git worktree remove <path>`). A conflict outside the epic's files: tell the maintainer.
+   `git -C <path> merge origin/main`, `git -C <path> push origin HEAD:<integration branch>`),
+   then clean that worktree as [run-cleanup.md](../../reference/run-cleanup.md) says (the
+   worktree `<path>`, its `HEAD` on the integration branch, no local branch). A conflict outside
+   the epic's files: tell the maintainer.
 3. **Run** `.claude/workflows/deliver-story.js` in epic mode (its `whenToUse` gives the args:
    `issue`, `epic`, `base` the integration branch, `work` when the story needs guidance beyond
    its To do), with `scriptPath` absolute. A direct story is not run: "A direct story", below,
@@ -104,29 +106,11 @@ One at a time, the next one only (rules of the cycle):
    - `deviations`, whatever the status, and the `choicesMade` that add structure (a new file,
      a category, a marker, an exception to a principle): each is sorted at once (step 3); the
      other choices stay in its PR's "Delivery notes".
-5. **Clean the run**, the steps of both delivery skills, `<base>` being the integration branch,
-   or `main` for a story without an epic.
-   `git worktree list --porcelain` lists the run's worktrees,
-   `.claude/worktrees/wf_<run id>-<n>`. A locked one: its agent still runs, wait. For each:
-   - `git -C <path> status --porcelain` shows nothing but `node_modules`; anything else: stop
-     and show it.
-   - A PR not merged (a story without an epic, always; here `needs-orchestrator`, `blocked`,
-     `failed`, before a rerun): after `git fetch`, the worktree's `HEAD` is on the PR's branch
-     on `origin` (`git -C <path> branch -r --contains HEAD` names `origin/<story branch>`); not
-     there: stop and show it. A run that opened no PR (`pr` 0): a worktree whose `HEAD` adds
-     nothing to `origin/<base>` (`git -C <path> log origin/<base>..HEAD` prints nothing) is
-     removed; one with commits stays, named to the maintainer with the run's status.
-   - Then `git worktree remove --force <path>` (an untracked `node_modules` makes a plain
-     remove refuse) and `git branch -D worktree-wf_<run id>-<n>`.
-
-   Then the local story branch. A merged PR (`mise exec -- gh pr view <pr> --json state` reads
-   `MERGED`): `git branch -D <story branch>`; the remote one goes with the merge, still there
-   (`git ls-remote --heads origin <story branch>`): tell the maintainer. A PR not merged: move
-   the local story branch to the PR's head, which a corrector's push (`git push origin
-   HEAD:<story branch>`, from a detached `HEAD`) does not move: `git branch -f <story branch>
-   origin/<story branch>`, never the integration branch. The rerun's contributor switches to it
-   and its push is a fast-forward. For a story without an epic, that local branch stays until
-   the merge: `/feyn-merge-cleanup` deletes it (its step 4).
+5. **Clean the run** as [run-cleanup.md](../../reference/run-cleanup.md) says: the run's
+   worktrees `.claude/worktrees/wf_<run id>-<n>`, the integration branch as the base, the
+   local `<story branch>` with the story's PR (`pr`), merged (`merged`,
+   `merged-with-problems`) or not (`needs-orchestrator`, `blocked`, `failed`, `merge-failed`,
+   before a rerun: the worktrees' `HEAD` on `<story branch>`).
 6. **The plan comment** ([project.md](../../reference/project.md), "Epics", "The plan
    comment": find it, read it into a file, edit, PATCH it): in the plan, the story ticked with
    its PR and the next one marked, the plan rewritten first when the next is not obvious or the
@@ -147,7 +131,8 @@ fresh-agent review, in place of steps 2.3 to 2.5:
 - the merge, as the workflow's Merge stage does: `mise exec -- gh pr merge <pr> --squash
   --match-head-commit <head sha>`, close the story
   ([project.md](../../reference/project.md), "Epics", Close) and check it
-  is Done; then `git switch main` and `git branch -D <type>/<n>-<slug>`; then steps 2.6 and 2.7.
+  is Done; then the local branch `<type>/<n>-<slug>`, its PR merged, as
+  [run-cleanup.md](../../reference/run-cleanup.md) says; then steps 2.6 and 2.7.
 
 ## 3. Sorting, open questions, answers
 
@@ -202,8 +187,8 @@ the prompt (the branch in place of a PR, the epic in place of an issue,
 in the diff that the plan comment holds neither as open nor as answered. A blocking finding: a
 story fixes it (step 2), then a fresh agent verifies the fix, as
 `/feyn-pr-review` step 4 verifies corrections. A structural choice: sorted (step 3).
-Clean its worktree as `/feyn-pr-review` step 2 says for a reviewer's `agent-<id>` worktree
-(`TaskStop`, then unlock and remove).
+Clean its worktree as [run-cleanup.md](../../reference/run-cleanup.md) says: the reviewer's
+worktree `.claude/worktrees/agent-<id>`, its `HEAD` on the integration branch, no local branch.
 
 ## 5. The epic PR and the hand-over
 
@@ -224,11 +209,11 @@ When no open question remains and every story is closed and Done
    tell the maintainer.
 2. The epic is closed and Done (`mise exec -- gh issue view <epic> --json state,projectItems`);
    not Done after a few seconds: set it ([project.md](../../reference/project.md), "Commands").
-3. `git pull --ff-only` on `main`; the local integration branch,
-   `git branch -D <integration branch>` if it exists (`git branch --list <integration branch>`:
-   step 1 creates none); the remote one goes with the merge (checked as in step 2.5). Every
-   worktree and `worktree-*` branch of the epic's runs is gone (`git worktree list`,
-   `git branch --list 'worktree-*'`).
+3. `git pull --ff-only` on `main`; then the local integration branch, its PR (the epic PR)
+   merged, as [run-cleanup.md](../../reference/run-cleanup.md) says (step 1 creates none: often
+   nothing to do). Every worktree and `worktree-*` branch of the epic's runs is gone
+   (`git worktree list`, `git branch --list 'worktree-*'`); one left is cleaned the same way,
+   its PR merged.
 4. The issues the epic blocked that are now free: as `/feyn-merge-cleanup` step 7, "The issues
    it blocked", for the epic.
 
@@ -241,11 +226,6 @@ The behaviours the steps above rely on, one line each with its step
   (Claude Code, observed 2026-10-28, #130).
 - Step 2.3: `Workflow` called by name serves a frozen version of the script, hence `scriptPath`
   absolute (Claude Code, observed 2026-10-29, #269).
-- Step 2.5: a workflow agent spawned with isolation works in `.claude/worktrees/wf_<run id>-<n>`
-  on a branch `worktree-wf_<run id>-<n>`, kept after the run when it holds a change
-  (Claude Code, observed 2026-10-31, #348).
-- Step 2.5: the repository deletes a PR's head branch on its merge
-  (GitHub, observed 2026-10-31, #342).
 - Step 2.4: a Project workflow "Auto-archive items" archived closed slices, whose items then
   left the Project and could not be set Done; it is off since 2026-10-31
   (GitHub, observed 2026-10-31, #317).
