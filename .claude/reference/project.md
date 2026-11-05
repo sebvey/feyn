@@ -104,14 +104,14 @@ options, with their ids:
   its database id (nothing printed: the epic has none):
   `mise exec -- gh api --paginate repos/sebvey/feyn/issues/<epic>/comments --jq '.[] | select(.body | startswith("**Plan comment**")) | .id' | tail -n 1`.
   Its three parts, in this order:
-  - the head, the plan comment head, under the line `**Plan comment**`: at most ten lines, which
-    say where the epic stands, what runs, what awaits the maintainer and what comes next;
-    rewritten whole at each step that rewrites the plan or adds to the log, so that it is read
-    at a glance and holds nothing the plan or the log does not;
+  - the plan comment head, under the line `**Plan comment**`: at most ten lines, which say where
+    the epic stands, what runs, what awaits the maintainer and what comes next; rewritten whole
+    at each step that rewrites the plan or adds to the log, so that it is read at a glance and
+    holds nothing the plan or the log does not;
   - the plan, from its line `Delivery: <integration branch>`, rewritten in place at each change
-    (that line; `Stories (an estimate):`, the stories in their current
-    order, one per line, each delivered one `- [x] #<n> <title> (PR #<pr>)`, the others
-    `- [ ] <story>`, the next one ending `(next)`; `Unknown:`; `Dropped:`);
+    (that line; `Stories (an estimate):`, the stories in their current order, one per line, each
+    delivered one `- [x] #<n> <title> (PR #<pr>)`, the others `- [ ] <story>`, the next one
+    ending `(next)`; `Unknown:`; `Dropped:`);
   - the log, from the line `**Log**`, only added to (a line per delivery,
     `<date> #<n> (PR #<pr>): <what it delivered>`; per open question, `Open question: …`; per
     answer, `Answered: …`, right under its question, as [sort.md](sort.md), "An open question",
