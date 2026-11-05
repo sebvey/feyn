@@ -135,7 +135,7 @@ left open keeps the label: it has not been decided.
 - **create the work items**: each with `/feyn-issue` in the form the maintainer chose,
   `story <what>`, `story #<epic> <what>` or `epic <objective>`, and its parameters:
   `--status Option`, or `--status Ready` when the maintainer said it is committed (step 3);
-  `--origin "From idea #<n>."` for a story, `--origin "Origin: idea #<n>"` for an epic;
+  `--origin`, the line its template gives for a work item from the idea #<n>;
   `--opened-from #<n>`, the idea, left out of the twin search. A story under an epic is created
   only when it is the next one the epic's plan comment marks (the policies of
   [contributing](../../../docs/contributing.md)); otherwise the idea is folded into that epic

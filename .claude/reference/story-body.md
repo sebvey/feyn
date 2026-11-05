@@ -52,4 +52,5 @@
      does the head say where, what and why in three lines; does each command of the Done when
      carry its baseline; does the Context open with what is wrong or missing, and end with its
      origin; does it list the files that refer to content the story removes, moves or renames;
-     does each To do item hold in one line? One no: fix it, then reread. -->
+     does each To do item hold in one line? One no: fix it before the issue is created or
+     saved, then reread. -->

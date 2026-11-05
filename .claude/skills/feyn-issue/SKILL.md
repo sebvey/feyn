@@ -38,7 +38,8 @@ applies them and decides none of them:
 - `--status Option` or `--status Ready`, on a work item: the Status it is born with. None given:
   Option. Which caller gives which is the cycle's rule
   ([contributing](../../../docs/contributing.md), "How the work is organised", "Creating and
-  committing are two acts"), stated by each caller. An idea takes none: refused, saying why;
+  committing are two acts"), stated by each caller; the maintainer's word at a direct call,
+  that the work item is committed, is `--status Ready`. An idea takes none: refused, saying why;
 - `--origin "<line>"`, on a story or an epic: its origin, in one of the forms its template
   gives. None given: the form the template says applies, from what step 1 says back;
 - `--opened-from #<n>`: the issue the caller works from (the idea triaged, the option split,

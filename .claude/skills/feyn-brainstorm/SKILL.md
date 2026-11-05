@@ -187,11 +187,10 @@ naming the folder.
 - A work item: `/feyn-issue story <what>`, `/feyn-issue story #<epic> <what>` (only the next
   story of an open epic) or `/feyn-issue epic <objective>`, with its parameters:
   `--status Option`, a work item a brainstorm creates being born Option (decision
-  `idea-and-option-before-ready`); `--origin`, the idea it opened from ("From idea #<n>." for
-  a story, "Origin: idea #<n>" for an epic), otherwise the brainstorm with the maintainer and
-  its date, in the form of its template; `--opened-from #<n>`, the idea or the option it opened
-  from, if any, left out of the twin search. The links the order decided, as `/feyn-issue` sets
-  them.
+  `idea-and-option-before-ready`); `--origin`, the idea it opened from, otherwise the
+  brainstorm with the maintainer and its date, in the form of its template;
+  `--opened-from #<n>`, the idea or the option it opened from, if any, left out of the twin
+  search. The links the order decided, as `/feyn-issue` sets them.
 - The option it opened from: reworked or split as `/feyn-refine-option` step 4 does it, its
   body ending with the marker `Refined <YYYY-MM-DD> (brainstorm)`, the label `stale` removed by
   the rework; or closed as completed, its comment naming the work items that replace it.

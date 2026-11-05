@@ -17,4 +17,5 @@
      line; the history last: the work session or PR where it was seen. -->
 
 <!-- Once written, reread it as the maintainer at a triage: does the Observation open with the
-     fact and its place; did a solution slip in? One no: fix it, then reread. -->
+     fact and its place; did a solution slip in? One no: fix it before the issue is created or
+     saved, then reread. -->
