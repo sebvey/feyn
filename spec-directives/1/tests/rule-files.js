@@ -6,8 +6,8 @@
 //     (a group slug), `title`, `purpose` (what the group is for, a non-empty string), `category`
 //     and `method`; every group of either file has a `purpose`;
 //   - a rule has `id` (a slug of two to five words), `level`, `category`, `method` (on the rule
-//     or on its group) and `text`; `check` and `why` are optional; a rule of the protocol may also
-//     have `origin`, a non-empty string; no other key;
+//     or on its group) and `text`; `check` and `why` are optional; no other key, in
+//     either file;
 //   - the closed lists of spec-directives/1/README.md sections 3 and 4 and of the spec MAJOR's
 //     README.md section 3: the levels, the methods (a rule of the
 //     protocol: demonstration), the categories of a course, the families of the protocol;
@@ -34,10 +34,9 @@ const COURSE_CATEGORIES = ['structure', 'pedagogy', 'writing', 'sources', 'diagr
 // the nine families of the protocol (the spec MAJOR's README.md section 3)
 const FAMILIES = ['session-start', 'domain-presentation', 'loop', 'message-form', 'storyline',
   'stances-and-sources', 'practice-skip-asides', 'learner-memory', 'stop'];
-// optional: the keys a rule of the file may add, each a non-empty string when present
 const FILES = {
-  'course/rules.yaml': { categories: COURSE_CATEGORIES, methods: METHODS, optional: [] },
-  'teacher/rules.yaml': { categories: FAMILIES, methods: ['demonstration'], optional: ['origin'] },
+  'course/rules.yaml': { categories: COURSE_CATEGORIES, methods: METHODS },
+  'teacher/rules.yaml': { categories: FAMILIES, methods: ['demonstration'] },
 };
 const RULE_KEYS = ['id', 'level', 'category', 'method', 'check', 'text', 'why'];
 const GROUP_KEYS = ['id', 'title', 'purpose', 'category', 'method', 'rules'];
@@ -71,7 +70,6 @@ function run(ctx) {
     if (!isObj(doc)) { out.push(fail(file, 1, 'a rule file is a map whose one key is groups')); continue; }
     for (const k of Object.keys(doc)) if (k !== 'groups') out.push(fail(file, yaml.lineOf(doc, k), `unknown key "${k}": a rule file has groups only`));
     if (!Array.isArray(doc.groups) || doc.groups.length === 0) { out.push(fail(file, yaml.lineOf(doc, 'groups'), 'groups must be a non-empty list')); continue; }
-    const keys = [...RULE_KEYS, ...spec.optional];
 
     const unique = (id, line, what) => {
       if (ids.has(id)) out.push(fail(file, line, `${what} id "${id}" is not unique: also at ${ids.get(id)}`));
@@ -107,7 +105,7 @@ function run(ctx) {
         const rl = yaml.lineOf(g.rules, ri, gl);
         if (!isObj(r)) { out.push(fail(file, rl, `group ${gi + 1}, rule ${ri + 1} is not a map`)); return; }
         const name = typeof r.id === 'string' ? `rule ${r.id}` : `group ${gi + 1}, rule ${ri + 1}`;
-        for (const k of Object.keys(r)) if (!keys.includes(k)) out.push(fail(file, yaml.lineOf(r, k, rl), `${name}: unknown key "${k}"`));
+        for (const k of Object.keys(r)) if (!RULE_KEYS.includes(k)) out.push(fail(file, yaml.lineOf(r, k, rl), `${name}: unknown key "${k}"`));
         if (r.id === undefined) out.push(fail(file, rl, `${name}: id is mandatory`));
         else if (typeof r.id !== 'string' || !SLUG.test(r.id)) out.push(fail(file, yaml.lineOf(r, 'id', rl), `${name}: id must be a slug, two to five lowercase words joined by hyphens`));
         else unique(r.id, yaml.lineOf(r, 'id', rl), 'rule');
@@ -122,7 +120,6 @@ function run(ctx) {
         if (!isStr(r.text)) out.push(fail(file, yaml.lineOf(r, 'text', rl), `${name}: text is mandatory`));
         else if (file === 'course/rules.yaml') courseTexts.push({ text: r.text, line: yaml.lineOf(r, 'text', rl) });
         if (r.why !== undefined && !isStr(r.why)) out.push(fail(file, yaml.lineOf(r, 'why', rl), `${name}: why must be a non-empty string`));
-        for (const k of spec.optional) if (r[k] !== undefined && !isStr(r[k])) out.push(fail(file, yaml.lineOf(r, k, rl), `${name}: ${k} must be a non-empty string`));
         if (r.check !== undefined) {
           const cl = yaml.lineOf(r, 'check', rl);
           // a level or a category that is missing or off the lists already failed above

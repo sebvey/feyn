@@ -1,5 +1,5 @@
 # fixture: the rules of the teacher, in two families; the group onboarding follows its family,
-# session-start; the rules of the second family have no origin, and one has a why
+# session-start; a rule of the second family has a why
 groups:
   - id: session-start
     title: Démarrage
@@ -9,7 +9,6 @@ groups:
     rules:
       - id: first-rule
         level: requirement
-        origin: "feyn: #1"
         text: Le premier message part sans appel d'outil.
   - id: onboarding
     title: Accueil

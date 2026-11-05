@@ -17,8 +17,7 @@ model is the spec directives', so it binds every spec that follows them. A rule 
 slug, decision `rules-named-by-slug`), a `level`, a `category`, a `method`, a `check`
 (optional: the check that implements the method, when one exists), a `why` (optional, on any
 rule: what a competent model does without the rule, as observed in a test or a teaching
-session) and a `text`; a rule of the protocol also has its group and order, and an `origin`
-where a feyn issue or decision is its source.
+session) and a `text`; a rule of the protocol also has its group and order.
 `category` and `method` can be declared once for a group of rules and overridden by a rule. The
 level is a field, never a word parsed from the text: the verb of the text matches it, and the
 field is authoritative. Three attributes are kept apart, which the spec fused: the **level** of
@@ -167,3 +166,8 @@ in the README of its MAJOR, each with its edition.
   feyn issue or decision is its source; a rule the base inherited with no such source has none.
   Without this, every rule of the protocol needs an `origin` and a rule with no feyn source gets
   one that names a course, which a spec does not (decision `spec-names-no-course`).
+- Amended 2026-11-05 (#565): the `origin` leaves the rules of the protocol, and the rule files
+  accept it no more. It was the provenance of a rule to the course the protocol came from, which
+  a spec no longer names; it covered a few rules, in three forms, and no program read it, while
+  git keeps the issue that wrote each rule. Without this, a contributor fills a field nothing
+  reads, in a form nothing checks, and takes it for the link from a rule to its decision.

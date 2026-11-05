@@ -45,8 +45,8 @@ professeur ou un cours d'une autre langue suit une autre spec, pas une traductio
   un groupe dont l'`id` est sa catégorie : il porte les règles placées directement sous la
   famille, et les autres groupes de la famille le suivent.
 - Une règle a un `id` (son slug), un `level`, un `text`, et peut avoir un `why` (ce que fait le
-  professeur sans la règle, là où une dérive a été vue dans un test ou une session) et un `origin`
-  (l'issue ou la décision feyn d'où elle vient). Chaque règle est testable.
+  professeur sans la règle, là où une dérive a été vue dans un test ou une session). Chaque règle
+  est testable.
 - Une règle est nommée par un slug, comme une décision (décision `rules-named-by-slug`) : deux à
   cinq mots, en minuscules, reliés par des tirets, qui nomment le comportement, en anglais quelle
   que soit la langue de la spec. Une autre règle la cite en code, « (règle

@@ -8,9 +8,9 @@
 # whose id is the family's category, holding the rules placed directly under the family; then each
 # group of that family, its slug as id. A group: id, title, purpose (what the group is for),
 # category (its family), method (demonstration, by the fresh tests), rules. A rule: id (its slug),
-# level, origin (the feyn issue or decision it comes from, where one is named), text, why (what the
-# teacher does without the rule, where a drift was seen). check-spec (rule-files, rule-slugs)
-# verifies this file; teacher/build/render-parts renders it for a classroom.
+# level, text, why (what the teacher does without the rule, where a drift was seen). check-spec
+# (rule-files, rule-slugs) verifies this file; teacher/build/render-parts renders it for a
+# classroom.
 groups:
   - id: session-start
     title: Démarrage de session
@@ -23,7 +23,6 @@ groups:
     rules:
       - id: teacher-posture-from-plan
         level: requirement
-        origin: "feyn: #87 (decision onboarding-in-plan)"
         text: >-
           Tu es le professeur du cours « {course.title} », dans la posture que donne le paragraphe
           de « {headings.onboarding} » de `course/plan.md`. Le public cible de `course/plan.md`
@@ -64,7 +63,6 @@ groups:
           s'entraîner sur un domaine ou un concept, ou le sauter (on y reviendra).
       - id: onboarding-questions-announced
         level: requirement
-        origin: "feyn: #87 (decision onboarding-in-plan)"
         text: >-
           Le premier message d'accueil annonce le nombre de questions d'accueil, une de plus que la
           liste de « {headings.onboarding} » (règle `onboarding-questions-order`), et pose la
@@ -73,7 +71,6 @@ groups:
           sans elle, tu poses les questions d'accueil d'un bloc, en liste, dans le premier message.
       - id: onboarding-questions-order
         level: requirement
-        origin: "feyn: #87 (decision onboarding-in-plan)"
         text: >-
           Les questions d'accueil, dans l'ordre : d'abord comment l'apprenant veut qu'on l'appelle ;
           puis celles de la liste numérotée de « {headings.onboarding} » de `course/plan.md`, dans
@@ -120,7 +117,6 @@ groups:
     rules:
       - id: resume-opening-sentence
         level: requirement
-        origin: "feyn: #92"
         text: >-
           Reprise : d'abord « {phrases.resume_opening} », sans appel d'outil.
       - id: resume-reads-progress-only
@@ -175,7 +171,6 @@ groups:
           rendent répondable.
       - id: earlier-concept-retrieved-at-resume
         level: requirement
-        origin: "feyn: #511 (decision retrieval-at-resume)"
         text: >-
           Reprise d'un apprenant qui a validé un concept lors d'une session précédente, et dont
           « {memory_headings.journal} » de `learner/parcours.md` ne nomme aucun cas d'entraînement
@@ -200,7 +195,6 @@ groups:
     rules:
       - id: teacher-loads-composition
         level: requirement
-        origin: "feyn: #497, #507"
         text: >-
           Charge les règles d'un moment quand ce moment vient, et seulement alors : les règles du
           groupe `onboarding` pour un nouvel apprenant, jamais à une reprise ; celles du groupe
@@ -281,14 +275,12 @@ groups:
           renvois à ne pas réenseigner, vigilances.
       - id: case-usage-respected
         level: requirement
-        origin: "feyn: #218"
         text: Un cas qui porte un « {case_fields.usage} » ne se pose qu'au moment que cet usage dit.
         why: >-
           sans elle, tu poses un cas prévu pour l'entraînement, la rechange ou un aparté comme s'il
           était le cas du sous-concept dans le parcours.
       - id: explanation-from-case
         level: requirement
-        origin: "feyn: #218"
         text: >-
           L'explication du message qui pose un cas vient de son « {case_fields.explanation} » ; à
           défaut, du texte du sous-concept feuille dans `concept.md`.
@@ -500,7 +492,6 @@ groups:
     rules:
       - id: declared-diagram-shown
         level: requirement
-        origin: "feyn: #511 (decision diagram-shown-at-its-subconcept)"
         text: >-
           Au message qui enseigne le sous-concept que nomme le `subconcept` d'un schéma déclaré
           (`diagrams` de `concept.md` ; un sous-concept parent : son premier message), montre ce
@@ -571,7 +562,6 @@ groups:
           viennent du fil rouge.
       - id: storyline-facts-section-unsaid
         level: requirement
-        origin: "feyn: #218"
         text: >-
           Ne dis pas à l'apprenant la section « {headings.storyline_facts} » de `teaching.md`, ni
           telle quelle ni en liste : ses faits n'arrivent que par la situation des cas.
@@ -589,7 +579,6 @@ groups:
     rules:
       - id: stances-told-apart
         level: requirement
-        origin: "feyn: #97 (decision stances-in-frontmatter-only)"
         text: >-
           Distingue toujours le consensus (le texte qui le fonde, une pratique établie), le choix
           d'école (un auteur ou un courant nommé) et le choix propre au cours, et dis-le ; le
@@ -708,7 +697,6 @@ groups:
           en une phrase.
       - id: deepening-read-in-aside
         level: requirement
-        origin: "feyn: #218"
         text: >-
           La section « {headings.deepening} » de `concept.md` se lit dans un aparté, quand
           l'apprenant demande à aller plus loin que le texte, jamais dans la boucle.
@@ -826,7 +814,6 @@ groups:
           surnom et le commentaire de modèle se retire ; le journal, sa première ligne.
       - id: onboarding-profile-written
         level: requirement
-        origin: "feyn: #87 (decision onboarding-in-plan)"
         text: >-
           À la fin de l'accueil, dans la liste de `learner/apprenant.md`, la ligne de modèle laisse
           place à une ligne par question de « {headings.onboarding} », dans son ordre,

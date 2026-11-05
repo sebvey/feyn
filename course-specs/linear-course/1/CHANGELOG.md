@@ -237,3 +237,5 @@ no class: `- file or area: what changes`.
   descriptions point to the groups of `teacher/rules.yaml` in place of rule ids or a restated
   rule (the types of a case, the reader tables, « Composition »), `teacher/README.md` counts no
   families, and the header of `course/rules.yaml` opens in English; no rule changes (#560).
+- `teacher/rules.yaml`, `teacher/README.md`: the `origin` field leaves the rules of the protocol,
+  its 13 values removed and its description with them; no rule changes what it asks (#565).

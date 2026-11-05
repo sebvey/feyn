@@ -23,7 +23,7 @@ A decision, in any `decisions/` folder, and `docs/glossary.md` cite no rule id: 
 a rule of a spec nor that of a group of rules. A rule id changes faster than they do, since rules
 are renamed, merged and regrouped while the decision still holds. A decision names the rule it
 settles by what it asks ("the protocol rule that shows a declared diagram at its
-sub-concept"); the rule points to the decision, in its `origin` or its `why`, not the reverse.
+sub-concept"); the rule points to the decision, in its `why`, not the reverse.
 A decision of a spec or of the spec directives also names no course (decision
 `spec-names-no-course`).
 

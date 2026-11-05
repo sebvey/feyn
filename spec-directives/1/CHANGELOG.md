@@ -95,3 +95,6 @@ no class: `- file or area: what changes`.
   8 say so (#554).
 - `decisions/`: `rules-with-level-and-method` no longer defers the standards of `linear-course` to
   #318: they are in the README of the spec's MAJOR, each with its edition (#556).
+- `tests/`: `rule-files` fails a rule with an `origin` as an unknown key, in either rule file (the
+  fixture `broken/rule-files-unknown-key`; no other fixture holds one); `README.md` sections 1
+  and 8 and decision `rules-with-level-and-method` no longer describe the field (#565).
