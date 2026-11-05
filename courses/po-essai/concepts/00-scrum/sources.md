@@ -58,12 +58,5 @@
 
 ## Non vérifié
 
-- L'essentiel, 0a : les termes français de la traduction officielle du Guide Scrum, novembre
-  2020 (https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-French.pdf), par
-  exemple « Objectif de Produit », « Incrément », « Responsabilités » : le texte du PDF n'a pas
-  pu être extrait. Les termes du cours suivent `course/glossary.md`, sans vérification contre
-  cette traduction.
-- Pièges : la fréquence de la confusion « on livre un sprint » (« Erreur fréquente en
-  formation ») : observée dans les sessions du cours (amélioration de session (`off-course.md`,
-  historique git), entrée du 2026-10-21), sans étude ni source externe. À présenter comme une
-  erreur fréquente en formation, pas comme un fait mesuré.
+- L'essentiel, 0a : les termes français de la traduction officielle du Guide Scrum, novembre 2020 (https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-French.pdf), par exemple « Objectif de Produit », « Incrément », « Responsabilités » : le texte du PDF n'a pas pu être extrait. Les termes du cours suivent `course/glossary.md`, sans vérification contre cette traduction.
+- Pièges : la fréquence de la confusion « on livre un sprint » (« Erreur fréquente en formation ») : observée dans les sessions du cours (amélioration de session (`off-course.md`, historique git), entrée du 2026-10-21), sans étude ni source externe. À présenter comme une erreur fréquente en formation, pas comme un fait mesuré.

@@ -1,11 +1,6 @@
 # Glossaire du cours
 
-Un seul terme par notion : le cours emploie le « terme du cours », en français, ou en anglais
-quand c'est l'usage. Les variantes d'un terme sont séparées par des virgules ; une parenthèse
-précise le sens. La colonne « Défini dans » donne le concept à ouvrir pour creuser le terme,
-celui qui l'enseigne : avant ce concept, le cours n'emploie le terme que dans une phrase qui
-renvoie à ce concept ou qui le définit en passant. Le prof peut montrer ce fichier à
-l'apprenant.
+Un seul terme par notion : le cours emploie le « terme du cours », en français, ou en anglais quand c'est l'usage. Les variantes d'un terme sont séparées par des virgules ; une parenthèse précise le sens. La colonne « Défini dans » donne le concept à ouvrir pour creuser le terme, celui qui l'enseigne : avant ce concept, le cours n'emploie le terme que dans une phrase qui renvoie à ce concept ou qui le définit en passant. Le prof peut montrer ce fichier à l'apprenant.
 
 | Terme du cours | Anglais | Définition | Défini dans |
 |---|---|---|---|
