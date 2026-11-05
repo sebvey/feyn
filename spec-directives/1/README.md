@@ -57,8 +57,9 @@ Two classes of products: the **course**, its diagrams included, and the **teache
   sufficient one: the review and taught-check do the rest, and a course tag certifies the whole.
 - A teacher conforms when it holds every requirement of the protocol (`teacher/rules.yaml`);
   the method of a rule of the protocol is demonstration, by the fresh tests (the test scenarios
-  of the spec MAJOR's `teacher/tests/`, run by `classroom-builder/fresh-test`). No teacher conforms yet: the scenarios cover the rules a
-  session of `po-essai` exercises, not every requirement.
+  of the spec MAJOR's `teacher/tests/`, run by `classroom-builder/fresh-test`). No teacher
+  conforms yet: the scenarios cover the rules a session of `po-essai` exercises, not every
+  requirement.
 - Recommendations are outside conformance.
 
 A rule binds a product, a course or a teacher. The lexicons of a spec (`course/lexicon.yaml`, the
@@ -240,18 +241,18 @@ A rule's slug is defined by the `id` of a rule of `teacher/rules.yaml`, a group'
 of a group (one to five words; a family is the group whose `id` is its category). Rules and groups
 share one namespace: a slug is defined once. A rule is cited by a code span: in the tables of
 `teacher/README.md`, every code span of a "Used in" or "Rule" column; in the `text` and `why` of a
-rule of `teacher/rules.yaml`, in `teacher/README.md`, `README.md`, `course/README.md` and
-`decisions/`, the code spans that follow « rule », « rules », « règle » or « règles », joined by
-commas, « and », « to », « et », « à » (« rules `a`, `b` and `c` »). A check id or a decision
-slug in code is not a rule, as long as no such word leads it. Everywhere, the code spans that
-follow « group », « groups », « groupe » or « groupes » must be groups, and those that follow
-« rule(s) » or « règle(s) » must be rules. A range, « `a` à `b` » or « `a` to `b` », fails in
+rule of `teacher/rules.yaml`, every code span shaped like a rule slug, which must be a rule or a
+group; in `teacher/README.md`, `README.md`, `course/README.md` and `decisions/`, the code spans
+that follow « rule », « rules », « règle » or « règles », joined by commas, « and », « to »,
+« et », « à » (« rules `a`, `b` and `c` »). There, a check id or a decision slug in code is not a
+rule, as long as no such word leads it. Everywhere, the code spans that follow « group »,
+« groups », « groupe » or « groupes » must be groups, and those that follow « rule(s) » or
+« règle(s) » must be rules. A range, « `a` à `b` » or « `a` to `b` », fails in
 `teacher/rules.yaml`, `teacher/README.md`, `README.md` and `course/README.md`; `decisions/` are not
 read for ranges, since a decision cites no rule id (decision `decision-format`).
 
 Known limits:
 - A code span after « group » that names something other than a rule group fails as a missing group.
-- A code span in the `text` of a rule that no « règle » or « groupe » leads is not read as a citation.
 
 **The fixtures.**
 
