@@ -670,20 +670,20 @@ groups:
       « Faits fixés » de `storyline.md`, un terme qu'elle met en gras à `glossary.md`, et, une
       fois les sources écrites, une affirmation d'un champ publié à « Affirmations » de
       `sources.md`. `unit-additions` dit au créateur, au moment où il écrit l'unité, ce qu'un
-      programme peut dire (le gras) ; la revue lit le reste. Un concept à moitié écrit échoue :
-      il n'y a pas d'état de brouillon.
+      programme peut dire (le gras) ; la revue lit le reste.
     category: pedagogy
     method: inspection
     rules:
       - id: bold-term-in-glossary
-        level: requirement
+        level: recommendation
         method: test
         check: unit-additions
         text: >-
-          Un passage en gras (`**…**`) d'un champ d'une unité ou d'un cas supplémentaire que
-          l'apprenant lit ou entend (`readers` de `course/form.yaml` : tout sauf la consigne),
-          libellés exceptés, doit être un terme de `glossary.md`, ou l'une de ses variantes, casse
-          ignorée : dans une unité, le gras marque un terme du glossaire, et rien d'autre.
+          Il convient qu'un passage en gras (`**…**`) d'un champ d'une unité ou d'un cas
+          supplémentaire que l'apprenant lit ou entend (`readers` de `course/form.yaml` : tout sauf
+          la consigne), libellés exceptés, soit un terme de `glossary.md`, ou l'une de ses
+          variantes, casse ignorée : un gras qui n'en est pas un est signalé, au cas où le terme
+          manquerait au glossaire.
       - id: anchor-uses-storyline-facts
         level: requirement
         method: inspection
