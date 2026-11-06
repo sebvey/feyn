@@ -21,3 +21,10 @@ Inès tient le comptoir du Petit Noir, le café en bas de l'agence. Ses conseils
 ## La soutenance
 
 L'agence répond à un appel d'offres, et le client vient dans ses locaux pour la soutenance. Pendant l'avant-vente, Aïmen lui a promis « le meilleur café de Lyon ». Ce que devient cette promesse le jour de la soutenance n'est pas encore écrit.
+
+## Faits fixés
+
+- Cédric fait sa tasse chez lui un lundi, puis un autre matin, avec le même paquet de café : la première est correcte, la seconde n'a plus rien à voir (0a1).
+- Un matin, la tasse de Cédric pique le bout de la langue, n'est pas amère, et ne laisse rien en bouche une seconde après avoir été avalée (0a2).
+- Le lendemain, Cédric trouve sa tasse amère, elle lui râpe la langue et ne pique plus : « du jus de pneu », écrit-il (0a2).
+- Aïmen assure à Cédric que sa tasse est amère parce qu'elle est trop forte, et qu'un peu d'eau chaude versée dedans règle le problème ; cette tasse est noire, épaisse, amère, et elle sèche la langue (0b1).

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" fill="currentColor" role="img" aria-labelledby="extraction-et-force-titre extraction-et-force-desc" font-family="sans-serif" font-size="15">
+  <title id="extraction-et-force-titre">L'extraction et la force, deux axes de la tasse</title>
+  <desc id="extraction-et-force-desc">Un carré divisé en trois colonnes. De gauche à droite, l'extraction : sous-extraite, acide et courte ; équilibrée ; sur-extraite, amère et sèche. De bas en haut, un autre axe, la force, de légère à forte : les trois colonnes montent sur toute la hauteur.</desc>
+  <defs>
+    <marker id="extraction-et-force-pointe" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g id="0b1-zones" class="primary">
+    <rect x="100" y="30" width="160" height="230" fill-opacity="0.12" stroke="currentColor"/>
+    <rect x="260" y="30" width="160" height="230" fill="none" stroke="currentColor"/>
+    <rect x="420" y="30" width="160" height="230" fill-opacity="0.12" stroke="currentColor"/>
+  </g>
+  <g id="0b1-zones-noms" class="muted">
+    <text x="180" y="135" text-anchor="middle" font-weight="bold">Sous-extraite</text>
+    <text x="180" y="158" text-anchor="middle">acide, courte</text>
+    <text x="340" y="146" text-anchor="middle" font-weight="bold">Équilibrée</text>
+    <text x="500" y="135" text-anchor="middle" font-weight="bold">Sur-extraite</text>
+    <text x="500" y="158" text-anchor="middle">amère, sèche</text>
+  </g>
+  <g id="0b1-extraction" class="primary">
+    <line x1="100" y1="285" x2="572" y2="285" stroke="currentColor" stroke-width="2" marker-end="url(#extraction-et-force-pointe)"/>
+    <text x="340" y="315" text-anchor="middle">Extraction : ce que l'eau a pris au café</text>
+  </g>
+  <g id="0b1-force" class="secondary">
+    <line x1="70" y1="260" x2="70" y2="38" stroke="currentColor" stroke-opacity="0.6" marker-end="url(#extraction-et-force-pointe)"/>
+  </g>
+  <g id="0b1-force-noms" class="muted">
+    <text x="60" y="258" text-anchor="end" font-size="14">légère</text>
+    <text x="60" y="44" text-anchor="end" font-size="14">forte</text>
+    <text x="0" y="0" text-anchor="middle" transform="translate(40 150) rotate(-90)">Force</text>
+  </g>
+</svg>
