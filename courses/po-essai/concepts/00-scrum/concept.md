@@ -94,7 +94,7 @@ Ce message est le premier du concept : il s'ouvre, toujours, sur l'annonce du pa
 
 #### Consigne (teacher seulement)
 
-« Ticket » se corrige dans la correction, sans en faire une vigilance. Séparer « faire le travail » (confiable) et « en répondre » (le PO seul).
+« ticket » se corrige dans la correction, sans en faire une vigilance. Séparer « faire le travail » (confiable) et « en répondre » (le PO seul).
 
 ### Unité 0a3 : Les Developers
 
@@ -232,7 +232,7 @@ Demander « au Daily Scrum, qui parle à qui, et pour quoi faire ? ».
 
 #### Consigne (teacher seulement)
 
-« La revue valide la livraison » vient en 0d : le dire en une ligne, sans réenseigner. Demander « à la sortie de la revue, qu'est-ce qui a changé ? » (le backlog).
+« la revue valide la livraison » vient en 0d : le dire en une ligne, sans réenseigner. Demander « à la sortie de la revue, qu'est-ce qui a changé ? » (le backlog).
 
 ### Unité 0b5 : Rétrospective
 
@@ -253,7 +253,7 @@ Demander « au Daily Scrum, qui parle à qui, et pour quoi faire ? ».
 
 #### Consigne (teacher seulement)
 
-« Produit à la revue, façon de travailler à la rétrospective ». Après ce message, le dernier des cinq de 0b, « Le sprint raconté par Diego » sert à l'« exercice » ou à l'entraînement du concept 0 : un récit neuf, qui mêle des erreurs sur les quatre événements.
+« produit à la revue, façon de travailler à la rétrospective ». Après ce message, le dernier des cinq de 0b, « Le sprint raconté par Diego » sert à l'« exercice » ou à l'entraînement du concept 0 : un récit neuf, qui mêle des erreurs sur les quatre événements.
 
 #### En stock, entraînement (teacher seulement) : Le sprint raconté par Diego
 
