@@ -178,7 +178,7 @@ groups:
         category: pedagogy
         method: inspection
         text: >-
-          Il convient qu'une unité, une section `###` ou une section `##` sans section `###`, tienne
+          Il convient qu'une unité, un titre `###` ou une section `##` sans titre `###`, tienne
           en un message du professeur avec sa question.
       - id: sources-sections-in-order
         level: requirement

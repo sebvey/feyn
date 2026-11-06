@@ -12,7 +12,7 @@ The readers are defined in [`spec-directives/README.md`](../../../spec-directive
 The spec of linear introductory courses: ordered domains, ordered concepts with prerequisites, each written in one concept file cut into units taught one per teacher message, a storyline. This folder, `course-specs/linear-course/1/`, holds its MAJOR 1, version `1.0.0-alpha` until its tag, binding from the tag `linear-course/v1.0.0` (`spec-directives/1/README.md` section 6); a course follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 
 - `README.md`: this file: scope, files, categories, normative references, the list of checks.
-- `course/README.md`: what a course is: course structure, reader-text conventions, diagrams (drawing contract and style), the lexicon of the course files.
+- `course/README.md`: what a course is: course structure, the conventions of the text, diagrams (drawing contract and style), the lexicon of the course files.
 - `teacher/README.md`: how a rule of the protocol is written (its notation, its writing rules), the description of the composition of the teacher, the keys and parameters; `teacher/rules.yaml`: the rules of the protocol the teacher executes.
 - `teacher/composition.yaml`: the composition of the teacher, its five parts, when each loads and what each draws from (section 2).
 - `teacher/build/`: the half of a classroom build that depends on this MAJOR, `render-parts`, which renders the five parts of the composition as text for a course, one JSON document whose shape `parts.schema.yaml` fixes (`teacher/build/README.md`).
