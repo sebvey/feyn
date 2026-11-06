@@ -44,11 +44,10 @@ function checkConcept(ctx, c, out, all) {
   // sub-concept sections
   for (const s of top) {
     const id = (/^(\S+)/.exec(s.title) || [])[1];
-    const sub = c.subs.find((x) => x.level === 1 && x.id === id);
+    const sub = c.subs.find((x) => x.level === 1 && x.line === s.line);
     if (!sub) continue;
     const bl = mdlib.blocks(s.lines);
-    const title = s.title.slice(id.length).trim();
-    if (title !== sub.title) out.push(fail(cf, s.line, `heading title: "${title}" must equal the title of course.yaml "${sub.title}"`));
+    if (!sub.title) out.push(fail(cf, s.line, `heading title: sub-concept ${id} has no title (\`## <id> <title>\`)`));
     const first = bl[0];
     if (!first || first.code || !/^\*[^*].*[^*]\*$|^\*[^*]\*$/.test(first.text) || /^#|^>|^[-*] /.test(first.text)) {
       out.push(fail(cf, first ? first.line : s.line, `sub-concept section ${id}: the first paragraph is the promise, entirely in italics`));
@@ -58,13 +57,7 @@ function checkConcept(ctx, c, out, all) {
       const firstH3 = h3s.length ? h3s[0].line : Infinity;
       const stray = bl.slice(1).find((b) => b.line < firstH3);
       if (stray) out.push(fail(cf, stray.line, `sub-concept section ${id} has children: it holds the promise and nothing else before its ### sections`));
-      for (const h of h3s) {
-        const hid = (/^(\S+)/.exec(h.text) || [])[1];
-        const k = sub.children.find((x) => x.id === hid);
-        if (!k) continue;
-        const t = h.text.slice(hid.length).trim();
-        if (t !== k.title) out.push(fail(cf, h.line, `heading title: "${t}" must equal the title of course.yaml "${k.title}"`));
-      }
+      for (const k of sub.children) if (!k.title) out.push(fail(cf, k.line, `heading title: sub-concept ${k.id} has no title (\`### <id> <title>\`)`));
       // each leaf has reader text
       const hs = mdlib.sections(s.lines, 3).sections;
       for (const h of hs) if (!h.lines.some((l) => l.t.trim())) out.push(fail(cf, h.line, `leaf ${h.title}: no reader text`));

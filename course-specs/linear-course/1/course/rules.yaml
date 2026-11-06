@@ -54,8 +54,9 @@ groups:
   - title: Le fichier course.yaml (course/README.md section 2)
     purpose: >-
       La carte du cours : son identité, ses domaines, ses concepts dans l'ordre du cours avec
-      leurs prérequis et leurs arbres de sous-concepts, et les identifiants que citent la mémoire
-      de l'apprenant et les adresses du site.
+      leurs prérequis, rien sous le concept (l'arbre d'un concept est dans les titres de son
+      `concept.md`), et les identifiants que citent la mémoire de l'apprenant et les adresses du
+      site.
     category: structure
     method: test
     rules:
@@ -64,8 +65,8 @@ groups:
         check: course-yaml
         text: >-
           `course.yaml` doit être valide selon `course/schemas/course.schema.yaml` : les champs
-          du cours, d'une entrée de domaine, d'une entrée de concept et d'un nœud de
-          sous-concept, leur présence et leur forme.
+          du cours, d'une entrée de domaine et d'une entrée de concept, leur présence et leur
+          forme ; une entrée de concept ne tient pas les sous-concepts du concept.
       - id: course-id-equals-folder
         level: requirement
         check: course-yaml
@@ -92,17 +93,10 @@ groups:
         text: >-
           Le `dir` d'un concept doit être `concepts/<NN>-<slug>`, `NN` son numéro sur deux
           chiffres ; une annexe garde son numéro (`concepts/A1-<slug>`).
-      - id: subconcept-ids-in-order
-        level: requirement
-        check: course-yaml
-        text: >-
-          L'id d'un sous-concept de premier niveau doit être le numéro du concept suivi d'une
-          lettre, à partir de `a`, dans l'ordre ; l'id d'un sous-concept de second niveau, l'id
-          de son parent suivi d'un chiffre, à partir de `1`, dans l'ordre.
       - id: course-identifiers-unique
         level: requirement
         check: course-yaml
-        text: Les numéros de concept et les ids de sous-concept doivent être uniques.
+        text: Les numéros de concept doivent être uniques.
       - id: concepts-in-course-order
         level: requirement
         check: course-yaml
@@ -146,18 +140,12 @@ groups:
         text: >-
           L'`audience` du cours, l'`objective` d'un domaine et l'`objective` d'un concept doivent
           tenir chacun en une phrase.
-      - id: leaf-fits-one-message
-        level: recommendation
-        category: pedagogy
-        method: inspection
-        text: >-
-          Il convient qu'un sous-concept feuille, un nœud sans `children`, tienne en un message du
-          professeur avec une question.
 
   - title: Le dossier de concept (course/README.md section 3)
     purpose: >-
-      Les fichiers dont un concept est fait et la forme commune de leurs sections : chaque concept
-      est une source, que le site construit et que le professeur lit, sans réécriture.
+      Les fichiers dont un concept est fait, la forme commune de leurs sections et l'arbre du
+      concept, ses sous-concepts, que tiennent les titres de `concept.md` : chaque concept est
+      une source, que le site construit et que le professeur lit, sans réécriture.
     category: structure
     method: test
     rules:
@@ -167,6 +155,25 @@ groups:
         text: >-
           Un dossier de concept doit tenir `concept.md`, `teaching.md`, `sources.md` et ses
           schémas `.svg`, et rien d'autre.
+      - id: subconcept-ids-in-order
+        level: requirement
+        check: concept-folder
+        text: >-
+          L'id d'un sous-concept de premier niveau, dans son titre `##` de `concept.md`, doit être
+          le numéro du concept suivi d'une lettre, à partir de `a`, dans l'ordre ; l'id d'un
+          sous-concept de second niveau, dans son titre `###`, l'id de son parent suivi d'un
+          chiffre, à partir de `1`, dans l'ordre : neuf enfants au plus.
+      - id: subconcept-ids-unique
+        level: requirement
+        check: concept-folder
+        text: Les ids de sous-concept doivent être uniques dans le cours.
+      - id: leaf-fits-one-message
+        level: recommendation
+        category: pedagogy
+        method: inspection
+        text: >-
+          Il convient qu'un sous-concept feuille, une section `###` ou une section `##` de
+          sous-concept sans section `###`, tienne en un message du professeur avec une question.
       - id: concept-sections-in-order
         level: requirement
         check: concept-folder
@@ -286,8 +293,9 @@ groups:
         method: test
         check: concept-folder
         text: >-
-          `concept.md` doit tenir une section par sous-concept de premier niveau, dans l'ordre de
-          `course.yaml`, et dans chacune une section `###` par sous-concept de second niveau.
+          `concept.md` doit tenir au moins une section de sous-concept, une par sous-concept de
+          premier niveau, et une section `###` n'existe que dans une section de sous-concept, une
+          par sous-concept de second niveau : les titres de `concept.md` sont l'arbre du concept.
       - id: pitfalls-whole-concept
         level: requirement
         text: « Pièges » doit porter sur le concept entier.
@@ -647,12 +655,6 @@ groups:
         level: requirement
         check: conventions
         text: Un titre de feuille doit être `### <id> <title>`, puis le texte lecteur.
-      - id: heading-title-from-course-yaml
-        level: requirement
-        check: conventions
-        text: >-
-          Le `<title>` d'un titre de sous-concept doit être égal à son `title` dans
-          `course.yaml`.
       - id: concept-reference-resolves
         level: requirement
         check: conventions

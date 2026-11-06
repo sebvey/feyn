@@ -24,7 +24,7 @@ Un rôle est ce que fait une personne. Voir le concept 1.
 
 *Deux rôles suffisent pour commencer.*
 
-### 0a1 Le premier rôle
+### 0a1
 
 Le premier rôle décide. Le concept 1 en dépend. [cours]
 

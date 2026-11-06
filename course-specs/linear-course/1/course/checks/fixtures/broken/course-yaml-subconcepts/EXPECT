@@ -1,0 +1,2 @@
+check: course-yaml
+message: course.yaml:32 unknown field "subconcepts" in concept entry 1
