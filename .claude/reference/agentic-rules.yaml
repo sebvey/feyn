@@ -27,14 +27,3 @@ rules:
       it shortened. It bounds, without undoing, point 12b of epic #607 ("a rule with its reason and
       an act").
     origin: "#627, PR #650"
-  - id: done-when-checks-the-act
-    applies-to: a Done when statement on a text the agents load
-    method: review
-    text: >-
-      The statement checks what the text makes its reader do and that it is there (a grep), never
-      its wording; the explanations go in the issue's Context.
-    why: >-
-      A statement that dictates a wording makes the contributor write it and the review pass it:
-      #627's Done when dictated the wording of an instruction of a skill, with its explanations in
-      parentheses and its ground, and the fresh-agent review of PR #650 passed them.
-    origin: "#627, PR #650"
