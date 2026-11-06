@@ -6,7 +6,8 @@
 # annex (an annex is also listed in `annexes`); `<NN>` is the number on two digits (09), an
 # annex keeps its number (A1).
 # course.yaml is the map: domains and concepts, nothing below a concept; the sections and units
-# of a concept are the headings of its concept.md (template concept.md). The rules of course.yaml are
+# of a concept are the headings of its concept.md (template concept.md); whom the course is for
+# is « Public cible » of plan.md (template plan.md). The rules of course.yaml are
 # the group « Le fichier course.yaml » of course/rules.yaml, to which course/README.md section 2
 # points.
 # Identifiers (numbers, section and unit ids, titles of cases, dir and file names) are cited by
@@ -16,7 +17,6 @@ id: <course-id>
 spec: linear-course@1
 title: "<course title>"
 subtitle: "<one line under the title>"
-audience: "<one sentence for the site home and previews>"
 # site:
 #   icon: <path of an SVG, relative to the course folder>
 #   color: "<#rrggbb>"

@@ -1,13 +1,15 @@
-# The fields of course.yaml, to which course/README.md section 2 points: those of the course, of a
-# domain entry and of a concept entry, their presence and their form. course.yaml is the map,
-# nothing below a concept: the tree of a concept is the headings of its concept.md (section 3;
-# decision course-map-and-concept-tree). What the schema does not say (unique numbers, course
-# order, the partition into domains, paths that exist) is a rule of course/rules.yaml, verified
-# by course-yaml.
+# The fields of course.yaml, to which course/README.md section 2 and `course_map` of
+# course/form.yaml point: those of the course, of a domain entry and of a concept entry, their
+# presence and their form. course.yaml is the map, nothing below a concept: the tree of a concept
+# is the headings of its concept.md (section 3; decision course-map-and-concept-tree); nor whom
+# the course is for, which « Public cible » of plan.md says. course-yaml validates course.yaml
+# against this schema through Ajv2020. What the schema does not say (unique numbers, course order, the
+# partition into domains, paths that exist) is a rule of course/rules.yaml, verified by
+# course-yaml.
 $schema: https://json-schema.org/draft/2020-12/schema
 title: course.yaml
 type: object
-required: [id, spec, title, audience, storyline, glossary, domains, concepts]
+required: [id, spec, title, storyline, glossary, domains, concepts]
 additionalProperties: false
 properties:
   id:
@@ -22,9 +24,6 @@ properties:
     $ref: '#/$defs/text'
   subtitle:
     description: one line under the title on the site
-    $ref: '#/$defs/text'
-  audience:
-    description: one sentence for the site home and previews
     $ref: '#/$defs/text'
   site:
     description: the course's look on the site; omitted keys take the site's defaults

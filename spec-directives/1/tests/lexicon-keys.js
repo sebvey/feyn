@@ -14,7 +14,7 @@ const TEACHER = 'teacher/lexicon.yaml';
 
 const KEYS = {
   headings: ['essentials', 'stances', 'deepening', 'landmarks', 'instruction',
-    'claims', 'references', 'unverified', 'problem', 'concept_thread', 'from_to', 'crossing_case', 'audience', 'onboarding', 'avoid', 'unreleased'],
+    'claims', 'references', 'unverified', 'problem', 'crossing_case', 'audience', 'onboarding', 'progression', 'fixed_facts', 'avoid', 'unreleased'],
   unit_fields: ['matter', 'anchor', 'question', 'expected_answer', 'misconceptions', 'follow_up', 'landmarks', 'instruction'],
   qualifiers: ['fallback', 'practice', 'aside'],
   markers: ['consensus', 'school', 'course'],
@@ -23,8 +23,6 @@ const KEYS = {
   source_types: ['primary', 'secondary', 'marketing'],
 };
 const LISTS = { typography: 'banned' };
-// checks.anaphora is optional (course/README.md section 7): a lexicon without it is consumable;
-// domain-first-sentence-standalone, a reporting check of a course, reports its absence.
 
 // The keys the protocol uses: a row of the « Clés et paramètres » tables of teacher/README.md
 // (`| `group.key` | ...`; a value cell that opens on « liste » or "list" is a list), the one read of

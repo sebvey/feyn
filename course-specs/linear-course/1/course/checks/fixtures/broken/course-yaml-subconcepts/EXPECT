@@ -1,2 +1,2 @@
 check: course-yaml
-message: course.yaml:32 unknown field "subconcepts" in concept entry 1
+message: course.yaml:31 not valid against course/schemas/course.schema.yaml: /concepts/0 must NOT have additional properties ("subconcepts")
