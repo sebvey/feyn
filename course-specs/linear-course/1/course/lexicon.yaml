@@ -1,6 +1,6 @@
 # The lexicon of the course files of `linear-course`: the one source of the words a program must
-# recognise in a course file (headings, block kinds, unit fields, qualifiers, markers, natures, concept
-# references, source types, typography), read by the checks, the classroom build and the site,
+# recognise in a course file (headings, block kinds, unit fields, unit blocks, readers, qualifiers,
+# markers, natures, concept references, source types, typography), read by the checks, the classroom build and the site,
 # none of which writes them again (course/README.md section 7;
 # decision `lexicon-not-language-pack`). The spec is French (`language: fr` in spec.yaml): the
 # values are course text, in French. The keys are those of course/README.md section 7
@@ -30,24 +30,41 @@ headings:
   unreleased: "Non publié"
 
 # The kind words that open the headings of a concept file (course/form.yaml): `# Concept 4 : <titre>`,
-# `# Annexe A1 : <titre>`, `## Section 4a : <titre>`, `### Unité 4a1 : <titre>`; `separator` stands
-# between the id and the title (French typography, a space before « : »).
+# `# Annexe A1 : <titre>`, `## Section 4a : <titre>`, `### Unité 4a1 : <titre>`, and a unit's
+# supplementary case, `#### En stock, rechange (teacher seulement) : <titre>`; `separator` stands
+# between the id (a case: its reader) and the title (French typography, a space before « : »).
 block_kinds:
   concept: "Concept"
   annex: "Annexe"
   section: "Section"
   unit: "Unité"
+  stock: "En stock"
   separator: " : "
 
 # Labels of the fields of a unit of a concept file and of its supplementary cases
-# (course/form.yaml).
+# (course/form.yaml); `misconceptions` is also the word of the unit's block « Pièges », and
+# `instruction` the word of its block « Consigne », both unlabelled in a unit.
 unit_fields:
   matter: "Matière"
   anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
-  misconceptions: "Idées fausses"
+  misconceptions: "Pièges"
   instruction: "Consigne"
+
+# The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`); a
+# block of one unlabelled field takes its label as its word: « Pièges » (`unit_fields.misconceptions`),
+# « Consigne » (`unit_fields.instruction`).
+unit_blocks:
+  lesson: "Leçon"
+  exercise: "Exercice"
+
+# Who reads a block of a unit or a supplementary case, the word in parentheses in its heading
+# (course/form.yaml): `all`, the site, the teacher and the learner; `teacher`, never published,
+# what the learner hears of it the teacher chooses and says.
+readers:
+  all: "pour tous"
+  teacher: "teacher seulement"
 
 # The stance markers of the published text: `[cours]`, `[école]`, `[consensus]`.
 markers:

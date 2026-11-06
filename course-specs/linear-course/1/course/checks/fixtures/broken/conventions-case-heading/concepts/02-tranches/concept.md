@@ -19,7 +19,7 @@ stances:
 
 Une tranche traverse toutes les couches.
 
-#### Une tranche (aparté)
+#### En stock, aparté (teacher seulement) : Une tranche
 
 Une note.
 
@@ -27,12 +27,19 @@ Une note.
 
 ### Unité 2a1 : Une tranche
 
+#### Leçon (pour tous)
+
 - **Matière** : Une tranche traverse toutes les couches (concept 1).
 - **Ancrage** : Régis regarde une carte.
+
+#### Exercice (teacher seulement)
+
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
-- **Idées fausses** :
-  - « Un tableau » : c'est une carte.
+
+#### Pièges (pour tous)
+
+- « Un tableau » : c'est une carte.
 
 ## Clôture
 

@@ -28,6 +28,7 @@ block_kinds:
   annex: "Annexe"
   section: "Section"
   unit: "Unité"
+  stock: "En stock"
   separator: " : "
 
 # Labels of the fields of a unit of a concept file and of its supplementary cases
@@ -37,8 +38,22 @@ unit_fields:
   anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
-  misconceptions: "Idées fausses"
+  misconceptions: "Pièges"
   instruction: "Consigne"
+
+# The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`); a
+# block of one unlabelled field takes its label as its word: « Pièges » (`unit_fields.misconceptions`),
+# « Consigne » (`unit_fields.instruction`).
+unit_blocks:
+  lesson: "Leçon"
+  exercise: "Exercice"
+
+# Who reads a block of a unit or a supplementary case, the word in parentheses in its heading
+# (course/form.yaml): `all`, the site, the teacher and the learner; `teacher`, never published,
+# what the learner hears of it the teacher chooses and says.
+readers:
+  all: "pour tous"
+  teacher: "teacher seulement"
 
 # The stance markers of the published text: `[cours]`, `[école]`, `[consensus]`.
 markers:

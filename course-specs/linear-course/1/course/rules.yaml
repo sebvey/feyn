@@ -328,13 +328,15 @@ groups:
   - title: L'unité (course/README.md section 3.3)
     purpose: >-
       L'unité est le contenu d'un cours, écrit une fois : un message du professeur, une feuille du
-      concept. Son bloc tient sa matière, ce qui est vrai, les mêmes mots pour le site et le
-      professeur ; son ancrage dans le fil rouge ; sa question et sa réponse attendue ; ses idées
-      fausses, chacune avec sa correction ; sa consigne, ce que la méthode a de propre à
-      l'unité ; puis ses cas supplémentaires, de rechange quand l'apprenant
-      échoue, d'entraînement pour s'exercer ou retrouver un concept validé, d'aparté pour une
-      question fréquente hors du parcours. Chaque champ est publié ou non, une propriété de la
-      spec (`course/form.yaml`), jamais écrite dans le cours.
+      concept. Elle tient quatre blocs, dans l'ordre où le créateur l'écrit : enseigner, demander,
+      prévoir les erreurs, donner la consigne. Sa « Leçon » tient sa matière, ce qui est vrai, les
+      mêmes mots pour le site et le professeur, et son ancrage dans le fil rouge ; son « Exercice »,
+      sa question et sa réponse attendue ; ses « Pièges », ses idées fausses, chacune avec sa
+      correction ; sa « Consigne », ce que la méthode a de propre à l'unité. Puis viennent ses cas
+      supplémentaires, « En stock », de rechange quand l'apprenant échoue, d'entraînement pour
+      s'exercer ou retrouver un concept validé, d'aparté pour une question fréquente hors du
+      parcours. Chaque bloc est publié ou non, une propriété de la spec (`course/form.yaml`) que son
+      titre dit par son lecteur, « pour tous » ou « teacher seulement », jamais un choix du cours.
     category: pedagogy
     rules:
       - id: section-holds-its-units
@@ -343,22 +345,39 @@ groups:
         check: unit-contract
         text: >-
           Une section ne doit rien tenir d'autre que ses titres `###` d'unité et leurs blocs.
+      - id: unit-blocks-with-their-reader
+        level: requirement
+        method: test
+        check: unit-contract
+        text: >-
+          Une unité doit tenir ses blocs `####`, chacun titré par son mot puis son lecteur entre
+          parenthèses, dans cet ordre et chacun une fois : `#### Leçon (pour tous)`,
+          `#### Exercice (teacher seulement)`, `#### Pièges (pour tous)`, obligatoires, puis
+          `#### Consigne (teacher seulement)` au choix ; ses cas supplémentaires viennent après
+          (`blocks` de `unit` dans `course/form.yaml`).
+        why: >-
+          Une unité était une liste de champs étiquetés dont la publication se savait par cœur, et
+          un cas ne se distinguait d'une partie de son unité que par sa parenthèse : le titre du
+          bloc dit ce que le site publie, et l'ordre des blocs est celui de l'écriture (idée #642,
+          epic #647).
       - id: unit-fields-labelled
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          Le bloc d'une unité doit être une liste de champs, chacun ouvert par
+          « Leçon » et « Exercice » doivent être chacun une liste de champs, chacun ouvert par
           `- **<label>** :`, le libellé l'un des `unit_fields` du lexique ; le texte d'un champ
           suit son libellé, et ses lignes suivantes sont en retrait de deux espaces (paragraphes,
-          listes imbriquées).
+          listes imbriquées). « Pièges » et « Consigne » n'ont pas de libellé : le mot de leur bloc
+          en tient lieu.
       - id: no-line-outside-a-field
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          Aucune ligne d'une unité ne doit se trouver hors d'un champ : le site ne publie que les
-          champs publiés, et une ligne qu'aucun champ ne porte n'est ni publiée ni lue.
+          Aucune ligne d'une unité ne doit se trouver hors d'un bloc, ni, dans « Leçon » et
+          « Exercice », hors d'un champ : le site ne publie que les blocs publiés, et une ligne
+          qu'aucun bloc ne porte n'est ni publiée ni lue.
       - id: field-qualifier-on-question-only
         level: requirement
         method: test
@@ -371,33 +390,36 @@ groups:
         method: test
         check: unit-contract
         text: >-
-          Une unité doit tenir « Matière », « Ancrage », « Question », « Réponse attendue » et
-          « Idées fausses », et « Consigne » au choix, aucun champ deux fois et aucun
-          vide (`fields` de `unit` dans `course/form.yaml`).
+          « Leçon » doit tenir « Matière » et « Ancrage », « Exercice » « Question » et
+          « Réponse attendue », « Pièges » une idée fausse au moins, « Consigne », quand l'unité en
+          a une, sa prose ; aucun champ deux fois et aucun vide (`fields` de chaque bloc de `unit`
+          dans `course/form.yaml`).
       - id: unit-fields-in-order
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          Les champs d'une unité doivent venir dans l'ordre de `course/form.yaml` : « Matière »,
-          « Ancrage », « Question », « Réponse attendue », « Idées fausses », « Consigne ».
+          Les champs d'un bloc doivent venir dans l'ordre de `course/form.yaml` : « Matière » puis
+          « Ancrage » dans « Leçon », « Question » puis « Réponse attendue » dans « Exercice ».
       - id: misconception-form
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          « Idées fausses » doit tenir, en liste imbriquée, au moins une idée fausse, chacune
-          `- « <misconception> » : <correction>`, et rien d'autre : aucune puce imbriquée sous
-          elle.
+          « Pièges » doit tenir au moins une idée fausse, chacune `- « <misconception> » :
+          <correction>`, et rien d'autre : aucune puce imbriquée sous elle. Dans une unité, ses
+          idées fausses sont les puces du bloc ; dans un cas supplémentaire, elles sont imbriquées
+          sous son champ `- **Pièges** :`.
       - id: supplementary-case-form
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          Un cas supplémentaire doit être un titre `####` dans une unité,
-          `#### <title> (<qualifier>)`, la parenthèse tenant un qualificatif et rien d'autre ; ses
-          champs sont ceux d'une unité sans « Matière » ni « Consigne », dans le même ordre et la
-          même présence (`supplementary_case` de `course/form.yaml`).
+          Un cas supplémentaire doit être un titre `####` après les blocs de son unité,
+          `#### En stock, <qualifier> (teacher seulement) : <title>`, le qualificatif seul entre la
+          virgule et le lecteur ; sa question est celle que l'unité tient en stock. Ses champs,
+          étiquetés, dans cet ordre et tous obligatoires : « Ancrage », « Question », « Réponse
+          attendue », « Pièges » (`supplementary_case` de `course/form.yaml`).
       - id: case-qualifier-from-lexicon
         level: requirement
         method: test
@@ -420,12 +442,13 @@ groups:
         level: requirement
         method: inspection
         text: >-
-          Chaque champ d'une unité doit tenir ce que son libellé annonce : « Matière », ce qui est
-          vrai, l'explication telle que le site la publie et que le professeur la dit ;
+          Chaque champ d'une unité doit tenir ce que son libellé, ou le mot de son bloc, annonce :
+          « Matière », ce qui est vrai, l'explication telle que le site la publie et que le
+          professeur la dit ;
           « Ancrage », la situation du fil rouge où la matière se voit, ses acteurs, ses faits et
           son déroulé (qui dit quoi, quand) ; « Question », la question que pose l'unité ;
           « Réponse attendue », la bonne réponse avec ses nuances, la position du cours telle que la
-          matière l'énonce ; « Idées fausses », les réponses fausses fréquentes, chacune avec sa
+          matière l'énonce ; « Pièges », les réponses fausses fréquentes, chacune avec sa
           correction ; « Consigne », ce que la méthode a de propre à l'unité (quand poser un cas
           supplémentaire, une formulation qui a marché, un renvoi à ne pas réenseigner).
       - id: course-question-in-instruction

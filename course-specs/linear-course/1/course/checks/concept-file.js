@@ -9,7 +9,7 @@
 // ### blocks of the head and the foot in their order; the tree of the concept in its headings
 // (section and unit ids: form, order, uniqueness, one unit at least and nine at most per section;
 // the kind word and a title around each id). The
-// fields of a unit and its supplementary cases are `unit-contract`'s, a `pedagogy` check; the form
+// blocks of a unit, their fields and its supplementary cases are `unit-contract`'s, a `pedagogy` check; the form
 // of sources.md is `sources`'.
 const fs = require('fs');
 const path = require('path');
