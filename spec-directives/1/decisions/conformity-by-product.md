@@ -11,7 +11,7 @@ Two classes of products, the course, its diagrams included, and the teacher; a r
 
 ## Consequences
 
-- No teacher conforms today: the fresh tests cover the rules a session of a two-concept course exercises, not every requirement; the rules they do not observe yet are idea #509.
+- No teacher conforms today: the fresh tests cover the rules a session of the spec's example course exercises on their path, not every requirement; the rules they do not observe yet are idea #509.
 - Amended 2026-10-31 (#339): a rule binds a product, a course or a teacher; the consistency of the spec's own files is verified by the tests of `check-spec`, which are not rules; the categories are those of a course and the families of the protocol. Without this, a contributor applies "every check verifies a rule" to a check of the spec's files and writes a rule file and a category for them, as #329 did (a third rule file, a sixth category named after the spec, and a marker so that `check-course` ran it on a course).
 - Amended 2026-11-03 (#497): the composition of the teacher joins the spec's own files that the tests of `check-spec` verify, by a test that checks the form of the file. Without this, a contributor reads the composition as a rule of the teacher and gives it a category and a level, or leaves its test outside the clause.
 - Amended 2026-11-04 (#545): "conformity", "conformance clause", and the French words of a diagram and of a schema, leave for the glossary (decision `word-choices-in-the-glossary`).
