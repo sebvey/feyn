@@ -353,7 +353,7 @@ groups:
         check: unit-contract
         text: >-
           Une unité doit tenir « Matière », « Ancrage », « Question », « Réponse attendue » et
-          « Idées fausses », « Consigne » au choix, aucun champ deux fois et aucun
+          « Idées fausses », et « Consigne » au choix, aucun champ deux fois et aucun
           vide (`fields` de `unit` dans `course/form.yaml`).
       - id: unit-fields-in-order
         level: requirement
