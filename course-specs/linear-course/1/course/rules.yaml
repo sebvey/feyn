@@ -270,8 +270,9 @@ groups:
       Le concept en un fichier, dans un ordre fixe : son titre ; sa tête, « Ouverture », qui tient
       « L'essentiel », le résumé écrit du concept ; ses sections et leurs unités, une par message
       du professeur ; son pied, « Clôture », qui tient « Se vérifier » et l'approfondissement que
-      le site publie, puis la consigne du concept, que seul le professeur lit. L'objectif et les pièges n'y sont pas écrits : le build les compose, depuis
-      `course.yaml` et depuis les idées fausses des unités.
+      le site publie, puis la consigne du concept, que seul le professeur lit. L'objectif et les
+      pièges n'y sont pas écrits : le build les compose, depuis `course.yaml` et depuis les idées
+      fausses des unités.
     category: pedagogy
     method: inspection
     rules:

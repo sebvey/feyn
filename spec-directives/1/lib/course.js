@@ -30,7 +30,7 @@ function idHeading(text, kindWord, separator) {
   const raw = firstWord(t);
   const id = raw.replace(/:$/, '');
   const rest = t.slice(raw.length);
-  const sep = raw === id && rest.startsWith(separator);
+  const sep = !!separator && raw === id && rest.startsWith(separator);
   const title = (sep ? rest.slice(separator.length) : rest.replace(/^\s*:?/, '')).trim();
   return { id, title, kind, sep };
 }
@@ -46,8 +46,8 @@ function tree(m, word, form) {
   if (!m) return subs;
   const cf = (form && form.concept_file) || {};
   const sections = cf.sections || {};
-  const separator = cf.separator || ' : ';
   const kw = (k) => (word && k ? word('block_kinds', k) : null);
+  const separator = kw(cf.separator);
   for (const s of md.sections(m.body, 2).sections) {
     const h = idHeading(s.title, kw(sections.kind), separator);
     if (!SUB_ID.test(h.id)) continue;

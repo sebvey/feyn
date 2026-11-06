@@ -164,7 +164,7 @@ Ses sections, leur ordre, leur présence, publiées ou non, et leurs lecteurs so
 
 - **`plan.md`** : à qui le cours s'adresse (« Public cible », le seul endroit qui le dit), comment le professeur accueille un nouvel apprenant (« Accueil »), la **progression** du cours (« Progression » : les domaines dans l'ordre, ce que chacun donne, comment l'un mène au suivant), puis ce que le professeur en prend pour enseigner (les partis pris, les règles d'écriture du cours, les questions qu'il pose et repose dans tout le cours) ; le professeur le lit, le site en construit le public et la progression.
 - **`glossary.md`** : les termes du cours ; le site montre son premier tableau tel quel.
-- **`storyline.md`** : le fil rouge, que le professeur lit et que le site montre, en deux parties : le **monde** (le cadre, les acteurs, les sources), en prose libre, puis les **faits fixés** (« Faits fixés »), chacun suivi de l'id de l'unité qui l'a fixé, `(0d)`.
+- **`storyline.md`** : le fil rouge, que le professeur lit et que le site montre, en deux parties : le **monde** (le cadre, les acteurs, les sources), en prose libre, puis les **faits fixés** (« Faits fixés »), chacun suivi de l'id de l'unité qui l'a fixé, `(0d1)`.
 - **`CHANGELOG.md`** : le journal des versions du cours.
 
 **Cellule du terme** : la première colonne du tableau du glossaire tient un terme, ou ses variantes séparées par des virgules (« Product Owner, PO »), chacune reconnue en mot entier, casse ignorée. Une parenthèse est un qualificatif de sens (« État (d'un élément) »).
@@ -223,7 +223,7 @@ Cette section n'énonce aucune règle d'un cours : le lexique est un fichier de 
 | Groupe | Clés et valeurs |
 |---|---|
 | `headings` | `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (le titre du site pour les positions du frontmatter, et la section qu'une entrée de « Non vérifié » de `sources.md` nomme pour une position ou un voisin : aucune section de `concept.md` ne l'a), `deepening` « Approfondissement », `landmarks` « Se vérifier », `instruction` « Consigne », `head` « Ouverture », `foot` « Clôture » ; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié » ; `problem` « Le problème », `crossing_case` « Un cas qui traverse le domaine » ; `audience` « Public cible », `onboarding` « Accueil », `progression` « Progression » ; `fixed_facts` « Faits fixés » ; `avoid` « Termes à éviter », `unreleased` « Non publié » |
-| `block_kinds` | `concept` « Concept », `annex` « Annexe », `section` « Section », `unit` « Unité » : le mot qui ouvre le titre d'un concept, d'une annexe, d'une section et d'une unité dans `concept.md`, suivi de son id puis de « : » et du titre (3) |
+| `block_kinds` | `concept` « Concept », `annex` « Annexe », `section` « Section », `unit` « Unité » : le mot qui ouvre le titre d'un concept, d'une annexe, d'une section et d'une unité dans `concept.md`, suivi de son id puis du séparateur et du titre ; `separator` « : », une espace avant et après, entre l'id et le titre (3) |
 | `unit_fields` | `matter` « Matière », `anchor` « Ancrage », `question` « Question », `expected_answer` « Réponse attendue », `misconceptions` « Idées fausses », `instruction` « Consigne » : les libellés des champs d'une unité et d'un cas supplémentaire (3.3) |
 | `qualifiers` | `fallback` « rechange », `practice` « entraînement », `aside` « aparté » : la liste fermée des qualificatifs d'un titre de cas supplémentaire (3.3) |
 | `markers` | `consensus` « consensus », `school` « école », `course` « cours » |

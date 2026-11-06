@@ -99,7 +99,7 @@ function checkConcept(ctx, c, out) {
       }
     }
     const K = (k) => ctx.word('block_kinds', k) || k;
-    const SEP = form.concept_file.separator;
+    const SEP = K(form.concept_file.separator);
     const HEAD = form.concept_file.head;
     const FOOT = form.concept_file.foot;
     const SECTIONS = form.concept_file.sections;

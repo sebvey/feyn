@@ -33,8 +33,9 @@ concept_file:
   # Every heading of the body starts with its kind, and one kind is always at one level: the
   # concept's title at #, the head, the sections and the foot at ##, the head's and the foot's
   # blocks and the units at ###, a unit's supplementary cases at ####. A heading that carries an id
-  # is `<kind word> <id><separator><title>`, the kind word of the lexicon's `block_kinds`.
-  separator: " : "
+  # is `<kind word> <id><separator><title>`, the kind word and the separator of the lexicon's
+  # `block_kinds`, the separator by its key.
+  separator: separator
   # the title: the one # heading, the first line of the body, `# Concept <n> : <title>` (an annex
   # `# Annexe <id> : <title>`), the title the concept's `title` in course.yaml, which keeps it too
   title:
