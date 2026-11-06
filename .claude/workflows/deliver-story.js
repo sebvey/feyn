@@ -105,12 +105,12 @@ const FINDING = {
 const FIXER_SCHEMA = {
   type: 'object',
   properties: {
-    head: { type: 'string', description: 'the PR head commit sha you reviewed' },
+    head: { type: 'string', description: 'the full 40-character sha of the PR head commit you reviewed (its headRefOid), never a short sha' },
     verdicts: { type: 'array', items: { type: 'object', properties: { statement: { type: 'string' }, verdict: { type: 'string', enum: ['met', 'not met', 'deviation'] }, proof: { type: 'string' } }, required: ['statement', 'verdict', 'proof'] } },
     blocking: { type: 'array', items: FINDING, description: 'the blocking findings of your review, as found, before any fix' },
     nonBlocking: { type: 'array', items: FINDING, description: 'the non-blocking findings of your review, as found, before any fix' },
     couldNotCheck: { type: 'string' },
-    newHead: { type: 'string', description: 'the PR head sha after your push; the reviewed head when you pushed nothing' },
+    newHead: { type: 'string', description: 'the full 40-character sha of the PR head after your push (its headRefOid), never a short sha; the reviewed head when you pushed nothing' },
     fixed: { type: 'array', items: { type: 'string' }, description: 'each finding fixed, and how its fix was checked in the diff' },
     left: { type: 'array', items: { type: 'object', properties: { finding: { type: 'string' }, blocking: { type: 'boolean' }, reason: { type: 'string' } }, required: ['finding', 'blocking', 'reason'] }, description: 'each finding not fixed, blocking or not, with its reason' },
   },
@@ -224,8 +224,8 @@ if (ALONE) return { status: 'ready-for-handover', ...report }
 // ---------- Merge
 phase('Merge')
 const merge = await agent(`You merge PR #${contrib.pr} of feyn into the integration branch ${A.base} and close its story #${A.issue}. Use only gh commands (through "mise exec --"); run no git command and no cd: your working directory is the work session's and must not change.
-1. "mise exec -- gh pr view ${contrib.pr} --json baseRefName,headRefOid,state,isDraft": the base must be ${A.base} and the head ${head}; otherwise stop and report the problem, merging nothing.
-2. "mise exec -- gh pr ready ${contrib.pr}", then "mise exec -- gh pr merge ${contrib.pr} --squash --match-head-commit ${head}" (no --delete-branch: it would touch the local checkout). Read "mise exec -- gh pr view ${contrib.pr} --json state,mergeCommit": state MERGED, note the merge commit sha.
+1. "mise exec -- gh pr view ${contrib.pr} --json baseRefName,headRefOid,state,isDraft": the base must be ${A.base} and the head (headRefOid, the full 40-character sha) must start with ${head}; otherwise stop and report the problem, merging nothing.
+2. "mise exec -- gh pr ready ${contrib.pr}", then "mise exec -- gh pr merge ${contrib.pr} --squash --match-head-commit <headRefOid>", with the full headRefOid read at step 1, never a short sha (no --delete-branch: it would touch the local checkout). Read "mise exec -- gh pr view ${contrib.pr} --json state,mergeCommit": state MERGED, note the merge commit sha.
    Leave the story's remote branch: remote branches are the maintainer's, and decision epic-on-integration-branch grants the merge and the close, not a deletion.
 3. Close the issue: "mise exec -- gh issue close ${A.issue} --reason completed --comment 'Delivered by PR #${contrib.pr}, merged into the integration branch ${A.base} of epic #${A.epic}.'".
 4. Read the Status: "mise exec -- gh issue view ${A.issue} --json state,projectItems". The Project workflow "Item closed" sets Done within seconds; read again once after a few seconds if not. Still not Done and the item is listed: set it as ".claude/reference/project.md", "Commands", says ("Set" the Status, by name, to Done), then read it again.

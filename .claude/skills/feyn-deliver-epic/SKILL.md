@@ -42,7 +42,7 @@ One at a time, the next one only (rules of the cycle):
 **A direct story.** A story whose To do opens with the line "Direct delivery" (named `direct` at its creation, [contributing](../../../docs/contributing.md), "How the work is organised", moment 5) is delivered by the orchestrator itself, in the work session, with no workflow run and no fresh-agent review, in place of steps 2.3 to 2.5:
 - `/feyn-issue-branch <n> --base <integration branch>`, then the edit;
 - `/feyn-pull-request --base <integration branch>`, its Checks saying `Fresh-agent review: none, direct delivery.`; no hand-over: a story never goes Ready for review;
-- the merge, as the workflow's Merge stage does: `mise exec -- gh pr merge <pr> --squash --match-head-commit <head sha>`, close the story ([project.md](../../reference/project.md), "Epics", Close) and check it is Done; then the local branch `<type>/<n>-<slug>`, its PR merged, as [run-cleanup.md](../../reference/run-cleanup.md) says; then steps 2.6 and 2.7.
+- the merge, as the workflow's Merge stage does: `mise exec -- gh pr merge <pr> --squash --match-head-commit <headRefOid>` (the full 40-character head sha, read by `mise exec -- gh pr view <pr> --json headRefOid`; never a short sha), close the story ([project.md](../../reference/project.md), "Epics", Close) and check it is Done; then the local branch `<type>/<n>-<slug>`, its PR merged, as [run-cleanup.md](../../reference/run-cleanup.md) says; then steps 2.6 and 2.7.
 
 ## 3. Sorting, open questions, answers
 
