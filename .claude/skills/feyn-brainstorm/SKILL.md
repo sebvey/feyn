@@ -21,8 +21,6 @@ The argument is one of three things:
 - **an idea** (Status Idea): read it (`/feyn-issue <n>`); its finding is the question, and the brainstorm is its triage (step 4 closes it);
 - **the maintainer's subject**, in a few words.
 
-A brainstorm on the process (a skill, a workflow, a policy, the glossary, `contributing.md`) opens from an idea that names the problem observed and where it was seen (decision `process-change-from-an-observed-problem`). Given a subject on the process with no such idea, ask which problem was observed, and where. Named: create the idea (`/feyn-issue idea <finding>`) and open from it. None: no brainstorm; the wish waits for an observed problem.
-
 Then create the working folder `tmp/<slug>/` at the repository root (slug: two or three words of the subject) with its `README.md`, and send its frame as the first message: the goal, the constraints, the process (the five steps), the first list of subjects. The maintainer corrects it before the inventory starts. The folder is written in the language of the conversation.
 
 The skeleton of `README.md`:
