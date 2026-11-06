@@ -12,6 +12,8 @@ The branch is the issue branch `<type>/<n>-<slug>` (made by `/feyn-issue-branch`
 
 ## Steps
 
+Every message to the maintainer follows [messages.md](../../reference/messages.md), "The clean-up", whether the clean-up runs in a delivery or alone: "stop" below is a stop message; "tell the maintainer", "say so" and the lines that end the reply go in the clean-up's progress message, an action asked of the maintainer in its "for you" bullet.
+
 Squash makes a new commit on `main`, so git does not see the branch as merged and `git branch -d` refuses it. Two separate moves: confirm, then delete.
 
 1. `mise exec -- gh pr view <branch> --json state,mergedAt,title,baseRefName` shows `MERGED`; otherwise stop: nothing to clean. A base other than `main` (a story of an epic, merged into its integration branch): stop and name `/feyn-deliver-epic`.

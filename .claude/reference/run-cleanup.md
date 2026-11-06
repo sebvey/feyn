@@ -11,7 +11,7 @@ How the worktrees and the local branches a delivery leaves are removed: a workfl
 
 ## A worktree
 
-For each one, in order; a check that fails stops the cleanup of that worktree and is shown to the caller, who tells the maintainer:
+For each one, in order; a check that fails stops the cleanup of that worktree and is shown to the caller, who tells the maintainer as [messages.md](messages.md), "The clean-up", says (a stop message when it stops the clean-up, otherwise the "for you" bullet of its progress message):
 
 1. **Not locked**: `git worktree list --porcelain` prints no `locked` line under it. A run's worktree locked: its agent still runs, wait. A reviewer's or a fixer's, once its work is done: stop its agent (`TaskStop`), then `git worktree unlock <path>`. The worktree is locked while its agent runs (Claude Code, observed 2026-10-28, #128).
 2. **Nothing but `node_modules`**: `git -C <path> status --porcelain` prints nothing, or nothing but `node_modules`, which a check links from the main checkout ([done-when.md](done-when.md)) and `.gitignore` does not ignore as a link.
@@ -22,5 +22,5 @@ A worktree already gone needs nothing: a worktree with no change at the end of i
 
 ## The local branch
 
-- **Its PR merged** (`mise exec -- gh pr view <pr> --json state` reads `MERGED`): `git branch -D <branch>`, `-D` since a squash merge leaves the branch unmerged in git's eyes. No such branch (`git branch --list <branch>`): nothing to do. Checked out in the work session's checkout: `git switch main` first. The remote branch goes with the merge, the repository deleting a PR's head branch on its merge (GitHub, observed 2026-10-31, #342); still there (`git ls-remote --heads origin <branch>`): tell the maintainer, never delete it.
+- **Its PR merged** (`mise exec -- gh pr view <pr> --json state` reads `MERGED`): `git branch -D <branch>`, `-D` since a squash merge leaves the branch unmerged in git's eyes. No such branch (`git branch --list <branch>`): nothing to do. Checked out in the work session's checkout: `git switch main` first. The remote branch goes with the merge, the repository deleting a PR's head branch on its merge (GitHub, observed 2026-10-31, #342); still there (`git ls-remote --heads origin <branch>`): tell the maintainer (the "for you" bullet of the clean-up's progress message, [messages.md](messages.md)), never delete it.
 - **Its PR not merged**: move the local branch to the PR's head, which the fixer's push (`git push origin HEAD:<branch>`, from a detached `HEAD`) does not move: `git branch -f <branch> origin/<branch>`, never the integration branch. A rerun's contributor switches to it and its push is a fast-forward; it stays until the merge.

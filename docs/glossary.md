@@ -678,7 +678,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 - means: the first part of a **plan comment**, at most ten lines: where the epic stands, what runs, what awaits the maintainer, what comes next; rewritten whole at each moment of its epic. It is not the head of an issue body, the lines that open a body template (Where, What, Why), which has no entry
 - en: plan comment head
 - fr: to settle
-- not to confuse with: [plan comment](#plan-comment)
+- not to confuse with: [plan comment](#plan-comment), [awaiting footer](#awaiting-footer), [progress message](#progress-message)
 
 ### story
 
@@ -788,7 +788,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 - means: a PR that cannot be merged until it is marked ready: opened as one when a maintainer decision is awaited (the issue, not the PR, carries `blocked:maintainer`), and, in a delivery through agents, until its review and corrections are done (marked ready at the hand-over of a story without an epic, or at the merge of a story of an epic into its integration branch)
 - en: draft · rejected: "WIP" for a draft PR
 - fr: to settle
-- not to confuse with: [WIP limit](#wip-limit)
+- not to confuse with: [WIP limit](#wip-limit), [hand-over](#hand-over)
 - why: "draft" is the term for a PR, so it left the descriptions of a spec and of the spec directives, where it named a MAJOR in preparation, which is an alpha
 
 ### blocked
@@ -796,7 +796,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 - means: two senses, never mixed. "Blocked by #n": a blocked-by link between issues, lifted when the blocking issue closes. `blocked:maintainer`: a maintainer decision is awaited, on the issue only, lifted when the maintainer removes the label
 - en: blocked · rejected: "on hold", "Needs Decision" (a Status removed)
 - fr: to settle
-- not to confuse with: [Status](#status), [open question](#open-question)
+- not to confuse with: [Status](#status), [open question](#open-question), [stop message](#stop-message)
 
 ### work session
 
@@ -824,14 +824,42 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 - means: the PR from an epic's integration branch to `main`, its body starting with `Closes #<epic>`: handed over to the maintainer once the last story is merged, the whole branch reviewed by a fresh agent and no open question left; the maintainer validates the whole epic by merging it (squash), which closes the epic
 - en: epic PR · rejected: "integration PR", "final PR", "release PR"
 - fr: to settle
-- not to confuse with: [integration branch](#integration-branch), [release](#release)
+- not to confuse with: [integration branch](#integration-branch), [release](#release), [hand-over](#hand-over)
 
 ### open question
 
 - means: a choice of a story of an epic that departs from the epic's Done when or adds structure (a new file, a category, a marker, an exception to a principle), that nothing already settles (a decision, the epic's Material, a rule, an answer of the maintainer, a story of the plan) and that is costly to undo or foundational, put to the maintainer at once as a line of the plan comment's log and a comment on the epic; the work goes on, and the epic PR is handed over only when none remains
 - en: open question · rejected: "pending decision", "escalation", "blocker"
 - fr: to settle
-- not to confuse with: [blocked](#blocked), [plan comment](#plan-comment)
+- not to confuse with: [blocked](#blocked), [plan comment](#plan-comment), [awaiting footer](#awaiting-footer)
+
+### progress message
+
+- means: one of the four kinds of message a delivery writes to the maintainer in the work session, the others being the **stop message**, the **hand-over** and the question: it reports one event of the delivery or of its clean-up, under a heading naming the event, in at most three named bullets (done, running, for you); it describes no choice settled without the maintainer, only their count
+- en: progress message · rejected: "status message", "status update", "information message"
+- fr: to settle
+- not to confuse with: [stop message](#stop-message), [hand-over](#hand-over), [plan comment head](#plan-comment-head)
+
+### stop message
+
+- means: one of the four kinds of message a delivery writes to the maintainer: the delivery or its clean-up stops on what it cannot settle, under a heading announcing the stop, in two named bullets (cause, for you)
+- en: stop message · rejected: "error report", "alert"
+- fr: to settle
+- not to confuse with: [progress message](#progress-message), [blocked](#blocked)
+
+### hand-over
+
+- means: the moment a PR goes to the maintainer to merge (the PR marked ready, its issue Ready for review) and the message that tells them, one of the four kinds of message of a delivery; the PR of a story without an epic has a hand-over of its own fixed form, the epic PR is handed over by a **progress message**; a story of an epic is never handed over, its orchestrator merges it
+- en: hand-over · rejected: "notification" for its message, "handoff"
+- fr: to settle
+- not to confuse with: [progress message](#progress-message), [epic PR](#epic-pr), [draft](#draft)
+
+### awaiting footer
+
+- means: the end of every message a delivery writes to the maintainer while a question to them is open: a rule, a fixed label, then one line per open question (its number, its title, the link to the comment that holds it); it does not ask the question again. It is not the section of a PR body that holds a decision awaited, nor the plan comment head, which says the same in the same words
+- en: awaiting footer · rejected: "pending questions", "postscript"
+- fr: to settle
+- not to confuse with: [open question](#open-question), [plan comment head](#plan-comment-head), [progress message](#progress-message)
 
 ### direct delivery
 
