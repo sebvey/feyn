@@ -11,14 +11,18 @@ stances:
       refs: []
 ---
 
-## L'essentiel
+# Concept 0 : Les rôles
+
+## Ouverture
+
+### L'essentiel
 
 Un rôle est ce que fait une personne sur une couche du produit. Voir le
 concept 1.
 
-## 0a Les deux rôles
+## Section 0a : Les deux rôles
 
-### 0a1 Le premier rôle
+### Unité 0a1 : Le premier rôle
 
 - **Matière** : Le premier **rôle** décide. Le concept 1 en dépend. [cours]
 - **Ancrage** : Régis veut une carte et décide de ce qu'elle montre.
@@ -28,7 +32,7 @@ concept 1.
   - « Tout le monde décide » : le premier rôle décide seul.
 - **Consigne** : ne pas parler de couche ici, elle vient au concept 1.
 
-### 0a2 Le second rôle
+### Unité 0a2 : Le second rôle
 
 - **Matière** : Le second rôle fait.
 
@@ -41,7 +45,9 @@ concept 1.
 - **Idées fausses** :
   - « Le second rôle décide aussi » : il fait, il ne décide pas.
 
-## 0b La règle
+## Section 0b : La règle
+
+### Unité 0b1 : La règle
 
 - **Matière** : La règle est la même pour tous. Ses mots sont dans le lexique (annexe A1a).
 - **Ancrage** : Régis applique la règle à la carte.
@@ -50,16 +56,18 @@ concept 1.
 - **Idées fausses** :
   - « Chaque rôle a sa règle » : la règle est la même pour tous.
 
-## Se vérifier
+## Clôture
+
+### Se vérifier
 
 > « Une question à se poser ? »
 
 Une note sur la question.
 
-## Approfondissement
+### Approfondissement
 
 Une autre façon de nommer les rôles, pour qui veut aller plus loin.
 
-## Consigne
+### Consigne
 
 Poser les deux rôles avant la règle.

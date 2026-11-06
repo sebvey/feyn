@@ -7,6 +7,8 @@ headings:
   stances: "Consensus et choix d'école"
   deepening: "Approfondissement"
   instruction: "Consigne"
+  head: "Ouverture"
+  foot: "Clôture"
   claims: "Affirmations"
   references: "Références"
   unverified: "Non vérifié"
@@ -18,6 +20,15 @@ headings:
   fixed_facts: "Faits fixés"
   avoid: "Termes à éviter"
   unreleased: "Non publié"
+
+# The kind words that open the headings of a concept file (course/form.yaml): `# Concept 4 : <titre>`,
+# `# Annexe A1 : <titre>`, `## Section 4a : <titre>`, `### Unité 4a1 : <titre>`.
+block_kinds:
+  concept: "Concept"
+  annex: "Annexe"
+  section: "Section"
+  unit: "Unité"
+  separator: " : "
 
 # Labels of the fields of a unit of a concept file and of its supplementary cases
 # (course/form.yaml).

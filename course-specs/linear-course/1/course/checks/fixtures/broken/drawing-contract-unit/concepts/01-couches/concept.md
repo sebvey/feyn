@@ -16,11 +16,17 @@ diagrams:
     unit: 1b
 ---
 
-## L'essentiel
+# Concept 1 : Les couches
+
+## Ouverture
+
+### L'essentiel
 
 Un produit s'empile en couches, de la collecte à la restitution.
 
-## 1a Les trois couches
+## Section 1a : Les trois couches
+
+### Unité 1a1 : Les trois couches
 
 - **Matière** : Les couches vont de la collecte à la restitution. Voir les concepts 0 et 1.
 - **Ancrage** : Régis regarde une carte.

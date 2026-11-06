@@ -14,31 +14,50 @@ function normNumber(n) {
   return null;
 }
 
-// a section heading: `## <id> <title>`, its id a concept number and a letter (0a, A2a); the form
-// and the order of the ids are checked by concept-file
+// a section heading: `## Section <id> : <title>`, its id a concept number and a letter (0a, A2a);
+// the form of the heading and the order of the ids are checked by concept-file
 const SUB_ID = /^(?:\d+|A\d+)[a-z]$/;
 const firstWord = (t) => (/^(\S+)/.exec(t) || [])[1] || '';
 
-// The tree of a concept from the headings of its concept.md (the split file, or null): a `##`
-// heading whose first word is a section id is a section (level 1), each `###` heading inside it a
-// unit of that section (level 2); a section without `###` is a section of one unit, itself a unit
-// (leaf). The rest of the heading is its title. Same shape for a numbered concept and an annex:
-// { id, title, level, parent, leaf, children, line }; `leaf` marks the units.
-function tree(m) {
+// A heading that carries an id, `<kind word> <id><separator><title>`, read leniently so that a
+// heading short of its kind word or its separator still names its block: { id, title, kind, sep },
+// `kind` and `sep` saying whether the kind word and the separator are there (concept-file reports
+// them).
+function idHeading(text, kindWord, separator) {
+  let t = text;
+  let kind = false;
+  if (kindWord && (t === kindWord || t.startsWith(kindWord + ' '))) { t = t.slice(kindWord.length).trimStart(); kind = true; }
+  const raw = firstWord(t);
+  const id = raw.replace(/:$/, '');
+  const rest = t.slice(raw.length);
+  const sep = !!separator && raw === id && rest.startsWith(separator);
+  const title = (sep ? rest.slice(separator.length) : rest.replace(/^\s*:?/, '')).trim();
+  return { id, title, kind, sep };
+}
+
+// The tree of a concept from the headings of its concept.md (the split file, or null; word the
+// lexicon's word(group, key); form the spec's form): a `##` heading whose id, after the kind word
+// `block_kinds.section`, is a section id is a section (level 1), each `###` heading inside it a unit
+// of that section (level 2, a leaf), its kind word `block_kinds.unit`. A section is never a unit,
+// even with no `###` (concept-file reports it). The rest of the heading is its title. Same shape for
+// a numbered concept and an annex: { id, title, level, parent, leaf, children, line, text, kind, sep }.
+function tree(m, word, form) {
   const subs = [];
   if (!m) return subs;
+  const cf = (form && form.concept_file) || {};
+  const sections = cf.sections || {};
+  const kw = (k) => (word && k ? word('block_kinds', k) : null);
+  const separator = kw(cf.separator);
   for (const s of md.sections(m.body, 2).sections) {
-    const id = firstWord(s.title);
-    if (!SUB_ID.test(id)) continue;
-    const sub = { id, title: s.title.slice(id.length).trim(), level: 1, parent: null, leaf: true, children: [], line: s.line };
+    const h = idHeading(s.title, kw(sections.kind), separator);
+    if (!SUB_ID.test(h.id)) continue;
+    const sub = { ...h, level: 1, parent: null, leaf: false, children: [], line: s.line, text: s.title };
     subs.push(sub);
-    for (const h of md.headings(s.lines).filter((x) => x.level === 3)) {
-      const kid = firstWord(h.text);
-      const child = { id: kid, title: h.text.slice(kid.length).trim(), level: 2, parent: sub, leaf: true, children: [], line: h.line };
+    for (const x of md.headings(s.lines).filter((y) => y.level === 3)) {
+      const child = { ...idHeading(x.text, kw(sections.unit_kind), separator), level: 2, parent: sub, leaf: true, children: [], line: x.line, text: x.text };
       sub.children.push(child);
       subs.push(child);
     }
-    sub.leaf = sub.children.length === 0;
   }
   return subs;
 }
@@ -47,19 +66,23 @@ function tree(m) {
 // spec's form): what concept-file, unit-contract, unit-length, unit-additions and the text checks read. It finds
 // the parts and the fields; it judges nothing but what a field's form makes unreadable, which it
 // lists in `problems` ({ line, message }) for unit-contract.
-//   head, foot: [{ key, title, line, lines }]   the ## parts the form names, by their lexicon word
-//   others: [{ title, line, lines }]            the ## headings that are neither a part nor a section
+//   head, foot: { line, lines, pre, blocks: [{ key, title, line, lines }] } or null
+//                                               the ## heading of the form's head or foot, the
+//                                               lines before its first ### (pre) and its ###
+//                                               blocks, `key` the form's block of that lexicon word
+//                                               (null for a ### the form does not name)
+//   others: [{ title, line, lines }]            the ## headings that are neither the head, the foot nor a section
 //   sections: [{ sub, line, lines, stray }]     stray: the lines of a section with units outside them
 //   units: [{ sub, line, fields, cases }]       fields: [{ key, label, qualifier, line, text, lines }]
 //                                               cases: [{ title, qualifier, line, fields }]
 //   heard: the body, the lines no learner reads (form readers without `learner`) blanked
 function conceptParts(m, subs, word, form) {
-  const out = { head: [], foot: [], others: [], sections: [], units: [], problems: [], heard: [] };
+  const out = { head: null, foot: null, others: [], sections: [], units: [], problems: [], heard: [] };
   if (!m) return out;
   const unitForm = (form && form.unit) || {};
   const caseForm = (form && form.supplementary_case) || {};
   const cf = (form && form.concept_file) || {};
-  const partKey = (list, title) => (list || []).find((p) => word('headings', p.heading) === title);
+  const blockOf = (part, title) => ((part && part.blocks) || []).find((p) => word('headings', p.heading) === title);
   const fieldKeys = (unitForm.fields || []).map((f) => f.field);
   const labelOf = (k) => word('unit_fields', k);
   const keyOfLabel = (l) => fieldKeys.find((k) => k && labelOf(k) === l);
@@ -141,25 +164,28 @@ function conceptParts(m, subs, word, form) {
     if (sub) {
       const sec = { sub, line: s.line, lines: s.lines, stray: [] };
       out.sections.push(sec);
-      if (sub.leaf) unit(sub, s.line, s.lines);
-      else {
-        const h3 = md.headings(s.lines).filter((h) => h.level === 3);
-        sec.stray = s.lines.slice(0, h3[0].idx).filter((l) => l.t.trim() !== '');
-        h3.forEach((h, k) => {
-          const kid = sub.children.find((x) => x.line === h.line);
-          unit(kid, h.line, s.lines.slice(h.idx + 1, k + 1 < h3.length ? h3[k + 1].idx : s.lines.length));
-        });
-      }
+      // a section that holds no unit heading has no unit: concept-file reports it, and its lines are no unit's
+      const h3 = md.headings(s.lines).filter((h) => h.level === 3);
+      if (!h3.length) continue;
+      sec.stray = s.lines.slice(0, h3[0].idx).filter((l) => l.t.trim() !== '');
+      h3.forEach((h, k) => {
+        const kid = sub.children.find((x) => x.line === h.line);
+        unit(kid, h.line, s.lines.slice(h.idx + 1, k + 1 < h3.length ? h3[k + 1].idx : s.lines.length));
+      });
       continue;
     }
-    const part = { title: s.title, line: s.line, lines: s.lines };
-    const h = partKey(cf.head, s.title);
-    const f = partKey(cf.foot, s.title);
-    if (h) out.head.push({ key: h.heading, ...part });
-    else if (f) {
-      out.foot.push({ key: f.heading, ...part });
-      if (notHeard(f.readers)) { unheard.add(s.line); for (const l of s.lines) unheard.add(l.n); }
-    } else out.others.push(part);
+    // the head and the foot: their ## heading, then their ### blocks
+    const which = [['head', cf.head], ['foot', cf.foot]].find(([, p]) => p && word('headings', p.heading) === s.title);
+    if (!which || out[which[0]]) { out.others.push({ title: s.title, line: s.line, lines: s.lines }); continue; }
+    const [name, p] = which;
+    const split = md.sections(s.lines, 3);
+    const part = { line: s.line, lines: s.lines, pre: split.pre, blocks: [] };
+    out[name] = part;
+    for (const b of split.sections) {
+      const f = blockOf(p, b.title);
+      part.blocks.push({ key: f ? f.heading : null, title: b.title, line: b.line, lines: b.lines });
+      if (f && notHeard(f.readers)) { unheard.add(b.line); for (const l of b.lines) unheard.add(l.n); }
+    }
   }
   out.heard = m.body.map((l) => (unheard.has(l.n) ? { n: l.n, t: '', code: false } : l));
   return out;
@@ -288,7 +314,7 @@ function load(dir, opts = {}) {
       if (!c || typeof c !== 'object') return;
       const number = normNumber(c.number);
       const dir = typeof c.dir === 'string' ? c.dir : null;
-      ctx.concepts.push({ entry: c, index, number, annex: /^A\d+$/.test(number || ''), dir, subs: dir ? tree(ctx.md(dir + '/concept.md')) : [] });
+      ctx.concepts.push({ entry: c, index, number, annex: /^A\d+$/.test(number || ''), dir, subs: dir ? tree(ctx.md(dir + '/concept.md'), ctx.word, ctx.form) : [] });
     });
   }
   const sel = opts.concept ? normNumber(opts.concept) : null;
@@ -302,4 +328,4 @@ function load(dir, opts = {}) {
 
 const fail = (file, line, message) => ({ file, line: line || 1, message });
 
-module.exports = { load, fail, normNumber, SLUG, conceptParts };
+module.exports = { load, fail, normNumber, SLUG, conceptParts, idHeading };

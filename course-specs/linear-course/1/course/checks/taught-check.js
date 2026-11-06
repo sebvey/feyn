@@ -1,7 +1,7 @@
 export const meta = {
   name: 'feyn-taught-check-workflow',
   description: 'Verify that no question of a course asks what the learner has not yet been taught',
-  whenToUse: 'Run on demand by a work session, with an absolute scriptPath (course-specs/linear-course/1/README.md section 5), whose triage of its findings follows: after an issue that changes what a concept teaches (a unit, its matter, an order), or when the maintainer asks. args: { course: "<course id>", from?: "<first concept or unit reread>", to?: "<last concept or unit reread>" }; a concept by its number (0, 12, A1), a unit by its id (0a1, or a section of one unit, 0c); default the whole course, annexes included. Report only: no agent modifies a file.',
+  whenToUse: 'Run on demand by a work session, with an absolute scriptPath (course-specs/linear-course/1/README.md section 5), whose triage of its findings follows: after an issue that changes what a concept teaches (a unit, its matter, an order), or when the maintainer asks. args: { course: "<course id>", from?: "<first concept or unit reread>", to?: "<last concept or unit reread>" }; a concept by its number (0, 12, A1), a unit by its id (0a1); default the whole course, annexes included. Report only: no agent modifies a file.',
   phases: [
     { title: 'Scope', detail: 'lists concepts and annexes in course order, their units and their entry points' },
     { title: 'Inventory', detail: 'what the learner receives, unit by unit, up to the last unit reread' },
@@ -24,13 +24,15 @@ docs/glossary.md (concept file, section, unit, matter, anchor, case, supplementa
 misconception, instruction, head and foot, deepening, defining concept).`
 
 // the form of a concept file and its words: the spec's data, read by every agent, never written here
-const FORM = `The form of a concept file is ${SPEC}form.yaml: its head, its sections (\`## <id> <title>\`) and \
-their units (\`### <id> <title>\`; a section with no ### is a section of one unit, itself a unit), its foot; \
+const FORM = `The form of a concept file is ${SPEC}form.yaml: every heading starts with its kind, one kind per level; \
+its title (\`# Concept <n> : <title>\`, an annex \`# Annexe <id> : <title>\`), its head (a ## heading, then its ### blocks), \
+its sections (\`## Section <id> : <title>\`) and their units (\`### Unité <id> : <title>\`, one at least per section), its foot \
+(a ## heading, then its ### blocks); \
 the fields of a unit in their order (\`unit.fields\`) and those of a supplementary case \
 (\`supplementary_case.fields\`), a supplementary case being a #### heading inside its unit, qualified in \
 parentheses. The words of the file are the values of ${SPEC}lexicon.yaml at the keys form.yaml names: a \
 field's label is \`unit_fields.<field>\` (a field opens with \`- **<label>** :\`), a qualifier is \`qualifiers.<key>\` \
-(fallback, practice, aside), a part of the head or the foot is \`headings.<key>\`. Read both files first; \
+(fallback, practice, aside), the head, the foot and their blocks are \`headings.<key>\`, the kind word of a heading is \`block_kinds.<key>\`. Read both files first; \
 below, a field is named by its key.`
 
 const SCOUT_SCHEMA = {
@@ -45,7 +47,7 @@ const SCOUT_SCHEMA = {
           id: { type: 'string', description: 'number as in course.yaml (0, 12, A1)' },
           title: { type: 'string' },
           concept_file: { type: 'string', description: 'path of concept.md in the concept folder, or empty string if the folder has none' },
-          units: { type: 'array', items: { type: 'string' }, description: 'the unit ids of concept.md, in the order of the file: each ### heading id, and each ## section id that has no ### heading' },
+          units: { type: 'array', items: { type: 'string' }, description: 'the unit ids of concept.md, in the order of the file: the id of each ### unit heading' },
           entry: { type: 'string', description: 'for an annex: after which concept the learner may open it, from the course; empty string for a concept' },
         },
         required: ['id', 'title', 'concept_file', 'units', 'entry'],

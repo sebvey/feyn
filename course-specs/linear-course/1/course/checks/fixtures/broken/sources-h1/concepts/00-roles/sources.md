@@ -16,5 +16,5 @@
 
 ## Non vérifié
 
-- 0b : aucune source consultée ne fixe la règle. Écrire « une règle », pas « la règle de Scrum ».
+- 0b1 : aucune source consultée ne fixe la règle. Écrire « une règle », pas « la règle de Scrum ».
 - Consensus et choix d'école : le choix du cours n'a pas été cherché ailleurs.

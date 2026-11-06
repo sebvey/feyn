@@ -1,0 +1,2 @@
+check: concept-file
+message: concept 0: concept.md opens with its title, `# Concept 0 : Les rôles`, the title of course.yaml

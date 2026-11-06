@@ -143,9 +143,10 @@ groups:
 
   - title: Le dossier de concept (course/README.md section 3)
     purpose: >-
-      Les fichiers dont un concept est fait et l'arbre du concept, ses sections et ses unités, que
-      tiennent les titres de `concept.md` : chaque concept est une source, que le site construit
-      et que le professeur lit, sans réécriture.
+      Les fichiers dont un concept est fait, son titre et l'arbre du concept, ses sections et ses
+      unités, que tiennent les titres de `concept.md`, chacun ouvert par son type : chaque concept
+      est une source, que le site construit et que le professeur lit, sans réécriture, et qu'un
+      humain qui l'ouvre lit sans connaître la spec.
     category: structure
     method: test
     rules:
@@ -155,6 +156,14 @@ groups:
         text: >-
           Un dossier de concept doit tenir `concept.md`, `sources.md` et ses schémas `.svg`, et
           rien d'autre (`folder` de `course/form.yaml`).
+      - id: concept-file-title
+        level: requirement
+        check: concept-file
+        text: >-
+          `concept.md` doit s'ouvrir sur son titre, son seul titre `#`, `# Concept <n> : <titre>`
+          (une annexe, `# Annexe <id> : <titre>`, les mots `block_kinds.concept` et
+          `block_kinds.annex` du lexique), le titre celui que `course.yaml` donne au concept, qui le
+          garde aussi.
       - id: tree-ids-in-order
         level: requirement
         check: concept-file
@@ -163,6 +172,13 @@ groups:
           suivi d'une lettre, à partir de `a`, dans l'ordre ; l'id d'une unité d'une section, dans
           son titre `###`, l'id de la section suivi d'un chiffre, à partir de `1`, dans l'ordre :
           neuf unités au plus.
+      - id: section-has-a-unit
+        level: requirement
+        check: concept-file
+        text: >-
+          Une section doit tenir au moins une unité, un titre `###`, même quand elle n'en a
+          qu'une : une section n'est jamais elle-même une unité, et un type est toujours au même
+          niveau.
       - id: tree-ids-unique
         level: requirement
         check: concept-file
@@ -171,15 +187,16 @@ groups:
         level: requirement
         check: concept-file
         text: >-
-          Le titre d'une section ou d'une unité doit tenir son id puis un titre : `## <id> <title>`,
-          `### <id> <title>`.
+          Le titre d'une section ou d'une unité doit commencer par son type, le mot
+          `block_kinds.section` ou `block_kinds.unit` du lexique, puis tenir son id et un titre,
+          séparés par « : » : `## Section <id> : <titre>`, `### Unité <id> : <titre>`.
       - id: unit-fits-one-message
         level: recommendation
         category: pedagogy
         method: inspection
         text: >-
-          Il convient qu'une unité, un titre `###` ou une section `##` sans titre `###`, tienne
-          en un message du professeur avec sa question.
+          Il convient qu'une unité, un titre `### Unité <id> : <titre>`, tienne en un message du
+          professeur avec sa question.
 
   - title: Le frontmatter de concept.md (course/README.md section 3.1)
     purpose: >-
@@ -250,11 +267,12 @@ groups:
 
   - title: Le corps de concept.md (course/README.md section 3.2)
     purpose: >-
-      Le concept en un fichier, dans un ordre fixe : sa tête, « L'essentiel », le résumé écrit du
-      concept ; ses sections et leurs unités, une par message du professeur ; son pied, « Se
-      vérifier » et l'approfondissement que le site publie, puis la consigne du concept, que seul
-      le professeur lit. L'objectif et les pièges n'y sont pas écrits : le build les compose, depuis
-      `course.yaml` et depuis les idées fausses des unités.
+      Le concept en un fichier, dans un ordre fixe : son titre ; sa tête, « Ouverture », qui tient
+      « L'essentiel », le résumé écrit du concept ; ses sections et leurs unités, une par message
+      du professeur ; son pied, « Clôture », qui tient « Se vérifier » et l'approfondissement que
+      le site publie, puis la consigne du concept, que seul le professeur lit. L'objectif et les
+      pièges n'y sont pas écrits : le build les compose, depuis `course.yaml` et depuis les idées
+      fausses des unités.
     category: pedagogy
     method: inspection
     rules:
@@ -264,12 +282,14 @@ groups:
         method: test
         check: concept-file
         text: >-
-          Le corps de `concept.md` doit être, dans cet ordre, sa tête, ses sections, puis son
-          pied, chaque partie de la tête et du pied un titre `##` dont le texte est le titre du
-          lexique, présente ou au choix comme `concept_file` de `course/form.yaml` le dit (la tête,
-          « L'essentiel » ; le pied, « Se vérifier », « Approfondissement » et « Consigne », chacun au
-          choix) ; aucune autre section `##` ne doit exister, ni l'objectif ni les pièges, que le
-          build compose.
+          Le corps de `concept.md` doit être, après son titre et dans cet ordre, sa tête, ses
+          sections, puis son pied ; la tête et le pied sont chacun un titre `##`, « Ouverture » et
+          « Clôture » (`headings.head` et `headings.foot` du lexique), qui ne tient que ses blocs,
+          des titres `###` dont le texte est le titre du lexique, présents ou au choix comme
+          `concept_file` de `course/form.yaml` le dit (la tête, « L'essentiel » ; le pied, « Se
+          vérifier », « Approfondissement » et « Consigne », chacun au choix, « Clôture » présente
+          quand elle en tient un) ; aucune autre section `##` ne doit exister, ni l'objectif ni les
+          pièges, que le build compose.
       - id: concept-has-sections
         level: requirement
         category: structure
@@ -277,7 +297,8 @@ groups:
         check: concept-file
         text: >-
           `concept.md` doit tenir au moins une section, et un titre `###` n'existe que dans une
-          section, une unité de cette section : les titres de `concept.md` sont l'arbre du concept.
+          section, une unité de cette section, ou dans la tête et le pied, l'un de leurs blocs :
+          les titres de `concept.md` sont l'arbre du concept.
       - id: essentials-define-concept
         level: requirement
         text: >-
@@ -321,9 +342,7 @@ groups:
         method: test
         check: unit-contract
         text: >-
-          Une section qui a des unités ne doit rien tenir d'autre que ses titres `###` et leurs
-          blocs ; une section sans titre `###` est une section d'une unité, et tient le bloc de
-          cette unité.
+          Une section ne doit rien tenir d'autre que ses titres `###` d'unité et leurs blocs.
       - id: unit-fields-labelled
         level: requirement
         method: test
@@ -923,7 +942,7 @@ groups:
         check: course-files
         text: >-
           Chaque fait fixé doit finir par l'id de l'unité qui l'a fixé, entre parenthèses
-          (« (0d) », un point final permis après), l'id d'une unité du cours.
+          (« (0d1) », un point final permis après), l'id d'une unité du cours.
       - id: storyline-holds-what-units-use
         level: requirement
         category: pedagogy

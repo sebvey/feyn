@@ -2,7 +2,7 @@
 
 | Affirmation | Section | Source | Vérifié | Nature |
 |---|---|---|---|---|
-| Une tranche traverse toutes les couches | 2a | [S1] | « le texte » (section 2) | école |
+| Une tranche traverse toutes les couches | 2a1 | [S1] | « le texte » (section 2) | école |
 
 ## Références
 

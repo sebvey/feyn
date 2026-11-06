@@ -38,14 +38,20 @@ diagrams:
   - file: produit-probleme-utilisateurs-valeur.svg
     title: "Un produit se décrit par un problème, des utilisateurs et une valeur ; trois acteurs se partagent les décisions"
     caption: "En haut, le produit se décrit par un problème, des utilisateurs et une valeur ; les consommateurs de données sont des utilisateurs. En bas, qui tranche quoi : le PO représente les parties prenantes dans le backlog et répond de la valeur."
-    unit: 1a
+    unit: 1a1
 ---
 
-## L'essentiel
+# Concept 1 : Le produit et le rôle du PO
+
+## Ouverture
+
+### L'essentiel
 
 Un produit livre de la valeur à des utilisateurs connus. Ce cours le décrit par trois choses : le **problème** qu'il résout, les **utilisateurs** qui ont ce problème (un consommateur de données en est un), la **valeur** qu'ils en tirent, plutôt que par sa technique. Le **Product Owner** répond de cette valeur : il tient le backlog produit, donc il dit **quoi**, **dans quel ordre** et **pourquoi**. Les **Developers** décident **comment** et donnent le **coût**. Les **parties prenantes** font valoir leurs besoins en convainquant le PO, qui est une seule personne.
 
-## 1a Le produit : problème, utilisateurs, valeur
+## Section 1a : Le produit : problème, utilisateurs, valeur
+
+### Unité 1a1 : Le produit : problème, utilisateurs, valeur
 
 - **Matière** : Le Scrum Guide définit un produit comme un moyen de livrer de la valeur, avec des utilisateurs et des parties prenantes connus [consensus]. Roman Pichler (Product Vision Board) le décrit par son groupe cible et par les problèmes qu'il lui retire et les bénéfices qu'il lui apporte [école]. Le cours en tire une grille à trois cases : le problème, les utilisateurs, la valeur [cours].
 
@@ -83,7 +89,9 @@ Un produit livre de la valeur à des utilisateurs connus. Ce cours le décrit pa
   - « La plateforme montrera les vélos signalés en panne depuis la source des signalements » : c'est ajouter de la technique, pas de la valeur.
   - « Théo gagne une heure par jour » : c'est inventer la valeur au lieu de la demander.
 
-## 1b Qui tranche quoi
+## Section 1b : Qui tranche quoi
+
+### Unité 1b1 : Qui tranche quoi
 
 - **Matière** : Le concept 0 a situé les trois responsabilités de l'équipe Scrum ; voici qui décide quoi.
 
@@ -131,7 +139,9 @@ Un produit livre de la valeur à des utilisateurs connus. Ce cours le décrit pa
   - « Le PO décide du quoi, donc du contenu du sprint » : il décide de l'ordre, les Developers choisissent ce qu'ils prennent avec lui.
   - « Les Developers choisissent seuls » : la discussion avec le PO fait partie du choix.
 
-## Se vérifier
+## Clôture
+
+### Se vérifier
 
 > Ma phrase dit-elle **qui** a **quel problème**, et **ce qui change** pour lui une fois résolu ?
 > Pour une décision : est-ce un quoi, un ordre ou un pourquoi (PO), ou un comment ou un coût
