@@ -27,7 +27,7 @@ neighbors:
 
 ### L'essentiel
 
-Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier son extraction ou sa force. Le cours en retient quatre : la mouture, le temps de contact et la température d'infusion font aller l'extraction plus ou moins loin ; le ratio, la quantité de café pour l'eau, fait d'abord la force. Une tasse ratée ne vient pas de nulle part : elle vient de ces quatre choix, souvent faits sans le savoir.
+Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier son extraction ou sa force. Le cours en retient quatre : la mouture, le temps de contact et la température d'infusion font aller l'extraction plus ou moins loin ; le ratio, la quantité de café pour l'eau, fait d'abord la force. Une tasse ratée ne vient pas de nulle part : elle vient le plus souvent de ces quatre choix, faits sans le savoir.
 
 ## Section 1a : Ce que l'on choisit
 
