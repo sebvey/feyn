@@ -7,7 +7,7 @@ headings:
   essentials: "L'essentiel"
   stances: "Consensus et choix d'école"
   deepening: "Approfondissement"
-  landmarks: "Repères"
+  landmarks: "Se vérifier"
   instruction: "Consigne"
   claims: "Affirmations"
   references: "Références"
@@ -22,15 +22,13 @@ headings:
   unreleased: "Non publié"
 
 # Labels of the fields of a unit of a concept file and of its supplementary cases
-# (course/form.yaml); `follow_up` labels a follow-up nested under a misconception.
+# (course/form.yaml).
 unit_fields:
   matter: "Matière"
   anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
   misconceptions: "Idées fausses"
-  follow_up: "Relance"
-  landmarks: "Repères"
   instruction: "Consigne"
 
 # The stance markers of the published text: `[cours]`, `[école]`, `[consensus]`.

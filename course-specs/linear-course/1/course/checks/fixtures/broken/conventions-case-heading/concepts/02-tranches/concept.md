@@ -28,7 +28,7 @@ Une note.
 - **Idées fausses** :
   - « Un tableau » : c'est une carte.
 
-## Repères
+## Se vérifier
 
 > « Une question à se poser ? »
 

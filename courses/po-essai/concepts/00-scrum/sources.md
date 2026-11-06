@@ -46,7 +46,7 @@
 | Un élément qui ne remplit pas la DoD n'est ni livré ni présenté en revue ; il retourne au backlog | 0d | [S1] | « it cannot be released or even presented at the Sprint Review. Instead, it returns to the Product Backlog » | consensus |
 | On ne « livre pas un sprint », on livre des incréments | L'essentiel, 0d | [S1] | « fixed length events of one month or less » ; « an Increment may be delivered to stakeholders prior to the end of the Sprint » | consensus |
 | Un pipeline fini mais inconsommable n'est pas un incrément | 0d | [S1] | Découle de « the Increment must be usable » et de la DoD. Exemple propre au cours | cours |
-| Repère : « Si on décidait de le livrer maintenant, un utilisateur pourrait-il s'en servir, et la DoD est-elle remplie ? » | Repères | [S1] | Le Scrum Guide exige un incrément utilisable et conforme à la DoD ; il n'exige pas qu'il soit livré (« may be delivered »). Le test mêle « utilisable » et « mis en service » | cours |
+| Question pour se vérifier : « Si on décidait de le livrer maintenant, un utilisateur pourrait-il s'en servir, et la DoD est-elle remplie ? » | Se vérifier | [S1] | Le Scrum Guide exige un incrément utilisable et conforme à la DoD ; il n'exige pas qu'il soit livré (« may be delivered »). Le test mêle « utilisable » et « mis en service » | cours |
 | Un sprint dure un mois au plus ; des sprints plus courts donnent plus de cycles d'apprentissage | 0b1 | [S1] | « fixed length events of one month or less » ; « Shorter Sprints can be employed to generate more learning cycles » | consensus |
 
 ## Références

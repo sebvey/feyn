@@ -3,7 +3,7 @@
 // section with units holds them and nothing else; each unit is a list of labelled fields (labels of
 // the lexicon's `unit_fields`, a qualifier on « Question » only), the mandatory ones present, none
 // twice, in the order of the form, and no line outside a field; « Idées fausses » a list of
-// misconceptions, each `- « … » : …`, its follow-ups nested under it; each supplementary case a
+// misconceptions, each `- « … » : …`, nothing nested under it; each supplementary case a
 // #### heading with one qualifier of the closed list, a title unique in the concept, and the fields
 // of a unit without those the form leaves out. The parts of concept.md and its tree are
 // `concept-file`'s, a `structure` check; the length of a unit is `unit-length`'s.
