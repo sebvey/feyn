@@ -17,7 +17,7 @@
 | Une tasse trop forte ou trop légère se corrige d'abord par le ratio ; plus de café fait d'abord une tasse plus forte | 2b1 | cours | Découle du concept 1 (1b3) : le ratio fait d'abord la force | cours |
 | Un même café donne des tasses très différentes selon ce que l'eau en prend | 2b1 | [S4] | « if you manipulate a coffee’s TDS and PE, you change its flavor in a predictable way » | consensus |
 | Une tasse réussie est celle que l'on aime ; les repères de la profession sont un point de départ, pas une norme | L'essentiel, 2b2 | cours | Le parti pris du cours, `plan.md` | cours |
-| Les préférences des buveurs de café noir se répartissent en deux groupes ; une étude de UC Davis | 2b2 | [S10] | « Cluster analysis revealed two consumer segments whose preferences varied most strongly with TDS » (résumé) ; « Department of Food Science and Technology, University of California » (affiliation des auteurs, Europe PMC) | fait |
+| Les préférences des buveurs de café noir se répartissent en deux groupes ; une étude de UC Davis | 2b2 | [S10] | « Cluster analysis revealed two consumer segments whose preferences varied most strongly with TDS » (résumé) ; « Department of Food Science and Technology, University of California, One Shields Avenue, Davis » (affiliation des auteurs, Europe PMC) | fait |
 | Une tasse que l'on aime se refait en gardant ses réglages, pesés et notés | 2b2 | [S7], [S6] | « When you have a method that works for you, try to replicate the variables as closely as possible each time » ; « Make sure to write down the recipe you’re using » (Easy Ways to Improve Your Coffee Grinding) | consensus |
 
 ## Références
@@ -38,7 +38,7 @@
 ## Non vérifié
 
 - Consensus et choix d'école : changer un seul réglage à la fois n'est pas écrit dans S4, l'article de la SCA sur le réglage de la tasse, qui dit ajuster les variables « methodically » ; ce sont des praticiens qui le disent, cités par S5 et S6, et S6 est sponsorisé par un fabricant de moulins. Le cours le donne comme le consensus des praticiens.
-- 2a1 : que le corps aide à dire si une tasse est trop forte ou trop légère n'est établi par aucune source consultée : seul un praticien cité par S6 dit qu'une mouture trop grosse donne une tasse « thinner-bodied and a less concentrated ». La matière ne le dit pas ; la réponse attendue de 2a1 dit la tasse « sans doute légère », sans plus.
+- 2a1 : que le corps aide à dire si une tasse est trop forte ou trop légère n'est établi par aucune source consultée : seul un praticien cité par S6 dit qu'une mouture trop grosse donne une tasse « thinner-bodied and a less concentrated ». La matière ne prête pas ce rôle au corps seul : elle dit que les trois mots, ensemble, disent si la tasse est trop forte ou trop légère, ce qui découle du concept 0 (plus une tasse est forte, plus l'amer et l'acide s'y goûtent) ; la réponse attendue de 2a1 dit la tasse « sans doute légère », sans plus.
 - 2a1 : « agréable quand elle est équilibrée » est le mot du cours et de son glossaire ; S8 dit seulement que l'acidité peut être bonne ou mauvaise, et que l'acidité qui pique est un défaut.
 - 2b1 : qu'une eau plus chaude corrige une tasse sous-extraite vient du concept 1 (plus chaude, l'eau extrait plus vite) ; aucune source ouverte pour ce concept ne le donne comme une correction. S7 ne nomme que la mouture et la durée.
 - 2b1 : la taille du pas (un cran de moulin, quelques degrés) n'a de chiffre dans aucune source consultée ; le cours dit « un petit pas » et laisse la tasse suivante juger.

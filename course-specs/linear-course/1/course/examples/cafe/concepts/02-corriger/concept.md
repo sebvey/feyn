@@ -58,7 +58,7 @@ Corriger une tasse ratée, c'est la goûter avec trois mots, l'**acidité**, l'*
 #### Exercice (teacher seulement)
 
 - **Question** : Que dis-tu à Cédric de ce qui s'est passé, et que lui conseilles-tu pour sa tasse de demain ?
-- **Réponse attendue** : ses trois changements sont allés dans le même sens. La mouture plus fine et l'eau bouillante ont poussé l'extraction plus loin, le café en plus a monté la force : la tasse est passée de sous-extraite à sur-extraite, et forte (elle racle, sèche la langue, est épaisse). Il ne peut pas savoir lequel des trois a fait le plus, et le paquet n'y est pour rien, c'est le même. Demain : revenir à la recette de la veille, changer un seul réglage d'un petit pas, par exemple une mouture un peu plus fine, goûter, et décider du suivant d'après la tasse.
+- **Réponse attendue** : ses trois changements sont allés dans le même sens. La mouture plus fine et l'eau bouillante ont poussé l'extraction plus loin, le café en plus a monté la force : la tasse est passée de sous-extraite à sur-extraite (elle racle, sèche la langue), et forte (elle est épaisse). Il ne peut pas savoir lequel des trois a fait le plus, et le paquet n'y est pour rien, c'est le même. Demain : revenir à la recette de la veille, changer un seul réglage d'un petit pas, par exemple une mouture un peu plus fine, goûter, et décider du suivant d'après la tasse.
 
 #### Pièges (pour tous)
 
