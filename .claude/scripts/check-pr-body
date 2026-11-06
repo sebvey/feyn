@@ -1,0 +1,112 @@
+#!/usr/bin/env node
+'use strict';
+// check-pr-body --title "<title>" <body file>
+// check-pr-body --pr <n>
+// Checks the title and the limits of a PR body that /feyn-pull-request steps 4 and 5 define:
+// the title `<type>(<area>): <summary>`, 72 characters at most, no final period; the awaiting
+// section (`## Awaiting the maintainer` up to the next heading or `Closes`/`Refs` line) left out,
+// the first non-blank line `Closes #<n>` or `Refs #<n>` and 30 non-blank lines at most; the
+// section `## Review first` with 1 to 3 top-level bullets. With --pr, reads the title and the body
+// with `mise exec -- gh pr view <n> --json title,body` (plain `gh` when mise is not on the PATH).
+// One line per failure; exit 0 when none, 1 on a failure, 2 on a usage error.
+const fs = require('fs');
+const { spawnSync } = require('child_process');
+
+const NAME = 'check-pr-body';
+const TYPES = ['bug', 'course', 'decision', 'improvement'];
+const MAX_TITLE = 72;
+const MAX_LINES = 30;
+
+function usage(code) {
+  const out = code ? console.error : console.log;
+  out(`usage: ${NAME} --title "<title>" <body file>`);
+  out(`       ${NAME} --pr <n>`);
+  process.exit(code);
+}
+function refuse(message) {
+  console.error(`${NAME}: ${message}`);
+  process.exit(2);
+}
+
+function readPr(n) {
+  const ghArgs = ['pr', 'view', String(n), '--json', 'title,body'];
+  let r = spawnSync('mise', ['exec', '--', 'gh', ...ghArgs], { encoding: 'utf8' });
+  if (r.error && r.error.code === 'ENOENT') r = spawnSync('gh', ghArgs, { encoding: 'utf8' });
+  if (r.error) refuse(`cannot run gh: ${r.error.message}`);
+  if (r.status !== 0) refuse(`gh pr view ${n} failed: ${(r.stderr || '').trim()}`);
+  try {
+    const { title, body } = JSON.parse(r.stdout);
+    return { title, body };
+  } catch (e) {
+    refuse(`cannot read the output of gh pr view ${n}`);
+  }
+}
+
+const args = process.argv.slice(2);
+let title = null;
+let pr = null;
+let file = null;
+for (let i = 0; i < args.length; i++) {
+  const a = args[i];
+  if (a === '--help' || a === '-h') usage(0);
+  else if (a === '--title') { if (i + 1 >= args.length) usage(2); title = args[++i]; }
+  else if (a === '--pr') { if (i + 1 >= args.length) usage(2); pr = args[++i]; }
+  else if (a.startsWith('-')) usage(2);
+  else if (file === null) file = a;
+  else usage(2);
+}
+
+let body;
+if (pr !== null) {
+  if (title !== null || file !== null) usage(2);
+  if (!/^\d+$/.test(pr)) refuse(`--pr takes a PR number, not "${pr}"`);
+  ({ title, body } = readPr(pr));
+} else {
+  if (title === null || file === null) usage(2);
+  try { body = fs.readFileSync(file, 'utf8'); } catch (e) { refuse(`cannot read ${file}`); }
+}
+
+const failures = [];
+
+// The title.
+const problems = [];
+const m = /^([a-z]+)\(([^()\s]+)\): (\S.*)$/.exec(title);
+if (!m) problems.push('not `<type>(<area>): <summary>`');
+else if (!TYPES.includes(m[1])) problems.push(`type "${m[1]}" not one of ${TYPES.join(', ')}`);
+if (/\.\s*$/.test(title)) problems.push('a final period');
+if (title.length > MAX_TITLE) problems.push(`${title.length} characters, over ${MAX_TITLE}`);
+if (problems.length) failures.push(`title "${title}": ${problems.join('; ')}`);
+
+// The body, the awaiting section left out of the first line and the count.
+const lines = body.replace(/\r\n?/g, '\n').split('\n');
+const isHeading = (l) => /^#{1,6}\s/.test(l);
+const isIssueLine = (l) => /^(Closes|Refs) #\d+\s*$/.test(l);
+const kept = [];
+let awaiting = false;
+for (const l of lines) {
+  if (/^##\s+Awaiting the maintainer\s*$/.test(l)) { awaiting = true; continue; }
+  if (awaiting && (isHeading(l) || isIssueLine(l))) awaiting = false;
+  if (!awaiting) kept.push(l);
+}
+const nonBlank = kept.filter((l) => l.trim() !== '');
+if (!nonBlank.length || !isIssueLine(nonBlank[0])) {
+  failures.push(`first line "${nonBlank.length ? nonBlank[0] : ''}" is not \`Closes #<n>\` nor \`Refs #<n>\``);
+}
+if (nonBlank.length > MAX_LINES) {
+  failures.push(`${nonBlank.length} lines, over ${MAX_LINES} (blank lines and the awaiting section excluded)`);
+}
+
+// Review first: its top-level bullets.
+const start = lines.findIndex((l) => /^##\s+Review first\s*$/.test(l));
+if (start === -1) failures.push('no `## Review first` section');
+else {
+  let bullets = 0;
+  for (let i = start + 1; i < lines.length && !isHeading(lines[i]); i++) {
+    if (/^[-*+] /.test(lines[i])) bullets++;
+  }
+  if (bullets < 1 || bullets > 3) failures.push(`Review first holds ${bullets} bullets, not 1 to 3`);
+}
+
+for (const f of failures) console.log(`${NAME}: fail: ${f}`);
+if (failures.length) process.exit(1);
+console.log(`${NAME}: ok`);

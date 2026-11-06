@@ -14,7 +14,7 @@ feyn is a monorepo of courses taught by a Claude Code teacher and published as a
 | `classroom-builder/` | teacher template, classroom build script (`build-classroom`: it runs the spec MAJOR's `teacher/build/` and writes the classroom, its teacher skills included) and its test (`test-build`), the fresh tests (`fresh-test`) |
 | `site-builder/` | the site engine (Astro); reads `courses/` directly |
 | `docs/` | `vision.md` (what feyn is for), `decisions/`, `glossary.md`, `contributing.md`, `kanban.md` (the frame of the work) |
-| `.claude/` | `skills/` (the procedures run on their own), `agents/` (project subagents), `workflows/`, `reference/` (what a thing is, and the procedures only ever a step of other skills), `decisions/`; decisions `claude-folder-layout`, `one-moment-one-file` |
+| `.claude/` | `skills/` (the procedures run on their own), `agents/` (project subagents), `workflows/`, `reference/` (what a thing is, and the procedures only ever a step of other skills), `decisions/`, `scripts/` (the scripts a skill and an agent both run); decisions `claude-folder-layout`, `one-moment-one-file` |
 | `.github/` | issue template and CI workflows |
 
 ## Contributing

@@ -1,0 +1,99 @@
+#!/usr/bin/env node
+'use strict';
+// check-decisions [<file> ...]
+// Checks the form of decision files that /feyn-decision step 5 writes: fewer than 40 lines; the
+// first non-blank line after the frontmatter starts with `Without this,`; no « ADR » for one
+// decision or several (`adr` as a word of the slug; `an ADR`, `the ADR`, `this ADR`, `that ADR`,
+// `ADRs` in the text), « ADR » alone, the practice, allowed; `status: superseded` followed by a
+// line `superseded-by: <slug>`, `<slug>.md` existing in a `decisions/` folder. With no file, every
+// `decisions/*.md` git tracks, those under a `fixtures/` or `test-fixtures/` folder left out.
+// One line per failure; exit 0 when none, 1 on a failure, 2 on a usage error.
+const fs = require('fs');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+const NAME = 'check-decisions';
+const ROOT = path.resolve(__dirname, '..', '..');
+const MAX_LINES = 40;
+const DECISION = /(^|\/)decisions\/[^/]+\.md$/;
+const FIXTURE = /(^|\/)(test-)?fixtures\//;
+
+function usage(code) {
+  const out = code ? console.error : console.log;
+  out(`usage: ${NAME} [<file> ...]`);
+  out('with no file, every decisions/*.md git tracks, fixtures left out');
+  process.exit(code);
+}
+function refuse(message) {
+  console.error(`${NAME}: ${message}`);
+  process.exit(2);
+}
+
+function gitFiles(extra) {
+  const r = spawnSync('git', ['ls-files', ...extra], { cwd: ROOT, encoding: 'utf8' });
+  if (r.error || r.status !== 0) refuse(`git ls-files failed in ${ROOT}`);
+  return r.stdout.split('\n').filter((f) => DECISION.test(f));
+}
+
+const args = process.argv.slice(2);
+for (const a of args) {
+  if (a === '--help' || a === '-h') usage(0);
+  if (a.startsWith('-')) usage(2);
+}
+const files = args.length
+  ? args
+  : gitFiles([]).filter((f) => !FIXTURE.test(f)).map((f) => path.join(ROOT, f));
+
+// The slugs a `superseded-by` may name: the decisions git tracks or that are not ignored yet
+// (one written and not added), wherever they are.
+let known = null;
+function slugExists(slug, file) {
+  if (fs.existsSync(path.join(path.dirname(file), `${slug}.md`))) return true;
+  if (known === null) {
+    known = new Set(gitFiles(['--cached', '--others', '--exclude-standard']).map((f) => path.basename(f, '.md')));
+  }
+  return known.has(slug);
+}
+
+const failures = [];
+for (const file of files) {
+  let text;
+  try { text = fs.readFileSync(file, 'utf8'); } catch (e) { refuse(`cannot read ${file}`); }
+  const shown = path.isAbsolute(file) && file.startsWith(ROOT + path.sep) ? path.relative(ROOT, file) : file;
+  const fail = (what) => failures.push(`${shown}: ${what}`);
+  const lines = text.replace(/\r\n?/g, '\n').replace(/\n$/, '').split('\n');
+
+  if (lines.length >= MAX_LINES) fail(`${lines.length} lines, ${MAX_LINES} or more`);
+
+  // The frontmatter, then the first non-blank line.
+  let i = 0;
+  const front = [];
+  if (lines[0] === '---') {
+    const end = lines.indexOf('---', 1);
+    if (end === -1) fail('a frontmatter with no closing `---`');
+    else { front.push(...lines.slice(1, end)); i = end + 1; }
+  }
+  while (i < lines.length && lines[i].trim() === '') i++;
+  if (i >= lines.length || !lines[i].startsWith('Without this,')) {
+    fail('the first line after the frontmatter does not start with `Without this,`');
+  }
+
+  // « ADR » for one decision or several.
+  const where = [];
+  const slug = path.basename(file, '.md');
+  if (slug.toLowerCase().split('-').includes('adr')) where.push('the slug');
+  if (/\b([Aa]n|[Tt]he|[Tt]his|[Tt]hat)\s+ADR\b|\bADRs\b/.test(text)) where.push('the text');
+  if (where.length) fail(`« ADR » for a decision in ${where.join(' and in ')}`);
+
+  // superseded: superseded-by on the next line, naming a decision that exists.
+  const s = front.findIndex((l) => /^status:\s*superseded\s*$/.test(l));
+  if (s !== -1) {
+    const by = /^superseded-by:\s*(\S+)\s*$/.exec(front[s + 1] || '');
+    if (!by) fail('`status: superseded` not followed by `superseded-by: <slug>`');
+    else if (!slugExists(by[1], file)) fail(`superseded-by "${by[1]}": no decisions/${by[1]}.md`);
+  }
+}
+
+for (const f of failures) console.log(`${NAME}: fail: ${f}`);
+if (failures.length) process.exit(1);
+console.log(`${NAME}: ok (${files.length} decisions)`);
