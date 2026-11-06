@@ -8,8 +8,8 @@ learner:
 
     ## Profil
 
-    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
-    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+    - Son café : au bureau, le café de la Pipeline, et le week-end des capsules
+    - Son matériel : une machine à capsules et une bouilloire, c'est tout
 
     ## Préférences
 
@@ -38,7 +38,7 @@ learner:
 
     ## Prochaine étape
 
-    Concept 0 : Scrum en bref et l'incrément (`concepts/00-scrum`), son premier message.
+    Concept 0 : L'extraction (`concepts/00-extraction`), son premier message.
 
     ## Concepts
 
@@ -59,19 +59,19 @@ turns:
   - message: Oui, vas-y.
     if: next-line
     expect:
-      - act: the first message of concept 0 (at this turn or the one before), its title a level-2 link, the stance of the course announced as its teaching notes say, one sub-concept (the team in brief) explained from the case « Qui est le chef de l'équipe vélos ? », the example and the question in one quote, the actors named with their storyline role
+      - act: the first message of concept 0 (at this turn or the one before), its title a level-2 link, the instruction of 0a1 followed (what changes the extraction left to concept 1, not taught), one sub-concept (0a1, the extraction makes the taste) explained from its case, Cédric's two cups of the same coffee (« Le café a tourné ? »), the example and the question in one quote, the actors named with their storyline role
         rules: [concept-title-link, follow-concept-instructions, one-sub-concept-per-message, explanation-from-case, examples-from-bank, case-usage-respected, example-question-quote-form, examples-from-storyline, actor-named-with-role, same-role-actors-grouped, storyline-role-in-parentheses, storyline-facts-section-unsaid]
-  - message: Scarlette, puisque c'est elle qui organise les réunions.
+  - message: "Le café a dû tourner : son paquet n'est plus aussi bon que lundi."
     expect:
-      - act: "the answer is wrong (a common mistake of the bank): the follow-up of the bank, « de quoi répond le Scrum Master ? », in the quote form without its example part, no new sub-concept"
+      - act: "the answer is wrong (a common mistake of the bank, « Si le goût change, c'est que le café a changé »): a follow-up on what the water took from the same coffee, in the quote form without its example part, no new sub-concept"
         rules: [wrong-answer-follow-up, common-mistake-not-nuance, follow-up-quote-form, wait-for-understanding, correct-frankly]
-  - message: Le Scrum Master répond de l'efficacité de l'équipe, donc Scarlette n'est pas la cheffe.
+  - message: Le café est le même. C'est sa façon de faire la tasse qui a changé ce matin.
     expect:
-      - act: "the answer is partial (the PO and the Developers are missing): what is right said, then a targeted follow-up on what is missing, in a short message, without explaining the sub-concept again"
+      - act: "the answer is partial (what that change did is missing: the water took more, or less, from the coffee, the extraction, and the taste followed): what is right said, then a targeted follow-up on what is missing, in a short message, without explaining the sub-concept again"
         rules: [partial-answer-follow-up, wait-for-understanding]
-  - message: "Il n'y a pas de chef : l'équipe s'organise elle-même. Moi, le PO, je réponds de la valeur de la plateforme et du backlog ; Dana, Diego et Anna, les Developers, réalisent l'incrément ; Scarlette répond de l'efficacité de l'équipe."
+  - message: "Le café est le même. Ce matin, quelque chose dans sa façon de faire la tasse a fait que l'eau en a dissous plus, ou moins, que lundi : c'est l'extraction qui a changé, et le goût a suivi."
     expect:
-      - act: the correction opens the message and says frankly that the answer is right, then the next part of the sub-concept (the PO) at the same message if it fits, or the next line; nothing written in learner/ (no save point)
+      - act: the correction opens the message and says frankly that the answer is right, then the next sub-concept (0a2, too little or too much) at the same message if it fits, or the next line; nothing written in learner/ (no save point)
         rules: [correct-frankly, correction-opens-message, chain-after-validation, write-at-save-points-only]
 rules:
   - one-sub-concept-per-message

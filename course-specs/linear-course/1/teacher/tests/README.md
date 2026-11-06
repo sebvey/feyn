@@ -10,7 +10,7 @@ The readers are defined in [`spec-directives/README.md`](../../../../../spec-dir
 
 A **test scenario** is a fixed run of a teaching session: the learner memory it starts from, the learner's messages in order, the acts the teacher's replies are expected to show and the rules of the protocol (`../rules.yaml`) they exercise. A **fresh test** runs one: `mise exec -- classroom-builder/fresh-test <course-dir> <scenario id>` builds a disposable classroom from the course, runs the teacher in it turn by turn, and judges the transcript, a script for the form rules and a fresh agent for the others, slug by slug (`classroom-builder/README.md`, "The fresh tests"). It is the implementation of the method demonstration of the protocol's rules (`spec-directives/1/README.md` section 4). The scenarios live here, in the spec MAJOR, since they name its rules; the harness lives at the root, the same cut as the classroom build (`../build/`).
 
-The scenarios are written for the bench course `courses/po-essai` (its two concepts, its actors, its cases); a second course gets its own when it is tested.
+The scenarios are written for the spec's example course `cafe` (`../../course/examples/cafe/`: its concepts, its actors, its cases); a second course gets its own when it is tested.
 
 ## The format
 
@@ -42,7 +42,7 @@ An act the teacher may do at one turn or the next (a reply that fits in one mess
 
 ## The rules covered
 
-The rules of the families 1, 3, 4, 5, 8 and 9 that a session of `po-essai` exercises on the path of the first five scenarios (a new learner, concept 0, a stop, a resume, concept 1) are each named by at least one scenario. The two scenarios of a teacher behaviour decision (`retrieval-at-resume`, `declared-diagram`) name only the rules of their decision, so that their exit code says whether the decision's rule holds, whatever the other rules do; the families 2 (the domain presentation), 6 (stances and sources) and 7 (practice, skips, asides) are left to the scenarios that will ask for them. The rules of those six families no scenario names, and why:
+The rules of the families 1, 3, 4, 5, 8 and 9 that a session of `cafe` exercises on the path of the first five scenarios (a new learner, concept 0, a stop, a resume, concept 1) are each named by at least one scenario. The two scenarios of a teacher behaviour decision (`retrieval-at-resume`, `declared-diagram`) name only the rules of their decision, so that their exit code says whether the decision's rule holds, whatever the other rules do; the families 2 (the domain presentation), 6 (stances and sources) and 7 (practice, skips, asides) are left to the scenarios that will ask for them. The rules of those six families no scenario names, and why:
 
 | Rule | Why no scenario names it |
 |---|---|
@@ -51,7 +51,7 @@ The rules of the families 1, 3, 4, 5, 8 and 9 that a session of `po-essai` exerc
 | `missing-nuance-not-partial` | needs an answer that misses only a nuance, a judgement the fixed messages cannot steer |
 | `two-failed-follow-ups` | needs two failed follow-ups in a row, three more turns no scenario spends |
 | `elliptic-answer-clarified` | needs an elliptic answer; the fixed answers are full sentences |
-| `periodic-mini-recap` | comes every 3 or 4 validated concepts; `po-essai` has two |
+| `periodic-mini-recap` | comes every 3 or 4 validated concepts; `cafe` has three and an annex, and the path validates only concept 0 |
 | `adapt-to-pace-requests` | no learner message asks « plus vite », « plus lent », « exemple » or « exercice » |
 | `classroom-exchanges-exempt` | no learner message is about the classroom itself |
 | `concept-reference-form` | a conditional rule: it acts only when the teacher refers to another concept, which no fixed message makes it do, so a scenario naming it would be judged on an act that may not come |
@@ -59,7 +59,7 @@ The rules of the families 1, 3, 4, 5, 8 and 9 that a session of `po-essai` exerc
 | `requested-diagram-shown` | the moment `diagram` on request: no learner message asks for a diagram |
 | `diagram-not-displayable` | the classroom of a fresh test cannot show a diagram, so `declared-diagram` exercises it, but names only the rule of its decision, `declared-diagram-shown`, whose text cites it (the judge reads it for context) |
 | `cut-loses-unsaved-state` | needs a cut between two save points |
-| `save-announced-ideas` | no idea is announced for a later concept on the path (the stance of concept 0 is noted only for a learner without sprints) |
+| `save-announced-ideas` | no idea is announced for a later concept on the path (the instruction of unit 0a1 keeps for concept 1 a setting the learner names, and no fixed message names one) |
 | `save-levers`, `save-vigilances`, `save-preferences` | a lever, a vigilance or a preference is the teacher's judgement of the learner, not a fixed act |
 | `line-only-if-it-matters`, `contradicted-observation-fixed`, `untaught-notion-not-vigilance`, `productions-not-kept` | judgements on what learner memory keeps, with no act a fixed message triggers |
 | `git-failure-told-once` | git works in the classroom |

@@ -71,8 +71,10 @@ Si l'apprenant nomme ce qui a pu changer dans la façon de faire (le moulin, l'e
 
 #### Exercice (teacher seulement)
 
-- **Question** : La tasse de Cédric est-elle trop peu ou trop extraite ? Dis-lui ce qui, dans sa description, te le fait dire.
-- **Réponse attendue** : trop peu, elle est sous-extraite : elle pique (acide) et ne laisse rien en bouche (finale courte), et elle n'a pas l'amer ni le sec d'une tasse sur-extraite.
+- **Question**, en deux parties : la tasse de Cédric est-elle trop peu ou trop extraite ? Et qu'est-ce qui, dans sa description, te le fait dire ?
+- **Réponse attendue** :
+  1. Trop peu : elle est sous-extraite.
+  2. Elle pique (acide) et ne laisse rien en bouche (finale courte), et elle n'a pas l'amer ni le sec d'une tasse sur-extraite.
 
 #### Pièges (pour tous)
 
@@ -110,6 +112,14 @@ Le cours juge l'extraction au goût seulement : ne proposer ni réfractomètre, 
 
 - « Une tasse forte est une tasse sur-extraite » : la force est la concentration de la tasse, l'extraction ce que l'eau a pris au café ; l'une peut être haute et l'autre juste.
 - « Un peu d'eau chaude rattrape une tasse sur-extraite » : l'eau ajoutée baisse la force, pas l'extraction ; l'amer et le sec restent, en plus léger.
+
+#### En stock, entraînement (teacher seulement) : La tasse légère du Petit Noir
+
+- **Ancrage** : Au Petit Noir, Inès sert à Cédric une tasse claire et légère. Il t'écrit : « Presque de l'eau. Douce, ça ne pique pas, pas amère, et le goût reste un moment une fois avalée. Mais si légère, elle est forcément sous-extraite, non ? Inès m'a juste répondu que légère n'est pas creuse. »
+- **Question** : Cédric a-t-il raison ? Dis-lui de quel côté penche cette tasse, et ce que veut dire Inès.
+- **Réponse attendue** : non. Légère, c'est sa force qui est basse, pas son extraction. Pour l'extraction, on cherche le genre de goût : elle est douce, ne pique pas, n'est ni amère ni sèche, et son goût reste en bouche ; elle n'est ni sous-extraite (acide et courte) ni sur-extraite (amère et sèche) : elle est équilibrée. Inès dit qu'une tasse peut être légère sans être creuse : la force n'est pas l'extraction.
+- **Pièges** :
+  - « Légère, donc sous-extraite » : la légèreté dit la force ; une tasse sous-extraite pique et ne laisse rien en bouche, quelle que soit sa force.
 
 ## Clôture
 

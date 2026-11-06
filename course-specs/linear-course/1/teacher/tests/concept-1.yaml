@@ -8,8 +8,8 @@ learner:
 
     ## Profil
 
-    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
-    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+    - Son café : au bureau, le café de la Pipeline, et le week-end des capsules
+    - Son matériel : une machine à capsules et une bouilloire, c'est tout
 
     ## Préférences
 
@@ -38,15 +38,15 @@ learner:
 
     ## Prochaine étape
 
-    Concept 0 : Scrum en bref et l'incrément (`concepts/00-scrum`), sous-concept 0b (sprint et
-    incrément) : son message, cas « La vue des stations vides livrée un mercredi ». Le
-    sous-concept 0a (le cadre) est fait.
+    Concept 0 : L'extraction (`concepts/00-extraction`), sous-concept 0b1 (forte ou
+    sur-extraite) : son message, cas « Verse de l'eau chaude dedans ». Les sous-concepts 0a1 et
+    0a2 sont faits.
 
     ## Concepts
 
     | # | Concept | Statut |
     |---|---|---|
-    | 0 | Scrum en bref et l'incrément | en cours |
+    | 0 | L'extraction | en cours |
 
     Annexes vues : aucune.
 
@@ -56,16 +56,16 @@ learner:
 
     ## Journal
 
-    2026-11-02, session 1 : accueil, concept 0 commencé (l'équipe en bref).
-    2026-11-03, session 2 : concept 0, 0a fait (responsabilités, événements, artefacts).
+    2026-11-02, session 1 : accueil, concept 0 commencé (l'extraction fait le goût).
+    2026-11-03, session 2 : concept 0, 0a1 et 0a2 faits (l'extraction fait le goût ; trop peu, ou trop).
 turns:
   - message: On continue.
   - message: Oui.
     if: next-line
     expect:
-      - act: the message of 0b (at this turn or the one before), from the case « La vue des stations vides livrée un mercredi », its question in the quote form
+      - act: the message of 0b1 (at this turn or the one before), from the case « Verse de l'eau chaude dedans », Aïmen's advice, its question in the quote form
         rules: [one-sub-concept-per-message, example-question-quote-form, examples-from-storyline, actor-named-with-role]
-  - message: "Non, Dana n'a pas raison. Mercredi, c'est un incrément qui a été livré : la plateforme dans un nouvel état utilisable, avec la vue, conforme à la DoD. Le sprint, lui, est une durée : il continue jusqu'à son terme et peut produire d'autres incréments. On peut livrer avant la fin du sprint, la revue n'est pas une porte de mise en production."
+  - message: "En partie seulement. La tasse est forte, noire et épaisse, mais amère et sèche en bouche : elle est aussi sur-extraite. L'eau chaude baissera sa force, elle sera moins intense, mais elle restera sur-extraite, amère et sèche en plus léger. C'est la façon de faire la tasse suivante qu'il faut changer."
     expect:
       - act: the answer validated frankly, concept 0 validated, the link of its page on the site
         rules: [correct-frankly, validated-concept-page-link, descriptive-site-links]
@@ -76,11 +76,11 @@ turns:
   - message: Oui.
     if: next-line
     expect:
-      - act: the first message of concept 1 (at this turn or the one before), its title a level-2 link, the sub-concept 1a from the case « Présenter la plateforme à un nouvel arrivant », a new situation in the same business
+      - act: the first message of concept 1 (at this turn or the one before), its title a level-2 link, the sub-concept 1a1 from the case of Cédric's recipe « Chez moi, qu'est-ce que je choisis, au juste ? », a new situation in the same business
         rules: [concept-title-link, one-sub-concept-per-message, change-situation-not-business, examples-from-storyline]
-  - message: La plateforme collecte les relevés des stations dans un entrepôt toutes les 5 minutes, et affiche des vues et des alertes.
+  - message: "Il ne choisit que la mouture, moyenne, au moulin : le reste, il ne le mesure pas, donc il ne le choisit pas."
     expect:
-      - act: "the answer restates the technique (a common mistake of the bank): the follow-up « qui s'en sert, et qu'est-ce qui change pour lui ? » or another angle, no new sub-concept"
+      - act: "the answer counts only what Cédric measures (a common mistake of the bank, « Ce que je ne mesure pas, je ne le choisis pas »): a follow-up on what he chose without measuring it (the coffee for his water, the heat of the water, the time) or another angle, no new sub-concept"
         rules: [wrong-answer-follow-up, one-question-per-message]
 rules:
   - one-sub-concept-per-message

@@ -8,8 +8,8 @@ learner:
 
     ## Profil
 
-    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
-    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+    - Son café : au bureau, le café de la Pipeline, et le week-end des capsules
+    - Son matériel : une machine à capsules et une bouilloire, c'est tout
 
     ## Préférences
 
@@ -38,16 +38,16 @@ learner:
 
     ## Prochaine étape
 
-    Concept 0 : Scrum en bref et l'incrément (`concepts/00-scrum`), sous-concept 0a1 (les
-    responsabilités), le message sur le PO. Question en attente : cas « Diego écrit des éléments
-    du backlog », question en deux parties, la première posée : « Odile a-t-elle raison de dire
-    que ce n'est pas le rôle de Diego d'écrire ces éléments ? ». Rien de juste encore.
+    Concept 0 : L'extraction (`concepts/00-extraction`), sous-concept 0a2 (trop peu, ou trop),
+    son message. Question en attente : cas « Elle pique le bout de la langue », question en deux
+    parties, la première posée : « La tasse de Cédric est-elle trop peu ou trop extraite ? ». Rien
+    de juste encore.
 
     ## Concepts
 
     | # | Concept | Statut |
     |---|---|---|
-    | 0 | Scrum en bref et l'incrément | en cours |
+    | 0 | L'extraction | en cours |
 
     Annexes vues : aucune.
 
@@ -57,8 +57,8 @@ learner:
 
     ## Journal
 
-    2026-11-02, session 1 : accueil, concept 0 commencé (l'équipe en bref).
-    2026-11-03, session 2 : concept 0, message sur le PO ; arrêt sur une question en attente.
+    2026-11-02, session 1 : accueil, concept 0 commencé (l'extraction fait le goût).
+    2026-11-03, session 2 : concept 0, message de 0a2 (trop peu, ou trop) ; arrêt sur une question en attente.
 turns:
   - message: Bonjour
     expect:
@@ -74,7 +74,7 @@ turns:
     expect:
       - act: the storyline and the files of concept 0 read before what follows
         rules: [read-before-what-follows]
-      - act: the sub-concept taught again from its start (explanation, example of the case « Diego écrit des éléments du backlog »), then the pending question, its first part, in the quote form
+      - act: the sub-concept taught again from its start (explanation, example of the case « Elle pique le bout de la langue »), then the pending question, its first part, in the quote form
         rules: [pending-question-retaught, example-question-quote-form, one-question-per-message]
 rules:
   - new-or-returning-learner
