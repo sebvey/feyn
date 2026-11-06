@@ -41,8 +41,9 @@ groups:
         check: conventions
         text: >-
           Le Markdown d'un cours doit être du CommonMark simple : pas de HTML, pas d'`import` ni
-          d'`export` MDX, pas de directive `:::` ; un fichier de concept n'a ni H1 ni titre plus
-          profond que `####`, et un titre `####` est un cas supplémentaire, dans une unité.
+          d'`export` MDX, pas de directive `:::` ; un fichier de concept n'a pas de titre plus
+          profond que `####`, et un titre `####` est un bloc d'une unité ou un cas supplémentaire,
+          dans une unité (son seul H1, son titre, est la règle `concept-file-title`).
       - id: no-banned-character
         level: recommendation
         category: writing
@@ -271,8 +272,8 @@ groups:
       « L'essentiel », le résumé écrit du concept ; ses sections et leurs unités, une par message
       du professeur ; son pied, « Clôture », qui tient « Se vérifier » et l'approfondissement que
       le site publie, puis la consigne du concept, que seul le professeur lit. L'objectif et les
-      pièges n'y sont pas écrits : le build les compose, depuis `course.yaml` et depuis les idées
-      fausses des unités.
+      pièges du concept n'y sont pas écrits : le build les compose, depuis `course.yaml` et depuis
+      les « Pièges » de ses unités.
     category: pedagogy
     method: inspection
     rules:
