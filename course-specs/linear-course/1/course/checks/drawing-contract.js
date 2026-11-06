@@ -131,4 +131,4 @@ function run(ctx) {
 }
 const normStr = (v) => String(v);
 
-module.exports = { id: 'svg-contract', run };
+module.exports = { id: 'drawing-contract', run };
