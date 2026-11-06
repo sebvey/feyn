@@ -8,6 +8,8 @@ feyn makes two products from one source, a course:
 - a **teacher**, which teaches the course to a learner in a teaching session in Claude Code;
 - a **site**, which publishes the course for the reader.
 
+A third build of the same source, the course-creator, comes later: it leads a creator along the creation path of a course, from its frame down to the teaching unit, each step producing one file or one block and proving itself at once (decision `one-source-two-builds`).
+
 The spec, its checks and the agentic layer are worth what they bring to the two products: a spec that no product consumes is premature. Several courses, other contributors and several learners come after, and are judged the same way.
 
 ## The yardstick
