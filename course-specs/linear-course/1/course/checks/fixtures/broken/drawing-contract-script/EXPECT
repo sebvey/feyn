@@ -1,2 +1,2 @@
-check: svg-contract
+check: drawing-contract
 message: forbidden element <script>

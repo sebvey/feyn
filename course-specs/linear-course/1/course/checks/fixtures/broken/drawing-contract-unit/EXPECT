@@ -1,2 +1,2 @@
-check: svg-contract
+check: drawing-contract
 message: diagram couches.svg: unit "1b" is not a unit of the concept

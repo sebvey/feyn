@@ -1,2 +1,2 @@
-check: svg-contract
+check: drawing-contract
 message: fill="#ff0000": only currentColor or none

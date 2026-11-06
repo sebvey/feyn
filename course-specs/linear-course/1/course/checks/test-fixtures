@@ -131,10 +131,10 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     report(`--category ${cats.join(',')} runs the checks of ${cats.join(', ')} only`, r.code === 0 && ids(r).length > 0 && ids(r).join(',') === runIds(cats), notOk(r) || ids(r).join(','));
   }
   // a blocking failure outside the categories selected is not run: exit code 0
-  const b = run(path.join(fx, 'broken', 'svg-contract'), [...lexicon, '--category', 'writing']);
-  report('broken/svg-contract with --category writing: svg-contract does not run, exit code 0', b.code === 0 && !ids(b).includes('svg-contract'), notOk(b));
-  const c = run(path.join(fx, 'broken', 'svg-contract'), [...lexicon, '--category', 'diagrams']);
-  report('broken/svg-contract with --category diagrams: exit code 1', c.code === 1 && failing(c).some((l) => l.startsWith('svg-contract: fail: ')), notOk(c));
+  const b = run(path.join(fx, 'broken', 'drawing-contract'), [...lexicon, '--category', 'writing']);
+  report('broken/drawing-contract with --category writing: drawing-contract does not run, exit code 0', b.code === 0 && !ids(b).includes('drawing-contract'), notOk(b));
+  const c = run(path.join(fx, 'broken', 'drawing-contract'), [...lexicon, '--category', 'diagrams']);
+  report('broken/drawing-contract with --category diagrams: exit code 1', c.code === 1 && failing(c).some((l) => l.startsWith('drawing-contract: fail: ')), notOk(c));
   const l = spawnSync(process.execPath, [runner, '--list', '--category', 'pedagogy'], { encoding: 'utf8' }).stdout.split('\n').filter(Boolean).map((x) => x.split(/\s+/)[0]);
   report('--list --category pedagogy lists the pedagogy checks only', l.join(',') === LIST.filter((x) => x.category === 'pedagogy').map((x) => x.id).join(','), l.join(','));
   const SPEC_NAME = 'spec';

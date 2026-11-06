@@ -187,7 +187,7 @@ La section 6.1 est le contrat de dessin ; la section 6.2, le style que partagent
 
 | Reader | Needs | When |
 |---|---|---|
-| the creator (human or agent) | what an SVG may hold, to pass `svg-contract` | drawing a diagram |
+| the creator (human or agent) | what an SVG may hold, to pass `drawing-contract` | drawing a diagram |
 | the site | an SVG shown as it is: no script, no external resource, colours that follow the text around it | at each build |
 | the teacher | an SVG the desktop panel shows as it is | sending a diagram |
 | the learner | with a screen reader, the title and description of the drawing | reading a concept on the site |
