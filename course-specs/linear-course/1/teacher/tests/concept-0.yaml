@@ -59,7 +59,7 @@ turns:
   - message: Oui, vas-y.
     if: next-line
     expect:
-      - act: the first message of concept 0 (at this turn or the one before), its title a level-2 link, the stance of the course announced as its teaching notes say, one sub-concept (0a1, the extraction makes the taste) explained from its case, Cédric's two cups of the same coffee (« Le café a tourné ? »), the example and the question in one quote, the actors named with their storyline role
+      - act: the first message of concept 0 (at this turn or the one before), its title a level-2 link, the instruction of 0a1 followed (what changes the extraction left to concept 1, not taught), one sub-concept (0a1, the extraction makes the taste) explained from its case, Cédric's two cups of the same coffee (« Le café a tourné ? »), the example and the question in one quote, the actors named with their storyline role
         rules: [concept-title-link, follow-concept-instructions, one-sub-concept-per-message, explanation-from-case, examples-from-bank, case-usage-respected, example-question-quote-form, examples-from-storyline, actor-named-with-role, same-role-actors-grouped, storyline-role-in-parentheses, storyline-facts-section-unsaid]
   - message: "Le café a dû tourner : son paquet n'est plus aussi bon que lundi."
     expect:
