@@ -94,7 +94,7 @@ function checkConcept(ctx, c, out) {
   if (secClaims) {
     const t = mdlib.tables(secClaims.lines)[0];
     if (t) for (const r of t.rows) {
-      // a row not in five cells (concept-folder fails it) still cites its ids
+      // a row not in five cells (concept-file fails it) still cites its ids
       if (r.cells.length !== 5) {
         for (const id of r.cells.join(' ').match(CITED) || []) cited.add(id);
         continue;
