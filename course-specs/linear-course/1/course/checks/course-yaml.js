@@ -1,6 +1,6 @@
 'use strict';
 // course.yaml, the map of the course (domains and concepts; the tree of a concept is its
-// concept.md's, checked by concept-folder): fields, identifiers, order, partition into domains,
+// concept.md's, checked by concept-file): fields, identifiers, order, partition into domains,
 // annexes, prerequisites, paths, no unlisted concept folder, spec declared (course/README.md section 2,
 // spec-directives/1/README.md section 6). An unknown spec or MAJOR is refused by
 // course-specs/check-course, before these checks run. A missing or unreadable lexicon fails

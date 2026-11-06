@@ -15,6 +15,8 @@ const rules = directives.lib('rules');
 const QUALITY_GONE = '--quality is gone: the reporting checks run by default, and --category <c> selects checks by category (check-course --list)';
 // the lexicon of the course files of this MAJOR, unless --lexicon names another (the fixtures')
 const LEXICON = path.join(__dirname, '..', 'lexicon.yaml');
+// the form of the concept file of this MAJOR
+const FORM = path.join(__dirname, '..', 'form.yaml');
 
 let RULES;
 try { RULES = rules.load(__dirname); } catch (e) {
@@ -46,7 +48,7 @@ const args = process.argv.slice(2);
 let dir = null;
 const only = [];
 const categories = [];
-const opts = { specLexicon: LEXICON };
+const opts = { specLexicon: LEXICON, specForm: FORM };
 let list = false;
 for (let i = 0; i < args.length; i++) {
   const a = args[i];

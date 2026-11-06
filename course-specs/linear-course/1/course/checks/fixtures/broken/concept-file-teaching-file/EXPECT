@@ -1,0 +1,2 @@
+check: concept-file
+message: unexpected file: a concept folder holds concept.md, sources.md and its .svg diagrams

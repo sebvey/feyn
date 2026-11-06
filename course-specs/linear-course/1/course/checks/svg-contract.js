@@ -1,6 +1,6 @@
 'use strict';
 // Every diagram against the drawing contract (course/README.md section 6.1); declared and present
-// diagrams match (section 3.1).
+// diagrams match, and each declared diagram names a unit of the concept (section 3.1).
 const fs = require('fs');
 const path = require('path');
 const directives = require('./directives');
@@ -61,7 +61,7 @@ function checkFile(ctx, concept, rel, decl, ids, out) {
         seenIds.set(v, n);
         if (ids.has(v) && ids.get(v) !== rel) here(al, `id "${v}" is also used in ${ids.get(v)}: ids are unique across the concept`);
         ids.set(v, rel);
-        if (concept.subs.some((s) => s.id === v)) here(al, `id "${v}" is a bare sub-concept id, which is the reader-text anchor`);
+        if (concept.subs.some((s) => s.id === v)) here(al, `id "${v}" is a bare section or unit id, which is the anchor of the published text`);
       }
     }
   });
@@ -92,15 +92,15 @@ function checkFile(ctx, concept, rel, decl, ids, out) {
     if (k.name === 'title' || k.name === 'desc' || k.name === 'defs') continue;
     if (k.name !== 'g') { here(k.line, `every drawn child of the root is a <g>, found <${k.name}>`); continue; }
     const id = k.attrs.id;
-    if (!id) { here(k.line, 'a top-level <g> needs an id: <sub-concept>-<element>'); continue; }
+    if (!id) { here(k.line, 'a top-level <g> needs an id: <id>-<element>, the id of a section or a unit'); continue; }
     const ok = concept.subs.some((s) => id.startsWith(s.id + '-') && ELEMENT_ID.test(id.slice(s.id.length + 1)));
-    if (!ok) here(k.line, `group id "${id}" must be <sub-concept>-<element>, a sub-concept id of the concept then lowercase ASCII words joined by hyphens`);
+    if (!ok) here(k.line, `group id "${id}" must be <id>-<element>, the id of a section or a unit of the concept then lowercase ASCII words joined by hyphens`);
   }
   // nested groups with an id follow the same form
   xml.walk(root, (n) => {
     if (n.name === 'g' && n.attrs.id && n.parent && n.parent !== root) {
       const id = n.attrs.id;
-      if (!concept.subs.some((s) => id.startsWith(s.id + '-') && ELEMENT_ID.test(id.slice(s.id.length + 1)))) here(n.line, `group id "${id}" must be <sub-concept>-<element>`);
+      if (!concept.subs.some((s) => id.startsWith(s.id + '-') && ELEMENT_ID.test(id.slice(s.id.length + 1)))) here(n.line, `group id "${id}" must be <id>-<element>, the id of a section or a unit of the concept`);
     }
   });
 }
@@ -118,7 +118,7 @@ function run(ctx) {
       const line = yaml.lineOf(md.data.diagrams, i, 1);
       if (!d || typeof d.file !== 'string') return;
       if (!files.includes(d.file)) out.push(fail(c.dir + '/concept.md', line, `declared diagram ${d.file} does not exist in ${c.dir}`));
-      if (d.subconcept !== undefined && !c.subs.some((s) => s.id === normStr(d.subconcept))) out.push(fail(c.dir + '/concept.md', line, `diagram ${d.file}: subconcept "${d.subconcept}" is not a sub-concept of the concept`));
+      if (d.unit !== undefined && !c.subs.some((s) => s.leaf && s.id === normStr(d.unit))) out.push(fail(c.dir + '/concept.md', line, `diagram ${d.file}: unit "${d.unit}" is not a unit of the concept`));
     });
     for (const f of files) {
       const rel = c.dir + '/' + f;

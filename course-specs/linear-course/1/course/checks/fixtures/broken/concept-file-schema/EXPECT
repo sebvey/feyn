@@ -1,0 +1,2 @@
+check: concept-file
+message: concept.md:2 frontmatter not valid against course/schemas/concept-frontmatter.schema.yaml: / must NOT have additional properties ("description")

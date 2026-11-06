@@ -88,7 +88,7 @@ parts:
             what: les schémas que le concept déclare, leur titre, leur légende et le sous-concept qu'ils illustrent
           - from: course
             source: <dir>/teaching.md
-            what: la consigne de dessin sous headings.drawing, quand aucun schéma n'est déclaré
+            what: la consigne de dessin sous frozen_form.drawing, quand aucun schéma n'est déclaré
       - id: stop
         when: l'apprenant dit que la session de cours s'arrête
         rules: [stop]

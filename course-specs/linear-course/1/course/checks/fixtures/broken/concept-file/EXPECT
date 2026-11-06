@@ -1,0 +1,2 @@
+check: concept-file
+message: section "Objectif" found where « L'essentiel » is expected

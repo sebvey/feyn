@@ -1,0 +1,2 @@
+check: unit-contract
+message: unit 2a: line outside a field ("Une phrase hors de tout champ.")

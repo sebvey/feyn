@@ -1,9 +1,9 @@
 'use strict';
 // sources.md (course/README.md section 3.4) and the frontmatter refs (3.1): no introduction; the
-// five columns of « Affirmations » (section anchors that exist in concept.md, a source cell of
-// reference ids or the markers.course word, a verification, a nature); « Références » (ids, one URL
-// or no link, types, dates); « Non vérifié » entries anchored; every id cited exists, every
-// reference is cited.
+// five columns of « Affirmations » (section anchors that exist in concept.md among its published
+// parts, a source cell of reference ids or the markers.course word, a verification, a nature);
+// « Références » (ids, one URL or no link, types, dates); « Non vérifié » entries anchored; every id
+// cited exists, every reference is cited; concept.md cites no reference.
 const directives = require('./directives');
 const yaml = directives.lib('yaml-lines');
 const mdlib = directives.lib('md');
@@ -14,18 +14,20 @@ const CITED = /\bS\d+[a-z]?\b/g;
 const IDS = /^\[S\d+[a-z]?\](\s*,\s*\[S\d+[a-z]?\])*$/;
 const PATH = /(^|[\s`(])[^\s`(]*\/?sources\.md\b|concepts\/[^\s`;,\])]+/;
 const URL = /^https?:\/\/\S+$/;
-const FIXED = ['essentials', 'pitfalls', 'quick_test', 'deepening'];
 
 const short = (s) => (s.length > 50 ? s.slice(0, 50) + '…' : s);
 
-// the anchors of concept.md: the ids of its sub-concept headings, and its fixed sections by
-// their lexicon value (« Objectif » is not one: it states what the learner will do, not a claim)
+// the published parts of the head and the foot of the form (course/form.yaml), by their key
+const fixedKeys = (form) => (form ? [...form.concept_file.head, ...form.concept_file.foot].filter((p) => p.published).map((p) => p.heading) : []);
+
+// the anchors of concept.md: the ids of its section and unit headings, and its published head and
+// foot parts by their lexicon value (the instruction is not one: it is not published)
 function anchorsOf(ctx, c, H) {
   const set = new Set();
   const cm = ctx.md(c.dir + '/concept.md');
   if (!cm) return null;
   const ids = new Set(c.subs.map((s) => s.id));
-  const fixed = new Set(FIXED.map(H));
+  const fixed = new Set(fixedKeys(ctx.form).map(H));
   for (const h of mdlib.headings(cm.body)) {
     if (h.level === 2 && fixed.has(h.text)) set.add(h.text);
     const id = (/^(\S+)/.exec(h.text) || [])[1];
@@ -46,7 +48,7 @@ function checkConcept(ctx, c, out) {
   const secClaims = top.sections.find((s) => s.title === H('claims'));
   const secUnv = top.sections.find((s) => s.title === H('unverified'));
   const anchors = anchorsOf(ctx, c, H);
-  const fixedList = FIXED.map((k) => `« ${H(k)} »`).join(', ');
+  const fixedList = fixedKeys(ctx.form).map((k) => `« ${H(k)} »`).join(', ');
   const courseWord = ctx.word('markers', 'course');
   const natureWords = [...['consensus', 'school', 'course'].map((k) => ctx.word('markers', k)), ctx.word('natures', 'fact')].filter(Boolean);
   const refs = new Map(); // id -> line
@@ -77,7 +79,7 @@ function checkConcept(ctx, c, out) {
   const checkAnchors = (cell, line, what, extra) => {
     const list = cell.split(',').map((a) => a.trim());
     if (cell.trim() === '' || list.some((a) => a === '')) {
-      out.push(fail(sf, line, `${what}: the section is empty (sub-concept ids or fixed sections of concept.md, separated by commas)`));
+      out.push(fail(sf, line, `${what}: the section is empty (section or unit ids or published parts of concept.md, separated by commas)`));
       return;
     }
     if (!anchors) return;
@@ -86,7 +88,7 @@ function checkConcept(ctx, c, out) {
     if (!bad.length) return;
     if (!extra && bad.includes(H('stances'))) out.push(fail(sf, line, `${what}: section « ${H('stances')} »: a stance or neighbour is sourced in its frontmatter item (refs, verified), not in « ${H('claims')} »`));
     const unknown = bad.filter((a) => extra || a !== H('stances'));
-    if (unknown.length) out.push(fail(sf, line, `${what}: unknown section ${unknown.map((a) => `"${a}"`).join(', ')}: a sub-concept id or a fixed section (${fixedList}) that exists in concept.md${extra ? `, or « ${extra} » for a stance or neighbour` : ''}`));
+    if (unknown.length) out.push(fail(sf, line, `${what}: unknown section ${unknown.map((a) => `"${a}"`).join(', ')}: a section or unit id or a published part (${fixedList}) that exists in concept.md${extra ? `, or « ${extra} » for a stance or neighbour` : ''}`));
   };
 
   if (secClaims) {
@@ -149,8 +151,8 @@ function checkConcept(ctx, c, out) {
   }
   for (const [id, line] of refs) if (!cited.has(id)) out.push(fail(sf, line, `reference ${id} is cited by no claim and no frontmatter item`));
 
-  // concept.md and teaching.md cite no reference
-  for (const f of ['concept.md', 'teaching.md']) {
+  // concept.md cites no reference
+  for (const f of ['concept.md']) {
     const m = ctx.md(dir + '/' + f);
     if (!m) continue;
     m.body.forEach((l) => {

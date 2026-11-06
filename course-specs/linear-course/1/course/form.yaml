@@ -1,0 +1,115 @@
+# The form of the concept file of `linear-course`, as data (decision `unit-is-the-content-unit`):
+# the files of a concept folder, the parts of `concept.md` (its head, its sections and units, its
+# foot), the fields of a unit and of a supplementary case, their order, their presence, published
+# or not, their readers, and the length of a unit. course/README.md section 3 describes it, the
+# rules of course/rules.yaml state it, the checks read it here (concept-file, unit-contract,
+# unit-length, and the text checks for their scope), and the site build of epic #598 will.
+#
+# This file names words by their key in course/lexicon.yaml and holds none: `heading: essentials`
+# is the lexicon's `headings.essentials`, a field `matter` is `unit_fields.matter`, a qualifier
+# `fallback` is `qualifiers.fallback`. A spec of another language copies the lexicon, not this file.
+#
+# presence: mandatory or optional. published: the site build renders it (true) or never (false);
+# the build is closed by default, so a part this file does not name is never rendered.
+# readers: who reads it, among
+#   site     the site reader, through the build (the published parts);
+#   teacher  the teacher, which reads the whole file;
+#   learner  the learner, who hears it from the teacher or reads it on the site: the text checks
+#            (conventions, glossary-order) read every part the learner reads, and only those.
+
+# The files of a concept folder, and nothing else.
+folder:
+  files: [concept.md, sources.md]
+  diagrams: "*.svg"
+
+concept_file:
+  file: concept.md
+  # the frontmatter, its keys and their form: the schema, which concept-file validates it against
+  frontmatter: course/schemas/concept-frontmatter.schema.yaml
+  # the ## headings before the sections, in this order
+  head:
+    - heading: essentials
+      presence: mandatory
+      published: true
+      readers: [site, teacher, learner]
+  # the sections: `## <id> <title>`, the id the concept number then a letter from a, in order;
+  # a section holds its units, `### <id> <title>`, the id the section's then a digit from 1, in
+  # order, nine at most; a section without ### is a section of one unit, and holds the fields of
+  # that unit. Nothing else stands in a section or a unit: no line outside a field.
+  sections:
+    presence: mandatory
+    heading_level: 2
+    unit_heading_level: 3
+    max_units: 9
+  # the ## headings after the sections, in this order
+  foot:
+    - heading: landmarks
+      presence: optional
+      published: true
+      readers: [site, teacher, learner]
+    - heading: deepening
+      presence: optional
+      published: true
+      readers: [site, teacher, learner]
+    - heading: instruction
+      presence: optional
+      published: false
+      readers: [teacher]
+
+# A unit: one teacher message. Its block is a list of labelled fields, `- **<label>** : <text>`,
+# in this order; a field's text goes on after its label, its following lines indented two spaces.
+unit:
+  fields:
+    - field: matter
+      presence: mandatory
+      published: true
+      readers: [site, teacher, learner]
+    - field: anchor
+      presence: mandatory
+      published: true
+      readers: [site, teacher, learner]
+    - field: question
+      presence: mandatory
+      published: false
+      readers: [teacher, learner]
+    - field: expected_answer
+      presence: mandatory
+      published: false
+      readers: [teacher, learner]
+    - field: misconceptions
+      presence: mandatory
+      # each misconception a nested bullet, the misconception in quotes, then its correction; the
+      # site renders the misconception and its correction, not its follow-ups
+      published: true
+      readers: [site, teacher, learner]
+      items:
+        follow_up:
+          # a bullet nested under its misconception, `- **<label>** : <text>`
+          field: follow_up
+          presence: optional
+          published: false
+          readers: [teacher, learner]
+    - field: landmarks
+      presence: optional
+      published: true
+      readers: [site, teacher, learner]
+    - field: instruction
+      presence: optional
+      published: false
+      readers: [teacher]
+  # the length of a unit: the lines of these fields, each line of text wrapped at `wrap`
+  # characters; above `max`, unit-length reports it (a signal, not an error)
+  length:
+    fields: [matter, anchor, question]
+    wrap: 100
+    max: 12
+
+# A supplementary case of a unit: a #### heading inside the unit, `#### <title> (<qualifier>)`, the
+# qualifier one of `qualifiers`; the fields of a unit without matter and instruction, in the same
+# order and presence. Unpublished whole: the site renders none of it.
+supplementary_case:
+  heading_level: 4
+  qualifiers: [fallback, practice, aside]
+  published: false
+  readers: [teacher, learner]
+  fields: [anchor, question, expected_answer, misconceptions, landmarks]

@@ -4,16 +4,11 @@
 
 # Section titles of the course files.
 headings:
-  objective: "Objectif"
   essentials: "L'essentiel"
   stances: "Consensus et choix d'école"
-  pitfalls: "Pièges"
-  quick_test: "Le test rapide"
   deepening: "Approfondissement"
-  instructions: "Consignes"
-  storyline_facts: "Faits du fil rouge utilisés"
-  bank: "Banque d'exemples"
-  drawing: "Schéma"
+  landmarks: "Repères"
+  instruction: "Consigne"
   claims: "Affirmations"
   references: "Références"
   unverified: "Non vérifié"
@@ -26,20 +21,20 @@ headings:
   avoid: "Termes à éviter"
   unreleased: "Non publié"
 
-# Labels of the fields of a case of `teaching.md`.
-case_fields:
-  usage: "Usage"
-  explanation: "Explication"
-  situation: "Situation"
+# Labels of the fields of a unit of a concept file and of its supplementary cases
+# (course/form.yaml); `follow_up` labels a follow-up nested under a misconception.
+unit_fields:
+  matter: "Matière"
+  anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
-  common_mistakes: "Erreurs fréquentes"
-  what_works: "Ce qui marche"
+  misconceptions: "Idées fausses"
+  follow_up: "Relance"
+  landmarks: "Repères"
+  instruction: "Consigne"
 
-# Words of the reader text: the storyline lead `**Fil rouge :**` and the stance markers `[cours]`,
-# `[école]`, `[consensus]`.
+# The stance markers of the published text: `[cours]`, `[école]`, `[consensus]`.
 markers:
-  storyline: "Fil rouge"
   consensus: "consensus"
   school: "école"
   course: "cours"

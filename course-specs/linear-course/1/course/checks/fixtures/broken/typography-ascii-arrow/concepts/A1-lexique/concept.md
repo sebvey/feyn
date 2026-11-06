@@ -1,5 +1,4 @@
 ---
-description: "Un lexique du cours."
 stances:
   consensus: []
   school: []
@@ -8,27 +7,26 @@ stances:
       refs: []
 ---
 
-## Objectif
-
-Retrouver un mot du cours.
-
 ## L'essentiel
 
 Le lexique rassemble les mots du cours.
 
 ## A1a Les mots
 
-*Chaque mot a sa définition.*
+### A1a1 Un mot
 
-Chaque mot du cours -> une définition courte.
+- **Matière** : Chaque mot du cours -> une définition courte.
+- **Ancrage** : Régis regarde une carte.
+- **Question** : que voit-il ?
+- **Réponse attendue** : une carte.
+- **Idées fausses** :
+  - « Un tableau » : c'est une carte.
 
-## Pièges
+### A1a2 Sa définition
 
-- **Un piège** : une explication.
-- **Un autre piège** : une autre explication.
-
-## Le test rapide
-
-> « Une question à se poser ? »
-
-Une note sur la question.
+- **Matière** : La définition d'un mot tient en une ligne.
+- **Ancrage** : Régis cherche un mot du lexique.
+- **Question** : combien de lignes a sa définition ?
+- **Réponse attendue** : une.
+- **Idées fausses** :
+  - « Une page » : une ligne suffit.
