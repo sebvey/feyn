@@ -1,8 +1,8 @@
 # The agentic rules: how feyn writes its agentic layer (`.claude/`, `CLAUDE.md`), one entry per
 # agentic rule (decision `agentic-rules-file`). An agentic rule binds what feyn writes in its
 # agentic layer; a rule of a spec binds a product (a course, a teacher) and lives in that spec's
-# rules.yaml. Read when the work touches the agentic layer: by the author of the work item
-# (done-when.md, "A statement"), by the reviewer and so the fixer (feyn-pr-reviewer.md).
+# rules.yaml. Read when the work touches the agentic layer: by the reviewer and so the fixer
+# (feyn-pr-reviewer.md).
 #
 # An entry: id (a slug, unique); applies-to (what it binds); method, `review` (judged by the
 # reviewer) or `script` (run), with its `check`, the name of a script of `.claude/scripts/`, when a
