@@ -28,7 +28,7 @@ A key with nothing to say is left out, `means`, `en` and `fr` excepted. A reject
 
 - `en` in the repository's English files: code, docs, skills, issues, decisions, and the English texts of a spec.
 - `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `teacher/README.md`, `teacher/rules.yaml` of `course-specs/linear-course/1/`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
-- A course glossary in its course. Each course has its own [course glossary](#course-glossary), which belongs to the course, follows the course's language and applies in that course's files. A word may be reserved in both with two meanings (**epic**); a repository text that speaks of the course's meaning says so ("epic, in the course's sense"). French course files keep their French section headings and field labels (« L'essentiel », « Matière », « Repères »…); the English terms here are how we talk about them in code, docs and issues.
+- A course glossary in its course. Each course has its own [course glossary](#course-glossary), which belongs to the course, follows the course's language and applies in that course's files. A word may be reserved in both with two meanings (**epic**); a repository text that speaks of the course's meaning says so ("epic, in the course's sense"). French course files keep their French section headings and field labels (« L'essentiel », « Matière », « Se vérifier »…); the English terms here are how we talk about them in code, docs and issues.
 
 ## Adding or changing an entry
 
@@ -201,7 +201,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### unit
 
-- means: the teaching unit, the unit of a course's content: one teacher message, one leaf of a concept's tree (`0a1`), written once as one block of labelled fields: its **matter**, its **anchor**, its question, its expected answer, its **misconceptions**, its **landmarks**, its **instruction**, then its supplementary cases. A **section** without units is itself a unit
+- means: the teaching unit, the unit of a course's content: one teacher message, one leaf of a concept's tree (`0a1`), written once as one block of labelled fields: its **matter**, its **anchor**, its question, its expected answer, its **misconceptions**, its **instruction**, then its supplementary cases. A **section** without units is itself a unit
 - en: unit · rejected: "leaf sub-concept", "sub-concept", "leaf", "lesson"
 - fr: « unité » · rejected: « sous-concept feuille », « sous-concept », « feuille »
 - not to confuse with: [section](#section), [concept](#concept), [case](#case), [head and foot](#head-and-foot)
@@ -217,7 +217,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### head and foot
 
-- means: the parts of a **concept file** around its sections: the head, « L'essentiel », the one written summary of the concept; the foot, its landmarks (« Repères »), its deepening (« Approfondissement ») and its instruction (« Consigne »), each optional, the last **unpublished**
+- means: the parts of a **concept file** around its sections: the head, « L'essentiel », the one written summary of the concept; the foot, its landmarks (« Se vérifier »), its deepening (« Approfondissement ») and its instruction (« Consigne »), each optional, the last **unpublished**
 - en: head and foot · rejected: "fixed sections"
 - fr: « tête » et « pied » · rejected: « sections fixes »
 - not to confuse with: [section](#section), [unit](#unit)
@@ -246,7 +246,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### misconception
 
-- means: a frequent wrong answer of a unit, quoted, with its correction and, nested under it, its **follow-ups**; the misconceptions without their follow-ups are **published**, and the site composes from them the « Pièges » of a concept
+- means: a frequent wrong answer of a unit, quoted, with its correction; the misconceptions are **published**, and the site composes from them the « Pièges » of a concept
 - en: misconception · rejected: "common mistake", "pitfall", "frequent error"
 - fr: « idée fausse » · rejected: « erreur fréquente », « piège »
 - not to confuse with: [follow-up](#follow-up)
@@ -254,11 +254,11 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### landmark
 
-- means: what the learner keeps to recognise or apply a point: a question to ask oneself, a rule of thumb; a field of a unit and a part of the foot of the concept file, **published**
+- means: what the learner keeps of a whole concept to check an answer: the question to ask oneself, what serves to recognise or apply the concept; the block « Se vérifier » of the foot of the concept file, **published**. A unit has none
 - en: landmark · rejected: "quick test", "lever", "cue"
-- fr: « repère » · rejected: « test rapide », « levier »
+- fr: « se vérifier » (the block) · rejected: « repères », « test rapide », « levier »
 - not to confuse with: [matter](#matter)
-- why: the quick test was one landmark among others, written three times; "lever" and "cue" name a teacher's means, not what the learner keeps
+- why: the quick test was one landmark among others, written three times; "lever" and "cue" name a teacher's means, not what the learner keeps; « Repères » hid that the block holds a question the learner asks themself, and named a field of a unit that no unit used
 
 ### instruction
 
@@ -269,7 +269,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### published
 
-- means: of a field or a part of a concept file, rendered by the site build: the matter, the anchor, the misconceptions without their follow-ups, the landmarks, « L'essentiel », the deepening; a property the spec fixes for the field, never written in a course. The build renders the published parts and nothing else
+- means: of a field or a part of a concept file, rendered by the site build: the matter, the anchor, the misconceptions, the landmarks, « L'essentiel », the deepening; a property the spec fixes for the field, never written in a course. The build renders the published parts and nothing else
 - en: published · rejected: "reader-facing", "public" (it describes the repository)
 - fr: « publié » · rejected: « côté lecteur »
 - not to confuse with: [unpublished](#unpublished)
@@ -277,7 +277,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### unpublished
 
-- means: of a field or a part of a concept file, never rendered by the site, read by the teacher: the question, the expected answer, the follow-ups, the instruction, the supplementary cases whole
+- means: of a field or a part of a concept file, never rendered by the site, read by the teacher: the question, the expected answer, the instruction, the supplementary cases whole
 - en: unpublished · rejected: "teacher-only", "private" (it describes the repository)
 - fr: « non publié » · rejected: « professeur seul »
 - not to confuse with: [published](#published)
@@ -285,7 +285,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### case
 
-- means: the questioning part of a unit: its question, its expected answer, its misconceptions and their follow-ups, around its anchor. A supplementary case is one more case of a unit, titled and qualified (« rechange », « entraînement », « aparté »), its title its id, which learner memory cites; it is unpublished
+- means: the questioning part of a unit: its question, its expected answer, its misconceptions, around its anchor. A supplementary case is one more case of a unit, titled and qualified (« rechange », « entraînement », « aparté »), its title its id, which learner memory cites; it is unpublished
 - en: case · rejected: "example", "exercise", "scenario", "example bank" (the set of cases of the form before units)
 - fr: « cas » · rejected: « exemple », « banque d'exemples »
 - not to confuse with: [example](#example), [unit](#unit), [practice case](#practice-case), [fallback case](#fallback-case), [aside case](#aside-case), [test scenario](#test-scenario)
@@ -320,7 +320,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### follow-up
 
-- means: the targeted re-question after a partial or wrong answer, nested under the **misconception** it answers; unpublished
+- means: the targeted re-question the teacher asks after a partial or wrong answer, on the **misconception** it answers; the teacher's own, no longer written in a concept file
 - en: follow-up · rejected: "retry", "hint", "probe"
 - fr: « relance »
 - not to confuse with: [misconception](#misconception)

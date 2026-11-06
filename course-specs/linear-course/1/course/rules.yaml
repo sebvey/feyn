@@ -251,9 +251,9 @@ groups:
   - title: Le corps de concept.md (course/README.md section 3.2)
     purpose: >-
       Le concept en un fichier, dans un ordre fixe : sa tête, « L'essentiel », le résumé écrit du
-      concept ; ses sections et leurs unités, une par message du professeur ; son pied, les
-      repères et l'approfondissement que le site publie, puis la consigne du concept, que seul le
-      professeur lit. L'objectif et les pièges n'y sont pas écrits : le build les compose, depuis
+      concept ; ses sections et leurs unités, une par message du professeur ; son pied, « Se
+      vérifier » et l'approfondissement que le site publie, puis la consigne du concept, que seul
+      le professeur lit. L'objectif et les pièges n'y sont pas écrits : le build les compose, depuis
       `course.yaml` et depuis les idées fausses des unités.
     category: pedagogy
     method: inspection
@@ -267,7 +267,7 @@ groups:
           Le corps de `concept.md` doit être, dans cet ordre, sa tête, ses sections, puis son
           pied, chaque partie de la tête et du pied un titre `##` dont le texte est le titre du
           lexique, présente ou au choix comme `concept_file` de `course/form.yaml` le dit (la tête,
-          « L'essentiel » ; le pied, « Repères », « Approfondissement » et « Consigne », chacun au
+          « L'essentiel » ; le pied, « Se vérifier », « Approfondissement » et « Consigne », chacun au
           choix) ; aucune autre section `##` ne doit exister, ni l'objectif ni les pièges, que le
           build compose.
       - id: concept-has-sections
@@ -286,8 +286,8 @@ groups:
       - id: landmarks-whole-concept
         level: requirement
         text: >-
-          « Repères » du pied doit porter sur le concept entier : ce qui sert à reconnaître ou à
-          appliquer le concept, une question à se poser par exemple.
+          « Se vérifier » du pied doit porter sur le concept entier : la question que l'apprenant
+          se pose pour vérifier sa réponse, ce qui sert à reconnaître ou à appliquer le concept.
       - id: deepening-beyond-units
         level: requirement
         text: >-
@@ -309,8 +309,8 @@ groups:
       L'unité est le contenu d'un cours, écrit une fois : un message du professeur, une feuille du
       concept. Son bloc tient sa matière, ce qui est vrai, les mêmes mots pour le site et le
       professeur ; son ancrage dans le fil rouge ; sa question et sa réponse attendue ; ses idées
-      fausses, chacune avec sa correction et ses relances ; ses repères ; sa consigne, ce que la
-      méthode a de propre à l'unité ; puis ses cas supplémentaires, de rechange quand l'apprenant
+      fausses, chacune avec sa correction ; sa consigne, ce que la méthode a de propre à
+      l'unité ; puis ses cas supplémentaires, de rechange quand l'apprenant
       échoue, d'entraînement pour s'exercer ou retrouver un concept validé, d'aparté pour une
       question fréquente hors du parcours. Chaque champ est publié ou non, une propriété de la
       spec (`course/form.yaml`), jamais écrite dans le cours.
@@ -353,7 +353,7 @@ groups:
         check: unit-contract
         text: >-
           Une unité doit tenir « Matière », « Ancrage », « Question », « Réponse attendue » et
-          « Idées fausses », « Repères » et « Consigne » au choix, aucun champ deux fois et aucun
+          « Idées fausses », et « Consigne » au choix, aucun champ deux fois et aucun
           vide (`fields` de `unit` dans `course/form.yaml`).
       - id: unit-fields-in-order
         level: requirement
@@ -361,16 +361,15 @@ groups:
         check: unit-contract
         text: >-
           Les champs d'une unité doivent venir dans l'ordre de `course/form.yaml` : « Matière »,
-          « Ancrage », « Question », « Réponse attendue », « Idées fausses », « Repères »,
-          « Consigne ».
+          « Ancrage », « Question », « Réponse attendue », « Idées fausses », « Consigne ».
       - id: misconception-form
         level: requirement
         method: test
         check: unit-contract
         text: >-
           « Idées fausses » doit tenir, en liste imbriquée, au moins une idée fausse, chacune
-          `- « <misconception> » : <correction>` ; ses relances sont des puces imbriquées sous
-          elle, `- **Relance** : <follow-up>`, et rien d'autre.
+          `- « <misconception> » : <correction>`, et rien d'autre : aucune puce imbriquée sous
+          elle.
       - id: supplementary-case-form
         level: requirement
         method: test
@@ -408,9 +407,23 @@ groups:
           son déroulé (qui dit quoi, quand) ; « Question », la question que pose l'unité ;
           « Réponse attendue », la bonne réponse avec ses nuances, la position du cours telle que la
           matière l'énonce ; « Idées fausses », les réponses fausses fréquentes, chacune avec sa
-          correction et ses relances ; « Repères », ce que l'apprenant garde pour reconnaître le
-          point ; « Consigne », ce que la méthode a de propre à l'unité (quand poser un cas
+          correction ; « Consigne », ce que la méthode a de propre à l'unité (quand poser un cas
           supplémentaire, une formulation qui a marché, un renvoi à ne pas réenseigner).
+      - id: course-question-in-instruction
+        level: requirement
+        method: inspection
+        text: >-
+          Une question que le cours pose et repose, sa façon propre de faire réfléchir l'apprenant
+          (« et alors ? », « d'où vient ce chiffre ? »), doit être écrite dans la « Consigne » de
+          son unité, ou dans celle du concept quand elle vaut pour le concept entier, ou dans une
+          section libre de `plan.md` quand elle vaut pour le cours entier ; jamais sous une idée
+          fausse, qui ne tient que sa correction.
+        why: >-
+          La forme d'avant tenait sous chaque idée fausse une question de plus, que le professeur
+          posait après la correction : sur les 37 de `po-essai`, environ 22 redisaient la
+          correction, environ 11 appliquaient une technique du professeur, environ 5 étaient des
+          questions du cours ; le professeur écrit les siennes, et celles du cours se perdaient
+          sous une idée fausse (idée #642, epic #647).
       - id: question-within-matter
         level: requirement
         method: inspection
@@ -527,7 +540,7 @@ groups:
         text: >-
           La cellule section d'une affirmation doit tenir des ids de section ou d'unité et les
           parties publiées de la tête et du pied par leur valeur du lexique (« L'essentiel »,
-          « Repères », « Approfondissement »), séparés par des virgules, jamais le texte d'un
+          « Se vérifier », « Approfondissement »), séparés par des virgules, jamais le texte d'un
           titre, chacun existant dans `concept.md`.
       - id: claim-source-cell-form
         level: requirement
@@ -697,7 +710,7 @@ groups:
         method: inspection
         text: >-
           Seuls les champs publiés de `concept.md` sont sourcés : « Affirmations » doit couvrir
-          les affirmations vérifiables de « Matière », de « L'essentiel », des « Repères », de
+          les affirmations vérifiables de « Matière », de « L'essentiel », de « Se vérifier », de
           « Approfondissement » et des corrections des idées fausses (une définition, une date, un chiffre, une citation, ce
           qu'un guide dit ou ne dit pas).
 
@@ -808,7 +821,7 @@ groups:
         text: >-
           `plan.md` peut avoir un H1 et, après « Progression », d'autres sections `##` que le
           professeur lit : les partis pris du cours (« Parti pris : une équipe en sprints »), ses
-          propres règles d'écriture.
+          propres règles d'écriture, les questions qu'il pose et repose dans tout le cours.
       - id: glossary-table-four-columns
         level: requirement
         check: course-files

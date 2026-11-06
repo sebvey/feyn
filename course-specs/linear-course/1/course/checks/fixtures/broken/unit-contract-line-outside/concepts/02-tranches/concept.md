@@ -26,7 +26,7 @@ Une tranche traverse toutes les couches.
 
 Une phrase hors de tout champ.
 
-## Repères
+## Se vérifier
 
 > « Une question à se poser ? »
 

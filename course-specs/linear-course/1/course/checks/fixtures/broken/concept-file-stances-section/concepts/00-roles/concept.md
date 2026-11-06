@@ -26,8 +26,6 @@ concept 1.
 - **Réponse attendue** : le premier rôle.
 - **Idées fausses** :
   - « Tout le monde décide » : le premier rôle décide seul.
-    - **Relance** : « qui répond de la décision ? »
-- **Repères** : qui décide, qui fait.
 - **Consigne** : ne pas parler de couche ici, elle vient au concept 1.
 
 ### 0a2 Le second rôle
@@ -56,7 +54,7 @@ concept 1.
 
 Un choix du cours.
 
-## Repères
+## Se vérifier
 
 > « Une question à se poser ? »
 

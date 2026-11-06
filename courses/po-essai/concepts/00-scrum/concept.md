@@ -50,9 +50,7 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Réponse attendue** : il n'y a pas de chef : l'équipe Scrum n'a pas de hiérarchie, elle s'organise elle-même. Le PO (l'apprenant) répond de la valeur de la plateforme et du backlog ; les Developers (Dana, Diego, Anna) réalisent l'incrément ; Scarlette, Scrum Master, répond de l'efficacité de l'équipe. Organiser les réunions ne fait pas d'elle une cheffe.
 - **Idées fausses** :
   - « Scarlette est la cheffe, puisqu'elle organise les réunions » : le Scrum Master répond de l'efficacité de l'équipe, il ne la commande pas ; l'équipe n'a pas de hiérarchie.
-    - **Relance** : « de quoi répond le Scrum Master ? »
   - « Le PO est le chef, puisqu'il décide de ce qu'on fait » : le PO répond de la valeur du produit et du backlog, pas des personnes ni de leur façon de travailler : l'équipe décide en interne qui fait quoi, quand et comment.
-    - **Relance** : « de quoi répond le PO, et qui décide comment faire le travail ? »
 - **Consigne** : ce message est le premier du concept : il s'ouvre, toujours, sur l'annonce du parti pris, en deux ou trois lignes. Le cours suppose une équipe Scrum en sprints ; si l'équipe de l'apprenant travaille sans sprint, il le signale, et l'équivalent en flux continu lui sera proposé, plus tard dans le parcours, aux unités de la Definition of Ready, de la préparation du Sprint Planning, de la revue de sprint et de la prévision (le reste du cours vaut sans sprint). La question du message reste celle de 0a1. S'il dit travailler sans sprint, note dans « Points annoncés pour plus tard » : équivalent en flux continu à proposer pour la Definition of Ready, la préparation du Sprint Planning, la revue de sprint et la prévision. Pour chaque rôle, demander « de quoi répond-il ? ».
 
 ### 0a2 Le Product Owner
@@ -71,9 +69,7 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
   2. Diego peut-il les mettre en tête ? Non : l'ordre reste au PO ; avoir écrit un élément ne donne pas sa place dans le backlog ; Diego, comme Odile, peut convaincre le PO de le placer haut.
 - **Idées fausses** :
   - « Le PO, c'est celui qui écrit les tickets ; seul lui écrit le backlog » : le PO répond de la valeur du produit et de ce que contient le backlog, son ordre compris ; il peut confier l'écriture des éléments et en reste responsable. « Ticket » est un terme d'outil, absent du Scrum Guide ; le cours dit « élément du backlog ».
-    - **Relance** : « de quoi le PO répond-il : d'écrire, ou de ce que contient le backlog ? »
   - « Diego a écrit les éléments, c'est donc lui qui les ordonne » : l'ordre du backlog reste au PO ; qui écrit un élément peut seulement convaincre le PO de le placer haut.
-    - **Relance** : « qui répond de l'ordre du backlog ? »
 - **Consigne** : « ticket » se corrige dans la correction, sans en faire une vigilance. Séparer « faire le travail » (confiable) et « en répondre » (le PO seul).
 
 ### 0a3 Les Developers
@@ -90,9 +86,7 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Réponse attendue** : Anna est une Developer : elle réalise une partie de l'incrément (les indicateurs, les analyses publiées dans les vues). Les Developers ne se définissent pas par leur métier mais par ce qu'ils réalisent. Dans une équipe Scrum, il n'y a pas de sous-équipe. Nuance à apporter si la réponse ne la donne pas : avec Dana et Diego, elle répond du backlog de sprint, de la qualité selon la DoD, de l'adaptation du plan chaque jour, et chacun se tient responsable envers les autres.
 - **Idées fausses** :
   - « Developer veut dire développeur » : les Developers sont ceux qui réalisent l'incrément, quel que soit leur métier.
-    - **Relance** : « qui réalise l'incrément de la plateforme ? »
   - « Anna est à part, mais elle aide les Developers » : il n'y a pas de sous-équipe dans une équipe Scrum ; Anna réalise une partie de l'incrément, elle est une Developer.
-    - **Relance** : « dans une équipe Scrum, peut-il y avoir un groupe à part ? »
 - **Consigne** : demander « qui réalise l'incrément ? » plutôt que « qui code ? ».
 
 ### 0a4 Le Scrum Master
@@ -103,11 +97,8 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Réponse attendue** : non. L'ordre du backlog relève du PO, qui en répond seul ; Scarlette répond de l'efficacité de l'équipe et aide à lever les obstacles. Étienne, ou Scarlette pour lui, porte la demande au PO et cherche à le convaincre ; le PO décide de la place de la vue. Scarlette peut aussi faciliter l'échange entre Étienne et le PO. Si l'apprenant soulève la délégation : vue en 0a2, le PO peut confier le travail d'ordonner et en reste responsable.
 - **Idées fausses** :
   - « Scarlette est la cheffe de l'équipe, elle peut » : il n'y a pas de hiérarchie dans l'équipe Scrum ; le Scrum Master sert son efficacité.
-    - **Relance** : « de quoi répond le Scrum Master ? »
   - « Scarlette anime les événements, donc elle arbitre » : animer un événement ne donne pas l'ordre du backlog.
-    - **Relance** : « de quoi répond le Scrum Master ? »
   - « Les Developers décident de l'ordre, puisqu'ils font le travail » : ils décident comment faire le travail ; l'ordre reste au PO (approfondi au concept 1b).
-    - **Relance** : « de quoi répondent les Developers, et de quoi répond le PO ? »
 - **Consigne** : pour chaque rôle, demander « de quoi répond-il ? ».
 
 ## 0b Le sprint et ses quatre événements
@@ -120,7 +111,6 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Réponse attendue** : deux choses. Le sprint suivant commence dès la fin du précédent : une semaine hors sprint n'existe pas en Scrum. La rétrospective fait partie du sprint et le clôt : elle ne vient pas après. Nuance, à apporter dans la correction : si l'équipe a besoin de souffler, c'est un sujet pour la rétrospective (le rythme de travail ; son but vient en 0b5), pas une pause entre deux sprints. Les deux semaines de l'équipe vélos sont conformes (un mois au plus).
 - **Idées fausses** :
   - « Seule la pause pose problème » : la rétrospective, elle aussi, est mal placée : elle fait partie du sprint et le clôt.
-    - **Relance** : « et la rétrospective, à quel moment du sprint a-t-elle lieu ? »
   - « Le sprint est un événement comme le Sprint Planning ou la revue » : le sprint est l'événement qui contient les quatre autres, et un sprint suit l'autre sans pause.
 - **Consigne** : pour le sprint au même rang que ses événements, réexpliquer avec l'image d'une frise : des blocs collés les uns aux autres, chacun contenant les quatre événements.
 
@@ -135,7 +125,6 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Réponse attendue** : Scarlette ne choisit rien ; elle peut veiller à ce que l'événement ait lieu et soit utile. Le PO propose comment le sprint peut augmenter la valeur ; toute l'équipe fixe l'objectif de sprint ; les Developers (Dana, Diego, Anna) choisissent les éléments en discutant avec le PO, puis font leur plan. Nuance : l'ordre du backlog, le PO le tient en continu ; au planning, il s'en sert pour proposer.
 - **Idées fausses** :
   - « C'est le PO qui choisit ce qui entre dans le sprint » : il propose, les Developers choisissent avec lui (approfondi au concept 1b).
-    - **Relance** : « qui choisit les éléments, et avec qui ? »
   - « Le PO ordonne le backlog au Sprint Planning » : l'ordre se tient en continu, hors de tout événement ; au planning, le PO s'en sert pour proposer.
 - **Consigne** : pour chaque événement, demander « qui y décide quoi ? ».
 
@@ -147,9 +136,7 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Réponse attendue** : le Daily Scrum n'est pas un compte rendu à Scarlette. C'est le point des Developers entre eux, sur l'avancement vers l'objectif de sprint ; ils y adaptent leur plan. Scarlette n'en est pas la destinataire ; elle peut aider à lever les obstacles que le point fait apparaître.
 - **Idées fausses** :
   - « Le Daily Scrum, ce sont les trois questions : hier, aujourd'hui, les obstacles » : elles ne sont plus dans le Scrum Guide depuis 2020 ; les Developers choisissent la structure du point.
-    - **Relance** : « au Daily Scrum, qui y décide quoi ? »
   - « Le Scrum Master anime le Daily Scrum, donc il contrôle l'avancement » : le Daily Scrum est le point des Developers entre eux, pas un compte rendu au Scrum Master.
-    - **Relance** : « de quoi répond le Scrum Master ? »
 - **Consigne** : demander « au Daily Scrum, qui parle à qui, et pour quoi faire ? ».
 
 ### 0b4 Revue de sprint
@@ -160,7 +147,6 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Réponse attendue** : la revue est une séance de travail : l'équipe montre son travail, puis l'équipe et les parties prenantes, dont Étienne, inspectent ce que le sprint a produit et ce qui a changé, et adaptent le backlog. Des diapositives seules n'y suffisent pas.
 - **Idées fausses** :
   - « À la revue, on rend des comptes à Étienne », ou « c'est un tour de table » : c'est une séance de travail entre l'équipe et les parties prenantes, qui inspectent ce que le sprint a produit et adaptent le backlog.
-    - **Relance** : « à la sortie de la revue, qu'est-ce qui a changé ? »
   - « La revue valide la livraison » : la revue n'est pas une porte de mise en production ; on peut livrer avant la fin du sprint (0d).
 - **Consigne** : « la revue valide la livraison » vient en 0d : le dire en une ligne, sans réenseigner. Demander « à la sortie de la revue, qu'est-ce qui a changé ? » (le backlog).
 
@@ -172,9 +158,7 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Réponse attendue** : le point testé : la rétrospective est le moment où l'équipe Scrum inspecte sa propre façon de travailler et choisit des améliorations ; l'ordre du backlog ne s'y revoit pas : le PO le tient en continu, et c'est à la revue que les parties prenantes inspectent le travail et que le backlog s'adapte. Sur la présence d'Odile, le Guide ne nomme que l'équipe Scrum ; le cours en tire qu'elle n'y vient pas (choix du cours, à dire comme tel). Une réponse qui la laisse écouter sans toucher à l'ordre n'est pas fausse : apporter la nuance. Odile peut donner son avis sur le retard à la revue de sprint, et faire valoir ses demandes auprès du PO.
 - **Idées fausses** :
   - « La rétrospective, c'est faire le bilan du produit » : c'est la façon de travailler qui s'inspecte à la rétrospective ; le produit s'inspecte à la revue.
-    - **Relance** : « à la rétrospective, qu'est-ce qu'on inspecte : le produit, ou la façon de travailler ? »
   - « Odile peut y revoir l'ordre du backlog » : l'ordre reste au PO, qui le tient en continu ; les parties prenantes donnent leur avis sur le travail à la revue.
-    - **Relance** : « qui répond de l'ordre du backlog, et où les parties prenantes donnent-elles leur avis sur le travail ? »
 - **Consigne** : « produit à la revue, façon de travailler à la rétrospective ». Après ce message, le dernier des cinq de 0b, « Le sprint raconté par Diego » sert à l'« exercice » ou à l'entraînement du concept 0 : un récit neuf, qui mêle des erreurs sur les quatre événements.
 
 #### Le sprint raconté par Diego (entraînement)
@@ -191,7 +175,6 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Idées fausses** :
   - « Le PO fixe seul l'objectif de sprint » : il propose comment le sprint peut augmenter la valeur ; toute l'équipe fixe l'objectif.
   - « On peut sauter la rétrospective quand le sprint s'est bien passé » : elle fait partie de chaque sprint et le clôt.
-    - **Relance** : « Et la rétrospective sautée ? »
 
 ## 0c Trois artefacts, trois engagements
 
@@ -209,7 +192,6 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Idées fausses** :
   - « La DoD est un artefact » : la DoD est l'engagement de l'incrément ; les artefacts sont le backlog produit, le backlog de sprint et l'incrément.
   - « La phrase va dans l'objectif produit, parce que c'est important » : l'objectif produit est la cible à long terme et ne change pas à chaque sprint.
-    - **Relance** : « est-ce que ça vaudra encore au prochain sprint ? »
 - **Consigne** : la première idée fausse touche la partie 1 de la question, la seconde la partie 2 ; pour la première, réexpliquer. Demander « est-ce que ça vaudra encore au prochain sprint ? » : oui pour la DoD et l'objectif produit, non pour l'objectif de sprint.
 
 ## 0d Sprint et incrément
@@ -225,10 +207,8 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Réponse attendue** : non. Mercredi, c'est un incrément qui a été livré : la plateforme dans un nouvel état utilisable, avec la vue, conforme à la DoD ; pas le sprint, qui continue jusqu'à son terme et peut produire d'autres incréments. On peut livrer avant la fin du sprint ; la revue n'est pas une porte de mise en production. Nuance à apporter dans la correction : à la revue, l'équipe et les parties prenantes, dont Étienne, inspectent ce que le sprint a produit, la vue comprise, et adaptent le backlog.
 - **Idées fausses** :
   - « Un sprint, une livraison : on livre le sprint » : le sprint est une durée ; on livre des incréments, un ou plusieurs, au moment où ils existent, ou pas du tout pendant un sprint. Erreur fréquente en formation.
-    - **Relance** : « le sprint : une durée, ou un état du produit ? »
   - « Livrer avant la fin casse le sprint » : rien n'oblige à attendre la revue ; pendant le sprint, la règle est de ne pas compromettre l'objectif de sprint.
   - « Le pipeline qui charge les relevés des stations est fini, c'est donc un incrément » : un travail fini que personne ne peut consulter, sans vue ni export, n'est pas un incrément ; un incrément est utilisable et remplit la DoD.
-    - **Relance** : « si on décidait de le livrer maintenant, un utilisateur pourrait-il s'en servir ? »
 - **Consigne** : pour la deuxième idée fausse, réexpliquer. Distinguer le sprint et la livraison grâce à l'incrément (« une durée, ou un état du produit ? ») ; l'image d'un escalier dont chaque marche est un incrément, avec une marche le mercredi. « Le sprint est livré » sert à l'« exercice » ou à l'entraînement.
 
 #### « Le sprint est livré » (entraînement)
@@ -238,13 +218,10 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 - **Réponse attendue** : on ne livre pas un sprint, on livre un incrément. La vue ne remplit pas la DoD : elle ne fait pas partie de l'incrément ; elle n'est ni livrée ni présentée à la revue, et retourne au backlog produit, où le PO l'ordonne avec le reste. Seul le travail conforme à la DoD forme l'incrément.
 - **Idées fausses** :
   - « C'est un détail, on peut la montrer à la revue » : un élément qui ne remplit pas la DoD n'est pas présenté à la revue.
-    - **Relance** : « si on la livrait maintenant, la DoD serait-elle remplie ? »
   - « Finie, donc livrée » : finie pour les Developers ne veut pas dire conforme à la DoD.
-    - **Relance** : « si on la livrait maintenant, la DoD serait-elle remplie ? »
   - « Le sprint est livré, c'est une façon de parler » : la formule entretient la confusion entre la durée et l'incrément.
-    - **Relance** : « Diego dit « le sprint est livré » : qu'est-ce qui se livre ? »
 
-## Repères
+## Se vérifier
 
 > « Si on décidait de le livrer maintenant, un utilisateur pourrait-il s'en servir, et la DoD est-elle remplie ? »
 

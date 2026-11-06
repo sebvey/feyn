@@ -48,7 +48,7 @@ Une tranche traverse toutes les couches.
 - **Idées fausses** :
   - « Un tableau » : c'est une carte.
 
-## Repères
+## Se vérifier
 
 > « Une question à se poser ? »
 

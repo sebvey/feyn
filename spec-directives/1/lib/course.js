@@ -61,9 +61,8 @@ function conceptParts(m, subs, word, form) {
   const cf = (form && form.concept_file) || {};
   const partKey = (list, title) => (list || []).find((p) => word('headings', p.heading) === title);
   const fieldKeys = (unitForm.fields || []).map((f) => f.field);
-  const followKey = ((unitForm.fields || []).find((f) => f.items && f.items.follow_up) || { items: { follow_up: {} } }).items.follow_up.field;
   const labelOf = (k) => word('unit_fields', k);
-  const keyOfLabel = (l) => [...fieldKeys, followKey].find((k) => k && labelOf(k) === l);
+  const keyOfLabel = (l) => fieldKeys.find((k) => k && labelOf(k) === l);
   const quals = (caseForm.qualifiers || []).map((k) => word('qualifiers', k)).filter(Boolean);
   const unheard = new Set();
   const notHeard = (readers) => Array.isArray(readers) && !readers.includes('learner');
@@ -82,7 +81,7 @@ function conceptParts(m, subs, word, form) {
         const fm = l.code ? null : FIELD.exec(l.t);
         const key = fm && keyOfLabel(fm[1].trim());
         if (!fm) { problem(l.n, `${where}: line outside a field ("${l.t.trim().slice(0, 40)}"): a field opens with "- **<label>** :", its following lines indented two spaces`); cur = null; continue; }
-        if (!key || key === followKey) { problem(l.n, `${where}: unknown field "${fm[1].trim()}"`); cur = null; continue; }
+        if (!key) { problem(l.n, `${where}: unknown field "${fm[1].trim()}"`); cur = null; continue; }
         cur = { key, label: fm[1].trim(), qualifier: fm[2].replace(/^\s*,/, '').trim(), line: l.n, text: (fm[3] || '').trim(), lines: [l], items: [] };
         mis = null;
         list.push(cur);
@@ -91,18 +90,16 @@ function conceptParts(m, subs, word, form) {
       if (!cur) { problem(l.n, `${where}: line outside a field ("${l.t.trim().slice(0, 40)}")`); continue; }
       cur.lines.push(l);
       if (cur.key !== 'misconceptions') continue;
-      // a misconception: `  - « <misconception> » : <correction>`; its follow-ups nested under
-      // it, `    - **<follow_up>** : <text>`; anything else indented deeper goes on its line
+      // a misconception: `  - « <misconception> » : <correction>`; a line indented deeper goes on
+      // its correction, but a bullet nested under it is an error (no field nests under a misconception)
       if (indent < 4) {
         if (indent === 2 && /^- /.test(l.t.slice(2))) {
-          mis = { line: l.n, followUps: [] };
+          mis = { line: l.n };
           cur.items.push(mis);
           if (!/^- «.+» :(\s|$)/.test(l.t.slice(2))) problem(l.n, `${where}: a misconception is "- « <the misconception> » : <its correction>", found "${l.t.trim().slice(0, 40)}"`);
         } else problem(l.n, `${where}: « ${cur.label} » holds a list of misconceptions, found "${l.t.trim().slice(0, 40)}"`);
       } else if (indent === 4 && /^- /.test(l.t.slice(4)) && mis) {
-        const fm = FIELD.exec(l.t.slice(4));
-        if (!fm || keyOfLabel(fm[1].trim()) !== followKey) problem(l.n, `${where}: a bullet nested under a misconception is a follow-up, "- **${labelOf(followKey)}** : <text>", found "${l.t.trim().slice(0, 40)}"`);
-        else mis.followUps.push(l.n);
+        problem(l.n, `${where}: a misconception holds its correction and nothing nested under it, found the bullet "${l.t.trim().slice(0, 40)}"`);
       } else if (!mis) problem(l.n, `${where}: « ${cur.label} » holds a list of misconceptions, found "${l.t.trim().slice(0, 40)}"`);
     }
     return list;

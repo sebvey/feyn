@@ -28,7 +28,6 @@ Un produit s'empile en couches, de la collecte à la restitution.
 - **Réponse attendue** : une carte.
 - **Idées fausses** :
   - « Un tableau » : c'est une carte.
-    - **Relance** : « que voit-il ? »
 - **Consigne** : **en rechange**, « Le cas la carte vide » ; « Le cas la couche du dessous » sert à l'entraînement, « Le cas la couche oubliée » à un aparté.
 
 #### Le cas la carte vide (exercice)
@@ -43,10 +42,9 @@ Un produit s'empile en couches, de la collecte à la restitution.
 
 - **Ancrage** : Régis regarde la couche du dessous.
 - **Question** : que voit-il ?
-- **Réponse attendue** : une couche.
+- **Réponse attendue** : une couche ; la **strate** du dessous porte la carte.
 - **Idées fausses** :
   - « Une carte » : c'est une couche.
-- **Repères** : la **strate** du dessous porte la carte.
 
 #### Le cas la couche oubliée (aparté)
 

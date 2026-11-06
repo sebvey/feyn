@@ -25,7 +25,7 @@ Une tranche traverse toutes les couches.
   - « Un tableau » : c'est une carte.
 - **Réserve, sur demande** : une autre carte.
 
-## Repères
+## Se vérifier
 
 > « Une question à se poser ? »
 

@@ -83,18 +83,7 @@ unit:
     - field: misconceptions
       presence: mandatory
       # each misconception a nested bullet, the misconception in quotes, then its correction; the
-      # site renders the misconception and its correction, not its follow-ups
-      published: true
-      readers: [site, teacher, learner]
-      items:
-        follow_up:
-          # a bullet nested under its misconception, `- **<label>** : <text>`
-          field: follow_up
-          presence: optional
-          published: false
-          readers: [teacher, learner]
-    - field: landmarks
-      presence: optional
+      # site renders the misconception and its correction
       published: true
       readers: [site, teacher, learner]
     - field: instruction
@@ -117,7 +106,7 @@ supplementary_case:
   qualifiers: [fallback, practice, aside]
   published: false
   readers: [teacher, learner]
-  fields: [anchor, question, expected_answer, misconceptions, landmarks]
+  fields: [anchor, question, expected_answer, misconceptions]
 
 # The course files, beside the concept file: what spans the course, and nothing a unit or the map
 # already says.
@@ -133,7 +122,8 @@ course_map:
   readers: [site, teacher]
 
 # plan.md: an optional H1, then these ## headings, in this order; after them, optional ##
-# sections of free titles that the teacher reads (the course's stances, its own writing rules).
+# sections of free titles that the teacher reads (the course's stances, its own writing rules, the
+# questions it asks again and again across the course).
 plan:
   file: plan.md
   sections:

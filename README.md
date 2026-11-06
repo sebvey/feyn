@@ -2,7 +2,7 @@
 
 feyn is a monorepo of courses taught by a Claude Code teacher and published as a site. A course is a set of source files under `courses/<id>/`, written against a spec in `course-specs/`; the teacher template in `classroom-builder/` turns a course into a classroom, and the engine in `site-builder/` builds the site from it.
 
-> **The expected answers of every course are visible in this repository.** It is public for now: the unpublished fields of the concept files (expected answers, follow-ups, instructions) can be read by anyone. This is acceptable for a beta with trusted testers; do not read the concept files here if you want to learn from the course.
+> **The expected answers of every course are visible in this repository.** It is public for now: the unpublished fields of the concept files (expected answers, instructions) can be read by anyone. This is acceptable for a beta with trusted testers; do not read the concept files here if you want to learn from the course.
 
 ## Map
 
