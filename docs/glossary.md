@@ -180,7 +180,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### concept file
 
-- means: `concept.md`, the one file in which a concept is written: its **sections** and their **units**, between a head and a foot (**head and foot**); the site renders its **published** parts, the teacher reads it whole
+- means: `concept.md`, the one file in which a concept is written: its title, the one the course map gives the concept, then its **sections** and their **units**, between a head and a foot (**head and foot**), every heading opened by the kind of its block, one kind per heading level; the site renders its **published** parts, the teacher reads it whole
 - en: concept file · rejected: "teaching notes", "reader text" (two files of the form before it)
 - fr: « fichier de concept »
 - not to confuse with: [concept folder](#concept-folder), [domain file](#domain-file)
@@ -201,7 +201,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### unit
 
-- means: the teaching unit, the unit of a course's content: one teacher message, one leaf of a concept's tree (`0a1`), written once as one block of labelled fields: its **matter**, its **anchor**, its question, its expected answer, its **misconceptions**, its **instruction**, then its supplementary cases. A **section** without units is itself a unit
+- means: the teaching unit, the unit of a course's content: one teacher message, one leaf of a concept's tree (`0a1`), written once as one block of labelled fields: its **matter**, its **anchor**, its question, its expected answer, its **misconceptions**, its **instruction**, then its supplementary cases. A unit always has its own heading, under its **section**
 - en: unit · rejected: "leaf sub-concept", "sub-concept", "leaf", "lesson"
 - fr: « unité » · rejected: « sous-concept feuille », « sous-concept », « feuille »
 - not to confuse with: [section](#section), [concept](#concept), [case](#case), [head and foot](#head-and-foot)
@@ -209,7 +209,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### section
 
-- means: of a concept, a group of **units** under one heading (`0a`), its id the concept number and a letter; a section of one unit is that unit. A section of a document (a heading and its text, « section 3 » of a README) keeps its everyday sense
+- means: of a concept, a group of **units** under one heading (`0a`), its id the concept number and a letter; it holds one unit at least, and is never itself a unit, even when it holds a single one. A section of a document (a heading and its text, « section 3 » of a README) keeps its everyday sense
 - en: section · rejected: "sub-concept", "first-level sub-concept", "node"
 - fr: « section » · rejected: « sous-concept »
 - not to confuse with: [unit](#unit), [head and foot](#head-and-foot), [concept](#concept)
@@ -217,7 +217,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### head and foot
 
-- means: the parts of a **concept file** around its sections: the head, « L'essentiel », the one written summary of the concept; the foot, its landmarks (« Se vérifier »), its deepening (« Approfondissement ») and its instruction (« Consigne »), each optional, the last **unpublished**
+- means: the parts of a **concept file** around its sections, each under its own heading: the head, « Ouverture », holds « L'essentiel », the one written summary of the concept; the foot, « Clôture », holds its landmarks (« Se vérifier »), its deepening (« Approfondissement ») and its instruction (« Consigne »), each optional, the last **unpublished**
 - en: head and foot · rejected: "fixed sections"
 - fr: « tête » et « pied » · rejected: « sections fixes »
 - not to confuse with: [section](#section), [unit](#unit)

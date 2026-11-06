@@ -7,13 +7,17 @@ stances:
       refs: []
 ---
 
-## L'essentiel
+# Annexe A1 : Le lexique
+
+## Ouverture
+
+### L'essentiel
 
 Le lexique rassemble les mots du cours.
 
-## A1a Les mots
+## Section A1a : Les mots
 
-### A1a1 Un mot
+### Unité A1a1 : Un mot
 
 - **Matière** : Chaque mot du cours -> une définition courte.
 - **Ancrage** : Régis regarde une carte.
@@ -22,7 +26,7 @@ Le lexique rassemble les mots du cours.
 - **Idées fausses** :
   - « Un tableau » : c'est une carte.
 
-### A1a2 Sa définition
+### Unité A1a2 : Sa définition
 
 - **Matière** : La définition d'un mot tient en une ligne, celle de **produit** comprise.
 - **Ancrage** : Régis cherche un mot du lexique.

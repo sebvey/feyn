@@ -1,0 +1,2 @@
+check: concept-file
+message: concept 0: the title "Les rôles de l'équipe" is not the one course.yaml gives the concept, "Les rôles"

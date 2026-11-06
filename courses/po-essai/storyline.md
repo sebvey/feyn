@@ -51,8 +51,8 @@ L'initiale du prénom rappelle le rôle : Dana et Diego (data), Anna (analyste),
 
 ## Faits fixés
 
-- La Definition of Done de l'équipe vélos exige notamment que chaque vue affiche l'heure de sa dernière mise à jour (0c).
+- La Definition of Done de l'équipe vélos exige notamment que chaque vue affiche l'heure de sa dernière mise à jour (0c1).
 - La vue des vélos en panne, qu'Étienne réclame, a pris du retard : elle n'est pas livrée (0b5).
-- La vue des stations vides est livrée un mercredi, en cours de sprint, conforme à la Definition of Done : Étienne peut s'en servir (0d).
-- Étienne fait chaque matin le point sur l'état du réseau, puis envoie les régulateurs vers les stations (1a).
-- La fraîcheur visée des données de la plateforme est de moins de 15 minutes, une règle fixée (1b).
+- La vue des stations vides est livrée un mercredi, en cours de sprint, conforme à la Definition of Done : Étienne peut s'en servir (0d1).
+- Étienne fait chaque matin le point sur l'état du réseau, puis envoie les régulateurs vers les stations (1a1).
+- La fraîcheur visée des données de la plateforme est de moins de 15 minutes, une règle fixée (1b1).

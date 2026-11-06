@@ -1,0 +1,2 @@
+check: concept-file
+message: heading kind: "## 0b La règle" starts with its kind, `## Section 0b : La règle`

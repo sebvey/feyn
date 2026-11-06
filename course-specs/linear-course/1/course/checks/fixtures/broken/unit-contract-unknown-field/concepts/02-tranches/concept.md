@@ -11,11 +11,17 @@ stances:
       refs: []
 ---
 
-## L'essentiel
+# Concept 2 : Les tranches
+
+## Ouverture
+
+### L'essentiel
 
 Une tranche traverse toutes les couches.
 
-## 2a Une tranche
+## Section 2a : Une tranche
+
+### Unité 2a1 : Une tranche
 
 - **Matière** : Une tranche traverse toutes les couches (concept 1).
 - **Ancrage** : Régis regarde une carte.
@@ -25,7 +31,9 @@ Une tranche traverse toutes les couches.
   - « Un tableau » : c'est une carte.
 - **Réserve, sur demande** : une autre carte.
 
-## Se vérifier
+## Clôture
+
+### Se vérifier
 
 > « Une question à se poser ? »
 

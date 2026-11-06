@@ -1,7 +1,8 @@
 <!--
 Template of courses/<id>/concepts/<NN>-<slug>/concept.md, the concept file (course/README.md sections 3.1 to 3.3, 3.5 and 3.6; its form is course/form.yaml). One file per concept: the site builds its published parts only, the teacher reads it whole. Nothing about one learner. How to use: copy to the concept folder, replace every <placeholder>, delete this comment (from the opening to the closing mark, marks included: no HTML in course Markdown).
-- No H1: the title is in course.yaml; the objective too, and « Pièges » is built from the misconceptions: neither is written here. The ## parts come in this order and no other ## exists: the head (« L'essentiel »), the sections, the foot (« Se vérifier », « Approfondissement », « Consigne », each optional: delete the ones you do not write).
-- The headings are the tree of the concept: one ## section per group of units, `## <id> <title>`, the id the concept number and a letter from a, in order (`<n>a`, `<n>b`); its units, `### <id> <title>`, the id its own and a digit from 1, in order, nine at most (`<n>a1`). A section holds its units and nothing else. A section of one unit has no ###: it holds the fields of that unit (as `<n>b` below). A unit is one teacher message.
+- Every heading starts with its kind, and one kind is always at one level: the title at #, the head, the sections and the foot at ##, the blocks of the head and the foot and the units at ###, the supplementary cases at ####.
+- The title opens the body: `# Concept <n> : <title>` (an annex `# Annexe <id> : <title>`), the title the one course.yaml gives the concept, which keeps it too. The objective is in course.yaml only, and « Pièges » is built from the misconceptions: neither is written here. The ## parts come in this order and no other ## exists: the head, « Ouverture » (its block « L'essentiel »), the sections, the foot, « Clôture » (its blocks « Se vérifier », « Approfondissement », « Consigne », each optional: delete the ones you do not write, and « Clôture » with them when none is left).
+- The headings are the tree of the concept: one ## section per group of units, `## Section <id> : <title>`, the id the concept number and a letter from a, in order (`<n>a`, `<n>b`); its units, `### Unité <id> : <title>`, the id its own and a digit from 1, in order, one at least and nine at most (`<n>a1`). A section holds its units and nothing else; a section with a single unit keeps its ### heading (as `<n>b` below). A unit is one teacher message.
 - A unit is a list of fields, in this order: « Matière », « Ancrage », « Question », « Réponse attendue », « Idées fausses » (mandatory), then « Consigne » (optional). A field's text follows its label; its following lines are indented two spaces (paragraphs, nested lists). No line of a unit stands outside a field. Published: « Matière », « Ancrage », « Idées fausses »; the rest is the teacher's.
 - « Idées fausses »: one nested bullet per misconception, `- « <misconception> » : <correction>`, and nothing nested under it.
 - A question the course asks again and again, its own way of making the learner think (« et alors ? », « d'où vient ce chiffre ? »): in the « Consigne » of its unit, in the « Consigne » of the foot when it holds for the whole concept, or in a free section of plan.md when it holds for the whole course; never under a misconception (rule course-question-in-instruction).
@@ -37,13 +38,17 @@ diagrams:
     unit: <n>a1
 ---
 
-## L'essentiel
+# Concept <n> : <concept title>
+
+## Ouverture
+
+### L'essentiel
 
 <the definition and why it matters, a few lines>
 
-## <n>a <title of a>
+## Section <n>a : <title of a>
 
-### <n>a1 <title of a1>
+### Unité <n>a1 : <title of a1>
 
 - **Matière** : <matter of a1: what is true, as the site publishes it and the teacher says it>
 - **Ancrage** : <the storyline situation where a1 shows: actors, facts, who says what>
@@ -61,7 +66,7 @@ diagrams:
 - **Idées fausses** :
   - « <a frequent wrong answer> » : <its correction>
 
-### <n>a2 <title of a2>
+### Unité <n>a2 : <title of a2>
 
 - **Matière** : <matter of a2>
 - **Ancrage** : <the storyline situation where a2 shows>
@@ -70,23 +75,27 @@ diagrams:
 - **Idées fausses** :
   - « <a frequent wrong answer of a2> » : <its correction>
 
-## <n>b <title of b>
+## Section <n>b : <title of b>
 
-- **Matière** : <matter of b, a section of one unit>
-- **Ancrage** : <the storyline situation where b shows>
-- **Question** : <the question of b>
-- **Réponse attendue** : <the right answer of b>
+### Unité <n>b1 : <title of b1>
+
+- **Matière** : <matter of b1, the single unit of its section>
+- **Ancrage** : <the storyline situation where b1 shows>
+- **Question** : <the question of b1>
+- **Réponse attendue** : <the right answer of b1>
 - **Idées fausses** :
-  - « <a frequent wrong answer of b> » : <its correction>
+  - « <a frequent wrong answer of b1> » : <its correction>
 
-## Se vérifier
+## Clôture
+
+### Se vérifier
 
 <the question the learner asks themself to check an answer, on the whole concept>
 
-## Approfondissement
+### Approfondissement
 
 <more matter on the concept, for the learner who asks to go further>
 
-## Consigne
+### Consigne
 
 <the method proper to the whole concept, which no unit says alone>

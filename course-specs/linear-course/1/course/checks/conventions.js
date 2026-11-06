@@ -21,7 +21,6 @@ function plainMarkdown(ctx, file, out, opts = {}) {
     if (/^\s*:::/.test(l.t)) out.push(fail(file, l.n, 'plain Markdown: no ::: directive'));
     if (opts.depth) {
       const h = /^(#{1,6})\s/.exec(l.t);
-      if (h && h[1].length === 1) out.push(fail(file, l.n, 'plain Markdown: no H1 in a concept file (the title is in course.yaml)'));
       if (h && h[1].length >= 5) out.push(fail(file, l.n, 'plain Markdown: no heading deeper than #### in a concept file'));
     }
   });

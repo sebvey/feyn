@@ -2,7 +2,7 @@
 
 | Affirmation | Section | Source | Vérifié | Nature |
 |---|---|---|---|---|
-| Les couches vont de la collecte à la restitution | 1a, L'essentiel | [S1] | « le texte » (section 2) | consensus |
+| Les couches vont de la collecte à la restitution | 1a1, L'essentiel | [S1] | « le texte » (section 2) | consensus |
 
 ## Références
 
