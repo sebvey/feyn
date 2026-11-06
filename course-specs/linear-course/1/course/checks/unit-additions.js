@@ -3,8 +3,9 @@
 // fields of a unit and of its supplementary cases that the learner reads or hears (course/form.yaml,
 // readers: every field but the instruction, the follow-ups included), each passage in bold
 // (`**…**`), the labels left out, is a term of glossary.md or one of its comma variants, its sense
-// qualifier in parentheses left out, case ignored (rule bold-term-in-glossary): in a unit, bold marks
-// a glossary term. That a fact an anchor uses is in storyline.md and that a claim of a published
+// qualifier in parentheses left out, case ignored (rule bold-term-in-glossary, a recommendation: bold
+// for emphasis stays possible, and a bold that is no term is reported in case the term is missing
+// from the glossary). That a fact an anchor uses is in storyline.md and that a claim of a published
 // field has its row in sources.md are rules by inspection of the same group; that a fixed fact or a
 // claim names a unit that exists is course-files' and sources'. Its fields are read as unit-contract
 // reads them (lib/course.js); a unit whose fields are unreadable is unit-contract's.
@@ -69,8 +70,8 @@ function run(ctx) {
         for (const b of bolds(f)) {
           if (terms && terms.has(key(b.text))) continue;
           out.push(fail(file, b.line, terms
-            ? `${where}: « ${label} » puts "${mdlib.plain(b.text)}" in bold, which is no term of glossary.md: in a unit, bold marks a glossary term; add the term to glossary.md, or drop the bold`
-            : `${where}: « ${label} » puts "${mdlib.plain(b.text)}" in bold, but glossary.md has no table of terms: in a unit, bold marks a glossary term`));
+            ? `${where}: « ${label} » puts "${mdlib.plain(b.text)}" in bold, which is no term of glossary.md: if it is a term, add it to glossary.md; if it is emphasis, leave it`
+            : `${where}: « ${label} » puts "${mdlib.plain(b.text)}" in bold, but glossary.md has no table of terms: if it is a term, add it to glossary.md; if it is emphasis, leave it`));
         }
       }
     }
