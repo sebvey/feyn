@@ -1,7 +1,7 @@
 export const meta = {
   name: 'feyn-taught-check-workflow',
   description: 'Verify that no case of a course asks what the learner has not yet been taught',
-  whenToUse: 'Run by the skill /feyn-taught-check, which triages its findings: after an issue that changes what a concept teaches (teaching notes, a sub-concept, an order), or when the maintainer asks. args: { course: "<course id>", from?: "<first concept reread>", to?: "<last concept reread>" }; default the whole course, annexes included. Report only: no agent modifies a file.',
+  whenToUse: 'Run on demand by a work session, with an absolute scriptPath (course-specs/linear-course/1/README.md section 5), whose triage of its findings follows: after an issue that changes what a concept teaches (teaching notes, a sub-concept, an order), or when the maintainer asks. args: { course: "<course id>", from?: "<first concept reread>", to?: "<last concept reread>" }; default the whole course, annexes included. Report only: no agent modifies a file.',
   phases: [
     { title: 'Scope', detail: 'lists concepts and annexes in course order, and their entry points' },
     { title: 'Inventory', detail: 'what the learner receives, unit by unit, up to the last concept reread' },
@@ -17,9 +17,8 @@ if (!A.course) throw new Error('args.course missing: the course id (courses/<id>
 const COURSE = `courses/${A.course}/`
 const GROUP = 4
 
-const ROLE = `You maintain a course; you are not the teacher: ignore the teaching instructions of the \
-repository's CLAUDE.md files except where you are asked to apply them as a criterion. Do not use \
-git. Modify no file. Read the files on disk yourself: trust no summary. Vocabulary: \
+const ROLE = `You maintain a course; you are not the teacher. Do not use git. Modify no file. \
+Read the files on disk yourself: trust no summary. Vocabulary: \
 docs/glossary.md (concept folder, teaching notes, example bank, case, practice case, reader text, \
 deepening, defining concept).`
 

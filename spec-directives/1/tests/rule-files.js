@@ -17,9 +17,8 @@
 //     belongs to the family of its category, whose group comes before it in the file (the order
 //     teacher/build/render-parts renders);
 //   - the ids of rules and groups are unique across the two files;
-//   - a check named exists, as a script of the spec MAJOR's course/checks/ (`<check>.js`; the
-//     folder that check-spec's --checks-dir names, when given) or an agent workflow of the
-//     repository (`.claude/workflows/<check>.js`);
+//   - a check named exists, as a script or an agent workflow of the spec MAJOR's course/checks/
+//     (`<check>.js`; the folder that check-spec's --checks-dir names, when given);
 //   - a check verifies rules of one category and one level;
 //   - each course/schemas/*.schema.yaml compiles under ajv's Ajv2020 (JSON Schema 2020-12), and the
 //     text of exactly one rule of course/rules.yaml names it; a schema named there exists.
@@ -44,8 +43,6 @@ const GROUP_KEYS = ['id', 'title', 'purpose', 'category', 'method', 'rules'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){1,4}$/;
 const GROUP_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){0,4}$/;
 const SCHEMA_REF = /course\/schemas\/[A-Za-z0-9._-]+\.schema\.yaml/g;
-// here is spec-directives/<MAJOR>/tests
-const WORKFLOWS = path.resolve(__dirname, '..', '..', '..', '.claude', 'workflows');
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const isStr = (v) => typeof v === 'string' && v.trim() !== '';
@@ -53,7 +50,7 @@ const oneOf = (list) => list.map((v) => `"${v}"`).join(', ');
 
 function checkExists(ctx, id) {
   if (!/^[a-z0-9-]+$/.test(id)) return false;
-  return fs.existsSync(path.join(ctx.checks, id + '.js')) || fs.existsSync(path.join(WORKFLOWS, id + '.js'));
+  return fs.existsSync(path.join(ctx.checks, id + '.js'));
 }
 
 function run(ctx) {
@@ -125,7 +122,7 @@ function run(ctx) {
           const cl = yaml.lineOf(r, 'check', rl);
           // a level or a category that is missing or off the lists already failed above
           const known = LEVELS.includes(r.level) && spec.categories.includes(category);
-          if (typeof r.check !== 'string' || !checkExists(ctx, r.check)) out.push(fail(file, cl, `${name}: check "${r.check}" does not exist (no course/checks/${r.check}.js, no .claude/workflows/${r.check}.js)`));
+          if (typeof r.check !== 'string' || !checkExists(ctx, r.check)) out.push(fail(file, cl, `${name}: check "${r.check}" does not exist (no course/checks/${r.check}.js)`));
           else if (!known) { /* nothing to compare */ }
           else if (!checks.has(r.check)) checks.set(r.check, { category, level: r.level, at: `${file}:${cl}` });
           else {

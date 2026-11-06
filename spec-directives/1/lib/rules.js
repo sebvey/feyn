@@ -7,14 +7,12 @@
 // and verify no rule.
 //
 // A check runs on a course (`check-course`) when its method is test and its script is in the
-// spec MAJOR's course/checks/; a check of another method (taught-check, an agent workflow) is not
-// run by a script of that folder.
+// spec MAJOR's course/checks/; a check of another method (taught-check, an agent workflow) may
+// keep its course/checks/<id>.js there too, which check-course does not run.
 const fs = require('fs');
 const path = require('path');
 const yaml = require('./yaml-lines');
 
-// here is spec-directives/<MAJOR>/lib
-const WORKFLOWS = path.resolve(__dirname, '..', '..', '..', '.claude', 'workflows');
 const FILE = 'course/rules.yaml';
 
 class RulesError extends Error {}
@@ -50,7 +48,7 @@ function load(CHECKS) {
     else {
       c.runsHere = false;
       if (byTest) c.how = `no script course/checks/${c.id}.js`;
-      else if (fs.existsSync(path.join(WORKFLOWS, c.id + '.js'))) c.how = `${c.methods.join(', ')}, the agent workflow .claude/workflows/${c.id}.js`;
+      else if (exists) c.how = `${c.methods.join(', ')}, the agent workflow course/checks/${c.id}.js`;
       else c.how = c.methods.join(', ');
     }
   }
