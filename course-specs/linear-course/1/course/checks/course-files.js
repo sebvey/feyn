@@ -1,14 +1,17 @@
 'use strict';
-// plan.md, glossary.md, CHANGELOG.md and the domain files: presence, frontmatter, sections, leads,
-// no unlisted domain file (course/README.md sections 4 and 5); « Accueil » of plan.md and its
-// questions.
+// The course files, from their form in course/form.yaml (`plan`, `domain_file`, `storyline`) and
+// their rules (course/README.md sections 4 and 5): plan.md (its sections in the order of the
+// form, « Accueil » and its questions), the domain files (no frontmatter, no H1, the sections of
+// the form, no unlisted file), storyline.md (« Faits fixés » last, each fact ending with the id of
+// a unit of the course), glossary.md and CHANGELOG.md.
 const directives = require('./directives');
-const yaml = directives.lib('yaml-lines');
 const mdlib = directives.lib('md');
 const glossary = directives.lib('glossary');
 const { fail } = directives.lib('course');
 
 const SEMVER = /^(\d+)\.(\d+)\.(\d+), \d{4}-\d{2}-\d{2}$/;
+// a fixed fact ends with the id of the unit that fixed it, in parentheses, a final period allowed
+const FACT_UNIT = /\(([^()\s]+)\)\.?$/;
 
 // « Accueil »: a posture paragraph, then a numbered list of questions "<n>. **<question label>** : <question>"
 function onboarding(secs, title) {
@@ -41,19 +44,56 @@ function onboarding(secs, title) {
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
   if (!ctx.lexiconOk) return [fail(ctx.lexiconFile || 'course/lexicon.yaml', 1, 'the lexicon is unusable: see course/README.md section 7')];
+  if (!ctx.form || !ctx.form.plan || !ctx.form.domain_file || !ctx.form.storyline) return [fail('course/form.yaml', 1, `the form of the course files is unusable (${ctx.formError || 'no plan, domain_file or storyline'}): see course/README.md sections 4 and 5`)];
   const H = (k) => ctx.word('headings', k) || k;
   const out = [];
   const numbers = ctx.allNumbers();
+  const empty = (sec) => !sec.lines.some((l) => l.t.trim());
 
-  // plan.md
-  if (!ctx.exists('plan.md')) out.push(fail('plan.md', 1, 'mandatory file is missing'));
+  // plan.md: the sections of the form, the first ## first and each after the one before it;
+  // « Accueil » its posture and its questions
+  const PLAN = ctx.form.plan.file;
+  if (!ctx.exists(PLAN)) out.push(fail(PLAN, 1, 'mandatory file is missing'));
   else {
-    const secs = mdlib.sections(ctx.md('plan.md').body, 2).sections;
-    if (!secs.length || secs[0].title !== H('audience')) out.push(fail('plan.md', secs.length ? secs[0].line : 1, `the first ## section of plan.md is « ${H('audience')} »`));
-    else if (!secs[0].lines.some((l) => l.t.trim())) out.push(fail('plan.md', secs[0].line, `« ${H('audience')} » is empty`));
+    const secs = mdlib.sections(ctx.md(PLAN).body, 2).sections;
+    const want = ctx.form.plan.sections.map((p) => H(p.heading));
+    want.forEach((title, k) => {
+      const i = secs.findIndex((x) => x.title === title);
+      if (title === H('onboarding')) return; // onboarding() says it
+      if (i < 0) out.push(fail(PLAN, k === 0 && secs.length ? secs[0].line : 1, k === 0 ? `the first ## section of ${PLAN} is « ${title} »` : `${PLAN} has no « ${title} » section: mandatory, the ## section that follows « ${want[k - 1]} »`));
+      else if (i !== k) out.push(fail(PLAN, secs[i].line, k === 0 ? `the first ## section of ${PLAN} is « ${title} »` : `« ${title} » is the ## section that follows « ${want[k - 1]} » in ${PLAN}`));
+      else if (empty(secs[i])) out.push(fail(PLAN, secs[i].line, `« ${title} » is empty`));
+    });
     out.push(...onboarding(secs, H('onboarding')));
   }
-  if (!ctx.exists('storyline.md')) out.push(fail('storyline.md', 1, 'mandatory file is missing'));
+
+  // storyline.md: the world, then « Faits fixés », last when present, one bullet per fact, each
+  // ending with the id of a unit of the course
+  const STORY = ctx.form.storyline.file;
+  if (!ctx.exists(STORY)) out.push(fail(STORY, 1, 'mandatory file is missing'));
+  else {
+    const secs = mdlib.sections(ctx.md(STORY).body, 2).sections;
+    const title = H(ctx.form.storyline.fixed_facts.heading);
+    const found = secs.filter((x) => x.title === title);
+    if (found.length > 1) out.push(fail(STORY, found[1].line, `« ${title} » appears twice in ${STORY}`));
+    if (found.length && secs[secs.length - 1] !== found[0]) out.push(fail(STORY, found[0].line, `« ${title} » is the last ## section of ${STORY}: the world comes before it`));
+    if (found.length) {
+      const units = new Set(ctx.concepts.flatMap((c) => c.subs.filter((x) => x.leaf).map((x) => x.id)));
+      const facts = [];
+      for (const l of found[0].lines) {
+        if (!l.t.trim()) continue;
+        if (!l.code && /^- /.test(l.t)) facts.push({ line: l.n, text: l.t.slice(2).trim() });
+        else if (!l.code && /^\s/.test(l.t) && facts.length) facts[facts.length - 1].text += ' ' + l.t.trim();
+        else out.push(fail(STORY, l.n, `« ${title} » holds a bulleted list only, one fact per bullet`));
+      }
+      if (!facts.length) out.push(fail(STORY, found[0].line, `« ${title} » is empty`));
+      for (const fact of facts) {
+        const m = FACT_UNIT.exec(fact.text);
+        if (!m) out.push(fail(STORY, fact.line, 'a fixed fact ends with the id of the unit that fixed it, in parentheses: « (0d) »'));
+        else if (!units.has(m[1])) out.push(fail(STORY, fact.line, `fixed fact names "${m[1]}", which is no unit of the course (the id of a ### unit, or of a ## section without units)`));
+      }
+    }
+  }
 
   // glossary.md
   if (!ctx.exists('glossary.md')) out.push(fail('glossary.md', 1, 'mandatory file is missing'));
@@ -115,46 +155,22 @@ function run(ctx) {
     if (e.name.startsWith('.')) continue;
     if (!listed.has('domains/' + e.name)) out.push(fail(`domains/${e.name}`, 1, `domains/${e.name} is the file of no domain of course.yaml: every file of domains/ is listed`));
   }
-  ctx.cy.domains.forEach((d, i) => {
+  const DF = ctx.form.domain_file;
+  const want = DF.sections.map((p) => H(p.heading));
+  ctx.cy.domains.forEach((d) => {
     if (!d || typeof d !== 'object' || typeof d.file !== 'string') return;
     const f = d.file;
     const m = ctx.md(f);
     if (!m) return;
     if (m.error) { out.push(fail(f, m.error.line, m.error.message)); return; }
-    if (!m.data || typeof m.data !== 'object') out.push(fail(f, 1, 'domain file needs a frontmatter with description'));
-    else {
-      for (const k of Object.keys(m.data)) if (k !== 'description') out.push(fail(f, yaml.lineOf(m.data, k), `frontmatter key "${k}": a domain file has only description (the rest is in course.yaml)`));
-      if (typeof m.data.description !== 'string' || !m.data.description.trim()) out.push(fail(f, 2, 'frontmatter description is mandatory'));
-    }
+    if (m.hasFront && !DF.frontmatter) out.push(fail(f, 1, 'a domain file has no frontmatter: its title and its objective are in course.yaml'));
     for (const h of mdlib.headings(m.body)) if (h.level === 1) out.push(fail(f, h.line, 'no H1 in a domain file'));
     const secs = mdlib.sections(m.body, 2).sections;
-    const want = ['problem', 'concept_thread', 'from_to', 'crossing_case'].map(H);
     if (secs.map((s) => s.title).join('|') !== want.join('|')) {
-      out.push(fail(f, secs.length ? secs[0].line : 1, `sections must be, in order: ${want.map((w) => '« ' + w + ' »').join(', ')}; found ${secs.map((s) => '« ' + s.title + ' »').join(', ') || 'none'}`));
+      out.push(fail(f, secs.length ? secs[0].line : 1, `sections must be, in order: ${want.map((w) => '« ' + w + ' »').join(', ')}, and no other; found ${secs.map((s) => '« ' + s.title + ' »').join(', ') || 'none'}`));
       return;
     }
-    for (const s of secs) if (!s.lines.some((l) => l.t.trim())) out.push(fail(f, s.line, `« ${s.title} » is empty`));
-    // concept thread
-    const thread = secs[1];
-    const paras = mdlib.blocks(thread.lines);
-    const leads = [];
-    const nums = Array.isArray(d.concepts) ? d.concepts.map((c) => String(c)) : [];
-    if (nums.length === 1) {
-      const c = ctx.conceptByNumber(nums[0]);
-      if (c) {
-        leads.push(`**${c.number}. ${c.entry.title}.**`);
-        for (const s of c.subs.filter((x) => x.level === 1)) leads.push(`**${s.id}. ${s.title}.**`);
-      }
-    } else {
-      for (const n of nums) {
-        const c = ctx.conceptByNumber(n);
-        if (c) leads.push(`**${c.number}. ${c.entry.title}.**`);
-      }
-    }
-    if (paras.length !== leads.length) out.push(fail(f, thread.line, `« ${thread.title} » has ${paras.length} paragraphs, expected ${leads.length} (one per ${nums.length === 1 ? 'concept, then one per section' : 'concept'})`));
-    leads.forEach((lead, k) => {
-      if (paras[k] && !paras[k].text.startsWith(lead)) out.push(fail(f, paras[k].line, `paragraph ${k + 1} must open with ${lead}`));
-    });
+    for (const s of secs) if (empty(s)) out.push(fail(f, s.line, `« ${s.title} » is empty`));
   });
   return out;
 }

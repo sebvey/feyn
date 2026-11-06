@@ -2,8 +2,8 @@
 // The concept file and its folder, their `structure` part (course/README.md sections 3, 3.1 and
 // 3.2), from the form of course/form.yaml: the files of the folder; the frontmatter of concept.md
 // against course/schemas/concept-frontmatter.schema.yaml through Ajv2020, a failure mapped from
-// ajv's instance path to its line (lib/yaml-lines.js), then what the schema does not say (`verified`
-// parallel to `refs`, an item's text in inline Markdown); the parts of concept.md in the order of
+// ajv's instance path to its line (`lineOfError` of lib/yaml-lines.js), then what the schema does
+// not say (`verified` parallel to `refs`, an item's text in inline Markdown); the parts of concept.md in the order of
 // the form (head, sections, foot) and no other ## heading; the tree of the concept in its headings
 // (section and unit ids: form, order, uniqueness, nine units at most; a title after each id); the
 // sections of sources.md and the column count of its tables. The fields of a unit and its
@@ -27,21 +27,6 @@ function schema(form) {
     validate = new Ajv2020({ allErrors: true, logger: false }).compile(yaml.parse(fs.readFileSync(file, 'utf8')));
   }
   return validate;
-}
-
-// the line of an ajv error: the deepest container of its instance path that has a line, or the
-// line of the key it names (an unknown key, a missing one)
-function lineOfError(data, e) {
-  let node = data;
-  let line = 1;
-  for (const p of e.instancePath.split('/').slice(1).map((s) => s.replace(/~1/g, '/').replace(/~0/g, '~'))) {
-    if (node === null || typeof node !== 'object') break;
-    const key = Array.isArray(node) ? Number(p) : p;
-    line = yaml.lineOf(node, key, line);
-    node = node[key];
-  }
-  if (e.params && e.params.additionalProperty && isObj(node)) line = yaml.lineOf(node, e.params.additionalProperty, line);
-  return line;
 }
 
 // what the schema does not say of an item: its text in inline Markdown, `verified` parallel to `refs`
@@ -102,7 +87,7 @@ function checkConcept(ctx, c, out) {
       const d = cm.data;
       const v = schema(form);
       if (!v(d)) {
-        for (const e of v.errors) out.push(fail(cf, lineOfError(d, e), `frontmatter not valid against ${form.concept_file.frontmatter}: ${e.instancePath || '/'} ${e.message}${e.params && e.params.additionalProperty ? ` ("${e.params.additionalProperty}")` : ''}`));
+        for (const e of v.errors) out.push(fail(cf, yaml.lineOfError(d, e), `frontmatter not valid against ${form.concept_file.frontmatter}: ${e.instancePath || '/'} ${e.message}${e.params && e.params.additionalProperty ? ` ("${e.params.additionalProperty}")` : ''}`));
       }
       if (isObj(d)) {
         if (isObj(d.stances)) for (const k of ['consensus', 'school', 'course']) checkItems(d.stances[k], `stances.${k}`, cf, out);

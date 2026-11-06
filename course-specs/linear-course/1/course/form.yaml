@@ -1,9 +1,11 @@
-# The form of the concept file of `linear-course`, as data (decision `unit-is-the-content-unit`):
-# the files of a concept folder, the parts of `concept.md` (its head, its sections and units, its
-# foot), the fields of a unit and of a supplementary case, their order, their presence, published
-# or not, their readers, and the length of a unit. course/README.md section 3 describes it, the
-# rules of course/rules.yaml state it, the checks read it here (concept-file, unit-contract,
-# unit-length, and the text checks for their scope), and the site build of epic #598 will.
+# The form of the files of a course of `linear-course`, as data (decision `unit-is-the-content-unit`):
+# the concept file (the files of a concept folder, the parts of `concept.md`, its head, its
+# sections and units, its foot, the fields of a unit and of a supplementary case, the length of a
+# unit) and, beside it, the course files (`course.yaml` as the map, `plan.md`, the domain file,
+# `storyline.md`): their parts, their order, their presence, published or not, their readers.
+# course/README.md sections 2 to 5 describe it, the rules of course/rules.yaml state it, the
+# checks read it here (concept-file, unit-contract, unit-length and the text checks for their
+# scope; course-yaml and course-files for the course files), and the site build of epic #598 will.
 #
 # This file names words by their key in course/lexicon.yaml and holds none: `heading: essentials`
 # is the lexicon's `headings.essentials`, a field `matter` is `unit_fields.matter`, a qualifier
@@ -15,7 +17,8 @@
 #   site     the site reader, through the build (the published parts);
 #   teacher  the teacher, which reads the whole file;
 #   learner  the learner, who hears it from the teacher or reads it on the site: the text checks
-#            (conventions, glossary-order) read every part the learner reads, and only those.
+#            (conventions, glossary-order) read every part of a concept file the learner reads,
+#            and only those.
 
 # The files of a concept folder, and nothing else.
 folder:
@@ -114,3 +117,71 @@ supplementary_case:
   published: false
   readers: [teacher, learner]
   fields: [anchor, question, expected_answer, misconceptions, landmarks]
+
+# The course files, beside the concept file: what spans the course, and nothing a unit or the map
+# already says.
+
+# course.yaml, the map of the course: its identity, its domains and its concepts, nothing below a
+# concept (the tree of a concept is the headings of its concept.md). Its fields, their presence
+# and their form: the schema, which course-yaml validates it against. The site renders its titles,
+# objectives and order; the teacher reads the order it teaches in and the prerequisites.
+course_map:
+  file: course.yaml
+  schema: course/schemas/course.schema.yaml
+  published: true
+  readers: [site, teacher]
+
+# plan.md: an optional H1, then these ## headings, in this order; after them, optional ##
+# sections of free titles that the teacher reads (the course's stances, its own writing rules).
+plan:
+  file: plan.md
+  sections:
+    - heading: audience
+      presence: mandatory
+      published: true
+      readers: [site, teacher, learner]
+    - heading: onboarding
+      presence: mandatory
+      published: false
+      readers: [teacher]
+    - heading: progression
+      presence: mandatory
+      published: true
+      readers: [site, teacher, learner]
+  free_sections:
+    presence: optional
+    published: false
+    readers: [teacher]
+
+# A domain file, `domains/<number>-<slug>.md`: no frontmatter, no H1, these ## headings, in this
+# order, and nothing else. Its thread of concepts is written nowhere: the build composes it from
+# course.yaml (the domain's concepts, their titles and their objectives).
+domain_file:
+  folder: domains
+  frontmatter: false
+  sections:
+    - heading: problem
+      presence: mandatory
+      published: true
+      readers: [site, teacher, learner]
+    - heading: crossing_case
+      presence: mandatory
+      published: true
+      readers: [site, teacher, learner]
+
+# storyline.md: the world, its H1 and the ## sections of free titles before the fixed facts (the
+# setting, the actors, the sources); then the fixed facts, the last ## section, one bullet per
+# fact, each ending with the id of the unit that fixed it in parentheses, `(0d)`, a final period
+# allowed after it. The fixed facts are optional while no unit is written.
+storyline:
+  file: storyline.md
+  world:
+    presence: mandatory
+    published: true
+    readers: [site, teacher, learner]
+  fixed_facts:
+    heading: fixed_facts
+    presence: optional
+    position: last
+    published: true
+    readers: [site, teacher, learner]

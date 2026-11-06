@@ -12,11 +12,11 @@ headings:
   references: "Références"
   unverified: "Non vérifié"
   problem: "Le problème"
-  concept_thread: "Le fil des concepts"
-  from_to: "D'où l'on vient, où l'on va"
   crossing_case: "Un cas qui traverse le domaine"
   audience: "Public cible"
   onboarding: "Accueil"
+  progression: "Progression"
+  fixed_facts: "Faits fixés"
   avoid: "Termes à éviter"
   unreleased: "Non publié"
 
@@ -69,10 +69,6 @@ typography:
   rules: "espace avant « : », « ; », « ? » et « ! » ; guillemets « »"
   banned: ["—", "→", "←", "↔", "↑", "↓", "↕", "↗", "↘", "↖", "↙", "↦", "↳", "↪", "⇒", "⇐", "⇔", "⇨", "⟶", "⟵", "⟷", "⟹", "⟸", "⟺", "➜", "➔", "➝", "➞", "➡", "⬅", "⬆", "⬇", "->", "<-", "=>"]
 
-# Words a domain paragraph's first sentence does not open with (`domain-first-sentence-standalone`,
-# a reporting check; optional).
-checks:
-  anaphora: ["Il", "Elle", "Ils", "Elles", "Ce", "Cet", "Cette", "Ces", "Puis", "Celui", "Celle", "Ceux", "Celles", "Cela", "Ça"]
 
 # Concept statuses in `learner/parcours.md`.
 status:

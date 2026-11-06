@@ -138,8 +138,8 @@ groups:
         category: writing
         method: inspection
         text: >-
-          L'`audience` du cours, l'`objective` d'un domaine et l'`objective` d'un concept doivent
-          tenir chacun en une phrase.
+          L'`objective` d'un domaine et l'`objective` d'un concept doivent tenir chacun en une
+          phrase.
 
   - title: Le dossier de concept (course/README.md section 3)
     purpose: >-
@@ -441,7 +441,7 @@ groups:
         text: >-
           Un ancrage ne doit reprendre que des faits de `storyline.md` ; il ajoute le déroulé (qui
           dit quoi, quand), jamais un fait nouveau : un fait qui manque est d'abord ajouté à
-          `storyline.md`.
+          `storyline.md`, aux « Faits fixés » avec l'id de l'unité qui le fixe.
       - id: fallback-case-stands-alone
         level: requirement
         method: inspection
@@ -668,9 +668,9 @@ groups:
 
   - title: Les fichiers de domaine (course/README.md section 4)
     purpose: >-
-      Un fichier de domaine est l'entrée d'un domaine : le problème qu'il règle, l'enchaînement
-      de ses concepts, sa place dans le cours, et une situation du fil rouge qui le traverse. Le
-      même texte sert le lecteur et le professeur.
+      Un fichier de domaine est l'entrée d'un domaine : le problème qu'il règle et une situation
+      du fil rouge qui le traverse, rien de ce que `course.yaml` ou « Progression » de `plan.md`
+      dit déjà. Le même texte sert le lecteur et le professeur.
     category: structure
     method: test
     rules:
@@ -678,12 +678,12 @@ groups:
         level: requirement
         check: course-files
         text: Chaque fichier de `domains/` doit être le `file` d'un domaine de `course.yaml`.
-      - id: domain-frontmatter-description
+      - id: domain-file-no-frontmatter
         level: requirement
         check: course-files
         text: >-
-          Le frontmatter d'un fichier de domaine doit être `description`, une phrase pour le site,
-          et rien d'autre.
+          Un fichier de domaine ne doit pas avoir de frontmatter : son titre et son objectif sont
+          dans `course.yaml`.
       - id: domain-file-no-h1
         level: requirement
         check: course-files
@@ -692,28 +692,19 @@ groups:
         level: requirement
         check: course-files
         text: >-
-          Le corps d'un fichier de domaine doit être « Le problème », « Le fil des concepts »,
-          « D'où l'on vient, où l'on va », « Un cas qui traverse le domaine », toutes présentes
-          et non vides, dans cet ordre.
-      - id: concept-thread-paragraphs
-        level: requirement
-        check: course-files
-        text: >-
-          « Le fil des concepts » doit tenir un paragraphe par concept du domaine, dans l'ordre,
-          ouvert par `**<number>. <concept title>.**`, le titre tel que dans `course.yaml` ; un
-          domaine d'un seul concept, un paragraphe pour le concept, puis un par section, ouvert
-          par `**<id>. <title>.**`.
+          Le corps d'un fichier de domaine doit être « Le problème », puis « Un cas qui traverse
+          le domaine », toutes deux présentes et non vides, et aucune autre section `##` :
+          l'enchaînement de ses concepts n'y est pas écrit, le build le compose depuis
+          `course.yaml`.
       - id: domain-section-content
         level: requirement
         category: pedagogy
         method: inspection
         text: >-
           Chaque section d'un fichier de domaine doit dire ce que son titre annonce : « Le
-          problème », la difficulté rencontrée sans les concepts du domaine ; « Le fil des
-          concepts », un court paragraphe par concept ; « D'où l'on vient, où l'on
-          va », ce que le domaine précédent donne à celui-ci et ce que celui-ci donne au suivant ;
-          « Un cas qui traverse le domaine », une situation du fil rouge où chaque concept du
-          domaine sert, dans l'ordre, sans donner la réponse.
+          problème », la difficulté rencontrée sans les concepts du domaine ; « Un cas qui
+          traverse le domaine », une situation du fil rouge où chaque concept du domaine sert,
+          dans l'ordre, sans donner la réponse.
       - id: domain-text-for-reader
         level: requirement
         category: writing
@@ -728,26 +719,13 @@ groups:
         text: >-
           Un fichier de domaine ne doit enseigner aucun concept ni faire d'affirmation qu'un
           concept du domaine ne fait pas : il n'a pas de fichier de sources.
-      - id: domain-first-sentence-ends
-        level: requirement
-        category: writing
-        check: domain-first-sentence
-        text: >-
-          La première phrase de chaque paragraphe de « Le fil des concepts », après l'amorce, doit
-          finir par `.`, `?` ou `!` dans les 300 caractères qui suivent l'amorce.
-      - id: domain-first-sentence-stands-alone
-        level: recommendation
-        category: writing
-        check: domain-first-sentence-standalone
-        text: >-
-          Il convient que la première phrase de chaque paragraphe de « Le fil des concepts », après
-          l'amorce, ne s'ouvre pas sur un mot de la liste `checks.anaphora` du lexique.
 
   - title: Les fichiers du cours (course/README.md section 5)
     purpose: >-
-      Les fichiers qui tiennent ce qui couvre tout le cours : à qui il s'adresse et comment le
-      professeur accueille un apprenant (`plan.md`), ses termes (`glossary.md`), le monde où vivent
-      ses cas (`storyline.md`), son histoire (`CHANGELOG.md`).
+      Les fichiers qui tiennent ce qui couvre tout le cours, et rien de ce qu'une unité ou
+      `course.yaml` dit déjà : à qui il s'adresse, comment le professeur accueille un apprenant et
+      la progression du cours (`plan.md`), ses termes (`glossary.md`), le monde où vivent ses cas
+      et les faits que ses unités ont fixés (`storyline.md`), son histoire (`CHANGELOG.md`).
     category: structure
     method: test
     rules:
@@ -756,7 +734,7 @@ groups:
         check: course-files
         text: >-
           La première section `##` de `plan.md` doit être « Public cible », la prose complète du
-          public.
+          public, non vide : le seul endroit où le cours dit à qui il s'adresse.
       - id: plan-onboarding-section
         level: requirement
         check: course-files
@@ -776,13 +754,26 @@ groups:
         text: >-
           « Accueil » ne doit poser aucune question sur le rythme : le professeur ajuste le rythme
           en cours de route.
+      - id: plan-progression-after-onboarding
+        level: requirement
+        check: course-files
+        text: >-
+          `plan.md` doit avoir une section « Progression », non vide, la section `##` qui suit
+          « Accueil ».
+      - id: progression-content
+        level: requirement
+        category: pedagogy
+        method: inspection
+        text: >-
+          « Progression » doit dire les domaines dans l'ordre du cours, ce que chacun donne et
+          comment l'un mène au suivant, une fois pour tout le cours.
       - id: plan-optional-sections
         level: permission
         method: inspection
         text: >-
-          `plan.md` peut avoir un H1 et, après « Accueil », d'autres sections `##` que le professeur
-          lit : les partis pris du cours (« Parti pris : une équipe en sprints »), ses propres
-          règles d'écriture.
+          `plan.md` peut avoir un H1 et, après « Progression », d'autres sections `##` que le
+          professeur lit : les partis pris du cours (« Parti pris : une équipe en sprints »), ses
+          propres règles d'écriture.
       - id: glossary-table-four-columns
         level: requirement
         check: course-files
@@ -872,6 +863,27 @@ groups:
         text: >-
           Avant son concept de définition, un terme du glossaire peut figurer dans une phrase qui
           le définit en passant.
+      - id: storyline-fixed-facts-last
+        level: requirement
+        check: course-files
+        text: >-
+          Quand `storyline.md` a une section « Faits fixés », elle doit être sa dernière section
+          `##` et ne tenir qu'une liste à puces, un fait par puce ; le monde (le titre et les
+          sections avant elle) vient d'abord.
+      - id: fixed-fact-names-its-unit
+        level: requirement
+        check: course-files
+        text: >-
+          Chaque fait fixé doit finir par l'id de l'unité qui l'a fixé, entre parenthèses
+          (« (0d) », un point final permis après), l'id d'une unité du cours.
+      - id: storyline-holds-what-units-use
+        level: requirement
+        category: pedagogy
+        method: inspection
+        text: >-
+          `storyline.md` ne doit rien tenir qu'aucune unité n'emploie : chaque fait fixé est fixé
+          par l'unité qu'il nomme, et chaque partie du monde (un acteur, une source, un trait du
+          cadre) sert à l'ancrage ou à un cas d'au moins une unité.
       - id: storyline-names-learner-role
         level: requirement
         category: pedagogy

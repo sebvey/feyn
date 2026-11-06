@@ -2,7 +2,6 @@ id: concept-file-item-link
 spec: linear-course@1
 title: "Un cours minimal"
 subtitle: "Pour les checks"
-audience: "Une personne qui découvre la livraison d'un produit en équipe."
 storyline: storyline.md
 glossary: glossary.md
 annexes: [A1]

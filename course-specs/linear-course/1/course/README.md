@@ -3,7 +3,7 @@
 | Reader | Comes for | Opens |
 |---|---|---|
 | creator | what a course is, the templates, how to verify | sections [1](#1-le-dossier-du-cours) to [7](#7-le-lexique-des-fichiers-du-cours), [`templates/README.md`](templates/README.md), [`course-specs/check-course`](../../../check-course) |
-| builder | the shape of a course, the form of the concept file, the lexicon of the course files | sections [1](#1-le-dossier-du-cours) to [7](#7-le-lexique-des-fichiers-du-cours), [`form.yaml`](form.yaml), [`schemas/`](schemas/) |
+| builder | the shape of a course, the form of the concept file and of the course files, the lexicon of the course files | sections [1](#1-le-dossier-du-cours) to [7](#7-le-lexique-des-fichiers-du-cours), [`form.yaml`](form.yaml), [`schemas/`](schemas/) |
 | verifier | the rules of a course as data, the checks, their fixtures | [`rules.yaml`](rules.yaml), [`checks/README.md`](checks/README.md), [`checks/fixtures/`](checks/fixtures/) |
 | spec writer | the rules, the form and the schemas of a course, the spec's decisions | [`rules.yaml`](rules.yaml), [`form.yaml`](form.yaml), [`schemas/`](schemas/), [`../decisions/`](../decisions/), [`../CHANGELOG.md`](../CHANGELOG.md) |
 
@@ -11,7 +11,7 @@ The readers are defined in [`spec-directives/README.md`](../../../../spec-direct
 
 Ce qu'est un cours de `linear-course` : son dossier, `course.yaml`, le dossier de concept, les fichiers de domaine, les fichiers du cours, les schémas et le lexique des fichiers du cours. La portée, les fichiers, les catégories et les checks sont le `README.md` de la MAJOR ; la conformité, les niveaux, les méthodes, la sévérité et les versions sont les directives de spec, `spec-directives/1/README.md` ; le protocole que le professeur exécute est `teacher/rules.yaml`.
 
-Les règles d'un cours, celles que la revue vérifie comprises, sont les données de [`rules.yaml`](rules.yaml), un groupe par section qui y renvoie, chacun avec son `purpose` ; les tables de champs sont les schémas JSON de [`schemas/`](schemas/) ; la forme du fichier de concept (ses parties, les champs d'une unité, leur ordre, leur présence, publiés ou non, leurs lecteurs, la longueur d'une unité) est la donnée de [`form.yaml`](form.yaml), qui nomme les mots par leur clé du lexique. Chaque section tient sa table des lecteurs quand elle en a une, ce qui n'énonce aucune règle (l'arborescence d'un cours, ce à quoi sert un fichier, une notation) et un lien vers son groupe de `rules.yaml` et, pour une table de champs, vers son schéma JSON (#524, #531, #533). Les sections 1 à 7 viennent des sections 2 à 7 et 9 de la description de la spec avant la séparation (#323, lue à `9c691da^:specs/linear-course/1/SPEC.md`).
+Les règles d'un cours, celles que la revue vérifie comprises, sont les données de [`rules.yaml`](rules.yaml), un groupe par section qui y renvoie, chacun avec son `purpose` ; les tables de champs sont les schémas JSON de [`schemas/`](schemas/) ; la forme du fichier de concept (ses parties, les champs d'une unité, leur ordre, leur présence, publiés ou non, leurs lecteurs, la longueur d'une unité) et celle des fichiers du cours (`course.yaml`, `plan.md`, le fichier de domaine, `storyline.md`) sont la donnée de [`form.yaml`](form.yaml), qui nomme les mots par leur clé du lexique. Chaque section tient sa table des lecteurs quand elle en a une, ce qui n'énonce aucune règle (l'arborescence d'un cours, ce à quoi sert un fichier, une notation) et un lien vers son groupe de `rules.yaml` et, pour une table de champs, vers son schéma JSON (#524, #531, #533). Les sections 1 à 7 viennent des sections 2 à 7 et 9 de la description de la spec avant la séparation (#323, lue à `9c691da^:specs/linear-course/1/SPEC.md`).
 
 Chaque concept est une source, écrite une fois : un **fichier de concept**, `concept.md`, découpé en **unités**, un message du professeur chacune, dont chaque champ est **publié** ou **non publié**, une propriété de la spec (`form.yaml`), jamais écrite dans le cours. Le site construit les parties publiées, et rien d'autre ; le professeur lit le fichier entier. Le site et la classe sont des builds du cours, sans réécriture.
 
@@ -26,9 +26,9 @@ Chaque concept est une source, écrite une fois : un **fichier de concept**, `co
 ```
 courses/<id>/
   course.yaml          la carte : identité, domaines, concepts (section 2)
-  plan.md              prose : public, accueil, partis pris, règles d'écriture (section 5)
+  plan.md              prose : public, accueil, progression, partis pris, règles d'écriture (section 5)
   glossary.md          le glossaire du cours (section 5)
-  storyline.md         le fil rouge (section 5)
+  storyline.md         le fil rouge : le monde, puis les faits fixés (section 5)
   CHANGELOG.md         le journal des versions du cours (section 5)
   domains/N-slug.md    un fichier de domaine par domaine (section 4)
   concepts/NN-slug/    un dossier de concept par concept numéroté et par annexe, son fichier de concept compris (section 3)
@@ -46,9 +46,9 @@ Les règles du dossier du cours sont le groupe « Le dossier du cours » de [`ru
 | the site | titles, objectives, durations, the order of the pages and their addresses | at each build |
 | the maintainer | the identifiers whose change is a course MAJOR (section 3) | classing a course change |
 
-`course.yaml` est la carte du cours : son identité, ses domaines et ses concepts, rien sous le concept ; l'arbre d'un concept est dans son `concept.md` (section 3). Le site, le build de la classe et les checks lisent `course.yaml`.
+`course.yaml` est la carte du cours : son identité, ses domaines et ses concepts, rien sous le concept ; l'arbre d'un concept est dans son `concept.md` (section 3), et à qui le cours s'adresse, dans « Public cible » de `plan.md` (section 5). Le site, le build de la classe et les checks lisent `course.yaml` ; le site compose depuis lui l'enchaînement des concepts d'un domaine (section 4).
 
-Ses champs sont décrits par le schéma JSON [`schemas/course.schema.yaml`](schemas/course.schema.yaml) ; ses règles sont le groupe « Le fichier course.yaml » de [`rules.yaml`](rules.yaml).
+Ses champs sont décrits par le schéma JSON [`schemas/course.schema.yaml`](schemas/course.schema.yaml), que `course_map` de [`form.yaml`](form.yaml) nomme avec ses lecteurs ; ses règles sont le groupe « Le fichier course.yaml » de [`rules.yaml`](rules.yaml).
 
 ## 3. Le dossier de concept
 
@@ -131,31 +131,32 @@ Les règles de ces conventions sont le groupe « Les conventions du texte » de 
 
 | Reader | Needs | When |
 |---|---|---|
-| the learner | why the domain matters and how its concepts connect | before its concepts |
+| the learner | why the domain matters, and a situation of the storyline where its concepts serve | before its concepts |
 | the teacher | what it says to present the domain (group `domain-presentation`) | before the first concept of a domain |
 | the creator (human or agent) | what each section says, and that it teaches no concept | writing or changing a domain |
 
-Un fichier de domaine, dans `domains/`, est l'entrée d'un domaine, publié : le site le construit et le professeur le lit.
+Un fichier de domaine, dans `domains/`, est l'entrée d'un domaine, publié : le site le construit et le professeur le lit. Il tient ce que seul le domaine dit, le problème qu'il règle et un cas du fil rouge qui le traverse ; le reste est écrit ailleurs une fois : son titre, son objectif et ses concepts dans `course.yaml`, d'où le build compose l'enchaînement de ses concepts, et sa place dans le cours dans « Progression » de `plan.md`.
 
-Ses règles sont le groupe « Les fichiers de domaine » de [`rules.yaml`](rules.yaml).
+Ses sections, leur ordre, leur présence, publiées ou non, et leurs lecteurs sont `domain_file` de [`form.yaml`](form.yaml) ; ses règles sont le groupe « Les fichiers de domaine » de [`rules.yaml`](rules.yaml).
 
 ## 5. Fichiers du cours
 
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | its posture, the onboarding questions, the course's stances, the storyline facts its anchors use | onboarding; each unit it teaches |
-| the learner | the course glossary and the storyline | reading the course on the site |
+| the learner | the course glossary, the public and the progression of the course, the storyline | reading the course on the site |
+| the site | the published sections of `plan.md` and the storyline | at each build |
 | the creator (human or agent) | the terms to use and the defining concept of each, the storyline facts an anchor may draw on | writing a concept or a unit |
 | the maintainer | what changed in each course version | each release |
 
-- **`plan.md`** : à qui le cours s'adresse, et ce que le professeur en prend pour accueillir un nouvel apprenant et pour enseigner ; le professeur le lit.
+- **`plan.md`** : à qui le cours s'adresse (« Public cible », le seul endroit qui le dit), comment le professeur accueille un nouvel apprenant (« Accueil »), la **progression** du cours (« Progression » : les domaines dans l'ordre, ce que chacun donne, comment l'un mène au suivant), puis ce que le professeur en prend pour enseigner (les partis pris, les règles d'écriture du cours) ; le professeur le lit, le site en construit le public et la progression.
 - **`glossary.md`** : les termes du cours ; le site montre son premier tableau tel quel.
-- **`storyline.md`** : le fil rouge, en prose libre, que le professeur lit et que le site montre.
+- **`storyline.md`** : le fil rouge, que le professeur lit et que le site montre, en deux parties : le **monde** (le cadre, les acteurs, les sources), en prose libre, puis les **faits fixés** (« Faits fixés »), chacun suivi de l'id de l'unité qui l'a fixé, `(0d)`.
 - **`CHANGELOG.md`** : le journal des versions du cours.
 
 **Cellule du terme** : la première colonne du tableau du glossaire tient un terme, ou ses variantes séparées par des virgules (« Product Owner, PO »), chacune reconnue en mot entier, casse ignorée. Une parenthèse est un qualificatif de sens (« État (d'un élément) »).
 
-Les règles de ces fichiers sont le groupe « Les fichiers du cours » de [`rules.yaml`](rules.yaml).
+Les parties de `plan.md` et de `storyline.md`, leur ordre, leur présence, publiées ou non, et leurs lecteurs sont `plan` et `storyline` de [`form.yaml`](form.yaml) ; les règles de ces fichiers sont le groupe « Les fichiers du cours » de [`rules.yaml`](rules.yaml).
 
 ## 6. Les schémas
 
@@ -204,11 +205,11 @@ Les règles du style sont le groupe « Le style des schémas » de [`rules.yaml`
 
 Le lexique des fichiers du cours, `course/lexicon.yaml`, écrit une fois les mots qu'un programme reconnaît dans un fichier du cours (un titre, un champ d'unité, un qualificatif, un marqueur, une nature, une référence de concept, un type de source, un caractère banni) et les nomme par clé : les checks, le build de la classe et le site les y lisent, par leur clé, et aucun ne les écrit à nouveau (décision `lexicon-not-language-pack`). Les mots que le professeur dit et écrit sont l'autre lexique, `teacher/lexicon.yaml` (`teacher/README.md`, « Clés et paramètres »).
 
-Cette section n'énonce aucune règle d'un cours : le lexique est un fichier de la spec. `course/lexicon.yaml` tient chaque clé ci-dessous, `checks.anaphora` au choix ; `lexicon-keys`, un test de `check-spec`, le vérifie. Un `course/lexicon.yaml` absent ou illisible est une erreur d'outillage, ni un défaut du cours ni une règle : `course-yaml` échoue dessus (code de sortie 1), et `lexicon-keys` échoue dessus à côté d'un `teacher/lexicon.yaml`. Les valeurs :
+Cette section n'énonce aucune règle d'un cours : le lexique est un fichier de la spec. `course/lexicon.yaml` tient chaque clé ci-dessous ; `lexicon-keys`, un test de `check-spec`, le vérifie. Un `course/lexicon.yaml` absent ou illisible est une erreur d'outillage, ni un défaut du cours ni une règle : `course-yaml` échoue dessus (code de sortie 1), et `lexicon-keys` échoue dessus à côté d'un `teacher/lexicon.yaml`. Les valeurs :
 
 | Groupe | Clés et valeurs |
 |---|---|
-| `headings` | `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (le titre du site pour les positions du frontmatter, et la section qu'une entrée de « Non vérifié » de `sources.md` nomme pour une position ou un voisin : aucune section de `concept.md` ne l'a), `deepening` « Approfondissement », `landmarks` « Repères », `instruction` « Consigne » ; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié » ; `problem` « Le problème », `concept_thread` « Le fil des concepts », `from_to` « D'où l'on vient, où l'on va », `crossing_case` « Un cas qui traverse le domaine » ; `audience` « Public cible », `onboarding` « Accueil », `avoid` « Termes à éviter », `unreleased` « Non publié » |
+| `headings` | `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (le titre du site pour les positions du frontmatter, et la section qu'une entrée de « Non vérifié » de `sources.md` nomme pour une position ou un voisin : aucune section de `concept.md` ne l'a), `deepening` « Approfondissement », `landmarks` « Repères », `instruction` « Consigne » ; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié » ; `problem` « Le problème », `crossing_case` « Un cas qui traverse le domaine » ; `audience` « Public cible », `onboarding` « Accueil », `progression` « Progression » ; `fixed_facts` « Faits fixés » ; `avoid` « Termes à éviter », `unreleased` « Non publié » |
 | `unit_fields` | `matter` « Matière », `anchor` « Ancrage », `question` « Question », `expected_answer` « Réponse attendue », `misconceptions` « Idées fausses », `follow_up` « Relance », `landmarks` « Repères », `instruction` « Consigne » : les libellés des champs d'une unité et d'un cas supplémentaire (3.3) |
 | `qualifiers` | `fallback` « rechange », `practice` « entraînement », `aside` « aparté » : la liste fermée des qualificatifs d'un titre de cas supplémentaire (3.3) |
 | `markers` | `consensus` « consensus », `school` « école », `course` « cours » |
@@ -216,4 +217,3 @@ Cette section n'énonce aucune règle d'un cours : le lexique est un fichier de 
 | `concept_refs` | `concept` « concept », `concepts` « concepts », `and` « et », `annex` « annexe » : les mots d'une référence de concept (3.5) |
 | `source_types` | `primary` « primaire », `secondary` « secondaire », `marketing` « marketing » |
 | `typography` | `banned` : les caractères que le texte d'un cours n'emploie pas (le tiret cadratin, les flèches) |
-| `checks` | `anaphora`, au choix : les mots sur lesquels la première phrase d'un paragraphe de domaine ne s'ouvre pas ; sans elle, `domain-first-sentence-standalone` échoue |

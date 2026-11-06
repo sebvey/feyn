@@ -151,10 +151,18 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### domain file
 
-- means: the file `domains/<n>-<slug>.md` of a course, which describes a domain: its presentation and the thread of its concepts (« Le fil des concepts »)
+- means: the file `domains/<n>-<slug>.md` of a course, the entry of a domain: the problem the domain solves and a situation of the **storyline** that crosses it; the thread of its concepts is composed from the course map, not written
 - en: domain file
 - fr: « fichier de domaine » · rejected: « fiche »
-- not to confuse with: [domain](#domain), [concept folder](#concept-folder)
+- not to confuse with: [domain](#domain), [concept folder](#concept-folder), [progression](#progression)
+
+### progression
+
+- means: the part of a course's plan that says the domains in course order, what each gives and how one leads to the next, once for the whole course
+- en: progression · rejected: "roadmap"
+- fr: « progression »
+- not to confuse with: [course path](#course-path), [domain file](#domain-file), [category](#category)
+- why: "roadmap" names a plan of future work, not the order a course is taught in; the word is rejected for the category pedagogy (see [category](#category))
 
 ### concept
 
@@ -233,7 +241,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the field of a unit that places its matter in the storyline: a situation, its actors, its facts and who says what, without the answer; **published**
 - en: anchor · rejected: "example", "situation", "storyline callout"
 - fr: « ancrage » · rejected: « exemple », « situation », « fil rouge » (the callout)
-- not to confuse with: [example](#example), [matter](#matter), [storyline](#storyline)
+- not to confuse with: [example](#example), [matter](#matter), [storyline](#storyline), [fixed fact](#fixed-fact)
 - why: an anchor does not only illustrate, it anchors the point in the world of the course; "example" names the illustration of a teacher message
 
 ### misconception
@@ -319,10 +327,24 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### storyline
 
-- means: the running world the anchors and the cases live in: `storyline.md` of a course
+- means: the running world the anchors and the cases live in: `storyline.md` of a course, in two parts, its **world** and its **fixed facts**, holding nothing no unit uses
 - en: storyline · rejected: "red thread", "thread", "fil rouge", "narrative"
 - fr: « fil rouge »
-- not to confuse with: [course path](#course-path), [anchor](#anchor)
+- not to confuse with: [course path](#course-path), [anchor](#anchor), [world](#world), [fixed fact](#fixed-fact)
+
+### world
+
+- means: the first part of the **storyline**: the setting, the actors and the sources that the anchors and the cases draw on, in free prose
+- en: world · rejected: "universe"
+- fr: « monde »
+- not to confuse with: [storyline](#storyline), [fixed fact](#fixed-fact)
+
+### fixed fact
+
+- means: a fact of the **storyline** that a **unit** established, written once in the storyline's second part with the id of that unit, so that later anchors and cases hold to it
+- en: fixed fact
+- fr: « fait fixé »
+- not to confuse with: [world](#world), [anchor](#anchor), [storyline](#storyline)
 
 ### stances
 
@@ -457,8 +479,8 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the course as the teacher leads the learner through it, concept after concept in course order; the teacher proposes to come back to it after an aside
 - en: course path · rejected: "main line", "track"
 - fr: « parcours » (« dans le parcours », « hors du parcours », « revenir au parcours ») · rejected: « fil » alone
-- not to confuse with: [storyline](#storyline), the « Le fil des concepts » section of a [domain file](#domain-file)
-- why: « fil » sat next to « fil rouge » (the storyline) and « Le fil des concepts » (a section of a domain file), sometimes in one rule of the protocol, three « fil » a reader or a model could mix; « parcours » is the word the courses and learner memory already use; « progression » is kept for a section of a course's plan, which a planned change of the course files adds
+- not to confuse with: [storyline](#storyline), [progression](#progression)
+- why: « fil » sat next to « fil rouge » (the storyline) and « Le fil des concepts » (then a section of a domain file), sometimes in one rule of the protocol, three « fil » a reader or a model could mix; « parcours » is the word the courses and learner memory already use; « progression » is kept for the [progression](#progression), a section of a course's plan
 
 ### concept status
 
@@ -543,8 +565,8 @@ The **spec directives** (`spec-directives/1/README.md`) and, for the categories 
 - means: what a rule is about, from a closed list, extended when needed: for a course, structure, pedagogy, writing, sources or diagrams; for a protocol rule, its family (the nine families of the protocol). A check's category is its rules', and checks are selected by it. The tests of the spec directives have none
 - en: category · rejected: "family" for a category of a course, "kind", "progression" for the category pedagogy
 - fr: « catégorie »; of a protocol rule, its « famille »
-- not to confuse with: [label](#label) (its kind), [group](#group)
-- why: "progression" was ruled out as the name of the category pedagogy: the contract of a case is pedagogical without being an order; « progression » stays the word of a section of a course's plan (see [course path](#course-path))
+- not to confuse with: [label](#label) (its kind), [group](#group), [progression](#progression)
+- why: "progression" was ruled out as the name of the category pedagogy: the contract of a case is pedagogical without being an order; « progression » stays the word of a section of a course's plan (see [progression](#progression))
 
 ### severity
 

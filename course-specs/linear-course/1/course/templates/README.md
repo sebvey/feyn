@@ -12,7 +12,7 @@ One template per file `course/README.md` defines. Copy one to the course folder,
 
 The templates of a learner's memory files are the teacher's, in `teacher/templates/learner/` (`apprenant.md`, `observations.md`, `parcours.md`), ported from the old course: no check reads them, the smoke run only scans them for unreplaced placeholders.
 
-The headings and markers in the templates are the words of the lexicon of the course files (`course/lexicon.yaml`), in French, the language of the spec. Each template shows one domain, one concept, a section with two units, one of them with a supplementary case, then a section of one unit: repeat the block.
+The headings and markers in the templates are the words of the lexicon of the course files (`course/lexicon.yaml`), in French, the language of the spec. Each template shows one domain, one concept, a section with two units, one of them with a supplementary case, then a section of one unit: repeat the block. Their parts are the form of `course/form.yaml`: `plan.md` its three sections, then the course's own; `domain.md` its two sections, no frontmatter; `storyline.md` the world, then « Faits fixés », each fact with the id of its unit.
 
 ## Smoke run
 

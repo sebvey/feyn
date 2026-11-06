@@ -1,0 +1,2 @@
+check: course-files
+message: domains/2-decoupage.md:1 a domain file has no frontmatter

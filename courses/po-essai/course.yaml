@@ -2,7 +2,6 @@ id: po-essai
 spec: linear-course@1
 title: "Parcours PO, deux concepts d'essai"
 subtitle: "Les deux premiers concepts du Parcours PO, sur lesquels chaque changement de la spec est essayé."
-audience: "Un développeur ou un profil data (data engineer, analyste), à l'aise avec la technique et débutant en gestion de produit, qui devient Product Owner d'un produit data et veut de bonnes bases pour tenir le rôle dans une équipe Scrum ou proche."
 storyline: storyline.md
 glossary: glossary.md
 domains:
