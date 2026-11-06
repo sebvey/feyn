@@ -1,0 +1,2 @@
+check: course-yaml
+message: course.yaml:31 not valid against course/schemas/course.schema.yaml: /concepts/0 must NOT have additional properties ("subconcepts")

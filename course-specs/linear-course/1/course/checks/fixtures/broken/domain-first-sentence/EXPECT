@@ -1,2 +1,0 @@
-check: domain-first-sentence
-message: no ".", "?" or "!" within 300 characters of the lead

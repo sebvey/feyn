@@ -7,12 +7,12 @@ One template per file `course/README.md` defines. Copy one to the course folder,
 | `course.yaml` | `courses/<id>/course.yaml` | 2 |
 | `plan.md`, `glossary.md`, `storyline.md`, `CHANGELOG.md` | the same names in `courses/<id>/` | 5 |
 | `domain.md` | `courses/<id>/domains/<N>-<slug>.md` | 4 |
-| `concept.md`, `teaching.md`, `sources.md` | the same names in `courses/<id>/concepts/<NN>-<slug>/` | 3 |
+| `concept.md`, `sources.md` | the same names in `courses/<id>/concepts/<NN>-<slug>/` | 3 |
 | `diagram.svg` | `<stem>.svg` in a concept folder, optional | 6 |
 
 The templates of a learner's memory files are the teacher's, in `teacher/templates/learner/` (`apprenant.md`, `observations.md`, `parcours.md`), ported from the old course: no check reads them, the smoke run only scans them for unreplaced placeholders.
 
-The headings and markers in the templates are the words of the lexicon of the course files (`course/lexicon.yaml`), in French, the language of the spec. Each template shows one domain, one concept, one first-level sub-concept with two leaves, two cases: repeat the block.
+The headings and markers in the templates are the words of the lexicon of the course files (`course/lexicon.yaml`), in French, the language of the spec. Each template shows one domain, one concept, a section with two units, one of them with a supplementary case, then a section of one unit: repeat the block. Their parts are the form of `course/form.yaml`: `plan.md` its three sections, then the course's own; `domain.md` its two sections, no frontmatter; `storyline.md` the world, then « Faits fixés », each fact with the id of its unit.
 
 ## Smoke run
 

@@ -2,7 +2,6 @@ id: course-files-onboarding-item
 spec: linear-course@1
 title: "Un cours minimal"
 subtitle: "Pour les checks"
-audience: "Une personne qui découvre la livraison d'un produit en équipe."
 storyline: storyline.md
 glossary: glossary.md
 annexes: [A1]
@@ -29,16 +28,6 @@ concepts:
     prerequisites: []
     duration_min: 10
     dir: concepts/00-roles
-    subconcepts:
-      - id: 0a
-        title: "Les deux rôles"
-        children:
-          - id: 0a1
-            title: "Le premier rôle"
-          - id: 0a2
-            title: "Le second rôle"
-      - id: 0b
-        title: "La règle"
   - number: 1
     slug: couches
     title: "Les couches"
@@ -46,9 +35,6 @@ concepts:
     prerequisites: [0]
     duration_min: 10
     dir: concepts/01-couches
-    subconcepts:
-      - id: 1a
-        title: "Les trois couches"
   - number: 2
     slug: tranches
     title: "Les tranches"
@@ -56,9 +42,6 @@ concepts:
     prerequisites: [1]
     duration_min: 10
     dir: concepts/02-tranches
-    subconcepts:
-      - id: 2a
-        title: "Une tranche"
   - number: A1
     slug: lexique
     title: "Le lexique"
@@ -66,6 +49,3 @@ concepts:
     prerequisites: []
     duration_min: 10
     dir: concepts/A1-lexique
-    subconcepts:
-      - id: A1a
-        title: "Les mots"

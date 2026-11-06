@@ -1,21 +1,38 @@
 'use strict';
-// course.yaml: fields, identifiers, order, partition into domains, annexes, prerequisites, paths,
-// no unlisted concept folder, spec declared (course/README.md section 2,
-// spec-directives/1/README.md section 6). An unknown spec or MAJOR is refused by
-// course-specs/check-course, before these checks run. A missing or unreadable lexicon fails
-// here too, as a tooling error of the check, not as a rule: the lexicon is a file of the spec,
-// which no course can break (decision conformity-by-product; lexicon-keys of check-spec
-// tests it).
+// course.yaml, the map of the course (domains and concepts; the tree of a concept is its
+// concept.md's, checked by concept-file), from `course_map` of course/form.yaml: its fields
+// against course/schemas/course.schema.yaml through Ajv2020, a failure mapped from ajv's
+// instance path to its line (`lineOfError` of lib/yaml-lines.js); then what the schema does not
+// say: identifiers, order, partition into domains, annexes, prerequisites, paths that exist, no
+// unlisted concept folder (course/README.md section 2, spec-directives/1/README.md section 6).
+// An unknown spec or MAJOR is refused by course-specs/check-course, before these checks run. A
+// missing or unreadable lexicon fails here too, as a tooling error of the check, not as a rule:
+// the lexicon is a file of the spec, which no course can break (decision conformity-by-product;
+// lexicon-keys of check-spec tests it).
+const fs = require('fs');
 const path = require('path');
 const directives = require('./directives');
 const yaml = directives.lib('yaml-lines');
-const { fail, normNumber, SLUG } = directives.lib('course');
+const { fail, normNumber } = directives.lib('course');
 
 const F = 'course.yaml';
-const isStr = (v) => typeof v === 'string' && v.trim() !== '';
-const isPosInt = (v) => Number.isInteger(v) && v > 0;
 const NUMBER = /^(\d+|A\d+)$/;
-const MAX_CHILDREN = 9;
+const MAJOR = path.resolve(__dirname, '..', '..');
+const SCHEMA = 'course/schemas/course.schema.yaml';
+const isStr = (v) => typeof v === 'string' && v.trim() !== '';
+const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+
+// the schema of course.yaml, the form's (course_map.schema), compiled once
+let validate = null;
+let schemaFile = null;
+function schema(form) {
+  if (!validate) {
+    schemaFile = (form && form.course_map && form.course_map.schema) || SCHEMA;
+    const Ajv2020 = directives.require('ajv/dist/2020').default;
+    validate = new Ajv2020({ allErrors: true, logger: false }).compile(yaml.parse(fs.readFileSync(path.join(MAJOR, schemaFile), 'utf8')));
+  }
+  return validate;
+}
 
 function run(ctx) {
   const out = [];
@@ -24,111 +41,60 @@ function run(ctx) {
   const cy = ctx.cy;
   const only = ctx.concept;
 
-  const known = new Set(['id', 'spec', 'title', 'subtitle', 'audience', 'site', 'storyline', 'glossary', 'domains', 'concepts', 'annexes']);
-  for (const k of Object.keys(cy)) if (!known.has(k)) bad(cy, k, `unknown field "${k}"`);
-
-  // identity
-  if (!isStr(cy.id) || !SLUG.test(cy.id)) bad(cy, 'id', 'id must be lowercase ASCII words joined by hyphens');
-  else if (cy.id !== path.basename(ctx.root)) bad(cy, 'id', `id "${cy.id}" must equal the course folder name "${path.basename(ctx.root)}"`);
-  if (!isStr(cy.spec)) bad(cy, 'spec', 'spec is mandatory: linear-course@<MAJOR>');
-  else if (!/^linear-course@\d+$/.test(cy.spec)) bad(cy, 'spec', `spec "${cy.spec}" must be linear-course@<MAJOR>`);
   // the lexicon of the course files, the course/lexicon.yaml of the spec MAJOR (or --lexicon):
   // a tooling error, not a rule of the course
   if (ctx.lexiconError) out.push(fail(ctx.lexiconFile || 'course/lexicon.yaml', ctx.lexiconError.line, `tooling error, not a defect of the course: the spec's lexicon is missing or unreadable (${ctx.lexiconError.message}); see course/README.md section 7`));
-  for (const k of ['title', 'audience']) if (!isStr(cy[k])) bad(cy, k, `${k} is mandatory`, 1);
-  if (cy.subtitle !== undefined && !isStr(cy.subtitle)) bad(cy, 'subtitle', 'subtitle must be a non-empty string');
-  if (cy.site !== undefined) {
-    const s = cy.site;
-    if (s === null || typeof s !== 'object' || Array.isArray(s)) bad(cy, 'site', 'site must be a map');
-    else {
-      for (const k of Object.keys(s)) if (!['icon', 'color'].includes(k)) bad(s, k, `unknown field "site.${k}"`);
-      if (s.icon !== undefined && (!isStr(s.icon) || !ctx.exists(s.icon))) bad(s, 'icon', `site.icon "${s.icon}" is not a file of the course`);
-      if (s.color !== undefined && !(typeof s.color === 'string' && /^#[0-9a-fA-F]{6}$/.test(s.color))) bad(s, 'color', 'site.color must be #rrggbb');
+
+  // the fields, their presence and their form: the schema
+  const v = schema(ctx.form);
+  if (!v(cy)) {
+    for (const e of v.errors) {
+      // an anyOf reports each branch, then itself: its own line says it once
+      if (e.schemaPath.includes('/anyOf/')) continue;
+      out.push(fail(F, yaml.lineOfError(cy, e), `not valid against ${schemaFile}: ${e.instancePath || '/'} ${e.message}${e.params && e.params.additionalProperty ? ` ("${e.params.additionalProperty}")` : ''}`));
     }
   }
-  for (const [k, v] of [['storyline', 'storyline.md'], ['glossary', 'glossary.md']]) {
-    if (cy[k] !== v) bad(cy, k, `${k} must be "${v}"`, 1);
-    else if (!ctx.exists(v)) bad(cy, k, `${v} does not exist`);
-  }
 
-  // domains
-  if (!Array.isArray(cy.domains) || cy.domains.length === 0) { bad(cy, 'domains', 'domains must be a non-empty list', 1); }
-  if (!Array.isArray(cy.concepts) || cy.concepts.length === 0) { bad(cy, 'concepts', 'concepts must be a non-empty list', 1); }
+  // what the schema does not say, on the values whose form it accepts
+  if (isStr(cy.id) && ctx.SLUG.test(cy.id) && cy.id !== path.basename(ctx.root)) bad(cy, 'id', `id "${cy.id}" must equal the course folder name "${path.basename(ctx.root)}"`);
+  if (isObj(cy.site) && isStr(cy.site.icon) && !ctx.exists(cy.site.icon)) bad(cy.site, 'icon', `site.icon "${cy.site.icon}" is not a file of the course`);
+  for (const k of ['storyline', 'glossary']) if (isStr(cy[k]) && !ctx.exists(cy[k])) bad(cy, k, `${cy[k]} does not exist`);
   if (!ctx.usable) return out;
 
+  // domains: number in list order, file named by number and slug, and present
   const domainConcepts = [];
   cy.domains.forEach((d, i) => {
+    if (!isObj(d)) return;
     const at = (k, m) => bad(d, k, m, yaml.lineOf(cy.domains, i));
-    if (!d || typeof d !== 'object') { bad(cy.domains, i, `domain ${i + 1} is not a map`); return; }
-    for (const k of Object.keys(d)) if (!['number', 'slug', 'title', 'objective', 'duration_min', 'file', 'concepts'].includes(k)) at(k, `unknown field "${k}" in domain ${i + 1}`);
-    if (d.number !== i + 1) at('number', `domain number must be ${i + 1} (domains are numbered 1, 2, 3... in list order)`);
-    if (!isStr(d.slug) || !SLUG.test(d.slug)) at('slug', `domain ${i + 1}: slug must be lowercase ASCII words joined by hyphens`);
-    for (const k of ['title', 'objective']) if (!isStr(d[k])) at(k, `domain ${i + 1}: ${k} is mandatory`);
-    if (!isPosInt(d.duration_min)) at('duration_min', `domain ${i + 1}: duration_min must be a positive integer`);
-    const want = `domains/${d.number}-${d.slug}.md`;
-    if (d.file !== want) at('file', `domain ${i + 1}: file must be "${want}"`);
-    else if (!ctx.exists(want)) at('file', `domain file ${want} does not exist`);
-    if (!Array.isArray(d.concepts) || d.concepts.length === 0) at('concepts', `domain ${i + 1}: concepts must be a non-empty list of concept numbers`);
-    else {
+    if (Number.isInteger(d.number) && d.number !== i + 1) at('number', `domain number must be ${i + 1} (domains are numbered 1, 2, 3... in list order)`);
+    if (Number.isInteger(d.number) && isStr(d.slug) && typeof d.file === 'string') {
+      const want = `domains/${d.number}-${d.slug}.md`;
+      if (d.file !== want) at('file', `domain ${i + 1}: file must be "${want}"`);
+      else if (!ctx.exists(want)) at('file', `domain file ${want} does not exist`);
+    }
+    if (Array.isArray(d.concepts)) {
       d.concepts.forEach((c, j) => {
         const n = normNumber(c);
-        if (n === null) bad(d.concepts, j, `domain ${i + 1}: bad concept number`);
-        else domainConcepts.push({ n, domain: i + 1, line: yaml.lineOf(d.concepts, j, yaml.lineOf(cy.domains, i)) });
+        if (n !== null && NUMBER.test(n)) domainConcepts.push({ n, domain: i + 1, line: yaml.lineOf(d.concepts, j, yaml.lineOf(cy.domains, i)) });
       });
     }
   });
 
-  // concepts
+  // concepts: numbers unique, dir named by number and slug, and present
   const seen = new Set();
-  const subSeen = new Set();
-  const annexList = [];
   cy.concepts.forEach((c, i) => {
-    const entry = ctx.concepts.find((x) => x.entry === c);
-    const cl = yaml.lineOf(cy.concepts, i);
-    const at = (k, m) => bad(c, k, m, cl);
-    if (!c || typeof c !== 'object') { bad(cy.concepts, i, `concept entry ${i + 1} is not a map`); return; }
-    for (const k of Object.keys(c)) if (!['number', 'slug', 'title', 'objective', 'prerequisites', 'duration_min', 'dir', 'subconcepts'].includes(k)) at(k, `unknown field "${k}" in concept entry ${i + 1}`);
+    if (!isObj(c)) return;
+    const at = (k, m) => bad(c, k, m, yaml.lineOf(cy.concepts, i));
     const number = normNumber(c.number);
-    if (number === null || !NUMBER.test(number)) { at('number', `concept entry ${i + 1}: number must be 0, 1... or A1, A2...`); return; }
+    if (number === null || !NUMBER.test(number)) return;
     const label = `concept ${number}`;
     if (seen.has(number)) at('number', `${label} is listed twice`);
     seen.add(number);
-    if (!isStr(c.slug) || !SLUG.test(c.slug)) at('slug', `${label}: slug must be lowercase ASCII words joined by hyphens`);
-    for (const k of ['title', 'objective']) if (!isStr(c[k])) at(k, `${label}: ${k} is mandatory`);
-    if (c.duration_min !== undefined && !isPosInt(c.duration_min)) at('duration_min', `${label}: duration_min must be a positive integer`);
+    if (!isStr(c.slug) || typeof c.dir !== 'string') return;
     const nn = /^\d+$/.test(number) ? number.padStart(2, '0') : number;
     const want = `concepts/${nn}-${c.slug}`;
     if (c.dir !== want) at('dir', `${label}: dir must be "${want}"`);
     else if ((!only || only === number) && !ctx.isDir(want)) at('dir', `${label}: folder ${want} does not exist`);
-    if (!Array.isArray(c.prerequisites)) at('prerequisites', `${label}: prerequisites is mandatory ([] for none)`);
-    if (entry && entry.annex) annexList.push(number);
-
-    // sub-concept tree
-    if (!Array.isArray(c.subconcepts) || c.subconcepts.length === 0) { at('subconcepts', `${label}: subconcepts must be a non-empty list`); return; }
-    const num = number;
-    c.subconcepts.forEach((s, a) => {
-      const sl = yaml.lineOf(c.subconcepts, a, cl);
-      if (!s || typeof s !== 'object') { bad(c.subconcepts, a, `${label}: sub-concept ${a + 1} is not a map`); return; }
-      const letter = String.fromCharCode(97 + a);
-      const check = (node, want2, level, l) => {
-        for (const k of Object.keys(node)) if (!['id', 'title', 'children'].includes(k)) bad(node, k, `unknown field "${k}" in sub-concept`, l);
-        const id = normNumber(node.id);
-        if (id !== want2) bad(node, 'id', `${label}: sub-concept id must be "${want2}", found "${node.id}"`, l);
-        if (id) { if (subSeen.has(id)) bad(node, 'id', `sub-concept id "${id}" is not unique`, l); subSeen.add(id); }
-        if (!isStr(node.title)) bad(node, 'title', `${label}: sub-concept ${want2} has no title`, l);
-        const kids = node.children;
-        if (kids !== undefined) {
-          if (!Array.isArray(kids) || kids.length === 0) bad(node, 'children', `${label}: children of ${want2} must be a non-empty list`, l);
-          else if (level === 2) bad(node, 'children', `${label}: the sub-concept tree has two levels at most (${want2} has children)`, l);
-          else kids.forEach((k, b) => {
-            if (b === MAX_CHILDREN) bad(kids, b, `${label}: ${want2} has ${kids.length} children, ${MAX_CHILDREN} at most (a child id ends in one digit)`, l);
-            if (!k || typeof k !== 'object') bad(kids, b, `${label}: bad sub-concept under ${want2}`, l);
-            else check(k, want2 + (b + 1), 2, yaml.lineOf(kids, b, l));
-          });
-        }
-      };
-      check(s, num + letter, 1, sl);
-    });
   });
 
   // every folder of concepts/ is the dir of a concept; under --concept, only that concept's

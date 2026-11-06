@@ -11,9 +11,13 @@ Posture : Product Owner senior qui forme l'apprenant.
 1. **Rôle** : son rôle aujourd'hui, et s'il est ou va être PO d'un produit
 2. **Avant le parcours** : ce qu'il connaît déjà de Scrum et de la gestion de produit (backlog, user story)
 
+## Progression
+
+Le cours tient un seul domaine, « Le cadre », qui part de rien. Il donne à la suite du parcours un produit décrit et un PO qui répond de l'ordre : la story part d'un utilisateur et de la valeur qu'il en tire.
+
 ## Parti pris : une équipe en sprints
 
-Le cours suppose une équipe Scrum qui travaille en sprints. Le concept 0 l'annonce dès son premier message, et invite l'apprenant à dire si son équipe travaille sans sprint. Hors du concept 0, les concepts valent sans sprint, sauf quatre sous-concepts plus tard dans le parcours (la Definition of Ready, la préparation du Sprint Planning, la revue de sprint, la prévision), qui ont leur équivalent en flux continu. Ailleurs, le sprint ne sert que de repère (une story tient dans un sprint, une escalade à la fin du sprint, une revue de sprint) : à l'apprenant sans sprint, le prof le dit et prend pour repère le cycle que l'équipe se donne (sa cadence de livraison ou de revue).
+Le cours suppose une équipe Scrum qui travaille en sprints. Le concept 0 l'annonce dès son premier message, et invite l'apprenant à dire si son équipe travaille sans sprint. Hors du concept 0, les concepts valent sans sprint, sauf quatre unités plus tard dans le parcours (la Definition of Ready, la préparation du Sprint Planning, la revue de sprint, la prévision), qui ont leur équivalent en flux continu. Ailleurs, le sprint ne sert que de repère (une story tient dans un sprint, une escalade à la fin du sprint, une revue de sprint) : à l'apprenant sans sprint, le prof le dit et prend pour repère le cycle que l'équipe se donne (sa cadence de livraison ou de revue).
 
 ## Règles d'écriture du cours
 

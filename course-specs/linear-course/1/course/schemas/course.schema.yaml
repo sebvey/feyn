@@ -1,11 +1,15 @@
-# The fields of course.yaml, to which course/README.md section 2 points: those of the course, of a
-# domain entry, of a concept entry and of a sub-concept node, their presence and their form. What
-# the schema does not say (unique numbers, course order, the partition into domains, paths that
-# exist) is a rule of course/rules.yaml, verified by course-yaml.
+# The fields of course.yaml, to which course/README.md section 2 and `course_map` of
+# course/form.yaml point: those of the course, of a domain entry and of a concept entry, their
+# presence and their form. course.yaml is the map, nothing below a concept: the tree of a concept
+# is the headings of its concept.md (section 3; decision course-map-and-concept-tree); nor whom
+# the course is for, which « Public cible » of plan.md says. course-yaml validates course.yaml
+# against this schema through Ajv2020. What the schema does not say (unique numbers, course order, the
+# partition into domains, paths that exist) is a rule of course/rules.yaml, verified by
+# course-yaml.
 $schema: https://json-schema.org/draft/2020-12/schema
 title: course.yaml
 type: object
-required: [id, spec, title, audience, storyline, glossary, domains, concepts]
+required: [id, spec, title, storyline, glossary, domains, concepts]
 additionalProperties: false
 properties:
   id:
@@ -20,9 +24,6 @@ properties:
     $ref: '#/$defs/text'
   subtitle:
     description: one line under the title on the site
-    $ref: '#/$defs/text'
-  audience:
-    description: one sentence for the site home and previews
     $ref: '#/$defs/text'
   site:
     description: the course's look on the site; omitted keys take the site's defaults
@@ -113,7 +114,7 @@ $defs:
           $ref: '#/$defs/concept-number'
   concept:
     type: object
-    required: [number, slug, title, objective, prerequisites, dir, subconcepts]
+    required: [number, slug, title, objective, prerequisites, dir]
     additionalProperties: false
     properties:
       number:
@@ -137,39 +138,3 @@ $defs:
         description: "concepts/<NN>-<slug>, NN the number on two digits; an annex keeps its number"
         type: string
         pattern: '^concepts/(\d{2,}|A\d+)-[a-z0-9]+(-[a-z0-9]+)*$'
-      subconcepts:
-        description: the concept's sub-concept tree, non-empty
-        type: array
-        minItems: 1
-        items:
-          $ref: '#/$defs/subconcept'
-  subconcept:
-    description: a first-level node, the concept number and a letter (9a, A2a)
-    type: object
-    required: [id, title]
-    additionalProperties: false
-    properties:
-      id:
-        type: string
-        pattern: '^(\d+|A\d+)[a-z]$'
-      title:
-        description: the sub-concept title, as its heading in concept.md writes it
-        $ref: '#/$defs/text'
-      children:
-        description: second-level nodes, 9 at most; the tree has two levels at most
-        type: array
-        minItems: 1
-        maxItems: 9
-        items:
-          $ref: '#/$defs/child'
-  child:
-    description: a second-level node, its parent's id and a digit (9a1)
-    type: object
-    required: [id, title]
-    additionalProperties: false
-    properties:
-      id:
-        type: string
-        pattern: '^(\d+|A\d+)[a-z][1-9]$'
-      title:
-        $ref: '#/$defs/text'

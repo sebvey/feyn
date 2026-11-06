@@ -12,10 +12,7 @@
 //   fixtures/valid                 passes every check, and every check of method test runs
 //   fixtures/lexicon.yaml          the lexicon of every run (--lexicon), with the values of the
 //                                  spec's own course/lexicon.yaml
-//   fixtures/lexicon-no-anaphora.yaml
-//                                  a lexicon without checks.anaphora: domain-first-sentence-standalone
-//                                  (reports) fails alone, exit code 0; a lexicon that does not
-//                                  exist fails course-yaml, exit code 1
+//   a lexicon that does not exist  fails course-yaml as a tooling error, exit code 1
 //   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>", optional "lexicon: <path>":
 //                                  that check fails with a line containing the fragment, no other
 //                                  check fails beside it, and the exit code is 1 when it blocks,
@@ -105,21 +102,6 @@ const runIds = (cats) => RUN.filter((c) => !cats || cats.includes(c.category)).m
     s === `${SUMMARY}${RUN.filter((c) => c.severity === 'blocks').length} blocking checks, 0 failed; ${RUN.filter((c) => c.severity === 'reports').length} reporting checks, 0 failed; exit 0`, s);
 }
 
-// a reporting failure alone: a lexicon without checks.anaphora is consumable; the reporting
-// domain-first-sentence-standalone says so, and the exit code stays 0
-{
-  const lexicon = path.join(fx, 'lexicon-no-anaphora.yaml');
-  const r = run(path.join(fx, 'valid'), ['--lexicon', lexicon]);
-  const f = failing(r);
-  report('lexicon-no-anaphora fails domain-first-sentence-standalone (reports) alone, exit code 0',
-    SEVERITY['domain-first-sentence-standalone'] === 'reports' && r.code === 0 && f.length === 1 && f[0].startsWith('domain-first-sentence-standalone: fail: ') && f[0].includes('no checks.anaphora')
-      && r.lines[r.lines.length - 1].includes('1 failed (domain-first-sentence-standalone); exit 0'), notOk(r));
-  // a blocking failure beside a reporting one: exit code 1
-  const b = run(path.join(fx, 'broken', 'course-files'), ['--lexicon', lexicon]);
-  report('broken/course-files with lexicon-no-anaphora: a blocking and a reporting failure, exit code 1',
-    b.code === 1 && failing(b).some((l) => l.startsWith('course-files: fail: ')) && failing(b).some((l) => l.startsWith('domain-first-sentence-standalone: fail: ')), notOk(b));
-}
-
 // a lexicon that does not exist fails course-yaml as a tooling error (no rule), exit code 1
 {
   const r = run(path.join(fx, 'valid'), ['--lexicon', path.join(fx, 'no-such-lexicon.yaml')]);
@@ -149,10 +131,10 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     report(`--category ${cats.join(',')} runs the checks of ${cats.join(', ')} only`, r.code === 0 && ids(r).length > 0 && ids(r).join(',') === runIds(cats), notOk(r) || ids(r).join(','));
   }
   // a blocking failure outside the categories selected is not run: exit code 0
-  const b = run(path.join(fx, 'broken', 'svg-contract'), [...lexicon, '--category', 'writing']);
-  report('broken/svg-contract with --category writing: svg-contract does not run, exit code 0', b.code === 0 && !ids(b).includes('svg-contract'), notOk(b));
-  const c = run(path.join(fx, 'broken', 'svg-contract'), [...lexicon, '--category', 'diagrams']);
-  report('broken/svg-contract with --category diagrams: exit code 1', c.code === 1 && failing(c).some((l) => l.startsWith('svg-contract: fail: ')), notOk(c));
+  const b = run(path.join(fx, 'broken', 'drawing-contract'), [...lexicon, '--category', 'writing']);
+  report('broken/drawing-contract with --category writing: drawing-contract does not run, exit code 0', b.code === 0 && !ids(b).includes('drawing-contract'), notOk(b));
+  const c = run(path.join(fx, 'broken', 'drawing-contract'), [...lexicon, '--category', 'diagrams']);
+  report('broken/drawing-contract with --category diagrams: exit code 1', c.code === 1 && failing(c).some((l) => l.startsWith('drawing-contract: fail: ')), notOk(c));
   const l = spawnSync(process.execPath, [runner, '--list', '--category', 'pedagogy'], { encoding: 'utf8' }).stdout.split('\n').filter(Boolean).map((x) => x.split(/\s+/)[0]);
   report('--list --category pedagogy lists the pedagogy checks only', l.join(',') === LIST.filter((x) => x.category === 'pedagogy').map((x) => x.id).join(','), l.join(','));
   const SPEC_NAME = 'spec';

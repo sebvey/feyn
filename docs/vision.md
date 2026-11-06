@@ -8,6 +8,8 @@ feyn makes two products from one source, a course:
 - a **teacher**, which teaches the course to a learner in a teaching session in Claude Code;
 - a **site**, which publishes the course for the reader.
 
+A third build of the same source, the course-creator, comes later: it leads a creator along the creation path of a course, from its frame down to the teaching unit, each step producing one file or one block and proving itself at once (decision `one-source-two-builds`).
+
 The spec, its checks and the agentic layer are worth what they bring to the two products: a spec that no product consumes is premature. Several courses, other contributors and several learners come after, and are judged the same way.
 
 ## The yardstick
@@ -19,7 +21,7 @@ A change of `linear-course` counts when the bench course `courses/po-essai/` (tw
 feyn was rebuilt from a first project that worked: `parcours-po`, a course of 18 concepts and 2 annexes taught in Claude Code, and its site `parcours-po-website`. Three of its couplings are what feyn is built against:
 - The site was a copy of the course rewritten by hand and kept in line by sha256 stamps: five re-alignments in two days.
 - The teacher was one `CLAUDE.md` of 257 lines, the generic protocol mixed with the course's specifics (its site address, its storyline, its file names): a second course would have copied it.
-- In feyn itself, concept 9 of `parcours-po` wrote the matter of one leaf three times: the reader section of its `concept.md`, the « Explication » of its first case and its instruction (epic #475).
+- In feyn itself, concept 9 of `parcours-po` wrote the matter of one unit three times: the reader section of its `concept.md`, the « Explication » of its first case and its instruction (epic #475).
 
 Hence three lessons:
 - **A thing is written once**, in the file of the reader who needs it first; every other reader is served from there (decision `one-source-two-builds`).

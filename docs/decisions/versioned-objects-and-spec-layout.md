@@ -11,7 +11,7 @@ Three objects are versioned, a course, a spec and the spec directives, in semver
 
 | Object | MAJOR | MINOR | PATCH |
 |---|---|---|---|
-| course `courses/<id>/` | identifiers change (concept and sub-concept numbers, case titles that learner memory cites), or the spec MAJOR changes | what is taught changes (case, sub-concept, stance, duration) | wording |
+| course `courses/<id>/` | identifiers change (concept numbers, section and unit ids, case titles that learner memory cites), or the spec MAJOR changes | what is taught changes (case, unit, stance, duration) | wording |
 | spec `course-specs/<name>/` | the structure changes (files, fields, mandatory sections); a requirement added or made stricter; an optional field made mandatory; a recommendation made a requirement | an optional element; a protocol rule added, changed or renamed (the old slug is burnt); a requirement made looser or made a recommendation; a recommendation added or made stricter; a lexicon key added or renamed | wording; a false positive lifted |
 | spec directives `spec-directives/` | a rule file that validated stops validating (a field made mandatory, a closed list narrowed) | a field, a level or a method added | wording |
 

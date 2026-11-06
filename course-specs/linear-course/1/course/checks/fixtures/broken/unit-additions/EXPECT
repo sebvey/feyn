@@ -1,0 +1,2 @@
+check: unit-additions
+message: unit 0a2: « Matière » puts "fait" in bold, which is no term of glossary.md

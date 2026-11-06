@@ -1,0 +1,2 @@
+check: drawing-contract
+message: must not have a width attribute

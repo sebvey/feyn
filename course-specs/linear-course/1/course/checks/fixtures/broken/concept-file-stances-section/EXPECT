@@ -1,0 +1,2 @@
+check: concept-file
+message: is not a `concept.md` section

@@ -1,2 +1,0 @@
-check: course-yaml
-message: course.yaml:42 unknown field "messages" in sub-concept

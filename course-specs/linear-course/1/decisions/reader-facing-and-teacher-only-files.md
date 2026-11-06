@@ -1,7 +1,8 @@
 ---
 date: 2026-10-27
 issue: 27
-status: accepted
+status: superseded
+superseded-by: unit-is-the-content-unit
 area: spec:linear-course
 ---
 

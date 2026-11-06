@@ -1,8 +1,10 @@
 'use strict';
 // A term of the course glossary is used after its defining concept (rule
 // glossary-term-after-defining-concept, course/README.md section 5):
-// every use in a concept.md, body and frontmatter, before the defining concept fails, unless its
-// sentence carries a concept reference to that concept. Each comma variant of the term cell is
+// every use in a concept.md, in the parts of its body the learner reads (course/form.yaml, readers:
+// every field but the instruction, the head and the foot but its instruction) and in its
+// frontmatter, before the defining concept fails, unless its sentence carries a concept reference
+// to that concept. Each comma variant of the term cell is
 // matched, whole word, case ignored; a row whose term cell has a parenthesis (a sense
 // qualifier) is skipped.
 const directives = require('./directives');
@@ -52,7 +54,7 @@ function sentences(pieces) {
   return out.map((s) => ({ text: s.text, at: (off) => lineAt(s.base + off) }));
 }
 
-// the sentences of a concept.md body
+// the sentences of a concept.md body (the lines no learner reads blanked)
 function bodySentences(body) {
   const out = [];
   let block = [];
@@ -119,7 +121,8 @@ function run(ctx) {
     const later = terms.filter((t) => t.def.index > c.index);
     if (!later.length) continue;
     const seen = new Set();
-    for (const s of [...frontSentences(m.data), ...bodySentences(m.body)]) {
+    // the parts of the body the learner reads (course/form.yaml, readers), the instruction left out
+    for (const s of [...frontSentences(m.data), ...bodySentences(ctx.parts(c).heard)]) {
       const named = new Set(parse ? parse(s.text).flatMap((r) => r.ids.map((id) => refs.conceptOf(ctx, id, r.annex))).filter(Boolean) : []);
       for (const t of later) {
         if (named.has(t.def)) continue;

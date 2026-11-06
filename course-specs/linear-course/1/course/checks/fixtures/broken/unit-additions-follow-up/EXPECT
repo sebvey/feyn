@@ -1,0 +1,2 @@
+check: unit-additions
+message: unit 0a1: « Idées fausses » puts "répond" in bold, which is no term of glossary.md

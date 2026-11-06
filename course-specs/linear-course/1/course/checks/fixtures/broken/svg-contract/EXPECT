@@ -1,2 +1,0 @@
-check: svg-contract
-message: fill="#ff0000": only currentColor or none
