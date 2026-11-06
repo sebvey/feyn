@@ -21,7 +21,7 @@ A change of `linear-course` counts when the bench course `courses/po-essai/` (tw
 feyn was rebuilt from a first project that worked: `parcours-po`, a course of 18 concepts and 2 annexes taught in Claude Code, and its site `parcours-po-website`. Three of its couplings are what feyn is built against:
 - The site was a copy of the course rewritten by hand and kept in line by sha256 stamps: five re-alignments in two days.
 - The teacher was one `CLAUDE.md` of 257 lines, the generic protocol mixed with the course's specifics (its site address, its storyline, its file names): a second course would have copied it.
-- In feyn itself, concept 9 of `parcours-po` wrote the matter of one leaf three times: the reader section of its `concept.md`, the « Explication » of its first case and its instruction (epic #475).
+- In feyn itself, concept 9 of `parcours-po` wrote the matter of one unit three times: the reader section of its `concept.md`, the « Explication » of its first case and its instruction (epic #475).
 
 Hence three lessons:
 - **A thing is written once**, in the file of the reader who needs it first; every other reader is served from there (decision `one-source-two-builds`).

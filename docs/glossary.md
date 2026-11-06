@@ -154,7 +154,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the file `domains/<n>-<slug>.md` of a course, the entry of a domain: the problem the domain solves and a situation of the **storyline** that crosses it; the thread of its concepts is composed from the course map, not written
 - en: domain file
 - fr: « fichier de domaine » · rejected: « fiche »
-- not to confuse with: [domain](#domain), [concept folder](#concept-folder), [progression](#progression)
+- not to confuse with: [domain](#domain), [concept folder](#concept-folder), [progression](#progression), [concept file](#concept-file)
 
 ### progression
 
@@ -204,7 +204,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the teaching unit, the unit of a course's content: one teacher message, one leaf of a concept's tree (`0a1`), written once as one block of labelled fields: its **matter**, its **anchor**, its question, its expected answer, its **misconceptions**, its **landmarks**, its **instruction**, then its supplementary cases. A **section** without units is itself a unit
 - en: unit · rejected: "leaf sub-concept", "sub-concept", "leaf", "lesson"
 - fr: « unité » · rejected: « sous-concept feuille », « sous-concept », « feuille »
-- not to confuse with: [section](#section), [concept](#concept), [case](#case)
+- not to confuse with: [section](#section), [concept](#concept), [case](#case), [head and foot](#head-and-foot)
 - why: the leaf was the partition every file already followed without naming it, one teacher message each; "sub-concept" named a node of a tree whatever its level, and "leaf" only its place in that tree, not what it is for
 
 ### section
@@ -212,7 +212,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: of a concept, a group of **units** under one heading (`0a`), its id the concept number and a letter; a section of one unit is that unit. A section of a document (a heading and its text, « section 3 » of a README) keeps its everyday sense
 - en: section · rejected: "sub-concept", "first-level sub-concept", "node"
 - fr: « section » · rejected: « sous-concept »
-- not to confuse with: [unit](#unit), [head and foot](#head-and-foot)
+- not to confuse with: [unit](#unit), [head and foot](#head-and-foot), [concept](#concept)
 - why: two levels of ids, the section and its units, cut a concept once the leaf is a message; "sub-concept" named both levels
 
 ### head and foot
@@ -224,7 +224,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### objective
 
-- means: what the learner can do after the concept, in one sentence. One term for the current « Objectif » and « À la fin, l'apprenant sait »
+- means: what the learner can do after the concept, in one sentence. One term for « Objectif » and « À la fin, l'apprenant sait »
 - en: objective · rejected: "goal", "outcome", "aim"
 - fr: « objectif »
 
@@ -233,7 +233,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the field of a unit that says what is true, in the same words for the site reader and the teacher: the explanation the unit teaches; **published**
 - en: matter · rejected: "reader text", "explanation", "body", "content", "copy"
 - fr: « matière » · rejected: « texte lecteur », « explication »
-- not to confuse with: [anchor](#anchor), [instruction](#instruction)
+- not to confuse with: [anchor](#anchor), [instruction](#instruction), [landmark](#landmark)
 - why: the reader text and a case's explanation were two writings of the same matter, one for the site, one for the teacher; one word for the one text
 
 ### anchor
@@ -445,7 +445,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: a rule of the protocol: it binds the teacher and belongs to a family and a group
 - en: protocol rule
 - fr: « règle du protocole »
-- not to confuse with: [rule](#rule), [protocol](#protocol)
+- not to confuse with: [rule](#rule), [protocol](#protocol), [instruction](#instruction)
 
 ### group
 

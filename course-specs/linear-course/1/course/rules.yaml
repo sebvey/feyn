@@ -444,8 +444,9 @@ groups:
           réponse attendue ; dans l'autre sens, son ancrage, ses questions et ses réponses
           attendues, les siens et ceux de ses cas, ne redisent pas sa matière.
         why: >-
-          Sans elle, les douze « Explication » des cas du concept 0 de `po-essai`, dans la forme
-          d'avant les unités, répétaient mot pour mot le texte de son `concept.md`, à 37 à 91 %
+          Sans elle, sur un cours de deux concepts, les douze « Explication » des cas du premier
+          concept, dans la forme d'avant les unités, répétaient mot pour mot le texte de son
+          `concept.md`, à 37 à 91 %
           (epic #475) ; la règle ne vivait que dans le prompt du workflow `course-batch.js`, retiré
           par #625.
       - id: fallback-case-stands-alone
