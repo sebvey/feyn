@@ -28,3 +28,8 @@ L'agence répond à un appel d'offres, et le client vient dans ses locaux pour l
 - Un matin, la tasse de Cédric pique le bout de la langue, n'est pas amère, et ne laisse rien en bouche une seconde après avoir été avalée (0a2).
 - Le lendemain, Cédric trouve sa tasse amère, elle lui râpe la langue et ne pique plus : « du jus de pneu », écrit-il (0a2).
 - Aïmen assure à Cédric que sa tasse est amère parce qu'elle est trop forte, et qu'un peu d'eau chaude versée dedans règle le problème ; cette tasse est noire, épaisse, amère, et elle sèche la langue (0b1).
+- La recette de Cédric : trois cuillères bombées de café moulu moyen, croit-il, l'eau dès que la bouilloire coupe, versée d'un coup ; il ne pèse rien et ne mesure pas le temps (1a1).
+- Un matin, Cédric moud beaucoup plus fin que d'habitude, presque de la farine, et l'eau met longtemps à passer dans le filtre, le temps de relire une PR entière (1b1).
+- Aïmen moud tout son paquet de café le dimanche et le garde au congélateur pour la semaine (1b1).
+- Aïmen assure à Cédric que l'eau doit bouillir et être versée aussitôt, l'eau bouillante étant ce qui extrait le mieux (1b2).
+- Cédric raconte sa recette à Inès, au Petit Noir ; elle lui répond : « Arrête les cuillères. Cinquante-cinq pour mille. » (1b3).
