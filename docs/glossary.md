@@ -257,7 +257,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the second block of a **unit**, « Exercice (teacher seulement) »: its question, then its expected answer, labelled; **unpublished**. The unit's question, always asked, where a supplementary case's is held in stock
 - en: exercise
 - fr: « exercice »
-- not to confuse with: [lesson](#lesson), [case](#case), [practice case](#practice-case), [misconception](#misconception)
+- not to confuse with: [unit](#unit), [lesson](#lesson), [case](#case), [practice case](#practice-case), [misconception](#misconception)
 - why: "exercise" is rejected for the case and the practice case, which hold an anchor and misconceptions besides the question; it names the block that asks
 
 ### misconception

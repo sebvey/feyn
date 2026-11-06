@@ -62,8 +62,8 @@ function checkBlocks(ctx, u, file, out) {
     if (!last || forms.indexOf(b) > forms.indexOf(last)) last = b;
     const bw = `${where}, « ${word(b)} »`;
     if (b.labelled) {
-      checkFields(blk.fields, b.fields.map((k) => ({ field: k, presence: 'mandatory' })), bw, file, out, ctx.word);
       if (!blk.fields.length) out.push(fail(file, blk.line, `${bw}: the block holds its fields, ${b.fields.map((k) => `« ${ctx.word('unit_fields', k) || k} »`).join(', ')}, found none`));
+      else checkFields(blk.fields, b.fields.map((k) => ({ field: k, presence: 'mandatory' })), bw, file, out, ctx.word);
     } else if (b.fields[0] === 'misconceptions') {
       if (!blk.fields[0].items.length) out.push(fail(file, blk.line, `${where}: « ${word(b)} » holds at least one misconception, "- « <the misconception> » : <its correction>"`));
     } else if (!blk.fields[0].lines.length) out.push(fail(file, blk.line, `${where}: block « ${word(b)} » is empty`));
