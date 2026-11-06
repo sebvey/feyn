@@ -2,7 +2,7 @@
 stances:
   consensus:
     - author: "Les baristas sondés par la Barista Guild of America (SCA, 2017)"
-      text: "Un expresso type : 18 à 20 g de café pour environ 36 g de boisson, un ratio d'environ 1 pour 2, en 25 à 30 secondes, sous une pression de 9 bars."
+      text: "Un expresso type : 18 à 20 g de café pour environ 36 g de boisson, une boisson d'environ deux fois le poids du café, en 25 à 30 secondes, sous une pression de 9 bars."
       refs: [S1, S4]
       verified: ["« The average shot of espresso starts with an 18–20 gram dose, has an output of 36.5 grams, is extracted in 25–30 seconds, at 9 bars of pressure » ; « the average barista uses a 1:2 brew ratio when extracting espresso » (What Does This All Mean?)", "« La pression généralement considérée comme optimale pour un expresso est en effet de 9 bars » (Et la pression dans tout ça ?)"]
   school: []
@@ -26,7 +26,7 @@ Une **méthode d'infusion** est la façon dont l'eau rencontre la mouture : la m
 #### Leçon (pour tous)
 
 - **Matière** : Une **méthode d'infusion** est la façon dont l'eau rencontre la mouture. En **immersion**, la mouture trempe dans toute l'eau : c'est le piston, dont on abaisse à la fin le filtre pour presser le marc au fond. Le temps de contact y est long : on y prend une mouture plus grosse, pour ralentir l'extraction et éviter l'amer. En **percolation**, l'eau traverse la mouture et s'écoule : c'est le filtre, dont les repères sont ceux du concept 1 (90 à 96 °C et environ 55 g par litre). La moka aussi : la vapeur y fait monter l'eau très chaude à travers la mouture.
-- **Ancrage** : Aïmen voit le filtre de Cédric et lève les yeux au ciel : « Le filtre, c'est de l'eau qui passe. Le vrai café, c'est au piston : il trempe, il a le temps de donner tout ce qu'il a. Mets ta mouture dedans, tu verras. » Cédric t'écrit : « Je dois racheter une cafetière, ou c'est encore une idée d'Aïmen ? »
+- **Ancrage** : Cédric parle de son filtre à Aïmen, qui lève les yeux au ciel : « Le filtre, c'est de l'eau qui passe. Le vrai café, c'est au piston : il trempe, il a le temps de donner tout ce qu'il a. Mets ta mouture dedans, tu verras. » Cédric t'écrit : « Je dois racheter une cafetière, ou c'est encore une idée d'Aïmen ? »
 
 #### Exercice (teacher seulement)
 
@@ -43,7 +43,7 @@ Une **méthode d'infusion** est la façon dont l'eau rencontre la mouture : la m
 
 #### Leçon (pour tous)
 
-- **Matière** : L'**expresso** force l'eau sous forte pression à travers une mouture très fine, en une trentaine de secondes : autour de 9 bars, 25 à 30 secondes, 18 à 20 g de café pour environ 36 g de boisson, un ratio d'environ 1 pour 2 [consensus]. Par rapport au filtre, il change trois réglages : une mouture bien plus fine, un temps de contact très court, beaucoup plus de café pour l'eau, d'où une tasse petite et très forte ; la température d'infusion reste dans les mêmes repères. Une machine à grains est une machine à expresso qui moud à chaque tasse, avec la saveur du café fraîchement moulu. Une machine à capsules fait aussi des expressos, d'un café moulu et dosé d'avance par le fabricant.
+- **Matière** : L'**expresso** force l'eau sous forte pression à travers une mouture très fine, en une trentaine de secondes : autour de 9 bars, 25 à 30 secondes, 18 à 20 g de café pour environ 36 g de boisson, une boisson d'environ deux fois le poids du café [consensus]. Par rapport au filtre, il change trois réglages : une mouture bien plus fine, un temps de contact très court, beaucoup plus de café pour l'eau, d'où une tasse petite et très forte ; la température d'infusion reste dans les mêmes repères. Une machine à grains est une machine à expresso qui moud à chaque tasse, avec la saveur du café fraîchement moulu. Une machine à capsules fait aussi des expressos, d'un café moulu et dosé d'avance par le fabricant.
 - **Ancrage** : Au bureau, la Pipeline moud, presse la mouture et sort en une trentaine de secondes une petite tasse épaisse. Aïmen : « Chez moi, j'ai une machine à capsules. Même café, et pas de bac à marc pour casser le build. » Cédric t'écrit : « C'est vrai ? Et pourquoi la tasse de la Pipeline n'a rien à voir avec celle de mon filtre ? »
 
 #### Exercice (teacher seulement)
@@ -59,4 +59,4 @@ Une **méthode d'infusion** est la façon dont l'eau rencontre la mouture : la m
 
 #### Consigne (teacher seulement)
 
-Situer chaque méthode par ce qu'elle change aux quatre réglages, sans la classer : aucune n'est meilleure, et c'est le goût de celui qui boit qui décide, le parti pris du cours. Ne donner aucun réglage de la Pipeline : la storyline dit que personne ne les connaît. Le repère de l'expresso se dit comme celui du filtre, un point de départ de la profession.
+Situer chaque méthode par ce qu'elle change aux quatre réglages, sans la classer : aucune n'est meilleure, et c'est le goût de celui qui boit qui décide, le parti pris du cours. Ne donner aucun réglage chiffré de la Pipeline au-delà de ce que Cédric en voit, une trentaine de secondes et une petite tasse : la storyline dit que personne ne connaît ses réglages. Le repère de l'expresso se dit comme celui du filtre, un point de départ de la profession.
