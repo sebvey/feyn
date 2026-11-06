@@ -13,7 +13,7 @@ stances:
     - text: "Aucun choix d'école dans ce concept : tout ce qu'il enseigne vient du Scrum Guide ou du cours."
       refs: []
   course:
-    - text: "Une équipe Scrum qui travaille en sprints : le cours le suppose. Ce n'est ni du consensus ni un choix d'école. Plus tard dans le parcours, quatre sous-concepts (la Definition of Ready, la préparation du Sprint Planning, la revue de sprint, la prévision) ont leur équivalent pour le travail sans sprint."
+    - text: "Une équipe Scrum qui travaille en sprints : le cours le suppose. Ce n'est ni du consensus ni un choix d'école. Plus tard dans le parcours, quatre unités (la Definition of Ready, la préparation du Sprint Planning, la revue de sprint, la prévision) ont leur équivalent pour le travail sans sprint."
       refs: []
     - text: "Le réflexe : « si on décidait de le livrer maintenant, un utilisateur pourrait-il s'en servir, et la DoD est-elle remplie ? ». Le Guide exige un incrément utilisable et conforme à la DoD ; il n'exige pas qu'il soit livré."
       refs: ["S1"]
@@ -38,7 +38,7 @@ diagrams:
 
 Scrum est un cadre de travail léger, défini par le Scrum Guide (Schwaber et Sutherland, 2020). Une équipe y tient trois **responsabilités** (Product Owner, Scrum Master, Developers), travaille en **sprints** d'un mois au plus, sans pause entre eux, qui contiennent quatre **événements**, et s'appuie sur trois **artefacts**, chacun avec son **engagement**. Un point à ne pas rater : le sprint est une **durée** ; l'**incrément** est le produit dans un nouvel état utilisable, qui remplit la DoD et peut être livré avant la fin du sprint. Qui les confond « livre un sprint » et attend sa fin pour livrer.
 
-Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du cours vaut aussi sans sprint ; seuls quatre sous-concepts, plus tard dans le parcours, font exception, avec leur équivalent en flux continu : la Definition of Ready, la préparation du Sprint Planning, la revue de sprint et la prévision.
+Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du cours vaut aussi sans sprint ; seuls quatre unités, plus tard dans le parcours, font exception, avec leur équivalent en flux continu : la Definition of Ready, la préparation du Sprint Planning, la revue de sprint et la prévision.
 
 ## 0a Trois responsabilités
 
