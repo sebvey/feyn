@@ -97,11 +97,12 @@ unit:
       presence: optional
       published: false
       readers: [teacher]
-  # the length of a unit: the lines of these fields, each line of text wrapped at `wrap`
-  # characters; above `max`, unit-length reports it (a signal, not an error)
+  # the length of a unit: the text of these fields, counted in lines of `line` characters (its
+  # characters, label and indentation left out, divided by `line`); above `max`, unit-length
+  # reports it (a signal, not an error)
   length:
     fields: [matter, anchor, question]
-    wrap: 100
+    line: 100
     max: 12
 
 # A supplementary case of a unit: a #### heading inside the unit, `#### <title> (<qualifier>)`, the

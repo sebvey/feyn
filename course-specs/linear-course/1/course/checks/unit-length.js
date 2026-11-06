@@ -1,21 +1,25 @@
 'use strict';
-// The length of a unit (course/README.md section 3.3), a reporting check: the lines of the fields
-// that `length` of `unit` in course/form.yaml names (« Matière », « Ancrage », « Question »), each
-// line of text wrapped at `wrap` characters, counted per unit; a unit above `max` is reported, a
-// signal that it may not hold in one teacher message, not an error. Its fields are read as
-// unit-contract reads them (lib/course.js); a unit whose fields are unreadable is unit-contract's.
+// The length of a unit (course/README.md section 3.3), a reporting check: the text of the fields
+// that `length` of `unit` in course/form.yaml names (« Matière », « Ancrage », « Question »),
+// counted in lines of `line` characters (the characters of the text, label and indentation left
+// out, divided by `line`), per unit; a unit above `max` is reported, a signal that it may not hold
+// in one teacher message, not an error. Its fields are read as unit-contract reads them
+// (lib/course.js); a unit whose fields are unreadable is unit-contract's.
 const directives = require('./directives');
 const { fail } = directives.lib('course');
 
-// the lines of a field once wrapped: its text after the label, then each of its following lines
-function wrapped(f, wrap) {
-  const texts = [f.text, ...f.lines.slice(1).map((l) => l.t.trim())].filter((t) => t !== '');
-  return texts.reduce((n, t) => n + Math.max(1, Math.ceil([...t].length / wrap)), 0);
+// the characters of a field: its text after the label, then each of its following lines, trimmed
+function chars(f) {
+  return [f.text, ...f.lines.slice(1).map((l) => l.t.trim())].reduce((n, t) => n + [...t].length, 0);
 }
 
+// [{ unit, lines }] for each unit of a concept, lines rounded to one decimal
 function lengths(ctx, c) {
   const L = ctx.form.unit.length;
-  return ctx.parts(c).units.map((u) => ({ unit: u, lines: u.fields.filter((f) => L.fields.includes(f.key)).reduce((n, f) => n + wrapped(f, L.wrap), 0) }));
+  return ctx.parts(c).units.map((u) => {
+    const n = u.fields.filter((f) => L.fields.includes(f.key)).reduce((s, f) => s + chars(f), 0);
+    return { unit: u, lines: Math.round((n / L.line) * 10) / 10 };
+  });
 }
 
 function run(ctx) {
@@ -28,7 +32,7 @@ function run(ctx) {
   for (const c of ctx.selected()) {
     if (!c.dir || !ctx.md(c.dir + '/concept.md')) continue;
     for (const { unit, lines } of lengths(ctx, c)) {
-      if (lines > L.max) out.push(fail(c.dir + '/concept.md', unit.line, `unit ${unit.sub.id}: ${lines} lines of ${names}, each line wrapped at ${L.wrap} characters, above ${L.max}: a unit holds in one teacher message`));
+      if (lines > L.max) out.push(fail(c.dir + '/concept.md', unit.line, `unit ${unit.sub.id}: ${lines} lines of ${L.line} characters in ${names}, above ${L.max}: a unit holds in one teacher message`));
     }
   }
   return out;

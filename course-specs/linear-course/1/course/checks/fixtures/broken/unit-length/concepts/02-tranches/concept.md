@@ -19,25 +19,29 @@ Une tranche traverse toutes les couches.
 
 - **Matière** : Une tranche traverse toutes les couches (concept 1).
 
-  Une tranche 1 traverse les couches.
+  La tranche 1 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 
-  Une tranche 2 traverse les couches.
+  La tranche 2 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 
-  Une tranche 3 traverse les couches.
+  La tranche 3 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 
-  Une tranche 4 traverse les couches.
+  La tranche 4 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 
-  Une tranche 5 traverse les couches.
+  La tranche 5 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 
-  Une tranche 6 traverse les couches.
+  La tranche 6 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 
-  Une tranche 7 traverse les couches.
+  La tranche 7 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 
-  Une tranche 8 traverse les couches.
+  La tranche 8 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 
-  Une tranche 9 traverse les couches.
+  La tranche 9 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 
-  Une tranche 10 traverse les couches.
+  La tranche 10 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
+
+  La tranche 11 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
+
+  La tranche 12 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.

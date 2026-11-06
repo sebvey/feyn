@@ -413,7 +413,7 @@ groups:
         check: unit-length
         text: >-
           Il convient qu'une unité tienne en 12 lignes au plus de « Matière », « Ancrage » et
-          « Question », chaque ligne de texte coupée à 100 caractères (`length` de `unit` dans
+          « Question », comptées en lignes de 100 caractères (`length` de `unit` dans
           `course/form.yaml`) : au-delà, elle tient mal en un message.
       - id: unit-field-content
         level: requirement
@@ -719,7 +719,7 @@ groups:
         category: writing
         method: inspection
         text: >-
-          Un fichier de domaine ne doit tenir aucun texte pour le professeur seul : tout son texte
+          Un fichier de domaine ne doit tenir aucun texte que seul le professeur lit : tout son texte
           est pour le lecteur.
       - id: domain-teaches-no-concept
         level: requirement

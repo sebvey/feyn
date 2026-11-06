@@ -1,2 +1,2 @@
 check: unit-length
-message: unit 2a: 13 lines of « Matière », « Ancrage », « Question », each line wrapped at 100 characters, above 12
+message: lines of 100 characters in « Matière », « Ancrage », « Question », above 12

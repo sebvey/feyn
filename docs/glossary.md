@@ -27,8 +27,8 @@ A key with nothing to say is left out, `means`, `en` and `fr` excepted. A reject
 ## Which designation applies where
 
 - `en` in the repository's English files: code, docs, skills, issues, decisions, and the English texts of a spec.
-- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `teacher/README.md`, `teacher/rules.yaml` of `course-specs/linear-course/1/`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Schéma », the heading of the drawing instruction in `teaching.md`, names that section, not a diagram.
-- A course glossary in its course. Each course has its own [course glossary](#course-glossary), which belongs to the course, follows the course's language and applies in that course's files. A word may be reserved in both with two meanings (**epic**); a repository text that speaks of the course's meaning says so ("epic, in the course's sense"). French course files keep their French section headings (« Objectif », « L'essentiel », « Pièges »…); the English terms here are how we talk about them in code, docs and issues.
+- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `teacher/README.md`, `teacher/rules.yaml` of `course-specs/linear-course/1/`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
+- A course glossary in its course. Each course has its own [course glossary](#course-glossary), which belongs to the course, follows the course's language and applies in that course's files. A word may be reserved in both with two meanings (**epic**); a repository text that speaks of the course's meaning says so ("epic, in the course's sense"). French course files keep their French section headings and field labels (« L'essentiel », « Matière », « Repères »…); the English terms here are how we talk about them in code, docs and issues.
 
 ## Adding or changing an entry
 
@@ -58,7 +58,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### course
 
-- means: what one course teaches and how to teach it: its reader-facing files (what it teaches) and its teacher-only files (how to teach it), identified by its **course id**
+- means: what one course teaches and how to teach it, in its course files and its concept files, whose **published** fields say what it teaches and whose **unpublished** fields how to teach it, identified by its **course id**
 - en: course · rejected: "content" (as a noun for the course), "material", "data"
 - fr: « cours »
 - not to confuse with: [course id](#course-id)
@@ -161,14 +161,21 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: a numbered unit of the course (`0`, `1`…, `A1`, `A2`…), whose files are in its **concept folder**
 - en: concept · rejected: "fiche", "lesson", "chapter", "page"
 - fr: « concept » · rejected: « fiche »
-- not to confuse with: [sub-concept](#sub-concept), [numbered concept](#numbered-concept), [annex](#annex), [concept folder](#concept-folder)
+- not to confuse with: [section](#section), [unit](#unit), [numbered concept](#numbered-concept), [annex](#annex), [concept folder](#concept-folder)
 
 ### concept folder
 
-- means: the folder of a concept in its course, holding `concept.md`, `teaching.md`, `sources.md` and its diagrams
+- means: the folder of a concept in its course, holding its **concept file**, `sources.md` and its diagrams
 - en: concept folder
 - fr: « dossier de concept » · rejected: « fiche »
-- not to confuse with: [concept](#concept), [domain file](#domain-file)
+- not to confuse with: [concept](#concept), [concept file](#concept-file), [domain file](#domain-file)
+
+### concept file
+
+- means: `concept.md`, the one file in which a concept is written: its **sections** and their **units**, between a head and a foot (**head and foot**); the site renders its **published** parts, the teacher reads it whole
+- en: concept file · rejected: "teaching notes", "reader text" (two files of the form before it)
+- fr: « fichier de concept »
+- not to confuse with: [concept folder](#concept-folder), [domain file](#domain-file)
 
 ### numbered concept
 
@@ -179,24 +186,33 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### annex
 
-- means: a concept numbered `A1`, `A2`…: it belongs to no domain and comes after the numbered concepts
+- means: a concept numbered `A1`, `A2`…: it belongs to no domain and comes after the numbered concepts; its concept file has the same form, cut into units
 - en: annex · rejected: "appendix", "bonus concept"
 - fr: « annexe »
 - not to confuse with: [numbered concept](#numbered-concept)
 
-### sub-concept
+### unit
 
-- means: a node of a concept's teaching tree (`9a`, `9a1`); a node with no children is a **leaf sub-concept**
-- en: sub-concept · rejected: "section", "step", "unit"
-- fr: « sous-concept »
-- not to confuse with: [concept](#concept), [leaf sub-concept](#leaf-sub-concept)
+- means: the teaching unit, the unit of a course's content: one teacher message, one leaf of a concept's tree (`0a1`), written once as one block of labelled fields: its **matter**, its **anchor**, its question, its expected answer, its **misconceptions**, its **landmarks**, its **instruction**, then its supplementary cases. A **section** without units is itself a unit
+- en: unit · rejected: "leaf sub-concept", "sub-concept", "leaf", "lesson"
+- fr: « unité » · rejected: « sous-concept feuille », « sous-concept », « feuille »
+- not to confuse with: [section](#section), [concept](#concept), [case](#case)
+- why: the leaf was the partition every file already followed without naming it, one teacher message each; "sub-concept" named a node of a tree whatever its level, and "leaf" only its place in that tree, not what it is for
 
-### leaf sub-concept
+### section
 
-- means: a sub-concept with no children: as a rule, one teacher message with one question, and one case in the course path
-- en: leaf sub-concept
-- fr: « sous-concept feuille »
-- not to confuse with: [sub-concept](#sub-concept)
+- means: of a concept, a group of **units** under one heading (`0a`), its id the concept number and a letter; a section of one unit is that unit. A section of a document (a heading and its text, « section 3 » of a README) keeps its everyday sense
+- en: section · rejected: "sub-concept", "first-level sub-concept", "node"
+- fr: « section » · rejected: « sous-concept »
+- not to confuse with: [unit](#unit), [head and foot](#head-and-foot)
+- why: two levels of ids, the section and its units, cut a concept once the leaf is a message; "sub-concept" named both levels
+
+### head and foot
+
+- means: the parts of a **concept file** around its sections: the head, « L'essentiel », the one written summary of the concept; the foot, its landmarks (« Repères »), its deepening (« Approfondissement ») and its instruction (« Consigne »), each optional, the last **unpublished**
+- en: head and foot · rejected: "fixed sections"
+- fr: « tête » et « pied » · rejected: « sections fixes »
+- not to confuse with: [section](#section), [unit](#unit)
 
 ### objective
 
@@ -204,88 +220,109 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - en: objective · rejected: "goal", "outcome", "aim"
 - fr: « objectif »
 
-### reader text
+### matter
 
-- means: the reader-facing explanation of a sub-concept, what the site shows
-- en: reader text · rejected: "body", "content", "copy"
-- fr: « texte lecteur »
-- not to confuse with: [teaching notes](#teaching-notes)
+- means: the field of a unit that says what is true, in the same words for the site reader and the teacher: the explanation the unit teaches; **published**
+- en: matter · rejected: "reader text", "explanation", "body", "content", "copy"
+- fr: « matière » · rejected: « texte lecteur », « explication »
+- not to confuse with: [anchor](#anchor), [instruction](#instruction)
+- why: the reader text and a case's explanation were two writings of the same matter, one for the site, one for the teacher; one word for the one text
 
-### reader-facing
+### anchor
 
-- means: the visibility class of the course files a reader sees: the reader text of a concept, its sources, its diagrams
-- en: reader-facing · rejected: "public" (it describes the repository)
-- fr: « côté lecteur »
-- not to confuse with: [teacher-only](#teacher-only)
+- means: the field of a unit that places its matter in the storyline: a situation, its actors, its facts and who says what, without the answer; **published**
+- en: anchor · rejected: "example", "situation", "storyline callout"
+- fr: « ancrage » · rejected: « exemple », « situation », « fil rouge » (the callout)
+- not to confuse with: [example](#example), [matter](#matter), [storyline](#storyline)
+- why: an anchor does not only illustrate, it anchors the point in the world of the course; "example" names the illustration of a teacher message
 
-### teacher-only
+### misconception
 
-- means: the visibility class of the course files only the teacher reads: the teaching notes
-- en: teacher-only · rejected: "private" (it describes the repository)
-- fr: « professeur seul »
-- not to confuse with: [reader-facing](#reader-facing)
+- means: a frequent wrong answer of a unit, quoted, with its correction and, nested under it, its **follow-ups**; the misconceptions without their follow-ups are **published**, and the site composes from them the « Pièges » of a concept
+- en: misconception · rejected: "common mistake", "pitfall", "frequent error"
+- fr: « idée fausse » · rejected: « erreur fréquente », « piège »
+- not to confuse with: [follow-up](#follow-up)
+- why: the pitfalls of a concept (« Pièges ») were its common mistakes written a second time; one word for what is written once
 
-### teaching notes
+### landmark
 
-- means: the whole of `teaching.md`, the example bank included: the instructions (« Consignes »), the storyline facts used, the example bank, the drawing instruction (« Schéma »)
-- en: teaching notes · rejected: "guide", "notes", "answers"
-- fr: « notes d'enseignement »
-- not to confuse with: [reader text](#reader-text)
+- means: what the learner keeps to recognise or apply a point: a question to ask oneself, a rule of thumb; a field of a unit and a part of the foot of the concept file, **published**
+- en: landmark · rejected: "quick test", "lever", "cue"
+- fr: « repère » · rejected: « test rapide », « levier »
+- not to confuse with: [matter](#matter)
+- why: the quick test was one landmark among others, written three times; "lever" and "cue" name a teacher's means, not what the learner keeps
 
-### example bank
+### instruction
 
-- means: the set of **cases** of a concept, in its teaching notes
-- en: example bank · rejected: "examples", "exercises", "questions"
-- fr: « banque d'exemples », « banque »
-- not to confuse with: [example](#example), [case](#case)
+- means: what the method has proper to a unit, or to a whole concept, for the teacher alone: when to pose a supplementary case, a wording that worked, a cross-reference not to re-teach; a field of a unit and a part of the foot of the concept file, **unpublished**; the order and the split of a concept are its sections and units, never an instruction
+- en: instruction · rejected: "instructions", "teaching notes", "usage", "what works"
+- fr: « consigne » · rejected: « consignes », « usage », « ce qui marche »
+- not to confuse with: [protocol rule](#protocol-rule), [matter](#matter)
+
+### published
+
+- means: of a field or a part of a concept file, rendered by the site build: the matter, the anchor, the misconceptions without their follow-ups, the landmarks, « L'essentiel », the deepening; a property the spec fixes for the field, never written in a course. The build renders the published parts and nothing else
+- en: published · rejected: "reader-facing", "public" (it describes the repository)
+- fr: « publié » · rejected: « côté lecteur »
+- not to confuse with: [unpublished](#unpublished)
+- why: visibility was a property of a file, reader-facing or teacher-only; with one file per concept it is a property of a field
+
+### unpublished
+
+- means: of a field or a part of a concept file, never rendered by the site, read by the teacher: the question, the expected answer, the follow-ups, the instruction, the supplementary cases whole
+- en: unpublished · rejected: "teacher-only", "private" (it describes the repository)
+- fr: « non publié » · rejected: « professeur seul »
+- not to confuse with: [published](#published)
+- why: see **published**; « Non publié », the heading of a course changelog, names that section, not this property
 
 ### case
 
-- means: one entry of the bank: situation, question, expected answer, common mistakes, follow-ups; its title is its id, which learner memory cites. The bank's heading, « Banque d'exemples », keeps its French word: the entries under it are cases, never called examples
-- en: case · rejected: "example", "exercise", "scenario"
-- fr: « cas » · rejected: « exemple »
-- not to confuse with: [example](#example), [practice case](#practice-case), [fallback case](#fallback-case), [aside case](#aside-case), [test scenario](#test-scenario)
+- means: the questioning part of a unit: its question, its expected answer, its misconceptions and their follow-ups, around its anchor. A supplementary case is one more case of a unit, titled and qualified (« rechange », « entraînement », « aparté »), its title its id, which learner memory cites; it is unpublished
+- en: case · rejected: "example", "exercise", "scenario", "example bank" (the set of cases of the form before units)
+- fr: « cas » · rejected: « exemple », « banque d'exemples »
+- not to confuse with: [example](#example), [unit](#unit), [practice case](#practice-case), [fallback case](#fallback-case), [aside case](#aside-case), [test scenario](#test-scenario)
 
 ### practice case
 
-- means: a case qualified « entraînement »: more practice on what a validated concept taught, posed when the learner asks to practise, or unasked at the **resume** to retrieve a concept validated in an earlier session, without re-explaining. The other qualifiers make a **fallback case** and an **aside case**
+- means: a supplementary case qualified « entraînement »: more practice on what a validated concept taught, posed when the learner asks to practise, or unasked at the **resume** to retrieve a concept validated in an earlier session, without re-explaining. The other qualifiers make a **fallback case** and an **aside case**
 - en: practice case · rejected: "dig case", "exercise"
 - fr: « cas d'entraînement »
 - not to confuse with: [deepening](#deepening), [case](#case), [fallback case](#fallback-case), [aside case](#aside-case)
 
 ### fallback case
 
-- means: a case qualified « rechange »: posed when the learner fails the case of a leaf sub-concept, self-contained (its own situation and its own question)
+- means: a supplementary case qualified « rechange »: posed when the learner fails the question of a unit, self-contained (its own anchor and its own question)
 - en: fallback case
 - fr: « cas de rechange »
 - not to confuse with: [case](#case), [practice case](#practice-case), [aside case](#aside-case)
 
 ### aside case
 
-- means: a case qualified « aparté »: for a frequent question outside the course path
+- means: a supplementary case qualified « aparté »: for a frequent question outside the course path
 - en: aside case
 - fr: « aparté »
 - not to confuse with: [case](#case), [practice case](#practice-case), [fallback case](#fallback-case), [course path](#course-path)
 
 ### example
 
-- means: in a teacher message, the illustration that precedes the question (« Exemple »); a case may serve as one, but the heading « Banque d'exemples » names the bank of cases, not a list of examples
+- means: in a teacher message, the illustration that precedes the question (« Exemple : »); the anchor of a unit may serve as one
 - en: example
 - fr: « exemple »
-- not to confuse with: [case](#case), [example bank](#example-bank)
+- not to confuse with: [anchor](#anchor), [case](#case)
 
 ### follow-up
 
-- means: the targeted re-question after a partial or wrong answer; ranked 1 or 2
+- means: the targeted re-question after a partial or wrong answer, nested under the **misconception** it answers; unpublished
 - en: follow-up · rejected: "retry", "hint", "probe"
 - fr: « relance »
+- not to confuse with: [misconception](#misconception)
 
 ### storyline
 
-- means: the running world the cases live in: `storyline.md` of a course
+- means: the running world the anchors and the cases live in: `storyline.md` of a course
 - en: storyline · rejected: "red thread", "thread", "fil rouge", "narrative"
 - fr: « fil rouge »
-- not to confuse with: [course path](#course-path)
+- not to confuse with: [course path](#course-path), [anchor](#anchor)
 
 ### stances
 
@@ -303,7 +340,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### sources
 
-- means: the file `sources.md` of a concept, which traces its reader text: its claims (each with its section, its source, whether it was verified, and its nature: consensus, school, course, or fact, what a source states with no stance), its references, and what stays unverified. A stance or a neighbour is sourced where it is declared: its references, each with the quotation and its place
+- means: the file `sources.md` of a concept, which traces its **published** fields: its claims (each with its section, its source, whether it was verified, and its nature: consensus, school, course, or fact, what a source states with no stance), its references, and what stays unverified. A stance or a neighbour is sourced where it is declared: its references, each with the quotation and its place
 - en: sources · rejected: "bibliography", "citations"
 - fr: « sources » (« affirmations », « références », « fait »)
 - not to confuse with: [concept reference](#concept-reference)
@@ -340,14 +377,14 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### deepening
 
-- means: the optional « Approfondissement » section of `concept.md`: more matter on the concept, sourced like its reader text, built by the site, read by the teacher in an aside on the learner's request; no case relies on it
+- means: the optional « Approfondissement » part of the foot of the concept file: more matter on the concept, sourced like the matter of its units, **published**, read by the teacher in an aside on the learner's request; no unit nor case relies on it
 - en: deepening · rejected: "dig", "reserve"
 - fr: « approfondissement »
 - not to confuse with: [practice case](#practice-case)
 
 ### concept reference
 
-- means: in reader text, the words that name a concept, a sub-concept or an annex: « concept 4 », « concepts 5 et 7b », « annexe A2 »
+- means: in the text of a course, the words that name a concept, a section, a unit or an annex: « concept 4 », « concepts 5 et 7b », « annexe A2 »
 - en: concept reference · rejected: "reference" alone
 - fr: « renvoi » (and nothing else: a pointer to a group or a file is a « lien »)
 - not to confuse with: [sources](#sources) (its references)
@@ -361,7 +398,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### defining concept
 
-- means: the concept of a course glossary row (its fourth column): the concept a learner opens to dig into the term, the one whose reader text teaches it; never a concept that only uses the term or defines it in passing
+- means: the concept of a course glossary row (its fourth column): the concept a learner opens to dig into the term, the one whose matter teaches it; never a concept that only uses the term or defines it in passing
 - en: defining concept · rejected: "introducing concept", "first concept"
 - fr: « concept de définition »
 
@@ -472,7 +509,7 @@ The **spec directives** (`spec-directives/1/README.md`) and, for the categories 
 
 - means: how binding a rule is: **requirement**, **recommendation** or **permission** (ISO/IEC Directives Part 2, clause 7); a field of the rule, never a word parsed from its text: the verb of a rule of the spec matches it, and the field is authoritative
 - en: level · rejected: "priority", "severity"
-- fr: « niveau » (the « premier niveau » of a sub-concept and the level of a heading are not this concept)
+- fr: « niveau » (the level of a heading is not this concept)
 - not to confuse with: [severity](#severity), [concept status](#concept-status)
 
 ### requirement

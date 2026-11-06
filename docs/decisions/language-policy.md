@@ -11,7 +11,7 @@ English everywhere, except what speaks to the learner, to the teacher or to the 
 
 | English | French (for a French spec) |
 |---|---|
-| code, skills, agent workflows, CI workflows, scripts | `concept.md`, `teaching.md`, `sources.md` |
+| code, skills, agent workflows, CI workflows, scripts | `concept.md`, `sources.md` |
 | root `CLAUDE.md`, teacher template | course glossary, storyline, the course's `plan.md` and `CHANGELOG.md` |
 | the spec directives, repository docs, decisions (the spec's `decisions/` included), issues, labels | diagram text, the site's labels |
 | the spec's `CHANGELOG.md`; file and folder names, `course.yaml` keys, the keys of the lexicons, the ids and slugs of the rule files, the keys of `composition.yaml` | what the teacher says, the words of the lexicons (`course/lexicon.yaml`, `teacher/lexicon.yaml`) |

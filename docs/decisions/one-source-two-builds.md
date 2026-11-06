@@ -16,4 +16,4 @@ Every course text the site shows and the teacher teaches comes from a course fil
 ## Consequences
 
 - A text the site needs and the course does not have (a domain page sentence, a caption) is given a place in the spec first, then written in the course.
-- Where these files live is decision `monorepo-feyn`; which of them the site builds is decision `reader-facing-and-teacher-only-files`.
+- Where these files live is decision `monorepo-feyn`; what of them the site builds is decision `unit-is-the-content-unit`.
