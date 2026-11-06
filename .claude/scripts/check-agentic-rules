@@ -1,0 +1,115 @@
+#!/usr/bin/env node
+'use strict';
+// check-agentic-rules [<file>]
+// Checks the form of the file of agentic rules (decision `agentic-rules-file`): under `rules:`, each
+// entry has `id`, `applies-to`, `method`, `text`, `why` and `origin`, each with a value, and no
+// other key but `check`; the ids are slugs and unique; `method` is `review` or `script`; a
+// `script` method names a `check` that exists in `.claude/scripts/`, a `review` method none. With
+// no file, `.claude/reference/agentic-rules.yaml`. Reads the file line by line, in the block form
+// that file uses (one key per line, a `>-` value on the lines below it), with no YAML package.
+// One line per failure; exit 0 when none, 1 on a failure, 2 on a usage error.
+const fs = require('fs');
+const path = require('path');
+
+const NAME = 'check-agentic-rules';
+const ROOT = path.resolve(__dirname, '..', '..');
+const DEFAULT = path.join(ROOT, '.claude', 'reference', 'agentic-rules.yaml');
+const SCRIPTS = path.join(ROOT, '.claude', 'scripts');
+const REQUIRED = ['id', 'applies-to', 'method', 'text', 'why', 'origin'];
+const ALLOWED = [...REQUIRED, 'check'];
+const METHODS = ['review', 'script'];
+
+function usage(code) {
+  const out = code ? console.error : console.log;
+  out(`usage: ${NAME} [<file>]`);
+  out('with no file, .claude/reference/agentic-rules.yaml');
+  process.exit(code);
+}
+function refuse(message) {
+  console.error(`${NAME}: ${message}`);
+  process.exit(2);
+}
+
+const args = process.argv.slice(2);
+for (const a of args) {
+  if (a === '--help' || a === '-h') usage(0);
+  if (a.startsWith('-')) usage(2);
+}
+if (args.length > 1) usage(2);
+const file = args.length ? args[0] : DEFAULT;
+let text;
+try { text = fs.readFileSync(file, 'utf8'); } catch (e) { refuse(`cannot read ${file}`); }
+const shown = path.isAbsolute(file) && file.startsWith(ROOT + path.sep) ? path.relative(ROOT, file) : file;
+const lines = text.replace(/\r\n?/g, '\n').split('\n');
+
+const start = lines.findIndex((l) => /^rules:\s*$/.test(l));
+if (start === -1) refuse(`${shown}: no top-level \`rules:\``);
+
+// The entries: an item `- <key>: …` opens one, a key one level deeper adds to it, a deeper or
+// blank line continues the value of the last key.
+const entries = [];
+const failures = [];
+const fail = (line, what) => failures.push(`${shown}:${line}: ${what}`);
+let itemIndent = null;
+let entry = null;
+let last = null;
+const unquote = (v) => v.replace(/^(["'])(.*)\1$/, '$2').trim();
+for (let i = start + 1; i < lines.length; i++) {
+  const l = lines[i];
+  if (/^\s*(#.*)?$/.test(l)) continue;
+  const indent = l.length - l.trimStart().length;
+  if (indent === 0) { fail(i + 1, 'a line outside `rules:`'); break; }
+  const item = /^(\s*)- ([a-z][a-z-]*):\s*(.*)$/.exec(l);
+  if (item && (itemIndent === null || indent === itemIndent)) {
+    itemIndent = indent;
+    entry = { line: i + 1, keys: new Map() };
+    entries.push(entry);
+    last = { key: item[2], value: unquote(item[3]), line: i + 1 };
+    entry.keys.set(item[2], last);
+    continue;
+  }
+  const key = /^(\s*)([a-z][a-z-]*):\s*(.*)$/.exec(l);
+  if (entry && key && indent === itemIndent + 2) {
+    if (entry.keys.has(key[2])) fail(i + 1, `\`${key[2]}\` twice in one entry`);
+    last = { key: key[2], value: unquote(key[3]), line: i + 1 };
+    entry.keys.set(key[2], last);
+    continue;
+  }
+  if (last && indent > itemIndent + 2) {
+    if (/^[>|][-+]?$/.test(last.value)) last.value = '';
+    last.value = `${last.value} ${l.trim()}`.trim();
+    continue;
+  }
+  fail(i + 1, 'a line that is no entry, key or value of `rules:`');
+}
+
+if (!entries.length) fail(start + 1, 'no entry under `rules:`');
+const ids = new Map();
+for (const e of entries) {
+  const id = e.keys.has('id') ? e.keys.get('id').value : null;
+  const who = id ? `entry "${id}"` : 'an entry';
+  for (const k of REQUIRED) {
+    const v = e.keys.get(k);
+    if (!v) fail(e.line, `${who} has no \`${k}\``);
+    else if (!v.value || /^[>|][-+]?$/.test(v.value)) fail(v.line, `${who}: \`${k}\` has no value`);
+  }
+  for (const [k, v] of e.keys) if (!ALLOWED.includes(k)) fail(v.line, `${who}: \`${k}\` is not a field of an agentic rule`);
+  if (id) {
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(id)) fail(e.keys.get('id').line, `id "${id}" is not a slug`);
+    if (ids.has(id)) fail(e.keys.get('id').line, `id "${id}" already at line ${ids.get(id)}`);
+    else ids.set(id, e.keys.get('id').line);
+  }
+  const method = e.keys.has('method') ? e.keys.get('method').value : null;
+  const check = e.keys.get('check');
+  if (method && !METHODS.includes(method)) fail(e.keys.get('method').line, `${who}: method "${method}", not ${METHODS.join(' or ')}`);
+  if (method === 'script') {
+    if (!check || !check.value) fail(e.keys.get('method').line, `${who}: method script with no \`check\``);
+    else if (!/^[a-z0-9-]+$/.test(check.value) || !fs.existsSync(path.join(SCRIPTS, check.value))) {
+      fail(check.line, `${who}: check "${check.value}": no .claude/scripts/${check.value}`);
+    }
+  } else if (method === 'review' && check) fail(check.line, `${who}: method review with a \`check\``);
+}
+
+for (const f of failures) console.log(`${NAME}: fail: ${f}`);
+if (failures.length) process.exit(1);
+console.log(`${NAME}: ok (${entries.length} rules)`);
