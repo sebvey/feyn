@@ -40,3 +40,6 @@ L'agence répond à un appel d'offres, et le client vient dans ses locaux pour l
 - Un jeudi, Cédric revient à sa recette pesée et ne change que la mouture, plus grosse d'un cran ; sa tasse ne racle plus, pique un peu, ne laisse rien en bouche une fois avalée, et ne pèse pas grand-chose (2b1).
 - Le jour de la soutenance, la Pipeline tombe en panne ; Cédric fait le café du client à la main, avec le moulin qu'il a apporté de chez lui et sa recette du matin (2b2).
 - Le client redemande une tasse du café de Cédric, et Aïmen lui glisse : « Je vous l'avais dit, le meilleur café de Lyon. » (2b2).
+- Aïmen trouve que le filtre, « c'est de l'eau qui passe » : pour lui, le vrai café se fait au piston, où il a le temps de donner tout ce qu'il a (A1a1).
+- La Pipeline moud, presse la mouture et sort en une trentaine de secondes une petite tasse épaisse (A1a2).
+- Aïmen a chez lui une machine à capsules, dont il assure qu'elle fait le même café que la Pipeline (A1a2).
