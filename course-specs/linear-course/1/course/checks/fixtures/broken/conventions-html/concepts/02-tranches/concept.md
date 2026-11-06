@@ -1,5 +1,4 @@
 ---
-description: "Découper un besoin."
 stances:
   consensus:
     - author: "Le Scrum Guide 2020"
@@ -12,26 +11,20 @@ stances:
       refs: []
 ---
 
-## Objectif
-
-Découper un besoin en tranches.
-
 ## L'essentiel
 
 Une tranche traverse toutes les couches.
 
 ## 2a Une tranche
 
-*Une tranche sert seule.*
+- **Matière** : Une <b>tranche</b> traverse toutes les couches (concept 1).
+- **Ancrage** : Régis regarde une carte.
+- **Question** : que voit-il ?
+- **Réponse attendue** : une carte.
+- **Idées fausses** :
+  - « Un tableau » : c'est une carte.
 
-Une tranche traverse toutes les couches (concept 1).
-
-## Pièges
-
-- **Un piège** : une explication.
-- **Un autre piège** : une autre explication.
-
-## Le test rapide
+## Repères
 
 > « Une question à se poser ? »
 

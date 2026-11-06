@@ -9,10 +9,10 @@
 
 The readers are defined in [`spec-directives/README.md`](../../../spec-directives/README.md#the-readers).
 
-The spec of linear introductory courses: ordered domains, ordered concepts with prerequisites, sub-concepts taught one per teacher message, a storyline. This folder, `course-specs/linear-course/1/`, holds its MAJOR 1, version `1.0.0-alpha` until its tag, binding from the tag `linear-course/v1.0.0` (`spec-directives/1/README.md` section 6); a course follows it by declaring `spec: linear-course@1` in its `course.yaml`.
+The spec of linear introductory courses: ordered domains, ordered concepts with prerequisites, each written in one concept file cut into units taught one per teacher message, a storyline. This folder, `course-specs/linear-course/1/`, holds its MAJOR 1, version `1.0.0-alpha` until its tag, binding from the tag `linear-course/v1.0.0` (`spec-directives/1/README.md` section 6); a course follows it by declaring `spec: linear-course@1` in its `course.yaml`.
 
 - `README.md`: this file: scope, files, categories, normative references, the list of checks.
-- `course/README.md`: what a course is: course structure, reader-text conventions, diagrams (drawing contract and style), the lexicon of the course files.
+- `course/README.md`: what a course is: course structure, the conventions of the text, diagrams (drawing contract and style), the lexicon of the course files.
 - `teacher/README.md`: how a rule of the protocol is written (its notation, its writing rules), the description of the composition of the teacher, the keys and parameters; `teacher/rules.yaml`: the rules of the protocol the teacher executes.
 - `teacher/composition.yaml`: the composition of the teacher, its five parts, when each loads and what each draws from (section 2).
 - `teacher/build/`: the half of a classroom build that depends on this MAJOR, `render-parts`, which renders the five parts of the composition as text for a course, one JSON document whose shape `parts.schema.yaml` fixes (`teacher/build/README.md`).
@@ -27,7 +27,7 @@ This file holds no rule on a course or on the teacher: what a course is, is in `
 
 ## 1. Scope
 
-`linear-course` describes a type of course: a linear introductory course made of ordered **domains**, ordered **concepts** with prerequisites, **sub-concepts** taught one per teacher message, a **storyline** the cases live in. A course that does not fit this shape needs another spec. The spec fixes what a course contains, how the teacher teaches it, and how it is checked. The spec is French (`language: fr` in `spec.yaml`): its courses, its lexicons and its protocol are in French, and a course of another language follows another spec, not a translation of this one (decision `lexicon-not-language-pack`). The words a program recognises in a course file are written once, in the **lexicon** `course/lexicon.yaml`, whose keys `course/README.md` section 7 names; the words the teacher says and writes, in `teacher/lexicon.yaml`.
+`linear-course` describes a type of course: a linear introductory course made of ordered **domains**, ordered **concepts** with prerequisites, each cut into **units** taught one per teacher message, a **storyline** the cases live in. A course that does not fit this shape needs another spec. The spec fixes what a course contains, how the teacher teaches it, and how it is checked. The spec is French (`language: fr` in `spec.yaml`): its courses, its lexicons and its protocol are in French, and a course of another language follows another spec, not a translation of this one (decision `lexicon-not-language-pack`). The words a program recognises in a course file are written once, in the **lexicon** `course/lexicon.yaml`, whose keys `course/README.md` section 7 names; the words the teacher says and writes, in `teacher/lexicon.yaml`.
 
 Out of scope here: the learner memory files (the protocol, and `teacher/templates/learner/`), how the site builds, and how a classroom realises the parts of the teacher for its target (their own folders); what this MAJOR renders for a classroom build is `teacher/build/`. The test scenarios of the teacher, which name the rules of the protocol, are this MAJOR's (`teacher/tests/`); the harness that runs them in a classroom, `classroom-builder/fresh-test`, is not.
 
@@ -38,7 +38,8 @@ The files of the spec are split by class of products (`spec-directives/1/README.
 | File | Holds |
 |---|---|
 | `README.md` | this file: scope, files, categories, normative references, the list of checks |
-| `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder, domain files, course files, diagrams, the lexicon of the course files |
+| `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder and its concept file, the unit, domain files, course files, diagrams, the lexicon of the course files |
+| `course/form.yaml` | the form of the concept file as data: the files of a concept folder, the parts of `concept.md`, the fields of a unit and of a supplementary case, their order, their presence, published or not, their readers, the length of a unit; it names the words by their key in `course/lexicon.yaml` and holds none |
 | `teacher/README.md` | how a rule of the protocol is written: its notation, its writing rules; the composition; the keys and parameters |
 | `course/rules.yaml` | the rules of a course, in French, one group per section of `course/README.md` that points to rules, each with its `purpose` |
 | `teacher/rules.yaml` | the rules of the protocol, in French, one group per family and per group of a family, each with its `purpose` |
@@ -81,7 +82,7 @@ The standards a rule of this spec depends on, through its text, its check or a s
 
 | Standard | Edition | Groups |
 |---|---|---|
-| [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le dossier de concept », « Le frontmatter de concept.md », « Le corps de concept.md », « Le fichier teaching.md », « Le fichier sources.md », « Les conventions du texte lecteur », « Les fichiers de domaine », « Les fichiers du cours »; `onboarding`, `resume`, `domain-presentation`, `loop`, `message-form`, `learner-memory` |
+| [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le dossier de concept », « Le frontmatter de concept.md », « Le corps de concept.md », « L'unité », « Le fichier sources.md », « Les conventions du texte », « Les fichiers de domaine », « Les fichiers du cours »; `onboarding`, `resume`, `domain-presentation`, `loop`, `message-form`, `learner-memory` |
 | [GitHub Flavored Markdown, tables](https://github.github.com/gfm/#tables-extension-) | 0.29-gfm (2019-04-06) | « Le fichier sources.md », « Les fichiers du cours » |
 | [YAML](https://yaml.org/) | the directives' (`spec-directives/1/README.md` section 7) | « Le fichier course.yaml », « Le dossier de concept », « Le frontmatter de concept.md », « Les fichiers de domaine » |
 | [JSON Schema](https://json-schema.org/) | the directives' (`spec-directives/1/README.md` section 7) | « Le fichier course.yaml », « Le frontmatter de concept.md » |
@@ -111,17 +112,18 @@ The category, level and method of each check below are those of the rules it ver
 
 | Id | Category | Level | Method | Severity | Verifies | Sections |
 |---|---|---|---|---|---|---|
-| `course-yaml` | `structure` | requirement | test | blocks | `course.yaml` fields (no sub-concepts: the map of the course), identifiers, order, partition into domains, annexes, prerequisites, paths, no unlisted folder in `concepts/`, spec declared (`course-specs/check-course` refuses an unknown spec or MAJOR); a missing lexicon, a tooling error (no rule) | 2; `spec-directives/1/README.md` 6 |
-| `concept-folder` | `structure` | requirement | test | blocks | the folder's files; the three files' sections and their order, the column count of the `sources.md` tables; frontmatter keys, `verified` parallel to `refs`; the tree of the concept in its headings (sub-concept ids: form, order, uniqueness, at most 9 children per node); « Objectif » equals `objective` | 3 |
-| `case-contract` | `pedagogy` | requirement | test | blocks | case headings and their qualifier, titles unique in the concept, fields, a qualifier on « Question » only, coverage of leaves, citation in « Consignes » | 3.3, 7 |
-| `conventions` | `writing` | requirement | test | blocks | the reader-text conventions of `concept.md`; plain Markdown in course files | 1, 3.5 |
-| `svg-contract` | `diagrams` | requirement | test | blocks | every diagram against the drawing contract (a root `<defs>` accepted); declared and present diagrams match | 3.1, 6.1 |
-| `sources` | `sources` | requirement | test | blocks | no introduction; in each claim row (its five columns are `concept-folder`'s): section anchors that exist in `concept.md`, a source cell of reference ids or the `markers.course` word, a verification, a nature; reference ids, links (one URL or empty), types, dates; every id cited exists, every reference cited; « Non vérifié » entries anchored | 3.1, 3.4 |
+| `course-yaml` | `structure` | requirement | test | blocks | `course.yaml` fields (no sections nor units: the map of the course), identifiers, order, partition into domains, annexes, prerequisites, paths, no unlisted folder in `concepts/`, spec declared (`course-specs/check-course` refuses an unknown spec or MAJOR); a missing lexicon, a tooling error (no rule) | 2; `spec-directives/1/README.md` 6 |
+| `concept-file` | `structure` | requirement | test | blocks | from `course/form.yaml`: the folder's files; the frontmatter against its schema through `Ajv2020`, `verified` parallel to `refs`; the parts of `concept.md` in order; the tree of the concept in its headings (section and unit ids: form, order, uniqueness, at most 9 units per section); the sections of `sources.md` and the column count of its tables | 3, 3.1, 3.2 |
+| `unit-contract` | `pedagogy` | requirement | test | blocks | from `course/form.yaml`: a section holds its units only; each unit's fields, labelled, in order and presence, a qualifier on « Question » only, no line outside a field; misconceptions and their nested follow-ups; supplementary cases, their qualifier, their titles unique in the concept, their fields | 3.3, 7 |
+| `conventions` | `writing` | requirement | test | blocks | the conventions of the text of `concept.md`, in the parts the learner reads; no image in `concept.md`; plain Markdown in course files | 1, 3.5 |
+| `svg-contract` | `diagrams` | requirement | test | blocks | every diagram against the drawing contract (a root `<defs>` accepted); declared and present diagrams match, each at a unit of the concept | 3.1, 6.1 |
+| `sources` | `sources` | requirement | test | blocks | no introduction; in each claim row (its five columns are `concept-file`'s): section anchors that exist in `concept.md` among its published parts, a source cell of reference ids or the `markers.course` word, a verification, a nature; reference ids, links (one URL or empty), types, dates; every id cited exists, every reference cited; « Non vérifié » entries anchored | 3.1, 3.4 |
 | `course-files` | `structure` | requirement | test | blocks | `plan.md` (« Public cible », « Accueil »: one posture paragraph, then its questions), `glossary.md` (four columns, one defining concept per row, a variant in one row), `CHANGELOG.md`, domain files: presence, no unlisted file in `domains/`, frontmatter, sections, leads | 4, 5 |
 | `domain-first-sentence` | `writing` | requirement | test | blocks | the first sentence of each paragraph of « Le fil des concepts » ends within 300 characters of the lead | 4 |
-| `glossary-order` | `pedagogy` | recommendation | test | reports | no glossary term used in a `concept.md`, body or frontmatter, before its defining concept, unless its sentence carries a concept reference to that concept; each comma variant matched, a qualified row skipped | 5 |
+| `unit-length` | `pedagogy` | recommendation | test | reports | no unit above 12 lines of 100 characters in « Matière », « Ancrage » and « Question » | 3.3 |
+| `glossary-order` | `pedagogy` | recommendation | test | reports | no glossary term used in a `concept.md`, in the parts the learner reads or in its frontmatter, before its defining concept, unless its sentence carries a concept reference to that concept; each comma variant matched, a qualified row skipped | 5 |
 | `typography` | `writing` | recommendation | test | reports | no banned character of the lexicon in course text | 1 |
 | `domain-first-sentence-standalone` | `writing` | recommendation | test | reports | the first sentence of each paragraph of « Le fil des concepts » does not open with a word of `checks.anaphora` | 4, 7 |
-| `taught-check` | `pedagogy` | recommendation | analysis | reports | no case asks what the learner has not yet been taught | 3.3 |
+| `taught-check` | `pedagogy` | recommendation | analysis | reports | no question of a unit or a case asks what the learner has not yet been taught | 3.3 |
 
 **`taught-check`** is not a script: it is an agent workflow, `course/checks/taught-check.js`, run on demand after a change to what a concept teaches, by a work session with `Workflow` and an absolute `scriptPath` (args `{ course, from?, to? }`, `from` the first concept the change touches; without it, the whole course); it modifies no file, and its findings are triaged like the others.

@@ -1,6 +1,6 @@
 'use strict';
-// Concept references of the reader text (course/README.md section 3.5): the words of the lexicon group
-// concept_refs, then concept numbers or sub-concept ids. One grammar, read by `conventions`
+// Concept references of the text of a course (course/README.md section 3.5): the words of the lexicon
+// group concept_refs, then concept numbers or section and unit ids. One grammar, read by `conventions`
 // (each id exists) and `glossary-order` (a concept reference silences a forward use).
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -42,7 +42,7 @@ function parser(ctx) {
 }
 
 // the concept an id of a concept reference names: a concept number (leading zeros dropped) or
-// the id of one of its sub-concepts; null when it names none, or when `annex` (the annex word
+// the id of one of its sections or units; null when it names none, or when `annex` (the annex word
 // was used) and the concept is not an annex
 function conceptOf(ctx, id, annex) {
   const c = /^(A?\d+)([a-z])(\d)?$/.test(id)

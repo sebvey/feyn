@@ -151,7 +151,7 @@ function run(ctx) {
         if (c) leads.push(`**${c.number}. ${c.entry.title}.**`);
       }
     }
-    if (paras.length !== leads.length) out.push(fail(f, thread.line, `« ${thread.title} » has ${paras.length} paragraphs, expected ${leads.length} (one per ${nums.length === 1 ? 'concept, then one per first-level sub-concept' : 'concept'})`));
+    if (paras.length !== leads.length) out.push(fail(f, thread.line, `« ${thread.title} » has ${paras.length} paragraphs, expected ${leads.length} (one per ${nums.length === 1 ? 'concept, then one per section' : 'concept'})`));
     leads.forEach((lead, k) => {
       if (paras[k] && !paras[k].text.startsWith(lead)) out.push(fail(f, paras[k].line, `paragraph ${k + 1} must open with ${lead}`));
     });

@@ -1,0 +1,2 @@
+check: unit-contract
+message: section 0a has units: it holds its ### units and nothing else

@@ -1,2 +1,2 @@
 check: svg-contract
-message: group id "couches" must be <sub-concept>-<element>
+message: group id "couches" must be <id>-<element>, the id of a section or a unit

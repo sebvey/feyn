@@ -1,5 +1,4 @@
 ---
-description: "Les couches d'un produit."
 stances:
   consensus:
     - author: "Le Scrum Guide 2020"
@@ -14,12 +13,8 @@ diagrams:
   - file: couches.svg
     title: "Trois couches empilées"
     caption: "Trois couches empilées : ingestion, transformation, restitution."
-    subconcept: 1a
+    unit: 1a
 ---
-
-## Objectif
-
-Nommer les couches d'un produit.
 
 ## L'essentiel
 
@@ -29,17 +24,36 @@ Un produit s'empile en couches, de la collecte à la restitution.
 
 ## 1a Les trois couches
 
-*Trois couches suffisent pour un premier produit.*
+- **Matière** : Les couches vont de la collecte à la restitution. Voir les concepts 0 et 1.
+- **Ancrage** : Régis regarde une carte.
+- **Question**, en deux parties : que voit-il ? Et dessous ?
+- **Réponse attendue** : une carte.
+- **Idées fausses** :
+  - « Un tableau » : c'est une carte.
+    - **Relance** : « que voit-il ? »
+- **Consigne** : en rechange, « Le cas la carte vide » ; « Le cas la couche du dessous » sert à l'entraînement, « Le cas la couche oubliée » à un aparté.
 
-Les couches vont de la collecte à la restitution. Voir les concepts 0 et 1.
+#### Le cas la carte vide (rechange)
 
-## Pièges
+- **Ancrage** : Régis regarde une carte vide.
+- **Question** : que voit-il ?
+- **Réponse attendue** : rien.
+- **Idées fausses** :
+  - « Une carte » : la carte est vide.
 
-- **Un piège** : une explication.
-- **Un autre piège** : une autre explication.
+#### Le cas la couche du dessous (entraînement)
 
-## Le test rapide
+- **Ancrage** : Régis regarde la couche du dessous.
+- **Question** : que voit-il ?
+- **Réponse attendue** : une couche.
+- **Idées fausses** :
+  - « Une carte » : c'est une couche.
+- **Repères** : la couche du dessous porte la carte.
 
-> « Une question à se poser ? »
+#### Le cas la couche oubliée (aparté)
 
-Une note sur la question.
+- **Ancrage** : Régis cherche une couche.
+- **Question** : où est-elle ?
+- **Réponse attendue** : dessous.
+- **Idées fausses** :
+  - « Nulle part » : elle est dessous.

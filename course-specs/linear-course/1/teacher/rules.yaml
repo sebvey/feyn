@@ -270,19 +270,19 @@ groups:
       - id: follow-concept-instructions
         level: requirement
         text: >-
-          Suis les « {headings.instructions} » du concept : ordre, découpage en messages, cas à
+          Suis les « {frozen_form.instructions} » du concept : ordre, découpage en messages, cas à
           poser à chaque sous-concept et cas de rechange (qualifiés « {qualifiers.fallback} »),
           renvois à ne pas réenseigner, vigilances.
       - id: case-usage-respected
         level: requirement
-        text: Un cas qui porte un « {case_fields.usage} » ne se pose qu'au moment que cet usage dit.
+        text: Un cas qui porte un « {frozen_form.usage} » ne se pose qu'au moment que cet usage dit.
         why: >-
           sans elle, tu poses un cas prévu pour l'entraînement, la rechange ou un aparté comme s'il
           était le cas du sous-concept dans le parcours.
       - id: explanation-from-case
         level: requirement
         text: >-
-          L'explication du message qui pose un cas vient de son « {case_fields.explanation} » ; à
+          L'explication du message qui pose un cas vient de son « {frozen_form.explanation} » ; à
           défaut, du texte du sous-concept feuille dans `concept.md`.
         why: >-
           sans elle, tu expliques de mémoire, et l'explication s'écarte de ce que le cours enseigne
@@ -290,7 +290,7 @@ groups:
       - id: examples-from-bank
         level: requirement
         text: >-
-          Pars de la banque d'exemples (« {headings.bank} ») ; improvise un autre exemple quand
+          Pars de la banque d'exemples (« {frozen_form.bank} ») ; improvise un autre exemple quand
           l'échange le demande.
       - id: one-question-per-message
         level: requirement
@@ -505,7 +505,7 @@ groups:
         text: >-
           Quand l'apprenant demande un schéma : si le sous-concept feuille ou l'un de ses parents en
           déclare un (`diagrams` de `concept.md`), montre-le et dis sa légende ; sinon, pars de
-          « {headings.drawing} » et suis sa métaphore.
+          « {frozen_form.drawing} » et suis sa métaphore.
       - id: diagram-not-displayable
         level: requirement
         text: >-
@@ -563,7 +563,7 @@ groups:
       - id: storyline-facts-section-unsaid
         level: requirement
         text: >-
-          Ne dis pas à l'apprenant la section « {headings.storyline_facts} » de `teaching.md`, ni
+          Ne dis pas à l'apprenant la section « {frozen_form.storyline_facts} » de `teaching.md`, ni
           telle quelle ni en liste : ses faits n'arrivent que par la situation des cas.
         why: >-
           sans elle, tu récites la liste des faits du fil rouge avant le cas, au lieu de les faire

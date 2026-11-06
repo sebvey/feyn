@@ -41,8 +41,8 @@ groups:
         check: conventions
         text: >-
           Le Markdown d'un cours doit être du CommonMark simple : pas de HTML, pas d'`import` ni
-          d'`export` MDX, pas de directive `:::` ; un fichier de concept n'a ni H1 ni titre `####`
-          ou plus profond.
+          d'`export` MDX, pas de directive `:::` ; un fichier de concept n'a ni H1 ni titre plus
+          profond que `####`, et un titre `####` est un cas supplémentaire, dans une unité.
       - id: no-banned-character
         level: recommendation
         category: writing
@@ -66,7 +66,7 @@ groups:
         text: >-
           `course.yaml` doit être valide selon `course/schemas/course.schema.yaml` : les champs
           du cours, d'une entrée de domaine et d'une entrée de concept, leur présence et leur
-          forme ; une entrée de concept ne tient pas les sous-concepts du concept.
+          forme ; une entrée de concept ne tient ni les sections ni les unités du concept.
       - id: course-id-equals-folder
         level: requirement
         check: course-yaml
@@ -143,79 +143,79 @@ groups:
 
   - title: Le dossier de concept (course/README.md section 3)
     purpose: >-
-      Les fichiers dont un concept est fait, la forme commune de leurs sections et l'arbre du
-      concept, ses sous-concepts, que tiennent les titres de `concept.md` : chaque concept est
-      une source, que le site construit et que le professeur lit, sans réécriture.
+      Les fichiers dont un concept est fait et l'arbre du concept, ses sections et ses unités, que
+      tiennent les titres de `concept.md` : chaque concept est une source, que le site construit
+      et que le professeur lit, sans réécriture.
     category: structure
     method: test
     rules:
       - id: concept-folder-files
         level: requirement
-        check: concept-folder
+        check: concept-file
         text: >-
-          Un dossier de concept doit tenir `concept.md`, `teaching.md`, `sources.md` et ses
-          schémas `.svg`, et rien d'autre.
-      - id: subconcept-ids-in-order
+          Un dossier de concept doit tenir `concept.md`, `sources.md` et ses schémas `.svg`, et
+          rien d'autre (`folder` de `course/form.yaml`).
+      - id: tree-ids-in-order
         level: requirement
-        check: concept-folder
+        check: concept-file
         text: >-
-          L'id d'un sous-concept de premier niveau, dans son titre `##` de `concept.md`, doit être
-          le numéro du concept suivi d'une lettre, à partir de `a`, dans l'ordre ; l'id d'un
-          sous-concept de second niveau, dans son titre `###`, l'id de son parent suivi d'un
-          chiffre, à partir de `1`, dans l'ordre : neuf enfants au plus.
-      - id: subconcept-ids-unique
+          L'id d'une section, dans son titre `##` de `concept.md`, doit être le numéro du concept
+          suivi d'une lettre, à partir de `a`, dans l'ordre ; l'id d'une unité d'une section, dans
+          son titre `###`, l'id de la section suivi d'un chiffre, à partir de `1`, dans l'ordre :
+          neuf unités au plus.
+      - id: tree-ids-unique
         level: requirement
-        check: concept-folder
-        text: Les ids de sous-concept doivent être uniques dans le cours.
-      - id: leaf-fits-one-message
+        check: concept-file
+        text: Les ids de section et d'unité doivent être uniques dans le cours.
+      - id: heading-has-a-title
+        level: requirement
+        check: concept-file
+        text: >-
+          Le titre d'une section ou d'une unité doit tenir son id puis un titre : `## <id> <title>`,
+          `### <id> <title>`.
+      - id: unit-fits-one-message
         level: recommendation
         category: pedagogy
         method: inspection
         text: >-
-          Il convient qu'un sous-concept feuille, une section `###` ou une section `##` de
-          sous-concept sans section `###`, tienne en un message du professeur avec une question.
-      - id: concept-sections-in-order
+          Il convient qu'une unité, un titre `###` ou une section `##` sans titre `###`, tienne
+          en un message du professeur avec sa question.
+      - id: sources-sections-in-order
         level: requirement
-        check: concept-folder
+        check: concept-file
         text: >-
-          Les sections fixes de `concept.md`, `teaching.md` et `sources.md` doivent être des
-          titres `##` dont le texte est le titre du lexique, dans cet ordre, toutes présentes sauf
-          celles dites au choix, et aucune autre section `##` ne doit exister : pour `concept.md`,
-          « Objectif », « L'essentiel », les sections de sous-concept, « Pièges », « Le test
-          rapide », puis « Approfondissement » au choix ; pour `teaching.md`, « Consignes »,
-          « Faits du fil rouge utilisés » au choix, « Banque d'exemples », « Schéma » au choix ;
-          pour `sources.md`, « Affirmations », « Références », « Non vérifié ».
-      - id: teaching-sources-no-h1
+          Les sections de `sources.md` doivent être des titres `##` dont le texte est le titre du
+          lexique, « Affirmations », « Références », « Non vérifié », dans cet ordre, toutes
+          présentes, et aucune autre section `##` ne doit exister.
+      - id: sources-no-h1
         level: requirement
-        check: concept-folder
-        text: >-
-          `teaching.md` et `sources.md` ne doivent pas avoir de H1 : le titre est dans
-          `course.yaml`.
-      - id: teaching-sources-no-frontmatter
+        check: concept-file
+        text: "`sources.md` ne doit pas avoir de H1 : le titre est dans `course.yaml`."
+      - id: sources-no-frontmatter
         level: requirement
-        check: concept-folder
+        check: concept-file
         text: >-
-          `teaching.md` et `sources.md` ne doivent pas avoir de frontmatter : le Markdown d'un
-          cours n'a de frontmatter YAML que là où la spec le dit.
+          `sources.md` ne doit pas avoir de frontmatter : le Markdown d'un cours n'a de frontmatter
+          YAML que là où la spec le dit.
 
   - title: Le frontmatter de concept.md (course/README.md section 3.1)
     purpose: >-
-      Ce que le concept déclare en tête de `concept.md` : sa description pour le site, ses
-      positions et ses voisins, chacun sourcé dans son propre élément, la preuve à côté de ce
-      qu'elle prouve, et ses schémas.
+      Ce que le concept déclare en tête de `concept.md` : ses positions et ses voisins, chacun
+      sourcé dans son propre élément, la preuve à côté de ce qu'elle prouve, et ses schémas,
+      chacun à son unité.
     category: structure
     method: test
     rules:
       - id: concept-frontmatter-valid-against-schema
         level: requirement
-        check: concept-folder
+        check: concept-file
         text: >-
           Le frontmatter de `concept.md` doit être valide selon
           `course/schemas/concept-frontmatter.schema.yaml` : ses clés, un élément et une entrée de
           schéma, leur présence et leur forme.
       - id: item-text-inline-markdown
         level: requirement
-        check: concept-folder
+        check: concept-file
         text: >-
           Le `text` d'un élément du frontmatter doit être du Markdown en ligne : gras et italique
           seulement.
@@ -228,7 +228,7 @@ groups:
           `author` : le texte ou l'auteur à qui l'affirmation appartient.
       - id: verified-parallel-to-refs
         level: requirement
-        check: concept-folder
+        check: concept-file
         text: >-
           Le `verified` d'un élément doit être présent quand `refs` n'est pas vide et absent
           sinon : une liste parallèle à `refs`, une entrée par référence, dans le même ordre.
@@ -242,7 +242,7 @@ groups:
           de « Affirmations ».
       - id: no-stances-section
         level: requirement
-        check: concept-folder
+        check: concept-file
         text: >-
           Le corps de `concept.md` ne doit pas avoir de section de positions : `stances` et
           `neighbors` sont le seul endroit des positions et des voisins du concept.
@@ -250,235 +250,236 @@ groups:
           Sans elle, la migration écrivait les positions deux fois, dans le frontmatter et dans
           une section du corps, et les deux copies divergeaient (prototype du concept 9 ; décision
           stances-in-frontmatter-only).
-      - id: reader-text-stance-markers
+      - id: published-text-stance-markers
         level: permission
         category: writing
         method: inspection
         text: >-
-          Le texte lecteur peut marquer une affirmation d'un marqueur de position, en plus des
+          Un champ publié peut marquer une affirmation d'un marqueur de position, en plus des
           positions du frontmatter.
       - id: diagrams-declared-and-present
         level: requirement
         category: diagrams
         check: svg-contract
         text: >-
-          Chaque fichier de schéma déclaré doit exister, son `subconcept` doit être un
-          sous-concept du concept, et chaque SVG du dossier doit être déclaré.
+          Chaque fichier de schéma déclaré doit exister, son `unit` doit être l'id d'une unité du
+          concept, et chaque SVG du dossier doit être déclaré.
 
   - title: Le corps de concept.md (course/README.md section 3.2)
     purpose: >-
-      Le texte lecteur du concept, dans un ordre fixe : son objectif, l'essentiel, une section par
-      sous-concept, ses pièges et son test rapide, puis, pour l'apprenant qui veut aller plus
-      loin, un approfondissement.
+      Le concept en un fichier, dans un ordre fixe : sa tête, « L'essentiel », le résumé écrit du
+      concept ; ses sections et leurs unités, une par message du professeur ; son pied, les
+      repères et l'approfondissement que le site publie, puis la consigne du concept, que seul le
+      professeur lit. L'objectif et les pièges n'y sont pas écrits : le build les compose, depuis
+      `course.yaml` et depuis les idées fausses des unités.
     category: pedagogy
     method: inspection
     rules:
-      - id: objective-restated-verbatim
+      - id: concept-parts-in-order
         level: requirement
         category: structure
         method: test
-        check: concept-folder
+        check: concept-file
         text: >-
-          « Objectif » doit être l'`objective` du concept, mot pour mot, aux sauts de ligne près,
-          écrit avec une majuscule initiale et fini par un point quand le champ ne finit ni par
-          `.`, ni par `!`, ni par `?`.
+          Le corps de `concept.md` doit être, dans cet ordre, sa tête, ses sections, puis son
+          pied, chaque partie de la tête et du pied un titre `##` dont le texte est le titre du
+          lexique, présente ou au choix comme `concept_file` de `course/form.yaml` le dit (la tête,
+          « L'essentiel » ; le pied, « Repères », « Approfondissement » et « Consigne », chacun au
+          choix) ; aucune autre section `##` ne doit exister, ni l'objectif ni les pièges, que le
+          build compose.
+      - id: concept-has-sections
+        level: requirement
+        category: structure
+        method: test
+        check: concept-file
+        text: >-
+          `concept.md` doit tenir au moins une section, et un titre `###` n'existe que dans une
+          section, une unité de cette section : les titres de `concept.md` sont l'arbre du concept.
       - id: essentials-define-concept
         level: requirement
         text: >-
           « L'essentiel » doit donner la définition du concept et ce qui la rend importante, en
-          quelques lignes.
-      - id: subconcept-sections-follow-tree
+          quelques lignes : c'est le seul résumé écrit du concept.
+      - id: landmarks-whole-concept
         level: requirement
-        category: structure
-        method: test
-        check: concept-folder
         text: >-
-          `concept.md` doit tenir au moins une section de sous-concept, une par sous-concept de
-          premier niveau, et une section `###` n'existe que dans une section de sous-concept, une
-          par sous-concept de second niveau : les titres de `concept.md` sont l'arbre du concept.
-      - id: pitfalls-whole-concept
-        level: requirement
-        text: « Pièges » doit porter sur le concept entier.
-      - id: quick-test-whole-concept
-        level: requirement
-        text: « Le test rapide » doit porter sur le concept entier.
-      - id: deepening-beyond-subconcepts
+          « Repères » du pied doit porter sur le concept entier : ce qui sert à reconnaître ou à
+          appliquer le concept, une question à se poser par exemple.
+      - id: deepening-beyond-units
         level: requirement
         text: >-
           « Approfondissement » doit tenir de la matière en plus sur le concept, au-delà de ce
-          qu'enseignent ses sections de sous-concept, pour l'apprenant qui demande à aller plus
-          loin.
-      - id: no-case-relies-on-deepening
+          qu'enseignent ses unités, pour l'apprenant qui demande à aller plus loin.
+      - id: no-unit-relies-on-deepening
         level: requirement
         text: >-
-          Aucun cas, de quelque type qu'il soit, ne doit reposer sur « Approfondissement ».
+          Aucune unité ni aucun cas supplémentaire ne doit reposer sur « Approfondissement ».
+      - id: concept-instruction-content
+        level: requirement
+        text: >-
+          « Consigne » du pied doit tenir ce que la méthode a de propre au concept entier, ce
+          qu'aucune unité ne dit pour elle seule ; l'ordre et le découpage du concept sont ses
+          sections et ses unités, jamais une consigne.
 
-  - title: Le fichier teaching.md (course/README.md section 3.3)
+  - title: L'unité (course/README.md section 3.3)
     purpose: >-
-      `teaching.md` tient ce dont le professeur a besoin au-delà du texte lecteur, avant tout les
-      cas. Un cas est la question préparée de la boucle : le professeur la pose à un sous-concept
-      et corrige la réponse. Il apporte la couverture (chaque sous-concept feuille en a un,
-      vérifié), la position propre du cours (sa réponse attendue est la position que le concept
-      énonce : consensus, école ou cours), l'expérience (il anticipe les erreurs des apprenants),
-      l'ancrage (il vit dans le fil rouge) et la testabilité (taught-check et les fresh tests le
-      citent par son titre). Un cas répond à l'un de quatre besoins, son type : un par
-      sous-concept feuille, dans le parcours ; un cas de rechange, quand l'apprenant échoue
-      au premier ; un cas d'entraînement, pour l'apprenant qui veut s'exercer sur un concept validé,
-      ou pour retrouver à la reprise un concept validé lors d'une session précédente ; un aparté,
-      pour une question fréquente hors du parcours.
+      L'unité est le contenu d'un cours, écrit une fois : un message du professeur, une feuille du
+      concept. Son bloc tient sa matière, ce qui est vrai, les mêmes mots pour le site et le
+      professeur ; son ancrage dans le fil rouge ; sa question et sa réponse attendue ; ses idées
+      fausses, chacune avec sa correction et ses relances ; ses repères ; sa consigne, ce que la
+      méthode a de propre à l'unité ; puis ses cas supplémentaires, de rechange quand l'apprenant
+      échoue, d'entraînement pour s'exercer ou retrouver un concept validé, d'aparté pour une
+      question fréquente hors du parcours. Chaque champ est publié ou non, une propriété de la
+      spec (`course/form.yaml`), jamais écrite dans le cours.
     category: pedagogy
     rules:
-      - id: case-within-reader-text
-        level: requirement
-        method: inspection
-        text: >-
-          Un cas ne doit porter que sur ce que le texte lecteur énonce : ce que le texte lecteur
-          n'énonce pas est une lacune du concept, comblée dans `concept.md`.
-      - id: instructions-content
-        level: requirement
-        method: inspection
-        text: >-
-          « Consignes » doit donner l'ordre d'enseignement et le découpage en messages, quel cas
-          poser à quel sous-concept et lequel en rechange, les renvois à ne pas réenseigner et les
-          points de vigilance propres au concept.
-      - id: case-cited-in-instructions
+      - id: section-holds-its-units
         level: requirement
         method: test
-        check: case-contract
+        check: unit-contract
         text: >-
-          Chaque cas de la banque doit être cité dans « Consignes » par son titre entre « » (« »
-          et “ ” comptent comme les mêmes guillemets, les espaces à l'intérieur ignorées).
-      - id: storyline-facts-section-content
-        level: requirement
-        method: inspection
-        text: >-
-          « Faits du fil rouge utilisés » doit tenir les faits de `storyline.md` que les cas
-          emploient, et ce que le fil rouge laisse non fixé.
-      - id: drawing-section-content
-        level: requirement
-        method: inspection
-        text: >-
-          « Schéma » doit tenir la consigne de dessin derrière les schémas du concept : la
-          métaphore, ce qu'elle montre.
-      - id: teaching-contradicts-no-protocol
-        level: requirement
-        method: inspection
-        text: >-
-          `teaching.md` ne doit contredire aucune règle du protocole : il dit quoi enseigner, le
-          protocole dit comment et quand (« Schéma » dit quoi dessiner, pas quand envoyer un
-          schéma) ; une « Consignes » qui contredit une règle est un défaut du concept.
-      - id: case-restates-storyline-facts-only
-        level: requirement
-        method: inspection
-        text: >-
-          Un cas ne doit reprendre que les faits du fil rouge listés dans « Faits du fil rouge
-          utilisés » ; il ajoute le déroulé (qui dit quoi, quand), jamais un fait nouveau.
-      - id: case-heading-form
+          Une section qui a des unités ne doit rien tenir d'autre que ses titres `###` et leurs
+          blocs ; une section sans titre `###` est une section d'une unité, et tient le bloc de
+          cette unité.
+      - id: unit-fields-labelled
         level: requirement
         method: test
-        check: case-contract
+        check: unit-contract
         text: >-
-          Le titre d'un cas doit être `### <title> (<sub-concept>)`, la parenthèse tenant un id
-          de sous-concept du concept, de n'importe quel niveau, et au plus un qualificatif, avant
-          ou après l'id, séparé par une virgule ; rien d'autre.
+          Le bloc d'une unité doit être une liste de champs, chacun ouvert par
+          `- **<label>** :`, le libellé l'un des `unit_fields` du lexique ; le texte d'un champ
+          suit son libellé, et ses lignes suivantes sont en retrait de deux espaces (paragraphes,
+          listes imbriquées).
+      - id: no-line-outside-a-field
+        level: requirement
+        method: test
+        check: unit-contract
+        text: >-
+          Aucune ligne d'une unité ne doit se trouver hors d'un champ : le site ne publie que les
+          champs publiés, et une ligne qu'aucun champ ne porte n'est ni publiée ni lue.
+      - id: field-qualifier-on-question-only
+        level: requirement
+        method: test
+        check: unit-contract
+        text: >-
+          Seul le libellé « Question » peut porter un qualificatif à lui avant les deux-points
+          (« **Question**, en deux parties : »).
+      - id: unit-fields-present-once
+        level: requirement
+        method: test
+        check: unit-contract
+        text: >-
+          Une unité doit tenir « Matière », « Ancrage », « Question », « Réponse attendue » et
+          « Idées fausses », « Repères » et « Consigne » au choix, aucun champ deux fois et aucun
+          vide (`fields` de `unit` dans `course/form.yaml`).
+      - id: unit-fields-in-order
+        level: requirement
+        method: test
+        check: unit-contract
+        text: >-
+          Les champs d'une unité doivent venir dans l'ordre de `course/form.yaml` : « Matière »,
+          « Ancrage », « Question », « Réponse attendue », « Idées fausses », « Repères »,
+          « Consigne ».
+      - id: misconception-form
+        level: requirement
+        method: test
+        check: unit-contract
+        text: >-
+          « Idées fausses » doit tenir, en liste imbriquée, au moins une idée fausse, chacune
+          `- « <misconception> » : <correction>` ; ses relances sont des puces imbriquées sous
+          elle, `- **Relance** : <follow-up>`, et rien d'autre.
+      - id: supplementary-case-form
+        level: requirement
+        method: test
+        check: unit-contract
+        text: >-
+          Un cas supplémentaire doit être un titre `####` dans une unité,
+          `#### <title> (<qualifier>)`, la parenthèse tenant un qualificatif et rien d'autre ; ses
+          champs sont ceux d'une unité sans « Matière » ni « Consigne », dans le même ordre et la
+          même présence (`supplementary_case` de `course/form.yaml`).
       - id: case-qualifier-from-lexicon
         level: requirement
         method: test
-        check: case-contract
-        text: Le qualificatif d'un cas doit être une valeur du groupe `qualifiers` du lexique.
+        check: unit-contract
+        text: Le qualificatif d'un cas supplémentaire doit être une valeur du groupe `qualifiers` du lexique.
+      - id: case-titles-unique
+        level: requirement
+        method: test
+        check: unit-contract
+        text: Les titres des cas supplémentaires doivent être uniques dans le concept.
+      - id: unit-length-under-threshold
+        level: recommendation
+        method: test
+        check: unit-length
+        text: >-
+          Il convient qu'une unité tienne en 12 lignes au plus de « Matière », « Ancrage » et
+          « Question », comptées en lignes de 100 caractères (`length` de `unit` dans
+          `course/form.yaml`) : au-delà, elle tient mal en un message.
+      - id: unit-field-content
+        level: requirement
+        method: inspection
+        text: >-
+          Chaque champ d'une unité doit tenir ce que son libellé annonce : « Matière », ce qui est
+          vrai, l'explication telle que le site la publie et que le professeur la dit ;
+          « Ancrage », la situation du fil rouge où la matière se voit, ses acteurs, ses faits et
+          son déroulé (qui dit quoi, quand) ; « Question », la question que pose l'unité ;
+          « Réponse attendue », la bonne réponse avec ses nuances, la position du cours telle que la
+          matière l'énonce ; « Idées fausses », les réponses fausses fréquentes, chacune avec sa
+          correction et ses relances ; « Repères », ce que l'apprenant garde pour reconnaître le
+          point ; « Consigne », ce que la méthode a de propre à l'unité (quand poser un cas
+          supplémentaire, une formulation qui a marché, un renvoi à ne pas réenseigner).
+      - id: question-within-matter
+        level: requirement
+        method: inspection
+        text: >-
+          La question d'une unité et celle de ses cas ne doivent porter que sur ce que sa matière,
+          et celle des unités d'avant, énoncent : ce que la matière n'énonce pas est une lacune de
+          l'unité, comblée dans sa matière.
+      - id: anchor-uses-storyline-facts
+        level: requirement
+        method: inspection
+        text: >-
+          Un ancrage ne doit reprendre que des faits de `storyline.md` ; il ajoute le déroulé (qui
+          dit quoi, quand), jamais un fait nouveau : un fait qui manque est d'abord ajouté à
+          `storyline.md`.
       - id: fallback-case-stands-alone
         level: requirement
         method: inspection
         text: >-
-          Un cas de rechange doit se suffire : sa propre situation et sa propre question, rien
-          d'emprunté au cas échoué.
-      - id: case-titles-unique
-        level: requirement
-        method: test
-        check: case-contract
-        text: Les titres des cas doivent être uniques dans le concept.
-      - id: leaf-has-a-case
-        level: requirement
-        method: test
-        check: case-contract
-        text: Chaque sous-concept feuille doit avoir au moins un cas.
-      - id: case-fields-labelled
-        level: requirement
-        method: test
-        check: case-contract
-        text: >-
-          Un cas doit être une liste de champs, chaque élément ouvert par `**<label>** :`, le
-          libellé l'un des `case_fields` du lexique, son texte sur la même ligne ou dans une liste
-          imbriquée.
-      - id: field-qualifier-on-question-only
-        level: requirement
-        method: test
-        check: case-contract
-        text: >-
-          Seul le libellé « Question » peut porter un qualificatif à lui avant les deux-points
-          (« **Question**, en deux parties : »).
-      - id: case-mandatory-fields
-        level: requirement
-        method: test
-        check: case-contract
-        text: >-
-          Un cas doit tenir « Situation », « Question », « Réponse attendue » et « Erreurs
-          fréquentes », et aucun champ deux fois.
-      - id: case-optional-fields
-        level: permission
-        method: inspection
-        text: Un cas peut tenir « Usage », « Explication » et « Ce qui marche ».
-      - id: case-fields-in-order
-        level: requirement
-        method: test
-        check: case-contract
-        text: >-
-          Les quatre champs requis d'un cas doivent venir dans l'ordre « Situation », « Question »,
-          « Réponse attendue », « Erreurs fréquentes », « Usage » et « Explication » avant eux, dans
-          n'importe quel ordre, et « Ce qui marche » en dernier.
-      - id: case-field-content
+          Un cas de rechange doit se suffire : son propre ancrage et sa propre question, rien
+          d'emprunté à la question échouée.
+      - id: instruction-contradicts-no-protocol
         level: requirement
         method: inspection
         text: >-
-          Chaque champ d'un cas doit tenir ce que son libellé annonce : « Usage », quand poser un
-          cas hors du parcours (rechange, entraînement, aparté) ; « Explication », ce que le
-          professeur dit avant le cas, la source de son explication du sous-concept ;
-          « Situation », les acteurs et les faits du fil rouge posés d'emblée, et le déroulé (qui
-          dit quoi, quand) ; « Question », la question que pose le cas ; « Réponse attendue », la
-          bonne réponse avec ses nuances, la position du cours telle que `concept.md` l'énonce ;
-          « Erreurs fréquentes », les réponses fréquentes et comment les corriger, relances
-          comprises ; « Ce qui marche », une formulation ou une relance qu'un professeur a vue
-          marcher.
-      - id: what-works-from-observation
-        level: requirement
-        method: inspection
-        text: >-
-          « Ce qui marche » doit être vide dans un nouveau cours : le mainteneur l'ajoute à partir
-          de ce que le professeur note dans la mémoire de l'apprenant.
+          Une « Consigne », d'une unité ou du concept, ne doit contredire aucune règle du
+          protocole : le fichier de concept dit quoi enseigner, le protocole dit comment et quand ;
+          une consigne qui contredit une règle est un défaut du concept.
       - id: case-asks-what-was-taught
         level: recommendation
         method: analysis
         check: taught-check
         text: >-
-          Il convient qu'un cas ne demande que ce que l'apprenant a appris avant lui, dans le
-          parcours.
+          Il convient qu'une question, d'une unité ou d'un cas, ne demande que ce que l'apprenant a
+          appris avant elle, dans le parcours.
 
   - title: Le fichier sources.md (course/README.md section 3.4)
     purpose: >-
       `sources.md` montre que le concept est fondé, et permet à chacun de remonter d'une
-      affirmation de son corps à ce sur quoi elle repose. « Références » sert d'abord le lecteur
+      affirmation de ce que le site publie du concept à ce sur quoi elle repose. « Références » sert d'abord le lecteur
       du site ; « Affirmations » sert l'audit (le relecteur, le mainteneur, le professeur sur
       demande). La traçabilité vaut par sa re-vérification, pas par son volume.
     category: sources
     method: test
     rules:
-      - id: body-claims-in-claims
+      - id: published-claims-in-claims
         level: requirement
         method: inspection
         text: >-
-          Seul `concept.md` est sourcé : « Affirmations » doit couvrir les affirmations
-          vérifiables de son corps (une définition, une date, un chiffre, une citation, ce qu'un
-          guide dit ou ne dit pas).
+          Seuls les champs publiés de `concept.md` sont sourcés : « Affirmations » doit couvrir
+          les affirmations vérifiables de « Matière », de « L'essentiel », des « Repères » et des
+          corrections des idées fausses (une définition, une date, un chiffre, une citation, ce
+          qu'un guide dit ou ne dit pas).
       - id: claims-hold-no-device
         level: requirement
         method: inspection
@@ -492,18 +493,19 @@ groups:
         text: >-
           Une position ou un voisin doit être sourcé dans son élément du frontmatter, jamais par
           une ligne de « Affirmations ».
-      - id: teaching-claim-to-concept
+      - id: unpublished-states-nothing-new
         level: requirement
         method: inspection
         text: >-
-          Une affirmation que seul `teaching.md` fait est une lacune du concept : elle doit
-          d'abord être ajoutée à `concept.md`, ou n'est pas une affirmation à sourcer.
-      - id: reader-files-cite-no-reference
+          Un champ non publié ne doit rien affirmer que les champs publiés n'affirment pas : une
+          affirmation qu'il serait seul à faire est une lacune de la matière, ajoutée d'abord à un
+          champ publié, ou n'est pas une affirmation à sourcer.
+      - id: concept-file-cites-no-reference
         level: requirement
         check: sources
         text: >-
-          `concept.md` et `teaching.md` ne doivent citer aucune référence : les références vivent
-          dans les `refs` du frontmatter et dans `sources.md`.
+          `concept.md` ne doit citer aucune référence : les références vivent dans les `refs` du
+          frontmatter et dans `sources.md`.
       - id: sources-no-introduction
         level: requirement
         check: sources
@@ -512,7 +514,7 @@ groups:
       - id: sources-tables-five-columns
         level: requirement
         category: structure
-        check: concept-folder
+        check: concept-file
         text: >-
           « Affirmations » et « Références » de `sources.md` doivent tenir chacune un tableau de
           cinq colonnes, dans cet ordre : pour « Affirmations », affirmation, section, source,
@@ -525,11 +527,10 @@ groups:
         level: requirement
         check: sources
         text: >-
-          La cellule section d'une affirmation doit tenir des ids de sous-concept et des sections
-          fixes par leur valeur du lexique (« L'essentiel », « Pièges », « Le test rapide »,
-          « Approfondissement »), séparés par des virgules, jamais le texte d'un titre, chacun
-          existant dans `concept.md`. « Objectif » n'en est pas une : il énonce ce que
-          l'apprenant fera, pas une affirmation.
+          La cellule section d'une affirmation doit tenir des ids de section ou d'unité et les
+          parties publiées de la tête et du pied par leur valeur du lexique (« L'essentiel »,
+          « Repères », « Approfondissement »), séparés par des virgules, jamais le texte d'un
+          titre, chacun existant dans `concept.md`.
       - id: claim-source-cell-form
         level: requirement
         check: sources
@@ -567,7 +568,7 @@ groups:
         level: requirement
         method: inspection
         text: >-
-          Une affirmation que le texte lecteur marque d'un marqueur de position doit avoir la
+          Une affirmation qu'un champ publié marque d'un marqueur de position doit avoir la
           nature de ce marqueur ; une source « cours » doit avoir la nature `cours`.
       - id: reference-id-form
         level: requirement
@@ -636,73 +637,34 @@ groups:
         text: >-
           Chaque référence doit être citée par une affirmation ou un élément du frontmatter.
 
-  - title: Les conventions du texte lecteur (course/README.md section 3.5)
+  - title: Les conventions du texte (course/README.md section 3.5)
     purpose: >-
-      Les conventions sous lesquelles la structure de `concept.md` reste du Markdown simple : le
-      site fait de chacune son HTML et ses classes, le professeur les lit comme du Markdown
-      ordinaire, et un message d'échec nomme la convention.
+      Les conventions sous lesquelles `concept.md` reste du Markdown simple : le site fait de
+      chacune son HTML et ses classes, le professeur les lit comme du Markdown ordinaire, et un
+      message d'échec nomme la convention. Elles valent dans ce que l'apprenant lit ou entend
+      (`readers` de `course/form.yaml`), la consigne exceptée.
     category: writing
     method: test
     rules:
-      - id: subconcept-section-form
-        level: requirement
-        check: conventions
-        text: >-
-          Une section de sous-concept doit être `## <id> <title>`, puis un paragraphe tout en
-          italique, la promesse ; un sous-concept de premier niveau qui a des enfants ne tient
-          rien d'autre, un sans enfant tient son texte lecteur après la promesse.
-      - id: leaf-heading-form
-        level: requirement
-        check: conventions
-        text: Un titre de feuille doit être `### <id> <title>`, puis le texte lecteur.
       - id: concept-reference-resolves
         level: requirement
         check: conventions
         text: >-
-          Une référence de concept doit nommer un concept ou un sous-concept existant du cours ;
-          une référence à une annexe, un numéro d'annexe ou l'id d'un sous-concept d'annexe.
-      - id: teaching-concept-reference-form
-        level: requirement
-        method: inspection
-        text: >-
-          Dans `teaching.md`, une référence de concept doit suivre la même forme que dans
-          `concept.md`.
+          Une référence de concept doit nommer un concept, une section ou une unité existant du
+          cours ; une référence à une annexe, un numéro d'annexe ou l'id d'une section ou d'une
+          unité d'annexe.
       - id: stance-marker-plain-text
         level: requirement
         check: conventions
         text: >-
           Un marqueur de position doit être du texte simple juste après l'affirmation qu'il
           qualifie ; aucune définition de référence de lien ne porte l'étiquette d'un marqueur.
-      - id: storyline-blockquote-form
+      - id: no-image-in-concept-file
         level: requirement
         check: conventions
         text: >-
-          Dans les sections de sous-concept, une citation en bloc doit être une citation du fil
-          rouge, sa première ligne commençant par `**Fil rouge :**` (`markers.storyline`).
-      - id: diagram-image-form
-        level: requirement
-        check: conventions
-        text: >-
-          Une image de schéma doit être `![<title>](<file>)` seule dans son paragraphe, `<file>`
-          un schéma déclaré et `<title>` son `title` déclaré ; chaque schéma déclaré apparaît une
-          fois dans le corps.
-      - id: diagram-image-placed
-        level: requirement
-        method: inspection
-        text: >-
-          Une image de schéma doit se trouver dans la section de son `subconcept` (l'une de ses
-          sections `###` comprise) ou dans « L'essentiel ».
-      - id: pitfalls-form
-        level: requirement
-        check: conventions
-        text: >-
-          « Pièges » doit être une liste à puces, chaque élément ouvert par le piège en gras.
-      - id: quick-test-form
-        level: requirement
-        check: conventions
-        text: >-
-          « Le test rapide » doit être une citation en bloc (la question), puis au plus un
-          paragraphe (la note).
+          `concept.md` ne doit tenir aucune image : le build place chaque schéma à son unité,
+          depuis `diagrams` du frontmatter.
 
   - title: Les fichiers de domaine (course/README.md section 4)
     purpose: >-
@@ -739,8 +701,8 @@ groups:
         text: >-
           « Le fil des concepts » doit tenir un paragraphe par concept du domaine, dans l'ordre,
           ouvert par `**<number>. <concept title>.**`, le titre tel que dans `course.yaml` ; un
-          domaine d'un seul concept, un paragraphe pour le concept, puis un par sous-concept de
-          premier niveau, ouvert par `**<id>. <title>.**`.
+          domaine d'un seul concept, un paragraphe pour le concept, puis un par section, ouvert
+          par `**<id>. <title>.**`.
       - id: domain-section-content
         level: requirement
         category: pedagogy
@@ -757,7 +719,7 @@ groups:
         category: writing
         method: inspection
         text: >-
-          Un fichier de domaine ne doit tenir aucun texte pour le professeur seul : tout son texte
+          Un fichier de domaine ne doit tenir aucun texte que seul le professeur lit : tout son texte
           est pour le lecteur.
       - id: domain-teaches-no-concept
         level: requirement
@@ -851,8 +813,8 @@ groups:
         method: inspection
         text: >-
           Le concept de définition d'un terme doit être celui qu'un apprenant ouvre pour creuser le
-          terme, celui dont le texte lecteur l'enseigne (son objectif ou l'un de ses
-          sous-concepts en traite), pas un concept qui l'emploie ou le définit en passant avec une
+          terme, celui dont la matière l'enseigne (son objectif ou l'une de ses unités en
+          traite), pas un concept qui l'emploie ou le définit en passant avec une
           référence de concept vers un autre ; de deux concepts qui l'enseignent aussi à fond, le
           premier dans l'ordre du cours.
       - id: glossary-term-taught
@@ -865,8 +827,8 @@ groups:
         category: pedagogy
         method: inspection
         text: >-
-          La définition d'un terme doit résumer le texte lecteur de son concept de définition et
-          ne rien affirmer qu'il n'affirme pas.
+          La définition d'un terme doit résumer la matière de son concept de définition et ne
+          rien affirmer qu'elle n'affirme pas.
       - id: glossary-no-usage-list
         level: requirement
         method: inspection
@@ -891,9 +853,10 @@ groups:
         check: glossary-order
         text: >-
           Il convient qu'un terme du glossaire soit employé après son concept de définition, dans
-          l'ordre du cours, dans le `concept.md` de chaque concept, son corps et son frontmatter ;
-          avant ce concept, seulement dans une phrase qui porte une référence de concept vers le
-          concept de définition ou vers l'un de ses sous-concepts.
+          l'ordre du cours, dans le `concept.md` de chaque concept, dans ce que l'apprenant en lit
+          ou en entend (`readers` de `course/form.yaml` : tout sauf la consigne) et dans son
+          frontmatter ; avant ce concept, seulement dans une phrase qui porte une référence de
+          concept vers le concept de définition ou vers l'une de ses sections ou unités.
       - id: qualified-term-order-reviewed
         level: recommendation
         category: pedagogy
@@ -924,8 +887,8 @@ groups:
         category: pedagogy
         method: inspection
         text: >-
-          Les cas doivent prendre leurs acteurs et leurs faits dans `storyline.md`, sans le
-          contredire.
+          Les ancrages et les cas supplémentaires doivent prendre leurs acteurs et leurs faits dans
+          `storyline.md`, sans le contredire.
       - id: changelog-unreleased-first
         level: requirement
         check: course-files
@@ -992,10 +955,10 @@ groups:
         level: requirement
         check: svg-contract
         text: >-
-          Chaque enfant dessiné de la racine doit être un `<g>` d'`id` `<sub-concept>-<element>` :
-          un id de sous-concept du concept, un trait d'union, des lettres ASCII minuscules et des
+          Chaque enfant dessiné de la racine doit être un `<g>` d'`id` `<id>-<element>` : un id
+          de section ou d'unité du concept, un trait d'union, des lettres ASCII minuscules et des
           chiffres joints par des traits d'union (`9a1-couches`, `9a1-tranche-1`), jamais un id
-          de sous-concept nu, qui est l'ancre du texte lecteur ; cet id est unique parmi les
+          de section ou d'unité nu, qui est l'ancre du texte publié ; cet id est unique parmi les
           schémas du concept. Un `<defs>`, qui n'est pas dessiné, peut se tenir à la racine à
           côté d'eux, et ce qu'il tient suit ce contrat.
       - id: svg-forbidden-elements

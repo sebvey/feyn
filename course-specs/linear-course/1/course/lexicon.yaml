@@ -1,5 +1,5 @@
 # The lexicon of the course files of `linear-course`: the one source of the words a program must
-# recognise in a course file (headings, case fields, qualifiers, markers, natures, concept
+# recognise in a course file (headings, unit fields, qualifiers, markers, natures, concept
 # references, source types, typography, the word lists of the checks), read by the checks, the
 # classroom build and the site, none of which writes them again (course/README.md section 7;
 # decision `lexicon-not-language-pack`). The spec is French (`language: fr` in spec.yaml): the
@@ -10,16 +10,11 @@
 
 # Section titles of the course files.
 headings:
-  objective: "Objectif"
   essentials: "L'essentiel"
   stances: "Consensus et choix d'école"
-  pitfalls: "Pièges"
-  quick_test: "Le test rapide"
   deepening: "Approfondissement"
-  instructions: "Consignes"
-  storyline_facts: "Faits du fil rouge utilisés"
-  bank: "Banque d'exemples"
-  drawing: "Schéma"
+  landmarks: "Repères"
+  instruction: "Consigne"
   claims: "Affirmations"
   references: "Références"
   unverified: "Non vérifié"
@@ -32,38 +27,38 @@ headings:
   avoid: "Termes à éviter"
   unreleased: "Non publié"
 
-# Labels of the fields of a case of `teaching.md`.
-case_fields:
-  usage: "Usage"
-  explanation: "Explication"
-  situation: "Situation"
+# Labels of the fields of a unit of a concept file and of its supplementary cases
+# (course/form.yaml); `follow_up` labels a follow-up nested under a misconception.
+unit_fields:
+  matter: "Matière"
+  anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
-  common_mistakes: "Erreurs fréquentes"
-  what_works: "Ce qui marche"
+  misconceptions: "Idées fausses"
+  follow_up: "Relance"
+  landmarks: "Repères"
+  instruction: "Consigne"
 
-# Words of the reader text: the storyline lead `**Fil rouge :**` and the stance markers `[cours]`,
-# `[école]`, `[consensus]`.
+# The stance markers of the published text: `[cours]`, `[école]`, `[consensus]`.
 markers:
-  storyline: "Fil rouge"
   consensus: "consensus"
   school: "école"
   course: "cours"
 
 # The nature of a claim of `sources.md` that is not a stance marker: what a source says with no
 # stance (a tool's default, a date, a figure). The other natures are the markers consensus,
-# school, course (course/README.md 3.4). Read by `sources` only: never a marker of the reader text.
+# school, course (course/README.md 3.4). Read by `sources` only: never a marker of the published text.
 natures:
   fact: "fait"
 
-# The qualifiers a case heading may carry, at most one, and no other word (the group of
+# The qualifiers of a supplementary case, one in its heading and no other word (the group of
 # course/rules.yaml for course/README.md section 3.3).
 qualifiers:
   fallback: "rechange"
   practice: "entraînement"
   aside: "aparté"
 
-# The words of a concept reference in reader text: « concept 4 », « concepts 5 et 7b »,
+# The words of a concept reference in the text of a course: « concept 4 », « concepts 5 et 7b »,
 # « annexe A2 » (course/README.md 3.5).
 concept_refs:
   concept: "concept"

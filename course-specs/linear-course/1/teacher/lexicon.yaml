@@ -70,3 +70,14 @@ memory:
   commit_validated: "concept {n} validé"
   commit_stop: "arrêt"
   onboarding: "accueil"
+
+# The words of the course form the frozen protocol still cites, which course/lexicon.yaml no
+# longer holds: moved here with their values unchanged until the brainstorm on the protocol rules
+# (decision `teacher-frozen-until-the-protocol-brainstorm`).
+frozen_form:
+  instructions: "Consignes"
+  bank: "Banque d'exemples"
+  drawing: "Schéma"
+  storyline_facts: "Faits du fil rouge utilisés"
+  usage: "Usage"
+  explanation: "Explication"

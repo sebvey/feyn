@@ -5,7 +5,7 @@
   fill-opacity, stroke-opacity, opacity); only the classes primary, secondary, muted; no style
   attribute, no style element; words are text elements, at least one; title is the root's
   first child and equals the frontmatter title; every drawn child of the root is a g whose id
-  is <sub-concept>-<element>; no script, no on* attribute, no image, no external href;
+  is <id>-<element>, the id of a section or a unit; no script, no on* attribute, no image, no external href;
   32 KB at most.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" fill="currentColor" role="img" aria-labelledby="&lt;diagram-stem&gt;-titre &lt;diagram-stem&gt;-desc" font-family="sans-serif">

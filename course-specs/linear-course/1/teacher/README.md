@@ -55,17 +55,11 @@ Chaque clé et chaque paramètre que les règles emploient, en un seul endroit :
 | Key | Value | Used in |
 |---|---|---|
 | `headings.onboarding` | « Accueil » (`plan.md` : la posture, puis les questions d'accueil) | `teacher-posture-from-plan`, `onboarding-questions-announced`, `onboarding-questions-order`, `onboarding-profile-written` |
-| `headings.instructions` | « Consignes » | `follow-concept-instructions` |
-| `headings.bank` | « Banque d'exemples » | `examples-from-bank` |
-| `headings.drawing` | « Schéma » | `requested-diagram-shown` |
 | `headings.unverified` | « Non vérifié » | `unverified-part-told` |
 | `headings.claims` | « Affirmations » | `origin-from-sources-file` |
 | `headings.references` | « Références » | `origin-from-sources-file` |
 | `headings.stances` | « Consensus et choix d'école » | `unverified-part-told` |
 | `headings.deepening` | « Approfondissement » | `deepening-read-in-aside` |
-| `headings.storyline_facts` | « Faits du fil rouge utilisés » | `storyline-facts-section-unsaid` |
-| `case_fields.usage` | « Usage » | `case-usage-respected` |
-| `case_fields.explanation` | « Explication » | `explanation-from-case` |
 | `qualifiers.fallback` | « rechange » (`course/README.md` 3.3) | `follow-concept-instructions` |
 | `qualifiers.practice` | « entraînement » (`course/README.md` 3.3) | `practice-cases-chosen`, `earlier-concept-retrieved-at-resume` |
 | `qualifiers.aside` | « aparté » (`course/README.md` 3.3) | `asides-welcome` |
@@ -125,6 +119,12 @@ Chaque clé et chaque paramètre que les règles emploient, en un seul endroit :
 | `memory.commit_validated` | « concept {n} validé » | `commit-after-save-point` |
 | `memory.commit_stop` | « arrêt » | `commit-after-save-point` |
 | `memory.onboarding` | « accueil » (le commit et la première ligne du journal) | `commit-after-save-point` |
+| `frozen_form.instructions` | « Consignes » | `follow-concept-instructions` |
+| `frozen_form.bank` | « Banque d'exemples » | `examples-from-bank` |
+| `frozen_form.drawing` | « Schéma » | `requested-diagram-shown` |
+| `frozen_form.storyline_facts` | « Faits du fil rouge utilisés » | `storyline-facts-section-unsaid` |
+| `frozen_form.usage` | « Usage » | `case-usage-respected` |
+| `frozen_form.explanation` | « Explication » | `explanation-from-case` |
 
 Les titres, les statuts et les formats de ligne que portent les clés de `memory_headings`, de `status` et de `memory` sont ceux de `teacher/templates/learner/` : `teacher/lexicon.yaml` et les modèles de l'apprenant changent ensemble.
 
