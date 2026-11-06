@@ -25,13 +25,13 @@ Chaque concept est une source : son dossier tient des fichiers **côté lecteur*
 
 ```
 courses/<id>/
-  course.yaml          identité, domaines, concepts, sous-concepts (section 2)
+  course.yaml          la carte : identité, domaines, concepts (section 2)
   plan.md              prose : public, accueil, partis pris, règles d'écriture (section 5)
   glossary.md          le glossaire du cours (section 5)
   storyline.md         le fil rouge (section 5)
   CHANGELOG.md         le journal des versions du cours (section 5)
   domains/N-slug.md    un fichier de domaine par domaine (section 4)
-  concepts/NN-slug/    un dossier de concept par concept numéroté et par annexe (section 3)
+  concepts/NN-slug/    un dossier de concept par concept numéroté et par annexe, son arbre de sous-concepts compris (section 3)
   decisions/           les décisions du cours ; aucun build ne le lit
 ```
 
@@ -41,16 +41,14 @@ Les règles du dossier du cours sont le groupe « Le dossier du cours » de [`ru
 
 | Reader | Needs | When |
 |---|---|---|
-| the creator (human or agent) | the course order and the split of each concept into leaf sub-concepts | designing the course; each change of its plan |
-| the teacher | the order it teaches in, the prerequisites, one leaf sub-concept per message | each teaching session |
+| the creator (human or agent) | the course order: its domains, its concepts and their prerequisites | designing the course; each change of its plan |
+| the teacher | the order it teaches in, the prerequisites | each teaching session |
 | the site | titles, objectives, durations, the order of the pages and their addresses | at each build |
-| the maintainer | the identifiers whose change is a course MAJOR (below) | classing a course change |
+| the maintainer | the identifiers whose change is a course MAJOR (section 3) | classing a course change |
 
-Le site, le build de la classe et les checks lisent `course.yaml`.
+`course.yaml` est la carte du cours : son identité, ses domaines et ses concepts, rien sous le concept ; l'arbre d'un concept est dans son `concept.md` (section 3). Le site, le build de la classe et les checks lisent `course.yaml`.
 
 Ses champs sont décrits par le schéma JSON [`schemas/course.schema.yaml`](schemas/course.schema.yaml) ; ses règles sont le groupe « Le fichier course.yaml » de [`rules.yaml`](rules.yaml).
-
-**Identifiants.** Les numéros de concept, les ids de sous-concept, les titres de cas (section 3.3), les numéros de domaine et leurs concepts, les noms `dir` des concepts et `file` des domaines sont les identifiants du cours : la mémoire de l'apprenant et les adresses du site les citent. En changer un est une MAJOR du cours (`spec-directives/1/README.md` section 6).
 
 ## 3. Le dossier de concept
 
@@ -61,6 +59,10 @@ concepts/09-decoupage-vertical/
   sources.md         côté lecteur : le site le construit, « Non vérifié » excepté (3.4)
   <stem>.svg         côté lecteur : un fichier par schéma (section 6)
 ```
+
+L'arbre du concept, ses sous-concepts, est dans les titres de `concept.md` et nulle part ailleurs : un sous-concept de premier niveau est un titre `## <id> <title>`, son id le numéro du concept suivi d'une lettre (`9a`, `A2a`) ; un sous-concept de second niveau est un titre `### <id> <title>` dans la section de son parent, son id celui du parent suivi d'un chiffre (`9a1`). Un sous-concept sans enfant est une feuille, enseignée en un message du professeur. Le créateur découpe le concept là où il l'écrit, et les checks lisent l'arbre dans ces titres.
+
+**Identifiants.** Les numéros de concept, les ids de sous-concept, les titres de cas (section 3.3), les numéros de domaine et leurs concepts, les noms `dir` des concepts et `file` des domaines sont les identifiants du cours : la mémoire de l'apprenant et les adresses du site les citent. En changer un est une MAJOR du cours (`spec-directives/1/README.md` section 6).
 
 Les règles du dossier de concept sont le groupe « Le dossier de concept » de [`rules.yaml`](rules.yaml).
 

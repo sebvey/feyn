@@ -1,4 +1,4 @@
-id: course-yaml-tenth-child
+id: concept-folder-tenth-child
 spec: linear-course@1
 title: "Un cours minimal"
 subtitle: "Pour les checks"
@@ -29,32 +29,6 @@ concepts:
     prerequisites: []
     duration_min: 10
     dir: concepts/00-roles
-    subconcepts:
-      - id: 0a
-        title: "Les deux rôles"
-        children:
-          - id: 0a1
-            title: "Le premier rôle"
-          - id: 0a2
-            title: "Le second rôle"
-          - id: 0a3
-            title: "Le troisième rôle"
-          - id: 0a4
-            title: "Le quatrième rôle"
-          - id: 0a5
-            title: "Le cinquième rôle"
-          - id: 0a6
-            title: "Le sixième rôle"
-          - id: 0a7
-            title: "Le septième rôle"
-          - id: 0a8
-            title: "Le huitième rôle"
-          - id: 0a9
-            title: "Le neuvième rôle"
-          - id: 0a10
-            title: "Le dixième rôle"
-      - id: 0b
-        title: "La règle"
   - number: 1
     slug: couches
     title: "Les couches"
@@ -62,9 +36,6 @@ concepts:
     prerequisites: [0]
     duration_min: 10
     dir: concepts/01-couches
-    subconcepts:
-      - id: 1a
-        title: "Les trois couches"
   - number: 2
     slug: tranches
     title: "Les tranches"
@@ -72,9 +43,6 @@ concepts:
     prerequisites: [1]
     duration_min: 10
     dir: concepts/02-tranches
-    subconcepts:
-      - id: 2a
-        title: "Une tranche"
   - number: A1
     slug: lexique
     title: "Le lexique"
@@ -82,6 +50,3 @@ concepts:
     prerequisites: []
     duration_min: 10
     dir: concepts/A1-lexique
-    subconcepts:
-      - id: A1a
-        title: "Les mots"

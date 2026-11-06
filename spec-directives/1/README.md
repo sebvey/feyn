@@ -86,7 +86,7 @@ A MAJOR lives while a served course version declares it, a course tag included; 
 
 A course declares the MAJOR it follows: `spec: linear-course@1`. `course-specs/check-course` reads it and runs that MAJOR's checks (`course-specs/linear-course/1/README.md` section 5).
 
-A course has its own version, tagged `<id>/vX.Y.Z` and recorded in its `CHANGELOG.md`: MAJOR when an identifier changes (`course/README.md` section 2) or the course moves to a new spec MAJOR, MINOR when what is taught changes (a case, a sub-concept, a stance, a duration), PATCH for wording. A course in 0.x can still change anything, identifiers included.
+A course has its own version, tagged `<id>/vX.Y.Z` and recorded in its `CHANGELOG.md`: MAJOR when an identifier changes (`course/README.md` section 3) or the course moves to a new spec MAJOR, MINOR when what is taught changes (a case, a sub-concept, a stance, a duration), PATCH for wording. A course in 0.x can still change anything, identifiers included.
 
 **The directives' version.** The directives are versioned like a spec: one folder per MAJOR under `spec-directives/`, a tag `spec-directives/vX.Y.Z`, a `CHANGELOG.md`. This MAJOR is `1.0.0-alpha` in `1/` until the tag `spec-directives/v1.0.0`, posed with the spec's in #451, when its « Unreleased » section becomes `1.0.0`. A spec MAJOR declares the directives MAJOR it follows in its `spec.yaml` (`directives`), and its checks load the `lib/` and the package of that MAJOR; a directives MAJOR lives while a live spec MAJOR declares it. The bump of a change to the directives, from their tag on:
 

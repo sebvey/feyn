@@ -5,12 +5,13 @@
 # per concept, in course order. Concept `<n>` is 0, 1, 2... for a concept, A1, A2... for an
 # annex (an annex is also listed in `annexes`); `<NN>` is the number on two digits (09), an
 # annex keeps its number (A1).
-# A leaf sub-concept (no `children`) is, as a rule, one teacher message (rule
-# leaf-fits-one-message); a node has 9 children at most. The rules of course.yaml are the group
-# « Le fichier course.yaml » of course/rules.yaml, to which course/README.md section 2 points.
+# course.yaml is the map: domains and concepts, nothing below a concept; the sub-concepts of a
+# concept are the headings of its concept.md (template concept.md). The rules of course.yaml are
+# the group « Le fichier course.yaml » of course/rules.yaml, to which course/README.md section 2
+# points.
 # Identifiers (numbers, sub-concept ids, titles of cases, dir and file names) are cited by
-# learner memory and site addresses: changing one is a course MAJOR (spec-directives/1/README.md
-# section 6).
+# learner memory and site addresses: changing one is a course MAJOR (course/README.md section 3,
+# spec-directives/1/README.md section 6).
 id: <course-id>
 spec: linear-course@1
 title: "<course title>"
@@ -38,11 +39,3 @@ concepts:
     prerequisites: []
     duration_min: <concept minutes>
     dir: concepts/<NN>-<concept-slug>
-    subconcepts:
-      - id: <n>a
-        title: "<title of a>"
-        children:
-          - id: <n>a1
-            title: "<title of a1>"
-          - id: <n>a2
-            title: "<title of a2>"

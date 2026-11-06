@@ -14,6 +14,34 @@ function normNumber(n) {
   return null;
 }
 
+// a first-level sub-concept heading: `## <id> <title>`, its id a concept number and a letter
+// (0a, A2a); the form and the order of the ids are checked by concept-folder
+const SUB_ID = /^(?:\d+|A\d+)[a-z]$/;
+const firstWord = (t) => (/^(\S+)/.exec(t) || [])[1] || '';
+
+// The tree of a concept from the headings of its concept.md (the split file, or null): a `##`
+// heading whose first word is a sub-concept id is a first-level sub-concept, each `###` heading
+// inside it a second-level one; the rest of the heading is its title. Same shape for a numbered
+// concept and an annex: { id, title, level, parent, leaf, children, line }.
+function tree(m) {
+  const subs = [];
+  if (!m) return subs;
+  for (const s of md.sections(m.body, 2).sections) {
+    const id = firstWord(s.title);
+    if (!SUB_ID.test(id)) continue;
+    const sub = { id, title: s.title.slice(id.length).trim(), level: 1, parent: null, leaf: true, children: [], line: s.line };
+    subs.push(sub);
+    for (const h of md.headings(s.lines).filter((x) => x.level === 3)) {
+      const kid = firstWord(h.text);
+      const child = { id: kid, title: h.text.slice(kid.length).trim(), level: 2, parent: sub, leaf: true, children: [], line: h.line };
+      sub.children.push(child);
+      subs.push(child);
+    }
+    sub.leaf = sub.children.length === 0;
+  }
+  return subs;
+}
+
 function load(dir, opts = {}) {
   const root = path.resolve(dir);
   const ctx = {
@@ -109,26 +137,16 @@ function load(dir, opts = {}) {
     return g && typeof g[key] === 'string' ? g[key] : null;
   };
 
-  // concept index
+  // concept index: course.yaml is the map (domains and concepts); the tree of a concept, its
+  // sub-concepts, is read from the headings of its concept.md (decision
+  // course-map-and-concept-tree)
   ctx.concepts = [];
   if (ctx.usable) {
     ctx.cy.concepts.forEach((c, index) => {
       if (!c || typeof c !== 'object') return;
       const number = normNumber(c.number);
-      const subs = [];
-      const walk = (nodes, level, parent) => {
-        if (!Array.isArray(nodes)) return;
-        nodes.forEach((n) => {
-          if (!n || typeof n !== 'object') return;
-          const kids = Array.isArray(n.children) ? n.children : [];
-          const sub = { id: normNumber(n.id), title: n.title, level, parent, leaf: kids.length === 0, node: n, children: [] };
-          subs.push(sub);
-          if (parent) parent.children.push(sub);
-          if (level === 1) walk(kids, 2, sub);
-        });
-      };
-      walk(c.subconcepts, 1, null);
-      ctx.concepts.push({ entry: c, index, number, annex: /^A\d+$/.test(number || ''), dir: typeof c.dir === 'string' ? c.dir : null, subs });
+      const dir = typeof c.dir === 'string' ? c.dir : null;
+      ctx.concepts.push({ entry: c, index, number, annex: /^A\d+$/.test(number || ''), dir, subs: dir ? tree(ctx.md(dir + '/concept.md')) : [] });
     });
   }
   const sel = opts.concept ? normNumber(opts.concept) : null;

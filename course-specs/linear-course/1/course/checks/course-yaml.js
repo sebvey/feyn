@@ -1,6 +1,7 @@
 'use strict';
-// course.yaml: fields, identifiers, order, partition into domains, annexes, prerequisites, paths,
-// no unlisted concept folder, spec declared (course/README.md section 2,
+// course.yaml, the map of the course (domains and concepts; the tree of a concept is its
+// concept.md's, checked by concept-folder): fields, identifiers, order, partition into domains,
+// annexes, prerequisites, paths, no unlisted concept folder, spec declared (course/README.md section 2,
 // spec-directives/1/README.md section 6). An unknown spec or MAJOR is refused by
 // course-specs/check-course, before these checks run. A missing or unreadable lexicon fails
 // here too, as a tooling error of the check, not as a rule: the lexicon is a file of the spec,
@@ -15,7 +16,6 @@ const F = 'course.yaml';
 const isStr = (v) => typeof v === 'string' && v.trim() !== '';
 const isPosInt = (v) => Number.isInteger(v) && v > 0;
 const NUMBER = /^(\d+|A\d+)$/;
-const MAX_CHILDREN = 9;
 
 function run(ctx) {
   const out = [];
@@ -80,14 +80,13 @@ function run(ctx) {
 
   // concepts
   const seen = new Set();
-  const subSeen = new Set();
   const annexList = [];
   cy.concepts.forEach((c, i) => {
     const entry = ctx.concepts.find((x) => x.entry === c);
     const cl = yaml.lineOf(cy.concepts, i);
     const at = (k, m) => bad(c, k, m, cl);
     if (!c || typeof c !== 'object') { bad(cy.concepts, i, `concept entry ${i + 1} is not a map`); return; }
-    for (const k of Object.keys(c)) if (!['number', 'slug', 'title', 'objective', 'prerequisites', 'duration_min', 'dir', 'subconcepts'].includes(k)) at(k, `unknown field "${k}" in concept entry ${i + 1}`);
+    for (const k of Object.keys(c)) if (!['number', 'slug', 'title', 'objective', 'prerequisites', 'duration_min', 'dir'].includes(k)) at(k, `unknown field "${k}" in concept entry ${i + 1}`);
     const number = normNumber(c.number);
     if (number === null || !NUMBER.test(number)) { at('number', `concept entry ${i + 1}: number must be 0, 1... or A1, A2...`); return; }
     const label = `concept ${number}`;
@@ -102,33 +101,6 @@ function run(ctx) {
     else if ((!only || only === number) && !ctx.isDir(want)) at('dir', `${label}: folder ${want} does not exist`);
     if (!Array.isArray(c.prerequisites)) at('prerequisites', `${label}: prerequisites is mandatory ([] for none)`);
     if (entry && entry.annex) annexList.push(number);
-
-    // sub-concept tree
-    if (!Array.isArray(c.subconcepts) || c.subconcepts.length === 0) { at('subconcepts', `${label}: subconcepts must be a non-empty list`); return; }
-    const num = number;
-    c.subconcepts.forEach((s, a) => {
-      const sl = yaml.lineOf(c.subconcepts, a, cl);
-      if (!s || typeof s !== 'object') { bad(c.subconcepts, a, `${label}: sub-concept ${a + 1} is not a map`); return; }
-      const letter = String.fromCharCode(97 + a);
-      const check = (node, want2, level, l) => {
-        for (const k of Object.keys(node)) if (!['id', 'title', 'children'].includes(k)) bad(node, k, `unknown field "${k}" in sub-concept`, l);
-        const id = normNumber(node.id);
-        if (id !== want2) bad(node, 'id', `${label}: sub-concept id must be "${want2}", found "${node.id}"`, l);
-        if (id) { if (subSeen.has(id)) bad(node, 'id', `sub-concept id "${id}" is not unique`, l); subSeen.add(id); }
-        if (!isStr(node.title)) bad(node, 'title', `${label}: sub-concept ${want2} has no title`, l);
-        const kids = node.children;
-        if (kids !== undefined) {
-          if (!Array.isArray(kids) || kids.length === 0) bad(node, 'children', `${label}: children of ${want2} must be a non-empty list`, l);
-          else if (level === 2) bad(node, 'children', `${label}: the sub-concept tree has two levels at most (${want2} has children)`, l);
-          else kids.forEach((k, b) => {
-            if (b === MAX_CHILDREN) bad(kids, b, `${label}: ${want2} has ${kids.length} children, ${MAX_CHILDREN} at most (a child id ends in one digit)`, l);
-            if (!k || typeof k !== 'object') bad(kids, b, `${label}: bad sub-concept under ${want2}`, l);
-            else check(k, want2 + (b + 1), 2, yaml.lineOf(kids, b, l));
-          });
-        }
-      };
-      check(s, num + letter, 1, sl);
-    });
   });
 
   // every folder of concepts/ is the dir of a concept; under --concept, only that concept's

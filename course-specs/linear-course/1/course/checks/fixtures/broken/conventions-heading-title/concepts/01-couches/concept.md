@@ -27,7 +27,7 @@ Un produit s'empile en couches, de la collecte à la restitution.
 
 ![Trois couches empilées](couches.svg)
 
-## 1a Les couches nommées
+## 1a Les trois couches
 
 *Trois couches suffisent pour un premier produit.*
 

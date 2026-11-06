@@ -10,3 +10,4 @@
 - PATCH, `concepts/00-scrum/concept.md`, `concepts/00-scrum/teaching.md` : chaque renvoi par numéro à un concept ultérieur ou à un contenu que le cours n'a pas est la notion en mots, « plus tard dans le parcours » au plus.
 - PATCH, `concepts/01-produit-et-po/` (`concept.md`, `sources.md`, `teaching.md`) : chaque renvoi par numéro à un concept ultérieur est la notion en mots, « plus tard dans le parcours » au plus.
 - PATCH, `course.yaml` : la clé `language` est retirée ; la langue est celle de la spec, déclarée dans son `spec.yaml` (#493).
+- PATCH, `course.yaml` : les sous-concepts quittent chaque concept ; `course.yaml` est la carte du cours, et l'arbre d'un concept est dans les titres de son `concept.md`, inchangés (#628).

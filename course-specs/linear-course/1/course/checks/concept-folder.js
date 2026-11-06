@@ -1,7 +1,8 @@
 'use strict';
 // The concept folder, its `structure` part (course/README.md section 3): files, sections and their
 // order, the column count of the sources.md tables, frontmatter keys (`verified` parallel to
-// `refs`), one section per sub-concept, « Objectif » equals the objective. The cases of
+// `refs`), the tree of the concept in the headings of concept.md (the ids of its sub-concepts:
+// form, order, uniqueness, nine children at most), « Objectif » equals the objective. The cases of
 // teaching.md (headings, fields, coverage of leaves, citation in « Consignes ») are
 // `case-contract`'s, a `pedagogy` check split from this one (#329).
 const directives = require('./directives');
@@ -10,6 +11,7 @@ const mdlib = directives.lib('md');
 const { fail } = directives.lib('course');
 
 const FILES = ['concept.md', 'teaching.md', 'sources.md'];
+const MAX_CHILDREN = 9;
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
 function checkItems(list, where, out, file, label) {
@@ -125,21 +127,31 @@ function checkConcept(ctx, c, out) {
       if (!/[.!?]$/.test(want)) want += '.';
       if (got !== want) out.push(fail(cf, obj.line, `« ${H('objective')} » must be the objective of course.yaml verbatim (capital first letter, final period): expected "${want}"`));
     }
-    // ### only inside first-level sub-concept sections, one per child, in order
+    // ### only inside first-level sub-concept sections
     for (const s of top.sections) {
-      const id = (/^(\S+)/.exec(s.title) || [])[1];
-      const sub = c.subs.find((x) => x.level === 1 && x.id === id);
-      const h3 = mdlib.headings(s.lines).filter((h) => h.level === 3);
-      if (!sub) {
-        for (const h of h3) out.push(fail(cf, h.line, `### "${h.text}" is only allowed inside a sub-concept section`));
-        continue;
-      }
-      const want = sub.children.map((k) => k.id);
-      const got = h3.map((h) => (/^(\S+)/.exec(h.text) || [])[1]);
-      if (want.join() !== got.join()) {
-        out.push(fail(cf, h3.length ? h3[0].line : s.line, `section ${sub.id}: expected ### sections ${want.length ? want.join(', ') : '(none)'}, found ${got.length ? got.join(', ') : '(none)'}`));
-      }
+      if (c.subs.some((x) => x.level === 1 && x.line === s.line)) continue;
+      for (const h of mdlib.headings(s.lines).filter((x) => x.level === 3)) out.push(fail(cf, h.line, `### "${h.text}" is only allowed inside a sub-concept section`));
     }
+
+    // the tree of the concept, read from its headings (lib/course.js): at least one sub-concept;
+    // a first-level id is the concept number and a letter from a, in order; a second-level id,
+    // its parent's id and a digit from 1, in order, so nine children at most; every id unique
+    // in the course
+    const subs1 = c.subs.filter((x) => x.level === 1);
+    if (!subs1.length) out.push(fail(cf, 1, `${label}: concept.md has no sub-concept section (\`## <id> <title>\`, the id ${c.number}a first)`));
+    const seen = new Map();
+    for (const x of ctx.concepts) for (const s of x.subs) seen.set(s.id, (seen.get(s.id) || 0) + 1);
+    const subId = (sub, want) => {
+      if (seen.get(sub.id) > 1) out.push(fail(cf, sub.line, `sub-concept id "${sub.id}" is not unique in the course`));
+      else if (sub.id !== want) out.push(fail(cf, sub.line, `${label}: sub-concept id must be "${want}", found "${sub.id}"`));
+    };
+    subs1.forEach((sub, a) => {
+      subId(sub, c.number + String.fromCharCode(97 + a));
+      sub.children.forEach((k, b) => {
+        if (b === MAX_CHILDREN) out.push(fail(cf, k.line, `${label}: ${sub.id} has ${sub.children.length} children, ${MAX_CHILDREN} at most (a child id ends in one digit)`));
+        if (b < MAX_CHILDREN) subId(k, sub.id + (b + 1));
+      });
+    });
   }
 
   // --- teaching.md
