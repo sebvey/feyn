@@ -697,8 +697,8 @@ groups:
         method: inspection
         text: >-
           Seuls les champs publiés de `concept.md` sont sourcés : « Affirmations » doit couvrir
-          les affirmations vérifiables de « Matière », de « L'essentiel », des « Repères » et des
-          corrections des idées fausses (une définition, une date, un chiffre, une citation, ce
+          les affirmations vérifiables de « Matière », de « L'essentiel », des « Repères », de
+          « Approfondissement » et des corrections des idées fausses (une définition, une date, un chiffre, une citation, ce
           qu'un guide dit ou ne dit pas).
 
   - title: Les fichiers de domaine (course/README.md section 4)
