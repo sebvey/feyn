@@ -44,7 +44,7 @@ function tree(m) {
 }
 
 // The parts of a concept file (concept.md split, its tree, the lexicon's word(group, key), the
-// spec's form): what concept-file, unit-contract, unit-length and the text checks read. It finds
+// spec's form): what concept-file, unit-contract, unit-length, unit-additions and the text checks read. It finds
 // the parts and the fields; it judges nothing but what a field's form makes unreadable, which it
 // lists in `problems` ({ line, message }) for unit-contract.
 //   head, foot: [{ key, title, line, lines }]   the ## parts the form names, by their lexicon word

@@ -4,8 +4,8 @@
 # unit) and, beside it, the course files (`course.yaml` as the map, `plan.md`, the domain file,
 # `storyline.md`): their parts, their order, their presence, published or not, their readers.
 # course/README.md sections 2 to 5 describe it, the rules of course/rules.yaml state it, the
-# checks read it here (concept-file, unit-contract, unit-length and the text checks for their
-# scope; course-yaml and course-files for the course files), and the site build of epic #598 will.
+# checks read it here (concept-file, unit-contract, unit-length, and the text checks and
+# unit-additions for their scope; course-yaml and course-files for the course files), and the site build of epic #598 will.
 #
 # This file names words by their key in course/lexicon.yaml and holds none: `heading: essentials`
 # is the lexicon's `headings.essentials`, a field `matter` is `unit_fields.matter`, a qualifier
@@ -18,7 +18,8 @@
 #   teacher  the teacher, which reads the whole file;
 #   learner  the learner, who hears it from the teacher or reads it on the site: the text checks
 #            (conventions, glossary-order) read every part of a concept file the learner reads,
-#            and only those.
+#            and only those; unit-additions, the fields of a unit and of a supplementary case
+#            the learner reads.
 
 # The files of a concept folder, and nothing else.
 folder:

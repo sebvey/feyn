@@ -127,9 +127,9 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 ### 0b2 Sprint Planning
 
 - **Matière** : Le Sprint Planning (8 heures au plus, en général moins pour un sprint plus court) ouvre le sprint ; toute l'équipe Scrum y prépare le sprint, en trois sujets. L'objectif, les éléments et le plan forment le backlog de sprint (repris en 0c). Comment le PO prépare le Sprint Planning vient plus tard dans le parcours.
-  - **Pourquoi ce sprint a de la valeur** : le PO propose comment le produit peut gagner en valeur pendant le sprint, puis toute l'équipe fixe l'objectif de sprint.
-  - **Quoi** : les Developers choisissent, en discutant avec le PO, les éléments du backlog qu'ils prennent.
-  - **Comment** : les Developers planifient le travail de chaque élément, et eux seuls en décident.
+  - Pourquoi ce sprint a de la valeur : le PO propose comment le produit peut gagner en valeur pendant le sprint, puis toute l'équipe fixe l'objectif de sprint.
+  - Quoi : les Developers choisissent, en discutant avec le PO, les éléments du backlog qu'ils prennent.
+  - Comment : les Developers planifient le travail de chaque élément, et eux seuls en décident.
 - **Ancrage** : Diego (data engineer) décrit le Sprint Planning de l'équipe vélos à un collègue de l'équipe appli : « Scarlette, la Scrum Master, arrive avec la liste de ce qu'on fait ce sprint, et on se répartit les éléments. »
 - **Question** : « Corrige Diego : au Sprint Planning, qui décide de quoi ? »
 - **Réponse attendue** : Scarlette ne choisit rien ; elle peut veiller à ce que l'événement ait lieu et soit utile. Le PO propose comment le sprint peut augmenter la valeur ; toute l'équipe fixe l'objectif de sprint ; les Developers (Dana, Diego, Anna) choisissent les éléments en discutant avec le PO, puis font leur plan. Nuance : l'ordre du backlog, le PO le tient en continu ; au planning, il s'en sert pour proposer.
@@ -214,7 +214,7 @@ Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du
 
 ## 0d Sprint et incrément
 
-- **Matière** : Le sprint est une durée, qui contient les événements. L'incrément est une étape concrète vers l'objectif produit : le produit dans un nouvel état **utilisable**. Il naît à l'instant où un élément du backlog remplit la DoD, et il s'ajoute à tous les précédents. Trois conséquences :
+- **Matière** : Le sprint est une durée, qui contient les événements. L'incrément est une étape concrète vers l'objectif produit : le produit dans un nouvel état utilisable. Il naît à l'instant où un élément du backlog remplit la DoD, et il s'ajoute à tous les précédents. Trois conséquences :
   - plusieurs incréments peuvent naître dans un même sprint ;
   - on peut livrer un incrément avant la fin du sprint : la revue de sprint n'est pas une porte de mise en production, et la seule règle pendant le sprint est de ne rien changer qui mette en danger l'objectif de sprint ;
   - un travail qui ne remplit pas la DoD ne fait pas partie de l'incrément : il n'est ni livré, ni présenté à la revue, et retourne au backlog produit, où le PO l'ordonne avec le reste.

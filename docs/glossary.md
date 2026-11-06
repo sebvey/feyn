@@ -344,7 +344,14 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: a fact of the **storyline** that a **unit** established, written once in the storyline's second part with the id of that unit, so that later anchors and cases hold to it
 - en: fixed fact
 - fr: « fait fixé »
-- not to confuse with: [world](#world), [anchor](#anchor), [storyline](#storyline)
+- not to confuse with: [world](#world), [anchor](#anchor), [storyline](#storyline), [additions](#additions)
+
+### additions
+
+- means: of a **unit**, what writing it adds outside its **concept file**: a fact its **anchor** uses, among the **fixed facts** of the **storyline**; a term it puts in bold, in the **course glossary**; a claim of one of its **published** fields, in the **sources** of its concept, once they are written
+- en: additions
+- fr: « ajouts »
+- not to confuse with: [fixed fact](#fixed-fact), [course glossary](#course-glossary), [sources](#sources)
 
 ### stances
 
@@ -365,7 +372,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the file `sources.md` of a concept, which traces its **published** fields: its claims (each with its section, its source, whether it was verified, and its nature: consensus, school, course, or fact, what a source states with no stance), its references, and what stays unverified. A stance or a neighbour is sourced where it is declared: its references, each with the quotation and its place
 - en: sources · rejected: "bibliography", "citations"
 - fr: « sources » (« affirmations », « références », « fait »)
-- not to confuse with: [concept reference](#concept-reference)
+- not to confuse with: [concept reference](#concept-reference), [additions](#additions)
 
 ### diagram
 
@@ -416,7 +423,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the glossary of a course, `glossary.md` of the course, course material: its terms, each with its defining concept
 - en: course glossary
 - fr: « glossaire du cours »
-- not to confuse with: [repository glossary](#repository-glossary)
+- not to confuse with: [repository glossary](#repository-glossary), [additions](#additions)
 
 ### defining concept
 

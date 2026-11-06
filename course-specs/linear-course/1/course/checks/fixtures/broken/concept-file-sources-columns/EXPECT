@@ -1,0 +1,2 @@
+check: concept-file
+message: « Affirmations » row has 6 cells, expected 5
