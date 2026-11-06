@@ -35,6 +35,6 @@ rules:
       its wording; the explanations go in the issue's Context.
     why: >-
       A statement that dictates a wording makes the contributor write it and the review pass it:
-      #627's Done when dictated the wording of an instruction of a skill, with its explanations in parentheses and its ground,
-      and the fresh-agent review of PR #650 passed them.
+      #627's Done when dictated the wording of an instruction of a skill, with its explanations in
+      parentheses and its ground, and the fresh-agent review of PR #650 passed them.
     origin: "#627, PR #650"
