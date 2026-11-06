@@ -8,8 +8,8 @@ learner:
 
     ## Profil
 
-    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
-    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+    - Son café : au bureau, le café de la Pipeline, et le week-end des capsules
+    - Son matériel : une machine à capsules et une bouilloire, c'est tout
 
     ## Préférences
 
@@ -38,15 +38,15 @@ learner:
 
     ## Prochaine étape
 
-    Concept 0 : Scrum en bref et l'incrément (`concepts/00-scrum`), sous-concept 0b (sprint et
-    incrément) : son message, cas « La vue des stations vides livrée un mercredi ». Le
-    sous-concept 0a (le cadre) est fait.
+    Concept 0 : L'extraction (`concepts/00-extraction`), sous-concept 0b1 (forte ou
+    sur-extraite) : son message, cas « Verse de l'eau chaude dedans ». Les sous-concepts 0a1 et
+    0a2 sont faits.
 
     ## Concepts
 
     | # | Concept | Statut |
     |---|---|---|
-    | 0 | Scrum en bref et l'incrément | en cours |
+    | 0 | L'extraction | en cours |
 
     Annexes vues : aucune.
 
@@ -56,14 +56,14 @@ learner:
 
     ## Journal
 
-    2026-11-02, session 1 : accueil, concept 0 commencé (l'équipe en bref).
-    2026-11-03, session 2 : concept 0, 0a fait (responsabilités, événements, artefacts).
+    2026-11-02, session 1 : accueil, concept 0 commencé (l'extraction fait le goût).
+    2026-11-03, session 2 : concept 0, 0a1 et 0a2 faits (l'extraction fait le goût ; trop peu, ou trop).
 turns:
   - message: On continue.
   - message: Oui.
     if: next-line
     expect:
-      - act: "the message of 0b (at this turn or the one before), unasked: the diagram « Un sprint est une durée, un incrément est un état du produit » shown, or, where it cannot show, its caption, that it cannot show here and the concept's page; its caption said"
+      - act: "the message of 0b1 (at this turn or the one before), unasked: the diagram « L'extraction et la force, deux axes de la tasse » shown, or, where it cannot show, its caption, that it cannot show here and the concept's page; its caption, « De gauche à droite, la tasse va de sous-extraite (acide, courte) à sur-extraite (amère, sèche) en passant par l'équilibre ; de bas en haut, sa force, légère ou forte, est un autre axe, et chaque zone d'extraction existe à toutes les forces. », said"
         rules: [declared-diagram-shown]
 rules:
   - declared-diagram-shown
