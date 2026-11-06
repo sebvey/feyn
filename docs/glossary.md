@@ -763,13 +763,6 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 - fr: to settle
 - not to confuse with: [milestone](#milestone), [channel](#channel)
 
-### batch
-
-- means: a set of concepts of a course written in one run of an agent workflow: sources, writing, two reviews, fixes, checks
-- en: batch · rejected: "lot", "chunk"
-- fr: to settle
-- not to confuse with: [stage](#stage)
-
 ### decision
 
 - means: a recorded choice of a structure or a process, why it is so and what was ruled out: one file by slug in a `decisions/` folder, with its counterfactual. A choice of words is a glossary entry, not a decision. "ADR" names the frame's complement, the practice of recording decisions
@@ -820,7 +813,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### work-cycle tooling
 
-- means: the skills called by the path skills or loaded directly for a one-off act, each named by what it produces or handles: those that own a **moment** of a path (`feyn-issue`, the idea noted; `feyn-issue-branch`, the start; `feyn-pull-request`, the PR; `feyn-pr-review`, the review; `feyn-merge-cleanup`, the freed issues) and the others (`feyn-decision`, a decision; `feyn-glossary-entry`, a glossary entry; `feyn-course-batch`, a batch of concepts; `feyn-taught-check`, what a course asks before teaching it)
+- means: the skills called by the path skills or loaded directly for a one-off act, each named by what it produces or handles: those that own a **moment** of a path (`feyn-issue`, the idea noted; `feyn-issue-branch`, the start; `feyn-pull-request`, the PR; `feyn-pr-review`, the review; `feyn-merge-cleanup`, the freed issues) and the others (`feyn-decision`, a decision; `feyn-glossary-entry`, a glossary entry)
 - en: work-cycle tooling · rejected: "tooling" alone (the build, site and teacher code)
 - fr: to settle
 - not to confuse with: [skill](#skill)
