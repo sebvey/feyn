@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" fill="currentColor" role="img" aria-labelledby="extraction-et-force-titre extraction-et-force-desc" font-family="sans-serif" font-size="15">
   <title id="extraction-et-force-titre">L'extraction et la force, deux axes de la tasse</title>
-  <desc id="extraction-et-force-desc">Un carré divisé en trois colonnes. De gauche à droite, l'extraction : sous-extraite, acide et courte ; équilibrée ; sur-extraite, amère et sèche. De bas en haut, un autre axe, la force, de légère à forte : les trois colonnes montent sur toute la hauteur.</desc>
+  <desc id="extraction-et-force-desc">Un rectangle divisé en trois colonnes. De gauche à droite, l'extraction : sous-extraite, acide et courte ; équilibrée ; sur-extraite, amère et sèche. De bas en haut, un autre axe, la force, de légère à forte : les trois colonnes montent sur toute la hauteur.</desc>
   <defs>
     <marker id="extraction-et-force-pointe" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L8,4 L0,8 z" fill="currentColor"/>
