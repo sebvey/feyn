@@ -1,2 +1,2 @@
-check: concept-file
+check: sources
 message: sources.md has no frontmatter

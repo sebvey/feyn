@@ -5,9 +5,9 @@
 // ajv's instance path to its line (`lineOfError` of lib/yaml-lines.js), then what the schema does
 // not say (`verified` parallel to `refs`, an item's text in inline Markdown); the parts of concept.md in the order of
 // the form (head, sections, foot) and no other ## heading; the tree of the concept in its headings
-// (section and unit ids: form, order, uniqueness, nine units at most; a title after each id); the
-// sections of sources.md and the column count of its tables. The fields of a unit and its
-// supplementary cases are `unit-contract`'s, a `pedagogy` check.
+// (section and unit ids: form, order, uniqueness, nine units at most; a title after each id). The
+// fields of a unit and its supplementary cases are `unit-contract`'s, a `pedagogy` check; the form
+// of sources.md is `sources`'.
 const fs = require('fs');
 const path = require('path');
 const directives = require('./directives');
@@ -134,24 +134,6 @@ function checkConcept(ctx, c, out) {
     for (const s of secs) {
       if (subs1.some((x) => x.line === s.line)) continue;
       for (const h of mdlib.headings(s.lines).filter((x) => x.level === 3)) out.push(fail(cf, h.line, `### "${h.text}" is only allowed inside a section, as one of its units`));
-    }
-  }
-
-  // --- sources.md
-  const sf = dir + '/sources.md';
-  const sm = ctx.md(sf);
-  if (sm) {
-    if (sm.hasFront) out.push(fail(sf, 1, 'sources.md has no frontmatter'));
-    for (const h of mdlib.headings(sm.body)) if (h.level === 1) out.push(fail(sf, h.line, 'no H1: the title is in course.yaml'));
-    const top = mdlib.sections(sm.body, 2);
-    headingSeq(sf, top.sections, ['claims', 'references', 'unverified'].map((k) => ({ text: H(k), mandatory: true, match: (t) => t === H(k) })), out);
-    for (const [key, cols] of [['claims', 5], ['references', 5]]) {
-      const s = top.sections.find((x) => x.title === H(key));
-      if (!s) continue;
-      const tabs = mdlib.tables(s.lines);
-      if (tabs.length !== 1) out.push(fail(sf, s.line, `« ${H(key)} » holds one table, found ${tabs.length}`));
-      else if (tabs[0].header.length !== cols) out.push(fail(sf, tabs[0].line, `« ${H(key)} » table has ${tabs[0].header.length} columns, expected ${cols}`));
-      else for (const r of tabs[0].rows) if (r.cells.length !== cols) out.push(fail(sf, r.line, `« ${H(key)} » row has ${r.cells.length} cells, expected ${cols}`));
     }
   }
 }

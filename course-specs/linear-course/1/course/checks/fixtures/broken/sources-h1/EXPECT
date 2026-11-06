@@ -1,2 +1,2 @@
-check: concept-file
+check: sources
 message: sources.md:15 no H1: the title is in course.yaml

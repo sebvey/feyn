@@ -1,6 +1,7 @@
 'use strict';
-// sources.md (course/README.md section 3.4) and the frontmatter refs (3.1): no introduction; the
-// five columns of « Affirmations » (section anchors that exist in concept.md among its published
+// sources.md (course/README.md section 3.4) and the frontmatter refs (3.1): its form (no
+// frontmatter, no H1, its three sections in order, a table of five columns in « Affirmations » and
+// « Références »); no introduction; the five columns of « Affirmations » (section anchors that exist in concept.md among its published
 // parts, a source cell of reference ids or the markers.course word, a verification, a nature);
 // « Références » (ids, one URL or no link, types, dates); « Non vérifié » entries anchored; every id
 // cited exists, every reference is cited; concept.md cites no reference.
@@ -44,6 +45,32 @@ function checkConcept(ctx, c, out) {
   const sm = ctx.md(sf);
   if (!sm) return;
   const top = mdlib.sections(sm.body, 2);
+
+  // the form of the file: no frontmatter, no H1, « Affirmations », « Références », « Non vérifié »,
+  // in this order, all present and no other ## section; one table of five columns in each of the
+  // first two
+  if (sm.hasFront) out.push(fail(sf, 1, 'sources.md has no frontmatter'));
+  for (const h of mdlib.headings(sm.body)) if (h.level === 1) out.push(fail(sf, h.line, 'no H1: the title is in course.yaml'));
+  const order = ['claims', 'references', 'unverified'].map(H);
+  let k = 0;
+  for (const s of top.sections) {
+    if (k < order.length && s.title === order[k]) { k++; continue; }
+    out.push(fail(sf, s.line, k < order.length
+      ? `section "${s.title}" found where « ${order[k]} » is expected (« ${order.join(' », « ')} », in this order, and no other ## section)`
+      : `section "${s.title}" is no section of sources.md: « ${order.join(' », « ')} » only`));
+    k = -1;
+    break;
+  }
+  if (k >= 0 && k < order.length) out.push(fail(sf, 1, `missing section « ${order[k]} »`));
+  for (const [key, cols] of [['claims', 5], ['references', 5]]) {
+    const s = top.sections.find((x) => x.title === H(key));
+    if (!s) continue;
+    const tabs = mdlib.tables(s.lines);
+    if (tabs.length !== 1) out.push(fail(sf, s.line, `« ${H(key)} » holds one table, found ${tabs.length}`));
+    else if (tabs[0].header.length !== cols) out.push(fail(sf, tabs[0].line, `« ${H(key)} » table has ${tabs[0].header.length} columns, expected ${cols}`));
+    else for (const r of tabs[0].rows) if (r.cells.length !== cols) out.push(fail(sf, r.line, `« ${H(key)} » row has ${r.cells.length} cells, expected ${cols}`));
+  }
+
   const secRefs = top.sections.find((s) => s.title === H('references'));
   const secClaims = top.sections.find((s) => s.title === H('claims'));
   const secUnv = top.sections.find((s) => s.title === H('unverified'));

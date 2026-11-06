@@ -180,23 +180,6 @@ groups:
         text: >-
           Il convient qu'une unité, un titre `###` ou une section `##` sans titre `###`, tienne
           en un message du professeur avec sa question.
-      - id: sources-sections-in-order
-        level: requirement
-        check: concept-file
-        text: >-
-          Les sections de `sources.md` doivent être des titres `##` dont le texte est le titre du
-          lexique, « Affirmations », « Références », « Non vérifié », dans cet ordre, toutes
-          présentes, et aucune autre section `##` ne doit exister.
-      - id: sources-no-h1
-        level: requirement
-        check: concept-file
-        text: "`sources.md` ne doit pas avoir de H1 : le titre est dans `course.yaml`."
-      - id: sources-no-frontmatter
-        level: requirement
-        check: concept-file
-        text: >-
-          `sources.md` ne doit pas avoir de frontmatter : le Markdown d'un cours n'a de frontmatter
-          YAML que là où la spec le dit.
 
   - title: Le frontmatter de concept.md (course/README.md section 3.1)
     purpose: >-
@@ -510,10 +493,26 @@ groups:
         check: sources
         text: >-
           `sources.md` ne doit pas avoir d'introduction : il s'ouvre sur « Affirmations ».
+      - id: sources-sections-in-order
+        level: requirement
+        check: sources
+        text: >-
+          Les sections de `sources.md` doivent être des titres `##` dont le texte est le titre du
+          lexique, « Affirmations », « Références », « Non vérifié », dans cet ordre, toutes
+          présentes, et aucune autre section `##` ne doit exister.
+      - id: sources-no-h1
+        level: requirement
+        check: sources
+        text: "`sources.md` ne doit pas avoir de H1 : le titre est dans `course.yaml`."
+      - id: sources-no-frontmatter
+        level: requirement
+        check: sources
+        text: >-
+          `sources.md` ne doit pas avoir de frontmatter : le Markdown d'un cours n'a de frontmatter
+          YAML que là où la spec le dit.
       - id: sources-tables-five-columns
         level: requirement
-        category: structure
-        check: concept-file
+        check: sources
         text: >-
           « Affirmations » et « Références » de `sources.md` doivent tenir chacune un tableau de
           cinq colonnes, dans cet ordre : pour « Affirmations », affirmation, section, source,
