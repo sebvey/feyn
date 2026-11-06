@@ -1,6 +1,6 @@
 ---
 name: feyn-glossary-entry
-description: "Read, add or change an entry of the glossary of feyn; a choice that changes files or steps goes to /feyn-decision. Use for \"/feyn-glossary-entry <word>\", \"add a glossary entry for …\", \"rename the term …\"."
+description: "Read, add or change an entry of the glossary of feyn. Use for \"/feyn-glossary-entry <word>\", \"add a glossary entry for …\", \"rename the term …\"."
 argument-hint: "<word> | add <concept> | rename <term> <new term> | merge <term> <term> | remove <term>"
 ---
 
