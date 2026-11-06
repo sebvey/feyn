@@ -19,6 +19,10 @@ Un seul terme par notion : le cours emploie le « terme du cours », en françai
 | Revue de sprint | Sprint Review | Événement où l'équipe et les parties prenantes inspectent l'incrément et adaptent le backlog | 0 |
 | Rétrospective | Sprint Retrospective | Événement où l'équipe inspecte sa façon de travailler, DoD comprise | 0 |
 | Incrément | Increment | Le produit dans un nouvel état utilisable, qui remplit la DoD | 0 |
+| Backlog produit | Product Backlog | Liste ordonnée et émergente de ce qu'il faut pour améliorer le produit, seule source du travail de l'équipe | 0 |
+| Objectif produit | Product Goal | Engagement du backlog produit : l'état futur du produit visé à long terme | 0 |
+| Objectif de sprint | Sprint Goal | Engagement du backlog de sprint : l'objectif unique du sprint | 0 |
+| Definition of Done, DoD | | Engagement de l'incrément : la description de l'état qu'il doit atteindre | 0 |
 | Produit (d'une équipe) | product | Ce qui résout un problème d'utilisateurs et leur apporte une valeur | 1 |
 | Utilisateur (d'un produit) | user | Personne qui se sert du produit (un consommateur de données en est un) | 1 |
 | Partie prenante | stakeholder | Toute personne ou équipe concernée par le produit (utilisateur, financeur, sponsor, équipe voisine, fournisseur de données) | 1 |

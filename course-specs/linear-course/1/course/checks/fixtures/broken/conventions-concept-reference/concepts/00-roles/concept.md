@@ -20,7 +20,7 @@ concept 1.
 
 ### 0a1 Le premier rôle
 
-- **Matière** : Le premier rôle décide. Le concept 99 en dépend. [cours]
+- **Matière** : Le premier **rôle** décide. Le concept 99 en dépend. [cours]
 - **Ancrage** : Régis veut une carte et décide de ce qu'elle montre.
 - **Question** : qui décide ?
 - **Réponse attendue** : le premier rôle.

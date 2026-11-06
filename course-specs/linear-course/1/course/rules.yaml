@@ -435,13 +435,19 @@ groups:
           La question d'une unité et celle de ses cas ne doivent porter que sur ce que sa matière,
           et celle des unités d'avant, énoncent : ce que la matière n'énonce pas est une lacune de
           l'unité, comblée dans sa matière.
-      - id: anchor-uses-storyline-facts
+      - id: no-restatement-matter-and-cases
         level: requirement
         method: inspection
         text: >-
-          Un ancrage ne doit reprendre que des faits de `storyline.md` ; il ajoute le déroulé (qui
-          dit quoi, quand), jamais un fait nouveau : un fait qui manque est d'abord ajouté à
-          `storyline.md`, aux « Faits fixés » avec l'id de l'unité qui le fixe.
+          La matière d'une unité doit rester générale : elle ne reprend pas la situation de son
+          ancrage ni celle d'un de ses cas supplémentaires, et n'énonce pas le verdict de sa
+          réponse attendue ; dans l'autre sens, son ancrage, ses questions et ses réponses
+          attendues, les siens et ceux de ses cas, ne redisent pas sa matière.
+        why: >-
+          Sans elle, les douze « Explication » des cas du concept 0 de `po-essai`, dans la forme
+          d'avant les unités, répétaient mot pour mot le texte de son `concept.md`, à 37 à 91 %
+          (epic #475) ; la règle ne vivait que dans le prompt du workflow `course-batch.js`, retiré
+          par #625.
       - id: fallback-case-stands-alone
         level: requirement
         method: inspection
@@ -472,14 +478,6 @@ groups:
     category: sources
     method: test
     rules:
-      - id: published-claims-in-claims
-        level: requirement
-        method: inspection
-        text: >-
-          Seuls les champs publiés de `concept.md` sont sourcés : « Affirmations » doit couvrir
-          les affirmations vérifiables de « Matière », de « L'essentiel », des « Repères » et des
-          corrections des idées fausses (une définition, une date, un chiffre, une citation, ce
-          qu'un guide dit ou ne dit pas).
       - id: claims-hold-no-device
         level: requirement
         method: inspection
@@ -665,6 +663,43 @@ groups:
         text: >-
           `concept.md` ne doit tenir aucune image : le build place chaque schéma à son unité,
           depuis `diagrams` du frontmatter.
+
+  - title: Les ajouts d'une unité (course/README.md section 3.6)
+    purpose: >-
+      Ce qu'écrire une unité ajoute hors du fichier de concept : un fait de son ancrage aux
+      « Faits fixés » de `storyline.md`, un terme qu'elle met en gras à `glossary.md`, et, une
+      fois les sources écrites, une affirmation d'un champ publié à « Affirmations » de
+      `sources.md`. `unit-additions` dit au créateur, au moment où il écrit l'unité, ce qu'un
+      programme peut dire (le gras) ; la revue lit le reste. Un concept à moitié écrit échoue :
+      il n'y a pas d'état de brouillon.
+    category: pedagogy
+    method: inspection
+    rules:
+      - id: bold-term-in-glossary
+        level: requirement
+        method: test
+        check: unit-additions
+        text: >-
+          Un passage en gras (`**…**`) d'un champ d'une unité ou d'un cas supplémentaire que
+          l'apprenant lit ou entend (`readers` de `course/form.yaml` : tout sauf la consigne),
+          libellés exceptés, doit être un terme de `glossary.md`, ou l'une de ses variantes, casse
+          ignorée : dans une unité, le gras marque un terme du glossaire, et rien d'autre.
+      - id: anchor-uses-storyline-facts
+        level: requirement
+        method: inspection
+        text: >-
+          Un ancrage ne doit reprendre que des faits de `storyline.md` ; il ajoute le déroulé (qui
+          dit quoi, quand), jamais un fait nouveau : un fait qui manque est d'abord ajouté à
+          `storyline.md`, aux « Faits fixés » avec l'id de l'unité qui le fixe.
+      - id: published-claims-in-claims
+        level: requirement
+        category: sources
+        method: inspection
+        text: >-
+          Seuls les champs publiés de `concept.md` sont sourcés : « Affirmations » doit couvrir
+          les affirmations vérifiables de « Matière », de « L'essentiel », des « Repères » et des
+          corrections des idées fausses (une définition, une date, un chiffre, une citation, ce
+          qu'un guide dit ou ne dit pas).
 
   - title: Les fichiers de domaine (course/README.md section 4)
     purpose: >-

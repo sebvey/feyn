@@ -121,11 +121,22 @@ Les règles de `sources.md` sont le groupe « Le fichier sources.md » de [`rule
 
 ### 3.5 Les conventions du texte
 
-La structure de `concept.md` est du Markdown simple sous des conventions : le site fait de chacune son HTML et ses classes, le professeur les lit comme du Markdown ordinaire. Hors d'elles (gras, italique, listes, paragraphes, catalogues en gras), le texte est du Markdown ordinaire. Elles valent dans ce que l'apprenant lit ou entend, la consigne exceptée (`readers` de [`form.yaml`](form.yaml)).
+La structure de `concept.md` est du Markdown simple sous des conventions : le site fait de chacune son HTML et ses classes, le professeur les lit comme du Markdown ordinaire. Hors d'elles (gras, italique, listes, paragraphes, catalogues en gras), le texte est du Markdown ordinaire ; dans une unité, le gras marque un terme du glossaire (3.6). Elles valent dans ce que l'apprenant lit ou entend, la consigne exceptée (`readers` de [`form.yaml`](form.yaml)).
 
 Une **référence de concept** est du texte simple : le mot `concept_refs.concept` (au pluriel `concept_refs.concepts`, une liste jointe par `concept_refs.and`) puis des numéros de concept ou des ids de section ou d'unité, `concept 4`, `concept 8a2`, `(concept 17)`, `concepts 5 et 7b` ; vers une annexe, le mot `concept_refs.annex` puis un numéro d'annexe ou l'id d'une section ou d'une unité d'annexe, `annexe A2`, `annexe A2b`. Un id nu sans ce mot (`qu'en 9a`) est du texte simple, sans lien. Un **marqueur de position** est `[cours]`, `[école]` ou `[consensus]` (`markers.course`, `markers.school`, `markers.consensus`).
 
 Les règles de ces conventions sont le groupe « Les conventions du texte » de [`rules.yaml`](rules.yaml).
+
+### 3.6 Les ajouts d'une unité
+
+| Reader | Needs | When |
+|---|---|---|
+| the creator (human or agent) | what writing a unit adds outside the concept file, and whether it was added | writing a unit, then the sources of its concept |
+| the reviewer | which additions a script verified, so the review reads the rest | reviewing a change |
+
+Écrire une unité ajoute hors du fichier de concept : ce sont ses **ajouts**. Un fait que son ancrage emploie entre aux « Faits fixés » de `storyline.md`, avec l'id de l'unité ; un terme qu'elle met en gras est un terme de `glossary.md`, le gras marquant dans une unité un terme du glossaire ; une affirmation d'un champ publié a sa ligne dans « Affirmations » de `sources.md`, une fois les sources du concept écrites. Les étapes de la création d'un cours et les checks que chacune lance sont dans [`checks/README.md`](checks/README.md).
+
+Les règles des ajouts sont le groupe « Les ajouts d'une unité » de [`rules.yaml`](rules.yaml).
 
 ## 4. Fichiers de domaine
 

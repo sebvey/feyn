@@ -15,7 +15,7 @@ Le lexique rassemble les mots du cours.
 
 ### A1a1 Un mot
 
-- **Matière** : Chaque mot du cours a une définition courte.
+- **Matière** : Chaque mot du **lexique** a une définition courte.
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
@@ -24,7 +24,7 @@ Le lexique rassemble les mots du cours.
 
 ### A1a2 Sa définition
 
-- **Matière** : La définition d'un mot tient en une ligne.
+- **Matière** : La définition d'un mot tient en une ligne, celle de **produit** comprise.
 - **Ancrage** : Régis cherche un mot du lexique.
 - **Question** : combien de lignes a sa définition ?
 - **Réponse attendue** : une.
