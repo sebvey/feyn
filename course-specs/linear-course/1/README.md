@@ -124,4 +124,4 @@ The category, level and method of each check below are those of the rules it ver
 | `domain-first-sentence-standalone` | `writing` | recommendation | test | reports | the first sentence of each paragraph of « Le fil des concepts » does not open with a word of `checks.anaphora` | 4, 7 |
 | `taught-check` | `pedagogy` | recommendation | analysis | reports | no case asks what the learner has not yet been taught | 3.3 |
 
-**`taught-check`** is not a script: it is an agent workflow (`.claude/workflows/taught-check.js`), run on demand through `/feyn-taught-check`, and its findings are triaged like the others.
+**`taught-check`** is not a script: it is an agent workflow, `course/checks/taught-check.js`, run on demand after a change to what a concept teaches, by a work session with `Workflow` and an absolute `scriptPath` (args `{ course, from?, to? }`, `from` the first concept the change touches; without it, the whole course); it modifies no file, and its findings are triaged like the others.

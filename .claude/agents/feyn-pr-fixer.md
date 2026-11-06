@@ -21,7 +21,7 @@ In your own worktree (`.claude/reference/worktree-agent.md`): `git fetch`, then 
 2. **Rerun** the checks the fixes touch (as `/feyn-pull-request` says) and the Done when statements they touch.
 3. **Commit and push** on the PR's branch, as above.
 4. **Check each fix in the diff** (`mise exec -- gh pr diff <pr>`, or `git diff <reviewed head>..HEAD`) against your finding's words: the finding gone, nothing else changed.
-5. **Update the PR body** (`mise exec -- gh pr edit <pr> --body-file <file>`): coherent with the change, within the limits of `/feyn-pull-request` step 5 (30 lines at most, blank lines and the awaiting section excluded; Review first 1 to 3 bullets), counted before each edit; its `Fresh-agent review:` line is the caller's, left as it is unless the prompt asks you to write it.
+5. **Update the PR body** (`mise exec -- gh pr edit <pr> --body-file <file>`): coherent with the change, `mise exec -- .claude/scripts/check-pr-body --pr <pr>` passing after each edit; its `Fresh-agent review:` line is the caller's, left as it is unless the prompt asks you to write it.
 6. **Update "Delivery notes"** in place (`/feyn-pull-request` step 6; post it if the PR has none, never a second one): the non-blocking findings you left, each with its reason; one goes up into Review first only when it needs the maintainer's decision, within the 1 to 3 bullets.
 
 ## Return

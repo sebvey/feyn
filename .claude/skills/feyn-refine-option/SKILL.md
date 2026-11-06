@@ -1,6 +1,6 @@
 ---
 name: feyn-refine-option
-description: "Run with the maintainer the option refinement of feyn (a moment of the work cycle of its own): one named option, an epic or a story in Status Option, analysed against the purpose of feyn (which product consumes it) and the repository (a staleness check and an overlap check, each run as a command, their results presented with their proof; an option labelled `stale` re-read against `vision.md`), then decided on its own: commit (set Ready), rework, brainstorm (what it builds on has changed), merge, split, fold into an epic, close; the decision is executed. An idea is not treated here: it goes to `/feyn-triage`. It never reviews the Option column as a whole. With no number, it asks which option. Use for \"raffine l'option 435\", \"refine option 435\", \"/feyn-refine-option 435\"."
+description: "Refine one option with the maintainer, against the purpose of feyn and the repository, up to its commitment, rework, brainstorm or close. Use for \"raffine l'option 435\", \"refine option 435\", \"/feyn-refine-option 435\"."
 argument-hint: "<option number>"
 ---
 
@@ -17,10 +17,12 @@ An **option** (Status Option) is a work item, epic or story, defined and not com
 
 ## 1. The option named
 
+An option refinement is a cold reading of the option. A work session that posed the option, or wrote the material it rests on (a brainstorm, a review), does not refine it: it would reread its own work through the reasoning that produced it. Say so in one line and propose a new work session, which starts from `/feyn-refine-option <n>` alone.
+
 The argument is one issue number. With no number, ask which option to refine and do nothing until the answer: never list the Option column to pick one. With several numbers, refine the first, and name the others at the end of the reply, each for its own `/feyn-refine-option`.
 
 Read it: `mise exec -- gh issue view <n> --json number,title,url,state,labels,body,comments,updatedAt,projectItems` (its Status: [project.md](../../reference/project.md), "Commands", Read). Then:
-- Status Idea, an issue of the old format included: not refined; say so in one line and name `/feyn-triage <n>`, which treats it;
+- Status Idea: not refined; say so in one line and name `/feyn-triage <n>`, which treats it;
 - closed, or any Status other than Option and Idea: not refined; say so in one line, with its Status.
 
 An option named is refined whatever it holds: sound or outdated, it goes through steps 2 to 4.
@@ -31,7 +33,7 @@ The checks of a commitment ([commitment.md](../../reference/commitment.md), "The
 
 ## 3. Present it
 
-One message, under its own level-2 heading, the decision put to the maintainer in the form their instructions give (`CLAUDE.md`, "Working with the maintainer"; where none is loaded, the project `CLAUDE.md`'s own form). What it holds:
+One message, under its own level-2 heading, the decision put to the maintainer in the form the maintainer's instructions give a decision. What it holds:
 - its frame in one line: epic or story, what it is for, where it belongs;
 - **Purpose**, **Staleness** and **Overlap**, as their files say (step 2);
 - what it still calls for, and what no longer holds, each with its proof (a commit, a file and line, an issue, each named);
@@ -42,23 +44,21 @@ The decision asked: commit, rework (what changes), brainstorm, merge (into which
 
 An option the maintainer leaves open stays Option, and the reply says so. An option that waits on an action of the maintainer (a label, a merge, an answer elsewhere): say what it waits on.
 
-A requirement added to an epic's Done when, by a fold or otherwise, is the maintainer's decision: propose it as a choice, never write it on the strength of another decision.
+An epic's Done when gaining a requirement: [commitment.md](../../reference/commitment.md), "The conditions of the act".
 
 ## 4. Execute the decision
 
 As the maintainer decided. Which form an issue is in is read as `/feyn-issue` reads it ([its skill](../feyn-issue/SKILL.md), "Read an issue").
 
-An option labelled `stale` (step 2): commit and rework remove the label with the act, since it holds as written or reworked (`mise exec -- gh issue edit <n> --remove-label stale`); merge, split, fold and close close it, and the close comment names what replaced it. An option left open, or sent to a brainstorm, keeps the label: it has not been decided.
+An option labelled `stale`: [project.md](../../reference/project.md), "Labels that are not a Status".
 
 - **commit**: set its Status to Ready, as [commitment.md](../../reference/commitment.md), "The conditions of the act", says (a statement the baselines show wrong: rework, below);
 - **rework**: its body rewritten (`mise exec -- gh issue edit <n> --body-file <file>`, from the template of its kind), or its kind changed, a story rewritten as an epic or the reverse, in the template of its new kind, its kind label with it (`mise exec -- gh issue edit <n> --remove-label <old kind> --add-label <new kind>`), and its title ("Epic: …" for an epic); a story becoming an epic is detached from its epic, if it had one ([project.md](../../reference/project.md), "Epics", Detach). The body ends with the line `Reworked <YYYY-MM-DD> (refinement)`, in place of any earlier marker. It stays Option;
 - **brainstorm**: nothing written on the option, which stays Option, its label `stale` kept until the brainstorm reworks or replaces it; the option refinement ends, and `/feyn-brainstorm <n>` opens from the option, with the changes the staleness check found;
 - **merge**: the option it goes into gets what it lacked (rework, above), then close it as completed with a comment naming that option;
 - **split**: one option per work item it holds, each citing it, created with `/feyn-issue` and its parameters: `--status Option`, or `--status Ready` when the maintainer says a part is committed and the conditions of a commitment hold for it; `--origin`, the origin of the option it splits, never a new form; `--opened-from #<n>`, the option, left out of the twin search. Then close the option as completed with a comment naming them. A story under an epic is created only when it is the next one the epic's plan comment marks (the policies of [contributing](../../../docs/contributing.md)); otherwise that part is folded into the epic (below);
-- **fold into an epic**: close it as completed with a comment naming the epic that covers it; what it adds goes into the epic's Material when the epic is still an option, as decided (a requirement added to its Done when: step 3);
-- **close**: done, moot or a duplicate, as not planned with the reason, or as completed when work already delivered settled it: `mise exec -- gh issue close <n> --reason <completed|"not planned"> --comment "<the reason, with the links: commit, PR, issue>"`.
-
-A duplicate comment (posted twice by mistake) is hidden, never deleted ([project.md](../../reference/project.md), "Issues", Hide a duplicate).
+- **fold into an epic**: close it as completed with a comment naming the epic that covers it; what it adds goes into the epic's Material when the epic is still an option, as decided (a requirement added to its Done when: [commitment.md](../../reference/commitment.md), "The conditions of the act");
+- **close**: done, moot or a duplicate ([project.md](../../reference/project.md), "Issues", Close).
 
 ## 5. End it
 

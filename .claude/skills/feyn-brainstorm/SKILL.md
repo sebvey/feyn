@@ -1,6 +1,6 @@
 ---
 name: feyn-brainstorm
-description: "Run a brainstorm with the maintainer on feyn (a spec, a product, the process), subject by subject, and end it in a plan of work items posed through the skills of the cycle: a working folder `tmp/<slug>/`, an inventory of the real object, the subjects decided one by one, a review on a support, a pass on what was missed, the output and its posing (options created, the option it opened from reworked or replaced, neighbours commented) and an optional review by a fresh agent. It opens from an option whose refinement found its basis changed, an idea (it is then that idea's triage) or the maintainer's subject. Use for \"on brainstorme sur la structure du cours\", \"brainstorm option 475\", \"brainstorm idea 12\", \"let's brainstorm the skills\", \"on passe à l'output\", \"/feyn-brainstorm\"."
+description: "Run a brainstorm with the maintainer, subject by subject, and end it in a plan of work items. Use for \"on brainstorme sur la structure du cours\", \"brainstorm option 475\", \"brainstorm idea 12\", \"let's brainstorm the skills\", \"on passe à l'output\", \"/feyn-brainstorm\"."
 argument-hint: "[subject | idea number | option number]"
 ---
 
@@ -20,8 +20,6 @@ The argument is one of three things:
 - **an option** (an epic or a story in Status Option) whose option refinement found that what it builds on has changed (a product delivered, a file removed, a decision replaced: `/feyn-refine-option` step 3): read it (`/feyn-issue <n>`) and the refinement's findings; it is the starting point, and the output says what becomes of it;
 - **an idea** (Status Idea): read it (`/feyn-issue <n>`); its finding is the question, and the brainstorm is its triage (step 4 closes it);
 - **the maintainer's subject**, in a few words.
-
-A brainstorm on the process (a skill, a workflow, a policy, the glossary, `contributing.md`) opens from an idea that names the problem observed and where it was seen (decision `process-change-from-an-observed-problem`). Given a subject on the process with no such idea, ask which problem was observed, and where. Named: create the idea (`/feyn-issue idea <finding>`) and open from it. None: no brainstorm; the wish waits for an observed problem.
 
 Then create the working folder `tmp/<slug>/` at the repository root (slug: two or three words of the subject) with its `README.md`, and send its frame as the first message: the goal, the constraints, the process (the five steps), the first list of subjects. The maintainer corrects it before the inventory starts. The folder is written in the language of the conversation.
 
@@ -66,11 +64,11 @@ The first subject is the real object, read and measured, never the spec or the p
 
 ## 2. The subjects
 
-The subjects are treated in the order of the README's table, each in its file `<nn>-<slug>.md`, and put to the maintainer in the form `CLAUDE.md`, "Working with the maintainer", gives a decision. What the brainstorm adds to that form: the subject's frame answers four questions, what the thing is; what it holds today (measured where it can be); who reads it (a program, an agent, the teacher, the site, the maintainer: checked in the code, not assumed); what the earlier subjects already changed there.
+The subjects are treated in the order of the README's table, each in its file `<nn>-<slug>.md`, and put to the maintainer in the form the maintainer's instructions give a decision. What the brainstorm adds to that form: the subject's frame answers four questions, what the thing is; what it holds today (measured where it can be); who reads it (a program, an agent, the teacher, the site, the maintainer: checked in the code, not assumed); what the earlier subjects already changed there.
 
 The maintainer decides. The decision is written in the subject's file before the next subject opens (decided, why, rejected), its state set to decided in the README's table, and one line added to the README's summary. A subject left open stays open in the table, with what it waits on.
 
-A gap found during a subject enters the README's table as the maintainer's rules say a gap enters a plan (`CLAUDE.md`, "Working with the maintainer": their "Plans and working files"). The output is always the last subject.
+A gap found during a subject enters the README's table as the maintainer's rules say a gap enters a plan (the maintainer's instructions, their "Plans and working files"). The output is always the last subject.
 
 The skeleton of a subject file:
 
@@ -102,7 +100,7 @@ State: <open | in progress | decided (<date>)>
 <what this subject taught about the object, one line each; none: the section is dropped.>
 ```
 
-A decision of the project that a subject touches is weighed as the maintainer's rules say (`CLAUDE.md`, "Working with the maintainer": their "Plans and working files"; on 2026-11-04, `reader-facing-and-teacher-only-files`, `spec-files-by-product` and `versioned-objects-and-spec-layout` were decided to be replaced, by #475 and #522); its replacement or amendment is a decision to write, carried by a work item (step 4).
+A decision of the project that a subject touches is weighed as the maintainer's rules say (the maintainer's instructions, their "Plans and working files"); its replacement or amendment is a decision to write, carried by a work item (step 4).
 
 ## 3. The review on a support
 

@@ -1,6 +1,6 @@
 ---
 name: feyn-deliver-epic
-description: "Deliver a Ready epic on feyn on its integration branch, from Ready to the maintainer's merge of its epic PR: take it (integration branch, plan comment, Status), pose each story and run it through the agent workflow feyn-deliver-story-workflow, sort every deviation and structural choice, putting to the maintainer as an open question only what nothing settles, have the whole branch reviewed by a fresh agent, hand over the epic PR, then clean up after the merge. Use for \"livre l'epic 342\", \"prends l'epic 318\", \"traite l'epic 318\", \"deliver epic 342\", \"take epic 318\", \"/feyn-deliver-epic 342\"."
+description: "Deliver a Ready epic on its integration branch, story by story through agents, up to the hand-over of its epic PR and the cleanup after its merge. Use for \"livre l'epic 342\", \"prends l'epic 318\", \"traite l'epic 318\", \"deliver epic 342\", \"take epic 318\", \"/feyn-deliver-epic 342\"."
 argument-hint: "<epic number>"
 ---
 
@@ -72,4 +72,3 @@ The behaviours the steps above rely on, one line each with its step ([contributi
 
 - Step 2.3: an agent workflow runs only in the work session: a subagent has no Workflow tool (Claude Code, observed 2026-10-28, #130).
 - Step 2.3: `Workflow` called by name serves a frozen version of the script, hence `scriptPath` absolute (Claude Code, observed 2026-10-29, #269).
-- Step 2.4: a Project workflow "Auto-archive items" archived closed slices, whose items then left the Project and could not be set Done; it is off since 2026-10-31 (GitHub, observed 2026-10-31, #317).

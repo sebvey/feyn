@@ -9,7 +9,7 @@ Without this, an agent would open a new repository for a second course or a seco
 
 One public repository, `sebvey/feyn`, holds the specs, the courses, the teacher, the site engine, the agentic layer and the decisions; it is the only repository we work in. The site builds are deployed to a separate artifact repository, `sebvey/feyn-site` (branch `gh-pages` only, never edited by hand). `feyn` was created empty: the git history of `parcours-po` does not carry over. The two old repositories are frozen, then archived; they are read, never written to.
 
-The root holds three files, `CLAUDE.md`, `CLAUDE.local.example.md` and `README.md`, plus dotfiles; `docs/` holds four things, `decisions/`, `glossary.md`, `contributing.md` and `kanban.md`. Anything more at the root or in `docs/` needs a decision here. A document that describes one area lives in that area's folder (`site-builder/docs/`, `classroom-builder/README.md`), and there is no `CLAUDE.md` per folder: skills carry the detail.
+The root holds two files, `CLAUDE.md` and `README.md`, plus dotfiles; `docs/` holds four things, `decisions/`, `glossary.md`, `contributing.md` and `kanban.md`. Anything more at the root or in `docs/` needs a decision here. A document that describes one area lives in that area's folder (`site-builder/docs/`, `classroom-builder/README.md`), and there is no `CLAUDE.md` per folder: skills carry the detail.
 
 ## Options ruled out
 
@@ -23,3 +23,4 @@ The root holds three files, `CLAUDE.md`, `CLAUDE.local.example.md` and `README.m
 - Two courses evolve in parallel on branches touching `courses/a/` and `courses/b/`, without conflict.
 - Amended 2026-11-02 (#393): `docs/` admits a fourth file, `kanban.md`, the reference of the frame of the work (Kanban, with ADR and GitHub flow), which says what the frame is while `contributing.md` says how feyn applies it. Without it, the frame would live in `contributing.md`, mixing the general with the particular in a file that changes at every retouch, or outside the repository only.
 - Amended 2026-11-04 (#550): the root admits a third file, `CLAUDE.local.example.md`, the maintainer's working rules as an example for a developer's own `CLAUDE.local.md`, which Claude Code loads beside `CLAUDE.md` and `.gitignore` keeps out. Without it, the skills, which follow the personal instructions of whoever works on feyn, would leave a new developer no model of the rules they were written against.
+- Amended 2026-11-06 (#609): the root no longer admits `CLAUDE.local.example.md`; how to work with the maintainer is theirs, in their own instructions. Without this, the repository would keep a copy of the maintainer's working rules that drifts from the ones they load, and `CLAUDE.md` would send every session to it.

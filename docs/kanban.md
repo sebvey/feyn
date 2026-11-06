@@ -12,7 +12,7 @@ Its principles:
 - **Limit WIP.** The work in progress, the items started and not finished, is limited, per state or for the whole workflow: a **WIP limit**. A new item is pulled only when one leaves. Fewer items in progress means each one finishes sooner, and a blocked item shows at once instead of hiding behind others.
 - **Manage flow.** Items are followed while they move: their age, how long they take to cross the workflow, how many finish over a period. An item that waits or ages is acted on; the aim is a smooth and predictable flow, not keeping everyone busy.
 - **Make policies explicit.** The rules of the workflow, its **policies** (what an item must hold to enter a state or leave it, the WIP limits, what is done first, who decides what), are written down where everyone reads them. A policy can then be followed, questioned and changed; an unwritten one cannot.
-- **Improve in small steps, through evolutionary change.** The process changes from what is observed in its flow, one small change at a time, each one checked against what it was meant to settle. No redesign from scratch: the current process is the starting point, and a change without an observed problem has nothing to be checked against.
+- **Improve in small steps, through evolutionary change.** The process changes from what is observed in its flow, one small change at a time, each one checked against what it was meant to settle. No redesign from scratch: the current process is the starting point.
 
 ## The upstream
 

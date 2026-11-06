@@ -1,6 +1,6 @@
 ---
 name: feyn-decision
-description: "Write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or change a live decision in place, or refuse a new one when no counterfactual is named, the bar of a decision is not met or the choice changes only words (sent to /feyn-glossary-entry). Use for \"/feyn-decision <the decision, in a sentence>\"."
+description: "Write a decision on feyn in the decisions/ folder of the area it binds, change a live one, or refuse one that names no counterfactual. Use for \"/feyn-decision <the decision, in a sentence>\"."
 argument-hint: "<the decision, in a sentence>"
 ---
 
@@ -42,7 +42,7 @@ Before writing, list every decision of every `decisions/` folder of the reposito
 
 ## 5. Write it
 
-At `<folder>/<slug>.md`, from [decision-body.md](../../reference/decision-body.md): its frontmatter and its sections are the form of decision `decision-format`, which this skill does not restate; the counterfactual is the one accepted at step 1. Name the choice rather than its files, skills or steps where the choice allows (a skill renamed or a file moved then leaves the decision true). Under 40 lines.
+At `<folder>/<slug>.md`, from [decision-body.md](../../reference/decision-body.md): its frontmatter and its sections are the form of decision `decision-format`, which this skill does not restate; the counterfactual is the one accepted at step 1. Name the choice rather than its files, skills or steps where the choice allows (a skill renamed or a file moved then leaves the decision true).
 
 Before writing, four checks on the whole text, an "Amended" line excepted; a line that fails is rewritten before the file is:
 - no rule id, of a rule or of a group of rules, the rule named by what it asks (decision `decision-format`); in a decision of a spec or of the spec directives, no course named, its evidence stated for any course (decision `spec-names-no-course`);
@@ -51,6 +51,8 @@ Before writing, four checks on the whole text, an "Amended" line excepted; a lin
 - no sentence chooses, renames or rejects a word ("X stays the name of…", "Y is the term for…", "Z leaves the texts"), which the check above lets through, since such a sentence assigns a word without defining it: it leaves the decision for the `why` of the entry, through `/feyn-glossary-entry` (decision `word-choices-in-the-glossary`), the decision keeping its structure, its files and its steps.
 
 A decision it supersedes: in the same commit, change that file's `status` to `superseded` and add `superseded-by: <slug>` on the line after it (decision `decision-format`).
+
+Then run `mise exec -- .claude/scripts/check-decisions <file> [<superseded file>]`: a failure is fixed before the commit.
 
 Commit it on the current issue branch (`git add <file>`, `git commit -m "decide <slug>"`); on `main`, stop and propose `/feyn-issue` first: a decision lands through a PR like the rest. Reply with the path and the counterfactual.
 
@@ -61,4 +63,4 @@ A live decision states what holds today; git keeps the before (decision `decisio
 - the scope of the choice that changes while it still holds (an exception added, a case it now covers or no longer covers): write it in the body too, and add one line `- Amended <date> (#<n>): …` under `## Consequences` (the heading added when missing), saying what changed and why;
 - the choice no longer holds: supersede it (step 5), never amend it.
 
-A superseded decision and a released CHANGELOG entry are history: leave them as they are. An "Amended" line keeps its account of the change of scope; correct in place a mechanism it names that changes, as in the body. The text written passes the four checks of step 5. The fourth runs over the whole decision changed, not only the text written: a sentence of it that chooses, renames or rejects a word leaves it for the `why` of its entry through `/feyn-glossary-entry`, with one "Amended" line saying so. Commit on the current issue branch, as in step 5.
+A superseded decision and a released CHANGELOG entry are history: leave them as they are. An "Amended" line keeps its account of the change of scope; correct in place a mechanism it names that changes, as in the body. The text written passes the four checks of step 5 and `check-decisions`. The fourth runs over the whole decision changed, not only the text written: a sentence of it that chooses, renames or rejects a word leaves it for the `why` of its entry through `/feyn-glossary-entry`, with one "Amended" line saying so. Commit on the current issue branch, as in step 5.

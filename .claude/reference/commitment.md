@@ -25,6 +25,8 @@ The item is set Ready ([project.md](project.md), "Commands", Set; a work item cr
 - an epic: its five sections written ([contributing](../../docs/contributing.md), "How the work is organised");
 - an epic or a story whose body names `courses/po-essai/`: its Done when states that the Material of the re-creation epic #520 holds its judgement calls ([contributing](../../docs/contributing.md), "Policies"). When it does not, that line is proposed in the presentation as a requirement added to its Done when, the maintainer's decision, written only on their word.
 
+A requirement added to an epic's Done when, by a fold or otherwise, is the maintainer's decision: propose it as a choice, never write it on the strength of another decision.
+
 A condition that does not hold is said in the presentation, with what would make it hold; the item is not set Ready until it does. At a triage, where the conditions are checked once the maintainer has said a work item is committed, after the presentation: a condition that does not hold is reported with the creation, and the work item is created Option, to be committed at an option refinement once it holds.
 
 ## A story posed in a taken epic
