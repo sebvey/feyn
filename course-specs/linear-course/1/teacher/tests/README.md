@@ -10,7 +10,7 @@ The readers are defined in [`spec-directives/README.md`](../../../../../spec-dir
 
 A **test scenario** is a fixed run of a teaching session: the learner memory it starts from, the learner's messages in order, the acts the teacher's replies are expected to show and the rules of the protocol (`../rules.yaml`) they exercise. A **fresh test** runs one: `mise exec -- classroom-builder/fresh-test <course-dir> <scenario id>` builds a disposable classroom from the course, runs the teacher in it turn by turn, and judges the transcript, a script for the form rules and a fresh agent for the others, slug by slug (`classroom-builder/README.md`, "The fresh tests"). It is the implementation of the method demonstration of the protocol's rules (`spec-directives/1/README.md` section 4). The scenarios live here, in the spec MAJOR, since they name its rules; the harness lives at the root, the same cut as the classroom build (`../build/`).
 
-The scenarios are written for the spec's example course `cafe` (`../../course/examples/cafe/`: its concepts, its actors, its cases); a second course gets its own when it is tested.
+The scenarios are written for the spec's sample course `cafe` (`../../course/samples/cafe/`: its concepts, its actors, its cases); a second course gets its own when it is tested.
 
 ## The format
 

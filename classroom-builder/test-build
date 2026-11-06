@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-// test-build: builds cafe (course-specs/linear-course/1/course/examples/cafe, the spec's example
+// test-build: builds cafe (course-specs/linear-course/1/course/samples/cafe, the spec's sample
 // course) with classroom-builder/build-classroom into temporary folders and checks what a command
 // can check of the classroom: the files of each part of the composition, the course copy (diff -r), the learner templates, the permissions, the
 // skills of the moments, the built CLAUDE.md (no placeholder left, the rules verbatim but for their
@@ -21,7 +21,7 @@ const BUILDER = __dirname;
 const REPO = path.resolve(BUILDER, '..');
 const BUILD = path.join(BUILDER, 'build-classroom');
 const SPEC = path.join(REPO, 'course-specs', 'linear-course', '1');
-const COURSE = path.join(SPEC, 'course', 'examples', 'cafe');
+const COURSE = path.join(SPEC, 'course', 'samples', 'cafe');
 const COURSE_ARG = path.relative(REPO, COURSE); // the course as given to the build, from the repository's root
 const TEMPLATES = path.join(SPEC, 'teacher', 'templates', 'learner');
 const PLACEHOLDER = /\{[a-z_]+\.[a-z_]+\}/;

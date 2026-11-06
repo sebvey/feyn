@@ -2,7 +2,7 @@
 stances:
   consensus:
     - author: "La SCA, norme 310-2021 des cafetières domestiques"
-      text: "Une eau entre 90 et 96 °C au contact de la mouture, et 55 g de café par kilo d'eau, environ 55 g par litre."
+      text: "Une eau entre 90 et 96 °C au contact du café moulu, et 55 g de café par kilo d'eau, environ 55 g par litre."
       refs: [S4]
       verified: ["« reach a temperature in the 90 to 96°C range » (6.2 Brewing Temperature) ; « a coffee/water ratio of 55 g/kg » (6.7 Operating Manuals and Other Instructional Materials)"]
   school:
@@ -35,7 +35,7 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 
 #### Leçon (pour tous)
 
-- **Matière** : Un **réglage** est une variable que l'on choisit avant ou pendant l'infusion, et qui fait varier l'extraction ou la force de la tasse. Le cours en retient quatre. La **mouture** est la finesse du café moulu, choisie au moulin. Le **ratio** est la masse de café pour la masse d'eau. La **température d'infusion** est la température de l'eau quand elle touche la mouture. Le **temps de contact** est la durée pendant laquelle l'eau et la mouture restent ensemble. Un réglage que l'on ne choisit pas est réglé quand même : au hasard. [cours]
+- **Matière** : Un **réglage** est une variable que l'on choisit avant ou pendant l'infusion, et qui fait varier l'extraction ou la force de la tasse. Le cours en retient quatre. La **mouture** est la finesse du café moulu, choisie au moulin. Le **ratio** est la masse de café pour la masse d'eau. La **température d'infusion** est la température de l'eau quand elle touche le café moulu. Le **temps de contact** est la durée pendant laquelle l'eau et le café moulu restent ensemble. Un réglage que l'on ne choisit pas est réglé quand même : au hasard. [cours]
 - **Ancrage** : Cédric t'écrit : « Ma recette : trois cuillères bombées de café moulu moyen, enfin je crois, l'eau dès que la bouilloire coupe, je verse tout d'un coup et j'attends que ça passe. Au bureau, la Pipeline ne me demande rien. Chez moi, qu'est-ce que je choisis, au juste ? »
 
 #### Exercice (teacher seulement)
@@ -54,7 +54,7 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 
 #### Leçon (pour tous)
 
-- **Matière** : L'eau ne prend au café que ce qu'elle atteint : moudre ouvre le grain et multiplie la surface que l'eau touche. Plus la **mouture** est fine, plus l'eau extrait vite ; plus elle est grosse, plus l'extraction est lente. Le **temps de contact** joue dans le même sens : plus l'eau reste longtemps avec la mouture, plus elle en prend. Une mouture plus fine ou un contact plus long poussent donc l'extraction vers la sur-extraction ; une mouture plus grosse ou un contact plus court la retiennent du côté de la sous-extraction.
+- **Matière** : L'eau ne prend au café que ce qu'elle atteint : moudre ouvre le grain et multiplie la surface que l'eau touche. Plus la **mouture** est fine, plus l'eau extrait vite ; plus elle est grosse, plus l'extraction est lente. Le **temps de contact** joue dans le même sens : plus l'eau reste longtemps avec le café moulu, plus elle en prend. Une mouture plus fine ou un contact plus long poussent donc l'extraction vers la sur-extraction ; une mouture plus grosse ou un contact plus court la retiennent du côté de la sous-extraction.
 - **Ancrage** : Cédric t'écrit : « Ce matin, j'ai moulu beaucoup plus fin que d'habitude, presque de la farine : plus c'est fin, plus il y a de goût, non ? Et l'eau a mis une éternité à passer dans le filtre. J'ai eu le temps de relire une PR entière. »
 
 #### Exercice (teacher seulement)
@@ -65,7 +65,7 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 #### Pièges (pour tous)
 
 - « Plus la mouture est fine, meilleur est le goût » : plus fine, elle fait extraire l'eau plus vite et plus loin, jusqu'à l'amer et au sec.
-- « Un contact plus long rend seulement la tasse plus forte » : plus l'eau reste avec la mouture, plus elle en prend : c'est l'extraction qui avance, avec ses goûts.
+- « Un contact plus long rend seulement la tasse plus forte » : plus l'eau reste avec le café moulu, plus elle en prend : c'est l'extraction qui avance, avec ses goûts.
 
 #### Consigne (teacher seulement)
 
@@ -84,7 +84,7 @@ Faire dire dans quel sens chaque changement pousse l'extraction, sans dire comme
 
 #### Leçon (pour tous)
 
-- **Matière** : La **température d'infusion** pousse l'extraction comme la mouture et le temps : plus l'eau est chaude quand elle touche la mouture, plus elle extrait vite. La profession donne un repère, une eau entre 90 et 96 °C [consensus] : un point de départ pour régler, pas une norme à atteindre. Des chercheurs de UC Davis ont fait le même café à 87, 90 et 93 °C, en ajustant la mouture et le temps pour arriver à la même extraction et à la même force : les dégustateurs n'ont pas fait la différence [école]. Ce qui fait le goût, c'est où l'extraction arrive ; la chaleur de l'eau n'est qu'un des moyens d'y aller.
+- **Matière** : La **température d'infusion** pousse l'extraction comme la mouture et le temps : plus l'eau est chaude quand elle touche le café moulu, plus elle extrait vite. La profession donne un repère, une eau entre 90 et 96 °C [consensus] : un point de départ pour régler, pas une norme à atteindre. Des chercheurs de UC Davis ont fait le même café à 87, 90 et 93 °C, en ajustant la mouture et le temps pour arriver à la même extraction et à la même force : les dégustateurs n'ont pas fait la différence [école]. Ce qui fait le goût, c'est où l'extraction arrive ; la chaleur de l'eau n'est qu'un des moyens d'y aller.
 - **Ancrage** : Cédric rapporte la règle d'Aïmen, qui ne doute jamais : « L'eau doit bouillir, et tu la verses direct. L'eau bouillante, c'est ce qui extrait le mieux, c'est physique. » Cédric, qui verse déjà dès que la bouilloire coupe, se sent conforté.
 
 #### Exercice (teacher seulement)
@@ -119,4 +119,4 @@ Faire dire dans quel sens chaque changement pousse l'extraction, sans dire comme
 
 ### Consigne
 
-Quand un repère est donné (90 à 96 °C, 55 g par litre), le dire comme le point de départ de la profession, pas comme une norme : c'est le goût de Cédric qui décide, le parti pris du cours. Ne pas corriger un apprenant qui préfère une tasse hors des repères, tant qu'il sait dire quel réglage la produit. Le concept dit ce que fait chaque réglage, pas comment corriger une tasse ni lequel changer d'abord : si l'apprenant y va, saluer la question et la garder pour le concept 2. Il ne nomme aucune autre façon de faire le café que le filtre de Cédric : les autres sont l'annexe A1. L'eau et la fraîcheur du café ne sont pas des réglages du cours : des apartés, courts. Ne pas enseigner l'agitation (remuer la mouture dans l'eau) : aucune source consultée ne la couvre.
+Quand un repère est donné (90 à 96 °C, 55 g par litre), le dire comme le point de départ de la profession, pas comme une norme : c'est le goût de Cédric qui décide, le parti pris du cours. Ne pas corriger un apprenant qui préfère une tasse hors des repères, tant qu'il sait dire quel réglage la produit. Le concept dit ce que fait chaque réglage, pas comment corriger une tasse ni lequel changer d'abord : si l'apprenant y va, saluer la question et la garder pour le concept 2. Il ne nomme aucune autre façon de faire le café que le filtre de Cédric : les autres sont l'annexe A1. L'eau et la fraîcheur du café ne sont pas des réglages du cours : des apartés, courts. Ne pas enseigner l'agitation (remuer le café moulu dans l'eau) : aucune source consultée ne la couvre.

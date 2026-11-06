@@ -10,7 +10,7 @@ feyn is a monorepo of courses taught by a Claude Code teacher and published as a
 |---|---|
 | `course-specs/` | the specs, one per type of course (`linear-course`: contract, lexicons, checks, templates); rules in `course-specs/README.md` |
 | `spec-directives/` | the spec directives, one folder per MAJOR; `README.md` defines the four readers of a spec; the tests of a spec's files (`check-spec`), the `lib/` and the package the checks load, the directives' `decisions/` |
-| `courses/` | one folder per course, `courses/<id>/`; none until the founding course, archived in the history, is re-created (epic #520). The bench course every spec change is tried on is the spec's example course, `course-specs/linear-course/1/course/examples/cafe/` |
+| `courses/` | one folder per course, `courses/<id>/`; none until the founding course, archived in the history, is re-created (epic #520). The bench course every spec change is tried on is the spec's sample course, `course-specs/linear-course/1/course/samples/cafe/` |
 | `classroom-builder/` | teacher template, classroom build script (`build-classroom`: it runs the spec MAJOR's `teacher/build/` and writes the classroom, its teacher skills included) and its test (`test-build`), the fresh tests (`fresh-test`) |
 | `site-builder/` | the site engine (Astro); reads `courses/` directly |
 | `docs/` | `vision.md` (what feyn is for), `decisions/`, `glossary.md`, `contributing.md`, `kanban.md` (the frame of the work) |

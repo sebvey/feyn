@@ -20,7 +20,7 @@ Inès tient le comptoir du Petit Noir, le café en bas de l'agence. Ses conseils
 
 ## La soutenance
 
-L'agence répond à un appel d'offres, et le client vient dans ses locaux pour la soutenance. Pendant l'avant-vente, Aïmen lui a promis « le meilleur café de Lyon ». Ce que devient cette promesse le jour de la soutenance n'est pas encore écrit.
+L'agence répond à un appel d'offres, et le client vient dans ses locaux pour la soutenance. Pendant l'avant-vente, Aïmen lui a promis « le meilleur café de Lyon ». Le jour de la soutenance, la promesse sera mise à l'épreuve.
 
 ## Faits fixés
 
@@ -42,5 +42,5 @@ L'agence répond à un appel d'offres, et le client vient dans ses locaux pour l
 - Le jour de la soutenance, la Pipeline tombe en panne ; Cédric fait le café du client à la main, avec le moulin qu'il a apporté de chez lui et sa recette du matin (2b2).
 - Le client redemande une tasse du café de Cédric, et Aïmen lui glisse : « Je vous l'avais dit, le meilleur café de Lyon. » (2b2).
 - Aïmen trouve que le filtre, « c'est de l'eau qui passe » : pour lui, le vrai café se fait au piston, où il a le temps de donner tout ce qu'il a (A1a1).
-- La Pipeline moud, presse la mouture et sort en une trentaine de secondes une petite tasse épaisse (A1a2).
+- La Pipeline moud, presse le café moulu et sort en une trentaine de secondes une petite tasse épaisse (A1a2).
 - Aïmen a chez lui une machine à capsules, dont il assure qu'elle fait le même café que la Pipeline (A1a2).

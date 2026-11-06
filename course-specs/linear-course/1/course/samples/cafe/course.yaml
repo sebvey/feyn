@@ -1,7 +1,7 @@
 id: cafe
 spec: linear-course@1
 title: "Faire un bon café"
-subtitle: "Comprendre sa tasse pour la régler"
+subtitle: "Goûter, comprendre, apprivoiser"
 storyline: storyline.md
 glossary: glossary.md
 annexes: [A1]

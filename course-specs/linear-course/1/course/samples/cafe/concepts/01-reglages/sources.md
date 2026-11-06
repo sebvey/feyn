@@ -7,7 +7,7 @@
 | Un réglage que l'on ne choisit pas est réglé quand même, au hasard ; une machine a les siens, choisis une fois | L'essentiel, 1a1 | cours | | cours |
 | Moudre multiplie la surface du café que l'eau atteint | 1b1 | [S2] | « It crushes the beans into a powder, exponentially increasing their surface area and allowing the water to do its work » | fait |
 | Plus la mouture est fine, plus l'eau extrait vite | 1b1 | [S2], [S3] | « we have to increase the surface area of the coffee beans » ; « grind size were systematically varied to control extraction » (Results) | fait |
-| Plus l'eau reste longtemps avec la mouture, plus elle en prend | 1b1 | [S3] | « higher PE in general is achieved by longer residence time » (Discussion) | fait |
+| Plus l'eau reste longtemps avec le café moulu, plus elle en prend | 1b1 | [S3] | « higher PE in general is achieved by longer residence time » (Discussion) | fait |
 | Une mouture plus fine ou un contact plus long poussent vers la sur-extraction, l'inverse vers la sous-extraction | L'essentiel, 1b1 | cours | Découle des trois lignes qui précèdent et des définitions du concept 0 | cours |
 | Plus l'eau est chaude, plus elle extrait vite | 1b2 | [S3] | « it is accepted that temperature impacts the solubility, volatility, and extraction kinetics of various coffee components » ; « hotter water predictably increased TDS and PE » (Introduction) | consensus |
 | Le repère de la profession : une eau entre 90 et 96 °C | 1b2 | [S4] | « reach a temperature in the 90 to 96°C range » (6.2 Brewing Temperature) | consensus |
@@ -35,7 +35,7 @@
 - 1b1 : le sens de l'effet de la mouture (plus fine, l'eau extrait plus vite) est déduit de S2 (moudre multiplie la surface que l'eau atteint) et de S3 (la mouture sert à régler l'extraction) ; aucune source ouverte ne le mesure pour un filtre. Écrire « plus vite », sans chiffre.
 - 1b1 : dans un filtre, une mouture plus fine ralentit aussi le passage de l'eau, et allonge le temps de contact ; aucune source ouverte ne le dit. Le cours ne l'enseigne pas : l'ancrage de 1b1 donne les deux changements comme deux faits.
 - 1b1 : moulin à meules ou moulin à lames : seul un torréfacteur (Counter Culture Coffee, « Deep Dive: Coffee Grinder Burrs ») dit que le moulin à lames hache le café inégalement, sans étude citée. Le cours n'en parle pas et ne conseille aucun moulin.
-- 1b1 : l'agitation (remuer la mouture dans l'eau) : aucune source consultée ne la couvre ; le cours n'en parle pas.
+- 1b1 : l'agitation (remuer le café moulu dans l'eau) : aucune source consultée ne la couvre ; le cours n'en parle pas.
 - 1b2 : l'eau bouillante n'est testée par aucune source ouverte : que plus chaude elle extrait plus vite vient de ce que S3 dit admis, et d'une étude sur l'expresso entre 88 et 98 °C que S3 cite ; le cours le dit de l'eau bouillante par extension.
 - 1b2 : le 92 à 96 °C du *Coffee Brewing Handbook* de la SCA n'est connu que par S3, le manuel n'a pas été ouvert ; le cours donne le 90 à 96 °C de S4.
 - 1b3 : qu'à extraction égale plus de café donne une tasse plus forte est déduit du lien que S3 fait entre la force, l'extraction et le ratio ; « environ 55 g par litre » convertit les 55 g par kilo de S4, un litre d'eau pesant environ un kilo.
