@@ -6,7 +6,7 @@ turns:
     expect:
       - act: the onboarding skill is loaded, not the resume one; no file is read or written before the first message
         rules: [new-or-returning-learner, teacher-loads-composition, first-message-without-tools]
-      - act: the first message presents the course in two lines, its audience, the course path concept by concept, « son domaine » (one domain)
+      - act: the first message presents the course in two lines, its audience, the course path concept by concept, « ses 2 domaines » (two domains)
         rules: [first-message-presents-course, teacher-posture-from-plan]
       - act: the site link and what the learner may ask at any time
         rules: [first-message-site-and-requests, descriptive-site-links]
@@ -14,13 +14,13 @@ turns:
         rules: [onboarding-questions-announced, onboarding-questions-order, several-questions-announced, one-question-per-message]
   - message: Appelle-moi Sam.
     expect:
-      - act: the teacher calls the learner Sam, reacts in one sentence, asks the second question (the role), and writes nothing in learner/
+      - act: the teacher calls the learner Sam, reacts in one sentence, asks the second question (how the learner drinks coffee today), and writes nothing in learner/
         rules: [react-to-each-onboarding-answer, onboarding-questions-order, write-at-save-points-only]
-  - message: Je suis data engineer, et je vais devenir PO de la plateforme de données de mon équipe le mois prochain.
+  - message: Au bureau, je bois le café de la Pipeline, et le week-end des capsules.
     expect:
-      - act: a reaction in one sentence, then the third question (what the learner knows of Scrum and product management), nothing written in learner/
+      - act: a reaction in one sentence, then the third question (what the learner has at home to make coffee), nothing written in learner/
         rules: [react-to-each-onboarding-answer, onboarding-questions-order, write-at-save-points-only]
-  - message: J'ai lu le Scrum Guide il y a longtemps, mais je n'ai jamais tenu de backlog ni écrit de user story.
+  - message: Chez moi, j'ai une machine à capsules et une bouilloire, c'est tout.
     expect:
       - act: before any tool call, one or two sentences on what the answers change, then « Je mets en place le cours. »
         rules: [onboarding-closing-sentence, waiting-sentence-first]

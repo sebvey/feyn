@@ -8,8 +8,8 @@ learner:
 
     ## Profil
 
-    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
-    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+    - Son café : au bureau, le café de la Pipeline, et le week-end des capsules
+    - Son matériel : une machine à capsules et une bouilloire, c'est tout
 
     ## Préférences
 
@@ -31,7 +31,7 @@ learner:
 
     ## Acquis
 
-    [0] responsabilités, événements, artefacts, sprint et incrément (2026-11-03)
+    [0] l'extraction fait le goût, sous- et sur-extraction, force et extraction (2026-11-03)
   parcours.md: |
     # Parcours de Sam
 
@@ -40,13 +40,13 @@ learner:
 
     ## Prochaine étape
 
-    Concept 1 : Le produit et le rôle du PO (`concepts/01-produit-et-po`), son premier message.
+    Concept 1 : Les réglages (`concepts/01-reglages`), son premier message.
 
     ## Concepts
 
     | # | Concept | Statut |
     |---|---|---|
-    | 0 | Scrum en bref et l'incrément | validé |
+    | 0 | L'extraction | validé |
 
     Annexes vues : aucune.
 
@@ -56,16 +56,16 @@ learner:
 
     ## Journal
 
-    2026-11-02, session 1 : accueil, concept 0 commencé (l'équipe en bref, les responsabilités).
-    2026-11-03, session 2 : concept 0, 0a2 avec l'exercice « Le sprint raconté par Diego », 0a3, 0b ; concept 0 validé.
+    2026-11-02, session 1 : accueil, concept 0 commencé (l'extraction fait le goût).
+    2026-11-03, session 2 : concept 0, 0a2 avec le cas de rechange « Le jus de pneu », 0b1 ; concept 0 validé.
 turns:
   - message: On continue.
     expect:
-      - act: "before concept 1 (at this turn or the next, after the recap), one practice case of concept 0 from its bank, the one the journal does not name, « « Le sprint est livré » », its question in the quote form; concept 1 not started before it"
+      - act: "before concept 1 (at this turn or the next, after the recap), one practice case of concept 0 from its bank, the « entraînement » one, which the journal does not name, « La tasse légère du Petit Noir », its question in the quote form; concept 1 not started before it"
         rules: [earlier-concept-retrieved-at-resume]
   - message: "Oui."
     if: next-line
-  - message: "On ne livre pas un sprint, on livre un incrément. La vue n'affiche pas encore l'heure de sa dernière mise à jour, donc elle ne remplit pas la DoD : elle ne fait pas partie de l'incrément. On ne la livre pas et on ne la présente pas à la revue ; elle retourne au backlog produit, où le PO l'ordonne avec le reste."
+  - message: "Non, il n'a pas raison. Légère, c'est sa force qui est basse, pas son extraction. Elle est douce, elle ne pique pas, elle n'est ni amère ni sèche, et son goût reste en bouche : elle n'est ni sous-extraite ni sur-extraite, elle est équilibrée. Inès veut dire qu'une tasse peut être légère sans être creuse."
     expect:
       - act: "the answer to the practice case corrected by the loop (validated frankly), then the next step of parcours.md, concept 1, at the same message or on the next line"
         rules: [earlier-concept-retrieved-at-resume]

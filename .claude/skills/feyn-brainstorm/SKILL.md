@@ -60,7 +60,7 @@ date, "not versioned".>
 
 ## 1. The inventory
 
-The first subject is the real object, read and measured, never the spec or the process read in the abstract: on 2026-11-04, the abstract reading of the spec alone recommended a rework, where concept 0 of `po-essai` measured (its 12 « Explication » repeating `concept.md` word for word at 37 to 91 %, 11 units for 4 leaves) showed the course had to be rethought. Pick the smallest real instance that carries the question (a concept, a skill, a run's transcript), list what it holds, for whom, with counts, and write it as a support the maintainer reads line by line (`01-<slug>.md`). What the inventory finds reorders or adds subjects.
+The first subject is the real object, read and measured, never the spec or the process read in the abstract: on 2026-11-04, the abstract reading of the spec alone recommended a rework, where concept 0 of the bench course of the time measured (its 12 « Explication » repeating `concept.md` word for word at 37 to 91 %, 11 units for 4 leaves) showed the course had to be rethought. Pick the smallest real instance that carries the question (a concept, a skill, a run's transcript), list what it holds, for whom, with counts, and write it as a support the maintainer reads line by line (`01-<slug>.md`). What the inventory finds reorders or adds subjects.
 
 ## 2. The subjects
 

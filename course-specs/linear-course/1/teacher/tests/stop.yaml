@@ -8,8 +8,8 @@ learner:
 
     ## Profil
 
-    - Rôle : data engineer, futur PO de la plateforme de données de son équipe
-    - Avant le parcours : a lu le Scrum Guide il y a longtemps, n'a jamais tenu de backlog ni écrit de user story
+    - Son café : au bureau, le café de la Pipeline, et le week-end des capsules
+    - Son matériel : une machine à capsules et une bouilloire, c'est tout
 
     ## Préférences
 
@@ -38,15 +38,15 @@ learner:
 
     ## Prochaine étape
 
-    Concept 0 : Scrum en bref et l'incrément (`concepts/00-scrum`), sous-concept 0a1 (les
-    responsabilités) : le message sur le PO, cas « Diego écrit des éléments du backlog ». Le
-    message sur l'équipe en bref est fait.
+    Concept 0 : L'extraction (`concepts/00-extraction`), sous-concept 0a2 (trop peu, ou trop) :
+    son message, cas « Elle pique le bout de la langue ». Le sous-concept 0a1 (l'extraction fait
+    le goût) est fait.
 
     ## Concepts
 
     | # | Concept | Statut |
     |---|---|---|
-    | 0 | Scrum en bref et l'incrément | en cours |
+    | 0 | L'extraction | en cours |
 
     Annexes vues : aucune.
 
@@ -56,16 +56,16 @@ learner:
 
     ## Journal
 
-    2026-11-02, session 1 : accueil, concept 0 commencé (l'équipe en bref).
+    2026-11-02, session 1 : accueil, concept 0 commencé (l'extraction fait le goût).
 turns:
   - message: On continue.
     expect:
-      - act: the recap, then the reads before what follows, then at the same message the message on the PO if the whole fits in about fifteen lines, otherwise the recap ends on the next line
+      - act: the recap, then the reads before what follows, then at the same message the message of 0a2 if the whole fits in about fifteen lines, otherwise the recap ends on the next line
         rules: [resume-on-continue]
   - message: Oui.
     if: next-line
     expect:
-      - act: the message on the PO (at this turn or the one before), its two-part question posed in steps, the first part only
+      - act: the message of 0a2 (at this turn or the one before), its two-part question posed in steps, the first part only (is Cédric's cup too little or too much extracted)
         rules: [multi-part-question-in-steps, one-question-per-message]
   - message: On s'arrête là pour aujourd'hui.
     expect:

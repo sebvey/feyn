@@ -8,7 +8,7 @@
 
 ### Done when
 
-<!-- Statements a reviewer can verify by reading a file or running a command, one per bullet, each command run on the base when it is written, its baseline on the line under it and checked against the statement's intent, a search leaving the history out: the rules of a Done when are `.claude/reference/done-when.md`. A story that changes `courses/po-essai/` carries the statement that each judgement call it makes is an entry of the Material of the re-creation epic #520 (`docs/contributing.md`, "Policies"). -->
+<!-- Statements a reviewer can verify by reading a file or running a command, one per bullet, each command run on the base when it is written, its baseline on the line under it and checked against the statement's intent, a search leaving the history out: the rules of a Done when are `.claude/reference/done-when.md`. -->
 
 ### Context
 

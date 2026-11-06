@@ -23,7 +23,6 @@ The item is set Ready ([project.md](project.md), "Commands", Set; a work item cr
 - its Done when is verifiable by its baselines: a Done when with none gets them first, each command run on `origin/main` and its output written under its statement as a dated amendment, each line checked against the statement's intent ([done-when.md](done-when.md)); a statement they show wrong is reworked, not committed;
 - no open blocked-by link remains ([project.md](project.md), "Dependencies", Read);
 - an epic: its five sections written ([contributing](../../docs/contributing.md), "How the work is organised");
-- an epic or a story whose body names `courses/po-essai/`: its Done when states that the Material of the re-creation epic #520 holds its judgement calls ([contributing](../../docs/contributing.md), "Policies"). When it does not, that line is proposed in the presentation as a requirement added to its Done when, the maintainer's decision, written only on their word.
 
 A requirement added to an epic's Done when, by a fold or otherwise, is the maintainer's decision: propose it as a choice, never write it on the strength of another decision.
 
