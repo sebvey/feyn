@@ -38,7 +38,7 @@ diagrams:
 
 Scrum est un cadre de travail léger, défini par le Scrum Guide (Schwaber et Sutherland, 2020). Une équipe y tient trois **responsabilités** (Product Owner, Scrum Master, Developers), travaille en **sprints** d'un mois au plus, sans pause entre eux, qui contiennent quatre **événements**, et s'appuie sur trois **artefacts**, chacun avec son **engagement**. Un point à ne pas rater : le sprint est une **durée** ; l'**incrément** est le produit dans un nouvel état utilisable, qui remplit la DoD et peut être livré avant la fin du sprint. Qui les confond « livre un sprint » et attend sa fin pour livrer.
 
-Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du cours vaut aussi sans sprint ; seuls quatre unités, plus tard dans le parcours, font exception, avec leur équivalent en flux continu : la Definition of Ready, la préparation du Sprint Planning, la revue de sprint et la prévision.
+Ce cours suppose une équipe Scrum qui travaille en sprints [cours]. Le reste du cours vaut aussi sans sprint ; seules quatre unités, plus tard dans le parcours, font exception, avec leur équivalent en flux continu : la Definition of Ready, la préparation du Sprint Planning, la revue de sprint et la prévision.
 
 ## 0a Trois responsabilités
 
