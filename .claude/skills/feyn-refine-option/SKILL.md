@@ -37,7 +37,7 @@ One message, under its own level-2 heading, the decision put to the maintainer i
 - its frame in one line: epic or story, what it is for, where it belongs;
 - **Purpose**, **Staleness** and **Overlap**, as their files say (step 2);
 - what it still calls for, and what no longer holds, each with its proof (a commit, a file and line, an issue, each named);
-- a condition of the commitment that does not hold, with what would make it hold ([commitment.md](../../reference/commitment.md), "The conditions of the act"), the #520 line proposed there when it is missing;
+- a condition of the commitment that does not hold, with what would make it hold ([commitment.md](../../reference/commitment.md), "The conditions of the act");
 - the options, from the actions of step 4 that apply: close (done, moot, or a duplicate of a twin), fold into an epic, merge (into another option), split, brainstorm, rework, commit. **Brainstorm** applies when the staleness check finds that what the option builds on has changed (a product delivered, a file removed, a decision replaced), each change named with its proof: rewriting its body would rework it on a basis that no longer holds, so the choice comes before rework.
 
 The decision asked: commit, rework (what changes), brainstorm, merge (into which option), split (into which work items), fold (into which epic), or close (completed or not planned, and why).
