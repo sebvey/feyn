@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
-// test-render: runs render-parts on courses/po-essai (the bench course), with no --site-url and
-// with one, and validates each JSON document against parts.schema.yaml (ajv's Ajv2020, from the
+// test-render: runs render-parts on cafe (course/examples/cafe, the spec's example course), with
+// no --site-url and with one, and validates each JSON document against parts.schema.yaml (ajv's Ajv2020, from the
 // package of the spec directives this MAJOR follows); then checks what the schema cannot say: one
 // moment per moment of composition.yaml, every rule of the protocol rendered once, in the permanent
 // protocol or in one moment, the learner templates verbatim, the three spots of the filling (a
@@ -16,7 +16,7 @@ const { createRequire } = require('module');
 const HERE = __dirname;
 const MAJOR = path.resolve(HERE, '..', '..');
 const REPO = path.resolve(MAJOR, '..', '..', '..');
-const COURSE = path.join(REPO, 'courses', 'po-essai');
+const COURSE = path.join(MAJOR, 'course', 'examples', 'cafe');
 
 const line = fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').split('\n').find((l) => /^directives\s*:/.test(l));
 const directives = line.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
@@ -45,7 +45,7 @@ function render(args) {
 }
 
 const doc = render([]);
-const published = render(['--site-url', 'https://example.org/feyn/next/po-essai', '--channel', 'prod']);
+const published = render(['--site-url', 'https://example.org/feyn/next/cafe', '--channel', 'prod']);
 if (!doc || !published) {
   failures.forEach((f) => console.error(`test-render: ${f}`));
   process.exit(1);
@@ -72,10 +72,10 @@ for (const t of doc.learner_templates) {
 }
 
 // the parameters
-check(doc.params.course.id === 'po-essai' && doc.params.classroom.channel === 'next', 'params: the course id or the default channel is wrong');
+check(doc.params.course.id === 'cafe' && doc.params.classroom.channel === 'next', 'params: the course id or the default channel is wrong');
 check(doc.params.classroom.site_url === '(site non publié)', 'params: with no --site-url, site_url is not « (site non publié) »');
-check(published.params.classroom.site_url === 'https://example.org/feyn/next/po-essai/' && published.params.classroom.channel === 'prod', 'params: --site-url or --channel is not used');
-check(published.permanent.protocol.includes('](https://example.org/feyn/next/po-essai/concepts/{nn}/)'), 'with --site-url, a link does not give the concept address');
+check(published.params.classroom.site_url === 'https://example.org/feyn/next/cafe/' && published.params.classroom.channel === 'prod', 'params: --site-url or --channel is not used');
+check(published.permanent.protocol.includes('](https://example.org/feyn/next/cafe/concepts/{nn}/)'), 'with --site-url, a link does not give the concept address');
 
 // the three spots of the filling
 const texts = (d) => [d.permanent.protocol, ...d.moments.map((m) => m.rules)].join('\n');
