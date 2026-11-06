@@ -1,6 +1,6 @@
 ---
 name: feyn-issue-branch
-description: "Put GitHub issue n on feyn in progress on its own branch, before any work on it. It refuses the issue when it is not committed (Idea or Option), a maintainer decision is awaited or an issue that blocks it is still open, creates the branch <type>/<n>-<slug> from an up-to-date base (--base <branch>, main by default; its epic's integration branch for a story of an epic), resumes an issue In progress and its branch when run by an agent in its own worktree (--worktree), reruns the commands of its Done when against their baselines (writes them when it has none), sets the Status of the issue (and of its epic) to In progress, restates the Done when and lays out the plan. Use for \"/feyn-issue-branch 12\"."
+description: "Start the work on a committed issue: its branch, its Done when rerun against its baselines, its Status In progress, its plan. Use for \"/feyn-issue-branch 12\"."
 argument-hint: "<issue number> [--base <branch>] [--worktree]"
 ---
 

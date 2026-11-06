@@ -1,6 +1,6 @@
 ---
 name: feyn-pull-request
-description: "At the end of the work on an issue, turn the current issue branch on feyn, or an epic's integration branch for its epic PR, into a pull request to its base (--base <branch>, main by default; its epic's integration branch for a story of an epic), as a draft with --draft, rereading the Done when, running the checks that exist, pushing, opening the PR with \"Closes #n\" and the title <type>(<area>): <summary>, and checking the issue lists it. It ends when the PR is open, and names what comes next (the fresh-agent review, the corrections, the hand-over). It never merges. Use for \"/feyn-pull-request\"."
+description: "Turn an issue branch, or an epic's integration branch, into a pull request to its base, its Done when reread and its checks run; it never merges. Use for \"/feyn-pull-request\"."
 argument-hint: "[--base <branch>] [--draft]"
 ---
 
@@ -42,7 +42,7 @@ Its caller passes its variations as parameters and rewrites none of its steps (d
      - `Not verified:` one line, if anything.
    - **Review first**: 1 to 3 bullets on where the maintainer's judgment is needed: a deviation, a choice the contributor made, a sensitive spot. The last one ends with a pointer to the "Delivery notes" comment when the PR has one, not a bullet of its own.
 
-   Before each `gh pr create`, and each `gh pr edit` of the body, run `mise exec -- .claude/scripts/check-pr-body --title "<title>" <body file>` (after the PR is open, `--pr <pr>`): a failure is fixed before the write, an overflow moving to "Delivery notes".
+   Before each `gh pr create`, and each `gh pr edit` of the body, run `mise exec -- .claude/scripts/check-pr-body --title "<title>" <body file>` on the body about to be written: a failure is fixed before the write, an overflow moving to "Delivery notes".
 
    **Delivery notes**: one PR comment for the detail the body leaves out, which the squash does not keep and GitHub keeps with the PR, from the second part of [pr-body.md](../../reference/pr-body.md): the choices with their options ruled out, the non-blocking findings left with their reason, the detail of the checks, the evidence for what stays unsure. Posted once the PR is open (step 6), always under the agent workflow `deliver-story.js`, otherwise when the PR has such detail. Its contributor writes it, whoever corrects after a review (the work session on the direct path, the fixer under the agent workflow) updates it: one comment, edited in place, never a second one.
 6. **Open it**:

@@ -1,6 +1,6 @@
 ---
 name: feyn-refine-option
-description: "Run with the maintainer the option refinement of feyn (a moment of the work cycle of its own): one named option, an epic or a story in Status Option, analysed against the purpose of feyn (which product consumes it) and the repository (a staleness check and an overlap check, each run as a command, their results presented with their proof; an option labelled `stale` re-read against `vision.md`), then decided on its own: commit (set Ready), rework, brainstorm (what it builds on has changed), merge, split, fold into an epic, close; the decision is executed. An idea is not treated here: it goes to `/feyn-triage`. It never reviews the Option column as a whole. With no number, it asks which option. Use for \"raffine l'option 435\", \"refine option 435\", \"/feyn-refine-option 435\"."
+description: "Refine one option with the maintainer, against the purpose of feyn and the repository, up to its commitment, rework, brainstorm or close. Use for \"raffine l'option 435\", \"refine option 435\", \"/feyn-refine-option 435\"."
 argument-hint: "<option number>"
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: feyn-pr-review
-description: "A fresh agent, the project subagent feyn-pr-reviewer, reviews a pull request on feyn against its issue's Done when and returns its report (a verdict per statement, blocking and non-blocking findings, what it could not check), changing nothing; it can also review a merged PR after the fact. Use for \"/feyn-pr-review 247\"."
+description: "Have a fresh agent, feyn-pr-reviewer, review a pull request against its issue's Done when and return its report, changing nothing. Use for \"/feyn-pr-review 247\"."
 argument-hint: "<pr number>"
 ---
 

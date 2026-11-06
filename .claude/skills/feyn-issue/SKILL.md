@@ -1,6 +1,6 @@
 ---
 name: feyn-issue
-description: "Create a GitHub issue on feyn from `idea <finding>`, `story [#<epic>] [direct] <what>` or `epic <objective>`, of the kind it is given (no kind given, it asks which and creates nothing; `direct`, for a story only, marks a direct delivery, refused when the work is more than one edit with no behaviour), each written from its body template, with its kind label, its type and area labels, its links and the Status its caller gives (`--status Option|Ready`, Option by default), its origin line (`--origin`) and the issue it is opened from (`--opened-from #<n>`, left out of the twin search), or read an existing issue and summarise it. Use for \"/feyn-issue 12\", \"/feyn-issue idea <finding>\", \"/feyn-issue story <what>\", \"/feyn-issue story direct <what>\", \"/feyn-issue story #220 <what>\", \"/feyn-issue story #220 direct <what>\", \"/feyn-issue epic <objective>\"."
+description: "Create an idea, a story or an epic on GitHub, or read an issue and summarise it. Use for \"/feyn-issue 12\", \"/feyn-issue idea <finding>\", \"/feyn-issue story <what>\", \"/feyn-issue story direct <what>\", \"/feyn-issue story #220 <what>\", \"/feyn-issue story #220 direct <what>\", \"/feyn-issue epic <objective>\"."
 argument-hint: "<issue number> | idea <finding> | story [#<epic>] [direct] <what> | epic <objective>, then [--status Option|Ready] [--origin \"<line>\"] [--opened-from #<n>]"
 ---
 
