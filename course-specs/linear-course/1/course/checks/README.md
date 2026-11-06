@@ -62,7 +62,7 @@ A claim's source cell holds reference ids (`[S1], [S2]`) or the `markers.course`
 
 Until `products/creator/` holds the creation path (epic #522), this section names the steps of the creation of a course and the checks each runs. Foundations, once: F1 to F4; then concept by concept, C1 to C5 (C6, teaching the concept, once the teacher is back: decision `teacher-frozen-until-the-protocol-brainstorm`), a concept finished before the next starts; D1 for a domain, once its concepts are written. A step runs its command at once, on what it has just written; `<course>` is `courses/<id>`, `<n>` the number of the concept being written.
 
-The checks stay strict: there is no draft state, and a check reads a whole file or the whole course. A failure that names what a later step writes is that step's work, not a defect: the last column says which ones to expect. A step is done when its command prints no other failure. The course is done when `course-specs/check-course <course>`, with no option, exits 0.
+The checks stay strict: there is no draft state, and a check reads a whole file or the whole course. A failure that names what a later step writes is that step's work, not a defect: the last column says which ones to expect. A step is done when its command prints no other failure, a bold that `unit-additions` reports and the creator keeps for emphasis excepted. The course is done when `course-specs/check-course <course>`, with no option, exits 0.
 
 | Step | Writes | Runs | Fails until a later step writes it |
 |---|---|---|---|
