@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
-// test-build: builds courses/po-essai (the bench course) with classroom-builder/build-classroom into
-// temporary folders and checks what a command can check of the classroom: the files of each part
-// of the composition, the course copy (diff -r), the learner templates, the permissions, the
+// test-build: builds cafe (course-specs/linear-course/1/course/examples/cafe, the spec's example
+// course) with classroom-builder/build-classroom into temporary folders and checks what a command
+// can check of the classroom: the files of each part of the composition, the course copy (diff -r), the learner templates, the permissions, the
 // skills of the moments, the built CLAUDE.md (no placeholder left, the rules verbatim but for their
 // placeholders, each rule of the protocol in CLAUDE.md or in one skill, once, each family and group
 // heading followed by its purpose; the protocol read from teacher/rules.yaml), the three spots of the filling (no doubled parenthesis, no
@@ -20,8 +20,9 @@ const { createRequire } = require('module');
 const BUILDER = __dirname;
 const REPO = path.resolve(BUILDER, '..');
 const BUILD = path.join(BUILDER, 'build-classroom');
-const COURSE = path.join(REPO, 'courses', 'po-essai');
 const SPEC = path.join(REPO, 'course-specs', 'linear-course', '1');
+const COURSE = path.join(SPEC, 'course', 'examples', 'cafe');
+const COURSE_ARG = path.relative(REPO, COURSE); // the course as given to the build, from the repository's root
 const TEMPLATES = path.join(SPEC, 'teacher', 'templates', 'learner');
 const PLACEHOLDER = /\{[a-z_]+\.[a-z_]+\}/;
 const RULE_LINE = /^\*\*[a-z0-9-]+\*\* /;
@@ -42,7 +43,7 @@ const git = (dir, ...args) => spawnSync('git', ['-C', dir, ...args], { encoding:
 
 // ---- the build, with no --site-url
 const out = path.join(tmp, 'classroom');
-const r = build(['courses/po-essai', '--out', out]);
+const r = build([COURSE_ARG, '--out', out]);
 if (!check(r.status === 0, `build exits ${r.status}, not 0: ${(r.stderr || '').trim()}`)) {
   failures.forEach((f) => console.error(`test-build: ${f}`));
   process.exit(1);
@@ -52,7 +53,7 @@ for (const f of ['CLAUDE.md', 'course.lock', '.claude/settings.json', 'learner/a
   check(fs.existsSync(path.join(out, f)), `${f} is missing`);
 }
 const diff = spawnSync('diff', ['-r', COURSE, path.join(out, 'course')], { encoding: 'utf8' });
-check(diff.status === 0 && diff.stdout === '', `course/ is not a copy of courses/po-essai: ${diff.stdout.split('\n')[0]}`);
+check(diff.status === 0 && diff.stdout === '', `course/ is not a copy of ${COURSE_ARG}: ${diff.stdout.split('\n')[0]}`);
 for (const f of ['apprenant.md', 'observations.md', 'parcours.md']) {
   check(read(path.join(out, 'learner', f)) === read(path.join(TEMPLATES, f)), `learner/${f} is not the learner template`);
 }
@@ -96,12 +97,20 @@ check(skillText.stop.includes('`learner/parcours.md`'), 'skill stop does not nam
 const claude = read(path.join(out, 'CLAUDE.md')) || '';
 check(!PLACEHOLDER.test(claude), `CLAUDE.md keeps a placeholder: ${(PLACEHOLDER.exec(claude) || [])[0]}`);
 check(claude.split("Pars de la banque d'exemples").length - 1 === 1, "CLAUDE.md does not hold « Pars de la banque d'exemples » once");
-check(claude.includes('Posture : Product Owner senior qui forme l\'apprenant.'), 'CLAUDE.md lacks the posture of plan.md');
-check(claude.includes('Domaine 1 : Le cadre') && claude.includes("Concept 0 : Scrum en bref et l'incrément (`concepts/00-scrum`)")
-  && claude.includes('Concept 1 : Le produit et le rôle du PO (`concepts/01-produit-et-po`)'), 'CLAUDE.md lacks the course map');
-for (const f of ['course/storyline.md', 'course/glossary.md', 'course/domains/1-frame.md', 'course/concepts/00-scrum/', 'course/concepts/01-produit-et-po/']) {
+check(claude.includes('Posture : un barista patient, qui aide l\'apprenant à aider Cédric.'), 'CLAUDE.md lacks the posture of plan.md');
+// the course map: the domains and concepts under « Course map », the annex A1 where the build
+// renders it, in « Course files » (the map renders no line for an annex)
+check(claude.includes('- Domaine 1 : Ce qui fait la tasse\n') && claude.includes('- Domaine 2 : Réussir sa tasse\n')
+  && claude.includes("Concept 0 : L'extraction (`concepts/00-extraction`)")
+  && claude.includes('Concept 1 : Les réglages (`concepts/01-reglages`)')
+  && claude.includes('Concept 2 : Corriger une tasse (`concepts/02-corriger`)')
+  && claude.includes('`course/concepts/A1-methodes/`: Concept A1 : Les méthodes'), 'CLAUDE.md lacks the course map');
+for (const f of ['course/storyline.md', 'course/glossary.md', 'course/domains/1-tasse.md', 'course/domains/2-reussir.md',
+  'course/concepts/00-extraction/', 'course/concepts/01-reglages/', 'course/concepts/02-corriger/', 'course/concepts/A1-methodes/']) {
   check(claude.includes('`' + f + '`'), `CLAUDE.md does not name the course file ${f}`);
 }
+// the diagram of concept 0, which CLAUDE.md does not name, is copied with its concept
+check(fs.existsSync(path.join(out, 'course', 'concepts', '00-extraction', 'extraction-et-force.svg')), 'the diagram of concept 0 is not copied');
 check(claude.includes('channel\n`next`') || claude.includes('channel `next`'), 'CLAUDE.md does not state the channel next');
 check(claude.includes('\n@course/course.yaml\n'), 'CLAUDE.md does not import course/course.yaml');
 check(claude.includes('(site non publié)') && !claude.includes('http'), 'CLAUDE.md: without --site-url, the site addresses are not « (site non publié) »');
@@ -240,7 +249,7 @@ for (const l of lockText.split('\n')) {
   if (m) lock[m[1]] = m[2] === 'null' ? null : JSON.parse(m[2]);
 }
 const sha = /^[0-9a-f]{40}$/;
-check(lock.course === 'po-essai', `course.lock: course is ${lock.course}`);
+check(lock.course === 'cafe', `course.lock: course is ${lock.course}`);
 check(typeof lock.ref === 'string' && lock.ref.length > 0, 'course.lock: no ref');
 check(sha.test(lock.course_sha || ''), 'course.lock: course_sha is not a commit');
 check(sha.test(lock.tooling_sha || ''), 'course.lock: tooling_sha is not a commit');
@@ -258,31 +267,31 @@ for (const f of ['CLAUDE.md', 'course.lock', '.claude/settings.json', 'learner/p
 }
 
 // a non-empty target is refused, --force rebuilds it
-const again = build(['courses/po-essai', '--out', out]);
+const again = build([COURSE_ARG, '--out', out]);
 check(again.status !== 0 && /not empty/.test(again.stderr) && /--force/.test(again.stderr), 'a non-empty target is not refused with a word on --force');
-const forced = build(['courses/po-essai', '--out', out, '--force', '--site-url', 'https://example.org/feyn/next/po-essai']);
+const forced = build([COURSE_ARG, '--out', out, '--force', '--site-url', 'https://example.org/feyn/next/cafe']);
 check(forced.status === 0, `--force exits ${forced.status}: ${(forced.stderr || '').trim()}`);
 const lock2 = read(path.join(out, 'course.lock')) || '';
-check(lock2.includes('site_url: "https://example.org/feyn/next/po-essai/"'), 'course.lock: site_url is not the --site-url base');
+check(lock2.includes('site_url: "https://example.org/feyn/next/cafe/"'), 'course.lock: site_url is not the --site-url base');
 const claude2 = read(path.join(out, 'CLAUDE.md')) || '';
 // --force empties a classroom only: a non-empty folder with no course.lock is refused
 const notClassroom = path.join(tmp, 'not-a-classroom');
 fs.mkdirSync(notClassroom);
 fs.writeFileSync(path.join(notClassroom, 'keep.txt'), 'kept\n');
-const refused = build(['courses/po-essai', '--out', notClassroom, '--force']);
+const refused = build([COURSE_ARG, '--out', notClassroom, '--force']);
 check(refused.status === 2 && /not a classroom/.test(refused.stderr) && read(path.join(notClassroom, 'keep.txt')) === 'kept\n', '--force empties a folder that holds no course.lock');
-check(claude2.includes('](https://example.org/feyn/next/po-essai/concepts/{nn}/)') && !claude2.includes('(site non publié)'), 'CLAUDE.md: --site-url does not give the site addresses');
+check(claude2.includes('](https://example.org/feyn/next/cafe/concepts/{nn}/)') && !claude2.includes('(site non publié)'), 'CLAUDE.md: --site-url does not give the site addresses');
 check(git(out, 'log', '--oneline').stdout.trim().split('\n').length === 1, 'the rebuilt classroom has not exactly one commit');
 
 // the default folders of the channels, under a temporary HOME (git keeps its global config)
 const home = path.join(tmp, 'home');
 fs.mkdirSync(home);
 const env = { HOME: home, GIT_CONFIG_GLOBAL: process.env.GIT_CONFIG_GLOBAL || path.join(os.homedir(), '.gitconfig') };
-const next = build(['courses/po-essai'], env);
-check(next.status === 0 && fs.existsSync(path.join(home, 'classrooms', 'po-essai-next', 'CLAUDE.md')), 'with no --out, the classroom is not ~/classrooms/po-essai-next/');
-const prod = build(['courses/po-essai', '--channel', 'prod'], env);
-check(prod.status === 0 && fs.existsSync(path.join(home, 'classrooms', 'po-essai', 'CLAUDE.md')), '--channel prod does not give ~/classrooms/po-essai/');
-check((read(path.join(home, 'classrooms', 'po-essai', 'course.lock')) || '').includes('channel: "prod"'), 'course.lock: channel is not prod');
+const next = build([COURSE_ARG], env);
+check(next.status === 0 && fs.existsSync(path.join(home, 'classrooms', 'cafe-next', 'CLAUDE.md')), 'with no --out, the classroom is not ~/classrooms/cafe-next/');
+const prod = build([COURSE_ARG, '--channel', 'prod'], env);
+check(prod.status === 0 && fs.existsSync(path.join(home, 'classrooms', 'cafe', 'CLAUDE.md')), '--channel prod does not give ~/classrooms/cafe/');
+check((read(path.join(home, 'classrooms', 'cafe', 'course.lock')) || '').includes('channel: "prod"'), 'course.lock: channel is not prod');
 check(/channel prod is built from a course tag/.test(prod.stderr), '--channel prod from a branch builds without a warning');
 
 // the dispatcher: an unknown MAJOR, and a MAJOR with no teacher/build/ (a copy of the build in a
