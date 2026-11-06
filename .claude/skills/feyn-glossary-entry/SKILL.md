@@ -1,6 +1,6 @@
 ---
 name: feyn-glossary-entry
-description: "Read, add or change an entry of the repository glossary of feyn. Read a word: its entry, or the entry that rejects it, with its neighbours; add an entry for a concept, behind an entry bar (refused, saying why, when it fails); change an entry: rename its term, merge two entries, remove one whose concept is gone. A choice that changes files, a structure or steps goes to /feyn-decision. Use for \"/feyn-glossary-entry <word>\", \"add a glossary entry for …\", \"rename the term …\"."
+description: "Read, add or change an entry of the glossary of feyn; a choice that changes files or steps goes to /feyn-decision. Use for \"/feyn-glossary-entry <word>\", \"add a glossary entry for …\", \"rename the term …\"."
 argument-hint: "<word> | add <concept> | rename <term> <new term> | merge <term> <term> | remove <term>"
 ---
 

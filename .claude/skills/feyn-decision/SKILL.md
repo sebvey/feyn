@@ -1,6 +1,6 @@
 ---
 name: feyn-decision
-description: "Write a decision on feyn (one file by slug, counterfactual first) in the decisions/ folder of the area it binds, or change a live decision in place, or refuse a new one when no counterfactual is named, the bar of a decision is not met or the choice changes only words (sent to /feyn-glossary-entry). Use for \"/feyn-decision <the decision, in a sentence>\"."
+description: "Write a decision on feyn in the decisions/ folder of the area it binds, change a live one, or refuse one that names no counterfactual. Use for \"/feyn-decision <the decision, in a sentence>\"."
 argument-hint: "<the decision, in a sentence>"
 ---
 

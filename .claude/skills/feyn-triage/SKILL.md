@@ -1,6 +1,6 @@
 ---
 name: feyn-triage
-description: "Triage with the maintainer the ideas of feyn they name (moment 2 of the work cycle, Triage): one or more issue numbers, triaged in the order given, one at a time; the work session looks up each one's neighbours (a twin, an epic or an option that covers or overlaps it, an open idea on the same files) and presents it with them, the maintainer decides, and the decision is executed; from an idea it creates the work items the maintainer decides (Option by default, Ready on the maintainer's word) and closes it. An option is not triaged: it goes to `/feyn-refine-option`. With no number, it asks which idea. Use for \"trie l'idea 431\", \"trie les idées 429 et 431\", \"triage idea 431\", \"/feyn-triage 431\", \"/feyn-triage 429 431\"."
+description: "Triage with the maintainer the ideas they name, one at a time, into the work items they decide or a close. Use for \"trie l'idea 431\", \"trie les idées 429 et 431\", \"triage idea 431\", \"/feyn-triage 431\", \"/feyn-triage 429 431\"."
 argument-hint: "<issue number> [<issue number> …]"
 ---
 

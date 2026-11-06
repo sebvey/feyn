@@ -1,6 +1,6 @@
 ---
 name: feyn-brainstorm
-description: "Run a brainstorm with the maintainer on feyn (a spec, a product, the process), subject by subject, and end it in a plan of work items posed through the skills of the cycle: a working folder `tmp/<slug>/`, an inventory of the real object, the subjects decided one by one, a review on a support, a pass on what was missed, the output and its posing (options created, the option it opened from reworked or replaced, neighbours commented) and an optional review by a fresh agent. It opens from an option whose refinement found its basis changed, an idea (it is then that idea's triage) or the maintainer's subject. Use for \"on brainstorme sur la structure du cours\", \"brainstorm option 475\", \"brainstorm idea 12\", \"let's brainstorm the skills\", \"on passe à l'output\", \"/feyn-brainstorm\"."
+description: "Run a brainstorm with the maintainer, subject by subject, and end it in a plan of work items. Use for \"on brainstorme sur la structure du cours\", \"brainstorm option 475\", \"brainstorm idea 12\", \"let's brainstorm the skills\", \"on passe à l'output\", \"/feyn-brainstorm\"."
 argument-hint: "[subject | idea number | option number]"
 ---
 
