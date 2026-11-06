@@ -1,0 +1,51 @@
+id: cafe
+spec: linear-course@1
+title: "Faire un bon café"
+subtitle: "Comprendre sa tasse pour la régler"
+storyline: storyline.md
+glossary: glossary.md
+annexes: [A1]
+domains:
+  - number: 1
+    slug: tasse
+    title: "Ce qui fait la tasse"
+    objective: "Dire pourquoi une tasse est acide ou amère, et quel réglage y joue."
+    duration_min: 18
+    file: domains/1-tasse.md
+    concepts: [0, 1]
+  - number: 2
+    slug: reussir
+    title: "Réussir sa tasse"
+    objective: "Goûter une tasse, dire ce qui cloche et la corriger, un réglage à la fois."
+    duration_min: 12
+    file: domains/2-reussir.md
+    concepts: [2]
+concepts:
+  - number: 0
+    slug: extraction
+    title: "L'extraction"
+    objective: "dire si une tasse est trop peu ou trop extraite, à son goût"
+    prerequisites: []
+    duration_min: 8
+    dir: concepts/00-extraction
+  - number: 1
+    slug: reglages
+    title: "Les réglages"
+    objective: "nommer les réglages d'une infusion et l'effet de chacun sur l'extraction"
+    prerequisites: [0]
+    duration_min: 10
+    dir: concepts/01-reglages
+  - number: 2
+    slug: corriger
+    title: "Corriger une tasse"
+    objective: "corriger une tasse ratée en changeant un seul réglage à la fois"
+    prerequisites: [1]
+    duration_min: 12
+    dir: concepts/02-corriger
+  - number: A1
+    slug: methodes
+    title: "Les méthodes"
+    objective: "situer une méthode d'infusion par ce qu'elle change aux réglages"
+    prerequisites: [1]
+    duration_min: 8
+    dir: concepts/A1-methodes

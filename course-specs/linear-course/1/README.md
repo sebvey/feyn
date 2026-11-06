@@ -53,6 +53,7 @@ The files of the spec are split by class of products (`spec-directives/1/README.
 | `course/lexicon.yaml` | the lexicon of the course files (`course/README.md` section 7) |
 | `teacher/lexicon.yaml` | the lexicon of the teacher, the words it says and writes (`teacher/README.md`, « Clés et paramètres ») |
 | `course/templates/` | the course templates |
+| `course/examples/` | the spec's example courses, one folder per course, each a course of this MAJOR that changes only with it, written for the spec's tests, the classroom build, the site build and a human who plays it: `cafe`, a short course on coffee |
 | `teacher/templates/learner/` | the templates of the learner memory files |
 | `decisions/` | the decisions of this spec |
 
