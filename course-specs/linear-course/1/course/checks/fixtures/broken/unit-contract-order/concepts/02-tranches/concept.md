@@ -23,12 +23,19 @@ Une tranche traverse toutes les couches.
 
 ### Unité 2a1 : Une tranche
 
-- **Matière** : Une tranche traverse toutes les couches (concept 1).
-- **Question** : que voit-il ?
+#### Leçon (pour tous)
+
 - **Ancrage** : Régis regarde une carte.
+- **Matière** : Une tranche traverse toutes les couches (concept 1).
+
+#### Exercice (teacher seulement)
+
+- **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
-- **Idées fausses** :
-  - « Un tableau » : c'est une carte.
+
+#### Pièges (pour tous)
+
+- « Un tableau » : c'est une carte.
 
 ## Clôture
 

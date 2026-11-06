@@ -1,2 +1,2 @@
 check: unit-contract
-message: unit 2a1: « Ancrage » must come before « Question »
+message: unit 2a1, « Leçon »: « Matière » must come before « Ancrage »

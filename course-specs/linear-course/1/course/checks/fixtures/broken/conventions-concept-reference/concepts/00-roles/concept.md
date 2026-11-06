@@ -24,37 +24,61 @@ concept 1.
 
 ### Unité 0a1 : Le premier rôle
 
+#### Leçon (pour tous)
+
 - **Matière** : Le premier **rôle** décide. Le concept 99 en dépend. [cours]
 - **Ancrage** : Régis veut une carte et décide de ce qu'elle montre.
+
+#### Exercice (teacher seulement)
+
 - **Question** : qui décide ?
 - **Réponse attendue** : le premier rôle.
-- **Idées fausses** :
-  - « Tout le monde décide » : le premier rôle décide seul.
-- **Consigne** : ne pas parler de couche ici, elle vient au concept 1.
+
+#### Pièges (pour tous)
+
+- « Tout le monde décide » : le premier rôle décide seul.
+
+#### Consigne (teacher seulement)
+
+Ne pas parler de couche ici, elle vient au concept 1.
 
 ### Unité 0a2 : Le second rôle
+
+#### Leçon (pour tous)
 
 - **Matière** : Le second rôle fait.
 
   Il fait ce que le premier rôle a décidé.
 - **Ancrage** : Régis demande la carte à l'équipe.
+
+#### Exercice (teacher seulement)
+
 - **Question**, en deux parties : qui fait ? Et qui décide ?
 - **Réponse attendue** :
   1. Le second rôle fait.
   2. Le premier rôle décide.
-- **Idées fausses** :
-  - « Le second rôle décide aussi » : il fait, il ne décide pas.
+
+#### Pièges (pour tous)
+
+- « Le second rôle décide aussi » : il fait, il ne décide pas.
 
 ## Section 0b : La règle
 
 ### Unité 0b1 : La règle
 
+#### Leçon (pour tous)
+
 - **Matière** : La règle est la même pour tous. Ses mots sont dans le lexique (annexe A1a).
 - **Ancrage** : Régis applique la règle à la carte.
+
+#### Exercice (teacher seulement)
+
 - **Question** : la règle change-t-elle selon le rôle ?
 - **Réponse attendue** : non, elle est la même pour tous.
-- **Idées fausses** :
-  - « Chaque rôle a sa règle » : la règle est la même pour tous.
+
+#### Pièges (pour tous)
+
+- « Chaque rôle a sa règle » : la règle est la même pour tous.
 
 ## Clôture
 

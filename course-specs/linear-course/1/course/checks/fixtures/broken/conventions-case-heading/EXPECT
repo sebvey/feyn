@@ -1,2 +1,2 @@
 check: conventions
-message: a #### heading is a supplementary case, inside a unit
+message: a #### heading is a block of a unit or a supplementary case, inside a unit
