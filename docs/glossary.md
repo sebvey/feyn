@@ -548,7 +548,7 @@ The **spec directives** (`spec-directives/1/README.md`) and, for the categories 
 - means: the unit of a spec, which binds a product (a course or a teacher): one provision held as data in a rule file, apart from the prose that describes it, with an id (a slug), a **level**, a **category**, a **method**, the check that implements the method when one exists, a text and, where an observed counterfactual exists, a why; a rule of the protocol is a **protocol rule**. A rule file is cut into **groups**. The spec's own files are verified by the tests of the spec directives, which are not rules
 - en: rule · rejected: "requirement" for a rule of any level, "constraint", "criterion"
 - fr: « règle »
-- not to confuse with: [requirement](#requirement), [check](#check), [policy](#policy), [protocol rule](#protocol-rule), [group](#group)
+- not to confuse with: [requirement](#requirement), [check](#check), [policy](#policy), [protocol rule](#protocol-rule), [group](#group), [agentic rule](#agentic-rule)
 
 ### level
 
@@ -773,7 +773,15 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 - means: what the workflow asks, written down where everyone reads it: what an item must hold to enter or leave a Status, the WIP limits, what is done first, who decides what; feyn's are its contributing guide, its decisions and its skills
 - en: policy · rejected: "rule", "convention"
 - fr: to settle
-- not to confuse with: [rule](#rule)
+- not to confuse with: [rule](#rule), [agentic rule](#agentic-rule)
+
+### agentic rule
+
+- means: how feyn writes a file of its agentic layer (its skills, project subagents, references, the prompts of its agent workflows, its project instructions), held as one entry of a file of such entries: an id, what it applies to, its method (judged by review, or run by a script), a text that states the act, a why and an origin; it binds what feyn writes to run its work, never a product
+- en: agentic rule · rejected: "rule" alone (a rule of a spec), "policy"
+- fr: to settle
+- not to confuse with: [rule](#rule), [policy](#policy)
+- why: the agentic layer is a tool of feyn, not feyn, and may one day leave the repository; the prefix namespaces the term until then, and is dropped that day. Ruled out: "rule" alone, reserved for a rule of a spec, so that two rule files of two meanings would coexist; "policy", what the workflow asks, broader than how the agentic layer is written and bound to the Kanban frame
 
 ### draft
 

@@ -1,18 +1,18 @@
-# The agentic rules: the writing rules of feyn's agentic layer (`.claude/`, `CLAUDE.md`), one entry
-# per rule (decision `agentic-rules-file`). An agentic rule binds what feyn writes in its agentic
-# layer; a rule of a spec binds a product (a course, a teacher) and lives in that spec's rules.yaml.
-# Read when the work touches the agentic layer: by the author of the work item (done-when.md, "A
-# statement"), by the reviewer and so the fixer (feyn-pr-reviewer.md).
+# The agentic rules: how feyn writes its agentic layer (`.claude/`, `CLAUDE.md`), one entry per
+# agentic rule (decision `agentic-rules-file`). An agentic rule binds what feyn writes in its
+# agentic layer; a rule of a spec binds a product (a course, a teacher) and lives in that spec's
+# rules.yaml. Read when the work touches the agentic layer: by the author of the work item
+# (done-when.md, "A statement"), by the reviewer and so the fixer (feyn-pr-reviewer.md).
 #
-# An entry: id (a slug, unique); applies-to (what the rule binds); method, `review` (judged by the
+# An entry: id (a slug, unique); applies-to (what it binds); method, `review` (judged by the
 # reviewer) or `script` (run), with its `check`, the name of a script of `.claude/scripts/`, when a
-# script holds it; text (the rule, its act); why (what goes wrong without it, as observed); origin
+# script holds it; text (the act it asks); why (what goes wrong without it, as observed); origin
 # (the issue or PR where it was found). Nothing else. A breach is a non-blocking finding unless the
-# text says otherwise. Adding a rule is adding an entry, by a story, with its origin; a `review`
-# rule a script can hold moves to `script`.
+# text says otherwise. Adding an agentic rule is adding an entry, by a story, with its origin; one
+# of method `review` that a script can hold moves to `script`.
 #
-# The prefix `agentic-` namespaces "rule", which the glossary reserves for a rule of a spec: the
-# agentic layer is a tool of feyn, not feyn; the day it leaves the repository, the prefix goes.
+# The prefix `agentic-` namespaces the word the glossary reserves for a rule of a spec: the agentic
+# layer is a tool of feyn, not feyn; the day it leaves the repository, the prefix goes.
 # .claude/scripts/check-agentic-rules verifies this file's form.
 rules:
   - id: act-before-reason
@@ -24,8 +24,8 @@ rules:
     why: >-
       A reason developed in a file the agents load is loaded by every work session that reads it,
       for nothing it acts on: PR #650 wrote a developed why into two skills, and the maintainer had
-      it shortened. It bounds, without undoing, the rule with its reason and an act of epic #607
-      (point 12b).
+      it shortened. It bounds, without undoing, point 12b of epic #607 ("a rule with its reason and
+      an act").
     origin: "#627, PR #650"
   - id: done-when-checks-the-act
     applies-to: a Done when statement on a text the agents load
@@ -35,6 +35,6 @@ rules:
       its wording; the explanations go in the issue's Context.
     why: >-
       A statement that dictates a wording makes the contributor write it and the review pass it:
-      #627's Done when dictated a skill rule with its explanations in parentheses and its ground,
+      #627's Done when dictated the wording of an instruction of a skill, with its explanations in parentheses and its ground,
       and the fresh-agent review of PR #650 passed them.
     origin: "#627, PR #650"
