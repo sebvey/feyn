@@ -17,6 +17,7 @@ While the cycle runs, each progress message to the maintainer holds at most thre
 ## 1. Before the run
 
 - Read each issue (`mise exec -- gh issue view <n>`).
+- **Not from the work session that refined it** (cold reading, `/feyn-refine-option` step 1, as `/feyn-deliver-epic` step 1), for each issue named: say so in one line, run nothing for it, and propose a new work session, started from `/feyn-deliver-story-alone <n>` alone.
 - **A story under an epic**, direct or not. Its parent (`mise exec -- gh api repos/sebvey/feyn/issues/<n>/parent --jq .number`; HTTP 404: none) carries the label `kind:epic`: refuse in one line, "#<n> is a story of epic #<epic>: `/feyn-deliver-epic <epic>` delivers it" (a direct story included, its step 2, "A direct story"), and run nothing for that issue.
 - **A direct delivery.** A story whose To do opens with the line "Direct delivery" (named `direct` by the maintainer at its creation, [contributing](../../../docs/contributing.md), "How the work is organised", moment 5) stops the cycle for that issue, before the refusals below: reply "this story is delivered as a direct delivery (`/feyn-issue-branch <n>`, the edit, `/feyn-pull-request`, both with no parameter, then the hand-over of `.claude/reference/hand-over.md`): nothing to spawn", and spawn nothing.
 - Then the refusals of `/feyn-issue-branch` step 1 apply: name the reason and stop for that issue. Except In progress: the run resumes it, its contributor taking the issue's branch and PR where they are (`/feyn-issue-branch --worktree`).
