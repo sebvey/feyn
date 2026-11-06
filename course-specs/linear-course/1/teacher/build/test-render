@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-// test-render: runs render-parts on cafe (course/examples/cafe, the spec's example course), with
+// test-render: runs render-parts on cafe (course/samples/cafe, the spec's sample course), with
 // no --site-url and with one, and validates each JSON document against parts.schema.yaml (ajv's Ajv2020, from the
 // package of the spec directives this MAJOR follows); then checks what the schema cannot say: one
 // moment per moment of composition.yaml, every rule of the protocol rendered once, in the permanent
@@ -16,7 +16,7 @@ const { createRequire } = require('module');
 const HERE = __dirname;
 const MAJOR = path.resolve(HERE, '..', '..');
 const REPO = path.resolve(MAJOR, '..', '..', '..');
-const COURSE = path.join(MAJOR, 'course', 'examples', 'cafe');
+const COURSE = path.join(MAJOR, 'course', 'samples', 'cafe');
 
 const line = fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').split('\n').find((l) => /^directives\s*:/.test(l));
 const directives = line.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();

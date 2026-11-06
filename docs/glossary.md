@@ -61,7 +61,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: what one course teaches and how to teach it, in its course files and its concept files, whose **published** fields say what it teaches and whose **unpublished** fields how to teach it, identified by its **course id**
 - en: course · rejected: "content" (as a noun for the course), "material", "data"
 - fr: « cours »
-- not to confuse with: [course id](#course-id)
+- not to confuse with: [course id](#course-id), [sample course](#sample-course)
 
 ### course id
 
@@ -69,6 +69,14 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - en: course id
 - fr: to settle
 - not to confuse with: [course](#course), [course version](#course-version)
+
+### sample course
+
+- means: a course that belongs to a spec MAJOR and changes only with it, written for that spec: its tests, the classroom build and the site build run on it, and a human may play it
+- en: sample course · rejected: "example course"
+- fr: to settle
+- not to confuse with: [course](#course), [example](#example)
+- why: "example" names the illustration that precedes a question in a teacher message, so "example course" would read as a course of such illustrations; "bench course" was ruled out too, the bench being a policy of the repository, not a part of the spec
 
 ### build
 
@@ -332,7 +340,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: in a teacher message, the illustration that precedes the question (« Exemple : »); the anchor of a unit may serve as one
 - en: example
 - fr: « exemple »
-- not to confuse with: [anchor](#anchor), [case](#case)
+- not to confuse with: [anchor](#anchor), [case](#case), [sample course](#sample-course)
 
 ### follow-up
 
