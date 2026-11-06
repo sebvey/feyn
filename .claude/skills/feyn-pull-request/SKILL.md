@@ -23,6 +23,7 @@ Its caller passes its variations as parameters and rewrites none of its steps (d
    - a path under `course-specs/linear-course/1/teacher/`: also the spec's render test, `course-specs/linear-course/1/teacher/build/test-render`, and the classroom build's test, `classroom-builder/test-build`;
    - `site-builder/` or a course: `astro check` and the site build, from `site-builder/`;
    - a decision file (`decisions/`): `mise exec -- .claude/scripts/check-decisions <files>`;
+   - the agentic rules (`.claude/reference/agentic-rules.yaml`): `mise exec -- .claude/scripts/check-agentic-rules`;
    - anything else: the checks its area documents, if any.
 
    No check exists yet for the area: say so in the PR's Checks. A failing blocking check (exit code 1; the summary line of `check-course` names it) is fixed before the PR opens; one that cannot be fixed here is named in the PR's Checks and in Review first. A failing blocking check on `po-essai` is always fixed before a PR to `main` opens: unlike a course PR, it has no such escape, since a spec change is done only with the bench passing in the PR that lands on `main`; a story's PR to its epic's integration branch may leave it failing, named in its Checks, the epic PR fixing it ([contributing](../../../docs/contributing.md), "Policies"). A failing reporting check leaves the exit code 0 and blocks nothing: its failures are findings, and the Checks line gives their count by check.
