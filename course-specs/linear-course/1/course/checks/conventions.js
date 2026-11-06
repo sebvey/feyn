@@ -21,7 +21,6 @@ function plainMarkdown(ctx, file, out, opts = {}) {
     if (/^\s*:::/.test(l.t)) out.push(fail(file, l.n, 'plain Markdown: no ::: directive'));
     if (opts.depth) {
       const h = /^(#{1,6})\s/.exec(l.t);
-      if (h && h[1].length === 1) out.push(fail(file, l.n, 'plain Markdown: no H1 in a concept file (the title is in course.yaml)'));
       if (h && h[1].length >= 5) out.push(fail(file, l.n, 'plain Markdown: no heading deeper than #### in a concept file'));
     }
   });
@@ -39,9 +38,9 @@ function checkConcept(ctx, c, out) {
   const heard = parts.heard;
   const markers = ['consensus', 'school', 'course'].map((k) => ctx.word('markers', k)).filter(Boolean);
 
-  // a #### heading is a supplementary case, inside a unit
+  // a #### heading is a block of a unit or a supplementary case, inside a unit
   const inSection = (n) => parts.sections.some((s) => n > s.line && n <= (s.lines.length ? s.lines[s.lines.length - 1].n : s.line));
-  for (const h of mdlib.headings(cm.body)) if (h.level === 4 && !inSection(h.line)) out.push(fail(cf, h.line, `plain Markdown: a #### heading is a supplementary case, inside a unit ("${h.text}")`));
+  for (const h of mdlib.headings(cm.body)) if (h.level === 4 && !inSection(h.line)) out.push(fail(cf, h.line, `plain Markdown: a #### heading is a block of a unit or a supplementary case, inside a unit ("${h.text}")`));
 
   // concept references (lib/refs.js): to a concept, a section or a unit with the concept words, to
   // an annex or a section or unit of one with the annex word

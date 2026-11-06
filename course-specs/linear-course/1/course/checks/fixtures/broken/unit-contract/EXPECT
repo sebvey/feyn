@@ -1,2 +1,2 @@
 check: unit-contract
-message: unit 2a: mandatory field « Ancrage » is missing
+message: unit 2a1, « Leçon »: mandatory field « Ancrage » is missing

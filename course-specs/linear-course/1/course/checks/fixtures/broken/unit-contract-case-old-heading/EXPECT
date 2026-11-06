@@ -1,0 +1,2 @@
+check: unit-contract
+message: a supplementary case is "#### En stock, <qualifier> (teacher seulement) : <title>", found "Le cas la carte vide (rechange)"

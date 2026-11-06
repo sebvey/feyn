@@ -1,7 +1,7 @@
 'use strict';
 // The additions of a unit (course/README.md section 3.6), what a program can tell of them: in the
 // fields of a unit and of its supplementary cases that the learner reads or hears (course/form.yaml,
-// readers: every field but the instruction, the follow-ups included), each passage in bold
+// the readers of their block: every block but « Consigne »), each passage in bold
 // (`**…**`), the labels left out, is a term of glossary.md or one of its comma variants, its sense
 // qualifier in parentheses left out, case ignored (rule bold-term-in-glossary, a recommendation: bold
 // for emphasis stays possible, and a bold that is no term is reported in case the term is missing
@@ -14,7 +14,7 @@ const mdlib = directives.lib('md');
 const glossary = directives.lib('glossary');
 const { fail } = directives.lib('course');
 
-// a field's label, `- **<label>**<qualifier> :`, on its first line or on a follow-up bullet
+// a field's label, `- **<label>**<qualifier> :`, on its first line
 const LABEL = /^(\s*)- \*\*[^*]+\*\*[^:]*?\s*:/;
 const BOLD = /\*\*([^*]+?)\*\*/g;
 
@@ -38,8 +38,8 @@ function bolds(f) {
   f.lines.forEach((l, i) => {
     if (l.code) return;
     let t = mdlib.maskCode(l.t);
-    // the field's own label on its first line; a follow-up's label on its bullet
-    if (i === 0 || (f.key === 'misconceptions' && /^ {4}- \*\*/.test(t))) t = t.replace(LABEL, (m) => ' '.repeat(m.length));
+    // the field's own label on its first line (an unlabelled field has none)
+    if (i === 0 && f.labelled) t = t.replace(LABEL, (m) => ' '.repeat(m.length));
     let m;
     BOLD.lastIndex = 0;
     while ((m = BOLD.exec(t))) out.push({ line: l.n, text: m[1] });
@@ -52,7 +52,7 @@ function run(ctx) {
   if (!ctx.lexiconOk) return [fail(ctx.lexiconFile || 'course/lexicon.yaml', 1, 'the lexicon is unusable: see course/README.md section 7')];
   if (!ctx.form || !ctx.form.unit || !ctx.form.supplementary_case) return [fail('course/form.yaml', 1, `tooling error, not a defect of the course: the spec's form is missing or unreadable (${ctx.formError || 'no unit or supplementary_case'})`)];
   const learner = (readers) => !Array.isArray(readers) || readers.includes('learner');
-  const heard = new Set(ctx.form.unit.fields.filter((f) => learner(f.readers)).map((f) => f.field));
+  const heard = new Set(ctx.form.unit.blocks.filter((b) => learner(b.readers)).flatMap((b) => b.fields));
   const caseHeard = learner(ctx.form.supplementary_case.readers);
   const terms = termsOf(ctx);
   const out = [];

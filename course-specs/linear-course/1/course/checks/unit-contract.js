@@ -1,12 +1,17 @@
 'use strict';
 // The contract of a unit (course/README.md section 3.3), from the form of course/form.yaml: a
-// section with units holds them and nothing else; each unit is a list of labelled fields (labels of
-// the lexicon's `unit_fields`, a qualifier on « Question » only), the mandatory ones present, none
-// twice, in the order of the form, and no line outside a field; « Idées fausses » a list of
-// misconceptions, each `- « … » : …`, its follow-ups nested under it; each supplementary case a
-// #### heading with one qualifier of the closed list, a title unique in the concept, and the fields
-// of a unit without those the form leaves out. The parts of concept.md and its tree are
-// `concept-file`'s, a `structure` check; the length of a unit is `unit-length`'s.
+// section with units holds them and nothing else; each unit is its #### blocks (`unit.blocks`),
+// « Leçon (pour tous) », « Exercice (teacher seulement) », « Pièges (pour tous) », then « Consigne
+// (teacher seulement) » when it has one, each titled by its word and its reader, the mandatory ones
+// present, none twice, in the order of the form, before the supplementary cases, and no line
+// outside a block; « Leçon » and « Exercice » hold their labelled fields (labels of the lexicon's
+// `unit_fields`, a qualifier on « Question » only), each once, in order, and no line outside a
+// field; « Pièges » holds its misconceptions, each `- « … » : …`, nothing nested under it;
+// « Consigne » is prose. Each supplementary case is a #### heading `#### En stock, <qualifier>
+// (teacher seulement) : <title>`, one qualifier of the closed list, a title unique in the concept,
+// and its labelled fields (`supplementary_case.fields`), its « Pièges » a nested list of
+// misconceptions. The parts of concept.md and its tree are `concept-file`'s, a `structure` check;
+// the length of a unit is `unit-length`'s.
 const directives = require('./directives');
 const { fail } = directives.lib('course');
 
@@ -36,13 +41,44 @@ function checkFields(fields, spec, where, file, out, word) {
   }
 }
 
+// the blocks of a unit: each of the form, titled by its word and its reader, the mandatory ones
+// present, none twice, in the order of the form, before the cases; then the content of each
+function checkBlocks(ctx, u, file, out) {
+  const where = `unit ${u.sub.id}`;
+  const forms = ctx.form.unit.blocks;
+  const word = (b) => (b.labelled ? ctx.word('unit_blocks', b.block) : ctx.word('unit_fields', b.fields[0])) || b.block;
+  const reader = (k) => ctx.word('readers', k) || k;
+  const heading = (b) => `#### ${word(b)} (${reader(b.reader)})`;
+  const order = forms.map((b) => `« ${word(b)} »`).join(', ');
+  const seen = new Set();
+  let last = null;
+  for (const blk of u.blocks) {
+    const b = forms.find((x) => x.block === blk.key);
+    if (blk.reader !== reader(b.reader)) out.push(fail(file, blk.line, `${where}: block « ${word(b)} » is read « ${reader(b.reader)} », its heading "${heading(b)}", found "#### ${blk.text}"`));
+    if (seen.has(b.block)) out.push(fail(file, blk.line, `${where}: block « ${word(b)} » appears twice`));
+    else if (last && forms.indexOf(b) < forms.indexOf(last)) out.push(fail(file, blk.line, `${where}: block « ${word(b)} » must come before « ${word(last)} » (the order of course/form.yaml: ${order})`));
+    else if (blk.afterCase) out.push(fail(file, blk.line, `${where}: block « ${word(b)} » must come before the supplementary cases`));
+    seen.add(b.block);
+    if (!last || forms.indexOf(b) > forms.indexOf(last)) last = b;
+    const bw = `${where}, « ${word(b)} »`;
+    if (b.labelled) {
+      if (!blk.fields.length) out.push(fail(file, blk.line, `${bw}: the block holds its fields, ${b.fields.map((k) => `« ${ctx.word('unit_fields', k) || k} »`).join(', ')}, found none`));
+      else checkFields(blk.fields, b.fields.map((k) => ({ field: k, presence: 'mandatory' })), bw, file, out, ctx.word);
+    } else if (b.fields[0] === 'misconceptions') {
+      if (!blk.fields[0].items.length) out.push(fail(file, blk.line, `${where}: « ${word(b)} » holds at least one misconception, "- « <the misconception> » : <its correction>"`));
+    } else if (!blk.fields[0].lines.length) out.push(fail(file, blk.line, `${where}: block « ${word(b)} » is empty`));
+  }
+  for (const b of forms) if (b.presence === 'mandatory' && !seen.has(b.block)) out.push(fail(file, u.line, `${where}: mandatory block "${heading(b)}" is missing`));
+}
+
 function checkConcept(ctx, c, out) {
   if (!c.dir || !ctx.isDir(c.dir)) return; // concept-file's failure
   const file = c.dir + '/' + ctx.form.concept_file.file;
   if (!ctx.md(file)) return;
   const parts = ctx.parts(c);
-  const unitSpec = ctx.form.unit.fields;
-  const caseSpec = unitSpec.filter((f) => ctx.form.supplementary_case.fields.includes(f.field));
+  const caseForm = ctx.form.supplementary_case;
+  const caseSpec = caseForm.fields.map((k) => ({ field: k, presence: 'mandatory' }));
+  const caseReader = ctx.word('readers', caseForm.reader) || caseForm.reader;
   for (const p of parts.problems) out.push(fail(file, p.line, p.message));
   for (const s of parts.sections) {
     if (s.stray.length) out.push(fail(file, s.stray[0].n, `section ${s.sub.id} has units: it holds its ### units and nothing else (found "${s.stray[0].t.trim().slice(0, 40)}")`));
@@ -50,11 +86,12 @@ function checkConcept(ctx, c, out) {
   const titles = new Map();
   for (const u of parts.units) {
     const where = `unit ${u.sub.id}`;
-    if (!u.fields.length) { out.push(fail(file, u.line, `${where}: a unit holds its fields (course/form.yaml), found none`)); continue; }
-    checkFields(u.fields, unitSpec, where, file, out, ctx.word);
+    if (!u.blocks.length && !u.cases.length) { out.push(fail(file, u.line, `${where}: a unit holds its #### blocks (course/form.yaml), found none`)); continue; }
+    checkBlocks(ctx, u, file, out);
     for (const cs of u.cases) {
       if (titles.has(cs.title)) out.push(fail(file, cs.line, `case title "${cs.title}" is used twice (line ${titles.get(cs.title)}): titles are unique in the concept`));
       titles.set(cs.title, cs.line);
+      if (cs.reader !== null && cs.reader !== caseReader) out.push(fail(file, cs.line, `${where}, case "${cs.title}": a supplementary case is read « ${caseReader} », found « ${cs.reader} »`));
       if (!cs.fields.length) out.push(fail(file, cs.line, `${where}, case "${cs.title}": a supplementary case holds its fields, found none`));
       else checkFields(cs.fields, caseSpec, `${where}, case "${cs.title}"`, file, out, ctx.word);
     }

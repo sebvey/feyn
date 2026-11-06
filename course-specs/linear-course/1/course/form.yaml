@@ -1,15 +1,16 @@
 # The form of the files of a course of `linear-course`, as data (decision `unit-is-the-content-unit`):
-# the concept file (the files of a concept folder, the parts of `concept.md`, its head, its
-# sections and units, its foot, the fields of a unit and of a supplementary case, the length of a
-# unit) and, beside it, the course files (`course.yaml` as the map, `plan.md`, the domain file,
+# the concept file (the files of a concept folder, the parts of `concept.md`, its title, its head, its
+# sections and units, its foot, the blocks of a unit and their fields, a supplementary case, the
+# length of a unit) and, beside it, the course files (`course.yaml` as the map, `plan.md`, the domain file,
 # `storyline.md`): their parts, their order, their presence, published or not, their readers.
 # course/README.md sections 2 to 5 describe it, the rules of course/rules.yaml state it, the
 # checks read it here (concept-file, unit-contract, unit-length, and the text checks and
 # unit-additions for their scope; course-yaml and course-files for the course files), and the site build of epic #598 will.
 #
 # This file names words by their key in course/lexicon.yaml and holds none: `heading: essentials`
-# is the lexicon's `headings.essentials`, a field `matter` is `unit_fields.matter`, a qualifier
-# `fallback` is `qualifiers.fallback`. A spec of another language copies the lexicon, not this file.
+# is the lexicon's `headings.essentials`, a field `matter` is `unit_fields.matter`, a block `lesson`
+# is `unit_blocks.lesson`, a reader `all` is `readers.all`, a qualifier `fallback` is
+# `qualifiers.fallback`. A spec of another language copies the lexicon, not this file.
 #
 # presence: mandatory or optional. published: the site build renders it (true) or never (false);
 # the build is closed by default, so a part this file does not name is never rendered.
@@ -20,6 +21,8 @@
 #            (conventions, glossary-order) read every part of a concept file the learner reads,
 #            and only those; unit-additions, the fields of a unit and of a supplementary case
 #            the learner reads.
+# reader: the word a block of a unit and a supplementary case carry in their heading, a key of the
+# lexicon's `readers`: `all` for a published block, `teacher` for an unpublished one.
 
 # The files of a concept folder, and nothing else.
 folder:
@@ -30,77 +33,104 @@ concept_file:
   file: concept.md
   # the frontmatter, its keys and their form: the schema, which concept-file validates it against
   frontmatter: course/schemas/concept-frontmatter.schema.yaml
-  # the ## headings before the sections, in this order
+  # Every heading of the body starts with its kind, and one kind is always at one level: the
+  # concept's title at #, the head, the sections and the foot at ##, the head's and the foot's
+  # blocks and the units at ###, a unit's blocks and its supplementary cases at #### (`unit` and
+  # `supplementary_case` below). A heading that carries an id is `<kind word> <id><separator><title>`,
+  # the kind word and the separator of the lexicon's `block_kinds`, the separator by its key.
+  separator: separator
+  # the title: the one # heading, the first line of the body, `# Concept <n> : <title>` (an annex
+  # `# Annexe <id> : <title>`), the title the concept's `title` in course.yaml, which keeps it too
+  title:
+    heading_level: 1
+    kind: concept
+    annex_kind: annex
+    presence: mandatory
+    published: true
+    readers: [site, teacher, learner]
+  # the head: the ## heading `headings.head`, then its ### blocks, in this order, and nothing else
   head:
-    - heading: essentials
-      presence: mandatory
-      published: true
-      readers: [site, teacher, learner]
-  # the sections: `## <id> <title>`, the id the concept number then a letter from a, in order;
-  # a section holds its units, `### <id> <title>`, the id the section's then a digit from 1, in
-  # order, nine at most; a section without ### is a section of one unit, and holds the fields of
-  # that unit. Nothing else stands in a section or a unit: no line outside a field.
+    heading: head
+    presence: mandatory
+    blocks:
+      - heading: essentials
+        presence: mandatory
+        published: true
+        readers: [site, teacher, learner]
+  # the sections: `## Section <id> : <title>`, the id the concept number then a letter from a, in
+  # order; a section holds its units, `### Unité <id> : <title>`, the id the section's then a digit
+  # from 1, in order, one at least and nine at most: a section with a single unit keeps its ### heading.
+  # Nothing else stands in a section: no line outside a unit.
   sections:
+    kind: section
+    unit_kind: unit
     presence: mandatory
     heading_level: 2
     unit_heading_level: 3
     max_units: 9
-  # the ## headings after the sections, in this order
+  # the foot: the ## heading `headings.foot`, then its ### blocks, in this order, and nothing else;
+  # present when it holds a block
   foot:
-    - heading: landmarks
-      presence: optional
-      published: true
-      readers: [site, teacher, learner]
-    - heading: deepening
-      presence: optional
-      published: true
-      readers: [site, teacher, learner]
-    - heading: instruction
-      presence: optional
-      published: false
-      readers: [teacher]
+    heading: foot
+    presence: optional
+    blocks:
+      - heading: landmarks
+        presence: optional
+        published: true
+        readers: [site, teacher, learner]
+      - heading: deepening
+        presence: optional
+        published: true
+        readers: [site, teacher, learner]
+      - heading: instruction
+        presence: optional
+        published: false
+        readers: [teacher]
 
-# A unit: one teacher message. Its block is a list of labelled fields, `- **<label>** : <text>`,
-# in this order; a field's text goes on after its label, its following lines indented two spaces.
+# A unit: one teacher message. Its #### blocks, in this order, the order of writing (teach, ask,
+# foresee the mistakes, instruct), then its supplementary cases; nothing else stands in a unit. A
+# block's heading is its word then its reader in parentheses, `#### Leçon (pour tous)`: the word
+# `unit_blocks.<block>` for a block of labelled fields, the label of its one field for a block of
+# one unlabelled field (`unit_fields.<field>`); the reader `readers.<reader>`. Each block is of one
+# publication: `published` and `readers` are the block's, its fields have none of their own.
+#   labelled: true   its fields, `- **<label>** : <text>`, the label `unit_fields.<field>`, in the
+#                    order of `fields`, all mandatory, a field's following lines indented two
+#                    spaces; no line outside a field
+#   labelled: false  its one field, unlabelled: the misconceptions directly, each a bullet
+#                    `- « <misconception> » : <correction>`, its following lines indented two spaces
+#                    and nothing nested under it; the instruction, prose
 unit:
-  fields:
-    - field: matter
+  heading_level: 4
+  blocks:
+    - block: lesson
       presence: mandatory
+      reader: all
       published: true
       readers: [site, teacher, learner]
-    - field: anchor
+      labelled: true
+      fields: [matter, anchor]
+    - block: exercise
       presence: mandatory
-      published: true
-      readers: [site, teacher, learner]
-    - field: question
-      presence: mandatory
+      reader: teacher
       published: false
       readers: [teacher, learner]
-    - field: expected_answer
+      labelled: true
+      fields: [question, expected_answer]
+    - block: misconceptions
       presence: mandatory
-      published: false
-      readers: [teacher, learner]
-    - field: misconceptions
-      presence: mandatory
-      # each misconception a nested bullet, the misconception in quotes, then its correction; the
-      # site renders the misconception and its correction, not its follow-ups
+      # the site renders each misconception and its correction
+      reader: all
       published: true
       readers: [site, teacher, learner]
-      items:
-        follow_up:
-          # a bullet nested under its misconception, `- **<label>** : <text>`
-          field: follow_up
-          presence: optional
-          published: false
-          readers: [teacher, learner]
-    - field: landmarks
+      labelled: false
+      fields: [misconceptions]
+    - block: instruction
       presence: optional
-      published: true
-      readers: [site, teacher, learner]
-    - field: instruction
-      presence: optional
+      reader: teacher
       published: false
       readers: [teacher]
+      labelled: false
+      fields: [instruction]
   # the length of a unit: the text of these fields, counted in lines of `line` characters (its
   # characters, label and indentation left out, divided by `line`); above `max`, unit-length
   # reports it (a signal, not an error)
@@ -109,15 +139,21 @@ unit:
     line: 100
     max: 12
 
-# A supplementary case of a unit: a #### heading inside the unit, `#### <title> (<qualifier>)`, the
-# qualifier one of `qualifiers`; the fields of a unit without matter and instruction, in the same
-# order and presence. Unpublished whole: the site renders none of it.
+# A supplementary case of a unit: a #### heading after the unit's blocks, `#### <kind word>,
+# <qualifier> (<reader>)<separator><title>`, `#### En stock, rechange (teacher seulement) : <titre>`,
+# the kind word `block_kinds.stock`, the qualifier one of `qualifiers`, the reader
+# `readers.<reader>`; its question is the one held in stock, asked when its qualifier says. Its
+# fields are labelled, in this order, all mandatory: those of the unit's « Leçon » and « Exercice »
+# without the matter, then `misconceptions`, labelled « Pièges », its misconceptions nested under it.
+# Unpublished whole: the site renders none of it.
 supplementary_case:
+  kind: stock
   heading_level: 4
   qualifiers: [fallback, practice, aside]
+  reader: teacher
   published: false
   readers: [teacher, learner]
-  fields: [anchor, question, expected_answer, misconceptions, landmarks]
+  fields: [anchor, question, expected_answer, misconceptions]
 
 # The course files, beside the concept file: what spans the course, and nothing a unit or the map
 # already says.
@@ -133,7 +169,8 @@ course_map:
   readers: [site, teacher]
 
 # plan.md: an optional H1, then these ## headings, in this order; after them, optional ##
-# sections of free titles that the teacher reads (the course's stances, its own writing rules).
+# sections of free titles that the teacher reads (the course's stances, its own writing rules, the
+# questions it asks again and again across the course).
 plan:
   file: plan.md
   sections:
@@ -172,7 +209,7 @@ domain_file:
 
 # storyline.md: the world, its H1 and the ## sections of free titles before the fixed facts (the
 # setting, the actors, the sources); then the fixed facts, the last ## section, one bullet per
-# fact, each ending with the id of the unit that fixed it in parentheses, `(0d)`, a final period
+# fact, each ending with the id of the unit that fixed it in parentheses, `(0d1)`, a final period
 # allowed after it. The fixed facts are optional while no unit is written.
 storyline:
   file: storyline.md

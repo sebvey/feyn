@@ -89,8 +89,8 @@ function run(ctx) {
       if (!facts.length) out.push(fail(STORY, found[0].line, `« ${title} » is empty`));
       for (const fact of facts) {
         const m = FACT_UNIT.exec(fact.text);
-        if (!m) out.push(fail(STORY, fact.line, 'a fixed fact ends with the id of the unit that fixed it, in parentheses: « (0d) »'));
-        else if (!units.has(m[1])) out.push(fail(STORY, fact.line, `fixed fact names "${m[1]}", which is no unit of the course (the id of a ### unit, or of a ## section without units)`));
+        if (!m) out.push(fail(STORY, fact.line, 'a fixed fact ends with the id of the unit that fixed it, in parentheses: « (0d1) »'));
+        else if (!units.has(m[1])) out.push(fail(STORY, fact.line, `fixed fact names "${m[1]}", which is no unit of the course (the id of a ### unit)`));
       }
     }
   }

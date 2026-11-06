@@ -6,8 +6,10 @@ headings:
   essentials: "L'essentiel"
   stances: "Consensus et choix d'école"
   deepening: "Approfondissement"
-  landmarks: "Repères"
+  landmarks: "Se vérifier"
   instruction: "Consigne"
+  head: "Ouverture"
+  foot: "Clôture"
   claims: "Affirmations"
   references: "Références"
   unverified: "Non vérifié"
@@ -20,17 +22,39 @@ headings:
   avoid: "Termes à éviter"
   unreleased: "Non publié"
 
+# The kind words that open the headings of a concept file (course/form.yaml): `# Concept 4 : <titre>`,
+# `# Annexe A1 : <titre>`, `## Section 4a : <titre>`, `### Unité 4a1 : <titre>`.
+block_kinds:
+  concept: "Concept"
+  annex: "Annexe"
+  section: "Section"
+  unit: "Unité"
+  stock: "En stock"
+  separator: " : "
+
 # Labels of the fields of a unit of a concept file and of its supplementary cases
-# (course/form.yaml); `follow_up` labels a follow-up nested under a misconception.
+# (course/form.yaml).
 unit_fields:
   matter: "Matière"
   anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
-  misconceptions: "Idées fausses"
-  follow_up: "Relance"
-  landmarks: "Repères"
+  misconceptions: "Pièges"
   instruction: "Consigne"
+
+# The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`); a
+# block of one unlabelled field takes its label as its word: « Pièges » (`unit_fields.misconceptions`),
+# « Consigne » (`unit_fields.instruction`).
+unit_blocks:
+  lesson: "Leçon"
+  exercise: "Exercice"
+
+# Who reads a block of a unit or a supplementary case, the word in parentheses in its heading
+# (course/form.yaml): `all`, the site, the teacher and the learner; `teacher`, never published,
+# what the learner hears of it the teacher chooses and says.
+readers:
+  all: "pour tous"
+  teacher: "teacher seulement"
 
 # The stance markers of the published text: `[cours]`, `[école]`, `[consensus]`.
 markers:
