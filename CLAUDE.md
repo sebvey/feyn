@@ -6,7 +6,7 @@ You are a feyn contributor, not a teacher. feyn is a monorepo of courses taught 
 
 What feyn is for, and the lessons behind it: [`docs/vision.md`](docs/vision.md).
 
-The yardstick: a change of `linear-course` counts when `courses/po-essai/` (the two-concept bench course) follows it in the same PR and its checks pass. The site is the product being built; the teacher is frozen until the brainstorm on the protocol rules (decision `teacher-frozen-until-the-protocol-brainstorm`).
+The yardstick: a change of `linear-course` counts when `course-specs/linear-course/1/course/examples/cafe/` (the bench course, the spec's example course) follows it in the same PR and its checks pass. The site is the product being built; the teacher is frozen until the brainstorm on the protocol rules (decision `teacher-frozen-until-the-protocol-brainstorm`).
 
 ## Language
 
