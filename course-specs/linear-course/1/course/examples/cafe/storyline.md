@@ -33,3 +33,10 @@ L'agence répond à un appel d'offres, et le client vient dans ses locaux pour l
 - Aïmen moud tout son paquet de café le dimanche et le garde au congélateur pour la semaine (1b1).
 - Aïmen assure à Cédric que l'eau doit bouillir et être versée aussitôt, l'eau bouillante étant ce qui extrait le mieux (1b2).
 - Cédric raconte sa recette à Inès, au Petit Noir ; elle lui répond : « Arrête les cuillères. Cinquante-cinq pour mille. » (1b3).
+- Cédric dit à Inès, au Petit Noir, que sa tasse est mauvaise ; elle lui répond : « Mauvaise, ça ne veut rien dire. Où elle pique, où elle racle, ce qu'elle pèse. » (2a1).
+- Un matin, la tasse de Cédric pique devant, ne racle pas du tout, et en bouche lui fait l'effet d'eau tiède (2a1).
+- Après une tasse qui piquait et ne pesait rien, Cédric, par souci d'efficacité, change tout d'un coup : une mouture plus fine, plus de café et une eau bouillante ; la tasse suivante racle, est épaisse comme un sirop et sèche la langue (2b1).
+- Aïmen assure à Cédric que si sa tasse est ratée, c'est son paquet de café qui est mauvais (2b1).
+- Un jeudi, Cédric revient à sa recette pesée et ne change que la mouture, plus grosse d'un cran ; sa tasse ne racle plus, pique un peu, ne laisse rien en bouche une fois avalée, et ne pèse pas grand-chose (2b1).
+- Le jour de la soutenance, la Pipeline tombe en panne ; Cédric fait le café du client à la main, avec le moulin qu'il a apporté de chez lui et sa recette du matin (2b2).
+- Le client redemande une tasse du café de Cédric, et Aïmen lui glisse : « Je vous l'avais dit, le meilleur café de Lyon. » (2b2).
