@@ -34,7 +34,7 @@ A Done when written before these rules, or without them, gets its baselines at t
 
 At the start (`/feyn-issue-branch`), each command is rerun on the base and its output compared with its baseline. The same lines are no change: a line number moved by an edit elsewhere in the file is tolerated, since a strict compare would stop every start whose file was touched above the matched line. An output that changed stops the start: the base moved under the statement, and its author (the orchestrator for a story of an epic, otherwise the maintainer) rewrites the statement and its baseline before the work begins. A line the baseline lacks is a changed output, even one the statement targets and the base did not move for: the start stops, and its author amends the baseline, since the start cannot tell a line left out of the baseline from a line the base gained.
 
-A start that stops, on an output changed or on a baseline it writes that shows a statement wrong, posts nothing on the issue. Its stop message (under the agent workflow, the question of its `blocked` result) reports each statement, its baseline (or the one it would write) and its output now. The author then amends the statement and its baseline in one dated amendment.
+A start that stops, on an output changed or on a baseline it writes that shows a statement wrong, posts nothing on the issue. Its message (under the agent workflow, the question of its `blocked` result) reports each statement, its baseline (or the one it would write) and its output now. The author then amends the statement and its baseline in one dated amendment.
 
 ## The intent prevails over the command
 

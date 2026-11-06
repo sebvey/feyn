@@ -72,7 +72,7 @@ The epic PR is handed over by a progress message:
 ```
 ## Epic PR ready to merge
 
-- **Done**: the three stories of epic 647 are on its branch, reviewed as a whole (sebvey/feyn#672)
+- **Done**: the three stories of the epic are on its branch, reviewed as a whole (sebvey/feyn#672)
 - **For you**: merge it (the PR page, "Squash and merge"); then I clean up
 ```
 
@@ -128,6 +128,6 @@ The clean-up (`/feyn-merge-cleanup`, [run-cleanup.md](run-cleanup.md), and the c
 ```
 ## Clean-up done
 
-- **Done**: story 640 is on main and closed, its branch deleted; story 655 is now free (Ready)
-- **For you**: close issue 612, whose stories are all closed (its page, "Close issue")
+- **Done**: sebvey/feyn#640 is on main and closed, its branch deleted; sebvey/feyn#655 is now free (Ready)
+- **For you**: close sebvey/feyn#612, whose stories are all closed (its page, "Close issue")
 ```
