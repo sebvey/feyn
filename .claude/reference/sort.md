@@ -17,11 +17,11 @@ What a delivery reports (a deviation, a structural choice made without the maint
 3. One a story of the plan makes moot (an epic): a line in the plan, under that story.
 4. The rest, when it is costly to undo or foundational (vocabulary, the structure of a file of reference, the teacher's behaviour):
    - an epic: an open question ("An open question");
-   - a story without an epic: named in the PR's Review first (one bullet can name several), its options ruled out and its cost of going back in "Delivery notes"; the maintainer decides it by the merge, and the hand-over does not wait for an answer. One missing from them is added by a rerun or by the orchestrator's own edit of the body (`mise exec -- gh pr edit <pr> --body-file <file>`, within the limits of `/feyn-pull-request` step 5) and of "Delivery notes" (in place, `/feyn-pull-request` step 6); the notification of the hand-over names that edit.
+   - a story without an epic: named in the PR's Review first (one bullet can name several), its options ruled out and its cost of going back in "Delivery notes"; the maintainer decides it by the merge, and the hand-over does not wait for an answer. One missing from them is added by a rerun or by the orchestrator's own edit of the body (`mise exec -- gh pr edit <pr> --body-file <file>`, within the limits of `/feyn-pull-request` step 5) and of "Delivery notes" (in place, `/feyn-pull-request` step 6); the hand-over message names that edit.
 
    A choice that is neither stays in its PR's "Delivery notes".
 
-"Inform" is a line of a progress message, not a question.
+"Inform" is a line in the plan comment's log (an epic, [project.md](project.md), "Epics", "The plan comment") and in the PR's "Delivery notes" (in place, `/feyn-pull-request` step 6), not a question: the progress message gives only their count ([messages.md](messages.md), "Progress message").
 
 ## An open question
 
@@ -29,7 +29,7 @@ Of an epic only.
 
 - **One that reports a defect** carries, with it: the correction; the cause (the instruction, skill step, brief or missing check that produced it or let it pass); the corrective action at that cause, or why it is not worth one (an isolated slip); and how the next occurrence will show that it held.
 - **The trace** is on GitHub, at once: the line `Open question: <the choice>, <the options ruled out>, <the cost of going back> (#<story>)` in the log of the plan comment ([project.md](project.md), "Epics", "The plan comment"), and a comment on the epic, numbered, with its recommendation, ending "Answer here or in the work session; the plan comment records the answer.", each write's output read ([project.md](project.md), "GitHub writes").
-- **The decision** is the message to the maintainer in the work session (GitHub notifies nobody of the maintainer's own comment, which the orchestrator posts): one question at a time, in the form the maintainer's instructions give a decision, with the link to the comment on the epic; the next one once it is answered. It is not a progress message.
+- **The decision** is the message to the maintainer in the work session (GitHub notifies nobody of the maintainer's own comment, which the orchestrator posts): a question of [messages.md](messages.md), in a message of its own, one question at a time, with the link to the comment on the epic; the next one once it is answered. While it is open, every message to the maintainer ends with the awaiting footer ([messages.md](messages.md)), its line for that question.
 - **The answer**, on the epic or in the work session, is recorded at once: the line `Answered: <the answer> (the maintainer, <where>, <date>)`, `<where>` being `on the epic` or `in the work session`, right under its `Open question:` line; then the answer is applied, by a story (posed next) when it needs work.
 - **The count**: the log's lines starting with `Open question:` that no `Answered:` line follows. The epic PR is not handed over while one remains.
 

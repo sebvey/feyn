@@ -12,7 +12,7 @@ Nothing is spawned and no run launched before the maintainer's go-ahead: they sa
 
 ## Progress
 
-While the cycle runs, each progress message to the maintainer holds at most three lines: what just finished, what runs now, what is awaited from them, if anything. That bound holds for progress messages only: a decision put to the maintainer takes the form of step 4, "Decision awaited". No report per agent, no repeat of the previous message. The PR is the report: its body and its "Delivery notes" comment; the hand-over (step 5) notifies what they do not hold.
+Every message to the maintainer, from the go-ahead to the clean-up, takes a form of [messages.md](../../reference/messages.md): a progress message, a stop message, the hand-over, or a question (a decision awaited, step 4), the awaiting footer while one is open, at its rhythm. No report per agent, no repeat of the previous message. The PR is the report: its body and its "Delivery notes" comment; the hand-over (step 5) says only what they do not hold.
 
 ## 1. Before the run
 
@@ -42,22 +42,22 @@ Every field, never only `status`:
 ## 4. Reruns: corrections, decision awaited
 
 Every change to the PR after a run goes through a new run of the workflow on the same issue, with `work` naming the change: its contributor resumes the PR from the local issue branch, which step 2.2 moved to the PR's head, a fresh agent reviews it, and step 2.2 cleans the run.
-- **Decision awaited.** A run `blocked` on a choice only the maintainer can make (its `contrib.question`): put `blocked:maintainer` on the issue (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`), post the question on the issue, with its recommendation, and put it to the maintainer in the work session, in the form the maintainer's instructions give a decision, with the link to that comment. The maintainer answers with a comment on the issue or in the work session, and removes the label; check it is gone (`mise exec -- gh issue view <n> --json labels`), then rerun with the answer restated in `work` (step 2.1), which names the comment that holds it (its URL).
+- **Decision awaited.** A run `blocked` on a choice only the maintainer can make (its `contrib.question`): put `blocked:maintainer` on the issue (`mise exec -- gh issue edit <n> --add-label blocked:maintainer`), post the question on the issue, with its recommendation, and put it to the maintainer in the work session as a question of [messages.md](../../reference/messages.md), with the link to that comment; until it is answered, every message ends with the awaiting footer. The maintainer answers with a comment on the issue or in the work session, and removes the label; check it is gone (`mise exec -- gh issue view <n> --json labels`), then rerun with the answer restated in `work` (step 2.1), which names the comment that holds it (its URL).
 - **An answer in the work session** to a decision awaited is recorded at once on the issue: a comment `Answered: <the answer> (the maintainer, in the work session, <date>)`, which links the question's comment.
 - **A late finding or a decision after the hand-over.** The maintainer can ask for a correction, refuse or settle a choice while the PR awaits the merge: rerun with the maintainer's request restated in `work` (step 2.1), in place of their words quoted; the contributor records it in "Delivery notes" (Choices, or a deviation when it departs from the Done when).
 - **The Status.** A correction asked on a delivered PR: set the issue back to In progress ([project.md](../../reference/project.md), "Commands") and turn the PR back into a draft (`mise exec -- gh pr ready --undo <pr>`); the renewed hand-over (step 5) marks it ready and sets Ready for review again.
 
 ## 5. Hand-over to the maintainer
 
-The review and the corrections being done, hand the PR over as [hand-over.md](../../reference/hand-over.md) says, the path a story without an epic, after its run: the PR marked ready, the issue Ready for review, the notification in its exact form.
+The review and the corrections being done, hand the PR over as [hand-over.md](../../reference/hand-over.md) says, the path a story without an epic, after its run: the PR marked ready, the issue Ready for review, the hand-over message in its exact form ([messages.md](../../reference/messages.md), "Hand-over").
 
 ## 6. After the merge
 
 From the main checkout, on `main`:
 
-1. `mise exec -- gh pr view <pr> --json state,mergedAt` shows `MERGED`; otherwise stop and tell the maintainer.
+1. `mise exec -- gh pr view <pr> --json state,mergedAt` shows `MERGED`; otherwise stop, by a stop message ([messages.md](../../reference/messages.md)).
 2. Nothing of the runs is left: `git worktree list` and `git branch --list 'worktree-wf_*'` show none of their worktrees and branches; one left: clean it as [run-cleanup.md](../../reference/run-cleanup.md) says, the PR merged.
-3. `/feyn-merge-cleanup <branch>` for the issue branch: it confirms the change landed, the Status, deletes the local branch, and names the issues now free, relayed to the maintainer in the clean-up reply.
+3. `/feyn-merge-cleanup <branch>` for the issue branch: it confirms the change landed, the Status, deletes the local branch, and names the issues now free, relayed to the maintainer in the clean-up's progress message ([messages.md](../../reference/messages.md), "The clean-up").
 
 ## Tool behaviours
 
