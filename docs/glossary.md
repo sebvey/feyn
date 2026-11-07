@@ -292,7 +292,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### instruction
 
-- means: what the method has proper to a unit, or to a whole concept, for the teacher alone: when to pose a supplementary case, a wording that worked, a cross-reference not to re-teach; the last block of a unit, « Consigne au professeur », in prose, and a block of the foot of the concept file under the same heading, **unpublished**; a question the course asks again and again goes there; the order and the split of a concept are its sections and units, never an instruction
+- means: the boundary of the **matter**, for the teacher alone: what the teacher knows and does not say in this unit, or in this concept for the foot's; a sentence stays only if a competent teacher reading the matter, the cases, the misconceptions, the protocol and the course plan would otherwise act differently, and only there: what holds for every unit is a **protocol rule**, what holds for the whole course a stance of the course plan, the obvious goes; the last block of a unit, « Consigne au professeur », in prose, and a block of the foot of the concept file under the same heading, **unpublished**; a question the course asks again and again goes there; the order and the split of a concept are its sections and units, never an instruction
 - en: instruction · rejected: "instructions", "teaching notes", "usage", "what works"
 - fr: « consigne » · rejected: « consignes », « usage », « ce qui marche »
 - not to confuse with: [protocol rule](#protocol-rule), [matter](#matter)
