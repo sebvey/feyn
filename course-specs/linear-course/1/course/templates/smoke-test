@@ -133,14 +133,15 @@ const DUMMY = {
   'onboarding question 2': 'ce qu\'il connaît déjà du sujet',
   'the first step: the concept to open with, its first message': 'Concept 0, premier message.',
 };
-// the logo of the course, which no template gives: a dummy one, square, one colour in currentColor
-const LOGO = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>\n';
 // the instructions' placeholders that appear twice with different dummies per file are keyed above once
 const files = {
   yaml: ['course.yaml'],
   md: ['plan.md', 'glossary.md', 'storyline.md', 'CHANGELOG.md'],
   learner: ['learner/apprenant.md', 'learner/observations.md', 'learner/parcours.md'],
 };
+
+// the logo of the course, which no template gives: a dummy one, square, one colour in currentColor
+const LOGO = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>\n';
 
 function stripHeader(name, text) {
   if (name.endsWith('.yaml')) return text.replace(/^(#.*\n)+/, '');
