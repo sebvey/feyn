@@ -97,6 +97,7 @@ check(c0 && c0.diagrams && c0.diagrams[0].svg === svg, 'the SVG of concept 0\'s 
 const u = c0 && c0.sections && c0.sections[0].units.find((x) => x.id === '0a2');
 check(u && u.blocks.cases.length === 2 && u.blocks.cases[1].qualifier === 'rechange' && u.blocks.cases[1].supplementary, 'unit 0a2 does not hold its case and its supplementary case with its qualifier');
 check(doc.storyline.fixed_facts.facts.every((f) => f.unit), 'a fixed fact has no unit id');
+check(doc.language === (fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').match(/^language\s*:\s*(\S+)/m) || [])[1], `the language is ${doc.language}, not that of spec.yaml`);
 check(doc.release === null, 'cafe has no release, and release is not null');
 check(doc.concepts.map((c) => c.path).join(',') === 'concepts/00/,concepts/01/,concepts/02/,concepts/A1/', `the concept paths are ${doc.concepts.map((c) => c.path).join(', ')}`);
 const ref = doc.concept_refs.find((r) => r.text === 'concept 0b');

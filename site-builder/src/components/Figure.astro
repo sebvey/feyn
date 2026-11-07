@@ -1,0 +1,12 @@
+---
+// A diagram of the frontmatter's `diagrams`, ported from the old site's Figure: the SVG of the
+// course as written, in its frame, then its title and its caption. The SVG carries its own
+// accessible title; its classes (`primary`, `secondary`, `muted`) take the --sch-* tokens.
+import type { Diagram } from '../lib/site';
+interface Props { diagram: Diagram }
+const { diagram } = Astro.props;
+---
+<figure class="figure">
+  <div class="box" set:html={diagram.svg} />
+  <figcaption><strong>{diagram.title}</strong>{diagram.caption}</figcaption>
+</figure>

@@ -626,3 +626,83 @@ div.cdep .soon { font-size: 0.78rem; margin-left: 0.4rem; }
 .sous-lien .corps { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
 .sous-lien .tt { font-family: var(--font-text); font-size: 1.02rem; line-height: 1.35; font-weight: 600; color: var(--accent); }
 .sous-lien .pq { font-family: var(--font-text); font-size: 0.95rem; line-height: 1.5; text-wrap: pretty; }
+
+/* ---------- Concept page: one piece, no tabs, the course's division top to bottom ---------- */
+/* The head and the text column aligned left, beside the table of contents (14rem + 2.5rem). */
+.concept-page .concept-head { padding-block: 3rem 0.5rem; max-width: var(--measure); }
+@media (min-width: 60rem) { .concept-page .concept-head { margin-left: 16.5rem; } }
+.concept-page .avec-sommaire { margin-top: 0; }
+.concept-page .prose, .concept-page .sources, .concept-page .pn-bas { margin-inline: 0; }
+.concept-page .sommaire-contenu { max-width: 50rem; }
+/* The table of contents: a section's id and title on desktop, its title alone on a phone. */
+.concept-page .sommaire .sommaire-n { flex: none; }
+@media (max-width: 59.99rem) { .concept-page .sommaire .sommaire-n { display: none; } }
+.concept-meta ul { margin-left: 0.25em; }
+
+/* The parts of the page */
+.bloc { padding-top: 2.5rem; scroll-margin-top: 1rem; }
+.bloc + .bloc { border-top: 1px solid var(--rule); margin-top: 3rem; }
+.bloc > h2 { font-size: 1.75rem; margin: 0 0 1.25rem; }
+.bloc h2 .num { font-family: var(--font-ui); font-size: 0.65em; font-weight: 650; color: var(--accent); margin-right: 0.15em; letter-spacing: 0.02em; }
+.bloc > h2 + .sous { margin-top: 1.5rem; }
+.bloc .bloc-t { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+.bloc > h2 + .bloc-t { margin-top: 0; }
+.essentiel > p { font-size: 1.12em; line-height: 1.6; }
+.sous h4 { font-family: var(--font-ui); font-size: 0.8rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin: 2rem 0 0.6rem; scroll-margin-top: 4.5rem; }
+.sous ul { margin-bottom: 1.15em; }
+@media (hover: none) { .sous .ancre { opacity: 0.6; } }
+
+/* The cases of a unit: the frame of the Reflexe box, each anchor a scene of the storyline */
+.exercice {
+  margin: 2rem 0 0; padding: 1.2rem 1.4rem; border: 1px solid var(--rule);
+  border-left: 5px solid var(--accent); background: var(--surface); border-radius: 0 6px 6px 0;
+}
+@media (max-width: 30rem) { .exercice { padding: 1rem 1rem; } }
+.sous .exercice > .tag { font-family: var(--font-ui); font-size: 0.78rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.75rem; }
+.prose .exercice > ol { list-style: none; margin: 0; padding: 0; }
+.prose .exercice li.ex { margin: 0; }
+.exercice li.ex + li.ex { border-top: 1px solid var(--rule); margin-top: 1.4rem; padding-top: 1.3rem; }
+.ex-titre { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.6rem; font-size: 1.12rem; line-height: 1.3; margin: 0 0 0.7rem; }
+.qualif {
+  font-family: var(--font-ui); font-size: 0.68rem; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-soft); border: 1px solid var(--rule); border-radius: 999px; padding: 0.2em 0.65em; background: var(--bg); line-height: 1.2;
+}
+.exercice .fil-rouge { margin: 0 0 1rem; background: var(--bg); }
+.fil-rouge p + p { margin-top: 0.6em; }
+.ex-label { font-family: var(--font-ui); font-size: 0.82em; font-weight: 650; color: var(--ink-soft); }
+.prose .exercice .ex-q p { margin: 0 0 0.9rem; font-weight: 600; line-height: 1.5; }
+.reponse summary { cursor: pointer; width: fit-content; font-family: var(--font-ui); font-size: 0.88rem; font-weight: 650; color: var(--accent); }
+.reponse summary:hover { color: var(--accent-ink); }
+.reponse .corps { margin-top: 0.5rem; padding: 0.7rem 0.9rem; background: var(--bg); border-left: 3px solid var(--rule); font-size: 0.97em; line-height: 1.55; }
+.prose .reponse .corps p, .prose .reponse .corps ol, .prose .reponse .corps ul { margin: 0 0 0.4em; }
+.prose .reponse .corps > :last-child { margin-bottom: 0; }
+.prose .reponse .corps ol { padding-left: 1.3em; list-style: decimal; }
+.prose .reponse .corps li { margin: 0 0 0.3em; }
+
+/* The misconceptions of a unit, one list in the Erreurs look */
+.sous .erreurs { margin-top: 2rem; }
+.sous .erreurs h4 { margin-top: 0; }
+.erreurs .idee { font-weight: 600; }
+.erreurs .idee::before { content: '«\00a0'; }
+.erreurs .idee::after { content: '\00a0»'; }
+
+/* The foot */
+.cloture .reflexe { margin-top: 0; }
+.reflexe h3.tag { margin: 0 0 0.35rem; }
+.reflexe .q p { margin: 0; }
+.reflexe .q p + p { margin-top: 0.6em; }
+
+/* A diagram: the classes of the course's SVG, on the --sch-* tokens */
+.figure svg { color: var(--sch-text); }
+.figure svg .primary { color: var(--sch-s1); }
+.figure svg .secondary { color: var(--sch-text-soft); }
+.figure svg .muted { color: var(--sch-text); }
+.figure figcaption strong { display: block; color: var(--ink); font-weight: 650; margin-bottom: 0.15rem; }
+
+/* The stances, the neighbours and the sources, in the text column */
+@media (min-width: 62rem) { .ecoles { gap: 1.25rem; } }
+.voisines h3 { font-family: var(--font-text); }
+.aff .where { margin: 0 0 0.3rem; font-family: var(--font-ui); font-size: 0.8rem; color: var(--ink-soft); }
+.nature-fait { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 650; letter-spacing: 0.02em; color: var(--ink-soft); vertical-align: 0.08em; }
+.sources > h3:first-child { margin-top: 0; }
+.bloc .sources h3 { font-size: 1.2rem; }

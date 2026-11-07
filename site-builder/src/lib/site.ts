@@ -14,16 +14,34 @@ export interface Domain {
   number: number; slug: string; title: string; objective: string; duration_min?: number;
   concepts: string[]; path: string; sections: Section[];
 }
-export interface Unit { id: string; title: string }
+export interface Case {
+  title: string; qualifier?: string; anchor?: string; question?: string; expected_answer?: string;
+  supplementary: boolean;
+}
+export interface Misconception { misconception: string; correction: string }
+export interface Unit {
+  id: string; title: string;
+  blocks: { lesson?: { matter?: string }; cases?: Case[]; misconceptions?: Misconception[] };
+}
 export interface ConceptSection { id: string; title: string; units: Unit[] }
+export interface Item { text: string; author?: string; refs: string[]; verified?: string[] }
+export interface Diagram { file: string; title: string; caption: string; unit: string; svg: string }
+export interface Table { key: string; heading: string; header: string[]; rows: string[][] }
 export interface Concept {
   number: string; annex: boolean; slug: string; title: string; objective: string;
   prerequisites: string[]; duration_min?: number; domain: number | null; path: string;
+  head?: Section;
   sections: ConceptSection[];
+  foot?: { heading: string; blocks: Section[] };
+  stances?: { heading: string; consensus: Item[]; school: Item[]; course: Item[] };
+  neighbors?: Item[];
+  diagrams?: Diagram[];
+  sources?: Table[];
 }
 export interface ConceptRef { text: string; targets: { id: string; concept: string; path: string; anchor: string | null }[] }
 export interface Doc {
   spec: string;
+  language: string;
   course: { id: string; title: string; subtitle?: string; annexes: string[] };
   plan: Section[];
   domains: Domain[];
@@ -73,7 +91,8 @@ export const domainName = (d: Domain) => `${words.site.labels.domain} ${d.number
 export const conceptByNumber = new Map(doc.concepts.map((c) => [c.number, c]));
 export const annexes = doc.concepts.filter((c) => c.annex);
 
-// ---- Markdown: CommonMark, rendered as written (no raw HTML), the concept references linked
+// ---- Markdown: CommonMark, rendered as written (no raw HTML), the concept references linked, the
+// stance markers as badges
 const refs = [...doc.concept_refs].sort((a, b) => b.text.length - a.text.length);
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const refPattern = refs.length
@@ -115,8 +134,38 @@ function remarkConceptRefs() {
 
 const processor = unified().use(remarkParse).use(remarkConceptRefs).use(remarkRehype).use(rehypeStringify);
 
-/** A Markdown text of the course as HTML. */
-export const md = (text: string) => String(processor.processSync(text));
+// ---- the stance markers of a text (`[cours]`, the course lexicon's `markers`), as badges
+/** The class of a badge by its marker key, the old site's names (`.pastille.ecole`). */
+const badgeClass: Record<string, string> = { consensus: 'consensus', school: 'ecole', course: 'cours' };
+const markerKey = new Map(Object.entries(words.course.markers ?? {}).map(([k, w]) => [w, k]));
+const markerPattern = markerKey.size
+  ? new RegExp(`\\[(${[...markerKey.keys()].map(escapeRe).join('|')})\\]`, 'gu')
+  : null;
+const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+/** The badge of a stance, by its marker key (`consensus`, `school`, `course`) and the word it shows; out of the search index. */
+export const badge = (key: string, word: string) =>
+  `<span class="pastille ${badgeClass[key] ?? key}" data-pagefind-ignore>${escapeHtml(word)}</span>`;
+
+/** The marker key of a word of the course lexicon's `markers` (« cours » is `course`), if it is one. */
+export const markerOf = (word: string) => markerKey.get(word);
+
+/** Each stance marker of an HTML text becomes its badge, the marker's word in it. */
+const badges = (html: string) => (markerPattern ? html.replace(markerPattern, (_m, w: string) => badge(markerKey.get(w)!, w)) : html);
+
+/** A Markdown text of the course as HTML: its concept references linked, its stance markers as badges. */
+export const md = (text: string) => badges(String(processor.processSync(text)));
+
+/**
+ * A Markdown text after its label (a case's question, its expected answer): the label goes into the
+ * text's first paragraph, or before the text in its own when the text opens with a list. The text
+ * keeps its first letter as written (no script capitalises course text).
+ */
+export function mdLabelled(label: string, text: string, cls = 'ex-label'): string {
+  const html = md(text).trim();
+  const tag = `<span class="${cls}">${escapeHtml(labelled(label))}</span>`;
+  return html.startsWith('<p>') ? `<p>${tag}${html.slice(3)}` : `<p>${tag}</p>${html}`;
+}
 
 /** A one-line Markdown text of the course as inline HTML, without its paragraph. */
 export const mdInline = (text: string) => md(text).trim().replace(/^<p>([\s\S]*)<\/p>$/, '$1');

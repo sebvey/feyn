@@ -1,0 +1,17 @@
+---
+// The misconceptions of a unit (the course lexicon's `unit_fields.misconceptions`), one list in the
+// old site's Erreurs look: each misconception, then the separator and its correction as written.
+import type { Misconception } from '../lib/site';
+import { words, mdInline } from '../lib/site';
+interface Props { unit: string; items: Misconception[] }
+const { unit, items } = Astro.props;
+const id = `${unit}-misconceptions`;
+---
+<section class="erreurs" aria-labelledby={id}>
+  <h4 id={id}>{words.course.unit_fields.misconceptions}</h4>
+  <ul>
+    {items.map((m) => (
+      <li><span class="idee" set:html={mdInline(m.misconception)} />{words.course.block_kinds.separator}<Fragment set:html={mdInline(m.correction)} /></li>
+    ))}
+  </ul>
+</section>

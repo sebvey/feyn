@@ -7,10 +7,10 @@
 // (closed by default: a part the form does not name, or names without `published: true`, is
 // never output), and prints them to stdout as one JSON document, whose shape site.schema.yaml
 // fixes and README.md (this folder) describes, with the words of site/lexicon.yaml, the headings
-// of course/lexicon.yaml the published parts carry and the URL scheme of site/url-scheme.yaml, so
-// that the site engine reads no course file and no spec file. It names no mechanism of a target
-// and rewrites no course text. Writes nothing. Exit 0 rendered, 1 an input it cannot read, 2 a
-// usage error.
+// of course/lexicon.yaml the published parts carry, the URL scheme of site/url-scheme.yaml and the
+// language of spec.yaml, so that the site engine reads no course file and no spec file. It names
+// no mechanism of a target and rewrites no course text. Writes nothing. Exit 0 rendered, 1 an
+// input it cannot read, 2 a usage error.
 const fs = require('fs');
 const path = require('path');
 const { createRequire } = require('module');
@@ -71,6 +71,9 @@ const refs = req('./lib/refs');
 const glossary = req('./lib/glossary');
 const course = req('./lib/course');
 const SPEC = `${lineOf('name')}@${lineOf('major')}`;
+// the language of the MAJOR's courses and lexicons (ISO 639-1), given to the engine for the pages it writes
+const LANGUAGE = lineOf('language');
+if (!/^[a-z]{2}$/.test(LANGUAGE || '')) fail(`${rel(MAJOR)}/spec.yaml declares no language (ISO 639-1)`);
 
 const parseYaml = (p) => {
   try { return yaml.parse(read(p)); } catch (e) { return fail(`${rel(p)}: ${e.message}`); }
@@ -300,6 +303,7 @@ const found = new Map();
 
 const doc = {
   spec: SPEC,
+  language: LANGUAGE,
   course: { id: cy.id, title: cy.title, subtitle: cy.subtitle, annexes: (cy.annexes || []).map(course.normNumber) },
   plan,
   domains,

@@ -1,0 +1,73 @@
+---
+// The sources of a concept (the published sections of its sources.md, each its table), ported from
+// the old site's Sources. The section `claims`: each row as a claim (its columns in the spec's
+// order: the claim, where it is, its sources, what was verified, its nature), its nature as the
+// badge of its stance marker, or as the word itself (« fait »); its sources ([S1]) linked to the
+// references. The section `references`: each row (the id, the source, its link, its type, the date
+// it was consulted) under the anchor `ref-<id>`. A section of another key: its table as written.
+// The unpublished section is not in the document, so never here.
+import type { Table } from '../lib/site';
+import { words, mdInline, markerOf, badge } from '../lib/site';
+interface Props { sections: Table[] }
+const { sections } = Astro.props;
+const sep = words.course.block_kinds.separator;
+const refIds = new Set(sections.filter((s) => s.key === 'references').flatMap((s) => s.rows.map((r) => r[0])));
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const refPattern = refIds.size ? new RegExp(`\\[(${[...refIds].map(escapeRe).join('|')})\\]`, 'g') : null;
+/** A cell of the course, its references ([S1]) linked to their line. */
+const cell = (text: string) => {
+  const html = mdInline(text ?? '');
+  return refPattern ? html.replace(refPattern, (_m, id: string) => `<a href="#ref-${id}">[${id}]</a>`) : html;
+};
+const nature = (word: string) => {
+  const key = markerOf(word);
+  return key ? badge(key, word) : `<span class="nature-fait" data-pagefind-ignore>${mdInline(word)}</span>`;
+};
+---
+<div class="sources">
+  {sections.map((s) => (
+    s.key === 'claims' ? (
+      <>
+        <h3 id={s.key}>{s.heading}</h3>
+        {words.site.intros?.claims && <p class="note">{words.site.intros.claims}</p>}
+        <ul class="aff">
+          {s.rows.map((r) => (
+            <li>
+              <p class="claim">{r[4] && <><Fragment set:html={nature(r[4])} />{' '}</>}<span set:html={cell(r[0])} /></p>
+              {r[1] && <p class="where">{s.header[1]}{sep}<span set:html={cell(r[1])} /></p>}
+              {r[3] && <p class="check" set:html={cell(r[3])} />}
+              {r[2] && <p class="refs" data-pagefind-ignore set:html={cell(r[2])} />}
+            </li>
+          ))}
+        </ul>
+      </>
+    ) : s.key === 'references' ? (
+      <>
+        <h3 id={s.key}>{s.heading}</h3>
+        <ol class="reflist">
+          {s.rows.map((r) => (
+            <li id={`ref-${r[0]}`}>
+              <span class="id">{r[0]}</span>
+              <span>
+                {r[2] && /^https?:\/\//.test(r[2])
+                  ? <a href={r[2]} rel="noopener"><span set:html={mdInline(r[1])} /></a>
+                  : <span set:html={mdInline(r[1])} />}
+                {(r[3] || r[4]) && <span class="meta">{r[3]}{r[3] && r[4] && ' · '}{r[4] && `${s.header[4]} ${r[4]}`}</span>}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </>
+    ) : (
+      <>
+        <h3 id={s.key}>{s.heading}</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>{s.header.map((h) => <th scope="col">{h}</th>)}</tr></thead>
+            <tbody>{s.rows.map((r) => <tr>{r.map((c) => <td set:html={cell(c)} />)}</tr>)}</tbody>
+          </table>
+        </div>
+      </>
+    )
+  ))}
+</div>
