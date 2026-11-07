@@ -145,7 +145,7 @@ Les règles de l'unité sont le groupe « L'unité » de [`rules.yaml`](rules.ya
 | the reviewer | that a claim is backed by what it cites: the quotation, the place | reviewing a change |
 | the maintainer | when a source changes or a section is rewritten, what to re-verify; when it was consulted | months later |
 
-`sources.md` trace les champs publiés de `concept.md` (« Matière », « L'essentiel », « Se vérifier », « Approfondissement », les corrections des « Pièges ») : « Affirmations » relie chaque affirmation à ce qui l'établit, « Références » décrit les sources, « Non vérifié » dit ce qu'aucune source consultée ne confirme. Le site construit chaque ligne de « Affirmations » et de « Références » ; « Non vérifié » est la seule section qu'il ne construit pas, reconnue par son titre du lexique ; la classe copie le fichier entier.
+`sources.md` trace les champs publiés de `concept.md` qui affirment (« Matière », « L'essentiel », « Se vérifier », « Approfondissement », les corrections des « Pièges »), pas les cas d'une unité, dont l'ancrage vient du fil rouge et la réponse attendue redit la matière : « Affirmations » relie chaque affirmation à ce qui l'établit, « Références » décrit les sources, « Non vérifié » dit ce qu'aucune source consultée ne confirme. Le site construit chaque ligne de « Affirmations » et de « Références » ; « Non vérifié » est la seule section qu'il ne construit pas, reconnue par son titre du lexique ; la classe copie le fichier entier.
 
 Les règles de `sources.md` sont le groupe « Le fichier sources.md » de [`rules.yaml`](rules.yaml).
 
