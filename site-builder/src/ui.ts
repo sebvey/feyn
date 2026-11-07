@@ -54,7 +54,7 @@ export const about = {
       id: 'professeur',
       heading: 'Un cours donné par un agent IA',
       paragraphs: [
-        'Le professeur du cours est un agent IA. Il fait progresser l’apprenant pas à pas, par des questions et des mises en situation, et s’adapte à ses réponses. Le site reprend le fond du cours, à lire avant, pendant ou après les sessions.',
+        'Le professeur du cours est un agent IA. Il fait progresser l’apprenant pas à pas, par des questions, et s’adapte à ses réponses. Le site reprend le fond du cours, à lire avant, pendant ou après les sessions.',
       ],
     },
     {

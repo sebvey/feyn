@@ -269,7 +269,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### misconception
 
-- means: a frequent wrong answer of a unit, quoted, with its correction; « Pièges » names the block of a unit that holds its misconceptions, those of all its cases, **published**, from which the site composes the « Pièges » of a concept, and « idée fausse » each misconception in it; a case holds none of its own
+- means: a frequent wrong answer of a unit, quoted, with its correction; « Pièges » names the block of a unit that holds its misconceptions, those of all its cases, **published**, shown by the site in its unit, and « idée fausse » each misconception in it; a case holds none of its own
 - en: misconception · rejected: "common mistake", "pitfall", "frequent error"
 - fr: « idée fausse » · rejected: « erreur fréquente »
 - not to confuse with: [follow-up](#follow-up), [case](#case)
