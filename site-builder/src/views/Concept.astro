@@ -111,7 +111,7 @@ const toc = [
           </section>
         )}
 
-        <PrevNext prev={prev} next={next} />
+        {(prev || next) && <PrevNext prev={prev} next={next} />}
       </div>
     </div>
   </div>

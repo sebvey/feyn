@@ -653,24 +653,24 @@ div.cdep .soon { font-size: 0.78rem; margin-left: 0.4rem; }
 @media (hover: none) { .sous .ancre { opacity: 0.6; } }
 
 /* The cases of a unit: the frame of the Reflexe box, each anchor a scene of the storyline */
-.exercice {
+.cas {
   margin: 2rem 0 0; padding: 1.2rem 1.4rem; border: 1px solid var(--rule);
   border-left: 5px solid var(--accent); background: var(--surface); border-radius: 0 6px 6px 0;
 }
-@media (max-width: 30rem) { .exercice { padding: 1rem 1rem; } }
-.sous .exercice > .tag { font-family: var(--font-ui); font-size: 0.78rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.75rem; }
-.prose .exercice > ol { list-style: none; margin: 0; padding: 0; }
-.prose .exercice li.ex { margin: 0; }
-.exercice li.ex + li.ex { border-top: 1px solid var(--rule); margin-top: 1.4rem; padding-top: 1.3rem; }
+@media (max-width: 30rem) { .cas { padding: 1rem 1rem; } }
+.sous .cas > .tag { font-family: var(--font-ui); font-size: 0.78rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.75rem; }
+.prose .cas > ol { list-style: none; margin: 0; padding: 0; }
+.prose .cas li.ex { margin: 0; }
+.cas li.ex + li.ex { border-top: 1px solid var(--rule); margin-top: 1.4rem; padding-top: 1.3rem; }
 .ex-titre { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.6rem; font-size: 1.12rem; line-height: 1.3; margin: 0 0 0.7rem; }
 .qualif {
   font-family: var(--font-ui); font-size: 0.68rem; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--ink-soft); border: 1px solid var(--rule); border-radius: 999px; padding: 0.2em 0.65em; background: var(--bg); line-height: 1.2;
 }
-.exercice .fil-rouge { margin: 0 0 1rem; background: var(--bg); }
+.cas .fil-rouge { margin: 0 0 1rem; background: var(--bg); }
 .fil-rouge p + p { margin-top: 0.6em; }
 .ex-label { font-family: var(--font-ui); font-size: 0.82em; font-weight: 650; color: var(--ink-soft); }
-.prose .exercice .ex-q p { margin: 0 0 0.9rem; font-weight: 600; line-height: 1.5; }
+.prose .cas .ex-q p { margin: 0 0 0.9rem; font-weight: 600; line-height: 1.5; }
 .reponse summary { cursor: pointer; width: fit-content; font-family: var(--font-ui); font-size: 0.88rem; font-weight: 650; color: var(--accent); }
 .reponse summary:hover { color: var(--accent-ink); }
 .reponse .corps { margin-top: 0.5rem; padding: 0.7rem 0.9rem; background: var(--bg); border-left: 3px solid var(--rule); font-size: 0.97em; line-height: 1.55; }

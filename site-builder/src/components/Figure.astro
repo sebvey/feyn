@@ -8,5 +8,5 @@ const { diagram } = Astro.props;
 ---
 <figure class="figure">
   <div class="box" set:html={diagram.svg} />
-  <figcaption><strong>{diagram.title}</strong>{diagram.caption}</figcaption>
+  <figcaption><strong>{diagram.title}</strong>{' '}{diagram.caption}</figcaption>
 </figure>
