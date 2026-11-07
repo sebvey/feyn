@@ -25,15 +25,15 @@ misconception, instruction, head and foot, deepening, defining concept).`
 
 // the form of a concept file and its words: the spec's data, read by every agent, never written here
 const FORM = `The form of a concept file is ${SPEC}form.yaml: every heading starts with its kind, one kind per level; \
-its title (\`# Concept <n> : <title>\`, an annex \`# Annexe <id> : <title>\`), its head (a ## heading, then its ### blocks), \
+its title (\`# Concept <n> : <title>\`, an annex \`# Annexe <id> : <title>\`), its head (a ## heading, then its text), \
 its sections (\`## Section <id> : <title>\`) and their units (\`### Unité <id> : <title>\`, one at least per section), its foot \
 (a ## heading, then its ### blocks); \
-the #### blocks of a unit in their order, each with its reader and its fields (\`unit.blocks\`), then its supplementary \
-cases (\`supplementary_case\`), each a #### heading after its unit's blocks, opened by its kind word, its qualifier and its \
-reader, then its title, its fields \`supplementary_case.fields\`. The words of the file are the values of ${SPEC}lexicon.yaml at the keys form.yaml names: a \
+the #### blocks of a unit in their order, each titled by its word alone, with its fields (\`unit.blocks\`); its block of \
+cases (\`cases\`) is a list of cases, each opened by its title field: the first, the unit's case, always posed; each other a \
+supplementary case, with its qualifier field. The words of the file are the values of ${SPEC}lexicon.yaml at the keys form.yaml names: a \
 field's label is \`unit_fields.<field>\` (a field opens with \`- **<label>** :\`; the misconceptions and the instruction of a unit \
-are unlabelled, their block's word being their label), a block's word is \`unit_blocks.<block>\` or its one field's label, a reader is \`readers.<key>\`, \
-a qualifier is \`qualifiers.<key>\` (fallback, practice, aside), the head, the foot and their blocks are \`headings.<key>\`, the kind word of a heading is \`block_kinds.<key>\`. Read both files first; \
+are unlabelled, their block's word being their label), a block's word is \`unit_blocks.<block>\` or its one field's label, \
+a qualifier is \`qualifiers.<key>\` (fallback, practice, aside), the head, the foot and its blocks are \`headings.<key>\`, the kind word of a heading is \`block_kinds.<key>\`. Read both files first; \
 below, a field is named by its key.`
 
 const SCOUT_SCHEMA = {

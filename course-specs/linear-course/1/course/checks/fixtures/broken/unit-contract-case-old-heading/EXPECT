@@ -1,2 +1,2 @@
 check: unit-contract
-message: a supplementary case is "#### En stock, <qualifier> (teacher seulement) : <title>", found "Le cas la carte vide (rechange)"
+message: unit 1a1: unknown block "En stock, rechange (teacher seulement) : Le cas la carte vide"

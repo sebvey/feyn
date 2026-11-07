@@ -13,12 +13,11 @@ const COURSE = 'course/lexicon.yaml';
 const TEACHER = 'teacher/lexicon.yaml';
 
 const KEYS = {
-  headings: ['essentials', 'stances', 'deepening', 'landmarks', 'instruction', 'head', 'foot',
+  headings: ['essentials', 'stances', 'deepening', 'landmarks', 'instruction', 'foot',
     'claims', 'references', 'unverified', 'problem', 'crossing_case', 'audience', 'onboarding', 'progression', 'fixed_facts', 'avoid', 'unreleased'],
-  block_kinds: ['concept', 'annex', 'section', 'unit', 'stock', 'separator'],
-  unit_fields: ['matter', 'anchor', 'question', 'expected_answer', 'misconceptions', 'instruction'],
-  unit_blocks: ['lesson', 'exercise'],
-  readers: ['all', 'teacher'],
+  block_kinds: ['concept', 'annex', 'section', 'unit', 'separator'],
+  unit_fields: ['matter', 'title', 'qualifier', 'anchor', 'question', 'expected_answer', 'misconceptions', 'instruction'],
+  unit_blocks: ['lesson', 'cases'],
   qualifiers: ['fallback', 'practice', 'aside'],
   markers: ['consensus', 'school', 'course'],
   natures: ['fact'],

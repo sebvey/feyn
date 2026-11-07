@@ -13,13 +13,11 @@ stances:
 
 # Concept 2 : Les tranches
 
-## Ouverture
-
-### L'essentiel
+## L'essentiel
 
 Une tranche traverse toutes les couches.
 
-#### En stock, aparté (teacher seulement) : Une tranche
+#### Cas du fil rouge
 
 Une note.
 
@@ -27,17 +25,18 @@ Une note.
 
 ### Unité 2a1 : Une tranche
 
-#### Leçon (pour tous)
+#### Leçon
 
 - **Matière** : Une tranche traverse toutes les couches (concept 1).
+
+#### Cas du fil rouge
+
+- **Titre** : Le cas 2a1
 - **Ancrage** : Régis regarde une carte.
-
-#### Exercice (teacher seulement)
-
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
 
-#### Pièges (pour tous)
+#### Pièges
 
 - « Un tableau » : c'est une carte.
 
