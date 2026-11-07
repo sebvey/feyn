@@ -63,7 +63,7 @@ diagrams:
 - **Ancrage** : <the storyline situation where a1 shows: actors, facts, who says what>
 - **Question** : <the question of a1>
 - **Réponse attendue** : <the right answer, with its nuances>
-- **Idées fausses en jeu** : <the name of a misconception of a1 its situation makes tempting> ; <another>
+- **Idées fausses en jeu** : <the names of the misconceptions of a1 it makes tempting>
 
 ##### Cas : <title of a supplementary case of a1>
 
