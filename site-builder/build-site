@@ -26,7 +26,7 @@ function usage(code) {
   const out = code ? console.error : console.log;
   out('usage: build-site <course-dir> [--channel next|prod|preview] [--base <path>] [--out <dir>]');
   out('builds the site of <course-dir> into <dir>, by default site-builder/dist/<channel>/<course id>/,');
-  out('its pages under the base path <path>, by default /feyn-site/<channel>/<course id>/ (channel next by default)');
+  out('its pages under the base path <path>, by default / (a build served at the root of its host; channel next by default)');
   process.exit(code);
 }
 function refuse(message) {
@@ -112,7 +112,8 @@ if (doc.spec !== specRef) fail(`${rel(RENDER)} rendered the document of ${doc.sp
 const courseId = doc.course.id;
 
 // ---- the base path and the output folder
-let base = opts.base || `/feyn-site/${channel}/${courseId}/`;
+// the default names no deployment: the base of a deployed build is the workflow's to give
+let base = opts.base || '/';
 if (!base.endsWith('/')) base += '/';
 const out = path.resolve(opts.out || path.join(BUILDER, 'dist', channel, courseId));
 if (fs.existsSync(out)) {
