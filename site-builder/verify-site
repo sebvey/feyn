@@ -64,6 +64,12 @@ if (base === null) {
 if (!base.startsWith('/')) refuse(`--base ${base} is not a path from the root of the host (it starts with /)`);
 if (!base.endsWith('/')) base += '/';
 
+// ---- the captures' folder, given: never inside the build
+if (opts.captures !== null) {
+  const c = path.resolve(opts.captures);
+  if (c === dir || c.startsWith(dir + path.sep)) refuse(`--captures ${c} is inside the build: refused`);
+}
+
 const failures = [];
 const fail = (m) => failures.push(m);
 
@@ -159,7 +165,6 @@ await new Promise((ok) => server.listen(0, '127.0.0.1', ok));
 const origin = `http://127.0.0.1:${server.address().port}`;
 
 const captures = path.resolve(opts.captures || fs.mkdtempSync(path.join(os.tmpdir(), 'feyn-verify-site-')));
-if (captures === dir || captures.startsWith(dir + path.sep)) refuse(`--captures ${captures} is inside the build: refused`);
 const FORMATS = [
   { name: 'desktop-light', viewport: { width: 1280, height: 800 }, colorScheme: 'light' },
   { name: 'desktop-dark', viewport: { width: 1280, height: 800 }, colorScheme: 'dark' },
