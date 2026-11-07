@@ -1,0 +1,155 @@
+# Deploys the preview of a pull request (decision three-channels): on a pull request that touches
+# the site engine, the spec or the course, builds the site of its head with build-site under its
+# own base, verifies it with verify-site, pushes it into pr-<n>/<course id>/ of gh-pages of the
+# artifact repository, every other folder and file kept, and gives its address in a comment on the
+# pull request; when the pull request closes, removes pr-<n>/. A pull request from a fork, which
+# gets no secret, is skipped. site-builder/README.md, "The deployment".
+name: Deploy preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    paths:
+      - 'site-builder/**'
+      - 'course-specs/linear-course/**'
+      - 'course-specs/linear-course/1/course/samples/cafe/**'
+
+# Shared with deploy-next.yml: one push to gh-pages at a time.
+concurrency:
+  group: feyn-site-gh-pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  # The course built, until parcours-po is re-created (epic #520): its folder and its course id
+  # (its course.yaml's id). The paths filter above names the folder too.
+  COURSE_DIR: course-specs/linear-course/1/course/samples/cafe
+  COURSE_ID: cafe
+  SITE_REPO: sebvey/feyn-site
+  SITE_URL: https://sebvey.github.io/feyn-site
+  PR: ${{ github.event.pull_request.number }}
+  # The first words of the preview's comment, by which a later run finds it to update it.
+  COMMENT_HEAD: Preview of the site
+
+jobs:
+  deploy:
+    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: |
+            site-builder/package-lock.json
+            spec-directives/1/package-lock.json
+
+      - name: Install
+        run: |
+          npm ci --prefix spec-directives/1
+          npm ci --prefix site-builder
+          cd site-builder && npx playwright install --with-deps chromium
+
+      - name: Build
+        run: site-builder/build-site "$COURSE_DIR" --channel preview --base "/feyn-site/pr-$PR/$COURSE_ID/" --out "$RUNNER_TEMP/site"
+
+      - name: Verify
+        run: site-builder/verify-site "$RUNNER_TEMP/site" --base "/feyn-site/pr-$PR/$COURSE_ID/" --captures "$RUNNER_TEMP/captures"
+
+      - name: Push to gh-pages
+        env:
+          DEPLOY_KEY: ${{ secrets.FEYN_SITE_DEPLOY_KEY }}
+          DEST: pr-${{ github.event.pull_request.number }}/${{ env.COURSE_ID }}
+          MESSAGE: 'pr-${{ github.event.pull_request.number }}: ${{ env.COURSE_ID }} from sebvey/feyn@${{ github.event.pull_request.head.sha }}'
+        run: |
+          set -euo pipefail
+          # The deploy key's private half, and GitHub's published host key (api.github.com/meta).
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/feyn_site
+          chmod 600 ~/.ssh/feyn_site
+          echo 'github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl' > ~/.ssh/known_hosts
+          export GIT_SSH_COMMAND='ssh -i ~/.ssh/feyn_site -o IdentitiesOnly=yes'
+          git clone --quiet --depth 1 --branch gh-pages "git@github.com:$SITE_REPO.git" "$RUNNER_TEMP/gh-pages"
+          cd "$RUNNER_TEMP/gh-pages"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          # Replace DEST only, on the tip of gh-pages; retried from a fresh tip if a push came first.
+          for try in 1 2 3 4 5; do
+            git fetch --quiet --depth 1 origin gh-pages
+            git reset --quiet --hard origin/gh-pages
+            rm -rf "$DEST"
+            mkdir -p "$DEST"
+            cp -R "$RUNNER_TEMP/site/." "$DEST/"
+            git add --all -- "$DEST"
+            if git diff --cached --quiet; then echo "gh-pages already holds this build"; exit 0; fi
+            git commit --quiet -m "$MESSAGE"
+            if git push --quiet origin HEAD:gh-pages; then echo "deployed: $SITE_URL/$DEST/"; exit 0; fi
+            sleep $((try * 5))
+          done
+          echo "push to gh-pages failed 5 times" >&2
+          exit 1
+
+      - name: Comment the address
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          body="$COMMENT_HEAD of \`$COURSE_ID\`: $SITE_URL/pr-$PR/$COURSE_ID/ (built from $SHA, verified by verify-site; GitHub Pages serves it a minute or two after this run)."
+          id=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"$COMMENT_HEAD\"))) | .id" | head -n 1)
+          if [ -n "$id" ]; then
+            gh api --silent -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -f body="$body"
+          else
+            gh api --silent "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -f body="$body"
+          fi
+
+  remove:
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Remove pr-<n>/ from gh-pages
+        env:
+          DEPLOY_KEY: ${{ secrets.FEYN_SITE_DEPLOY_KEY }}
+          DEST: pr-${{ github.event.pull_request.number }}
+          MESSAGE: 'pr-${{ github.event.pull_request.number }}: removed, the pull request is closed'
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/feyn_site
+          chmod 600 ~/.ssh/feyn_site
+          echo 'github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl' > ~/.ssh/known_hosts
+          export GIT_SSH_COMMAND='ssh -i ~/.ssh/feyn_site -o IdentitiesOnly=yes'
+          git clone --quiet --depth 1 --branch gh-pages "git@github.com:$SITE_REPO.git" "$RUNNER_TEMP/gh-pages"
+          cd "$RUNNER_TEMP/gh-pages"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for try in 1 2 3 4 5; do
+            git fetch --quiet --depth 1 origin gh-pages
+            git reset --quiet --hard origin/gh-pages
+            if [ ! -e "$DEST" ]; then echo "gh-pages holds no $DEST/"; exit 0; fi
+            git rm -r --quiet -- "$DEST"
+            git commit --quiet -m "$MESSAGE"
+            if git push --quiet origin HEAD:gh-pages; then echo "removed: $DEST/"; exit 0; fi
+            sleep $((try * 5))
+          done
+          echo "push to gh-pages failed 5 times" >&2
+          exit 1
+
+      - name: Say so in the comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          id=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"$COMMENT_HEAD\"))) | .id" | head -n 1)
+          if [ -n "$id" ]; then
+            gh api --silent -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -f body="$COMMENT_HEAD of \`$COURSE_ID\`: removed, the pull request is closed."
+          fi
