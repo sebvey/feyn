@@ -10,8 +10,8 @@
 // of CHANGELOG.md), and the build is closed by default, one case each, render-site run with a copy
 // of course/form.yaml (--form): a part named `published: false`, a part named without
 // `published`, a part the form does not name, and a form that does not name the logo, which
-// render-site refuses. The logo and the accent colour are those cafe declares. Last, the latest release of a CHANGELOG.md, on a copy
-// of cafe given two releases. Exit 0 when every check passes, 1 otherwise; one line per failure.
+// render-site refuses. The logo and the accent colour are those cafe declares. Last, the latest
+// release of a CHANGELOG.md, on a copy of cafe given two releases. Exit 0 when every check passes, 1 otherwise; one line per failure.
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
