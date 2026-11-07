@@ -67,7 +67,7 @@ function logo(ctx) {
       }
       if (COLOR_ATTRS.includes(k)) here(al, `forbidden colour attribute ${k}: the logo is one colour, currentColor`);
       if ((k === 'href' || k === 'xlink:href') && !v.startsWith('#')) here(al, `${k}="${v}": only references starting with #, the logo holds no external resource`);
-      if (k !== 'xmlns' && !k.startsWith('xmlns:') && /url\(\s*['"]?(?!#)/.test(v)) here(al, `attribute ${k} points outside the file: the logo holds no external resource`);
+      if (k !== 'xmlns' && !k.startsWith('xmlns:') && /url\(\s*(?!['"]?#)/.test(v)) here(al, `attribute ${k} points outside the file: the logo holds no external resource`);
     }
   });
   if (!current) here(root.line, 'no fill nor stroke is currentColor: the logo is drawn in currentColor');
