@@ -16,6 +16,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
+import zlib from 'node:zlib';
 
 const BUILDER = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(BUILDER, '..');
@@ -159,12 +160,50 @@ for (const address of Object.values(doc.url_scheme.pages)) {
   }
 }
 
-run('pagefind', [path.join(BUILDER, 'node_modules', 'pagefind', 'lib', 'runner', 'bin.cjs'), '--site', out, '--silent']);
+// ---- the search index. Pagefind splits a word at a straight apostrophe (« l'extraction » is indexed
+// as « extraction » and « lextraction ») but not at the curly one the typography writes
+// (« l’extraction », one word): searching « extraction » would miss it. So Pagefind indexes a copy
+// of the pages, each apostrophe between two letters made straight (a tag may stand between it and
+// the second letter: « l’<strong>acidité</strong> »); the excerpts it stores (its fragments) are
+// then given back their curly apostrophes, so that the reader sees the pages' typography in the
+// results too. The pages themselves are not touched.
+const LETTER_APOSTROPHE = /(\p{L})’(?=(?:<[^>]*>)*\p{L})/gu;
+const indexed = fs.mkdtempSync(path.join(os.tmpdir(), 'feyn-build-site-index-'));
+try {
+  const copy = (dir) => {
+    for (const e of fs.readdirSync(path.join(out, dir), { withFileTypes: true })) {
+      const rel = path.join(dir, e.name);
+      if (e.isDirectory()) copy(rel);
+      else if (e.name.endsWith('.html')) {
+        fs.mkdirSync(path.join(indexed, dir), { recursive: true });
+        fs.writeFileSync(path.join(indexed, rel), fs.readFileSync(path.join(out, rel), 'utf8').replace(LETTER_APOSTROPHE, "$1'"));
+      }
+    }
+  };
+  copy('');
+  run('pagefind', [path.join(BUILDER, 'node_modules', 'pagefind', 'lib', 'runner', 'bin.cjs'), '--site', indexed, '--output-path', path.join(out, 'pagefind'), '--silent']);
+} finally {
+  fs.rmSync(indexed, { recursive: true, force: true });
+}
+const SIGNATURE = 'pagefind_dcd';
+const curl = (v) => (typeof v === 'string' ? v.replace(/(\p{L})'(?=\p{L})/gu, '$1’')
+  : Array.isArray(v) ? v.map(curl)
+  : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, k === 'url' ? x : curl(x)]))
+  : v);
+const fragments = path.join(out, 'pagefind', 'fragment');
+for (const f of fs.existsSync(fragments) ? fs.readdirSync(fragments) : []) {
+  const file = path.join(fragments, f);
+  const text = zlib.gunzipSync(fs.readFileSync(file)).toString('utf8');
+  if (!text.startsWith(SIGNATURE)) fail(`${file} is not a Pagefind fragment`);
+  const fragment = curl(JSON.parse(text.slice(SIGNATURE.length)));
+  fs.writeFileSync(file, zlib.gzipSync(Buffer.from(SIGNATURE + JSON.stringify(fragment), 'utf8')));
+}
 
 // ---- what the build must hold: a page at each address it routes
 const expected = [
   ...['home', 'domains', 'search', 'not_found'].map((k) => doc.url_scheme.pages[k]),
   ...doc.domains.map((d) => d.path),
+  ...doc.concepts.map((c) => c.path),
 ].map((a) => (a === '' || a.endsWith('/') ? `${a}index.html` : a));
 const missing = expected.filter((f) => !fs.existsSync(path.join(out, f)));
 if (missing.length) fail(`the build holds no ${missing.join(', ')} in ${out}`);

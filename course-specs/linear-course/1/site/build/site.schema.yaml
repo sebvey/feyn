@@ -8,13 +8,17 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: the published parts of a course, for its site
 type: object
-required: [spec, course, plan, domains, concepts, storyline, glossary, concept_refs, words, url_scheme]
+required: [spec, language, course, plan, domains, concepts, storyline, glossary, concept_refs, words, url_scheme]
 additionalProperties: false
 properties:
   spec:
     description: "<name>@<MAJOR>: the spec MAJOR that rendered the document"
     type: string
     pattern: '^linear-course@1$'
+  language:
+    description: the language of the courses of the spec MAJOR, `language` of its spec.yaml (ISO 639-1), that of every page of the site
+    type: string
+    pattern: '^[a-z]{2}$'
   course:
     description: the course, from course.yaml
     type: object

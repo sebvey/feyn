@@ -1,0 +1,118 @@
+---
+// A concept page (an annex's too), ported from the old site's concept page without its tabs: it
+// follows the course's division top to bottom (epic #598, point 17). Its head (the eyebrow: the
+// concept and its domain, or the annex; the title; the objective after its label; the
+// prerequisites, each a link to its concept); the sticky table of contents beside a text column
+// aligned left; the head of concept.md; each section and each unit in place (the Sous component);
+// the foot (its `landmarks` block in the Reflexe box); the stances in three columns, then the
+// neighbours; the sources; the previous and next cards in the reading order (an annex is out of
+// it, so has none). Every word comes from the document or from src/ui.ts.
+import Base from '../layouts/Base.astro';
+import Sommaire from '../components/Sommaire.astro';
+import Sous from '../components/Sous.astro';
+import Figure from '../components/Figure.astro';
+import Reflexe from '../components/Reflexe.astro';
+import Ecoles from '../components/Ecoles.astro';
+import Voisins from '../components/Voisins.astro';
+import Sources from '../components/Sources.astro';
+import PrevNext from '../components/PrevNext.astro';
+import { doc, words, md, mdInline, href, labelled, conceptName, domainName, conceptByNumber, around } from '../lib/site';
+import type { Concept } from '../lib/site';
+import { ui } from '../ui';
+interface Props { number: string }
+const c = conceptByNumber.get(Astro.props.number)!;
+const domain = c.domain === null ? undefined : doc.domains.find((d) => d.number === c.domain);
+const prerequisites = c.prerequisites.map((n) => conceptByNumber.get(n)).filter((p): p is Concept => !!p);
+const { prev, next } = c.annex ? {} : around(href(c.path));
+
+// The diagrams, each in the unit it names after its matter; one that names a section goes under the
+// section's heading, one that names neither under the head.
+const diagrams = c.diagrams ?? [];
+const unitIds = new Set(c.sections.flatMap((s) => s.units.map((u) => u.id)));
+const sectionIds = new Set(c.sections.map((s) => s.id));
+const inUnit = (id: string) => diagrams.filter((d) => d.unit === id);
+const inSection = (id: string) => diagrams.filter((d) => d.unit === id && !unitIds.has(id));
+const loose = diagrams.filter((d) => !unitIds.has(d.unit) && !sectionIds.has(d.unit));
+
+// The parts of the page, each with its anchor: the table of contents lists them.
+const neighborsAlone = !c.stances && (c.neighbors?.length ?? 0) > 0;
+const toc = [
+  ...(c.head ? [{ id: c.head.key, title: c.head.heading }] : []),
+  ...c.sections.map((s) => ({ id: s.id, n: s.id, title: s.title })),
+  ...(c.foot ? [{ id: 'foot', title: c.foot.heading }] : []),
+  ...(c.stances ? [{ id: 'stances', title: c.stances.heading }] : []),
+  ...(neighborsAlone ? [{ id: 'neighbors-part', title: words.site.page_headings?.neighbors ?? '' }] : []),
+  ...(c.sources?.length ? [{ id: 'sources', title: words.site.page_headings?.sources ?? '' }] : []),
+];
+---
+<Base title={`${labelled(conceptName(c))}${c.title}`} nav="domains">
+  <div class="container-wide concept-page">
+    <header class="concept-head">
+      <p class="eyebrow">{conceptName(c)}{domain && <> · <a class="eyebrow-lien" href={href(domain.path)}>{labelled(domainName(domain))}{domain.title}</a></>}</p>
+      <h1>{c.title}</h1>
+      <p class="lead">{labelled(words.site.labels.objective)}<Fragment set:html={mdInline(c.objective)} /></p>
+      {prerequisites.length > 0 && (
+        <div class="concept-meta" data-pagefind-ignore>
+          {labelled(words.site.labels.prerequisites ?? '')}
+          <ul>
+            {prerequisites.map((p) => <li><a href={href(p.path)}>{conceptName(p)} · {p.title}</a></li>)}
+          </ul>
+        </div>
+      )}
+    </header>
+
+    <div class="avec-sommaire">
+      <Sommaire items={toc} label={ui.onThisPage} />
+      <div class="sommaire-contenu">
+        {c.head && (
+          <section class="bloc prose essentiel" id={c.head.key} aria-labelledby={`${c.head.key}-t`}>
+            <h2 id={`${c.head.key}-t`}>{c.head.heading}</h2>
+            <Fragment set:html={md(c.head.text)} />
+            {loose.map((d) => <Figure diagram={d} />)}
+          </section>
+        )}
+
+        {c.sections.map((s) => (
+          <section class="bloc prose" id={s.id} aria-labelledby={`${s.id}-t`}>
+            <h2 id={`${s.id}-t`}><span class="num">{s.id}</span> {s.title}</h2>
+            {inSection(s.id).map((d) => <Figure diagram={d} />)}
+            {s.units.map((u) => <Sous unit={u} diagrams={inUnit(u.id)} />)}
+          </section>
+        ))}
+
+        {c.foot && (
+          <section class="bloc prose cloture" id="foot" aria-labelledby="foot-t">
+            <h2 id="foot-t">{c.foot.heading}</h2>
+            {c.foot.blocks.map((b) => (
+              b.key === 'landmarks'
+                ? <Reflexe id={b.key} heading={b.heading} text={b.text} />
+                : <><h3 class="bloc-t" id={b.key}>{b.heading}</h3><Fragment set:html={md(b.text)} /></>
+            ))}
+          </section>
+        )}
+
+        {c.stances && (
+          <section class="bloc" id="stances" aria-labelledby="stances-t">
+            <h2 id="stances-t">{c.stances.heading}</h2>
+            <Ecoles consensus={c.stances.consensus} school={c.stances.school} course={c.stances.course} />
+            {c.neighbors && c.neighbors.length > 0 && <Voisins items={c.neighbors} />}
+          </section>
+        )}
+        {neighborsAlone && (
+          <section class="bloc" id="neighbors-part">
+            <Voisins items={c.neighbors!} />
+          </section>
+        )}
+
+        {c.sources && c.sources.length > 0 && (
+          <section class="bloc" id="sources" aria-labelledby="sources-t">
+            <h2 id="sources-t">{words.site.page_headings?.sources}</h2>
+            <Sources sections={c.sources} />
+          </section>
+        )}
+
+        {(prev || next) && <PrevNext prev={prev} next={next} />}
+      </div>
+    </div>
+  </div>
+</Base>

@@ -16,6 +16,11 @@ export const ui = {
   toDark: 'Passer au thème sombre',
   // the footer
   about: 'À propos',
+  // the concept page: its table of contents, the link of a unit's heading to itself, the button
+  // that reveals an expected answer
+  onThisPage: 'Dans cette page',
+  linkTo: 'Lien vers',
+  reveal: 'Voir la réponse',
   // the cards at the foot of a domain or concept page, in the reading order
   previous: 'Précédent',
   next: 'Suivant',

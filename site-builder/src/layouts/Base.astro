@@ -3,6 +3,7 @@
 // header (the course title as brand; the navigation, whose words come from the document; search;
 // the theme toggle), the main content, indexed by Pagefind unless `noindex`, and the footer
 // (the link to the about page). `nav` is the key of the URL scheme's page the header marks as current.
+// The page's language is the document's (`language`, its spec MAJOR's): the engine writes none.
 import '../styles/global.css';
 import { doc, words, pageHref, href } from '../lib/site';
 import { ui } from '../ui';
@@ -27,7 +28,7 @@ const items = [
 ];
 ---
 <!doctype html>
-<html lang="fr">
+<html lang={doc.language}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -37,7 +38,6 @@ const items = [
     <link rel="icon" type="image/svg+xml" href={href('favicon.svg')} />
     <meta name="color-scheme" content="light dark" />
     <meta property="og:title" content={fullTitle} />
-    <meta property="og:locale" content="fr_FR" />
     <script is:inline>
       document.documentElement.classList.add('js');
       // The theme the reader chose (the header's button), applied before the page shows; otherwise the system's.

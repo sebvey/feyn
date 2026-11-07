@@ -1,0 +1,11 @@
+---
+// The references of an item ([S1], [S2]), each a link to its line of the references of the page
+// (`ref-<id>`, the Sources component); ported from the old site's Refs. Out of the search index.
+interface Props { refs: string[] }
+const { refs } = Astro.props;
+---
+{refs.length > 0 && (
+  <span class="refs" data-pagefind-ignore>
+    {refs.map((r, i) => (<>{i > 0 && ' '}<a href={`#ref-${r}`}>[{r}]</a></>))}
+  </span>
+)}

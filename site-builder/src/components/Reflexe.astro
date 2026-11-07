@@ -1,0 +1,11 @@
+---
+// A block of a page's foot in the old site's Reflexe box: its heading as the box's tag, its text
+// as the question to ask oneself. Used for the foot's `landmarks` block.
+import { md } from '../lib/site';
+interface Props { id: string; heading: string; text: string }
+const { id, heading, text } = Astro.props;
+---
+<aside class="reflexe" aria-labelledby={id}>
+  <h3 class="tag" id={id}>{heading}</h3>
+  <div class="q" set:html={md(text)} />
+</aside>
