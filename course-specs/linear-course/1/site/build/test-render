@@ -9,7 +9,8 @@
 // « Non vérifié », the free sections of plan.md, the introduction of glossary.md, « Non publié »
 // of CHANGELOG.md), and the build is closed by default, one case each, render-site run with a copy
 // of course/form.yaml (--form): a part named `published: false`, a part named without
-// `published`, a part the form does not name. Last, the latest release of a CHANGELOG.md, on a copy
+// `published`, a part the form does not name, and a form that does not name the logo, which
+// render-site refuses. The logo and the accent colour are those cafe declares. Last, the latest release of a CHANGELOG.md, on a copy
 // of cafe given two releases. Exit 0 when every check passes, 1 otherwise; one line per failure.
 const fs = require('fs');
 const os = require('os');
@@ -133,6 +134,9 @@ const uf = doc.words.course.unit_fields;
 check(uf.misconceptions === 'Idées fausses' && uf.root === 'Racine' && uf.correction === 'Correction', 'the words of the misconceptions are not « Idées fausses », « Racine », « Correction »');
 check(doc.storyline.fixed_facts.facts.every((f) => f.unit), 'a fixed fact has no unit id');
 check(doc.language === (fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').match(/^language\s*:\s*(\S+)/m) || [])[1], `the language is ${doc.language}, not that of spec.yaml`);
+// the look of the course, as the course declares it: its logo, logo.svg as written, and its accent colour
+check(doc.course.logo === fs.readFileSync(path.join(COURSE, 'logo.svg'), 'utf8'), 'the logo of cafe is not its logo.svg as written');
+check(doc.course.accent_color === cy.site.accent_color && /^#[0-9a-fA-F]{6}$/.test(doc.course.accent_color), `the accent colour is ${doc.course.accent_color}, not site.accent_color of course.yaml`);
 check(doc.release === null, 'cafe has no release, and release is not null');
 check(doc.concepts.map((c) => c.path).join(',') === 'concepts/00/,concepts/01/,concepts/02/,concepts/A1/,concepts/A2/', `the concept paths are ${doc.concepts.map((c) => c.path).join(', ')}`);
 const ref = doc.concept_refs.find((r) => r.text === 'concept 0b');
@@ -161,6 +165,12 @@ const deepening = render(COURSE, formWith('deepening-unnamed', (f) => { f.concep
 if (deepening) check(!holds(deepening, 'La profession mesure ce que le cours goûte.') && holds(deepening, 'Devant une tasse ratée'), 'a part the form does not name (« Approfondissement ») reaches the document');
 const avoid = render(COURSE, formWith('glossary-unnamed', (f) => { delete f.glossary; }), 'a form that does not name glossary.md');
 if (avoid) check(!holds(avoid, 'Sous-extraction, sous-extrait') && !holds(avoid, 'brûlé (pour une tasse amère)'), 'a file the form does not name (glossary.md) reaches the document');
+// the logo, closed by default too: a form that does not name logo.svg leaves the site with no
+// logo, and render-site refuses it, since the engine keeps no default logo
+{
+  const r = spawnSync(process.execPath, [path.join(HERE, 'render-site'), COURSE, ...formWith('logo-unnamed', (f) => { delete f.logo; })], { encoding: 'utf8' });
+  check(r.status === 1 && /logo/.test(r.stderr), `a form that does not name logo.svg: render-site exits ${r.status}, not 1 with the logo named: ${(r.stderr || '').trim()}`);
+}
 
 // the latest release of CHANGELOG.md, on a copy of cafe given two
 const copy = path.join(TMP, 'cafe');

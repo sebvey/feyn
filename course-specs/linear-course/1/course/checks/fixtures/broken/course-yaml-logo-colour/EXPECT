@@ -1,0 +1,2 @@
+check: course-yaml
+message: stroke="#6b3f1d": only currentColor or none

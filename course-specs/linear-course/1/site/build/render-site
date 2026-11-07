@@ -130,6 +130,13 @@ const conceptPath = (c) => pages.concept.replace('{nn}', c.annex ? c.number : c.
 // ---- the course map, course.yaml
 if (!pub(form.course_map)) fail('course/form.yaml: the course map (course_map) is not published, the site has nothing to lay out');
 const cy = ctx.cy;
+// the look of the course on its site, both as the course declares them: its logo, the text of the
+// file the form names (`logo`), and its accent colour (`site.accent_color` of course.yaml); the
+// engine derives the rest (the favicon, the share image, the accent of each theme)
+if (!pub(form.logo) || typeof form.logo.file !== 'string') fail('course/form.yaml: the logo (logo) is not published, the site has no logo to show');
+const logo = read(path.join(courseDir, form.logo.file));
+const accentColor = cy.site && cy.site.accent_color;
+if (typeof accentColor !== 'string') fail(`${rel(courseDir)}/course.yaml has no site.accent_color (check-course says more)`);
 const domainOf = new Map();
 const domains = cy.domains.map((d) => {
   const concepts = (d.concepts || []).map(course.normNumber);
@@ -348,7 +355,7 @@ const found = new Map();
 const doc = {
   spec: SPEC,
   language: LANGUAGE,
-  course: { id: cy.id, title: cy.title, subtitle: cy.subtitle, annexes: (cy.annexes || []).map(course.normNumber) },
+  course: { id: cy.id, title: cy.title, subtitle: cy.subtitle, logo, accent_color: accentColor, annexes: (cy.annexes || []).map(course.normNumber) },
   plan,
   domains,
   concepts,

@@ -29,6 +29,35 @@ groups:
         level: requirement
         check: course-files
         text: "`plan.md`, `glossary.md`, `storyline.md` et `CHANGELOG.md` doivent exister."
+      - id: course-logo-present
+        level: requirement
+        check: course-yaml
+        text: >-
+          `logo.svg`, le logo du cours, doit exister à la racine du dossier du cours ; le site n'a
+          pas de logo par défaut.
+      - id: course-logo-square
+        level: requirement
+        check: course-yaml
+        text: >-
+          `logo.svg` doit être du XML bien formé, sa racine un `<svg>` avec `xmlns` et un
+          `viewBox` carré, de largeur égale à sa hauteur : il tient dans une case carrée (l'en-tête,
+          le favicon).
+      - id: course-logo-one-colour
+        level: requirement
+        check: course-yaml
+        text: >-
+          `logo.svg` doit être d'une seule couleur, `currentColor` : sa racine a un `fill`
+          `currentColor` ou `none` ; chaque `fill` et chaque `stroke` est `currentColor` ou
+          `none`, `currentColor` au moins une fois ; aucun autre attribut de couleur, aucun
+          attribut `style`, aucun élément `<style>`. Le site le peint dans la couleur d'accent du
+          cours, dans chaque thème.
+      - id: course-logo-self-contained
+        level: requirement
+        check: course-yaml
+        text: >-
+          `logo.svg` ne doit tenir aucun script (`<script>`, attribut `on*`, `<foreignObject>`)
+          ni aucune ressource externe (`<image>`, `href` ou `xlink:href` qui ne commence pas par
+          `#`, `url()` hors du fichier) : le build en tire seul le favicon et l'image de partage.
       - id: course-decisions-folder
         level: permission
         method: inspection
@@ -77,8 +106,16 @@ groups:
         level: requirement
         check: course-yaml
         text: >-
-          Les chemins de `course.yaml` doivent exister dans le dossier du cours : `site.icon`,
-          `storyline`, `glossary`, le `file` de chaque domaine et le `dir` de chaque concept.
+          Les chemins de `course.yaml` doivent exister dans le dossier du cours : `storyline`,
+          `glossary`, le `file` de chaque domaine et le `dir` de chaque concept.
+      - id: course-accent-colour
+        level: requirement
+        check: course-yaml
+        text: >-
+          `course.yaml` doit donner la couleur d'accent du cours, `site.accent_color`, une couleur
+          `#rrggbb` ; le site en garde la teinte et en tire l'accent de chaque thème, avec sa
+          propre luminosité. Le bloc `site` dit seulement l'apparence du site du cours, jamais
+          s'il est publié : chaque cours a un site.
       - id: domain-file-named-by-number
         level: requirement
         check: course-yaml

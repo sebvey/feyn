@@ -1,0 +1,2 @@
+check: course-yaml
+message: mandatory file is missing: logo.svg

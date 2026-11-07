@@ -17,9 +17,10 @@ id: <course-id>
 spec: linear-course@1
 title: "<course title>"
 subtitle: "<one line under the title>"
-# site:
-#   icon: <path of an SVG, relative to the course folder>
-#   color: "<#rrggbb>"
+# the course's look on its site; its logo is the file logo.svg beside this one (course/README.md
+# section 1), named by no key
+site:
+  accent_color: "<#rrggbb>"
 storyline: storyline.md
 glossary: glossary.md
 # annexes: [A1]
