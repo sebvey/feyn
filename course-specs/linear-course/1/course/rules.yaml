@@ -424,7 +424,7 @@ groups:
         method: test
         check: unit-contract
         text: >-
-          Le nom d'une idée fausse doit être court et unique dans son unité.
+          Le nom d'une idée fausse doit être unique dans son unité.
       - id: case-form
         level: requirement
         method: test
@@ -471,8 +471,8 @@ groups:
           Chaque champ d'une unité doit tenir ce que son libellé, ou le mot de son bloc, annonce :
           « Matière », ce qui est vrai, l'explication telle que le site la publie et que le
           professeur la dit ; « Idées fausses », ce qui semble vrai et ne l'est pas, chacune une
-          croyance qu'un apprenant qui a lu la matière pourrait encore avoir, citée, sous son nom,
-          avec sa « Racine », pourquoi elle semble vraie (une expérience courante, un mot
+          croyance qu'un apprenant qui a lu la matière pourrait encore avoir, citée, sous son nom
+          court, avec sa « Racine », pourquoi elle semble vraie (une expérience courante, un mot
           trompeur, une vérité voisine étendue trop loin), et sa « Correction », ce qui la
           corrige, appuyé sur la matière ;
           « Titre », le nom du cas, que la mémoire de l'apprenant cite ; « Qualificatif », quand

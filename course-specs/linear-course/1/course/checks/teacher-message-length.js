@@ -4,8 +4,9 @@
 // « Question »), those of the unit's case, the first of « Cas du fil rouge », and none of a
 // supplementary case's, the misconceptions left out, counted in lines of `line` characters (the
 // characters of the text, label and indentation left out, divided by `line`), per unit; a unit
-// above `max` is reported, a signal that it may not hold in one teacher message, not an error. Its fields are read as unit-contract reads them
-// (lib/course.js); a unit whose fields are unreadable is unit-contract's.
+// above `max` is reported, a signal that it may not hold in one teacher message, not an error.
+// Its fields are read as unit-contract reads them (lib/course.js); a unit whose fields are
+// unreadable is unit-contract's.
 const directives = require('./directives');
 const { fail } = directives.lib('course');
 
