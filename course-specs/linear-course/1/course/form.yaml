@@ -4,7 +4,7 @@
 # cases, the length of a teacher message), `sources.md` beside it and the course files (`course.yaml` as the
 # map, `logo.svg`, `plan.md`, the domain file, `storyline.md`, `glossary.md`, `CHANGELOG.md`): their parts,
 # their order, their presence, published or not, their readers.
-# course/README.md sections 2 to 5 describe it, the rules of course/rules.yaml state it, the
+# course/README.md sections 1 to 5 describe it, the rules of course/rules.yaml state it, the
 # checks read it here (concept-file, unit-contract, teacher-message-length, and the text checks and
 # unit-additions for their scope; course-yaml and course-files for the course files), and the
 # spec half of the site build, site/build/render-site, reads `published` here (site/build/README.md).
