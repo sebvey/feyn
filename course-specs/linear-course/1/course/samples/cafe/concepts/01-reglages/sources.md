@@ -3,7 +3,7 @@
 | Affirmation | Section | Source | Vérifié | Nature |
 |---|---|---|---|---|
 | Un réglage est une variable choisie pour la tasse, qui fait varier son extraction | L'essentiel, 1a1 | [S1], [S3] | « we adjust factors like dose, grind, and extraction level to optimize the flavor of a coffee brew » ; « Brew time, flow rate, dose (i.e., amount of ground coffee), and grind size were systematically varied to control extraction » (Results) | consensus |
-| Le cours retient quatre réglages : la mouture, le ratio, la température d'infusion, le temps de contact | L'essentiel, 1a1 | cours | L'eau et la fraîcheur du café sont laissées aux apartés | cours |
+| Le cours retient quatre réglages : la mouture, le ratio, la température d'infusion, le temps de contact | L'essentiel, 1a1 | cours | L'eau elle-même n'est pas un réglage et le cours ne l'enseigne pas ; la fraîcheur du café est laissée à un aparté | cours |
 | Un réglage que l'on ne choisit pas est réglé quand même, au hasard ; une machine a les siens, choisis une fois | L'essentiel, 1a1 | cours | | cours |
 | Moudre multiplie la surface du café que l'eau atteint | 1b1 | [S2] | « It crushes the beans into a powder, exponentially increasing their surface area and allowing the water to do its work » | fait |
 | Plus la mouture est fine, plus l'eau extrait vite | 1b1 | [S2], [S3] | « we have to increase the surface area of the coffee beans » ; « grind size were systematically varied to control extraction » (Results) | fait |

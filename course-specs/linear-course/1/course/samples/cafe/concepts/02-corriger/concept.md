@@ -84,7 +84,7 @@ Corriger une tasse ratée, c'est la goûter avec trois mots, l'**acidité**, l'*
 
 #### Consigne au professeur
 
-Faire nommer un seul réglage, et le sens dans lequel le changer. Si l'apprenant en propose deux, lui demander lequel il change d'abord : n'importe lequel des réglages qui poussent l'extraction dans le bon sens convient, tant qu'il est seul. Ne donner aucun chiffre de pas (un cran, quelques degrés) comme une règle : le pas est petit, et c'est la tasse suivante qui dit s'il suffit. Ne parler d'aucune autre façon de faire le café que le filtre de Cédric : les autres sont l'annexe A1.
+Ne donner aucun chiffre de pas (un cran, quelques degrés) comme une règle : le pas est petit, et c'est la tasse suivante qui dit s'il suffit. Ne parler d'aucune autre façon de faire le café que le filtre de Cédric : les autres sont l'annexe A1.
 
 ### Unité 2b2 : La tasse que l'on aime
 

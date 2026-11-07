@@ -11,7 +11,7 @@ stances:
       refs: [S3]
       verified: ["« surprisingly the brew temperature had no appreciable impact » ; « only one of several parameters that affect the extraction dynamics » (résumé)"]
   course:
-    - text: "Le cours retient quatre réglages : la mouture, le ratio, la température d'infusion et le temps de contact. L'eau et la fraîcheur du café sont des apartés."
+    - text: "Le cours retient quatre réglages : la mouture, le ratio, la température d'infusion et le temps de contact. L'eau elle-même n'en est pas un, et le cours ne l'enseigne pas ; la fraîcheur du café est un aparté."
       refs: []
     - text: "Les repères de la profession, 90 à 96 °C et 55 g par litre, sont un point de départ, pas une norme : la tasse réussie est celle que l'on aime."
       refs: []
@@ -78,7 +78,7 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 
 #### Consigne au professeur
 
-Faire dire dans quel sens chaque changement pousse l'extraction, sans dire comment corriger la tasse de Cédric ni quel réglage changer : c'est le concept 2. Si l'apprenant parle de moudre à l'avance, de garder le café ou de sa fraîcheur, poser l'aparté ; la fraîcheur change le café, ce n'est pas un réglage.
+Ne dire ni comment corriger la tasse de Cédric, ni quel réglage changer : c'est le concept 2.
 
 ### Unité 1b2 : La chaleur de l'eau
 
@@ -127,4 +127,4 @@ Faire dire dans quel sens chaque changement pousse l'extraction, sans dire comme
 
 ### Consigne au professeur
 
-Quand un repère est donné (90 à 96 °C, 55 g par litre), le dire comme le point de départ de la profession, pas comme une norme : c'est le goût de Cédric qui décide, le parti pris du cours. Ne pas corriger un apprenant qui préfère une tasse hors des repères, tant qu'il sait dire quel réglage la produit. Le concept dit ce que fait chaque réglage, pas comment corriger une tasse ni lequel changer d'abord : si l'apprenant y va, saluer la question et la garder pour le concept 2. Il ne nomme aucune autre façon de faire le café que le filtre de Cédric : les autres sont l'annexe A1. L'eau et la fraîcheur du café ne sont pas des réglages du cours : des apartés, courts. Ne pas enseigner l'agitation (remuer le café moulu dans l'eau) : aucune source consultée ne la couvre.
+Le concept dit ce que fait chaque réglage, pas comment corriger une tasse ni lequel changer d'abord : c'est le concept 2. Il ne nomme aucune autre façon de faire le café que le filtre de Cédric : les autres sont l'annexe A1. Le cours n'enseigne pas l'eau elle-même, ce qu'elle contient : ce n'est pas un de ses réglages. Il n'enseigne pas non plus l'agitation (remuer le café moulu dans l'eau) : aucune source consultée ne la couvre.
