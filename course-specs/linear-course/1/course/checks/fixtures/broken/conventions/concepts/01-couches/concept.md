@@ -31,6 +31,19 @@ Un produit s'empile en couches, de la collecte à la restitution.
 #### Leçon
 
 - **Matière** : Les couches vont de la collecte à la restitution. Voir les concepts 0 et 1.
+- **Idées fausses** :
+  - **Un tableau** : « Un tableau »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : c'est une carte.
+  - **Une carte** : « Une carte »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : la carte est vide.
+  - **Une carte 2** : « Une carte »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : c'est une couche.
+  - **Nulle part** : « Nulle part »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : elle est dessous.
 
 #### Cas du fil rouge
 
@@ -53,14 +66,6 @@ Un produit s'empile en couches, de la collecte à la restitution.
 - **Ancrage** : Régis cherche une couche.
 - **Question** : où est-elle ?
 - **Réponse attendue** : dessous.
-
-#### Pièges
-
-- « Un tableau » : c'est une carte.
-- « Une carte » : la carte est vide.
-- « Une carte » : c'est une couche.
-- « Nulle part » : elle est dessous.
-
 #### Consigne au professeur
 
 **En rechange**, « Le cas la carte vide » ; « Le cas la couche du dessous » sert à l'entraînement, « Le cas la couche oubliée » à un aparté.

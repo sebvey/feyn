@@ -1,11 +1,12 @@
 'use strict';
-// The length of a unit (course/README.md section 3.3), a reporting check: the text of the fields
-// that `length` of `unit` in course/form.yaml names (« Matière », « Ancrage », « Question »), those
-// of the unit's case, the first of « Cas du fil rouge », and none of a supplementary case's,
-// counted in lines of `line` characters (the characters of the text, label and indentation left
-// out, divided by `line`), per unit; a unit above `max` is reported, a signal that it may not hold
-// in one teacher message, not an error. Its fields are read as unit-contract reads them
-// (lib/course.js); a unit whose fields are unreadable is unit-contract's.
+// The length of a teacher message (course/README.md section 3.3), a reporting check: the text of
+// the fields that `length` of `unit` in course/form.yaml names (« Matière », « Ancrage »,
+// « Question »), those of the unit's case, the first of « Cas du fil rouge », and none of a
+// supplementary case's, the misconceptions left out, counted in lines of `line` characters (the
+// characters of the text, label and indentation left out, divided by `line`), per unit; a unit
+// above `max` is reported, a signal that it may not hold in one teacher message, not an error.
+// Its fields are read as unit-contract reads them (lib/course.js); a unit whose fields are
+// unreadable is unit-contract's.
 const directives = require('./directives');
 const { fail } = directives.lib('course');
 
@@ -41,4 +42,4 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'unit-length', run, lengths };
+module.exports = { id: 'teacher-message-length', run, lengths };

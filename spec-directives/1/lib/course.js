@@ -63,7 +63,7 @@ function tree(m, word, form) {
 }
 
 // The parts of a concept file (concept.md split, its tree, the lexicon's word(group, key), the
-// spec's form): what concept-file, unit-contract, unit-length, unit-additions and the text checks read. It finds
+// spec's form): what concept-file, unit-contract, teacher-message-length, unit-additions and the text checks read. It finds
 // the parts, the blocks of each unit, their fields and its cases; it judges nothing but what a
 // heading's or a field's form makes unreadable, which it lists in `problems` ({ line, message })
 // for unit-contract.
@@ -88,12 +88,15 @@ function tree(m, word, form) {
 //                                               colon (unit-contract refuses any), `case` the
 //                                               case a field belongs to (null outside the block
 //                                               of cases); an unlabelled field (the
-//                                               misconceptions, the instruction) takes its
-//                                               block's word as its label
+//                                               instruction) takes its block's word as its label
 //                                               `body` the whole text of a labelled field
-//                                               (its lines after the label, unindented); an
-//                                               item of the misconceptions is { line,
-//                                               misconception, correction }
+//                                               (its lines after the label, unindented); the
+//                                               field of misconceptions (`misconceptions` of
+//                                               its block in the form) lists in `items` each
+//                                               misconception, { line, name, belief, parts,
+//                                               <part>: its body }, `parts` [{ key, label,
+//                                               qualifier, line, text, lines, body }] in the
+//                                               order written
 //                                               cases: the cases of its block of cases, in order,
 //                                               [{ title, line, fields, first }], `first` for the
 //                                               unit's case; a field before the first case's
@@ -116,9 +119,6 @@ function conceptParts(m, subs, word, form) {
   const problem = (line, message) => out.problems.push({ line, message });
   const short = (l) => l.t.trim().slice(0, 40);
   const indentOf = (l) => /^ */.exec(l.t)[0].length;
-  const MISCONCEPTION = /^- «.+» :(\s|$)/;
-  // a misconception's two halves: the words in « » before the first « » : », and its correction
-  const HALVES = /^- «\s*(.+?)\s*» :\s*(.*)$/;
   const dedent = (l) => l.t.replace(/^ {2}/, '');
 
   // the labelled fields of a block of lines (« Leçon », « Cas du fil rouge »): `qualifier` holds
@@ -163,26 +163,49 @@ function conceptParts(m, subs, word, form) {
     return cs;
   }
 
-  // the misconceptions of the unit's « Pièges », unlabelled: `- « <misconception> » : <correction>`,
-  // its following lines indented two spaces, nothing nested under it
-  function misconceptions(key, label, line, lines, where) {
-    const f = { key, label, labelled: false, qualifier: '', line, text: '', lines: [], items: [], case: null };
+  // the misconceptions of a field of labelled fields (« Idées fausses » of « Leçon »), on the lines
+  // below its label: each `  - **<name>** : « <belief> »`, then its parts, `    - **<label>** :
+  // <text>`, a part's following lines indented six spaces; nothing else. The parts' presence, their
+  // order and the names' uniqueness are unit-contract's
+  const MISCONCEPTION = /^ {2}- \*\*([^*]+)\*\*\s*:(?:\s+(.*))?$/;
+  const BELIEF = /^«\s*(.+?)\s*»$/;
+  const PART = /^ {4}- \*\*([^*]+)\*\*([^:]*?)\s*:(?:\s+(.*))?$/;
+  function misconceptions(f, spec, where) {
+    const parts = (spec && Array.isArray(spec.parts)) ? spec.parts : [];
+    const form = `"  - **<name>** : « <belief> »", then ${parts.map((k) => `"    - **${labelOf(k) || k}** : <text>"`).join(', ')}`;
+    if (f.text !== '') problem(f.line, `${where}: « ${f.label} » holds its misconceptions on the lines below its label, nothing after its colon (found "${f.text.slice(0, 40)}")`);
     let mis = null;
-    for (const l of lines) {
+    let part = null;
+    for (const l of f.lines.slice(1)) {
       if (l.t.trim() === '') continue;
-      f.lines.push(l);
       const indent = indentOf(l);
-      if (indent === 0 && /^- /.test(l.t)) {
-        const halves = HALVES.exec(l.t);
-        mis = { line: l.n, misconception: halves ? halves[1] : '', correction: halves ? halves[2].trim() : '' };
+      if (indent === 2 && /^ {2}- /.test(l.t)) {
+        const m = MISCONCEPTION.exec(l.t);
+        const b = m && BELIEF.exec((m[2] || '').trim());
+        mis = { line: l.n, name: m ? m[1].trim() : '', belief: b ? b[1] : '', parts: [] };
         f.items.push(mis);
-        if (!MISCONCEPTION.test(l.t)) problem(l.n, `${where}: a misconception is "- « <the misconception> » : <its correction>", found "${short(l)}"`);
-      } else if (indent === 2 && /^- /.test(l.t.slice(2)) && mis) {
-        problem(l.n, `${where}: a misconception holds its correction and nothing nested under it, found the bullet "${short(l)}"`);
-      } else if (indent === 0 || !mis) {
-        problem(l.n, `${where}: « ${label} » holds its misconceptions, each "- « <the misconception> » : <its correction>", found "${short(l)}"`);
-        mis = null;
-      } else mis.correction = [mis.correction, dedent(l)].join('\n').trim();
+        part = null;
+        if (!m || !b) problem(l.n, `${where}: a misconception is ${form}, found "${short(l)}"`);
+      } else if (indent === 4 && /^ {4}- /.test(l.t) && mis) {
+        const pm = PART.exec(l.t);
+        const key = pm && parts.find((k) => labelOf(k) === pm[1].trim());
+        part = null;
+        if (!pm) { problem(l.n, `${where}, misconception "${mis.name}": a part is ${parts.map((k) => `"- **${labelOf(k) || k}** : <text>"`).join(' or ')}, found "${short(l)}"`); continue; }
+        if (!key) { problem(l.n, `${where}, misconception "${mis.name}": unknown part "${pm[1].trim()}": a misconception holds ${parts.map((k) => `« ${labelOf(k) || k} »`).join(' and ')}, and nothing else`); continue; }
+        part = { key, label: pm[1].trim(), qualifier: pm[2].replace(/^\s*,/, '').trim(), line: l.n, text: (pm[3] || '').trim(), lines: [l] };
+        mis.parts.push(part);
+      } else if (indent >= 6 && part) part.lines.push(l);
+      else {
+        problem(l.n, `${where}: « ${f.label} » holds its misconceptions, each ${form}, found "${short(l)}"`);
+        part = null;
+      }
+    }
+    // each part's whole text, its following lines unindented; the item's `<part>`, the first written
+    for (const m of f.items) {
+      for (const p of m.parts) {
+        p.body = [p.text, ...p.lines.slice(1).map((l) => l.t.replace(/^ {6}/, ''))].join('\n').trim();
+        if (!(p.key in m)) m[p.key] = p.body;
+      }
     }
     return f;
   }
@@ -220,9 +243,8 @@ function conceptParts(m, subs, word, form) {
       if (!b) { problem(h.line, `${where}: unknown block "${h.text}": a unit holds its #### blocks, ${names}`); return; }
       const field = b.labelled ? null : (b.fields || [])[0];
       const bw = `${where}, « ${name} »`;
-      const fs = b.labelled ? fields(body, bw)
-        : field === 'misconceptions' ? [misconceptions(field, name, h.line, body, bw)]
-          : [prose(field, name, h.line, body)];
+      const fs = b.labelled ? fields(body, bw) : [prose(field, name, h.line, body)];
+      if (b.labelled && b.misconceptions) for (const f of fs.filter((x) => x.key === b.misconceptions.field)) misconceptions(f, b.misconceptions, bw);
       const cs = b.cases ? cases(fs, b.cases.opens, bw) : null;
       u.blocks.push({ key: b.block, text: h.text, line: h.line, fields: fs, cases: cs });
       u.fields.push(...fs);

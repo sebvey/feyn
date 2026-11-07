@@ -38,22 +38,22 @@ block_kinds:
   unit: "Unité"
   separator: " : "
 
-# Labels of the fields of a unit of a concept file, those of its cases among them
-# (course/form.yaml); `misconceptions` is also the word of the unit's block « Pièges », and
-# `instruction` the word of its block « Consigne au professeur », both unlabelled.
+# Labels of the fields of a unit of a concept file, those of its cases and of its misconceptions
+# among them (course/form.yaml); `instruction` is also the word of the unit's block « Consigne au
+# professeur », unlabelled.
 unit_fields:
   matter: "Matière"
+  misconceptions: "Idées fausses"
+  root: "Racine"
+  correction: "Correction"
   title: "Titre"
   qualifier: "Qualificatif"
   anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
-  misconceptions: "Pièges"
   instruction: "Consigne au professeur"
 
-# The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`); a
-# block of one unlabelled field takes its label as its word: « Pièges » (`unit_fields.misconceptions`),
-# « Consigne au professeur » (`unit_fields.instruction`).
+# The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`).
 unit_blocks:
   lesson: "Leçon"
   cases: "Cas du fil rouge"

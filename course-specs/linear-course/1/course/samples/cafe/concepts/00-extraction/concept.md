@@ -44,6 +44,13 @@ L'**extraction** est ce que l'eau dissout du café moulu pendant l'infusion : c'
 #### Leçon
 
 - **Matière** : Faire un café, c'est laisser l'eau dissoudre une partie du café moulu : c'est l'**extraction**, et ce que l'eau a dissous fait le goût de la tasse. Tout ne se dissout pas au même rythme : les notes fruitées et acides partent d'abord, puis le sucré, puis l'amer. Selon jusqu'où l'eau est allée, le même café donne donc des tasses de goûts différents.
+- **Idées fausses** :
+  - **Le café a changé** : « Si le goût change, c'est que le café a changé »
+    - **Racine** : d'habitude, le goût d'une boisson vient de ce que l'on y met : changer de thé change le goût du thé, et le paquet est ce que l'on pense d'abord à accuser.
+    - **Correction** : un même café donne des tasses très différentes selon ce que l'eau en a dissous ; c'est l'extraction qu'il faut regarder d'abord.
+  - **Plus, c'est mieux** : « Plus l'eau prend au café, meilleure est la tasse »
+    - **Racine** : ce que l'eau dissout fait bien le goût de la tasse, et l'on en tire qu'en dissoudre davantage donne davantage de bon goût.
+    - **Correction** : l'eau prend l'amer en dernier ; aller trop loin donne une tasse amère.
 
 #### Cas du fil rouge
 
@@ -51,11 +58,6 @@ L'**extraction** est ce que l'eau dissout du café moulu pendant l'infusion : c'
 - **Ancrage** : Cédric t'écrit sur la messagerie de l'équipe : « Même paquet que lundi, même cuisine, même moi. Lundi la tasse était correcte, ce matin elle n'a plus rien à voir. Le café a tourné ? »
 - **Question** : Que réponds-tu à Cédric : qu'est-ce qui a pu changer d'une tasse à l'autre ?
 - **Réponse attendue** : le café est le même ; ce qui a changé, c'est ce que l'eau lui a pris, l'extraction. Quelque chose dans la façon de faire la tasse ce matin a fait que l'eau a dissous plus, ou moins, que lundi, et le goût a suivi.
-
-#### Pièges
-
-- « Si le goût change, c'est que le café a changé » : un même café donne des tasses très différentes selon ce que l'eau en a dissous ; c'est l'extraction qu'il faut regarder d'abord.
-- « Plus l'eau prend au café, meilleure est la tasse » : l'eau prend l'amer en dernier ; aller trop loin donne une tasse amère.
 
 #### Consigne au professeur
 
@@ -66,6 +68,16 @@ Si l'apprenant nomme ce qui a pu changer dans la façon de faire (le moulin, l'e
 #### Leçon
 
 - **Matière** : Quand l'eau a pris trop peu au café, c'est la **sous-extraction** : la tasse est acide, d'un acide qui pique, sans sucré, creuse, et sa finale est courte, le goût disparaît aussitôt avalé. Quand l'eau a pris trop, c'est la **sur-extraction** : la tasse est amère et sèche en bouche, comme un thé trop infusé, et creuse elle aussi. Entre les deux, la tasse est équilibrée. Un goût amer ne suffit pas à dire sur-extraite : un café torréfié foncé est amer même bien extrait.
+- **Idées fausses** :
+  - **Goût et force** : « Un goût marqué, piquant ou amer, dit une tasse trop forte »
+    - **Racine** : une tasse plus concentrée a un goût plus marqué, et le piquant comme l'amer semblent « en trop ».
+    - **Correction** : le piquant de l'acide dit une tasse sous-extraite, l'amer avec le sec une tasse sur-extraite ; la force, la concentration de la tasse, est une autre question (concept 0b).
+  - **L'amer seul** : « Une tasse amère est sur-extraite »
+    - **Racine** : l'amer est bien un signe de la sur-extraction.
+    - **Correction** : seul, il ne suffit pas : un café torréfié foncé est amer même bien extrait ; c'est l'amer avec le sec en bouche qui dit une tasse sur-extraite.
+  - **Un seul défaut** : « Acide et amer, c'est le même défaut »
+    - **Racine** : les deux sont des goûts désagréables, qu'on range ensemble sous « raté ».
+    - **Correction** : ce sont les deux bouts opposés : acide et court quand l'eau a pris trop peu, amer et sec quand elle a pris trop.
 
 #### Cas du fil rouge
 
@@ -81,13 +93,6 @@ Si l'apprenant nomme ce qui a pu changer dans la façon de faire (le moulin, l'e
 - **Question** : Cette fois, sa tasse est-elle trop peu ou trop extraite, et à quoi le reconnais-tu ?
 - **Réponse attendue** : trop, elle est sur-extraite : elle est amère et sèche en bouche (elle râpe la langue), sans le piquant de l'acide.
 
-#### Pièges
-
-- « Elle pique, donc elle est trop forte » : le piquant de l'acide dit une tasse sous-extraite ; la force, la concentration de la tasse, est une autre question (concept 0b).
-- « Elle est amère, donc sur-extraite » : l'amer d'une tasse sur-extraite vient avec le sec en bouche ; un café torréfié foncé est amer même bien extrait, et c'est la torréfaction qu'on goûte.
-- « Acide et amer, c'est le même défaut » : ce sont les deux bouts opposés : acide et court quand l'eau a pris trop peu, amer et sec quand elle a pris trop.
-- « Amère, donc trop forte » : l'amer avec le sec en bouche dit une tasse sur-extraite ; la force est une autre question.
-
 #### Consigne au professeur
 
 Le cours juge l'extraction au goût seulement : ne proposer ni réfractomètre, ni mesure de la force, ni pourcentage d'extraction ; si l'apprenant en parle, dire que la profession mesure et que le cours goûte, puis revenir à la description de Cédric. Faire nommer le goût avant le verdict : acide ou amer, court ou sec. Si l'apprenant se trompe de côté, poser le cas de rechange.
@@ -99,6 +104,16 @@ Le cours juge l'extraction au goût seulement : ne proposer ni réfractomètre, 
 #### Leçon
 
 - **Matière** : La **force** d'une tasse est sa concentration : ce qu'elle a de café dissous pour son volume d'eau. Elle ne dit pas ce que l'eau a pris au café, qui est l'extraction : une tasse peut être forte et bien extraite, légère et sur-extraite. Plus une tasse est forte, plus l'amer et l'acide s'y goûtent. Allonger une tasse d'eau baisse sa force, pas son extraction : ce que l'eau a pris au café est déjà pris. Pour juger l'extraction, on cherche donc le genre de goût, acide et court ou amer et sec, plutôt que son intensité. [cours]
+- **Idées fausses** :
+  - **Forte, donc trop extraite** : « Une tasse forte est une tasse sur-extraite »
+    - **Racine** : une tasse forte et une tasse sur-extraite ont toutes deux un goût marqué, et l'amer se goûte davantage dans une tasse forte.
+    - **Correction** : la force est la concentration de la tasse, l'extraction ce que l'eau a pris au café ; l'une peut être haute et l'autre juste.
+  - **L'eau qui rattrape** : « Un peu d'eau chaude rattrape une tasse sur-extraite »
+    - **Racine** : allonger une tasse adoucit bien son goût : moins forte, l'amer s'y goûte moins.
+    - **Correction** : l'eau ajoutée baisse la force, pas l'extraction : ce que l'eau a pris au café est déjà pris ; l'amer et le sec restent, en plus léger.
+  - **Légère, donc creuse** : « Une tasse légère est une tasse sous-extraite »
+    - **Racine** : « légère » et « creuse » semblent dire la même chose : une tasse à qui il manque du café.
+    - **Correction** : la légèreté dit la force ; une tasse sous-extraite pique et ne laisse rien en bouche, quelle que soit sa force.
 
 #### Cas du fil rouge
 
@@ -111,12 +126,6 @@ Le cours juge l'extraction au goût seulement : ne proposer ni réfractomètre, 
 - **Ancrage** : Au Petit Noir, Inès sert à Cédric une tasse claire et légère. Il t'écrit : « Presque de l'eau. Douce, ça ne pique pas, pas amère, et le goût reste un moment une fois avalée. Mais si légère, elle est forcément sous-extraite, non ? Inès m'a juste répondu que légère n'est pas creuse. »
 - **Question** : Cédric a-t-il raison ? Dis-lui de quel côté penche cette tasse, et ce que veut dire Inès.
 - **Réponse attendue** : non. Légère, c'est sa force qui est basse, pas son extraction. Pour l'extraction, on cherche le genre de goût : elle est douce, ne pique pas, n'est ni amère ni sèche, et son goût reste en bouche ; elle n'est ni sous-extraite (acide et courte) ni sur-extraite (amère et sèche) : elle est équilibrée. Inès dit qu'une tasse peut être légère sans être creuse : la force n'est pas l'extraction.
-
-#### Pièges
-
-- « Une tasse forte est une tasse sur-extraite » : la force est la concentration de la tasse, l'extraction ce que l'eau a pris au café ; l'une peut être haute et l'autre juste.
-- « Un peu d'eau chaude rattrape une tasse sur-extraite » : l'eau ajoutée baisse la force, pas l'extraction ; l'amer et le sec restent, en plus léger.
-- « Légère, donc sous-extraite » : la légèreté dit la force ; une tasse sous-extraite pique et ne laisse rien en bouche, quelle que soit sa force.
 
 ## Clôture
 

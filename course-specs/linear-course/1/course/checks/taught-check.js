@@ -31,8 +31,9 @@ its sections (\`## Section <id> : <title>\`) and their units (\`### Unité <id> 
 the #### blocks of a unit in their order, each titled by its word alone, with its fields (\`unit.blocks\`); its block of \
 cases (\`cases\`) is a list of cases, each opened by its title field: the first, the unit's case, always posed; each other a \
 supplementary case, with its qualifier field. The words of the file are the values of ${SPEC}lexicon.yaml at the keys form.yaml names: a \
-field's label is \`unit_fields.<field>\` (a field opens with \`- **<label>** :\`; the misconceptions and the instruction of a unit \
-are unlabelled, their block's word being their label), a block's word is \`unit_blocks.<block>\` or its one field's label, \
+field's label is \`unit_fields.<field>\` (a field opens with \`- **<label>** :\`; the instruction of a unit is unlabelled, its \
+block's word being its label; the field of misconceptions of the lesson (\`misconceptions\` of its block) lists each \
+misconception below its label, \`  - **<name>** : « <belief> »\`, then its parts, each labelled), a block's word is \`unit_blocks.<block>\` or its one field's label, \
 a qualifier is \`qualifiers.<key>\` (fallback, practice, aside), the head, the foot and its blocks are \`headings.<key>\`, the kind word of a heading is \`block_kinds.<key>\`. Read both files first; \
 below, a field is named by its key.`
 
@@ -88,12 +89,12 @@ const CHECKS = `The seven checks:
 2. expected answer broader than the unit's matter and the previous units;
 3. answer that relies on a storyline fact, actor or rule absent from the anchor and the previous units;
 4. glossary term used before its defining concept, without a definition in passing, and without a concept reference to the defining concept or one of its sections or units in its sentence;
-5. correction of a misconception that relies on a notion not yet seen;
+5. root or correction of a misconception that relies on a notion not yet seen;
 6. false cross-reference ("seen in X", "recall of X", list of what is already taught) to an X that comes later, or that does not hold what is claimed;
 7. the same checks for the supplementary cases (fallback, practice, aside) and the annexes, from their entry point.
 
 What the learner has received at a point of the course: the preceding units of the inventory and, for a unit, its matter, its anchor and its question; for a supplementary case, the matter of its unit and the case's own anchor and question. They are not assumed to read the storyline, the glossary or the rest of the concept file, even though the site shows the first two. Out of scope: prerequisites a learner skipped at their own request.
-The expected answer, the misconceptions with their corrections, and the instruction of a unit or a case are the teacher's.
+The expected answer, the misconceptions of a unit's lesson with their roots and corrections, which come after its question, and the instruction of a unit or a case are the teacher's.
 The deepening (headings.deepening, in the foot; the rules of ${SPEC}rules.yaml that course/README.md 3.2 points to) is never taught matter: the teacher reads it only in an aside, on the learner's request, never on the course path, and no unit nor supplementary case relies on it. A question whose expected answer needs it asks what the learner has not been taught: it is a finding (check 2).`
 
 // --- Scope -----------------------------------------------------------------------------

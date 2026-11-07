@@ -28,6 +28,10 @@ Une note.
 #### Leçon
 
 - **Matière** : Une tranche traverse toutes les couches (concept 1).
+- **Idées fausses** :
+  - **Un tableau** : « Un tableau »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : c'est une carte.
 
 #### Cas du fil rouge
 
@@ -35,11 +39,6 @@ Une note.
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
-
-#### Pièges
-
-- « Un tableau » : c'est une carte.
-
 ## Clôture
 
 ### Se vérifier

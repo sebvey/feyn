@@ -18,9 +18,10 @@ export interface Case {
   title: string; qualifier?: string; anchor?: string; question?: string; expected_answer?: string;
   supplementary: boolean;
 }
-export interface Misconception { misconception: string; correction: string }
+export interface Misconception { name: string; belief: string; root: string; correction: string }
 export interface Unit {
   id: string; title: string;
+  /** Its published blocks, in the order the site renders them: the misconceptions of its lesson after its cases. */
   blocks: { lesson?: { matter?: string }; cases?: Case[]; misconceptions?: Misconception[] };
 }
 export interface ConceptSection { id: string; title: string; units: Unit[] }
