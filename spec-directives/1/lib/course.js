@@ -90,6 +90,10 @@ function tree(m, word, form) {
 //                                               of cases); an unlabelled field (the
 //                                               misconceptions, the instruction) takes its
 //                                               block's word as its label
+//                                               `body` the whole text of a labelled field
+//                                               (its lines after the label, unindented); an
+//                                               item of the misconceptions is { line,
+//                                               misconception, correction }
 //                                               cases: the cases of its block of cases, in order,
 //                                               [{ title, line, fields, first }], `first` for the
 //                                               unit's case; a field before the first case's
@@ -113,6 +117,9 @@ function conceptParts(m, subs, word, form) {
   const short = (l) => l.t.trim().slice(0, 40);
   const indentOf = (l) => /^ */.exec(l.t)[0].length;
   const MISCONCEPTION = /^- «.+» :(\s|$)/;
+  // a misconception's two halves: the words in « » before the first « » : », and its correction
+  const HALVES = /^- «\s*(.+?)\s*» :\s*(.*)$/;
+  const dedent = (l) => l.t.replace(/^ {2}/, '');
 
   // the labelled fields of a block of lines (« Leçon », « Cas du fil rouge »): `qualifier` holds
   // what stands between a label and its colon, which unit-contract refuses
@@ -134,6 +141,9 @@ function conceptParts(m, subs, word, form) {
       if (!cur) { problem(l.n, `${where}: line outside a field ("${short(l)}")`); continue; }
       cur.lines.push(l);
     }
+    // `body`: the field's whole text, its first line's after the label and its following lines
+    // with their two spaces of indentation removed (Markdown, as the site build gives it)
+    for (const f of list) f.body = [f.text, ...f.lines.slice(1).map(dedent)].join('\n').trim();
     return list;
   }
 
@@ -163,7 +173,8 @@ function conceptParts(m, subs, word, form) {
       f.lines.push(l);
       const indent = indentOf(l);
       if (indent === 0 && /^- /.test(l.t)) {
-        mis = { line: l.n };
+        const halves = HALVES.exec(l.t);
+        mis = { line: l.n, misconception: halves ? halves[1] : '', correction: halves ? halves[2].trim() : '' };
         f.items.push(mis);
         if (!MISCONCEPTION.test(l.t)) problem(l.n, `${where}: a misconception is "- « <the misconception> » : <its correction>", found "${short(l)}"`);
       } else if (indent === 2 && /^- /.test(l.t.slice(2)) && mis) {
@@ -171,7 +182,7 @@ function conceptParts(m, subs, word, form) {
       } else if (indent === 0 || !mis) {
         problem(l.n, `${where}: « ${label} » holds its misconceptions, each "- « <the misconception> » : <its correction>", found "${short(l)}"`);
         mis = null;
-      }
+      } else mis.correction = [mis.correction, dedent(l)].join('\n').trim();
     }
     return f;
   }
@@ -396,4 +407,30 @@ function load(dir, opts = {}) {
 
 const fail = (file, line, message) => ({ file, line: line || 1, message });
 
-module.exports = { load, fail, normNumber, SLUG, conceptParts, idHeading };
+// The fixed facts of storyline.md, the lines of its section `headings.fixed_facts`: one bullet per
+// fact, its following lines indented, each ending with the id of the unit that fixed it in
+// parentheses, a final period allowed after it, `(0d1)`. Read by course-files and the site build:
+// { facts: [{ line, text, unit }], stray: [lines] }, `unit` null when the fact ends with no id,
+// `stray` a line that is no bullet nor the continuation of one.
+const FACT_UNIT = /\(([^()\s]+)\)\.?$/;
+function fixedFacts(lines) {
+  const facts = [];
+  const stray = [];
+  for (const l of lines) {
+    if (!l.t.trim()) continue;
+    if (!l.code && /^- /.test(l.t)) facts.push({ line: l.n, text: l.t.slice(2).trim() });
+    else if (!l.code && /^\s/.test(l.t) && facts.length) facts[facts.length - 1].text += ' ' + l.t.trim();
+    else stray.push(l);
+  }
+  for (const f of facts) {
+    const m = FACT_UNIT.exec(f.text);
+    f.unit = m ? m[1] : null;
+  }
+  return { facts, stray };
+}
+
+// A release section of a course's CHANGELOG.md: `## X.Y.Z, YYYY-MM-DD`, below « Non publié »
+// (`headings.unreleased`), newest first. Read by course-files and the site build.
+const RELEASE = /^((\d+)\.(\d+)\.(\d+)), (\d{4}-\d{2}-\d{2})$/;
+
+module.exports = { load, fail, normNumber, SLUG, conceptParts, idHeading, fixedFacts, RELEASE };

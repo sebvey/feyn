@@ -145,7 +145,7 @@ Les règles de l'unité sont le groupe « L'unité » de [`rules.yaml`](rules.ya
 | the reviewer | that a claim is backed by what it cites: the quotation, the place | reviewing a change |
 | the maintainer | when a source changes or a section is rewritten, what to re-verify; when it was consulted | months later |
 
-`sources.md` trace les champs publiés de `concept.md` qui affirment (« Matière », « L'essentiel », « Se vérifier », « Approfondissement », les corrections des « Pièges »), pas les cas d'une unité, dont l'ancrage vient du fil rouge et la réponse attendue redit la matière : « Affirmations » relie chaque affirmation à ce qui l'établit, « Références » décrit les sources, « Non vérifié » dit ce qu'aucune source consultée ne confirme. Le site construit chaque ligne de « Affirmations » et de « Références » ; « Non vérifié » est la seule section qu'il ne construit pas, reconnue par son titre du lexique ; la classe copie le fichier entier.
+`sources.md` trace les champs publiés de `concept.md` qui affirment (« Matière », « L'essentiel », « Se vérifier », « Approfondissement », les corrections des « Pièges »), pas les cas d'une unité, dont l'ancrage vient du fil rouge et la réponse attendue redit la matière : « Affirmations » relie chaque affirmation à ce qui l'établit, « Références » décrit les sources, « Non vérifié » dit ce qu'aucune source consultée ne confirme. Le site construit chaque ligne de « Affirmations » et de « Références » ; « Non vérifié » est la seule section qu'il ne construit pas, reconnue par son titre du lexique ; la classe copie le fichier entier. Ses sections, leur ordre et leur publication sont `sources` de [`form.yaml`](form.yaml).
 
 Les règles de `sources.md` sont le groupe « Le fichier sources.md » de [`rules.yaml`](rules.yaml).
 
@@ -191,13 +191,13 @@ Ses sections, leur ordre, leur présence, publiées ou non, et leurs lecteurs so
 | the maintainer | what changed in each course version | each release |
 
 - **`plan.md`** : à qui le cours s'adresse (« Public cible », le seul endroit qui le dit), comment le professeur accueille un nouvel apprenant (« Accueil »), la **progression** du cours (« Progression » : les domaines dans l'ordre, ce que chacun donne, comment l'un mène au suivant), puis ce que le professeur en prend pour enseigner (les partis pris, les règles d'écriture du cours, les questions qu'il pose et repose dans tout le cours) ; le professeur le lit, le site en construit le public et la progression.
-- **`glossary.md`** : les termes du cours ; le site montre son premier tableau tel quel.
+- **`glossary.md`** : les termes du cours ; le site montre son premier tableau et « Termes à éviter » tels quels.
 - **`storyline.md`** : le fil rouge, que le professeur lit et que le site montre, en deux parties : le **monde** (le cadre, les acteurs, les sources), en prose libre, puis les **faits fixés** (« Faits fixés »), chacun suivi de l'id de l'unité qui l'a fixé, `(0d1)`.
-- **`CHANGELOG.md`** : le journal des versions du cours.
+- **`CHANGELOG.md`** : le journal des versions du cours ; le site montre sa dernière version, son numéro et sa date.
 
 **Cellule du terme** : la première colonne du tableau du glossaire tient un terme, ou ses variantes séparées par des virgules (« Product Owner, PO »), chacune reconnue en mot entier, casse ignorée. Une parenthèse est un qualificatif de sens (« État (d'un élément) »).
 
-Les parties de `plan.md` et de `storyline.md`, leur ordre, leur présence, publiées ou non, et leurs lecteurs sont `plan` et `storyline` de [`form.yaml`](form.yaml) ; les règles de ces fichiers sont le groupe « Les fichiers du cours » de [`rules.yaml`](rules.yaml).
+Les parties de `plan.md`, de `storyline.md`, de `glossary.md` et de `CHANGELOG.md`, leur ordre, leur présence, publiées ou non, et leurs lecteurs sont `plan`, `storyline`, `glossary` et `changelog` de [`form.yaml`](form.yaml) ; les règles de ces fichiers sont le groupe « Les fichiers du cours » de [`rules.yaml`](rules.yaml).
 
 ## 6. Les schémas
 

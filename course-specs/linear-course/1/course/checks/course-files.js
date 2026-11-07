@@ -7,11 +7,9 @@
 const directives = require('./directives');
 const mdlib = directives.lib('md');
 const glossary = directives.lib('glossary');
-const { fail } = directives.lib('course');
-
-const SEMVER = /^(\d+)\.(\d+)\.(\d+), \d{4}-\d{2}-\d{2}$/;
-// a fixed fact ends with the id of the unit that fixed it, in parentheses, a final period allowed
-const FACT_UNIT = /\(([^()\s]+)\)\.?$/;
+// the fixed facts of storyline.md and the release sections of CHANGELOG.md are read by the lib,
+// as the site build reads them
+const { fail, fixedFacts, RELEASE } = directives.lib('course');
 
 // « Accueil »: a posture paragraph, then a numbered list of questions "<n>. **<question label>** : <question>"
 function onboarding(secs, title) {
@@ -79,18 +77,12 @@ function run(ctx) {
     if (found.length && secs[secs.length - 1] !== found[0]) out.push(fail(STORY, found[0].line, `« ${title} » is the last ## section of ${STORY}: the world comes before it`));
     if (found.length) {
       const units = new Set(ctx.concepts.flatMap((c) => c.subs.filter((x) => x.leaf).map((x) => x.id)));
-      const facts = [];
-      for (const l of found[0].lines) {
-        if (!l.t.trim()) continue;
-        if (!l.code && /^- /.test(l.t)) facts.push({ line: l.n, text: l.t.slice(2).trim() });
-        else if (!l.code && /^\s/.test(l.t) && facts.length) facts[facts.length - 1].text += ' ' + l.t.trim();
-        else out.push(fail(STORY, l.n, `« ${title} » holds a bulleted list only, one fact per bullet`));
-      }
+      const { facts, stray } = fixedFacts(found[0].lines);
+      for (const l of stray) out.push(fail(STORY, l.n, `« ${title} » holds a bulleted list only, one fact per bullet`));
       if (!facts.length) out.push(fail(STORY, found[0].line, `« ${title} » is empty`));
       for (const fact of facts) {
-        const m = FACT_UNIT.exec(fact.text);
-        if (!m) out.push(fail(STORY, fact.line, 'a fixed fact ends with the id of the unit that fixed it, in parentheses: « (0d1) »'));
-        else if (!units.has(m[1])) out.push(fail(STORY, fact.line, `fixed fact names "${m[1]}", which is no unit of the course (the id of a ### unit)`));
+        if (!fact.unit) out.push(fail(STORY, fact.line, 'a fixed fact ends with the id of the unit that fixed it, in parentheses: « (0d1) »'));
+        else if (!units.has(fact.unit)) out.push(fail(STORY, fact.line, `fixed fact names "${fact.unit}", which is no unit of the course (the id of a ### unit)`));
       }
     }
   }
@@ -134,10 +126,10 @@ function run(ctx) {
     let prev = null;
     secs.forEach((s, i) => {
       if (i > 0) {
-        const m = SEMVER.exec(s.title);
+        const m = RELEASE.exec(s.title);
         if (!m) out.push(fail('CHANGELOG.md', s.line, `release section "${s.title}" must be "X.Y.Z, YYYY-MM-DD"`));
         else {
-          const v = [1, 2, 3].map((k) => parseInt(m[k], 10));
+          const v = [2, 3, 4].map((k) => parseInt(m[k], 10));
           if (prev && (v[0] - prev[0] || v[1] - prev[1] || v[2] - prev[2]) >= 0) out.push(fail('CHANGELOG.md', s.line, `release ${s.title.split(',')[0]} is not older than the one above it: newest first`));
           prev = v;
         }

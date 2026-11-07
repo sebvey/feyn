@@ -23,8 +23,9 @@ placeholders:
   # {n}: the number of a domain (`domains[].number`), as course.yaml writes it: `1`, `2`.
   n:
     of: domain
-  # {nn}: the number of a concept (`concepts[].number`) on two digits, `00`, `09`, `12`, as the
-  # `dir` of the concept writes it; an annex is written as its id, `A1`, never padded.
+  # {nn}: the number of a concept (`concepts[].number`) on `digits` digits, `00`, `09`, `12`, as
+  # the `dir` of the concept writes it; an annex is written as its id (`annex: id`), `A1`, never padded.
   nn:
     of: concept
     digits: 2
+    annex: id
