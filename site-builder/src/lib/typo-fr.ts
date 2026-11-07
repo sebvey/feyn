@@ -3,8 +3,8 @@
 // « ; ? ! », the curly apostrophe. Applied once to every page's HTML by src/middleware.ts, outside
 // <script>, <style>, <pre> and <code> (code stays copiable), and to the attributes a screen reader
 // reads. It adds spaces and curls apostrophes only: it rewrites no word of the course. Idempotent.
-const NBSP = ' ';
-const NNBSP = ' ';
+const NBSP = '\u00a0';
+const NNBSP = '\u202f';
 
 export function typoFr(s: string): string {
   return s
