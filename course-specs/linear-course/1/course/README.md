@@ -218,14 +218,14 @@ Ses sections, leur ordre, leur présence, publiées ou non, et leurs lecteurs so
 | Reader | Needs | When |
 |---|---|---|
 | the teacher | its posture, the onboarding questions, the course's stances, the storyline facts its anchors use | onboarding; each unit it teaches |
-| the learner | the course glossary, the public and the progression of the course, the storyline | reading the course on the site |
-| the site | the published sections of `plan.md` and the storyline | at each build |
+| the learner | the course glossary, the public and the progression of the course, the world of the storyline | reading the course on the site |
+| the site | the published sections of `plan.md` and the world of the storyline, never its fixed facts | at each build |
 | the creator (human or agent) | the terms to use and the defining concept of each, the storyline facts an anchor may draw on | writing a concept or a unit |
 | the maintainer | what changed in each course version | each release |
 
 - **`plan.md`** : à qui le cours s'adresse (« Public cible », le seul endroit qui le dit), comment le professeur accueille un nouvel apprenant (« Accueil »), la **progression** du cours (« Progression » : les domaines dans l'ordre, ce que chacun donne, comment l'un mène au suivant), puis ce que le professeur en prend pour enseigner (les partis pris, les règles d'écriture du cours, les questions qu'il pose et repose dans tout le cours) ; le professeur le lit, le site en construit le public et la progression.
 - **`glossary.md`** : les termes du cours ; le site montre son premier tableau et « Termes à éviter » tels quels.
-- **`storyline.md`** : le fil rouge, que le professeur lit et que le site montre, en deux parties : le **monde** (le cadre, les acteurs, les sources), en prose libre, puis les **faits fixés** (« Faits fixés »), chacun suivi de l'id de l'unité qui l'a fixé, `(0d1)`.
+- **`storyline.md`** : le fil rouge, que le professeur lit en entier, en deux parties : le **monde** (le cadre, les acteurs, les sources), en prose libre, que le site montre, puis les **faits fixés** (« Faits fixés »), chacun suivi de l'id de l'unité qui l'a fixé, `(0d1)`, une aide à l'écriture que lisent le professeur et le créateur et que le site ne montre jamais.
 - **`CHANGELOG.md`** : le journal des versions du cours ; le site montre le numéro de sa dernière version, sans autre détail.
 
 **Cellule du terme** : la première colonne du tableau du glossaire tient un terme, ou ses variantes séparées par des virgules (« Product Owner, PO »), chacune reconnue en mot entier, casse ignorée. Une parenthèse est un qualificatif de sens (« État (d'un élément) »).

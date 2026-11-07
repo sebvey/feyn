@@ -86,7 +86,6 @@ const published = [
   ['« Progression »', 'Le domaine 1, « Ce qui fait la tasse », part de rien'],
   ['« Le problème »', 'Chez lui, Cédric a tout ce qu\'il faut pour faire un café à la main'],
   ['the storyline\'s world', 'Inès tient le comptoir du Petit Noir'],
-  ['a fixed fact', 'Aïmen moud tout son paquet de café le dimanche'],
   ['a row of « Affirmations »', 'Les notes fruitées et acides se dissolvent d\'abord, puis le sucré, puis l\'amer'],
   ['a row of « Références »', 'Coffee Extraction and How to Taste It'],
   ['a term of the glossary', 'Sous-extraction, sous-extrait'],
@@ -133,7 +132,7 @@ check(g && g.belief === 'Un goût marqué, piquant ou amer, dit une tasse trop f
 check(!('misconceptions' in ((u && u.blocks.lesson) || {})), 'the lesson of unit 0a2 still holds its misconceptions: the document gives them after the cases');
 const uf = doc.words.course.unit_fields;
 check(uf.misconceptions === 'Idées fausses' && uf.root === 'Racine' && uf.correction === 'Correction', 'the words of the misconceptions are not « Idées fausses », « Racine », « Correction »');
-check(doc.storyline.fixed_facts.facts.every((f) => f.unit), 'a fixed fact has no unit id');
+check(doc.storyline && Object.keys(doc.storyline).join(',') === 'world', `the storyline of the document holds ${doc.storyline ? Object.keys(doc.storyline).join(', ') : 'nothing'}, not its world only`);
 check(doc.language === (fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').match(/^language\s*:\s*(\S+)/m) || [])[1], `the language is ${doc.language}, not that of spec.yaml`);
 // the look of the course, as the course declares it: its logo, logo.svg as written, and its accent colour
 check(doc.course.logo === fs.readFileSync(path.join(COURSE, 'logo.svg'), 'utf8'), 'the logo of cafe is not its logo.svg as written');
@@ -151,6 +150,8 @@ const unpublished = [
   ['« Accueil » of plan.md', 'un barista patient'],
   ['a free section of plan.md', 'Règles d\'écriture du cours'],
   ['« Non vérifié » of sources.md', 'S2 marque lui-même'],
+  ['a fact of « Faits fixés » of storyline.md', 'Aïmen moud tout son paquet de café le dimanche'],
+  ['the heading « Faits fixés » of storyline.md', 'Faits fixés'],
   ['the introduction of glossary.md', 'Les termes du cours, chacun défini dans le concept qui l\'enseigne.'],
   ['« Non publié » of CHANGELOG.md', 'créé dans le dossier'],
 ];

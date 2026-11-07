@@ -46,7 +46,6 @@ export interface Concept {
 export interface ConceptRef { text: string; targets: { id: string; concept: string; path: string; anchor: string | null }[] }
 export interface Storyline {
   world?: { title: string | null; text: string; sections: { heading: string; text: string }[] };
-  fixed_facts?: { heading: string; facts: { text: string; unit: string | null }[] };
 }
 export interface TableSection { key: string; heading: string; header: string[]; rows: string[][] }
 export interface Glossary { table?: { header: string[]; rows: string[][] }; sections: TableSection[] }
@@ -111,10 +110,6 @@ export const domainName = (d: Domain) => `${words.site.labels.domain} ${d.number
 
 export const conceptByNumber = new Map(doc.concepts.map((c) => [c.number, c]));
 export const annexes = doc.concepts.filter((c) => c.annex);
-
-/** The address of a unit, on its concept's page under its id, from the units the document gives. */
-const unitHref = new Map(doc.concepts.flatMap((c) => c.sections.flatMap((s) => s.units.map((u) => [u.id, `${href(c.path)}#${u.id}`] as const))));
-export const unitAddress = (id: string) => unitHref.get(id);
 
 /** The pages a course may lack (its storyline, its glossary): routed and linked only when the document gives them. */
 export const hasPage = (key: string) =>
