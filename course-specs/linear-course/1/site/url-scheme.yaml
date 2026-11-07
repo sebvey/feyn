@@ -1,0 +1,30 @@
+# The URL scheme of the site of a course of `linear-course`: the address of each page, written
+# once, read by the site build; no engine file writes an address or a path word. An address is a
+# path relative to the base path of the site (`<base>`, which the build is given: `/feyn-site/next/<course id>/`
+# on the next channel), its path words in French, the language of the spec. The domain, domain map
+# and concept addresses are those the classroom build already gives the learner
+# (`teacher/build/render-parts`, which keeps its own copy until the teacher catches up): changing
+# one breaks the links the teacher gives.
+
+# The pages and their addresses. `home` is `<base>` itself.
+pages:
+  home: ""
+  domains: "domaines/"        # the domain map
+  domain: "domaines/{n}/"     # a domain page
+  concept: "concepts/{nn}/"   # a concept page, an annex included: `concepts/A1/`
+  storyline: "fil-rouge/"
+  glossary: "glossaire/"      # the course glossary
+  about: "a-propos/"          # « À propos », the one text of `site-builder/`
+  search: "recherche/"
+  not_found: "404.html"       # the page of an address no page has
+
+# The placeholders of an address, filled by the build from `course.yaml`.
+placeholders:
+  # {n}: the number of a domain (`domains[].number`), as course.yaml writes it: `1`, `2`.
+  n:
+    of: domain
+  # {nn}: the number of a concept (`concepts[].number`) on two digits, `00`, `09`, `12`, as the
+  # `dir` of the concept writes it; an annex is written as its id, `A1`, never padded.
+  nn:
+    of: concept
+    digits: 2

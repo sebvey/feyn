@@ -236,6 +236,13 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - en: objective · rejected: "goal", "outcome", "aim"
 - fr: « objectif »
 
+### prerequisites
+
+- means: of a concept, the earlier concepts the learner must have validated before it, given by their numbers in the course map; an annex may have any numbered concept as one.
+- en: prerequisites · rejected: "requirements" (a **requirement** is a level of a rule), "dependencies"
+- fr: « prérequis »
+- not to confuse with: [requirement](#requirement), [concept reference](#concept-reference)
+
 ### matter
 
 - means: the field of a unit's **lesson** that says what is true, in the same words for the site reader and the teacher: the explanation the unit teaches; **published**
@@ -394,7 +401,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### sources
 
-- means: the file `sources.md` of a concept, which traces its **published** fields: its claims (each with its section, its source, whether it was verified, and its nature: consensus, school, course, or fact, what a source states with no stance), its references, and what stays unverified. A stance or a neighbour is sourced where it is declared: its references, each with the quotation and its place
+- means: the file `sources.md` of a concept, which traces its **published** fields that state claims, not the cases of its units: its claims (each with its section, its source, whether it was verified, and its nature: consensus, school, course, or fact, what a source states with no stance), its references, and what stays unverified. A stance or a neighbour is sourced where it is declared: its references, each with the quotation and its place
 - en: sources · rejected: "bibliography", "citations"
 - fr: « sources » (« affirmations », « références », « fait »)
 - not to confuse with: [concept reference](#concept-reference), [additions](#additions)
@@ -441,7 +448,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: in the text of a course, the words that name a concept, a section, a unit or an annex: « concept 4 », « concepts 5 et 7b », « annexe A2 »
 - en: concept reference · rejected: "reference" alone
 - fr: « renvoi » (and nothing else: a pointer to a group or a file is a « lien »)
-- not to confuse with: [sources](#sources) (its references)
+- not to confuse with: [sources](#sources) (its references), [prerequisites](#prerequisites)
 
 ### course glossary
 
@@ -481,7 +488,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### lexicon
 
-- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the words of the blocks and the labels of the fields of a unit, qualifiers, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the classroom build and the site; `teacher/lexicon.yaml`, the words the teacher says and writes. Not a translation file: the language is the spec's
+- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the words of the blocks and the labels of the fields of a unit, qualifiers, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the classroom build and the site; `teacher/lexicon.yaml`, the words the teacher says and writes; `site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds. Not a translation file: the language is the spec's
 - en: lexicon · rejected: "language pack", "i18n", "locale", "strings"
 - fr: « lexique »
 
@@ -571,7 +578,7 @@ The **spec directives** (`spec-directives/1/README.md`) and, for the categories 
 - means: a rule of the level requirement: "shall", "shall not" (« doit », « ne doit pas »); in the protocol, the imperative. A product conforms when it holds every requirement of its class; a requirement verified by test has a **blocking check**
 - en: requirement · rejected: "must" (ISO keeps it for external constraints)
 - fr: to settle
-- not to confuse with: [rule](#rule), [blocking check](#blocking-check)
+- not to confuse with: [rule](#rule), [blocking check](#blocking-check), [prerequisites](#prerequisites)
 
 ### recommendation
 
