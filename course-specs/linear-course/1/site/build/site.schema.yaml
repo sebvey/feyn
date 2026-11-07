@@ -22,12 +22,20 @@ properties:
   course:
     description: the course, from course.yaml
     type: object
-    required: [id, title, annexes]
+    required: [id, title, logo, accent_color, annexes]
     additionalProperties: false
     properties:
       id: { $ref: '#/$defs/slug' }
       title: { $ref: '#/$defs/line' }
       subtitle: { $ref: '#/$defs/line' }
+      logo:
+        description: the course's logo, the text of its logo.svg as written, one colour in currentColor
+        type: string
+        pattern: '<svg'
+      accent_color:
+        description: the course's accent colour, site.accent_color of course.yaml, one #rrggbb
+        type: string
+        pattern: '^#[0-9a-fA-F]{6}$'
       annexes:
         type: array
         items: { $ref: '#/$defs/number' }

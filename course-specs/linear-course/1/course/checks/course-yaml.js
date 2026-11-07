@@ -4,7 +4,9 @@
 // against course/schemas/course.schema.yaml through Ajv2020, a failure mapped from ajv's
 // instance path to its line (`lineOfError` of lib/yaml-lines.js); then what the schema does not
 // say: identifiers, order, partition into domains, annexes, prerequisites, paths that exist, no
-// unlisted concept folder (course/README.md section 2, spec-directives/1/README.md section 6).
+// unlisted concept folder (course/README.md section 2, spec-directives/1/README.md section 6); and
+// the logo, logo.svg at the root of the course folder (`logo` of course/form.yaml): present, square,
+// one colour in currentColor, no script and no external resource (course/README.md section 1).
 // An unknown spec or MAJOR is refused by course-specs/check-course, before these checks run. A
 // missing or unreadable lexicon fails here too, as a tooling error of the check, not as a rule:
 // the lexicon is a file of the spec, which no course can break (decision conformity-by-product;
@@ -13,6 +15,7 @@ const fs = require('fs');
 const path = require('path');
 const directives = require('./directives');
 const yaml = directives.lib('yaml-lines');
+const xml = directives.lib('xml');
 const { fail, normNumber } = directives.lib('course');
 
 const F = 'course.yaml';
@@ -21,6 +24,55 @@ const MAJOR = path.resolve(__dirname, '..', '..');
 const SCHEMA = 'course/schemas/course.schema.yaml';
 const isStr = (v) => typeof v === 'string' && v.trim() !== '';
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+const COLOR_ATTRS = ['color', 'stop-color', 'flood-color', 'lighting-color'];
+
+// the logo: the file `logo.file` of the form names, at the root of the course folder; one colour,
+// currentColor, so that the site paints it in the course's accent colour in each theme; square,
+// for its square slots (the header, the favicon); self-contained, so that the build renders
+// the favicon and the share image from it alone
+function logo(ctx) {
+  const L = (ctx.form && ctx.form.logo && ctx.form.logo.file) || 'logo.svg';
+  const out = [];
+  const here = (line, msg) => out.push(fail(L, line, msg));
+  if (!ctx.exists(L)) return [fail(L, 1, `mandatory file is missing: ${L}, the logo of the course, at the root of the course folder (course/README.md section 1)`)];
+  let root;
+  try {
+    root = xml.parse(ctx.read(L));
+  } catch (e) {
+    here(e.line || 1, `not well-formed XML: ${e.message}`);
+    return out;
+  }
+  if (root.name !== 'svg') { here(root.line, `root element is <${root.name}>, not <svg>`); return out; }
+  const a = root.attrs;
+  if (a.xmlns !== 'http://www.w3.org/2000/svg') here(root.line, 'the root <svg> needs xmlns="http://www.w3.org/2000/svg"');
+  const box = (a.viewBox || '').trim().split(/[\s,]+/).map(Number);
+  if (!a.viewBox) here(root.line, 'the root <svg> needs a viewBox, square');
+  else if (box.length !== 4 || box.some((n) => !Number.isFinite(n)) || box[2] <= 0) here(root.line, `viewBox="${a.viewBox}" is not "<x> <y> <width> <height>"`);
+  else if (box[2] !== box[3]) here(root.line, `viewBox="${a.viewBox}" is not square: the logo sits in a square slot, its width equal to its height`);
+  if (a.fill !== 'currentColor' && a.fill !== 'none') here(root.line, 'the root <svg> needs fill="currentColor" or fill="none": the logo is one colour, currentColor');
+  let current = false;
+  xml.walk(root, (n) => {
+    const l = n.line;
+    if (n.name === 'script') here(l, 'forbidden element <script>: the logo holds no script');
+    if (n.name === 'foreignObject') here(l, 'forbidden element <foreignObject>: the logo holds no script');
+    if (n.name === 'image') here(l, 'forbidden element <image>: the logo holds no external resource');
+    if (n.name === 'style') here(l, 'forbidden element <style>: the logo is one colour, currentColor');
+    for (const [k, v] of Object.entries(n.attrs)) {
+      const al = (n.attrLines && n.attrLines[k]) || l;
+      if (/^on/i.test(k)) here(al, `forbidden attribute ${k}: the logo holds no script`);
+      if (k === 'style') here(al, 'forbidden attribute style: the logo is one colour, currentColor');
+      if (k === 'fill' || k === 'stroke') {
+        if (v === 'currentColor') current = true;
+        else if (v !== 'none') here(al, `${k}="${v}": only currentColor or none, the logo is one colour`);
+      }
+      if (COLOR_ATTRS.includes(k)) here(al, `forbidden colour attribute ${k}: the logo is one colour, currentColor`);
+      if ((k === 'href' || k === 'xlink:href') && !v.startsWith('#')) here(al, `${k}="${v}": only references starting with #, the logo holds no external resource`);
+      if (k !== 'xmlns' && !k.startsWith('xmlns:') && /url\((?!\s*['"]?#)/.test(v)) here(al, `attribute ${k} points outside the file: the logo holds no external resource`);
+    }
+  });
+  if (!current) here(root.line, 'no fill nor stroke is currentColor: the logo is drawn in currentColor');
+  return out;
+}
 
 // the schema of course.yaml, the form's (course_map.schema), compiled once
 let validate = null;
@@ -57,7 +109,7 @@ function run(ctx) {
 
   // what the schema does not say, on the values whose form it accepts
   if (isStr(cy.id) && ctx.SLUG.test(cy.id) && cy.id !== path.basename(ctx.root)) bad(cy, 'id', `id "${cy.id}" must equal the course folder name "${path.basename(ctx.root)}"`);
-  if (isObj(cy.site) && isStr(cy.site.icon) && !ctx.exists(cy.site.icon)) bad(cy.site, 'icon', `site.icon "${cy.site.icon}" is not a file of the course`);
+  out.push(...logo(ctx));
   for (const k of ['storyline', 'glossary']) if (isStr(cy[k]) && !ctx.exists(cy[k])) bad(cy, k, `${cy[k]} does not exist`);
   if (!ctx.usable) return out;
 

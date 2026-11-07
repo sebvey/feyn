@@ -11,7 +11,7 @@ The readers are defined in [`spec-directives/README.md`](../../../../spec-direct
 
 Ce qu'est un cours de `linear-course` : son dossier, `course.yaml`, le dossier de concept, les fichiers de domaine, les fichiers du cours, les schémas et le lexique des fichiers du cours. La portée, les fichiers, les catégories et les checks sont le `README.md` de la MAJOR ; la conformité, les niveaux, les méthodes, la sévérité et les versions sont les directives de spec, `spec-directives/1/README.md` ; le protocole que le professeur exécute est `teacher/rules.yaml`.
 
-Les règles d'un cours, celles que la revue vérifie comprises, sont les données de [`rules.yaml`](rules.yaml), un groupe par section qui y renvoie, chacun avec son `purpose` ; les tables de champs sont les schémas JSON de [`schemas/`](schemas/) ; la forme du fichier de concept (ses parties, les blocs d'une unité et leurs champs, leur ordre, leur présence, publiés ou non, leurs lecteurs, la longueur d'un message du professeur) et celle des fichiers du cours (`course.yaml`, `plan.md`, le fichier de domaine, `storyline.md`) sont la donnée de [`form.yaml`](form.yaml), qui nomme les mots par leur clé du lexique. Chaque section tient sa table des lecteurs quand elle en a une, ce qui n'énonce aucune règle (l'arborescence d'un cours, ce à quoi sert un fichier, une notation) et un lien vers son groupe de `rules.yaml` et, pour une table de champs, vers son schéma JSON (#524, #531, #533). Les sections 1 à 7 viennent des sections 2 à 7 et 9 de la description de la spec avant la séparation (#323, lue à `9c691da^:specs/linear-course/1/SPEC.md`).
+Les règles d'un cours, celles que la revue vérifie comprises, sont les données de [`rules.yaml`](rules.yaml), un groupe par section qui y renvoie, chacun avec son `purpose` ; les tables de champs sont les schémas JSON de [`schemas/`](schemas/) ; la forme du fichier de concept (ses parties, les blocs d'une unité et leurs champs, leur ordre, leur présence, publiés ou non, leurs lecteurs, la longueur d'un message du professeur) et celle des fichiers du cours (`course.yaml`, `logo.svg`, `plan.md`, le fichier de domaine, `storyline.md`) sont la donnée de [`form.yaml`](form.yaml), qui nomme les mots par leur clé du lexique. Chaque section tient sa table des lecteurs quand elle en a une, ce qui n'énonce aucune règle (l'arborescence d'un cours, ce à quoi sert un fichier, une notation) et un lien vers son groupe de `rules.yaml` et, pour une table de champs, vers son schéma JSON (#524, #531, #533). Les sections 1 à 7 viennent des sections 2 à 7 et 9 de la description de la spec avant la séparation (#323, lue à `9c691da^:specs/linear-course/1/SPEC.md`).
 
 Chaque concept est une source, écrite une fois : un **fichier de concept**, `concept.md`, découpé en **unités**, un message du professeur chacune, dont chaque bloc est **publié** ou **non publié**, une propriété de la spec (`form.yaml`), jamais écrite dans le cours. Le site construit les parties publiées, et rien d'autre ; le professeur lit le fichier entier. Le site et la classe sont des builds du cours, sans réécriture.
 
@@ -25,7 +25,8 @@ Chaque concept est une source, écrite une fois : un **fichier de concept**, `co
 
 ```
 courses/<id>/
-  course.yaml          la carte : identité, domaines, concepts (section 2)
+  course.yaml          la carte : identité, domaines, concepts, couleur d'accent (section 2)
+  logo.svg             le logo du cours : une couleur, carré, sans script ni ressource externe (ci-dessous)
   plan.md              prose : public, accueil, progression, partis pris, règles d'écriture (section 5)
   glossary.md          le glossaire du cours (section 5)
   storyline.md         le fil rouge : le monde, puis les faits fixés (section 5)
@@ -34,6 +35,8 @@ courses/<id>/
   concepts/NN-slug/    un dossier de concept par concept numéroté et par annexe, son fichier de concept compris (section 3)
   decisions/           les décisions du cours ; aucun build ne le lit
 ```
+
+**Le logo.** `logo.svg`, à la racine du dossier, est le logo du cours, obligatoire : son nom est fixé par la spec (`logo` de [`form.yaml`](form.yaml)), aucune clé de `course.yaml` ne le nomme, et le site n'a pas de logo par défaut. Le site le montre dans son en-tête et le build en tire le favicon et l'image de partage. Son contrat suit celui d'un schéma (section 6.1) pour la couleur, et pour la même raison : une seule couleur, `currentColor` (un `fill` et un `stroke` toujours `currentColor` ou `none`, aucune autre couleur, aucun style), que le site peint dans la couleur d'accent du cours (section 2), dans chaque thème, celui que le lecteur choisit avec le bouton du site compris ; un `viewBox` carré, puisqu'il tient dans une case carrée (l'en-tête, le favicon) ; aucun script et aucune ressource externe, puisque le favicon et l'image de partage sont tirés de lui seul. Il n'a pas de gabarit : copié tel quel, un gabarit donnerait à plusieurs cours le même logo. Un logo lisible à 16 et 28 pixels se dessine en quelques traits.
 
 Les règles du dossier du cours sont le groupe « Le dossier du cours » de [`rules.yaml`](rules.yaml).
 
@@ -47,6 +50,8 @@ Les règles du dossier du cours sont le groupe « Le dossier du cours » de [`ru
 | the maintainer | the identifiers whose change is a course MAJOR (section 3) | classing a course change |
 
 `course.yaml` est la carte du cours : son identité, ses domaines et ses concepts, rien sous le concept ; l'arbre d'un concept est dans son `concept.md` (section 3), et à qui le cours s'adresse, dans « Public cible » de `plan.md` (section 5). Le site, le build de la classe et les checks lisent `course.yaml` ; le site compose depuis lui l'enchaînement des concepts d'un domaine (section 4).
+
+**La couleur d'accent.** Le bloc `site` de `course.yaml` dit l'apparence du site du cours, jamais s'il est publié : chaque cours a un site, sur ses trois canaux. Il tient la couleur d'accent du cours, `site.accent_color`, obligatoire, une couleur `#rrggbb`. Le site en garde la teinte et en tire toute la famille de l'accent de chaque thème, avec sa propre luminosité, pour que le contraste reste le sien et non une règle de chaque cours ; il y peint le logo (section 1).
 
 Ses champs sont décrits par le schéma JSON [`schemas/course.schema.yaml`](schemas/course.schema.yaml), que `course_map` de [`form.yaml`](form.yaml) nomme avec ses lecteurs ; ses règles sont le groupe « Le fichier course.yaml » de [`rules.yaml`](rules.yaml).
 

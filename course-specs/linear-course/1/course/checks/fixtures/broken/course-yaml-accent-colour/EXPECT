@@ -1,0 +1,2 @@
+check: course-yaml
+message: /site must have required property 'accent_color'

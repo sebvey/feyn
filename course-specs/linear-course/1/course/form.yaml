@@ -2,9 +2,9 @@
 # the concept file (the files of a concept folder, the parts of `concept.md`, its frontmatter, its
 # title, its head, its sections and units, its foot, the blocks of a unit and their fields, its
 # cases, the length of a teacher message), `sources.md` beside it and the course files (`course.yaml` as the
-# map, `plan.md`, the domain file, `storyline.md`, `glossary.md`, `CHANGELOG.md`): their parts,
+# map, `logo.svg`, `plan.md`, the domain file, `storyline.md`, `glossary.md`, `CHANGELOG.md`): their parts,
 # their order, their presence, published or not, their readers.
-# course/README.md sections 2 to 5 describe it, the rules of course/rules.yaml state it, the
+# course/README.md sections 1 to 5 describe it, the rules of course/rules.yaml state it, the
 # checks read it here (concept-file, unit-contract, teacher-message-length, and the text checks and
 # unit-additions for their scope; course-yaml and course-files for the course files), and the
 # spec half of the site build, site/build/render-site, reads `published` here (site/build/README.md).
@@ -214,6 +214,17 @@ course_map:
   schema: course/schemas/course.schema.yaml
   published: true
   readers: [site, teacher]
+
+# logo.svg, the logo of the course, at the root of the course folder, its name fixed here: one
+# colour, currentColor, square, self-contained (course/README.md section 1); course-yaml checks it.
+# The site shows it in its header, painted in the accent colour of the course (`site.accent_color`
+# of course.yaml), and the build derives the favicon and the share image from it; render-site gives
+# it to the engine as the file's text.
+logo:
+  file: logo.svg
+  presence: mandatory
+  published: true
+  readers: [site]
 
 # plan.md: an optional H1, then these ## headings, in this order; after them, optional ##
 # sections of free titles that the teacher reads (the course's stances, its own writing rules, the

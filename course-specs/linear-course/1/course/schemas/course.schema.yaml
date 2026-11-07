@@ -9,7 +9,7 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: course.yaml
 type: object
-required: [id, spec, title, storyline, glossary, domains, concepts]
+required: [id, spec, title, site, storyline, glossary, domains, concepts]
 additionalProperties: false
 properties:
   id:
@@ -26,16 +26,17 @@ properties:
     description: one line under the title on the site
     $ref: '#/$defs/text'
   site:
-    description: the course's look on the site; omitted keys take the site's defaults
+    description: >-
+      how the course looks on its site, never whether it has one: every course has a site; the
+      logo is no key here, it is the file logo.svg at the root of the course folder
     type: object
+    required: [accent_color]
     additionalProperties: false
     properties:
-      icon:
+      accent_color:
         description: >-
-          path, relative to the course folder, of an SVG used as the course's mark and favicon
-        $ref: '#/$defs/text'
-      color:
-        description: the course's accent colour
+          the course's accent colour, one #rrggbb: the site paints the logo in it and derives from
+          its hue the accent of each theme, with its own lightness
         type: string
         pattern: '^#[0-9a-fA-F]{6}$'
   storyline:

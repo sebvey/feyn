@@ -2,6 +2,8 @@ id: cafe
 spec: linear-course@1
 title: "Faire un bon café"
 subtitle: "Goûter, comprendre, apprivoiser"
+site:
+  accent_color: "#6b3f1d"
 storyline: storyline.md
 glossary: glossary.md
 annexes: [A1, A2]

@@ -22,6 +22,7 @@ const DUMMY = {
   'course-id': 'smoke',
   'course title': 'Un cours de test',
   'one line under the title': 'Pour la fumée',
+  '#rrggbb': '#336699',
   'domain-slug': 'bases',
   'domain title': 'Les bases',
   'what the learner can do at the end of the domain, one sentence': 'Nommer les rôles.',
@@ -139,6 +140,9 @@ const files = {
   learner: ['learner/apprenant.md', 'learner/observations.md', 'learner/parcours.md'],
 };
 
+// the logo of the course, which no template gives: a dummy one, square, one colour in currentColor
+const LOGO = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>\n';
+
 function stripHeader(name, text) {
   if (name.endsWith('.yaml')) return text.replace(/^(#.*\n)+/, '');
   return text.replace(/^<!--[\s\S]*?-->\n/, '');
@@ -173,6 +177,8 @@ function build(withDiagram) {
   const read = (n) => fs.readFileSync(path.join(files.learner.includes(n) ? teacher : here, n), 'utf8');
   const out = (n) => fill(n, read(n));
   for (const n of [...files.yaml, ...files.md]) put(n, out(n), n);
+  // the logo has no template (course/README.md section 1): the course gets a dummy one
+  fs.writeFileSync(path.join(course, 'logo.svg'), LOGO);
   put('domains/1-bases.md', out('domain.md'), 'domain.md');
   const dir = 'concepts/00-roles/';
   for (const n of ['sources.md']) put(dir + n, out(n), n);

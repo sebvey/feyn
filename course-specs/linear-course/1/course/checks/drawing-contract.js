@@ -53,7 +53,7 @@ function checkFile(ctx, concept, rel, decl, ids, out) {
       if ((k === 'fill' || k === 'stroke') && v !== 'currentColor' && v !== 'none') here(al, `${k}="${v}": only currentColor or none`);
       if (COLOR_ATTRS.includes(k)) here(al, `forbidden colour attribute ${k}`);
       if ((k === 'href' || k === 'xlink:href') && !v.startsWith('#')) here(al, `${k}="${v}": only references starting with # are allowed`);
-      if (/url\(\s*['"]?(?!#)/.test(v) || /(https?:)?\/\/[\w.-]+\.\w/.test(v) && k !== 'xmlns' && !k.startsWith('xmlns:')) here(al, `attribute ${k} points outside the file`);
+      if (/url\((?!\s*['"]?#)/.test(v) || /(https?:)?\/\/[\w.-]+\.\w/.test(v) && k !== 'xmlns' && !k.startsWith('xmlns:')) here(al, `attribute ${k} points outside the file`);
       if (k === 'class') for (const c of v.split(/\s+/).filter(Boolean)) if (!CLASSES.has(c)) here(al, `class "${c}": only primary, secondary and muted are allowed`);
       if (k === 'font-family') for (const f of v.split(',').map((s) => s.trim().replace(/^['"]|['"]$/g, ''))) if (!GENERIC.has(f.toLowerCase())) here(al, `font-family "${f}": only generic families (${[...GENERIC].join(', ')})`);
       if (k === 'id') {

@@ -1,6 +1,6 @@
 # Templates of `linear-course`
 
-One template per file `course/README.md` defines. Copy one to the course folder, replace every `<placeholder>`, delete the header comment (a `#` block in `course.yaml`; a `<!-- -->` block, the first thing in the file, elsewhere: course Markdown has no HTML). The header says what the file is, which course/README.md section describes it (its rules are the groups of `course/rules.yaml` that section points to), and the rules a check enforces.
+One template per file `course/README.md` defines, except `logo.svg`, which has none (course/README.md section 1: copied unchanged, a template would give several courses the same logo). Copy one to the course folder, replace every `<placeholder>`, delete the header comment (a `#` block in `course.yaml`; a `<!-- -->` block, the first thing in the file, elsewhere: course Markdown has no HTML). The header says what the file is, which course/README.md section describes it (its rules are the groups of `course/rules.yaml` that section points to), and the rules a check enforces.
 
 | Template | Becomes | course/README.md |
 |---|---|---|
@@ -20,4 +20,4 @@ The headings and markers in the templates are the words of the lexicon of the co
 mise exec -- course-specs/linear-course/1/course/templates/smoke-test
 ```
 
-Builds a course from the templates with every placeholder filled by a dummy value (the table in the script), once with a diagram and once without, and runs `check-course` on it with the default, the blocking and the reporting checks, each of which must pass. It fails on an unreplaced placeholder too. A change to a template that breaks a check, or to a check that a template no longer satisfies, shows here.
+Builds a course from the templates with every placeholder filled by a dummy value (the table in the script), and a dummy `logo.svg`, once with a diagram and once without, and runs `check-course` on it with the default, the blocking and the reporting checks, each of which must pass. It fails on an unreplaced placeholder too. A change to a template that breaks a check, or to a check that a template no longer satisfies, shows here.

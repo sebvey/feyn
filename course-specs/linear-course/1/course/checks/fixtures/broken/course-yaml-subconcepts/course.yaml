@@ -59,3 +59,5 @@ concepts:
     prerequisites: []
     duration_min: 10
     dir: concepts/A1-lexique
+site:
+  accent_color: "#336699"

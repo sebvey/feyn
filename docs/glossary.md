@@ -389,7 +389,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: an SVG of a concept under the **drawing contract**, with its **caption**
 - en: diagram · rejected: "schema" (a JSON Schema), "figure", "image", "illustration"
 - fr: « schéma » · rejected: « diagramme », « figure », « illustration », « croquis », « graphique »
-- not to confuse with: [schema](#schema), [drawing contract](#drawing-contract), [caption](#caption)
+- not to confuse with: [schema](#schema), [drawing contract](#drawing-contract), [caption](#caption), [logo](#logo)
 - why: « schéma » is the courses' own word for a drawing; « diagramme » is a calque that evokes a notation or data and no course uses it; « figure », « illustration », « croquis » and « graphique » name another thing (a numbered figure, a decoration, a sketch, a chart of data); the data sense of « schéma » takes « schéma JSON » so the two never meet
 
 ### caption
@@ -440,6 +440,22 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the concept of a course glossary row (its fourth column): the concept a learner opens to dig into the term, the one whose matter teaches it; never a concept that only uses the term or defines it in passing
 - en: defining concept · rejected: "introducing concept", "first concept"
 - fr: « concept de définition »
+
+### logo
+
+- means: the drawing that stands for a course on its site, `logo.svg` at the root of the course: square, one colour in `currentColor`, which the site paints in the course's **accent colour**; the site's header shows it, and its favicon and share image are drawn from it
+- en: logo · rejected: "mark", "icon"
+- fr: « logo »
+- not to confuse with: [accent colour](#accent-colour), [diagram](#diagram)
+- why: "icon" names the small drawings of the site's buttons, which stand for an action, not for a course; "mark" says less than "logo" and reads as a sign put on a text
+
+### accent colour
+
+- means: the one colour a course gives its site, a `#rrggbb`: the site keeps its hue, derives with its own lightness the accent of each theme, and paints the course's **logo** in it
+- en: accent colour · rejected: "brand colour", "theme colour"
+- fr: « couleur d'accent »
+- not to confuse with: [logo](#logo)
+- why: "brand colour" speaks of a brand, which a course is not; "theme colour" is the browser's bar colour (`theme-color`), another thing; the key is spelt `color`, as CSS spells it, and the prose says "colour"
 
 ## How the teacher works
 

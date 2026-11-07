@@ -10,7 +10,7 @@
     <rect x="10" y="10" width="180" height="24" fill-opacity="0.3" stroke="currentColor"/>
     <rect x="10" y="38" width="180" height="24" fill-opacity="0.2" stroke="currentColor"/>
     <rect x="10" y="66" width="180" height="24" fill-opacity="0.1" stroke="currentColor"/>
-    <line x1="195" y1="88" x2="195" y2="14" stroke="currentColor" marker-end="url(#couches-fleche)"/>
+    <line x1="195" y1="88" x2="195" y2="14" stroke="currentColor" marker-end="url('#couches-fleche')"/>
   </g>
   <g id="1a-noms" class="primary" font-size="12">
     <text x="20" y="26">Restitution</text>
