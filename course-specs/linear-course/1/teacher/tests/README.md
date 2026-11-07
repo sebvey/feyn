@@ -51,7 +51,7 @@ The rules of the families 1, 3, 4, 5, 8 and 9 that a session of `cafe` exercises
 | `missing-nuance-not-partial` | needs an answer that misses only a nuance, a judgement the fixed messages cannot steer |
 | `two-failed-follow-ups` | needs two failed follow-ups in a row, three more turns no scenario spends |
 | `elliptic-answer-clarified` | needs an elliptic answer; the fixed answers are full sentences |
-| `periodic-mini-recap` | comes every 3 or 4 validated concepts; `cafe` has three and an annex, and the path validates only concept 0 |
+| `periodic-mini-recap` | comes every 3 or 4 validated concepts; `cafe` has three and two annexes, and the path validates only concept 0 |
 | `adapt-to-pace-requests` | no learner message asks « plus vite », « plus lent », « exemple » or « exercice » |
 | `classroom-exchanges-exempt` | no learner message is about the classroom itself |
 | `concept-reference-form` | a conditional rule: it acts only when the teacher refers to another concept, which no fixed message makes it do, so a scenario naming it would be judged on an act that may not come |

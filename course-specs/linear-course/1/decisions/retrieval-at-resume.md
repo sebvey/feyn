@@ -21,4 +21,4 @@ The two fresh tests, scenario `retrieval-at-resume` (a returning learner who val
 
 ## Consequences
 
-- Amended 2026-11-07 (#715): no case of a course carries « entraînement » any more, the word that marked a supplementary case for practice (decision `cases-name-their-misconceptions`); the frozen teacher keeps the word, moved to its own lexicon with its value, and the rule still picks those cases first, so it falls back on the cases of the bank the journal does not name, until the brainstorm on the protocol rules redoes it (idea #597).
+- Amended 2026-11-07 (#715): no case of a course carries « entraînement » any more, the word that marked a supplementary case for practice (decision `cases-name-their-misconceptions`); the frozen teacher keeps the word, moved to `frozen_form` of its own lexicon with its value, and the rule still picks those cases first, so it falls back on the cases of the bank the journal does not name, until the brainstorm on the protocol rules redoes it (idea #597).
