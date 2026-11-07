@@ -65,5 +65,7 @@ Un produit s'empile en couches, de la collecte à la restitution.
 - **Ancrage** : Régis regarde une carte vide.
 - **Question** : que voit-il ?
 - **Réponse attendue** : rien.
-- **Pièges** :
-  - « Une carte » : la carte est vide.
+- **Idées fausses** :
+  - **Une carte** : « Une carte »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : la carte est vide.
