@@ -1,8 +1,7 @@
 'use strict';
 // course.yaml, the map of the course (domains and concepts; the tree of a concept is its
 // concept.md's, checked by concept-file), from `course_map` of course/form.yaml: its fields
-// against course/schemas/course.schema.yaml through Ajv2020 (the accent colour, `site.accent_color`,
-// mandatory and one #rrggbb, among them: the schema says it, this code does not), a failure mapped from ajv's
+// against course/schemas/course.schema.yaml through Ajv2020, a failure mapped from ajv's
 // instance path to its line (`lineOfError` of lib/yaml-lines.js); then what the schema does not
 // say: identifiers, order, partition into domains, annexes, prerequisites, paths that exist, no
 // unlisted concept folder (course/README.md section 2, spec-directives/1/README.md section 6); and
