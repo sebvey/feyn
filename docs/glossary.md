@@ -209,7 +209,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### unit
 
-- means: the teaching unit, the unit of a course's content: one teacher message, one leaf of a concept's tree (`0a1`), written once as four blocks in the order of writing, each titled by its word alone: its **lesson** (its **matter**), its **cases** (« Cas du fil rouge »: the unit's case, then its supplementary cases), its **misconceptions** (« Pièges »), its **instruction**. A unit always has its own heading, under its **section**
+- means: the teaching unit, the unit of a course's content: one teacher message, one leaf of a concept's tree (`0a1`), written once as three blocks in the order of writing, each titled by its word alone: its **lesson** (its **matter**, what is true, then its **misconceptions**), its **cases** (« Cas du fil rouge »: the unit's case, then its supplementary cases), its **instruction**. A unit always has its own heading, under its **section**
 - en: unit · rejected: "leaf sub-concept", "sub-concept", "leaf", "lesson" (its first block)
 - fr: « unité » · rejected: « sous-concept feuille », « sous-concept », « feuille »
 - not to confuse with: [section](#section), [concept](#concept), [case](#case), [head and foot](#head-and-foot), [lesson](#lesson)
@@ -248,7 +248,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the field of a unit's **lesson** that says what is true, in the same words for the site reader and the teacher: the explanation the unit teaches; **published**
 - en: matter · rejected: "reader text", "explanation", "body", "content", "copy"
 - fr: « matière » · rejected: « texte lecteur », « explication »
-- not to confuse with: [anchor](#anchor), [instruction](#instruction), [landmark](#landmark)
+- not to confuse with: [anchor](#anchor), [instruction](#instruction), [landmark](#landmark), [misconception](#misconception)
 - why: the reader text and a case's explanation were two writings of the same matter, one for the site, one for the teacher; one word for the one text
 
 ### anchor
@@ -261,19 +261,26 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### lesson
 
-- means: the first block of a **unit**, « Leçon »: its **matter**, labelled; **published**. What the unit teaches, written first
+- means: the first block of a **unit**, « Leçon »: its **matter**, labelled, in two fields, in this order: « Matière », what is true, then « Idées fausses », its **misconceptions**, what seems true and is not; **published**. What the unit teaches, written first, before its cases
 - en: lesson
 - fr: « leçon »
-- not to confuse with: [unit](#unit), [concept](#concept), [case](#case)
+- not to confuse with: [unit](#unit), [concept](#concept), [case](#case), [misconception](#misconception)
 - why: "lesson" is rejected for the unit and for the concept, which it would have named whole; it names the block that teaches, beside the cases that ask
 
 ### misconception
 
-- means: a frequent wrong answer of a unit, quoted, with its correction; « Pièges » names the block of a unit that holds its misconceptions, those of all its cases, **published**, shown by the site in its unit, and « idée fausse » each misconception in it; a case holds none of its own
-- en: misconception · rejected: "common mistake", "pitfall", "frequent error"
-- fr: « idée fausse » · rejected: « erreur fréquente »
-- not to confuse with: [follow-up](#follow-up), [case](#case)
-- why: the pitfalls of a concept (« Pièges ») were its common mistakes written a second time; one word for what is written once. « Pièges », once rejected, names the block of the unit, the name the site's composed section already had, and « idée fausse » stays the word for each misconception in it
+- means: what seems true about the matter of a unit and is not: a belief a learner who has read the **matter** could still hold, quoted, with its name, unique in its unit, its **root** and its correction, which rests on the matter; never the mere negation of a sentence of the matter, never stated on a case's situation. A unit's misconceptions are the second field of its **lesson**, « Idées fausses », after its matter, each written once, **published**. A case writes none: it names those it makes tempting
+- en: misconception · rejected: "common mistake", "pitfall", "frequent error", "wrong answer"
+- fr: « idée fausse » · rejected: « erreur fréquente », « mauvaise réponse », « piège »
+- not to confuse with: [matter](#matter), [root](#root), [follow-up](#follow-up), [case](#case)
+- why: the pitfalls of a concept (« Pièges ») were its common mistakes written a second time; one word for what is written once. « Pièges » then named the block of a unit that held its misconceptions after its cases, written as wrong answers on a case's situation, free to only negate the matter; once the misconceptions are matter, the block goes with its word, and "wrong answer" (« mauvaise réponse ») names an answer, not the belief behind it
+
+### root
+
+- means: the part of a **misconception** that says why it seems true: an everyday experience, a misleading word, a neighbouring truth stretched too far; labelled « Racine », before the correction
+- en: root
+- fr: « racine »
+- not to confuse with: [misconception](#misconception), [matter](#matter)
 
 ### landmark
 
@@ -292,7 +299,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### published
 
-- means: of a block or a part of a concept file, rendered by the site build: the **lesson** (the matter), the **cases** (each with its anchor, its question and its expected answer, shown hidden until the reader reveals it), the misconceptions, « L'essentiel », the landmarks, the deepening, the title and the headings of the sections and units, the **stances**, the **neighbors** and the **diagrams**; beside it, the claims and the references of its **sources**; a property the spec fixes for the block, never chosen by a course, and no heading says it. The build renders the published parts and nothing else
+- means: of a block or a part of a concept file, rendered by the site build: the **lesson** (its matter and its **misconceptions**, which the site shows after the cases), the **cases** (each with its anchor, its question and its expected answer, shown hidden until the reader reveals it), « L'essentiel », the landmarks, the deepening, the title and the headings of the sections and units, the **stances**, the **neighbors** and the **diagrams**; beside it, the claims and the references of its **sources**; a property the spec fixes for the block, never chosen by a course, and no heading says it. The build renders the published parts and nothing else
 - en: published · rejected: "reader-facing", "public" (it describes the repository)
 - fr: « publié » · rejected: « côté lecteur »
 - not to confuse with: [unpublished](#unpublished)
