@@ -42,8 +42,9 @@ groups:
         text: >-
           Le Markdown d'un cours doit être du CommonMark simple : pas de HTML, pas d'`import` ni
           d'`export` MDX, pas de directive `:::` ; un fichier de concept n'a pas de titre plus
-          profond que `####`, et un titre `####` est un bloc d'une unité ou un cas supplémentaire,
-          dans une unité (son seul H1, son titre, est la règle `concept-file-title`).
+          profond que `#####` : un titre `####` est un bloc d'une unité, dans une unité, et un
+          titre `#####` un cas, dans le bloc « Cas du fil rouge » d'une unité (son seul H1, son
+          titre, est la règle `concept-file-title`).
       - id: no-banned-character
         level: recommendation
         category: writing
@@ -335,11 +336,10 @@ groups:
       donner la consigne. Sa « Leçon » tient sa matière, ses deux faces, les mêmes mots pour le site
       et le professeur : ce qui est vrai, « Matière », puis ce qui semble vrai et ne l'est pas,
       « Idées fausses », chacune nommée, avec sa racine et sa correction ; son « Cas du fil rouge »,
-      ses cas, chacun titré,
-      avec son ancrage dans le fil rouge, sa question et sa réponse attendue : d'abord le cas de
-      l'unité, toujours posé, puis ses cas supplémentaires, de rechange quand l'apprenant échoue,
-      d'entraînement pour s'exercer ou retrouver un concept validé, d'aparté pour une question
-      fréquente hors du parcours ; sa « Consigne au professeur », la limite de sa matière, ce que
+      ses cas, chacun sous son titre, avec son ancrage dans le fil rouge, sa question, sa réponse
+      attendue et les idées fausses de l'unité qu'il rend tentantes, nommées : d'abord le cas de
+      l'unité, toujours posé, puis ses cas supplémentaires, où le professeur choisit après une
+      réponse fausse ou pour s'entraîner ; sa « Consigne au professeur », la limite de sa matière, ce que
       le professeur sait et ne dit pas dans l'unité. Chaque
       bloc est publié ou non, une propriété de la spec (`course/form.yaml`), jamais un choix du
       cours, et que son titre ne dit pas.
@@ -369,8 +369,8 @@ groups:
         method: test
         check: unit-contract
         text: >-
-          « Leçon » et « Cas du fil rouge » doivent être chacun une liste de champs, chacun ouvert
-          par `- **<label>** :`, le libellé l'un des `unit_fields` du lexique, rien entre lui et
+          « Leçon », et chaque cas de « Cas du fil rouge » sous son titre, doivent être une liste de
+          champs, chacun ouvert par `- **<label>** :`, le libellé l'un des `unit_fields` du lexique, rien entre lui et
           les deux-points ; le texte d'un champ suit son libellé, et peut s'ouvrir sur une
           précision (« en deux parties : »), ses lignes suivantes en retrait de deux espaces
           (paragraphes, listes imbriquées). « Consigne au professeur » n'a pas de libellé : le mot
@@ -385,8 +385,8 @@ groups:
         check: unit-contract
         text: >-
           Aucune ligne d'une unité ne doit se trouver hors d'un bloc, ni, dans « Leçon » et
-          « Cas du fil rouge », hors d'un champ : une ligne qu'aucun bloc ne porte n'est ni publiée
-          ni lue.
+          « Cas du fil rouge », hors d'un champ, ni, dans « Cas du fil rouge », avant le titre du
+          premier cas : une ligne qu'aucun bloc ne porte n'est ni publiée ni lue.
       - id: unit-fields-present-once
         level: requirement
         method: test
@@ -401,8 +401,8 @@ groups:
         method: test
         check: unit-contract
         text: >-
-          Les champs d'un cas doivent venir dans l'ordre de `course/form.yaml` : « Titre »,
-          « Qualificatif », « Ancrage », « Question », « Réponse attendue ».
+          Les champs d'un cas doivent venir dans l'ordre de `course/form.yaml` : « Ancrage »,
+          « Question », « Réponse attendue », « Idées fausses en jeu ».
       - id: misconception-form
         level: requirement
         method: test
@@ -431,31 +431,55 @@ groups:
         method: test
         check: unit-contract
         text: >-
-          « Cas du fil rouge » doit tenir un cas au moins, chacun ouvert par son « Titre », puis,
-          étiquetés, dans cet ordre et tous obligatoires, « Qualificatif » (un cas supplémentaire
-          seulement), « Ancrage », « Question », « Réponse attendue ». Le premier cas est celui de
-          l'unité, toujours posé, sans « Qualificatif » ; chaque autre est un cas supplémentaire,
-          posé quand son qualificatif le dit (`cases` du bloc dans `course/form.yaml`).
+          « Cas du fil rouge » doit tenir un cas au moins, chacun sous son titre
+          `##### Cas : <titre>` (le mot `block_kinds.case` du lexique, le séparateur, le titre),
+          puis ses champs, étiquetés, dans cet ordre et tous obligatoires : « Ancrage »,
+          « Question », « Réponse attendue », « Idées fausses en jeu ». Le premier cas est celui de
+          l'unité, toujours posé ; chaque autre est un cas supplémentaire (`cases` du bloc dans
+          `course/form.yaml`).
         why: >-
-          La question d'une unité vivait dans un bloc non publié, son ancrage dans « Leçon », et
-          chaque cas supplémentaire sous un titre `####` à part, non publié : un lecteur du site
-          voyait une scène sans question. Les cas d'une unité sont une liste publiée,
-          chacun avec son ancrage, et le site montre la réponse attendue cachée jusqu'à ce que le
-          lecteur la révèle (epic #598).
-      - id: case-qualifier-from-lexicon
-        level: requirement
-        method: test
-        check: unit-contract
-        text: >-
-          Le « Qualificatif » d'un cas supplémentaire doit être une valeur du groupe `qualifiers`
-          du lexique, seule.
+          Les cas d'une unité étaient une liste plate, chacun ouvert par un champ « Titre » qu'un
+          lecteur ne distinguait pas des autres champs, et un cas supplémentaire portait un
+          qualificatif, l'un de trois, qui disait quand le poser : la structure se lit dans les
+          titres, comme les sections et les unités au-dessus, et chaque cas a une seule forme ; le
+          professeur choisit un cas supplémentaire par les idées fausses qu'il met en jeu (epic
+          #710).
       - id: case-titles-unique
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          Le « Titre » de chaque cas, celui de l'unité comme ceux de ses cas supplémentaires, doit
+          Le titre de chaque cas, celui de l'unité comme ceux de ses cas supplémentaires, doit
           être unique dans le concept.
+      - id: case-names-its-misconceptions
+        level: requirement
+        method: test
+        check: unit-contract
+        text: >-
+          « Idées fausses en jeu » d'un cas doit nommer, par leurs noms séparés par « ; », les
+          idées fausses de son unité que sa situation rend tentantes, une au moins, chaque nom
+          celui d'une idée fausse de son unité ; un cas n'écrit aucune idée fausse (`in_play` de
+          `cases` dans `course/form.yaml`).
+        why: >-
+          Rien ne liait un cas aux idées fausses de son unité : le professeur ne savait quel cas
+          poser après une réponse fausse, et un cours ne tenait qu'un cas prévu pour elle sur une
+          douzaine d'unités. Ce qui se répète est une référence, pas un contenu : le nom, pas la
+          croyance recopiée (epic #710).
+      - id: misconception-named-by-a-case
+        level: requirement
+        method: test
+        check: unit-contract
+        text: >-
+          Chaque idée fausse d'une unité doit être nommée par un cas de l'unité au moins, dans son
+          « Idées fausses en jeu ».
+      - id: unit-case-misconceptions-covered
+        level: recommendation
+        method: test
+        check: case-coverage
+        text: >-
+          Il convient que chaque idée fausse que nomme le cas de l'unité soit nommée aussi par un
+          cas supplémentaire de l'unité : après une réponse fausse qui la montre, le professeur a
+          un autre cas à poser.
       - id: teacher-message-length-under-threshold
         level: recommendation
         method: test
@@ -476,11 +500,12 @@ groups:
           court, avec sa « Racine », pourquoi elle semble vraie (une expérience courante, un mot
           trompeur, une vérité voisine étendue trop loin), et sa « Correction », ce qui la
           corrige, appuyé sur la matière ;
-          « Titre », le nom du cas, que la mémoire de l'apprenant cite ; « Qualificatif », quand
-          poser le cas supplémentaire ; « Ancrage », la situation du fil rouge où la matière se
-          voit, ses acteurs, ses faits et son déroulé (qui dit quoi, quand) ; « Question », la
-          question que pose le cas ; « Réponse attendue », la bonne réponse avec ses nuances, la
-          position du cours telle que la matière l'énonce ; « Consigne au professeur », ce que le
+          le titre d'un cas, son nom, que la mémoire de l'apprenant cite ; « Ancrage », la
+          situation du fil rouge où la matière se voit, ses acteurs, ses faits et son déroulé (qui
+          dit quoi, quand) ; « Question », la question que pose le cas ; « Réponse attendue », la
+          bonne réponse avec ses nuances, la position du cours telle que la matière l'énonce ;
+          « Idées fausses en jeu », les idées fausses de l'unité que la situation du cas rend
+          tentantes, celles qu'une réponse fausse à sa question montrerait ; « Consigne au professeur », ce que le
           professeur sait et ne dit pas dans l'unité (`instruction-beyond-a-competent-teacher`).
       - id: instruction-beyond-a-competent-teacher
         level: requirement
@@ -546,12 +571,16 @@ groups:
           `concept.md`, à 37 à 91 %
           (epic #475) ; la règle ne vivait que dans le prompt du workflow `course-batch.js`, retiré
           par #625.
-      - id: fallback-case-stands-alone
+      - id: supplementary-case-stands-alone
         level: requirement
         method: inspection
         text: >-
-          Un cas de rechange doit se suffire : son propre ancrage et sa propre question, rien
-          d'emprunté à la question échouée.
+          Un cas supplémentaire doit se suffire : son propre ancrage et sa propre question, rien
+          d'emprunté à la question échouée ni au cas de l'unité.
+        why: >-
+          Seul le cas qualifié pour être posé après une réponse fausse devait se suffire ; sans
+          qualificatif, le professeur peut poser après une réponse fausse n'importe quel cas
+          supplémentaire qui nomme l'idée fausse qu'elle montre (epic #710).
       - id: instruction-contradicts-no-protocol
         level: requirement
         method: inspection

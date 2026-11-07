@@ -8,10 +8,12 @@
 // « Leçon » holds « Matière », then « Idées fausses », its misconceptions, one at least, each
 // named, its name unique in its unit, with its belief in « », then « Racine » and « Correction »,
 // each once, in that order, none empty, nothing else under it; « Cas du fil rouge » is a list of
-// cases, each opened by its « Titre » and holding its fields once, in order: the first, the
-// unit's case, without « Qualificatif »; each other, a supplementary case, with it, one qualifier
-// of the closed list; every case's title unique in the concept; « Consigne au professeur » is
-// prose. The parts of concept.md and its tree are `concept-file`'s, a `structure` check; the
+// cases, one at least, each under its heading `##### Cas : <title>` and holding its fields once,
+// in order, « Idées fausses en jeu » last; every case's title unique in the concept; each case
+// names in « Idées fausses en jeu » one misconception of its unit at least, and only names of
+// misconceptions of its unit; each misconception of a unit is named by one of its cases at least
+// (whether the unit's case's are named by a supplementary case too is `case-coverage`'s, which
+// reports); « Consigne au professeur » is prose. The parts of concept.md and its tree are `concept-file`'s, a `structure` check; the
 // length of a teacher message is `teacher-message-length`'s.
 const directives = require('./directives');
 const { fail } = directives.lib('course');
@@ -41,30 +43,44 @@ function checkFields(fields, spec, where, file, out, word, line) {
   }
 }
 
-// the cases of « Cas du fil rouge »: the first, the unit's case, its fields without those of
-// `supplementary_only`; each other, a supplementary case, with them, its qualifier one of the list
-function checkCases(ctx, b, blk, where, file, out) {
+// the cases of « Cas du fil rouge »: each with its fields, those of the form, once, in order, all
+// mandatory; « Idées fausses en jeu » names one misconception at least, each a misconception of its
+// unit (a name of another unit's said so); each misconception of the unit named by a case at least
+function checkCases(ctx, b, blk, u, others, where, file, out) {
   const fw = (k) => ctx.word('unit_fields', k) || k;
-  const only = b.cases.supplementary_only || [];
-  const quals = (b.cases.qualifiers || []).map((k) => ctx.word('qualifiers', k)).filter(Boolean);
-  if (!blk.cases.length) { out.push(fail(file, blk.line, `${where}: the block holds its cases, one at least, each opened by « ${fw(b.cases.opens)} », found none`)); return; }
+  const ip = (b.cases.in_play || {}).field;
+  const head = `##### ${ctx.word('block_kinds', b.cases.kind) || b.cases.kind}${ctx.word('block_kinds', ctx.form.concept_file.separator) || ' : '}<title>`;
+  if (!blk.cases.length) { out.push(fail(file, blk.line, `${where}: the block holds its cases, one at least, each under its heading "${head}", found none`)); return; }
+  const mis = new Map(misconceptionsOf(ctx, u).map((m) => [m.name, m]));
+  const named = new Set();
   for (const cs of blk.cases) {
     const cw = `${where}, case "${cs.title}"`;
-    if (cs.first) {
-      for (const f of cs.fields.filter((x) => only.includes(x.key))) out.push(fail(file, f.line, `${cw}: the first case is the unit's case, always posed: it has no « ${f.label} » (a supplementary case comes after it)`));
-      const fields = cs.fields.filter((x) => !only.includes(x.key));
-      checkFields(fields, b.fields.filter((k) => !only.includes(k)).map((k) => ({ field: k, presence: 'mandatory' })), cw, file, out, ctx.word, cs.line);
+    checkFields(cs.fields, b.fields.filter((k) => k !== ip).map((k) => ({ field: k, presence: 'mandatory' })).concat(ip ? [{ field: ip, presence: 'optional' }] : []).sort((x, y) => b.fields.indexOf(x.field) - b.fields.indexOf(y.field)), cw, file, out, ctx.word, cs.line);
+    if (!ip) continue;
+    if (!cs.inPlay || !cs.inPlay.length) {
+      out.push(fail(file, cs.line, `${cw}: names no misconception: « ${fw(ip)} » names the misconceptions of its unit its situation makes tempting, one at least, "- **${fw(ip)}** : <name> ; <name>"`));
       continue;
     }
-    checkFields(cs.fields, b.fields.map((k) => ({ field: k, presence: 'mandatory' })), cw, file, out, ctx.word, cs.line);
-    for (const f of cs.fields.filter((x) => x.key === 'qualifier' && x.text !== '')) {
-      const q = [f.text, ...f.lines.slice(1).map((l) => l.t.trim())].join(' ').trim();
-      if (quals.includes(q)) continue;
-      const inside = quals.find((x) => q.split(/[\s,]+/).includes(x));
-      if (inside) out.push(fail(file, f.line, `${cw}: "${q}" holds a word besides the qualifier « ${inside} »: « ${f.label} » holds the qualifier alone`));
-      else out.push(fail(file, f.line, `${cw}: unknown qualifier "${q}": a qualifier is one of ${quals.map((x) => `« ${x} »`).join(', ')}, and nothing else`));
+    const f = cs.fields.find((x) => x.key === ip);
+    for (const n of cs.inPlay) {
+      if (mis.has(n)) { named.add(n); continue; }
+      const elsewhere = others.find((o) => o.names.includes(n));
+      out.push(fail(file, f ? f.line : cs.line, elsewhere
+        ? `${cw}: « ${fw(ip)} » names "${n}", a misconception of unit ${elsewhere.unit}, not of its unit: a case names only the misconceptions of its unit`
+        : `${cw}: « ${fw(ip)} » names "${n}", which is no misconception of its unit (${[...mis.keys()].map((x) => `"${x}"`).join(', ') || 'none'})`));
     }
   }
+  if (!ip) return;
+  for (const [name, m] of mis) {
+    if (!named.has(name)) out.push(fail(file, m.line, `${where.replace(/, « [^»]* »$/, '')}: misconception "${name}" is named by no case: each misconception of a unit is named in « ${fw(ip)} » of one of its cases at least`));
+  }
+}
+
+// the misconceptions of a unit, its lesson's, those with a name
+function misconceptionsOf(ctx, u) {
+  const lesson = ctx.form.unit.blocks.find((b) => b.misconceptions);
+  if (!lesson) return [];
+  return u.fields.filter((f) => f.key === lesson.misconceptions.field).flatMap((f) => f.items).filter((m) => m.name !== '');
 }
 
 // the misconceptions of a field (« Idées fausses »): one at least; each with its name, unique in
@@ -98,7 +114,7 @@ function checkMisconceptions(ctx, f, spec, where, file, out) {
 
 // the blocks of a unit: each of the form, the mandatory ones present, none twice, in the order of
 // the form; then the content of each
-function checkBlocks(ctx, u, file, out) {
+function checkBlocks(ctx, u, others, file, out) {
   const where = `unit ${u.sub.id}`;
   const forms = ctx.form.unit.blocks;
   const word = (b) => (b.labelled ? ctx.word('unit_blocks', b.block) : ctx.word('unit_fields', b.fields[0])) || b.block;
@@ -112,7 +128,7 @@ function checkBlocks(ctx, u, file, out) {
     seen.add(b.block);
     if (!last || forms.indexOf(b) > forms.indexOf(last)) last = b;
     const bw = `${where}, « ${word(b)} »`;
-    if (b.cases) checkCases(ctx, b, blk, bw, file, out);
+    if (b.cases) checkCases(ctx, b, blk, u, others, bw, file, out);
     else if (b.labelled) {
       if (!blk.fields.length) out.push(fail(file, blk.line, `${bw}: the block holds its fields, ${b.fields.map((k) => `« ${ctx.word('unit_fields', k) || k} »`).join(', ')}, found none`));
       else checkFields(blk.fields, b.fields.map((k) => ({ field: k, presence: 'mandatory' })), bw, file, out, ctx.word, blk.line);
@@ -131,13 +147,15 @@ function checkConcept(ctx, c, out) {
   for (const s of parts.sections) {
     if (s.stray.length) out.push(fail(file, s.stray[0].n, `section ${s.sub.id} has units: it holds its ### units and nothing else (found "${s.stray[0].t.trim().slice(0, 40)}")`));
   }
+  // the misconceptions of every unit of the concept, to name the unit of a name a case gives
+  const others = parts.units.map((u) => ({ unit: u.sub.id, names: misconceptionsOf(ctx, u).map((m) => m.name) }));
   // the title of every case, the unit's case and the supplementary ones, unique in the concept
   const titles = new Map();
   for (const u of parts.units) {
     if (!u.blocks.length) { out.push(fail(file, u.line, `unit ${u.sub.id}: a unit holds its #### blocks (course/form.yaml), found none`)); continue; }
-    checkBlocks(ctx, u, file, out);
+    checkBlocks(ctx, u, others.filter((o) => o.unit !== u.sub.id), file, out);
     for (const cs of u.cases) {
-      if (cs.title === '') continue; // an empty « Titre »: checkFields reports it
+      if (cs.title === '') continue; // a heading with no title: the parser reports it
       if (titles.has(cs.title)) out.push(fail(file, cs.line, `case title "${cs.title}" is used twice (line ${titles.get(cs.title)}): the title of every case is unique in the concept`));
       else titles.set(cs.title, cs.line);
     }

@@ -11,7 +11,7 @@
 #
 # This file names words by their key in course/lexicon.yaml and holds none: `heading: essentials`
 # is the lexicon's `headings.essentials`, a field `matter` is `unit_fields.matter`, a block `lesson`
-# is `unit_blocks.lesson`, a qualifier `fallback` is `qualifiers.fallback`. A spec of another
+# is `unit_blocks.lesson`, the kind word `case` of a case's heading is `block_kinds.case`. A spec of another
 # language copies the lexicon, not this file.
 #
 # presence: mandatory or optional. published: the site build renders it (true) or never (false);
@@ -121,13 +121,20 @@ concept_file:
 #                    following lines indented six spaces; nothing else under a misconception.
 #                    The lesson's two fields are the matter of the unit: what is true, then what
 #                    seems true and is not (decision `misconception-is-matter`)
-#   cases            a block of labelled fields that holds a list of cases, one at least, each
-#                    opened by its field `opens` and holding the fields of `fields` in their
-#                    order: the first, the unit's case, always posed, without the fields of
-#                    `supplementary_only`; each other, a supplementary case, with them, its
-#                    qualifier one of `qualifiers`, posed when its qualifier says. A case's title
-#                    is unique among the cases of its concept: the learner's memory cites it.
-#                    A case holds no misconception: those it makes tempting are its unit's.
+#   cases            a block that holds a list of cases, one at least, each under its heading
+#                    `##### <kind word><separator><title>` (heading_level, the kind word
+#                    `block_kinds.<kind>`, the separator the concept file's), then its labelled
+#                    fields, those of `fields` in their order, each once and mandatory; no line
+#                    before the first case's heading. The first case is the unit's case, always
+#                    posed; each other is a supplementary case, the unit's stock, among which the
+#                    teacher picks (decision `cases-name-their-misconceptions`). A case's title is its id, unique
+#                    among the cases of its concept: the learner's memory cites it. A case holds no
+#                    misconception: its field `in_play.field` names, by their names, separated by
+#                    `in_play.separator`, the misconceptions of its unit its situation makes
+#                    tempting, one at least, only those of its unit; each misconception of the unit
+#                    is named by one case at least; each one the unit's case names is, it is
+#                    recommended, named by a supplementary case too. `revealed`: the fields the
+#                    site shows hidden until the reader reveals them.
 unit:
   heading_level: 4
   blocks:
@@ -145,23 +152,30 @@ unit:
         parts: [root, correction]
     - block: cases
       presence: mandatory
-      # the site renders each case; it shows the expected answer hidden until the reader reveals it
+      # the site renders each case under its heading; it shows the expected answer hidden until
+      # the reader reveals it, and with it the misconceptions in play, each name a link to its
+      # misconception
       published: true
       readers: [site, teacher, learner]
       labelled: true
-      fields: [title, qualifier, anchor, question, expected_answer]
+      fields: [anchor, question, expected_answer, misconceptions_in_play]
       cases:
-        opens: title
-        supplementary_only: [qualifier]
-        qualifiers: [fallback, practice, aside]
+        heading_level: 5
+        kind: case
+        in_play:
+          field: misconceptions_in_play
+          separator: ";"
+        # the fields the site shows hidden until the reader reveals them; the teacher says the
+        # expected answer only once the learner has answered
+        revealed: [expected_answer, misconceptions_in_play]
     - block: instruction
       presence: optional
       published: false
       readers: [teacher]
       labelled: false
       fields: [instruction]
-  # the length of one teacher message: the text of these fields, the unit's case's and not a
-  # supplementary case's, the misconceptions left out, counted in lines of `line` characters (its
+  # the length of one teacher message: the text of these fields, the unit's case's and not those
+  # of a supplementary case, the misconceptions left out, counted in lines of `line` characters (its
   # characters, label and indentation left out, divided by `line`); above `max`,
   # teacher-message-length reports it (a signal, not an error)
   length:

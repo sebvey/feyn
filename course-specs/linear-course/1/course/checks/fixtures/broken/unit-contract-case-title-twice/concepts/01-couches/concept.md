@@ -45,25 +45,34 @@ Un produit s'empile en couches, de la collecte à la restitution.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 1a1
+##### Cas : Le cas 1a1
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : en deux parties : que voit-il ? Et dessous ?
 - **Réponse attendue** : une carte.
-- **Titre** : Le cas la carte vide
-- **Qualificatif** : rechange
+- **Idées fausses en jeu** : Un tableau ; Une carte ; Une carte 2 ; Nulle part
+
+##### Cas : Le cas la carte vide
+
 - **Ancrage** : Régis regarde une carte vide.
 - **Question** : que voit-il ?
 - **Réponse attendue** : rien.
-- **Titre** : Le cas la couche du dessous
-- **Qualificatif** : entraînement
+- **Idées fausses en jeu** : Un tableau ; Une carte ; Une carte 2 ; Nulle part
+
+##### Cas : Le cas la couche du dessous
+
 - **Ancrage** : Régis regarde la couche du dessous.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une couche ; la **strate** du dessous porte la carte.
-- **Titre** : Le cas la carte vide
-- **Qualificatif** : aparté
+- **Idées fausses en jeu** : Un tableau ; Une carte ; Une carte 2 ; Nulle part
+
+##### Cas : Le cas la carte vide
+
 - **Ancrage** : Régis cherche une couche.
 - **Question** : où est-elle ?
 - **Réponse attendue** : dessous.
+- **Idées fausses en jeu** : Un tableau ; Une carte ; Une carte 2 ; Nulle part
+
 #### Consigne au professeur
 
 **En rechange**, « Le cas la carte vide » ; « Le cas la couche du dessous » sert à l'entraînement, « Le cas la couche oubliée » à un aparté.

@@ -34,6 +34,7 @@ Une tranche traverse toutes les couches.
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
+
 ## Clôture
 
 ### Se vérifier

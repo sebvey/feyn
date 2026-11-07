@@ -88,7 +88,10 @@ function tree(m, word, form) {
 //                                               colon (unit-contract refuses any), `case` the
 //                                               case a field belongs to (null outside the block
 //                                               of cases); an unlabelled field (the
-//                                               instruction) takes its block's word as its label
+//                                               instruction) takes its block's word as its label;
+//                                               the field of misconceptions in play (`in_play` of
+//                                               the block of cases in the form) lists in `names`
+//                                               the names it gives, [{ name, line }]
 //                                               `body` the whole text of a labelled field
 //                                               (its lines after the label, unindented); the
 //                                               field of misconceptions (`misconceptions` of
@@ -98,9 +101,13 @@ function tree(m, word, form) {
 //                                               qualifier, line, text, lines, body }] in the
 //                                               order written
 //                                               cases: the cases of its block of cases, in order,
-//                                               [{ title, line, fields, first }], `first` for the
-//                                               unit's case; a field before the first case's
-//                                               opening field belongs to no case (a problem)
+//                                               [{ title, line, fields, first, inPlay }], each
+//                                               under its heading `##### <kind word><separator>
+//                                               <title>` (`cases` of the block in the form),
+//                                               `first` for the unit's case, `inPlay` the names
+//                                               of its field of misconceptions in play (null
+//                                               without that field); a line before the first
+//                                               case's heading belongs to no case (a problem)
 //   heard: the body, the lines no learner reads (form readers without `learner`) blanked
 function conceptParts(m, subs, word, form) {
   const out = { head: null, foot: null, others: [], sections: [], units: [], problems: [], heard: [] };
@@ -147,20 +154,43 @@ function conceptParts(m, subs, word, form) {
     return list;
   }
 
-  // the cases of the block of cases: each opened by its field `opens` (« Titre »), the first the
-  // unit's case; a field before the first opening field belongs to no case
-  function cases(list, opens, where) {
+  // the cases of a block of cases (« Cas du fil rouge »), from its lines, headings included: each
+  // case under its heading, `##### <kind word><separator><title>` (`heading_level`, the kind word
+  // `block_kinds.<kind>`, the separator the concept file's), then its labelled fields; a line
+  // before the first heading belongs to no case. The field `in_play.field` lists in `names` the
+  // names it gives, split at `in_play.separator`. The fields' presence and order, and what the
+  // names name, are unit-contract's
+  function cases(raw, spec, where) {
+    const level = spec.heading_level || 5;
+    const lead = `${word('block_kinds', spec.kind) || ''}${word('block_kinds', cf.separator) || ''}`;
+    const heads = md.headings(raw).filter((h) => h.level === level);
     const cs = [];
-    for (const f of list) {
-      if (f.key === opens) cs.push({ title: f.text, line: f.line, fields: [], first: cs.length === 0 });
-      else if (!cs.length) {
-        problem(f.line, `${where}: a case opens with its « ${labelOf(opens)} », found « ${f.label} » before it`);
-        continue;
-      }
-      f.case = cs[cs.length - 1];
-      f.case.fields.push(f);
+    const fs = [];
+    const pre = raw.slice(0, heads.length ? heads[0].idx : raw.length).find((l) => l.t.trim() !== '');
+    if (pre) {
+      const fm = pre.code ? null : FIELD.exec(pre.t);
+      problem(pre.n, `${where}: a case opens with its heading "${'#'.repeat(level)} ${lead}<title>", its fields under it; found ${fm ? `« ${fm[1].trim()} »` : `"${short(pre)}"`} before it`);
     }
-    return cs;
+    heads.forEach((h, k) => {
+      const ok = h.text.startsWith(lead);
+      const title = (ok ? h.text.slice(lead.length) : h.text).trim();
+      if (!ok) problem(h.line, `${where}: case heading "${'#'.repeat(level)} ${h.text}": a case's heading is "${'#'.repeat(level)} ${lead}<title>"`);
+      else if (!title) problem(h.line, `${where}: case heading "${'#'.repeat(level)} ${h.text}" has no title: "${'#'.repeat(level)} ${lead}<title>"`);
+      const c = { title, line: h.line, fields: [], first: k === 0, inPlay: null };
+      cs.push(c);
+      const body = raw.slice(h.idx + 1, k + 1 < heads.length ? heads[k + 1].idx : raw.length).filter((l) => !md.headings([l]).length);
+      for (const f of fields(body, `${where}, case "${title}"`)) {
+        f.case = c;
+        c.fields.push(f);
+        fs.push(f);
+        if (spec.in_play && f.key === spec.in_play.field) {
+          const sep = spec.in_play.separator || ';';
+          f.names = [f.text, ...f.lines.slice(1).map((l) => l.t.trim())].join(' ').split(sep).map((x) => x.trim()).filter(Boolean).map((name) => ({ name, line: f.line }));
+          c.inPlay = f.names.map((x) => x.name);
+        }
+      }
+    });
+    return { fs, cs };
   }
 
   // the misconceptions of a field of labelled fields (« Idées fausses » of « Leçon »), on the lines
@@ -221,13 +251,16 @@ function conceptParts(m, subs, word, form) {
     const hs = md.headings(lines).filter((h) => h.level >= 4);
     const where = `unit ${sub.id}`;
     const u = { sub, line, blocks: [], fields: [], cases: [] };
-    for (const h of hs) if (h.level > 4) problem(h.line, `${where}: heading "${h.text}" deeper than ####`);
+    // a ##### heading is a case, in the block of cases (cases() reads it); none is deeper
+    const caseLevel = Math.max(0, ...blockForms.map((b) => (b.cases ? b.cases.heading_level || 5 : 0)));
+    for (const h of hs) if (h.level > Math.max(4, caseLevel)) problem(h.line, `${where}: heading "${h.text}" deeper than ${'#'.repeat(Math.max(4, caseLevel))}`);
     const h4 = hs.filter((h) => h.level === 4);
     const stray = lines.slice(0, h4.length ? h4[0].idx : lines.length).find((l) => l.t.trim() !== '');
     const names = blockForms.map((b) => `"#### ${blockWord(b)}"`).join(', ');
     if (stray) problem(stray.n, `${where}: line outside a block ("${short(stray)}"): a unit holds its #### blocks, ${names}`);
     h4.forEach((h, k) => {
-      const body = lines.slice(h.idx + 1, k + 1 < h4.length ? h4[k + 1].idx : lines.length).filter((l) => !md.headings([l]).length);
+      const raw = lines.slice(h.idx + 1, k + 1 < h4.length ? h4[k + 1].idx : lines.length);
+      const body = raw.filter((l) => !md.headings([l]).length);
       let name = h.text.trim();
       let b = blockForms.find((x) => blockWord(x) === name);
       // a heading that carries more than its word, a mark in parentheses: named, then read as its block
@@ -243,9 +276,13 @@ function conceptParts(m, subs, word, form) {
       if (!b) { problem(h.line, `${where}: unknown block "${h.text}": a unit holds its #### blocks, ${names}`); return; }
       const field = b.labelled ? null : (b.fields || [])[0];
       const bw = `${where}, « ${name} »`;
-      const fs = b.labelled ? fields(body, bw) : [prose(field, name, h.line, body)];
+      // a case heading outside the block of cases
+      if (!b.cases) for (const x of md.headings(raw).filter((y) => y.level === caseLevel)) problem(x.line, `${bw}: heading "${'#'.repeat(caseLevel)} ${x.text}": a ${'#'.repeat(caseLevel)} heading is a case, in the block of cases`);
+      let fs;
+      let cs = null;
+      if (b.cases) ({ fs, cs } = cases(raw, b.cases, bw));
+      else fs = b.labelled ? fields(body, bw) : [prose(field, name, h.line, body)];
       if (b.labelled && b.misconceptions) for (const f of fs.filter((x) => x.key === b.misconceptions.field)) misconceptions(f, b.misconceptions, bw);
-      const cs = b.cases ? cases(fs, b.cases.opens, bw) : null;
       u.blocks.push({ key: b.block, text: h.text, line: h.line, fields: fs, cases: cs });
       u.fields.push(...fs);
       if (cs) u.cases.push(...cs);

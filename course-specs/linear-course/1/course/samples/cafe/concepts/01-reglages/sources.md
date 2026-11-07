@@ -3,7 +3,7 @@
 | Affirmation | Section | Source | Vérifié | Nature |
 |---|---|---|---|---|
 | Un réglage est une variable choisie pour la tasse, qui fait varier son extraction | L'essentiel, 1a1 | [S1], [S3] | « we adjust factors like dose, grind, and extraction level to optimize the flavor of a coffee brew » ; « Brew time, flow rate, dose (i.e., amount of ground coffee), and grind size were systematically varied to control extraction » (Results) | consensus |
-| Le cours retient quatre réglages : la mouture, le ratio, la température d'infusion, le temps de contact | L'essentiel, 1a1 | cours | L'eau elle-même n'est pas un réglage et le cours ne l'enseigne pas ; la fraîcheur du café est laissée à un aparté | cours |
+| Le cours retient quatre réglages : la mouture, le ratio, la température d'infusion, le temps de contact | L'essentiel, 1a1 | cours | L'eau elle-même n'est pas un réglage et le cours ne l'enseigne pas ; la fraîcheur du café n'en est pas un non plus, et l'annexe A2 l'enseigne | cours |
 | Un réglage que l'on ne choisit pas est réglé quand même, au hasard ; une machine a les siens, choisis une fois | L'essentiel, 1a1 | cours | | cours |
 | Moudre multiplie la surface du café que l'eau atteint | 1b1 | [S2] | « It crushes the beans into a powder, exponentially increasing their surface area and allowing the water to do its work » | fait |
 | Plus la mouture est fine, plus l'eau extrait vite | 1b1 | [S2], [S3] | « we have to increase the surface area of the coffee beans » ; « grind size were systematically varied to control extraction » (Results) | fait |
@@ -26,9 +26,6 @@
 | S3 | Mackenzie E. Batali, William D. Ristenpart, Jean-Xavier Guinard, « Brew temperature, at fixed brew strength and extraction, has little impact on the sensory profile of drip brew coffee », *Scientific Reports* 10, 16450, 2020 | https://www.nature.com/articles/s41598-020-73341-4 | primaire | 2026-11-06 |
 | S4 | Specialty Coffee Association, *SCA Standard 310-2021, Home Coffee Brewers: Specifications and Test Methods*, 2021 | https://web.archive.org/web/20250108161720/https://sca.coffee/s/SCA_Standard_310-2021.pdf | primaire (lu dans l'archive du web, l'adresse de la SCA répondant 404) | 2026-11-06 |
 | S5 | Specialty Coffee Association, *Coffee Standards*, révision 2018 | https://web.archive.org/web/20240927072426/https://sca.coffee/s/Coffee-Standards-compressed.pdf | primaire (lu dans l'archive du web, l'adresse de la SCA répondant 404) | 2026-11-06 |
-| S6 | Peter Giuliano, « Coffee Decoded: What is “freshly roasted” coffee? », Specialty Coffee Association, 28 juillet, année non affichée | https://sca.coffee/sca-news/coffee-decoded-9-fresh-coffee | secondaire | 2026-11-06 |
-| S7 | Emma Sage, « What is the Shelf Life of Roasted Coffee? A Literature Review on Coffee Staling », Specialty Coffee Association, 15 février 2012 | https://sca.coffee/sca-news/2012/02/15/what-is-the-shelf-life-of-roasted-coffee-a-literature-review-on-coffee-staling-bjcx7 | secondaire (revue de littérature) | 2026-11-06 |
-| S8 | National Coffee Association USA, « Storage and shelf life », sans date affichée | https://www.ncausa.org/about-coffee/how-to-store-coffee | secondaire (association professionnelle) | 2026-11-06 |
 
 ## Non vérifié
 

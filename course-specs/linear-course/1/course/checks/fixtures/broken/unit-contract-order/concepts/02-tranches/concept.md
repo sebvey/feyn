@@ -31,10 +31,20 @@ Une tranche traverse toutes les couches.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 2a1
+##### Cas : Le cas 2a1
+
 - **Question** : que voit-il ?
 - **Ancrage** : Régis regarde une carte.
 - **Réponse attendue** : une carte.
+- **Idées fausses en jeu** : Un tableau
+
+##### Cas : Le cas 2a1, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Un tableau
+
 ## Clôture
 
 ### Se vérifier

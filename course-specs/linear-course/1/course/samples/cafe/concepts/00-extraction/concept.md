@@ -54,10 +54,12 @@ L'**extraction** est ce que l'eau dissout du café moulu pendant l'infusion : c'
 
 #### Cas du fil rouge
 
-- **Titre** : Le café qui a tourné
+##### Cas : Le café qui a tourné
+
 - **Ancrage** : Cédric t'écrit sur la messagerie de l'équipe : « Même paquet que lundi, même cuisine, même moi. Lundi la tasse était correcte, ce matin elle n'a plus rien à voir. Le café a tourné ? »
 - **Question** : Que réponds-tu à Cédric : qu'est-ce qui a pu changer d'une tasse à l'autre ?
 - **Réponse attendue** : le café est le même ; ce qui a changé, c'est ce que l'eau lui a pris, l'extraction. Quelque chose dans la façon de faire la tasse ce matin a fait que l'eau a dissous plus, ou moins, que lundi, et le goût a suivi.
+- **Idées fausses en jeu** : Le café a changé ; Plus, c'est mieux
 
 #### Consigne au professeur
 
@@ -81,17 +83,21 @@ L'unité n'enseigne pas ce qui fait varier l'extraction (le moulin, l'eau, le te
 
 #### Cas du fil rouge
 
-- **Titre** : La tasse qui pique
+##### Cas : La tasse qui pique
+
 - **Ancrage** : Cédric décrit sa tasse du jour : « Elle pique le bout de la langue, et une seconde après l'avoir avalée, il ne reste rien. Pas amère du tout. »
 - **Question** : en deux parties : la tasse de Cédric est-elle trop peu ou trop extraite ? Et qu'est-ce qui, dans sa description, te le fait dire ?
 - **Réponse attendue** :
   1. Trop peu : elle est sous-extraite.
   2. Elle pique (acide) et ne laisse rien en bouche (finale courte), et elle n'a pas l'amer ni le sec d'une tasse sur-extraite.
-- **Titre** : Le jus de pneu
-- **Qualificatif** : rechange
+- **Idées fausses en jeu** : Goût et force ; Un seul défaut
+
+##### Cas : Le jus de pneu
+
 - **Ancrage** : Le lendemain, Cédric écrit : « Aujourd'hui, du jus de pneu. Amer, et ça me râpe la langue comme un thé oublié dans la tasse. Au moins ça ne pique plus. »
 - **Question** : Cette fois, sa tasse est-elle trop peu ou trop extraite, et à quoi le reconnais-tu ?
 - **Réponse attendue** : trop, elle est sur-extraite : elle est amère et sèche en bouche (elle râpe la langue), sans le piquant de l'acide.
+- **Idées fausses en jeu** : Goût et force ; L'amer seul ; Un seul défaut
 
 ## Section 0b : La force n'est pas l'extraction
 
@@ -113,15 +119,19 @@ L'unité n'enseigne pas ce qui fait varier l'extraction (le moulin, l'eau, le te
 
 #### Cas du fil rouge
 
-- **Titre** : L'eau chaude d'Aïmen
+##### Cas : L'eau chaude d'Aïmen
+
 - **Ancrage** : Cédric rapporte l'avis d'Aïmen, qui ne doute jamais : « Ta tasse est amère parce qu'elle est trop forte. Verse de l'eau chaude dedans, problème réglé. » La tasse est noire, épaisse, amère, et elle sèche la langue.
 - **Question** : Aïmen a-t-il raison ? Dis à Cédric ce que sa tasse a de trop, et ce que l'eau chaude y changera.
 - **Réponse attendue** : en partie seulement. La tasse est forte (noire, épaisse), mais l'amer avec le sec en bouche dit aussi qu'elle est sur-extraite. L'eau chaude baissera la force, et la tasse sera moins intense ; elle restera sur-extraite, amère et sèche en plus léger. C'est la façon de faire la tasse suivante qui doit changer.
-- **Titre** : La tasse légère du Petit Noir
-- **Qualificatif** : entraînement
+- **Idées fausses en jeu** : Forte, donc trop extraite ; L'eau qui rattrape
+
+##### Cas : La tasse légère du Petit Noir
+
 - **Ancrage** : Au Petit Noir, Inès sert à Cédric une tasse claire et légère. Il t'écrit : « Presque de l'eau. Douce, ça ne pique pas, pas amère, et le goût reste un moment une fois avalée. Mais si légère, elle est forcément sous-extraite, non ? Inès m'a juste répondu que légère n'est pas creuse. »
 - **Question** : Cédric a-t-il raison ? Dis-lui de quel côté penche cette tasse, et ce que veut dire Inès.
 - **Réponse attendue** : non. Légère, c'est sa force qui est basse, pas son extraction. Pour l'extraction, on cherche le genre de goût : elle est douce, ne pique pas, n'est ni amère ni sèche, et son goût reste en bouche ; elle n'est ni sous-extraite (acide et courte) ni sur-extraite (amère et sèche) : elle est équilibrée. Inès dit qu'une tasse peut être légère sans être creuse : la force n'est pas l'extraction.
+- **Idées fausses en jeu** : Légère, donc creuse
 
 ## Clôture
 

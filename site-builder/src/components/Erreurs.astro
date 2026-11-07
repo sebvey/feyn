@@ -2,7 +2,7 @@
 // The misconceptions of a unit's lesson (the course lexicon's `unit_fields.misconceptions`), one
 // list in the old site's Erreurs look, after its cases: each misconception by its name, then its
 // belief, quoted, then its root and its correction, each after its label (`unit_fields.root`,
-// `unit_fields.correction`).
+// `unit_fields.correction`); each under its id, the anchor a case's misconceptions in play link to.
 import type { Misconception } from '../lib/site';
 import { words, mdInline, mdLabelled } from '../lib/site';
 interface Props { unit: string; items: Misconception[] }
@@ -14,7 +14,7 @@ const id = `${unit}-misconceptions`;
   <h4 id={id}>{fields.misconceptions}</h4>
   <ul>
     {items.map((m) => (
-      <li>
+      <li id={m.id}>
         <p class="idee-nom">{m.name}</p>
         <p><span class="idee" set:html={mdInline(m.belief)} /></p>
         <div class="idee-racine" set:html={mdLabelled(fields.root, m.root, 'idee-label')} />

@@ -32,10 +32,20 @@ concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a1
+##### Cas : Le cas 0a1
+
 - **Ancrage** : Régis veut une carte et décide de ce qu'elle montre.
 - **Question** : qui décide ?
 - **Réponse attendue** : le premier rôle.
+- **Idées fausses en jeu** : Tout le monde
+
+##### Cas : Le cas 0a1, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Tout le monde
+
 #### Consigne au professeur
 
 Ne pas parler de couche ici, elle vient au concept 1.
@@ -54,12 +64,22 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a2
+##### Cas : Le cas 0a2
+
 - **Ancrage** : Régis demande la carte à l'équipe.
 - **Question** : en deux parties : qui fait ? Et qui décide ?
 - **Réponse attendue** :
   1. Le second rôle fait.
   2. Le premier rôle décide.
+- **Idées fausses en jeu** : Le second rôle
+
+##### Cas : Le cas 0a2, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Le second rôle
+
 ### Unité 0a3 : Un rôle de plus
 
 #### Leçon
@@ -72,10 +92,20 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a3
+##### Cas : Le cas 0a3
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
+- **Idées fausses en jeu** : Un tableau
+
+##### Cas : Le cas 0a3, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Un tableau
+
 ### Unité 0a4 : Un rôle de plus
 
 #### Leçon
@@ -88,10 +118,20 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a4
+##### Cas : Le cas 0a4
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
+- **Idées fausses en jeu** : Un tableau
+
+##### Cas : Le cas 0a4, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Un tableau
+
 ### Unité 0a5 : Un rôle de plus
 
 #### Leçon
@@ -104,10 +144,20 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a5
+##### Cas : Le cas 0a5
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
+- **Idées fausses en jeu** : Un tableau
+
+##### Cas : Le cas 0a5, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Un tableau
+
 ### Unité 0a6 : Un rôle de plus
 
 #### Leçon
@@ -120,10 +170,20 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a6
+##### Cas : Le cas 0a6
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
+- **Idées fausses en jeu** : Un tableau
+
+##### Cas : Le cas 0a6, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Un tableau
+
 ### Unité 0a7 : Un rôle de plus
 
 #### Leçon
@@ -136,10 +196,20 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a7
+##### Cas : Le cas 0a7
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
+- **Idées fausses en jeu** : Un tableau
+
+##### Cas : Le cas 0a7, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Un tableau
+
 ### Unité 0a8 : Un rôle de plus
 
 #### Leçon
@@ -152,10 +222,20 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a8
+##### Cas : Le cas 0a8
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
+- **Idées fausses en jeu** : Un tableau
+
+##### Cas : Le cas 0a8, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Un tableau
+
 ### Unité 0a9 : Un rôle de plus
 
 #### Leçon
@@ -168,10 +248,20 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a9
+##### Cas : Le cas 0a9
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
+- **Idées fausses en jeu** : Un tableau
+
+##### Cas : Le cas 0a9, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Un tableau
+
 ### 0a10 Un rôle de plus
 
 #### Leçon
@@ -184,10 +274,20 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a10
+##### Cas : Le cas 0a10
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
+- **Idées fausses en jeu** : Un tableau
+
+##### Cas : Le cas 0a10, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Un tableau
+
 ## Section 0b : La règle
 
 ### Unité 0b1 : La règle
@@ -202,10 +302,20 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0b1
+##### Cas : Le cas 0b1
+
 - **Ancrage** : Régis applique la règle à la carte.
 - **Question** : la règle change-t-elle selon le rôle ?
 - **Réponse attendue** : non, elle est la même pour tous.
+- **Idées fausses en jeu** : Chaque rôle a
+
+##### Cas : Le cas 0b1, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Chaque rôle a
+
 ## Clôture
 
 ### Se vérifier

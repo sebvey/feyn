@@ -11,14 +11,10 @@ stances:
       refs: [S3]
       verified: ["« surprisingly the brew temperature had no appreciable impact » ; « only one of several parameters that affect the extraction dynamics » (résumé)"]
   course:
-    - text: "Le cours retient quatre réglages : la mouture, le ratio, la température d'infusion et le temps de contact. L'eau elle-même n'en est pas un, et le cours ne l'enseigne pas ; la fraîcheur du café est un aparté."
+    - text: "Le cours retient quatre réglages : la mouture, le ratio, la température d'infusion et le temps de contact. L'eau elle-même n'en est pas un, et le cours ne l'enseigne pas ; la fraîcheur du café n'en est pas un non plus, et l'annexe A2 l'enseigne."
       refs: []
     - text: "Les repères de la profession, 90 à 96 °C et 55 g par litre, sont un point de départ, pas une norme : la tasse réussie est celle que l'on aime."
       refs: []
-neighbors:
-  - text: "La fraîcheur du café, qui n'est pas un réglage : moulu, il reste frais une heure environ, en grains trois semaines environ après la torréfaction. Le froid ralentit son vieillissement, mais le café prend l'humidité et les odeurs, et la condensation s'y forme : une boîte hermétique et opaque, au frais, et de petites quantités."
-    refs: [S6, S7, S8]
-    verified: ["« whole bean coffee can reasonably be considered “fresh” within about three weeks of roasting » ; « it might be considered “fresh” for about an hour after grinding »", "« found that it slowed the reactions known to be a part of staling » (Temperature)", "« coffee absorbs and retains moisture » ; « condensation can build up in the refrigerator » ; « Using an airtight container for coffee storage will help it stay fresher, longer » ; « Store it in opaque containers »"]
 ---
 
 # Concept 1 : Les réglages
@@ -44,10 +40,12 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 
 #### Cas du fil rouge
 
-- **Titre** : La recette de Cédric
+##### Cas : La recette de Cédric
+
 - **Ancrage** : Cédric t'écrit : « Ma recette : trois cuillères bombées de café moulu moyen, enfin je crois, l'eau dès que la bouilloire coupe, je verse tout d'un coup et j'attends que ça passe. Au bureau, la Pipeline ne me demande rien. Chez moi, qu'est-ce que je choisis, au juste ? »
 - **Question** : Nomme à Cédric les réglages de sa recette, et ce qu'il a choisi pour chacun, même sans y penser.
 - **Réponse attendue** : les quatre. La mouture : moyenne, au moulin. Le ratio : trois cuillères pour son eau, sans peser ni l'un ni l'autre. La température d'infusion : l'eau juste après que la bouilloire coupe, donc presque bouillante. Le temps de contact : le temps que l'eau met à passer, qu'il ne mesure pas. Il les choisit tous, même ceux qu'il laisse au hasard ; la Pipeline a les siens aussi, choisis une fois à l'installation.
+- **Idées fausses en jeu** : Pas mesuré, pas choisi ; La machine sans réglages
 
 ## Section 1b : Ce que fait chaque réglage
 
@@ -66,15 +64,12 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 
 #### Cas du fil rouge
 
-- **Titre** : Le café en farine
+##### Cas : Le café en farine
+
 - **Ancrage** : Cédric t'écrit : « Ce matin, j'ai moulu beaucoup plus fin que d'habitude, presque de la farine : plus c'est fin, plus il y a de goût, non ? Et l'eau a mis une éternité à passer dans le filtre. J'ai eu le temps de relire une PR entière. »
 - **Question** : Qu'ont fait ces deux changements à l'extraction de sa tasse, et de quel côté t'attends-tu à la trouver ?
 - **Réponse attendue** : tous les deux l'ont poussée plus loin. La mouture plus fine a fait extraire l'eau plus vite, et le contact plus long lui a laissé plus de temps pour prendre. La tasse a toutes les chances de pencher vers la sur-extraction, amère et sèche. Plus fin ne veut pas dire plus de bon goût : l'eau va plus vite, et plus loin, jusqu'à l'amer.
-- **Titre** : Le paquet du dimanche
-- **Qualificatif** : aparté
-- **Ancrage** : Cédric rapporte l'habitude d'Aïmen : « Moi, je mouds tout le paquet le dimanche et je le mets au congélateur : il reste frais toute la semaine. » Cédric se demande s'il doit faire pareil.
-- **Question** : Que dis-tu à Cédric de l'habitude d'Aïmen ?
-- **Réponse attendue** : deux choses. Moulu, le café ne reste frais qu'une heure environ, quand le grain garde ses arômes trois semaines environ après la torréfaction : mieux vaut moudre juste avant l'infusion. Le froid ralentit le vieillissement du café, mais le café y prend l'humidité et les odeurs, et la condensation s'y forme : mieux vaut une boîte hermétique et opaque, au frais, et de petites quantités. La fraîcheur change le café lui-même : ce n'est pas un des quatre réglages.
+- **Idées fausses en jeu** : Plus fin, plus de goût ; Le temps fait la force
 
 #### Consigne au professeur
 
@@ -98,10 +93,12 @@ Ne dire ni comment corriger la tasse de Cédric, ni quel réglage changer : c'es
 
 #### Cas du fil rouge
 
-- **Titre** : L'eau qui bout
+##### Cas : L'eau qui bout
+
 - **Ancrage** : Cédric rapporte la règle d'Aïmen, qui ne doute jamais : « L'eau doit bouillir, et tu la verses direct. L'eau bouillante, c'est ce qui extrait le mieux, c'est physique. » Cédric, qui verse déjà dès que la bouilloire coupe, se sent conforté.
 - **Question** : Aïmen a-t-il raison ? Dis à Cédric ce que l'eau bouillante fait à l'extraction, et quel repère tu lui donnes.
 - **Réponse attendue** : en partie. Plus chaude, l'eau extrait plus vite : l'eau bouillante pousse l'extraction plus loin. Mais « le mieux » ne veut rien dire : ce qui fait le goût, c'est où l'extraction arrive, et la chaleur n'est qu'un des réglages qui l'y mènent ; avec une mouture fine et un long contact, elle pousse vers la sur-extraction. Le repère de la profession est une eau entre 90 et 96 °C, un point de départ : c'est le goût de Cédric qui décide.
+- **Idées fausses en jeu** : Bouillante, c'est mieux ; Le café brûlé ; Le repère pris pour une norme
 
 ### Unité 1b3 : Le ratio
 
@@ -118,10 +115,12 @@ Ne dire ni comment corriger la tasse de Cédric, ni quel réglage changer : c'es
 
 #### Cas du fil rouge
 
-- **Titre** : Cinquante-cinq pour mille
+##### Cas : Cinquante-cinq pour mille
+
 - **Ancrage** : Cédric a raconté sa recette à Inès, au Petit Noir. Sa réponse : « Arrête les cuillères. Cinquante-cinq pour mille. » Cédric te l'écrit : « Elle m'a regardé comme si j'avais commandé un café soluble. Ça veut dire quoi ? »
 - **Question** : Traduis le conseil d'Inès : de quel réglage parle-t-elle, que dit son chiffre, et que fera à la tasse plus de café pour la même eau ?
 - **Réponse attendue** : du ratio. 55 g de café pour 1000 g d'eau, environ un litre ; pour un demi-litre, environ 27 g, pesés à la balance plutôt que comptés en cuillères. C'est le repère de la profession, un point de départ. Plus de café pour la même eau, à extraction égale, donnera une tasse plus forte ; moins de café, une tasse plus légère.
+- **Idées fausses en jeu** : Plus de café, plus extrait ; La bonne quantité
 
 ## Clôture
 

@@ -2,7 +2,7 @@
 // The conventions of the text of concept.md (course/README.md section 3.5), read in the parts the
 // learner reads (course/form.yaml, readers; lib/course.js), the instruction left out: concept
 // references, stance markers; no image in concept.md (the build places a diagram at its unit). Plain
-// Markdown in every course file (section 1).
+// Markdown in every course file (section 1), a concept file's headings no deeper than #####, a case's.
 const directives = require('./directives');
 const mdlib = directives.lib('md');
 const { fail } = directives.lib('course');
@@ -21,7 +21,7 @@ function plainMarkdown(ctx, file, out, opts = {}) {
     if (/^\s*:::/.test(l.t)) out.push(fail(file, l.n, 'plain Markdown: no ::: directive'));
     if (opts.depth) {
       const h = /^(#{1,6})\s/.exec(l.t);
-      if (h && h[1].length >= 5) out.push(fail(file, l.n, 'plain Markdown: no heading deeper than #### in a concept file'));
+      if (h && h[1].length >= 6) out.push(fail(file, l.n, 'plain Markdown: no heading deeper than ##### in a concept file'));
     }
   });
 }
@@ -38,9 +38,13 @@ function checkConcept(ctx, c, out) {
   const heard = parts.heard;
   const markers = ['consensus', 'school', 'course'].map((k) => ctx.word('markers', k)).filter(Boolean);
 
-  // a #### heading is a block of a unit, inside a unit
+  // a #### heading is a block of a unit, inside a unit; a ##### heading a case, inside a unit (where
+  // in the unit is unit-contract's)
   const inSection = (n) => parts.sections.some((s) => n > s.line && n <= (s.lines.length ? s.lines[s.lines.length - 1].n : s.line));
-  for (const h of mdlib.headings(cm.body)) if (h.level === 4 && !inSection(h.line)) out.push(fail(cf, h.line, `plain Markdown: a #### heading is a block of a unit, inside a unit ("${h.text}")`));
+  for (const h of mdlib.headings(cm.body)) {
+    if (h.level === 4 && !inSection(h.line)) out.push(fail(cf, h.line, `plain Markdown: a #### heading is a block of a unit, inside a unit ("${h.text}")`));
+    if (h.level === 5 && !inSection(h.line)) out.push(fail(cf, h.line, `plain Markdown: a ##### heading is a case, in the block of cases of a unit ("${h.text}")`));
+  }
 
   // concept references (lib/refs.js): to a concept, a section or a unit with the concept words, to
   // an annex or a section or unit of one with the annex word

@@ -37,7 +37,7 @@ An act the teacher may do at one turn or the next (a reply that fits in one mess
 | [`stop`](stop.yaml) | a learner in concept 0 | « on continue », a two-part question, then « on s'arrête » : the save, the next step written with the pending question, the commit, the two-line reply |
 | [`resume`](resume.yaml) | a returning learner with a pending question | the resume: the opening sentence, the recap from memory, the reply to a greeting, then the pending question taught again |
 | [`concept-1`](concept-1.yaml) | a learner at the last sub-concept of concept 0 | concept 0 validated (its save point and commit), the transition to concept 1, its first sub-concept and a follow-up |
-| [`retrieval-at-resume`](retrieval-at-resume.yaml) | a returning learner who validated concept 0 in an earlier session, next step concept 1 | the two tests of decision `retrieval-at-resume`: a practice case of concept 0 posed and corrected before concept 1, then its title in the journal at the stop |
+| [`retrieval-at-resume`](retrieval-at-resume.yaml) | a returning learner who validated concept 0 in an earlier session, next step concept 1 | the two tests of decision `retrieval-at-resume`: a supplementary case of concept 0 the journal does not name, posed for practice and corrected before concept 1, then its title in the journal at the stop |
 | [`declared-diagram`](declared-diagram.yaml) | a learner at sub-concept 0b of concept 0, which declares a diagram | the two tests of decision `diagram-shown-at-its-subconcept`: the message of 0b shows its diagram and says its caption, though the learner never asks |
 
 ## The rules covered
