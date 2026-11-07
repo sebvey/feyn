@@ -1,0 +1,34 @@
+---
+// The one route of the site: every page is routed from the addresses the document gives
+// (`url_scheme.pages` and each domain's `path`, filled by render-site from the spec's URL scheme),
+// so that no file name and no line of the engine writes an address. An address ending with `.html`
+// (the page of an address no page has) is given without its extension: Astro writes a status
+// page (`404`) as `404.html`, and build-site moves any other one to its address.
+import { doc, pages } from '../lib/site';
+import Home from '../views/Home.astro';
+import Domains from '../views/Domains.astro';
+import DomainPage from '../views/Domain.astro';
+import Search from '../views/Search.astro';
+import NotFound from '../views/NotFound.astro';
+
+export function getStaticPaths() {
+  const param = (address: string) => {
+    const p = address.replace(/\.html$/, '').replace(/\/$/, '');
+    return p === '' ? undefined : p;
+  };
+  return [
+    { params: { path: param(pages.home) }, props: { page: 'home' } },
+    { params: { path: param(pages.domains) }, props: { page: 'domains' } },
+    ...doc.domains.map((d) => ({ params: { path: param(d.path) }, props: { page: 'domain', domain: d.number } })),
+    { params: { path: param(pages.search) }, props: { page: 'search' } },
+    { params: { path: param(pages.not_found) }, props: { page: 'not_found' } },
+  ];
+}
+
+const { page, domain } = Astro.props as { page: string; domain?: number };
+---
+{page === 'home' && <Home />}
+{page === 'domains' && <Domains />}
+{page === 'domain' && <DomainPage number={domain!} />}
+{page === 'search' && <Search />}
+{page === 'not_found' && <NotFound />}

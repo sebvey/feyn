@@ -1,0 +1,33 @@
+---
+// The concepts of a domain, each foldable on its sections (the `## Section` headings of its
+// concept file), with its duration (and its objective with `objectives`) and an arrow that opens
+// its page; ported from the old site's ConceptsDepliables. A section links to its anchor on the
+// concept page.
+import type { Concept } from '../lib/site';
+import { href, words, conceptName, labelled } from '../lib/site';
+import Bulle from './Bulle.astro';
+import Arrow from '../icons/fleche.svg';
+interface Props { concepts: Concept[]; objectives?: boolean }
+const { concepts, objectives = false } = Astro.props;
+const objective = labelled(words.site.labels.objective);
+---
+<ul class="cdep-liste">
+  {concepts.map((c) => (
+    <li class="cdep-item">
+      <details class="cdep">
+        <summary><span class="num">{conceptName(c)}</span> <span class="t">{c.title}</span>{c.duration_min && <> <Bulle minutes={c.duration_min} /></>}{objectives && <span class="acc">{objective}{c.objective}</span>}</summary>
+        <ol class="sous-liste">
+          {c.sections.map((s) => (
+            <li>
+              <a class="sous-lien" href={`${href(c.path)}#${s.id}`}>
+                <span class="ref">{s.id}</span>
+                <span class="corps"><span class="tt">{s.title}</span></span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </details>
+      <a class="lire-btn" href={href(c.path)} aria-label={`${labelled(conceptName(c))}${c.title}`}><Arrow width="24" height="24" aria-hidden="true" /></a>
+    </li>
+  ))}
+</ul>

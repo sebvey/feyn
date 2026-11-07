@@ -1,0 +1,40 @@
+---
+// The search page: Pagefind's component interface over the index build-site writes into
+// `pagefind/` of the output; out of the index itself. Ported from the old site's search page.
+import Base from '../layouts/Base.astro';
+import { base, href } from '../lib/site';
+import { ui } from '../ui';
+const bundle = href('pagefind/');
+---
+<Base title={ui.search} nav="search" noindex>
+  <link rel="stylesheet" href={`${bundle}pagefind-component-ui.css`} />
+  <div class="container search-page">
+    <section class="page">
+      <h1>{ui.search}</h1>
+      <pagefind-config bundle-path={bundle} base-url={base}></pagefind-config>
+      <pagefind-input></pagefind-input>
+      <pagefind-summary></pagefind-summary>
+      <pagefind-results></pagefind-results>
+      <noscript><p>{ui.searchNeedsScript}</p></noscript>
+    </section>
+  </div>
+  <script is:inline type="module" src={`${bundle}pagefind-component-ui.js`}></script>
+  <script is:inline>
+    // Gives the field the focus (Pagefind's autofocus has no effect) and fills it from ?q= (a direct link).
+    window.addEventListener('DOMContentLoaded', function () {
+      var q = new URLSearchParams(location.search).get('q');
+      customElements.whenDefined('pagefind-input').then(function () {
+        setTimeout(function () {
+          var host = document.querySelector('pagefind-input');
+          var input = host && (host.querySelector('input') || (host.shadowRoot && host.shadowRoot.querySelector('input')));
+          if (!input) return;
+          if (q) {
+            input.value = q;
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+          input.focus();
+        }, 50);
+      });
+    });
+  </script>
+</Base>

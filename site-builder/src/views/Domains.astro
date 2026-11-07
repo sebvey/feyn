@@ -1,0 +1,14 @@
+---
+// The domain map page: the domains with their concepts, durations and sections, then the annexes.
+import Base from '../layouts/Base.astro';
+import DomainMap from '../components/DomainMap.astro';
+import { words } from '../lib/site';
+---
+<Base title={words.site.nav.domains} nav="domains">
+  <div class="container-wide">
+    <section class="page">
+      <h1>{words.site.nav.domains}</h1>
+      <DomainMap />
+    </section>
+  </div>
+</Base>

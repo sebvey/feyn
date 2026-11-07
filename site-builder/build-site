@@ -1,0 +1,172 @@
+#!/usr/bin/env node
+// build-site <course-dir> [--channel next|prod|preview] [--base <path>] [--out <dir>]
+// Builds the site of a course, in two halves (site-builder/README.md):
+//   1. the dispatcher: it reads `spec: <name>@<MAJOR>` in course.yaml and runs that MAJOR's
+//      course-specs/<name>/<MAJOR>/site/build/render-site, which prints the published parts of the
+//      course, the words and the URL scheme of its site as one JSON document, validated here
+//      against the MAJOR's site/build/site.schema.yaml;
+//   2. the engine, this folder's: Astro lays the document out in pages under the base path, then
+//      Pagefind indexes them. The engine reads no course file and no spec file but the schema.
+// Exit 0 built, 1 an input the build cannot read (render-site failed, its output not valid, the
+// Astro or Pagefind build failed), 2 a usage error, missing dependencies or a refused target (a
+// spec or MAJOR with no site/build/render-site, an output folder that is not a site build).
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+
+const BUILDER = path.dirname(fileURLToPath(import.meta.url));
+const REPO = path.resolve(BUILDER, '..');
+const CHANNELS = ['next', 'prod', 'preview'];
+
+function usage(code) {
+  const out = code ? console.error : console.log;
+  out('usage: build-site <course-dir> [--channel next|prod|preview] [--base <path>] [--out <dir>]');
+  out('builds the site of <course-dir> into <dir>, by default site-builder/dist/<channel>/<course id>/,');
+  out('its pages under the base path <path>, by default /feyn-site/<channel>/<course id>/ (channel next by default)');
+  process.exit(code);
+}
+function refuse(message) {
+  console.error(`build-site: ${message}`);
+  process.exit(2);
+}
+function fail(message) {
+  console.error(`build-site: ${message}`);
+  process.exit(1);
+}
+
+// ---- arguments
+const opts = { channel: null, base: null, out: null };
+let courseDir = null;
+const argv = process.argv.slice(2);
+for (let i = 0; i < argv.length; i++) {
+  const a = argv[i];
+  const value = () => {
+    if (i + 1 >= argv.length) refuse(`${a} needs a value`);
+    return argv[++i];
+  };
+  if (a === '--help' || a === '-h') usage(0);
+  else if (a === '--channel') opts.channel = value();
+  else if (a === '--base') opts.base = value();
+  else if (a === '--out') opts.out = value();
+  else if (a.startsWith('-')) refuse(`unknown option ${a}`);
+  else if (courseDir === null) courseDir = a;
+  else refuse(`one course folder only (got ${courseDir} and ${a})`);
+}
+if (courseDir === null) usage(2);
+const channel = opts.channel || 'next';
+if (!CHANNELS.includes(channel)) refuse(`channel "${channel}" is not one of ${CHANNELS.join(', ')}`);
+if (opts.base !== null && !opts.base.startsWith('/')) refuse(`--base ${opts.base} is not a path from the root of the host (it starts with /)`);
+courseDir = path.resolve(courseDir);
+if (!fs.existsSync(path.join(courseDir, 'course.yaml'))) refuse(`${courseDir} holds no course.yaml: not a course folder`);
+
+const read = (p) => {
+  try { return fs.readFileSync(p, 'utf8'); } catch (e) { return fail(`cannot read ${path.relative(process.cwd(), p) || p}`); }
+};
+const rel = (p) => path.relative(REPO, p);
+
+// ---- the engine's own dependencies (npm ci in this folder)
+const engineDeps = Object.keys(JSON.parse(read(path.join(BUILDER, 'package.json'))).dependencies || {});
+if (!engineDeps.every((d) => fs.existsSync(path.join(BUILDER, 'node_modules', d, 'package.json')))) {
+  refuse(`the engine's dependencies are missing, run: mise exec -- npm ci --prefix ${path.relative(process.cwd(), BUILDER) || '.'}`);
+}
+
+// ---- the dispatcher: the spec MAJOR the course declares, and its render-site
+const specLine = read(path.join(courseDir, 'course.yaml')).split('\n').find((l) => /^spec\s*:/.test(l));
+const specRef = specLine && specLine.replace(/^spec\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2');
+const specMatch = specRef && /^([a-z0-9]+(?:-[a-z0-9]+)*)@(\d+)$/.exec(specRef);
+if (!specMatch) refuse(`${courseDir}/course.yaml declares no spec (spec: <name>@<MAJOR>)`);
+const SPEC = path.join(REPO, 'course-specs', specMatch[1], specMatch[2]);
+if (!fs.existsSync(path.join(SPEC, 'spec.yaml'))) refuse(`unknown spec MAJOR ${specRef}: no ${rel(SPEC)}/spec.yaml, no site is built from it`);
+const RENDER = path.join(SPEC, 'site', 'build', 'render-site');
+const SCHEMA = path.join(SPEC, 'site', 'build', 'site.schema.yaml');
+if (!fs.existsSync(RENDER)) refuse(`the spec MAJOR ${specRef} has no site/build/render-site: no site is built from it`);
+if (!fs.existsSync(SCHEMA)) refuse(`the spec MAJOR ${specRef} has no site/build/site.schema.yaml`);
+const dirLine = read(path.join(SPEC, 'spec.yaml')).split('\n').find((l) => /^directives\s*:/.test(l));
+const directives = dirLine && dirLine.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
+if (!/^\d+$/.test(directives || '')) fail(`${rel(SPEC)}/spec.yaml declares no directives MAJOR`);
+const DIRECTIVES = path.join(REPO, 'spec-directives', directives);
+const requireDirectives = createRequire(path.join(DIRECTIVES, 'package.json'));
+requireDirectives('./lib/deps').need();
+const yaml = requireDirectives('./lib/yaml-lines');
+const Ajv2020 = requireDirectives('ajv/dist/2020').default;
+
+// ---- the document, rendered by the MAJOR and validated against its schema
+const rendered = spawnSync(process.execPath, [RENDER, courseDir], { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
+if (rendered.error) fail(`cannot run ${rel(RENDER)}: ${rendered.error.message}`);
+if (rendered.status !== 0) {
+  process.stderr.write(rendered.stderr || '');
+  fail(`${rel(RENDER)} exits ${rendered.status}`);
+}
+let doc;
+try { doc = JSON.parse(rendered.stdout); } catch (e) { fail(`${rel(RENDER)} prints no JSON: ${e.message}`); }
+let validate;
+try { validate = new Ajv2020({ allErrors: true }).compile(yaml.parse(read(SCHEMA))); } catch (e) { fail(`${rel(SCHEMA)}: ${e.message}`); }
+if (!validate(doc)) {
+  fail(`the output of ${rel(RENDER)} is not valid against ${rel(SCHEMA)}: ${validate.errors.map((e) => `${e.instancePath || '/'} ${e.message}`).join('; ')}`);
+}
+if (doc.spec !== specRef) fail(`${rel(RENDER)} rendered the document of ${doc.spec}, not of ${specRef}`);
+const courseId = doc.course.id;
+
+// ---- the base path and the output folder
+let base = opts.base || `/feyn-site/${channel}/${courseId}/`;
+if (!base.endsWith('/')) base += '/';
+const out = path.resolve(opts.out || path.join(BUILDER, 'dist', channel, courseId));
+if (fs.existsSync(out)) {
+  if (!fs.statSync(out).isDirectory()) refuse(`${out} exists and is not a folder`);
+  if (fs.readdirSync(out).length) {
+    // a folder that holds no index.html is not a site build (a typo of --out): never emptied
+    if (!fs.existsSync(path.join(out, 'index.html'))) refuse(`${out} is not empty and holds no index.html, so it is not a site build: refused`);
+    fs.rmSync(out, { recursive: true, force: true });
+  }
+}
+
+// ---- the engine: Astro, then Pagefind
+const work = fs.mkdtempSync(path.join(os.tmpdir(), 'feyn-build-site-'));
+const data = path.join(work, 'site.json');
+fs.writeFileSync(data, JSON.stringify(doc));
+function run(what, args) {
+  const r = spawnSync(process.execPath, args, {
+    cwd: BUILDER,
+    encoding: 'utf8',
+    maxBuffer: 256 * 1024 * 1024,
+    env: { ...process.env, FEYN_SITE_DATA: data, FEYN_SITE_BASE: base, FEYN_SITE_OUT: out, ASTRO_TELEMETRY_DISABLED: '1' },
+  });
+  if (r.error) fail(`cannot run ${what}: ${r.error.message}`);
+  if (r.status !== 0) {
+    process.stderr.write(r.stdout || '');
+    process.stderr.write(r.stderr || '');
+    fail(`${what} exits ${r.status}`);
+  }
+}
+try {
+  run('astro build', [path.join(BUILDER, 'node_modules', 'astro', 'bin', 'astro.mjs'), 'build', '--silent']);
+} finally {
+  fs.rmSync(work, { recursive: true, force: true });
+}
+
+// An address of the URL scheme that is a file (`404.html`) is routed without its extension: Astro
+// writes a status page as `<name>.html`, any other as `<name>/index.html`, moved here to its address.
+for (const address of Object.values(doc.url_scheme.pages)) {
+  if (!address.endsWith('.html')) continue;
+  const target = path.join(out, address);
+  const written = path.join(out, address.replace(/\.html$/, ''), 'index.html');
+  if (!fs.existsSync(target) && fs.existsSync(written)) {
+    fs.renameSync(written, target);
+    fs.rmSync(path.dirname(written), { recursive: true, force: true });
+  }
+}
+
+run('pagefind', [path.join(BUILDER, 'node_modules', 'pagefind', 'lib', 'runner', 'bin.cjs'), '--site', out, '--silent']);
+
+// ---- what the build must hold: a page at each address it routes
+const expected = [
+  ...['home', 'domains', 'search', 'not_found'].map((k) => doc.url_scheme.pages[k]),
+  ...doc.domains.map((d) => d.path),
+].map((a) => (a === '' || a.endsWith('/') ? `${a}index.html` : a));
+const missing = expected.filter((f) => !fs.existsSync(path.join(out, f)));
+if (missing.length) fail(`the build holds no ${missing.join(', ')} in ${out}`);
+if (!fs.existsSync(path.join(out, 'pagefind'))) fail(`the build holds no Pagefind index in ${out}`);
+console.log(`build-site: ${out} built (${courseId}, channel ${channel}, base ${base}, ${expected.length} pages)`);
