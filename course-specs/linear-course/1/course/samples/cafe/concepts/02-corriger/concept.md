@@ -44,10 +44,12 @@ Corriger une tasse ratée, c'est la goûter avec trois mots, l'**acidité**, l'*
 
 #### Cas du fil rouge
 
-- **Titre** : Mauvaise, point
+##### Cas : Mauvaise, point
+
 - **Ancrage** : Cédric t'écrit : « Ma tasse de ce matin est mauvaise, point. » Il l'a dit à Inès, au Petit Noir, qui lui a répondu : « Mauvaise, ça ne veut rien dire. Où elle pique, où elle racle, ce qu'elle pèse. » Cédric regoûte et précise : « Elle pique devant, elle ne racle pas du tout, et en bouche c'est de l'eau tiède. »
 - **Question** : Traduis à Cédric les trois questions d'Inès, puis dis-lui ce que sa tasse a de travers.
 - **Réponse attendue** : Inès lui demande son acidité (où elle pique), son amertume (où elle racle) et son corps (ce qu'elle pèse en bouche). Sa tasse a une acidité qui pique, pas d'amertume et peu de corps : elle est sous-extraite, et sans doute légère aussi. « Mauvaise » ne lui disait pas quoi changer ; ces trois réponses le lui disent.
+- **Idées fausses en jeu** : L'acide, un défaut ; Amère et forte ; Le corps, une saveur
 
 ## Section 2b : Un réglage à la fois
 
@@ -72,15 +74,19 @@ Corriger une tasse ratée, c'est la goûter avec trois mots, l'**acidité**, l'*
 
 #### Cas du fil rouge
 
-- **Titre** : Tout corrigé d'un coup
+##### Cas : Tout corrigé d'un coup
+
 - **Ancrage** : La veille, la tasse de Cédric piquait et ne pesait rien. Ce matin, par souci d'efficacité, il a tout corrigé d'un coup : une mouture plus fine, plus de café et une eau bouillante. Il t'écrit : « Résultat : elle racle, elle est épaisse comme un sirop, et elle sèche la langue. J'ai corrigé trois fois plus vite, et c'est trois fois pire. » Aïmen, lui, est formel : c'est le paquet qui est mauvais.
 - **Question** : Que dis-tu à Cédric de ce qui s'est passé, et que lui conseilles-tu pour sa tasse de demain ?
 - **Réponse attendue** : ses trois changements sont allés dans le même sens. La mouture plus fine et l'eau bouillante ont poussé l'extraction plus loin, le café en plus a monté la force : la tasse est passée de sous-extraite à sur-extraite (elle racle, sèche la langue), et forte (elle est épaisse). Il ne peut pas savoir lequel des trois a fait le plus, et le paquet n'y est pour rien, c'est le même. Demain : revenir à la recette de la veille, changer un seul réglage d'un petit pas, par exemple une mouture un peu plus fine, goûter, et décider du suivant d'après la tasse.
-- **Titre** : La tasse du jeudi
-- **Qualificatif** : entraînement
+- **Idées fausses en jeu** : Tout d'un coup ; Le mauvais paquet ; Le ratio contre l'acide ; Tout reprendre
+
+##### Cas : La tasse du jeudi
+
 - **Ancrage** : Le jeudi, Cédric revient à sa recette pesée et ne change que la mouture, plus grosse d'un cran. Il t'écrit : « Plus rien ne racle. Mais elle pique un peu, le goût s'en va dès que j'avale, et elle ne pèse pas grand-chose. »
 - **Question** : De quel côté penche sa tasse, et quel seul réglage lui conseilles-tu de changer pour la suivante, dans quel sens ?
 - **Réponse attendue** : elle penche un peu du côté sous-extrait : une acidité qui pique, une finale courte. Un seul réglage, pour pousser l'extraction un peu plus loin : une mouture un peu moins grosse, à mi-chemin, ou un temps de contact un peu plus long, ou une eau un peu plus chaude ; un seul, puis goûter. Si la tasse reste légère une fois l'acidité réglée, le ratio viendra ensuite.
+- **Idées fausses en jeu** : Tout d'un coup ; Le ratio contre l'acide ; Tout reprendre
 
 #### Consigne au professeur
 
@@ -101,10 +107,12 @@ Ne donner aucun chiffre de pas (un cran, quelques degrés) comme une règle : le
 
 #### Cas du fil rouge
 
-- **Titre** : Le café du client
+##### Cas : Le café du client
+
 - **Ancrage** : Le jour de la soutenance, le client arrive à l'agence, et la Pipeline tombe en panne. Cédric, qui a apporté son moulin de chez lui, fait le café du client à la main, avec sa recette du matin. Le client en redemande une tasse, et Aïmen lui glisse : « Je vous l'avais dit, le meilleur café de Lyon. » Le soir, Cédric t'écrit : « J'ai eu de la chance, non ? »
 - **Question** : Que réponds-tu à Cédric : a-t-il eu de la chance, et sa tasse est-elle le meilleur café de Lyon ?
 - **Réponse attendue** : pas de chance là-dedans. Chaque matin, il a goûté sa tasse, dit ce qui clochait et changé un seul réglage, jusqu'à une tasse qu'il aime ; le jour venu, il l'a refaite avec les mêmes réglages. « Le meilleur café de Lyon » ne se mesure pas : c'est une tasse que Cédric aime, et que le client a aimée aussi. Un autre buveur pourrait la vouloir autrement, et Cédric saurait quel réglage changer.
+- **Idées fausses en jeu** : La tasse parfaite ; La chance
 
 ## Clôture
 

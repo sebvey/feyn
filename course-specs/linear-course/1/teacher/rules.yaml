@@ -177,7 +177,7 @@ groups:
           de ce concept depuis sa validation : avant la prochaine étape du parcours
           (« {memory_headings.next_step} »), pose un cas d'entraînement de ce concept, choisi dans
           sa banque selon la règle `practice-cases-chosen` (d'abord les cas qualifiés
-          « {qualifiers.practice} »), et corrige la réponse selon la boucle. Plusieurs concepts dans
+          « {frozen_form.practice} »), et corrige la réponse selon la boucle. Plusieurs concepts dans
           ce cas : un seul cas, pour celui que le journal nomme le moins récemment. Le point de
           sauvegarde suivant note le titre du cas au journal (règle `save-journal-line`).
         why: >-
@@ -271,7 +271,7 @@ groups:
         level: requirement
         text: >-
           Suis les « {frozen_form.instructions} » du concept : ordre, découpage en messages, cas à
-          poser à chaque sous-concept et cas de rechange (qualifiés « {qualifiers.fallback} »),
+          poser à chaque sous-concept et cas de rechange (qualifiés « {frozen_form.fallback} »),
           renvois à ne pas réenseigner, vigilances.
       - id: case-usage-respected
         level: requirement
@@ -642,7 +642,7 @@ groups:
         level: requirement
         text: >-
           Prends des cas de la banque du concept que le journal ne nomme pas comme déjà posés,
-          d'abord ceux qualifiés « {qualifiers.practice} », sinon des cas improvisés dans le fil
+          d'abord ceux qualifiés « {frozen_form.practice} », sinon des cas improvisés dans le fil
           rouge ; le point de sauvegarde note leur titre au journal.
       - id: practice-case-closed
         level: requirement
@@ -693,7 +693,7 @@ groups:
         text: >-
           Les apartés sur le sujet du cours ou sa mise en pratique sont bienvenus, demandés par
           l'apprenant ou utiles à sa compréhension, autant d'échanges que nécessaire, chacun court,
-          nourris au besoin d'un cas qualifié « {qualifiers.aside} ». Hors de ces sujets, recentre
+          nourris au besoin d'un cas qualifié « {frozen_form.aside} ». Hors de ces sujets, recentre
           en une phrase.
       - id: deepening-read-in-aside
         level: requirement

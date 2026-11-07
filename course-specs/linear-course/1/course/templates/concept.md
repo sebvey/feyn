@@ -1,12 +1,12 @@
 <!--
 Template of courses/<id>/concepts/<NN>-<slug>/concept.md, the concept file (course/README.md sections 3.1 to 3.3, 3.5 and 3.6; its form is course/form.yaml). One file per concept: the site builds its published parts only, the teacher reads it whole. Nothing about one learner. How to use: copy to the concept folder, replace every <placeholder>, delete this comment (from the opening to the closing mark, marks included: no HTML in course Markdown).
-- Every heading starts with its kind, and one kind is always at one level: the title at #, the head, the sections and the foot at ##, the blocks of the foot and the units at ###, the blocks of a unit at ####.
+- Every heading starts with its kind, and one kind is always at one level: the title at #, the head, the sections and the foot at ##, the blocks of the foot and the units at ###, the blocks of a unit at ####, the cases of its « Cas du fil rouge » at #####.
 - The title opens the body: `# Concept <n> : <title>` (an annex `# Annexe <id> : <title>`), the title the one course.yaml gives the concept, which keeps it too. The objective is in course.yaml only: it is not written here. The misconceptions of the concept are those of its units, written in their « Leçon ». The ## parts come in this order and no other ## exists: the head, « L'essentiel » (its text, no ### block), the sections, the foot, « Clôture » (its blocks « Se vérifier », « Approfondissement », « Consigne au professeur », each optional: delete the ones you do not write, and « Clôture » with them when none is left).
 - The headings are the tree of the concept: one ## section per group of units, `## Section <id> : <title>`, the id the concept number and a letter from a, in order (`<n>a`, `<n>b`); its units, `### Unité <id> : <title>`, the id its own and a digit from 1, in order, one at least and nine at most (`<n>a1`). A section holds its units and nothing else; a section with a single unit keeps its ### heading (as `<n>b` below). A unit is one teacher message.
 - A unit is three #### blocks, in the order of writing: teach, ask, instruct. Each heading is the block's word alone; which block is published is course/form.yaml's, not the heading's. « Leçon », the matter of the unit, its two faces: « Matière », what is true, then « Idées fausses », what seems true and is not; « Cas du fil rouge », its cases; these two mandatory and published; then « Consigne au professeur », optional and never published: delete it when the unit has none. No line of a unit stands outside a block.
 - In « Leçon » and « Cas du fil rouge », each field opens with its label alone, `- **<label>** : <text>` (nothing between the label and its colon: a precision opens the text, `- **Question** : en deux parties : …`), its following lines indented two spaces (paragraphs, nested lists), and no line stands outside a field. « Idées fausses » holds its misconceptions on the lines below its label, nothing after its colon: each a belief a learner who has read the matter could still hold, `  - **<name>** : « <belief> »`, its name short and unique in the unit, then, indented four spaces, `- **Racine** : <why it seems true>` (an everyday experience, a misleading word, a neighbouring truth stretched too far) and `- **Correction** : <what corrects it, resting on the matter>`, and nothing else under it. A misconception that only negates a sentence of the matter, with no root a learner could follow, is removed; one written on a case's situation, or repeating another of its unit, is rewritten as a general belief, or merged (rule misconception-not-a-negation). « Consigne au professeur » is prose, the boundary of the matter: what the teacher knows and does not say in this unit. A sentence stays only if a competent teacher reading the matter, the cases, the misconceptions, the protocol and plan.md would otherwise act differently, and only in this unit: what holds for every unit is the protocol's, what holds for the whole course goes to the stances of plan.md, the obvious goes (rule instruction-beyond-a-competent-teacher).
 - A question the course asks again and again, its own way of making the learner think (« et alors ? », « d'où vient ce chiffre ? »): in the « Consigne au professeur » of its unit, in the one of the foot when it holds for the whole concept, or in a free section of plan.md when it holds for the whole course; never under a misconception, which holds its root and its correction only (rule course-question-in-instruction).
-- « Cas du fil rouge » holds one case or more, each opened by its « Titre », a title unique in the concept, then « Ancrage », « Question », « Réponse attendue ». The first is the unit's case, always posed, with no « Qualificatif ». Each other is a supplementary case, its « Qualificatif » right after its « Titre »: « rechange », « entraînement » or « aparté », and it is posed when its qualifier says. A case writes no misconception: those it makes tempting are in the « Leçon » of its unit. To have no supplementary case, delete it.
+- « Cas du fil rouge » holds one case or more, each under its heading `##### Cas : <title>`, a title unique in the concept, then « Ancrage », « Question », « Réponse attendue » and « Idées fausses en jeu ». The first is the unit's case, always posed; each other is a supplementary case, which the teacher may pose after a wrong answer or for practice: it stands alone, its own anchor and its own question. A case writes no misconception: « Idées fausses en jeu » names, by their names separated by « ; », those of its unit its situation makes tempting, one at least. Each misconception of the unit is named by a case at least, and each one the unit's case names is best named by a supplementary case too (case-coverage reports it otherwise). A question often asked outside the course path is not a case: its matter is a unit of an annex, which no unit links to.
 - The additions of a unit (course/README.md 3.6): a term a unit puts in bold should be in glossary.md, bold for emphasis staying possible (rule bold-term-in-glossary, a recommendation: a bold that is no term is reported); a fact its anchor uses is in « Faits fixés » of storyline.md, with the unit's id (rule anchor-uses-storyline-facts); a claim of a published field has its row in « Affirmations » of sources.md (rule published-claims-in-claims). The matter stays general: it neither takes up the situation of the anchor or of a case nor states the verdict of the expected answer, and the anchor, the questions and the expected answers do not restate the matter (rule no-restatement-matter-and-cases).
 - Concept references are plain text: `concept 4`, `concepts 5 et 7b`, `annexe A2`. Stance markers `[cours]`, `[école]`, `[consensus]` come right after the claim they qualify.
 - Frontmatter: `stances` (three keys, each a list, possibly empty), `neighbors` (optional). An item has `text` (bold and italics only), `author` (expected on consensus and school), `refs` (ids of sources.md, possibly empty) and, when `refs` is not empty, `verified`: one entry per id, in the same order, the shortest quotation in « » and its place in parentheses. They are the one place for the stances and their sources: the body has no stances section, « Affirmations » of sources.md has no stance row, and the site builds them from the frontmatter.
@@ -58,15 +58,19 @@ diagrams:
 
 #### Cas du fil rouge
 
-- **Titre** : <title of the case of a1>
+##### Cas : <title of the case of a1>
+
 - **Ancrage** : <the storyline situation where a1 shows: actors, facts, who says what>
 - **Question** : <the question of a1>
 - **Réponse attendue** : <the right answer, with its nuances>
-- **Titre** : <title of a supplementary case of a1>
-- **Qualificatif** : rechange
+- **Idées fausses en jeu** : <the name of a misconception of a1 its situation makes tempting> ; <another>
+
+##### Cas : <title of a supplementary case of a1>
+
 - **Ancrage** : <another storyline situation, standing alone>
 - **Question** : <its question>
 - **Réponse attendue** : <its right answer>
+- **Idées fausses en jeu** : <the names of the misconceptions of a1 it makes tempting>
 
 #### Consigne au professeur
 
@@ -84,10 +88,19 @@ diagrams:
 
 #### Cas du fil rouge
 
-- **Titre** : <title of the case of a2>
+##### Cas : <title of the case of a2>
+
 - **Ancrage** : <the storyline situation where a2 shows>
 - **Question** : <the question of a2>
 - **Réponse attendue** : <the right answer of a2>
+- **Idées fausses en jeu** : <the names of the misconceptions of a2 it makes tempting>
+
+##### Cas : <title of a supplementary case of a2>
+
+- **Ancrage** : <another storyline situation, standing alone>
+- **Question** : <its question>
+- **Réponse attendue** : <its right answer>
+- **Idées fausses en jeu** : <the names of the misconceptions of a2 it makes tempting>
 
 ## Section <n>b : <title of b>
 
@@ -103,10 +116,19 @@ diagrams:
 
 #### Cas du fil rouge
 
-- **Titre** : <title of the case of b1>
+##### Cas : <title of the case of b1>
+
 - **Ancrage** : <the storyline situation where b1 shows>
 - **Question** : <the question of b1>
 - **Réponse attendue** : <the right answer of b1>
+- **Idées fausses en jeu** : <the names of the misconceptions of b1 it makes tempting>
+
+##### Cas : <title of a supplementary case of b1>
+
+- **Ancrage** : <another storyline situation, standing alone>
+- **Question** : <its question>
+- **Réponse attendue** : <its right answer>
+- **Idées fausses en jeu** : <the names of the misconceptions of b1 it makes tempting>
 
 ## Clôture
 

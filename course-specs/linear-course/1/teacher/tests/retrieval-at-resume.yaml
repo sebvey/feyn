@@ -57,21 +57,21 @@ learner:
     ## Journal
 
     2026-11-02, session 1 : accueil, concept 0 commencé (l'extraction fait le goût).
-    2026-11-03, session 2 : concept 0, 0a2 avec le cas de rechange « Le jus de pneu », 0b1 ; concept 0 validé.
+    2026-11-03, session 2 : concept 0, 0a2 avec son cas supplémentaire « Le jus de pneu », 0b1 ; concept 0 validé.
 turns:
   - message: On continue.
     expect:
-      - act: "before concept 1 (at this turn or the next, after the recap), one practice case of concept 0 from its bank, the « entraînement » one, which the journal does not name, « La tasse légère du Petit Noir », its question in the quote form; concept 1 not started before it"
+      - act: "before concept 1 (at this turn or the next, after the recap), one case of concept 0 for practice, from its bank, the supplementary case the journal does not name, « La tasse légère du Petit Noir » (no case carries « entraînement » any more), its question in the quote form; concept 1 not started before it"
         rules: [earlier-concept-retrieved-at-resume]
   - message: "Oui."
     if: next-line
   - message: "Non, il n'a pas raison. Légère, c'est sa force qui est basse, pas son extraction. Elle est douce, elle ne pique pas, elle n'est ni amère ni sèche, et son goût reste en bouche : elle n'est ni sous-extraite ni sur-extraite, elle est équilibrée. Inès veut dire qu'une tasse peut être légère sans être creuse."
     expect:
-      - act: "the answer to the practice case corrected by the loop (validated frankly), then the next step of parcours.md, concept 1, at the same message or on the next line"
+      - act: "the answer to the case corrected by the loop (validated frankly), then the next step of parcours.md, concept 1, at the same message or on the next line"
         rules: [earlier-concept-retrieved-at-resume]
   - message: On s'arrête là.
     expect:
-      - act: the stop's save point notes the title of the practice case in the journal line of the session
+      - act: the stop's save point notes the title of the case posed for practice in the journal line of the session
         rules: [earlier-concept-retrieved-at-resume]
 rules:
   - earlier-concept-retrieved-at-resume

@@ -60,9 +60,6 @@ Chaque clé et chaque paramètre que les règles emploient, en un seul endroit :
 | `headings.references` | « Références » | `origin-from-sources-file` |
 | `headings.stances` | « Consensus et choix d'école » | `unverified-part-told` |
 | `headings.deepening` | « Approfondissement » | `deepening-read-in-aside` |
-| `qualifiers.fallback` | « rechange » (`course/README.md` 3.3) | `follow-concept-instructions` |
-| `qualifiers.practice` | « entraînement » (`course/README.md` 3.3) | `practice-cases-chosen`, `earlier-concept-retrieved-at-resume` |
-| `qualifiers.aside` | « aparté » (`course/README.md` 3.3) | `asides-welcome` |
 | `typography.banned` | les caractères interdits (le tiret long, les flèches que liste `typography.banned`) | `course-language-typography` |
 | `typography.rules` | la typographie selon laquelle le professeur écrit : une espace avant « : », « ; », « ? », « ! » ; les guillemets « ». Elle ne répète pas l'interdit : `typography.banned` porte les caractères interdits (le tiret long, les flèches que liste `typography.banned`) | `course-language-typography` |
 
@@ -125,6 +122,9 @@ Chaque clé et chaque paramètre que les règles emploient, en un seul endroit :
 | `frozen_form.storyline_facts` | « Faits du fil rouge utilisés » | `storyline-facts-section-unsaid` |
 | `frozen_form.usage` | « Usage » | `case-usage-respected` |
 | `frozen_form.explanation` | « Explication » | `explanation-from-case` |
+| `frozen_form.fallback` | « rechange » (un ancien qualificatif d'un cas supplémentaire, qu'aucun cas ne porte plus) | `follow-concept-instructions` |
+| `frozen_form.practice` | « entraînement » (un ancien qualificatif d'un cas supplémentaire, qu'aucun cas ne porte plus) | `practice-cases-chosen`, `earlier-concept-retrieved-at-resume` |
+| `frozen_form.aside` | « aparté » (un ancien qualificatif d'un cas supplémentaire, qu'aucun cas ne porte plus) | `asides-welcome` |
 
 Les titres, les statuts et les formats de ligne que portent les clés de `memory_headings`, de `status` et de `memory` sont ceux de `teacher/templates/learner/` : `teacher/lexicon.yaml` et les modèles de l'apprenant changent ensemble.
 

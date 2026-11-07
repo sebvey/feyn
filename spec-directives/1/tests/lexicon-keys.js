@@ -15,10 +15,9 @@ const TEACHER = 'teacher/lexicon.yaml';
 const KEYS = {
   headings: ['essentials', 'stances', 'deepening', 'landmarks', 'instruction', 'foot',
     'claims', 'references', 'unverified', 'problem', 'crossing_case', 'audience', 'onboarding', 'progression', 'fixed_facts', 'avoid', 'unreleased'],
-  block_kinds: ['concept', 'annex', 'section', 'unit', 'separator'],
-  unit_fields: ['matter', 'misconceptions', 'root', 'correction', 'title', 'qualifier', 'anchor', 'question', 'expected_answer', 'instruction'],
+  block_kinds: ['concept', 'annex', 'section', 'unit', 'case', 'separator'],
+  unit_fields: ['matter', 'misconceptions', 'root', 'correction', 'anchor', 'question', 'expected_answer', 'misconceptions_in_play', 'instruction'],
   unit_blocks: ['lesson', 'cases'],
-  qualifiers: ['fallback', 'practice', 'aside'],
   markers: ['consensus', 'school', 'course'],
   natures: ['fact'],
   concept_refs: ['concept', 'concepts', 'and', 'annex'],

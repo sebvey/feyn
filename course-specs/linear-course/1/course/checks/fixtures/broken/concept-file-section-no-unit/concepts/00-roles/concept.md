@@ -32,10 +32,20 @@ concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a1
+##### Cas : Le cas 0a1
+
 - **Ancrage** : Régis veut une carte et décide de ce qu'elle montre.
 - **Question** : qui décide ?
 - **Réponse attendue** : le premier rôle.
+- **Idées fausses en jeu** : Tout le monde
+
+##### Cas : Le cas 0a1, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Tout le monde
+
 #### Consigne au professeur
 
 Ne pas parler de couche ici, elle vient au concept 1.
@@ -57,12 +67,22 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a2
+##### Cas : Le cas 0a2
+
 - **Ancrage** : Régis demande la carte à l'équipe.
 - **Question** : en deux parties : qui fait ? Et qui décide ?
 - **Réponse attendue** :
   1. Le second rôle fait.
   2. Le premier rôle décide.
+- **Idées fausses en jeu** : Le second rôle ; Chaque rôle a
+
+##### Cas : Le cas 0a2, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Le second rôle ; Chaque rôle a
+
 ## Section 0b : La règle
 
 #### Leçon
@@ -78,10 +98,20 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0b
+##### Cas : Le cas 0b
+
 - **Ancrage** : Régis applique la règle à la carte.
 - **Question** : la règle change-t-elle selon le rôle ?
 - **Réponse attendue** : non, elle est la même pour tous.
+- **Idées fausses en jeu** : Le second rôle ; Chaque rôle a
+
+##### Cas : Le cas 0b, encore
+
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Le second rôle ; Chaque rôle a
+
 ## Clôture
 
 ### Se vérifier

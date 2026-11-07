@@ -14,7 +14,7 @@ The spec, its checks and the agentic layer are worth what they bring to the two 
 
 ## The yardstick
 
-A change of `linear-course` counts when the bench course, the spec's sample course `course-specs/linear-course/1/course/samples/cafe/` (three concepts, one annex), follows it in the same PR and its checks pass on it. The site is the product being built; the teacher is frozen until the brainstorm on the protocol rules (idea #597), and comes back after it (decision `teacher-frozen-until-the-protocol-brainstorm`). Small and proven over complete: a change proven on a short course that holds the whole form is worth more than a complete spec judged on paper.
+A change of `linear-course` counts when the bench course, the spec's sample course `course-specs/linear-course/1/course/samples/cafe/` (three concepts, two annexes), follows it in the same PR and its checks pass on it. The site is the product being built; the teacher is frozen until the brainstorm on the protocol rules (idea #597), and comes back after it (decision `teacher-frozen-until-the-protocol-brainstorm`). Small and proven over complete: a change proven on a short course that holds the whole form is worth more than a complete spec judged on paper.
 
 ## The lessons of parcours-po
 

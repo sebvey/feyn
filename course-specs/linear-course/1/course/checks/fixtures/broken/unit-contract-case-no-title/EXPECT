@@ -1,2 +1,2 @@
 check: unit-contract
-message: unit 2a1, « Cas du fil rouge »: a case opens with its « Titre », found « Ancrage » before it
+message: unit 2a1, « Cas du fil rouge »: a case opens with its heading "##### Cas : <title>", its fields under it; found « Ancrage » before it

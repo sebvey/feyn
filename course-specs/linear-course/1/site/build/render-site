@@ -152,22 +152,56 @@ const cf = form.concept_file || {};
 const unitForm = form.unit || {};
 const blockForms = Array.isArray(unitForm.blocks) ? unitForm.blocks : [];
 const fieldsOf = (fields) => Object.fromEntries(fields.map((f) => [f.key, f.body]));
-// the misconceptions of a field (« Idées fausses »): each its name, its belief and its parts by key
-const misconceptionsOf = (f, spec) => f.items.map((m) => ({ name: m.name, belief: m.belief, ...Object.fromEntries((spec.parts || []).map((k) => [k, m[k] || ''])) }));
+// the id of a misconception, its anchor on the concept page: its unit's id, then its name in
+// lowercase ASCII words joined by hyphens, a hyphen more while another misconception of the unit has it
+const slug = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+function misconceptionIds(u) {
+  const lesson = blockForms.find((b) => b.misconceptions);
+  const ids = new Map();
+  for (const f of u.fields.filter((x) => lesson && x.key === lesson.misconceptions.field)) {
+    for (const m of f.items) {
+      if (!m.name || ids.has(m.name)) continue;
+      let id = `${u.sub.id}-${slug(m.name)}`;
+      while ([...ids.values()].includes(id)) id += '-';
+      ids.set(m.name, id);
+    }
+  }
+  return ids;
+}
+// the misconceptions of a field (« Idées fausses »): each its id, its name, its belief and its parts by key
+const misconceptionsOf = (f, spec, ids) => f.items.map((m) => ({ id: ids.get(m.name), name: m.name, belief: m.belief, ...Object.fromEntries((spec.parts || []).map((k) => [k, m[k] || ''])) }));
+// a case: its title, from its heading; its fields, those of `revealed` under `revealed`, which the
+// site shows hidden until the reader reveals them; the misconceptions in play, each its name and
+// the id of the misconception of its unit it names (none for a name that matches none)
+function caseOf(c, spec, ids) {
+  const ip = spec.in_play && spec.in_play.field;
+  const hidden = new Set(spec.revealed || []);
+  const out = { title: c.title };
+  const revealed = {};
+  for (const f of c.fields) {
+    const v = f.key === ip ? (f.names || []).map((n) => (ids.has(n.name) ? { name: n.name, id: ids.get(n.name) } : { name: n.name })) : f.body;
+    if (hidden.has(f.key)) revealed[f.key] = v;
+    else out[f.key] = v;
+  }
+  if (Object.keys(revealed).length) out.revealed = revealed;
+  out.supplementary = !c.first;
+  return out;
+}
 // a unit's published blocks, in the order the site renders them: the lesson (its matter), the
 // cases, then the misconceptions of the lesson, after the cases, so that the site does not give a
 // misconception away before the question (decision `misconception-is-matter`)
 function unitOf(u) {
   const blocks = {};
   let misconceptions = null;
+  const ids = misconceptionIds(u);
   for (const b of u.blocks) {
     const bf = blockForms.find((x) => x.block === b.key);
     if (!pub(bf)) continue;
-    if (bf.cases) blocks[b.key] = b.cases.map((c) => ({ ...fieldsOf(c.fields), supplementary: !c.first }));
+    if (bf.cases) blocks[b.key] = b.cases.map((c) => caseOf(c, bf.cases, ids));
     else if (bf.labelled) {
       const mf = bf.misconceptions && b.fields.find((f) => f.key === bf.misconceptions.field);
       blocks[b.key] = fieldsOf(b.fields.filter((f) => f !== mf));
-      if (mf) misconceptions = [...(misconceptions || []), ...misconceptionsOf(mf, bf.misconceptions)];
+      if (mf) misconceptions = [...(misconceptions || []), ...misconceptionsOf(mf, bf.misconceptions, ids)];
     } else blocks[b.key] = text(b.fields[0].lines);
   }
   if (misconceptions) blocks.misconceptions = misconceptions;
@@ -265,8 +299,8 @@ if (pub(ch.latest_release)) {
 
 // ---- the words: site/lexicon.yaml whole, and of course/lexicon.yaml those the published parts
 // carry: the headings and the unit fields and blocks the form names `published: true`, the kind
-// words of the headings, the qualifiers of a case, the stance markers
-const words = { headings: {}, block_kinds: {}, unit_blocks: {}, unit_fields: {}, qualifiers: {}, markers: {} };
+// words of the headings, a case's among them, the stance markers
+const words = { headings: {}, block_kinds: {}, unit_blocks: {}, unit_fields: {}, markers: {} };
 const take = (group, key) => {
   const w = ctx.word(group, key);
   if (w) words[group][key] = w;
@@ -281,7 +315,7 @@ const take = (group, key) => {
       if (node.labelled) take('unit_blocks', node.block);
       for (const f of node.fields || []) take('unit_fields', f);
       for (const f of (node.misconceptions && node.misconceptions.parts) || []) take('unit_fields', f);
-      for (const q of (node.cases && node.cases.qualifiers) || []) take('qualifiers', q);
+      if (node.cases && typeof node.cases.kind === 'string') take('block_kinds', node.cases.kind);
     }
   }
   for (const v of Object.values(node)) if (v && typeof v === 'object') walk(v);

@@ -1,6 +1,6 @@
 # The lexicon of the course files of `linear-course`: the one source of the words a program must
-# recognise in a course file (headings, block kinds, unit fields, unit blocks, qualifiers,
-# markers, natures, concept references, source types, typography), read by the checks, the classroom build and the site,
+# recognise in a course file (headings, block kinds, unit fields, unit blocks, markers,
+# natures, concept references, source types, typography), read by the checks, the classroom build and the site,
 # none of which writes them again (course/README.md section 7;
 # decision `lexicon-not-language-pack`). The spec is French (`language: fr` in spec.yaml): the
 # values are course text, in French. The keys are those of course/README.md section 7
@@ -29,13 +29,15 @@ headings:
   unreleased: "Non publié"
 
 # The kind words that open the headings of a concept file (course/form.yaml): `# Concept 4 : <titre>`,
-# `# Annexe A1 : <titre>`, `## Section 4a : <titre>`, `### Unité 4a1 : <titre>`; `separator` stands
-# between the id and the title (French typography, a space before « : »).
+# `# Annexe A1 : <titre>`, `## Section 4a : <titre>`, `### Unité 4a1 : <titre>`, `##### Cas : <titre>`;
+# `separator` stands between the id and the title, or between the kind word of a case and its
+# title (French typography, a space before « : »).
 block_kinds:
   concept: "Concept"
   annex: "Annexe"
   section: "Section"
   unit: "Unité"
+  case: "Cas"
   separator: " : "
 
 # Labels of the fields of a unit of a concept file, those of its cases and of its misconceptions
@@ -46,11 +48,10 @@ unit_fields:
   misconceptions: "Idées fausses"
   root: "Racine"
   correction: "Correction"
-  title: "Titre"
-  qualifier: "Qualificatif"
   anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
+  misconceptions_in_play: "Idées fausses en jeu"
   instruction: "Consigne au professeur"
 
 # The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`).
@@ -69,13 +70,6 @@ markers:
 # school, course (course/README.md 3.4). Read by `sources` only: never a marker of the published text.
 natures:
   fact: "fait"
-
-# The qualifiers of a supplementary case, the value of its field « Qualificatif », one and no
-# other word (the group of course/rules.yaml for course/README.md section 3.3).
-qualifiers:
-  fallback: "rechange"
-  practice: "entraînement"
-  aside: "aparté"
 
 # The words of a concept reference in the text of a course: « concept 4 », « concepts 5 et 7b »,
 # « annexe A2 » (course/README.md 3.5).

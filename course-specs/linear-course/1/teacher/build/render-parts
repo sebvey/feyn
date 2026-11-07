@@ -141,7 +141,7 @@ function fill(text, where) {
     });
 }
 // a bare key in a `what` of the composition (`headings.onboarding`): its value in « »
-const fillWhat = (what) => what.replace(/\b(headings|case_fields|qualifiers)\.([a-z_]+)\b/g, (m, g, k) => quote(valueOf(g, k, 'composition.yaml')));
+const fillWhat = (what) => what.replace(/\b(headings|case_fields)\.([a-z_]+)\b/g, (m, g, k) => quote(valueOf(g, k, 'composition.yaml')));
 
 // ---- the protocol, teacher/rules.yaml, in its order: a family is a group whose id is its
 // category, rendered "## <n>. <title>" (n its rank among the families of the file); another group

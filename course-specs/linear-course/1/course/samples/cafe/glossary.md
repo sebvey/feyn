@@ -20,6 +20,7 @@ Les termes du cours, chacun défini dans le concept qui l'enseigne.
 | Immersion | immersion | Une méthode où le café moulu trempe dans toute l'eau, comme le piston | A1 |
 | Percolation | percolation | Une méthode où l'eau traverse le café moulu, comme le filtre ou la moka | A1 |
 | Expresso | espresso | Une méthode où l'eau traverse un café moulu très fin sous forte pression, en une trentaine de secondes | A1 |
+| Fraîcheur | freshness | Ce que le café torréfié garde de ses arômes et qu'il perd en vieillissant, plus vite une fois moulu ; ce n'est pas un réglage | A2 |
 
 ## Termes à éviter
 

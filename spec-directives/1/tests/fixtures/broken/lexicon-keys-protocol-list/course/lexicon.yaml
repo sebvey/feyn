@@ -29,17 +29,17 @@ block_kinds:
   annex: "Annexe"
   section: "Section"
   unit: "Unité"
+  case: "Cas"
   separator: " : "
 
 # Labels of the fields of a unit of a concept file, those of its cases among them
 # (course/form.yaml).
 unit_fields:
   matter: "Matière"
-  title: "Titre"
-  qualifier: "Qualificatif"
   anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
+  misconceptions_in_play: "Idées fausses en jeu"
   misconceptions: "Idées fausses"
   root: "Racine"
   correction: "Correction"
@@ -61,13 +61,6 @@ markers:
 # school, course (course/README.md 3.4). Read by `sources` only: never a marker of the reader text.
 natures:
   fact: "fait"
-
-# The qualifiers of a supplementary case, the value of its field « Qualificatif », one and no
-# other word (course/README.md 3.3).
-qualifiers:
-  fallback: "rechange"
-  practice: "entraînement"
-  aside: "aparté"
 
 # The words of a concept reference in reader text: « concept 4 », « concepts 5 et 7b »,
 # « annexe A2 » (course/README.md 3.5).

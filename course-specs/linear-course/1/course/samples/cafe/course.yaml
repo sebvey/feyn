@@ -4,7 +4,7 @@ title: "Faire un bon café"
 subtitle: "Goûter, comprendre, apprivoiser"
 storyline: storyline.md
 glossary: glossary.md
-annexes: [A1]
+annexes: [A1, A2]
 domains:
   - number: 1
     slug: tasse
@@ -49,3 +49,10 @@ concepts:
     prerequisites: [1]
     duration_min: 8
     dir: concepts/A1-methodes
+  - number: A2
+    slug: fraicheur
+    title: "La fraîcheur du café"
+    objective: "dire combien de temps un café reste frais, moulu ou en grains, et comment le garder"
+    prerequisites: [1]
+    duration_min: 4
+    dir: concepts/A2-fraicheur

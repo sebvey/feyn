@@ -37,10 +37,12 @@ Une **méthode d'infusion** est la façon dont l'eau rencontre le café moulu : 
 
 #### Cas du fil rouge
 
-- **Titre** : Le piston d'Aïmen
+##### Cas : Le piston d'Aïmen
+
 - **Ancrage** : Cédric parle de son filtre à Aïmen, qui lève les yeux au ciel : « Le filtre, c'est de l'eau qui passe. Le vrai café, c'est au piston : il trempe, il a le temps de donner tout ce qu'il a. Mets ton café moulu dedans, tu verras. » Cédric t'écrit : « Je dois racheter une cafetière, ou c'est encore une idée d'Aïmen ? »
 - **Question** : Dis à Cédric ce qui sépare le piston de son filtre, et ce qu'il devrait changer à ses réglages s'il passait au piston.
 - **Réponse attendue** : la façon dont l'eau rencontre le café moulu. Au piston, le café moulu trempe dans toute l'eau, le temps qu'il choisit, puis il presse le marc : c'est une immersion. Dans son filtre, l'eau traverse le café moulu et s'écoule : c'est une percolation. Les deux font une extraction ; aucun ne « donne tout ». Au piston, le temps de contact est long : il lui faut une mouture plus grosse, sinon sa mouture de filtre pousse l'extraction vers l'amer. Racheter une cafetière n'est pas nécessaire : c'est une autre méthode, pas une meilleure.
+- **Idées fausses en jeu** : Tout donner ; La même mouture ; Le piston plus fort
 
 ### Unité A1a2 : Sous pression
 
@@ -60,7 +62,16 @@ Une **méthode d'infusion** est la façon dont l'eau rencontre le café moulu : 
 
 #### Cas du fil rouge
 
-- **Titre** : La Pipeline et les capsules
+##### Cas : La Pipeline et les capsules
+
 - **Ancrage** : Au bureau, la Pipeline moud, presse le café moulu et sort en une trentaine de secondes une petite tasse épaisse. Aïmen : « Chez moi, j'ai une machine à capsules. Même café, et pas de bac à marc pour casser le build. » Cédric t'écrit : « C'est vrai ? Et pourquoi la tasse de la Pipeline n'a rien à voir avec celle de mon filtre ? »
 - **Question** : Réponds à Cédric : qu'est-ce que la Pipeline change aux réglages de son filtre, et la capsule d'Aïmen fait-elle le même café ?
 - **Réponse attendue** : la Pipeline fait des expressos : l'eau forcée sous pression, une mouture bien plus fine, un temps de contact d'une trentaine de secondes et beaucoup plus de café pour l'eau ; sa tasse est petite et très forte, quand celle de son filtre est longue et plus légère. La capsule d'Aïmen fait aussi un expresso, mais pas le même café : son café est moulu et dosé d'avance par le fabricant, quand la Pipeline moud ses grains à chaque tasse. Les réglages exacts de la Pipeline, eux, personne ne les connaît.
+- **Idées fausses en jeu** : L'expresso sur-extrait ; Capsule et grains
+
+##### Cas : La moka d'Inès
+
+- **Ancrage** : Au Petit Noir, à midi, Inès fait son propre café dans une moka posée sur le feu : l'eau monte en sifflant à travers le café moulu. Cédric t'écrit : « Elle a une machine à expresso de poche, en fait ? La Pipeline en version camping. »
+- **Question** : La moka d'Inès fait-elle un expresso ? Dis à Cédric ce qui pousse l'eau à travers le café moulu, et ce qui sépare la moka de la Pipeline.
+- **Réponse attendue** : non. Dans la moka, c'est la pression de la vapeur qui fait monter l'eau très chaude à travers le café moulu : l'eau le traverse et s'écoule, c'est une percolation, à une pression qui ne dépasse pas 3 bars. La Pipeline force l'eau autour de 9 bars à travers un café moulu très fin : c'est un expresso. Les deux poussent l'eau, pas avec la même force.
+- **Idées fausses en jeu** : La moka sous pression

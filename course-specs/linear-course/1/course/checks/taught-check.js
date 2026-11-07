@@ -29,12 +29,12 @@ its title (\`# Concept <n> : <title>\`, an annex \`# Annexe <id> : <title>\`), i
 its sections (\`## Section <id> : <title>\`) and their units (\`### Unité <id> : <title>\`, one at least per section), its foot \
 (a ## heading, then its ### blocks); \
 the #### blocks of a unit in their order, each titled by its word alone, with its fields (\`unit.blocks\`); its block of \
-cases (\`cases\`) is a list of cases, each opened by its title field: the first, the unit's case, always posed; each other a \
-supplementary case, with its qualifier field. The words of the file are the values of ${SPEC}lexicon.yaml at the keys form.yaml names: a \
+cases (\`cases\`) is a list of cases, each under its heading \`##### Cas : <title>\`, then its fields, the last naming the \
+misconceptions of its unit it makes tempting: the first, the unit's case, always posed; each other a supplementary case. The words of the file are the values of ${SPEC}lexicon.yaml at the keys form.yaml names: a \
 field's label is \`unit_fields.<field>\` (a field opens with \`- **<label>** :\`; the instruction of a unit is unlabelled, its \
 block's word being its label; the field of misconceptions of the lesson (\`misconceptions\` of its block) lists each \
 misconception below its label, \`  - **<name>** : « <belief> »\`, then its parts, each labelled), a block's word is \`unit_blocks.<block>\` or its one field's label, \
-a qualifier is \`qualifiers.<key>\` (fallback, practice, aside), the head, the foot and its blocks are \`headings.<key>\`, the kind word of a heading is \`block_kinds.<key>\`. Read both files first; \
+the head, the foot and its blocks are \`headings.<key>\`, the kind word of a heading is \`block_kinds.<key>\`. Read both files first; \
 below, a field is named by its key.`
 
 const SCOUT_SCHEMA = {
@@ -91,7 +91,7 @@ const CHECKS = `The seven checks:
 4. glossary term used before its defining concept, without a definition in passing, and without a concept reference to the defining concept or one of its sections or units in its sentence;
 5. root or correction of a misconception that relies on a notion not yet seen;
 6. false cross-reference ("seen in X", "recall of X", list of what is already taught) to an X that comes later, or that does not hold what is claimed;
-7. the same checks for the supplementary cases (fallback, practice, aside) and the annexes, from their entry point.
+7. the same checks for the supplementary cases (posed after a wrong answer or for practice) and the annexes, from their entry point.
 
 What the learner has received at a point of the course: the preceding units of the inventory and, for a unit, its matter, its anchor and its question; for a supplementary case, the matter of its unit and the case's own anchor and question. They are not assumed to read the storyline, the glossary or the rest of the concept file, even though the site shows the first two. Out of scope: prerequisites a learner skipped at their own request.
 The expected answer, the misconceptions of a unit's lesson with their roots and corrections, which come after its question, and the instruction of a unit or a case are the teacher's.
@@ -149,9 +149,9 @@ ${FORM}
 
 Build the cumulative inventory of what the learner receives following the course, from concept ${main[0].id} to concept ${lastMain.id}, in course order (${scout.course_yaml}). Files: ${upTo.map(c => c.concept_file).filter(Boolean).join(', ')}.
 
-One block per unit, one teacher message each, in the order of the course and, inside a concept file, in the order of the file. For each unit: what its matter and its anchor give the learner (notions, rules, defined terms, storyline actors with what is said of them, storyline facts); its question, in one line; and its expected answer, in one line, which the learner hears in the correction after answering. After a unit, each of its supplementary cases, by its title and its qualifier, with its anchor, its question and its expected answer in one line each: a supplementary case is posed only when its qualifier says (a fallback when the learner fails, practice, an aside), so what it gives is never counted as received by the units after it. The head and the foot of a concept file do not enter the inventory, the deepening least of all.
+One block per unit, one teacher message each, in the order of the course and, inside a concept file, in the order of the file. For each unit: what its matter and its anchor give the learner (notions, rules, defined terms, storyline actors with what is said of them, storyline facts); its question, in one line; and its expected answer, in one line, which the learner hears in the correction after answering. After a unit, each of its supplementary cases, by its title, with its anchor, its question and its expected answer in one line each: a supplementary case is posed only after a wrong answer or for practice, so what it gives is never counted as received by the units after it. The head and the foot of a concept file do not enter the inventory, the deepening least of all.
 
-Return the inventory as text, one block per unit titled "<unit id>: <unit title>", each of its supplementary cases after it titled "<unit id> / <case title> (<qualifier>)". No other comment.`,
+Return the inventory as text, one block per unit titled "<unit id>: <unit title>", each of its supplementary cases after it titled "<unit id> / <case title>". No other comment.`,
   { label: 'inventory' })
 
 if (!inventory) throw new Error('Empty inventory')
