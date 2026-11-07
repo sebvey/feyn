@@ -1,0 +1,62 @@
+---
+// The storyline page, ported from the old site's storyline page: the world of the course's
+// storyline (its title, the text under it, each of its sections), then its fixed facts, each
+// fact's unit id a link to that unit on its concept page. Every word comes from the document
+// (its headings, the navigation word as eyebrow) or from src/ui.ts.
+import Base from '../layouts/Base.astro';
+import Sommaire from '../components/Sommaire.astro';
+import { doc, words, md, mdInline, unitAddress } from '../lib/site';
+import { ui } from '../ui';
+
+const s = doc.storyline!;
+const name = words.site.nav.storyline;
+const world = s.world;
+const sections = (world?.sections ?? []).map((x, i) => ({ ...x, id: `world-${i + 1}` }));
+const facts = s.fixed_facts;
+const toc = [
+  ...sections.map((x) => ({ id: x.id, title: x.heading })),
+  ...(facts ? [{ id: 'facts', title: facts.heading }] : []),
+];
+
+// A fact's unit id, where the fact writes it (« … (0a1). »), becomes the link to its unit; a fact
+// that does not write it gets the link after its text.
+const unitPattern = (id: string) => new RegExp(`(?<![\\p{L}\\p{N}#-])${id}(?![\\p{L}\\p{N}])(?![^<]*>)`, 'gu');
+function factHtml(f: { text: string; unit: string | null }): string {
+  const html = mdInline(f.text);
+  const to = f.unit ? unitAddress(f.unit) : undefined;
+  if (!f.unit || !to) return html;
+  const link = `<a class="fait-unite" href="${to}">${f.unit}</a>`;
+  const matches = [...html.matchAll(unitPattern(f.unit))];
+  const last = matches[matches.length - 1];
+  if (!last) return `${html} <span class="chips">${link}</span>`;
+  return html.slice(0, last.index) + link + html.slice(last.index! + f.unit.length);
+}
+---
+<Base title={name} nav="storyline">
+  <div class="container-wide">
+    <section class="page tr">
+      <p class="eyebrow">{name}</p>
+      <h1>{world?.title ?? name}</h1>
+      {world?.text && <div class="lead tr-lead" set:html={md(world.text)} />}
+      <div class="avec-sommaire">
+        {toc.length > 0 && <Sommaire items={toc} label={ui.onThisPage} />}
+        <div class="sommaire-contenu">
+          {sections.map((x) => (
+            <section class="fr-section" id={x.id} aria-labelledby={`${x.id}-t`}>
+              <h2 id={`${x.id}-t`}>{x.heading}</h2>
+              <div class="tr-text-p" set:html={md(x.text)} />
+            </section>
+          ))}
+          {facts && (
+            <section class="fr-section" id="facts" aria-labelledby="facts-t">
+              <h2 id="facts-t">{facts.heading}</h2>
+              <ul class="tr-text faits">
+                {facts.facts.map((f) => <li set:html={factHtml(f)} />)}
+              </ul>
+            </section>
+          )}
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>

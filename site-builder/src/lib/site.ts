@@ -39,6 +39,12 @@ export interface Concept {
   sources?: Table[];
 }
 export interface ConceptRef { text: string; targets: { id: string; concept: string; path: string; anchor: string | null }[] }
+export interface Storyline {
+  world?: { title: string | null; text: string; sections: { heading: string; text: string }[] };
+  fixed_facts?: { heading: string; facts: { text: string; unit: string | null }[] };
+}
+export interface TableSection { key: string; heading: string; header: string[]; rows: string[][] }
+export interface Glossary { table?: { header: string[]; rows: string[][] }; sections: TableSection[] }
 export interface Doc {
   spec: string;
   language: string;
@@ -46,6 +52,10 @@ export interface Doc {
   plan: Section[];
   domains: Domain[];
   concepts: Concept[];
+  storyline: Storyline | null;
+  glossary: Glossary | null;
+  /** The latest release of the course: null while it has none, absent when its spec does not publish it. */
+  release?: { version: string; date: string } | null;
   concept_refs: ConceptRef[];
   words: {
     course: {
@@ -90,6 +100,14 @@ export const domainName = (d: Domain) => `${words.site.labels.domain} ${d.number
 
 export const conceptByNumber = new Map(doc.concepts.map((c) => [c.number, c]));
 export const annexes = doc.concepts.filter((c) => c.annex);
+
+/** The address of a unit, on its concept's page under its id, from the units the document gives. */
+const unitHref = new Map(doc.concepts.flatMap((c) => c.sections.flatMap((s) => s.units.map((u) => [u.id, `${href(c.path)}#${u.id}`] as const))));
+export const unitAddress = (id: string) => unitHref.get(id);
+
+/** The pages a course may lack (its storyline, its glossary): routed and linked only when the document gives them. */
+export const hasPage = (key: string) =>
+  key in pages && (key === 'storyline' ? !!doc.storyline : key === 'glossary' ? !!doc.glossary : true);
 
 // ---- Markdown: CommonMark, rendered as written (no raw HTML), the concept references linked, the
 // stance markers as badges
@@ -161,7 +179,7 @@ export const md = (text: string) => badges(String(processor.processSync(text)));
  * text's first paragraph, or before the text in its own when the text opens with a list. The text
  * keeps its first letter as written (no script capitalises course text).
  */
-export function mdLabelled(label: string, text: string, cls = 'ex-label'): string {
+export function mdLabelled(label: string, text: string, cls = 'cas-label'): string {
   const html = md(text).trim();
   const tag = `<span class="${cls}">${escapeHtml(labelled(label))}</span>`;
   return html.startsWith('<p>') ? `<p>${tag}${html.slice(3)}` : `<p>${tag}</p>${html}`;

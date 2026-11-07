@@ -1,0 +1,188 @@
+---
+// The glossary page, ported from the old site's glossary page: the terms of the course glossary's
+// first table, by their first letter, each with its English, its definition and the concepts it is
+// defined in (a link each); the old site's filter by text and by concept; then each further table
+// of the glossary the document gives (its terms to avoid), under its heading. The columns are read
+// by their place in the table (term, English, definition, defined in), their headings from the
+// document; every other word comes from the document or from src/ui.ts.
+import Base from '../layouts/Base.astro';
+import Sommaire from '../components/Sommaire.astro';
+import { doc, words, mdInline, href, labelled, conceptName, domainName, conceptByNumber, annexes } from '../lib/site';
+import type { Concept } from '../lib/site';
+import { ui } from '../ui';
+
+const g = doc.glossary!;
+const name = words.site.nav.glossary;
+const header = g.table?.header ?? [];
+const plain = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const stripMd = (s: string) => s.replace(/[*_`]+/g, '');
+
+// The concepts a term is defined in: each number the cell names that is a concept of the course.
+const definedIn = (cell: string) =>
+  (cell.match(/[A-Za-z]?\d+/g) ?? []).map((n) => conceptByNumber.get(n)).filter((c): c is Concept => !!c);
+
+// The terms, sorted by their letters without accents, each with an anchor of its own.
+const used = new Set<string>();
+const anchor = (term: string) => {
+  const root = `terme-${plain(stripMd(term)).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x'}`;
+  let id = root;
+  for (let i = 2; used.has(id); i++) id = `${root}-${i}`;
+  used.add(id);
+  return id;
+};
+const terms = (g.table?.rows ?? [])
+  .map((r) => ({ term: r[0] ?? '', en: r[1] ?? '', def: r[2] ?? '', concepts: definedIn(r[3] ?? '') }))
+  .filter((t) => t.term)
+  .sort((a, b) => plain(stripMd(a.term)).localeCompare(plain(stripMd(b.term)), doc.language))
+  .map((t) => ({ ...t, id: anchor(t.term) }));
+const letterOf = (s: string) => {
+  const l = plain(stripMd(s)).replace(/[^a-z0-9]/g, '').charAt(0).toUpperCase();
+  return /[0-9]/.test(l) ? '0-9' : l || '?';
+};
+const groups: { letter: string; id: string; items: typeof terms }[] = [];
+for (const t of terms) {
+  const l = letterOf(t.term);
+  const found = groups.find((x) => x.letter === l);
+  if (found) found.items.push(t);
+  else groups.push({ letter: l, id: `lettre-${l.toLowerCase()}`, items: [t] });
+}
+const sections = g.sections.map((s) => ({ ...s, id: `section-${s.key}` }));
+const toc = [
+  ...groups.map((x) => ({ id: x.id, title: x.letter })),
+  ...sections.map((s) => ({ id: s.id, title: s.heading })),
+];
+
+// The choice of a concept in the filter: those a term is defined in, by domain, then the annexes.
+const usedConcepts = new Set(terms.flatMap((t) => t.concepts.map((c) => c.number)));
+const choice = doc.domains
+  .map((d) => ({ label: `${domainName(d)} · ${d.title}`, concepts: d.concepts.filter((n) => usedConcepts.has(n)).map((n) => conceptByNumber.get(n)!) }))
+  .filter((x) => x.concepts.length > 0);
+const looseConcepts = [...annexes, ...doc.concepts.filter((c) => !c.annex && c.domain === null)].filter((c) => usedConcepts.has(c.number));
+const optionLabel = (c: Concept) => `${conceptName(c)} · ${c.title}`;
+const etq = ['ev', 'pl'];
+---
+<Base title={name} nav="glossary">
+  <div class="container-wide">
+    <section class="page tr">
+      <h1>{name}</h1>
+
+      <div class="avec-sommaire">
+        <Sommaire items={toc} label={ui.onThisPage} compact />
+        <div class="sommaire-contenu">
+
+          {terms.length > 0 && (
+            <div class="gl-filtre" data-pagefind-ignore hidden>
+              <form role="search" aria-label={ui.filter}>
+                <div class="champ">
+                  <label for="gl-q">{ui.filterText}</label>
+                  <input id="gl-q" type="search" autocomplete="off" />
+                </div>
+                <div class="champ">
+                  <label for="gl-c">{header[3] ?? ''}</label>
+                  <select id="gl-c" autocomplete="off">
+                    <option value="">{ui.filterAll}</option>
+                    {choice.map((x) => (
+                      <optgroup label={x.label}>
+                        {x.concepts.map((c) => <option value={c.number}>{optionLabel(c)}</option>)}
+                      </optgroup>
+                    ))}
+                    {looseConcepts.map((c) => <option value={c.number}>{optionLabel(c)}</option>)}
+                  </select>
+                </div>
+              </form>
+              <p class="gl-statut" role="status" aria-live="polite" id="gl-statut" data-one={ui.termOne} data-many={ui.termMany} data-of={ui.termOf}></p>
+            </div>
+          )}
+
+          <div id="gl-liste">
+            {groups.map((x) => (
+              <section class="gl-groupe" data-groupe aria-labelledby={x.id}>
+                <h2 class="gl-lettre" id={x.id}>{x.letter}</h2>
+                <ul class="gl-termes">
+                  {x.items.map((t) => (
+                    <li class="gl-terme" id={t.id} data-s={plain(stripMd(`${t.term} ${t.en} ${t.def}`))} data-c={` ${t.concepts.map((c) => c.number).join(' ')} `}>
+                      <h3><a href={`#${t.id}`} class="gl-nom"><span set:html={mdInline(t.term)} /></a></h3>
+                      {t.en && <p class="gl-en">{labelled(header[1] ?? '')} <span set:html={mdInline(t.en)} /></p>}
+                      {t.def && <p class="gl-def" set:html={mdInline(t.def)} />}
+                      {t.concepts.length > 0 && (
+                        <p class="gl-orig">
+                          {labelled(header[3] ?? '')}
+                          <span class="chips">{t.concepts.map((c) => <a class="chip" href={href(c.path)} title={`${labelled(conceptName(c))}${c.title}`}>{c.number}</a>)}</span>
+                        </p>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+          <p class="gl-vide" id="gl-vide" hidden>{ui.filterNone}</p>
+
+          {sections.map((s) => (
+            <section class="fr-section" id={s.id} aria-labelledby={`${s.id}-t`}>
+              <h2 id={`${s.id}-t`}>{s.heading}</h2>
+              <ul class="eviter">
+                {s.rows.map((r) => (
+                  <li>
+                    {r.map((cell, i) => cell && (
+                      <p class={etq[i] ?? 'pq'}><span class="etq">{s.header[i] ?? ''}</span> <span set:html={mdInline(cell)} /></p>
+                    ))}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script is:inline>
+    // The filter: by the words typed (accents ignored) and by the concept a term is defined in; ?q=
+    // and ?concept= fill it (a direct link); an anchor to a term the filter hides lifts the filter.
+    (function () {
+      var box = document.querySelector('.gl-filtre');
+      var q = document.getElementById('gl-q');
+      var sel = document.getElementById('gl-c');
+      var status = document.getElementById('gl-statut');
+      var empty = document.getElementById('gl-vide');
+      if (!box || !q || !sel) return;
+      box.hidden = false;
+      var form = q.closest('form');
+      if (form) form.addEventListener('submit', function (e) { e.preventDefault(); });
+      var items = Array.prototype.slice.call(document.querySelectorAll('.gl-terme'));
+      var groups = Array.prototype.slice.call(document.querySelectorAll('[data-groupe]'));
+      function norm(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+      function filter() {
+        var words = norm(q.value).split(/\s+/).filter(Boolean);
+        var c = sel.value;
+        var n = 0;
+        items.forEach(function (el) {
+          var ok = words.every(function (m) { return el.dataset.s.indexOf(m) !== -1; }) &&
+                   (!c || el.dataset.c.indexOf(' ' + c + ' ') !== -1);
+          el.hidden = !ok;
+          if (ok) n++;
+        });
+        groups.forEach(function (g) { g.hidden = !g.querySelector('.gl-terme:not([hidden])'); });
+        var active = words.length > 0 || c !== '';
+        empty.hidden = n !== 0;
+        status.textContent = active && n > 0
+          ? n + ' ' + (n === 1 ? status.dataset.one : status.dataset.many) + ' ' + status.dataset.of + ' ' + items.length
+          : '';
+      }
+      q.addEventListener('input', filter);
+      sel.addEventListener('change', filter);
+      var params = new URLSearchParams(location.search);
+      if (params.get('q')) q.value = params.get('q');
+      if (params.get('concept')) sel.value = params.get('concept');
+      filter();
+      function toAnchor() {
+        var id = decodeURIComponent(location.hash.replace(/^#/, ''));
+        var el = id && document.getElementById(id);
+        if (el && el.closest('[hidden]')) { q.value = ''; sel.value = ''; filter(); el.scrollIntoView(); }
+      }
+      window.addEventListener('hashchange', toAnchor);
+      toAnchor();
+    })();
+  </script>
+</Base>

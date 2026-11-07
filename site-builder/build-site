@@ -201,10 +201,13 @@ for (const f of fs.existsSync(fragments) ? fs.readdirSync(fragments) : []) {
 
 // ---- what the build must hold: a page at each address it routes
 const expected = [
-  ...['home', 'domains', 'search', 'not_found'].map((k) => doc.url_scheme.pages[k]),
+  ...['home', 'domains', 'about', 'search', 'not_found'].map((k) => doc.url_scheme.pages[k]),
+  // the storyline and the glossary, when the course has them
+  ...(doc.storyline ? [doc.url_scheme.pages.storyline] : []),
+  ...(doc.glossary ? [doc.url_scheme.pages.glossary] : []),
   ...doc.domains.map((d) => d.path),
   ...doc.concepts.map((c) => c.path),
-].map((a) => (a === '' || a.endsWith('/') ? `${a}index.html` : a));
+].filter((a) => typeof a === 'string').map((a) => (a === '' || a.endsWith('/') ? `${a}index.html` : a));
 const missing = expected.filter((f) => !fs.existsSync(path.join(out, f)));
 if (missing.length) fail(`the build holds no ${missing.join(', ')} in ${out}`);
 if (!fs.existsSync(path.join(out, 'pagefind'))) fail(`the build holds no Pagefind index in ${out}`);

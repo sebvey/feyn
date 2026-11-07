@@ -2,10 +2,11 @@
 // The shell of every page, ported from the old site's src/layouts/Base.astro: the skip link, the
 // header (the course title as brand; the navigation, whose words come from the document; search;
 // the theme toggle), the main content, indexed by Pagefind unless `noindex`, and the footer
-// (the link to the about page). `nav` is the key of the URL scheme's page the header marks as current.
+// (the link to the about page, and the band with the course's version: its number, or « version non
+// publiée » while it has none; no band when the document does not give it). `nav` is the key of the URL scheme's page the header marks as current.
 // The page's language is the document's (`language`, its spec MAJOR's): the engine writes none.
 import '../styles/global.css';
-import { doc, words, pageHref, href } from '../lib/site';
+import { doc, words, pageHref, href, hasPage } from '../lib/site';
 import { ui } from '../ui';
 import Mark from '../icons/marque.svg';
 import Magnifier from '../icons/loupe.svg';
@@ -25,7 +26,8 @@ const items = [
   { key: 'domains', label: words.site.nav.domains },
   { key: 'storyline', label: words.site.nav.storyline },
   { key: 'glossary', label: words.site.nav.glossary },
-];
+].filter((i) => hasPage(i.key));
+const release = doc.release;
 ---
 <!doctype html>
 <html lang={doc.language}>
@@ -125,6 +127,9 @@ const items = [
     <footer class="site-footer">
       <div class="container-wide row">
         <p><a href={pageHref('about')} aria-current={nav === 'about' ? 'page' : undefined}>{ui.about}</a></p>
+        {release !== undefined && (
+          <p class="footer-meta version" data-pagefind-ignore>{release ? `${ui.version} ${release.version}` : ui.unreleased}</p>
+        )}
       </div>
     </footer>
   </body>

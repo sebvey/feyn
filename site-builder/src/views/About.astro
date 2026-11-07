@@ -1,0 +1,20 @@
+---
+// The « À propos » page: the one text of site-builder about the site (`about` in src/ui.ts), the
+// same for every course, inspired by the old site's about page; it names no course.
+import Base from '../layouts/Base.astro';
+import { ui, about } from '../ui';
+---
+<Base title={ui.about} nav="about">
+  <div class="container">
+    <section class="page prose">
+      <h1>{ui.about}</h1>
+      <p class="lead">{about.lead}</p>
+      {about.sections.map((s) => (
+        <>
+          <h2 id={s.id}>{s.heading}</h2>
+          {s.paragraphs.map((p) => <p>{p}</p>)}
+        </>
+      ))}
+    </section>
+  </div>
+</Base>

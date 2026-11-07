@@ -5,13 +5,16 @@
 // an address. An address ending with `.html` (the page of an address no page has) is given without
 // its extension: Astro writes a status page (`404`) as `404.html`, and build-site moves any other
 // one to its address.
-import { doc, pages } from '../lib/site';
+import { doc, pages, hasPage } from '../lib/site';
 import Home from '../views/Home.astro';
 import Domains from '../views/Domains.astro';
 import DomainPage from '../views/Domain.astro';
 import ConceptPage from '../views/Concept.astro';
 import Search from '../views/Search.astro';
 import NotFound from '../views/NotFound.astro';
+import Storyline from '../views/Storyline.astro';
+import Glossary from '../views/Glossary.astro';
+import About from '../views/About.astro';
 
 export function getStaticPaths() {
   const param = (address: string) => {
@@ -23,6 +26,8 @@ export function getStaticPaths() {
     { params: { path: param(pages.domains) }, props: { page: 'domains' } },
     ...doc.domains.map((d) => ({ params: { path: param(d.path) }, props: { page: 'domain', domain: d.number } })),
     ...doc.concepts.map((c) => ({ params: { path: param(c.path) }, props: { page: 'concept', concept: c.number } })),
+    // the storyline and the glossary only when the course has them
+    ...['storyline', 'glossary', 'about'].filter(hasPage).map((key) => ({ params: { path: param(pages[key]) }, props: { page: key } })),
     { params: { path: param(pages.search) }, props: { page: 'search' } },
     { params: { path: param(pages.not_found) }, props: { page: 'not_found' } },
   ];
@@ -34,5 +39,8 @@ const { page, domain, concept } = Astro.props as { page: string; domain?: number
 {page === 'domains' && <Domains />}
 {page === 'domain' && <DomainPage number={domain!} />}
 {page === 'concept' && <ConceptPage number={concept!} />}
+{page === 'storyline' && <Storyline />}
+{page === 'glossary' && <Glossary />}
+{page === 'about' && <About />}
 {page === 'search' && <Search />}
 {page === 'not_found' && <NotFound />}

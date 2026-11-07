@@ -1,6 +1,6 @@
 # site-builder
 
-Builds the site of a course: the site engine (Astro), its one command (`build-site`), which runs the spec half of the site build on a course and lays its output out in pages with the old site's design, and Pagefind's search index. Its own documentation lives in `site-builder/docs/`, its decisions in `site-builder/decisions/`. Builds are deployed to the artifact repository `sebvey/feyn-site`, never from here.
+Builds the site of a course: the site engine (Astro), its command `build-site`, which runs the spec half of the site build on a course and lays its output out in pages with the old site's design, and Pagefind's search index, and its command `verify-site`, which verifies a build in a browser. Its own documentation lives in `site-builder/docs/`, its decisions in `site-builder/decisions/`. Builds are deployed to the artifact repository `sebvey/feyn-site`, never from here.
 
 ## The two halves
 
@@ -12,7 +12,7 @@ The engine never reads a course file, nor a spec file but that schema: every tex
 
 ## Install
 
-Once, and after each change of `package-lock.json`: `cd site-builder && mise exec -- npm ci` (or `mise exec -- npm ci --prefix site-builder` from the root, the plain form an agent in a worktree runs). The dependencies, their versions pinned: Astro and Pagefind, the remark pipeline that renders the course's Markdown (`unified`, `remark-parse`, `remark-rehype`, `rehype-stringify`), and for `astro check` only, `@astrojs/check`, `typescript` and `@types/node`. `render-site` and the validation also need the spec directives' package: `mise exec -- npm ci --prefix spec-directives/1`. Missing either, `build-site` stops at exit 2 with the command to run.
+Once, and after each change of `package-lock.json`: `cd site-builder && mise exec -- npm ci` (or `mise exec -- npm ci --prefix site-builder` from the root, the plain form an agent in a worktree runs). The dependencies, their versions pinned: Astro and Pagefind, the remark pipeline that renders the course's Markdown (`unified`, `remark-parse`, `remark-rehype`, `rehype-stringify`), for `astro check` only, `@astrojs/check`, `typescript` and `@types/node`, and for `verify-site` only, Playwright (`playwright`, a dev dependency). `render-site` and the validation also need the spec directives' package: `mise exec -- npm ci --prefix spec-directives/1`. Missing either, `build-site` stops at exit 2 with the command to run.
 
 ## The command
 
@@ -29,20 +29,42 @@ Exit 0 built, 1 an input the build cannot read (`render-site` failed, its output
 
 ## The output
 
-One page per address of the URL scheme (`course-specs/linear-course/1/site/url-scheme.yaml`, given through the document), under the base path: the home (`index.html`), the domain map (`domaines/index.html`), a page per domain (`domaines/<n>/index.html`), a page per concept and per annex (`concepts/<nn>/index.html`, `concepts/00/` for concept 0, `concepts/A1/` for annex A1), the search page (`recherche/index.html`) and the page of an address no page has (`404.html`); then `pagefind/`, the search index, and `_astro/`, the stylesheet and the icons. The storyline, glossary and « À propos » pages are epic #598's next stories: the header and the footer already link to their addresses.
+One page per address of the URL scheme (`course-specs/linear-course/1/site/url-scheme.yaml`, given through the document), under the base path: the home (`index.html`), the domain map (`domaines/index.html`), a page per domain (`domaines/<n>/index.html`), a page per concept and per annex (`concepts/<nn>/index.html`, `concepts/00/` for concept 0, `concepts/A1/` for annex A1), the storyline page (`fil-rouge/index.html`) and the glossary page (`glossaire/index.html`) when the course has them (the document's `storyline` and `glossary` not null; otherwise neither the page nor its link in the header), the « À propos » page (`a-propos/index.html`), the search page (`recherche/index.html`) and the page of an address no page has (`404.html`); then `pagefind/`, the search index, and `_astro/`, the stylesheet and the icons. Every page ends with the footer: the link to « À propos » and the band of the course version, the document's `release` (« version 1.2.0 », or « version non publiée » while the course has no released version; no band when its spec does not publish it), no detail.
 
 ## How the engine lays the document out
 
 - **One route.** Astro's file-based routing would write the addresses in file names: the one page `src/pages/[...path].astro` routes every page from the addresses the document gives (`url_scheme.pages`, each domain's and each concept's `path`), and hands it to its view in `src/views/`. An address that is a file (`404.html`) is routed without its extension; `build-site` moves it to its address when Astro writes it as a folder.
-- **The words.** A word that names a thing of the course comes from the document's `words` (the navigation, the labels, the headings, the kind words, the separator « : »); a word of the interface (the skip link, the menu, search, « À propos », previous and next, the theme toggle, a concept page's table of contents and the button that reveals an expected answer, the 404 page, the version) is written once, in `src/ui.ts`; a page writes none of its own (decision `one-source-two-builds`).
+- **The words.** A word that names a thing of the course comes from the document's `words` (the navigation, the labels, the headings, the kind words, the separator « : »); a word of the interface (the skip link, the menu, search, « À propos », previous and next, the theme toggle, a concept page's table of contents and the button that reveals an expected answer, the glossary's filter, the 404 page, the version and « version non publiée ») is written once, in `src/ui.ts`, as is the text of the « À propos » page (`about`), the site's own text about itself, the same for every course, which names no course and no licence; a page writes none of its own (decision `one-source-two-builds`).
 - **The text.** The course's Markdown, CommonMark, is rendered as written by the remark pipeline (`src/lib/site.ts`), raw HTML left out; each concept reference the document lists (`concept_refs`) becomes a link to its page, each stance marker (`[consensus]`, `[école]`, `[cours]`, the course lexicon's `markers`) the badge of its stance with the marker's word, out of the search index, `**gras**` bold. French typography is applied to every page's HTML at build time (`src/lib/typo-fr.ts`, run by `src/middleware.ts`): no-break spaces and curly apostrophes, no word changed. No script capitalises a course text: a label comes before a text that starts lowercase (« Objectif : dire si … », « Réponse attendue : trop peu : … »). The page's language is the document's `language`, its spec MAJOR's: the engine writes none.
 - **The design.** The old site's (`parcours-po-website`): `src/styles/global.css` ports its `global.css` and `transversal.css` (tokens, palette, serif body, system UI, dark mode by preference and by the header's toggle, widths 40rem and 66rem, accessibility, print styles), its class names kept, reworked only where the structure changes (no tabs, no cross-course pages, no course bar); the shell (`src/layouts/Base.astro`: skip link, header with the course title as brand, navigation, search and theme toggle, footer with « À propos »), the table of contents (`Sommaire`), the foldable concepts (`ConceptList`), the duration bubble (`Bulle`) and the previous and next cards (`PrevNext`) are its components, ported.
 - **The concept page.** `src/views/Concept.astro` follows the course's division top to bottom, with no tabs (epic #598, point 17): the head (the eyebrow, the title, the objective, the prerequisites), the sticky table of contents (`Sommaire`, a section by its id and title on desktop, its title on a phone) beside the text column, « L'essentiel », each section and each unit in place (`Sous`: its matter, the diagrams that name it (`Figure`), its cases (`Cases`, each expected answer in a `<details>` closed by default and out of the index) and its « Pièges » (`Erreurs`)), « Clôture » (« Se vérifier » in the `Reflexe` box), the stances in three columns (`Ecoles`, the badges `Pastille`, the references `Refs`) and the neighbours (`Voisins`), the sources (`Sources`: « Affirmations », each nature a badge or its word, « Références » under the anchors `ref-S1`), the previous and next cards; an annex, out of the reading order, has none. What the document leaves out (« Consigne au professeur », « Non vérifié », a part `published: false`) is never there to build.
+
+- **The storyline page.** `src/views/Storyline.astro`: the world of `storyline.md` (its title, the text under it, each of its sections, listed in the table of contents), then its fixed facts under their heading, each fact's unit id a link to that unit on its concept page (`concepts/00/#0a1`).
+- **The glossary page.** `src/views/Glossary.astro`: the terms of the glossary's first table, read by the place of their column (term, English, definition, defined in; the headings are the table's), sorted and grouped by their first letter, the letters in the table of contents; each term with its English, its definition and the concepts it is defined in, a link each; the old site's filter, by text (accents ignored) and by the concept a term is defined in, grouped by domain, filled by `?q=` and `?concept=`; then each further table the document gives (« Termes à éviter »), under its heading.
+- **The « À propos » page.** `src/views/About.astro`: the text `about` of `src/ui.ts`.
 
 ## The search index
 
 Pagefind splits a word at a straight apostrophe, not at the curly one the typography writes: « l’extraction » would be one word, and searching « extraction » would miss it. `build-site` has Pagefind index a copy of the pages whose apostrophes between two letters are straight, then gives the excerpts Pagefind stores (its fragments) their curly apostrophes back; the pages are not touched.
 
+## The verification
+
+```
+mise exec -- site-builder/verify-site <built-dir> [--base <path>] [--captures <dir>]
+```
+
+- `<built-dir>`: a folder `build-site` wrote (`site-builder/dist/next/cafe`).
+- `--base <path>`: the base path the pages were built under; by default the one the home page's favicon link is under, which `build-site` writes under the base.
+- `--captures <dir>`: where the captures go; by default a new folder of the system's temp folder, printed at the end. Never inside the build, which it refuses.
+
+Ported from the old site's `scripts/verify.mjs`, it serves the build itself at its base path (a folder by its `index.html`, an address no file has by the build's `404.html`), then checks, on every page:
+- the internal links and anchors: each `href` and `src` leads to a file of the build, under the base path, and its anchor, if any, to an `id` of that page;
+- in a headless Chromium (Playwright), at 1280 and 375 px wide, in light and in dark: a full-page capture, no horizontal overflow (at the opening, then with every `<details>` open), no JavaScript error, no request of the site that fails.
+
+Exit 0 every check passes, 1 a check fails (each failure printed), 2 a usage error, a folder that is not a site build, or Playwright or its browser missing. The old site's alignment stamps (`check-alignment.mjs`) and its typography check are not ported.
+
+The browser, once per machine (and after a change of Playwright's version): `cd site-builder && mise exec -- npx playwright install chromium`, which downloads the Chromium of the Playwright the lockfile pins into Playwright's cache (`~/Library/Caches/ms-playwright` on macOS); `npm ci` installs Playwright, not its browser.
+
 ## The check
 
-`mise exec -- npm run check --prefix site-builder`: `astro check`, the types of the engine's files. The site's verification (links, captures, no overflow, no JS error) comes with epic #598's sixth story; until then, a build of `cafe` read in a browser.
+`mise exec -- npm run check --prefix site-builder`: `astro check`, the types of the engine's files.
