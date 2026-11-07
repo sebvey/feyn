@@ -59,7 +59,7 @@ jobs:
           cd site-builder && npx playwright install --with-deps chromium
 
       - name: Build
-        run: site-builder/build-site "$COURSE_DIR" --channel preview --base "/feyn-site/pr-$PR/$COURSE_ID/" --out "$RUNNER_TEMP/site"
+        run: site-builder/build-site "$COURSE_DIR" --channel preview --base "/feyn-site/pr-$PR/$COURSE_ID/" --origin "$(echo "$SITE_URL" | cut -d/ -f1-3)" --out "$RUNNER_TEMP/site"
 
       - name: Verify
         run: site-builder/verify-site "$RUNNER_TEMP/site" --base "/feyn-site/pr-$PR/$COURSE_ID/" --captures "$RUNNER_TEMP/captures"

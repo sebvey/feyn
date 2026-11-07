@@ -5,10 +5,16 @@
 // (the link to the about page, and the band with the course's version: its number, or « version non
 // publiée » while it has none; no band when the document does not give it). `nav` is the key of the URL scheme's page the header marks as current.
 // The page's language is the document's (`language`, its spec MAJOR's): the engine writes none.
+// The look is the course's (src/lib/look.ts): its logo in the header, painted in the accent through
+// `currentColor`; the accent family and the focus as custom properties, per theme; the favicon and the
+// share image the build writes from them; `theme-color`, the accent of each theme. `og:url` and
+// `og:image` are absolute addresses, written only when the build is given an origin (`Astro.site`,
+// build-site's `--origin`); `og:url` not on a page out of the index (the search page, the 404 page,
+// served at any address no page has).
 import '../styles/global.css';
 import { doc, words, pageHref, href, hasPage } from '../lib/site';
 import { ui } from '../ui';
-import Mark from '../icons/marque.svg';
+import { logo, tokensCss, accent } from '../lib/look';
 import Magnifier from '../icons/loupe.svg';
 import Sun from '../icons/soleil.svg';
 import Moon from '../icons/lune.svg';
@@ -28,6 +34,8 @@ const items = [
   { key: 'glossary', label: words.site.nav.glossary },
 ].filter((i) => hasPage(i.key));
 const release = doc.release;
+const headerLogo = logo({ width: '28', height: '28', 'aria-hidden': 'true', focusable: 'false' });
+const site = Astro.site;
 ---
 <!doctype html>
 <html lang={doc.language}>
@@ -39,7 +47,12 @@ const release = doc.release;
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="icon" type="image/svg+xml" href={href('favicon.svg')} />
     <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content={accent.light} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={accent.dark} media="(prefers-color-scheme: dark)" />
+    <style is:inline set:html={tokensCss}></style>
     <meta property="og:title" content={fullTitle} />
+    {site && !noindex && <meta property="og:url" content={new URL(Astro.url.pathname, site).href} />}
+    {site && <meta property="og:image" content={new URL(href('share.png'), site).href} />}
     <script is:inline>
       document.documentElement.classList.add('js');
       // The theme the reader chose (the header's button), applied before the page shows; otherwise the system's.
@@ -54,7 +67,7 @@ const release = doc.release;
     <header class="site-header">
       <div class="container-wide bar">
         <a class="brand" href={pageHref('home')} aria-current={nav === 'home' ? 'page' : undefined}>
-          <Mark width="28" height="28" aria-hidden="true" />
+          <Fragment set:html={headerLogo} />
           <span class="brand-nom">{course.title}</span>
         </a>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list" hidden>{ui.menu}</button>

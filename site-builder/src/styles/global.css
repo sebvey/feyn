@@ -4,6 +4,10 @@
    The class names are the old site's. */
 
 /* ---------- Tokens ---------- */
+/* The accent family (--accent, --accent-ink, --bulle-*, --sch-s1 to --sch-s3, --sch-s-ink in the dark
+   themes) and the focus are the course's: derived from its accent colour at build time
+   (src/lib/look.ts) and written by the layout in these three blocks (decision
+   accent-family-from-the-course-hue). */
 :root {
   color-scheme: light dark;
 
@@ -13,9 +17,6 @@
   --ink: #1d1c1a;
   --ink-soft: #55514a;
   --rule: #ddd8cb;
-  --accent: #1f5a8f;
-  --accent-ink: #164a78;
-  --focus: #b4530a;
 
   /* Badges: three hues + a shape + a word */
   --p-consensus-bg: #dcefea;
@@ -27,18 +28,12 @@
   --p-cours-bg: #e9e2f5;
   --p-cours-fg: #46277f;
   --p-cours-line: #b2a0d8;
-  --bulle-bg: #e2ecf5;
-  --bulle-fg: #164a78;
-  --bulle-alt: #c9dbec;
 
   /* Diagrams */
   --sch-band: #ebe7dc;
   --sch-band-line: #bdb7a8;
   --sch-grey: #cfcac0;
   --sch-grey-line: #8a8478;
-  --sch-s1: #1f5a8f;
-  --sch-s2: #4f87ba;
-  --sch-s3: #8db4d8;
   --sch-s-ink: #ffffff;
   --sch-text: #1d1c1a;
   --sch-text-soft: #55514a;
@@ -59,9 +54,6 @@
     --ink: #ece9e1;
     --ink-soft: #b3aea3;
     --rule: #39352f;
-    --accent: #8fbfe9;
-    --accent-ink: #b0d3f2;
-    --focus: #f0a45c;
 
     --p-consensus-bg: #12342e;
     --p-consensus-fg: #95dccd;
@@ -72,18 +64,11 @@
     --p-cours-bg: #2c2248;
     --p-cours-fg: #d1bff5;
     --p-cours-line: #5f4a97;
-    --bulle-bg: #1c2f42;
-    --bulle-fg: #b0d3f2;
-    --bulle-alt: #26405a;
 
     --sch-band: #24221e;
     --sch-band-line: #4a463e;
     --sch-grey: #3a3731;
     --sch-grey-line: #8d887c;
-    --sch-s1: #8fbfe9;
-    --sch-s2: #5f93c4;
-    --sch-s3: #3d6c9c;
-    --sch-s-ink: #0f1a24;
     --sch-text: #ece9e1;
     --sch-text-soft: #b3aea3;
   }
@@ -97,9 +82,6 @@
   --ink: #ece9e1;
   --ink-soft: #b3aea3;
   --rule: #39352f;
-  --accent: #8fbfe9;
-  --accent-ink: #b0d3f2;
-  --focus: #f0a45c;
   --p-consensus-bg: #12342e;
   --p-consensus-fg: #95dccd;
   --p-consensus-line: #2f6b5f;
@@ -109,17 +91,10 @@
   --p-cours-bg: #2c2248;
   --p-cours-fg: #d1bff5;
   --p-cours-line: #5f4a97;
-  --bulle-bg: #1c2f42;
-  --bulle-fg: #b0d3f2;
-  --bulle-alt: #26405a;
   --sch-band: #24221e;
   --sch-band-line: #4a463e;
   --sch-grey: #3a3731;
   --sch-grey-line: #8d887c;
-  --sch-s1: #8fbfe9;
-  --sch-s2: #5f93c4;
-  --sch-s3: #3d6c9c;
-  --sch-s-ink: #0f1a24;
   --sch-text: #ece9e1;
   --sch-text-soft: #b3aea3;
 }
@@ -219,7 +194,7 @@ h1, h2, h3, h4 {
 }
 /* Desktop: the two round buttons stay together. */
 @media (min-width: 58rem) { .search-link + .theme-toggle { margin-left: -0.75rem; } }
-/* Very narrow: the mark alone stands for the brand (the name is still read by screen readers). */
+/* Very narrow: the logo alone stands for the brand (the name is still read by screen readers). */
 @media (max-width: 26rem) { .brand-nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 /* The icon shows the theme the button switches to. */
 .theme-toggle .icone-soleil { display: none; }

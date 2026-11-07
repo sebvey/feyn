@@ -10,6 +10,7 @@
     "node": ">=22.23.4"
   },
   "dependencies": {
+    "@resvg/resvg-js": "2.6.2",
     "astro": "7.4.2",
     "pagefind": "1.5.2",
     "rehype-stringify": "10.0.1",

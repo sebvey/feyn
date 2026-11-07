@@ -4,11 +4,14 @@
 // (site-builder/README.md, "The verification"):
 //   1. the internal links and anchors: each href and src of each page leads to a file of the build,
 //      and its anchor, if any, to an id of that page;
-//   2. in a headless Chromium (Playwright), each page served at its base path, at 1280 and 375 px
+//   2. the course's look on each page: its logo in the header (the favicon's drawing), the favicon
+//      link to a file of the build, a theme-color per theme, og:image, when written, an absolute
+//      address of a PNG of the build of 1200 x 630;
+//   3. in a headless Chromium (Playwright), each page served at its base path, at 1280 and 375 px
 //      wide, in light and in dark: a full-page capture, no horizontal overflow (at the opening, then
 //      with every <details> open), no JavaScript error, no request of the site that fails.
 // The base path is the one the pages were built under, read from the favicon link of the home page
-// (build-site writes it under the base), or given by --base. The captures go to --captures, by
+// (build-site writes the favicon under the base), or given by --base. The captures go to --captures, by
 // default a new folder of the system's temp folder, printed at the end; never into the build.
 // Exit 0 every check passes, 1 a check fails, 2 a usage error, a folder that is not a site build,
 // or Playwright or its browser missing (the message names the command to run).
@@ -129,7 +132,51 @@ for (const f of pages) {
 }
 console.log(`verify-site: links: ${pages.length} pages, ${links} internal links and sources, ${failures.length} failing`);
 
-// ---- 2. the browser
+// ---- 2. the course's look, drawn by the build from its logo and accent (decision
+// accent-family-from-the-course-hue): on every page, the course's logo in the header (the drawing of
+// the favicon), the favicon link to a file of the build, a theme-color per theme, and og:image, when
+// written, an absolute address of a PNG of the build, 1200 x 630.
+const lookFailing = failures.length;
+/** The drawing of an SVG: what its root element holds, its <style> left out. */
+const drawing = (svg) => svg.replace(/^[\s\S]*?<svg\b[^>]*>/, '').replace(/<\/svg>\s*$/, '').replace(/<style\b[\s\S]*?<\/style>/g, '').trim();
+const attr = (tag, name) => { const m = new RegExp(`\\s${name}="([^"]*)"`).exec(tag); return m ? decode(m[1]) : null; };
+const headTags = (html, re) => [...html.matchAll(re)].map((m) => m[0]);
+for (const f of pages) {
+  const html = fs.readFileSync(path.join(dir, f), 'utf8');
+  const at = addressOf(f);
+  const here = new URL(at, ORIGIN);
+  // the favicon
+  const icon = headTags(html, /<link\b[^>]*\brel="icon"[^>]*>/g)[0];
+  const iconFile = icon && attr(icon, 'href') !== null ? fileAt(new URL(attr(icon, 'href'), here).pathname) : null;
+  if (!iconFile) fail(`favicon: ${at}: no icon link to a file of the build`);
+  // the course's logo in the header: the favicon's drawing
+  const brand = /<a\b[^>]*\bclass="brand"[^>]*>([\s\S]*?)<\/a>/.exec(html);
+  const logo = brand && /<svg\b[\s\S]*?<\/svg>/.exec(brand[1]);
+  if (!logo) fail(`logo: ${at}: no logo in the header`);
+  else if (iconFile && drawing(logo[0]) !== drawing(fs.readFileSync(iconFile, 'utf8'))) fail(`logo: ${at}: the header's logo is not the favicon's drawing`);
+  // theme-color, one per theme
+  const themes = headTags(html, /<meta\b[^>]*\bname="theme-color"[^>]*>/g);
+  for (const scheme of ['light', 'dark']) {
+    const t = themes.find((m) => attr(m, 'media') === `(prefers-color-scheme: ${scheme})`);
+    if (!t || !/^#[0-9a-f]{6}$/i.test(attr(t, 'content') || '')) fail(`theme-color: ${at}: no theme-color for the ${scheme} theme`);
+  }
+  // og:image, when the build was given an origin
+  const og = headTags(html, /<meta\b[^>]*\bproperty="og:image"[^>]*>/g)[0];
+  if (og) {
+    let u = null;
+    try { u = new URL(attr(og, 'content')); } catch { fail(`og:image: ${at}: ${attr(og, 'content')} is not an absolute address`); }
+    const png = u && fileAt(u.pathname);
+    if (u && !png) fail(`og:image: ${at}: ${u.href} leads to no file of the build`);
+    else if (png) {
+      const b = fs.readFileSync(png);
+      const isPng = b.length > 24 && b.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+      if (!isPng || b.readUInt32BE(16) !== 1200 || b.readUInt32BE(20) !== 630) fail(`og:image: ${at}: ${u.href} is not a PNG of 1200 x 630`);
+    }
+  }
+}
+console.log(`verify-site: look: ${pages.length} pages (logo, favicon, theme-color, og:image), ${failures.length - lookFailing} failing`);
+
+// ---- 3. the browser
 let chromium;
 try {
   ({ chromium } = await import(path.join(BUILDER, 'node_modules', 'playwright', 'index.mjs')));
