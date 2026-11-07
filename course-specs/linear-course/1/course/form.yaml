@@ -1,11 +1,13 @@
 # The form of the files of a course of `linear-course`, as data (decision `unit-is-the-content-unit`):
-# the concept file (the files of a concept folder, the parts of `concept.md`, its title, its head, its
-# sections and units, its foot, the blocks of a unit and their fields, its cases, the length of a
-# unit) and, beside it, the course files (`course.yaml` as the map, `plan.md`, the domain file,
-# `storyline.md`): their parts, their order, their presence, published or not, their readers.
+# the concept file (the files of a concept folder, the parts of `concept.md`, its frontmatter, its
+# title, its head, its sections and units, its foot, the blocks of a unit and their fields, its
+# cases, the length of a unit), `sources.md` beside it and the course files (`course.yaml` as the
+# map, `plan.md`, the domain file, `storyline.md`, `glossary.md`, `CHANGELOG.md`): their parts,
+# their order, their presence, published or not, their readers.
 # course/README.md sections 2 to 5 describe it, the rules of course/rules.yaml state it, the
 # checks read it here (concept-file, unit-contract, unit-length, and the text checks and
-# unit-additions for their scope; course-yaml and course-files for the course files), and the site build of epic #598 will.
+# unit-additions for their scope; course-yaml and course-files for the course files), and the
+# spec half of the site build, site/build/render-site, reads `published` here (site/build/README.md).
 #
 # This file names words by their key in course/lexicon.yaml and holds none: `heading: essentials`
 # is the lexicon's `headings.essentials`, a field `matter` is `unit_fields.matter`, a block `lesson`
@@ -13,8 +15,8 @@
 # language copies the lexicon, not this file.
 #
 # presence: mandatory or optional. published: the site build renders it (true) or never (false);
-# the build is closed by default, so a part this file does not name is never rendered. No heading
-# says who reads its part: this file does.
+# the build is closed by default, so a part this file does not name, or names without
+# `published: true`, is never rendered. No heading says who reads its part: this file does.
 # readers: who reads it, among
 #   site     the site reader, through the build (the published parts);
 #   teacher  the teacher, which reads the whole file;
@@ -31,6 +33,20 @@ concept_file:
   file: concept.md
   # the frontmatter, its keys and their form: the schema, which concept-file validates it against
   frontmatter: course/schemas/concept-frontmatter.schema.yaml
+  # the keys of the frontmatter, each published whole, an item with its author, its refs and its
+  # verified: the stances, under the heading `headings.stances`; the neighbours; the diagrams, each
+  # entry with its SVG file
+  frontmatter_fields:
+    stances:
+      heading: stances
+      published: true
+      readers: [site, teacher, learner]
+    neighbors:
+      published: true
+      readers: [site, teacher, learner]
+    diagrams:
+      published: true
+      readers: [site, teacher, learner]
   # Every heading of the body starts with its kind, and one kind is always at one level: the
   # concept's title at #, the head, the sections and the foot at ##, the foot's blocks and the
   # units at ###, a unit's blocks at #### (`unit` below). A heading that carries an id is
@@ -56,19 +72,24 @@ concept_file:
   # the sections: `## Section <id> : <title>`, the id the concept number then a letter from a, in
   # order; a section holds its units, `### Unité <id> : <title>`, the id the section's then a digit
   # from 1, in order, one at least and nine at most: a section with a single unit keeps its ### heading.
-  # Nothing else stands in a section: no line outside a unit.
+  # Nothing else stands in a section: no line outside a unit. `published`: the headings of the
+  # sections and units, their ids and titles; what a unit holds is its blocks' (`unit`).
   sections:
     kind: section
     unit_kind: unit
     presence: mandatory
+    published: true
+    readers: [site, teacher, learner]
     heading_level: 2
     unit_heading_level: 3
     max_units: 9
   # the foot: the ## heading `headings.foot`, then its ### blocks, in this order, and nothing else;
-  # present when it holds a block
+  # present when it holds a block; `published`: its heading, each block of its own
   foot:
     heading: foot
     presence: optional
+    published: true
+    readers: [site, teacher, learner]
     blocks:
       - heading: landmarks
         presence: optional
@@ -142,6 +163,25 @@ unit:
     line: 100
     max: 12
 
+# sources.md, beside concept.md in each concept folder (course/README.md section 3.4): its three ##
+# sections, in this order, each holding a table but the last (the check `sources` holds the order).
+# The site builds every row of « Affirmations » and « Références », never « Non vérifié ».
+sources:
+  file: sources.md
+  sections:
+    - heading: claims
+      presence: mandatory
+      published: true
+      readers: [site, teacher, learner]
+    - heading: references
+      presence: mandatory
+      published: true
+      readers: [site, teacher, learner]
+    - heading: unverified
+      presence: mandatory
+      published: false
+      readers: [teacher]
+
 # The course files, beside the concept file: what spans the course, and nothing a unit or the map
 # already says.
 
@@ -210,3 +250,27 @@ storyline:
     position: last
     published: true
     readers: [site, teacher, learner]
+
+# glossary.md: an H1 and an introduction, not published; its first table, one term per row, before
+# any ## section; then « Termes à éviter », its one ## section, optional, a table of three columns.
+glossary:
+  file: glossary.md
+  table:
+    presence: mandatory
+    published: true
+    readers: [site, teacher, learner]
+  sections:
+    - heading: avoid
+      presence: optional
+      published: true
+      readers: [site, teacher, learner]
+
+# CHANGELOG.md: « Non publié » first (`headings.unreleased`), then the releases, newest first, each
+# `## X.Y.Z, YYYY-MM-DD`. The site shows the latest release, its version and its date; « Non
+# publié », the entries and the older releases are not named, never rendered. With no release, the
+# site writes its own « version non publiée ».
+changelog:
+  file: CHANGELOG.md
+  latest_release:
+    published: true
+    readers: [site]

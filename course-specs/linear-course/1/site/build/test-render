@@ -1,0 +1,139 @@
+#!/usr/bin/env node
+'use strict';
+// test-render: runs render-site on cafe (course/samples/cafe, the spec's sample course) and
+// validates its JSON document against site.schema.yaml (ajv's Ajv2020, from the package of the
+// spec directives this MAJOR follows); then checks what the schema cannot say: the published parts
+// reach it, no part the form leaves unpublished does (« Consigne au professeur », « Accueil »,
+// « Non vérifié », the free sections of plan.md, the introduction of glossary.md, « Non publié »
+// of CHANGELOG.md), and the build is closed by default, one case each, render-site run with a copy
+// of course/form.yaml (--form): a part named `published: false`, a part named without
+// `published`, a part the form does not name. Last, the latest release of a CHANGELOG.md, on a copy
+// of cafe given two releases. Exit 0 when every check passes, 1 otherwise; one line per failure.
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+const { createRequire } = require('module');
+
+// here is course-specs/<name>/<MAJOR>/site/build
+const HERE = __dirname;
+const MAJOR = path.resolve(HERE, '..', '..');
+const REPO = path.resolve(MAJOR, '..', '..', '..');
+const COURSE = path.join(MAJOR, 'course', 'samples', 'cafe');
+const FORM = path.join(MAJOR, 'course', 'form.yaml');
+
+const line = fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').split('\n').find((l) => /^directives\s*:/.test(l));
+const directives = line.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
+const req = createRequire(path.join(REPO, 'spec-directives', directives, 'package.json'));
+req('./lib/deps').need();
+const yaml = req('./lib/yaml-lines');
+const Ajv2020 = req('ajv/dist/2020').default;
+
+const failures = [];
+let checks = 0;
+function check(ok, message) {
+  checks++;
+  if (!ok) failures.push(message);
+  return ok;
+}
+const validate = new Ajv2020({ allErrors: true }).compile(yaml.parse(fs.readFileSync(path.join(HERE, 'site.schema.yaml'), 'utf8')));
+
+const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'test-render-site-'));
+process.on('exit', () => fs.rmSync(TMP, { recursive: true, force: true }));
+
+// render-site on a course, with a form; the document, valid against the schema, or null
+function render(course, args, label) {
+  const r = spawnSync(process.execPath, [path.join(HERE, 'render-site'), course, ...args], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  if (!check(r.status === 0, `${label}: render-site exits ${r.status}, not 0: ${(r.stderr || '').trim()}`)) return null;
+  let doc = null;
+  try { doc = JSON.parse(r.stdout); } catch (e) { check(false, `${label}: render-site prints no JSON: ${e.message}`); return null; }
+  check(validate(doc), `${label}: not valid against site.schema.yaml: ${(validate.errors || []).map((e) => `${e.instancePath} ${e.message}`).join('; ')}`);
+  return { doc, text: r.stdout };
+}
+// a copy of course/form.yaml changed by `edit`, written as JSON (a YAML document)
+function formWith(name, edit) {
+  const form = yaml.parse(fs.readFileSync(FORM, 'utf8'));
+  edit(form);
+  const file = path.join(TMP, `${name}.json`);
+  fs.writeFileSync(file, JSON.stringify(form));
+  return ['--form', file];
+}
+// the JSON text holds a course text: the document escapes nothing but quotes and line breaks
+const holds = (out, fragment) => out.text.includes(JSON.stringify(fragment).slice(1, -1));
+
+const cafe = render(COURSE, [], 'cafe');
+if (!cafe) {
+  failures.forEach((f) => console.error(`test-render: ${f}`));
+  process.exit(1);
+}
+const { doc } = cafe;
+
+// the published parts reach the document
+const published = [
+  ['a case title', 'La tasse qui pique'],
+  ['an expected answer', 'Trop peu : elle est sous-extraite.'],
+  ['a matter', 'Faire un café, c\'est laisser l\'eau dissoudre une partie du café moulu'],
+  ['a misconception', 'Si le goût change, c\'est que le café a changé'],
+  ['« L\'essentiel »', 'c\'est elle qui fait le goût de la tasse'],
+  ['« Se vérifier »', 'Devant une tasse ratée : est-elle acide et courte, ou amère et sèche ?'],
+  ['« Approfondissement »', 'La profession mesure ce que le cours goûte.'],
+  ['« Public cible »', 'Une personne qui boit du café sans jamais l\'avoir vraiment fait'],
+  ['« Progression »', 'Le domaine 1, « Ce qui fait la tasse », part de rien'],
+  ['« Le problème »', 'Chez lui, Cédric a tout ce qu\'il faut pour faire un café à la main'],
+  ['the storyline\'s world', 'Inès tient le comptoir du Petit Noir'],
+  ['a fixed fact', 'Aïmen moud tout son paquet de café le dimanche'],
+  ['a row of « Affirmations »', 'Les notes fruitées et acides se dissolvent d\'abord, puis le sucré, puis l\'amer'],
+  ['a row of « Références »', 'Coffee Extraction and How to Taste It'],
+  ['a term of the glossary', 'Sous-extraction, sous-extrait'],
+  ['a row of « Termes à éviter »', 'brûlé (pour une tasse amère)'],
+  ['a stance', 'Le cours juge l\'extraction au goût seulement'],
+  ['a neighbour', 'Le goût amer d\'un café torréfié foncé'],
+  ['a diagram\'s caption', 'De gauche à droite, la tasse va de sous-extraite'],
+];
+for (const [what, fragment] of published) check(holds(cafe, fragment), `${what} does not reach the document: « ${fragment} »`);
+const c0 = doc.concepts.find((c) => c.number === '0');
+const svg = fs.readFileSync(path.join(COURSE, 'concepts', '00-extraction', 'extraction-et-force.svg'), 'utf8');
+check(c0 && c0.diagrams && c0.diagrams[0].svg === svg, 'the SVG of concept 0\'s diagram is not in the document as written');
+const u = c0 && c0.sections && c0.sections[0].units.find((x) => x.id === '0a2');
+check(u && u.blocks.cases.length === 2 && u.blocks.cases[1].qualifier === 'rechange' && u.blocks.cases[1].supplementary, 'unit 0a2 does not hold its case and its supplementary case with its qualifier');
+check(doc.storyline.fixed_facts.facts.every((f) => f.unit), 'a fixed fact has no unit id');
+check(doc.release === null, 'cafe has no release, and release is not null');
+check(doc.concepts.map((c) => c.path).join(',') === 'concepts/00/,concepts/01/,concepts/02/,concepts/A1/', `the concept paths are ${doc.concepts.map((c) => c.path).join(', ')}`);
+const ref = doc.concept_refs.find((r) => r.text === 'concept 0b');
+check(ref && ref.targets[0].concept === '0' && ref.targets[0].anchor === '0b' && ref.targets[0].path === 'concepts/00/', 'the concept reference « concept 0b » does not name section 0b of concept 0');
+check(!('home' in doc.words.site) && doc.words.course.headings.audience === 'Public cible', 'the home labels are not those of course/lexicon.yaml');
+
+// no unpublished part reaches it
+const unpublished = [
+  ['« Consigne au professeur » of a unit', 'ne proposer ni réfractomètre'],
+  ['« Consigne au professeur » of a foot', 'le point de départ de la profession'],
+  ['« Accueil » of plan.md', 'un barista patient'],
+  ['a free section of plan.md', 'Règles d\'écriture du cours'],
+  ['« Non vérifié » of sources.md', 'S2 marque lui-même'],
+  ['the introduction of glossary.md', 'Les termes du cours, chacun défini dans le concept qui l\'enseigne.'],
+  ['« Non publié » of CHANGELOG.md', 'créé dans le dossier'],
+];
+for (const [what, fragment] of unpublished) check(!holds(cafe, fragment), `${what} reaches the document: « ${fragment} »`);
+
+// closed by default, one case each: a part named `published: false`, a part named without
+// `published`, a part the form does not name
+const head = render(COURSE, formWith('head-false', (f) => { f.concept_file.head.published = false; }), 'a form with the head `published: false`');
+if (head) check(!holds(head, 'c\'est elle qui fait le goût de la tasse') && head.doc.concepts.every((c) => !c.head), 'a part named `published: false` (the head) reaches the document');
+const audience = render(COURSE, formWith('audience-unset', (f) => { delete f.plan.sections.find((s) => s.heading === 'audience').published; }), 'a form with « Public cible » named without `published`');
+if (audience) check(!holds(audience, 'Une personne qui boit du café sans jamais') && !audience.doc.plan.some((s) => s.key === 'audience'), 'a part named without `published` (« Public cible ») reaches the document');
+const deepening = render(COURSE, formWith('deepening-unnamed', (f) => { f.concept_file.foot.blocks = f.concept_file.foot.blocks.filter((b) => b.heading !== 'deepening'); }), 'a form that does not name « Approfondissement »');
+if (deepening) check(!holds(deepening, 'La profession mesure ce que le cours goûte.') && holds(deepening, 'Devant une tasse ratée'), 'a part the form does not name (« Approfondissement ») reaches the document');
+const avoid = render(COURSE, formWith('glossary-unnamed', (f) => { delete f.glossary; }), 'a form that does not name glossary.md');
+if (avoid) check(!holds(avoid, 'Sous-extraction, sous-extrait') && !holds(avoid, 'brûlé (pour une tasse amère)'), 'a file the form does not name (glossary.md) reaches the document');
+
+// the latest release of CHANGELOG.md, on a copy of cafe given two
+const copy = path.join(TMP, 'cafe');
+fs.cpSync(COURSE, copy, { recursive: true });
+const log = path.join(copy, 'CHANGELOG.md');
+fs.writeFileSync(log, fs.readFileSync(log, 'utf8') + '\n## 1.1.0, 2026-12-01\n\n- MINOR, concept 0 : une unité de plus (#1).\n\n## 1.0.0, 2026-11-20\n\n- MAJOR, tout le cours : publié (#1).\n');
+const released = render(copy, [], 'cafe with two releases');
+if (released) check(released.doc.release && released.doc.release.version === '1.1.0' && released.doc.release.date === '2026-12-01' && !holds(released, '1.0.0') && !holds(released, 'une unité de plus'), 'the latest release is not the one in the document, or another part of CHANGELOG.md is');
+
+for (const f of failures) console.error(`test-render: ${f}`);
+console.log(`test-render: ${checks - failures.length}/${checks} checks pass`);
+process.exit(failures.length ? 1 : 0);

@@ -1,7 +1,8 @@
 # The lexicon of the site of `linear-course`: the words and short texts the site shows for every
 # course of the spec and no course file holds, read by key by the site build, which writes none of
 # them again (decisions `lexicon-not-language-pack` and `one-source-two-builds`). The headings of a
-# concept file and of `sources.md`, the labels of a unit's fields and the kind words « Concept »
+# concept file, of `sources.md` and of `plan.md` (« Public cible », « Progression », above the two
+# parts of `plan.md` the home shows), the labels of a unit's fields and the kind words « Concept »
 # and « Annexe » that the site shows are read from `course/lexicon.yaml`, not written here; a word of the
 # interface (search, « À propos », previous and next, the menu, the reveal button, the version) is
 # `site-builder/`'s. The spec is French (`language: fr` in spec.yaml): the values are French, each
@@ -14,13 +15,6 @@ nav:
   domains: "Domaines"     # glossary `domain`, fr « domaine »: the domain map
   storyline: "Fil rouge"  # glossary `storyline`, fr « fil rouge »
   glossary: "Glossaire"   # glossary `course glossary`, fr « glossaire du cours »
-
-# The labels of the home, above the two parts of `plan.md` it shows, the home's own: today the same
-# words as the headings of those parts (`headings.audience` and `headings.progression` of
-# course/lexicon.yaml), which a course file holds.
-home:
-  audience: "Public cible"   # the course's public, « Public cible » of plan.md
-  progression: "Progression" # glossary `progression`, fr « progression »
 
 # The words that come before a value on a domain page and a concept page.
 labels:
