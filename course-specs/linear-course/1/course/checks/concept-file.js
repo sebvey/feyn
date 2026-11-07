@@ -5,11 +5,11 @@
 // ajv's instance path to its line (`lineOfError` of lib/yaml-lines.js), then what the schema does
 // not say (`verified` parallel to `refs`, an item's text in inline Markdown); the title of
 // concept.md, its one # heading, first, `# Concept <n> : <title>` with the title of course.yaml; the
-// parts of concept.md in the order of the form (head, sections, foot) and no other ## heading, the
-// ### blocks of the head and the foot in their order; the tree of the concept in its headings
+// parts of concept.md in the order of the form (head, sections, foot) and no other ## heading, no
+// ### in the head, the ### blocks of the foot in their order; the tree of the concept in its headings
 // (section and unit ids: form, order, uniqueness, one unit at least and nine at most per section;
 // the kind word and a title around each id). The
-// blocks of a unit, their fields and its supplementary cases are `unit-contract`'s, a `pedagogy` check; the form
+// blocks of a unit, their fields and its cases are `unit-contract`'s, a `pedagogy` check; the form
 // of sources.md is `sources`'.
 const fs = require('fs');
 const path = require('path');
@@ -134,9 +134,12 @@ function checkConcept(ctx, c, out) {
     exp.push(part(FOOT));
     headingSeq(cf, secs, exp, out);
 
-    // the head and the foot: their ### blocks, in the order of the form, and nothing else; the foot
-    // holds one block at least
-    for (const p of [HEAD, FOOT]) {
+    // the head: its text, and no ### heading
+    const hs = secs.find((x) => x.title === H(HEAD.heading));
+    if (hs) for (const h of mdlib.headings(hs.lines).filter((x) => x.level === 3)) out.push(fail(cf, h.line, `« ${H(HEAD.heading)} » holds its text and no ### block (found "### ${h.text}")`));
+
+    // the foot: its ### blocks, in the order of the form, and nothing else, one block at least
+    for (const p of [FOOT]) {
       const s = secs.find((x) => x.title === H(p.heading));
       if (!s) continue;
       const split = mdlib.sections(s.lines, 3);

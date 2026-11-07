@@ -1,0 +1,2 @@
+check: unit-contract
+message: field « Question » carries a qualifier ("en deux parties")

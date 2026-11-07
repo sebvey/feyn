@@ -1,2 +1,2 @@
 check: unit-contract
-message: unit 2a1: block « Exercice » must come before « Pièges »
+message: unit 2a1: block « Cas du fil rouge » must come before « Pièges »

@@ -9,9 +9,7 @@ stances:
 
 # Annexe A1 : Le lexique
 
-## Ouverture
-
-### L'essentiel
+## L'essentiel
 
 Le lexique rassemble les mots du cours.
 
@@ -19,32 +17,34 @@ Le lexique rassemble les mots du cours.
 
 ### Unité A1a1 : Un mot
 
-#### Leçon (pour tous)
+#### Leçon
 
 - **Matière** : Chaque mot du **lexique** a une définition courte.
+
+#### Cas du fil rouge
+
+- **Titre** : Le cas A1a1
 - **Ancrage** : Régis regarde une carte.
-
-#### Exercice (teacher seulement)
-
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
 
-#### Pièges (pour tous)
+#### Pièges
 
 - « Un tableau » : c'est une carte.
 
 ### Unité A1a2 : Sa définition
 
-#### Leçon (pour tous)
+#### Leçon
 
 - **Matière** : La définition d'un mot tient en une ligne, celle de **produit** comprise.
+
+#### Cas du fil rouge
+
+- **Titre** : Le cas A1a2
 - **Ancrage** : Régis cherche un mot du lexique.
-
-#### Exercice (teacher seulement)
-
 - **Question** : combien de lignes a sa définition ?
 - **Réponse attendue** : une.
 
-#### Pièges (pour tous)
+#### Pièges
 
 - « Une page » : une ligne suffit.

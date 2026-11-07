@@ -7,8 +7,7 @@ headings:
   stances: "Consensus et choix d'école"
   deepening: "Approfondissement"
   landmarks: "Se vérifier"
-  instruction: "Consigne"
-  head: "Ouverture"
+  instruction: "Consigne au professeur"
   foot: "Clôture"
   claims: "Affirmations"
   references: "Références"
@@ -23,39 +22,32 @@ headings:
   unreleased: "Non publié"
 
 # The kind words that open the headings of a concept file (course/form.yaml): `# Concept 4 : <titre>`,
-# `# Annexe A1 : <titre>`, `## Section 4a : <titre>`, `### Unité 4a1 : <titre>`,
-# `#### En stock, rechange (teacher seulement) : <titre>`.
+# `# Annexe A1 : <titre>`, `## Section 4a : <titre>`, `### Unité 4a1 : <titre>`.
 block_kinds:
   concept: "Concept"
   annex: "Annexe"
   section: "Section"
   unit: "Unité"
-  stock: "En stock"
   separator: " : "
 
-# Labels of the fields of a unit of a concept file and of its supplementary cases
+# Labels of the fields of a unit of a concept file, those of its cases among them
 # (course/form.yaml).
 unit_fields:
   matter: "Matière"
+  title: "Titre"
+  qualifier: "Qualificatif"
   anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
   misconceptions: "Pièges"
-  instruction: "Consigne"
+  instruction: "Consigne au professeur"
 
 # The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`); a
 # block of one unlabelled field takes its label as its word: « Pièges » (`unit_fields.misconceptions`),
-# « Consigne » (`unit_fields.instruction`).
+# « Consigne au professeur » (`unit_fields.instruction`).
 unit_blocks:
   lesson: "Leçon"
-  exercise: "Exercice"
-
-# Who reads a block of a unit or a supplementary case, the word in parentheses in its heading
-# (course/form.yaml): `all`, the site, the teacher and the learner; `teacher`, never published,
-# what the learner hears of it the teacher chooses and says.
-readers:
-  all: "pour tous"
-  teacher: "teacher seulement"
+  cases: "Cas du fil rouge"
 
 # The stance markers of the published text: `[cours]`, `[école]`, `[consensus]`.
 markers:
@@ -69,7 +61,8 @@ markers:
 natures:
   fact: "fait"
 
-# The qualifiers a case heading may carry, at most one, and no other word (course/README.md 3.3).
+# The qualifiers of a supplementary case, the value of its field « Qualificatif », one and no
+# other word (course/README.md 3.3).
 qualifiers:
   fallback: "rechange"
   practice: "entraînement"

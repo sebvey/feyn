@@ -1,7 +1,7 @@
 'use strict';
 // The additions of a unit (course/README.md section 3.6), what a program can tell of them: in the
-// fields of a unit and of its supplementary cases that the learner reads or hears (course/form.yaml,
-// the readers of their block: every block but « Consigne »), each passage in bold
+// fields of a unit, those of its cases among them, that the learner reads or hears (course/form.yaml,
+// the readers of their block: every block but « Consigne au professeur »), each passage in bold
 // (`**…**`), the labels left out, is a term of glossary.md or one of its comma variants, its sense
 // qualifier in parentheses left out, case ignored (rule bold-term-in-glossary, a recommendation: bold
 // for emphasis stays possible, and a bold that is no term is reported in case the term is missing
@@ -14,7 +14,8 @@ const mdlib = directives.lib('md');
 const glossary = directives.lib('glossary');
 const { fail } = directives.lib('course');
 
-// a field's label, `- **<label>**<qualifier> :`, on its first line
+// a field's label, `- **<label>** :` (what stands before its colon, which unit-contract refuses,
+// included), on its first line
 const LABEL = /^(\s*)- \*\*[^*]+\*\*[^:]*?\s*:/;
 const BOLD = /\*\*([^*]+?)\*\*/g;
 
@@ -50,22 +51,18 @@ function bolds(f) {
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
   if (!ctx.lexiconOk) return [fail(ctx.lexiconFile || 'course/lexicon.yaml', 1, 'the lexicon is unusable: see course/README.md section 7')];
-  if (!ctx.form || !ctx.form.unit || !ctx.form.supplementary_case) return [fail('course/form.yaml', 1, `tooling error, not a defect of the course: the spec's form is missing or unreadable (${ctx.formError || 'no unit or supplementary_case'})`)];
+  if (!ctx.form || !ctx.form.unit) return [fail('course/form.yaml', 1, `tooling error, not a defect of the course: the spec's form is missing or unreadable (${ctx.formError || 'no unit'})`)];
   const learner = (readers) => !Array.isArray(readers) || readers.includes('learner');
   const heard = new Set(ctx.form.unit.blocks.filter((b) => learner(b.readers)).flatMap((b) => b.fields));
-  const caseHeard = learner(ctx.form.supplementary_case.readers);
   const terms = termsOf(ctx);
   const out = [];
   for (const c of ctx.selected()) {
     if (!c.dir || !ctx.md(c.dir + '/concept.md')) continue;
     const file = c.dir + '/concept.md';
     for (const u of ctx.parts(c).units) {
-      const fields = [
-        ...u.fields.map((f) => ({ f, where: `unit ${u.sub.id}` })),
-        ...(caseHeard ? u.cases.flatMap((k) => k.fields.map((f) => ({ f, where: `unit ${u.sub.id}, case "${k.title}"` }))) : []),
-      ];
-      for (const { f, where } of fields) {
+      for (const f of u.fields) {
         if (!heard.has(f.key)) continue;
+        const where = f.case ? `unit ${u.sub.id}, case "${f.case.title}"` : `unit ${u.sub.id}`;
         const label = ctx.word('unit_fields', f.key) || f.key;
         for (const b of bolds(f)) {
           if (terms && terms.has(key(b.text))) continue;

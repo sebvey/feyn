@@ -13,9 +13,7 @@ stances:
 
 # Concept 0 : Les rôles
 
-## Ouverture
-
-### L'essentiel
+## L'essentiel
 
 Un rôle est ce que fait une personne sur une couche du produit ; voir le
 concept 1.
@@ -24,41 +22,43 @@ concept 1.
 
 ### Unité 0a1 : Le premier rôle
 
-#### Leçon (pour tous)
+#### Leçon
 
 - **Matière** : Le premier **rôle** décide. Le concept 1 en dépend. [cours]
+
+#### Cas du fil rouge
+
+- **Titre** : Le cas 0a1
 - **Ancrage** : Régis veut une carte et décide de ce qu'elle montre.
-
-#### Exercice (teacher seulement)
-
 - **Question** : qui décide ?
 - **Réponse attendue** : le premier rôle.
 
-#### Pièges (pour tous)
+#### Pièges
 
 - « Tout le monde décide » : le premier rôle décide seul.
 
-#### Consigne (teacher seulement)
+#### Consigne au professeur
 
 Ne pas parler de couche ici, elle vient au concept 1.
 
 ### Unité 0a2 : Le second rôle
 
-#### Leçon (pour tous)
+#### Leçon
 
 - **Matière** : Le second rôle fait une strate.
 
   Il fait ce que le premier rôle a décidé.
+
+#### Cas du fil rouge
+
+- **Titre** : Le cas 0a2
 - **Ancrage** : Régis demande la carte à l'équipe.
-
-#### Exercice (teacher seulement)
-
-- **Question**, en deux parties : qui fait ? Et qui décide ?
+- **Question** : en deux parties : qui fait ? Et qui décide ?
 - **Réponse attendue** :
   1. Le second rôle fait.
   2. Le premier rôle décide.
 
-#### Pièges (pour tous)
+#### Pièges
 
 - « Le second rôle décide aussi » : il fait, il ne décide pas.
 
@@ -66,17 +66,18 @@ Ne pas parler de couche ici, elle vient au concept 1.
 
 ### Unité 0b1 : La règle
 
-#### Leçon (pour tous)
+#### Leçon
 
 - **Matière** : La règle est la même pour tous. Ses mots sont dans le lexique (annexe A1a).
+
+#### Cas du fil rouge
+
+- **Titre** : Le cas 0b1
 - **Ancrage** : Régis applique la règle à la carte.
-
-#### Exercice (teacher seulement)
-
 - **Question** : la règle change-t-elle selon le rôle ?
 - **Réponse attendue** : non, elle est la même pour tous.
 
-#### Pièges (pour tous)
+#### Pièges
 
 - « Chaque rôle a sa règle » : la règle est la même pour tous.
 
@@ -92,6 +93,6 @@ Une note sur la question.
 
 Une autre façon de nommer les rôles, pour qui veut aller plus loin.
 
-### Consigne
+### Consigne au professeur
 
 Poser les deux rôles avant la règle.

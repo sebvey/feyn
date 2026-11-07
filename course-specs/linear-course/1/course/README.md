@@ -59,9 +59,9 @@ concepts/09-decoupage-vertical/
   <stem>.svg         publié : un fichier par schéma (section 6)
 ```
 
-Chaque titre de `concept.md` commence par son type, et un type est toujours au même niveau : le titre du concept en `#`, la tête, les sections et le pied en `##`, les blocs de la tête et du pied et les unités en `###`, les blocs d'une unité et ses cas supplémentaires en `####`. Le fichier s'ouvre sur son **titre**, `# Concept <n> : <titre>` (une annexe, `# Annexe <id> : <titre>`), celui que `course.yaml` donne au concept, qui le garde aussi : un humain qui ouvre le fichier sait quel concept il lit, et le check compare les deux. L'arbre du concept est dans les titres de `concept.md` et nulle part ailleurs : une **section** est un titre `## Section <id> : <titre>`, son id le numéro du concept suivi d'une lettre (`9a`, `A2a`) ; ses **unités** sont des titres `### Unité <id> : <titre>` dans la section, leur id celui de la section suivi d'un chiffre (`9a1`). Une section tient au moins une unité, même quand elle n'en a qu'une (`9b`, puis `9b1`) : une section n'est jamais elle-même une unité. Une unité est un message du professeur. Les mots de type sont les valeurs de `block_kinds` dans le lexique (section 7). Le créateur découpe le concept là où il l'écrit, et les checks lisent l'arbre dans ces titres.
+Chaque titre de `concept.md` commence par son type, et un type est toujours au même niveau : le titre du concept en `#`, la tête, les sections et le pied en `##`, les blocs du pied et les unités en `###`, les blocs d'une unité en `####`. Le fichier s'ouvre sur son **titre**, `# Concept <n> : <titre>` (une annexe, `# Annexe <id> : <titre>`), celui que `course.yaml` donne au concept, qui le garde aussi : un humain qui ouvre le fichier sait quel concept il lit, et le check compare les deux. L'arbre du concept est dans les titres de `concept.md` et nulle part ailleurs : une **section** est un titre `## Section <id> : <titre>`, son id le numéro du concept suivi d'une lettre (`9a`, `A2a`) ; ses **unités** sont des titres `### Unité <id> : <titre>` dans la section, leur id celui de la section suivi d'un chiffre (`9a1`). Une section tient au moins une unité, même quand elle n'en a qu'une (`9b`, puis `9b1`) : une section n'est jamais elle-même une unité. Une unité est un message du professeur. Les mots de type sont les valeurs de `block_kinds` dans le lexique (section 7). Le créateur découpe le concept là où il l'écrit, et les checks lisent l'arbre dans ces titres.
 
-**Identifiants.** Les numéros de concept, les ids de section et d'unité, les titres des cas supplémentaires (section 3.3), les numéros de domaine et leurs concepts, les noms `dir` des concepts et `file` des domaines sont les identifiants du cours : la mémoire de l'apprenant et les adresses du site les citent. En changer un est une MAJOR du cours (`spec-directives/1/README.md` section 6).
+**Identifiants.** Les numéros de concept, les ids de section et d'unité, les titres des cas (section 3.3), les numéros de domaine et leurs concepts, les noms `dir` des concepts et `file` des domaines sont les identifiants du cours : la mémoire de l'apprenant et les adresses du site les citent. En changer un est une MAJOR du cours (`spec-directives/1/README.md` section 6).
 
 La forme du dossier et du fichier de concept est la donnée de [`form.yaml`](form.yaml) ; ses règles sont le groupe « Le dossier de concept » de [`rules.yaml`](rules.yaml). Une annexe a le même fichier de concept, découpé en unités (`A1a`, `A1a1`).
 
@@ -77,9 +77,9 @@ Le site rend les positions et les voisins depuis le frontmatter, sous le titre `
 |---|---|---|
 | the creator (human or agent) | the parts of the file, in order, and what each holds | writing or changing a concept |
 | the site | the published parts, to render them and nothing else | at each build |
-| the teacher | the whole file: the units in order, each with its question, its corrections, its instruction | each teaching session |
+| the teacher | the whole file: the units in order, each with its cases, its corrections, its instruction | each teaching session |
 
-Le corps tient, dans cet ordre, le titre du concept (section 3) ; une **tête**, le titre `## Ouverture`, puis son bloc `### L'essentiel`, le seul résumé écrit du concept ; les sections et leurs unités ; un **pied**, le titre `## Clôture`, puis ses blocs `###` : « Se vérifier » (la question que l'apprenant se pose pour vérifier sa réponse, ce qui sert à reconnaître ou à appliquer le concept entier), « Approfondissement » (de la matière en plus, pour qui demande à aller plus loin) et « Consigne » (la méthode propre au concept entier, que seul le professeur lit), chacun au choix, « Clôture » présente quand elle en tient un. Ce qu'un build compose n'y est pas écrit : l'objectif vient de `course.yaml`, les pièges du concept des « Pièges » de ses unités. Le site construit les parties publiées de la tête et du pied ; quand le professeur lit « Approfondissement », `teacher/rules.yaml` le dit.
+Le corps tient, dans cet ordre, le titre du concept (section 3) ; une **tête**, le titre `## L'essentiel`, puis son texte, le seul résumé écrit du concept ; les sections et leurs unités ; un **pied**, le titre `## Clôture`, puis ses blocs `###` : « Se vérifier » (la question que l'apprenant se pose pour vérifier sa réponse, ce qui sert à reconnaître ou à appliquer le concept entier), « Approfondissement » (de la matière en plus, pour qui demande à aller plus loin) et « Consigne au professeur » (la méthode propre au concept entier, que seul le professeur lit), chacun au choix, « Clôture » présente quand elle en tient un. Ce qu'un build compose n'y est pas écrit : l'objectif vient de `course.yaml`, les pièges du concept des « Pièges » de ses unités. Le site construit la tête et les parties publiées du pied ; quand le professeur lit « Approfondissement », `teacher/rules.yaml` le dit.
 
 Ses règles sont le groupe « Le corps de concept.md » de [`rules.yaml`](rules.yaml) ; ses parties, leur ordre et leur présence sont `concept_file` de [`form.yaml`](form.yaml).
 
@@ -87,32 +87,51 @@ Ses règles sont le groupe « Le corps de concept.md » de [`rules.yaml`](rules.
 
 | Reader | Needs | When |
 |---|---|---|
-| the teacher | the unit's matter to say, its anchor, the question to pose, how to correct the answer, when to pose a supplementary case | each unit; each fallback, practice case or aside |
-| the learner | through the teacher or on the site, the matter, the anchor, the misconceptions and their corrections; through the teacher, the question, and the expected answer never before they answer | each unit |
+| the teacher | the unit's matter to say, its case to pose (its anchor, its question), how to correct the answer, when to pose a supplementary case | each unit; each fallback, practice case or aside |
+| the learner | through the teacher or on the site, the matter, each case (its anchor, its question, its expected answer), the misconceptions and their corrections; through the teacher, the expected answer of a case after they answer it | each unit |
+| the site reader | the published blocks of each unit: the matter, each case with its expected answer, which the site shows hidden until the reader reveals it, the misconceptions | reading a concept |
 | the site | the published blocks of each unit, nothing else | at each build |
-| the creator (human or agent) | the blocks of a unit in the order of writing, who reads each, what each field holds, which are mandatory, and when to write a supplementary case | writing a unit |
+| the creator (human or agent) | the blocks of a unit in the order of writing, which are published, what each field holds, which are mandatory, and when to write a supplementary case | writing a unit |
 | taught-check | what each question asks, against what the learner was taught before it | after a change to what a concept teaches |
 
-Une unité tient quatre blocs `####`, dans l'ordre où le créateur l'écrit : enseigner, demander, prévoir les erreurs, donner la consigne. Le titre d'un bloc dit son mot puis, entre parenthèses, son **lecteur** : « pour tous » (le site, le professeur et l'apprenant le lisent : il est publié) ou « teacher seulement » (jamais publié : ce que l'apprenant en entend, le professeur le choisit et le dit). Les mots sont ceux de `unit_blocks`, `unit_fields` et `readers` du lexique (section 7).
+Une unité tient quatre blocs `####`, dans l'ordre où le créateur l'écrit : enseigner, demander, prévoir les erreurs, donner la consigne. Le titre d'un bloc est son seul mot ; qu'un bloc soit **publié** (le site, le professeur et l'apprenant le lisent) ou non (le professeur seul le lit), c'est `form.yaml` qui le dit, pas son titre. Les mots sont ceux de `unit_blocks` et `unit_fields` du lexique (section 7).
 
-| Bloc | Lecteur | Tient | Présence |
+| Bloc | Publié | Tient | Présence |
 |---|---|---|---|
-| `#### Leçon (pour tous)` | « pour tous » | sa **matière** (`- **Matière** :`, ce qui est vrai, les mêmes mots pour le site et le professeur), puis son **ancrage** (`- **Ancrage** :`, la situation du fil rouge où la matière se voit) | obligatoire |
-| `#### Exercice (teacher seulement)` | « teacher seulement » | sa question (`- **Question** :`), puis sa réponse attendue (`- **Réponse attendue** :`) | obligatoire |
-| `#### Pièges (pour tous)` | « pour tous » | ses **idées fausses**, sans libellé, chacune une puce `- « <idée fausse> » : <correction>`, rien d'imbriqué sous elle | obligatoire |
-| `#### Consigne (teacher seulement)` | « teacher seulement » | sa **consigne**, en prose, sans libellé : ce que la méthode a de propre à l'unité | au choix |
+| `#### Leçon` | oui | sa **matière** (`- **Matière** :`, ce qui est vrai, les mêmes mots pour le site et le professeur) | obligatoire |
+| `#### Cas du fil rouge` | oui | ses **cas**, chacun ouvert par son titre (`- **Titre** :`), puis, pour un cas supplémentaire, son qualificatif (`- **Qualificatif** :`), son **ancrage** (`- **Ancrage** :`, la situation du fil rouge où la matière se voit), sa question (`- **Question** :`) et sa réponse attendue (`- **Réponse attendue** :`) | obligatoire |
+| `#### Pièges` | oui | ses **idées fausses**, celles de tous ses cas, sans libellé, chacune une puce `- « <idée fausse> » : <correction>`, rien d'imbriqué sous elle | obligatoire |
+| `#### Consigne au professeur` | non | sa **consigne**, en prose, sans libellé : ce que la méthode a de propre à l'unité | au choix |
 
-Dans « Leçon » et « Exercice », chaque champ s'ouvre sur son libellé, `- **<libellé>** : <texte>`, ses lignes suivantes en retrait de deux espaces ; aucune ligne de l'unité n'est hors d'un bloc, ni, dans ces deux blocs, hors d'un champ. Les blocs, leur ordre, leur présence, leur publication, leurs lecteurs et leurs champs sont `unit` de [`form.yaml`](form.yaml).
+Dans « Leçon » et « Cas du fil rouge », chaque champ s'ouvre sur son libellé seul, `- **<libellé>** : <texte>`, rien entre le libellé et ses deux-points, ses lignes suivantes en retrait de deux espaces ; une précision ouvre le texte (`- **Question** : en deux parties : …`). Aucune ligne de l'unité n'est hors d'un bloc, ni, dans ces deux blocs, hors d'un champ. Les blocs, leur ordre, leur présence, leur publication, leurs lecteurs et leurs champs sont `unit` de [`form.yaml`](form.yaml).
 
-Une question que le cours pose et repose, sa façon propre de faire réfléchir (« et alors ? », « d'où vient ce chiffre ? »), s'écrit dans la « Consigne » de son unité, dans celle du concept quand elle vaut pour le concept entier, ou dans une section libre de `plan.md` quand elle vaut pour le cours entier (section 5) ; jamais sous une idée fausse, qui ne tient que sa correction.
+Une question que le cours pose et repose, sa façon propre de faire réfléchir (« et alors ? », « d'où vient ce chiffre ? »), s'écrit dans la « Consigne au professeur » de son unité, dans celle du concept quand elle vaut pour le concept entier, ou dans une section libre de `plan.md` quand elle vaut pour le cours entier (section 5) ; jamais sous une idée fausse, qui ne tient que sa correction.
 
-Un **cas supplémentaire** est un titre `####` après les blocs de l'unité, `#### En stock, <qualificatif> (teacher seulement) : <titre>` : sa question est celle que l'unité tient **en stock**, posée quand son qualificatif le dit, quand la question de l'unité, elle, est toujours posée. Son titre est son identifiant, son **qualificatif** lui donne son type, et il tient, étiquetés et dans cet ordre, « Ancrage », « Question », « Réponse attendue » et « Pièges », ses idées fausses imbriquées sous ce dernier champ. Il n'est pas publié. Quand le professeur pose chaque type, les groupes `loop` et `practice-skip-asides` de `teacher/rules.yaml` le disent :
+« Cas du fil rouge » tient un cas au moins. Le premier est le **cas de l'unité**, toujours posé, sans qualificatif. Chaque autre est un **cas supplémentaire**, posé quand son **qualificatif** le dit, qui lui donne son type. Chaque cas a un titre, son identifiant, unique dans le concept ; un cas n'a pas de « Pièges » à lui : ses idées fausses sont celles du bloc « Pièges » de l'unité. Le site publie chaque cas et montre sa réponse attendue cachée, jusqu'à ce que le lecteur la révèle ; le professeur, lui, ne la dit qu'une fois la réponse donnée. Quand le professeur pose chaque type, les groupes `loop` et `practice-skip-asides` de `teacher/rules.yaml` le disent :
 
 | Type | Qualificatif (clé) |
 |---|---|
 | rechange | « rechange » (`qualifiers.fallback`) |
 | entraînement | « entraînement » (`qualifiers.practice`) |
 | aparté | « aparté » (`qualifiers.aside`) |
+
+La forme d'un cas, sur l'unité 0a2 de `samples/cafe` :
+
+```
+#### Cas du fil rouge
+
+- **Titre** : La tasse qui pique
+- **Ancrage** : Cédric décrit sa tasse du jour : « … »
+- **Question** : en deux parties : la tasse de Cédric est-elle trop peu ou trop extraite ? Et qu'est-ce qui, dans sa description, te le fait dire ?
+- **Réponse attendue** :
+  1. Trop peu : elle est sous-extraite.
+  2. …
+- **Titre** : Le jus de pneu
+- **Qualificatif** : rechange
+- **Ancrage** : Le lendemain, Cédric écrit : « … »
+- **Question** : …
+- **Réponse attendue** : …
+```
 
 Les règles de l'unité sont le groupe « L'unité » de [`rules.yaml`](rules.yaml).
 
@@ -222,21 +241,20 @@ Les règles du style sont le groupe « Le style des schémas » de [`rules.yaml`
 
 | Reader | Needs | When |
 |---|---|---|
-| the creator (human or agent) | the headings, block kinds, unit field labels, unit block words, readers, qualifiers, markers and natures to write | writing any course file |
+| the creator (human or agent) | the headings, block kinds, unit field labels, unit block words, qualifiers, markers and natures to write | writing any course file |
 | the writer of a program that recognises a word of the course files (a check, the classroom build, the site) | the key that names the word, its group, and the file to read it from, `course/lexicon.yaml` | writing or changing that program |
 
-Le lexique des fichiers du cours, `course/lexicon.yaml`, écrit une fois les mots qu'un programme reconnaît dans un fichier du cours (un titre, un mot de type, un champ ou un bloc d'unité, un lecteur, un qualificatif, un marqueur, une nature, une référence de concept, un type de source, un caractère banni) et les nomme par clé : les checks, le build de la classe et le site les y lisent, par leur clé, et aucun ne les écrit à nouveau (décision `lexicon-not-language-pack`). Les mots que le professeur dit et écrit sont l'autre lexique, `teacher/lexicon.yaml` (`teacher/README.md`, « Clés et paramètres »).
+Le lexique des fichiers du cours, `course/lexicon.yaml`, écrit une fois les mots qu'un programme reconnaît dans un fichier du cours (un titre, un mot de type, un champ ou un bloc d'unité, un qualificatif, un marqueur, une nature, une référence de concept, un type de source, un caractère banni) et les nomme par clé : les checks, le build de la classe et le site les y lisent, par leur clé, et aucun ne les écrit à nouveau (décision `lexicon-not-language-pack`). Les mots que le professeur dit et écrit sont l'autre lexique, `teacher/lexicon.yaml` (`teacher/README.md`, « Clés et paramètres »).
 
 Cette section n'énonce aucune règle d'un cours : le lexique est un fichier de la spec. `course/lexicon.yaml` tient chaque clé ci-dessous ; `lexicon-keys`, un test de `check-spec`, le vérifie. Un `course/lexicon.yaml` absent ou illisible est une erreur d'outillage, ni un défaut du cours ni une règle : `course-yaml` échoue dessus (code de sortie 1), et `lexicon-keys` échoue dessus à côté d'un `teacher/lexicon.yaml`. Les valeurs :
 
 | Groupe | Clés et valeurs |
 |---|---|
-| `headings` | `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (le titre du site pour les positions du frontmatter, et la section qu'une entrée de « Non vérifié » de `sources.md` nomme pour une position ou un voisin : aucune section de `concept.md` ne l'a), `deepening` « Approfondissement », `landmarks` « Se vérifier », `instruction` « Consigne », `head` « Ouverture », `foot` « Clôture » ; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié » ; `problem` « Le problème », `crossing_case` « Un cas qui traverse le domaine » ; `audience` « Public cible », `onboarding` « Accueil », `progression` « Progression » ; `fixed_facts` « Faits fixés » ; `avoid` « Termes à éviter », `unreleased` « Non publié » |
-| `block_kinds` | `concept` « Concept », `annex` « Annexe », `section` « Section », `unit` « Unité » : le mot qui ouvre le titre d'un concept, d'une annexe, d'une section et d'une unité dans `concept.md`, suivi de son id puis du séparateur et du titre ; `stock` « En stock » : le mot qui ouvre le titre d'un cas supplémentaire (3.3) ; `separator` « : », une espace avant et après, entre l'id (d'un cas, son lecteur) et le titre (3) |
-| `unit_fields` | `matter` « Matière », `anchor` « Ancrage », `question` « Question », `expected_answer` « Réponse attendue », `misconceptions` « Pièges », `instruction` « Consigne » : les libellés des champs d'une unité et d'un cas supplémentaire ; `misconceptions` et `instruction` sont aussi les mots des blocs « Pièges » et « Consigne » d'une unité, où ils n'ont pas de libellé (3.3) |
-| `unit_blocks` | `lesson` « Leçon », `exercise` « Exercice » : les mots des deux blocs d'une unité qui tiennent des champs étiquetés (3.3) |
-| `readers` | `all` « pour tous », `teacher` « teacher seulement » : le lecteur d'un bloc d'une unité et d'un cas supplémentaire, entre parenthèses dans son titre (3.3) |
-| `qualifiers` | `fallback` « rechange », `practice` « entraînement », `aside` « aparté » : la liste fermée des qualificatifs d'un titre de cas supplémentaire (3.3) |
+| `headings` | `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (le titre du site pour les positions du frontmatter, et la section qu'une entrée de « Non vérifié » de `sources.md` nomme pour une position ou un voisin : aucune section de `concept.md` ne l'a), `deepening` « Approfondissement », `landmarks` « Se vérifier », `instruction` « Consigne au professeur », `foot` « Clôture » ; `essentials` est aussi le titre de la tête de `concept.md` (3.2) ; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié » ; `problem` « Le problème », `crossing_case` « Un cas qui traverse le domaine » ; `audience` « Public cible », `onboarding` « Accueil », `progression` « Progression » ; `fixed_facts` « Faits fixés » ; `avoid` « Termes à éviter », `unreleased` « Non publié » |
+| `block_kinds` | `concept` « Concept », `annex` « Annexe », `section` « Section », `unit` « Unité » : le mot qui ouvre le titre d'un concept, d'une annexe, d'une section et d'une unité dans `concept.md`, suivi de son id puis du séparateur et du titre ; `separator` « : », une espace avant et après, entre l'id et le titre (3) |
+| `unit_fields` | `matter` « Matière », `title` « Titre », `qualifier` « Qualificatif », `anchor` « Ancrage », `question` « Question », `expected_answer` « Réponse attendue », `misconceptions` « Pièges », `instruction` « Consigne au professeur » : les libellés des champs d'une unité, ceux de ses cas compris ; `misconceptions` et `instruction` sont aussi les mots des blocs « Pièges » et « Consigne au professeur » d'une unité, où ils n'ont pas de libellé (3.3) |
+| `unit_blocks` | `lesson` « Leçon », `cases` « Cas du fil rouge » : les mots des deux blocs d'une unité qui tiennent des champs étiquetés (3.3) |
+| `qualifiers` | `fallback` « rechange », `practice` « entraînement », `aside` « aparté » : la liste fermée des valeurs du champ « Qualificatif » d'un cas supplémentaire (3.3) |
 | `markers` | `consensus` « consensus », `school` « école », `course` « cours » |
 | `natures` | `fact` « fait » : la nature d'une affirmation de `sources.md` qu'une source énonce sans position (3.4) ; les autres natures sont les marqueurs de position `consensus`, `school`, `course`. Seul `sources` la lit : ce n'est pas un marqueur du texte publié, que `conventions` vérifie |
 | `concept_refs` | `concept` « concept », `concepts` « concepts », `and` « et », `annex` « annexe » : les mots d'une référence de concept (3.5) |

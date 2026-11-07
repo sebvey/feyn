@@ -268,12 +268,12 @@ groups:
 
   - title: Le corps de concept.md (course/README.md section 3.2)
     purpose: >-
-      Le concept en un fichier, dans un ordre fixe : son titre ; sa tête, « Ouverture », qui tient
-      « L'essentiel », le résumé écrit du concept ; ses sections et leurs unités, une par message
-      du professeur ; son pied, « Clôture », qui tient « Se vérifier » et l'approfondissement que
-      le site publie, puis la consigne du concept, que seul le professeur lit. L'objectif et les
-      pièges du concept n'y sont pas écrits : le build les compose, depuis `course.yaml` et depuis
-      les « Pièges » de ses unités.
+      Le concept en un fichier, dans un ordre fixe : son titre ; sa tête, « L'essentiel », le
+      résumé écrit du concept ; ses sections et leurs unités, une par message du professeur ; son
+      pied, « Clôture », qui tient « Se vérifier » et l'approfondissement que le site publie, puis
+      la consigne au professeur du concept, que seul le professeur lit. L'objectif et les pièges
+      du concept n'y sont pas écrits : le build les compose, depuis `course.yaml` et depuis les
+      « Pièges » de ses unités.
     category: pedagogy
     method: inspection
     rules:
@@ -284,13 +284,13 @@ groups:
         check: concept-file
         text: >-
           Le corps de `concept.md` doit être, après son titre et dans cet ordre, sa tête, ses
-          sections, puis son pied ; la tête et le pied sont chacun un titre `##`, « Ouverture » et
-          « Clôture » (`headings.head` et `headings.foot` du lexique), qui ne tient que ses blocs,
-          des titres `###` dont le texte est le titre du lexique, présents ou au choix comme
-          `concept_file` de `course/form.yaml` le dit (la tête, « L'essentiel » ; le pied, « Se
-          vérifier », « Approfondissement » et « Consigne », chacun au choix, « Clôture » présente
-          quand elle en tient un) ; aucune autre section `##` ne doit exister, ni l'objectif ni les
-          pièges, que le build compose.
+          sections, puis son pied. La tête est un titre `##`, « L'essentiel »
+          (`headings.essentials` du lexique), puis son texte, sans titre `###`. Le pied est un
+          titre `##`, « Clôture » (`headings.foot`), qui ne tient que ses blocs, des titres `###`
+          dont le texte est le titre du lexique, au choix comme `concept_file` de
+          `course/form.yaml` le dit (« Se vérifier », « Approfondissement » et « Consigne au
+          professeur », « Clôture » présente quand elle en tient un) ; aucune autre section `##`
+          ne doit exister, ni l'objectif ni les pièges, que le build compose.
       - id: concept-has-sections
         level: requirement
         category: structure
@@ -298,8 +298,8 @@ groups:
         check: concept-file
         text: >-
           `concept.md` doit tenir au moins une section, et un titre `###` n'existe que dans une
-          section, une unité de cette section, ou dans la tête et le pied, l'un de leurs blocs :
-          les titres de `concept.md` sont l'arbre du concept.
+          section, une unité de cette section, ou dans le pied, l'un de ses blocs : les titres de
+          `concept.md` sont l'arbre du concept.
       - id: essentials-define-concept
         level: requirement
         text: >-
@@ -322,22 +322,23 @@ groups:
       - id: concept-instruction-content
         level: requirement
         text: >-
-          « Consigne » du pied doit tenir ce que la méthode a de propre au concept entier, ce
-          qu'aucune unité ne dit pour elle seule ; l'ordre et le découpage du concept sont ses
-          sections et ses unités, jamais une consigne.
+          « Consigne au professeur » du pied doit tenir ce que la méthode a de propre au concept
+          entier, ce qu'aucune unité ne dit pour elle seule ; l'ordre et le découpage du concept
+          sont ses sections et ses unités, jamais une consigne.
 
   - title: L'unité (course/README.md section 3.3)
     purpose: >-
       L'unité est le contenu d'un cours, écrit une fois : un message du professeur, une feuille du
       concept. Elle tient quatre blocs, dans l'ordre où le créateur l'écrit : enseigner, demander,
       prévoir les erreurs, donner la consigne. Sa « Leçon » tient sa matière, ce qui est vrai, les
-      mêmes mots pour le site et le professeur, et son ancrage dans le fil rouge ; son « Exercice »,
-      sa question et sa réponse attendue ; ses « Pièges », ses idées fausses, chacune avec sa
-      correction ; sa « Consigne », ce que la méthode a de propre à l'unité. Puis viennent ses cas
-      supplémentaires, « En stock », de rechange quand l'apprenant échoue, d'entraînement pour
-      s'exercer ou retrouver un concept validé, d'aparté pour une question fréquente hors du
-      parcours. Chaque bloc est publié ou non, une propriété de la spec (`course/form.yaml`) que son
-      titre dit par son lecteur, « pour tous » ou « teacher seulement », jamais un choix du cours.
+      mêmes mots pour le site et le professeur ; son « Cas du fil rouge », ses cas, chacun titré,
+      avec son ancrage dans le fil rouge, sa question et sa réponse attendue : d'abord le cas de
+      l'unité, toujours posé, puis ses cas supplémentaires, de rechange quand l'apprenant échoue,
+      d'entraînement pour s'exercer ou retrouver un concept validé, d'aparté pour une question
+      fréquente hors du parcours ; ses « Pièges », les idées fausses de ses cas, chacune avec sa
+      correction ; sa « Consigne au professeur », ce que la méthode a de propre à l'unité. Chaque
+      bloc est publié ou non, une propriété de la spec (`course/form.yaml`), jamais un choix du
+      cours, et que son titre ne dit pas.
     category: pedagogy
     rules:
       - id: section-holds-its-units
@@ -346,99 +347,106 @@ groups:
         check: unit-contract
         text: >-
           Une section ne doit rien tenir d'autre que ses titres `###` d'unité et leurs blocs.
-      - id: unit-blocks-with-their-reader
+      - id: unit-blocks-in-order
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          Une unité doit tenir ses blocs `####`, chacun titré par son mot puis son lecteur entre
-          parenthèses, dans cet ordre et chacun une fois : `#### Leçon (pour tous)`,
-          `#### Exercice (teacher seulement)`, `#### Pièges (pour tous)`, obligatoires, puis
-          `#### Consigne (teacher seulement)` au choix ; ses cas supplémentaires viennent après
-          (`blocks` de `unit` dans `course/form.yaml`).
+          Une unité doit tenir ses blocs `####`, chacun titré par son seul mot, dans cet ordre et
+          chacun une fois : `#### Leçon`, `#### Cas du fil rouge`, `#### Pièges`, obligatoires,
+          puis `#### Consigne au professeur` au choix (`blocks` de `unit` dans
+          `course/form.yaml`).
         why: >-
-          Une unité était une liste de champs étiquetés dont la publication se savait par cœur, et
-          un cas ne se distinguait d'une partie de son unité que par sa parenthèse : le titre du
-          bloc dit ce que le site publie, et l'ordre des blocs est celui de l'écriture (idée #642,
-          epic #647).
+          Le titre d'un bloc disait aussi son lecteur, entre parenthèses, pour que la publication
+          ne se sache plus par cœur (idée #642, epic #647) ; elle est la donnée
+          de `course/form.yaml`, et un lecteur du site n'a que faire de la marque : le titre d'un
+          bloc ne tient plus que son mot (epic #598).
       - id: unit-fields-labelled
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          « Leçon » et « Exercice » doivent être chacun une liste de champs, chacun ouvert par
-          `- **<label>** :`, le libellé l'un des `unit_fields` du lexique ; le texte d'un champ
-          suit son libellé, et ses lignes suivantes sont en retrait de deux espaces (paragraphes,
-          listes imbriquées). « Pièges » et « Consigne » n'ont pas de libellé : le mot de leur bloc
-          en tient lieu.
+          « Leçon » et « Cas du fil rouge » doivent être chacun une liste de champs, chacun ouvert
+          par `- **<label>** :`, le libellé l'un des `unit_fields` du lexique, rien entre lui et
+          les deux-points ; le texte d'un champ suit son libellé, et peut s'ouvrir sur une
+          précision (« en deux parties : »), ses lignes suivantes en retrait de deux espaces
+          (paragraphes, listes imbriquées). « Pièges » et « Consigne au professeur » n'ont pas de
+          libellé : le mot de leur bloc en tient lieu.
+        why: >-
+          Le libellé « Question » pouvait porter un qualificatif avant ses deux-points
+          (« **Question**, en deux parties : ») ; un libellé seul se lit d'une seule façon, par
+          le site comme par les checks, et la précision passe dans le texte (epic #598).
       - id: no-line-outside-a-field
         level: requirement
         method: test
         check: unit-contract
         text: >-
           Aucune ligne d'une unité ne doit se trouver hors d'un bloc, ni, dans « Leçon » et
-          « Exercice », hors d'un champ : le site ne publie que les blocs publiés, et une ligne
-          qu'aucun bloc ne porte n'est ni publiée ni lue.
-      - id: field-qualifier-on-question-only
-        level: requirement
-        method: test
-        check: unit-contract
-        text: >-
-          Seul le libellé « Question » peut porter un qualificatif à lui avant les deux-points
-          (« **Question**, en deux parties : »).
+          « Cas du fil rouge », hors d'un champ : une ligne qu'aucun bloc ne porte n'est ni publiée
+          ni lue.
       - id: unit-fields-present-once
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          « Leçon » doit tenir « Matière » et « Ancrage », « Exercice » « Question » et
-          « Réponse attendue », « Pièges » une idée fausse au moins, « Consigne », quand l'unité en
-          a une, sa prose ; aucun champ deux fois et aucun vide (`fields` de chaque bloc de `unit`
-          dans `course/form.yaml`).
+          « Leçon » doit tenir « Matière », chaque cas de « Cas du fil rouge » ses champs
+          (`case-form`), « Pièges » une idée fausse au moins, « Consigne au professeur », quand
+          l'unité en a une, sa prose ; aucun champ deux fois et aucun vide (`fields` de chaque bloc
+          de `unit` dans `course/form.yaml`).
       - id: unit-fields-in-order
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          Les champs d'un bloc doivent venir dans l'ordre de `course/form.yaml` : « Matière » puis
-          « Ancrage » dans « Leçon », « Question » puis « Réponse attendue » dans « Exercice ».
+          Les champs d'un cas doivent venir dans l'ordre de `course/form.yaml` : « Titre »,
+          « Qualificatif », « Ancrage », « Question », « Réponse attendue ».
       - id: misconception-form
         level: requirement
         method: test
         check: unit-contract
         text: >-
           « Pièges » doit tenir au moins une idée fausse, chacune `- « <misconception> » :
-          <correction>`, et rien d'autre : aucune puce imbriquée sous elle. Dans une unité, ses
-          idées fausses sont les puces du bloc ; dans un cas supplémentaire, elles sont imbriquées
-          sous son champ `- **Pièges** :`.
-      - id: supplementary-case-form
+          <correction>`, et rien d'autre : aucune puce imbriquée sous elle. Ce sont les idées
+          fausses de tous les cas de l'unité : un cas n'a pas de « Pièges » à lui.
+      - id: case-form
         level: requirement
         method: test
         check: unit-contract
         text: >-
-          Un cas supplémentaire doit être un titre `####` après les blocs de son unité,
-          `#### En stock, <qualifier> (teacher seulement) : <title>`, le qualificatif seul entre la
-          virgule et le lecteur ; sa question est celle que l'unité tient en stock. Ses champs,
-          étiquetés, dans cet ordre et tous obligatoires : « Ancrage », « Question », « Réponse
-          attendue », « Pièges » (`supplementary_case` de `course/form.yaml`).
+          « Cas du fil rouge » doit tenir un cas au moins, chacun ouvert par son « Titre », puis,
+          étiquetés, dans cet ordre et tous obligatoires, « Qualificatif » (un cas supplémentaire
+          seulement), « Ancrage », « Question », « Réponse attendue ». Le premier cas est celui de
+          l'unité, toujours posé, sans « Qualificatif » ; chaque autre est un cas supplémentaire,
+          posé quand son qualificatif le dit (`cases` du bloc dans `course/form.yaml`).
+        why: >-
+          La question d'une unité vivait dans un bloc non publié, son ancrage dans « Leçon », et
+          chaque cas supplémentaire sous un titre `####` à part, non publié : un lecteur du site
+          voyait une scène sans question. Les cas d'une unité sont une liste publiée,
+          chacun avec son ancrage, et le site montre la réponse attendue cachée jusqu'à ce que le
+          lecteur la révèle (epic #598).
       - id: case-qualifier-from-lexicon
         level: requirement
         method: test
         check: unit-contract
-        text: Le qualificatif d'un cas supplémentaire doit être une valeur du groupe `qualifiers` du lexique.
+        text: >-
+          Le « Qualificatif » d'un cas supplémentaire doit être une valeur du groupe `qualifiers`
+          du lexique, seule.
       - id: case-titles-unique
         level: requirement
         method: test
         check: unit-contract
-        text: Les titres des cas supplémentaires doivent être uniques dans le concept.
+        text: >-
+          Le « Titre » de chaque cas, celui de l'unité comme ceux de ses cas supplémentaires, doit
+          être unique dans le concept.
       - id: unit-length-under-threshold
         level: recommendation
         method: test
         check: unit-length
         text: >-
-          Il convient qu'une unité tienne en 12 lignes au plus de « Matière », « Ancrage » et
-          « Question », comptées en lignes de 100 caractères (`length` de `unit` dans
-          `course/form.yaml`) : au-delà, elle tient mal en un message.
+          Il convient qu'une unité tienne en 12 lignes au plus de « Matière » et, de son cas, de
+          « Ancrage » et « Question », comptées en lignes de 100 caractères (`length` de `unit`
+          dans `course/form.yaml`) : au-delà, elle tient mal en un message. Un cas supplémentaire,
+          posé à part, n'y compte pas.
       - id: unit-field-content
         level: requirement
         method: inspection
@@ -446,12 +454,14 @@ groups:
           Chaque champ d'une unité doit tenir ce que son libellé, ou le mot de son bloc, annonce :
           « Matière », ce qui est vrai, l'explication telle que le site la publie et que le
           professeur la dit ;
-          « Ancrage », la situation du fil rouge où la matière se voit, ses acteurs, ses faits et
-          son déroulé (qui dit quoi, quand) ; « Question », la question que pose l'unité ;
-          « Réponse attendue », la bonne réponse avec ses nuances, la position du cours telle que la
-          matière l'énonce ; « Pièges », les réponses fausses fréquentes, chacune avec sa
-          correction ; « Consigne », ce que la méthode a de propre à l'unité (quand poser un cas
-          supplémentaire, une formulation qui a marché, un renvoi à ne pas réenseigner).
+          « Titre », le nom du cas, que la mémoire de l'apprenant cite ; « Qualificatif », quand
+          poser le cas supplémentaire ; « Ancrage », la situation du fil rouge où la matière se
+          voit, ses acteurs, ses faits et son déroulé (qui dit quoi, quand) ; « Question », la
+          question que pose le cas ; « Réponse attendue », la bonne réponse avec ses nuances, la
+          position du cours telle que la matière l'énonce ; « Pièges », les réponses fausses
+          fréquentes, chacune avec sa correction ; « Consigne au professeur », ce que la méthode a
+          de propre à l'unité (quand poser un cas supplémentaire, une formulation qui a marché, un
+          renvoi à ne pas réenseigner).
       - id: course-question-in-instruction
         level: requirement
         method: inspection
@@ -498,8 +508,8 @@ groups:
         level: requirement
         method: inspection
         text: >-
-          Une « Consigne », d'une unité ou du concept, ne doit contredire aucune règle du
-          protocole : le fichier de concept dit quoi enseigner, le protocole dit comment et quand ;
+          Une « Consigne au professeur », d'une unité ou du concept, ne doit contredire aucune
+          règle du protocole : le fichier de concept dit quoi enseigner, le protocole dit comment et quand ;
           une consigne qui contredit une règle est un défaut du concept.
       - id: case-asks-what-was-taught
         level: recommendation
@@ -735,8 +745,8 @@ groups:
         method: test
         check: unit-additions
         text: >-
-          Il convient qu'un passage en gras (`**…**`) d'un champ d'une unité ou d'un cas
-          supplémentaire que l'apprenant lit ou entend (`readers` de `course/form.yaml` : tout sauf
+          Il convient qu'un passage en gras (`**…**`) d'un champ d'une unité, ceux de ses cas
+          compris, que l'apprenant lit ou entend (`readers` de `course/form.yaml` : tout sauf
           la consigne), libellés exceptés, soit un terme de `glossary.md`, ou l'une de ses
           variantes, casse ignorée : un gras qui n'en est pas un est signalé, au cas où le terme
           manquerait au glossaire.

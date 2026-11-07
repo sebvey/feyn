@@ -18,11 +18,12 @@ const URL = /^https?:\/\/\S+$/;
 
 const short = (s) => (s.length > 50 ? s.slice(0, 50) + '…' : s);
 
-// the published parts of the head and the foot of the form (course/form.yaml), by their key
-const fixedKeys = (form) => (form ? [...form.concept_file.head.blocks, ...form.concept_file.foot.blocks].filter((p) => p.published).map((p) => p.heading) : []);
+// the published parts of the head and the foot of the form (course/form.yaml), by their key: the
+// head itself, the foot's blocks
+const fixedKeys = (form) => (form ? [form.concept_file.head, ...form.concept_file.foot.blocks].filter((p) => p.published).map((p) => p.heading) : []);
 
 // the anchors of concept.md: the ids of its section and unit headings (its tree, lib/course.js),
-// and its published blocks of the head and the foot by their lexicon value (the instruction is not
+// and its published head and blocks of the foot by their lexicon value (the instruction is not
 // one: it is not published)
 function anchorsOf(ctx, c, H) {
   const cm = ctx.md(c.dir + '/concept.md');
@@ -30,7 +31,8 @@ function anchorsOf(ctx, c, H) {
   const set = new Set(c.subs.map((s) => s.id));
   const parts = ctx.parts(c);
   const fixed = new Set(fixedKeys(ctx.form));
-  for (const p of [parts.head, parts.foot]) for (const b of (p ? p.blocks : [])) if (fixed.has(b.key)) set.add(H(b.key));
+  if (parts.head && fixed.has(parts.head.key)) set.add(H(parts.head.key));
+  for (const b of (parts.foot ? parts.foot.blocks : [])) if (fixed.has(b.key)) set.add(H(b.key));
   return set;
 }
 
