@@ -1,0 +1,43 @@
+# The lexicon of the site of `linear-course`: the words and short texts the site shows for every
+# course of the spec and no course file holds, read by key by the site build, which writes none of
+# them again (decisions `lexicon-not-language-pack` and `one-source-two-builds`). The headings of a
+# concept file, of `sources.md` and of `plan.md` (« Public cible », « Progression », above the two
+# parts of `plan.md` the home shows), the labels of a unit's fields and the kind words « Concept »
+# and « Annexe » that the site shows are read from `course/lexicon.yaml`, not written here; a word of the
+# interface (search, « À propos », previous and next, the menu, the reveal button, the version) is
+# `site-builder/`'s. The spec is French (`language: fr` in spec.yaml): the values are French, each
+# a word of the repository glossary (`docs/glossary.md`, its `fr`), named in the comment beside it;
+# the build never reads the glossary. Typography of these values: space before « : », « ; »,
+# « ? », « ! », quotes « »; no em-dash, no arrow.
+
+# The words of the header's navigation that name a thing of the course.
+nav:
+  domains: "Domaines"     # glossary `domain`, fr « domaine »: the domain map
+  storyline: "Fil rouge"  # glossary `storyline`, fr « fil rouge »
+  glossary: "Glossaire"   # glossary `course glossary`, fr « glossaire du cours »
+
+# The words that come before a value on a domain page and a concept page.
+labels:
+  domain: "Domaine"          # glossary `domain`, fr « domaine »: the eyebrow of a concept page, « Concept 0 · Domaine 1 : <titre> »
+  objective: "Objectif"      # glossary `objective`, fr « objectif »: « Objectif : » before the objective of a domain or a concept
+  prerequisites: "Prérequis" # glossary `prerequisites`, fr « prérequis »: before the concept references of a concept's prerequisites
+
+# The headings of a concept page that no course file holds.
+page_headings:
+  neighbors: "Notions voisines" # glossary `neighbors`, fr « notions voisines »: the frontmatter's `neighbors`
+  sources: "Sources"            # glossary `sources`, fr « sources »: the part built from `sources.md`
+
+# The headings of the three stance columns under « Consensus et choix d'école » (`headings.stances`
+# of course/lexicon.yaml), keyed as the markers of course/lexicon.yaml.
+stance_columns:
+  consensus: "consensus"     # glossary `stances`, fr « consensus »
+  school: "choix d'école"    # glossary `stances`, fr « choix d'école »
+  course: "choix du cours"   # glossary `stances`, fr « choix du cours »
+
+# The intro line under each stance column, keyed as `stance_columns`, and under « Affirmations »
+# (`headings.claims` of course/lexicon.yaml), the claims of `sources.md`.
+intros:
+  consensus: "Ce que disent les références établies et ce que font en général les praticiens." # glossary `stances`: consensus
+  school: "Le choix d'un auteur ou d'un courant, chacun nommé : on pose les choix d'école côte à côte, sans les fondre." # glossary `stances`: school
+  course: "Le choix propre au cours, sans source externe : à prendre comme tel." # glossary `stances`: course
+  claims: "Pour chaque affirmation du concept : où elle se trouve, la source qui la porte, ce que sa lecture a permis de vérifier et sa nature. Un choix du cours est signalé comme tel." # glossary `sources`: its claims

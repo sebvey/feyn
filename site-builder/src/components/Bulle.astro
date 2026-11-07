@@ -1,0 +1,9 @@
+---
+// The duration bubble, ported from the old site's Bulle: a duration in the shape of a speech
+// bubble, the time of the conversation with the teacher. The old site's words after it
+// (« avec l'agent ») are not carried: the bubble holds the duration alone. Ignored by Pagefind.
+import { duration } from '../lib/site';
+interface Props { minutes: number }
+const { minutes } = Astro.props;
+---
+<span class="bulle" data-pagefind-ignore>≈ {duration(minutes)}</span>

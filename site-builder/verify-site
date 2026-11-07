@@ -1,0 +1,239 @@
+#!/usr/bin/env node
+// verify-site <built-dir> [--base <path>] [--captures <dir>]
+// Verifies a site build-site wrote, ported from the old site's scripts/verify.mjs
+// (site-builder/README.md, "The verification"):
+//   1. the internal links and anchors: each href and src of each page leads to a file of the build,
+//      and its anchor, if any, to an id of that page;
+//   2. in a headless Chromium (Playwright), each page served at its base path, at 1280 and 375 px
+//      wide, in light and in dark: a full-page capture, no horizontal overflow (at the opening, then
+//      with every <details> open), no JavaScript error, no request of the site that fails.
+// The base path is the one the pages were built under, read from the favicon link of the home page
+// (build-site writes it under the base), or given by --base. The captures go to --captures, by
+// default a new folder of the system's temp folder, printed at the end; never into the build.
+// Exit 0 every check passes, 1 a check fails, 2 a usage error, a folder that is not a site build,
+// or Playwright or its browser missing (the message names the command to run).
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { createServer } from 'node:http';
+import { fileURLToPath } from 'node:url';
+
+const BUILDER = path.dirname(fileURLToPath(import.meta.url));
+
+function usage(code) {
+  const out = code ? console.error : console.log;
+  out('usage: verify-site <built-dir> [--base <path>] [--captures <dir>]');
+  out('checks the internal links and anchors of the site built in <built-dir>, then each page in a browser');
+  out('at 1280 and 375 px, light and dark: captures, no horizontal overflow, no JavaScript error');
+  process.exit(code);
+}
+function refuse(message) {
+  console.error(`verify-site: ${message}`);
+  process.exit(2);
+}
+
+// ---- arguments
+const opts = { base: null, captures: null };
+let dir = null;
+const argv = process.argv.slice(2);
+for (let i = 0; i < argv.length; i++) {
+  const a = argv[i];
+  const value = () => {
+    if (i + 1 >= argv.length) refuse(`${a} needs a value`);
+    return argv[++i];
+  };
+  if (a === '--help' || a === '-h') usage(0);
+  else if (a === '--base') opts.base = value();
+  else if (a === '--captures') opts.captures = value();
+  else if (a.startsWith('-')) refuse(`unknown option ${a}`);
+  else if (dir === null) dir = a;
+  else refuse(`one built folder only (got ${dir} and ${a})`);
+}
+if (dir === null) usage(2);
+dir = path.resolve(dir);
+const home = path.join(dir, 'index.html');
+if (!fs.existsSync(home)) refuse(`${dir} holds no index.html: not a site build`);
+
+// ---- the base path: given, or the one the favicon link of the home page is under
+let base = opts.base;
+if (base === null) {
+  const m = /<link[^>]*\brel="icon"[^>]*\bhref="([^"]*)favicon\.svg"/.exec(fs.readFileSync(home, 'utf8'));
+  if (!m || !m[1].startsWith('/')) refuse(`cannot read the base path from ${home} (no favicon link from the root of the host): give it with --base`);
+  base = m[1];
+}
+if (!base.startsWith('/')) refuse(`--base ${base} is not a path from the root of the host (it starts with /)`);
+if (!base.endsWith('/')) base += '/';
+
+// ---- the captures' folder, given: never inside the build
+if (opts.captures !== null) {
+  const c = path.resolve(opts.captures);
+  if (c === dir || c.startsWith(dir + path.sep)) refuse(`--captures ${c} is inside the build: refused`);
+}
+
+const failures = [];
+const fail = (m) => failures.push(m);
+
+// ---- 1. the internal links and anchors
+/** Every HTML file of the build, relative to it (separator /), Pagefind's and Astro's assets left out. */
+function htmlFiles(d = dir) {
+  return fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => {
+    const p = path.join(d, e.name);
+    if (e.isDirectory()) return d === dir && (e.name === 'pagefind' || e.name === '_astro') ? [] : htmlFiles(p);
+    return e.name.endsWith('.html') ? [path.relative(dir, p).split(path.sep).join('/')] : [];
+  });
+}
+/** The address of a file: « concepts/01/index.html » is « <base>concepts/01/ ». */
+const addressOf = (f) => base + f.replace(/(^|\/)index\.html$/, '$1');
+/** The file served at a path under the base, or null. */
+function fileAt(pathname) {
+  if (!pathname.startsWith(base)) return null;
+  let rel;
+  try { rel = decodeURIComponent(pathname.slice(base.length)); } catch { return null; }
+  const p = path.join(dir, rel);
+  if (p !== dir && !p.startsWith(dir + path.sep)) return null;
+  if (fs.existsSync(p) && fs.statSync(p).isFile()) return p;
+  const index = path.join(p, 'index.html');
+  return fs.existsSync(index) ? index : null;
+}
+const decode = (s) => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&#x27;/g, "'");
+const idCache = new Map();
+function idsOf(file) {
+  if (!idCache.has(file)) {
+    const html = fs.readFileSync(file, 'utf8');
+    idCache.set(file, new Set([...html.matchAll(/\sid="([^"]*)"/g)].map((m) => decode(m[1]))));
+  }
+  return idCache.get(file);
+}
+
+const ORIGIN = 'http://site.invalid';
+const pages = htmlFiles();
+let links = 0;
+for (const f of pages) {
+  const html = fs.readFileSync(path.join(dir, f), 'utf8');
+  const here = new URL(addressOf(f), ORIGIN);
+  for (const [, , raw] of html.matchAll(/\s(href|src)="([^"]*)"/g)) {
+    const v = decode(raw);
+    if (/^(mailto:|tel:|javascript:|data:)/i.test(v)) continue;
+    let u;
+    try { u = new URL(v, here); } catch { fail(`unreadable link: ${addressOf(f)} -> ${v}`); continue; }
+    if (u.origin !== ORIGIN) continue;
+    links++;
+    const target = fileAt(u.pathname);
+    if (!target) {
+      fail(`broken link: ${addressOf(f)} -> ${v}${u.pathname.startsWith(base) ? '' : ` (not under the base path ${base})`}`);
+      continue;
+    }
+    const anchor = u.hash ? decodeURIComponent(u.hash.slice(1)) : '';
+    if (anchor && target.endsWith('.html') && !idsOf(target).has(anchor)) fail(`missing anchor: ${addressOf(f)} -> ${v}`);
+  }
+}
+console.log(`verify-site: links: ${pages.length} pages, ${links} internal links and sources, ${failures.length} failing`);
+
+// ---- 2. the browser
+let chromium;
+try {
+  ({ chromium } = await import(path.join(BUILDER, 'node_modules', 'playwright', 'index.mjs')));
+} catch {
+  refuse(`Playwright is missing, run: mise exec -- npm ci --prefix ${path.relative(process.cwd(), BUILDER) || '.'}`);
+}
+let browser;
+try {
+  browser = await chromium.launch();
+} catch (e) {
+  refuse(`Chromium does not start, install it once: cd ${path.relative(process.cwd(), BUILDER) || '.'} && mise exec -- npx playwright install chromium\n${String(e.message).split('\n')[0]}`);
+}
+
+const TYPES = {
+  '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript',
+  '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.wasm': 'application/wasm',
+  '.woff2': 'font/woff2', '.ico': 'image/x-icon',
+};
+// The build served at its base path, as the host serves it: a folder by its index.html, an address
+// no file has by the build's 404.html with the status 404.
+const notFound = path.join(dir, '404.html');
+const server = createServer((req, res) => {
+  const file = fileAt(new URL(req.url, ORIGIN).pathname);
+  if (!file) {
+    res.writeHead(404, { 'content-type': TYPES['.html'] });
+    res.end(fs.existsSync(notFound) ? fs.readFileSync(notFound) : 'not found');
+    return;
+  }
+  res.writeHead(200, { 'content-type': TYPES[path.extname(file)] ?? 'application/octet-stream' });
+  res.end(fs.readFileSync(file));
+});
+await new Promise((ok) => server.listen(0, '127.0.0.1', ok));
+const origin = `http://127.0.0.1:${server.address().port}`;
+
+const captures = path.resolve(opts.captures || fs.mkdtempSync(path.join(os.tmpdir(), 'feyn-verify-site-')));
+const FORMATS = [
+  { name: 'desktop-light', viewport: { width: 1280, height: 800 }, colorScheme: 'light' },
+  { name: 'desktop-dark', viewport: { width: 1280, height: 800 }, colorScheme: 'dark' },
+  { name: 'mobile-light', viewport: { width: 375, height: 812 }, colorScheme: 'light' },
+  { name: 'mobile-dark', viewport: { width: 375, height: 812 }, colorScheme: 'dark' },
+];
+
+/** Run in the page: what passes the right edge, when the page scrolls horizontally; null otherwise. */
+function overflow() {
+  const width = document.documentElement.clientWidth;
+  if (document.documentElement.scrollWidth <= width + 1) return null;
+  const name = (el) => el.tagName.toLowerCase() + (el.id ? `#${el.id}` : '') + (el.classList.length ? `.${[...el.classList].join('.')}` : '');
+  // The highest element that passes the edge, out of the containers that scroll themselves (the table of contents' bar).
+  const inScroller = (el) => { for (let a = el.parentElement; a; a = a.parentElement) if (getComputedStyle(a).overflowX !== 'visible') return true; return false; };
+  const culprits = [];
+  for (const el of document.body.querySelectorAll('*')) {
+    const r = el.getBoundingClientRect();
+    const p = el.parentElement;
+    if (r.width && r.right > width + 1 && !(p && p.getBoundingClientRect().right > width + 1 && !inScroller(p)) && !inScroller(el)) {
+      culprits.push(`${name(el)} "${el.textContent.trim().slice(0, 50)}" (${Math.round(r.right)} px)`);
+      if (culprits.length === 3) break;
+    }
+  }
+  return `${document.documentElement.scrollWidth} px for ${width} px; passing the edge: ${culprits.join(', ') || '? (a ::before or ::after)'}`;
+}
+
+console.log(`verify-site: browser: ${pages.length} pages x ${FORMATS.length} formats (1280 and 375 px, light and dark)`);
+try {
+  await Promise.all(FORMATS.map(async (fmt) => {
+    const ctx = await browser.newContext({ viewport: fmt.viewport, colorScheme: fmt.colorScheme });
+    const page = await ctx.newPage();
+    let current = '';
+    page.on('pageerror', (e) => fail(`JavaScript error: ${current} (${fmt.name}): ${e.message}`));
+    page.on('response', (r) => {
+      const u = new URL(r.url());
+      if (u.origin === origin && r.status() >= 400) {
+        fail(`request failed: ${current} (${fmt.name}): ${u.pathname} answers ${r.status()}`);
+      }
+    });
+    page.on('requestfailed', (r) => {
+      if (new URL(r.url()).origin === origin) fail(`request failed: ${current} (${fmt.name}): ${new URL(r.url()).pathname} (${r.failure()?.errorText})`);
+    });
+    fs.mkdirSync(path.join(captures, fmt.name), { recursive: true });
+    for (const f of pages) {
+      current = addressOf(f);
+      const shot = f.replace(/\/?index\.html$/, '').replace(/\.html$/, '').replace(/\//g, '_') || 'home';
+      await page.goto(origin + current, { waitUntil: 'load' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.screenshot({ path: path.join(captures, fmt.name, `${shot}.png`), fullPage: true });
+      const check = async (state) => {
+        const d = await page.evaluate(overflow);
+        if (d) fail(`horizontal overflow: ${current} (${fmt.name}, ${state}): ${d}`);
+      };
+      await check('at the opening');
+      await page.evaluate(() => document.querySelectorAll('details').forEach((d) => { d.open = true; }));
+      await check('every details open');
+    }
+    await ctx.close();
+  }));
+} finally {
+  await browser.close();
+  server.close();
+}
+console.log(`verify-site: captures in ${captures}`);
+
+// ---- the result
+for (const m of failures) console.log(`  ${m}`);
+if (failures.length) {
+  console.error(`verify-site: ${dir}: ${failures.length} failing`);
+  process.exit(1);
+}
+console.log(`verify-site: ${dir}: every check passes`);

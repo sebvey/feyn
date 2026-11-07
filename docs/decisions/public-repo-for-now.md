@@ -7,7 +7,7 @@ area: repo
 
 Without this, an agent would make `feyn` private to hide what only the teacher reads, losing GitHub Pages, rulesets and unlimited Actions minutes on the Free plan, or would serve the site from `feyn`'s own Pages, an address that a later switch to private would break.
 
-`feyn` is public for now. The unpublished fields of its concept files (expected answers, instructions) can be read by anyone: accepted for a beta with trusted testers, and said at the top of `README.md`. Even public, the site is deployed to the artifact repository `feyn-site`, never from `feyn`, so the site address survives a change of visibility.
+`feyn` is public for now. The unpublished fields of its concept files (the instructions) can be read by anyone: accepted for a beta with trusted testers, and said at the top of `README.md`. Even public, the site is deployed to the artifact repository `feyn-site`, never from `feyn`, so the site address survives a change of visibility.
 
 The day unknown learners arrive, `feyn` switches to private: one click. It then loses rulesets and `main` protection, which the discipline of the command skills replaces, and keeps an Actions quota (2000 minutes a month) that is plenty for the checks. Issues and unlimited collaborators stay on both sides.
 
@@ -15,3 +15,4 @@ The day unknown learners arrive, `feyn` switches to private: one click. It then 
 
 - No secret, key or learner memory is ever committed to `feyn`; the classroom, with learner memory, is built outside the repository.
 - A learner who wants to learn from the course is told not to read its concept files in the repository, where the unpublished fields sit beside the published ones.
+- Amended 2026-11-07 (#693): the expected answers are published, each shown hidden on the site until the reader reveals it; the instructions remain the unpublished fields anyone can read in the repository.

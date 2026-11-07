@@ -1,0 +1,32 @@
+---
+// The stances of a concept (the frontmatter's `stances`), ported from the old site's Ecoles: three
+// columns, each headed by the badge of the site lexicon's `stance_columns` word and its intro line
+// (`intros`); each item with its author, its text and its references linked to the sources. Its
+// `verified` quotes are not shown (an audit material). Each item carries the anchor `<key>-<rank>`.
+import type { Item } from '../lib/site';
+import { words, mdInline } from '../lib/site';
+import Pastille from './Pastille.astro';
+import Refs from './Refs.astro';
+interface Props { consensus: Item[]; school: Item[]; course: Item[] }
+const columns = (['consensus', 'school', 'course'] as const).map((key) => ({ key, items: Astro.props[key] }));
+const cls: Record<string, string> = { consensus: 'consensus', school: 'ecole', course: 'cours' };
+---
+<div class="ecoles">
+  {columns.map((c) => (
+    <section class={`col ${cls[c.key]}`} aria-labelledby={`col-${c.key}`}>
+      <h3 id={`col-${c.key}`}><Pastille kind={c.key} word={words.site.stance_columns?.[c.key] ?? c.key} /></h3>
+      {words.site.intros?.[c.key] && <p class="col-intro">{words.site.intros[c.key]}</p>}
+      {c.items.length > 0 && (
+        <ul>
+          {c.items.map((it, i) => (
+            <li id={`${c.key}-${i + 1}`}>
+              {it.author && <span class="auteur">{it.author}</span>}
+              <span set:html={mdInline(it.text)} />{' '}
+              <Refs refs={it.refs} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  ))}
+</div>

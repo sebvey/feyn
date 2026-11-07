@@ -1,0 +1,20 @@
+---
+// The neighbours of a concept (the frontmatter's `neighbors`), under the site lexicon's
+// `page_headings.neighbors`: each with its author, its text and its references; ported from the
+// box the old site's Ecoles closed with. Its `verified` quotes are not shown.
+import type { Item } from '../lib/site';
+import { words, mdInline } from '../lib/site';
+import Refs from './Refs.astro';
+interface Props { items: Item[] }
+const { items } = Astro.props;
+---
+<aside class="voisines" aria-labelledby="neighbors">
+  <h3 id="neighbors">{words.site.page_headings?.neighbors}</h3>
+  {items.map((it) => (
+    <p>
+      {it.author && <strong>{it.author}{words.course.block_kinds.separator}</strong>}
+      <span set:html={mdInline(it.text)} />{' '}
+      <Refs refs={it.refs} />
+    </p>
+  ))}
+</aside>

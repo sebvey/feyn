@@ -1,0 +1,2 @@
+check: unit-contract
+message: case "Le cas la couche oubliée": mandatory field « Qualificatif » is missing

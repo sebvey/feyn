@@ -1,3 +1,86 @@
 # site-builder
 
-Builds the site from a course: the site engine (Astro), which reads `courses/<id>/` directly and builds the pages for each channel. Its own documentation lives in `site-builder/docs/`, its decisions in `site-builder/decisions/`. Builds are deployed to the artifact repository `sebvey/feyn-site`, never from here.
+Builds the site of a course: the site engine (Astro), its command `build-site`, which runs the spec half of the site build on a course and lays its output out in pages with the old site's design, and Pagefind's search index, and its command `verify-site`, which verifies a build in a browser. Its own documentation lives in `site-builder/docs/`, its decisions in `site-builder/decisions/`. Builds are deployed to the artifact repository `sebvey/feyn-site`, never served from here: two CI workflows push them there ("The deployment").
+
+## The two halves
+
+The site build is cut in two, as the classroom build is (`classroom-builder/README.md`, "The two halves"):
+- the half that depends on the spec MAJOR, `course-specs/<name>/<MAJOR>/site/build/`: its `render-site <course-dir>` reads the course through the one course parser and prints its published parts, the words, the URL scheme and the language of the site as one JSON document, whose shape the MAJOR's `site.schema.yaml` fixes (for `linear-course@1`, `course-specs/linear-course/1/site/build/README.md`);
+- the half that depends on the target only, here: `build-site` reads `spec: <name>@<MAJOR>` in the course's `course.yaml`, refuses (exit 2) a spec or a MAJOR with no `site/build/render-site`, runs it, validates its output against the MAJOR's `site.schema.yaml` (the `ajv` of the spec directives the MAJOR declares), then has Astro lay the document out and Pagefind index the pages.
+
+The engine never reads a course file, nor a spec file but that schema: every text, every word that names a thing of the course and every address comes from the document. A second MAJOR or a second spec writes its own `site/build/`, and this folder does not change.
+
+## Install
+
+Once, and after each change of `package-lock.json`: `cd site-builder && mise exec -- npm ci` (or `mise exec -- npm ci --prefix site-builder` from the root, the plain form an agent in a worktree runs). The dependencies, their versions pinned: Astro and Pagefind, the remark pipeline that renders the course's Markdown (`unified`, `remark-parse`, `remark-rehype`, `rehype-stringify`), for `astro check` only, `@astrojs/check`, `typescript` and `@types/node`, and for `verify-site` only, Playwright (`playwright`, a dev dependency). `render-site` and the validation also need the spec directives' package: `mise exec -- npm ci --prefix spec-directives/1`. Missing either, `build-site` stops at exit 2 with the command to run.
+
+## The command
+
+```
+mise exec -- site-builder/build-site <course-dir> [--channel next|prod|preview] [--base <path>] [--out <dir>]
+```
+
+- `<course-dir>`: a course folder, holding its `course.yaml` (`course-specs/linear-course/1/course/samples/cafe`, the bench course).
+- `--channel`: `next` (the default), `prod` or `preview` (decision `three-channels`); it sets the default of `--out`.
+- `--base <path>`: the base path of the pages, every internal link starting with it, `/` by default (a build served at the root of its host, as a local server serves it); the engine names no deployment. A deployed build is given the base of its address by its workflow ("The deployment"): `--base /feyn-site/next/<course id>/` on next, `--base /feyn-site/pr-<n>/<course id>/` for a preview; the course id is `course.yaml`'s `id`. A path from the root of the host, `/` added at its end when missing.
+- `--out <dir>`: the output folder, `site-builder/dist/<channel>/<course id>/` by default (`dist/` is ignored by git). An existing folder is emptied first when it holds a site build (an `index.html`); a non-empty folder without one is refused, so that a typo of `--out` never empties another folder.
+
+Exit 0 built, 1 an input the build cannot read (`render-site` failed, its output not valid against the schema, the Astro or Pagefind build failed, a page missing from the output), 2 a usage error, missing dependencies or a refused target: a course whose `course.yaml` declares no spec, a spec or MAJOR with no `spec.yaml` or no `site/build/render-site` (the message names it), an output folder that is not a site build.
+
+## The output
+
+One page per address of the URL scheme (`course-specs/linear-course/1/site/url-scheme.yaml`, given through the document), under the base path: the home (`index.html`), the domain map (`domaines/index.html`), a page per domain (`domaines/<n>/index.html`), a page per concept and per annex (`concepts/<nn>/index.html`, `concepts/00/` for concept 0, `concepts/A1/` for annex A1), the storyline page (`fil-rouge/index.html`) and the glossary page (`glossaire/index.html`) when the course has them (the document's `storyline` and `glossary` not null; otherwise neither the page nor its link in the header), the « À propos » page (`a-propos/index.html`), the search page (`recherche/index.html`) and the page of an address no page has (`404.html`); then `pagefind/`, the search index, and `_astro/`, the stylesheet and the icons. Every page ends with the footer: the link to « À propos » and the band of the course version, the document's `release` (« version 1.2.0 », or « version non publiée » while the course has no released version; no band when its spec does not publish it), no detail.
+
+## How the engine lays the document out
+
+- **One route.** Astro's file-based routing would write the addresses in file names: the one page `src/pages/[...path].astro` routes every page from the addresses the document gives (`url_scheme.pages`, each domain's and each concept's `path`), and hands it to its view in `src/views/`. An address that is a file (`404.html`) is routed without its extension; `build-site` moves it to its address when Astro writes it as a folder.
+- **The words.** A word that names a thing of the course comes from the document's `words` (the navigation, the labels, the headings, the kind words, the separator « : »); a word of the interface (the skip link, the menu, search, « À propos », previous and next, the theme toggle, a concept page's table of contents and the button that reveals an expected answer, the glossary's filter, the 404 page, the version and « version non publiée ») is written once, in `src/ui.ts`, as is the text of the « À propos » page (`about`), the site's own text about itself, the same for every course, which names no course and no licence; a page writes none of its own (decision `one-source-two-builds`).
+- **The text.** Each convention of the course text is mapped here, never written as markup in the course (decision `markdown-conventions-mapped-by-plugins`). The course's Markdown, CommonMark, is rendered as written by the remark pipeline (`src/lib/site.ts`), raw HTML left out; each concept reference the document lists (`concept_refs`) becomes a link to its page, each stance marker (`[consensus]`, `[école]`, `[cours]`, the course lexicon's `markers`) the badge of its stance with the marker's word, out of the search index, `**gras**` bold. French typography is applied to every page's HTML at build time (`src/lib/typo-fr.ts`, run by `src/middleware.ts`): no-break spaces and curly apostrophes, no word changed. No script capitalises a course text: a label comes before a text that starts lowercase (« Objectif : dire si … », « Réponse attendue : trop peu : … »). The page's language is the document's `language`, its spec MAJOR's: the engine writes none.
+- **The design.** The old site's (`parcours-po-website`): `src/styles/global.css` ports its `global.css` and `transversal.css` (tokens, palette, serif body, system UI, dark mode by preference and by the header's toggle, widths 40rem and 66rem, accessibility, print styles), its class names kept, reworked only where the structure changes (no tabs, no cross-course pages, no course bar); the shell (`src/layouts/Base.astro`: skip link, header with the course title as brand, navigation, search and theme toggle, footer with « À propos »), the table of contents (`Sommaire`), the foldable concepts (`ConceptList`), the duration bubble (`Bulle`) and the previous and next cards (`PrevNext`) are its components, ported.
+- **The concept page.** `src/views/Concept.astro` follows the course's division top to bottom, with no tabs (epic #598, point 17): the head (the eyebrow, the title, the objective, the prerequisites), the sticky table of contents (`Sommaire`, a section by its id and title on desktop, its title on a phone) beside the text column, « L'essentiel », each section and each unit in place (`Sous`: its matter, the diagrams that name it (`Figure`), its cases (`Cases`, each expected answer in a `<details>` closed by default and out of the index) and its « Pièges » (`Erreurs`)), « Clôture » (« Se vérifier » in the `Reflexe` box), the stances in three columns (`Ecoles`, the badges `Pastille`, the references `Refs`) and the neighbours (`Voisins`), the sources (`Sources`: « Affirmations », each nature a badge or its word, « Références » under the anchors `ref-S1`), the previous and next cards; an annex, out of the reading order, has none. What the document leaves out (« Consigne au professeur », « Non vérifié », a part `published: false`) is never there to build.
+
+- **The storyline page.** `src/views/Storyline.astro`: the world of `storyline.md` (its title, the text under it, each of its sections, listed in the table of contents), then its fixed facts under their heading, each fact's unit id a link to that unit on its concept page (`concepts/00/#0a1`).
+- **The glossary page.** `src/views/Glossary.astro`: the terms of the glossary's first table, read by the place of their column (term, English, definition, defined in; the headings are the table's), sorted and grouped by their first letter, the letters in the table of contents; each term with its English, its definition and the concepts it is defined in, a link each; the old site's filter, by text (accents ignored) and by the concept a term is defined in, grouped by domain, filled by `?q=` and `?concept=`; then each further table the document gives (« Termes à éviter »), under its heading.
+- **The « À propos » page.** `src/views/About.astro`: the text `about` of `src/ui.ts`.
+
+## The search index
+
+Pagefind splits a word at a straight apostrophe, not at the curly one the typography writes: « l’extraction » would be one word, and searching « extraction » would miss it. `build-site` has Pagefind index a copy of the pages whose apostrophes between two letters are straight, then gives the excerpts Pagefind stores (its fragments) their curly apostrophes back; the pages are not touched.
+
+## The verification
+
+```
+mise exec -- site-builder/verify-site <built-dir> [--base <path>] [--captures <dir>]
+```
+
+- `<built-dir>`: a folder `build-site` wrote (`site-builder/dist/next/cafe`).
+- `--base <path>`: the base path the pages were built under; by default the one the home page's favicon link is under, which `build-site` writes under the base.
+- `--captures <dir>`: where the captures go; by default a new folder of the system's temp folder, printed at the end. Never inside the build, which it refuses.
+
+Ported from the old site's `scripts/verify.mjs`, it serves the build itself at its base path (a folder by its `index.html`, an address no file has by the build's `404.html`), then checks, on every page:
+- the internal links and anchors: each `href` and `src` leads to a file of the build, under the base path, and its anchor, if any, to an `id` of that page;
+- in a headless Chromium (Playwright), at 1280 and 375 px wide, in light and in dark: a full-page capture, no horizontal overflow (at the opening, then with every `<details>` open), no JavaScript error, no request of the site that fails.
+
+Exit 0 every check passes, 1 a check fails (each failure printed), 2 a usage error, a folder that is not a site build, or Playwright or its browser missing. The old site's alignment stamps (`check-alignment.mjs`) and its typography check are not ported.
+
+The browser, once per machine (and after a change of Playwright's version): `cd site-builder && mise exec -- npx playwright install chromium`, which downloads the Chromium of the Playwright the lockfile pins into Playwright's cache (`~/Library/Caches/ms-playwright` on macOS); `npm ci` installs Playwright, not its browser.
+
+## The check
+
+`mise exec -- npm run check --prefix site-builder`: `astro check`, the types of the engine's files.
+
+## The deployment
+
+Two CI workflows of `feyn` deploy the site of the course to the artifact repository `sebvey/feyn-site`, served by GitHub Pages from its branch `gh-pages` at `https://sebvey.github.io/feyn-site/`, as decision `three-channels` sets its channels:
+
+| CI workflow | Trigger | Address |
+|---|---|---|
+| `.github/workflows/deploy-next.yml`, the next channel | a push to `main` | `https://sebvey.github.io/feyn-site/next/cafe/` |
+| `.github/workflows/deploy-preview.yml`, a preview | a pull request opened, synchronised or reopened, to any base; removed when it closes | `https://sebvey.github.io/feyn-site/pr-<n>/cafe/` |
+
+- **When they run.** Only when the change touches `site-builder/`, `course-specs/linear-course/` or the course (their `paths:` filters); a pull request from a fork, which gets no secret, is skipped.
+- **The course.** `cafe` (`course-specs/linear-course/1/course/samples/cafe`, course id `cafe`) until parcours-po is re-created (epic #520): its folder and its id are the workflows' configuration (their `env`, and their `paths:` filters), never the engine's.
+- **What each does.** `npm ci` in `spec-directives/1/` and here, Playwright's Chromium, `build-site --channel next --base /feyn-site/next/cafe/` (or `--channel preview --base /feyn-site/pr-<n>/cafe/`, from the pull request's head), then `verify-site` on the build: a build that fails a check is not deployed. Then it clones `gh-pages`, replaces its own folder (`next/cafe/`, or `pr-<n>/cafe/`) with the build, every other folder and file of the branch kept (the trial's `index.html`, `ping.txt` and `.nojekyll` included), commits and pushes, from a fresh tip if another push came first. A preview then writes its address in a comment on the pull request, the same comment updated by each later run; when the pull request closes, its folder `pr-<n>/` is removed and the comment says so.
+- **One at a time.** Both share the concurrency group `feyn-site-gh-pages`: two deploys never push at once. GitHub keeps one run waiting per group: a third run cancels the one waiting, which is then run again by hand (its page on GitHub, "Re-run jobs").
+- **The secret.** They push by SSH with the Actions secret `FEYN_SITE_DEPLOY_KEY` of `sebvey/feyn`, the private half of the deploy key `feyn-ci` of `feyn-site` (write access), and use no other secret (the comment uses the run's own token). The secret is the maintainer's (project `CLAUDE.md`): the workflows create none.
+- **The 404.** GitHub Pages serves only the `404.html` at the root of a site: the `404.html` of a build, in its folder, is not served for an unknown address under it. The root of `feyn-site` is out of scope, with the prod channel (a course tag, decision `three-channels`): the workflows write nothing at the root.

@@ -64,100 +64,117 @@ function tree(m, word, form) {
 
 // The parts of a concept file (concept.md split, its tree, the lexicon's word(group, key), the
 // spec's form): what concept-file, unit-contract, unit-length, unit-additions and the text checks read. It finds
-// the parts, the blocks of each unit and their fields; it judges nothing but what a heading's or a
-// field's form makes unreadable, which it lists in `problems` ({ line, message }) for unit-contract.
-//   head, foot: { line, lines, pre, blocks: [{ key, title, line, lines }] } or null
-//                                               the ## heading of the form's head or foot, the
-//                                               lines before its first ### (pre) and its ###
-//                                               blocks, `key` the form's block of that lexicon word
-//                                               (null for a ### the form does not name)
+// the parts, the blocks of each unit, their fields and its cases; it judges nothing but what a
+// heading's or a field's form makes unreadable, which it lists in `problems` ({ line, message })
+// for unit-contract.
+//   head: { key, line, lines, pre, blocks: [] } or null
+//                                               the ## heading of the form's head, `key` its
+//                                               lexicon key, and its lines (pre: all of them;
+//                                               it has no ### block)
+//   foot: { line, lines, pre, blocks: [{ key, title, line, lines }] } or null
+//                                               the ## heading of the form's foot, the lines
+//                                               before its first ### (pre) and its ### blocks,
+//                                               `key` the form's block of that lexicon word (null
+//                                               for a ### the form does not name)
 //   others: [{ title, line, lines }]            the ## headings that are neither the head, the foot nor a section
 //   sections: [{ sub, line, lines, stray }]     stray: the lines of a section with units outside them
 //   units: [{ sub, line, blocks, fields, cases }]
-//                                               blocks: [{ key, text, reader, line, afterCase, fields }],
+//                                               blocks: [{ key, text, line, fields, cases }],
 //                                               the #### blocks of the form in the unit's order,
-//                                               `reader` the word in the parentheses of the heading
-//                                               (null when it has none), `afterCase` true for a
-//                                               block after a supplementary case
+//                                               `cases` the cases of the block of cases, else null
 //                                               fields: the fields of its blocks, in order,
-//                                               [{ key, label, labelled, qualifier, line, text, lines, items }];
-//                                               an unlabelled field (the misconceptions, the
-//                                               instruction) takes its block's word as its label
-//                                               cases: [{ title, qualifier, reader, line, fields }]
+//                                               [{ key, label, labelled, qualifier, line, text, lines, items, case }];
+//                                               `qualifier` the words between a label and its
+//                                               colon (unit-contract refuses any), `case` the
+//                                               case a field belongs to (null outside the block
+//                                               of cases); an unlabelled field (the
+//                                               misconceptions, the instruction) takes its
+//                                               block's word as its label
+//                                               `body` the whole text of a labelled field
+//                                               (its lines after the label, unindented); an
+//                                               item of the misconceptions is { line,
+//                                               misconception, correction }
+//                                               cases: the cases of its block of cases, in order,
+//                                               [{ title, line, fields, first }], `first` for the
+//                                               unit's case; a field before the first case's
+//                                               opening field belongs to no case (a problem)
 //   heard: the body, the lines no learner reads (form readers without `learner`) blanked
 function conceptParts(m, subs, word, form) {
   const out = { head: null, foot: null, others: [], sections: [], units: [], problems: [], heard: [] };
   if (!m) return out;
   const unitForm = (form && form.unit) || {};
   const blockForms = Array.isArray(unitForm.blocks) ? unitForm.blocks : [];
-  const caseForm = (form && form.supplementary_case) || {};
   const cf = (form && form.concept_file) || {};
   const blockOf = (part, title) => ((part && part.blocks) || []).find((p) => word('headings', p.heading) === title);
-  const fieldKeys = [...new Set([...blockForms.flatMap((b) => b.fields || []), ...(caseForm.fields || [])])];
+  const fieldKeys = [...new Set(blockForms.flatMap((b) => b.fields || []))];
   const labelOf = (k) => word('unit_fields', k);
   const keyOfLabel = (l) => fieldKeys.find((k) => k && labelOf(k) === l);
   // the word of a unit's block: `unit_blocks.<block>` for labelled fields, else its one field's label
   const blockWord = (b) => (b.labelled ? word('unit_blocks', b.block) : labelOf((b.fields || [])[0]));
-  const readerWord = (k) => word('readers', k);
-  const stock = word('block_kinds', caseForm.kind);
-  const separator = word('block_kinds', cf.separator) || ' : ';
-  const caseHeading = `#### ${stock}, <qualifier> (${readerWord(caseForm.reader)})${separator}<title>`;
-  const quals = (caseForm.qualifiers || []).map((k) => word('qualifiers', k)).filter(Boolean);
   const unheard = new Set();
   const notHeard = (readers) => Array.isArray(readers) && !readers.includes('learner');
   const problem = (line, message) => out.problems.push({ line, message });
   const short = (l) => l.t.trim().slice(0, 40);
   const indentOf = (l) => /^ */.exec(l.t)[0].length;
   const MISCONCEPTION = /^- «.+» :(\s|$)/;
+  // a misconception's two halves: the words in « » before the first « » : », and its correction
+  const HALVES = /^- «\s*(.+?)\s*» :\s*(.*)$/;
+  const dedent = (l) => l.t.replace(/^ {2}/, '');
 
-  // the labelled fields of a block of lines (« Leçon », « Exercice », a supplementary case)
+  // the labelled fields of a block of lines (« Leçon », « Cas du fil rouge »): `qualifier` holds
+  // what stands between a label and its colon, which unit-contract refuses
   const FIELD = /^- \*\*([^*]+)\*\*([^:]*?)\s*:(?:\s+(.*))?$/;
   function fields(lines, where) {
     const list = [];
     let cur = null;
-    let mis = null; // the current misconception of a labelled « misconceptions »
     for (const l of lines) {
       if (l.t.trim() === '') continue;
-      const indent = indentOf(l);
-      if (indent === 0) {
+      if (indentOf(l) === 0) {
         const fm = l.code ? null : FIELD.exec(l.t);
         const key = fm && keyOfLabel(fm[1].trim());
         if (!fm) { problem(l.n, `${where}: line outside a field ("${short(l)}"): a field opens with "- **<label>** :", its following lines indented two spaces`); cur = null; continue; }
         if (!key) { problem(l.n, `${where}: unknown field "${fm[1].trim()}"`); cur = null; continue; }
-        cur = { key, label: fm[1].trim(), labelled: true, qualifier: fm[2].replace(/^\s*,/, '').trim(), line: l.n, text: (fm[3] || '').trim(), lines: [l], items: [] };
-        mis = null;
+        cur = { key, label: fm[1].trim(), labelled: true, qualifier: fm[2].replace(/^\s*,/, '').trim(), line: l.n, text: (fm[3] || '').trim(), lines: [l], items: [], case: null };
         list.push(cur);
         continue;
       }
       if (!cur) { problem(l.n, `${where}: line outside a field ("${short(l)}")`); continue; }
       cur.lines.push(l);
-      if (cur.key !== 'misconceptions') continue;
-      // a misconception: `  - « <misconception> » : <correction>`; a line indented deeper goes on
-      // its correction, but a bullet nested under it is an error (no field nests under a misconception)
-      if (indent < 4) {
-        if (indent === 2 && /^- /.test(l.t.slice(2))) {
-          mis = { line: l.n };
-          cur.items.push(mis);
-          if (!MISCONCEPTION.test(l.t.slice(2))) problem(l.n, `${where}: a misconception is "- « <the misconception> » : <its correction>", found "${short(l)}"`);
-        } else problem(l.n, `${where}: « ${cur.label} » holds a list of misconceptions, found "${short(l)}"`);
-      } else if (indent === 4 && /^- /.test(l.t.slice(4)) && mis) {
-        problem(l.n, `${where}: a misconception holds its correction and nothing nested under it, found the bullet "${short(l)}"`);
-      } else if (!mis) problem(l.n, `${where}: « ${cur.label} » holds a list of misconceptions, found "${short(l)}"`);
     }
+    // `body`: the field's whole text, its first line's after the label and its following lines
+    // with their two spaces of indentation removed (Markdown, as the site build gives it)
+    for (const f of list) f.body = [f.text, ...f.lines.slice(1).map(dedent)].join('\n').trim();
     return list;
+  }
+
+  // the cases of the block of cases: each opened by its field `opens` (« Titre »), the first the
+  // unit's case; a field before the first opening field belongs to no case
+  function cases(list, opens, where) {
+    const cs = [];
+    for (const f of list) {
+      if (f.key === opens) cs.push({ title: f.text, line: f.line, fields: [], first: cs.length === 0 });
+      else if (!cs.length) {
+        problem(f.line, `${where}: a case opens with its « ${labelOf(opens)} », found « ${f.label} » before it`);
+        continue;
+      }
+      f.case = cs[cs.length - 1];
+      f.case.fields.push(f);
+    }
+    return cs;
   }
 
   // the misconceptions of the unit's « Pièges », unlabelled: `- « <misconception> » : <correction>`,
   // its following lines indented two spaces, nothing nested under it
   function misconceptions(key, label, line, lines, where) {
-    const f = { key, label, labelled: false, qualifier: '', line, text: '', lines: [], items: [] };
+    const f = { key, label, labelled: false, qualifier: '', line, text: '', lines: [], items: [], case: null };
     let mis = null;
     for (const l of lines) {
       if (l.t.trim() === '') continue;
       f.lines.push(l);
       const indent = indentOf(l);
       if (indent === 0 && /^- /.test(l.t)) {
-        mis = { line: l.n };
+        const halves = HALVES.exec(l.t);
+        mis = { line: l.n, misconception: halves ? halves[1] : '', correction: halves ? halves[2].trim() : '' };
         f.items.push(mis);
         if (!MISCONCEPTION.test(l.t)) problem(l.n, `${where}: a misconception is "- « <the misconception> » : <its correction>", found "${short(l)}"`);
       } else if (indent === 2 && /^- /.test(l.t.slice(2)) && mis) {
@@ -165,33 +182,18 @@ function conceptParts(m, subs, word, form) {
       } else if (indent === 0 || !mis) {
         problem(l.n, `${where}: « ${label} » holds its misconceptions, each "- « <the misconception> » : <its correction>", found "${short(l)}"`);
         mis = null;
-      }
+      } else mis.correction = [mis.correction, dedent(l)].join('\n').trim();
     }
     return f;
   }
 
-  // a block of prose (the unit's « Consigne »): its lines, unlabelled
+  // a block of prose (the unit's « Consigne au professeur »): its lines, unlabelled
   function prose(key, label, line, lines) {
     const ls = lines.filter((l) => l.t.trim() !== '');
-    return { key, label, labelled: false, qualifier: '', line: ls.length ? ls[0].n : line, text: ls.length ? ls[0].t.trim() : '', lines: ls, items: [] };
+    return { key, label, labelled: false, qualifier: '', line: ls.length ? ls[0].n : line, text: ls.length ? ls[0].t.trim() : '', lines: ls, items: [], case: null };
   }
 
-  // a supplementary case: `#### <stock>, <qualifier> (<reader>)<separator><title>`, then its labelled fields
-  function supplementaryCase(h, body, where) {
-    const cm = /^,\s*([^()]*?)\s*\(([^()]*)\)(.*)$/.exec(h.text.slice(stock.length));
-    const title = cm && cm[3].startsWith(separator) ? cm[3].slice(separator.length).trim() : '';
-    const c = { title: title || h.text, qualifier: cm ? cm[1].trim() : null, reader: cm ? cm[2].trim() : null, line: h.line, fields: [] };
-    if (!title) problem(h.line, `${where}: a supplementary case is "${caseHeading}", found "${h.text}"`);
-    else if (!quals.includes(c.qualifier)) {
-      const inside = quals.find((q) => c.qualifier.split(/[\s,]+/).includes(q));
-      if (inside) problem(h.line, `${where}, case "${title}": "${c.qualifier}" holds a word besides the qualifier « ${inside} »: the qualifier stands alone between « ${stock}, » and its reader`);
-      else problem(h.line, `${where}, case "${title}": unknown qualifier "${c.qualifier}": a qualifier is one of ${quals.map((q) => `« ${q} »`).join(', ')}, and nothing else stands between « ${stock}, » and its reader`);
-    }
-    c.fields = fields(body, `${where}, case "${c.title}"`);
-    return c;
-  }
-
-  // a unit: its #### blocks, then its supplementary cases (#### headings opened by `block_kinds.stock`)
+  // a unit: its #### blocks, each titled by its word alone
   function unit(sub, line, lines) {
     const hs = md.headings(lines).filter((h) => h.level >= 4);
     const where = `unit ${sub.id}`;
@@ -199,35 +201,33 @@ function conceptParts(m, subs, word, form) {
     for (const h of hs) if (h.level > 4) problem(h.line, `${where}: heading "${h.text}" deeper than ####`);
     const h4 = hs.filter((h) => h.level === 4);
     const stray = lines.slice(0, h4.length ? h4[0].idx : lines.length).find((l) => l.t.trim() !== '');
-    const names = blockForms.map((b) => `"#### ${blockWord(b)} (${readerWord(b.reader)})"`).join(', ');
-    if (stray) problem(stray.n, `${where}: line outside a block ("${short(stray)}"): a unit holds its #### blocks, ${names}, then its supplementary cases`);
+    const names = blockForms.map((b) => `"#### ${blockWord(b)}"`).join(', ');
+    if (stray) problem(stray.n, `${where}: line outside a block ("${short(stray)}"): a unit holds its #### blocks, ${names}`);
     h4.forEach((h, k) => {
       const body = lines.slice(h.idx + 1, k + 1 < h4.length ? h4[k + 1].idx : lines.length).filter((l) => !md.headings([l]).length);
-      const hide = (readers) => { if (notHeard(readers)) { unheard.add(h.line); for (const l of body) unheard.add(l.n); } };
-      if (stock && (h.text === stock || h.text.startsWith(stock + ',') || h.text.startsWith(stock + ' '))) {
-        u.cases.push(supplementaryCase(h, body, where));
-        hide(caseForm.readers);
-        return;
-      }
-      const bm = /^(.*?)\s*\(([^()]*)\)\s*$/.exec(h.text);
-      const name = bm ? bm[1].trim() : h.text.trim();
-      const b = blockForms.find((x) => blockWord(x) === name);
+      let name = h.text.trim();
+      let b = blockForms.find((x) => blockWord(x) === name);
+      // a heading that carries more than its word, a mark in parentheses: named, then read as its block
       if (!b) {
-        // a case in the old form, `#### <title> (<qualifier>)`: named, then read as a case
-        if (bm && quals.includes(bm[2].trim())) {
-          problem(h.line, `${where}: a supplementary case is "${caseHeading}", found "${h.text}"`);
-          u.cases.push({ title: name, qualifier: bm[2].trim(), reader: null, line: h.line, fields: fields(body, `${where}, case "${name}"`) });
-          hide(caseForm.readers);
-        } else problem(h.line, `${where}: unknown block "${h.text}": a unit holds its blocks, ${names}, then its supplementary cases, "${caseHeading}"`);
-        return;
+        const bm = /^(.*?)\s*\(([^()]*)\)\s*$/.exec(name);
+        const marked = bm && blockForms.find((x) => blockWord(x) === bm[1].trim());
+        if (marked) {
+          problem(h.line, `${where}: block "#### ${h.text}" carries a mark: a block's heading is its word alone, "#### ${blockWord(marked)}"`);
+          b = marked;
+          name = bm[1].trim();
+        }
       }
+      if (!b) { problem(h.line, `${where}: unknown block "${h.text}": a unit holds its #### blocks, ${names}`); return; }
       const field = b.labelled ? null : (b.fields || [])[0];
-      const fs = b.labelled ? fields(body, `${where}, « ${name} »`)
-        : field === 'misconceptions' ? [misconceptions(field, name, h.line, body, `${where}, « ${name} »`)]
+      const bw = `${where}, « ${name} »`;
+      const fs = b.labelled ? fields(body, bw)
+        : field === 'misconceptions' ? [misconceptions(field, name, h.line, body, bw)]
           : [prose(field, name, h.line, body)];
-      u.blocks.push({ key: b.block, text: h.text, reader: bm ? bm[2].trim() : null, line: h.line, afterCase: u.cases.length > 0, fields: fs });
+      const cs = b.cases ? cases(fs, b.cases.opens, bw) : null;
+      u.blocks.push({ key: b.block, text: h.text, line: h.line, fields: fs, cases: cs });
       u.fields.push(...fs);
-      hide(b.readers);
+      if (cs) u.cases.push(...cs);
+      if (notHeard(b.readers)) { unheard.add(h.line); for (const l of body) unheard.add(l.n); }
     });
     out.units.push(u);
     return u;
@@ -248,15 +248,20 @@ function conceptParts(m, subs, word, form) {
       });
       continue;
     }
-    // the head and the foot: their ## heading, then their ### blocks
-    const which = [['head', cf.head], ['foot', cf.foot]].find(([, p]) => p && word('headings', p.heading) === s.title);
-    if (!which || out[which[0]]) { out.others.push({ title: s.title, line: s.line, lines: s.lines }); continue; }
-    const [name, p] = which;
+    // the head: its ## heading, then its text; the foot: its ## heading, then its ### blocks
+    const head = cf.head && word('headings', cf.head.heading) === s.title;
+    if (head && !out.head) {
+      out.head = { key: cf.head.heading, line: s.line, lines: s.lines, pre: s.lines, blocks: [] };
+      if (notHeard(cf.head.readers)) { unheard.add(s.line); for (const l of s.lines) unheard.add(l.n); }
+      continue;
+    }
+    const foot = cf.foot && word('headings', cf.foot.heading) === s.title;
+    if (!foot || out.foot) { out.others.push({ title: s.title, line: s.line, lines: s.lines }); continue; }
     const split = md.sections(s.lines, 3);
     const part = { line: s.line, lines: s.lines, pre: split.pre, blocks: [] };
-    out[name] = part;
+    out.foot = part;
     for (const b of split.sections) {
-      const f = blockOf(p, b.title);
+      const f = blockOf(cf.foot, b.title);
       part.blocks.push({ key: f ? f.heading : null, title: b.title, line: b.line, lines: b.lines });
       if (f && notHeard(f.readers)) { unheard.add(b.line); for (const l of b.lines) unheard.add(l.n); }
     }
@@ -402,4 +407,30 @@ function load(dir, opts = {}) {
 
 const fail = (file, line, message) => ({ file, line: line || 1, message });
 
-module.exports = { load, fail, normNumber, SLUG, conceptParts, idHeading };
+// The fixed facts of storyline.md, the lines of its section `headings.fixed_facts`: one bullet per
+// fact, its following lines indented, each ending with the id of the unit that fixed it in
+// parentheses, a final period allowed after it, `(0d1)`. Read by course-files and the site build:
+// { facts: [{ line, text, unit }], stray: [lines] }, `unit` null when the fact ends with no id,
+// `stray` a line that is no bullet nor the continuation of one.
+const FACT_UNIT = /\(([^()\s]+)\)\.?$/;
+function fixedFacts(lines) {
+  const facts = [];
+  const stray = [];
+  for (const l of lines) {
+    if (!l.t.trim()) continue;
+    if (!l.code && /^- /.test(l.t)) facts.push({ line: l.n, text: l.t.slice(2).trim() });
+    else if (!l.code && /^\s/.test(l.t) && facts.length) facts[facts.length - 1].text += ' ' + l.t.trim();
+    else stray.push(l);
+  }
+  for (const f of facts) {
+    const m = FACT_UNIT.exec(f.text);
+    f.unit = m ? m[1] : null;
+  }
+  return { facts, stray };
+}
+
+// A release section of a course's CHANGELOG.md: `## X.Y.Z, YYYY-MM-DD`, below « Non publié »
+// (`headings.unreleased`), newest first. Read by course-files and the site build.
+const RELEASE = /^((\d+)\.(\d+)\.(\d+)), (\d{4}-\d{2}-\d{2})$/;
+
+module.exports = { load, fail, normNumber, SLUG, conceptParts, idHeading, fixedFacts, RELEASE };

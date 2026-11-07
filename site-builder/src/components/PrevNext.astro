@@ -1,0 +1,15 @@
+---
+// The previous and next cards at the foot of a domain or concept page, in the reading order
+// (src/lib/site.ts, `readingOrder`), ported from the old site's Voisins; the arrow is the icon
+// fleche.svg (no arrow character in a text).
+import type { Step } from '../lib/site';
+import { labelled } from '../lib/site';
+import { ui } from '../ui';
+import Arrow from '../icons/fleche.svg';
+interface Props { prev?: Step; next?: Step }
+const { prev, next } = Astro.props;
+---
+<nav class="pn-bas" aria-label={`${ui.previous} · ${ui.next}`} data-pagefind-ignore>
+  {prev ? <a class="pn-carte" href={prev.href}><span class="dir"><Arrow class="pn-fleche pn-fleche-prev" width="14" height="14" aria-hidden="true" /> {ui.previous}</span><span class="t">{labelled(prev.name)}{prev.title}</span></a> : <span />}
+  {next ? <a class="pn-carte nx" href={next.href}><span class="dir">{ui.next} <Arrow class="pn-fleche" width="14" height="14" aria-hidden="true" /></span><span class="t">{labelled(next.name)}{next.title}</span></a> : <span />}
+</nav>

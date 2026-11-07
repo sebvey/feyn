@@ -5,7 +5,7 @@ Builds a classroom from a course: everything that makes the teacher, the teacher
 ## The two halves
 
 The classroom build is cut in two, as the checks are:
-- the half that depends on the spec MAJOR, `course-specs/<name>/<MAJOR>/teacher/build/`: its `render-parts` reads the protocol, the composition, the two lexicons, the learner templates and the course, and prints the five parts of the composition rendered as text, one JSON document whose shape the MAJOR's `parts.schema.yaml` fixes (`course-specs/linear-course/1/teacher/build/README.md`);
+- the half that depends on the spec MAJOR, `course-specs/<name>/<MAJOR>/teacher/build/`: its `render-parts` reads the protocol, the composition, the lexicons of the course files and of the teacher, the learner templates and the course, and prints the five parts of the composition rendered as text, one JSON document whose shape the MAJOR's `parts.schema.yaml` fixes (`course-specs/linear-course/1/teacher/build/README.md`);
 - the half that depends on the target only, here: the dispatcher and the Claude Code realisation. `build-classroom` reads `spec: <name>@<MAJOR>` in the course's `course.yaml`, refuses (exit 2) a spec or a MAJOR with no `teacher/build/render-parts`, runs it, validates its output against the MAJOR's `parts.schema.yaml` (the `ajv` of the spec directives the MAJOR declares), then writes the classroom from it, as `course-specs/check-course` dispatches to the MAJOR's `check-course`.
 
 A second MAJOR or a second spec writes its own `teacher/build/`, and this folder does not change; a second target rewrites this folder, and the spec does not change. Nothing here reads the protocol or the composition.

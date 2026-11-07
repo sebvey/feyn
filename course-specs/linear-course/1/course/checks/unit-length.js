@@ -1,6 +1,7 @@
 'use strict';
 // The length of a unit (course/README.md section 3.3), a reporting check: the text of the fields
-// that `length` of `unit` in course/form.yaml names (« Matière », « Ancrage », « Question »),
+// that `length` of `unit` in course/form.yaml names (« Matière », « Ancrage », « Question »), those
+// of the unit's case, the first of « Cas du fil rouge », and none of a supplementary case's,
 // counted in lines of `line` characters (the characters of the text, label and indentation left
 // out, divided by `line`), per unit; a unit above `max` is reported, a signal that it may not hold
 // in one teacher message, not an error. Its fields are read as unit-contract reads them
@@ -17,7 +18,9 @@ function chars(f) {
 function lengths(ctx, c) {
   const L = ctx.form.unit.length;
   return ctx.parts(c).units.map((u) => {
-    const n = u.fields.filter((f) => L.fields.includes(f.key)).reduce((s, f) => s + chars(f), 0);
+    // the unit's fields outside its cases, then its case's: a supplementary case is posed apart
+    const own = u.fields.filter((f) => !f.case || f.case.first);
+    const n = own.filter((f) => L.fields.includes(f.key)).reduce((s, f) => s + chars(f), 0);
     return { unit: u, lines: Math.round((n / L.line) * 10) / 10 };
   });
 }

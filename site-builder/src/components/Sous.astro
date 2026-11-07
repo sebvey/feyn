@@ -1,0 +1,21 @@
+---
+// A unit in place, ported from the old site's Sous: its heading (its id styled as `.num`, a link to
+// itself), then, in this order, its matter as prose with no label, the diagrams that name it, its
+// block of cases and its misconceptions. Nothing of a unit is regrouped elsewhere.
+import type { Unit, Diagram } from '../lib/site';
+import { md } from '../lib/site';
+import { ui } from '../ui';
+import Figure from './Figure.astro';
+import Cases from './Cases.astro';
+import Erreurs from './Erreurs.astro';
+interface Props { unit: Unit; diagrams: Diagram[] }
+const { unit, diagrams } = Astro.props;
+const b = unit.blocks;
+---
+<section class="sous" aria-labelledby={unit.id}>
+  <h3 id={unit.id}><span class="num">{unit.id}</span> {unit.title}<a class="ancre" href={`#${unit.id}`} aria-label={`${ui.linkTo} ${unit.id} ${unit.title}`}>#</a></h3>
+  {b.lesson?.matter && <Fragment set:html={md(b.lesson.matter)} />}
+  {diagrams.map((d) => <Figure diagram={d} />)}
+  {b.cases && b.cases.length > 0 && <Cases unit={unit.id} cases={b.cases} />}
+  {b.misconceptions && b.misconceptions.length > 0 && <Erreurs unit={unit.id} items={b.misconceptions} />}
+</section>

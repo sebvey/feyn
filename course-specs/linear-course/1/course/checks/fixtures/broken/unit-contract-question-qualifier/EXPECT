@@ -1,0 +1,2 @@
+check: unit-contract
+message: field « Question » carries words before its colon ("en deux parties")

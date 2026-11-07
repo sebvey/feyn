@@ -14,7 +14,7 @@ English everywhere, except what speaks to the learner, to the teacher or to the 
 | code, skills, agent workflows, CI workflows, scripts | `concept.md`, `sources.md` |
 | root `CLAUDE.md`, teacher template | course glossary, storyline, the course's `plan.md` and `CHANGELOG.md` |
 | the spec directives, repository docs, decisions (the spec's `decisions/` included), issues, labels | diagram text, the site's labels |
-| the spec's `CHANGELOG.md`; file and folder names, `course.yaml` keys, the keys of the lexicons, the ids and slugs of the rule files, the keys of `composition.yaml` | what the teacher says, the words of the lexicons (`course/lexicon.yaml`, `teacher/lexicon.yaml`) |
+| the spec's `CHANGELOG.md`; file and folder names, `course.yaml` keys, the keys of the lexicons, the ids and slugs of the rule files, the keys of `composition.yaml` | what the teacher says, the words of the lexicons (`course/lexicon.yaml`, `teacher/lexicon.yaml`, `site/lexicon.yaml`) |
 | the checks' code, the schemas' structure | the spec's texts for the teacher and the author: `teacher/README.md` (how a rule of the protocol is written, its tables), `teacher/composition.yaml` (its `what` texts), `course/README.md`, the `text` and `why` of `course/rules.yaml` and `teacher/rules.yaml` and the `purpose` of their groups, the descriptions of `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md` |
 
 An issue, a PR or a decision in English that quotes the course quotes it in French and never translates it. French text uses no em-dashes and no arrows. What the teacher says to the learner comes from the course and the teacher's lexicon.

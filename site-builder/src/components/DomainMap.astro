@@ -1,0 +1,65 @@
+---
+// The domain map: each domain of the course, in order, with its objective, its duration and its
+// concepts (each foldable on its sections), then each annex with its sections; a sticky table of
+// contents beside it. Ported from the old site's domain map page,
+// without its « À la fin, vous savez », its course bar and its « Tout déplier » button. On the
+// home, under a heading of the page, the titles are one level lower (`level`).
+import { doc, words, href, domainName, conceptName, conceptByNumber, annexes, labelled } from '../lib/site';
+import type { Concept } from '../lib/site';
+import Sommaire from './Sommaire.astro';
+import ConceptList from './ConceptList.astro';
+import Bulle from './Bulle.astro';
+import Arrow from '../icons/fleche.svg';
+interface Props { level?: 2 | 3 }
+const { level = 2 } = Astro.props;
+const H: 'h2' | 'h3' = level === 3 ? 'h3' : 'h2';
+const domainId = (n: number) => `domain-${n}`;
+const annexId = (c: Concept) => `annex-${c.number}`;
+const items = [
+  ...doc.domains.map((d) => ({ id: domainId(d.number), n: d.number, title: d.title })),
+  ...annexes.map((c) => ({ id: annexId(c), n: c.number, title: c.title })),
+];
+const objective = labelled(words.site.labels.objective);
+---
+<div class="avec-sommaire">
+  <Sommaire items={items} label={words.site.nav.domains} />
+  <div class="sommaire-contenu">
+    {doc.domains.map((d) => (
+      <section class="domaine" id={domainId(d.number)} aria-labelledby={`${domainId(d.number)}-t`}>
+        <div class="dom-bloc">
+          <a class="dom-carte" href={href(d.path)}>
+            <span class="n">{domainName(d)}</span>
+            <H id={`${domainId(d.number)}-t`}>{d.title}</H>
+            <span class="q">{objective}{d.objective}</span>
+            {d.duration_min && <Bulle minutes={d.duration_min} />}
+            <Arrow class="dom-fleche" width="24" height="24" aria-hidden="true" />
+          </a>
+          <ConceptList concepts={d.concepts.map((n) => conceptByNumber.get(n)).filter((c): c is Concept => !!c)} />
+        </div>
+      </section>
+    ))}
+    {annexes.map((c) => (
+      <section class="domaine" id={annexId(c)} aria-labelledby={`${annexId(c)}-t`}>
+        <div class="dom-bloc">
+          <a class="dom-carte" href={href(c.path)}>
+            <span class="n">{conceptName(c)}</span>
+            <H id={`${annexId(c)}-t`}>{c.title}</H>
+            <span class="q">{objective}{c.objective}</span>
+            {c.duration_min && <Bulle minutes={c.duration_min} />}
+            <Arrow class="dom-fleche" width="24" height="24" aria-hidden="true" />
+          </a>
+          <ol class="sous-liste">
+            {c.sections.map((s) => (
+              <li>
+                <a class="sous-lien" href={`${href(c.path)}#${s.id}`}>
+                  <span class="ref">{s.id}</span>
+                  <span class="corps"><span class="tt">{s.title}</span></span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    ))}
+  </div>
+</div>

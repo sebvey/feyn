@@ -1,0 +1,32 @@
+---
+// The block of a unit's cases (the course lexicon's `unit_blocks.cases`), in the frame
+// of the old site's Reflexe box: each case under its title, a supplementary case with its qualifier
+// as a small tag; its anchor as a scene of the storyline (the old site's FilRouge look, no label);
+// its question after its label; its expected answer behind a button, after its label once
+// revealed, closed by default and out of the search index.
+import type { Case } from '../lib/site';
+import { words, md, mdLabelled } from '../lib/site';
+import { ui } from '../ui';
+interface Props { unit: string; cases: Case[] }
+const { unit, cases } = Astro.props;
+const fields = words.course.unit_fields;
+const id = `${unit}-cases`;
+---
+<aside class="cas" aria-labelledby={id}>
+  <h4 class="tag" id={id}>{words.course.unit_blocks.cases}</h4>
+  <ol>
+    {cases.map((c) => (
+      <li class="cas-item">
+        <h5 class="cas-titre">{c.title}{c.qualifier && <>{' '}<span class="qualif">{c.qualifier}</span></>}</h5>
+        {c.anchor && <div class="fil-rouge" set:html={md(c.anchor)} />}
+        {c.question && <div class="cas-q" set:html={mdLabelled(fields.question, c.question)} />}
+        {c.expected_answer && (
+          <details class="reponse" data-pagefind-ignore>
+            <summary>{ui.reveal}</summary>
+            <div class="corps" set:html={mdLabelled(fields.expected_answer, c.expected_answer)} />
+          </details>
+        )}
+      </li>
+    ))}
+  </ol>
+</aside>

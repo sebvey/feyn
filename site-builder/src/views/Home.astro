@@ -1,0 +1,30 @@
+---
+// The home: the course's title and subtitle, the published sections of its plan (each under its
+// heading, the course lexicon's), then the domain map. Not the old home's « Par où commencer » nor
+// « Comment lire une page ».
+import Base from '../layouts/Base.astro';
+import DomainMap from '../components/DomainMap.astro';
+import { doc, words, md, pageHref } from '../lib/site';
+---
+<Base nav="home">
+  <div class="container">
+    <section class="hero">
+      <h1>{doc.course.title}</h1>
+      {doc.course.subtitle && <p class="lead">{doc.course.subtitle}</p>}
+    </section>
+    <div class="prose home-plan">
+      {doc.plan.map((s) => (
+        <section aria-labelledby={`plan-${s.key}`}>
+          <h2 id={`plan-${s.key}`}>{s.heading}</h2>
+          <Fragment set:html={md(s.text)} />
+        </section>
+      ))}
+    </div>
+  </div>
+  <div class="container-wide">
+    <section class="page home-map" aria-labelledby="domain-map">
+      <h2 id="domain-map"><a href={pageHref('domains')}>{words.site.nav.domains}</a></h2>
+      <DomainMap level={3} />
+    </section>
+  </div>
+</Base>
