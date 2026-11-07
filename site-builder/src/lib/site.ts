@@ -53,7 +53,13 @@ export interface Glossary { table?: { header: string[]; rows: string[][] }; sect
 export interface Doc {
   spec: string;
   language: string;
-  course: { id: string; title: string; subtitle?: string; annexes: string[] };
+  course: {
+    id: string; title: string; subtitle?: string; annexes: string[];
+    /** The text of the course's `logo.svg`: square, one colour in `currentColor`. */
+    logo: string;
+    /** The course's accent colour, `#rrggbb`, whose hue the site's accent family keeps (src/lib/look.ts). */
+    accent_color: string;
+  };
   plan: Section[];
   domains: Domain[];
   concepts: Concept[];

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// build-site <course-dir> [--channel next|prod|preview] [--base <path>] [--out <dir>]
+// build-site <course-dir> [--channel next|prod|preview] [--base <path>] [--origin <https://host>] [--out <dir>]
 // Builds the site of a course, in two halves (site-builder/README.md):
 //   1. the dispatcher: it reads `spec: <name>@<MAJOR>` in course.yaml and runs that MAJOR's
 //      course-specs/<name>/<MAJOR>/site/build/render-site, which prints the published parts of the
@@ -24,9 +24,10 @@ const CHANNELS = ['next', 'prod', 'preview'];
 
 function usage(code) {
   const out = code ? console.error : console.log;
-  out('usage: build-site <course-dir> [--channel next|prod|preview] [--base <path>] [--out <dir>]');
+  out('usage: build-site <course-dir> [--channel next|prod|preview] [--base <path>] [--origin <https://host>] [--out <dir>]');
   out('builds the site of <course-dir> into <dir>, by default site-builder/dist/<channel>/<course id>/,');
-  out('its pages under the base path <path>, by default / (a build served at the root of its host; channel next by default)');
+  out('its pages under the base path <path>, by default / (a build served at the root of its host; channel next by default);');
+  out('given the origin of its host, its pages write their Open Graph addresses (og:url, og:image) absolute, otherwise neither');
   process.exit(code);
 }
 function refuse(message) {
@@ -39,7 +40,7 @@ function fail(message) {
 }
 
 // ---- arguments
-const opts = { channel: null, base: null, out: null };
+const opts = { channel: null, base: null, origin: null, out: null };
 let courseDir = null;
 const argv = process.argv.slice(2);
 for (let i = 0; i < argv.length; i++) {
@@ -51,6 +52,7 @@ for (let i = 0; i < argv.length; i++) {
   if (a === '--help' || a === '-h') usage(0);
   else if (a === '--channel') opts.channel = value();
   else if (a === '--base') opts.base = value();
+  else if (a === '--origin') opts.origin = value();
   else if (a === '--out') opts.out = value();
   else if (a.startsWith('-')) refuse(`unknown option ${a}`);
   else if (courseDir === null) courseDir = a;
@@ -60,6 +62,16 @@ if (courseDir === null) usage(2);
 const channel = opts.channel || 'next';
 if (!CHANNELS.includes(channel)) refuse(`channel "${channel}" is not one of ${CHANNELS.join(', ')}`);
 if (opts.base !== null && !opts.base.startsWith('/')) refuse(`--base ${opts.base} is not a path from the root of the host (it starts with /)`);
+let origin = null;
+if (opts.origin !== null) {
+  // an origin, scheme and host only: the base path is --base's
+  let u;
+  try { u = new URL(opts.origin); } catch { refuse(`--origin ${opts.origin} is not an address`); }
+  if (!['https:', 'http:'].includes(u.protocol) || u.pathname !== '/' || u.search || u.hash || u.username) {
+    refuse(`--origin ${opts.origin} is not an origin (https://<host>, no path: the path is --base's)`);
+  }
+  origin = u.origin;
+}
 courseDir = path.resolve(courseDir);
 if (!fs.existsSync(path.join(courseDir, 'course.yaml'))) refuse(`${courseDir} holds no course.yaml: not a course folder`);
 
@@ -134,7 +146,7 @@ function run(what, args) {
     cwd: BUILDER,
     encoding: 'utf8',
     maxBuffer: 256 * 1024 * 1024,
-    env: { ...process.env, FEYN_SITE_DATA: data, FEYN_SITE_BASE: base, FEYN_SITE_OUT: out, ASTRO_TELEMETRY_DISABLED: '1' },
+    env: { ...process.env, FEYN_SITE_DATA: data, FEYN_SITE_BASE: base, FEYN_SITE_ORIGIN: origin || '', FEYN_SITE_OUT: out, ASTRO_TELEMETRY_DISABLED: '1' },
   });
   if (r.error) fail(`cannot run ${what}: ${r.error.message}`);
   if (r.status !== 0) {
@@ -209,7 +221,10 @@ const expected = [
   ...doc.domains.map((d) => d.path),
   ...doc.concepts.map((c) => c.path),
 ].filter((a) => typeof a === 'string').map((a) => (a === '' || a.endsWith('/') ? `${a}index.html` : a));
+// and the files the engine writes from the course's logo and accent: the favicon and the share image
+const drawn = ['favicon.svg', 'share.png'].filter((f) => !fs.existsSync(path.join(out, f)));
+if (drawn.length) fail(`the build holds no ${drawn.join(', ')} in ${out}`);
 const missing = expected.filter((f) => !fs.existsSync(path.join(out, f)));
 if (missing.length) fail(`the build holds no ${missing.join(', ')} in ${out}`);
 if (!fs.existsSync(path.join(out, 'pagefind'))) fail(`the build holds no Pagefind index in ${out}`);
-console.log(`build-site: ${out} built (${courseId}, channel ${channel}, base ${base}, ${expected.length} pages)`);
+console.log(`build-site: ${out} built (${courseId}, channel ${channel}, base ${base}${origin ? `, origin ${origin}` : ''}, ${expected.length} pages)`);
