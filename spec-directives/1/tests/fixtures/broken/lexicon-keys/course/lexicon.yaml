@@ -38,12 +38,12 @@ unit_fields:
   anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
-  misconceptions: "Pièges"
+  misconceptions: "Idées fausses"
+  root: "Racine"
+  correction: "Correction"
   instruction: "Consigne au professeur"
 
-# The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`); a
-# block of one unlabelled field takes its label as its word: « Pièges » (`unit_fields.misconceptions`),
-# « Consigne au professeur » (`unit_fields.instruction`).
+# The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`).
 unit_blocks:
   lesson: "Leçon"
   cases: "Cas du fil rouge"

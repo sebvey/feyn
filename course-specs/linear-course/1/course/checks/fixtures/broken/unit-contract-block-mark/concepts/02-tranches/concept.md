@@ -31,11 +31,6 @@ Une tranche traverse toutes les couches.
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
-
-#### Pièges
-
-- « Un tableau » : c'est une carte.
-
 ## Clôture
 
 ### Se vérifier

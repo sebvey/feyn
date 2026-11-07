@@ -1,16 +1,18 @@
 'use strict';
 // The contract of a unit (course/README.md section 3.3), from the form of course/form.yaml: a
 // section with units holds them and nothing else; each unit is its #### blocks (`unit.blocks`),
-// « Leçon », « Cas du fil rouge », « Pièges », then « Consigne au professeur » when it has one,
-// each titled by its word alone, the mandatory ones present, none twice, in the order of the
-// form, and no line outside a block; « Leçon » and « Cas du fil rouge » hold their labelled
-// fields (labels of the lexicon's `unit_fields`, nothing between a label and its colon), no line
-// outside a field; « Cas du fil rouge » is a list of cases, each opened by its « Titre » and
-// holding its fields once, in order: the first, the unit's case, without « Qualificatif »; each
-// other, a supplementary case, with it, one qualifier of the closed list; every case's title
-// unique in the concept; « Pièges » holds its misconceptions, each `- « … » : …`, nothing nested
-// under it; « Consigne au professeur » is prose. The parts of concept.md and its tree are
-// `concept-file`'s, a `structure` check; the length of a unit is `unit-length`'s.
+// « Leçon », « Cas du fil rouge », then « Consigne au professeur » when it has one, each titled
+// by its word alone, the mandatory ones present, none twice, in the order of the form, and no
+// line outside a block; « Leçon » and « Cas du fil rouge » hold their labelled fields (labels of
+// the lexicon's `unit_fields`, nothing between a label and its colon), no line outside a field;
+// « Leçon » holds « Matière », then « Idées fausses », its misconceptions, one at least, each
+// named, its name unique in its unit, with its belief in « », then « Racine » and « Correction »,
+// each once, in that order, none empty, nothing else under it; « Cas du fil rouge » is a list of
+// cases, each opened by its « Titre » and holding its fields once, in order: the first, the
+// unit's case, without « Qualificatif »; each other, a supplementary case, with it, one qualifier
+// of the closed list; every case's title unique in the concept; « Consigne au professeur » is
+// prose. The parts of concept.md and its tree are `concept-file`'s, a `structure` check; the
+// length of a teacher message is `teacher-message-length`'s.
 const directives = require('./directives');
 const { fail } = directives.lib('course');
 
@@ -65,6 +67,35 @@ function checkCases(ctx, b, blk, where, file, out) {
   }
 }
 
+// the misconceptions of a field (« Idées fausses »): one at least; each with its name, unique in
+// its unit, and its belief (a form the parser could not read is its problem, listed already); its
+// parts, those of `spec.parts`, each once, in that order, none empty, nothing before a colon
+function checkMisconceptions(ctx, f, spec, where, file, out) {
+  const fw = (k) => ctx.word('unit_fields', k) || k;
+  const parts = spec.parts || [];
+  if (f.text === '' && f.lines.length === 1) return; // an empty field: checkFields reports it
+  if (!f.items.length) { out.push(fail(file, f.line, `${where}: « ${f.label} » holds at least one misconception, "  - **<name>** : « <belief> »", then ${parts.map((k) => `« ${fw(k)} »`).join(' and ')}`)); return; }
+  const names = new Map();
+  for (const m of f.items) {
+    const mw = `${where}, misconception "${m.name}"`;
+    if (m.name !== '') {
+      if (names.has(m.name)) out.push(fail(file, m.line, `${where}: misconception name "${m.name}" is used twice (line ${names.get(m.name)}): the name of a misconception is unique in its unit`));
+      else names.set(m.name, m.line);
+    }
+    const seen = new Set();
+    let last = -1;
+    for (const p of m.parts) {
+      if (p.qualifier !== '') out.push(fail(file, p.line, `${mw}: « ${p.label} » carries words before its colon ("${p.qualifier}"): a label stands alone before its colon`));
+      if (seen.has(p.key)) out.push(fail(file, p.line, `${mw}: « ${p.label} » appears twice`));
+      else if (parts.indexOf(p.key) < last) out.push(fail(file, p.line, `${mw}: « ${p.label} » must come before « ${fw(parts[last])} » (the order of course/form.yaml)`));
+      seen.add(p.key);
+      last = Math.max(last, parts.indexOf(p.key));
+      if (p.body === '') out.push(fail(file, p.line, `${mw}: « ${p.label} » is empty`));
+    }
+    for (const k of parts) if (!seen.has(k)) out.push(fail(file, m.line, `${mw}: its « ${fw(k)} » is missing: a misconception holds ${parts.map((x) => `« ${fw(x)} »`).join(' and ')}, in that order`));
+  }
+}
+
 // the blocks of a unit: each of the form, the mandatory ones present, none twice, in the order of
 // the form; then the content of each
 function checkBlocks(ctx, u, file, out) {
@@ -85,8 +116,7 @@ function checkBlocks(ctx, u, file, out) {
     else if (b.labelled) {
       if (!blk.fields.length) out.push(fail(file, blk.line, `${bw}: the block holds its fields, ${b.fields.map((k) => `« ${ctx.word('unit_fields', k) || k} »`).join(', ')}, found none`));
       else checkFields(blk.fields, b.fields.map((k) => ({ field: k, presence: 'mandatory' })), bw, file, out, ctx.word, blk.line);
-    } else if (b.fields[0] === 'misconceptions') {
-      if (!blk.fields[0].items.length) out.push(fail(file, blk.line, `${where}: « ${word(b)} » holds at least one misconception, "- « <the misconception> » : <its correction>"`));
+      if (b.misconceptions) for (const f of blk.fields.filter((x) => x.key === b.misconceptions.field)) checkMisconceptions(ctx, f, b.misconceptions, bw, file, out);
     } else if (!blk.fields[0].lines.length) out.push(fail(file, blk.line, `${where}: block « ${word(b)} » is empty`));
   }
   for (const b of forms) if (b.presence === 'mandatory' && !seen.has(b.block)) out.push(fail(file, u.line, `${where}: mandatory block "#### ${word(b)}" is missing`));

@@ -152,16 +152,25 @@ const cf = form.concept_file || {};
 const unitForm = form.unit || {};
 const blockForms = Array.isArray(unitForm.blocks) ? unitForm.blocks : [];
 const fieldsOf = (fields) => Object.fromEntries(fields.map((f) => [f.key, f.body]));
+// the misconceptions of a field (« Idées fausses »): each its name, its belief and its parts by key
+const misconceptionsOf = (f, spec) => f.items.map((m) => ({ name: m.name, belief: m.belief, ...Object.fromEntries((spec.parts || []).map((k) => [k, m[k] || ''])) }));
+// a unit's published blocks, in the order the site renders them: the lesson (its matter), the
+// cases, then the misconceptions of the lesson, after the cases, so that the site does not give a
+// misconception away before the question (decision `misconception-is-matter`)
 function unitOf(u) {
   const blocks = {};
+  let misconceptions = null;
   for (const b of u.blocks) {
     const bf = blockForms.find((x) => x.block === b.key);
     if (!pub(bf)) continue;
     if (bf.cases) blocks[b.key] = b.cases.map((c) => ({ ...fieldsOf(c.fields), supplementary: !c.first }));
-    else if (bf.labelled) blocks[b.key] = fieldsOf(b.fields);
-    else if ((bf.fields || [])[0] === 'misconceptions') blocks[b.key] = b.fields[0].items.map((m) => ({ misconception: m.misconception, correction: m.correction }));
-    else blocks[b.key] = text(b.fields[0].lines);
+    else if (bf.labelled) {
+      const mf = bf.misconceptions && b.fields.find((f) => f.key === bf.misconceptions.field);
+      blocks[b.key] = fieldsOf(b.fields.filter((f) => f !== mf));
+      if (mf) misconceptions = [...(misconceptions || []), ...misconceptionsOf(mf, bf.misconceptions)];
+    } else blocks[b.key] = text(b.fields[0].lines);
   }
+  if (misconceptions) blocks.misconceptions = misconceptions;
   return { id: u.sub.id, title: u.sub.title, blocks };
 }
 function conceptOf(c) {
@@ -271,6 +280,7 @@ const take = (group, key) => {
     if (typeof node.block === 'string') {
       if (node.labelled) take('unit_blocks', node.block);
       for (const f of node.fields || []) take('unit_fields', f);
+      for (const f of (node.misconceptions && node.misconceptions.parts) || []) take('unit_fields', f);
       for (const q of (node.cases && node.cases.qualifiers) || []) take('qualifiers', q);
     }
   }

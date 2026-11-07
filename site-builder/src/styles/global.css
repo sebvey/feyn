@@ -685,12 +685,17 @@ div.cdep .soon { font-size: 0.78rem; margin-left: 0.4rem; }
 .prose .reponse .corps ol { padding-left: 1.3em; list-style: decimal; }
 .prose .reponse .corps li { margin: 0 0 0.3em; }
 
-/* The misconceptions of a unit, one list in the Erreurs look */
+/* The misconceptions of a unit's lesson, after its cases, one list in the Erreurs look: each its
+   name, its belief quoted, then its root and its correction after their labels */
 .sous .erreurs { margin-top: 2rem; }
 .sous .erreurs h4 { margin-top: 0; }
+.erreurs li p { margin: 0 0 0.3em; }
+.erreurs li > :last-child { margin-bottom: 0; }
+.erreurs .idee-nom { font-family: var(--font-ui); font-size: 0.88rem; font-weight: 650; color: var(--ink-soft); }
 .erreurs .idee { font-weight: 600; }
 .erreurs .idee::before { content: '«\00a0'; }
 .erreurs .idee::after { content: '\00a0»'; }
+.erreurs .idee-label { font-family: var(--font-ui); font-size: 0.82em; font-weight: 650; color: var(--ink-soft); }
 
 /* The foot */
 .cloture .reflexe { margin-top: 0; }

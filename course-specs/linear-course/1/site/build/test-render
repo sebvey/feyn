@@ -3,7 +3,8 @@
 // test-render: runs render-site on cafe (course/samples/cafe, the spec's sample course) and
 // validates its JSON document against site.schema.yaml (ajv's Ajv2020, from the package of the
 // spec directives this MAJOR follows); then checks what the schema cannot say: the published parts
-// reach it, no part the form leaves unpublished does (« Consigne au professeur », « Accueil »,
+// reach it, the misconceptions of every unit come after its cases, each with its name, its belief,
+// its root and its correction, no part the form leaves unpublished does (« Consigne au professeur », « Accueil »,
 // « Non vérifié », the free sections of plan.md, the introduction of glossary.md, « Non publié »
 // of CHANGELOG.md), and the build is closed by default, one case each, render-site run with a copy
 // of course/form.yaml (--form): a part named `published: false`, a part named without
@@ -73,7 +74,8 @@ const published = [
   ['a case title', 'La tasse qui pique'],
   ['an expected answer', 'Trop peu : elle est sous-extraite.'],
   ['a matter', 'Faire un café, c\'est laisser l\'eau dissoudre une partie du café moulu'],
-  ['a misconception', 'Si le goût change, c\'est que le café a changé'],
+  ['a misconception\'s belief', 'Si le goût change, c\'est que le café a changé'],
+  ['a misconception\'s root', 'une tasse plus concentrée a un goût plus marqué'],
   ['« L\'essentiel »', 'c\'est elle qui fait le goût de la tasse'],
   ['« Se vérifier »', 'Devant une tasse ratée : est-elle acide et courte, ou amère et sèche ?'],
   ['« Approfondissement »', 'La profession mesure ce que le cours goûte.'],
@@ -96,6 +98,17 @@ const svg = fs.readFileSync(path.join(COURSE, 'concepts', '00-extraction', 'extr
 check(c0 && c0.diagrams && c0.diagrams[0].svg === svg, 'the SVG of concept 0\'s diagram is not in the document as written');
 const u = c0 && c0.sections && c0.sections[0].units.find((x) => x.id === '0a2');
 check(u && u.blocks.cases.length === 2 && u.blocks.cases[1].qualifier === 'rechange' && u.blocks.cases[1].supplementary, 'unit 0a2 does not hold its case and its supplementary case with its qualifier');
+// the misconceptions of each unit's lesson: after its cases, the order the site renders them in,
+// each with its name, its belief, its root and its correction, under the lexicon's words
+const units = doc.concepts.flatMap((c) => (c.sections || []).flatMap((s) => s.units));
+const order = (x) => Object.keys(x.blocks).join(',');
+check(units.length > 0 && units.every((x) => order(x) === 'lesson,cases,misconceptions'), `a unit does not give its matter, then its cases, then its misconceptions: ${units.filter((x) => order(x) !== 'lesson,cases,misconceptions').map((x) => x.id).join(', ')}`);
+check(units.every((x) => (x.blocks.misconceptions || []).every((m) => m.name && m.belief && m.root && m.correction)), 'a misconception lacks its name, its belief, its root or its correction');
+const g = u && (u.blocks.misconceptions || []).find((m) => m.name === 'Goût et force');
+check(g && g.belief === 'Un goût marqué, piquant ou amer, dit une tasse trop forte' && g.root.startsWith('une tasse plus concentrée') && g.correction.startsWith('le piquant de l\'acide'), 'the misconception « Goût et force » of unit 0a2 is not in the document with its belief, its root and its correction');
+check(!('misconceptions' in ((u && u.blocks.lesson) || {})), 'the lesson of unit 0a2 still holds its misconceptions: the document gives them after the cases');
+const uf = doc.words.course.unit_fields;
+check(uf.misconceptions === 'Idées fausses' && uf.root === 'Racine' && uf.correction === 'Correction', 'the words of the misconceptions are not « Idées fausses », « Racine », « Correction »');
 check(doc.storyline.fixed_facts.facts.every((f) => f.unit), 'a fixed fact has no unit id');
 check(doc.language === (fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').match(/^language\s*:\s*(\S+)/m) || [])[1], `the language is ${doc.language}, not that of spec.yaml`);
 check(doc.release === null, 'cafe has no release, and release is not null');

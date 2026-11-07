@@ -27,6 +27,10 @@ concept 1.
 #### Leçon
 
 - **Matière** : Le premier **rôle** décide. Le concept 1 en dépend. [cours]
+- **Idées fausses** :
+  - **Tout le monde** : « Tout le monde décide »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : le premier rôle décide seul.
 
 #### Cas du fil rouge
 
@@ -34,11 +38,6 @@ concept 1.
 - **Ancrage** : Régis veut une carte et décide de ce qu'elle montre.
 - **Question** : qui décide ?
 - **Réponse attendue** : le premier rôle.
-
-#### Pièges
-
-- « Tout le monde décide » : le premier rôle décide seul.
-
 #### Consigne au professeur
 
 Ne pas parler de couche ici, elle vient au concept 1.
@@ -50,6 +49,10 @@ Ne pas parler de couche ici, elle vient au concept 1.
 - **Matière** : Le second rôle fait.
 
   Il fait ce que le premier rôle a décidé.
+- **Idées fausses** :
+  - **Le second rôle** : « Le second rôle décide aussi »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : il fait, il ne décide pas.
 
 #### Cas du fil rouge
 
@@ -59,11 +62,6 @@ Ne pas parler de couche ici, elle vient au concept 1.
 - **Réponse attendue** :
   1. Le second rôle fait.
   2. Le premier rôle décide.
-
-#### Pièges
-
-- « Le second rôle décide aussi » : il fait, il ne décide pas.
-
 ## Section 0b : La règle
 
 ### Unité 0b1 : La règle
@@ -71,6 +69,10 @@ Ne pas parler de couche ici, elle vient au concept 1.
 #### Leçon
 
 - **Matière** : La règle est la même pour tous. Ses mots sont dans le lexique (annexe A1a).
+- **Idées fausses** :
+  - **Chaque rôle a** : « Chaque rôle a sa règle »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : la règle est la même pour tous.
 
 #### Cas du fil rouge
 
@@ -78,11 +80,6 @@ Ne pas parler de couche ici, elle vient au concept 1.
 - **Ancrage** : Régis applique la règle à la carte.
 - **Question** : la règle change-t-elle selon le rôle ?
 - **Réponse attendue** : non, elle est la même pour tous.
-
-#### Pièges
-
-- « Chaque rôle a sa règle » : la règle est la même pour tous.
-
 ## Clôture
 
 ### Se vérifier

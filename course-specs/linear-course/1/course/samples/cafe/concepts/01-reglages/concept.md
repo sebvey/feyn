@@ -34,6 +34,13 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 #### Leçon
 
 - **Matière** : Un **réglage** est une variable que l'on choisit avant ou pendant l'infusion, et qui fait varier l'extraction ou la force de la tasse. Le cours en retient quatre. La **mouture** est la finesse du café moulu, choisie au moulin. Le **ratio** est la masse de café pour la masse d'eau. La **température d'infusion** est la température de l'eau quand elle touche le café moulu. Le **temps de contact** est la durée pendant laquelle l'eau et le café moulu restent ensemble. Un réglage que l'on ne choisit pas est réglé quand même : au hasard. [cours]
+- **Idées fausses** :
+  - **Pas mesuré, pas choisi** : « Ce que je ne mesure pas, je ne le choisis pas »
+    - **Racine** : choisir semble demander une décision réfléchie, et trois cuillères ou une bouilloire qui coupe ne ressemblent pas à un choix.
+    - **Correction** : verser sans peser ni regarder l'heure, c'est choisir quand même un ratio et un temps de contact, au hasard.
+  - **La machine sans réglages** : « Une machine qui fait tout n'a pas de réglages »
+    - **Racine** : une machine ne montre ni sa mouture, ni sa quantité de café, ni la température de son eau : on n'y voit rien à régler.
+    - **Correction** : elle a les mêmes réglages, choisis une fois pour toutes ; elle les reprend à chaque tasse sans les montrer.
 
 #### Cas du fil rouge
 
@@ -42,11 +49,6 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 - **Question** : Nomme à Cédric les réglages de sa recette, et ce qu'il a choisi pour chacun, même sans y penser.
 - **Réponse attendue** : les quatre. La mouture : moyenne, au moulin. Le ratio : trois cuillères pour son eau, sans peser ni l'un ni l'autre. La température d'infusion : l'eau juste après que la bouilloire coupe, donc presque bouillante. Le temps de contact : le temps que l'eau met à passer, qu'il ne mesure pas. Il les choisit tous, même ceux qu'il laisse au hasard ; la Pipeline a les siens aussi, choisis une fois à l'installation.
 
-#### Pièges
-
-- « Ce que je ne mesure pas, je ne le choisis pas » : verser sans peser ni regarder l'heure, c'est choisir quand même un ratio et un temps de contact, au hasard.
-- « Une machine qui fait tout n'a pas de réglages » : elle a les mêmes, choisis une fois pour toutes ; elle les reprend à chaque tasse sans les montrer.
-
 ## Section 1b : Ce que fait chaque réglage
 
 ### Unité 1b1 : La mouture et le temps de contact
@@ -54,6 +56,13 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 #### Leçon
 
 - **Matière** : L'eau ne prend au café que ce qu'elle atteint : moudre ouvre le grain et multiplie la surface que l'eau touche. Plus la **mouture** est fine, plus l'eau extrait vite ; plus elle est grosse, plus l'extraction est lente. Le **temps de contact** joue dans le même sens : plus l'eau reste longtemps avec le café moulu, plus elle en prend. Une mouture plus fine ou un contact plus long poussent donc l'extraction vers la sur-extraction ; une mouture plus grosse ou un contact plus court la retiennent du côté de la sous-extraction.
+- **Idées fausses** :
+  - **Plus fin, plus de goût** : « Plus la mouture est fine, meilleur est le goût »
+    - **Racine** : une mouture plus fine fait bien extraire l'eau plus vite, et l'on prend « plus de goût » pour « meilleur goût ».
+    - **Correction** : plus fine, elle fait extraire l'eau plus vite et plus loin, jusqu'à l'amer et au sec.
+  - **Le temps fait la force** : « Un contact plus long rend seulement la tasse plus forte »
+    - **Racine** : une tasse qui a infusé longtemps a un goût plus marqué, et un goût marqué se prend pour de la force.
+    - **Correction** : plus l'eau reste avec le café moulu, plus elle en prend : c'est l'extraction qui avance, avec ses goûts.
 
 #### Cas du fil rouge
 
@@ -67,13 +76,6 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 - **Question** : Que dis-tu à Cédric de l'habitude d'Aïmen ?
 - **Réponse attendue** : deux choses. Moulu, le café ne reste frais qu'une heure environ, quand le grain garde ses arômes trois semaines environ après la torréfaction : mieux vaut moudre juste avant l'infusion. Le froid ralentit le vieillissement du café, mais le café y prend l'humidité et les odeurs, et la condensation s'y forme : mieux vaut une boîte hermétique et opaque, au frais, et de petites quantités. La fraîcheur change le café lui-même : ce n'est pas un des quatre réglages.
 
-#### Pièges
-
-- « Plus la mouture est fine, meilleur est le goût » : plus fine, elle fait extraire l'eau plus vite et plus loin, jusqu'à l'amer et au sec.
-- « Un contact plus long rend seulement la tasse plus forte » : plus l'eau reste avec le café moulu, plus elle en prend : c'est l'extraction qui avance, avec ses goûts.
-- « Au congélateur, le café ne vieillit plus » : le froid ralentit son vieillissement sans l'arrêter, et le café y prend l'humidité et les odeurs.
-- « Moulu ou en grains, c'est le même café » : moulu, il perd sa fraîcheur en une heure environ, le grain en quelques semaines.
-
 #### Consigne au professeur
 
 Faire dire dans quel sens chaque changement pousse l'extraction, sans dire comment corriger la tasse de Cédric ni quel réglage changer : c'est le concept 2. Si l'apprenant parle de moudre à l'avance, de garder le café ou de sa fraîcheur, poser l'aparté ; la fraîcheur change le café, ce n'est pas un réglage.
@@ -83,6 +85,16 @@ Faire dire dans quel sens chaque changement pousse l'extraction, sans dire comme
 #### Leçon
 
 - **Matière** : La **température d'infusion** pousse l'extraction comme la mouture et le temps : plus l'eau est chaude quand elle touche le café moulu, plus elle extrait vite. La profession donne un repère, une eau entre 90 et 96 °C [consensus] : un point de départ pour régler, pas une norme à atteindre. Des chercheurs de UC Davis ont fait le même café à 87, 90 et 93 °C, en ajustant la mouture et le temps pour arriver à la même extraction et à la même force : les dégustateurs n'ont pas fait la différence [école]. Ce qui fait le goût, c'est où l'extraction arrive ; la chaleur de l'eau n'est qu'un des moyens d'y aller.
+- **Idées fausses** :
+  - **Bouillante, c'est mieux** : « L'eau bouillante extrait mieux »
+    - **Racine** : plus chaude, l'eau extrait bien plus vite, et une extraction plus rapide semble une meilleure extraction.
+    - **Correction** : plus vite n'est pas mieux : ce qui fait le goût, c'est où l'extraction arrive, et la chaleur n'est qu'un des moyens d'y aller.
+  - **Le café brûlé** : « L'eau bouillante brûle le café »
+    - **Racine** : une tasse faite à l'eau bouillante sort parfois amère et sèche, un goût que l'on dit « brûlé ».
+    - **Correction** : l'eau bouillante fait avancer l'extraction plus vite ; si la tasse en sort amère et sèche, c'est qu'elle est sur-extraite.
+  - **Le repère pris pour une norme** : « Hors de 90 à 96 °C, la tasse est ratée »
+    - **Racine** : le repère vient de la profession et se donne en chiffres, et un chiffre de la profession se lit comme une règle.
+    - **Correction** : c'est un repère, un point de départ ; à extraction et force égales, des dégustateurs n'ont pas distingué une eau à 87 °C d'une eau à 93 °C.
 
 #### Cas du fil rouge
 
@@ -91,17 +103,18 @@ Faire dire dans quel sens chaque changement pousse l'extraction, sans dire comme
 - **Question** : Aïmen a-t-il raison ? Dis à Cédric ce que l'eau bouillante fait à l'extraction, et quel repère tu lui donnes.
 - **Réponse attendue** : en partie. Plus chaude, l'eau extrait plus vite : l'eau bouillante pousse l'extraction plus loin. Mais « le mieux » ne veut rien dire : ce qui fait le goût, c'est où l'extraction arrive, et la chaleur n'est qu'un des réglages qui l'y mènent ; avec une mouture fine et un long contact, elle pousse vers la sur-extraction. Le repère de la profession est une eau entre 90 et 96 °C, un point de départ : c'est le goût de Cédric qui décide.
 
-#### Pièges
-
-- « L'eau bouillante extrait mieux » : plus chaude, l'eau extrait plus vite, pas mieux ; ce qui fait le goût, c'est où l'extraction arrive.
-- « L'eau bouillante brûle le café » : elle fait avancer l'extraction plus vite ; si la tasse en sort amère et sèche, c'est qu'elle est sur-extraite.
-- « Hors de 90 à 96 °C, la tasse est ratée » : c'est un repère, un point de départ ; à extraction et force égales, des dégustateurs n'ont pas distingué une eau à 87 °C d'une eau à 93 °C.
-
 ### Unité 1b3 : Le ratio
 
 #### Leçon
 
 - **Matière** : Le **ratio** se pèse : tant de grammes de café pour tant de grammes d'eau. Il fait d'abord la force : pour une même extraction, plus de café pour la même eau donne une tasse plus forte, moins de café une tasse plus légère. La profession donne un repère, 55 g de café par kilo d'eau, soit environ 55 g par litre [consensus] : un point de départ, pas une norme. La tasse réussie est celle que l'on aime. [cours]
+- **Idées fausses** :
+  - **Plus de café, plus extrait** : « Plus de café, c'est plus d'extraction »
+    - **Racine** : le café est ce que l'eau extrait, et plus il y en a, plus il semble y avoir à extraire.
+    - **Correction** : plus de café pour la même eau fait d'abord une tasse plus forte ; l'extraction est ce que l'eau prend au café, une autre mesure.
+  - **La bonne quantité** : « 55 g par litre, c'est la bonne quantité, il faut s'y tenir »
+    - **Racine** : un chiffre précis, au gramme, donné par la profession, semble la quantité juste plutôt qu'un point de départ.
+    - **Correction** : c'est un repère de la profession, un point de départ ; c'est le goût de celui qui boit qui décide.
 
 #### Cas du fil rouge
 
@@ -109,11 +122,6 @@ Faire dire dans quel sens chaque changement pousse l'extraction, sans dire comme
 - **Ancrage** : Cédric a raconté sa recette à Inès, au Petit Noir. Sa réponse : « Arrête les cuillères. Cinquante-cinq pour mille. » Cédric te l'écrit : « Elle m'a regardé comme si j'avais commandé un café soluble. Ça veut dire quoi ? »
 - **Question** : Traduis le conseil d'Inès : de quel réglage parle-t-elle, que dit son chiffre, et que fera à la tasse plus de café pour la même eau ?
 - **Réponse attendue** : du ratio. 55 g de café pour 1000 g d'eau, environ un litre ; pour un demi-litre, environ 27 g, pesés à la balance plutôt que comptés en cuillères. C'est le repère de la profession, un point de départ. Plus de café pour la même eau, à extraction égale, donnera une tasse plus forte ; moins de café, une tasse plus légère.
-
-#### Pièges
-
-- « Plus de café, c'est plus d'extraction » : plus de café pour la même eau fait d'abord une tasse plus forte ; l'extraction est ce que l'eau prend au café, une autre mesure.
-- « 55 g par litre, c'est la bonne quantité, il faut s'y tenir » : c'est un repère de la profession, un point de départ ; c'est le goût de celui qui boit qui décide.
 
 ## Clôture
 

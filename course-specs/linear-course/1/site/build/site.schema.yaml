@@ -288,7 +288,10 @@ $defs:
       id: { $ref: '#/$defs/id' }
       title: { $ref: '#/$defs/line' }
       blocks:
-        description: its published blocks, by their key in course/form.yaml; never the instruction
+        description: >-
+          its published blocks, by their key in course/form.yaml, in the order the site renders them:
+          the lesson (its matter), the cases, then the misconceptions of the lesson; never the
+          instruction
         type: object
         additionalProperties: false
         properties:
@@ -302,13 +305,19 @@ $defs:
             minItems: 1
             items: { $ref: '#/$defs/case' }
           misconceptions:
+            description: >-
+              the misconceptions of the lesson, after the cases, the order the site renders them in:
+              each its name, its belief, its root and its correction
             type: array
+            minItems: 1
             items:
               type: object
-              required: [misconception, correction]
+              required: [name, belief, root, correction]
               additionalProperties: false
               properties:
-                misconception: { $ref: '#/$defs/markdown' }
+                name: { $ref: '#/$defs/line' }
+                belief: { $ref: '#/$defs/markdown' }
+                root: { $ref: '#/$defs/markdown' }
                 correction: { $ref: '#/$defs/markdown' }
   concept:
     type: object
