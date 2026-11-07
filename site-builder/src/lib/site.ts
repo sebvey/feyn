@@ -7,6 +7,7 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
+import { ui } from '../ui';
 
 export interface Section { key: string; heading: string; text: string }
 export interface Domain {
@@ -135,5 +136,5 @@ export function around(at: string): { prev?: Step; next?: Step } {
 /** A duration in minutes, as the old site wrote it: « 18 min », « 1 h 30 ». */
 export function duration(min: number): string {
   const h = Math.floor(min / 60), m = min % 60;
-  return h ? (m ? `${h} h ${String(m).padStart(2, '0')}` : `${h} h`) : `${m} min`;
+  return h ? (m ? `${h} ${ui.hours} ${String(m).padStart(2, '0')}` : `${h} ${ui.hours}`) : `${m} ${ui.minutes}`;
 }

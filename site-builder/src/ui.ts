@@ -19,6 +19,9 @@ export const ui = {
   // the cards at the foot of a domain or concept page, in the reading order
   previous: 'Précédent',
   next: 'Suivant',
+  // the units of a duration (« 18 min », « 1 h 30 »)
+  minutes: 'min',
+  hours: 'h',
   // the search page
   searchNeedsScript: 'La recherche demande JavaScript.',
   // the page of an address no page has
