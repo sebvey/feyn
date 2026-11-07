@@ -1,0 +1,89 @@
+# Deploys the next channel of the course's site (decision three-channels): on a push to main that
+# touches the site engine, the spec or the course, builds the site with build-site, verifies it
+# with verify-site, then pushes it into next/<course id>/ of gh-pages of the artifact repository,
+# every other folder and file kept. site-builder/README.md, "The deployment".
+name: Deploy next
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site-builder/**'
+      - 'course-specs/linear-course/**'
+      - 'course-specs/linear-course/1/course/samples/cafe/**'
+
+# Shared with deploy-preview.yml: one push to gh-pages at a time.
+concurrency:
+  group: feyn-site-gh-pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  # The course built, until parcours-po is re-created (epic #520): its folder and its course id
+  # (its course.yaml's id). The paths filter above names the folder too.
+  COURSE_DIR: course-specs/linear-course/1/course/samples/cafe
+  COURSE_ID: cafe
+  SITE_REPO: sebvey/feyn-site
+  SITE_URL: https://sebvey.github.io/feyn-site
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: |
+            site-builder/package-lock.json
+            spec-directives/1/package-lock.json
+
+      - name: Install
+        run: |
+          npm ci --prefix spec-directives/1
+          npm ci --prefix site-builder
+          cd site-builder && npx playwright install --with-deps chromium
+
+      - name: Build
+        run: site-builder/build-site "$COURSE_DIR" --channel next --base "/feyn-site/next/$COURSE_ID/" --out "$RUNNER_TEMP/site"
+
+      - name: Verify
+        run: site-builder/verify-site "$RUNNER_TEMP/site" --base "/feyn-site/next/$COURSE_ID/" --captures "$RUNNER_TEMP/captures"
+
+      - name: Push to gh-pages
+        env:
+          DEPLOY_KEY: ${{ secrets.FEYN_SITE_DEPLOY_KEY }}
+          DEST: next/${{ env.COURSE_ID }}
+          MESSAGE: 'next: ${{ env.COURSE_ID }} from sebvey/feyn@${{ github.sha }}'
+        run: |
+          set -euo pipefail
+          # The deploy key's private half, and GitHub's published host key (api.github.com/meta).
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/feyn_site
+          chmod 600 ~/.ssh/feyn_site
+          echo 'github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl' > ~/.ssh/known_hosts
+          export GIT_SSH_COMMAND='ssh -i ~/.ssh/feyn_site -o IdentitiesOnly=yes'
+          git clone --quiet --depth 1 --branch gh-pages "git@github.com:$SITE_REPO.git" "$RUNNER_TEMP/gh-pages"
+          cd "$RUNNER_TEMP/gh-pages"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          # Replace DEST only, on the tip of gh-pages; retried from a fresh tip if a push came first.
+          for try in 1 2 3 4 5; do
+            git fetch --quiet --depth 1 origin gh-pages
+            git reset --quiet --hard origin/gh-pages
+            rm -rf "$DEST"
+            mkdir -p "$DEST"
+            cp -R "$RUNNER_TEMP/site/." "$DEST/"
+            git add --all -- "$DEST"
+            if git diff --cached --quiet; then echo "gh-pages already holds this build"; exit 0; fi
+            git commit --quiet -m "$MESSAGE"
+            if git push --quiet origin HEAD:gh-pages; then echo "deployed: $SITE_URL/$DEST/"; exit 0; fi
+            sleep $((try * 5))
+          done
+          echo "push to gh-pages failed 5 times" >&2
+          exit 1

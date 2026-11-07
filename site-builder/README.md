@@ -1,6 +1,6 @@
 # site-builder
 
-Builds the site of a course: the site engine (Astro), its command `build-site`, which runs the spec half of the site build on a course and lays its output out in pages with the old site's design, and Pagefind's search index, and its command `verify-site`, which verifies a build in a browser. Its own documentation lives in `site-builder/docs/`, its decisions in `site-builder/decisions/`. Builds are deployed to the artifact repository `sebvey/feyn-site`, never from here.
+Builds the site of a course: the site engine (Astro), its command `build-site`, which runs the spec half of the site build on a course and lays its output out in pages with the old site's design, and Pagefind's search index, and its command `verify-site`, which verifies a build in a browser. Its own documentation lives in `site-builder/docs/`, its decisions in `site-builder/decisions/`. Builds are deployed to the artifact repository `sebvey/feyn-site`, never served from here: two CI workflows push them there ("The deployment").
 
 ## The two halves
 
@@ -68,3 +68,19 @@ The browser, once per machine (and after a change of Playwright's version): `cd 
 ## The check
 
 `mise exec -- npm run check --prefix site-builder`: `astro check`, the types of the engine's files.
+
+## The deployment
+
+Two CI workflows of `feyn` deploy the site of the course to the artifact repository `sebvey/feyn-site`, served by GitHub Pages from its branch `gh-pages` at `https://sebvey.github.io/feyn-site/`, as decision `three-channels` sets its channels:
+
+| CI workflow | Trigger | Address |
+|---|---|---|
+| `.github/workflows/deploy-next.yml`, the next channel | a push to `main` | `https://sebvey.github.io/feyn-site/next/cafe/` |
+| `.github/workflows/deploy-preview.yml`, a preview | a pull request opened, synchronised or reopened, to any base; removed when it closes | `https://sebvey.github.io/feyn-site/pr-<n>/cafe/` |
+
+- **When they run.** Only when the change touches `site-builder/`, `course-specs/linear-course/` or the course (their `paths:` filters); a pull request from a fork, which gets no secret, is skipped.
+- **The course.** `cafe` (`course-specs/linear-course/1/course/samples/cafe`, course id `cafe`) until parcours-po is re-created (epic #520): its folder and its id are the workflows' configuration (their `env`, and their `paths:` filters), never the engine's.
+- **What each does.** `npm ci` in `spec-directives/1/` and here, Playwright's Chromium, `build-site --channel next` (or `--channel preview --base /feyn-site/pr-<n>/cafe/`, from the pull request's head), then `verify-site` on the build: a build that fails a check is not deployed. Then it clones `gh-pages`, replaces its own folder (`next/cafe/`, or `pr-<n>/cafe/`) with the build, every other folder and file of the branch kept (the trial's `index.html`, `ping.txt` and `.nojekyll` included), commits and pushes, from a fresh tip if another push came first. A preview then writes its address in a comment on the pull request, the same comment updated by each later run; when the pull request closes, its folder `pr-<n>/` is removed and the comment says so.
+- **One at a time.** Both share the concurrency group `feyn-site-gh-pages`: two deploys never push at once. GitHub keeps one run waiting per group: a third run cancels the one waiting, which is then run again by hand (its page on GitHub, "Re-run jobs").
+- **The secret.** They push by SSH with the Actions secret `FEYN_SITE_DEPLOY_KEY` of `sebvey/feyn`, the private half of the deploy key `feyn-ci` of `feyn-site` (write access), and use no other secret (the comment uses the run's own token). The secret is the maintainer's (project `CLAUDE.md`): the workflows create none.
+- **The 404.** GitHub Pages serves only the `404.html` at the root of a site: the `404.html` of a build, in its folder, is not served for an unknown address under it. The root of `feyn-site` is out of scope, with the prod channel (a course tag, decision `three-channels`): the workflows write nothing at the root.
