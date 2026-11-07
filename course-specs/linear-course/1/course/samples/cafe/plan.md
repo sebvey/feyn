@@ -13,7 +13,7 @@ Posture : un barista patient, qui aide l'apprenant à aider Cédric.
 
 ## Progression
 
-Le domaine 1, « Ce qui fait la tasse », part de rien : ce qu'est l'extraction, ce qu'elle donne au goût, puis les réglages qui la font varier. Le domaine 2, « Réussir sa tasse », s'en sert sur les tasses de Cédric : goûter, dire ce qui cloche, changer un réglage, jusqu'au jour de la soutenance. L'annexe A1 situe les méthodes d'infusion par ce qu'elles changent aux réglages, et se consulte à tout moment après le concept 1.
+Le domaine 1, « Ce qui fait la tasse », part de rien : ce qu'est l'extraction, ce qu'elle donne au goût, puis les réglages qui la font varier. Le domaine 2, « Réussir sa tasse », s'en sert sur les tasses de Cédric : goûter, dire ce qui cloche, changer un réglage, jusqu'au jour de la soutenance. L'annexe A1 situe les méthodes d'infusion par ce qu'elles changent aux réglages, et se consulte à tout moment après le concept 1. L'annexe A2 dit combien de temps le café reste frais, moulu ou en grains, et comment le garder : le professeur la pose quand la question vient.
 
 ## Parti pris : la tasse que Cédric aime
 
