@@ -79,7 +79,7 @@ Le site rend les positions et les voisins depuis le frontmatter, sous le titre `
 | the site | the published parts, to render them and nothing else | at each build |
 | the teacher | the whole file: the units in order, each with its cases, its corrections, its instruction | each teaching session |
 
-Le corps tient, dans cet ordre, le titre du concept (section 3) ; une **tête**, le titre `## L'essentiel`, puis son texte, le seul résumé écrit du concept ; les sections et leurs unités ; un **pied**, le titre `## Clôture`, puis ses blocs `###` : « Se vérifier » (la question que l'apprenant se pose pour vérifier sa réponse, ce qui sert à reconnaître ou à appliquer le concept entier), « Approfondissement » (de la matière en plus, pour qui demande à aller plus loin) et « Consigne au professeur » (la méthode propre au concept entier, que seul le professeur lit), chacun au choix, « Clôture » présente quand elle en tient un. Ce qu'un build compose n'y est pas écrit : l'objectif vient de `course.yaml`. Le site construit la tête et les parties publiées du pied ; quand le professeur lit « Approfondissement », `teacher/rules.yaml` le dit.
+Le corps tient, dans cet ordre, le titre du concept (section 3) ; une **tête**, le titre `## L'essentiel`, puis son texte, le seul résumé écrit du concept ; les sections et leurs unités ; un **pied**, le titre `## Clôture`, puis ses blocs `###` : « Se vérifier » (la question que l'apprenant se pose pour vérifier sa réponse, ce qui sert à reconnaître ou à appliquer le concept entier), « Approfondissement » (de la matière en plus, pour qui demande à aller plus loin) et « Consigne au professeur » (ce que le professeur sait et ne dit pas dans le concept entier, qu'aucune unité ne dit seule, que seul le professeur lit ; son critère est celui de la consigne d'une unité, 3.3), chacun au choix, « Clôture » présente quand elle en tient un. Ce qu'un build compose n'y est pas écrit : l'objectif vient de `course.yaml`. Le site construit la tête et les parties publiées du pied ; quand le professeur lit « Approfondissement », `teacher/rules.yaml` le dit.
 
 Ses règles sont le groupe « Le corps de concept.md » de [`rules.yaml`](rules.yaml) ; ses parties, leur ordre et leur présence sont `concept_file` de [`form.yaml`](form.yaml).
 
@@ -101,7 +101,7 @@ Une unité tient trois blocs `####`, dans l'ordre où le créateur l'écrit : en
 |---|---|---|---|
 | `#### Leçon` | oui | sa **matière**, ses deux faces, dans cet ordre : ce qui est vrai (`- **Matière** :`, les mêmes mots pour le site et le professeur), puis ce qui semble vrai et ne l'est pas, ses **idées fausses** (`- **Idées fausses** :`), chacune nommée, avec sa **racine** et sa correction | obligatoire |
 | `#### Cas du fil rouge` | oui | ses **cas**, chacun ouvert par son titre (`- **Titre** :`), puis, pour un cas supplémentaire, son qualificatif (`- **Qualificatif** :`), son **ancrage** (`- **Ancrage** :`, la situation du fil rouge où la matière se voit), sa question (`- **Question** :`) et sa réponse attendue (`- **Réponse attendue** :`) | obligatoire |
-| `#### Consigne au professeur` | non | sa **consigne**, en prose, sans libellé : ce que la méthode a de propre à l'unité | au choix |
+| `#### Consigne au professeur` | non | sa **consigne**, en prose, sans libellé : la limite de sa matière, ce que le professeur sait et ne dit pas dans l'unité (ci-dessous) | au choix |
 
 Dans « Leçon » et « Cas du fil rouge », chaque champ s'ouvre sur son libellé seul, `- **<libellé>** : <texte>`, rien entre le libellé et ses deux-points, ses lignes suivantes en retrait de deux espaces ; une précision ouvre le texte (`- **Question** : en deux parties : …`). Aucune ligne de l'unité n'est hors d'un bloc, ni, dans ces deux blocs, hors d'un champ. Les blocs, leur ordre, leur présence, leur publication, leurs lecteurs et leurs champs sont `unit` de [`form.yaml`](form.yaml).
 
@@ -156,6 +156,8 @@ La forme d'un cas, sur l'unité 0a2 de `samples/cafe` :
 - **Question** : …
 - **Réponse attendue** : …
 ```
+
+**La consigne.** « Consigne au professeur » est la limite de la matière de l'unité : ce que le professeur sait et ne dit pas ici. Une phrase n'y reste que si un professeur compétent, qui lit la matière, les cas, les idées fausses, le protocole et le plan, agirait autrement sans elle, et seulement dans cette unité. Elle tient ce que l'unité n'enseigne pas et où cela s'enseigne (« Ne dire ni comment corriger la tasse de Cédric, ni quel réglage changer : c'est le concept 2 »), ce que le cours n'enseigne pas, et une question que le cours pose et repose dans cette unité (ci-dessus). Elle ne tient pas ce qui vaut pour toute unité, quand poser un cas supplémentaire ou que faire d'un concept plus loin que l'apprenant aborde : c'est une règle du protocole, `teacher/rules.yaml` ; ni ce qui vaut pour le cours entier, un parti pris : il va aux partis pris de `plan.md` (section 5) ; ni l'évident, ce que le professeur fait sans qu'on le lui dise : il est retiré. Plus une consigne tient de phrases, plus le professeur est rigide, plus elle contredit le protocole et s'éloigne de la matière. La consigne du pied (3.2) suit le même critère pour le concept entier.
 
 Les règles de l'unité sont le groupe « L'unité » de [`rules.yaml`](rules.yaml).
 

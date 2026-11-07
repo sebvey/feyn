@@ -323,9 +323,10 @@ groups:
       - id: concept-instruction-content
         level: requirement
         text: >-
-          « Consigne au professeur » du pied doit tenir ce que la méthode a de propre au concept
-          entier, ce qu'aucune unité ne dit pour elle seule ; l'ordre et le découpage du concept
-          sont ses sections et ses unités, jamais une consigne.
+          « Consigne au professeur » du pied doit tenir ce que le professeur sait et ne dit pas
+          dans le concept entier, ce qu'aucune unité ne dit pour elle seule, au critère de
+          `instruction-beyond-a-competent-teacher` ; l'ordre et le découpage du concept sont ses
+          sections et ses unités, jamais une consigne.
 
   - title: L'unité (course/README.md section 3.3)
     purpose: >-
@@ -338,8 +339,8 @@ groups:
       avec son ancrage dans le fil rouge, sa question et sa réponse attendue : d'abord le cas de
       l'unité, toujours posé, puis ses cas supplémentaires, de rechange quand l'apprenant échoue,
       d'entraînement pour s'exercer ou retrouver un concept validé, d'aparté pour une question
-      fréquente hors du parcours ; sa « Consigne au professeur », ce que la méthode a de propre à
-      l'unité. Chaque
+      fréquente hors du parcours ; sa « Consigne au professeur », la limite de sa matière, ce que
+      le professeur sait et ne dit pas dans l'unité. Chaque
       bloc est publié ou non, une propriété de la spec (`course/form.yaml`), jamais un choix du
       cours, et que son titre ne dit pas.
     category: pedagogy
@@ -479,10 +480,23 @@ groups:
           poser le cas supplémentaire ; « Ancrage », la situation du fil rouge où la matière se
           voit, ses acteurs, ses faits et son déroulé (qui dit quoi, quand) ; « Question », la
           question que pose le cas ; « Réponse attendue », la bonne réponse avec ses nuances, la
-          position du cours telle que la matière l'énonce ; « Consigne au professeur », ce que la
-          méthode a
-          de propre à l'unité (quand poser un cas supplémentaire, une formulation qui a marché, un
-          renvoi à ne pas réenseigner).
+          position du cours telle que la matière l'énonce ; « Consigne au professeur », ce que le
+          professeur sait et ne dit pas dans l'unité (`instruction-beyond-a-competent-teacher`).
+      - id: instruction-beyond-a-competent-teacher
+        level: requirement
+        method: inspection
+        text: >-
+          Une phrase de « Consigne au professeur », d'une unité ou du pied, ne doit y rester que si
+          un professeur compétent, qui lit la matière, les cas, les idées fausses, le protocole et
+          le plan, agirait autrement sans elle, et seulement dans cette unité, ou dans ce concept
+          pour la consigne du pied : la consigne est la limite de la matière, ce que le professeur
+          sait et ne dit pas ici. Ce qui vaut pour toute unité est une règle du protocole ; ce qui
+          vaut pour le cours entier va aux partis pris de `plan.md` ; l'évident est retiré.
+        why: >-
+          Les consignes d'un cours mêlaient le générique, valable pour toute unité, le parti pris
+          du cours et l'évident, et l'une ne tenait rien de propre à son unité : un modèle
+          compétent fait l'évident, et plus une consigne tient de phrases, plus le professeur est
+          rigide, plus elle contredit le protocole et s'éloigne de la matière (epic #710).
       - id: course-question-in-instruction
         level: requirement
         method: inspection

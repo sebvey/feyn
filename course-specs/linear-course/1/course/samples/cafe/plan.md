@@ -19,6 +19,10 @@ Le domaine 1, « Ce qui fait la tasse », part de rien : ce qu'est l'extraction,
 
 Le cours donne les repères de la profession (ratio, température, temps) comme un point de départ, pas comme une norme à atteindre : c'est le goût de Cédric qui décide si une tasse est réussie. Le prof le dit quand un repère est donné, et ne corrige pas un apprenant qui préfère une tasse hors des repères, tant qu'il sait dire quel réglage la produit.
 
+Le cours juge une tasse à son goût seulement, sans aucune mesure : ni réfractomètre, ni mesure de la force, ni pourcentage d'extraction. Si l'apprenant en parle, le prof dit que la profession mesure et que le cours goûte.
+
+Aucune méthode d'infusion n'est meilleure qu'une autre : le cours situe chacune par ce qu'elle change aux réglages, sans les classer, et c'est le goût de celui qui boit qui décide.
+
 ## Règles d'écriture du cours
 
 - Le cours est en français. Pas de tiret long ni de flèche dans la prose : virgules, deux-points et parenthèses.

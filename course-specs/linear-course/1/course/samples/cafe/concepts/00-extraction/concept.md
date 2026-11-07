@@ -61,7 +61,7 @@ L'**extraction** est ce que l'eau dissout du café moulu pendant l'infusion : c'
 
 #### Consigne au professeur
 
-Si l'apprenant nomme ce qui a pu changer dans la façon de faire (le moulin, l'eau, le temps), le prendre comme une bonne intuition sans l'enseigner : ce qui fait varier l'extraction est le concept 1. Ici, il suffit que quelque chose dans la façon de faire ait changé ce que l'eau a pris.
+L'unité n'enseigne pas ce qui fait varier l'extraction (le moulin, l'eau, le temps) : c'est le concept 1. Ici, il suffit que quelque chose dans la façon de faire ait changé ce que l'eau a pris.
 
 ### Unité 0a2 : Trop peu, ou trop
 
@@ -92,10 +92,6 @@ Si l'apprenant nomme ce qui a pu changer dans la façon de faire (le moulin, l'e
 - **Ancrage** : Le lendemain, Cédric écrit : « Aujourd'hui, du jus de pneu. Amer, et ça me râpe la langue comme un thé oublié dans la tasse. Au moins ça ne pique plus. »
 - **Question** : Cette fois, sa tasse est-elle trop peu ou trop extraite, et à quoi le reconnais-tu ?
 - **Réponse attendue** : trop, elle est sur-extraite : elle est amère et sèche en bouche (elle râpe la langue), sans le piquant de l'acide.
-
-#### Consigne au professeur
-
-Le cours juge l'extraction au goût seulement : ne proposer ni réfractomètre, ni mesure de la force, ni pourcentage d'extraction ; si l'apprenant en parle, dire que la profession mesure et que le cours goûte, puis revenir à la description de Cédric. Faire nommer le goût avant le verdict : acide ou amer, court ou sec. Si l'apprenant se trompe de côté, poser le cas de rechange.
 
 ## Section 0b : La force n'est pas l'extraction
 
