@@ -1,0 +1,43 @@
+---
+// A domain page: its title, its objective after its label, its duration; the published
+// sections of its domain file, each under its heading; the thread of its concepts (titles,
+// objectives, sections); its previous and next pages in the reading order. Ported from the old
+// site's domain page, without its « À la fin, vous savez ».
+import Base from '../layouts/Base.astro';
+import ConceptList from '../components/ConceptList.astro';
+import PrevNext from '../components/PrevNext.astro';
+import Bulle from '../components/Bulle.astro';
+import { doc, words, md, mdInline, href, labelled, domainName, conceptByNumber, around } from '../lib/site';
+import type { Concept } from '../lib/site';
+interface Props { number: number }
+const d = doc.domains.find((x) => x.number === Astro.props.number)!;
+const concepts = d.concepts.map((n) => conceptByNumber.get(n)).filter((c): c is Concept => !!c);
+const { prev, next } = around(href(d.path));
+---
+<Base title={`${labelled(domainName(d))}${d.title}`} nav="domains">
+  <header class="concept-head container">
+    <p class="eyebrow">{domainName(d)}</p>
+    <h1 id="domain-title">{d.title}</h1>
+    <p class="lead">{labelled(words.site.labels.objective)}<Fragment set:html={mdInline(d.objective)} /></p>
+    {d.duration_min && (
+      <p class="domaine-meta" data-pagefind-ignore><Bulle minutes={d.duration_min} /></p>
+    )}
+  </header>
+
+  <div class="container-wide">
+    <div class="prose domaine-prose">
+      {d.sections.map((s) => (
+        <section aria-labelledby={`section-${s.key}`}>
+          <h2 id={`section-${s.key}`}>{s.heading}</h2>
+          <Fragment set:html={md(s.text)} />
+        </section>
+      ))}
+    </div>
+
+    <section class="prose domaine-concepts">
+      <ConceptList concepts={concepts} objectives />
+    </section>
+
+    <PrevNext prev={prev} next={next} />
+  </div>
+</Base>

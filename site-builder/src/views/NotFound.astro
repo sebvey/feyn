@@ -1,0 +1,15 @@
+---
+// The page of an address no page has, out of the index; its one link leads to the domain map.
+import Base from '../layouts/Base.astro';
+import { words, pageHref } from '../lib/site';
+import { ui } from '../ui';
+---
+<Base title={ui.notFound} noindex>
+  <div class="container">
+    <section class="page">
+      <h1>{ui.notFound}</h1>
+      <p class="lead">{ui.notFoundLead}</p>
+      <div class="actions"><a class="btn" href={pageHref('domains')}>{words.site.nav.domains}</a></div>
+    </section>
+  </div>
+</Base>

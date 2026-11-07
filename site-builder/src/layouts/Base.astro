@@ -1,0 +1,131 @@
+---
+// The shell of every page, ported from the old site's src/layouts/Base.astro: the skip link, the
+// header (the course title as brand; the navigation, whose words come from the document; search;
+// the theme toggle), the main content, indexed by Pagefind unless `noindex`, and the footer
+// (the link to the about page). `nav` is the key of the URL scheme's page the header marks as current.
+import '../styles/global.css';
+import { doc, words, pageHref, href } from '../lib/site';
+import { ui } from '../ui';
+import Mark from '../icons/marque.svg';
+import Magnifier from '../icons/loupe.svg';
+import Sun from '../icons/soleil.svg';
+import Moon from '../icons/lune.svg';
+
+interface Props {
+  title?: string;
+  nav?: string;
+  /** A page out of the index: neither in the Pagefind search nor for search engines. */
+  noindex?: boolean;
+}
+const { title, nav, noindex = false } = Astro.props;
+const course = doc.course;
+const fullTitle = title ? `${title} | ${course.title}` : course.title;
+const items = [
+  { key: 'domains', label: words.site.nav.domains },
+  { key: 'storyline', label: words.site.nav.storyline },
+  { key: 'glossary', label: words.site.nav.glossary },
+];
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    {course.subtitle && <meta name="description" content={course.subtitle} />}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" type="image/svg+xml" href={href('favicon.svg')} />
+    <meta name="color-scheme" content="light dark" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:locale" content="fr_FR" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      // The theme the reader chose (the header's button), applied before the page shows; otherwise the system's.
+      try {
+        var theme = localStorage.getItem('theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#content">{ui.skip}</a>
+    <header class="site-header">
+      <div class="container-wide bar">
+        <a class="brand" href={pageHref('home')} aria-current={nav === 'home' ? 'page' : undefined}>
+          <Mark width="28" height="28" aria-hidden="true" />
+          <span class="brand-nom">{course.title}</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list" hidden>{ui.menu}</button>
+        <nav class="site-nav" aria-label={ui.mainNav}>
+          <ul id="nav-list">
+            {items.map((i) => (
+              <li><a href={pageHref(i.key)} aria-current={nav === i.key ? 'page' : undefined}>{i.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+        <a class="btn-rond search-link" href={pageHref('search')} title={ui.search} aria-current={nav === 'search' ? 'page' : undefined}>
+          <Magnifier width="18" height="18" aria-hidden="true" />
+          <span class="sr-only">{ui.search}</span>
+        </a>
+        <button class="btn-rond theme-toggle" type="button" hidden data-label={ui.themeDark} data-to-light={ui.toLight} data-to-dark={ui.toDark}>
+          <Sun class="icone-soleil" width="18" height="18" aria-hidden="true" />
+          <Moon class="icone-lune" width="18" height="18" aria-hidden="true" />
+          <span class="sr-only"></span>
+        </button>
+      </div>
+    </header>
+    <script is:inline>
+      // The light / dark button: switches the theme shown and remembers the choice.
+      (function () {
+        var b = document.querySelector('.theme-toggle');
+        if (!b) return;
+        var root = document.documentElement;
+        var systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+        function current() { return root.getAttribute('data-theme') || (systemDark.matches ? 'dark' : 'light'); }
+        function update() {
+          var dark = current() === 'dark';
+          b.setAttribute('aria-pressed', dark ? 'true' : 'false');
+          b.querySelector('.sr-only').textContent = b.getAttribute('data-label');
+          b.title = dark ? b.getAttribute('data-to-light') : b.getAttribute('data-to-dark');
+        }
+        b.hidden = false;
+        b.addEventListener('click', function () {
+          var t = current() === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', t);
+          try { localStorage.setItem('theme', t); } catch (e) {}
+          update();
+        });
+        systemDark.addEventListener('change', update);
+        update();
+      })();
+    </script>
+    <script is:inline>
+      // The menu button on a narrow screen: folds and unfolds the navigation; Escape folds it.
+      (function () {
+        var b = document.querySelector('.nav-toggle');
+        var l = document.getElementById('nav-list');
+        if (!b || !l) return;
+        b.hidden = false;
+        document.documentElement.classList.add('nav-js');
+        b.addEventListener('click', function () {
+          var open = b.getAttribute('aria-expanded') === 'true';
+          b.setAttribute('aria-expanded', open ? 'false' : 'true');
+          l.parentNode.classList.toggle('is-open', !open);
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true') {
+            b.setAttribute('aria-expanded', 'false'); l.parentNode.classList.remove('is-open'); b.focus();
+          }
+        });
+      })();
+    </script>
+    <main id="content" data-pagefind-body={noindex ? undefined : ''}>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container-wide row">
+        <p><a href={pageHref('about')} aria-current={nav === 'about' ? 'page' : undefined}>{ui.about}</a></p>
+      </div>
+    </footer>
+  </body>
+</html>
