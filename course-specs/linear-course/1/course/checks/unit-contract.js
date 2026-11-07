@@ -14,7 +14,7 @@
 const directives = require('./directives');
 const { fail } = directives.lib('course');
 
-// the labelled fields of a list (« Leçon », or one case): known here, no qualifier, each once,
+// the labelled fields of a list (« Leçon », or one case): known here, nothing before the colon, each once,
 // none empty, the mandatory ones present, in the order of `spec`
 function checkFields(fields, spec, where, file, out, word, line) {
   const fw = (k) => word('unit_fields', k) || k;
@@ -22,7 +22,7 @@ function checkFields(fields, spec, where, file, out, word, line) {
   const seen = new Map();
   for (const f of fields) {
     if (!allowed.includes(f.key)) { out.push(fail(file, f.line, `${where}: field « ${f.label} » is not a field here (${allowed.map((k) => `« ${fw(k)} »`).join(', ')})`)); continue; }
-    if (f.qualifier !== '') out.push(fail(file, f.line, `${where}: field « ${f.label} » carries a qualifier ("${f.qualifier}"): a label stands alone before its colon, "- **${f.label}** : <text>", and the text may start with it`));
+    if (f.qualifier !== '') out.push(fail(file, f.line, `${where}: field « ${f.label} » carries words before its colon ("${f.qualifier}"): a label stands alone before its colon, "- **${f.label}** : <text>", and the text may start with it`));
     if (seen.has(f.key)) out.push(fail(file, f.line, `${where}: field « ${f.label} » appears twice`));
     seen.set(f.key, f);
     if (f.text === '' && f.lines.length === 1) out.push(fail(file, f.line, `${where}: field « ${f.label} » is empty`));

@@ -1,2 +1,2 @@
 check: unit-contract
-message: field « Ancrage » carries a qualifier ("en bref")
+message: field « Ancrage » carries words before its colon ("en bref")
