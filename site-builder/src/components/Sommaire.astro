@@ -1,12 +1,13 @@
 ---
 // The sticky table of contents of a long page, ported from the old site's Sommaire: a column on the
 // left on desktop, a bar of pills at the top on a phone; the part being read is highlighted. Put
-// first in a `.avec-sommaire` block, the content in `.sommaire-contenu`. One per page.
+// first in a `.avec-sommaire` block, the content in `.sommaire-contenu`. One per page. `compact`:
+// short items (the letters of the glossary) side by side on desktop, the last on its own line.
 interface Item { id: string; n?: number | string; title: string }
-interface Props { items: Item[]; label: string }
-const { items, label } = Astro.props;
+interface Props { items: Item[]; label: string; compact?: boolean }
+const { items, label, compact = false } = Astro.props;
 ---
-<nav class="sommaire" aria-label={label} data-pagefind-ignore>
+<nav class:list={['sommaire', { 'sommaire-compact': compact }]} aria-label={label} data-pagefind-ignore>
   <ol>
     {items.map((i) => (
       <li><a href={`#${i.id}`} data-sommaire={i.id}>{i.n !== undefined && <span class="sommaire-n">{i.n}</span>}<span class="sommaire-t">{i.title}</span></a></li>

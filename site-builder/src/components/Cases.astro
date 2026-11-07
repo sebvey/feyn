@@ -16,10 +16,10 @@ const id = `${unit}-cases`;
   <h4 class="tag" id={id}>{words.course.unit_blocks.cases}</h4>
   <ol>
     {cases.map((c) => (
-      <li class="ex">
-        <h5 class="ex-titre">{c.title}{c.qualifier && <>{' '}<span class="qualif">{c.qualifier}</span></>}</h5>
+      <li class="cas-item">
+        <h5 class="cas-titre">{c.title}{c.qualifier && <>{' '}<span class="qualif">{c.qualifier}</span></>}</h5>
         {c.anchor && <div class="fil-rouge" set:html={md(c.anchor)} />}
-        {c.question && <div class="ex-q" set:html={mdLabelled(fields.question, c.question)} />}
+        {c.question && <div class="cas-q" set:html={mdLabelled(fields.question, c.question)} />}
         {c.expected_answer && (
           <details class="reponse" data-pagefind-ignore>
             <summary>{ui.reveal}</summary>
