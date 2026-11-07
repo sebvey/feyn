@@ -292,7 +292,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### published
 
-- means: of a block or a part of a concept file, rendered by the site build: the **lesson** (the matter), the **cases** (each with its anchor, its question and its expected answer, shown hidden until the reader reveals it), the misconceptions, « L'essentiel », the landmarks, the deepening; a property the spec fixes for the block, never chosen by a course, and no heading says it. The build renders the published parts and nothing else
+- means: of a block or a part of a concept file, rendered by the site build: the **lesson** (the matter), the **cases** (each with its anchor, its question and its expected answer, shown hidden until the reader reveals it), the misconceptions, « L'essentiel », the landmarks, the deepening, the title and the headings of the sections and units, the **stances**, the **neighbors** and the **diagrams**; beside it, the claims and the references of its **sources**; a property the spec fixes for the block, never chosen by a course, and no heading says it. The build renders the published parts and nothing else
 - en: published · rejected: "reader-facing", "public" (it describes the repository)
 - fr: « publié » · rejected: « côté lecteur »
 - not to confuse with: [unpublished](#unpublished)

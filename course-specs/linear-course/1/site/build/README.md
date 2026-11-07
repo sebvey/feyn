@@ -23,7 +23,7 @@ It reads the course through the lib of the spec directives this MAJOR declares, 
 
 - `--form <file>`: a form other than `course/form.yaml`, YAML or JSON, so that `test-render` checks the closed default; a site build never gives it.
 
-Exit 0 rendered, 1 an input it cannot read (a course of another spec, a course map with no domain or no concept, a form that does not publish the course map, a missing file the form names, a URL scheme without `pages.domain`, `pages.concept` or the form of `{nn}`), 2 a usage error.
+Exit 0 rendered, 1 an input it cannot read (a course of another spec, a course map with no domain or no concept, a form that does not publish the course map, a missing `plan.md`, domain file, `concept.md` or diagram SVG, a URL scheme without `pages.domain`, `pages.concept` or the form of `{nn}`), 2 a usage error. A missing `storyline.md`, `glossary.md`, `CHANGELOG.md` or `sources.md` is no error: its key is null (`storyline`, `glossary`, `release`) or absent (a concept's `sources`).
 
 ## The document
 
