@@ -14,13 +14,18 @@ export interface Domain {
   number: number; slug: string; title: string; objective: string; duration_min?: number;
   concepts: string[]; path: string; sections: Section[];
 }
+/** A misconception a case makes tempting: its name, and the id of the misconception of its unit it names. */
+export interface InPlay { name: string; id?: string }
 export interface Case {
-  title: string; qualifier?: string; anchor?: string; question?: string; expected_answer?: string;
+  title: string; anchor?: string; question?: string;
+  /** What the site shows hidden until the reader reveals it. */
+  revealed?: { expected_answer?: string; misconceptions_in_play?: InPlay[] };
   supplementary: boolean;
 }
-export interface Misconception { misconception: string; correction: string }
+export interface Misconception { id: string; name: string; belief: string; root: string; correction: string }
 export interface Unit {
   id: string; title: string;
+  /** Its published blocks, in the order the site renders them: the misconceptions of its lesson after its cases. */
   blocks: { lesson?: { matter?: string }; cases?: Case[]; misconceptions?: Misconception[] };
 }
 export interface ConceptSection { id: string; title: string; units: Unit[] }

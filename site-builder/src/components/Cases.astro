@@ -1,11 +1,11 @@
 ---
 // The block of a unit's cases (the course lexicon's `unit_blocks.cases`), in the frame
-// of the old site's Reflexe box: each case under its title, a supplementary case with its qualifier
-// as a small tag; its anchor as a scene of the storyline (the old site's FilRouge look, no label);
-// its question after its label; its expected answer behind a button, after its label once
-// revealed, closed by default and out of the search index.
+// of the old site's Reflexe box: each case under its heading, its title; its anchor as a scene of
+// the storyline (the old site's FilRouge look, no label); its question after its label; behind a
+// button, closed by default and out of the search index, its expected answer after its label, then
+// the misconceptions in play after theirs, each name a link to its misconception on the page.
 import type { Case } from '../lib/site';
-import { words, md, mdLabelled } from '../lib/site';
+import { words, md, mdLabelled, labelled } from '../lib/site';
 import { ui } from '../ui';
 interface Props { unit: string; cases: Case[] }
 const { unit, cases } = Astro.props;
@@ -17,13 +17,23 @@ const id = `${unit}-cases`;
   <ol>
     {cases.map((c) => (
       <li class="cas-item">
-        <h5 class="cas-titre">{c.title}{c.qualifier && <>{' '}<span class="qualif">{c.qualifier}</span></>}</h5>
+        <h5 class="cas-titre">{c.title}</h5>
         {c.anchor && <div class="fil-rouge" set:html={md(c.anchor)} />}
         {c.question && <div class="cas-q" set:html={mdLabelled(fields.question, c.question)} />}
-        {c.expected_answer && (
+        {c.revealed && (
           <details class="reponse" data-pagefind-ignore>
             <summary>{ui.reveal}</summary>
-            <div class="corps" set:html={mdLabelled(fields.expected_answer, c.expected_answer)} />
+            <div class="corps">
+              {c.revealed.expected_answer && <Fragment set:html={mdLabelled(fields.expected_answer, c.revealed.expected_answer)} />}
+              {c.revealed.misconceptions_in_play && (
+                <p class="en-jeu">
+                  <span class="cas-label">{labelled(fields.misconceptions_in_play)}</span>
+                  {c.revealed.misconceptions_in_play.map((m, i) => (
+                    <>{i > 0 && ' ; '}{m.id ? <a href={`#${m.id}`}>{m.name}</a> : m.name}</>
+                  ))}
+                </p>
+              )}
+            </div>
           </details>
         )}
       </li>

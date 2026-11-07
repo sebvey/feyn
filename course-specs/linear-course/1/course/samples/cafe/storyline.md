@@ -31,7 +31,7 @@ L'agence répond à un appel d'offres, et le client vient dans ses locaux pour l
 - Au Petit Noir, Inès sert à Cédric une tasse claire et légère, douce, qui ne pique pas, n'est pas amère et dont le goût reste en bouche ; Cédric la croit sous-extraite, et Inès lui répond que légère n'est pas creuse (0b1).
 - La recette de Cédric : trois cuillères bombées de café moulu moyen, croit-il, l'eau dès que la bouilloire coupe, versée d'un coup ; il ne pèse rien et ne mesure pas le temps (1a1).
 - Un matin, Cédric moud beaucoup plus fin que d'habitude, presque de la farine, et l'eau met longtemps à passer dans le filtre, le temps de relire une PR entière (1b1).
-- Aïmen moud tout son paquet de café le dimanche et le garde au congélateur pour la semaine (1b1).
+- Aïmen moud tout son paquet de café le dimanche et le garde au congélateur pour la semaine (A2a1).
 - Aïmen assure à Cédric que l'eau doit bouillir et être versée aussitôt, l'eau bouillante étant ce qui extrait le mieux (1b2).
 - Cédric raconte sa recette à Inès, au Petit Noir ; elle lui répond : « Arrête les cuillères. Cinquante-cinq pour mille. » (1b3).
 - Cédric dit à Inès, au Petit Noir, que sa tasse est mauvaise ; elle lui répond : « Mauvaise, ça ne veut rien dire. Où elle pique, où elle racle, ce qu'elle pèse. » (2a1).
@@ -44,3 +44,4 @@ L'agence répond à un appel d'offres, et le client vient dans ses locaux pour l
 - Aïmen trouve que le filtre, « c'est de l'eau qui passe » : pour lui, le vrai café se fait au piston, où il a le temps de donner tout ce qu'il a (A1a1).
 - La Pipeline moud, presse le café moulu et sort en une trentaine de secondes une petite tasse épaisse (A1a2).
 - Aïmen a chez lui une machine à capsules, dont il assure qu'elle fait le même café que la Pipeline (A1a2).
+- Au Petit Noir, Inès fait son café du midi dans une moka posée sur le feu, où l'eau monte en sifflant à travers le café moulu (A1a2).

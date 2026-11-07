@@ -21,20 +21,22 @@ Une tranche traverse toutes les couches.
 
 ### Unité 2a1 : Une tranche
 
-#### Leçon
-
-- **Matière** : Une tranche traverse toutes les couches (concept 1).
-
-#### Pièges
-
-- « Un tableau » : c'est une carte.
-
 #### Cas du fil rouge
 
-- **Titre** : Le cas 2a1
+##### Cas : Le cas 2a1
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
+- **Idées fausses en jeu** : 
+
+#### Leçon
+
+- **Matière** : Une tranche traverse toutes les couches (concept 1).
+- **Idées fausses** :
+  - **Un tableau** : « Un tableau »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : c'est une carte.
 
 ## Clôture
 

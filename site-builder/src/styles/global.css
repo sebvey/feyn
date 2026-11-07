@@ -669,10 +669,6 @@ div.cdep .soon { font-size: 0.78rem; margin-left: 0.4rem; }
 .prose .cas li.cas-item { margin: 0; }
 .cas li.cas-item + li.cas-item { border-top: 1px solid var(--rule); margin-top: 1.4rem; padding-top: 1.3rem; }
 .cas-titre { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.6rem; font-size: 1.12rem; line-height: 1.3; margin: 0 0 0.7rem; }
-.qualif {
-  font-family: var(--font-ui); font-size: 0.68rem; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--ink-soft); border: 1px solid var(--rule); border-radius: 999px; padding: 0.2em 0.65em; background: var(--bg); line-height: 1.2;
-}
 .cas .fil-rouge { margin: 0 0 1rem; background: var(--bg); }
 .fil-rouge p + p { margin-top: 0.6em; }
 .cas-label { font-family: var(--font-ui); font-size: 0.82em; font-weight: 650; color: var(--ink-soft); }
@@ -682,15 +678,22 @@ div.cdep .soon { font-size: 0.78rem; margin-left: 0.4rem; }
 .reponse .corps { margin-top: 0.5rem; padding: 0.7rem 0.9rem; background: var(--bg); border-left: 3px solid var(--rule); font-size: 0.97em; line-height: 1.55; }
 .prose .reponse .corps p, .prose .reponse .corps ol, .prose .reponse .corps ul { margin: 0 0 0.4em; }
 .prose .reponse .corps > :last-child { margin-bottom: 0; }
+.prose .reponse .corps .en-jeu { margin-top: 0.6em; }
+.erreurs li[id] { scroll-margin-top: 4.5rem; }
 .prose .reponse .corps ol { padding-left: 1.3em; list-style: decimal; }
 .prose .reponse .corps li { margin: 0 0 0.3em; }
 
-/* The misconceptions of a unit, one list in the Erreurs look */
+/* The misconceptions of a unit's lesson, after its cases, one list in the Erreurs look: each its
+   name, its belief quoted, then its root and its correction after their labels */
 .sous .erreurs { margin-top: 2rem; }
 .sous .erreurs h4 { margin-top: 0; }
+.erreurs li p { margin: 0 0 0.3em; }
+.erreurs li > :last-child { margin-bottom: 0; }
+.erreurs .idee-nom { font-family: var(--font-ui); font-size: 0.88rem; font-weight: 650; color: var(--ink-soft); }
 .erreurs .idee { font-weight: 600; }
 .erreurs .idee::before { content: '«\00a0'; }
 .erreurs .idee::after { content: '\00a0»'; }
+.erreurs .idee-label { font-family: var(--font-ui); font-size: 0.82em; font-weight: 650; color: var(--ink-soft); }
 
 /* The foot */
 .cloture .reflexe { margin-top: 0; }

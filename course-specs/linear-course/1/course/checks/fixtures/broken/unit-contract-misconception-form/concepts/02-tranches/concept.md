@@ -24,17 +24,19 @@ Une tranche traverse toutes les couches.
 #### Leçon
 
 - **Matière** : Une tranche traverse toutes les couches (concept 1).
+- **Idées fausses** :
+  - Un tableau : c'est une carte.
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : c'est une carte.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 2a1
+##### Cas : Le cas 2a1
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une carte.
-
-#### Pièges
-
-- Un tableau : c'est une carte.
+- **Idées fausses en jeu** : 
 
 ## Clôture
 

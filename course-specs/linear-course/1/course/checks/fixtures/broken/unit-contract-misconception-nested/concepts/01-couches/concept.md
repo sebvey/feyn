@@ -29,36 +29,50 @@ Un produit s'empile en couches, de la collecte à la restitution.
 #### Leçon
 
 - **Matière** : Les couches vont de la collecte à la restitution. Voir les concepts 0 et 1.
+- **Idées fausses** :
+  - **Un tableau** : « Un tableau »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : c'est une carte.
+  - **Une carte** : « Une carte »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : la carte est vide.
+    - Rappel : « que voit-il ? »
+  - **Une carte 2** : « Une carte »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : c'est une couche.
+  - **Nulle part** : « Nulle part »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : elle est dessous.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 1a1
+##### Cas : Le cas 1a1
+
 - **Ancrage** : Régis regarde une carte.
 - **Question** : en deux parties : que voit-il ? Et dessous ?
 - **Réponse attendue** : une carte.
-- **Titre** : Le cas la carte vide
-- **Qualificatif** : rechange
+- **Idées fausses en jeu** : Un tableau ; Une carte ; Une carte 2 ; Nulle part
+
+##### Cas : Le cas la carte vide
+
 - **Ancrage** : Régis regarde une carte vide.
 - **Question** : que voit-il ?
 - **Réponse attendue** : rien.
-- **Titre** : Le cas la couche du dessous
-- **Qualificatif** : entraînement
+- **Idées fausses en jeu** : Un tableau ; Une carte ; Une carte 2 ; Nulle part
+
+##### Cas : Le cas la couche du dessous
+
 - **Ancrage** : Régis regarde la couche du dessous.
 - **Question** : que voit-il ?
 - **Réponse attendue** : une couche ; la **strate** du dessous porte la carte.
-- **Titre** : Le cas la couche oubliée
-- **Qualificatif** : aparté
+- **Idées fausses en jeu** : Un tableau ; Une carte ; Une carte 2 ; Nulle part
+
+##### Cas : Le cas la couche oubliée
+
 - **Ancrage** : Régis cherche une couche.
 - **Question** : où est-elle ?
 - **Réponse attendue** : dessous.
-
-#### Pièges
-
-- « Un tableau » : c'est une carte.
-  - Rappel : « que voit-il ? »
-- « Une carte » : la carte est vide.
-- « Une carte » : c'est une couche.
-- « Nulle part » : elle est dessous.
+- **Idées fausses en jeu** : Un tableau ; Une carte ; Une carte 2 ; Nulle part
 
 #### Consigne au professeur
 

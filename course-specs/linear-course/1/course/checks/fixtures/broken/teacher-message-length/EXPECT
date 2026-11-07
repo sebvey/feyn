@@ -1,0 +1,2 @@
+check: teacher-message-length
+message: lines of 100 characters in « Matière », « Ancrage », « Question », above 12

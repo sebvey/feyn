@@ -2,7 +2,7 @@
 // The additions of a unit (course/README.md section 3.6), what a program can tell of them: in the
 // fields of a unit, those of its cases among them, that the learner reads or hears (course/form.yaml,
 // the readers of their block: every block but « Consigne au professeur »), each passage in bold
-// (`**…**`), the labels left out, is a term of glossary.md or one of its comma variants, its sense
+// (`**…**`), the labels left out (a misconception's name and the labels of its parts among them), is a term of glossary.md or one of its comma variants, its sense
 // qualifier in parentheses left out, case ignored (rule bold-term-in-glossary, a recommendation: bold
 // for emphasis stays possible, and a bold that is no term is reported in case the term is missing
 // from the glossary). That a fact an anchor uses is in storyline.md and that a claim of a published
@@ -36,11 +36,13 @@ function termsOf(ctx) {
 // [{ line, text }]: the bold passages of the lines of a field, its labels left out
 function bolds(f) {
   const out = [];
+  // the lines that open a misconception (its name) or one of its parts (its label)
+  const labelled = new Set((f.items || []).flatMap((m) => [m.line, ...(m.parts || []).map((p) => p.line)]));
   f.lines.forEach((l, i) => {
     if (l.code) return;
     let t = mdlib.maskCode(l.t);
-    // the field's own label on its first line (an unlabelled field has none)
-    if (i === 0 && f.labelled) t = t.replace(LABEL, (m) => ' '.repeat(m.length));
+    // the field's own label on its first line (an unlabelled field has none), and those of its misconceptions
+    if ((i === 0 && f.labelled) || labelled.has(l.n)) t = t.replace(LABEL, (m) => ' '.repeat(m.length));
     let m;
     BOLD.lastIndex = 0;
     while ((m = BOLD.exec(t))) out.push({ line: l.n, text: m[1] });

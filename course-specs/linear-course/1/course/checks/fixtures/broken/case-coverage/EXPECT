@@ -1,0 +1,2 @@
+check: case-coverage
+message: unit 1a1: the unit's case "Le cas 1a1" names "Un tableau" in « Idées fausses en jeu », which no supplementary case of the unit names

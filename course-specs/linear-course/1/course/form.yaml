@@ -1,17 +1,17 @@
 # The form of the files of a course of `linear-course`, as data (decision `unit-is-the-content-unit`):
 # the concept file (the files of a concept folder, the parts of `concept.md`, its frontmatter, its
 # title, its head, its sections and units, its foot, the blocks of a unit and their fields, its
-# cases, the length of a unit), `sources.md` beside it and the course files (`course.yaml` as the
+# cases, the length of a teacher message), `sources.md` beside it and the course files (`course.yaml` as the
 # map, `plan.md`, the domain file, `storyline.md`, `glossary.md`, `CHANGELOG.md`): their parts,
 # their order, their presence, published or not, their readers.
 # course/README.md sections 2 to 5 describe it, the rules of course/rules.yaml state it, the
-# checks read it here (concept-file, unit-contract, unit-length, and the text checks and
+# checks read it here (concept-file, unit-contract, teacher-message-length, and the text checks and
 # unit-additions for their scope; course-yaml and course-files for the course files), and the
 # spec half of the site build, site/build/render-site, reads `published` here (site/build/README.md).
 #
 # This file names words by their key in course/lexicon.yaml and holds none: `heading: essentials`
 # is the lexicon's `headings.essentials`, a field `matter` is `unit_fields.matter`, a block `lesson`
-# is `unit_blocks.lesson`, a qualifier `fallback` is `qualifiers.fallback`. A spec of another
+# is `unit_blocks.lesson`, the kind word `case` of a case's heading is `block_kinds.case`. A spec of another
 # language copies the lexicon, not this file.
 #
 # presence: mandatory or optional. published: the site build renders it (true) or never (false);
@@ -105,59 +105,79 @@ concept_file:
         readers: [teacher]
 
 # A unit: one teacher message. Its #### blocks, in this order, the order of writing (teach, ask,
-# foresee the mistakes, instruct); nothing else stands in a unit. A block's heading is its word
-# alone, `#### Leçon`: the word `unit_blocks.<block>` for a block of labelled fields, the label of
-# its one field for a block of one unlabelled field (`unit_fields.<field>`). Each block is of one
-# publication: `published` and `readers` are the block's, its fields have none of their own.
+# instruct); nothing else stands in a unit. A block's heading is its word alone, `#### Leçon`: the
+# word `unit_blocks.<block>` for a block of labelled fields, the label of its one field for a block
+# of one unlabelled field (`unit_fields.<field>`). Each block is of one publication: `published`
+# and `readers` are the block's, its fields have none of their own.
 #   labelled: true   its fields, `- **<label>** : <text>`, the label `unit_fields.<field>` and
 #                    nothing between it and the colon, in the order of `fields`, a field's
 #                    following lines indented two spaces; no line outside a field
-#   labelled: false  its one field, unlabelled: the misconceptions directly, each a bullet
-#                    `- « <misconception> » : <correction>`, its following lines indented two spaces
-#                    and nothing nested under it; the instruction, prose
-#   cases            a block of labelled fields that holds a list of cases, one at least, each
-#                    opened by its field `opens` and holding the fields of `fields` in their
-#                    order: the first, the unit's case, always posed, without the fields of
-#                    `supplementary_only`; each other, a supplementary case, with them, its
-#                    qualifier one of `qualifiers`, posed when its qualifier says. A case's title
-#                    is unique among the cases of its concept: the learner's memory cites it.
-#                    The misconceptions of every case are the unit's « Pièges ».
+#   labelled: false  its one field, unlabelled: the instruction, prose
+#   misconceptions   in a block of labelled fields, the field `field` holds a list of
+#                    misconceptions on the lines below its label, nothing after its colon: each
+#                    `  - **<name>** : « <belief> »`, its name unique in its unit, then, indented
+#                    four spaces, its parts of `parts`, each `    - **<label>** : <text>`, the label
+#                    `unit_fields.<part>`, in that order, each once and mandatory, a part's
+#                    following lines indented six spaces; nothing else under a misconception.
+#                    The lesson's two fields are the matter of the unit: what is true, then what
+#                    seems true and is not (decision `misconception-is-matter`)
+#   cases            a block that holds a list of cases, one at least, each under its heading
+#                    `##### <kind word><separator><title>` (heading_level, the kind word
+#                    `block_kinds.<kind>`, the separator the concept file's), then its labelled
+#                    fields, those of `fields` in their order, each once and mandatory; no line
+#                    before the first case's heading. The first case is the unit's case, always
+#                    posed; each other is a supplementary case, the unit's stock, among which the
+#                    teacher picks (decision `cases-name-their-misconceptions`). A case's title is its id, unique
+#                    among the cases of its concept: the learner's memory cites it. A case holds no
+#                    misconception: its field `in_play.field` names, by their names, separated by
+#                    `in_play.separator`, the misconceptions of its unit its situation makes
+#                    tempting, one at least, only those of its unit; each misconception of the unit
+#                    is named by one case at least; each one the unit's case names is, it is
+#                    recommended, named by a supplementary case too. `revealed`: the fields the
+#                    site shows hidden until the reader reveals them.
 unit:
   heading_level: 4
   blocks:
     - block: lesson
       presence: mandatory
+      # the site renders the matter, then the cases, then the misconceptions, each with its name,
+      # its belief, its root and its correction: it does not give a misconception away before the
+      # question
       published: true
       readers: [site, teacher, learner]
       labelled: true
-      fields: [matter]
+      fields: [matter, misconceptions]
+      misconceptions:
+        field: misconceptions
+        parts: [root, correction]
     - block: cases
       presence: mandatory
-      # the site renders each case; it shows the expected answer hidden until the reader reveals it
+      # the site renders each case under its heading; it shows the expected answer hidden until
+      # the reader reveals it, and with it the misconceptions in play, each name a link to its
+      # misconception
       published: true
       readers: [site, teacher, learner]
       labelled: true
-      fields: [title, qualifier, anchor, question, expected_answer]
+      fields: [anchor, question, expected_answer, misconceptions_in_play]
       cases:
-        opens: title
-        supplementary_only: [qualifier]
-        qualifiers: [fallback, practice, aside]
-    - block: misconceptions
-      presence: mandatory
-      # the site renders each misconception and its correction
-      published: true
-      readers: [site, teacher, learner]
-      labelled: false
-      fields: [misconceptions]
+        heading_level: 5
+        kind: case
+        in_play:
+          field: misconceptions_in_play
+          separator: ";"
+        # the fields the site shows hidden until the reader reveals them; the teacher says the
+        # expected answer only once the learner has answered
+        revealed: [expected_answer, misconceptions_in_play]
     - block: instruction
       presence: optional
       published: false
       readers: [teacher]
       labelled: false
       fields: [instruction]
-  # the length of a unit: the text of these fields, the unit's case's and not a supplementary
-  # case's, counted in lines of `line` characters (its characters, label and indentation left out,
-  # divided by `line`); above `max`, unit-length reports it (a signal, not an error)
+  # the length of one teacher message: the text of these fields, the unit's case's and not those
+  # of a supplementary case, the misconceptions left out, counted in lines of `line` characters (its
+  # characters, label and indentation left out, divided by `line`); above `max`,
+  # teacher-message-length reports it (a signal, not an error)
   length:
     fields: [matter, anchor, question]
     line: 100

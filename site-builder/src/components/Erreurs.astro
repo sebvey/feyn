@@ -1,17 +1,25 @@
 ---
-// The misconceptions of a unit (the course lexicon's `unit_fields.misconceptions`), one list in the
-// old site's Erreurs look: each misconception, then the separator and its correction as written.
+// The misconceptions of a unit's lesson (the course lexicon's `unit_fields.misconceptions`), one
+// list in the old site's Erreurs look, after its cases: each misconception by its name, then its
+// belief, quoted, then its root and its correction, each after its label (`unit_fields.root`,
+// `unit_fields.correction`); each under its id, the anchor a case's misconceptions in play link to.
 import type { Misconception } from '../lib/site';
-import { words, mdInline } from '../lib/site';
+import { words, mdInline, mdLabelled } from '../lib/site';
 interface Props { unit: string; items: Misconception[] }
 const { unit, items } = Astro.props;
+const fields = words.course.unit_fields;
 const id = `${unit}-misconceptions`;
 ---
 <section class="erreurs" aria-labelledby={id}>
-  <h4 id={id}>{words.course.unit_fields.misconceptions}</h4>
+  <h4 id={id}>{fields.misconceptions}</h4>
   <ul>
     {items.map((m) => (
-      <li><span class="idee" set:html={mdInline(m.misconception)} />{words.course.block_kinds.separator}<Fragment set:html={mdInline(m.correction)} /></li>
+      <li id={m.id}>
+        <p class="idee-nom">{m.name}</p>
+        <p><span class="idee" set:html={mdInline(m.belief)} /></p>
+        <div class="idee-racine" set:html={mdLabelled(fields.root, m.root, 'idee-label')} />
+        <div class="idee-correction" set:html={mdLabelled(fields.correction, m.correction, 'idee-label')} />
+      </li>
     ))}
   </ul>
 </section>

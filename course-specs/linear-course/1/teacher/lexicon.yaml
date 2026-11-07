@@ -73,7 +73,9 @@ memory:
 
 # The words of the course form the frozen protocol still cites, which course/lexicon.yaml no
 # longer holds: moved here with their values unchanged until the brainstorm on the protocol rules
-# (decision `teacher-frozen-until-the-protocol-brainstorm`).
+# (decision `teacher-frozen-until-the-protocol-brainstorm`); `fallback`, `practice` and `aside`, the
+# former qualifiers of a supplementary case, which no case of a course carries any more (#597
+# redoes the rules that cite them).
 frozen_form:
   instructions: "Consignes"
   bank: "Banque d'exemples"
@@ -81,3 +83,6 @@ frozen_form:
   storyline_facts: "Faits du fil rouge utilisés"
   usage: "Usage"
   explanation: "Explication"
+  fallback: "rechange"
+  practice: "entraînement"
+  aside: "aparté"

@@ -23,17 +23,26 @@ concept 1.
 #### Leçon
 
 - **Matière** : Le premier **rôle** décide. Le concept 1 en dépend. [cours]
+- **Idées fausses** :
+  - **Tout le monde** : « Tout le monde décide »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : le premier rôle décide seul.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a1
+##### Cas : Le cas 0a1
+
 - **Ancrage** : Régis veut une carte et décide de ce qu'elle montre.
 - **Question** : qui décide ?
 - **Réponse attendue** : le premier rôle.
+- **Idées fausses en jeu** : Tout le monde
 
-#### Pièges
+##### Cas : Le cas 0a1, encore
 
-- « Tout le monde décide » : le premier rôle décide seul.
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Tout le monde
 
 #### Consigne au professeur
 
@@ -46,19 +55,28 @@ Ne pas parler de couche ici, elle vient au concept 1.
 - **Matière** : Le second rôle fait.
 
   Il fait ce que le premier rôle a décidé.
+- **Idées fausses** :
+  - **Le second rôle** : « Le second rôle décide aussi »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : il fait, il ne décide pas.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0a2
+##### Cas : Le cas 0a2
+
 - **Ancrage** : Régis demande la carte à l'équipe.
 - **Question** : en deux parties : qui fait ? Et qui décide ?
 - **Réponse attendue** :
   1. Le second rôle fait.
   2. Le premier rôle décide.
+- **Idées fausses en jeu** : Le second rôle
 
-#### Pièges
+##### Cas : Le cas 0a2, encore
 
-- « Le second rôle décide aussi » : il fait, il ne décide pas.
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Le second rôle
 
 ## Section 0b : La règle
 
@@ -67,17 +85,26 @@ Ne pas parler de couche ici, elle vient au concept 1.
 #### Leçon
 
 - **Matière** : La règle est la même pour tous. Ses mots sont dans le lexique (annexe A1a).
+- **Idées fausses** :
+  - **Chaque rôle a** : « Chaque rôle a sa règle »
+    - **Racine** : la phrase se lit vite ainsi.
+    - **Correction** : la règle est la même pour tous.
 
 #### Cas du fil rouge
 
-- **Titre** : Le cas 0b1
+##### Cas : Le cas 0b1
+
 - **Ancrage** : Régis applique la règle à la carte.
 - **Question** : la règle change-t-elle selon le rôle ?
 - **Réponse attendue** : non, elle est la même pour tous.
+- **Idées fausses en jeu** : Chaque rôle a
 
-#### Pièges
+##### Cas : Le cas 0b1, encore
 
-- « Chaque rôle a sa règle » : la règle est la même pour tous.
+- **Ancrage** : Le même cas, une autre fois.
+- **Question** : La même question ?
+- **Réponse attendue** : La même réponse.
+- **Idées fausses en jeu** : Chaque rôle a
 
 ## Clôture
 

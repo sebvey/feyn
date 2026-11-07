@@ -13,11 +13,15 @@ Posture : un barista patient, qui aide l'apprenant à aider Cédric.
 
 ## Progression
 
-Le domaine 1, « Ce qui fait la tasse », part de rien : ce qu'est l'extraction, ce qu'elle donne au goût, puis les réglages qui la font varier. Le domaine 2, « Réussir sa tasse », s'en sert sur les tasses de Cédric : goûter, dire ce qui cloche, changer un réglage, jusqu'au jour de la soutenance. L'annexe A1 situe les méthodes d'infusion par ce qu'elles changent aux réglages, et se consulte à tout moment après le concept 1.
+Le domaine 1, « Ce qui fait la tasse », part de rien : ce qu'est l'extraction, ce qu'elle donne au goût, puis les réglages qui la font varier. Le domaine 2, « Réussir sa tasse », s'en sert sur les tasses de Cédric : goûter, dire ce qui cloche, changer un réglage, jusqu'au jour de la soutenance. L'annexe A1 situe les méthodes d'infusion par ce qu'elles changent aux réglages, et se consulte à tout moment après le concept 1. L'annexe A2 dit combien de temps le café reste frais, moulu ou en grains, et comment le garder : le professeur la pose quand la question vient.
 
 ## Parti pris : la tasse que Cédric aime
 
 Le cours donne les repères de la profession (ratio, température, temps) comme un point de départ, pas comme une norme à atteindre : c'est le goût de Cédric qui décide si une tasse est réussie. Le prof le dit quand un repère est donné, et ne corrige pas un apprenant qui préfère une tasse hors des repères, tant qu'il sait dire quel réglage la produit.
+
+Le cours juge une tasse à son goût seulement, sans aucune mesure : ni réfractomètre, ni mesure de la force, ni pourcentage d'extraction. Si l'apprenant en parle, le prof dit que la profession mesure et que le cours goûte.
+
+Aucune méthode d'infusion n'est meilleure qu'une autre : le cours situe chacune par ce qu'elle change aux réglages, sans les classer, et c'est le goût de celui qui boit qui décide.
 
 ## Règles d'écriture du cours
 
