@@ -77,7 +77,7 @@ properties:
         additionalProperties: false
         properties:
           world:
-            description: its H1, the text under it and its ## sections before the fixed facts
+            description: its H1, the text under it and its ## sections of free titles; the only part of storyline.md the site shows
             type: object
             required: [title, text, sections]
             additionalProperties: false
@@ -93,22 +93,6 @@ properties:
                   properties:
                     heading: { $ref: '#/$defs/line' }
                     text: { $ref: '#/$defs/markdown' }
-          fixed_facts:
-            type: object
-            required: [heading, facts]
-            additionalProperties: false
-            properties:
-              heading: { $ref: '#/$defs/line' }
-              facts:
-                description: each fact as written, the id of the unit that fixed it included, and that id
-                type: array
-                items:
-                  type: object
-                  required: [text, unit]
-                  additionalProperties: false
-                  properties:
-                    text: { $ref: '#/$defs/markdown' }
-                    unit: { oneOf: [{ type: 'null' }, { $ref: '#/$defs/id' }] }
   glossary:
     description: glossary.md, its first table and its published ## sections; null when the course has none
     oneOf:

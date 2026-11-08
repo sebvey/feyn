@@ -258,26 +258,23 @@ const concepts = ctx.concepts.map(conceptOf);
 // ---- plan.md, its published sections
 const plan = form.plan ? sectionsOf(form.plan.file, form.plan.sections) : [];
 
-// ---- storyline.md: the world (its H1, its text, its ## sections before the fixed facts) and the
-// fixed facts, each with the id of the unit that fixed it (lib/course.js)
+// ---- storyline.md: the world only (its H1, its text, its ## sections of free titles); a ## section
+// under a heading the form names for another part of the file is not the world's, and the site
+// never renders it (the teacher's, course/form.yaml)
 const st = form.storyline || {};
 let storyline = null;
 if (st.file && ctx.exists(st.file)) {
   const body = mdOf(st.file).body;
   const h1 = md.headings(body).find((h) => h.level === 1);
   const split = md.sections(body, 2);
-  const factsTitle = st.fixed_facts ? H(st.fixed_facts.heading) : null;
+  const named = Object.values(st).filter((p) => p && typeof p === 'object' && p.heading).map((p) => H(p.heading));
   storyline = {};
   if (pub(st.world)) {
     storyline.world = {
       title: h1 ? h1.text : null,
       text: text(split.pre.filter((l) => !h1 || l.n !== h1.line)),
-      sections: split.sections.filter((s) => s.title !== factsTitle).map((s) => ({ heading: s.title, text: text(s.lines) })),
+      sections: split.sections.filter((s) => !named.includes(s.title)).map((s) => ({ heading: s.title, text: text(s.lines) })),
     };
-  }
-  const facts = split.sections.find((s) => s.title === factsTitle);
-  if (pub(st.fixed_facts) && facts) {
-    storyline.fixed_facts = { heading: factsTitle, facts: course.fixedFacts(facts.lines).facts.map((f) => ({ text: f.text, unit: f.unit })) };
   }
 }
 

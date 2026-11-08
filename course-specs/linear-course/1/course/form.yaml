@@ -268,7 +268,8 @@ domain_file:
 # storyline.md: the world, its H1 and the ## sections of free titles before the fixed facts (the
 # setting, the actors, the sources); then the fixed facts, the last ## section, one bullet per
 # fact, each ending with the id of the unit that fixed it in parentheses, `(0d1)`, a final period
-# allowed after it. The fixed facts are optional while no unit is written.
+# allowed after it. The fixed facts are optional while no unit is written. The site shows the
+# world; the fixed facts are a writing aid, read by the teacher and the creator, never published.
 storyline:
   file: storyline.md
   world:
@@ -279,8 +280,8 @@ storyline:
     heading: fixed_facts
     presence: optional
     position: last
-    published: true
-    readers: [site, teacher, learner]
+    published: false
+    readers: [teacher]
 
 # glossary.md: an H1 and an introduction, not published; its first table, one term per row, before
 # any ## section; then « Termes à éviter », its one ## section, optional, a table of three columns.

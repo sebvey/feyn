@@ -492,11 +492,7 @@ a.card .st { color: var(--accent); font-weight: 650; }
 [hidden] { display: none !important; }
 
 .tr h2 { scroll-margin-top: 1.5rem; }
-.tr-text, .tr-text-p, .tr-jump { max-width: var(--measure); }
-.tr-text { padding-left: 1.3em; margin: 0 0 1.15em; }
-.tr-text li { margin-bottom: 0.5em; }
-div.tr-text { padding-left: 0; }
-div.tr-text p { margin: 0 0 1em; }
+.tr-text-p, .tr-jump { max-width: var(--measure); }
 .tr-text-p { margin: 0 0 1.15em; }
 .tr-sub { font-family: var(--font-ui); font-size: 0.8rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin: 1.75rem 0 0.6rem; }
 
