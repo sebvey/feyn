@@ -17,5 +17,5 @@ The agentic rules of the files of the agentic layer (its skills, project subagen
 
 ## Consequences
 
-- The form follows the rule file of a spec (an entry per rule, its method, its check, its why, a check of the file's form), not that file: a rule of a spec binds a product, an agentic rule binds what feyn writes in its agentic layer.
+- The form follows the rule file of a spec (an entry per rule, its method, its check, its why, a check of the file's form), not that file: a rule of a spec binds the course or a product, an agentic rule binds what feyn writes in its agentic layer.
 - Amended 2026-11-06 (#664): the rules of a Done when no longer send the author of a work item to the agentic rules; the fresh-agent reviewer alone reads them, since an agentic rule binds a file of the agentic layer and a Done when, which lives in an issue, falls under none (the one agentic rule on a Done when moved to the rules of a Done when).

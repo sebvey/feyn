@@ -2,15 +2,16 @@
 
 The purpose of feyn, the yardstick a change is judged by, and the lessons it was built on. It is read at the moments where one judges: `/feyn-refine-option` asks it of an option before its staleness check, `/feyn-brainstorm` and `/feyn-triage` read it first. It restates no decision: each decision keeps its own counterfactual, and this file names a decision by its slug where one grounds a point. A change to this file is a decision ([contributing](contributing.md), "Policies").
 
-## Two products, one source
+## Three products, one course
 
-feyn makes two products from one source, a course:
-- a **teacher**, which teaches the course to a learner in a teaching session in Claude Code;
-- a **site**, which publishes the course for the reader.
+feyn makes three products, each for a person to use:
+- a **teacher**, which teaches a course to a learner in a teaching session in Claude Code;
+- a **site**, which publishes a course for the reader;
+- a **course-creator**, which leads a creator along the creation path of a course, from its frame down to the teaching unit, each step producing one file or one block and proving itself at once; it comes later.
 
-A third build of the same source, the course-creator, comes later: it leads a creator along the creation path of a course, from its frame down to the teaching unit, each step producing one file or one block and proving itself at once (decision `one-source-two-builds`).
+The course is their input, not a product: the teacher and the site are built from a course, the course-creator writes one (decisions `product-line-vocabulary` and `products-built-from-one-course`). A spec is the contract of a product line: the form of its courses and what it fixes of each of their products.
 
-The spec, its checks and the agentic layer are worth what they bring to the two products: a spec that no product consumes is premature. Several courses, other contributors and several learners come after, and are judged the same way.
+The spec, its checks and the agentic layer are worth what they bring to the products: a spec that serves no product is premature. Several courses, other contributors and several learners come after, and are judged the same way.
 
 ## The yardstick
 
@@ -24,9 +25,9 @@ feyn was rebuilt from a first project that worked: `parcours-po`, a course of 18
 - In feyn itself, concept 9 of `parcours-po` wrote the matter of one unit three times: the reader section of its `concept.md`, the « Explication » of its first case and its instruction (epic #475).
 
 Hence three lessons:
-- **A thing is written once**, in the file of the reader who needs it first; every other reader is served from there (decision `one-source-two-builds`).
+- **A thing is written once**, in the file of the reader who needs it first; every other reader is served from there (decision `products-built-from-one-course`).
 - **The generic and the specific stay apart**: what holds for every course of a type is in the spec, what is one course's own is in the course (decision `onboarding-in-plan` applies it to the teacher's posture and onboarding questions).
-- **Outputs are builds**: the site and the classroom are produced from the course by scripts, never edited by hand (decision `one-source-two-builds`).
+- **Outputs are builds**: the site and the classroom are produced from the course by scripts, never edited by hand (decision `products-built-from-one-course`).
 
 The course itself is archived at the tag `parcours-po/v0-fondateur` and re-created through the creation path (epic #520; decision `parcours-po-archived`).
 

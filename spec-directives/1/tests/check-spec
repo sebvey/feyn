@@ -6,7 +6,7 @@
 // course/rules.yaml, course/schemas/, course/lexicon.yaml, teacher/README.md, teacher/rules.yaml,
 // teacher/lexicon.yaml, teacher/composition.yaml, teacher/tests/, decisions/, spec.yaml,
 // CHANGELOG.md), not of a course: they verify no rule, carry no category and no level, and each
-// failure blocks (exit code 1; decision conformity-by-product, amended by #339).
+// failure blocks (exit code 1; decision conformity-of-the-course-and-products, amended by #339).
 // <spec-dir>: the folder of a spec MAJOR (course-specs/linear-course/1); spec-directives/check-spec
 // runs this script for a spec MAJOR whose spec.yaml declares this directives MAJOR.
 // --checks-dir: the folder where rule-files looks for the check scripts a rule names, by default

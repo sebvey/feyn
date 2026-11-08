@@ -44,10 +44,18 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### spec
 
-- means: the contract of a *type of course*: the shape of its courses (structure, drawing contract, checks) and the generic way to teach every course of the type, its **protocol**; versioned, one folder per MAJOR. Neither "spec" nor "specification" names anything else (an issue, a design)
+- means: the contract of a **product line**: the shape of its courses (structure, drawing contract, checks) and what it fixes of each of its products, among which the generic way to teach every course of the line, its **protocol**; versioned, one folder per MAJOR. Neither "spec" nor "specification" names anything else (an issue, a design)
 - en: spec
 - fr: « spec »
-- not to confuse with: [spec directives](#spec-directives), [protocol](#protocol)
+- not to confuse with: [product line](#product-line), [spec directives](#spec-directives), [protocol](#protocol)
+
+### product line
+
+- means: a type of course and what comes with it: the form of its courses and what its **spec** fixes of each of its **products**; a course of the line is the input of the builds of its products. Its contract is its spec
+- en: product line · rejected: "specs" for a product line, "course type", "collection", "kit", "format"
+- fr: to settle
+- not to confuse with: [spec](#spec), [course](#course), [product](#product)
+- why: the term of software product line engineering, a family of products built on a common base, each from its own input, which extends **product** instead of adding a word; "specs" does not say of what; "course type" names the type without what comes with it; "collection" also names a set of titles; "kit" says nothing precise; "format" already has another sense in some thirty files
 
 ### spec directives
 
@@ -58,10 +66,19 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### course
 
-- means: what one course teaches and how to teach it, in its course files and its concept files, whose **published** fields say what it teaches and whose **unpublished** fields how to teach it, identified by its **course id**
-- en: course · rejected: "content" (as a noun for the course), "material", "data"
+- means: what one course teaches and how to teach it, in its course files and its concept files, whose **published** fields say what it teaches and whose **unpublished** fields how to teach it, identified by its **course id**; the input of the builds of its **products**, never a product itself
+- en: course · rejected: "content" (as a noun for the course), "material", "data", "source" (for the course as the input of a build)
 - fr: « cours »
-- not to confuse with: [course id](#course-id), [sample course](#sample-course)
+- not to confuse with: [course id](#course-id), [sample course](#sample-course), [product](#product), [product line](#product-line), [sources](#sources)
+- why: the course is the input of its products' builds and not a product, since nobody uses a course as it is: the site build reads it for the reader, the classroom gives it to the teacher for the learner. "source" was ruled out for that role, since « sources » already names, in a course, the sources of a concept and the source of a claim, so the source of a course's site and the sources of its first concept would name two things in one course; keeping "source" with a "not to confuse with" was ruled out too
+
+### product
+
+- means: what feyn makes for a person to use, defined by who uses it and what for: the **site** (the reader), the **teacher** (the learner) and the course-creator (the creator). The site and the teacher are built from a course, the course-creator writes one; a course is not a product. One uses a product, one does not consume it
+- en: product · rejected: "tool", "output" for a product, "deliverable", "application"
+- fr: to settle
+- not to confuse with: [course](#course), [product line](#product-line), [build](#build), [site](#site), [teacher](#teacher)
+- why: the word of product management, the one that covers the three and is defined by use; "tool" fits the course-creator, not the site; "output" names what a build produces, and the course-creator starts from no course; "deliverable" is defined by the project, not by the person who uses it, and "application" was ruled out with it. A second word for the course-creator was ruled out, since every text would then say "the products and" that word, and so was the course-creator as a build, since a build starts from a course and the course-creator writes one; "consume" is not said of a product, which is used
 
 ### course id
 
@@ -83,7 +100,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: (noun and verb) producing an output from a course: the **site build** and the **classroom build**. Builds have no version of their own
 - en: build · rejected: "render" for a build, "generate", "export", "compile", "publish"
 - fr: « build » (noun), « construire » (verb)
-- not to confuse with: [release](#release), [site build](#site-build), [classroom build](#classroom-build)
+- not to confuse with: [release](#release), [site build](#site-build), [classroom build](#classroom-build), [product](#product)
 
 ### site build
 
@@ -104,14 +121,14 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the published website and its engine
 - en: site · rejected: "website", "web", "pages"
 - fr: « site »
-- not to confuse with: [site build](#site-build)
+- not to confuse with: [site build](#site-build), [product](#product)
 
 ### teacher
 
 - means: the generic Claude Code agent that teaches, with the **teacher skills** of its moments, built from the **teacher template**, the protocol and the lexicons of its spec, as the **composition** of its spec says
 - en: teacher · rejected: "prof", "tutor", "coach", "agent" alone
 - fr: « professeur » · rejected: « prof »
-- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment)
+- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment), [product](#product)
 
 ### classroom
 
@@ -382,7 +399,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the file `sources.md` of a concept, which traces its **published** fields that state claims, not the cases of its units: its claims (each with its section, its source, whether it was verified, and its nature: consensus, school, course, or fact, what a source states with no stance), its references, and what stays unverified. A stance or a neighbour is sourced where it is declared: its references, each with the quotation and its place
 - en: sources · rejected: "bibliography", "citations"
 - fr: « sources » (« affirmations », « références », « fait »)
-- not to confuse with: [concept reference](#concept-reference), [additions](#additions)
+- not to confuse with: [concept reference](#concept-reference), [additions](#additions), [course](#course)
 
 ### diagram
 
@@ -551,11 +568,11 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ## Rules and checks
 
-The **spec directives** (`spec-directives/1/README.md`) and, for the categories and the checks of a spec, the `README.md` of its MAJOR (decisions `rules-with-level-and-method`, `levels-from-iso-directives`, `severity-from-level-and-method` and `conformity-by-product`).
+The **spec directives** (`spec-directives/1/README.md`) and, for the categories and the checks of a spec, the `README.md` of its MAJOR (decisions `rules-with-level-and-method`, `levels-from-iso-directives`, `severity-from-level-and-method` and `conformity-of-the-course-and-products`).
 
 ### rule
 
-- means: the unit of a spec, which binds a product (a course or a teacher): one provision held as data in a rule file, apart from the prose that describes it, with an id (a slug), a **level**, a **category**, a **method**, the check that implements the method when one exists, a text and, where an observed counterfactual exists, a why; a rule of the protocol is a **protocol rule**. A rule file is cut into **groups**. The spec's own files are verified by the tests of the spec directives, which are not rules
+- means: the unit of a spec, which binds the **course** or a **product** (today the teacher): one provision held as data in a rule file, apart from the prose that describes it, with an id (a slug), a **level**, a **category**, a **method**, the check that implements the method when one exists, a text and, where an observed counterfactual exists, a why; a rule of the protocol is a **protocol rule**. A rule file is cut into **groups**. The spec's own files are verified by the tests of the spec directives, which are not rules
 - en: rule · rejected: "requirement" for a rule of any level, "constraint", "criterion"
 - fr: « règle »
 - not to confuse with: [requirement](#requirement), [check](#check), [policy](#policy), [protocol rule](#protocol-rule), [group](#group), [agentic rule](#agentic-rule)
@@ -569,7 +586,7 @@ The **spec directives** (`spec-directives/1/README.md`) and, for the categories 
 
 ### requirement
 
-- means: a rule of the level requirement: "shall", "shall not" (« doit », « ne doit pas »); in the protocol, the imperative. A product conforms when it holds every requirement of its class; a requirement verified by test has a **blocking check**
+- means: a rule of the level requirement: "shall", "shall not" (« doit », « ne doit pas »); in the protocol, the imperative. The course, or a product, conforms when it holds every requirement of its own; a requirement verified by test has a **blocking check**
 - en: requirement · rejected: "must" (ISO keeps it for external constraints)
 - fr: to settle
 - not to confuse with: [rule](#rule), [blocking check](#blocking-check), [prerequisites](#prerequisites)
@@ -638,7 +655,7 @@ The **spec directives** (`spec-directives/1/README.md`) and, for the categories 
 
 ### conformity
 
-- means: the conformance clause of the spec directives: a product, the course (its diagrams included) or the teacher, conforms when it holds every requirement of its class, whatever the method that verifies each one. The blocking checks are a necessary condition, not a sufficient one: the review and taught-check do the rest, and a course tag certifies the whole. The lexicons of a spec are not products
+- means: the conformance clause of the spec directives: the course (its diagrams included) and each product a rule binds (today the teacher) conform, each when it holds every requirement of its own, whatever the method that verifies each one. The blocking checks are a necessary condition, not a sufficient one: the review and taught-check do the rest, and a course tag certifies the whole. The lexicons of a spec are neither the course nor a product
 - en: conformity · rejected: "conforming" for a course that only passes the blocking checks, "compliance"
 - fr: « conformité »
 - why: "conformity" is ISO's word; the section that states it is the conformance clause, after the W3C QA Framework, whose idea ISO shares
@@ -766,7 +783,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### option refinement
 
-- means: the analysis of one named option against the purpose of feyn (which product consumes it) and against the repository (what changed in the files it names since it was last updated, the work items and ideas that cover or overlap it), up to a decision on it alone: commit it (set Ready), rework it, open a brainstorm from it (what it builds on has changed), merge it, split it, fold it into an epic or close it; run with the maintainer, one option at a time. It never reviews all the options nor chooses among them
+- means: the analysis of one named option against the purpose of feyn (which product it is for) and against the repository (what changed in the files it names since it was last updated, the work items and ideas that cover or overlap it), up to a decision on it alone: commit it (set Ready), rework it, open a brainstorm from it (what it builds on has changed), merge it, split it, fold it into an epic or close it; run with the maintainer, one option at a time. It never reviews all the options nor chooses among them
 - en: option refinement · rejected: "replenishment", "grooming"
 - fr: to settle
 - not to confuse with: [replenishment](#replenishment), [triage](#triage), [option](#option), [brainstorm](#brainstorm)

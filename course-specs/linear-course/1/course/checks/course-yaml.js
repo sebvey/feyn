@@ -9,7 +9,7 @@
 // one colour in currentColor, no script and no external resource (course/README.md section 1).
 // An unknown spec or MAJOR is refused by course-specs/check-course, before these checks run. A
 // missing or unreadable lexicon fails here too, as a tooling error of the check, not as a rule:
-// the lexicon is a file of the spec, which no course can break (decision conformity-by-product;
+// the lexicon is a file of the spec, which no course can break (decision conformity-of-the-course-and-products;
 // lexicon-keys of check-spec tests it).
 const fs = require('fs');
 const path = require('path');

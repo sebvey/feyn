@@ -20,7 +20,7 @@ The spec is read by four makers, each of something that must agree with a course
 
 ## The directives and their MAJORs
 
-The spec directives say how a spec is written and read: what a rule file holds, when a product conforms, the levels and methods a rule carries, the severity of a check, the versions, the normative references of the rule model, and the tests of a spec's own files. They are the third versioned object, beside a course and a spec (decision `versioned-objects-and-spec-layout`).
+The spec directives say how a spec is written and read: what a rule file holds, when the course or a product conforms, the levels and methods a rule carries, the severity of a check, the versions, the normative references of the rule model, and the tests of a spec's own files. They are the third versioned object, beside a course and a spec (decision `versioned-objects-and-spec-layout`).
 
 - One folder per MAJOR, `spec-directives/<MAJOR>/` (`1/`, not `v1/`): `README.md` (the directives), `tests/`, `lib/` with `package.json` and `package-lock.json`, `decisions/`, `CHANGELOG.md`. The only MAJOR is `1/`, at `1.0.0-alpha` until its tag (decision `alpha-version-until-tag`).
 - A spec MAJOR declares the directives MAJOR it follows in its `spec.yaml` (`directives: 1`), and its checks load the `lib/` and the package of that MAJOR; a directives MAJOR lives while a live spec MAJOR declares it.

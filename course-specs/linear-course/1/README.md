@@ -34,7 +34,7 @@ Out of scope here: the learner memory files (the protocol, and `teacher/template
 
 ## 2. Files
 
-The files of the spec are split by class of products (`spec-directives/1/README.md` section 2), plus this README (decision `spec-files-by-product`):
+The files of the spec are split by the course and by product (`spec-directives/1/README.md` section 2), plus this README (decision `spec-files-by-product`):
 
 | File | Holds |
 |---|---|
