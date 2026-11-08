@@ -1,6 +1,11 @@
 # linear-fr : le cours
 
-Who reads each file of the course and what tests it: the map, [`../README.md`](../README.md#2-files) section 2; the form of the files of a course, readable: [`form.md`](form.md).
+| Reader | Comes for | Opens |
+|---|---|---|
+| creator | what a course is, the templates, how to verify | sections [1](#1-le-dossier-du-cours) to [7](#7-le-lexique-des-fichiers-du-cours), [`templates/README.md`](templates/README.md), [`product-lines/check-course`](../../../check-course) |
+| builder | the shape of a course, the form of the concept file and of the course files, the lexicon of the course files | sections [1](#1-le-dossier-du-cours) to [7](#7-le-lexique-des-fichiers-du-cours), [`form.yaml`](form.yaml) and its readable view [`form.md`](form.md), [`schemas/`](schemas/) |
+| verifier | the rules of a course as data, the checks, their fixtures | [`rules.yaml`](rules.yaml), [`checks/README.md`](checks/README.md), [`checks/fixtures/`](checks/fixtures/), the map, [`../README.md`](../README.md#2-files) section 2 (what tests each file) |
+| spec writer | the rules, the form and the schemas of a course, the spec's decisions | [`rules.yaml`](rules.yaml), [`form.yaml`](form.yaml), [`schemas/`](schemas/), [`../decisions/`](../decisions/), [`../CHANGELOG.md`](../CHANGELOG.md), the map, [`../README.md`](../README.md#2-files) section 2 (who reads each file) |
 
 The readers are defined in [`spec-directives/README.md`](../../../../spec-directives/README.md#the-readers).
 
