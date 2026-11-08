@@ -1,11 +1,11 @@
 ---
 name: feyn-instructions-worktree
-description: "The rules of an agent of feyn that works in a worktree, preloaded by its project subagents; never run by name."
+description: "The rules and the Claude Code behaviours of an agent of feyn that works in a worktree, preloaded, never run by name."
 ---
 
 # Rules for an agent in a worktree
 
-Preloaded by every project subagent of `.claude/agents/`: the contributor and the fixer of the agent workflow [`deliver-story.js`](../../workflows/deliver-story.js), the reviewers of `/feyn-pr-review` and `/feyn-brainstorm`; they hold for the one that works in a worktree. A line ending with a mark is a Claude Code behaviour ([contributing](../../../docs/contributing.md), "Tool behaviours").
+Preloaded by every project subagent of `.claude/agents/`; they hold for the one that works in a worktree. A line ending with a mark is a Claude Code behaviour ([contributing](../../../docs/contributing.md), "Tool behaviours").
 
 ## Git and the tools
 

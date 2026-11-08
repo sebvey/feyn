@@ -1,6 +1,6 @@
 ---
 name: feyn-instructions-project
-description: "The project instructions of feyn, imported by CLAUDE.md and preloaded by its project subagents; never run by name."
+description: "The project instructions of feyn (what it is for, its language, its vocabulary, its commands, its non-negotiable rules), preloaded, never run by name."
 ---
 
 # feyn
