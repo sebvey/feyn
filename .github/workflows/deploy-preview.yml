@@ -11,8 +11,8 @@ on:
     types: [opened, synchronize, reopened, closed]
     paths:
       - 'site-builder/**'
-      - 'course-specs/linear-course/**'
-      - 'course-specs/linear-course/1/course/samples/cafe/**'
+      - 'product-lines/linear-fr/**'
+      - 'product-lines/linear-fr/1/course/samples/cafe/**'
 
 # Shared with deploy-next.yml: one push to gh-pages at a time.
 concurrency:
@@ -26,7 +26,7 @@ permissions:
 env:
   # The course built, until parcours-po is re-created (epic #520): its folder and its course id
   # (its course.yaml's id). The paths filter above names the folder too.
-  COURSE_DIR: course-specs/linear-course/1/course/samples/cafe
+  COURSE_DIR: product-lines/linear-fr/1/course/samples/cafe
   COURSE_ID: cafe
   SITE_REPO: sebvey/feyn-site
   SITE_URL: https://sebvey.github.io/feyn-site

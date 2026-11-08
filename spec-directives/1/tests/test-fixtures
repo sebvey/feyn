@@ -2,7 +2,7 @@
 'use strict';
 // Runs check-spec (the tests of a spec's own files, its lexicons included) on the fixtures,
 // and says whether every run gave the expected result (the course fixtures are tested by
-// course-specs/<name>/<MAJOR>/course/checks/test-fixtures).
+// product-lines/<name>/<MAJOR>/course/checks/test-fixtures).
 //   fixtures/valid                 a model spec MAJOR that passes every test
 //   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>": that test fails with a
 //                                  line containing the fragment, and no other test fails beside it
@@ -10,7 +10,7 @@
 //                                  defect fails too (a slug defined twice: rule-slugs and rule-files)
 //   fixtures/checks/               the stubs of the check scripts the fixtures' rules name
 //                                  (check-spec --checks-dir)
-//   the repository's specs         every spec MAJOR of course-specs/ whose spec.yaml declares this
+//   the repository's specs         every spec MAJOR of product-lines/ whose spec.yaml declares this
 //                                  directives MAJOR passes spec-directives/check-spec
 const fs = require('fs');
 const path = require('path');
@@ -56,7 +56,7 @@ const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
 // the repository's specs: each spec MAJOR that declares this directives MAJOR passes, through the
 // dispatcher spec-directives/check-spec
 {
-  const specs = path.join(repo, 'course-specs');
+  const specs = path.join(repo, 'product-lines');
   const isDir = (p) => { try { return fs.statSync(p).isDirectory(); } catch (e) { return false; } };
   const declaring = [];
   for (const name of fs.readdirSync(specs).filter((n) => isDir(path.join(specs, n))).sort()) {
@@ -66,7 +66,7 @@ const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
       if (text.split('\n').some((l) => new RegExp(`^directives\\s*:\\s*['"]?${MAJOR}['"]?\\s*(#.*)?$`).test(l))) declaring.push(`${name}/${m}`);
     }
   }
-  if (!declaring.length) report(`a spec MAJOR of course-specs/ declares directives ${MAJOR}`, false, 'none found');
+  if (!declaring.length) report(`a spec MAJOR of product-lines/ declares directives ${MAJOR}`, false, 'none found');
   for (const s of declaring) {
     const r = spawn(path.join(repo, 'spec-directives', 'check-spec'), path.join(specs, s), []);
     report(`the repository spec ${s} passes every spec check`, r.code === 0, notOk(r));

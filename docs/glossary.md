@@ -27,7 +27,7 @@ A key with nothing to say is left out, `means`, `en` and `fr` excepted. A reject
 ## Which designation applies where
 
 - `en` in the repository's English files: code, docs, skills, issues, decisions, and the English texts of a spec.
-- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `teacher/README.md`, `teacher/rules.yaml` of `course-specs/linear-course/1/`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
+- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `teacher/README.md`, `teacher/rules.yaml` of `product-lines/linear-fr/1/`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
 - A course glossary in its course. Each course has its own [course glossary](#course-glossary), which belongs to the course, follows the course's language and applies in that course's files. A word may be reserved in both with two meanings (**epic**); a repository text that speaks of the course's meaning says so ("epic, in the course's sense"). French course files keep their French section headings and field labels (« L'essentiel », « Matière », « Se vérifier »…); the English terms here are how we talk about them in code, docs and issues.
 
 ## Adding or changing an entry
@@ -89,7 +89,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### sample course
 
-- means: a course that belongs to a spec MAJOR and changes only with it, written for that spec: its tests, the classroom build and the site build run on it, and a human may play it
+- means: a course that belongs to a spec MAJOR and changes only with it, written for that spec: its tests, the teacher build and the site build run on it, and a human may play it
 - en: sample course · rejected: "example course"
 - fr: to settle
 - not to confuse with: [course](#course), [example](#example)
@@ -97,22 +97,22 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### build
 
-- means: (noun and verb) producing an output from a course: the **site build** and the **classroom build**. Builds have no version of their own
+- means: (noun and verb) producing an output from a course: the **site build** and the **teacher build**. Builds have no version of their own
 - en: build · rejected: "render" for a build, "generate", "export", "compile", "publish"
 - fr: « build » (noun), « construire » (verb)
-- not to confuse with: [release](#release), [site build](#site-build), [classroom build](#classroom-build), [product](#product)
+- not to confuse with: [release](#release), [site build](#site-build), [teacher build](#teacher-build), [product](#product)
 
 ### site build
 
 - means: the build of the site from a course and its spec MAJOR, in two halves: the spec MAJOR's half reads the course where it is written and gives its published parts, and the repository's site builder renders them as the pages served on a channel
 - en: site build
 - fr: to settle
-- not to confuse with: [build](#build), [classroom build](#classroom-build), [release](#release)
+- not to confuse with: [build](#build), [teacher build](#teacher-build), [release](#release)
 
-### classroom build
+### teacher build
 
-- means: the build of a classroom from a course and its spec MAJOR, made in two halves: the spec MAJOR renders the parts of the **composition** as text, and the repository's classroom builder realises them in Claude Code. Rendering the parts as text is a step of the classroom build, not a build
-- en: classroom build
+- means: the build of a classroom from a course and its spec MAJOR, made in two halves: the spec MAJOR renders the parts of the **composition** as text, and the repository's teacher builder realises them in Claude Code. Rendering the parts as text is a step of the teacher build, not a build
+- en: teacher build
 - fr: « build de la classe »
 - not to confuse with: [build](#build), [site build](#site-build), [classroom](#classroom), [composition](#composition)
 
@@ -132,10 +132,10 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### classroom
 
-- means: the folder built outside the repo, by the **classroom build**, where the teacher runs: the teacher and its permissions, a copy of the course, its **course.lock**, learner memory, its own git; what it gives the teacher, part by part, is the **composition**
+- means: the folder built outside the repo, by the **teacher build**, where the teacher runs: the teacher and its permissions, a copy of the course, its **course.lock**, learner memory, its own git; what it gives the teacher, part by part, is the **composition**
 - en: classroom · rejected: "workspace", "instance", "environment"
 - fr: « classe » (in the rules of a diagram, « classe » is an SVG class, `primary`, `secondary`, `muted`, not this concept)
-- not to confuse with: [composition](#composition), [channel](#channel), [classroom build](#classroom-build), [course.lock](#courselock)
+- not to confuse with: [composition](#composition), [channel](#channel), [teacher build](#teacher-build), [course.lock](#courselock)
 
 ### learner
 
@@ -499,7 +499,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### lexicon
 
-- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the classroom build and the site; `teacher/lexicon.yaml`, the words the teacher says and writes; `site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds. Not a translation file: the language is the spec's
+- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the teacher build and the site; `teacher/lexicon.yaml`, the words the teacher says and writes; `site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds. Not a translation file: the language is the spec's
 - en: lexicon · rejected: "language pack", "i18n", "locale", "strings"
 - fr: « lexique »
 
@@ -548,10 +548,10 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### composition
 
-- means: what a teacher is made of, beside how it behaves: five parts, each defined by when it loads and what it draws from the spec, the course, learner memory and the classroom; described by the spec with no Claude Code term: its realisation is the classroom build's
+- means: what a teacher is made of, beside how it behaves: five parts, each defined by when it loads and what it draws from the spec, the course, learner memory and the classroom; described by the spec with no Claude Code term: its realisation is the teacher build's
 - en: composition · rejected: "architecture", "the instructions"
 - fr: « composition »
-- not to confuse with: [protocol](#protocol), [classroom build](#classroom-build), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment)
+- not to confuse with: [protocol](#protocol), [teacher build](#teacher-build), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment)
 
 ### mini-recap
 
@@ -896,7 +896,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### milestone
 
-- means: a release target: named after the tag that closes it (`linear-course/v1.0.0`, `<id>/vX.Y.Z`), holding the stories that must close before the tag, created when a release is in sight; an epic may target one; tooling has none
+- means: a release target: named after the tag that closes it (`linear-fr/v1.0.0`, `<id>/vX.Y.Z`), holding the stories that must close before the tag, created when a release is in sight; an epic may target one; tooling has none
 - en: milestone · rejected: "sprint", "phase", "version" for the milestone itself
 - fr: to settle
 - not to confuse with: [stage](#stage), [release](#release), [epic](#epic)
@@ -965,7 +965,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### teacher skill
 
-- means: a skill of a classroom, one per moment of the **composition** that has rules, named `feyn-teacher-<moment>` (`feyn-teacher-onboarding`, `feyn-teacher-stop`), made by the classroom build; apart from Claude Code's own skills (`/resume`)
+- means: a skill of a classroom, one per moment of the **composition** that has rules, named `feyn-teacher-<moment>` (`feyn-teacher-onboarding`, `feyn-teacher-stop`), made by the teacher build; apart from Claude Code's own skills (`/resume`)
 - en: teacher skill
 - fr: to settle
 - not to confuse with: [skill](#skill), [teacher](#teacher), [composition](#composition), [resume](#resume), [moment](#moment)
