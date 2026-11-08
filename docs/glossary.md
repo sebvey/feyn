@@ -111,10 +111,11 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### teacher build
 
-- means: the build of a classroom from a course and its spec MAJOR, made in two halves: the spec MAJOR renders the parts of the **composition** as text, and the repository's teacher builder realises them in Claude Code. Rendering the parts as text is a step of the teacher build, not a build
-- en: teacher build
-- fr: « build de la classe »
-- not to confuse with: [build](#build), [site build](#site-build), [classroom](#classroom), [composition](#composition)
+- means: the build of the **teacher** from a course and its spec MAJOR, into the **classroom** it makes, in two halves: the spec MAJOR renders the parts of the **composition** as text, and the repository's teacher builder realises them in Claude Code. Rendering the parts as text is a step of the teacher build, not a build
+- en: teacher build · rejected: "classroom build"
+- fr: « build du professeur » · rejected: « build de la classe »
+- not to confuse with: [build](#build), [site build](#site-build), [teacher](#teacher), [classroom](#classroom), [composition](#composition)
+- why: "classroom build" named the build after the folder it makes, not the product it builds, so the name changed between a product and its build, while the site build bears the name of its product; "classroom" names only that folder
 
 ### site
 
@@ -128,7 +129,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the generic Claude Code agent that teaches, with the **teacher skills** of its moments, built from the **teacher template**, the protocol and the lexicons of its spec, as the **composition** of its spec says
 - en: teacher · rejected: "prof", "tutor", "coach", "agent" alone
 - fr: « professeur » · rejected: « prof »
-- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment), [product](#product)
+- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment), [product](#product), [teacher build](#teacher-build)
 
 ### classroom
 

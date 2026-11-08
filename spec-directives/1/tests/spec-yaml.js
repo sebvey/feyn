@@ -7,6 +7,8 @@
 //   - `name` is a slug, `major` and `directives` are positive integers written as such (not `1.0`),
 //     `version` is `MAJOR.MINOR.PATCH` with an optional `-alpha`, and the MAJOR of `version` is
 //     `major`; `language` is an ISO 639-1 code (two lowercase letters), the language of the spec;
+//   - `name` ends with its language, `-<language>` (`linear-fr`), checked once `name` is a slug and
+//     `language` a code: a course of another language follows another spec, whose name says so;
 //   - `version` agrees with the first `## ` section of CHANGELOG.md: during the alpha (`version` is
 //     `<MAJOR>.0.0-alpha`) that section is « Unreleased »; otherwise it names `version`
 //     (`## 1.0.0`, a date after the version allowed); an `-alpha` on another version fails.
@@ -80,6 +82,12 @@ function run(ctx) {
   }
   if ('language' in spec && (typeof spec.language !== 'string' || !LANGUAGE.test(spec.language))) {
     out.push(fail(F, at('language'), `language ${JSON.stringify(spec.language)} is not an ISO 639-1 code (two lowercase letters)`));
+  }
+  // the language test: a name or a language already at fault above is not held to it
+  const slug = typeof spec.name === 'string' && SLUG.test(spec.name);
+  const code = typeof spec.language === 'string' && LANGUAGE.test(spec.language);
+  if (slug && code && !spec.name.endsWith(`-${spec.language}`)) {
+    out.push(fail(F, at('name'), `name ${spec.name} does not end with its language: -${spec.language} (language ${spec.language})`));
   }
   if (!('version' in spec)) return out;
   const version = spec.version;

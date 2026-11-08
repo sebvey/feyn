@@ -9,13 +9,13 @@
 
 The readers are defined in [`spec-directives/README.md`](../../../../spec-directives/README.md#the-readers).
 
-Le protocole pédagogique de `linear-fr`, la partie de la spec que le professeur exécute : des règles nommées par un slug, en familles, toutes dans [`rules.yaml`](rules.yaml), leur seule source. Ce fichier dit comment une règle s'écrit et n'en énonce aucune. Le protocole a la version de la spec (le `README.md` du MAJOR) ; ajouter ou changer une règle est un MINOR de la spec (`spec-directives/1/README.md` section 6). Le build de la classe place les règles de chaque partie là où le dit la [Composition](#composition) : les permanentes dans les instructions du professeur, celles d'un moment chargées à ce moment, à côté du modèle d'instructions, des deux lexiques et des paramètres.
+Le protocole pédagogique de `linear-fr`, la partie de la spec que le professeur exécute : des règles nommées par un slug, en familles, toutes dans [`rules.yaml`](rules.yaml), leur seule source. Ce fichier dit comment une règle s'écrit et n'en énonce aucune. Le protocole a la version de la spec (le `README.md` du MAJOR) ; ajouter ou changer une règle est un MINOR de la spec (`spec-directives/1/README.md` section 6). Le build du professeur place les règles de chaque partie là où le dit la [Composition](#composition) : les permanentes dans les instructions du professeur, celles d'un moment chargées à ce moment, à côté du modèle d'instructions, des deux lexiques et des paramètres.
 
 **Langue : le français, une exception bornée.** Les règles et ce fichier sont en français, la langue de la spec (`language: fr` dans `spec.yaml` ; décision `language-policy`, `docs/decisions/language-policy.md`) ; les clés, les ids et les slugs restent en anglais. Un professeur ou un cours d'une autre langue suit une autre spec, pas une traduction de celle-ci (décision `lexicon-not-language-pack`).
 
 ## Notation
 
-- `{group.key}` (un point) : une clé de l'un des deux lexiques de la spec, `course/lexicon.yaml`, les mots des fichiers du cours (`course/README.md` section 7), ou `teacher/lexicon.yaml`, les mots que le professeur dit et écrit. Toute phrase littérale que l'apprenant voit, tout mot de l'apprenant auquel une règle réagit, tout titre et toute valeur écrits dans la mémoire de l'apprenant, la typographie. Le build de la classe la remplace par la valeur du lexique (une liste par ses éléments entre « », séparés par des virgules). Toutes les clés sont listées dans [Clés et paramètres](#clés-et-paramètres).
+- `{group.key}` (un point) : une clé de l'un des deux lexiques de la spec, `course/lexicon.yaml`, les mots des fichiers du cours (`course/README.md` section 7), ou `teacher/lexicon.yaml`, les mots que le professeur dit et écrit. Toute phrase littérale que l'apprenant voit, tout mot de l'apprenant auquel une règle réagit, tout titre et toute valeur écrits dans la mémoire de l'apprenant, la typographie. Le build du professeur la remplace par la valeur du lexique (une liste par ses éléments entre « », séparés par des virgules). Toutes les clés sont listées dans [Clés et paramètres](#clés-et-paramètres).
 - `{course.<name>}` : un paramètre du cours, tiré de `course.yaml` ; `{classroom.<name>}` : un paramètre de la classe, tiré de `course.lock`. Le build les remplace aussi.
 - `{n}`, `{title}`… (sans point) : un emplacement dans une valeur, que le professeur remplit quand il parle ou écrit.
 - `course/` est la copie du cours dans la classe, en lecture seule ; `learner/` est la mémoire de l'apprenant, les trois fichiers de `teacher/templates/learner/`.
@@ -34,7 +34,7 @@ Décidées par le mainteneur le 2026-10-27 (débrief, issue #92) et le 2026-10-2
 
 ## Composition
 
-La composition du professeur est ce dont un professeur est fait, à côté de la façon dont il se comporte (le protocole) : cinq parties, chacune définie par le moment où elle se charge et par ce qu'elle tire de la spec, du cours, de la mémoire de l'apprenant et de la classe. C'est une donnée, dans [`composition.yaml`](composition.yaml), dont l'en-tête nomme les listes fermées de `loads` et de `from` ; cette section la décrit. Elle ne nomme aucun mécanisme d'une cible : la façon dont une partie se réalise appartient au build de la classe (`teacher-builder/`), si bien qu'une seconde cible se construit depuis la même composition.
+La composition du professeur est ce dont un professeur est fait, à côté de la façon dont il se comporte (le protocole) : cinq parties, chacune définie par le moment où elle se charge et par ce qu'elle tire de la spec, du cours, de la mémoire de l'apprenant et de la classe. C'est une donnée, dans [`composition.yaml`](composition.yaml), dont l'en-tête nomme les listes fermées de `loads` et de `from` ; cette section la décrit. Elle ne nomme aucun mécanisme d'une cible : la façon dont une partie se réalise appartient au build du professeur (`teacher-builder/`), si bien qu'une seconde cible se construit depuis la même composition.
 
 | Partie | Se charge | Tire de |
 |---|---|---|
@@ -44,7 +44,7 @@ La composition du professeur est ce dont un professeur est fait, à côté de la
 | `learner-memory` | `at-start-and-save-points` | les modèles de l'apprenant (spec, `templates/learner/`), les règles de la mémoire (la famille `learner-memory`), les trois fichiers de `learner/` ; rien du cours |
 | `permissions` | `always` | ce qu'un professeur écrit, `learner/` et ses commits, et ce qu'il n'écrit jamais, `course/` (une règle du groupe `learner-memory`) |
 
-Deux lecteurs y viennent. Le builder, qui écrit le build de la classe : sa moitié qui dépend de ce MAJOR, [`build/render-parts`](build/README.md), lit `composition.yaml` et `rules.yaml` pour rendre chaque partie en texte, et la moitié à la racine (`teacher-builder/`) réalise les parties pour sa cible. Les fresh tests ([`tests/`](tests/README.md)) : ils jugent un professeur sur ce qu'il charge et quand, par le groupe `composition-loading`. `composition` (`check-spec`, `spec-directives/1/README.md` section 8) teste la forme du fichier, jamais son sens.
+Deux lecteurs y viennent. Le builder, qui écrit le build du professeur : sa moitié qui dépend de ce MAJOR, [`build/render-parts`](build/README.md), lit `composition.yaml` et `rules.yaml` pour rendre chaque partie en texte, et la moitié à la racine (`teacher-builder/`) réalise les parties pour sa cible. Les fresh tests ([`tests/`](tests/README.md)) : ils jugent un professeur sur ce qu'il charge et quand, par le groupe `composition-loading`. `composition` (`check-spec`, `spec-directives/1/README.md` section 8) teste la forme du fichier, jamais son sens.
 
 ## Clés et paramètres
 
@@ -128,7 +128,7 @@ Chaque clé et chaque paramètre que les règles emploient, en un seul endroit :
 
 Les titres, les statuts et les formats de ligne que portent les clés de `memory_headings`, de `status` et de `memory` sont ceux de `teacher/templates/learner/` : `teacher/lexicon.yaml` et les modèles de l'apprenant changent ensemble.
 
-**Paramètres du cours** (tirés de `course.yaml`, injectés par le build de la classe)
+**Paramètres du cours** (tirés de `course.yaml`, injectés par le build du professeur)
 
 | Parameter | Value | Used in |
 |---|---|---|
@@ -137,7 +137,7 @@ Les titres, les statuts et les formats de ligne que portent les clés de `memory
 | `course.storyline` | `storyline` (un chemin dans le dossier du cours) | `read-before-what-follows`, `examples-from-storyline` |
 | `course.glossary` | `glossary` (un chemin dans le dossier du cours) | `one-term-per-notion` |
 
-**Paramètres de la classe** (tirés de `course.lock`, injectés par le build de la classe)
+**Paramètres de la classe** (tirés de `course.lock`, injectés par le build du professeur)
 
 | Parameter | Value | Used in |
 |---|---|---|

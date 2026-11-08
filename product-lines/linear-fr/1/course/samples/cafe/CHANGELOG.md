@@ -18,3 +18,4 @@
 - PATCH, `glossary.md` : l'exemple du ratio passe à 55 g par litre, le repère du concept 1 (#688).
 - PATCH, tout le cours : « mouture » ne nomme plus que la finesse du café moulu ; là où le mot nommait le café moulu lui-même, le glossaire, les concepts 1 et A1, leurs sources et `storyline.md` disent « café moulu », le titre de la section A1a compris (#688).
 - PATCH, `storyline.md` : la dernière phrase de « La soutenance » annonce le jour où la promesse sera mise à l'épreuve, sans plus dire que son issue n'est pas encore écrite (#688).
+- PATCH, `course.yaml` : la spec déclarée prend son nouveau nom, `spec: linear-fr@1`, et le cours se trouve désormais dans `product-lines/linear-fr/1/course/samples/cafe/` ; rien d'autre ne change (#732).
