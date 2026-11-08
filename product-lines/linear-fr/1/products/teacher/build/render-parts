@@ -174,7 +174,7 @@ function parseProtocol(doc) {
   return { families, byCategory };
 }
 const { families, byCategory: familyByCategory } = parseProtocol(parseYaml(path.join(MAJOR, 'products', 'teacher', 'rules.yaml')));
-if (!families.length) fail(`${rel(MAJOR)}/teacher/rules.yaml holds no rule family`);
+if (!families.length) fail(`${rel(MAJOR)}/products/teacher/rules.yaml holds no rule family`);
 const allRules = families.flatMap((f) => [...f.rules, ...f.groups.flatMap((g) => g.rules)]);
 const ruleBySlug = new Map(allRules.map((r) => [r.slug, r]));
 const groupById = new Map(families.flatMap((f) => f.groups).map((g) => [g.id, g]));
