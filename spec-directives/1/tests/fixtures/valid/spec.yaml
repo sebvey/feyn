@@ -11,12 +11,14 @@ course:
   lexicon: course/lexicon.yaml
   schemas: course/schemas
 products:
+  site:
+    lexicon: products/site/lexicon.yaml
   teacher:
-    readme: teacher/README.md
-    rules: teacher/rules.yaml
-    lexicon: teacher/lexicon.yaml
-    composition: teacher/composition.yaml
-    tests: teacher/tests
+    readme: products/teacher/README.md
+    rules: products/teacher/rules.yaml
+    lexicon: products/teacher/lexicon.yaml
+    composition: products/teacher/composition.yaml
+    tests: products/teacher/tests
 lists:
   categories: [structure, pedagogy, writing, sources, diagrams]
   families: [session-start, domain-presentation, loop, message-form, storyline, stances-and-sources, practice-skip-asides, learner-memory, stop]
@@ -31,3 +33,5 @@ lists:
       concept_refs: {concept: string, concepts: string, and: string, annex: string}
       source_types: {primary: string, secondary: string, marketing: string}
       typography: {banned: list}
+    site:
+      nav: {domains: string, storyline: string, glossary: string}

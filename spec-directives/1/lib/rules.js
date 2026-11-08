@@ -2,7 +2,7 @@
 // The checks of a course as course/rules.yaml gives them (decision `severity-from-level-and-method`):
 // each check named by the `check` of a rule of course/rules.yaml, with the category, the level and
 // the methods of its rules, and the severity that follows (spec-directives/1/README.md section 5):
-// a check blocks when it verifies requirements by test, otherwise it reports. teacher/rules.yaml is
+// a check blocks when it verifies requirements by test, otherwise it reports. products/teacher/rules.yaml is
 // the teacher's and names no check of a course; the tests of the spec's own files are check-spec's
 // and verify no rule.
 //

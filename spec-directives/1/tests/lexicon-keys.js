@@ -3,8 +3,8 @@
 // conformity-of-the-course-and-products, amended by #339): the lexicons of a spec MAJOR (decision
 // lexicon-not-language-pack of linear-fr), those the manifest, spec.yaml, declares: the lexicon of
 // the course files (`course.lexicon`, below course/lexicon.yaml), the site's
-// (`products.site.lexicon`, site/lexicon.yaml) and the teacher's (`products.teacher.lexicon`,
-// teacher/lexicon.yaml).
+// (`products.site.lexicon`, products/site/lexicon.yaml) and the teacher's (`products.teacher.lexicon`,
+// products/teacher/lexicon.yaml).
 //   - each lexicon declared exists and is a map;
 //   - the lexicon of the course files holds every key `lists.lexicons.course` of the manifest
 //     lists, and the site's every key of `lists.lexicons.site`, each of its kind, a non-empty
@@ -17,15 +17,15 @@
 const yaml = require('../lib/yaml-lines');
 const { fail } = require('../lib/course');
 
-// The keys the protocol uses: a row of the « Clés et paramètres » tables of teacher/README.md
+// The keys the protocol uses: a row of the « Clés et paramètres » tables of products/teacher/README.md
 // (`products.teacher.readme`)
 // (`| `group.key` | ...`; a value cell that opens on « liste » or "list" is a list), the one read of
-// teacher/README.md left in the tests of check-spec for what the protocol holds (rule-slugs reads
+// products/teacher/README.md left in the tests of check-spec for what the protocol holds (rule-slugs reads
 // it only for the citations it makes), then a `{group.key}` in a `purpose`, a `text` or a `why` of
-// teacher/rules.yaml. A file missing gives no key: rule-slugs reports it.
+// products/teacher/rules.yaml. A file missing gives no key: rule-slugs reports it.
 const NOT_LEXICON = new Set(['course', 'classroom', 'group']); // parameters, and the notation's own example
 
-// readme: the text of teacher/README.md; texts: the purposes, texts and whys of teacher/rules.yaml
+// readme: the text of products/teacher/README.md; texts: the purposes, texts and whys of products/teacher/rules.yaml
 function protocolKeys(readme, texts) {
   const keys = new Map();
   for (const line of (readme || '').split('\n')) {
@@ -40,7 +40,7 @@ function protocolKeys(readme, texts) {
   return keys;
 }
 
-// the purposes, texts and whys of teacher/rules.yaml; none when it is missing or broken (rule-files
+// the purposes, texts and whys of products/teacher/rules.yaml; none when it is missing or broken (rule-files
 // and rule-slugs report it)
 function protocolTexts(raw) {
   if (raw === null) return [];

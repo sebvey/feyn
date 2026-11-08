@@ -11,10 +11,10 @@ course:
   schemas: course/schemas
 products:
   teacher:
-    readme: teacher/README.md
-    rules: teacher/rules.yaml
-    lexicon: teacher/lexicon.yaml
-    composition: teacher/composition.yaml
+    readme: products/teacher/README.md
+    rules: products/teacher/rules.yaml
+    lexicon: products/teacher/lexicon.yaml
+    composition: products/teacher/composition.yaml
 lists:
   categories: [structure, pedagogy, writing, sources, diagrams]
   families: [session-start, domain-presentation, loop, message-form, storyline, stances-and-sources, practice-skip-asides, learner-memory, stop]

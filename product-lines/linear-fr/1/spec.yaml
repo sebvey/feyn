@@ -29,9 +29,9 @@ course:
 # nothing and say so (idea #687 brings it back).
 products:
   site:
-    lexicon: site/lexicon.yaml
-    url-scheme: site/url-scheme.yaml
-    build: site/build
+    lexicon: products/site/lexicon.yaml
+    url-scheme: products/site/url-scheme.yaml
+    build: products/site/build
 
 # The lists of the spec, which the tests of check-spec hold its files to: the categories of the
 # rules of a course (README.md section 3), and the keys of the lexicons, by owner, each with its
