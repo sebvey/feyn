@@ -40,7 +40,7 @@ lists:
       typography: {banned: list}
     site:
       nav: {domains: string, storyline: string, glossary: string}
-map:
+files:
   spec:
     manifest: {holds: "the manifest", readers: [builder, verifier, spec writer]}
     readme: {holds: "the entry to the spec", readers: [creator, builder, verifier, spec writer]}

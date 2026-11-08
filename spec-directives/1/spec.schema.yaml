@@ -1,6 +1,6 @@
 # The form of a spec MAJOR's manifest, its spec.yaml (README.md section 8): its identity, then
 # its own files, the files of its course and of each of its products, each by role, then its own
-# lists, then its map: what each role holds and who reads it. A role maps to one path, relative to
+# lists, then `files:`, what each role holds and who reads it. A role maps to one path, relative to
 # the spec MAJOR, a file or a folder. lib/manifest.js reads the
 # manifest for every test of check-spec, and spec-yaml validates it against this schema through
 # Ajv2020 (decision checks-use-ajv-and-yaml); what the schema does not say (the version against
@@ -36,7 +36,7 @@ properties:
     type: string
     pattern: '^[a-z]{2}$'
   spec:
-    description: the spec MAJOR's own files, by role, at the paths the directives fix; optional, the map (lib/map.js) shows them when declared
+    description: the spec MAJOR's own files, by role, at the paths the directives fix; optional
     type: object
     additionalProperties: false
     minProperties: 1
@@ -58,8 +58,6 @@ properties:
       schemas: { $ref: '#/$defs/path', description: "a path, the folder of the schemas of a course" }
       checks: { $ref: '#/$defs/path', description: "a path, the folder of the checks of a course" }
       parser: { $ref: '#/$defs/path', description: "a path, the parser of the files of a course, which its checks and the builds of the products load" }
-      views: { $ref: '#/$defs/path', description: "a path, the script that renders the generated views of the course's files, each under the role of the view it writes (generate-map)" }
-      form-view: { $ref: '#/$defs/path', description: "a path, the readable view of the form, generated from it" }
       templates: { $ref: '#/$defs/path', description: "a path, the folder of the course templates" }
       samples: { $ref: '#/$defs/path', description: "a path, the folder of the spec's sample courses" }
   products:
@@ -107,8 +105,8 @@ properties:
         properties:
           course: { $ref: '#/$defs/keys' }
           site: { $ref: '#/$defs/keys' }
-  map:
-    description: the map of the spec MAJOR, which generate-map writes into section 2 of its README.md; optional; when present, the test map requires an entry for every role declared and none for a role not declared
+  files:
+    description: the files of the spec MAJOR, what each role holds and who reads it, which section 2 of its README.md points to; optional; when present, the test spec-yaml requires an entry for every role declared and none for a role not declared
     type: object
     additionalProperties: false
     minProperties: 1
@@ -123,7 +121,7 @@ properties:
           site: { $ref: '#/$defs/entries' }
           teacher: { $ref: '#/$defs/entries' }
       undeclared:
-        description: the products the manifest does not declare, each with the one line the map shows for it
+        description: the products the manifest does not declare, each with one line saying why
         type: object
         additionalProperties: false
         minProperties: 1
@@ -136,7 +134,7 @@ $defs:
     type: string
     pattern: '^[^\n]*\S[^\n]*$'
   entries:
-    description: the entries of the map for the roles of one owner, keyed by role
+    description: the entries of `files:` for the roles of one owner, keyed by role
     type: object
     minProperties: 1
     additionalProperties:

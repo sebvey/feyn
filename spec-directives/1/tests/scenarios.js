@@ -85,9 +85,9 @@ function run(ctx) {
   return out;
 }
 
-// the roles it reads, by their key in the manifest, which the map of a spec MAJOR shows (lib/map.js)
+// the roles it reads, by their key in the manifest (README.md section 8)
 const reads = ['products.teacher.tests', 'products.teacher.rules'];
-// the roles without which it checks nothing (m.nothing above): the map lists it when one is declared
+// the roles without which it checks nothing (m.nothing above)
 const needs = ['products.teacher.tests'];
 
 module.exports = { id: 'scenarios', run, reads, needs };
