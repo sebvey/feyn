@@ -1,2 +1,2 @@
 check: spec-yaml
-message: spec.yaml:12 unknown key course.glossary
+message: spec.yaml:12 unknown key course.index

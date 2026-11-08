@@ -31,6 +31,8 @@ course:
   schemas: course/schemas
   checks: course/checks
   parser: course/parser.js
+  refs: course/refs.js
+  glossary: course/glossary.js
   templates: course/templates
   samples: course/samples
 
@@ -104,6 +106,12 @@ files:
       readers: [creator, verifier]
     parser:
       holds: "the parser of a course: it loads a course folder and reads the tree and the parts of each `concept.md` and the fixed facts of `storyline.md`, for the checks and the site build"
+      readers: [builder, verifier]
+    refs:
+      holds: "the reader of the references between concepts in the text of a course (`course/README.md` section 3.5): the words of the group `concept_refs` of the lexicon, then concept numbers or section and unit ids, for the checks and the site build"
+      readers: [builder, verifier]
+    glossary:
+      holds: "the reader of the course glossary (`course/README.md` section 5): the first table of `glossary.md`, its terms and their variants, the number of the concept that defines each, for the checks and the site build"
       readers: [builder, verifier]
     templates:
       holds: "the course templates"

@@ -6,7 +6,8 @@
 // a unit of the course), glossary.md and CHANGELOG.md.
 const directives = require('./directives');
 const mdlib = directives.lib('md');
-const glossary = directives.lib('glossary');
+// the glossary's table is read by the reader of this MAJOR (course/glossary.js), given the directives' lib
+const glossary = require('../glossary')(directives.lib);
 // the fixed facts of storyline.md are read by the parser of this MAJOR (course/parser.js), the
 // release sections of CHANGELOG.md through the directives' lib (lib/common.js), as the site build
 // reads them
@@ -171,6 +172,6 @@ function run(ctx) {
 
 // the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
 // the course through the parser
-const reads = ['course.form', 'course.lexicon', 'course.parser'];
+const reads = ['course.form', 'course.lexicon', 'course.parser', 'course.glossary'];
 
 module.exports = { id: 'course-files', run, reads };

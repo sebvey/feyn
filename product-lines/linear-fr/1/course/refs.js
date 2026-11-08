@@ -1,7 +1,12 @@
 'use strict';
-// Concept references of the text of a course (course/README.md section 3.5): the words of the lexicon
-// group concept_refs, then concept numbers or section and unit ids. One grammar, read by `conventions`
-// (each id exists) and `glossary-order` (a concept reference silences a forward use).
+// Concept references of the text of a course of this spec MAJOR (course/README.md section 3.5): the
+// words of the lexicon group concept_refs, then concept numbers or section and unit ids. One grammar,
+// read by the course checks `conventions` (each id exists) and `glossary-order` (a concept reference
+// silences a forward use) and by the site build (products/site/build/render-site). It holds forms of
+// this spec (the grammar of the ids, `0a`, `A2a`, the annexes `A<n>`), so it lives in the spec, beside
+// course/parser.js, not in the directives. Its callers give it the lib of the spec directives this
+// MAJOR follows, as they give the parser; it needs none of it today.
+//   const { parser, conceptOf } = require('<MAJOR>/course/refs')(lib);
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const ID = '(?:A\\d+|\\d+)(?:[a-z]\\d?)?';
@@ -51,4 +56,7 @@ function conceptOf(ctx, id, annex) {
   return c && (!annex || c.annex) ? c : null;
 }
 
-module.exports = { parser, conceptOf, ID };
+// lib(name): the module spec-directives/<MAJOR>/lib/<name>.js of the directives this MAJOR follows
+module.exports = function refs(lib) {
+  return { parser, conceptOf, ID };
+};

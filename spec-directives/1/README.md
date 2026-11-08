@@ -16,7 +16,7 @@ Version 1.0.0-alpha: binding from the tag `spec-directives/v1.0.0` (section 6). 
 - `decisions/`: the decisions of the directives.
 - `tests/`: the tests of a spec's own files, their fixtures and their `test-fixtures` (section 8).
 - `spec.schema.yaml`: the form of a spec MAJOR's manifest, its `spec.yaml` (section 8).
-- `lib/`, `package.json`, `package-lock.json`: the lib the checks of a spec and the tests share, its helpers (`lib/common.js`: a failure, a slug, a number, a release heading), the reader of the manifest (`lib/manifest.js`) among it, the parser of a course being the spec MAJOR's (`course.parser` of its `spec.yaml`), and its dependencies (`yaml`, `ajv`), loaded by the checks of a spec MAJOR that declares this MAJOR in its `spec.yaml`.
+- `lib/`, `package.json`, `package-lock.json`: the lib the checks of a spec and the tests share, its helpers (`lib/common.js`: a failure, a slug, a number, a release heading), the reader of the manifest (`lib/manifest.js`) among it, the parser of a course and the readers of its concept references and of its glossary being the spec MAJOR's (`course.parser`, `course.refs` and `course.glossary` of its `spec.yaml`), and its dependencies (`yaml`, `ajv`), loaded by the checks of a spec MAJOR that declares this MAJOR in its `spec.yaml`.
 
 ## 1. Rules
 

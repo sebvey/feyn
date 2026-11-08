@@ -2,8 +2,9 @@
 'use strict';
 // render-site <course-dir> [--form <file>]
 // The half of a site build that depends on this spec MAJOR: it reads a course through the parser
-// of this MAJOR, course/parser.js, the one the course checks use, given the lib of the spec
-// directives this MAJOR follows (with md.js, refs.js and glossary.js of that lib), keeps the parts course/form.yaml names `published: true`
+// of this MAJOR, course/parser.js, and its readers of the concept references and of the glossary,
+// course/refs.js and course/glossary.js, the ones the course checks use, given the lib of the spec
+// directives this MAJOR follows (with md.js of that lib), keeps the parts course/form.yaml names `published: true`
 // (closed by default: a part the form does not name, or names without `published: true`, is
 // never output), and prints them to stdout as one JSON document, whose shape site.schema.yaml
 // fixes and README.md (this folder) describes, with the words of products/site/lexicon.yaml, the headings
@@ -67,11 +68,13 @@ const req = createRequire(path.join(DIRECTIVES, 'package.json'));
 req('./lib/deps').need();
 const yaml = req('./lib/yaml-lines');
 const md = req('./lib/md');
-const refs = req('./lib/refs');
-const glossary = req('./lib/glossary');
 const { normNumber, RELEASE } = req('./lib/common');
-// the parser of a course is this MAJOR's, given the directives' lib
-const course = require(path.join(MAJOR, 'course', 'parser.js'))((name) => req('./lib/' + name));
+// the parser of a course and the readers of its concept references and of its glossary are this
+// MAJOR's, given the directives' lib
+const lib = (name) => req('./lib/' + name);
+const course = require(path.join(MAJOR, 'course', 'parser.js'))(lib);
+const refs = require(path.join(MAJOR, 'course', 'refs.js'))(lib);
+const glossary = require(path.join(MAJOR, 'course', 'glossary.js'))(lib);
 const SPEC = `${lineOf('name')}@${lineOf('major')}`;
 // the language of the MAJOR's courses and lexicons (ISO 639-1), given to the engine for the pages it writes
 const LANGUAGE = lineOf('language');
@@ -329,7 +332,7 @@ const take = (group, key) => {
 if (typeof cf.separator === 'string') take('block_kinds', cf.separator);
 for (const k of Object.keys(ctx.lexicon.markers || {})) take('markers', k);
 
-// ---- the concept references of the published text (refs.js): each distinct reference, as the
+// ---- the concept references of the published text (course/refs.js): each distinct reference, as the
 // text writes it, with the concepts it names, so that the engine links them without a grammar
 const parser = refs.parser(ctx);
 const found = new Map();
