@@ -169,4 +169,7 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'rule-files', run };
+// the roles it reads, by their key in the manifest, which the map of a spec MAJOR shows (lib/map.js)
+const reads = ['course.rules', 'products.teacher.rules', 'course.schemas', 'course.checks'];
+
+module.exports = { id: 'rule-files', run, reads };

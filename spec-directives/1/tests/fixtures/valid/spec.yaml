@@ -5,6 +5,11 @@ directives: 1
 version: 1.0.0-alpha
 language: fr
 
+spec:
+  manifest: spec.yaml
+  readme: README.md
+  changelog: CHANGELOG.md
+  decisions: decisions
 course:
   readme: course/README.md
   rules: course/rules.yaml
@@ -35,3 +40,23 @@ lists:
       typography: {banned: list}
     site:
       nav: {domains: string, storyline: string, glossary: string}
+map:
+  spec:
+    manifest: {holds: "the manifest", readers: [builder, verifier, spec writer]}
+    readme: {holds: "the entry to the spec", readers: [creator, builder, verifier, spec writer]}
+    changelog: {holds: "the changes of the spec", readers: [spec writer]}
+    decisions: {holds: "the decisions of the spec", readers: [spec writer]}
+  course:
+    readme: {holds: "what a course is", readers: [creator, builder]}
+    rules: {holds: "the rules of a course", readers: [verifier, spec writer]}
+    lexicon: {holds: "the lexicon of the course files", readers: [creator, builder]}
+    schemas: {holds: "the schemas of a course", readers: [builder, verifier]}
+  products:
+    site:
+      lexicon: {holds: "the lexicon of the site", readers: [builder]}
+    teacher:
+      readme: {holds: "the protocol, described", readers: [builder]}
+      rules: {holds: "the rules of the protocol", readers: [builder, verifier]}
+      lexicon: {holds: "the lexicon of the teacher", readers: [builder]}
+      composition: {holds: "the composition of the teacher", readers: [builder]}
+      tests: {holds: "the test scenarios of the teacher", readers: [verifier]}

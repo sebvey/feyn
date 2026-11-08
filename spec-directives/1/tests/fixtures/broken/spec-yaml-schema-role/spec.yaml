@@ -9,7 +9,7 @@ course:
   readme: course/README.md
   rules: course/rules.yaml
   lexicon: course/lexicon.yaml
-  templates: course/templates
+  glossary: course/glossary.md
   schemas: course/schemas
 products:
   teacher:

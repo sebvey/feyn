@@ -5,7 +5,8 @@
 // The tests of a spec's own files, of this directives MAJOR, not of a course: they verify no rule,
 // carry no category and no level, and each failure blocks (exit code 1; decision
 // conformity-of-the-course-and-products, amended by #339). Every file they read but the spec
-// MAJOR's README.md, CHANGELOG.md, decisions/ and spec.yaml itself is a role its manifest,
+// MAJOR's README.md, CHANGELOG.md, decisions/ and spec.yaml itself (read at these fixed paths, declared
+// under `spec:` or not) is a role its manifest,
 // spec.yaml, declares (lib/manifest.js, read once here as ctx.manifest): a test whose files the
 // manifest does not declare checks nothing and says so on its line ("<id>: checked nothing: ..."),
 // which leaves the exit code 0.
@@ -18,7 +19,7 @@ const path = require('path');
 require('../lib/deps').need();
 const manifest = require('../lib/manifest');
 
-const CHECKS = ['rule-slugs', 'rule-files', 'lexicon-keys', 'spec-yaml', 'composition', 'scenarios'];
+const CHECKS = ['rule-slugs', 'rule-files', 'lexicon-keys', 'spec-yaml', 'composition', 'scenarios', 'map'];
 
 function usage(code) {
   const out = code ? console.error : console.log;

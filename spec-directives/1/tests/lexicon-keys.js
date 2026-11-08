@@ -146,4 +146,7 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'lexicon-keys', run, protocolKeys };
+// the roles it reads, by their key in the manifest, which the map of a spec MAJOR shows (lib/map.js)
+const reads = ['course.lexicon', 'products.site.lexicon', 'products.teacher.lexicon', 'products.teacher.readme', 'products.teacher.rules'];
+
+module.exports = { id: 'lexicon-keys', run, reads, protocolKeys };

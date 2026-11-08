@@ -131,4 +131,8 @@ function run(ctx) {
 }
 const normStr = (v) => String(v);
 
-module.exports = { id: 'drawing-contract', run };
+// the roles of the spec it reads, by their key in spec.yaml (the course through the parser), which
+// the map of the spec shows (spec-directives/1/lib/map.js)
+const reads = ['course.parser'];
+
+module.exports = { id: 'drawing-contract', run, reads };

@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+'use strict';
+// generate-map <spec-dir>
+// Writes the map of a spec MAJOR, section 2 of its README.md, and the views of its course's files
+// the manifest declares (`course.views`), from its manifest, spec.yaml (lib/map.js; README.md
+// section 8, "The map"). The test `map` of check-spec fails when what they hold differs from
+// what this writes. spec-directives/generate-map runs this script for a spec MAJOR whose
+// spec.yaml declares this directives MAJOR. Prints one line per file, written or up to date; exit
+// 1 when the manifest declares no map or a view cannot be rendered, 2 on a usage error.
+const fs = require('fs');
+const path = require('path');
+require('./lib/deps').need();
+const manifest = require('./lib/manifest');
+const map = require('./lib/map');
+
+const args = process.argv.slice(2);
+if (args.includes('--help') || args.includes('-h')) {
+  console.log('usage: generate-map <spec-dir>');
+  process.exit(0);
+}
+if (args.length !== 1 || args[0].startsWith('-')) {
+  console.error('usage: generate-map <spec-dir>');
+  process.exit(2);
+}
+const root = path.resolve(args[0]);
+if (!fs.existsSync(root) || !fs.statSync(root).isDirectory()) { console.error(`not a directory: ${args[0]}`); process.exit(2); }
+const read = (rel) => { try { return fs.readFileSync(path.join(root, rel), 'utf8'); } catch (e) { return null; } };
+
+const m = manifest.read(read(manifest.FILE));
+if (!m.doc || !m.doc.map) { console.error(`generate-map: ${manifest.FILE} declares no map`); process.exit(1); }
+const out = map.render(root, m);
+for (const e of out.errors) console.error(`generate-map: ${e}`);
+
+const write = (rel, text) => {
+  if (read(rel) === text) console.log(`${rel}: up to date`);
+  else { fs.writeFileSync(path.join(root, rel), text); console.log(`${rel}: written`); }
+};
+const readmePath = m.path('spec', 'readme') || 'README.md';
+const readme = read(readmePath);
+const next = readme === null ? null : map.splice(readme, out.section);
+if (next === null) { console.error(`generate-map: ${readmePath} has no section 2 (a heading "## 2. ")`); process.exit(1); }
+write(readmePath, next);
+for (const v of out.views) write(v.path, v.text);
+process.exit(out.errors.length ? 1 : 0);

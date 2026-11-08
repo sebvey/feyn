@@ -190,4 +190,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'concept-file', run };
+// the roles of the spec it reads, by their key in spec.yaml (the course through the parser), which
+// the map of the spec shows (spec-directives/1/lib/map.js)
+const reads = ['course.form', 'course.lexicon', 'course.schemas', 'course.parser'];
+
+module.exports = { id: 'concept-file', run, reads };
