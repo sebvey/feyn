@@ -7,8 +7,9 @@
 const directives = require('./directives');
 const mdlib = directives.lib('md');
 const glossary = directives.lib('glossary');
-// the fixed facts of storyline.md and the release sections of CHANGELOG.md are read by the lib,
-// as the site build reads them
+// the fixed facts of storyline.md are read by the parser of this MAJOR (course/parser.js), the
+// release sections of CHANGELOG.md through the directives' lib (lib/common.js), as the site build
+// reads them
 const { fail, RELEASE } = directives.lib('common');
 const { fixedFacts } = require('../parser')(directives.lib);
 
