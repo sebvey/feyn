@@ -48,7 +48,7 @@ Deux lecteurs y viennent. Le builder, qui écrit le build du professeur : sa moi
 
 ## Clés et paramètres
 
-Chaque clé et chaque paramètre que les règles emploient, en un seul endroit : les deux lexiques, `course/lexicon.yaml` et `teacher/lexicon.yaml`, s'écrivent depuis cette liste, et `lexicon-keys` (`check-spec`) vérifie que chaque clé existe dans l'un d'eux. Les valeurs sont données pour référence ; le lexique fait foi. Une valeur marquée *modèle* est un patron que le professeur suit, pas une chaîne fixe. La colonne « Used in » cite les règles de `rules.yaml` qui emploient la clé.
+Chaque clé et chaque paramètre que les règles emploient, en un seul endroit : les deux lexiques, `course/lexicon.yaml` et `teacher/lexicon.yaml`, s'écrivent depuis cette liste, et `lexicon-keys` (`check-spec`) vérifie que chaque clé existe dans l'un d'eux quand le manifeste de la spec, `spec.yaml`, déclare le professeur, ce qu'il ne fait pas tant que le professeur est gelé. Les valeurs sont données pour référence ; le lexique fait foi. Une valeur marquée *modèle* est un patron que le professeur suit, pas une chaîne fixe. La colonne « Used in » cite les règles de `rules.yaml` qui emploient la clé.
 
 **`course/lexicon.yaml`, le lexique des fichiers du cours (`course/README.md` section 7) : les clés employées ici**
 

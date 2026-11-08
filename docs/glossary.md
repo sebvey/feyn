@@ -47,7 +47,15 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the contract of a **product line**: the shape of its courses (structure, drawing contract, checks) and what it fixes of each of its products, among which the generic way to teach every course of the line, its **protocol**; versioned, one folder per MAJOR. Neither "spec" nor "specification" names anything else (an issue, a design)
 - en: spec
 - fr: « spec »
-- not to confuse with: [product line](#product-line), [spec directives](#spec-directives), [protocol](#protocol)
+- not to confuse with: [product line](#product-line), [spec directives](#spec-directives), [protocol](#protocol), [manifest](#manifest)
+
+### manifest
+
+- means: the file `spec.yaml` of a spec MAJOR, which declares the spec: its identity (its name, its MAJOR, the MAJOR of the **spec directives** it follows, its version, its language), the files of its **course** and of each of its **products**, each by its role, and the lists of the spec that its files are held to
+- en: manifest
+- fr: « manifeste »
+- not to confuse with: [spec](#spec), [course.lock](#courselock)
+- why: named after what it declares, as `course.yaml` is named after the course; a file `manifest.yaml` beside `spec.yaml` was ruled out, since it would name the role of the file and not the thing it declares, and split the declaration of a spec in two. "manifest" stays rejected for the classroom's record, the **course.lock**, which declares no spec
 
 ### product line
 
@@ -565,7 +573,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the classroom's record, the file `course.lock`: course id, ref, course sha, tooling sha, channel, site URL, date
 - en: course.lock · rejected: "manifest"
 - fr: to settle
-- not to confuse with: [classroom](#classroom)
+- not to confuse with: [classroom](#classroom), [manifest](#manifest)
 
 ## Rules and checks
 
