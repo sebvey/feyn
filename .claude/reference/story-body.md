@@ -1,6 +1,6 @@
 <!-- The body of a story: every rule of its writing is in this template's comments, followed and then removed (each comment replaced by what it asks), whoever writes or rewrites it. -->
 
-**Where:** <!-- The area (agentic, repo, site, teacher, a spec, a course), then at most three words on what is touched, in parentheses. It comes first: it situates the rest. -->
+**Where:** <!-- The area (agentic, repo, site, teacher, spec-directives, a spec, a course), then at most three words on what is touched, in parentheses. It comes first: it situates the rest. -->
 
 **What:** <!-- What the story delivers, in one sentence. -->
 
