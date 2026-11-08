@@ -7,7 +7,7 @@
 # course/README.md sections 1 to 5 describe it, the rules of course/rules.yaml state it, the
 # checks read it here (concept-file, unit-contract, teacher-message-length, and the text checks and
 # unit-additions for their scope; course-yaml and course-files for the course files), and the
-# spec half of the site build, site/build/render-site, reads `published` here (site/build/README.md).
+# spec half of the site build, products/site/build/render-site, reads `published` here (products/site/build/README.md).
 #
 # This file names words by their key in course/lexicon.yaml and holds none: `heading: essentials`
 # is the lexicon's `headings.essentials`, a field `matter` is `unit_fields.matter`, a block `lesson`

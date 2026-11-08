@@ -5,7 +5,7 @@ status: accepted
 area: spec:linear-fr
 ---
 
-Without this, S1-05 would write « s'il est ou va être PO d'un produit » into `teacher/lexicon.yaml` as a generic phrase of the teacher's lexicon, and the teacher build of any other course would make the teacher ask the learner what they know of Scrum.
+Without this, S1-05 would write « s'il est ou va être PO d'un produit » into `products/teacher/lexicon.yaml` as a generic phrase of the teacher's lexicon, and the teacher build of any other course would make the teacher ask the learner what they know of Scrum.
 
 The onboarding questions and the teacher's posture belong to the course, not to the protocol: `plan.md` has a mandatory « Accueil » section (`headings.onboarding`) giving the posture in a paragraph, then the questions as a numbered list, each `**<label>** : <question>`; the protocol reads it (its rules on the posture, on announcing and ordering the questions and on writing the learner's profile) and keeps only what every course shares: the nickname question, first, and no question on pace. Each answer goes to `learner/apprenant.md` as `- <label> : <answer>`, in the learner's words. This replaces the generic wording PR #86 put in the protocol's rules on the posture and on the order of the questions, and the two fixed memory headings « Rôle » and « Avant le parcours ».
 

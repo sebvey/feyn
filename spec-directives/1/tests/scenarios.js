@@ -1,17 +1,17 @@
 'use strict';
 // A test of the spec's own files, run by check-spec, which verifies no rule (decisions
 // conformity-of-the-course-and-products, spec-files-by-product): the test scenarios of the teacher,
-// teacher/tests/, in their form, never what a run of them shows (teacher-builder/fresh-test).
+// products/teacher/tests/, in their form, never what a run of them shows (teacher-builder/fresh-test).
 //   - the folder is the one the manifest, spec.yaml, declares, `products.teacher.tests`
-//     (teacher/tests/ here), the rules those of `products.teacher.rules` (teacher/rules.yaml): a
+//     (products/teacher/tests/ here), the rules those of `products.teacher.rules` (products/teacher/rules.yaml): a
 //     manifest that does not declare the folder checks nothing (a spec MAJOR may have no fresh
 //     test yet); a folder declared and missing or empty fails;
-//   - teacher/tests/scenario.schema.yaml exists and compiles under ajv's Ajv2020 (JSON Schema
+//   - products/teacher/tests/scenario.schema.yaml exists and compiles under ajv's Ajv2020 (JSON Schema
 //     2020-12);
-//   - every other `*.yaml` of teacher/tests/ is a scenario: it parses, is valid against the
+//   - every other `*.yaml` of products/teacher/tests/ is a scenario: it parses, is valid against the
 //     schema, and its `id` is its file name without .yaml;
 //   - every slug a scenario names, in `rules` and in the `rules` of an `expect`, is a rule of the
-//     protocol: the id of a rule of teacher/rules.yaml;
+//     protocol: the id of a rule of products/teacher/rules.yaml;
 //   - every slug of an `expect` is in the scenario's `rules`.
 // It names no file of a spec: the schema's name, scenario.schema.yaml, is the directives'.
 const path = require('path');
@@ -23,7 +23,7 @@ const SCHEMA_NAME = 'scenario.schema.yaml';
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
-// the rules of the protocol: the ids of the rules of teacher/rules.yaml
+// the rules of the protocol: the ids of the rules of products/teacher/rules.yaml
 function protocolRules(ctx, file) {
   const rules = new Set();
   const raw = file === null ? null : ctx.read(file);

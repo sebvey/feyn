@@ -1,8 +1,8 @@
 'use strict';
 // A test of the spec's own files, run by check-spec, which verifies no rule (decisions
 // conformity-of-the-course-and-products, spec-files-by-product): the composition of the teacher,
-// teacher/composition.yaml, in its form, never its sense (the fresh tests judge that).
-//   - teacher/composition.yaml exists and is a map whose key `parts` is a list of exactly five
+// products/teacher/composition.yaml, in its form, never its sense (the fresh tests judge that).
+//   - products/teacher/composition.yaml exists and is a map whose key `parts` is a list of exactly five
 //     parts, ids `permanent`, `on-demand`, `course-reads`, `learner-memory`, `permissions`, each once;
 //   - a part has `loads`, one of the closed list below, and `draws`, a non-empty list;
 //   - an entry of `draws` has `from`, one of the closed list below, `source` and `what`, non-empty
@@ -10,7 +10,7 @@
 //   - the part `on-demand` has `moments`, a non-empty list; a moment has `id` and `when`, `rules` a
 //     list (empty allowed) of strings, and `draws`, as a part's.
 // The file is the one the manifest, spec.yaml, declares, `products.teacher.composition`
-// (teacher/composition.yaml above): a manifest that does not declare it checks nothing. The closed
+// (products/teacher/composition.yaml above): a manifest that does not declare it checks nothing. The closed
 // lists are the composition model's, not one spec's: the five parts, when a part loads, where a
 // source lives. A `from: spec` source is checked against the spec folder, so the test names no
 // file of a spec.

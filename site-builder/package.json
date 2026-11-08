@@ -2,7 +2,7 @@
   "name": "feyn-site-builder",
   "private": true,
   "type": "module",
-  "description": "The site engine of feyn: lays out the published parts of a course, rendered by its spec MAJOR's site/build/render-site, as a static site (site-builder/README.md).",
+  "description": "The site engine of feyn: lays out the published parts of a course, rendered by its spec MAJOR's products/site/build/render-site, as a static site (site-builder/README.md).",
   "scripts": {
     "check": "astro check"
   },

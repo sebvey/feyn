@@ -5,7 +5,7 @@
 // method test, the blocking and the reporting ones), each of which must pass. Two courses: with
 // a diagram, and without (the `diagrams` key deleted, as the concept template says).
 //   mise exec -- product-lines/linear-fr/1/course/templates/smoke-test [--keep]
-// The learner templates (teacher/templates/learner/ of the MAJOR) have no check: they are only
+// The learner templates (products/teacher/templates/learner/ of the MAJOR) have no check: they are only
 // scanned for unreplaced placeholders.
 const fs = require('fs');
 const os = require('os');
@@ -15,7 +15,7 @@ const { spawnSync } = require('child_process');
 const here = __dirname;
 // here is product-lines/<name>/<MAJOR>/course/templates
 const spec = path.resolve(here, '..', '..');
-const teacher = path.join(spec, 'teacher', 'templates');
+const teacher = path.join(spec, 'products', 'teacher', 'templates');
 
 // placeholder -> dummy value (the French words are course text)
 const DUMMY = {
@@ -173,7 +173,7 @@ function build(withDiagram) {
     fs.mkdirSync(path.dirname(path.join(course, rel)), { recursive: true });
     fs.writeFileSync(path.join(course, rel), text);
   };
-  // the learner templates are the teacher's, read from teacher/templates/
+  // the learner templates are the teacher's, read from products/teacher/templates/
   const read = (n) => fs.readFileSync(path.join(files.learner.includes(n) ? teacher : here, n), 'utf8');
   const out = (n) => fill(n, read(n));
   for (const n of [...files.yaml, ...files.md]) put(n, out(n), n);
