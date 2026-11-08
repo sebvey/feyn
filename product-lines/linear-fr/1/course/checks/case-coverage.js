@@ -35,4 +35,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'case-coverage', run };
+// the roles of the spec it reads, by their key in spec.yaml (the course through the parser), which
+// the map of the spec shows (spec-directives/1/lib/map.js)
+const reads = ['course.form', 'course.lexicon', 'course.parser'];
+
+module.exports = { id: 'case-coverage', run, reads };

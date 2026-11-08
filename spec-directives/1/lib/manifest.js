@@ -2,12 +2,17 @@
 // The manifest of a spec MAJOR, its spec.yaml (README.md section 8), read once for every test of
 // check-spec and for any program of the directives that needs the files or the lists of a spec:
 // none of them parses spec.yaml its own way. Its form is spec.schema.yaml, beside lib/: the
-// identity (name, major, directives, version, language), then `course:` and `products:`, each
-// role mapped to one path relative to the spec MAJOR, then `lists:`.
+// identity (name, major, directives, version, language), then `spec:` (the MAJOR's own files),
+// `course:` and `products:`, each role mapped to one path relative to the spec MAJOR, then
+// `lists:`, then `map:` (what each role holds and who reads it, for the map, lib/map.js).
 //   read(text)      the manifest of a spec.yaml's text (null when the file is missing): a reader
 //                   that never throws; a manifest it cannot read declares nothing
-//   m.path(owner, role)   the path of a role, `course` or a product (`site`, `teacher`) as owner;
-//                         null when the manifest does not declare it
+//   m.path(owner, role)   the path of a role, `spec`, `course` or a product (`site`, `teacher`) as
+//                         owner; null when the manifest does not declare it
+//   m.roles()             every role declared, in the manifest's order: [{ owner, role, ref, path }],
+//                         `ref` its dotted key (`spec.readme`, `course.rules`, `products.site.build`)
+//   m.products()          the products declared, in the manifest's order
+//   m.map(ref)            the entry of `map:` for a role's ref ({ holds, readers }), null when none
 //   m.list(name)          a list of `lists:` (`categories`, `families`), null when undeclared
 //   m.lexicon(owner)      the keys of `lists.lexicons.<owner>`, [[group, key, kind], ...], null
 //                         when undeclared
@@ -37,7 +42,7 @@ function describe(error) {
   if (error.keyword === 'additionalProperties') return `unknown key ${key(p.additionalProperty)}`;
   if (error.keyword === 'propertyNames') return `${key(p.propertyName)}: the key is not lowercase words joined by underscores`;
   const what = error.parentSchema && error.parentSchema.description;
-  if (what && ['type', 'pattern', 'minimum', 'enum', 'minItems', 'uniqueItems'].includes(error.keyword)) {
+  if (what && ['type', 'pattern', 'minimum', 'enum', 'const', 'minItems', 'uniqueItems'].includes(error.keyword)) {
     return `${at} ${JSON.stringify(error.data)} is not ${what}`;
   }
   return `${at || 'the manifest'} ${error.message}`;
@@ -65,11 +70,17 @@ function read(text) {
   }
   const section = (owner) => {
     if (!doc) return null;
-    const s = owner === 'course' ? doc.course : (isMap(doc.products) ? doc.products[owner] : null);
+    const s = owner === 'course' || owner === 'spec' ? doc[owner] : (isMap(doc.products) ? doc.products[owner] : null);
     return isMap(s) ? s : null;
   };
+  const products = () => (doc && isMap(doc.products) ? Object.keys(doc.products).filter((p) => isMap(doc.products[p])) : []);
   const lists = () => (doc && isMap(doc.lists) ? doc.lists : {});
-  const ref = (owner, role) => (owner === 'course' ? `course.${role}` : `products.${owner}.${role}`);
+  const ref = (owner, role) => (owner === 'course' || owner === 'spec' ? `${owner}.${role}` : `products.${owner}.${role}`);
+  const path_ = (owner, role) => {
+    const s = section(owner);
+    const v = s ? s[role] : null;
+    return typeof v === 'string' && v.trim() !== '' ? v.replace(/\/+$/, '') : null;
+  };
 
   return {
     file: FILE,
@@ -81,10 +92,23 @@ function read(text) {
       if (!doc || !(key in doc)) return '';
       return text.split('\n')[yaml.lineOf(doc, key, 1) - 1] || '';
     },
-    path(owner, role) {
-      const s = section(owner);
-      const v = s ? s[role] : null;
-      return typeof v === 'string' && v.trim() !== '' ? v.replace(/\/+$/, '') : null;
+    path: path_,
+    roles() {
+      const out = [];
+      for (const owner of ['spec', 'course', ...products()]) {
+        for (const role of Object.keys(section(owner) || {})) {
+          const p = path_(owner, role);
+          if (p !== null) out.push({ owner, role, ref: ref(owner, role), path: p });
+        }
+      }
+      return out;
+    },
+    products,
+    map(r) {
+      if (!doc || !isMap(doc.map)) return null;
+      let v = doc.map;
+      for (const k of r.split('.')) v = isMap(v) ? v[k] : null;
+      return isMap(v) && typeof v.holds === 'string' && Array.isArray(v.readers) ? { holds: v.holds, readers: v.readers.slice() } : null;
     },
     list(name) {
       const v = lists()[name];

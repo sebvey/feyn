@@ -1,27 +1,16 @@
 # linear-fr : le cours
 
-| Reader | Comes for | Opens |
-|---|---|---|
-| creator | what a course is, the templates, how to verify | sections [1](#1-le-dossier-du-cours) to [7](#7-le-lexique-des-fichiers-du-cours), [`templates/README.md`](templates/README.md), [`product-lines/check-course`](../../../check-course) |
-| builder | the shape of a course, the form of the concept file and of the course files, the lexicon of the course files | sections [1](#1-le-dossier-du-cours) to [7](#7-le-lexique-des-fichiers-du-cours), [`form.yaml`](form.yaml), [`schemas/`](schemas/) |
-| verifier | the rules of a course as data, the checks, their fixtures | [`rules.yaml`](rules.yaml), [`checks/README.md`](checks/README.md), [`checks/fixtures/`](checks/fixtures/) |
-| spec writer | the rules, the form and the schemas of a course, the spec's decisions | [`rules.yaml`](rules.yaml), [`form.yaml`](form.yaml), [`schemas/`](schemas/), [`../decisions/`](../decisions/), [`../CHANGELOG.md`](../CHANGELOG.md) |
+Who reads each file of the course and what tests it: the map, [`../README.md`](../README.md#2-files) section 2; the form of the files of a course, readable: [`form.md`](form.md).
 
 The readers are defined in [`spec-directives/README.md`](../../../../spec-directives/README.md#the-readers).
 
 Ce qu'est un cours de `linear-fr` : son dossier, `course.yaml`, le dossier de concept, les fichiers de domaine, les fichiers du cours, les schémas et le lexique des fichiers du cours. La portée, les fichiers, les catégories et les checks sont le `README.md` de la MAJOR ; la conformité, les niveaux, les méthodes, la sévérité et les versions sont les directives de spec, `spec-directives/1/README.md` ; le protocole que le professeur exécute est `products/teacher/rules.yaml`.
 
-Les règles d'un cours, celles que la revue vérifie comprises, sont les données de [`rules.yaml`](rules.yaml), un groupe par section qui y renvoie, chacun avec son `purpose` ; les tables de champs sont les schémas JSON de [`schemas/`](schemas/) ; la forme du fichier de concept (ses parties, les blocs d'une unité et leurs champs, leur ordre, leur présence, publiés ou non, leurs lecteurs, la longueur d'un message du professeur) et celle des fichiers du cours (`course.yaml`, `logo.svg`, `plan.md`, le fichier de domaine, `storyline.md`) sont la donnée de [`form.yaml`](form.yaml), qui nomme les mots par leur clé du lexique. Chaque section tient sa table des lecteurs quand elle en a une, ce qui n'énonce aucune règle (l'arborescence d'un cours, ce à quoi sert un fichier, une notation) et un lien vers son groupe de `rules.yaml` et, pour une table de champs, vers son schéma JSON (#524, #531, #533). Les sections 1 à 7 viennent des sections 2 à 7 et 9 de la description de la spec avant la séparation (#323, lue à `9c691da^:specs/linear-course/1/SPEC.md`).
+Les règles d'un cours, celles que la revue vérifie comprises, sont les données de [`rules.yaml`](rules.yaml), un groupe par section qui y renvoie, chacun avec son `purpose` ; les tables de champs sont les schémas JSON de [`schemas/`](schemas/) ; la forme du fichier de concept (ses parties, les blocs d'une unité et leurs champs, leur ordre, leur présence, publiés ou non, leurs lecteurs, la longueur d'un message du professeur) et celle des fichiers du cours (`course.yaml`, `logo.svg`, `plan.md`, le fichier de domaine, `storyline.md`) sont la donnée de [`form.yaml`](form.yaml), qui nomme les mots par leur clé du lexique. Chaque section tient ce qui n'énonce aucune règle (l'arborescence d'un cours, ce à quoi sert un fichier, une notation) et un lien vers son groupe de `rules.yaml` et, pour une table de champs, vers son schéma JSON (#524, #531, #533). Les sections 1 à 7 viennent des sections 2 à 7 et 9 de la description de la spec avant la séparation (#323, lue à `9c691da^:specs/linear-course/1/SPEC.md`).
 
 Chaque concept est une source, écrite une fois : un **fichier de concept**, `concept.md`, découpé en **unités**, un message du professeur chacune, dont chaque bloc est **publié** ou **non publié**, une propriété de la spec (`form.yaml`), jamais écrite dans le cours. Le site construit les parties publiées, et rien d'autre ; le professeur lit le fichier entier. Le site et la classe sont des builds du cours, sans réécriture.
 
 ## 1. Le dossier du cours
-
-| Reader | Needs | When |
-|---|---|---|
-| the creator (human or agent) | the files a course has, which are mandatory, where each one's form is given | creating a course; adding a domain or a concept |
-| the site | where each file it builds is | at each build |
-| the reviewer | that a change sits where the spec puts it, in plain CommonMark | reviewing a change |
 
 ```
 courses/<id>/
@@ -41,13 +30,6 @@ courses/<id>/
 Les règles du dossier du cours sont le groupe « Le dossier du cours » de [`rules.yaml`](rules.yaml).
 
 ## 2. `course.yaml`
-
-| Reader | Needs | When |
-|---|---|---|
-| the creator (human or agent) | the course order: its domains, its concepts and their prerequisites | designing the course; each change of its plan |
-| the teacher | the order it teaches in, the prerequisites | each teaching session |
-| the site | titles, objectives, durations, the order of the pages and their addresses | at each build |
-| the maintainer | the identifiers whose change is a course MAJOR (section 3) | classing a course change |
 
 `course.yaml` est la carte du cours : son identité, ses domaines et ses concepts, rien sous le concept ; l'arbre d'un concept est dans son `concept.md` (section 3), et à qui le cours s'adresse, dans « Public cible » de `plan.md` (section 5). Le site, le build du professeur et les checks lisent `course.yaml` ; le site compose depuis lui l'enchaînement des concepts d'un domaine (section 4).
 
@@ -78,27 +60,11 @@ Le site rend les positions et les voisins depuis le frontmatter, sous le titre `
 
 ### 3.2 Le corps de `concept.md`
 
-| Reader | Needs | When |
-|---|---|---|
-| the creator (human or agent) | the parts of the file, in order, and what each holds | writing or changing a concept |
-| the site | the published parts, to render them and nothing else | at each build |
-| the teacher | the whole file: the units in order, each with its cases, its corrections, its instruction | each teaching session |
-
 Le corps tient, dans cet ordre, le titre du concept (section 3) ; une **tête**, le titre `## L'essentiel`, puis son texte, le seul résumé écrit du concept ; les sections et leurs unités ; un **pied**, le titre `## Clôture`, puis ses blocs `###` : « Se vérifier » (la question que l'apprenant se pose pour vérifier sa réponse, ce qui sert à reconnaître ou à appliquer le concept entier), « Approfondissement » (de la matière en plus, pour qui demande à aller plus loin) et « Consigne au professeur » (ce que le professeur sait et ne dit pas dans le concept entier, qu'aucune unité ne dit seule, que seul le professeur lit ; son critère est celui de la consigne d'une unité, 3.3), chacun au choix, « Clôture » présente quand elle en tient un. Ce qu'un build compose n'y est pas écrit : l'objectif vient de `course.yaml`. Le site construit la tête et les parties publiées du pied ; quand le professeur lit « Approfondissement », `products/teacher/rules.yaml` le dit.
 
 Ses règles sont le groupe « Le corps de concept.md » de [`rules.yaml`](rules.yaml) ; ses parties, leur ordre et leur présence sont `concept_file` de [`form.yaml`](form.yaml).
 
 ### 3.3 L'unité
-
-| Reader | Needs | When |
-|---|---|---|
-| the teacher | the unit's matter to say, its case to pose (its anchor, its question), how to correct the answer from the root of the misconception the learner holds, the misconceptions each case makes tempting, to pick a supplementary case | each unit; after a wrong answer; in practice |
-| the learner | through the teacher or on the site, the matter, each case (its anchor, its question, its expected answer), the misconceptions, each with its root and its correction; through the teacher, the expected answer of a case after they answer it | each unit |
-| the site reader | the published blocks of each unit: the matter, each case under its heading with its expected answer and the misconceptions it makes tempting, which the site shows hidden until the reader reveals them, each name a link to its misconception, then the misconceptions | reading a concept |
-| the site | the published blocks of each unit, nothing else | at each build |
-| the creator (human or agent) | the blocks of a unit in the order of writing, which are published, what each field holds, which are mandatory, what a misconception is and what it is not, which misconceptions a case names, what « Cas du fil rouge » holds and where the rest goes | writing a unit |
-| the reviewer | the review rule of a misconception, with a good one and a bad one | reviewing a unit |
-| taught-check | what each question asks, against what the learner was taught before it | after a change to what a concept teaches |
 
 Une unité tient trois blocs `####`, dans l'ordre où le créateur l'écrit : enseigner, demander, donner la consigne. Le titre d'un bloc est son seul mot ; qu'un bloc soit **publié** (le site, le professeur et l'apprenant le lisent) ou non (le professeur seul le lit), c'est `form.yaml` qui le dit, pas son titre. Les mots sont ceux de `unit_blocks` et `unit_fields` du lexique (section 7).
 
@@ -170,14 +136,6 @@ Les règles de l'unité sont le groupe « L'unité » de [`rules.yaml`](rules.ya
 
 ### 3.4 `sources.md`
 
-| Reader | Needs | When |
-|---|---|---|
-| the site reader | to know the course is grounded; where to read further; which claim is consensus, school or the course's choice | reading a concept |
-| the teacher | the source as described, to answer « d'où ça vient ? », and what is not verified (`products/teacher/rules.yaml`, group `stances-and-sources`) | on the learner's request |
-| the creator (human or agent) | what to source and what not to; where to put what could not be confirmed | writing the concept |
-| the reviewer | that a claim is backed by what it cites: the quotation, the place | reviewing a change |
-| the maintainer | when a source changes or a section is rewritten, what to re-verify; when it was consulted | months later |
-
 `sources.md` trace les champs publiés de `concept.md` qui affirment (« Matière », les racines et les corrections des « Idées fausses », « L'essentiel », « Se vérifier », « Approfondissement »), pas les cas d'une unité, dont l'ancrage vient du fil rouge et la réponse attendue redit la matière : « Affirmations » relie chaque affirmation à ce qui l'établit, « Références » décrit les sources, « Non vérifié » dit ce qu'aucune source consultée ne confirme. Le site construit chaque ligne de « Affirmations » et de « Références » ; « Non vérifié » est la seule section qu'il ne construit pas, reconnue par son titre du lexique ; la classe copie le fichier entier. Ses sections, leur ordre et leur publication sont `sources` de [`form.yaml`](form.yaml).
 
 Les règles de `sources.md` sont le groupe « Le fichier sources.md » de [`rules.yaml`](rules.yaml).
@@ -192,36 +150,17 @@ Les règles de ces conventions sont le groupe « Les conventions du texte » de 
 
 ### 3.6 Les ajouts d'une unité
 
-| Reader | Needs | When |
-|---|---|---|
-| the creator (human or agent) | what writing a unit adds outside the concept file, and whether it was added | writing a unit, then the sources of its concept |
-| the reviewer | which additions a script verified, so the review reads the rest | reviewing a change |
-
 Écrire une unité ajoute hors du fichier de concept : ce sont ses **ajouts**. Un fait que son ancrage emploie entre aux « Faits fixés » de `storyline.md`, avec l'id de l'unité ; il convient qu'un passage qu'elle met en gras soit un terme de `glossary.md` : le gras d'emphase reste possible, et `unit-additions` signale un gras qui n'est pas un terme, au cas où le terme manquerait au glossaire ; une affirmation d'un champ publié a sa ligne dans « Affirmations » de `sources.md`, une fois les sources du concept écrites. Les étapes de la création d'un cours et les checks que chacune lance sont dans [`checks/README.md`](checks/README.md).
 
 Les règles des ajouts sont le groupe « Les ajouts d'une unité » de [`rules.yaml`](rules.yaml).
 
 ## 4. Fichiers de domaine
 
-| Reader | Needs | When |
-|---|---|---|
-| the learner | why the domain matters, and a situation of the storyline where its concepts serve | before its concepts |
-| the teacher | what it says to present the domain (group `domain-presentation`) | before the first concept of a domain |
-| the creator (human or agent) | what each section says, and that it teaches no concept | writing or changing a domain |
-
 Un fichier de domaine, dans `domains/`, est l'entrée d'un domaine, publié : le site le construit et le professeur le lit. Il tient ce que seul le domaine dit, le problème qu'il règle et un cas du fil rouge qui le traverse ; le reste est écrit ailleurs une fois : son titre, son objectif et ses concepts dans `course.yaml`, d'où le build compose l'enchaînement de ses concepts, et sa place dans le cours dans « Progression » de `plan.md`.
 
 Ses sections, leur ordre, leur présence, publiées ou non, et leurs lecteurs sont `domain_file` de [`form.yaml`](form.yaml) ; ses règles sont le groupe « Les fichiers de domaine » de [`rules.yaml`](rules.yaml).
 
 ## 5. Fichiers du cours
-
-| Reader | Needs | When |
-|---|---|---|
-| the teacher | its posture, the onboarding questions, the course's stances, the storyline facts its anchors use | onboarding; each unit it teaches |
-| the learner | the course glossary, the public and the progression of the course, the world of the storyline | reading the course on the site |
-| the site | the published sections of `plan.md` and the world of the storyline, never its fixed facts | at each build |
-| the creator (human or agent) | the terms to use and the defining concept of each, the storyline facts an anchor may draw on | writing a concept or a unit |
-| the maintainer | what changed in each course version | each release |
 
 - **`plan.md`** : à qui le cours s'adresse (« Public cible », le seul endroit qui le dit), comment le professeur accueille un nouvel apprenant (« Accueil »), la **progression** du cours (« Progression » : les domaines dans l'ordre, ce que chacun donne, comment l'un mène au suivant), puis ce que le professeur en prend pour enseigner (les partis pris, les règles d'écriture du cours, les questions qu'il pose et repose dans tout le cours) ; le professeur le lit, le site en construit le public et la progression.
 - **`glossary.md`** : les termes du cours ; le site montre son premier tableau et « Termes à éviter » tels quels.
@@ -234,26 +173,11 @@ Les parties de `plan.md`, de `storyline.md`, de `glossary.md` et de `CHANGELOG.m
 
 ## 6. Les schémas
 
-| Reader | Needs | When |
-|---|---|---|
-| the learner | a drawing readable on the site in both themes and in the desktop panel; in the terminal, its caption and the site link | at the unit it illustrates |
-| the creator (human or agent) | the contract an SVG meets (6.1) and the style it is drawn in (6.2) | drawing or redrawing a diagram |
-| the site | the one property a consumer keeps when it displays a diagram (below) | at each build |
-| the teacher | the same property, in the desktop panel | sending a diagram |
-| the reviewer | the style and the match with the caption, which no script checks | reviewing a diagram |
-
 Un **schéma** est un SVG du dossier de concept, déclaré dans `diagrams` (section 3.1), qui montre en un dessin ce qu'une unité enseigne. Un même SVG sert chaque endroit où l'apprenant le rencontre, complet par lui-même : le site le montre ; le professeur l'envoie au panneau du bureau et en dit la légende ; dans le terminal, le professeur dit la légende et donne le lien du site. Chacun affiche le SVG tel qu'il est, `currentColor` suivant la couleur du texte qui l'entoure ; certains teintent en outre les trois classes `primary`, `secondary` et `muted`, et aucun ne demande au SVG de changer.
 
 La section 6.1 est le contrat de dessin ; la section 6.2, le style que partagent les schémas d'un cours.
 
 ### 6.1 Le contrat de dessin
-
-| Reader | Needs | When |
-|---|---|---|
-| the creator (human or agent) | what an SVG may hold, to pass `drawing-contract` | drawing a diagram |
-| the site | an SVG shown as it is: no script, no external resource, colours that follow the text around it | at each build |
-| the teacher | an SVG the desktop panel shows as it is | sending a diagram |
-| the learner | with a screen reader, the title and description of the drawing | reading a concept on the site |
 
 Les nuances d'un schéma viennent de `fill-opacity`, `stroke-opacity` et `opacity`. Quand la feuille de style d'un consommateur fixe la `color` des trois classes (et celle du thème sombre), elle reteinte `currentColor`. `<desc>` décrit le dessin pour les lecteurs d'écran.
 
@@ -261,21 +185,11 @@ Les règles du contrat de dessin sont le groupe « Le contrat de dessin » de [`
 
 ### 6.2 Le style
 
-| Reader | Needs | When |
-|---|---|---|
-| the creator (human or agent) | which class and opacity each role takes, what a diagram holds | drawing or redrawing a diagram |
-| the reviewer | the principles a diagram is judged against | reviewing a diagram |
-
 Le style est écrit pour les schémas à dessiner, pas pour la compatibilité avec les anciens (décision `one-diagram-style`).
 
 Les règles du style sont le groupe « Le style des schémas » de [`rules.yaml`](rules.yaml).
 
 ## 7. Le lexique des fichiers du cours
-
-| Reader | Needs | When |
-|---|---|---|
-| the creator (human or agent) | the headings, block kinds, unit field labels, unit block words, markers and natures to write | writing any course file |
-| the writer of a program that recognises a word of the course files (a check, the teacher build, the site) | the key that names the word, its group, and the file to read it from, `course/lexicon.yaml` | writing or changing that program |
 
 Le lexique des fichiers du cours, `course/lexicon.yaml`, écrit une fois les mots qu'un programme reconnaît dans un fichier du cours (un titre, un mot de type, un champ ou un bloc d'unité, un marqueur, une nature, une référence de concept, un type de source, un caractère banni) et les nomme par clé : les checks, le build du professeur et le site les y lisent, par leur clé, et aucun ne les écrit à nouveau (décision `lexicon-not-language-pack`). Les mots que le professeur dit et écrit sont le lexique du professeur, `products/teacher/lexicon.yaml` (`products/teacher/README.md`, « Clés et paramètres ») ; les mots et les textes courts que le site montre pour tout cours de la spec, et qu'aucun fichier du cours ne tient, sont le lexique du site, `products/site/lexicon.yaml`.
 

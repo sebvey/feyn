@@ -106,4 +106,9 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'composition', run };
+// the roles it reads, by their key in the manifest, which the map of a spec MAJOR shows (lib/map.js)
+const reads = ['products.teacher.composition'];
+// the roles without which it checks nothing (m.nothing above): the map lists it when one is declared
+const needs = ['products.teacher.composition'];
+
+module.exports = { id: 'composition', run, reads, needs };

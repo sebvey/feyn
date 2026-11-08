@@ -5,7 +5,8 @@
 //   - spec.yaml exists and is valid against spec-directives/1/spec.schema.yaml (through
 //     lib/manifest.js, under ajv's Ajv2020): its identity (`name` a slug, `major` and `directives`
 //     positive integers, `version` `MAJOR.MINOR.PATCH` with an optional `-alpha`, `language` an
-//     ISO 639-1 code), `course:` and `products:` (each role one of the schema's, mapped to a path),
+//     ISO 639-1 code), `spec:` (its own files, at their fixed paths), `course:` and `products:` (each
+//     role one of the schema's, mapped to a path), `map:` (each entry its `holds` and its `readers`),
 //     `lists:` (`categories`, and the optional `families` and `lexicons`), no other key; each
 //     failure names the key at fault;
 //   - then what the schema cannot say: `major` and `directives` are written as integers (not
@@ -99,4 +100,7 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'spec-yaml', run };
+// the roles it reads, by their key in the manifest, which the map of a spec MAJOR shows (lib/map.js)
+const reads = ['spec.manifest', 'spec.changelog'];
+
+module.exports = { id: 'spec-yaml', run, reads };

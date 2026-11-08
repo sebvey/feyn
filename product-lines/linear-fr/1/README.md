@@ -2,8 +2,8 @@
 
 | Reader | Comes for | Opens |
 |---|---|---|
-| creator | what a course is, the templates, how to verify | [`course/README.md`](course/README.md), [`course/templates/README.md`](course/templates/README.md), [`product-lines/check-course`](../../check-course) |
-| builder | the shape of a course, of learner memory, the lexicons, the protocol | [`course/README.md`](course/README.md), [`course/schemas/`](course/schemas/), [`linear-fr/1/products/teacher/README.md`](products/teacher/README.md), [`linear-fr/1/products/teacher/rules.yaml`](products/teacher/rules.yaml), [`products/teacher/composition.yaml`](products/teacher/composition.yaml), [`linear-fr/1/products/teacher/templates/learner/`](products/teacher/templates/learner/), [`course/lexicon.yaml`](course/lexicon.yaml), [`products/teacher/lexicon.yaml`](products/teacher/lexicon.yaml), [`products/site/lexicon.yaml`](products/site/lexicon.yaml), [`products/site/url-scheme.yaml`](products/site/url-scheme.yaml), [`products/site/build/README.md`](products/site/build/README.md), [`spec.yaml`](spec.yaml) |
+| creator | what a course is, its form, the templates, how to verify | [`course/README.md`](course/README.md), [`course/form.md`](course/form.md), [`course/templates/README.md`](course/templates/README.md), [`product-lines/check-course`](../../check-course); the files of [section 2](#2-files) whose readers name the creator |
+| builder | the shape of a course, of learner memory, the lexicons, the protocol | the files of [section 2](#2-files) whose readers name the builder, [`spec.yaml`](spec.yaml); the teacher's, not declared while it is frozen: [`products/teacher/README.md`](products/teacher/README.md), [`products/teacher/rules.yaml`](products/teacher/rules.yaml), [`products/teacher/composition.yaml`](products/teacher/composition.yaml), [`products/teacher/templates/learner/`](products/teacher/templates/learner/), [`products/teacher/lexicon.yaml`](products/teacher/lexicon.yaml) |
 | verifier | the rules as data, the conformance clause, the categories, the checks | [`course/rules.yaml`](course/rules.yaml), [`linear-fr/1/products/teacher/rules.yaml`](products/teacher/rules.yaml), sections [3](#3-categories) and [5](#5-checks), [`course/checks/README.md`](course/checks/README.md), [`spec-directives/1/README.md`](../../../spec-directives/1/README.md#2-conformance) sections 2 to 5 |
 | spec writer | the files, the references, the decisions, the changelog | sections [2](#2-files) and [4](#4-normative-references), [`decisions/`](decisions/), [`CHANGELOG.md`](CHANGELOG.md), [`spec-directives/1/README.md`](../../../spec-directives/1/README.md) |
 
@@ -11,19 +11,7 @@ The readers are defined in [`spec-directives/README.md`](../../../spec-directive
 
 The spec of linear introductory courses: ordered domains, ordered concepts with prerequisites, each written in one concept file cut into units taught one per teacher message, a storyline. This folder, `product-lines/linear-fr/1/`, holds its MAJOR 1, version `1.0.0-alpha` until its tag, binding from the tag `linear-fr/v1.0.0` (`spec-directives/1/README.md` section 6); a course follows it by declaring `spec: linear-fr@1` in its `course.yaml`.
 
-- `README.md`: this file: scope, files, categories, normative references, the list of checks.
-- `course/README.md`: what a course is: course structure, the conventions of the text, diagrams (drawing contract and style), the lexicon of the course files.
-- `products/teacher/README.md`: how a rule of the protocol is written (its notation, its writing rules), the description of the composition of the teacher, the keys and parameters; `products/teacher/rules.yaml`: the rules of the protocol the teacher executes.
-- `products/teacher/composition.yaml`: the composition of the teacher, its five parts, when each loads and what each draws from (section 2).
-- `products/teacher/build/`: the half of a teacher build that depends on this MAJOR, `render-parts`, which renders the five parts of the composition as text for a course, one JSON document whose shape `parts.schema.yaml` fixes (`products/teacher/build/README.md`).
-- `products/teacher/tests/`: the test scenarios of the teacher, one YAML file each, whose form `scenario.schema.yaml` fixes, run by `teacher-builder/fresh-test` (`products/teacher/tests/README.md`).
-- `products/site/`: what the site build needs from the spec and no course file holds: `products/site/lexicon.yaml`, the words and short texts the site shows for every course of the spec, and `products/site/url-scheme.yaml`, the address of each page of the site; `products/site/build/`: the half of a site build that depends on this MAJOR, `render-site`, which gives the published parts of a course as one JSON document whose shape `site.schema.yaml` fixes (`products/site/build/README.md`).
-- `CHANGELOG.md`: the changes of the spec, « Unreleased » until the tag.
-- `spec.yaml`: the manifest of this MAJOR: its version, its language (`fr`) and the MAJOR of the spec directives it follows (`spec-directives/1/`: the tests of these files, run by `spec-directives/check-spec product-lines/linear-fr/1`, and the `lib/` and package the checks load), then the files of the course and of the site by role, and the lists the tests hold them to: the categories of a course and the keys of the lexicons of the course and of the site (`spec-directives/1/README.md` section 8). The teacher is not declared while it is frozen.
-- `course/lexicon.yaml`: the lexicon of the course files, the one source of the words the checks, the teacher build and the site recognise in a course file (headings, block kinds, unit fields and blocks, markers, natures, concept references, source types, typography); `products/teacher/lexicon.yaml`: the words the teacher says and writes; `products/site/lexicon.yaml`: the words the site shows for every course and no course file holds.
-- `course/parser.js`: the parser of a course of this MAJOR, which the checks and the site build read a course through, with the `lib/` of the spec directives `spec.yaml` declares.
-- `course/checks/`: the check scripts; `product-lines/check-course <course-dir>` runs on a course that declares this MAJOR the checks of the rule files, those that block and those that report, `--category` selecting by category (section 5).
-- `course/templates/`: the course templates; `decisions/`: the decisions of this spec.
+Its files, what each holds, who reads it and what tests it are the map, section 2, generated from its manifest, `spec.yaml`.
 
 This file holds no rule on a course or on the teacher: what a course is, is in `course/README.md`; the protocol the teacher executes, in `products/teacher/rules.yaml`. How a spec is written and read (what a rule file holds, conformance, levels, methods, severity, versions, the tests of these files) is the spec directives this MAJOR follows, `spec-directives/1/README.md`.
 
@@ -31,43 +19,56 @@ This file holds no rule on a course or on the teacher: what a course is, is in `
 
 `linear-fr` describes a type of course: a linear introductory course made of ordered **domains**, ordered **concepts** with prerequisites, each cut into **units** taught one per teacher message, a **storyline** the cases live in. A course that does not fit this shape needs another spec. The spec fixes what a course contains, how the teacher teaches it, and how it is checked. The spec is French (`language: fr` in `spec.yaml`): its courses, its lexicons and its protocol are in French, and a course of another language follows another spec, not a translation of this one (decision `lexicon-not-language-pack`). The words a program recognises in a course file are written once, in the **lexicon** `course/lexicon.yaml`, whose keys `course/README.md` section 7 names; the words the teacher says and writes, in `products/teacher/lexicon.yaml`.
 
-Out of scope here: the learner memory files (the protocol, and `products/teacher/templates/learner/`), how the site engine lays out its pages, and how a classroom realises the parts of the teacher for its target (their own folders); what this MAJOR renders for a teacher build is `products/teacher/build/`, and what it gives the site build, the published parts of a course, the words and the addresses of the site, is `site/`. The test scenarios of the teacher, which name the rules of the protocol, are this MAJOR's (`products/teacher/tests/`); the harness that runs them in a classroom, `teacher-builder/fresh-test`, is not.
+Out of scope here: the learner memory files (the protocol, and `products/teacher/templates/learner/`), how the site engine lays out its pages, and how a classroom realises the parts of the teacher for its target (their own folders); what this MAJOR renders for a teacher build is `products/teacher/build/`, and what it gives the site build, the published parts of a course, the words and the addresses of the site, is `products/site/`. The test scenarios of the teacher, which name the rules of the protocol, are this MAJOR's (`products/teacher/tests/`); the harness that runs them in a classroom, `teacher-builder/fresh-test`, is not.
+
+The files of the spec are split by the course and by product (`spec-directives/1/README.md` section 2), plus this README (decision `spec-files-by-product`); what a rule file holds is the directives' (`spec-directives/1/README.md` section 1). `course/rules.yaml` holds every rule of a course, those the checks verify, taught-check included, and those verified by inspection (the review), one group per section of `course/README.md` that points to rules; `course/schemas/course.schema.yaml` holds the fields of `course.yaml`, and `course/schemas/concept-frontmatter.schema.yaml` the fields of the `concept.md` frontmatter (#329). `products/teacher/rules.yaml` holds every rule of the protocol (#554); `products/teacher/README.md` states none.
+
+**Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language of its courses, of its lexicons and of the rules of `products/teacher/rules.yaml`, a bounded exception to the language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited from the founding course, whose teacher was instructed and corrected in French. It changes by user story, its fresh tests come with the teacher. A teacher or a course of another language follows another spec, not a translation of this one (decision `lexicon-not-language-pack`).
 
 ## 2. Files
 
-The files of the spec are split by the course and by product (`spec-directives/1/README.md` section 2), plus this README (decision `spec-files-by-product`):
+Generated from `spec.yaml` by `mise exec -- spec-directives/generate-map product-lines/linear-fr/1`: do not edit it by hand, change the manifest (its roles and its `map:`) and run the command again.
 
-| File | Holds |
-|---|---|
-| `README.md` | this file: scope, files, categories, normative references, the list of checks |
-| `course/README.md` | what a course is: the course folder, `course.yaml`, the concept folder and its concept file, the unit and its additions, domain files, course files, diagrams, the lexicon of the course files |
-| `course/form.yaml` | the form of the files of a course as data: the concept file (the files of a concept folder, the parts of `concept.md` and of its frontmatter, the blocks of a unit with their readers and their fields, its cases, the length of a unit), `sources.md` and the course files (`course.yaml` as the map, `logo.svg`, `plan.md`, the domain file, `storyline.md`, `glossary.md`, `CHANGELOG.md`), their parts, their order, their presence, published or not, their readers; it names the words by their key in `course/lexicon.yaml` and holds none |
-| `products/teacher/README.md` | how a rule of the protocol is written: its notation, its writing rules; the composition; the keys and parameters |
-| `course/rules.yaml` | the rules of a course, in French, one group per section of `course/README.md` that points to rules, each with its `purpose` |
-| `products/teacher/rules.yaml` | the rules of the protocol, in French, one group per family and per group of a family, each with its `purpose` |
-| `products/teacher/composition.yaml` | the composition of the teacher: its five parts, when each loads and what each draws from (`products/teacher/README.md`, "Composition") |
-| `products/teacher/tests/` | the test scenarios of the teacher (`README.md`: the format, the rules each covers and those none covers), `scenario.schema.yaml` (their form), one YAML file per scenario, run by `teacher-builder/fresh-test` and verified in form by `check-spec` (`scenarios`) when `spec.yaml` declares the teacher, which it does not while the teacher is frozen |
-| `products/teacher/build/` | `render-parts`, which renders the five parts of the composition as text for a course (the half of a teacher build that depends on this MAJOR, read by `teacher-builder/`), `parts.schema.yaml` (the shape of its output), `test-render`, `README.md` |
-| `course/schemas/*.schema.yaml` | the fields of `course.yaml` and of the `concept.md` frontmatter, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` |
-| `CHANGELOG.md` | the changes of the spec, an « Unreleased » section until the tag |
-| `spec.yaml` | the manifest of this MAJOR: `name`, `major`, `version`, `language`, and `directives`, the MAJOR of `spec-directives/` whose tests verify these files and whose `lib/` and package the checks load; `course:` and `products:`, the files by role; `lists:`, the categories of a course and the keys of the lexicons |
-| `course/parser.js` | the parser of a course: it loads a course folder (`course.yaml`, the lexicon of the course files, the form) and reads the tree and the parts of each `concept.md` and the fixed facts of `storyline.md`, for the checks and the site build, with the `lib/` of the spec directives `spec.yaml` declares, given by its caller |
-| `course/checks/` | the check scripts, their fixtures and `course/checks/README.md` (how to run them) |
-| `course/lexicon.yaml` | the lexicon of the course files (`course/README.md` section 7) |
-| `products/teacher/lexicon.yaml` | the lexicon of the teacher, the words it says and writes (`products/teacher/README.md`, « Clés et paramètres ») |
-| `products/site/lexicon.yaml` | the lexicon of the site: the words and short texts the site shows for every course of the spec and no course file holds (the words of its navigation and headings that name a thing of the course, the words that come before a value, the headings of its stance columns, the intro lines of its stance columns and of its claims), each with the glossary entry it takes its word from |
-| `products/site/url-scheme.yaml` | the URL scheme of the site: the address of each page, relative to the site's base path, its path words, and how a domain's number and a concept's number are written in it (a concept on two digits, an annex as its id) |
-| `products/site/build/` | `render-site`, which gives the published parts of a course (`course/form.yaml`, `published: true`) with the words, the URL scheme and the language of the site as one JSON document (the half of a site build that depends on this MAJOR, run by `site-builder/`), `site.schema.yaml` (the shape of its output), `test-render`, `README.md` |
-| `course/templates/` | the course templates |
-| `course/samples/` | the spec's sample courses, one folder per course, each a course of this MAJOR that changes only with it, written for the spec's tests, the teacher build, the site build and a human who plays it: `cafe`, a short course on coffee |
-| `products/teacher/templates/learner/` | the templates of the learner memory files |
-| `decisions/` | the decisions of this spec |
+The files of this MAJOR, one table per owner, a row per role the manifest declares: the file, what it holds and who reads it (`map:`), its kind, told from its path (`data` a `.yaml`, `prose` a `.md`, `script` a program, `folder`), and what tests it, the tests of `check-spec` and the checks of a course that read it, as each says. The readers are defined in `spec-directives/README.md`, « The readers »; the tests of `check-spec` in `spec-directives/1/README.md` section 8, the checks of a course in `course/checks/README.md`.
 
-What a rule file holds is the directives' (`spec-directives/1/README.md` section 1).
+### The spec
 
-`course/rules.yaml` holds every rule of a course, those the checks verify, taught-check included, and those verified by inspection (the review), one group per section of `course/README.md` that points to rules; `course/schemas/course.schema.yaml` holds the fields of `course.yaml`, and `course/schemas/concept-frontmatter.schema.yaml` the fields of the `concept.md` frontmatter (#329). `products/teacher/rules.yaml` holds every rule of the protocol (#554); `products/teacher/README.md` states none.
+| File | Holds | Kind | Readers | Tested by |
+|---|---|---|---|---|
+| [`spec.yaml`](spec.yaml) | the manifest of this MAJOR: its identity, the MAJOR of the spec directives it follows, its files by role, the lists its tests hold them to, and this map | data | builder, verifier, spec writer | check-spec: `map`, `spec-yaml` |
+| [`README.md`](README.md) | the entry to this MAJOR: its scope, its files (this map), the categories, the normative references, the list of checks | prose | creator, builder, verifier, spec writer | check-spec: `map` |
+| [`CHANGELOG.md`](CHANGELOG.md) | the changes of the spec, an « Unreleased » section until the tag | prose | spec writer | check-spec: `spec-yaml` |
+| [`decisions/`](decisions/) | the decisions of this spec | folder | spec writer | none |
 
-**Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language of its courses, of its lexicons and of the rules of `products/teacher/rules.yaml`, a bounded exception to the language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited from the founding course, whose teacher was instructed and corrected in French. It changes by user story, its fresh tests come with the teacher. A teacher or a course of another language follows another spec, not a translation of this one (decision `lexicon-not-language-pack`).
+### The course
+
+| File | Holds | Kind | Readers | Tested by |
+|---|---|---|---|---|
+| [`course/README.md`](course/README.md) | what a course is: the course folder, `course.yaml`, the concept folder and its concept file, the unit and its additions, domain files, course files, diagrams, the lexicon of the course files | prose | creator, builder, spec writer | none |
+| [`course/rules.yaml`](course/rules.yaml) | the rules of a course, in French, one group per section of `course/README.md` that points to rules, each with its `purpose` | data | verifier, spec writer | check-spec: `rule-files` |
+| [`course/lexicon.yaml`](course/lexicon.yaml) | the lexicon of the course files: the words a program recognises in a course file, by key (`course/README.md` section 7) | data | creator, builder, spec writer | check-spec: `lexicon-keys`; check-course: `course-yaml`, `course-files`, `conventions`, `typography`, `concept-file`, `unit-contract`, `case-coverage`, `teacher-message-length`, `sources`, `unit-additions`, `glossary-order` |
+| [`course/form.yaml`](course/form.yaml) | the form of the files of a course as data: their parts, their order, their presence, published or not, their readers; it names the words by their key in `course/lexicon.yaml` and holds none | data | builder, verifier, spec writer | check-course: `course-yaml`, `course-files`, `conventions`, `concept-file`, `unit-contract`, `case-coverage`, `teacher-message-length`, `sources`, `unit-additions`, `glossary-order` |
+| [`course/form.md`](course/form.md) | the form of the files of a course, readable: each file with its parts in order, mandatory or not, published or not, their readers and their words | prose | creator, builder | check-spec: `map` |
+| [`course/schemas/`](course/schemas/) | the fields of `course.yaml` and of the `concept.md` frontmatter, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` | folder | builder, verifier, spec writer | check-spec: `rule-files`; check-course: `course-yaml`, `concept-file` |
+| [`course/checks/`](course/checks/) | the check scripts of a course, their fixtures and `README.md` (how to run them); `product-lines/check-course <course-dir>` runs them | folder | creator, verifier | check-spec: `rule-files` |
+| [`course/parser.js`](course/parser.js) | the parser of a course: it loads a course folder and reads the tree and the parts of each `concept.md` and the fixed facts of `storyline.md`, for the checks and the site build | script | builder, verifier | check-course: `course-yaml`, `course-files`, `conventions`, `typography`, `concept-file`, `drawing-contract`, `unit-contract`, `case-coverage`, `teacher-message-length`, `sources`, `unit-additions`, `glossary-order` |
+| [`course/views.js`](course/views.js) | the renderer of the views of the course's files that generate-map writes: `course/form.md`, from `course/form.yaml` and `course/lexicon.yaml` | script | spec writer | check-spec: `map` |
+| [`course/templates/`](course/templates/) | the course templates | folder | creator | none |
+| [`course/samples/`](course/samples/) | the spec's sample courses, one folder per course, each a course of this MAJOR that changes only with it, written for the spec's tests, the teacher build, the site build and a human who plays it: `cafe`, a short course on coffee | folder | creator, builder, verifier | none |
+
+### The product `site`
+
+| File | Holds | Kind | Readers | Tested by |
+|---|---|---|---|---|
+| [`products/site/lexicon.yaml`](products/site/lexicon.yaml) | the lexicon of the site: the words and short texts the site shows for every course of the spec and no course file holds, each with the glossary entry it takes its word from | data | builder | check-spec: `lexicon-keys` |
+| [`products/site/url-scheme.yaml`](products/site/url-scheme.yaml) | the URL scheme of the site: the address of each page, relative to the site's base path, its path words, and how the number of a domain and of a concept is written in it | data | builder | none |
+| [`products/site/build/`](products/site/build/) | the half of a site build that depends on this MAJOR: `render-site`, which gives the published parts of a course with the words, the URL scheme and the language of the site as one JSON document, run by `site-builder/`; `site.schema.yaml`, the shape of its output; `test-render`; `README.md` | folder | builder | none |
+
+Built from the course by [`products/site/build/`](products/site/build/).
+
+### The product `teacher`
+
+[`products/teacher/`](products/teacher/), not declared while it is frozen (decision `teacher-frozen-until-the-protocol-brainstorm`, idea #687): the protocol, the composition, the lexicon, the build and the test scenarios of the teacher, and the templates of learner memory.
 
 ## 3. Categories
 

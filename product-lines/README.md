@@ -3,9 +3,9 @@
 | Reader | Comes for | Opens |
 |---|---|---|
 | creator | the spec a course follows, how to check a course | [`linear-fr/1/README.md`](linear-fr/1/README.md), [`check-course`](check-course) |
-| builder | the specs, their MAJORs and versions | [Layout](#layout), [Versions](#versions), [`linear-fr/1/spec.yaml`](linear-fr/1/spec.yaml) |
+| builder | the specs, their MAJORs and versions | [A spec MAJOR](#a-spec-major), [Versions](#versions), [`linear-fr/1/spec.yaml`](linear-fr/1/spec.yaml) |
 | verifier | how the checks of a course are run | [`check-course`](check-course), [`linear-fr/1/README.md`](linear-fr/1/README.md) section 5 |
-| spec writer | the layout of a spec MAJOR, the bump of a change | [Layout](#layout), [Versions](#versions), [`versioned-objects-and-spec-layout`](../docs/decisions/versioned-objects-and-spec-layout.md), [`spec-directives/`](../spec-directives/README.md) |
+| spec writer | the layout of a spec MAJOR, the bump of a change | [A spec MAJOR](#a-spec-major), [Versions](#versions), [`versioned-objects-and-spec-layout`](../docs/decisions/versioned-objects-and-spec-layout.md), [`spec-directives/`](../spec-directives/README.md) |
 
 The readers are defined in [`spec-directives/README.md`](../spec-directives/README.md#the-readers).
 
@@ -15,18 +15,11 @@ Three objects are versioned: a course (`courses/<id>/`), a spec (here) and the s
 
 A spec is the contract for a type of course. The only spec is `linear-fr`; its MAJOR 1 sits in `product-lines/linear-fr/1/`.
 
-## Layout
+## A spec MAJOR
 
-One folder per MAJOR, `product-lines/<name>/<MAJOR>/` (`1/`, not `v1/`), holds:
+One folder per MAJOR, `product-lines/<name>/<MAJOR>/` (`1/`, not `v1/`). Its manifest, `spec.yaml`, declares its files by role: its own (`README.md`, `CHANGELOG.md`, `decisions/`), those of its course, the input of the builds of the products, under `course/`, and those of each product under `products/<product>/`; then the lists of the spec, which the tests read, and the map, what each file holds and who reads it. Its identity gives its `name`, `major`, `version`, `language` (the language of the spec, its courses and its protocol: a course of another language follows another spec) and `directives`, the MAJOR of `spec-directives/` it follows, whose tests verify the spec's own files (`spec-directives/check-spec <MAJOR folder>`) and whose `lib/` and package its checks load (`spec-directives/1/README.md` section 8).
 
-| File or folder | Holds |
-|---|---|
-| `README.md` | the entry to the MAJOR: scope, files, categories, the normative references of its rules, checks |
-| `course/` | the course, the input of the builds of the products: `README.md` (what a course is: its files, fields, diagrams, the lexicon of the course files), `lexicon.yaml` (the words of the course files), `rules.yaml` (the rules of a course, as data), `schemas/` (the JSON Schemas of a course's files), `templates/` (the course templates), `parser.js` (the parser of a course, which the checks and the builds read a course through), `checks/` (the checks of a course, their fixtures) |
-| `products/teacher/` | the teacher, a product: `README.md` (the protocol and the description of the composition), `rules.yaml` (the rules of the protocol, as data), `composition.yaml` (the composition of the teacher: its parts, when each loads, what each draws from), `templates/learner/` (the templates of learner memory), `lexicon.yaml` (the words the teacher says and writes), `build/` (the half of a teacher build that depends on the MAJOR: it renders the parts of the composition as text, which `teacher-builder/` realises), `tests/` (the test scenarios of the teacher, which `teacher-builder/fresh-test` runs) |
-| `decisions/` | the spec's decisions |
-| `CHANGELOG.md` | the changelog of the spec's versions in this MAJOR |
-| `spec.yaml` | the manifest of the MAJOR: `name`, `major`, `version`, `language` (the language of the spec, its courses and its protocol: a course of another language follows another spec), and `directives`: the MAJOR of `spec-directives/` it follows, whose tests verify the spec's own files (`spec-directives/check-spec <MAJOR folder>`) and whose `lib/` and package its checks load; then the files of the course and of each product, by role, and the lists of the spec, which those tests read (`spec-directives/1/README.md` section 8) |
+The map of a MAJOR, section 2 of its `README.md`, is generated from its manifest by `spec-directives/generate-map <MAJOR folder>`: each file, what it holds, its kind, who reads it and what tests it. For `linear-fr` 1: the manifest [`linear-fr/1/spec.yaml`](linear-fr/1/spec.yaml), the map [`linear-fr/1/README.md`](linear-fr/1/README.md#2-files) section 2.
 
 A new MAJOR copies the tree of the previous one, its decisions under the same slugs.
 

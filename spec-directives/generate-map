@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+'use strict';
+// generate-map <spec MAJOR folder>
+// Reads `directives: <MAJOR>` in <spec MAJOR folder>/spec.yaml and runs
+// spec-directives/<MAJOR>/generate-map on that folder, its output and exit code unchanged: it
+// writes the map of the spec MAJOR, section 2 of its README.md, and the views of its course's
+// files, from its manifest. Refuses (exit 2, one line) as check-spec does: a folder with no
+// spec.yaml, a spec.yaml with no `directives` line, a directives MAJOR with no folder here, or
+// with no generate-map.
+const fs = require('fs');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+const DIRECTIVES = __dirname;
+
+function refuse(message) {
+  console.error(`generate-map: ${message}`);
+  process.exit(2);
+}
+const args = process.argv.slice(2);
+if (args.length !== 1 || args[0].startsWith('-')) {
+  const help = args.includes('--help') || args.includes('-h');
+  (help ? console.log : console.error)('usage: generate-map <spec MAJOR folder>');
+  process.exit(help ? 0 : 2);
+}
+const file = path.join(args[0], 'spec.yaml');
+let text;
+try { text = fs.readFileSync(file, 'utf8'); } catch (e) { refuse(`cannot read ${file}`); }
+const line = text.split('\n').find((l) => /^directives\s*:/.test(l));
+const major = line && line.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2');
+if (!line || !/^\d+$/.test(major)) refuse(`${file} declares no directives MAJOR (directives: <MAJOR>)`);
+const runner = path.join(DIRECTIVES, major, 'generate-map');
+if (!fs.existsSync(runner)) refuse(`directives MAJOR ${major} in ${file} has no generate-map`);
+
+const r = spawnSync(process.execPath, [runner, ...args], { stdio: 'inherit' });
+if (r.error) refuse(`cannot run ${runner}: ${r.error.message}`);
+process.exit(r.status === null ? 1 : r.status);

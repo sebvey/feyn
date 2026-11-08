@@ -1,0 +1,2 @@
+check: map
+message: section 2, the map, is not what generate-map writes from the manifest
