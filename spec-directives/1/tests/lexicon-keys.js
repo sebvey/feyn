@@ -148,5 +148,7 @@ function run(ctx) {
 
 // the roles it reads, by their key in the manifest, which the map of a spec MAJOR shows (lib/map.js)
 const reads = ['course.lexicon', 'products.site.lexicon', 'products.teacher.lexicon', 'products.teacher.readme', 'products.teacher.rules'];
+// the roles without which it checks nothing (m.nothing above): the map lists it when one is declared
+const needs = ['course.lexicon', 'products.site.lexicon', 'products.teacher.lexicon'];
 
-module.exports = { id: 'lexicon-keys', run, reads, protocolKeys };
+module.exports = { id: 'lexicon-keys', run, reads, needs, protocolKeys };

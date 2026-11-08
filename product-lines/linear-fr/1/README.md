@@ -29,22 +29,22 @@ The files of the spec are split by the course and by product (`spec-directives/1
 
 Generated from `spec.yaml` by `mise exec -- spec-directives/generate-map product-lines/linear-fr/1`: do not edit it by hand, change the manifest (its roles and its `map:`) and run the command again.
 
-The files of this MAJOR, one table per owner, a row per role the manifest declares: the file, what it holds and who reads it (`map:`), its kind, told from its path (`data` a `.yaml`, `prose` a `.md`, `script` a program, `folder`), and what tests it, the tests of `check-spec` and the checks of a course that read it, as each says. The readers are defined in `spec-directives/README.md`, « The readers »; the tests of `check-spec` in `spec-directives/1/README.md` section 8, the checks of a course in section 5.
+The files of this MAJOR, one table per owner, a row per role the manifest declares: the file, what it holds and who reads it (`map:`), its kind, told from its path (`data` a `.yaml`, `prose` a `.md`, `script` a program, `folder`), and what tests it, the tests of `check-spec` and the checks of a course that read it, as each says. The readers are defined in `spec-directives/README.md`, « The readers »; the tests of `check-spec` in `spec-directives/1/README.md` section 8, the checks of a course in `course/checks/README.md`.
 
 ### The spec
 
 | File | Holds | Kind | Readers | Tested by |
 |---|---|---|---|---|
 | [`spec.yaml`](spec.yaml) | the manifest of this MAJOR: its identity, the MAJOR of the spec directives it follows, its files by role, the lists its tests hold them to, and this map | data | builder, verifier, spec writer | check-spec: `map`, `spec-yaml` |
-| [`README.md`](README.md) | the entry to this MAJOR: its scope, its files (this map), the categories, the normative references, the list of checks | prose | creator, builder, verifier, spec writer | check-spec: `map`, `rule-slugs` |
+| [`README.md`](README.md) | the entry to this MAJOR: its scope, its files (this map), the categories, the normative references, the list of checks | prose | creator, builder, verifier, spec writer | check-spec: `map` |
 | [`CHANGELOG.md`](CHANGELOG.md) | the changes of the spec, an « Unreleased » section until the tag | prose | spec writer | check-spec: `spec-yaml` |
-| [`decisions/`](decisions/) | the decisions of this spec | folder | spec writer | check-spec: `rule-slugs` |
+| [`decisions/`](decisions/) | the decisions of this spec | folder | spec writer | none |
 
 ### The course
 
 | File | Holds | Kind | Readers | Tested by |
 |---|---|---|---|---|
-| [`course/README.md`](course/README.md) | what a course is: the course folder, `course.yaml`, the concept folder and its concept file, the unit and its additions, domain files, course files, diagrams, the lexicon of the course files | prose | creator, builder, spec writer | check-spec: `rule-slugs` |
+| [`course/README.md`](course/README.md) | what a course is: the course folder, `course.yaml`, the concept folder and its concept file, the unit and its additions, domain files, course files, diagrams, the lexicon of the course files | prose | creator, builder, spec writer | none |
 | [`course/rules.yaml`](course/rules.yaml) | the rules of a course, in French, one group per section of `course/README.md` that points to rules, each with its `purpose` | data | verifier, spec writer | check-spec: `rule-files` |
 | [`course/lexicon.yaml`](course/lexicon.yaml) | the lexicon of the course files: the words a program recognises in a course file, by key (`course/README.md` section 7) | data | creator, builder, spec writer | check-spec: `lexicon-keys`; check-course: `course-yaml`, `course-files`, `conventions`, `typography`, `concept-file`, `unit-contract`, `case-coverage`, `teacher-message-length`, `sources`, `unit-additions`, `glossary-order` |
 | [`course/form.yaml`](course/form.yaml) | the form of the files of a course as data: their parts, their order, their presence, published or not, their readers; it names the words by their key in `course/lexicon.yaml` and holds none | data | builder, verifier, spec writer | check-course: `course-yaml`, `course-files`, `conventions`, `concept-file`, `unit-contract`, `case-coverage`, `teacher-message-length`, `sources`, `unit-additions`, `glossary-order` |

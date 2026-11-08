@@ -7,7 +7,7 @@ teacher build; the group `onboarding` welcomes a new learner. A check id in code
 
 Generated from `spec.yaml` by `mise exec -- spec-directives/generate-map spec-directives/1/tests/fixtures/broken/map-stale`: do not edit it by hand, change the manifest (its roles and its `map:`) and run the command again.
 
-The files of this MAJOR, one table per owner, a row per role the manifest declares: the file, what it holds and who reads it (`map:`), its kind, told from its path (`data` a `.yaml`, `prose` a `.md`, `script` a program, `folder`), and what tests it, the tests of `check-spec` and the checks of a course that read it, as each says. The readers are defined in `spec-directives/README.md`, « The readers »; the tests of `check-spec` in `spec-directives/1/README.md` section 8, the checks of a course in section 5.
+The files of this MAJOR, one table per owner, a row per role the manifest declares: the file, what it holds and who reads it (`map:`), its kind, told from its path (`data` a `.yaml`, `prose` a `.md`, `script` a program, `folder`), and what tests it, the tests of `check-spec` and the checks of a course that read it, as each says. The readers are defined in `spec-directives/README.md`, « The readers »; the tests of `check-spec` in `spec-directives/1/README.md` section 8.
 
 ### The spec
 

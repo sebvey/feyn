@@ -10,7 +10,9 @@
 //   Tested by   the tests of check-spec and the checks of a course that read the role, as each
 //               says by its export `reads` (the roles it reads, by their dotted key), never a list
 //               written apart: the tests of tests/, the checks that course/rules.yaml names and
-//               that check-course runs, in the folder the manifest declares as `course.checks`
+//               that check-course runs, in the folder the manifest declares as `course.checks`; a
+//               test that checks nothing unless the manifest declares one of the roles of its
+//               export `needs` is listed only when the manifest declares one of them
 // Under a product's table, one line saying it is built from the course by its `build`; a product
 // the manifest does not declare shows as one line, `map.undeclared.<product>`.
 // The views: when the manifest declares `course.views`, a script of the spec MAJOR, a factory
@@ -52,9 +54,14 @@ function testedBy(root, m, errors) {
       by.get(ref).push([runner, id]);
     }
   };
+  // a test that checks nothing unless the manifest declares one of the roles of its `needs` tests
+  // nothing here when it declares none of them
+  const declared = new Set(m.roles().map((r) => r.ref));
   for (const f of fs.readdirSync(TESTS).filter((n) => n.endsWith('.js')).sort()) {
     const t = require(path.join(TESTS, f));
-    if (t && t.id && typeof t.run === 'function') add('check-spec', t.id, t.reads);
+    if (!t || !t.id || typeof t.run !== 'function') continue;
+    if (Array.isArray(t.needs) && !t.needs.some((ref) => declared.has(ref))) continue;
+    add('check-spec', t.id, t.reads);
   }
   const checks = m.path('course', 'checks');
   if (checks !== null && fs.existsSync(path.join(root, checks))) {
@@ -115,10 +122,11 @@ function render(root, m) {
   }
 
   const all = m.roles();
+  const checks = m.path('course', 'checks');
   const out = [
     `Generated from \`spec.yaml\` by \`${cmd}\`: do not edit it by hand, change the manifest (its roles and its \`map:\`) and run the command again.`,
     '',
-    'The files of this MAJOR, one table per owner, a row per role the manifest declares: the file, what it holds and who reads it (`map:`), its kind, told from its path (`data` a `.yaml`, `prose` a `.md`, `script` a program, `folder`), and what tests it, the tests of `check-spec` and the checks of a course that read it, as each says. The readers are defined in `spec-directives/README.md`, « The readers »; the tests of `check-spec` in `spec-directives/1/README.md` section 8, the checks of a course in section 5.',
+    `The files of this MAJOR, one table per owner, a row per role the manifest declares: the file, what it holds and who reads it (\`map:\`), its kind, told from its path (\`data\` a \`.yaml\`, \`prose\` a \`.md\`, \`script\` a program, \`folder\`), and what tests it, the tests of \`check-spec\` and the checks of a course that read it, as each says. The readers are defined in \`spec-directives/README.md\`, « The readers »; the tests of \`check-spec\` in \`spec-directives/1/README.md\` section 8${checks === null ? '' : `, the checks of a course in \`${checks}/README.md\``}.`,
   ];
   for (const owner of ['spec', 'course']) {
     const roles = all.filter((r) => r.owner === owner);
