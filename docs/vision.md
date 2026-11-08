@@ -9,7 +9,7 @@ feyn makes three products, each for a person to use:
 - a **site**, which publishes a course for the reader;
 - a **course-creator**, which leads a creator along the creation path of a course, from its frame down to the teaching unit, each step producing one file or one block and proving itself at once; it comes later.
 
-The course is their input, not a product: the teacher and the site are built from a course, the course-creator writes one (decisions `product-line-vocabulary` and `products-built-from-one-course`). A spec is the contract of a product line: the form of its courses and what it fixes of each of their products.
+The course is not a product: it is the input of the builds of the teacher and the site, and the course-creator writes one (decisions `product-line-vocabulary` and `products-built-from-one-course`). A spec is the contract of a product line: the form of its courses and what it fixes of each of their products.
 
 The spec, its checks and the agentic layer are worth what they bring to the products: a spec that serves no product is premature. Several courses, other contributors and several learners come after, and are judged the same way.
 
