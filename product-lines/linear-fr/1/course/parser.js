@@ -1,18 +1,22 @@
 'use strict';
-// Loads a course folder for the checks: course.yaml, the lexicon of the course files, the form of
-// the concept file (course/form.yaml), the concept index and the parts of each concept file, files.
+// The parser of a course of this spec MAJOR, read by the course checks (course/checks/check-course,
+// course-files) and the site build (products/site/build/render-site): it loads a course folder,
+// course.yaml, the lexicon of the course files, the form of the concept file (course/form.yaml),
+// the concept index and the parts of each concept file, files. It holds the forms of this spec
+// (the heading `## Section <id> : <titre>`, the ids `0a` and `A2a`, the annexes `A<n>`, the fixed
+// facts of storyline.md), so it lives in the spec, not in the directives. It reads with the lib of
+// the spec directives this MAJOR follows (spec.yaml, `directives: <MAJOR>`), which its caller has
+// loaded and gives it: `lib(name)` returns spec-directives/<MAJOR>/lib/<name>.js (yaml-lines, md,
+// common), so the spec MAJOR follows its directives, never the reverse.
+//   const { load, fixedFacts } = require('<MAJOR>/course/parser')(lib);
 const fs = require('fs');
 const path = require('path');
-const yaml = require('./yaml-lines');
-const md = require('./md');
 
-const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
-
-function normNumber(n) {
-  if (typeof n === 'number') return String(n);
-  if (typeof n === 'string') return /^\d+$/.test(n) ? String(parseInt(n, 10)) : n;
-  return null;
-}
+// the directives' lib, bound by the caller (module.exports, at the end)
+let yaml = null;
+let md = null;
+let SLUG = null;
+let normNumber = null;
 
 // a section heading: `## Section <id> : <title>`, its id a concept number and a letter (0a, A2a);
 // the form of the heading and the order of the ids are checked by concept-file
@@ -396,7 +400,7 @@ function load(dir, opts = {}) {
   ctx.usable = !!(ctx.cy && Array.isArray(ctx.cy.concepts) && Array.isArray(ctx.cy.domains));
 
   // the lexicon of the course files: the course/lexicon.yaml of the spec MAJOR whose checks run
-  // (opts.specLexicon; this lib is the directives'), or the file --lexicon names (opts.lexicon).
+  // (opts.specLexicon, which its caller passes), or the file --lexicon names (opts.lexicon).
   // The course names no language: the language is the spec's (spec.yaml).
   ctx.lexicon = null;
   ctx.lexiconFile = null;
@@ -464,11 +468,10 @@ function load(dir, opts = {}) {
   return ctx;
 }
 
-const fail = (file, line, message) => ({ file, line: line || 1, message });
-
 // The fixed facts of storyline.md, the lines of its section `headings.fixed_facts`: one bullet per
 // fact, its following lines indented, each ending with the id of the unit that fixed it in
-// parentheses, a final period allowed after it, `(0d1)`. Read by course-files and the site build:
+// parentheses, a final period allowed after it, `(0d1)`. Read by course-files (the site does not
+// publish them):
 // { facts: [{ line, text, unit }], stray: [lines] }, `unit` null when the fact ends with no id,
 // `stray` a line that is no bullet nor the continuation of one.
 const FACT_UNIT = /\(([^()\s]+)\)\.?$/;
@@ -488,8 +491,10 @@ function fixedFacts(lines) {
   return { facts, stray };
 }
 
-// A release section of a course's CHANGELOG.md: `## X.Y.Z, YYYY-MM-DD`, below « Non publié »
-// (`headings.unreleased`), newest first. Read by course-files and the site build.
-const RELEASE = /^((\d+)\.(\d+)\.(\d+)), (\d{4}-\d{2}-\d{2})$/;
-
-module.exports = { load, fail, normNumber, SLUG, conceptParts, idHeading, fixedFacts, RELEASE };
+// lib(name): the module spec-directives/<MAJOR>/lib/<name>.js of the directives this MAJOR follows
+module.exports = function parser(lib) {
+  yaml = lib('yaml-lines');
+  md = lib('md');
+  ({ SLUG, normNumber } = lib('common'));
+  return { load, tree, conceptParts, idHeading, fixedFacts };
+};

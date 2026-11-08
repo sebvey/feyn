@@ -1,11 +1,11 @@
 'use strict';
 // The conventions of the text of concept.md (course/README.md section 3.5), read in the parts the
-// learner reads (course/form.yaml, readers; lib/course.js), the instruction left out: concept
+// learner reads (course/form.yaml, readers; course/parser.js), the instruction left out: concept
 // references, stance markers; no image in concept.md (the build places a diagram at its unit). Plain
 // Markdown in every course file (section 1), a concept file's headings no deeper than #####, a case's.
 const directives = require('./directives');
 const mdlib = directives.lib('md');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 const { parser: refParser } = directives.lib('refs');
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

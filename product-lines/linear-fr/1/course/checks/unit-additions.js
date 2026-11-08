@@ -8,11 +8,11 @@
 // from the glossary). That a fact an anchor uses is in storyline.md and that a claim of a published
 // field has its row in sources.md are rules by inspection of the same group; that a fixed fact or a
 // claim names a unit that exists is course-files' and sources'. Its fields are read as unit-contract
-// reads them (lib/course.js); a unit whose fields are unreadable is unit-contract's.
+// reads them (course/parser.js); a unit whose fields are unreadable is unit-contract's.
 const directives = require('./directives');
 const mdlib = directives.lib('md');
 const glossary = directives.lib('glossary');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 // a field's label, `- **<label>** :` (what stands before its colon, which unit-contract refuses,
 // included), on its first line

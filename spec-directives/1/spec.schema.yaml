@@ -46,6 +46,7 @@ properties:
       form: { $ref: '#/$defs/path', description: "a path, the form of the files of a course" }
       schemas: { $ref: '#/$defs/path', description: "a path, the folder of the schemas of a course" }
       checks: { $ref: '#/$defs/path', description: "a path, the folder of the checks of a course" }
+      parser: { $ref: '#/$defs/path', description: "a path, the parser of the files of a course, which its checks and the builds of the products load" }
   products:
     description: the products the spec defines, each with its files by role; none required
     type: object

@@ -23,6 +23,7 @@ course:
   form: course/form.yaml
   schemas: course/schemas
   checks: course/checks
+  parser: course/parser.js
 
 # The products of the spec and their files, by role. The teacher is not declared while it is
 # frozen (decision `teacher-frozen-until-the-protocol-brainstorm`): the tests of its files check

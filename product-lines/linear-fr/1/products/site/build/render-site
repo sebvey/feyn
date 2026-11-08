@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 // render-site <course-dir> [--form <file>]
-// The half of a site build that depends on this spec MAJOR: it reads a course through the lib of
-// the spec directives this MAJOR follows (lib/course.js, the one course parser, with md.js,
-// refs.js and glossary.js beside it), keeps the parts course/form.yaml names `published: true`
+// The half of a site build that depends on this spec MAJOR: it reads a course through the parser
+// of this MAJOR, course/parser.js, the one the course checks use, given the lib of the spec
+// directives this MAJOR follows (with md.js, refs.js and glossary.js of that lib), keeps the parts course/form.yaml names `published: true`
 // (closed by default: a part the form does not name, or names without `published: true`, is
 // never output), and prints them to stdout as one JSON document, whose shape site.schema.yaml
 // fixes and README.md (this folder) describes, with the words of products/site/lexicon.yaml, the headings
@@ -69,7 +69,9 @@ const yaml = req('./lib/yaml-lines');
 const md = req('./lib/md');
 const refs = req('./lib/refs');
 const glossary = req('./lib/glossary');
-const course = req('./lib/course');
+const { normNumber, RELEASE } = req('./lib/common');
+// the parser of a course is this MAJOR's, given the directives' lib
+const course = require(path.join(MAJOR, 'course', 'parser.js'))((name) => req('./lib/' + name));
 const SPEC = `${lineOf('name')}@${lineOf('major')}`;
 // the language of the MAJOR's courses and lexicons (ISO 639-1), given to the engine for the pages it writes
 const LANGUAGE = lineOf('language');
@@ -139,7 +141,7 @@ const accentColor = cy.site && cy.site.accent_color;
 if (typeof accentColor !== 'string') fail(`${rel(courseDir)}/course.yaml has no site.accent_color (check-course says more)`);
 const domainOf = new Map();
 const domains = cy.domains.map((d) => {
-  const concepts = (d.concepts || []).map(course.normNumber);
+  const concepts = (d.concepts || []).map(normNumber);
   for (const n of concepts) domainOf.set(n, d.number);
   return {
     number: d.number,
@@ -153,7 +155,7 @@ const domains = cy.domains.map((d) => {
   };
 });
 
-// ---- a concept: its concept.md through lib/course.js (its tree and its parts), its frontmatter,
+// ---- a concept: its concept.md through course/parser.js (its tree and its parts), its frontmatter,
 // its diagrams, its sources.md
 const cf = form.concept_file || {};
 const unitForm = form.unit || {};
@@ -225,7 +227,7 @@ function conceptOf(c) {
     slug: e.slug,
     title: e.title,
     objective: e.objective,
-    prerequisites: (e.prerequisites || []).map(course.normNumber),
+    prerequisites: (e.prerequisites || []).map(normNumber),
     duration_min: e.duration_min,
     domain: domainOf.has(c.number) ? domainOf.get(c.number) : null,
     path: conceptPath(c),
@@ -295,7 +297,7 @@ if (pub(ch.latest_release)) {
   release = null;
   if (ch.file && ctx.exists(ch.file)) {
     for (const s of md.sections(mdOf(ch.file).body, 2).sections) {
-      const r = course.RELEASE.exec(s.title);
+      const r = RELEASE.exec(s.title);
       if (r) { release = { version: r[1], date: r[5] }; break; }
     }
   }
@@ -352,7 +354,7 @@ const found = new Map();
 const doc = {
   spec: SPEC,
   language: LANGUAGE,
-  course: { id: cy.id, title: cy.title, subtitle: cy.subtitle, logo, accent_color: accentColor, annexes: (cy.annexes || []).map(course.normNumber) },
+  course: { id: cy.id, title: cy.title, subtitle: cy.subtitle, logo, accent_color: accentColor, annexes: (cy.annexes || []).map(normNumber) },
   plan,
   domains,
   concepts,

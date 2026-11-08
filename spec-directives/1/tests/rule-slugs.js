@@ -26,7 +26,7 @@
 // decision cites no rule id (decision decision-format), so a citation there is a slip to catch.
 const yaml = require('../lib/yaml-lines');
 const mdlib = require('../lib/md');
-const { fail } = require('../lib/course');
+const { fail } = require('../lib/common');
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){1,4}$/;
 const GROUP_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){0,4}$/;

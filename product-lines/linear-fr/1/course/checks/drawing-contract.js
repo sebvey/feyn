@@ -6,7 +6,7 @@ const path = require('path');
 const directives = require('./directives');
 const xml = directives.lib('xml');
 const yaml = directives.lib('yaml-lines');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 const CLASSES = new Set(['primary', 'secondary', 'muted']);
 const GENERIC = new Set(['system-ui', 'sans-serif', 'serif', 'monospace']);

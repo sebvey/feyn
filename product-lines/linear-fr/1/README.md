@@ -21,6 +21,7 @@ The spec of linear introductory courses: ordered domains, ordered concepts with 
 - `CHANGELOG.md`: the changes of the spec, « Unreleased » until the tag.
 - `spec.yaml`: the manifest of this MAJOR: its version, its language (`fr`) and the MAJOR of the spec directives it follows (`spec-directives/1/`: the tests of these files, run by `spec-directives/check-spec product-lines/linear-fr/1`, and the `lib/` and package the checks load), then the files of the course and of the site by role, and the lists the tests hold them to: the categories of a course and the keys of the lexicons of the course and of the site (`spec-directives/1/README.md` section 8). The teacher is not declared while it is frozen.
 - `course/lexicon.yaml`: the lexicon of the course files, the one source of the words the checks, the teacher build and the site recognise in a course file (headings, block kinds, unit fields and blocks, markers, natures, concept references, source types, typography); `products/teacher/lexicon.yaml`: the words the teacher says and writes; `products/site/lexicon.yaml`: the words the site shows for every course and no course file holds.
+- `course/parser.js`: the parser of a course of this MAJOR, which the checks and the site build read a course through, with the `lib/` of the spec directives `spec.yaml` declares.
 - `course/checks/`: the check scripts; `product-lines/check-course <course-dir>` runs on a course that declares this MAJOR the checks of the rule files, those that block and those that report, `--category` selecting by category (section 5).
 - `course/templates/`: the course templates; `decisions/`: the decisions of this spec.
 
@@ -50,6 +51,7 @@ The files of the spec are split by the course and by product (`spec-directives/1
 | `course/schemas/*.schema.yaml` | the fields of `course.yaml` and of the `concept.md` frontmatter, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` |
 | `CHANGELOG.md` | the changes of the spec, an « Unreleased » section until the tag |
 | `spec.yaml` | the manifest of this MAJOR: `name`, `major`, `version`, `language`, and `directives`, the MAJOR of `spec-directives/` whose tests verify these files and whose `lib/` and package the checks load; `course:` and `products:`, the files by role; `lists:`, the categories of a course and the keys of the lexicons |
+| `course/parser.js` | the parser of a course: it loads a course folder (`course.yaml`, the lexicon of the course files, the form) and reads the tree and the parts of each `concept.md` and the fixed facts of `storyline.md`, for the checks and the site build, with the `lib/` of the spec directives `spec.yaml` declares, given by its caller |
 | `course/checks/` | the check scripts, their fixtures and `course/checks/README.md` (how to run them) |
 | `course/lexicon.yaml` | the lexicon of the course files (`course/README.md` section 7) |
 | `products/teacher/lexicon.yaml` | the lexicon of the teacher, the words it says and writes (`products/teacher/README.md`, « Clés et paramètres ») |

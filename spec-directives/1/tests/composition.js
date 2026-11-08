@@ -17,7 +17,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('../lib/yaml-lines');
-const { fail } = require('../lib/course');
+const { fail } = require('../lib/common');
 
 let F = null; // the composition's path, from the manifest at each run
 const PARTS = ['permanent', 'on-demand', 'course-reads', 'learner-memory', 'permissions'];
