@@ -1,0 +1,2 @@
+check: lexicon-keys
+message: course/README.md:12 key headings.landmarks of lists.lexicons.course (spec.yaml) is missing from the table of the course lexicon
