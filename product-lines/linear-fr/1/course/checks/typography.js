@@ -25,8 +25,8 @@ function run(ctx) {
   return out;
 }
 
-// the roles of the spec it reads, by their key in spec.yaml (the course through the parser), which
-// the map of the spec shows (spec-directives/1/lib/map.js)
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
 const reads = ['course.lexicon', 'course.parser'];
 
 module.exports = { id: 'typography', run, reads };

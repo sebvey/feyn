@@ -14,7 +14,7 @@ directives: 1
 version: 1.0.0-alpha
 language: fr
 
-# The files of the spec MAJOR itself, by role, at the paths the directives fix: the map shows them.
+# The files of the spec MAJOR itself, by role, at the paths the directives fix.
 spec:
   manifest: spec.yaml
   readme: README.md
@@ -28,11 +28,9 @@ course:
   rules: course/rules.yaml
   lexicon: course/lexicon.yaml
   form: course/form.yaml
-  form-view: course/form.md
   schemas: course/schemas
   checks: course/checks
   parser: course/parser.js
-  views: course/views.js
   templates: course/templates
   samples: course/samples
 
@@ -68,17 +66,16 @@ lists:
       stance_columns: {consensus: string, school: string, course: string}
       intros: {consensus: string, school: string, course: string, claims: string}
 
-# The map of this MAJOR: for each role above, what it holds and who reads it, among the four readers
-# of spec-directives/README.md (« The readers »); spec-directives/generate-map writes it into
-# section 2 of README.md, with the kind of each file and what tests it, and the test map of
-# check-spec holds the section to it.
-map:
+# The files of this MAJOR: for each role above, what it holds and who reads it, among the four
+# readers of spec-directives/README.md (« The readers »); the test spec-yaml of check-spec requires
+# an entry for every role declared. Section 2 of README.md points here.
+files:
   spec:
     manifest:
-      holds: "the manifest of this MAJOR: its identity, the MAJOR of the spec directives it follows, its files by role, the lists its tests hold them to, and this map"
+      holds: "the manifest of this MAJOR: its identity, the MAJOR of the spec directives it follows, its files by role, the lists its tests hold them to, and what each file holds and who reads it"
       readers: [builder, verifier, spec writer]
     readme:
-      holds: "the entry to this MAJOR: its scope, its files (this map), the categories, the normative references, the list of checks"
+      holds: "the entry to this MAJOR: its scope, its files (a pointer to this manifest), the categories, the normative references, the list of checks"
       readers: [creator, builder, verifier, spec writer]
     changelog:
       holds: "the changes of the spec, an « Unreleased » section until the tag"
@@ -98,10 +95,7 @@ map:
       readers: [creator, builder, spec writer]
     form:
       holds: "the form of the files of a course as data: their parts, their order, their presence, published or not, their readers; it names the words by their key in `course/lexicon.yaml` and holds none"
-      readers: [builder, verifier, spec writer]
-    form-view:
-      holds: "the form of the files of a course, readable: each file with its parts in order, mandatory or not, published or not, their readers and their words"
-      readers: [creator, builder]
+      readers: [creator, builder, verifier, spec writer]
     schemas:
       holds: "the fields of `course.yaml` and of the `concept.md` frontmatter, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml`"
       readers: [builder, verifier, spec writer]
@@ -111,9 +105,6 @@ map:
     parser:
       holds: "the parser of a course: it loads a course folder and reads the tree and the parts of each `concept.md` and the fixed facts of `storyline.md`, for the checks and the site build"
       readers: [builder, verifier]
-    views:
-      holds: "the renderer of the views of the course's files that generate-map writes: `course/form.md`, from `course/form.yaml` and `course/lexicon.yaml`"
-      readers: [spec writer]
     templates:
       holds: "the course templates"
       readers: [creator]

@@ -19,7 +19,7 @@ const path = require('path');
 require('../lib/deps').need();
 const manifest = require('../lib/manifest');
 
-const CHECKS = ['rule-slugs', 'rule-files', 'lexicon-keys', 'spec-yaml', 'composition', 'scenarios', 'map'];
+const CHECKS = ['rule-slugs', 'rule-files', 'lexicon-keys', 'spec-yaml', 'composition', 'scenarios'];
 
 function usage(code) {
   const out = code ? console.error : console.log;

@@ -51,19 +51,11 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### manifest
 
-- means: the file `spec.yaml` of a spec MAJOR, which declares the spec: its identity (its name, its MAJOR, the MAJOR of the **spec directives** it follows, its version, its language), its own files, the files of its **course** and of each of its **products**, each by its role, the lists of the spec that its files are held to, and what each file holds and who reads it, from which its **map** is generated
+- means: the file `spec.yaml` of a spec MAJOR, which declares the spec: its identity (its name, its MAJOR, the MAJOR of the **spec directives** it follows, its version, its language), its own files, the files of its **course** and of each of its **products**, each by its role, the lists of the spec that its files are held to, and what each file holds and who reads it
 - en: manifest
 - fr: « manifeste »
-- not to confuse with: [spec](#spec), [course.lock](#courselock), [map](#map)
+- not to confuse with: [spec](#spec), [course.lock](#courselock)
 - why: named after what it declares, as `course.yaml` is named after the course; a file `manifest.yaml` beside `spec.yaml` was ruled out, since it would name the role of the file and not the thing it declares, and split the declaration of a spec in two. "manifest" stays rejected for the classroom's record, the **course.lock**, which declares no spec
-
-### map
-
-- means: the list of the files of a spec MAJOR, generated from its **manifest** into the entry of the MAJOR, never written by hand: for each file, what it holds, its kind, who reads it and what tests it
-- en: map
-- fr: to settle
-- not to confuse with: [manifest](#manifest)
-- why: the course map, `course.yaml`, is a course's own list of its domains and concepts, unbolded in the meanings that name it; the map is a spec MAJOR's, of its files
 
 ### product line
 

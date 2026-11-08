@@ -4,7 +4,7 @@
 // none of them parses spec.yaml its own way. Its form is spec.schema.yaml, beside lib/: the
 // identity (name, major, directives, version, language), then `spec:` (the MAJOR's own files),
 // `course:` and `products:`, each role mapped to one path relative to the spec MAJOR, then
-// `lists:`, then `map:` (what each role holds and who reads it, for the map, lib/map.js).
+// `lists:`, then `files:` (what each role holds and who reads it).
 //   read(text)      the manifest of a spec.yaml's text (null when the file is missing): a reader
 //                   that never throws; a manifest it cannot read declares nothing
 //   m.path(owner, role)   the path of a role, `spec`, `course` or a product (`site`, `teacher`) as
@@ -12,7 +12,7 @@
 //   m.roles()             every role declared, in the manifest's order: [{ owner, role, ref, path }],
 //                         `ref` its dotted key (`spec.readme`, `course.rules`, `products.site.build`)
 //   m.products()          the products declared, in the manifest's order
-//   m.map(ref)            the entry of `map:` for a role's ref ({ holds, readers }), null when none
+//   m.entry(ref)          the entry of `files:` for a role's ref ({ holds, readers }), null when none
 //   m.list(name)          a list of `lists:` (`categories`, `families`), null when undeclared
 //   m.lexicon(owner)      the keys of `lists.lexicons.<owner>`, [[group, key, kind], ...], null
 //                         when undeclared
@@ -104,9 +104,9 @@ function read(text) {
       return out;
     },
     products,
-    map(r) {
-      if (!doc || !isMap(doc.map)) return null;
-      let v = doc.map;
+    entry(r) {
+      if (!doc || !isMap(doc.files)) return null;
+      let v = doc.files;
       for (const k of r.split('.')) v = isMap(v) ? v[k] : null;
       return isMap(v) && typeof v.holds === 'string' && Array.isArray(v.readers) ? { holds: v.holds, readers: v.readers.slice() } : null;
     },

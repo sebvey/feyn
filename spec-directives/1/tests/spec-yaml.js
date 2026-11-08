@@ -6,9 +6,9 @@
 //     lib/manifest.js, under ajv's Ajv2020): its identity (`name` a slug, `major` and `directives`
 //     positive integers, `version` `MAJOR.MINOR.PATCH` with an optional `-alpha`, `language` an
 //     ISO 639-1 code), `spec:` (its own files, at their fixed paths), `course:` and `products:` (each
-//     role one of the schema's, mapped to a path), `map:` (each entry its `holds` and its `readers`),
-//     `lists:` (`categories`, and the optional `families` and `lexicons`), no other key; each
-//     failure names the key at fault;
+//     role one of the schema's, mapped to a path), `lists:` (`categories`, and the optional
+//     `families` and `lexicons`), `files:` (each entry its `holds` and its `readers`), no other key;
+//     each failure names the key at fault;
 //   - then what the schema cannot say: `major` and `directives` are written as integers (not
 //     `1.0`), on a line of their own at the top level for `directives` and `language`, which the
 //     builds read by a line pattern; the MAJOR of `version` is `major`;
@@ -17,8 +17,13 @@
 //   - `version` agrees with the first `## ` section of CHANGELOG.md: during the alpha (`version` is
 //     `<MAJOR>.0.0-alpha`) that section is « Unreleased »; otherwise it names `version`
 //     (`## 1.0.0`, a date after the version allowed); an `-alpha` on another version fails.
+//   - when the manifest has a `files:` (it is optional): every role it declares has its entry there
+//     and its path exists; an entry of `files:` names a role the manifest declares; a product of
+//     `files.undeclared` is not declared.
 // Each failure names spec.yaml and the line of the key at fault. The test names no list of one
 // spec: it verifies the model of a spec MAJOR, common to every spec.
+const fs = require('fs');
+const path = require('path');
 const yaml = require('../lib/yaml-lines');
 const { fail, SLUG } = require('../lib/common');
 const { FILE: F } = require('../lib/manifest');
@@ -64,6 +69,27 @@ function changelog(ctx, version, m, at) {
   return [fail(F, at, `version ${version} differs from the version ${where} names: "${first.title}"`)];
 }
 
+// `files:` against the roles the manifest declares; `at` is the line of `files:` in spec.yaml
+function files(ctx, m, at) {
+  const out = [];
+  const declared = m.roles();
+  for (const r of declared) {
+    if (!m.entry(r.ref)) out.push(fail(F, at, `files has no entry for ${r.ref} (${r.path})`));
+    if (!fs.existsSync(path.join(ctx.root, r.path))) out.push(fail(F, at, `${r.ref}: ${r.path} does not exist`));
+  }
+  const refs = new Set(declared.map((r) => r.ref));
+  const isMap = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+  const entries = (prefix, v) => (isMap(v) ? Object.keys(v).map((k) => `${prefix}.${k}`) : []);
+  const doc = m.doc.files;
+  const named = [...entries('spec', doc.spec), ...entries('course', doc.course)];
+  for (const p of Object.keys(isMap(doc.products) ? doc.products : {})) named.push(...entries(`products.${p}`, doc.products[p]));
+  for (const ref of named) if (!refs.has(ref)) out.push(fail(F, at, `files.${ref} names a role the manifest does not declare`));
+  for (const p of Object.keys(isMap(doc.undeclared) ? doc.undeclared : {})) {
+    if (m.products().includes(p)) out.push(fail(F, at, `files.undeclared.${p}: the product ${p} is declared`));
+  }
+  return out;
+}
+
 // ctx: check-spec's (read and list relative to the spec folder; its manifest, read from spec.yaml)
 function run(ctx) {
   const m = ctx.manifest;
@@ -89,6 +115,7 @@ function run(ctx) {
   if (slug && code && !spec.name.endsWith(`-${spec.language}`)) {
     out.push(fail(F, at('name'), `name ${spec.name} does not end with its language: -${spec.language} (language ${spec.language})`));
   }
+  if (spec.files !== null && typeof spec.files === 'object' && !Array.isArray(spec.files)) out.push(...files(ctx, m, at('files')));
   if (!('version' in spec)) return out;
   const version = spec.version;
   const v = typeof version === 'string' ? VERSION.exec(version) : null;
@@ -100,7 +127,7 @@ function run(ctx) {
   return out;
 }
 
-// the roles it reads, by their key in the manifest, which the map of a spec MAJOR shows (lib/map.js)
+// the roles it reads, by their key in the manifest (README.md section 8)
 const reads = ['spec.manifest', 'spec.changelog'];
 
 module.exports = { id: 'spec-yaml', run, reads };
