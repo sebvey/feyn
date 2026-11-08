@@ -1,8 +1,13 @@
 'use strict';
 // Every rule and every group of rules of the protocol is named by a slug, defined once in one
-// namespace, and every rule or group cited in teacher/rules.yaml, teacher/README.md, README.md,
-// course/README.md and decisions/ (where a decision cites none: decision decision-format) is cited
-// by a slug that is defined (decisions rules-named-by-slug, rule-groups-replace-ranges).
+// namespace, and every rule or group cited in the rules of the protocol, the description of the
+// protocol, README.md, the description of the course and decisions/ (where a decision cites none:
+// decision decision-format) is cited by a slug that is defined (decisions rules-named-by-slug,
+// rule-groups-replace-ranges). The files are those the manifest, spec.yaml, declares:
+// `products.teacher.rules` (below, teacher/rules.yaml), `products.teacher.readme`
+// (teacher/README.md) and `course.readme` (course/README.md), beside the spec MAJOR's README.md and
+// decisions/. The slugs are defined by the rules of the protocol only: a manifest that does not
+// declare them checks nothing.
 //
 // Defined, in teacher/rules.yaml: a rule by its `id`, a group by its `id` (a family is a group whose
 // id is its category); each id once, across rules and groups.
@@ -19,7 +24,6 @@
 // a range, « `a` à `b` » or « `a` to `b` », in teacher/rules.yaml, teacher/README.md, README.md or
 // course/README.md (decision rule-groups-replace-ranges). decisions/ are not read for ranges: a
 // decision cites no rule id (decision decision-format), so a citation there is a slip to catch.
-// The file names it reads are those of linear-fr, a named debt: idea #485.
 const yaml = require('../lib/yaml-lines');
 const mdlib = require('../lib/md');
 const { fail } = require('../lib/course');
@@ -29,12 +33,8 @@ const GROUP_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){0,4}$/;
 const NUMBER = /^\d+\.\d+[a-z]?$/;
 const RULE_WORD = /\b(?:[Rr]ules?|[Rr]ègles?)/;
 const GROUP_WORD = /\b(?:[Gg]roups?|[Gg]roupes?)/;
-const RULES = 'teacher/rules.yaml';
-// read for the citations it makes only, as README.md and course/README.md are: no slug is defined
-// there
-const PROTOCOL = 'teacher/README.md';
-// the descriptions read beside the protocol: the spec MAJOR's README, and what a course is
-const DESCRIPTIONS = ['README.md', 'course/README.md'];
+// the spec MAJOR's README, read beside the description of the course (course.readme)
+const README = 'README.md';
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const codeSpans = (t) => [...t.matchAll(/`([^`]+)`/g)].map((m) => m[1]);
@@ -88,6 +88,13 @@ function rangeCitations(paras) {
 }
 
 function run(ctx) {
+  const m = ctx.manifest;
+  const RULES = m.path('teacher', 'rules');
+  if (RULES === null) return m.nothing(m.ref('teacher', 'rules'));
+  // read for the citations it makes only, as the descriptions are: no slug is defined there
+  const PROTOCOL = m.path('teacher', 'readme');
+  // the descriptions read beside the protocol: the spec MAJOR's README, and what a course is
+  const DESCRIPTIONS = [README, m.path('course', 'readme')].filter((f) => f !== null);
   const raw = ctx.read(RULES);
   if (raw === null) return [fail(RULES, 1, `${RULES} is missing`)];
   let doc;
@@ -129,8 +136,8 @@ function run(ctx) {
   prose.push({ file: RULES, paras: texts, ranges: true });
 
   // teacher/README.md: its tables' "Used in" and "Rule" columns, and its prose
-  const readme = ctx.read(PROTOCOL);
-  if (readme === null) out.push(fail(PROTOCOL, 1, `${PROTOCOL} is missing`));
+  const readme = PROTOCOL === null ? '' : ctx.read(PROTOCOL);
+  if (PROTOCOL === null) { /* not declared: nothing to read */ } else if (readme === null) out.push(fail(PROTOCOL, 1, `${PROTOCOL} is missing`));
   else {
     const body = mdlib.split(readme).body;
     for (const tb of mdlib.tables(body)) {

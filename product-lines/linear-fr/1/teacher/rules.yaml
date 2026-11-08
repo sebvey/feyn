@@ -9,8 +9,8 @@
 # group of that family, its slug as id. A group: id, title, purpose (what the group is for),
 # category (its family), method (demonstration, by the fresh tests), rules. A rule: id (its slug),
 # level, text, why (what the teacher does without the rule, where a drift was seen). check-spec
-# (rule-files, rule-slugs) verifies this file; teacher/build/render-parts renders it for a
-# classroom.
+# (rule-files, rule-slugs) verifies this file when spec.yaml declares the teacher, which it does
+# not while the teacher is frozen; teacher/build/render-parts renders it for a classroom.
 groups:
   - id: session-start
     title: Démarrage de session

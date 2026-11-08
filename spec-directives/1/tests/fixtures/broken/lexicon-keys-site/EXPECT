@@ -1,0 +1,2 @@
+check: lexicon-keys
+message: site/lexicon.yaml:2 missing key nav.glossary (a non-empty string)

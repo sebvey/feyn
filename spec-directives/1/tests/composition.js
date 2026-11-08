@@ -9,15 +9,17 @@
 //     strings; a `from: spec` source is a file or folder the spec folder holds;
 //   - the part `on-demand` has `moments`, a non-empty list; a moment has `id` and `when`, `rules` a
 //     list (empty allowed) of strings, and `draws`, as a part's.
-// The closed lists are the composition model's, not one spec's: the five parts, when a part
-// loads, where a source lives. A `from: spec` source is checked against the spec folder, so the test
-// names no file of a spec (the debt of idea #485 stays as it is, none added).
+// The file is the one the manifest, spec.yaml, declares, `products.teacher.composition`
+// (teacher/composition.yaml above): a manifest that does not declare it checks nothing. The closed
+// lists are the composition model's, not one spec's: the five parts, when a part loads, where a
+// source lives. A `from: spec` source is checked against the spec folder, so the test names no
+// file of a spec.
 const fs = require('fs');
 const path = require('path');
 const yaml = require('../lib/yaml-lines');
 const { fail } = require('../lib/course');
 
-const F = 'teacher/composition.yaml';
+let F = null; // the composition's path, from the manifest at each run
 const PARTS = ['permanent', 'on-demand', 'course-reads', 'learner-memory', 'permissions'];
 const LOADS = ['every-message', 'at-a-moment', 'during-the-session', 'at-start-and-save-points', 'always'];
 const FROM = ['spec', 'course', 'learner', 'classroom'];
@@ -73,6 +75,9 @@ function moments(ctx, part, at) {
 
 // ctx: check-spec's (read and list relative to the spec folder)
 function run(ctx) {
+  const m = ctx.manifest;
+  F = m.path('teacher', 'composition');
+  if (F === null) return m.nothing(m.ref('teacher', 'composition'));
   const text = ctx.read(F);
   if (text === null) return [fail(F, 1, `${F} is missing: the composition of the teacher, its five parts`)];
   let doc;

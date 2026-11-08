@@ -1,0 +1,119 @@
+# The form of a spec MAJOR's manifest, its spec.yaml (README.md section 8): its identity, then
+# the files of its course and of each of its products, each by role, then its own lists. A role
+# maps to one path, relative to the spec MAJOR, a file or a folder. lib/manifest.js reads the
+# manifest for every test of check-spec, and spec-yaml validates it against this schema through
+# Ajv2020 (decision checks-use-ajv-and-yaml); what the schema does not say (the version against
+# CHANGELOG.md, the name against the language, `major` and `directives` written as integers) is
+# spec-yaml's. `directives` and `language` stay top-level keys: the builds and the course checks
+# read them by a line pattern (`directives: <MAJOR>`, `language: <code>`) before they know which
+# directives to load. A description of a scalar is what its value must be, for spec-yaml's
+# failures (« language "french" is not an ISO 639-1 code »).
+$schema: https://json-schema.org/draft/2020-12/schema
+title: spec.yaml
+type: object
+required: [name, major, directives, version, language, course, lists]
+additionalProperties: false
+properties:
+  name:
+    description: a slug (lowercase words joined by hyphens)
+    type: string
+    pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+  major:
+    description: a positive integer
+    type: integer
+    minimum: 1
+  directives:
+    description: a positive integer, the MAJOR of spec-directives/ the spec follows
+    type: integer
+    minimum: 1
+  version:
+    description: MAJOR.MINOR.PATCH with an optional -alpha
+    type: string
+    pattern: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-alpha)?$'
+  language:
+    description: an ISO 639-1 code (two lowercase letters), the language of the spec
+    type: string
+    pattern: '^[a-z]{2}$'
+  course:
+    description: the files of the course, the input of the builds of the products, by role
+    type: object
+    required: [readme, rules]
+    additionalProperties: false
+    properties:
+      readme: { $ref: '#/$defs/path', description: "a path, the description of a course" }
+      rules: { $ref: '#/$defs/path', description: "a path, the rules of a course" }
+      lexicon: { $ref: '#/$defs/path', description: "a path, the lexicon of the course files" }
+      form: { $ref: '#/$defs/path', description: "a path, the form of the files of a course" }
+      schemas: { $ref: '#/$defs/path', description: "a path, the folder of the schemas of a course" }
+      checks: { $ref: '#/$defs/path', description: "a path, the folder of the checks of a course" }
+  products:
+    description: the products the spec defines, each with its files by role; none required
+    type: object
+    additionalProperties: false
+    minProperties: 1
+    properties:
+      site:
+        type: object
+        additionalProperties: false
+        minProperties: 1
+        properties:
+          lexicon: { $ref: '#/$defs/path', description: "a path, the lexicon of the site" }
+          url-scheme: { $ref: '#/$defs/path', description: "a path, the URL scheme of the site" }
+          build: { $ref: '#/$defs/path', description: "a path, the folder of the spec's half of the site build" }
+      teacher:
+        type: object
+        additionalProperties: false
+        minProperties: 1
+        properties:
+          readme: { $ref: '#/$defs/path', description: "a path, the description of the protocol" }
+          rules: { $ref: '#/$defs/path', description: "a path, the rules of the protocol" }
+          lexicon: { $ref: '#/$defs/path', description: "a path, the lexicon of the teacher" }
+          composition: { $ref: '#/$defs/path', description: "a path, the composition of the teacher" }
+          tests: { $ref: '#/$defs/path', description: "a path, the folder of the test scenarios of the teacher" }
+          build: { $ref: '#/$defs/path', description: "a path, the folder of the spec's half of the teacher build" }
+  lists:
+    description: the closed lists of the spec, which its tests hold its files to
+    type: object
+    required: [categories]
+    additionalProperties: false
+    properties:
+      categories:
+        description: a non-empty list of distinct slugs, the categories of the rules of a course
+        $ref: '#/$defs/slugs'
+      families:
+        description: a non-empty list of distinct slugs, the families of the protocol, in their order
+        $ref: '#/$defs/slugs'
+      lexicons:
+        description: the keys each lexicon holds, by its owner, the course or a product
+        type: object
+        additionalProperties: false
+        minProperties: 1
+        properties:
+          course: { $ref: '#/$defs/keys' }
+          site: { $ref: '#/$defs/keys' }
+$defs:
+  path:
+    description: a path relative to the spec MAJOR, a file or a folder, with no leading or trailing slash and no . or .. segment
+    type: string
+    pattern: '^(?!\.\.?(/|$))(?!.*/\.\.?(/|$))[A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)*$'
+  slugs:
+    description: a non-empty list of distinct slugs
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items:
+      description: a slug (lowercase words joined by hyphens)
+      type: string
+      pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+  keys:
+    description: the groups of a lexicon, each a map of its keys to their kind
+    type: object
+    minProperties: 1
+    propertyNames: { pattern: '^[a-z_]+$' }
+    additionalProperties:
+      type: object
+      minProperties: 1
+      propertyNames: { pattern: '^[a-z_]+$' }
+      additionalProperties:
+        description: a kind of key, string (a non-empty string) or list (a non-empty list of strings)
+        enum: [string, list]

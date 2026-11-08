@@ -3,7 +3,8 @@
 // Runs check-spec (the tests of a spec's own files, its lexicons included) on the fixtures,
 // and says whether every run gave the expected result (the course fixtures are tested by
 // product-lines/<name>/<MAJOR>/course/checks/test-fixtures).
-//   fixtures/valid                 a model spec MAJOR that passes every test
+//   fixtures/valid                 a model spec MAJOR that passes every test, its manifest
+//                                  declaring every file a test reads, so that none checks nothing
 //   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>": that test fails with a
 //                                  line containing the fragment, and no other test fails beside it
 //                                  but those an "also: <id>[, <id>]" line names, which the same
@@ -40,7 +41,7 @@ const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
   const checksDir = ['--checks-dir', path.join(fx, 'checks')];
   const spec = (dir, extra) => spawn(path.join(here, 'check-spec'), dir, [...checksDir, ...extra]);
   const v = spec(path.join(fx, 'valid'), []);
-  report('valid passes every spec check', v.code === 0, notOk(v));
+  report('valid passes every spec check', v.code === 0 && v.lines.every((l) => l.endsWith(': ok')), notOk(v));
   for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     const d = path.join(fx, 'broken', name);
     const ex = Object.fromEntries(fs.readFileSync(path.join(d, 'EXPECT'), 'utf8').split('\n').filter(Boolean).map((l) => [l.slice(0, l.indexOf(':')), l.slice(l.indexOf(':') + 1).trim()]));
