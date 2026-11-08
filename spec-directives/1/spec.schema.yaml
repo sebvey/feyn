@@ -146,12 +146,12 @@ $defs:
       properties:
         holds: { $ref: '#/$defs/line', description: "a non-empty string on one line, what the file or folder holds" }
         readers:
-          description: a non-empty list of distinct readers of a spec (spec-directives/README.md, « The readers »)
+          description: a non-empty list of distinct readers of a spec, each defined in spec-directives/README.md (« The readers »), whose bullets the directives' own tests (tests/test-fixtures) hold the enum below to
           type: array
           minItems: 1
           uniqueItems: true
           items:
-            description: a reader of a spec, creator, builder, verifier or spec writer
+            description: a reader of a spec, one of those spec-directives/README.md defines (« The readers »)
             enum: [creator, builder, verifier, spec writer]
   path:
     description: a path relative to the spec MAJOR, a file or a folder, with no leading or trailing slash and no . or .. segment

@@ -18,7 +18,7 @@ The spec is read by four makers, each of something that must agree with a course
 - **verifier**: the checks, the reviewer and the fresh tests, which make a verdict; comes for the rules as data, the conformance clause and the fixtures.
 - **spec writer**: whoever writes a rule, a check or a decision of a spec, the maintainer at the tag included; comes for the directives, the decisions and the changelogs.
 
-The manifest of a spec MAJOR, its `spec.yaml`, names the readers of each of its files, among these four, under `files:` (`1/README.md` section 8).
+The manifest of a spec MAJOR, its `spec.yaml`, names the readers of each of its files, among these four, under `files:` (`1/README.md` section 8). The schema of the manifest, `1/spec.schema.yaml`, holds them in the enum of `readers`, which the directives' own tests (`1/tests/test-fixtures`) hold to the four names above: renamed, added or removed in one place only, they fail.
 
 ## The directives and their MAJORs
 
