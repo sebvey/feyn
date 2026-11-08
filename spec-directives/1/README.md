@@ -16,7 +16,7 @@ Version 1.0.0-alpha: binding from the tag `spec-directives/v1.0.0` (section 6). 
 - `decisions/`: the decisions of the directives.
 - `tests/`: the tests of a spec's own files, their fixtures and their `test-fixtures` (section 8).
 - `spec.schema.yaml`: the form of a spec MAJOR's manifest, its `spec.yaml` (section 8).
-- `lib/`, `package.json`, `package-lock.json`: the lib the checks of a spec and the tests share, its helpers (`lib/common.js`: a failure, a slug, a number, a release heading), the reader of the manifest (`lib/manifest.js`) among it, the parser of a course being the spec MAJOR's (`course.parser` of its `spec.yaml`), and its dependencies (`yaml`, `ajv`), loaded by the checks of a spec MAJOR that declares this MAJOR in its `spec.yaml`.
+- `lib/`, `package.json`, `package-lock.json`: the lib the checks of a spec and the tests share, its helpers (`lib/common.js`: a failure, a slug, a number, a release heading), the reader of the manifest (`lib/manifest.js`) among it, the parser of a course and the readers of its concept references and of its glossary being the spec MAJOR's (`course.parser`, `course.refs` and `course.glossary` of its `spec.yaml`), and its dependencies (`yaml`, `ajv`), loaded by the checks of a spec MAJOR that declares this MAJOR in its `spec.yaml`.
 
 ## 1. Rules
 
@@ -119,7 +119,7 @@ The standards the rules of one spec depend on are in the README of that spec MAJ
 |---|---|---|
 | identity | `name` (a slug ending with `-<language>`), `major`, `directives`, `version`, `language` (ISO 639-1), each a top-level key on a line of its own, which the builds and the course checks read by a line pattern before they know which directives to load | all |
 | `spec` | `manifest`, `readme`, `changelog`, `decisions`, each at the path the directives fix (`spec.yaml`, `README.md`, `CHANGELOG.md`, `decisions`) | none |
-| `course` | `readme`, `rules`, `lexicon`, `form`, `schemas`, `checks`, `parser`, `templates`, `samples` | `course`, its `readme` and `rules` |
+| `course` | `readme`, `rules`, `lexicon`, `form`, `schemas`, `checks`, `parser`, `refs`, `glossary`, `templates`, `samples` | `course`, its `readme` and `rules` |
 | `products` | `site`: `lexicon`, `url-scheme`, `build`; `teacher`: `readme`, `rules`, `lexicon`, `composition`, `tests`, `build` | none |
 | `lists` | `categories` (the categories of the rules of a course), `families` (the families of the protocol, in their order), `lexicons` (by owner, `course` or `site`: each group, each key with its kind, `string` or `list`) | `lists` and its `categories` |
 | `files` | keyed as the roles (`files.course.rules`, `files.products.site.build`, `files.spec.readme`): `holds`, one line on what the file or folder holds, and `readers`, among `creator`, `builder`, `verifier`, `spec writer` (`spec-directives/README.md`, « The readers »); `undeclared`, for a product the manifest does not declare, one line saying why | none; when present, an entry for every role declared |

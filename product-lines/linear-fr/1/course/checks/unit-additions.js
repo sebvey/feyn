@@ -11,7 +11,8 @@
 // reads them (course/parser.js); a unit whose fields are unreadable is unit-contract's.
 const directives = require('./directives');
 const mdlib = directives.lib('md');
-const glossary = directives.lib('glossary');
+// the glossary's table is read by the reader of this MAJOR (course/glossary.js), given the directives' lib
+const glossary = require('../glossary')(directives.lib);
 const { fail } = directives.lib('common');
 
 // a field's label, `- **<label>** :` (what stands before its colon, which unit-contract refuses,
@@ -80,6 +81,6 @@ function run(ctx) {
 
 // the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
 // the course through the parser
-const reads = ['course.form', 'course.lexicon', 'course.parser'];
+const reads = ['course.form', 'course.lexicon', 'course.parser', 'course.glossary'];
 
 module.exports = { id: 'unit-additions', run, reads };
