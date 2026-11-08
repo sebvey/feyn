@@ -1,6 +1,6 @@
 'use strict';
 // A test of the spec's own files, run by check-spec, which verifies no rule (decisions
-// conformity-by-product, spec-files-by-product): the test scenarios of the teacher,
+// conformity-of-the-course-and-products, spec-files-by-product): the test scenarios of the teacher,
 // teacher/tests/, in their form, never what a run of them shows (classroom-builder/fresh-test).
 //   - no teacher/tests/ folder: nothing to verify (a spec MAJOR may have no fresh test yet);
 //   - teacher/tests/scenario.schema.yaml exists and compiles under ajv's Ajv2020 (JSON Schema

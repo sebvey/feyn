@@ -1,5 +1,5 @@
 // The words of the interface: the site's own words, which name no thing of the course (decision
-// `one-source-two-builds`). Every other word a page shows comes from the document render-site
+// `products-built-from-one-course`). Every other word a page shows comes from the document render-site
 // prints: a word that names a thing of the course (the navigation, the labels, the headings, the
 // kind words) is in its `words`, read from the spec's lexicons. This file is the one place an
 // interface word is written; a page never writes one of its own. French, the language of the
