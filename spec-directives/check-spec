@@ -6,7 +6,7 @@
 // exit code unchanged: the tests of a spec's own files, which belong to the directives the spec
 // follows. Refuses (exit 2, one line) a folder with no spec.yaml, a spec.yaml with no
 // `directives` line, and a directives MAJOR with no folder here.
-// spec.yaml is read by a line scan, as course-specs/check-course reads course.yaml: the YAML reader
+// spec.yaml is read by a line scan, as product-lines/check-course reads course.yaml: the YAML reader
 // is the directives' own package, which this script does not load.
 const fs = require('fs');
 const path = require('path');

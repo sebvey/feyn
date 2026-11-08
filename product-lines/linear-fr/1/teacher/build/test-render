@@ -1,0 +1,91 @@
+#!/usr/bin/env node
+'use strict';
+// test-render: runs render-parts on cafe (course/samples/cafe, the spec's sample course), with
+// no --site-url and with one, and validates each JSON document against parts.schema.yaml (ajv's Ajv2020, from the
+// package of the spec directives this MAJOR follows); then checks what the schema cannot say: one
+// moment per moment of composition.yaml, every rule of the protocol rendered once, in the permanent
+// protocol or in one moment, the learner templates verbatim, the three spots of the filling (a
+// value in parentheses inside a link, a phrase ending its sentence, the plural of the domains).
+// Exit 0 when every check passes, 1 otherwise; one line per failure.
+const fs = require('fs');
+const path = require('path');
+const { spawnSync } = require('child_process');
+const { createRequire } = require('module');
+
+// here is product-lines/<name>/<MAJOR>/teacher/build
+const HERE = __dirname;
+const MAJOR = path.resolve(HERE, '..', '..');
+const REPO = path.resolve(MAJOR, '..', '..', '..');
+const COURSE = path.join(MAJOR, 'course', 'samples', 'cafe');
+
+const line = fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').split('\n').find((l) => /^directives\s*:/.test(l));
+const directives = line.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
+const req = createRequire(path.join(REPO, 'spec-directives', directives, 'package.json'));
+req('./lib/deps').need();
+const yaml = req('./lib/yaml-lines');
+const Ajv2020 = req('ajv/dist/2020').default;
+
+const failures = [];
+let checks = 0;
+function check(ok, message) {
+  checks++;
+  if (!ok) failures.push(message);
+  return ok;
+}
+const validate = new Ajv2020({ allErrors: true }).compile(yaml.parse(fs.readFileSync(path.join(HERE, 'parts.schema.yaml'), 'utf8')));
+
+function render(args) {
+  const r = spawnSync(process.execPath, [path.join(HERE, 'render-parts'), COURSE, ...args], { encoding: 'utf8' });
+  if (!check(r.status === 0, `render-parts ${args.join(' ')} exits ${r.status}, not 0: ${(r.stderr || '').trim()}`)) return null;
+  let doc = null;
+  try { doc = JSON.parse(r.stdout); } catch (e) { check(false, `render-parts ${args.join(' ')} prints no JSON: ${e.message}`); return null; }
+  const ok = validate(doc);
+  check(ok, `render-parts ${args.join(' ')}: not valid against parts.schema.yaml: ${(validate.errors || []).map((e) => `${e.instancePath} ${e.message}`).join('; ')}`);
+  return doc;
+}
+
+const doc = render([]);
+const published = render(['--site-url', 'https://example.org/feyn/next/cafe', '--channel', 'prod']);
+if (!doc || !published) {
+  failures.forEach((f) => console.error(`test-render: ${f}`));
+  process.exit(1);
+}
+
+// one moment per moment of the composition, in its order
+const composition = yaml.parse(fs.readFileSync(path.join(MAJOR, 'teacher', 'composition.yaml'), 'utf8'));
+const ids = composition.parts.find((p) => p.id === 'on-demand').moments.map((m) => m.id);
+check(doc.moments.map((m) => m.id).join(',') === ids.join(','), `the moments are ${doc.moments.map((m) => m.id).join(', ')}, not ${ids.join(', ')}`);
+
+// every rule of the protocol once, in the permanent protocol or in one moment
+const protocol = yaml.parse(fs.readFileSync(path.join(MAJOR, 'teacher', 'rules.yaml'), 'utf8'));
+const slugsOf = (text) => text.split('\n').map((l) => /^\*\*([a-z0-9-]+)\*\* /.exec(l)).filter(Boolean).map((m) => m[1]);
+const all = protocol.groups.flatMap((g) => g.rules.map((r) => r.id));
+const rendered = [doc.permanent.protocol, ...doc.moments.map((m) => m.rules)].flatMap(slugsOf);
+check(rendered.length === all.length && [...rendered].sort().join(',') === [...all].sort().join(','), `${rendered.length} rules rendered, not the ${all.length} of the protocol once each`);
+
+// the learner templates, verbatim
+const TEMPLATES = path.join(MAJOR, 'teacher', 'templates', 'learner');
+const names = fs.readdirSync(TEMPLATES).filter((x) => x.endsWith('.md')).sort();
+check(doc.learner_templates.map((t) => t.name).join(',') === names.join(','), 'the learner templates are not those of teacher/templates/learner/');
+for (const t of doc.learner_templates) {
+  check(fs.existsSync(path.join(TEMPLATES, t.name)) && t.text === fs.readFileSync(path.join(TEMPLATES, t.name), 'utf8'), `learner template ${t.name} is not verbatim`);
+}
+
+// the parameters
+check(doc.params.course.id === 'cafe' && doc.params.classroom.channel === 'next', 'params: the course id or the default channel is wrong');
+check(doc.params.classroom.site_url === '(site non publié)', 'params: with no --site-url, site_url is not « (site non publié) »');
+check(published.params.classroom.site_url === 'https://example.org/feyn/next/cafe/' && published.params.classroom.channel === 'prod', 'params: --site-url or --channel is not used');
+check(published.permanent.protocol.includes('](https://example.org/feyn/next/cafe/concepts/{nn}/)'), 'with --site-url, a link does not give the concept address');
+
+// the three spots of the filling
+const texts = (d) => [d.permanent.protocol, ...d.moments.map((m) => m.rules)].join('\n');
+const t = texts(doc);
+check(!t.includes('((site'), 'a value in parentheses inside a link keeps a doubled pair: « ((site »');
+check(t.includes('](site non publié)'), 'with no --site-url, a link does not read « (site non publié) »');
+const doubled = t.split('\n').filter((l) => /\. »\.|\.\./.test(l));
+check(doubled.length === 0, `a period follows a phrase that ends its sentence: ${doubled[0]}`);
+check(!/ses 1 domaines/.test(t) && !/ses \d+ domaines/.test(t), 'the count of domains is written « ses <number> domaines » whatever the number');
+
+for (const f of failures) console.error(`test-render: ${f}`);
+console.log(`test-render: ${checks - failures.length}/${checks} checks pass`);
+process.exit(failures.length ? 1 : 0);

@@ -5,8 +5,8 @@ How an item is read against the purpose of feyn before it is presented to the ma
 ## The reading
 
 Read [vision.md](../../docs/vision.md) (what feyn is for, the yardstick of a change, the lessons) and answer two questions from the item's body, each with the line it rests on:
-- which product consumes it: the teacher, the site, or neither (then which of them it serves, through what);
-- how it serves the purpose, measured by the yardstick (for a change of `linear-course`: does the bench course `course-specs/linear-course/1/course/samples/cafe/` follow it in the same PR, and do its checks pass on it; the teacher is frozen, decision `teacher-frozen-until-the-protocol-brainstorm`).
+- which product it is for: the teacher, the site, the course-creator, or none (then which of them it serves, through what);
+- how it serves the purpose, measured by the yardstick (for a change of `linear-fr`: does the bench course `product-lines/linear-fr/1/course/samples/cafe/` follow it in the same PR, and do its checks pass on it; the teacher is frozen, decision `teacher-frozen-until-the-protocol-brainstorm`).
 
 An item that names no product it serves says so; it is not refused here, the answer goes to the maintainer with the rest.
 
@@ -16,4 +16,4 @@ An item labelled `stale` (posed before the frame of 2026-11-03) is, in this same
 
 ## What the presentation shows
 
-**Purpose**: the product that consumes it and how it serves the purpose, each with its line, or "Names no product it serves"; an item labelled `stale`: also whether it still holds against `vision.md`, as written, reworked, or not at all (what replaced it), with its proof.
+**Purpose**: the product it is for and how it serves the purpose, each with its line, or "Names no product it serves"; an item labelled `stale`: also whether it still holds against `vision.md`, as written, reworked, or not at all (what replaced it), with its proof.

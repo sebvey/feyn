@@ -1,6 +1,6 @@
 'use strict';
 // A test of the spec's own files, run by check-spec, which verifies no rule (decision
-// conformity-by-product): the rule files (decisions rules-with-level-and-method,
+// conformity-of-the-course-and-products): the rule files (decisions rules-with-level-and-method,
 // spec-files-by-product) and the schemas (decision field-tables-as-schemas).
 //   - course/rules.yaml and teacher/rules.yaml exist, each a map whose one key
 //     `groups` is a non-empty list; a group has `rules`, a non-empty list, and may declare `id`
@@ -22,7 +22,7 @@
 //   - a check verifies rules of one category and one level;
 //   - each course/schemas/*.schema.yaml compiles under ajv's Ajv2020 (JSON Schema 2020-12), and the
 //     text of exactly one rule of course/rules.yaml names it; a schema named there exists.
-// The categories and the families below are those of linear-course, a named debt: idea #485.
+// The categories and the families below are those of linear-fr, a named debt: idea #485.
 const fs = require('fs');
 const path = require('path');
 const yaml = require('../lib/yaml-lines');

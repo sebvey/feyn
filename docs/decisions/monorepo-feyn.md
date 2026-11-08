@@ -9,7 +9,7 @@ Without this, an agent would open a new repository for a second course or a seco
 
 One public repository, `sebvey/feyn`, holds the specs, the courses, the teacher, the site engine, the agentic layer and the decisions; it is the only repository we work in. The site builds are deployed to a separate artifact repository, `sebvey/feyn-site` (branch `gh-pages` only, never edited by hand). `feyn` was created empty: the git history of `parcours-po` does not carry over. The two old repositories are frozen, then archived; they are read, never written to.
 
-The root holds two files, `CLAUDE.md` and `README.md`, plus dotfiles; `docs/` holds four things, `decisions/`, `glossary.md`, `contributing.md` and `kanban.md`. Anything more at the root or in `docs/` needs a decision here. A document that describes one area lives in that area's folder (`site-builder/docs/`, `classroom-builder/README.md`), and there is no `CLAUDE.md` per folder: skills carry the detail.
+The root holds two files, `CLAUDE.md` and `README.md`, plus dotfiles; `docs/` holds four things, `decisions/`, `glossary.md`, `contributing.md` and `kanban.md`. Anything more at the root or in `docs/` needs a decision here. A document that describes one area lives in that area's folder (`site-builder/docs/`, `teacher-builder/README.md`), and there is no `CLAUDE.md` per folder: skills carry the detail.
 
 ## Options ruled out
 

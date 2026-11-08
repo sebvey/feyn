@@ -1,6 +1,6 @@
 'use strict';
 // A test of the spec's own files, run by check-spec, which verifies no rule (decisions
-// conformity-by-product, spec-files-by-product): the composition of the teacher,
+// conformity-of-the-course-and-products, spec-files-by-product): the composition of the teacher,
 // teacher/composition.yaml, in its form, never its sense (the fresh tests judge that).
 //   - teacher/composition.yaml exists and is a map whose key `parts` is a list of exactly five
 //     parts, ids `permanent`, `on-demand`, `course-reads`, `learner-memory`, `permissions`, each once;
