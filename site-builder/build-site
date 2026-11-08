@@ -2,7 +2,7 @@
 // build-site <course-dir> [--channel next|prod|preview] [--base <path>] [--origin <https://host>] [--out <dir>]
 // Builds the site of a course, in two halves (site-builder/README.md):
 //   1. the dispatcher: it reads `spec: <name>@<MAJOR>` in course.yaml and runs that MAJOR's
-//      course-specs/<name>/<MAJOR>/site/build/render-site, which prints the published parts of the
+//      product-lines/<name>/<MAJOR>/site/build/render-site, which prints the published parts of the
 //      course, the words and the URL scheme of its site as one JSON document, validated here
 //      against the MAJOR's site/build/site.schema.yaml;
 //   2. the engine, this folder's: Astro lays the document out in pages under the base path, then
@@ -91,7 +91,7 @@ const specLine = read(path.join(courseDir, 'course.yaml')).split('\n').find((l) 
 const specRef = specLine && specLine.replace(/^spec\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2');
 const specMatch = specRef && /^([a-z0-9]+(?:-[a-z0-9]+)*)@(\d+)$/.exec(specRef);
 if (!specMatch) refuse(`${courseDir}/course.yaml declares no spec (spec: <name>@<MAJOR>)`);
-const SPEC = path.join(REPO, 'course-specs', specMatch[1], specMatch[2]);
+const SPEC = path.join(REPO, 'product-lines', specMatch[1], specMatch[2]);
 if (!fs.existsSync(path.join(SPEC, 'spec.yaml'))) refuse(`unknown spec MAJOR ${specRef}: no ${rel(SPEC)}/spec.yaml, no site is built from it`);
 const RENDER = path.join(SPEC, 'site', 'build', 'render-site');
 const SCHEMA = path.join(SPEC, 'site', 'build', 'site.schema.yaml');

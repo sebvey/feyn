@@ -50,10 +50,10 @@ Any other body: its sections in order.
 
      | Path | Area label |
      |---|---|
-     | `course-specs/<name>/` | `area:spec:<name>` |
+     | `product-lines/<name>/` | `area:spec:<name>` |
      | `spec-directives/` | `area:spec-directives` |
      | `courses/<id>/` | `area:course:<id>` |
-     | `classroom-builder/` | `area:teacher` |
+     | `teacher-builder/` | `area:teacher` |
      | `site-builder/` | `area:site` |
      | `.claude/`, `.github/` | `area:agentic` |
      | root files, `docs/` | `area:repo` |

@@ -18,6 +18,6 @@ feyn makes three products, the site, the teacher and the course-creator: the sit
 
 ## Consequences
 
-- The paths, the spec's name and the test of `check-spec` that holds its language to `spec.yaml`, the builder of the teacher and its script, the GitHub label and milestone, the area table of `/feyn-issue` and the deploy workflows follow in the renaming story of epic #729, before the epic reaches `main`; until it lands, the tree keeps `course-specs/linear-course/1/` and `classroom-builder/`.
+- The paths, the spec's name and the test of `check-spec` that holds its language to `spec.yaml`, the builder of the teacher and its script, the GitHub label and milestone, the area table of `/feyn-issue` and the deploy workflows follow in the renaming story of epic #729 (#732), before the epic reaches `main`.
 - The move of `site/` and `teacher/` under `products/` is epic #522's, after this one.
 - Decisions `conformity-of-the-course-and-products`, `products-built-from-one-course`, `spec-files-by-product`, `lexicon-not-language-pack`, `versioned-objects-and-spec-layout`, `teacher-frozen-until-the-protocol-brainstorm` and `agentic-rules-file` are reworded or amended to match.

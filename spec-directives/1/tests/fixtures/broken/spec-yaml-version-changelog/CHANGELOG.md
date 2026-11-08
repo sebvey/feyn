@@ -1,6 +1,6 @@
 # Changelog of the spec
 
-`fixture-spec`, MAJOR 1. Tagged `fixture-spec/v1.0.0`.
+`fixture-fr`, MAJOR 1. Tagged `fixture-fr/v1.0.0`.
 
 One line per change: `- CLASS, file or area: what changes`.
 

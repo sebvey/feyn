@@ -1,0 +1,2 @@
+check: spec-yaml
+message: spec.yaml:2 name fixture-en does not end with its language: -fr

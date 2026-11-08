@@ -19,7 +19,7 @@
 // a range, « `a` à `b` » or « `a` to `b` », in teacher/rules.yaml, teacher/README.md, README.md or
 // course/README.md (decision rule-groups-replace-ranges). decisions/ are not read for ranges: a
 // decision cites no rule id (decision decision-format), so a citation there is a slip to catch.
-// The file names it reads are those of linear-course, a named debt: idea #485.
+// The file names it reads are those of linear-fr, a named debt: idea #485.
 const yaml = require('../lib/yaml-lines');
 const mdlib = require('../lib/md');
 const { fail } = require('../lib/course');

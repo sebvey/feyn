@@ -1,11 +1,11 @@
 'use strict';
 // A test of the spec's own files, run by check-spec (not a rule: decision
 // conformity-of-the-course-and-products, amended by #339): the course and teacher lexicons of a spec MAJOR (decision
-// lexicon-not-language-pack of linear-course). course/lexicon.yaml, the lexicon of the course
+// lexicon-not-language-pack of linear-fr). course/lexicon.yaml, the lexicon of the course
 // files, holds every key of course/README.md section 7; every key the protocol uses is in one of
 // the two lexicons, course/lexicon.yaml or teacher/lexicon.yaml; a group lives in one of
 // them only. A spec folder with neither lexicon has none to test.
-// The keys of section 7 below are those of linear-course, a named debt: idea #485.
+// The keys of section 7 below are those of linear-fr, a named debt: idea #485.
 const yaml = require('../lib/yaml-lines');
 const { fail } = require('../lib/course');
 

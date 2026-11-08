@@ -1,0 +1,317 @@
+#!/usr/bin/env node
+'use strict';
+// test-build: builds cafe (product-lines/linear-fr/1/course/samples/cafe, the spec's sample
+// course) with teacher-builder/build-teacher into temporary folders and checks what a command
+// can check of the classroom: the files of each part of the composition, the course copy (diff -r), the learner templates, the permissions, the
+// skills of the moments, the built CLAUDE.md (no placeholder left, the rules verbatim but for their
+// placeholders, each rule of the protocol in CLAUDE.md or in one skill, once, each family and group
+// heading followed by its purpose; the protocol read from teacher/rules.yaml), the three spots of the filling (no doubled parenthesis, no
+// period after a phrase that ends with one, the plural of the domains), the teacher template (no
+// rule text), course.lock, the classroom's git (one commit, clean), the default folders of the
+// channels (under a temporary HOME), the refusal of a non-empty target and --force, --site-url, and
+// the dispatcher's refusal of a spec MAJOR with no teacher/build/ or of an unknown MAJOR.
+// Exit 0 when every check passes, 1 otherwise; one line per failure.
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+const { createRequire } = require('module');
+
+const BUILDER = __dirname;
+const REPO = path.resolve(BUILDER, '..');
+const BUILD = path.join(BUILDER, 'build-teacher');
+const SPEC = path.join(REPO, 'product-lines', 'linear-fr', '1');
+const COURSE = path.join(SPEC, 'course', 'samples', 'cafe');
+const COURSE_ARG = path.relative(REPO, COURSE); // the course as given to the build, from the repository's root
+const TEMPLATES = path.join(SPEC, 'teacher', 'templates', 'learner');
+const PLACEHOLDER = /\{[a-z_]+\.[a-z_]+\}/;
+const RULE_LINE = /^\*\*[a-z0-9-]+\*\* /;
+
+const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'feyn-test-build-'));
+const failures = [];
+let checks = 0;
+function check(ok, message) {
+  checks++;
+  if (!ok) failures.push(message);
+  return ok;
+}
+function build(args, env = {}) {
+  return spawnSync(process.execPath, [BUILD, ...args], { cwd: REPO, encoding: 'utf8', env: { ...process.env, ...env } });
+}
+const read = (p) => { try { return fs.readFileSync(p, 'utf8'); } catch (e) { return null; } };
+const git = (dir, ...args) => spawnSync('git', ['-C', dir, ...args], { encoding: 'utf8' });
+
+// ---- the build, with no --site-url
+const out = path.join(tmp, 'classroom');
+const r = build([COURSE_ARG, '--out', out]);
+if (!check(r.status === 0, `build exits ${r.status}, not 0: ${(r.stderr || '').trim()}`)) {
+  failures.forEach((f) => console.error(`test-build: ${f}`));
+  process.exit(1);
+}
+
+for (const f of ['CLAUDE.md', 'course.lock', '.claude/settings.json', 'learner/apprenant.md', 'learner/observations.md', 'learner/parcours.md']) {
+  check(fs.existsSync(path.join(out, f)), `${f} is missing`);
+}
+const diff = spawnSync('diff', ['-r', COURSE, path.join(out, 'course')], { encoding: 'utf8' });
+check(diff.status === 0 && diff.stdout === '', `course/ is not a copy of ${COURSE_ARG}: ${diff.stdout.split('\n')[0]}`);
+for (const f of ['apprenant.md', 'observations.md', 'parcours.md']) {
+  check(read(path.join(out, 'learner', f)) === read(path.join(TEMPLATES, f)), `learner/${f} is not the learner template`);
+}
+check(fs.readdirSync(path.join(out, 'learner')).length === 3, 'learner/ holds other files than the three templates');
+
+// the skills: one per moment that has rules, named feyn-teacher-<moment>
+const skills = ['onboarding', 'resume', 'diagram', 'stop'];
+const skillOf = (s) => `feyn-teacher-${s}`;
+for (const s of skills) check(fs.existsSync(path.join(out, '.claude', 'skills', skillOf(s), 'SKILL.md')), `skill ${skillOf(s)} is missing`);
+check(!fs.existsSync(path.join(out, '.claude', 'skills', skillOf('reset'))), 'skill feyn-teacher-reset exists, though the moment has no rule');
+check(fs.readdirSync(path.join(out, '.claude', 'skills')).sort().join(',') === skills.map(skillOf).sort().join(','), 'the skills are not exactly feyn-teacher- onboarding, resume, diagram, stop');
+const WHEN = {
+  onboarding: "un nouvel apprenant, au premier message d'une session de cours",
+  resume: "un apprenant qui revient, au premier message d'une session de cours",
+  diagram: "l'apprenant demande un schéma, ou vient le message du sous-concept que nomme le subconcept d'un schéma déclaré par concept.md",
+  stop: "l'apprenant dit que la session de cours s'arrête",
+};
+const skillText = {};
+for (const s of skills) {
+  const t = read(path.join(out, '.claude', 'skills', skillOf(s), 'SKILL.md')) || '';
+  skillText[s] = t;
+  const fm = /^---\nname: ([^\n]+)\ndescription: ([^\n]+)\n---\n/.exec(t);
+  check(fm && fm[1] === skillOf(s), `skill ${skillOf(s)}: no frontmatter with name ${skillOf(s)}`);
+  check(fm && fm[2].includes(WHEN[s]), `skill ${s}: its description does not say when it is used (${WHEN[s]})`);
+  check(!PLACEHOLDER.test(t), `skill ${s} keeps a placeholder: ${(PLACEHOLDER.exec(t) || [])[0]}`);
+}
+check(skillText.onboarding.includes('`course/plan.md`'), 'skill onboarding does not name course/plan.md as what it reads');
+// the onboarding questions of plan.md are given in the skill, so that the first message needs no
+// read (rule first-message-without-tools; the fresh test onboarding, #507)
+{
+  const plan = (read(path.join(COURSE, 'plan.md')) || '').split('\n');
+  const at = plan.findIndex((l) => l.trim() === '## Accueil');
+  const questions = plan.slice(at + 1).filter((l, i, a) => /^\d+\.\s/.test(l) && !a.slice(0, i).some((x) => /^## /.test(x)));
+  check(at >= 0 && questions.length > 0 && questions.every((q) => skillText.onboarding.includes(q.trim())), 'skill onboarding does not give the onboarding questions of plan.md');
+}
+check(skillText.resume.includes('`learner/parcours.md`'), 'skill resume does not name learner/parcours.md as what it reads');
+check(skillText.diagram.includes('`course/<dir>/concept.md`') && skillText.diagram.includes('`course/<dir>/teaching.md`'), 'skill diagram does not name concept.md and teaching.md as what it reads');
+check(skillText.stop.includes('`learner/parcours.md`'), 'skill stop does not name learner/parcours.md as what it reads');
+
+// the built CLAUDE.md
+const claude = read(path.join(out, 'CLAUDE.md')) || '';
+check(!PLACEHOLDER.test(claude), `CLAUDE.md keeps a placeholder: ${(PLACEHOLDER.exec(claude) || [])[0]}`);
+check(claude.split("Pars de la banque d'exemples").length - 1 === 1, "CLAUDE.md does not hold « Pars de la banque d'exemples » once");
+check(claude.includes('Posture : un barista patient, qui aide l\'apprenant à aider Cédric.'), 'CLAUDE.md lacks the posture of plan.md');
+// the course map: the domains and concepts under « Course map », the annex A1 where the build
+// renders it, in « Course files » (the map renders no line for an annex)
+check(claude.includes('- Domaine 1 : Ce qui fait la tasse\n') && claude.includes('- Domaine 2 : Réussir sa tasse\n')
+  && claude.includes("Concept 0 : L'extraction (`concepts/00-extraction`)")
+  && claude.includes('Concept 1 : Les réglages (`concepts/01-reglages`)')
+  && claude.includes('Concept 2 : Corriger une tasse (`concepts/02-corriger`)')
+  && claude.includes('`course/concepts/A1-methodes/`: Concept A1 : Les méthodes'), 'CLAUDE.md lacks the course map');
+for (const f of ['course/storyline.md', 'course/glossary.md', 'course/domains/1-tasse.md', 'course/domains/2-reussir.md',
+  'course/concepts/00-extraction/', 'course/concepts/01-reglages/', 'course/concepts/02-corriger/', 'course/concepts/A1-methodes/']) {
+  check(claude.includes('`' + f + '`'), `CLAUDE.md does not name the course file ${f}`);
+}
+// the diagram of concept 0, which CLAUDE.md does not name, is copied with its concept
+check(fs.existsSync(path.join(out, 'course', 'concepts', '00-extraction', 'extraction-et-force.svg')), 'the diagram of concept 0 is not copied');
+check(claude.includes('channel\n`next`') || claude.includes('channel `next`'), 'CLAUDE.md does not state the channel next');
+check(claude.includes('\n@course/course.yaml\n'), 'CLAUDE.md does not import course/course.yaml');
+check(claude.includes('(site non publié)') && !claude.includes('http'), 'CLAUDE.md: without --site-url, the site addresses are not « (site non publié) »');
+// the « Moments » list names each teacher skill
+for (const s of skills) check(claude.includes(`- \`${s}\` (skill \`${skillOf(s)}\`): `), `CLAUDE.md: the « Moments » list does not name the skill ${skillOf(s)}`);
+check(claude.includes('- `reset`: ') && !claude.includes(skillOf('reset')), 'CLAUDE.md: the « Moments » list names a skill for reset');
+
+// the three spots of the filling, in CLAUDE.md and in the skills
+for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
+  check(!text.includes('((site'), `${name}: a link reads « ((site non publié)) », a doubled parenthesis`);
+  const doubled = text.split('\n').find((l) => /\. »\.|\.\./.test(l));
+  check(!doubled, `${name}: a period follows a phrase that ends with one: ${doubled}`);
+  check(!/ses \d+ domaines/.test(text), `${name}: the count of domains reads « ses <number> domaines » whatever the number`);
+}
+check(claude.includes('](site non publié)'), 'CLAUDE.md: a link does not read « (site non publié) » once');
+check(skillText.stop.includes('« Je sauvegarde ta progression, un instant. »\n') || skillText.stop.includes('« Je sauvegarde ta progression, un instant. » '), 'skill feyn-teacher-stop: the stop phrase is not followed by the rule\'s text without a second period');
+
+// the protocol, teacher/rules.yaml, read with the yaml lib of the spec directives the MAJOR declares:
+// its groups (a family is a group whose id is its category), each rule as the build writes it,
+// `**<id>** <text>` and its why on a line `*Pourquoi :* <why>`
+const directivesLine = (read(path.join(SPEC, 'spec.yaml')) || '').split('\n').find((l) => /^directives\s*:/.test(l)) || '';
+const directives = directivesLine.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
+const yaml = createRequire(path.join(REPO, 'spec-directives', directives, 'package.json'))('./lib/yaml-lines');
+const protocol = yaml.parse(read(path.join(SPEC, 'teacher', 'rules.yaml')) || '');
+const groups = protocol.groups;
+const families = groups.filter((g) => g.id === g.category);
+const source = new Map(groups.flatMap((g) => g.rules).map((r) => [r.id, `**${r.id}** ${r.text}` + (r.why ? `\n*Pourquoi :* ${r.why}` : '')]));
+const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+// a text of the protocol as built: a placeholder as fill() treats it (« {k} » with the period after
+// it, ({k}) with its parentheses, a bare {k}) stands for its value
+const patternOf = (t) => new RegExp('^' + t.split(/« \{[a-z_]+\.[a-z_]+\} »\.?|\(\{[a-z_]+\.[a-z_]+\}\)|\{[a-z_]+\.[a-z_]+\}/).map(escape).join('[\\s\\S]+?') + '$');
+
+// every rule of the protocol, once, in CLAUDE.md or in the skill of its moment
+const slugsOf = (text) => text.split('\n').map((l) => /^\*\*([a-z0-9-]+)\*\* /.exec(l)).filter(Boolean).map((m) => m[1]);
+const all = [...source.keys()];
+const where = new Map(all.map((s) => [s, []]));
+for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
+  for (const s of slugsOf(text)) {
+    if (!where.has(s)) check(false, `${name} holds a rule ${s} the protocol does not`);
+    else where.get(s).push(name);
+  }
+}
+for (const [s, at] of where) check(at.length === 1, `rule ${s} is in ${at.length ? at.join(', ') : 'nothing'}, not in exactly one place`);
+const MOMENT_OF = { 'first-message-without-tools': 'onboarding', 'resume-opening-sentence': 'resume', 'requested-diagram-shown': 'diagram', 'diagram-not-displayable': 'diagram', 'stop-opening-sentence': 'stop', 'hurried-departure': 'stop' };
+for (const [s, m] of Object.entries(MOMENT_OF)) check((where.get(s) || [])[0] === skillOf(m), `rule ${s} is not in the skill ${skillOf(m)}`);
+// the diagram declared for a sub-concept is shown unasked: a permanent rule, so that the teacher knows
+// it at every message, the moment diagram loaded at that sub-concept too (its `when`, in the Moments
+// list of CLAUDE.md)
+check((where.get('declared-diagram-shown') || [])[0] === 'CLAUDE.md', 'rule declared-diagram-shown is not in CLAUDE.md');
+check(claude.includes(`- \`diagram\` (skill \`${skillOf('diagram')}\`): ${WHEN.diagram}.`), 'the Moments list of CLAUDE.md does not load the moment diagram at the sub-concept a diagram declares');
+const order = slugsOf(claude);
+check(order.join(',') === all.filter((s) => where.get(s)[0] === 'CLAUDE.md').join(','), 'the rules of CLAUDE.md are not in the order of teacher/rules.yaml');
+// every family and group heading kept is followed by its purpose: in CLAUDE.md, and in the skills
+// that hold a group or a family whole (the diagram rules of the moment sit under the heading of the
+// group `diagram-showing`, whose purpose stays in CLAUDE.md with declared-diagram-shown)
+const HEADING = /^(## \d+\. .+|##+ .+ \(`[a-z0-9-]+`\))$/;
+const headingsOf = (text) => {
+  const lines = text.split('\n');
+  let fence = false;
+  const found = [];
+  lines.forEach((l, i) => {
+    if (/^```/.test(l)) fence = !fence;
+    if (!fence && HEADING.test(l)) found.push(i);
+  });
+  return { lines, found };
+};
+let headingCount = 0;
+for (const [name, text] of [['CLAUDE.md', claude], ['onboarding', skillText.onboarding], ['resume', skillText.resume], ['stop', skillText.stop]]) {
+  const { lines, found } = headingsOf(text);
+  for (const i of found) {
+    headingCount++;
+    const next = lines.slice(i + 1).find((l) => l.trim() !== '') || '';
+    const grp = /\(`([a-z0-9-]+)`\)$/.exec(lines[i]);
+    const fam = /^## (\d+)\. /.exec(lines[i]);
+    const g = grp ? groups.find((x) => x.id === grp[1]) : fam ? families[Number(fam[1]) - 1] : null;
+    check(g && patternOf(g.purpose).test(next), `${name}: ${lines[i]} is not followed by its purpose`);
+  }
+}
+check(headingCount === groups.length, `${headingCount} family and group headings in CLAUDE.md and the skills, not the ${groups.length} of the protocol`);
+
+// each rule as built is the protocol's text, verbatim but for its placeholders: a rule block of the
+// built text runs from its **slug** line to the next rule or heading; a placeholder stands for its
+// value, a period after its » included (dropped when the value ends with one), its parentheses
+// included (one pair kept when the value has its own)
+function ruleBlocks(text) {
+  const blocks = new Map();
+  let cur = null;
+  let fence = false;
+  const close = () => {
+    if (!cur) return;
+    while (cur.lines.length && cur.lines[cur.lines.length - 1].trim() === '') cur.lines.pop();
+    blocks.set(cur.slug, cur.lines.join('\n'));
+    cur = null;
+  };
+  for (const l of text.split('\n')) {
+    if (!fence && /^#/.test(l)) { close(); continue; }
+    const m = !fence && /^\*\*([a-z0-9-]+)\*\* /.exec(l);
+    if (/^```/.test(l)) fence = !fence;
+    if (m) { close(); cur = { slug: m[1], lines: [l] }; continue; }
+    if (cur) cur.lines.push(l);
+  }
+  close();
+  return blocks;
+}
+let compared = 0;
+for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
+  for (const [slug, built] of ruleBlocks(text)) {
+    if (!source.has(slug)) continue;
+    compared++;
+    check(patternOf(source.get(slug)).test(built), `${name}: rule ${slug} is not the protocol's text with its placeholders filled`);
+  }
+}
+check(compared === all.length, `${compared} rules compared with the protocol, not ${all.length}`);
+check(!claude.includes('## 9. Arrêt') && !claude.includes('(`onboarding`)') && !claude.includes('(`resume`)'), 'CLAUDE.md holds a family or group a moment loads whole');
+check(claude.includes('\n**save-next-step** '), 'CLAUDE.md lacks the save-point rule save-next-step');
+
+// the teacher template: the harness only
+const template = read(path.join(BUILDER, 'CLAUDE.template.md')) || '';
+check(!template.split('\n').some((l) => RULE_LINE.test(l)), 'CLAUDE.template.md holds a rule line');
+
+// the permissions
+let settings = {};
+try { settings = JSON.parse(read(path.join(out, '.claude', 'settings.json'))); } catch (e) { check(false, '.claude/settings.json is not JSON'); }
+const allow = (settings.permissions && settings.permissions.allow) || [];
+const deny = (settings.permissions && settings.permissions.deny) || [];
+check(allow.includes('Bash(git add learner/)'), 'settings.json does not allow git add learner/');
+check(allow.some((a) => /^Bash\(git commit/.test(a)), 'settings.json does not allow git commit');
+check(deny.includes('Edit(course/**)') && deny.includes('Write(course/**)'), 'settings.json does not deny Edit and Write under course/');
+check(deny.some((d) => /^Bash\(git push/.test(d)), 'settings.json does not deny git push');
+
+// course.lock
+const lockText = read(path.join(out, 'course.lock')) || '';
+const lock = {};
+for (const l of lockText.split('\n')) {
+  const m = /^([a-z_]+): (.*)$/.exec(l);
+  if (m) lock[m[1]] = m[2] === 'null' ? null : JSON.parse(m[2]);
+}
+const sha = /^[0-9a-f]{40}$/;
+check(lock.course === 'cafe', `course.lock: course is ${lock.course}`);
+check(typeof lock.ref === 'string' && lock.ref.length > 0, 'course.lock: no ref');
+check(sha.test(lock.course_sha || ''), 'course.lock: course_sha is not a commit');
+check(sha.test(lock.tooling_sha || ''), 'course.lock: tooling_sha is not a commit');
+check(lock.channel === 'next', `course.lock: channel is ${lock.channel}, not next`);
+check(lock.site_url === null, 'course.lock: site_url is not null without --site-url');
+check(/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$/.test(lock.built_at || ''), 'course.lock: built_at is not ISO 8601');
+
+// the classroom's git
+const log = git(out, 'log', '--oneline');
+check(log.status === 0 && log.stdout.trim().split('\n').length === 1, 'the classroom has not exactly one commit');
+check(git(out, 'status', '--porcelain').stdout === '', 'the classroom has uncommitted files');
+const tracked = git(out, 'ls-files').stdout.split('\n');
+for (const f of ['CLAUDE.md', 'course.lock', '.claude/settings.json', 'learner/parcours.md', 'course/course.yaml']) {
+  check(tracked.includes(f), `the commit does not hold ${f}`);
+}
+
+// a non-empty target is refused, --force rebuilds it
+const again = build([COURSE_ARG, '--out', out]);
+check(again.status !== 0 && /not empty/.test(again.stderr) && /--force/.test(again.stderr), 'a non-empty target is not refused with a word on --force');
+const forced = build([COURSE_ARG, '--out', out, '--force', '--site-url', 'https://example.org/feyn/next/cafe']);
+check(forced.status === 0, `--force exits ${forced.status}: ${(forced.stderr || '').trim()}`);
+const lock2 = read(path.join(out, 'course.lock')) || '';
+check(lock2.includes('site_url: "https://example.org/feyn/next/cafe/"'), 'course.lock: site_url is not the --site-url base');
+const claude2 = read(path.join(out, 'CLAUDE.md')) || '';
+// --force empties a classroom only: a non-empty folder with no course.lock is refused
+const notClassroom = path.join(tmp, 'not-a-classroom');
+fs.mkdirSync(notClassroom);
+fs.writeFileSync(path.join(notClassroom, 'keep.txt'), 'kept\n');
+const refused = build([COURSE_ARG, '--out', notClassroom, '--force']);
+check(refused.status === 2 && /not a classroom/.test(refused.stderr) && read(path.join(notClassroom, 'keep.txt')) === 'kept\n', '--force empties a folder that holds no course.lock');
+check(claude2.includes('](https://example.org/feyn/next/cafe/concepts/{nn}/)') && !claude2.includes('(site non publié)'), 'CLAUDE.md: --site-url does not give the site addresses');
+check(git(out, 'log', '--oneline').stdout.trim().split('\n').length === 1, 'the rebuilt classroom has not exactly one commit');
+
+// the default folders of the channels, under a temporary HOME (git keeps its global config)
+const home = path.join(tmp, 'home');
+fs.mkdirSync(home);
+const env = { HOME: home, GIT_CONFIG_GLOBAL: process.env.GIT_CONFIG_GLOBAL || path.join(os.homedir(), '.gitconfig') };
+const next = build([COURSE_ARG], env);
+check(next.status === 0 && fs.existsSync(path.join(home, 'classrooms', 'cafe-next', 'CLAUDE.md')), 'with no --out, the classroom is not ~/classrooms/cafe-next/');
+const prod = build([COURSE_ARG, '--channel', 'prod'], env);
+check(prod.status === 0 && fs.existsSync(path.join(home, 'classrooms', 'cafe', 'CLAUDE.md')), '--channel prod does not give ~/classrooms/cafe/');
+check((read(path.join(home, 'classrooms', 'cafe', 'course.lock')) || '').includes('channel: "prod"'), 'course.lock: channel is not prod');
+check(/channel prod is built from a course tag/.test(prod.stderr), '--channel prod from a branch builds without a warning');
+
+// the dispatcher: an unknown MAJOR, and a MAJOR with no teacher/build/ (a copy of the build in a
+// repository of its own, whose spec MAJOR holds spec.yaml alone), are refused, exit 2
+const courseAt = (dir, spec) => {
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'course.yaml'), `id: x\nspec: ${spec}\n`);
+  return dir;
+};
+const unknown = build([courseAt(path.join(tmp, 'major-9'), 'linear-fr@9'), '--out', path.join(tmp, 'out-9')]);
+check(unknown.status === 2 && /unknown spec MAJOR linear-fr@9/.test(unknown.stderr), `an unknown MAJOR is not refused with exit 2: ${unknown.status} ${(unknown.stderr || '').trim()}`);
+const bare = path.join(tmp, 'bare-repo');
+fs.mkdirSync(path.join(bare, 'teacher-builder'), { recursive: true });
+fs.mkdirSync(path.join(bare, 'product-lines', 'linear-fr', '1'), { recursive: true });
+fs.copyFileSync(BUILD, path.join(bare, 'teacher-builder', 'build-teacher'));
+fs.copyFileSync(path.join(SPEC, 'spec.yaml'), path.join(bare, 'product-lines', 'linear-fr', '1', 'spec.yaml'));
+const noBuild = spawnSync(process.execPath, [path.join(bare, 'teacher-builder', 'build-teacher'), courseAt(path.join(bare, 'course'), 'linear-fr@1'), '--out', path.join(tmp, 'out-bare')], { encoding: 'utf8' });
+check(noBuild.status === 2 && /has no teacher\/build\/render-parts/.test(noBuild.stderr) && !fs.existsSync(path.join(tmp, 'out-bare')), `a MAJOR with no teacher/build/ is not refused with exit 2: ${noBuild.status} ${(noBuild.stderr || '').trim()}`);
+
+fs.rmSync(tmp, { recursive: true, force: true });
+for (const f of failures) console.error(`test-build: ${f}`);
+console.log(`test-build: ${checks - failures.length}/${checks} checks pass`);
+process.exit(failures.length ? 1 : 0);

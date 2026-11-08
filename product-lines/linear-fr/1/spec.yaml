@@ -1,0 +1,10 @@
+# The declaration of this spec MAJOR: its name, its MAJOR, the MAJOR of the spec directives it
+# follows (spec-directives/<directives>/: the tests of its files, the lib and the package its checks
+# load), its version (`<MAJOR>.0.0-alpha` until its tag) and its language (ISO 639-1), that of its
+# courses, its lexicons and its protocol: a course of another language follows another spec
+# (decision `lexicon-not-language-pack`).
+name: linear-fr
+major: 1
+directives: 1
+version: 1.0.0-alpha
+language: fr

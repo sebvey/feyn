@@ -26,10 +26,10 @@ The most local area the decision binds:
 
 | Binds | Folder |
 |---|---|
-| one spec | `course-specs/<name>/<MAJOR>/decisions/` of each MAJOR it binds: the current one for a new rule, every live MAJOR for a bug fix |
+| one spec | `product-lines/<name>/<MAJOR>/decisions/` of each MAJOR it binds: the current one for a new rule, every live MAJOR for a bug fix |
 | the spec directives (the rule model, the conformance clause, the versions, the tooling of the checks) | `spec-directives/<MAJOR>/decisions/` |
 | one course | `courses/<id>/decisions/` |
-| the teacher's Claude Code realisation (a rule of the protocol binds one spec) | `classroom-builder/decisions/` |
+| the teacher's Claude Code realisation (a rule of the protocol binds one spec) | `teacher-builder/decisions/` |
 | the site | `site-builder/decisions/` |
 | the agentic layer (`.claude/`, `.github/`) | `.claude/decisions/` |
 | two areas or more, the repository | `docs/decisions/` |
@@ -38,7 +38,7 @@ The most local area the decision binds:
 
 Slug: two to five words, lowercase, hyphens, naming the choice, not the problem (`classroom-as-build`, not `classroom-problem`). Never a number, never "adr".
 
-Before writing, list every decision of every `decisions/` folder of the repository and grep them for the decision's key words: `find . -path '*/decisions/*.md' -not -path '*/node_modules/*' -not -path './.claude/worktrees/*' -not -path '*/fixtures/*'`, then `grep -ril --include='*.md' --exclude-dir=worktrees --exclude-dir=node_modules --exclude-dir=fixtures "<key word>" . | grep /decisions/` (quoted globs: zsh stops on a pattern that matches nothing; `.claude/worktrees/` holds the copies of other branches; `fixtures/` holds the test decisions of the spec directives). A match whose frontmatter has `status: superseded` is history, not a neighbour (`grep -l '^status: superseded' <matches>` lists them): skip it, and say so in one line, naming it with its `superseded-by`, the live decision to read instead. A neighbour on the same point, in any of the `decisions/` folders: show it, and ask whether the new one supersedes it, changes it (step 6 instead), or is distinct (say why in one line). Same slug already taken in any folder, by a live or a superseded decision (a superseded slug stays taken): the same decision exists; stop. One exception: the same slug in two MAJORs of one spec (`course-specs/<name>/1/decisions/<slug>.md`, `course-specs/<name>/2/decisions/<slug>.md`) is one decision, copied with the tree or ported as a bug fix (decision `versioned-objects-and-spec-layout`), not a collision; a decision written for several MAJORs is one file in each, under one slug.
+Before writing, list every decision of every `decisions/` folder of the repository and grep them for the decision's key words: `find . -path '*/decisions/*.md' -not -path '*/node_modules/*' -not -path './.claude/worktrees/*' -not -path '*/fixtures/*'`, then `grep -ril --include='*.md' --exclude-dir=worktrees --exclude-dir=node_modules --exclude-dir=fixtures "<key word>" . | grep /decisions/` (quoted globs: zsh stops on a pattern that matches nothing; `.claude/worktrees/` holds the copies of other branches; `fixtures/` holds the test decisions of the spec directives). A match whose frontmatter has `status: superseded` is history, not a neighbour (`grep -l '^status: superseded' <matches>` lists them): skip it, and say so in one line, naming it with its `superseded-by`, the live decision to read instead. A neighbour on the same point, in any of the `decisions/` folders: show it, and ask whether the new one supersedes it, changes it (step 6 instead), or is distinct (say why in one line). Same slug already taken in any folder, by a live or a superseded decision (a superseded slug stays taken): the same decision exists; stop. One exception: the same slug in two MAJORs of one spec (`product-lines/<name>/1/decisions/<slug>.md`, `product-lines/<name>/2/decisions/<slug>.md`) is one decision, copied with the tree or ported as a bug fix (decision `versioned-objects-and-spec-layout`), not a collision; a decision written for several MAJORs is one file in each, under one slug.
 
 ## 5. Write it
 

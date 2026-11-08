@@ -1,0 +1,187 @@
+#!/usr/bin/env node
+'use strict';
+// test-render: runs render-site on cafe (course/samples/cafe, the spec's sample course) and
+// validates its JSON document against site.schema.yaml (ajv's Ajv2020, from the package of the
+// spec directives this MAJOR follows); then checks what the schema cannot say: the published parts
+// reach it, the misconceptions of every unit come after its cases, each with its name, its belief,
+// its root and its correction, each case under the title of its heading, its expected answer and
+// its misconceptions in play inside what the reader reveals, each name linking to its misconception, no part the form leaves unpublished does (« Consigne au professeur », « Accueil »,
+// « Non vérifié », the free sections of plan.md, the introduction of glossary.md, « Non publié »
+// of CHANGELOG.md), and the build is closed by default, one case each, render-site run with a copy
+// of course/form.yaml (--form): a part named `published: false`, a part named without
+// `published`, a part the form does not name, and a form that does not name the logo, which
+// render-site refuses. The logo and the accent colour are those cafe declares. Last, the latest
+// release of a CHANGELOG.md, on a copy of cafe given two releases. Exit 0 when every check
+// passes, 1 otherwise; one line per failure.
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+const { createRequire } = require('module');
+
+// here is product-lines/<name>/<MAJOR>/site/build
+const HERE = __dirname;
+const MAJOR = path.resolve(HERE, '..', '..');
+const REPO = path.resolve(MAJOR, '..', '..', '..');
+const COURSE = path.join(MAJOR, 'course', 'samples', 'cafe');
+const FORM = path.join(MAJOR, 'course', 'form.yaml');
+
+const line = fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').split('\n').find((l) => /^directives\s*:/.test(l));
+const directives = line.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
+const req = createRequire(path.join(REPO, 'spec-directives', directives, 'package.json'));
+req('./lib/deps').need();
+const yaml = req('./lib/yaml-lines');
+const Ajv2020 = req('ajv/dist/2020').default;
+
+const failures = [];
+let checks = 0;
+function check(ok, message) {
+  checks++;
+  if (!ok) failures.push(message);
+  return ok;
+}
+const validate = new Ajv2020({ allErrors: true }).compile(yaml.parse(fs.readFileSync(path.join(HERE, 'site.schema.yaml'), 'utf8')));
+
+const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'test-render-site-'));
+process.on('exit', () => fs.rmSync(TMP, { recursive: true, force: true }));
+
+// render-site on a course, with a form; the document, valid against the schema, or null
+function render(course, args, label) {
+  const r = spawnSync(process.execPath, [path.join(HERE, 'render-site'), course, ...args], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  if (!check(r.status === 0, `${label}: render-site exits ${r.status}, not 0: ${(r.stderr || '').trim()}`)) return null;
+  let doc = null;
+  try { doc = JSON.parse(r.stdout); } catch (e) { check(false, `${label}: render-site prints no JSON: ${e.message}`); return null; }
+  check(validate(doc), `${label}: not valid against site.schema.yaml: ${(validate.errors || []).map((e) => `${e.instancePath} ${e.message}`).join('; ')}`);
+  return { doc, text: r.stdout };
+}
+// a copy of course/form.yaml changed by `edit`, written as JSON (a YAML document)
+function formWith(name, edit) {
+  const form = yaml.parse(fs.readFileSync(FORM, 'utf8'));
+  edit(form);
+  const file = path.join(TMP, `${name}.json`);
+  fs.writeFileSync(file, JSON.stringify(form));
+  return ['--form', file];
+}
+// the JSON text holds a course text: the document escapes nothing but quotes and line breaks
+const holds = (out, fragment) => out.text.includes(JSON.stringify(fragment).slice(1, -1));
+
+const cafe = render(COURSE, [], 'cafe');
+if (!cafe) {
+  failures.forEach((f) => console.error(`test-render: ${f}`));
+  process.exit(1);
+}
+const { doc } = cafe;
+
+// the published parts reach the document
+const published = [
+  ['a case title', 'La tasse qui pique'],
+  ['an expected answer', 'Trop peu : elle est sous-extraite.'],
+  ['a matter', 'Faire un café, c\'est laisser l\'eau dissoudre une partie du café moulu'],
+  ['a misconception\'s belief', 'Si le goût change, c\'est que le café a changé'],
+  ['a misconception\'s root', 'une tasse plus concentrée a un goût plus marqué'],
+  ['« L\'essentiel »', 'c\'est elle qui fait le goût de la tasse'],
+  ['« Se vérifier »', 'Devant une tasse ratée : est-elle acide et courte, ou amère et sèche ?'],
+  ['« Approfondissement »', 'La profession mesure ce que le cours goûte.'],
+  ['« Public cible »', 'Une personne qui boit du café sans jamais l\'avoir vraiment fait'],
+  ['« Progression »', 'Le domaine 1, « Ce qui fait la tasse », part de rien'],
+  ['« Le problème »', 'Chez lui, Cédric a tout ce qu\'il faut pour faire un café à la main'],
+  ['the storyline\'s world', 'Inès tient le comptoir du Petit Noir'],
+  ['a row of « Affirmations »', 'Les notes fruitées et acides se dissolvent d\'abord, puis le sucré, puis l\'amer'],
+  ['a row of « Références »', 'Coffee Extraction and How to Taste It'],
+  ['a term of the glossary', 'Sous-extraction, sous-extrait'],
+  ['a row of « Termes à éviter »', 'brûlé (pour une tasse amère)'],
+  ['a stance', 'Le cours juge l\'extraction au goût seulement'],
+  ['a neighbour', 'Le goût amer d\'un café torréfié foncé'],
+  ['a diagram\'s caption', 'De gauche à droite, la tasse va de sous-extraite'],
+];
+for (const [what, fragment] of published) check(holds(cafe, fragment), `${what} does not reach the document: « ${fragment} »`);
+const c0 = doc.concepts.find((c) => c.number === '0');
+const svg = fs.readFileSync(path.join(COURSE, 'concepts', '00-extraction', 'extraction-et-force.svg'), 'utf8');
+check(c0 && c0.diagrams && c0.diagrams[0].svg === svg, 'the SVG of concept 0\'s diagram is not in the document as written');
+const u = c0 && c0.sections && c0.sections[0].units.find((x) => x.id === '0a2');
+check(u && u.blocks.cases.length === 2 && !u.blocks.cases[0].supplementary && u.blocks.cases[1].supplementary, 'unit 0a2 does not hold its case, then its supplementary case');
+// each case under its heading: the titles of the document, concept by concept, are those of the
+// `##### Cas : <title>` headings of its concept.md, in their order
+const cy = yaml.parse(fs.readFileSync(path.join(COURSE, 'course.yaml'), 'utf8'));
+for (const c of doc.concepts) {
+  const entry = cy.concepts.find((x) => String(x.number) === c.number);
+  const headings = fs.readFileSync(path.join(COURSE, entry.dir, 'concept.md'), 'utf8').split('\n').filter((l) => /^##### Cas : /.test(l)).map((l) => l.replace(/^##### Cas : /, '').trim());
+  const titles = (c.sections || []).flatMap((s) => s.units.flatMap((x) => (x.blocks.cases || []).map((k) => k.title)));
+  check(headings.length > 0 && titles.join('|') === headings.join('|'), `the cases of concept ${c.number} are not each under the title of its heading: ${titles.join(', ')}`);
+}
+// what the reader reveals: the expected answer and « Idées fausses en jeu », inside \`revealed\`
+// and nowhere else; each name in play links to the id of a misconception of its unit of that name
+const allUnits = doc.concepts.flatMap((c) => (c.sections || []).flatMap((s) => s.units));
+const cases = allUnits.flatMap((x) => (x.blocks.cases || []).map((k) => ({ unit: x, k })));
+check(cases.length > 0 && cases.every(({ k }) => k.revealed && k.revealed.expected_answer && (k.revealed.misconceptions_in_play || []).length > 0 && !('expected_answer' in k) && !('misconceptions_in_play' in k)), `a case does not give its expected answer and « Idées fausses en jeu » inside what the reader reveals: ${cases.filter(({ k }) => !(k.revealed && k.revealed.expected_answer && k.revealed.misconceptions_in_play)).map(({ k }) => k.title).join(', ')}`);
+const unlinked = cases.flatMap(({ unit, k }) => ((k.revealed || {}).misconceptions_in_play || []).filter((m) => !(unit.blocks.misconceptions || []).some((x) => x.id === m.id && x.name === m.name)).map((m) => `${k.title}: ${m.name}`));
+check(unlinked.length === 0, `a name in play does not link to the misconception of its unit of that name: ${unlinked.join('; ')}`);
+const ids = allUnits.flatMap((x) => (x.blocks.misconceptions || []).map((m) => m.id));
+check(ids.every(Boolean) && new Set(ids).size === ids.length, 'the misconceptions do not each have an id of their own');
+const pique = u && u.blocks.cases[0];
+check(pique && pique.title === 'La tasse qui pique' && pique.revealed.misconceptions_in_play.map((m) => m.id).join(',') === '0a2-gout-et-force,0a2-un-seul-defaut', 'the case « La tasse qui pique » of unit 0a2 does not name « Goût et force » and « Un seul défaut », linked to 0a2-gout-et-force and 0a2-un-seul-defaut');
+check(doc.words.course.unit_fields.misconceptions_in_play === 'Idées fausses en jeu', 'the label of the misconceptions in play is not « Idées fausses en jeu »');
+// the misconceptions of each unit's lesson: after its cases, the order the site renders them in,
+// each with its name, its belief, its root and its correction, under the lexicon's words
+const units = doc.concepts.flatMap((c) => (c.sections || []).flatMap((s) => s.units));
+const order = (x) => Object.keys(x.blocks).join(',');
+check(units.length > 0 && units.every((x) => order(x) === 'lesson,cases,misconceptions'), `a unit does not give its matter, then its cases, then its misconceptions: ${units.filter((x) => order(x) !== 'lesson,cases,misconceptions').map((x) => x.id).join(', ')}`);
+check(units.every((x) => (x.blocks.misconceptions || []).every((m) => m.name && m.belief && m.root && m.correction)), 'a misconception lacks its name, its belief, its root or its correction');
+const g = u && (u.blocks.misconceptions || []).find((m) => m.name === 'Goût et force');
+check(g && g.belief === 'Un goût marqué, piquant ou amer, dit une tasse trop forte' && g.root.startsWith('une tasse plus concentrée') && g.correction.startsWith('le piquant de l\'acide'), 'the misconception « Goût et force » of unit 0a2 is not in the document with its belief, its root and its correction');
+check(!('misconceptions' in ((u && u.blocks.lesson) || {})), 'the lesson of unit 0a2 still holds its misconceptions: the document gives them after the cases');
+const uf = doc.words.course.unit_fields;
+check(uf.misconceptions === 'Idées fausses' && uf.root === 'Racine' && uf.correction === 'Correction', 'the words of the misconceptions are not « Idées fausses », « Racine », « Correction »');
+check(doc.storyline && Object.keys(doc.storyline).join(',') === 'world', `the storyline of the document holds ${doc.storyline ? Object.keys(doc.storyline).join(', ') : 'nothing'}, not its world only`);
+check(doc.language === (fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').match(/^language\s*:\s*(\S+)/m) || [])[1], `the language is ${doc.language}, not that of spec.yaml`);
+// the look of the course, as the course declares it: its logo, logo.svg as written, and its accent colour
+check(doc.course.logo === fs.readFileSync(path.join(COURSE, 'logo.svg'), 'utf8'), 'the logo of cafe is not its logo.svg as written');
+check(doc.course.accent_color === cy.site.accent_color && /^#[0-9a-fA-F]{6}$/.test(doc.course.accent_color), `the accent colour is ${doc.course.accent_color}, not site.accent_color of course.yaml`);
+check(doc.release === null, 'cafe has no release, and release is not null');
+check(doc.concepts.map((c) => c.path).join(',') === 'concepts/00/,concepts/01/,concepts/02/,concepts/A1/,concepts/A2/', `the concept paths are ${doc.concepts.map((c) => c.path).join(', ')}`);
+const ref = doc.concept_refs.find((r) => r.text === 'concept 0b');
+check(ref && ref.targets[0].concept === '0' && ref.targets[0].anchor === '0b' && ref.targets[0].path === 'concepts/00/', 'the concept reference « concept 0b » does not name section 0b of concept 0');
+check(!('home' in doc.words.site) && doc.words.course.headings.audience === 'Public cible', 'the home labels are not those of course/lexicon.yaml');
+
+// no unpublished part reaches it
+const unpublished = [
+  ['« Consigne au professeur » of a unit', 'ne proposer ni réfractomètre'],
+  ['« Consigne au professeur » of a foot', 'le point de départ de la profession'],
+  ['« Accueil » of plan.md', 'un barista patient'],
+  ['a free section of plan.md', 'Règles d\'écriture du cours'],
+  ['« Non vérifié » of sources.md', 'S2 marque lui-même'],
+  ['a fact of « Faits fixés » of storyline.md', 'Aïmen moud tout son paquet de café le dimanche'],
+  ['the heading « Faits fixés » of storyline.md', 'Faits fixés'],
+  ['the introduction of glossary.md', 'Les termes du cours, chacun défini dans le concept qui l\'enseigne.'],
+  ['« Non publié » of CHANGELOG.md', 'créé dans le dossier'],
+];
+for (const [what, fragment] of unpublished) check(!holds(cafe, fragment), `${what} reaches the document: « ${fragment} »`);
+
+// closed by default, one case each: a part named `published: false`, a part named without
+// `published`, a part the form does not name
+const head = render(COURSE, formWith('head-false', (f) => { f.concept_file.head.published = false; }), 'a form with the head `published: false`');
+if (head) check(!holds(head, 'c\'est elle qui fait le goût de la tasse') && head.doc.concepts.every((c) => !c.head), 'a part named `published: false` (the head) reaches the document');
+const audience = render(COURSE, formWith('audience-unset', (f) => { delete f.plan.sections.find((s) => s.heading === 'audience').published; }), 'a form with « Public cible » named without `published`');
+if (audience) check(!holds(audience, 'Une personne qui boit du café sans jamais') && !audience.doc.plan.some((s) => s.key === 'audience'), 'a part named without `published` (« Public cible ») reaches the document');
+const deepening = render(COURSE, formWith('deepening-unnamed', (f) => { f.concept_file.foot.blocks = f.concept_file.foot.blocks.filter((b) => b.heading !== 'deepening'); }), 'a form that does not name « Approfondissement »');
+if (deepening) check(!holds(deepening, 'La profession mesure ce que le cours goûte.') && holds(deepening, 'Devant une tasse ratée'), 'a part the form does not name (« Approfondissement ») reaches the document');
+const avoid = render(COURSE, formWith('glossary-unnamed', (f) => { delete f.glossary; }), 'a form that does not name glossary.md');
+if (avoid) check(!holds(avoid, 'Sous-extraction, sous-extrait') && !holds(avoid, 'brûlé (pour une tasse amère)'), 'a file the form does not name (glossary.md) reaches the document');
+// the logo, closed by default too: a form that does not name logo.svg leaves the site with no
+// logo, and render-site refuses it, since the engine keeps no default logo
+{
+  const r = spawnSync(process.execPath, [path.join(HERE, 'render-site'), COURSE, ...formWith('logo-unnamed', (f) => { delete f.logo; })], { encoding: 'utf8' });
+  check(r.status === 1 && /logo/.test(r.stderr), `a form that does not name logo.svg: render-site exits ${r.status}, not 1 with the logo named: ${(r.stderr || '').trim()}`);
+}
+
+// the latest release of CHANGELOG.md, on a copy of cafe given two
+const copy = path.join(TMP, 'cafe');
+fs.cpSync(COURSE, copy, { recursive: true });
+const log = path.join(copy, 'CHANGELOG.md');
+fs.writeFileSync(log, fs.readFileSync(log, 'utf8') + '\n## 1.1.0, 2026-12-01\n\n- MINOR, concept 0 : une unité de plus (#1).\n\n## 1.0.0, 2026-11-20\n\n- MAJOR, tout le cours : publié (#1).\n');
+const released = render(copy, [], 'cafe with two releases');
+if (released) check(released.doc.release && released.doc.release.version === '1.1.0' && released.doc.release.date === '2026-12-01' && !holds(released, '1.0.0') && !holds(released, 'une unité de plus'), 'the latest release is not the one in the document, or another part of CHANGELOG.md is');
+
+for (const f of failures) console.error(`test-render: ${f}`);
+console.log(`test-render: ${checks - failures.length}/${checks} checks pass`);
+process.exit(failures.length ? 1 : 0);
