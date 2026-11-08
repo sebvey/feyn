@@ -8,7 +8,7 @@ feyn is a monorepo of courses taught by a Claude Code teacher and published as a
 
 | Folder | Holds |
 |---|---|
-| `product-lines/` | the specs, one per type of course (`linear-fr`: contract, lexicons, checks, templates); rules in `product-lines/README.md` |
+| `product-lines/` | the specs, one per product line, each its contract: the form of its courses and what it fixes of each of its products (`linear-fr`: its course, its products, lexicons, checks, templates); rules in `product-lines/README.md` |
 | `spec-directives/` | the spec directives, one folder per MAJOR; `README.md` defines the four readers of a spec; the tests of a spec's files (`check-spec`), the `lib/` and the package the checks load, the directives' `decisions/` |
 | `courses/` | one folder per course, `courses/<id>/`; none until the founding course, archived in the history, is re-created (epic #520). The bench course every spec change is tried on is the spec's sample course, `product-lines/linear-fr/1/course/samples/cafe/` |
 | `teacher-builder/` | teacher template, teacher build script (`build-teacher`: it runs the spec MAJOR's `products/teacher/build/` and writes the classroom, its teacher skills included) and its test (`test-build`), the fresh tests (`fresh-test`) |
