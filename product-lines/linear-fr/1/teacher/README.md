@@ -44,7 +44,7 @@ La composition du professeur est ce dont un professeur est fait, à côté de la
 | `learner-memory` | `at-start-and-save-points` | les modèles de l'apprenant (spec, `templates/learner/`), les règles de la mémoire (la famille `learner-memory`), les trois fichiers de `learner/` ; rien du cours |
 | `permissions` | `always` | ce qu'un professeur écrit, `learner/` et ses commits, et ce qu'il n'écrit jamais, `course/` (une règle du groupe `learner-memory`) |
 
-Deux lecteurs y viennent. Le builder, qui écrit le build du professeur : sa moitié qui dépend de ce MAJOR, [`build/render-parts`](build/README.md), lit `composition.yaml` et `rules.yaml` pour rendre chaque partie en texte, et la moitié à la racine (`teacher-builder/`) réalise les parties pour sa cible. Les fresh tests ([`tests/`](tests/README.md)) : ils jugent un professeur sur ce qu'il charge et quand, par le groupe `composition-loading`. `composition` (`check-spec`, `spec-directives/1/README.md` section 8) teste la forme du fichier, jamais son sens.
+Deux lecteurs y viennent. Le builder, qui écrit le build du professeur : sa moitié qui dépend de ce MAJOR, [`build/render-parts`](build/README.md), lit `composition.yaml` et `rules.yaml` pour rendre chaque partie en texte, et la moitié à la racine (`teacher-builder/`) réalise les parties pour sa cible. Les fresh tests ([`tests/`](tests/README.md)) : ils jugent un professeur sur ce qu'il charge et quand, par le groupe `composition-loading`. `composition` (`check-spec`, `spec-directives/1/README.md` section 8) teste la forme du fichier, jamais son sens, quand le manifeste de la spec, `spec.yaml`, déclare le professeur, ce qu'il ne fait pas tant que le professeur est gelé.
 
 ## Clés et paramètres
 

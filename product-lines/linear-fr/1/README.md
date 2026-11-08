@@ -45,7 +45,7 @@ The files of the spec are split by the course and by product (`spec-directives/1
 | `course/rules.yaml` | the rules of a course, in French, one group per section of `course/README.md` that points to rules, each with its `purpose` |
 | `teacher/rules.yaml` | the rules of the protocol, in French, one group per family and per group of a family, each with its `purpose` |
 | `teacher/composition.yaml` | the composition of the teacher: its five parts, when each loads and what each draws from (`teacher/README.md`, "Composition") |
-| `teacher/tests/` | the test scenarios of the teacher (`README.md`: the format, the rules each covers and those none covers), `scenario.schema.yaml` (their form), one YAML file per scenario, run by `teacher-builder/fresh-test` and verified in form by `check-spec` (`scenarios`) |
+| `teacher/tests/` | the test scenarios of the teacher (`README.md`: the format, the rules each covers and those none covers), `scenario.schema.yaml` (their form), one YAML file per scenario, run by `teacher-builder/fresh-test` and verified in form by `check-spec` (`scenarios`) when `spec.yaml` declares the teacher, which it does not while the teacher is frozen |
 | `teacher/build/` | `render-parts`, which renders the five parts of the composition as text for a course (the half of a teacher build that depends on this MAJOR, read by `teacher-builder/`), `parts.schema.yaml` (the shape of its output), `test-render`, `README.md` |
 | `course/schemas/*.schema.yaml` | the fields of `course.yaml` and of the `concept.md` frontmatter, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml` |
 | `CHANGELOG.md` | the changes of the spec, an « Unreleased » section until the tag |
