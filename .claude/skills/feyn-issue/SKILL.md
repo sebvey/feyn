@@ -12,7 +12,7 @@ An issue carries an **idea** (a finding, no kind) or a **work item** of one of t
 
 The argument decides the mode: a number (`12`, `#12`) reads; anything else creates, in one of three forms, `idea <finding>`, `story [#<epic>] [direct] <what>`, `epic <objective>`:
 - the kind is the first word when it is exactly `idea`, `story` or `epic`; any other first word is not a kind (a finding that starts with "stories…" names none);
-- a first word that is an old kind, `slice`, `observation` or `proposal` (rejected terms of `docs/glossary.md`), is never read as its replacement: ask "You said <word>, did you mean <story or idea>?" (story for `slice` and `proposal`, idea for `observation`), in the language of the conversation, and create nothing until the answer (project `CLAUDE.md`, "Vocabulary");
+- a first word that is an old kind, `slice`, `observation` or `proposal` (rejected terms of `docs/glossary.md`), is never read as its replacement: ask "You said <word>, did you mean <story or idea>?" (story for `slice` and `proposal`, idea for `observation`), in the language of the conversation, and create nothing until the answer (the project instructions, `feyn-instructions-project`, "Vocabulary");
 - `#<epic>` follows the kind for a story attached to an epic, and only for a story; a story without it has no parent epic (decision `story-with-or-without-an-epic`);
 - `direct` is the word right after `story` (after `#<epic>` when there is one) when it is exactly that word (step 3); a `<what>` whose own first word is "direct" can read the same: when unsure, ask the maintainer and create nothing until the answer;
 - no kind: ask which of the three, and create nothing until the answer.
