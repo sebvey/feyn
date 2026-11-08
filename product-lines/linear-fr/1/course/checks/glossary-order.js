@@ -12,7 +12,7 @@ const mdlib = directives.lib('md');
 const glossary = directives.lib('glossary');
 const refs = directives.lib('refs');
 const yaml = directives.lib('yaml-lines');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 

@@ -19,7 +19,7 @@
 // Each failure names spec.yaml and the line of the key at fault. The test names no list of one
 // spec: it verifies the model of a spec MAJOR, common to every spec.
 const yaml = require('../lib/yaml-lines');
-const { fail, SLUG } = require('../lib/course');
+const { fail, SLUG } = require('../lib/common');
 const { FILE: F } = require('../lib/manifest');
 
 const LANGUAGE = /^[a-z]{2}$/;

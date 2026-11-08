@@ -17,7 +17,7 @@
 const path = require('path');
 const { createRequire } = require('module');
 const yaml = require('../lib/yaml-lines');
-const { fail } = require('../lib/course');
+const { fail } = require('../lib/common');
 
 const SCHEMA_NAME = 'scenario.schema.yaml';
 

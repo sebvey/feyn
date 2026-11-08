@@ -6,10 +6,11 @@
 // `severity-from-level-and-method`): by default every check of method test that runs on a course, the
 // blocking ones first, then the reporting ones, each in the order of course/rules.yaml. A failure
 // of a blocking check sets exit code 1; a failure of a reporting check is printed and leaves 0.
-// lib/ is the one of the spec directives that spec.yaml declares (./directives.js).
+// lib/ is the one of the spec directives that spec.yaml declares (./directives.js); the course is
+// read by the parser of this MAJOR, course/parser.js, given that lib.
 const path = require('path');
 const directives = require('./directives');
-const { load } = directives.lib('course');
+const { load } = require('../parser')(directives.lib);
 const rules = directives.lib('rules');
 
 const QUALITY_GONE = '--quality is gone: the reporting checks run by default, and --category <c> selects checks by category (check-course --list)';

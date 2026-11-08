@@ -15,7 +15,7 @@
 //     manifest does not declare the teacher's lexicon.
 // A manifest that declares no lexicon checks nothing.
 const yaml = require('../lib/yaml-lines');
-const { fail } = require('../lib/course');
+const { fail } = require('../lib/common');
 
 // The keys the protocol uses: a row of the « Clés et paramètres » tables of products/teacher/README.md
 // (`products.teacher.readme`)

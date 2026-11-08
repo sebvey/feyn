@@ -9,7 +9,8 @@ const mdlib = directives.lib('md');
 const glossary = directives.lib('glossary');
 // the fixed facts of storyline.md and the release sections of CHANGELOG.md are read by the lib,
 // as the site build reads them
-const { fail, fixedFacts, RELEASE } = directives.lib('course');
+const { fail, RELEASE } = directives.lib('common');
+const { fixedFacts } = require('../parser')(directives.lib);
 
 // « Accueil »: a posture paragraph, then a numbered list of questions "<n>. **<question label>** : <question>"
 function onboarding(secs, title) {

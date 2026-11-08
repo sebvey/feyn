@@ -16,7 +16,7 @@ const path = require('path');
 const directives = require('./directives');
 const yaml = directives.lib('yaml-lines');
 const xml = directives.lib('xml');
-const { fail, normNumber } = directives.lib('course');
+const { fail, normNumber } = directives.lib('common');
 
 const F = 'course.yaml';
 const NUMBER = /^(\d+|A\d+)$/;

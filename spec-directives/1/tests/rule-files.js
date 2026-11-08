@@ -31,7 +31,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('../lib/yaml-lines');
-const { fail } = require('../lib/course');
+const { fail } = require('../lib/common');
 
 const LEVELS = ['requirement', 'recommendation', 'permission'];
 const METHODS = ['test', 'analysis', 'inspection', 'demonstration'];

@@ -16,7 +16,7 @@
 // reports); « Consigne au professeur » is prose. The parts of concept.md and its tree are `concept-file`'s, a `structure` check; the
 // length of a teacher message is `teacher-message-length`'s.
 const directives = require('./directives');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 // the labelled fields of a list (« Leçon », or one case): known here, nothing before the colon, each once,
 // none empty, the mandatory ones present, in the order of `spec`
