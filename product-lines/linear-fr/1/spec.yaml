@@ -1,10 +1,57 @@
-# The declaration of this spec MAJOR: its name, its MAJOR, the MAJOR of the spec directives it
-# follows (spec-directives/<directives>/: the tests of its files, the lib and the package its checks
+# The manifest of this spec MAJOR (spec-directives/1/README.md section 8), in the form of
+# spec-directives/1/spec.schema.yaml, which the test spec-yaml of check-spec holds it to; every
+# test of check-spec reads the files and the lists of the spec from it, through
+# spec-directives/1/lib/manifest.js.
+# Its identity: its name, its MAJOR, the MAJOR of the spec directives it follows
+# (spec-directives/<directives>/: the tests of its files, the lib and the package its checks
 # load), its version (`<MAJOR>.0.0-alpha` until its tag) and its language (ISO 639-1), that of its
 # courses, its lexicons and its protocol: a course of another language follows another spec
-# (decision `lexicon-not-language-pack`).
+# (decision `lexicon-not-language-pack`). `directives` and `language` stay on a line of their own:
+# the builds and the course checks read them by that line.
 name: linear-fr
 major: 1
 directives: 1
 version: 1.0.0-alpha
 language: fr
+
+# The files of the course, the input of the builds of the products, by role: a path relative to
+# this folder, a file or a folder.
+course:
+  readme: course/README.md
+  rules: course/rules.yaml
+  lexicon: course/lexicon.yaml
+  form: course/form.yaml
+  schemas: course/schemas
+  checks: course/checks
+
+# The products of the spec and their files, by role. The teacher is not declared while it is
+# frozen (decision `teacher-frozen-until-the-protocol-brainstorm`): the tests of its files check
+# nothing and say so (idea #687 brings it back).
+products:
+  site:
+    lexicon: site/lexicon.yaml
+    url-scheme: site/url-scheme.yaml
+    build: site/build
+
+# The lists of the spec, which the tests of check-spec hold its files to: the categories of the
+# rules of a course (README.md section 3), and the keys of the lexicons, by owner, each with its
+# kind, `string` or `list` (the course's: course/README.md section 7).
+lists:
+  categories: [structure, pedagogy, writing, sources, diagrams]
+  lexicons:
+    course:
+      headings: {essentials: string, stances: string, deepening: string, landmarks: string, instruction: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
+      block_kinds: {concept: string, annex: string, section: string, unit: string, case: string, separator: string}
+      unit_fields: {matter: string, misconceptions: string, root: string, correction: string, anchor: string, question: string, expected_answer: string, misconceptions_in_play: string, instruction: string}
+      unit_blocks: {lesson: string, cases: string}
+      markers: {consensus: string, school: string, course: string}
+      natures: {fact: string}
+      concept_refs: {concept: string, concepts: string, and: string, annex: string}
+      source_types: {primary: string, secondary: string, marketing: string}
+      typography: {banned: list}
+    site:
+      nav: {domains: string, storyline: string, glossary: string}
+      labels: {domain: string, objective: string, prerequisites: string}
+      page_headings: {neighbors: string, sources: string}
+      stance_columns: {consensus: string, school: string, course: string}
+      intros: {consensus: string, school: string, course: string, claims: string}

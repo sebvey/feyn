@@ -2,18 +2,21 @@
 'use strict';
 // check-spec <spec-dir> [--only <id>[,<id>...]] [--checks-dir <dir>]
 // check-spec --list
-// The tests of a spec's own files, of this directives MAJOR (README.md, course/README.md,
-// course/rules.yaml, course/schemas/, course/lexicon.yaml, teacher/README.md, teacher/rules.yaml,
-// teacher/lexicon.yaml, teacher/composition.yaml, teacher/tests/, decisions/, spec.yaml,
-// CHANGELOG.md), not of a course: they verify no rule, carry no category and no level, and each
-// failure blocks (exit code 1; decision conformity-of-the-course-and-products, amended by #339).
+// The tests of a spec's own files, of this directives MAJOR, not of a course: they verify no rule,
+// carry no category and no level, and each failure blocks (exit code 1; decision
+// conformity-of-the-course-and-products, amended by #339). Every file they read but the spec
+// MAJOR's README.md, CHANGELOG.md, decisions/ and spec.yaml itself is a role its manifest,
+// spec.yaml, declares (lib/manifest.js, read once here as ctx.manifest): a test whose files the
+// manifest does not declare checks nothing and says so on its line ("<id>: checked nothing: ..."),
+// which leaves the exit code 0.
 // <spec-dir>: the folder of a spec MAJOR (product-lines/linear-fr/1); spec-directives/check-spec
 // runs this script for a spec MAJOR whose spec.yaml declares this directives MAJOR.
 // --checks-dir: the folder where rule-files looks for the check scripts a rule names, by default
-// <spec-dir>/course/checks (test-fixtures names fixtures/checks/, the stubs of the fixtures).
+// the manifest's course.checks (test-fixtures names fixtures/checks/, the stubs of the fixtures).
 const fs = require('fs');
 const path = require('path');
 require('../lib/deps').need();
+const manifest = require('../lib/manifest');
 
 const CHECKS = ['rule-slugs', 'rule-files', 'lexicon-keys', 'spec-yaml', 'composition', 'scenarios'];
 
@@ -46,14 +49,22 @@ for (const id of only) if (!CHECKS.includes(id)) { console.error(`unknown check 
 if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) { console.error(`not a directory: ${dir}`); process.exit(2); }
 
 const root = path.resolve(dir);
+const read = (rel) => {
+  try { return fs.readFileSync(path.join(root, rel), 'utf8'); } catch (e) { return null; }
+};
+const m = manifest.read(read(manifest.FILE));
+const declaredChecks = m.path('course', 'checks');
 const ctx = {
   root,
-  checks: path.resolve(checksDir === null ? path.join(root, 'course', 'checks') : checksDir),
-  read(rel) {
-    try { return fs.readFileSync(path.join(root, rel), 'utf8'); } catch (e) { return null; }
-  },
+  manifest: m,
+  // null when neither --checks-dir nor the manifest names the folder
+  checks: checksDir !== null ? path.resolve(checksDir) : declaredChecks !== null ? path.join(root, declaredChecks) : null,
+  read,
   list(rel) {
     try { return fs.readdirSync(path.join(root, rel)); } catch (e) { return []; }
+  },
+  exists(rel) {
+    return fs.existsSync(path.join(root, rel));
   },
 };
 const run = only.length ? CHECKS.filter((id) => only.includes(id)) : CHECKS;
@@ -65,7 +76,8 @@ for (const id of run) {
   } catch (e) {
     failures = [{ file: 'check-spec', line: 1, message: `the check crashed: ${e.stack.split('\n').slice(0, 3).join(' | ')}` }];
   }
-  if (!failures.length) console.log(`${id}: ok`);
+  if (failures && failures.nothing) console.log(`${id}: checked nothing: ${failures.nothing}`);
+  else if (!failures.length) console.log(`${id}: ok`);
   else {
     failed++;
     for (const f of failures) console.log(`${id}: fail: ${f.file}:${f.line} ${f.message}`);

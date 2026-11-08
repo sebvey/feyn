@@ -1,12 +1,16 @@
 'use strict';
 // A test of the spec's own files, run by check-spec, which verifies no rule (decisions
-// conformity-of-the-course-and-products, alpha-version-until-tag): the declaration of the spec MAJOR,
-// spec.yaml, held to its CHANGELOG.md.
-//   - spec.yaml exists and is a map of exactly five keys: `name`, `major`, `directives`, `version`,
-//     `language`;
-//   - `name` is a slug, `major` and `directives` are positive integers written as such (not `1.0`),
-//     `version` is `MAJOR.MINOR.PATCH` with an optional `-alpha`, and the MAJOR of `version` is
-//     `major`; `language` is an ISO 639-1 code (two lowercase letters), the language of the spec;
+// conformity-of-the-course-and-products, alpha-version-until-tag): the manifest of the spec MAJOR,
+// spec.yaml, held to its schema and to its CHANGELOG.md.
+//   - spec.yaml exists and is valid against spec-directives/1/spec.schema.yaml (through
+//     lib/manifest.js, under ajv's Ajv2020): its identity (`name` a slug, `major` and `directives`
+//     positive integers, `version` `MAJOR.MINOR.PATCH` with an optional `-alpha`, `language` an
+//     ISO 639-1 code), `course:` and `products:` (each role one of the schema's, mapped to a path),
+//     `lists:` (`categories`, and the optional `families` and `lexicons`), no other key; each
+//     failure names the key at fault;
+//   - then what the schema cannot say: `major` and `directives` are written as integers (not
+//     `1.0`), on a line of their own at the top level for `directives` and `language`, which the
+//     builds read by a line pattern; the MAJOR of `version` is `major`;
 //   - `name` ends with its language, `-<language>` (`linear-fr`), checked once `name` is a slug and
 //     `language` a code: a course of another language follows another spec, whose name says so;
 //   - `version` agrees with the first `## ` section of CHANGELOG.md: during the alpha (`version` is
@@ -16,9 +20,8 @@
 // spec: it verifies the model of a spec MAJOR, common to every spec.
 const yaml = require('../lib/yaml-lines');
 const { fail, SLUG } = require('../lib/course');
+const { FILE: F } = require('../lib/manifest');
 
-const F = 'spec.yaml';
-const KEYS = ['name', 'major', 'directives', 'version', 'language'];
 const LANGUAGE = /^[a-z]{2}$/;
 // SemVer 2.0.0 numbers (no leading zero), with the one prerelease the alpha allows
 const VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-alpha)?$/;
@@ -60,30 +63,26 @@ function changelog(ctx, version, m, at) {
   return [fail(F, at, `version ${version} differs from the version ${where} names: "${first.title}"`)];
 }
 
-// ctx: check-spec's (read and list relative to the spec folder)
+// ctx: check-spec's (read and list relative to the spec folder; its manifest, read from spec.yaml)
 function run(ctx) {
-  const text = ctx.read(F);
-  if (text === null) return [fail(F, 1, 'spec.yaml is missing: a spec MAJOR declares name, major, directives, version and language')];
-  let spec;
-  try { spec = yaml.parse(text); } catch (e) { return [fail(F, e.line || 1, e.message)]; }
-  if (!spec || typeof spec !== 'object' || Array.isArray(spec)) return [fail(F, 1, 'spec.yaml is not a map')];
-
-  const out = [];
+  const m = ctx.manifest;
+  if (!m.doc) {
+    if (m.text === null) return [fail(F, 1, 'spec.yaml is missing: a spec MAJOR declares its identity, its course, its products and its lists')];
+    return [fail(F, m.error.line, m.error.message)];
+  }
+  const spec = m.doc;
+  const out = m.validate().map((e) => fail(F, e.line, e.message));
   const at = (k) => yaml.lineOf(spec, k, 1);
-  for (const k of KEYS) if (!(k in spec)) out.push(fail(F, 1, `missing key ${k}`));
-  for (const k of Object.keys(spec)) {
-    if (!KEYS.includes(k)) out.push(fail(F, at(k), `unknown key ${k} (the keys: ${KEYS.join(', ')})`));
-  }
-  if ('name' in spec && (typeof spec.name !== 'string' || !SLUG.test(spec.name))) {
-    out.push(fail(F, at('name'), `name ${JSON.stringify(spec.name)} is not a slug (lowercase words joined by hyphens)`));
-  }
   for (const k of ['major', 'directives']) {
-    if (k in spec && !positive(spec, k)) out.push(fail(F, at(k), `${k} ${yaml.sourceOf(spec, k) || JSON.stringify(spec[k])} is not a positive integer`));
+    if (Number.isInteger(spec[k]) && spec[k] > 0 && !positive(spec, k)) out.push(fail(F, at(k), `${k} ${yaml.sourceOf(spec, k)} is not written as a positive integer`));
   }
-  if ('language' in spec && (typeof spec.language !== 'string' || !LANGUAGE.test(spec.language))) {
-    out.push(fail(F, at('language'), `language ${JSON.stringify(spec.language)} is not an ISO 639-1 code (two lowercase letters)`));
+  // the line the builds read: `<key>: <value>` at the top level, the value on the key's line
+  for (const k of ['directives', 'language']) {
+    if (k in spec && !new RegExp(`^${k}\\s*:\\s*['"]?[^\\s#'"]`).test(m.line(k))) {
+      out.push(fail(F, at(k), `${k} is not written on its own line, "${k}: <value>": the builds read it by that line`));
+    }
   }
-  // the language test: a name or a language already at fault above is not held to it
+  // the language test: a name or a language the schema refuses is not held to it
   const slug = typeof spec.name === 'string' && SLUG.test(spec.name);
   const code = typeof spec.language === 'string' && LANGUAGE.test(spec.language);
   if (slug && code && !spec.name.endsWith(`-${spec.language}`)) {
@@ -91,15 +90,12 @@ function run(ctx) {
   }
   if (!('version' in spec)) return out;
   const version = spec.version;
-  const m = typeof version === 'string' ? VERSION.exec(version) : null;
-  if (!m) {
-    out.push(fail(F, at('version'), `version ${JSON.stringify(version)} is not MAJOR.MINOR.PATCH with an optional -alpha`));
-    return out;
+  const v = typeof version === 'string' ? VERSION.exec(version) : null;
+  if (!v) return out; // the schema's failure
+  if (positive(spec, 'major') && Number(v[1]) !== spec.major) {
+    out.push(fail(F, at('version'), `the MAJOR of version ${version} is ${v[1]}, not major ${spec.major}`));
   }
-  if (positive(spec, 'major') && Number(m[1]) !== spec.major) {
-    out.push(fail(F, at('version'), `the MAJOR of version ${version} is ${m[1]}, not major ${spec.major}`));
-  }
-  out.push(...changelog(ctx, version, m, at('version')));
+  out.push(...changelog(ctx, version, v, at('version')));
   return out;
 }
 
