@@ -63,9 +63,6 @@ const ctx = {
   list(rel) {
     try { return fs.readdirSync(path.join(root, rel)); } catch (e) { return []; }
   },
-  exists(rel) {
-    return fs.existsSync(path.join(root, rel));
-  },
 };
 const run = only.length ? CHECKS.filter((id) => only.includes(id)) : CHECKS;
 let failed = 0;
