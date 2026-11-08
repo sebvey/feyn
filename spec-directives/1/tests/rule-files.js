@@ -171,7 +171,4 @@ function run(ctx) {
 
 // the roles it reads, by their key in the manifest (README.md section 8)
 const reads = ['course.rules', 'products.teacher.rules', 'course.schemas', 'course.checks'];
-// the roles without which it checks nothing (m.nothing above)
-const needs = ['course.rules', 'products.teacher.rules'];
-
-module.exports = { id: 'rule-files', run, reads, needs };
+module.exports = { id: 'rule-files', run, reads };
