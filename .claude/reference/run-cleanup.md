@@ -18,7 +18,7 @@ For each one, in order; a check that fails stops the cleanup of that worktree an
 3. **Its `HEAD` kept**, when the caller names a branch on `origin` or the run opened no PR. A branch on `origin`: after `git fetch`, `git -C <path> branch -r --contains HEAD` names `origin/<that branch>`. A run that opened no PR: a worktree whose `HEAD` adds nothing to the base (`git -C <path> log origin/<base>..HEAD` prints nothing) goes; one with commits stays, named to the maintainer with the run's status.
 4. **Remove** it: `git worktree remove --force <path>` (an untracked `node_modules` makes a plain remove refuse), then its branch, `git branch -D worktree-wf_<run id>-<n>` or `git branch -D worktree-agent-<id>` (a detached worktree has none).
 
-A worktree already gone needs nothing: a worktree with no change at the end of its agent's turn is removed ([worktree-agent.md](worktree-agent.md), "Claude Code behaviours"); a workflow agent's, holding a change, is kept after the run (Claude Code, observed 2026-10-31, #348).
+A worktree already gone needs nothing: a worktree with no change at the end of its agent's turn is removed (the skill [`feyn-instructions-worktree`](../skills/feyn-instructions-worktree/SKILL.md), "Claude Code behaviours"); a workflow agent's, holding a change, is kept after the run (Claude Code, observed 2026-10-31, #348).
 
 ## The local branch
 

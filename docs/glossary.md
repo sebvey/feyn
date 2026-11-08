@@ -960,7 +960,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### skill
 
-- means: a Claude Code skill of the repository, folder and name prefixed `feyn-`, invoked as `/feyn-<name>` or loaded from its description: one named by a verb, that chains the **moments** of a path (`feyn-deliver-epic`, `feyn-deliver-story-alone`) or owns a moment run with the maintainer (`feyn-triage`, `feyn-brainstorm`, `feyn-refine-option`), or the **work-cycle tooling**; "tooling" alone is the build, site and teacher code. A **teacher skill** is a skill of a classroom, not of the repository
+- means: a Claude Code skill of the repository, folder and name prefixed `feyn-`, invoked as `/feyn-<name>`, loaded from its description or preloaded into a **project subagent**: one named by a verb, that chains the **moments** of a path (`feyn-deliver-epic`, `feyn-deliver-story-alone`) or owns a moment run with the maintainer (`feyn-triage`, `feyn-brainstorm`, `feyn-refine-option`), or the **work-cycle tooling**, or an instructions text named `feyn-instructions-<where>`, preloaded and never invoked by name (`feyn-instructions-project`, `feyn-instructions-worktree`); "tooling" alone is the build, site and teacher code. A **teacher skill** is a skill of a classroom, not of the repository
 - en: skill · rejected: "command", "prompt", "recipe"
 - fr: to settle
 - not to confuse with: [agent workflow](#agent-workflow), [project subagent](#project-subagent), [work-cycle tooling](#work-cycle-tooling), [teacher skill](#teacher-skill), [moment](#moment)

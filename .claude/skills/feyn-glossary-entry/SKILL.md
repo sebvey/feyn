@@ -14,7 +14,7 @@ A choice that changes files, a structure or steps (a file renamed with its term,
 
 1. Look the word up in the headings and the designations, case-insensitive: `grep -n -i -E '^(### |- en: |- fr: ).*<word>' docs/glossary.md`. A line `### <word>`, or the preferred term of an `en` or `fr` line, is the word's entry; the word after ` · rejected: ` of a line is rejected by that entry. A word quoted in a meaning only is not a designation: say so.
 2. Reply with the entry (its heading and keys as written) and, for each `not to confuse with` link, the neighbour's term and its `means` in one line. A word that is preferred in one entry and rejected in another: show both.
-3. A word rejected for the concept meant (the maintainer's or the caller's): answer first « You said <word>, did you mean <term>? », in the language of the conversation (`CLAUDE.md`, "Vocabulary"), and act on nothing until it is settled.
+3. A word rejected for the concept meant (the maintainer's or the caller's): answer first « You said <word>, did you mean <term>? », in the language of the conversation (the project instructions, `feyn-instructions-project`, "Vocabulary"), and act on nothing until it is settled.
 4. No entry: say so; the word is free, or calls for an entry (below).
 
 ## Add `<concept>`
