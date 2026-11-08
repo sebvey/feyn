@@ -13,7 +13,7 @@ Summary of decision `versioned-objects-and-spec-layout`; if they differ, the dec
 
 Three objects are versioned: a course (`courses/<id>/`), a spec (here) and the spec directives, which say how a spec is written and read and live in `spec-directives/`, one folder per MAJOR, with the tests of a spec's own files (`spec-directives/README.md`).
 
-A spec is the contract for a type of course. The only spec is `linear-fr`; its MAJOR 1 sits in `product-lines/linear-fr/1/`.
+A spec is the contract of a **product line**: the form of its courses and what it fixes of each of its products ([`docs/glossary.md`](../docs/glossary.md#spec)). The only spec is `linear-fr`; its MAJOR 1 sits in `product-lines/linear-fr/1/`.
 
 ## A spec MAJOR
 
