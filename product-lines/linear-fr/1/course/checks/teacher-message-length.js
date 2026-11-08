@@ -5,10 +5,10 @@
 // supplementary case's, the misconceptions left out, counted in lines of `line` characters (the
 // characters of the text, label and indentation left out, divided by `line`), per unit; a unit
 // above `max` is reported, a signal that it may not hold in one teacher message, not an error.
-// Its fields are read as unit-contract reads them (lib/course.js); a unit whose fields are
+// Its fields are read as unit-contract reads them (course/parser.js); a unit whose fields are
 // unreadable is unit-contract's.
 const directives = require('./directives');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 // the characters of a field: its text after the label, then each of its following lines, trimmed
 function chars(f) {
@@ -42,4 +42,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'teacher-message-length', run, lengths };
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
+const reads = ['course.form', 'course.lexicon', 'course.parser'];
+
+module.exports = { id: 'teacher-message-length', run, reads, lengths };

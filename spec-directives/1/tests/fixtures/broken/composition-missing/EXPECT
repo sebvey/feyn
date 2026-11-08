@@ -1,2 +1,2 @@
 check: composition
-message: teacher/composition.yaml is missing
+message: products/teacher/composition.yaml is missing

@@ -1,3 +1,3 @@
 # fixture: the course
 
-A concept folder holds the teaching notes the teacher reads (`teacher/rules.yaml`).
+A concept folder holds the teaching notes the teacher reads (`products/teacher/rules.yaml`).

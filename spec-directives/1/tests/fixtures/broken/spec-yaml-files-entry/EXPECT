@@ -1,0 +1,2 @@
+check: spec-yaml
+message: files has no entry for course.schemas

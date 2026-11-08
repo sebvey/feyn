@@ -9,10 +9,12 @@
 // qualifier) is skipped.
 const directives = require('./directives');
 const mdlib = directives.lib('md');
-const glossary = directives.lib('glossary');
-const refs = directives.lib('refs');
+// the glossary's table and the concept references are read by the readers of this MAJOR
+// (course/glossary.js, course/refs.js), given the directives' lib
+const glossary = require('../glossary')(directives.lib);
+const refs = require('../refs')(directives.lib);
 const yaml = directives.lib('yaml-lines');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -141,4 +143,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'glossary-order', run };
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
+const reads = ['course.form', 'course.lexicon', 'course.parser', 'course.refs', 'course.glossary'];
+
+module.exports = { id: 'glossary-order', run, reads };

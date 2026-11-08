@@ -5,9 +5,9 @@
 // another case to pose after a wrong answer that shows it; a unit that leaves one to its case alone
 // is reported, a signal that its stock lacks a case, not an error. A name that matches no
 // misconception of its unit, a case that names none and a misconception no case names are
-// unit-contract's, which blocks; the cases are read as unit-contract reads them (lib/course.js).
+// unit-contract's, which blocks; the cases are read as unit-contract reads them (course/parser.js).
 const directives = require('./directives');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
@@ -35,4 +35,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'case-coverage', run };
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
+const reads = ['course.form', 'course.lexicon', 'course.parser'];
+
+module.exports = { id: 'case-coverage', run, reads };

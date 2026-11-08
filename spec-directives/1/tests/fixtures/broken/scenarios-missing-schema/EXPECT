@@ -1,2 +1,2 @@
 check: scenarios
-message: teacher/tests/scenario.schema.yaml is missing
+message: products/teacher/tests/scenario.schema.yaml is missing

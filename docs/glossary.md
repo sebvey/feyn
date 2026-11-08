@@ -27,7 +27,7 @@ A key with nothing to say is left out, `means`, `en` and `fr` excepted. A reject
 ## Which designation applies where
 
 - `en` in the repository's English files: code, docs, skills, issues, decisions, and the English texts of a spec.
-- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `teacher/README.md`, `teacher/rules.yaml` of `product-lines/linear-fr/1/`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
+- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `products/teacher/README.md`, `products/teacher/rules.yaml` of `product-lines/linear-fr/1/`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
 - A course glossary in its course. Each course has its own [course glossary](#course-glossary), which belongs to the course, follows the course's language and applies in that course's files. A word may be reserved in both with two meanings (**epic**); a repository text that speaks of the course's meaning says so ("epic, in the course's sense"). French course files keep their French section headings and field labels (« L'essentiel », « Matière », « Se vérifier »…); the English terms here are how we talk about them in code, docs and issues.
 
 ## Adding or changing an entry
@@ -47,7 +47,15 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the contract of a **product line**: the shape of its courses (structure, drawing contract, checks) and what it fixes of each of its products, among which the generic way to teach every course of the line, its **protocol**; versioned, one folder per MAJOR. Neither "spec" nor "specification" names anything else (an issue, a design)
 - en: spec
 - fr: « spec »
-- not to confuse with: [product line](#product-line), [spec directives](#spec-directives), [protocol](#protocol)
+- not to confuse with: [product line](#product-line), [spec directives](#spec-directives), [protocol](#protocol), [manifest](#manifest)
+
+### manifest
+
+- means: the file `spec.yaml` of a spec MAJOR, which declares the spec: its identity (its name, its MAJOR, the MAJOR of the **spec directives** it follows, its version, its language), its own files, the files of its **course** and of each of its **products**, each by its role, the lists of the spec that its files are held to, and what each file holds and who reads it
+- en: manifest
+- fr: « manifeste »
+- not to confuse with: [spec](#spec), [course.lock](#courselock)
+- why: named after what it declares, as `course.yaml` is named after the course; a file `manifest.yaml` beside `spec.yaml` was ruled out, since it would name the role of the file and not the thing it declares, and split the declaration of a spec in two. "manifest" stays rejected for the classroom's record, the **course.lock**, which declares no spec
 
 ### product line
 
@@ -500,7 +508,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### lexicon
 
-- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the teacher build and the site; `teacher/lexicon.yaml`, the words the teacher says and writes; `site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds. Not a translation file: the language is the spec's
+- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the teacher build and the site; `products/teacher/lexicon.yaml`, the words the teacher says and writes; `products/site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds. Not a translation file: the language is the spec's
 - en: lexicon · rejected: "language pack", "i18n", "locale", "strings"
 - fr: « lexique »
 
@@ -565,7 +573,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the classroom's record, the file `course.lock`: course id, ref, course sha, tooling sha, channel, site URL, date
 - en: course.lock · rejected: "manifest"
 - fr: to settle
-- not to confuse with: [classroom](#classroom)
+- not to confuse with: [classroom](#classroom), [manifest](#manifest)
 
 ## Rules and checks
 

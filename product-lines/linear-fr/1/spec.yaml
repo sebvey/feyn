@@ -1,10 +1,134 @@
-# The declaration of this spec MAJOR: its name, its MAJOR, the MAJOR of the spec directives it
-# follows (spec-directives/<directives>/: the tests of its files, the lib and the package its checks
+# The manifest of this spec MAJOR (spec-directives/1/README.md section 8), in the form of
+# spec-directives/1/spec.schema.yaml, which the test spec-yaml of check-spec holds it to; every
+# test of check-spec reads the files and the lists of the spec from it, through
+# spec-directives/1/lib/manifest.js.
+# Its identity: its name, its MAJOR, the MAJOR of the spec directives it follows
+# (spec-directives/<directives>/: the tests of its files, the lib and the package its checks
 # load), its version (`<MAJOR>.0.0-alpha` until its tag) and its language (ISO 639-1), that of its
 # courses, its lexicons and its protocol: a course of another language follows another spec
-# (decision `lexicon-not-language-pack`).
+# (decision `lexicon-not-language-pack`). `directives` and `language` stay on a line of their own:
+# the builds and the course checks read them by that line.
 name: linear-fr
 major: 1
 directives: 1
 version: 1.0.0-alpha
 language: fr
+
+# The files of the spec MAJOR itself, by role, at the paths the directives fix.
+spec:
+  manifest: spec.yaml
+  readme: README.md
+  changelog: CHANGELOG.md
+  decisions: decisions
+
+# The files of the course, the input of the builds of the products, by role: a path relative to
+# this folder, a file or a folder.
+course:
+  readme: course/README.md
+  rules: course/rules.yaml
+  lexicon: course/lexicon.yaml
+  form: course/form.yaml
+  schemas: course/schemas
+  checks: course/checks
+  parser: course/parser.js
+  refs: course/refs.js
+  glossary: course/glossary.js
+  templates: course/templates
+  samples: course/samples
+
+# The products of the spec and their files, by role. The teacher is not declared while it is
+# frozen (decision `teacher-frozen-until-the-protocol-brainstorm`): the tests of its files check
+# nothing and say so (idea #687 brings it back).
+products:
+  site:
+    lexicon: products/site/lexicon.yaml
+    url-scheme: products/site/url-scheme.yaml
+    build: products/site/build
+
+# The lists of the spec, which the tests of check-spec hold its files to: the categories of the
+# rules of a course (README.md section 3), and the keys of the lexicons, by owner, each with its
+# kind, `string` or `list` (the course's: course/README.md section 7).
+lists:
+  categories: [structure, pedagogy, writing, sources, diagrams]
+  lexicons:
+    course:
+      headings: {essentials: string, stances: string, deepening: string, landmarks: string, instruction: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
+      block_kinds: {concept: string, annex: string, section: string, unit: string, case: string, separator: string}
+      unit_fields: {matter: string, misconceptions: string, root: string, correction: string, anchor: string, question: string, expected_answer: string, misconceptions_in_play: string, instruction: string}
+      unit_blocks: {lesson: string, cases: string}
+      markers: {consensus: string, school: string, course: string}
+      natures: {fact: string}
+      concept_refs: {concept: string, concepts: string, and: string, annex: string}
+      source_types: {primary: string, secondary: string, marketing: string}
+      typography: {banned: list}
+    site:
+      nav: {domains: string, storyline: string, glossary: string}
+      labels: {domain: string, objective: string, prerequisites: string}
+      page_headings: {neighbors: string, sources: string}
+      stance_columns: {consensus: string, school: string, course: string}
+      intros: {consensus: string, school: string, course: string, claims: string}
+
+# The files of this MAJOR: for each role above, what it holds and who reads it, among the four
+# readers of spec-directives/README.md (« The readers »); the test spec-yaml of check-spec requires
+# an entry for every role declared. Section 2 of README.md points here.
+files:
+  spec:
+    manifest:
+      holds: "the manifest of this MAJOR: its identity, the MAJOR of the spec directives it follows, its files by role, the lists its tests hold them to, and what each file holds and who reads it"
+      readers: [builder, verifier, spec writer]
+    readme:
+      holds: "the entry to this MAJOR: its scope, its files (a pointer to this manifest), the categories, the normative references, the list of checks"
+      readers: [creator, builder, verifier, spec writer]
+    changelog:
+      holds: "the changes of the spec, an « Unreleased » section until the tag"
+      readers: [spec writer]
+    decisions:
+      holds: "the decisions of this spec"
+      readers: [spec writer]
+  course:
+    readme:
+      holds: "what a course is: the course folder, `course.yaml`, the concept folder and its concept file, the unit and its additions, domain files, course files, diagrams, the lexicon of the course files"
+      readers: [creator, builder, spec writer]
+    rules:
+      holds: "the rules of a course, in French, one group per section of `course/README.md` that points to rules, each with its `purpose`"
+      readers: [verifier, spec writer]
+    lexicon:
+      holds: "the lexicon of the course files: the words a program recognises in a course file, by key (`course/README.md` section 7)"
+      readers: [creator, builder, spec writer]
+    form:
+      holds: "the form of the files of a course as data: their parts, their order, their presence, published or not, their readers; it names the words by their key in `course/lexicon.yaml` and holds none"
+      readers: [creator, builder, verifier, spec writer]
+    schemas:
+      holds: "the fields of `course.yaml` and of the `concept.md` frontmatter, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml`"
+      readers: [builder, verifier, spec writer]
+    checks:
+      holds: "the check scripts of a course, their fixtures and `README.md` (how to run them); `product-lines/check-course <course-dir>` runs them"
+      readers: [creator, verifier]
+    parser:
+      holds: "the parser of a course: it loads a course folder and reads the tree and the parts of each `concept.md` and the fixed facts of `storyline.md`, for the checks and the site build"
+      readers: [builder, verifier]
+    refs:
+      holds: "the reader of the references between concepts in the text of a course (`course/README.md` section 3.5): the words of the group `concept_refs` of the lexicon, then concept numbers or section and unit ids, for the checks and the site build"
+      readers: [builder, verifier]
+    glossary:
+      holds: "the reader of the course glossary (`course/README.md` section 5): the first table of `glossary.md`, its terms and their variants, the number of the concept that defines each, for the checks and the site build"
+      readers: [builder, verifier]
+    templates:
+      holds: "the course templates"
+      readers: [creator]
+    samples:
+      holds: "the spec's sample courses, one folder per course, each a course of this MAJOR that changes only with it, written for the spec's tests, the teacher build, the site build and a human who plays it: `cafe`, a short course on coffee"
+      readers: [creator, builder, verifier]
+  products:
+    site:
+      lexicon:
+        holds: "the lexicon of the site: the words and short texts the site shows for every course of the spec and no course file holds, each with the glossary entry it takes its word from"
+        readers: [builder]
+      url-scheme:
+        holds: "the URL scheme of the site: the address of each page, relative to the site's base path, its path words, and how the number of a domain and of a concept is written in it"
+        readers: [builder]
+      build:
+        holds: "the half of a site build that depends on this MAJOR: `render-site`, which gives the published parts of a course with the words, the URL scheme and the language of the site as one JSON document, run by `site-builder/`; `site.schema.yaml`, the shape of its output; `test-render`; `README.md`"
+        readers: [builder]
+  undeclared:
+    teacher: "not declared while it is frozen (decision `teacher-frozen-until-the-protocol-brainstorm`, idea #687): the protocol, the composition, the lexicon, the build and the test scenarios of the teacher, and the templates of learner memory"

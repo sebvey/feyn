@@ -3,7 +3,8 @@
 // Runs check-spec (the tests of a spec's own files, its lexicons included) on the fixtures,
 // and says whether every run gave the expected result (the course fixtures are tested by
 // product-lines/<name>/<MAJOR>/course/checks/test-fixtures).
-//   fixtures/valid                 a model spec MAJOR that passes every test
+//   fixtures/valid                 a model spec MAJOR that passes every test, its manifest
+//                                  declaring every file a test reads, so that none checks nothing
 //   fixtures/broken/<name>/EXPECT  "check: <id>", "message: <fragment>": that test fails with a
 //                                  line containing the fragment, and no other test fails beside it
 //                                  but those an "also: <id>[, <id>]" line names, which the same
@@ -12,6 +13,8 @@
 //                                  (check-spec --checks-dir)
 //   the repository's specs         every spec MAJOR of product-lines/ whose spec.yaml declares this
 //                                  directives MAJOR passes spec-directives/check-spec
+//   the readers                    the readers spec-directives/README.md defines (« The readers »)
+//                                  are the enum of `readers` in spec.schema.yaml
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
@@ -40,7 +43,7 @@ const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
   const checksDir = ['--checks-dir', path.join(fx, 'checks')];
   const spec = (dir, extra) => spawn(path.join(here, 'check-spec'), dir, [...checksDir, ...extra]);
   const v = spec(path.join(fx, 'valid'), []);
-  report('valid passes every spec check', v.code === 0, notOk(v));
+  report('valid passes every spec check', v.code === 0 && v.lines.every((l) => l.endsWith(': ok')), notOk(v));
   for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
     const d = path.join(fx, 'broken', name);
     const ex = Object.fromEntries(fs.readFileSync(path.join(d, 'EXPECT'), 'utf8').split('\n').filter(Boolean).map((l) => [l.slice(0, l.indexOf(':')), l.slice(l.indexOf(':') + 1).trim()]));
@@ -71,6 +74,42 @@ const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
     const r = spawn(path.join(repo, 'spec-directives', 'check-spec'), path.join(specs, s), []);
     report(`the repository spec ${s} passes every spec check`, r.code === 0, notOk(r));
   }
+}
+// the readers: the bold names of the bullets of « The readers » in spec-directives/README.md, where
+// a reader is defined, are the enum of `readers` in spec.schema.yaml, which validates `files:`
+{
+  const yaml = require('../lib/yaml-lines');
+  const README = path.join(repo, 'spec-directives', 'README.md');
+  const SCHEMA = path.join(here, '..', 'spec.schema.yaml');
+  const defined = [];
+  let inside = false;
+  for (const l of fs.readFileSync(README, 'utf8').split('\n')) {
+    if (/^## /.test(l)) inside = l.trim() === '## The readers';
+    const b = inside && /^- \*\*([^*]+)\*\*:/.exec(l);
+    if (b) defined.push(b[1]);
+  }
+  // every enum of a property `readers`, wherever the schema has one
+  const enums = [];
+  const walk = (v) => {
+    if (Array.isArray(v)) return v.forEach(walk);
+    if (!v || typeof v !== 'object') return;
+    for (const [k, x] of Object.entries(v)) {
+      if (k === 'readers' && x && x.items && Array.isArray(x.items.enum)) enums.push(x.items.enum);
+      walk(x);
+    }
+  };
+  walk(yaml.parse(fs.readFileSync(SCHEMA, 'utf8')));
+  const diff = (a, b) => a.filter((x) => !b.includes(x));
+  const problems = [];
+  if (!defined.length) problems.push('spec-directives/README.md defines no reader under « The readers »');
+  if (!enums.length) problems.push('spec.schema.yaml has no enum of readers');
+  for (const e of enums) {
+    const more = diff(defined, e);
+    const less = diff(e, defined);
+    if (more.length) problems.push(`not in the enum of spec.schema.yaml: ${more.join(', ')}`);
+    if (less.length) problems.push(`not defined in spec-directives/README.md: ${less.join(', ')}`);
+  }
+  report('the readers of spec-directives/README.md are the enum of readers in spec.schema.yaml', !problems.length, problems.join('; '));
 }
 console.log(bad ? `${bad} unexpected result(s)` : 'all as expected');
 process.exit(bad ? 1 : 0);

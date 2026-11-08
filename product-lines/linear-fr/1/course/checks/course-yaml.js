@@ -16,7 +16,7 @@ const path = require('path');
 const directives = require('./directives');
 const yaml = directives.lib('yaml-lines');
 const xml = directives.lib('xml');
-const { fail, normNumber } = directives.lib('course');
+const { fail, normNumber } = directives.lib('common');
 
 const F = 'course.yaml';
 const NUMBER = /^(\d+|A\d+)$/;
@@ -205,4 +205,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'course-yaml', run };
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
+const reads = ['course.form', 'course.lexicon', 'course.schemas', 'course.parser'];
+
+module.exports = { id: 'course-yaml', run, reads };

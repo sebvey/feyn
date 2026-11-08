@@ -6,7 +6,7 @@ const path = require('path');
 const directives = require('./directives');
 const xml = directives.lib('xml');
 const yaml = directives.lib('yaml-lines');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 const CLASSES = new Set(['primary', 'secondary', 'muted']);
 const GENERIC = new Set(['system-ui', 'sans-serif', 'serif', 'monospace']);
@@ -131,4 +131,8 @@ function run(ctx) {
 }
 const normStr = (v) => String(v);
 
-module.exports = { id: 'drawing-contract', run };
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
+const reads = ['course.parser'];
+
+module.exports = { id: 'drawing-contract', run, reads };

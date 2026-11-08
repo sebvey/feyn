@@ -16,7 +16,7 @@
 // reports); « Consigne au professeur » is prose. The parts of concept.md and its tree are `concept-file`'s, a `structure` check; the
 // length of a teacher message is `teacher-message-length`'s.
 const directives = require('./directives');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 // the labelled fields of a list (« Leçon », or one case): known here, nothing before the colon, each once,
 // none empty, the mandatory ones present, in the order of `spec`
@@ -171,4 +171,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'unit-contract', run };
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
+const reads = ['course.form', 'course.lexicon', 'course.parser'];
+
+module.exports = { id: 'unit-contract', run, reads };

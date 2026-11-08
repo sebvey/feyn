@@ -16,7 +16,7 @@ const path = require('path');
 const directives = require('./directives');
 const yaml = directives.lib('yaml-lines');
 const mdlib = directives.lib('md');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 const MAJOR = path.resolve(__dirname, '..', '..');
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -149,7 +149,7 @@ function checkConcept(ctx, c, out) {
       headingSeq(cf, split.sections, p.blocks.map(part), out, `block of « ${H(p.heading)} »`, 'no other ### block exists in it');
     }
 
-    // the tree of the concept, read from its headings (lib/course.js): at least one section; a
+    // the tree of the concept, read from its headings (course/parser.js): at least one section; a
     // section id is the concept number and a letter from a, in order; a unit id of a section, the
     // section's and a digit from 1, in order, so nine units at most, and one at least; every id
     // unique in the course; each heading starts with its kind word and has a title after its id
@@ -190,4 +190,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'concept-file', run };
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
+const reads = ['course.form', 'course.lexicon', 'course.schemas', 'course.parser'];
+
+module.exports = { id: 'concept-file', run, reads };

@@ -1,5 +1,5 @@
 <!--
-The teacher template: the frame of the CLAUDE.md of a classroom, the part `permanent` of the composition (product-lines/<name>/<MAJOR>/teacher/composition.yaml). teacher-builder/build-teacher fills each {{slot}} from the parts the spec MAJOR's teacher/build/render-parts renders, and drops this comment; the template holds no rule text: the rules come from the protocol of the spec, in its language. teacher-builder/README.md says what fills each slot.
+The teacher template: the frame of the CLAUDE.md of a classroom, the part `permanent` of the composition (product-lines/<name>/<MAJOR>/products/teacher/composition.yaml). teacher-builder/build-teacher fills each {{slot}} from the parts the spec MAJOR's products/teacher/build/render-parts renders, and drops this comment; the template holds no rule text: the rules come from the protocol of the spec, in its language. teacher-builder/README.md says what fills each slot.
 -->
 # Classroom: {{course_title}}
 

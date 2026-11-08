@@ -1,12 +1,13 @@
 'use strict';
 // The conventions of the text of concept.md (course/README.md section 3.5), read in the parts the
-// learner reads (course/form.yaml, readers; lib/course.js), the instruction left out: concept
+// learner reads (course/form.yaml, readers; course/parser.js), the instruction left out: concept
 // references, stance markers; no image in concept.md (the build places a diagram at its unit). Plain
 // Markdown in every course file (section 1), a concept file's headings no deeper than #####, a case's.
 const directives = require('./directives');
 const mdlib = directives.lib('md');
-const { fail } = directives.lib('course');
-const { parser: refParser } = directives.lib('refs');
+const { fail } = directives.lib('common');
+// the concept references are read by the reader of this MAJOR (course/refs.js), given the directives' lib
+const { parser: refParser } = require('../refs')(directives.lib);
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -46,7 +47,7 @@ function checkConcept(ctx, c, out) {
     if (h.level === 5 && !inSection(h.line)) out.push(fail(cf, h.line, `plain Markdown: a ##### heading is a case, in the block of cases of a unit ("${h.text}")`));
   }
 
-  // concept references (lib/refs.js): to a concept, a section or a unit with the concept words, to
+  // concept references (course/refs.js): to a concept, a section or a unit with the concept words, to
   // an annex or a section or unit of one with the annex word
   const refs = refParser(ctx);
   if (refs) {
@@ -96,4 +97,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'conventions', run };
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
+const reads = ['course.form', 'course.lexicon', 'course.parser', 'course.refs'];
+
+module.exports = { id: 'conventions', run, reads };

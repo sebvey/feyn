@@ -1,2 +1,2 @@
 check: composition
-message: spec source teacher/protocol.yaml is not a file or folder of the spec folder
+message: spec source products/teacher/protocol.yaml is not a file or folder of the spec folder

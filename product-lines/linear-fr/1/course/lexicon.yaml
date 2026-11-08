@@ -3,10 +3,11 @@
 # natures, concept references, source types, typography), read by the checks, the teacher build and the site,
 # none of which writes them again (course/README.md section 7;
 # decision `lexicon-not-language-pack`). The spec is French (`language: fr` in spec.yaml): the
-# values are course text, in French. The keys are those of course/README.md section 7
-# (`lexicon-keys`, a test of check-spec, verifies them). Typography of these values: space before
-# « : », « ; », « ? », « ! », quotes « »; no em-dash, no arrow (the list under `typography.banned`
-# names them).
+# values are course text, in French. The keys are those `lists.lexicons.course` of spec.yaml
+# lists, which the table of course/README.md section 7 lists too, with what each is used for
+# (`lexicon-keys`, a test of check-spec, holds this file and that table to the manifest).
+# Typography of these values: space before « : », « ; », « ? », « ! », quotes « »; no em-dash, no
+# arrow (the list under `typography.banned` names them).
 
 # Section titles of the course files.
 headings:

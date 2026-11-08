@@ -1,6 +1,33 @@
-# fixture: the declaration of a spec MAJOR in its alpha
+# fixture: the manifest of a spec MAJOR in its alpha, which declares the files the fixture holds
 name: fixture-fr
 major: 1
 directives: 1
 version: 1.0.0-alpha
 language: fr
+
+course:
+  readme: course/README.md
+  rules: course/rules.yaml
+  lexicon: course/lexicon.yaml
+  schemas: course/schemas
+products:
+  teacher:
+    readme: products/teacher/README.md
+    rules: products/teacher/rules.yaml
+    lexicon: products/teacher/lexicon.yaml
+    composition: products/teacher/composition.yaml
+    tests: products/teacher/tests
+lists:
+  categories: [structure, pedagogy, writing, sources, diagrams]
+  families: [session-start, domain-presentation, loop, message-form, storyline, stances-and-sources, practice-skip-asides, learner-memory, stop]
+  lexicons:
+    course:
+      headings: {essentials: string, stances: string, deepening: string, landmarks: string, instruction: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
+      block_kinds: {concept: string, annex: string, section: string, unit: string, case: string, separator: string}
+      unit_fields: {matter: string, misconceptions: string, root: string, correction: string, anchor: string, question: string, expected_answer: string, misconceptions_in_play: string, instruction: string}
+      unit_blocks: {lesson: string, cases: string}
+      markers: {consensus: string, school: string, course: string}
+      natures: {fact: string}
+      concept_refs: {concept: string, concepts: string, and: string, annex: string}
+      source_types: {primary: string, secondary: string, marketing: string}
+      typography: {banned: list}

@@ -1,40 +1,40 @@
 'use strict';
 // Every rule and every group of rules of the protocol is named by a slug, defined once in one
-// namespace, and every rule or group cited in teacher/rules.yaml, teacher/README.md, README.md,
-// course/README.md and decisions/ (where a decision cites none: decision decision-format) is cited
-// by a slug that is defined (decisions rules-named-by-slug, rule-groups-replace-ranges).
+// namespace, and every rule or group cited in the rules of the protocol, the description of the
+// protocol, README.md, the description of the course and decisions/ (where a decision cites none:
+// decision decision-format) is cited by a slug that is defined (decisions rules-named-by-slug,
+// rule-groups-replace-ranges). The files are those the manifest, spec.yaml, declares:
+// `products.teacher.rules` (below, products/teacher/rules.yaml), `products.teacher.readme`
+// (products/teacher/README.md) and `course.readme` (course/README.md), beside the spec MAJOR's README.md and
+// decisions/. The slugs are defined by the rules of the protocol only: a manifest that does not
+// declare them checks nothing.
 //
-// Defined, in teacher/rules.yaml: a rule by its `id`, a group by its `id` (a family is a group whose
+// Defined, in products/teacher/rules.yaml: a rule by its `id`, a group by its `id` (a family is a group whose
 // id is its category); each id once, across rules and groups.
 // Cited:
-//   - in the `text` and `why` of a rule of teacher/rules.yaml, every code span shaped like a rule
+//   - in the `text` and `why` of a rule of products/teacher/rules.yaml, every code span shaped like a rule
 //     slug, and those that follow « règle(s) » must be rules;
-//   - in a table of teacher/README.md, every code span of a "Used in" or "Rule" column;
-//   - in teacher/README.md, README.md, course/README.md and decisions/*.md, the code spans that
+//   - in a table of products/teacher/README.md, every code span of a "Used in" or "Rule" column;
+//   - in products/teacher/README.md, README.md, course/README.md and decisions/*.md, the code spans that
 //     follow « rule », « rules », « règle » or « règles », joined by commas, « and », « to », « et »,
 //     « à »: each must be a rule;
 //   - everywhere, the code spans that follow « group », « groups », « groupe » or « groupes »: each
 //     must be a group.
 // A rule named or cited by its old number (« règle 1.2 », « rules 1.1, 1.5 ») fails too, and so does
-// a range, « `a` à `b` » or « `a` to `b` », in teacher/rules.yaml, teacher/README.md, README.md or
+// a range, « `a` à `b` » or « `a` to `b` », in products/teacher/rules.yaml, products/teacher/README.md, README.md or
 // course/README.md (decision rule-groups-replace-ranges). decisions/ are not read for ranges: a
 // decision cites no rule id (decision decision-format), so a citation there is a slip to catch.
-// The file names it reads are those of linear-fr, a named debt: idea #485.
 const yaml = require('../lib/yaml-lines');
 const mdlib = require('../lib/md');
-const { fail } = require('../lib/course');
+const { fail } = require('../lib/common');
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){1,4}$/;
 const GROUP_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){0,4}$/;
 const NUMBER = /^\d+\.\d+[a-z]?$/;
 const RULE_WORD = /\b(?:[Rr]ules?|[Rr]ègles?)/;
 const GROUP_WORD = /\b(?:[Gg]roups?|[Gg]roupes?)/;
-const RULES = 'teacher/rules.yaml';
-// read for the citations it makes only, as README.md and course/README.md are: no slug is defined
-// there
-const PROTOCOL = 'teacher/README.md';
-// the descriptions read beside the protocol: the spec MAJOR's README, and what a course is
-const DESCRIPTIONS = ['README.md', 'course/README.md'];
+// the spec MAJOR's README, read beside the description of the course (course.readme)
+const README = 'README.md';
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const codeSpans = (t) => [...t.matchAll(/`([^`]+)`/g)].map((m) => m[1]);
@@ -52,7 +52,7 @@ function paragraphs(lines) {
     return { text, lineAt };
   });
 }
-// a text of teacher/rules.yaml as one paragraph, all at the line of its key
+// a text of products/teacher/rules.yaml as one paragraph, all at the line of its key
 const yamlParagraph = (text, line) => [{ text: text.replace(/\s+/g, ' ').trim(), lineAt: () => line }];
 
 // citations led by a word: [{ items, line }]
@@ -88,6 +88,13 @@ function rangeCitations(paras) {
 }
 
 function run(ctx) {
+  const m = ctx.manifest;
+  const RULES = m.path('teacher', 'rules');
+  if (RULES === null) return m.nothing(m.ref('teacher', 'rules'));
+  // read for the citations it makes only, as the descriptions are: no slug is defined there
+  const PROTOCOL = m.path('teacher', 'readme');
+  // the descriptions read beside the protocol: the spec MAJOR's README, and what a course is
+  const DESCRIPTIONS = [README, m.path('course', 'readme')].filter((f) => f !== null);
   const raw = ctx.read(RULES);
   if (raw === null) return [fail(RULES, 1, `${RULES} is missing`)];
   let doc;
@@ -128,9 +135,9 @@ function run(ctx) {
   });
   prose.push({ file: RULES, paras: texts, ranges: true });
 
-  // teacher/README.md: its tables' "Used in" and "Rule" columns, and its prose
-  const readme = ctx.read(PROTOCOL);
-  if (readme === null) out.push(fail(PROTOCOL, 1, `${PROTOCOL} is missing`));
+  // products/teacher/README.md: its tables' "Used in" and "Rule" columns, and its prose
+  const readme = PROTOCOL === null ? '' : ctx.read(PROTOCOL);
+  if (PROTOCOL === null) { /* not declared: nothing to read */ } else if (readme === null) out.push(fail(PROTOCOL, 1, `${PROTOCOL} is missing`));
   else {
     const body = mdlib.split(readme).body;
     for (const tb of mdlib.tables(body)) {
@@ -185,4 +192,6 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'rule-slugs', run };
+// the roles it reads, by their key in the manifest (README.md section 8)
+const reads = ['products.teacher.rules', 'products.teacher.readme', 'spec.readme', 'course.readme', 'spec.decisions'];
+module.exports = { id: 'rule-slugs', run, reads };

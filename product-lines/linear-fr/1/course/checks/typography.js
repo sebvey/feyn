@@ -1,7 +1,7 @@
 'use strict';
 // No character the lexicon bans (`typography.banned`: em-dash, arrows) in course text.
 const directives = require('./directives');
-const { fail } = directives.lib('course');
+const { fail } = directives.lib('common');
 
 function run(ctx) {
   if (!ctx.lexiconOk || !ctx.lexicon.typography || !Array.isArray(ctx.lexicon.typography.banned)) {
@@ -25,4 +25,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'typography', run };
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
+const reads = ['course.lexicon', 'course.parser'];
+
+module.exports = { id: 'typography', run, reads };

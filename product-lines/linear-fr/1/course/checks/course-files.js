@@ -6,10 +6,13 @@
 // a unit of the course), glossary.md and CHANGELOG.md.
 const directives = require('./directives');
 const mdlib = directives.lib('md');
-const glossary = directives.lib('glossary');
-// the fixed facts of storyline.md and the release sections of CHANGELOG.md are read by the lib,
-// as the site build reads them
-const { fail, fixedFacts, RELEASE } = directives.lib('course');
+// the glossary's table is read by the reader of this MAJOR (course/glossary.js), given the directives' lib
+const glossary = require('../glossary')(directives.lib);
+// the fixed facts of storyline.md are read by the parser of this MAJOR (course/parser.js), the
+// release sections of CHANGELOG.md through the directives' lib (lib/common.js), as the site build
+// reads them
+const { fail, RELEASE } = directives.lib('common');
+const { fixedFacts } = require('../parser')(directives.lib);
 
 // « Accueil »: a posture paragraph, then a numbered list of questions "<n>. **<question label>** : <question>"
 function onboarding(secs, title) {
@@ -167,4 +170,8 @@ function run(ctx) {
   return out;
 }
 
-module.exports = { id: 'course-files', run };
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the course through the parser
+const reads = ['course.form', 'course.lexicon', 'course.parser', 'course.glossary'];
+
+module.exports = { id: 'course-files', run, reads };
