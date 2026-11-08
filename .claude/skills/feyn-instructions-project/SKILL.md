@@ -15,7 +15,7 @@ The yardstick: a change of `linear-fr` counts when `product-lines/linear-fr/1/co
 
 ## Language
 
-English for everything, except course material and quotes from it, which stay in French and are never translated. French text: no em-dashes, no arrows.
+English for everything, except what speaks to the learner, to the teacher or to the author of a French course (course material, the French texts of a French spec), and quotes from it, which stay in French and are never translated (decision `language-policy`). French text: no em-dashes, no arrows.
 
 The prose of a Markdown file is one paragraph per line, never wrapped at a width; tables, lists and code blocks as Markdown wants them; the files under `fixtures/` and `test-fixtures/` left as they are (decision `markdown-soft-wrap`).
 
