@@ -10,7 +10,7 @@ One job: put issue n in progress on its own branch. It writes nothing but the br
 
 Its caller passes its variations as parameters and rewrites none of its steps (decision `one-moment-one-file`):
 - `--base <branch>`: the branch the issue branch is cut from, `main` by default. A story of an epic, a direct story included, gives its epic's integration branch (the Delivery line of its plan comment; decision `epic-on-integration-branch`). Steps 2 and 3.
-- `--worktree`: run by an agent in its own worktree (the contributor of the agent workflow `deliver-story.js`), which can neither `git switch main` (it fails in a worktree, [worktree-agent.md](../../reference/worktree-agent.md)) nor ask the maintainer. Steps 1 to 3.
+- `--worktree`: run by an agent in its own worktree (the contributor of the agent workflow `deliver-story.js`), which can neither `git switch main` (it fails in a worktree, [`feyn-instructions-worktree`](../feyn-instructions-worktree/SKILL.md)) nor ask the maintainer. Steps 1 to 3.
 
 ## 1. Read the issue
 

@@ -1,7 +1,7 @@
 export const meta = {
   name: 'feyn-deliver-story-workflow',
   description: 'Deliver one story of feyn through agents: contributor, fresh-agent review and its corrections by the same agent, then a merge into the epic\'s integration branch (a story under an epic) or a hand-over (a story without an epic)',
-  whenToUse: 'Run by the orchestrator of an epic for each story of it (epic mode: args.epic and args.base given; decision epic-on-integration-branch), or by whoever delivers a story without an epic (no-epic mode: no args.epic; the PR targets main and the maintainer merges it; decision story-with-or-without-an-epic). args: { issue: <n>, epic?: <n>, base?: "<integration branch>", work?: "<guidance for the contributor beyond the issue>", dryRun?: true }. dryRun spawns no agent and returns the steps of the mode the args select.',
+  whenToUse: 'Run by the orchestrator of an epic for each story of it (epic mode: args.epic and args.base given; decision epic-on-integration-branch), or by whoever delivers a story without an epic (no-epic mode: no args.epic; the PR targets main and the maintainer merges it; decision story-with-or-without-an-epic). args: { issue: <n>, issueBody: "<the issue\'s body, verbatim>", epic?: <n>, base?: "<integration branch>", planComment?: "<the epic\'s plan comment, verbatim>", work?: "<guidance for the contributor beyond the issue>", dryRun?: true }. issueBody is read by the caller ("mise exec -- gh issue view <n> --json body --jq .body"), planComment in epic mode (the body of the plan comment, .claude/reference/project.md, "Epics"): the script cannot run gh, and the contributor gets them in its prompt. dryRun spawns no agent and returns the steps of the mode the args select.',
   phases: [
     { title: 'Contribute', detail: 'a contributor agent in a worktree opens a draft PR to the base' },
     { title: 'Review', detail: 'the fixer, a fresh agent, reviews the PR against the issue\'s Done when, reports its findings, then corrects what it located and checks each fix in the diff' },
@@ -13,8 +13,13 @@ export const meta = {
 // Generic: nothing here belongs to one epic, one story or one machine. The repository's main
 // checkout is found by the agents themselves (the first path "git worktree list" prints); the
 // rules cite the decision epic-on-integration-branch, not a date.
-// Briefs: the contributor runs /feyn-issue-branch and /feyn-pull-request with their parameters
-// (base, worktree; base, draft), and rewrites none of their steps (decision one-moment-one-file).
+// Briefs: the contributor is the project subagent feyn-contributor (.claude/agents/feyn-contributor.md,
+// its agentType), which runs /feyn-issue-branch and /feyn-pull-request with their parameters
+// (base, worktree; base, draft) and rewrites none of their steps (decision one-moment-one-file);
+// this workflow's prompt gives it the run's parameters, its delivery rules and its start material
+// (the issue's body, the epic's plan comment), which the caller passes in args since a workflow
+// script runs no shell. Every project subagent preloads the instructions skills
+// (feyn-instructions-project, feyn-instructions-worktree) and no CLAUDE.md.
 // The review and its corrections are the project subagent feyn-pr-fixer
 // (.claude/agents/feyn-pr-fixer.md, its agentType: the reviewer brief of feyn-pr-reviewer as its
 // review step, then its correction step), with this workflow's additions in its prompt: the agent
@@ -23,7 +28,9 @@ export const meta = {
 // folded in here, since the workflow spawns the agent itself.
 
 const A = args || {}
-if (!A.issue) throw new Error('args.issue missing: args are { issue, epic?, base?, work?, dryRun? }')
+if (!A.issue) throw new Error('args.issue missing: args are { issue, issueBody, epic?, base?, planComment?, work?, dryRun? }')
+if (!A.dryRun && !A.issueBody) throw new Error('args.issueBody missing: the caller reads the issue\'s body ("mise exec -- gh issue view <n> --json body --jq .body") and passes it')
+if (!A.dryRun && A.epic && !A.planComment) throw new Error('args.planComment missing: epic mode needs the body of the epic\'s plan comment')
 if (A.epic && !A.base) throw new Error('args.base missing: epic mode needs the integration branch of the epic')
 if (A.base && !A.epic) throw new Error('args.epic missing: a base other than main is the integration branch of an epic')
 
@@ -33,7 +40,6 @@ const ALONE = !A.epic
 const BASE = ALONE ? 'main' : A.base
 const MODE = ALONE ? 'no-epic' : 'epic'
 const SCOPE = ALONE ? 'a story without an epic' : `a story of epic #${A.epic}`
-const READ_EPIC = ALONE ? '' : `, then the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments")`
 const DW = ALONE ? "the issue's Done when" : "the epic's Done when"
 const WORK = A.work || "The issue's To do is the plan."
 // A maintainer's request reaches the agents only through args.work (feyn-deliver-story-alone
@@ -131,18 +137,23 @@ const MERGE_SCHEMA = {
 
 // ---------- Contribute
 phase('Contribute')
-const contrib = await agent(`You are a feyn contributor working on GitHub issue #${A.issue}, ${SCOPE}, in the repo at your current working directory (a git worktree of the repository). Read ".claude/reference/worktree-agent.md", then CLAUDE.md, then the issue ("mise exec -- gh issue view ${A.issue}"), its "Reads" files${READ_EPIC}.
+const contrib = await agent(`You are the contributor of this workflow (follow your brief) on issue #${A.issue}, ${SCOPE}: base ${BASE}; the workflow's stage after your PR: ${ALONE ? 'the hand-over' : 'the merge'}.
 
 ${RULES}
 
-## How to run the cycle (in a worktree)
-Run /feyn-issue-branch ${A.issue} --base ${BASE} --worktree (follow ".claude/skills/feyn-issue-branch/SKILL.md" with these parameters). Then do the work. Then run /feyn-pull-request --base ${BASE} --draft (follow ".claude/skills/feyn-pull-request/SKILL.md" with these parameters): it ends when the PR is open; the review, the corrections and the ${ALONE ? 'hand-over' : 'merge'} are this workflow's next stages, not yours; leave the Status In progress. Its body holds the limits of its step 5, checked with ".claude/scripts/check-pr-body" before each "gh pr create" or "gh pr edit". Its "Delivery notes" comment (its steps 5 and 6) is always posted under this workflow; two or more found, edit none and report them in "unsure". You have no Workflow tool: a Done when that needs an agent-workflow run, make it runnable and name the exact script and args in "unsure".
+## The issue #${A.issue}: its body, as the caller read it
+<issue>
+${A.issueBody}
+</issue>${ALONE ? '' : `
+
+## The plan comment of epic #${A.epic}, as the caller read it
+<plan-comment>
+${A.planComment}
+</plan-comment>`}
 
 ## The work
-${WORK}${RECORD}
-
-Run the checks that exist for what you touch (as /feyn-pull-request says). Return: status "done" with the branch, the PR number, files changed, checks and results, the choices you made the issue did not settle (and every counterfactual you proposed rather than derived), what you were unsure of, the deviations, question "". Or status "blocked" only when the work cannot go on without the maintainer (a choice that leaves ${DW} impossible to meet), with the question, the options and your recommendation (open the draft PR first with what does not depend on it); or when a command of the Done when of #${A.issue} gives at the start an output changed from its baseline, or, with no baseline, an output that shows its statement wrong (/feyn-issue-branch step 4), with each statement, its baseline (or the one you would write) and its output now in the question, nothing posted on the issue and no PR opened (its author amends the statement first).`,
-  { label: `contributor #${A.issue}`, phase: 'Contribute', schema: CONTRIB_SCHEMA, isolation: 'worktree', model: 'opus' })
+${WORK}${RECORD}`,
+  { label: `contributor #${A.issue}`, phase: 'Contribute', schema: CONTRIB_SCHEMA, isolation: 'worktree', agentType: 'feyn-contributor', model: 'opus' })
 
 if (!contrib) return { status: 'failed', stage: 'contribute' }
 if (contrib.status === 'blocked' || !contrib.pr) return { status: 'blocked', contrib, deviations: contrib.deviations }
@@ -154,7 +165,7 @@ phase('Review')
 // feyn-pr-reviewer does, then corrects what it located. No rounds: what it cannot correct within
 // the issue's scope ends the run in needs-orchestrator.
 const FIXER = 'feyn-pr-fixer'
-const fixer = await agent(`You review PR #${contrib.pr} (branch ${contrib.branch}, base ${BASE}) on feyn, which claims to deliver issue #${A.issue}, ${SCOPE}, then you correct what your review located. You are the fixer of this workflow: follow your brief (PR #${contrib.pr}, branch ${contrib.branch}, base ${BASE}, issue #${A.issue}, checks to rerun: those the PR diff touches, agent-workflow run: none), not the steps of ".claude/skills/feyn-pr-review/SKILL.md", which this workflow runs.${ALONE ? '' : ` Read also the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments"); the base is ${A.base} wherever the brief or a skill says main.`} You are in your own worktree: read ".claude/reference/worktree-agent.md" first; "git fetch" then "git switch --detach origin/${contrib.branch}" (the branch is checked out elsewhere); you commit there and push with "git push origin HEAD:${contrib.branch}". ${CHECKOUT} Never force-push.
+const fixer = await agent(`You review PR #${contrib.pr} (branch ${contrib.branch}, base ${BASE}) on feyn, which claims to deliver issue #${A.issue}, ${SCOPE}, then you correct what your review located. You are the fixer of this workflow: follow your brief (PR #${contrib.pr}, branch ${contrib.branch}, base ${BASE}, issue #${A.issue}, checks to rerun: those the PR diff touches, agent-workflow run: none), not the steps of ".claude/skills/feyn-pr-review/SKILL.md", which this workflow runs.${ALONE ? '' : ` Read also the epic and its plan comment ("mise exec -- gh issue view ${A.epic} --comments"); the base is ${A.base} wherever the brief or a skill says main.`} You are in your own worktree: "git fetch" then "git switch --detach origin/${contrib.branch}" (the branch is checked out elsewhere); you commit there and push with "git push origin HEAD:${contrib.branch}". ${CHECKOUT} Never force-push.
 
 ${RULES}
 The PR is a draft until ${ALONE ? 'its hand-over' : 'it is merged'}: not a finding. Under these rules, a choice the contributor made and listed in "Delivery notes" or "Review first", a counterfactual it proposed, and a decision the maintainer has not accepted yet are acceptable when sound: judge them on their merit, never block only because the maintainer has not seen them. Check also the consistency with ${ALONE ? 'the decisions the issue names' : "the epic's Done when and plan comment"}.

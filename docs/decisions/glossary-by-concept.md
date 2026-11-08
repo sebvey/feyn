@@ -17,7 +17,7 @@ The repository glossary, `docs/glossary.md`, is concept-oriented, as ISO 704 and
 ## Consequences
 
 - A regular form, so a conversion to YAML or a check of the rejected terms needs no change of it.
-- What enforces the vocabulary today: "You said <word>, did you mean <term>?" (`CLAUDE.md`, "Vocabulary"), no skill accepting a rejected word silently, `/feyn-glossary-entry` read mode.
+- What enforces the vocabulary today: "You said <word>, did you mean <term>?" (the project instructions, "Vocabulary"), no skill accepting a rejected word silently, `/feyn-glossary-entry` read mode.
 - Names follow the terms: labels `area:…`, `type:…`; agent workflows `feyn-<script>-workflow`.
 - It supersedes `reserved-vocabulary`, whose reservation and two glossaries it carries over.
 - Amended 2026-11-04 (#541): one entry per concept, no code key, files named only as the concept.
