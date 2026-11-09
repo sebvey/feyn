@@ -4,8 +4,8 @@
 |---|---|---|
 | creator | nothing here: what a course is | [`../../course/README.md`](../../course/README.md), [`../../course/templates/README.md`](../../course/templates/README.md) |
 | builder | what a teacher of this spec must do and what it needs, which a teacher implementation makes hold | [Capacités](#capacités), [Comportements attendus](#comportements-attendus) |
-| verifier | how an expected behaviour is judged | [Comportements attendus](#comportements-attendus) |
-| spec writer | how an expected behaviour is written and classed | [Définitions](#définitions), [Comportements attendus](#comportements-attendus), [`../../decisions/`](../../decisions/), [`../../CHANGELOG.md`](../../CHANGELOG.md) |
+| verifier | how a protocol rule is judged | [Comportements attendus](#comportements-attendus) |
+| spec writer | how a protocol rule is written and classed | [Définitions](#définitions), [Comportements attendus](#comportements-attendus), [`../../decisions/`](../../decisions/), [`../../CHANGELOG.md`](../../CHANGELOG.md) |
 
 The readers are defined in [`spec-directives/README.md`](../../../../../spec-directives/README.md#the-readers).
 

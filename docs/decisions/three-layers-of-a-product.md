@@ -16,3 +16,4 @@ A product is cut in three layers. The spec holds what is expected of the product
 - The behaviours given as the default prompt, the rule noted on paper beside it: the spec would still hold one target's means.
 - A prompt generated from the behaviours: what makes a behaviour hold is not always a text that repeats it, and the best means depends on the target.
 - Two fields per protocol rule, its behaviour and its prompt: the prompt stays in the spec.
+- Amended 2026-11-09 (#767): the capability of knowing the course covers each concept as well as each annex (the title and « L'essentiel » of each), as the maintainer set it with the frame of the spec of the teacher.

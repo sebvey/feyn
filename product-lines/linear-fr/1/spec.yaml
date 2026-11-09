@@ -141,7 +141,7 @@ files:
         readers: [builder]
     teacher:
       readme:
-        holds: "what the spec expects of a teacher, in French: the definitions its expected behaviours use, the capabilities a teacher needs, how an expected behaviour is written and classed"
+        holds: "what the spec expects of a teacher, in French: the definitions its protocol rules use, the capabilities a teacher needs, how a protocol rule is written and classed"
         readers: [builder, verifier, spec writer]
       lexicon:
         holds: "the words the teacher says and writes, for every course of the spec, and the words of the old course form its instructions still cite, until epic #757 rewrites them"
