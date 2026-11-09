@@ -1,5 +1,5 @@
 <!--
-Template of a learner's progress (ported from the old course/templates/learner/parcours.md). Learner memory, not course material; no check reads it. Replace every <placeholder>, delete this comment (from the opening to the closing mark, marks included).
+Template of a learner's progress, a learner template of the teacher implementation of linear-fr@1 (its headings are memory_headings of its lexicon.yaml). Learner memory, not course material; no check reads it. Replace every <placeholder>, delete this comment (from the opening to the closing mark, marks included).
 -->
 # Parcours de <nickname>
 
@@ -14,10 +14,8 @@ Statut des concepts de la carte du cours (`course.yaml`) : `validé`, `en cours`
 | # | Concept | Statut |
 |---|---|---|
 
-Annexes vues : aucune.
+## Annexes vues
 
-## Points annoncés pour plus tard
-
-Aucun.
+Aucune.
 
 ## Journal

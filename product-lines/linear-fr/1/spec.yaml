@@ -37,9 +37,9 @@ course:
   samples: course/samples
 
 # The products of the spec, each by its name, and their files, by role. The teacher declares
-# its README (what is expected of a teacher, how a protocol rule is written and classed), its
-# rule file, filled subject by subject by epic #757, and its lexicon; its build, its composition
-# and its learner templates are the teacher implementation's, outside the spec (decision
+# its README (what is expected of a teacher, how a protocol rule is written and classed) and its
+# rule file; its build, its means, the words they make it say and write, and its learner
+# templates are the teacher implementation's, outside the spec (decision
 # teacher-implementation-folder).
 products:
   site:
@@ -49,11 +49,10 @@ products:
   teacher:
     readme: products/teacher/README.md
     rules: products/teacher/rules.yaml
-    lexicon: products/teacher/lexicon.yaml
 
 # The lists of the spec, which the tests of check-spec hold its files to: the classifications of
 # the rules of a course, its levels and its categories (README.md section 3), those of the
-# protocol rules of the teacher (products/teacher/README.md), and the keys of the
+# protocol rules of the teacher (its README, « Comportements attendus »), and the keys of the
 # lexicons, by owner, each with its kind, `string` or `list` (the course's: course/README.md
 # section 7).
 lists:
@@ -152,6 +151,3 @@ files:
       rules:
         holds: "the protocol rules of the teacher, in French: what any teacher of the spec does, each with its reason and how it is judged, grouped by subject"
         readers: [builder, verifier, spec writer]
-      lexicon:
-        holds: "the words the teacher says and writes, for every course of the spec, and the words of the old course form its instructions still cite, until epic #757 rewrites them"
-        readers: [builder, spec writer]

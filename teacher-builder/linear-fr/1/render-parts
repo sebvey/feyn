@@ -4,12 +4,13 @@
 // The part of the teacher implementation of linear-fr@1 that reads the spec and the course: it
 // renders the five parts of composition.yaml (this folder) as text for a course and prints them to
 // stdout as one JSON document, whose shape parts.schema.yaml fixes and README.md (this folder)
-// describes. It reads the instructions (instructions.yaml, the rules by family and group with their
-// purpose), the composition and the learner templates of this folder, the two lexicons of the spec
-// MAJOR, and the course through the spec's parser (course/parser.js, as the site build reads it),
-// and fills every {group.key}, {course.<name>} and {classroom.<name>}. What each part becomes in a
-// classroom is build-teacher's (teacher-builder/). Writes nothing. Exit 0 rendered, 1 an input it
-// cannot read (a placeholder in neither lexicon, a moment naming an unknown rule), 2 a usage error.
+// describes. It reads the instructions (instructions.yaml, by group with their purpose), the
+// composition, the lexicon and the learner templates of this folder, the spec MAJOR's lexicon of
+// the course files, and the course through the spec's parser (course/parser.js, as the site build
+// reads it), and fills every {group.key}, {course.<name>} and {classroom.<name>}. What each part
+// becomes in a classroom is build-teacher's (teacher-builder/). Writes nothing. Exit 0 rendered, 1
+// an input it cannot read (a placeholder in neither lexicon, a moment naming an unknown group, an
+// instruction or a group out of its form), 2 a usage error.
 const fs = require('fs');
 const path = require('path');
 const { createRequire } = require('module');
@@ -88,7 +89,8 @@ if (!ctx.usable) fail(`${rel(courseDir)}/course.yaml has no domains or no concep
 if (!ctx.lexiconOk) fail(ctx.lexiconError.message);
 const course = ctx.cy;
 const composition = parseYaml(path.join(HERE, 'composition.yaml'));
-const lexicons = [parseYaml(path.join(MAJOR, 'products', 'teacher', 'lexicon.yaml')), parseYaml(path.join(MAJOR, 'course', 'lexicon.yaml'))];
+// the words the instructions cite: the implementation's lexicon, then the spec's lexicon of the course files
+const lexicons = [parseYaml(path.join(HERE, 'lexicon.yaml')), parseYaml(path.join(MAJOR, 'course', 'lexicon.yaml'))];
 const LEARNER_TEMPLATES = path.join(HERE, 'templates', 'learner');
 if (typeof course.id !== 'string' || !course.id) fail('course.yaml has no id');
 if (course.spec !== SPEC) fail(`${rel(courseDir)}/course.yaml declares spec ${course.spec}, not ${SPEC}`);
@@ -130,7 +132,7 @@ function valueOf(group, key, where) {
   return fail(`${where}: {${group}.${key}} is in neither lexicon`);
 }
 // the filling keeps the sentence whole: a phrase in « » that ends with its own period is not
-// followed by the period the rule adds after the »; a value already in parentheses, inside the
+// followed by the period the instruction adds after the »; a value already in parentheses, inside the
 // parentheses of a link, keeps one pair
 const ENDS_SENTENCE = /\.$/;
 function fill(text, where) {
@@ -153,98 +155,53 @@ function fill(text, where) {
 // a bare key in a `what` of the composition (`headings.onboarding`): its value in « »
 const fillWhat = (what) => what.replace(/\b(headings|case_fields)\.([a-z_]+)\b/g, (m, g, k) => quote(valueOf(g, k, 'composition.yaml')));
 
-// ---- the protocol, instructions.yaml, in its order: a family is a group whose id is its
-// category, rendered "## <n>. <title>" (n its rank among the families of the file); another group
-// belongs to the family of its category, which comes before it, rendered "### <title> (`<id>`)";
-// each with its purpose; each rule "**<id>** <text>", its why on a line "*Pourquoi :* <why>"
-function parseProtocol(doc) {
-  const families = [];
-  const byCategory = new Map();
+// ---- the instructions, instructions.yaml, in its order: a group, rendered "## <title> (`<id>`)",
+// its purpose, then each instruction "**<id>** <text>", its why on a line "*Pourquoi :* <why>";
+// `serves` is the link test-build checks, never rendered to the teacher
+const GROUP_KEYS = ['id', 'title', 'purpose', 'instructions'];
+const INSTRUCTION_KEYS = ['id', 'text', 'serves', 'why'];
+function parseInstructions(doc) {
+  const groups = [];
   for (const g of (doc && Array.isArray(doc.groups) ? doc.groups : [])) {
     const where = `instructions.yaml: group ${g && g.id}`;
-    if (!g || typeof g.id !== 'string' || typeof g.title !== 'string' || typeof g.purpose !== 'string') {
-      fail(`${where} lacks an id, a title or a purpose`);
+    if (!g || typeof g.id !== 'string' || typeof g.title !== 'string' || typeof g.purpose !== 'string' || !Array.isArray(g.instructions)) {
+      fail(`${where} lacks an id, a title, a purpose or its instructions`);
     }
-    let section;
-    if (g.id === g.category) {
-      section = { kind: 'family', heading: `## ${families.length + 1}. ${g.title}`, category: g.category, purpose: g.purpose, rules: [], groups: [] };
-      families.push(section);
-      byCategory.set(g.category, section);
-    } else {
-      const family = byCategory.get(g.category);
-      if (!family) fail(`${where}: no family of category ${g.category} before it`);
-      section = { kind: 'group', id: g.id, heading: `### ${g.title} (\`${g.id}\`)`, purpose: g.purpose, rules: [], family };
-      family.groups.push(section);
-    }
-    for (const r of (Array.isArray(g.rules) ? g.rules : [])) {
+    const extra = Object.keys(g).filter((k) => !GROUP_KEYS.includes(k));
+    if (extra.length) fail(`${where} has keys the form has not: ${extra.join(', ')}`);
+    const group = { id: g.id, heading: `## ${g.title} (\`${g.id}\`)`, purpose: g.purpose, instructions: [] };
+    for (const r of g.instructions) {
+      if (!r || typeof r.id !== 'string' || typeof r.text !== 'string') fail(`${where}: an instruction lacks an id or a text`);
+      const bad = Object.keys(r).filter((k) => !INSTRUCTION_KEYS.includes(k));
+      if (bad.length) fail(`${where}: instruction ${r.id} has keys the form has not: ${bad.join(', ')}`);
       const text = `**${r.id}** ${r.text}` + (r.why ? `\n*Pourquoi :* ${r.why}` : '');
-      section.rules.push({ slug: r.id, text, section });
+      group.instructions.push({ slug: r.id, text });
     }
+    groups.push(group);
   }
-  return { families, byCategory };
+  return groups;
 }
-const { families, byCategory: familyByCategory } = parseProtocol(parseYaml(path.join(HERE, 'instructions.yaml')));
-if (!families.length) fail(`${rel(HERE)}/instructions.yaml holds no rule family`);
-const allRules = families.flatMap((f) => [...f.rules, ...f.groups.flatMap((g) => g.rules)]);
-const ruleBySlug = new Map(allRules.map((r) => [r.slug, r]));
-const groupById = new Map(families.flatMap((f) => f.groups).map((g) => [g.id, g]));
+const groups = parseInstructions(parseYaml(path.join(HERE, 'instructions.yaml')));
+if (!groups.length) fail(`${rel(HERE)}/instructions.yaml holds no group`);
+const groupById = new Map(groups.map((g) => [g.id, g]));
+if (groupById.size !== groups.length) fail('instructions.yaml: two groups share an id');
 
-// ---- the moments: a moment's rules name a group by its id, a family by its category, or rules
+// ---- the moments: a moment loads groups of instructions.yaml whole, each named by its id
 const moments = (parts.get('on-demand').moments || []).map((m) => {
-  const units = (m.rules || []).map((name) => {
-    if (groupById.has(name)) return { kind: 'group', group: groupById.get(name) };
-    if (familyByCategory.has(name)) return { kind: 'family', family: familyByCategory.get(name) };
-    if (ruleBySlug.has(name)) return { kind: 'rule', rule: ruleBySlug.get(name) };
-    return fail(`composition.yaml: moment ${m.id} names ${name}, neither a group, a family nor a rule of the protocol`);
-  });
-  const slugs = new Set();
-  for (const u of units) {
-    if (u.kind === 'group') u.group.rules.forEach((r) => slugs.add(r.slug));
-    if (u.kind === 'family') [...u.family.rules, ...u.family.groups.flatMap((g) => g.rules)].forEach((r) => slugs.add(r.slug));
-    if (u.kind === 'rule') slugs.add(u.rule.slug);
-  }
-  return { ...m, units, slugs };
+  const loaded = (m.groups || []).map((id) => groupById.get(id) || fail(`composition.yaml: moment ${m.id} names ${id}, not a group of instructions.yaml`));
+  return { ...m, loaded };
 });
-const onDemand = new Set(moments.flatMap((m) => [...m.slugs]));
+const onDemand = new Set(moments.flatMap((m) => m.loaded.map((g) => g.id)));
 
-const ruleText = (r) => fill(r.text, `rule ${r.slug}`);
-const purposeText = (s) => fill(s.purpose, s.heading);
+const instructionText = (r) => fill(r.text, `instruction ${r.slug}`);
+const purposeText = (g) => fill(g.purpose, g.heading);
 const blocks = (list) => list.filter(Boolean).join('\n\n');
+const groupText = (g) => blocks([g.heading, purposeText(g), ...g.instructions.map(instructionText)]);
 
-// the permanent protocol: every rule no moment loads, in the order of instructions.yaml, each
-// family and group with a rule left preceded by its heading and its purpose
-function permanentProtocol() {
-  const out = [];
-  for (const f of families) {
-    const own = f.rules.filter((r) => !onDemand.has(r.slug));
-    const groups = f.groups.map((g) => ({ g, rules: g.rules.filter((r) => !onDemand.has(r.slug)) })).filter((x) => x.rules.length);
-    if (!own.length && !groups.length) continue;
-    out.push(blocks([f.heading, purposeText(f), ...own.map(ruleText)]));
-    for (const { g, rules } of groups) out.push(blocks([g.heading, purposeText(g), ...rules.map(ruleText)]));
-  }
-  return out.join('\n\n');
-}
-
-// the rules of a moment, as a text of their own: a group under its heading raised to ##, a family
-// with its groups, rules under the heading of their family or group
-function momentRules(m) {
-  const body = [];
-  for (const u of m.units) {
-    if (u.kind === 'group') body.push(blocks([u.group.heading.replace(/^###/, '##'), purposeText(u.group), ...u.group.rules.map(ruleText)]));
-    if (u.kind === 'family') {
-      const f = u.family;
-      body.push(blocks([f.heading, purposeText(f), ...f.rules.map(ruleText)]));
-      for (const g of f.groups) body.push(blocks([g.heading, purposeText(g), ...g.rules.map(ruleText)]));
-    }
-    if (u.kind === 'rule') {
-      const s = u.rule.section;
-      const heading = s.kind === 'group' ? s.heading.replace(/^###/, '##') : s.heading;
-      const prev = body.length && body[body.length - 1].startsWith(heading + '\n') ? body.pop() : heading;
-      body.push(blocks([prev, ruleText(u.rule)]));
-    }
-  }
-  return body.join('\n\n');
-}
+// the permanent instructions: every group no moment loads, in the order of instructions.yaml
+const permanentInstructions = () => groups.filter((g) => !onDemand.has(g.id)).map(groupText).join('\n\n');
+// the instructions of a moment, its groups in its order
+const momentInstructions = (m) => m.loaded.map(groupText).join('\n\n');
 
 // ---- the course: posture, map, files
 const lex = (group, key) => valueOf(group, key, 'render-parts');
@@ -315,7 +272,7 @@ const SLOTS = {
 // A draw from a course file with no slot whose `what` names a heading (`headings.onboarding`) is
 // rendered with the section under that heading, `text`, so that the moment needs no read: the
 // onboarding questions of plan.md reach the onboarding with no tool call before its first message
-// (rule first-message-without-tools; a finding of the fresh test onboarding, #507).
+// (instruction first-message-without-tools; a finding of the fresh test onboarding, #507).
 function section(file, heading) {
   const lines = read(file).split('\n');
   const at = lines.findIndex((l) => l.trim() === `## ${heading}`);
@@ -359,7 +316,7 @@ const learnerTemplates = fs.readdirSync(LEARNER_TEMPLATES).filter((x) => x.endsW
 const rendered = {
   spec: SPEC,
   permanent: {
-    protocol: permanentProtocol(),
+    instructions: permanentInstructions(),
     posture: posture(),
     course_map: courseMap(),
     course_files: courseFiles(),
@@ -371,7 +328,7 @@ const rendered = {
       when: m.when,
       draws: reads,
       slots: Object.keys(SLOTS).filter((s) => reads.some((r) => r.path.includes(s))).map((s) => ({ slot: s, meaning: SLOTS[s] })),
-      rules: momentRules(m),
+      instructions: momentInstructions(m),
     };
   }),
   learner_templates: learnerTemplates,

@@ -27,7 +27,7 @@ A key with nothing to say is left out, `means`, `en` and `fr` excepted. A reject
 ## Which designation applies where
 
 - `en` in the repository's English files: code, docs, skills, issues, decisions, and the English texts of a spec.
-- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `products/teacher/README.md`, `products/teacher/rules.yaml` of `product-lines/linear-fr/1/`, and the French texts of its teacher implementation, `teacher-builder/linear-fr/1/` (its instructions, its composition's texts, its learner templates). A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
+- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `products/teacher/README.md`, `products/teacher/rules.yaml` of `product-lines/linear-fr/1/`, and the French texts of its teacher implementation, `teacher-builder/linear-fr/1/` (its instructions, its lexicon, the texts of its `composition.yaml`, its learner templates). A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
 - A course glossary in its course. Each course has its own [course glossary](#course-glossary), which belongs to the course, follows the course's language and applies in that course's files. A word may be reserved in both with two meanings (**epic**); a repository text that speaks of the course's meaning says so ("epic, in the course's sense"). French course files keep their French section headings and field labels (« L'essentiel », « Matière », « Se vérifier »…); the English terms here are how we talk about them in code, docs and issues.
 
 ## Adding or changing an entry
@@ -119,10 +119,10 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### teacher build
 
-- means: the build of the **teacher** from a course and its spec MAJOR, into the **classroom** it makes, by the **teacher implementation** of that spec MAJOR alone, the spec holding no part of it: the implementation reads the spec and the course, renders the parts of the **composition** as text, and the repository's teacher builder realises them in Claude Code. Rendering the parts as text is a step of the teacher build, not a build
+- means: the build of the **teacher** from a course and its spec MAJOR, into the **classroom** it makes, by the **teacher implementation** of that spec MAJOR alone, the spec holding no half of it: the implementation reads the spec and the course and renders its **means** as text, the instructions of the teacher and what each moment of a teaching session loads, and the repository's teacher builder realises them in Claude Code. Rendering the means as text is a step of the teacher build, not a build
 - en: teacher build · rejected: "classroom build"
 - fr: « build du professeur » · rejected: « build de la classe »
-- not to confuse with: [build](#build), [site build](#site-build), [teacher](#teacher), [classroom](#classroom), [composition](#composition), [teacher implementation](#teacher-implementation)
+- not to confuse with: [build](#build), [site build](#site-build), [teacher](#teacher), [classroom](#classroom), [teacher implementation](#teacher-implementation), [means](#means)
 - why: "classroom build" named the build after the folder it makes, not the product it builds, so the name changed between a product and its build, while the site build bears the name of its product; "classroom" names only that folder
 
 ### teacher implementation
@@ -144,14 +144,14 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the product that teaches a course of a spec, as that spec fixes it with no target term: its **protocol rules**, the expected behaviours it holds, and the **capabilities** it needs. Its realisation on one target, Claude Code today, is a **teacher implementation**
 - en: teacher · rejected: "prof", "tutor", "coach", "agent" alone
 - fr: « professeur » · rejected: « prof »
-- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment), [product](#product), [teacher build](#teacher-build), [teacher implementation](#teacher-implementation), [capability](#capability)
+- not to confuse with: [classroom](#classroom), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment), [product](#product), [teacher build](#teacher-build), [teacher implementation](#teacher-implementation), [capability](#capability)
 
 ### classroom
 
-- means: a word of the **teacher implementation** for Claude Code, which the spec does not use: the folder built outside the repo, by the **teacher build**, where the teacher runs: the teacher and its permissions, a copy of the course, its **course.lock**, learner memory, its own git; what it gives the teacher, part by part, is the **composition**
+- means: a word of the **teacher implementation** for Claude Code, which the spec does not use: the folder built outside the repo, by the **teacher build**, where the teacher runs: its instructions and its **teacher skills**, its permissions, a copy of the course, its **course.lock**, learner memory started from the **learner templates**, its own git
 - en: classroom · rejected: "workspace", "instance", "environment"
 - fr: « classe » (in the rules of a diagram, « classe » is an SVG class, `primary`, `secondary`, `muted`, not this concept)
-- not to confuse with: [composition](#composition), [channel](#channel), [teacher build](#teacher-build), [course.lock](#courselock), [teacher implementation](#teacher-implementation)
+- not to confuse with: [channel](#channel), [teacher build](#teacher-build), [course.lock](#courselock), [teacher implementation](#teacher-implementation), [teacher skill](#teacher-skill)
 
 ### learner
 
@@ -352,7 +352,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - en: case · rejected: "exercise" (the former block of a unit that held its question), "example", "scenario", "example bank" (the set of cases of the form before units), "fallback case", "practice case", "aside case", "qualifier" (of a case)
 - fr: « cas » · rejected: « exercice », « exemple », « banque d'exemples », « cas de rechange », « cas d'entraînement », « aparté » (for a case), « qualificatif » (of a case)
 - not to confuse with: [example](#example), [unit](#unit), [lesson](#lesson), [misconception](#misconception), [test scenario](#test-scenario)
-- why: « Exercice » named the block of a unit that held its question, apart from its anchor and from its supplementary cases, held in stock under headings of their own; once the anchor moved into it and the supplementary cases joined it, the block is the unit's list of cases, and "exercise" (« exercice ») one more word for a case, merged here. A supplementary case then carried a qualifier, « rechange », « entraînement » or « aparté », which gave it a kind ("fallback case", "practice case", "aside case") and said when to pose it; once a case names the misconceptions it makes tempting, the teacher picks a supplementary case by them, the qualifier goes with its three kinds, and a question often asked outside the course path has its matter in a unit of an annex: the four words name nothing of the form. Two exceptions to replacing a rejected word in use, until the teacher is thawed: « exercice », a word the learner says, in `learner_says` of the frozen teacher's lexicon; « rechange », « entraînement » and « aparté », which the frozen teacher's rules still cite, through `frozen_form` of its lexicon and its README; "qualifier" also names, in its everyday sense, the parenthesis of a term cell of a course glossary (« qualificatif de sens »)
+- why: « Exercice » named the block of a unit that held its question, apart from its anchor and from its supplementary cases, held in stock under headings of their own; once the anchor moved into it and the supplementary cases joined it, the block is the unit's list of cases, and "exercise" (« exercice ») one more word for a case, merged here. A supplementary case then carried a qualifier, « rechange », « entraînement » or « aparté », which gave it a kind ("fallback case", "practice case", "aside case") and said when to pose it; once a case names the misconceptions it makes tempting, the teacher picks a supplementary case by them, the qualifier goes with its three kinds, and a question often asked outside the course path has its matter in a unit of an annex: the four words name nothing of the form. One exception to replacing a rejected word in use: « exercice », a word the learner says, in `learner_says` of the teacher implementation's lexicon; "qualifier" also names, in its everyday sense, the parenthesis of a term cell of a course glossary (« qualificatif de sens »)
 
 ### example
 
@@ -497,7 +497,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the pedagogical protocol: the testable teaching rules of a spec, each named by a slug, set in **groups**. A rule of it is a **protocol rule**
 - en: protocol · rejected: "the loop", "pedagogy", "rules", "behaviour"
 - fr: « protocole »
-- not to confuse with: [teacher](#teacher), [rule](#rule), [composition](#composition), [protocol rule](#protocol-rule), [group](#group)
+- not to confuse with: [teacher](#teacher), [rule](#rule), [protocol rule](#protocol-rule), [group](#group)
 
 ### protocol rule
 
@@ -530,7 +530,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### lexicon
 
-- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the teacher build and the site; `products/teacher/lexicon.yaml`, the words the teacher says and writes other than the form marks and titles its **protocol rules** fix, held until the **teacher implementation** takes them; `products/site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds. Not a translation file: the language is the spec's
+- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the teacher build and the site; `products/site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds; and the lexicon of a **teacher implementation**, the words its **means** make the teacher say and write other than the form marks and titles its **protocol rules** fix. Not a translation file: the language is the spec's
 - en: lexicon · rejected: "language pack", "i18n", "locale", "strings"
 - fr: « lexique »
 
@@ -576,13 +576,6 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - en: save point · rejected: "checkpoint", "sync"
 - fr: « point de sauvegarde »
 - not to confuse with: [learner memory](#learner-memory)
-
-### composition
-
-- means: what a teacher is made of, beside how it behaves: five parts, each defined by when it loads and what it draws from the spec, the course, learner memory and the classroom; described by the **teacher implementation** with no Claude Code term: its realisation is the teacher build's
-- en: composition · rejected: "architecture", "the instructions"
-- fr: « composition »
-- not to confuse with: [protocol](#protocol), [teacher build](#teacher-build), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment)
 
 ### mini-recap
 
@@ -807,10 +800,10 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### moment
 
-- means: one of the moments of the work cycle, from an idea noted to the issues a merge frees, numbered in the cycle's order; each has one owner, which holds its procedure (a skill and its step, a reference file, a body template, the agent workflow, or the maintainer), and every other file cites that owner. A path (an epic, a story alone, a direct delivery) chains moments. Not the moments of a teacher's **composition**, which its **teacher skills** carry
+- means: one of the moments of the work cycle, from an idea noted to the issues a merge frees, numbered in the cycle's order; each has one owner, which holds its procedure (a skill and its step, a reference file, a body template, the agent workflow, or the maintainer), and every other file cites that owner. A path (an epic, a story alone, a direct delivery) chains moments. Not the moments of a teaching session at which a classroom loads a **teacher skill**
 - en: moment · rejected: "step" (a numbered part of a skill or of a reference file, which a moment's owner may be), "phase"
 - fr: to settle
-- not to confuse with: [skill](#skill), [teacher](#teacher), [teacher skill](#teacher-skill), [composition](#composition)
+- not to confuse with: [skill](#skill), [teacher](#teacher), [teacher skill](#teacher-skill)
 - why: `feyn-brainstorm` called its own parts "moments" until they became steps, as in every other skill: a step is a part of one owner, a moment a part of the cycle
 
 ### triage
@@ -1004,10 +997,10 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### teacher skill
 
-- means: a skill of a classroom, one per moment of the **composition** that has rules, named `feyn-teacher-<moment>` (`feyn-teacher-onboarding`, `feyn-teacher-stop`), made by the teacher build; apart from Claude Code's own skills (`/resume`)
+- means: a skill of a classroom, made by the **teacher build**: the instructions of the **teacher implementation** loaded at one moment of a teaching session and only then, the onboarding or the stop, named `feyn-teacher-<moment>` (`feyn-teacher-onboarding`, `feyn-teacher-stop`); apart from Claude Code's own skills (`/resume`)
 - en: teacher skill
 - fr: to settle
-- not to confuse with: [skill](#skill), [teacher](#teacher), [composition](#composition), [resume](#resume), [moment](#moment)
+- not to confuse with: [skill](#skill), [teacher](#teacher), [resume](#resume), [moment](#moment), [teacher build](#teacher-build), [teacher implementation](#teacher-implementation)
 
 ### agent workflow
 
@@ -1053,17 +1046,17 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### learner template
 
-- means: a model file of learner memory, a means of the **teacher implementation** for Claude Code, in French for now; the spec names what the memory retains, not its files
+- means: a model file of learner memory, a **means** of the **teacher implementation**, linked to the **protocol rules** it serves: the files, headings and lines learner memory starts from, in the language of the spec; the spec names what the memory retains, not its files
 - en: learner template
 - fr: « modèle de l'apprenant »
-- not to confuse with: [template](#template), [learner memory](#learner-memory), [course template](#course-template)
+- not to confuse with: [template](#template), [learner memory](#learner-memory), [course template](#course-template), [teacher implementation](#teacher-implementation)
 
 ### teacher template
 
 - means: a word of the **teacher implementation** for Claude Code, which the spec does not use: the model of the teacher's instructions, filled from the parts the build renders
 - en: teacher template
 - fr: « modèle d'instructions »
-- not to confuse with: [template](#template), [teacher](#teacher), [composition](#composition), [teacher implementation](#teacher-implementation)
+- not to confuse with: [template](#template), [teacher](#teacher), [teacher implementation](#teacher-implementation)
 
 ### body template
 

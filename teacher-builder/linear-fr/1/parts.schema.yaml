@@ -4,7 +4,7 @@
 # document against this schema before it writes a classroom. Every text is final: no {group.key}, {course.<name>} nor {classroom.<name>} is left;
 # a slot without a dot ({n}, {title}) is the teacher's to fill and stays.
 $schema: https://json-schema.org/draft/2020-12/schema
-title: the rendered parts of the composition
+title: the rendered parts of composition.yaml
 type: object
 required: [spec, permanent, moments, learner_templates, permissions, params]
 additionalProperties: false
@@ -16,11 +16,11 @@ properties:
   permanent:
     description: the part permanent, present at every message of the teacher
     type: object
-    required: [protocol, posture, course_map, course_files]
+    required: [instructions, posture, course_map, course_files]
     additionalProperties: false
     properties:
-      protocol:
-        description: every rule of the protocol no moment loads, in the order of instructions.yaml, each family and group that keeps a rule preceded by its heading and its purpose (Markdown)
+      instructions:
+        description: every group of instructions.yaml no moment loads, in its order, each under its heading with its purpose, then its instructions, never their serves (Markdown)
         $ref: '#/$defs/text'
       posture:
         description: the paragraph of the course's plan.md under its onboarding heading
@@ -37,7 +37,7 @@ properties:
     minItems: 1
     items:
       type: object
-      required: [id, when, draws, slots, rules]
+      required: [id, when, draws, slots, instructions]
       additionalProperties: false
       properties:
         id:
@@ -77,8 +77,8 @@ properties:
                 pattern: '^<[a-z]+>$'
               meaning:
                 $ref: '#/$defs/text'
-        rules:
-          description: the rules of the moment under the headings of their family or group, with the purpose of a group or family loaded whole (Markdown); empty when the moment has no rule yet
+        instructions:
+          description: the groups of instructions the moment loads, each under its heading with its purpose, then its instructions, never their serves (Markdown); empty when the moment loads no group
           type: string
           not:
             $ref: '#/$defs/placeholder'
