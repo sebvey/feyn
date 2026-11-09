@@ -971,3 +971,46 @@ groups:
           Un script lit la typographie du lexique des fichiers du cours et chaque message
           du professeur : aucun caractère banni, les espaces et les guillemets que la typographie
           demande.
+      - id: declared-diagram-shown
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, au message qui enseigne une unité pour laquelle le cours déclare un
+          schéma, montre ce schéma et dit sa légende, sans attendre qu'on le lui demande.
+        why: >-
+          Le cours a dessiné ce que l'unité enseigne : enseignée en texte seul, l'apprenant qui ne
+          pense pas à demander un schéma ne le voit jamais.
+        criterion: >-
+          Le juge lit les schémas déclarés du concept et le message qui enseigne chaque unité qui
+          en a un : le schéma y est montré et sa légende dite, sans demande de l'apprenant.
+      - id: requested-diagram-shown
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, quand l'apprenant demande un schéma, montre celui que le cours déclare
+          pour l'unité ou son concept et dit sa légende ; quand le cours n'en déclare aucun, il le
+          dit.
+        why: >-
+          L'apprenant qui demande un schéma en a besoin pour comprendre ; un schéma improvisé
+          peut dire autre chose que le cours, tant qu'un schéma n'est pas spécifié avant d'être
+          dessiné.
+        criterion: >-
+          Le juge lit chaque demande de schéma : un schéma déclaré pour l'unité ou son concept est
+          montré avec sa légende ; sans schéma déclaré, le professeur dit qu'il n'y en a pas, sans
+          en dessiner un.
+      - id: diagram-not-displayable
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, là où un schéma ne peut pas s'afficher, dit sa légende, dit qu'il ne peut
+          pas le montrer ici, et donne la page du concept où le voir.
+        why: >-
+          L'apprenant garde ce que le schéma enseigne par sa légende, et sait où le voir plutôt que
+          de croire qu'il n'existe pas.
+        criterion: >-
+          Le juge lit chaque endroit où un schéma devait être montré et ne l'a pas été : la
+          légende est dite, l'impossibilité de le montrer aussi, et le lien de la page du concept
+          est donné.
