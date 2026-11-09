@@ -34,9 +34,6 @@ parts:
     loads: every-message
     draws:
       - from: implementation
-        source: CLAUDE.template.md
-        what: le cadre de CLAUDE.md, la classe et ce qu'elle importe au démarrage
-      - from: implementation
         source: instructions.yaml
         what: les instructions du professeur et le but de leurs groupes, sauf les groupes qu'un moment charge
       - from: implementation
