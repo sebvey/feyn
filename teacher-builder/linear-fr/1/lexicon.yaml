@@ -31,6 +31,7 @@ phrases:
   banned_question: "as-tu compris ?"
   reference_model: "le concept {n} : « {title} »"  # in place of the concept's name, never beside it: « On le verra au concept 1 : « Les réglages ». »
   waiting_example: "Je prépare le concept {n} : « {title} »."  # a model: the sentence names precisely what comes
+  retrieval_intro: "Avant de reprendre le cours au concept {n} : « {title} », voici un cas pour réviser le concept {reviewed_n} : « {reviewed_title} »."  # a model: its words free but for the two references; {n}, {title} the concept the course resumes on, {reviewed_n}, {reviewed_title} the concept reviewed
   onboarding_setup: "Je mets en place le cours."
   onboarding_ready: "C'est prêt, on démarre."
   resume_opening: "Je retrouve où on en était, un instant."
