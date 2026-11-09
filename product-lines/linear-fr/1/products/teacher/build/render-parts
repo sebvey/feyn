@@ -4,7 +4,7 @@
 // The half of a teacher build that depends on this spec MAJOR: it renders the five parts of
 // products/teacher/composition.yaml as text for a course and prints them to stdout as one JSON document,
 // whose shape parts.schema.yaml fixes and README.md (this folder) describes. It reads the protocol
-// (products/teacher/rules.yaml, the rules by family and group with their purpose), the composition, the two
+// (products/teacher/build/instructions.yaml, the rules by family and group with their purpose), the composition, the two
 // lexicons, the learner templates and the course, and fills every {group.key}, {course.<name>} and {classroom.<name>}. It names no
 // mechanism of a target: what each part becomes in a classroom is the teacher build's, at the
 // root of the repository. Writes nothing. Exit 0 rendered, 1 an input it cannot read (a
@@ -143,7 +143,7 @@ function fill(text, where) {
 // a bare key in a `what` of the composition (`headings.onboarding`): its value in « »
 const fillWhat = (what) => what.replace(/\b(headings|case_fields)\.([a-z_]+)\b/g, (m, g, k) => quote(valueOf(g, k, 'composition.yaml')));
 
-// ---- the protocol, products/teacher/rules.yaml, in its order: a family is a group whose id is its
+// ---- the protocol, products/teacher/build/instructions.yaml, in its order: a family is a group whose id is its
 // category, rendered "## <n>. <title>" (n its rank among the families of the file); another group
 // belongs to the family of its category, which comes before it, rendered "### <title> (`<id>`)";
 // each with its purpose; each rule "**<id>** <text>", its why on a line "*Pourquoi :* <why>"
@@ -151,7 +151,7 @@ function parseProtocol(doc) {
   const families = [];
   const byCategory = new Map();
   for (const g of (doc && Array.isArray(doc.groups) ? doc.groups : [])) {
-    const where = `products/teacher/rules.yaml: group ${g && g.id}`;
+    const where = `products/teacher/build/instructions.yaml: group ${g && g.id}`;
     if (!g || typeof g.id !== 'string' || typeof g.title !== 'string' || typeof g.purpose !== 'string') {
       fail(`${where} lacks an id, a title or a purpose (check-spec says more)`);
     }
@@ -173,8 +173,8 @@ function parseProtocol(doc) {
   }
   return { families, byCategory };
 }
-const { families, byCategory: familyByCategory } = parseProtocol(parseYaml(path.join(MAJOR, 'products', 'teacher', 'rules.yaml')));
-if (!families.length) fail(`${rel(MAJOR)}/products/teacher/rules.yaml holds no rule family`);
+const { families, byCategory: familyByCategory } = parseProtocol(parseYaml(path.join(MAJOR, 'products', 'teacher', 'build', 'instructions.yaml')));
+if (!families.length) fail(`${rel(MAJOR)}/products/teacher/build/instructions.yaml holds no rule family`);
 const allRules = families.flatMap((f) => [...f.rules, ...f.groups.flatMap((g) => g.rules)]);
 const ruleBySlug = new Map(allRules.map((r) => [r.slug, r]));
 const groupById = new Map(families.flatMap((f) => f.groups).map((g) => [g.id, g]));
@@ -201,7 +201,7 @@ const ruleText = (r) => fill(r.text, `rule ${r.slug}`);
 const purposeText = (s) => fill(s.purpose, s.heading);
 const blocks = (list) => list.filter(Boolean).join('\n\n');
 
-// the permanent protocol: every rule no moment loads, in the order of products/teacher/rules.yaml, each
+// the permanent protocol: every rule no moment loads, in the order of products/teacher/build/instructions.yaml, each
 // family and group with a rule left preceded by its heading and its purpose
 function permanentProtocol() {
   const out = [];

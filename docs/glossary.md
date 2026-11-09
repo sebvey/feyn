@@ -27,7 +27,7 @@ A key with nothing to say is left out, `means`, `en` and `fr` excepted. A reject
 ## Which designation applies where
 
 - `en` in the repository's English files: code, docs, skills, issues, decisions, and the English texts of a spec.
-- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `products/teacher/README.md`, `products/teacher/rules.yaml` of `product-lines/linear-fr/1/`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
+- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `products/teacher/README.md`, `products/teacher/rules.yaml` of `product-lines/linear-fr/1/`, and the instructions of the teacher while they wait in `products/teacher/build/instructions.yaml`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
 - A course glossary in its course. Each course has its own [course glossary](#course-glossary), which belongs to the course, follows the course's language and applies in that course's files. A word may be reserved in both with two meanings (**epic**); a repository text that speaks of the course's meaning says so ("epic, in the course's sense"). French course files keep their French section headings and field labels (« L'essentiel », « Matière », « Se vérifier »…); the English terms here are how we talk about them in code, docs and issues.
 
 ## Adding or changing an entry
@@ -141,17 +141,17 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### teacher
 
-- means: the generic Claude Code agent that teaches, with the **teacher skills** of its moments, built from the **teacher template**, the protocol and the lexicons of its spec, as the **composition** of its spec says
+- means: the product that teaches a course of a spec, as that spec fixes it with no target term: its **protocol rules**, the expected behaviours it holds, and the **capabilities** it needs. Its realisation on one target, Claude Code today, is a **teacher implementation**
 - en: teacher · rejected: "prof", "tutor", "coach", "agent" alone
 - fr: « professeur » · rejected: « prof »
-- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment), [product](#product), [teacher build](#teacher-build), [teacher implementation](#teacher-implementation)
+- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment), [product](#product), [teacher build](#teacher-build), [teacher implementation](#teacher-implementation), [capability](#capability)
 
 ### classroom
 
-- means: the folder built outside the repo, by the **teacher build**, where the teacher runs: the teacher and its permissions, a copy of the course, its **course.lock**, learner memory, its own git; what it gives the teacher, part by part, is the **composition**
+- means: a word of the **teacher implementation** for Claude Code, which the spec does not use: the folder built outside the repo, by the **teacher build**, where the teacher runs: the teacher and its permissions, a copy of the course, its **course.lock**, learner memory, its own git; what it gives the teacher, part by part, is the **composition**
 - en: classroom · rejected: "workspace", "instance", "environment"
 - fr: « classe » (in the rules of a diagram, « classe » is an SVG class, `primary`, `secondary`, `muted`, not this concept)
-- not to confuse with: [composition](#composition), [channel](#channel), [teacher build](#teacher-build), [course.lock](#courselock)
+- not to confuse with: [composition](#composition), [channel](#channel), [teacher build](#teacher-build), [course.lock](#courselock), [teacher implementation](#teacher-implementation)
 
 ### learner
 
@@ -1060,10 +1060,10 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### teacher template
 
-- means: the model of the teacher's instructions, part of the Claude Code realisation of the **composition**, filled from the parts the spec MAJOR renders
+- means: a word of the **teacher implementation** for Claude Code, which the spec does not use: the model of the teacher's instructions, filled from the parts the build renders
 - en: teacher template
 - fr: « modèle d'instructions »
-- not to confuse with: [template](#template), [teacher](#teacher), [composition](#composition)
+- not to confuse with: [template](#template), [teacher](#teacher), [composition](#composition), [teacher implementation](#teacher-implementation)
 
 ### body template
 
