@@ -1,12 +1,13 @@
 ---
 // A diagram of the frontmatter's `diagrams`, ported from the old site's Figure: the SVG of the
-// course as written, in its frame, then its title and its caption. The SVG carries its own
+// course as written, in its frame, then its title and its caption; the figure's id is the diagram's
+// anchor, which the teacher's link to the diagram lands on. The SVG carries its own
 // accessible title; its classes (`primary`, `secondary`, `muted`) take the --sch-* tokens.
 import type { Diagram } from '../lib/site';
 interface Props { diagram: Diagram }
 const { diagram } = Astro.props;
 ---
-<figure class="figure">
+<figure class="figure" id={diagram.anchor}>
   <div class="box" set:html={diagram.svg} />
   <figcaption><strong>{diagram.title}</strong>{' '}{diagram.caption}</figcaption>
 </figure>

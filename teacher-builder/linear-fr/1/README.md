@@ -34,7 +34,7 @@ mise exec -- teacher-builder/linear-fr/1/render-parts <course-dir> [--site-url <
 
 It reads the course through the spec's parser (`product-lines/linear-fr/1/course/parser.js`, `load`, with the spec's `course/lexicon.yaml` and `course/form.yaml`, as the site build reads it), the instructions (`instructions.yaml`, by group, each group with its `purpose`), `composition.yaml`, the folder's `lexicon.yaml` and the spec's `course/lexicon.yaml`, and the learner templates, and prints one JSON document to stdout. It writes nothing. It loads the `yaml` package through the lib of the spec directives the spec MAJOR declares (`mise exec -- npm ci --prefix spec-directives/1` once).
 
-- `--site-url <base>`: the address of the course's site. The four classroom parameters are derived from it: `<base>`, `<base>domaines/`, `<base>domaines/{n}/`, `<base>concepts/{nn}/`. Without it, each reads « (site non publié) ».
+- `--site-url <base>`: the address of the course's site. The five classroom parameters are derived from it: `<base>`, `<base>domaines/`, `<base>domaines/{n}/`, `<base>concepts/{nn}/`, `<base>concepts/{nn}/#schema-{file}` (a diagram on its concept page, `{file}` its file name without `.svg`: the anchor `anchors.diagram` of the site's URL scheme, `product-lines/linear-fr/1/products/site/url-scheme.yaml`). Without it, each reads « (site non publié) ».
 - `--channel <c>`: the classroom's channel (decision `three-channels`), `next` by default, a classroom parameter passed through.
 
 Exit 0 rendered, 1 an input it cannot read (a placeholder in neither lexicon, a moment naming no group of the instructions, a group or an instruction with a key its form has not, a course of another spec, a course the parser cannot read), 2 a usage error.
@@ -48,7 +48,7 @@ Exit 0 rendered, 1 an input it cannot read (a placeholder in neither lexicon, a 
 | `moments` | the part `on-demand`, one entry per moment of `composition.yaml`, in its order: `id`, `when`, `draws` (what the moment reads from the course and learner memory, each a `path` under `course/` or `learner/`, a `what`, and a `text` when the draw names a heading of a course file whose path holds no slot: the section under that heading, given so that the moment needs no read, as the onboarding questions of `plan.md` are), `slots` (the slots of those paths, `<dir>`, `<file>`, each with its `meaning`), `instructions` (the groups the moment loads, each as in `permanent`; empty while the moment loads none, `reset`) |
 | `learner_templates` | the part `learner-memory`: each learner template of `templates/learner/`, its `name` and its `text` verbatim |
 | `permissions` | the part `permissions`, from its `classroom` draws: `writable` (the folders the teacher writes, `learner/`), `read_only` (those it never writes, `course/`), `commit` (what it writes is committed), `push` (`false`: never pushed), read from the French `what` of each draw: « peut s'écrire », « se commite », « ne se pousse jamais », « en lecture seule » |
-| `params` | the parameters used: `course` (`id`, and the course parameters `title`, `domain_count`, `storyline`, `glossary`), `classroom` (`site_url`, `domains_url`, `domain_url`, `concept_url`, and `channel`) |
+| `params` | the parameters used: `course` (`id`, and the course parameters `title`, `domain_count`, `storyline`, `glossary`), `classroom` (`site_url`, `domains_url`, `domain_url`, `concept_url`, `diagram_url`, and `channel`) |
 
 The part `course-reads` has no key: it is the course folder as it is, which `build-teacher` copies.
 

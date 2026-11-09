@@ -166,9 +166,12 @@ properties:
   url_scheme:
     description: products/site/url-scheme.yaml, as written
     type: object
-    required: [pages, placeholders]
+    required: [pages, anchors, placeholders]
     properties:
       pages:
+        type: object
+        additionalProperties: { type: string }
+      anchors:
         type: object
         additionalProperties: { type: string }
       placeholders:
@@ -399,10 +402,14 @@ $defs:
         type: array
         items:
           type: object
-          required: [file, title, caption, unit, svg]
+          required: [file, title, caption, unit, anchor, svg]
           additionalProperties: false
           properties:
             file: { type: string, pattern: '^[a-z0-9-]+\.svg$' }
+            anchor:
+              description: the id of the diagram on its concept page, anchors.diagram of products/site/url-scheme.yaml, {file} its file name without .svg
+              type: string
+              pattern: '^schema-[a-z0-9-]+$'
             title: { $ref: '#/$defs/line' }
             caption: { $ref: '#/$defs/line' }
             unit: { $ref: '#/$defs/id' }

@@ -30,7 +30,7 @@ export interface Unit {
 }
 export interface ConceptSection { id: string; title: string; units: Unit[] }
 export interface Item { text: string; author?: string; refs: string[]; verified?: string[] }
-export interface Diagram { file: string; title: string; caption: string; unit: string; svg: string }
+export interface Diagram { file: string; title: string; caption: string; unit: string; anchor: string; svg: string }
 export interface Table { key: string; heading: string; header: string[]; rows: string[][] }
 export interface Concept {
   number: string; annex: boolean; slug: string; title: string; objective: string;

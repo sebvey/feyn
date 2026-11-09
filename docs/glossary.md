@@ -510,7 +510,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### capability
 
-- means: what the teacher needs to honour its **protocol rules**, fixed by the spec with no target term: read the course, retrieve and record what it knows of the learner, know the addresses of the site (the course's site, the map of its domains, the page of each domain, concept and annex), search outside the course or know it cannot, show a diagram or know it cannot, know the title and « L'essentiel » of each concept and each annex. A **teacher implementation** provides each on its target
+- means: what the teacher needs to honour its **protocol rules**, fixed by the spec with no target term: read the course, retrieve and record what it knows of the learner, know the addresses of the site (the course's site, the map of its domains, the page of each domain, concept and annex, each diagram on its concept page), search outside the course or know it cannot, show a diagram or know it cannot, know the title and « L'essentiel » of each concept and each annex. A **teacher implementation** provides each on its target
 - en: capability
 - fr: to settle
 - not to confuse with: [protocol rule](#protocol-rule), [means](#means), [permission](#permission), [teacher implementation](#teacher-implementation)

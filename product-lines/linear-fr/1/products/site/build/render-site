@@ -124,12 +124,15 @@ function sectionsOf(file, list, table) {
 }
 
 // ---- the addresses, from products/site/url-scheme.yaml: {n} a domain's number, {nn} a concept's on
-// `digits` digits, an annex as its id
+// `digits` digits, an annex as its id; the anchor of a diagram, {file} its file name without `.svg`
 const pages = urlScheme.pages || {};
 const nn = (urlScheme.placeholders || {}).nn || {};
 if (typeof pages.domain !== 'string' || typeof pages.concept !== 'string') fail('products/site/url-scheme.yaml has no pages.domain or pages.concept');
 if (!Number.isInteger(nn.digits) || nn.annex !== 'id') fail('products/site/url-scheme.yaml: placeholders.nn needs `digits` (an integer) and `annex: id`');
+const anchors = urlScheme.anchors || {};
+if (typeof anchors.diagram !== 'string' || !anchors.diagram.includes('{file}')) fail('products/site/url-scheme.yaml has no anchors.diagram with its {file}');
 const domainPath = (n) => pages.domain.replace('{n}', String(n));
+const diagramAnchor = (file) => anchors.diagram.replace('{file}', file.replace(/\.svg$/, ''));
 const conceptPath = (c) => pages.concept.replace('{nn}', c.annex ? c.number : c.number.padStart(nn.digits, '0'));
 
 // ---- the course map, course.yaml
@@ -252,7 +255,7 @@ function conceptOf(c) {
   const data = m.data || {};
   if (pub(fm.stances) && data.stances) out.stances = { heading: H(fm.stances.heading), ...data.stances };
   if (pub(fm.neighbors) && data.neighbors) out.neighbors = data.neighbors;
-  if (pub(fm.diagrams) && data.diagrams) out.diagrams = data.diagrams.map((d) => ({ ...d, svg: read(path.join(courseDir, c.dir, d.file)) }));
+  if (pub(fm.diagrams) && data.diagrams) out.diagrams = data.diagrams.map((d) => ({ ...d, anchor: diagramAnchor(d.file), svg: read(path.join(courseDir, c.dir, d.file)) }));
   const sources = form.sources || {};
   const sf = `${c.dir}/${sources.file || 'sources.md'}`;
   if (ctx.exists(sf)) out.sources = sectionsOf(sf, sources.sections, true);

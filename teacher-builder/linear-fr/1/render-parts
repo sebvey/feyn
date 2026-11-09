@@ -110,8 +110,9 @@ const PARAMS = {
   },
   classroom: {
     ...(site
-      ? { site_url: site, domains_url: `${site}domaines/`, domain_url: `${site}domaines/{n}/`, concept_url: `${site}concepts/{nn}/` }
-      : { site_url: UNPUBLISHED, domains_url: UNPUBLISHED, domain_url: UNPUBLISHED, concept_url: UNPUBLISHED }),
+      // diagram_url: a diagram on its concept page, the anchor of the site's url-scheme.yaml (anchors.diagram)
+      ? { site_url: site, domains_url: `${site}domaines/`, domain_url: `${site}domaines/{n}/`, concept_url: `${site}concepts/{nn}/`, diagram_url: `${site}concepts/{nn}/#schema-{file}` }
+      : { site_url: UNPUBLISHED, domains_url: UNPUBLISHED, domain_url: UNPUBLISHED, concept_url: UNPUBLISHED, diagram_url: UNPUBLISHED }),
     channel,
   },
 };

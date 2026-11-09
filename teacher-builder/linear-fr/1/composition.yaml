@@ -82,7 +82,7 @@ parts:
         draws:
           - from: course
             source: <dir>/concept.md
-            what: les schémas que le concept déclare, leur titre, leur légende et l'unité qu'ils illustrent
+            what: les schémas que le concept déclare, leur fichier, leur titre, leur légende et l'unité qu'ils illustrent
       - id: stop
         when: l'apprenant dit que la session de cours s'arrête
         groups: [stop]
