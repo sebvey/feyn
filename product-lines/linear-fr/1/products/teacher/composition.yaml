@@ -2,7 +2,7 @@
 # when it is loaded and what it draws from, as data (decision spec-files-by-product). The classroom
 # build reads it to know what goes into each part (products/teacher/build/render-parts renders the parts as
 # text, teacher-builder/ realises them); the fresh tests judge a teacher against it, on
-# what it loads and when. products/teacher/README.md, « Composition », describes it. It names no mechanism of
+# what it loads and when. products/teacher/build/README.md describes how it is rendered. It names no mechanism of
 # a target: how a part is realised is the teacher build's (teacher-builder/).
 #
 # A part: `id`, `loads`, `draws`; the part `on-demand` adds `moments`.

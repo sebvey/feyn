@@ -494,14 +494,14 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### protocol
 
-- means: the pedagogical protocol: the testable teaching rules of a spec, each named by a slug, set in families and **groups**. A rule of it is a **protocol rule**
+- means: the pedagogical protocol: the testable teaching rules of a spec, each named by a slug, set in **groups**. A rule of it is a **protocol rule**
 - en: protocol · rejected: "the loop", "pedagogy", "rules", "behaviour"
 - fr: « protocole »
 - not to confuse with: [teacher](#teacher), [rule](#rule), [composition](#composition), [protocol rule](#protocol-rule), [group](#group)
 
 ### protocol rule
 
-- means: a rule of the protocol, an expected behaviour of the teacher: what any teacher of the spec does, observable in the conversation or in what it records, written with no target term; it binds the teacher and belongs to a family and a group. What makes it hold on a target is a **means** of the **teacher implementation**
+- means: a rule of the protocol, an expected behaviour of the teacher: what any teacher of the spec does, observable in the conversation or in what it records, written with no target term; it binds the teacher and belongs to a group, its subject. What makes it hold on a target is a **means** of the **teacher implementation**
 - en: protocol rule
 - fr: « règle du protocole », or « comportement attendu », its admitted synonym
 - not to confuse with: [rule](#rule), [protocol](#protocol), [instruction](#instruction), [means](#means), [capability](#capability)
@@ -509,7 +509,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### capability
 
-- means: what the teacher needs to honour its **protocol rules**, fixed by the spec with no target term: read the course, retrieve and record what it knows of the learner, know the site addresses, search outside the course, show a diagram or know it cannot, know the title and « L'essentiel » of each annex. A **teacher implementation** provides each on its target
+- means: what the teacher needs to honour its **protocol rules**, fixed by the spec with no target term: read the course, retrieve and record what it knows of the learner, know the site addresses, search outside the course, show a diagram or know it cannot, know the title and « L'essentiel » of each concept and each annex. A **teacher implementation** provides each on its target
 - en: capability
 - fr: to settle
 - not to confuse with: [protocol rule](#protocol-rule), [means](#means), [permission](#permission), [teacher implementation](#teacher-implementation)
