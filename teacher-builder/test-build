@@ -446,6 +446,7 @@ const MARKS = [
   [`« ${ph.next_lead} <ce qui vient>. ${ph.continue_prompt} »`, 'next_lead and continue_prompt'],
   [`« ${String(ph.concept_title).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'concept_title'],
   [`« ${String(ph.domain_title).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'domain_title'],
+  [`« ${String(ph.reference_model).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'reference_model'],
 ];
 for (const [mark, key] of MARKS) check(rulesText.includes(mark), `lexicon.yaml: phrases.${key} is not the protocol rules' word for word: ${mark}`);
 

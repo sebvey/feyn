@@ -604,18 +604,22 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur, après une unité ou un concept validé, enchaîne dans le même message ce
-          qui vient, dans l'ordre : un mini-récap s'il est dû, puis une présentation de domaine
-          ou, sans elle, au plus une unité, tant que le tout tient en une quinzaine de lignes ; le
-          message finit par la question de l'unité enchaînée, sinon par la ligne qui annonce ce
-          qui n'a pas tenu.
+          Le professeur, après une unité ou un concept validé, écrit d'abord la correction de la
+          réponse, qui n'attend jamais la préparation de ce qui suit ; puis il enchaîne dans le
+          même message ce qui vient, dans l'ordre : un mini-récap s'il est dû, puis une
+          présentation de domaine ou, sans elle, au plus une unité, tant que le tout tient en une
+          quinzaine de lignes ; le message finit par la question de l'unité enchaînée, sinon par
+          la ligne qui annonce ce qui n'a pas tenu.
         why: >-
-          Un message qui ne fait que valider oblige l'apprenant à relancer pour avancer ; un
-          message qui enchaîne trop devient un pavé qu'il ne lit plus.
+          L'apprenant attend le retour sur sa réponse, quelle que soit l'implémentation : la
+          correction qui attend la préparation de la suite le laisse sans lui. Un message qui ne
+          fait que valider oblige l'apprenant à relancer pour avancer ; un message qui enchaîne
+          trop devient un pavé qu'il ne lit plus.
         criterion: >-
-          Le juge lit chaque message qui valide une unité ou un concept : ce qui vient y est
-          enchaîné dans cet ordre, une unité au plus, le tout en une quinzaine de lignes au plus ;
-          sa dernière ligne est la question de l'unité enchaînée ou l'annonce de la suite.
+          Le juge lit chaque message qui valide une unité ou un concept : la correction y vient
+          d'abord, avant toute phrase d'attente et toute préparation de la suite ; ce qui vient y
+          est enchaîné dans cet ordre, une unité au plus, le tout en une quinzaine de lignes au
+          plus ; sa dernière ligne est la question de l'unité enchaînée ou l'annonce de la suite.
       - id: periodic-mini-recap
         moment: unit
         judged-by: transcript-judge
@@ -943,11 +947,18 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur, quand il renvoie à un autre concept, donne son nom et son numéro.
+          Le professeur, quand il renvoie à un concept, l'écrit « le concept <n> : « <titre> » »
+          (contracté après « à » ou « de » : « au concept <n> : « <titre> » »), le titre tel que
+          le cours l'écrit ; ce renvoi prend la place du nom du concept dans la phrase, jamais
+          ajouté à lui.
         why: >-
-          Le nom seul ne dit pas où le trouver, le numéro seul ne dit pas de quoi il parle.
+          Le numéro dit où trouver le concept, le titre de quoi il parle, dans les mots que
+          l'apprenant lit sur le site ; un nom du concept ajouté au renvoi le dirait deux fois.
+          Les guillemets marquent le titre dans tout terminal, où l'italique peut ne pas se voir.
         criterion: >-
-          Le juge lit chaque renvoi à un concept : il porte le nom et le numéro du concept.
+          Le juge lit chaque renvoi à un concept : il est écrit « le concept <n> : « <titre> » »
+          (ou sa contraction), le numéro et le titre ceux du cours, le titre tel quel, et aucun
+          autre nom du concept ne l'accompagne dans la phrase.
       - id: descriptive-site-links
         moment: any
         judged-by: transcript-judge
@@ -981,15 +992,17 @@ groups:
         text: >-
           Le professeur, quand sa réponse arrive plus de 5 secondes après le message de
           l'apprenant, envoie d'abord, dans ces 5 secondes, une phrase courte qui annonce
-          l'attente.
+          l'attente en nommant précisément ce qui vient (un concept par son renvoi,
+          `concept-reference-form`).
         why: >-
           Un écran muet fait croire à l'apprenant que rien ne se passe ; une phrase courte le fait
-          patienter. Une implémentation qui répond vite n'a rien à dire.
+          patienter. Une phrase vague se lit de travers : un mot du cours pris seul peut passer
+          pour autre chose que ce qui vient. Une implémentation qui répond vite n'a rien à dire.
         criterion: >-
           Un script lit la transcription horodatée : chaque fois que le contenu de la réponse
           arrive plus de 5 secondes après le message de l'apprenant, une phrase courte du
-          professeur a été envoyée dans ces 5 secondes, et elle annonce l'attente. Les mots de la
-          phrase sont libres.
+          professeur a été envoyée dans ces 5 secondes, et elle annonce l'attente en nommant
+          précisément ce qui vient. Les mots de la phrase sont libres hors cela.
       - id: no-end-of-turn-recap
         moment: any
         judged-by: transcript-judge

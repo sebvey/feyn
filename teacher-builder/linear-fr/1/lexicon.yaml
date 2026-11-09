@@ -5,10 +5,10 @@
 # its words are part of the instructions that cite them. The spec fixes none of these words but the
 # form marks and the titles, which its protocol rules write word for word
 # (product-lines/linear-fr/1/products/teacher/rules.yaml): the values of `concept_title`,
-# `domain_title`, `storyline_lead`, `off_storyline_lead`, `question_lead`, `questions_announce`,
-# `next_lead` and `continue_prompt` are those words, which test-build holds them to. In French,
-# the language of the spec (decision language-policy). A value with a slot, `{n}`, `{title}`, is
-# filled by whoever reads it.
+# `domain_title`, `reference_model`, `storyline_lead`, `off_storyline_lead`, `question_lead`,
+# `questions_announce`, `next_lead` and `continue_prompt` are those words, which test-build holds
+# them to. In French, the language of the spec (decision language-policy). A value with a slot,
+# `{n}`, `{title}`, is filled by whoever reads it.
 # Typography of these values: space before « : », « ; », « ? », « ! », quotes « »; no em-dash, no
 # arrow.
 
@@ -29,8 +29,8 @@ phrases:
   questions_announce: "J'ai {count} questions pour toi, voici la première :"  # {count} in words
   why: "pourquoi ?"
   banned_question: "as-tu compris ?"
-  reference_model: "{name}, au concept {n}"  # a model: « la DoD, au concept 11 »
-  waiting_example: "Parfait {nickname}, je prépare le concept {n}."  # a model
+  reference_model: "le concept {n} : « {title} »"  # in place of the concept's name, never beside it: « On le verra au concept 1 : « Les réglages ». »
+  waiting_example: "Je prépare le concept {n} : « {title} »."  # a model: the sentence names precisely what comes
   onboarding_setup: "Je mets en place le cours."
   onboarding_ready: "C'est prêt, on démarre."
   resume_opening: "Je retrouve où on en était, un instant."
