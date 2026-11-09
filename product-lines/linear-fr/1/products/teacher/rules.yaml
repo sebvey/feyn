@@ -123,28 +123,42 @@ groups:
         text: >-
           Le professeur dit, après la dernière réponse d'accueil, en une ou deux phrases, ce que
           les réponses de l'apprenant changent pour le cours : son rythme, sa profondeur, ce qu'il
-          pourra sauter.
+          pourra sauter ; seulement un effet que le cours prévoit, aucun inventé. Puis il amène le
+          fil rouge par le rôle qu'y tient l'apprenant, avant de dire qu'il met en place le cours.
+          Ainsi, dans le cours du café, à « jamais, que des capsules » : « Jamais à la main : on
+          partira du goût de la tasse, pas à pas. Tu n'as rien à préparer : c'est Cédric qui fait
+          les tasses, et toi qui l'aides à comprendre ce qui cloche. Je mets en place le cours. »
         why: >-
           L'apprenant voit que ses réponses servent à quelque chose ; sans cette phrase, l'accueil
-          semble une formalité.
+          semble une formalité. Un effet inventé, pour avoir quelque chose à dire, fait une phrase
+          de remplissage ou une promesse que le cours ne tiendra pas ; le rôle dans le fil rouge,
+          lui, est ce que l'apprenant doit savoir avant le premier cas.
         criterion: >-
-          Le juge lit le message qui suit la dernière réponse d'accueil : une ou deux phrases
-          relient les réponses données à un effet sur le cours (rythme, profondeur, ce qui pourra
-          être sauté).
+          Le juge lit le message qui suit la dernière réponse d'accueil et le cours : une ou deux
+          phrases relient les réponses données à un effet sur le cours (rythme, profondeur, ce qui
+          pourra être sauté) que le cours prévoit, aucune n'annonce un effet ou un contenu qu'il ne
+          prévoit pas ; puis une phrase dit le rôle de l'apprenant dans le fil rouge, avant celle
+          qui annonce la mise en place du cours.
       - id: onboarding-ready-message
         moment: onboarding
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur, une fois l'accueil enregistré, présente le fil rouge du cours en deux
-          lignes, le produit et le rôle qu'y tient l'apprenant, puis le premier domaine.
+          Le professeur, une fois l'accueil enregistré, ouvre le cours sur le titre du fil rouge,
+          visible comme un titre, du rang d'un titre de domaine, en lien vers la page du fil rouge
+          du site : « Fil rouge : <titre> », le titre étant celui du fichier du fil rouge. Sous
+          lui, il présente le fil rouge en deux lignes, le produit et le rôle qu'y tient
+          l'apprenant, puis vient le titre du premier domaine et sa présentation.
         why: >-
           Le fil rouge porte tous les cas du cours : l'apprenant doit savoir quel rôle il y tient
-          avant que le premier cas le lui demande.
+          avant que le premier cas le lui demande. Son titre en lien le mène à la page qui raconte
+          ce monde, et lui donne le même repère que les domaines et les concepts.
         criterion: >-
-          Le juge lit le message qui suit l'accueil : il présente le fil rouge en deux lignes au
-          plus, nomme le produit et le rôle de l'apprenant, puis vient la présentation du premier
-          domaine.
+          Le juge lit le message qui suit l'accueil : un titre, du rang d'un titre de domaine,
+          dont le texte est exactement « Fil rouge : <titre> », le titre du fichier du fil rouge,
+          en lien vers l'adresse de la page du fil rouge ; sous lui, deux lignes au plus nomment le
+          produit et le rôle de l'apprenant ; puis viennent le titre du premier domaine et sa
+          présentation.
       - id: resume-recap-message
         moment: resume
         judged-by: transcript-judge
@@ -985,7 +999,8 @@ groups:
           page se lit comme une phrase.
         criterion: >-
           Le juge lit chaque lien vers le site : son texte nomme la page (le site, la carte des
-          domaines, la page d'un domaine ou d'un concept), aucune adresse n'est écrite nue.
+          domaines, la page du fil rouge, la page d'un domaine ou d'un concept), aucune adresse
+          n'est écrite nue.
       - id: site-pages-not-files
         moment: any
         judged-by: transcript-judge

@@ -40,8 +40,8 @@ means:
     serves: [teacher-posture-from-plan]
   - id: course-map-given
     kind: build
-    source: "render-parts, permanent.course_map, written by build-teacher to carte-du-cours.md at the classroom's root and imported by @ in CLAUDE.md (CLAUDE.template.md): each domain, its title, objective and file, then its concepts; the annexes as annexes; each concept and annex with its title, number, objective, prerequisites, folder and files and its « L'essentiel »; the other course files"
-    serves: [domain-title-link, concept-title-link, concept-reference-form, resume-on-greeting, missing-prerequisite-told, later-concept-acknowledged, annex-unit-offered, course-end]
+    source: "render-parts, permanent.course_map, written by build-teacher to carte-du-cours.md at the classroom's root and imported by @ in CLAUDE.md (CLAUDE.template.md): the storyline, its title, file and the text under its H1 (the world and the learner's role in it); each domain, its title, objective and file, then its concepts; the annexes as annexes; each concept and annex with its title, number, objective, prerequisites, folder and files and its « L'essentiel »; the other course files"
+    serves: [onboarding-closing-sentence, onboarding-ready-message, domain-title-link, concept-title-link, concept-reference-form, resume-on-greeting, missing-prerequisite-told, later-concept-acknowledged, annex-unit-offered, course-end]
   - id: onboarding-questions-given
     kind: build
     source: "composition.yaml, moment onboarding: the onboarding questions of plan.md written into the skill feyn-teacher-onboarding"
@@ -49,7 +49,7 @@ means:
   - id: site-addresses-given
     kind: build
     source: "render-parts, params.classroom: the site addresses filled into the instructions from --site-url"
-    serves: [first-message-site-and-requests, descriptive-site-links, validated-concept-page-link, domain-title-link, concept-title-link, resume-on-greeting, diagram-not-displayable]
+    serves: [first-message-site-and-requests, descriptive-site-links, onboarding-ready-message, validated-concept-page-link, domain-title-link, concept-title-link, resume-on-greeting, diagram-not-displayable]
 
 declared:
   - rule: course-language-typography

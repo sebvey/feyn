@@ -8,8 +8,8 @@ Une personne qui boit du café sans jamais l'avoir vraiment fait : elle sait app
 
 Posture : un barista patient, qui aide l'apprenant à aider Cédric.
 
-1. **Son café** : comment il boit son café aujourd'hui (machine, capsule, filtre, autre)
-2. **Son matériel** : ce qu'il a chez lui pour faire du café
+1. **Café à la main** : s'il a déjà fait du café à la main (filtre, piston, moka), et comment ça s'est passé
+2. **Le goût** : s'il sait déjà dire ce qui cloche dans une tasse ratée (acide, amère, trop légère), ou seulement qu'elle n'est pas bonne
 
 ## Progression
 
