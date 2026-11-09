@@ -7,8 +7,10 @@
 // moment per moment of composition.yaml, every instruction of instructions.yaml rendered once, in
 // the permanent instructions or in one moment, no `serves` rendered, the learner templates
 // verbatim, the course map (its file, the annexes as annexes, each « L'essentiel » of cafe), the
-// storyline address (published and unpublished, the link of the storyline title), the three spots of the filling (a value in parentheses inside a link, a phrase ending its sentence,
-// the plural of the domains).
+// storyline address (published and unpublished, the link of the storyline title), the diagram
+// address (its anchor on the concept page, the link of the diagram moment), the three spots of
+// the filling (a value in parentheses inside a link, a phrase ending its sentence, the plural of
+// the domains).
 // Exit 0 when every check passes, 1 otherwise; one line per failure.
 const fs = require('fs');
 const path = require('path');

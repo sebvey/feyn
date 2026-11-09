@@ -1,8 +1,8 @@
 # The URL scheme of the site of a course of `linear-fr`: the address of each page, written
 # once, read by the site build; no engine file writes an address or a path word. An address is a
 # path relative to the base path of the site (`<base>`, which the build is given: `/feyn-site/next/<course id>/`
-# on the next channel), its path words in French, the language of the spec. The domain, domain map
-# and concept addresses and the diagram anchor are those the teacher build already gives the learner (the rendering of
+# on the next channel), its path words in French, the language of the spec. The domain, domain map,
+# storyline and concept addresses and the diagram anchor are those the teacher build already gives the learner (the rendering of
 # the teacher implementation, outside the spec, which keeps its own copy until the teacher catches
 # up): changing one breaks the links the teacher gives.
 

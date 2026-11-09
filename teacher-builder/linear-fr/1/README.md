@@ -34,10 +34,10 @@ mise exec -- teacher-builder/linear-fr/1/render-parts <course-dir> [--site-url <
 
 It reads the course through the spec's parser (`product-lines/linear-fr/1/course/parser.js`, `load`, with the spec's `course/lexicon.yaml` and `course/form.yaml`, as the site build reads it), the instructions (`instructions.yaml`, by group, each group with its `purpose`), `composition.yaml`, the folder's `lexicon.yaml` and the spec's `course/lexicon.yaml`, and the learner templates, and prints one JSON document to stdout. It writes nothing. It loads the `yaml` package through the lib of the spec directives the spec MAJOR declares (`mise exec -- npm ci --prefix spec-directives/1` once).
 
-- `--site-url <base>`: the address of the course's site. The five classroom parameters are derived from it: `<base>`, `<base>domaines/`, `<base>domaines/{n}/`, `<base>concepts/{nn}/`, `<base>concepts/{nn}/#schema-{file}` (a diagram on its concept page, `{file}` its file name without `.svg`: the anchor `anchors.diagram` of the site's URL scheme, `product-lines/linear-fr/1/products/site/url-scheme.yaml`). Without it, each reads « (site non publié) ».
+- `--site-url <base>`: the address of the course's site. The six classroom parameters are derived from it: `<base>`, `<base>domaines/`, `<base>domaines/{n}/`, `<base>fil-rouge/` (the storyline page), `<base>concepts/{nn}/`, `<base>concepts/{nn}/#schema-{file}` (a diagram on its concept page, `{file}` its file name without `.svg`: the anchor `anchors.diagram` of the site's URL scheme, `product-lines/linear-fr/1/products/site/url-scheme.yaml`). Without it, each reads « (site non publié) ».
 - `--channel <c>`: the classroom's channel (decision `three-channels`), `next` by default, a classroom parameter passed through.
 
-Exit 0 rendered, 1 an input it cannot read (a placeholder in neither lexicon, a moment naming no group of the instructions, a group or an instruction with a key its form has not, a course of another spec, a course the parser cannot read), 2 a usage error.
+Exit 0 rendered, 1 an input it cannot read (a placeholder in neither lexicon, a moment naming no group of the instructions, a group or an instruction with a key its form has not, a course of another spec, a course the parser cannot read, a storyline file with no title « # <titre> » or no text under it), 2 a usage error.
 
 ## The document
 
