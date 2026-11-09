@@ -1,9 +1,10 @@
 # The composition of the teacher of linear-fr: the five parts a teacher is made of, each by
-# when it is loaded and what it draws from, as data (decision spec-files-by-product). The classroom
-# build reads it to know what goes into each part (products/teacher/build/render-parts renders the parts as
-# text, teacher-builder/ realises them); the fresh tests judge a teacher against it, on
-# what it loads and when. products/teacher/build/README.md describes how it is rendered. It names no mechanism of
-# a target: how a part is realised is the teacher build's (teacher-builder/).
+# when it is loaded and what it draws from, as data, in the teacher implementation of linear-fr@1
+# (decision teacher-implementation-folder). The classroom build reads it to know what goes into
+# each part (render-parts, this folder, renders the parts as text, teacher-builder/build-teacher
+# realises them); the fresh tests judge a teacher against it, on what it loads and when.
+# README.md (this folder) describes how it is rendered. It names no mechanism of a target: how a
+# part is realised is build-teacher's.
 #
 # A part: `id`, `loads`, `draws`; the part `on-demand` adds `moments`.
 # `loads`, when the part is loaded, one of:
@@ -14,30 +15,31 @@
 #   always                    in force from the teacher build on, whatever the teacher does
 # `draws`, a list of entries, each `from`, `source` and `what`. `from`, where the source lives, one
 # of:
-#   spec       a file or folder of this spec MAJOR (product-lines/linear-fr/1/)
+#   spec            a file or folder of the spec MAJOR (product-lines/linear-fr/1/)
+#   implementation  a file or folder of this implementation folder (teacher-builder/linear-fr/1/)
 #   course     a file of the course folder, copied as is into the classroom's course/
 #   learner    a file of learner memory, the classroom's learner/
 #   classroom  a file or folder the teacher build makes
 # `source`, the file or folder read, relative to its `from`: `{course.<name>}` is a course
-# parameter (those products/teacher/build/instructions.yaml cites), `<dir>` the `dir` of the concept at hand in
+# parameter (those instructions.yaml cites), `<dir>` the `dir` of the concept at hand in
 # course.yaml, `<file>` the `file` of the domain at hand. `what`, what is drawn, in a few words, in
 # French, since the teacher reads it (decision language-policy); a lexicon key
 # (`headings.onboarding`) names a heading of a course file.
 # A moment of `on-demand`: `id`, `when` (in French, as `what`: the teacher reads it to recognise
 # the moment), `rules` (the slugs of the groups, families or rules of the protocol loaded at that
-# moment, a family by its category in products/teacher/build/instructions.yaml; empty while the protocol has none for it)
+# moment, a family by its category in instructions.yaml; empty while the protocol has none for it)
 # and `draws`, as a part's.
 #
-# The rules of the protocol are named by their file, products/teacher/build/instructions.yaml, which
-# products/teacher/build/render-parts reads by family and group. No test of check-spec verifies the
-# form of this file since the test composition left the spec directives (#765); the fresh tests
-# judge its sense.
+# The rules of the protocol are named by their file, instructions.yaml (this folder), which
+# render-parts reads by family and group. No test of check-spec verifies the form of this file
+# since the test composition left the spec directives (#765) and the file the spec (#779);
+# render-parts and test-render read it.
 parts:
   - id: permanent
     loads: every-message
     draws:
-      - from: spec
-        source: products/teacher/build/instructions.yaml
+      - from: implementation
+        source: instructions.yaml
         what: les règles du protocole et le but de leurs familles et de leurs groupes, sauf les règles qu'une autre partie charge
       - from: course
         source: plan.md
@@ -61,8 +63,8 @@ parts:
   - id: on-demand
     loads: at-a-moment
     draws:
-      - from: spec
-        source: products/teacher/build/instructions.yaml
+      - from: implementation
+        source: instructions.yaml
         what: les règles de chaque moment ci-dessous
     moments:
       - id: onboarding
@@ -100,8 +102,8 @@ parts:
         when: l'apprenant demande à reprendre le cours au début
         rules: []
         draws:
-          - from: spec
-            source: products/teacher/templates/learner/
+          - from: implementation
+            source: templates/learner/
             what: les modèles de l'apprenant, où revient la mémoire de l'apprenant
 
   - id: course-reads
@@ -129,11 +131,11 @@ parts:
   - id: learner-memory
     loads: at-start-and-save-points
     draws:
-      - from: spec
-        source: products/teacher/templates/learner/
+      - from: implementation
+        source: templates/learner/
         what: les modèles de l'apprenant, la forme de la mémoire de l'apprenant
-      - from: spec
-        source: products/teacher/build/instructions.yaml
+      - from: implementation
+        source: instructions.yaml
         what: les règles de mémoire, la famille learner-memory
       - from: learner
         source: apprenant.md
@@ -148,8 +150,8 @@ parts:
   - id: permissions
     loads: always
     draws:
-      - from: spec
-        source: products/teacher/build/instructions.yaml
+      - from: implementation
+        source: instructions.yaml
         what: la règle write-only-in-learner
       - from: classroom
         source: learner/

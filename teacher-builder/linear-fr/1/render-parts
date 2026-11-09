@@ -1,28 +1,31 @@
 #!/usr/bin/env node
 'use strict';
 // render-parts <course-dir> [--site-url <base>] [--channel <c>]
-// The half of a teacher build that depends on this spec MAJOR: it renders the five parts of
-// products/teacher/composition.yaml as text for a course and prints them to stdout as one JSON document,
-// whose shape parts.schema.yaml fixes and README.md (this folder) describes. It reads the protocol
-// (products/teacher/build/instructions.yaml, the rules by family and group with their purpose), the composition, the two
-// lexicons, the learner templates and the course, and fills every {group.key}, {course.<name>} and {classroom.<name>}. It names no
-// mechanism of a target: what each part becomes in a classroom is the teacher build's, at the
-// root of the repository. Writes nothing. Exit 0 rendered, 1 an input it cannot read (a
-// placeholder in neither lexicon, a moment naming an unknown rule), 2 a usage error.
+// The part of the teacher implementation of linear-fr@1 that reads the spec and the course: it
+// renders the five parts of composition.yaml (this folder) as text for a course and prints them to
+// stdout as one JSON document, whose shape parts.schema.yaml fixes and README.md (this folder)
+// describes. It reads the instructions (instructions.yaml, the rules by family and group with their
+// purpose), the composition and the learner templates of this folder, the two lexicons of the spec
+// MAJOR, and the course through the spec's parser (course/parser.js, as the site build reads it),
+// and fills every {group.key}, {course.<name>} and {classroom.<name>}. What each part becomes in a
+// classroom is build-teacher's (teacher-builder/). Writes nothing. Exit 0 rendered, 1 an input it
+// cannot read (a placeholder in neither lexicon, a moment naming an unknown rule), 2 a usage error.
 const fs = require('fs');
 const path = require('path');
 const { createRequire } = require('module');
 
-// here is product-lines/<name>/<MAJOR>/products/teacher/build
-const MAJOR = path.resolve(__dirname, '..', '..', '..');
-const REPO = path.resolve(MAJOR, '..', '..', '..');
+// here is teacher-builder/<name>/<MAJOR>, the implementation of the spec MAJOR
+// product-lines/<name>/<MAJOR>: the implementation reads the spec, the spec never reads it
+const HERE = __dirname;
+const REPO = path.resolve(HERE, '..', '..', '..');
+const MAJOR = path.join(REPO, 'product-lines', path.basename(path.dirname(HERE)), path.basename(HERE));
 const UNPUBLISHED = '(site non publié)';
 const PARTS = ['permanent', 'on-demand', 'course-reads', 'learner-memory', 'permissions'];
 
 function usage(code) {
   const out = code ? console.error : console.log;
   out('usage: render-parts <course-dir> [--site-url <base>] [--channel <c>]');
-  out('prints the five parts of products/teacher/composition.yaml rendered for <course-dir>, as JSON (README.md);');
+  out('prints the five parts of composition.yaml rendered for <course-dir>, as JSON (README.md);');
   out('without --site-url the site addresses are « (site non publié) »; --channel defaults to next');
   process.exit(code);
 }
@@ -76,10 +79,17 @@ const SPEC = `${lineOf('name')}@${lineOf('major')}`;
 const parseYaml = (p) => {
   try { return yaml.parse(read(p)); } catch (e) { return fail(`${rel(p)}: ${e.message}`); }
 };
-const course = parseYaml(path.join(courseDir, 'course.yaml'));
-const composition = parseYaml(path.join(MAJOR, 'products', 'teacher', 'composition.yaml'));
+// the course, through the parser of the spec MAJOR (course/parser.js), given the directives' lib,
+// with the MAJOR's lexicon of the course files and form, as the site build reads it
+const parser = require(path.join(MAJOR, 'course', 'parser.js'))((name) => req('./lib/' + name));
+const ctx = parser.load(courseDir, { specLexicon: path.join(MAJOR, 'course', 'lexicon.yaml'), specForm: path.join(MAJOR, 'course', 'form.yaml') });
+if (!ctx.cy) fail(`${rel(courseDir)}: ${ctx.cyError ? ctx.cyError.message : 'no course.yaml'}`);
+if (!ctx.usable) fail(`${rel(courseDir)}/course.yaml has no domains or no concepts (check-course says more)`);
+if (!ctx.lexiconOk) fail(ctx.lexiconError.message);
+const course = ctx.cy;
+const composition = parseYaml(path.join(HERE, 'composition.yaml'));
 const lexicons = [parseYaml(path.join(MAJOR, 'products', 'teacher', 'lexicon.yaml')), parseYaml(path.join(MAJOR, 'course', 'lexicon.yaml'))];
-const LEARNER_TEMPLATES = path.join(MAJOR, 'products', 'teacher', 'templates', 'learner');
+const LEARNER_TEMPLATES = path.join(HERE, 'templates', 'learner');
 if (typeof course.id !== 'string' || !course.id) fail('course.yaml has no id');
 if (course.spec !== SPEC) fail(`${rel(courseDir)}/course.yaml declares spec ${course.spec}, not ${SPEC}`);
 const parts = new Map((composition.parts || []).map((p) => [p.id, p]));
@@ -143,7 +153,7 @@ function fill(text, where) {
 // a bare key in a `what` of the composition (`headings.onboarding`): its value in « »
 const fillWhat = (what) => what.replace(/\b(headings|case_fields)\.([a-z_]+)\b/g, (m, g, k) => quote(valueOf(g, k, 'composition.yaml')));
 
-// ---- the protocol, products/teacher/build/instructions.yaml, in its order: a family is a group whose id is its
+// ---- the protocol, instructions.yaml, in its order: a family is a group whose id is its
 // category, rendered "## <n>. <title>" (n its rank among the families of the file); another group
 // belongs to the family of its category, which comes before it, rendered "### <title> (`<id>`)";
 // each with its purpose; each rule "**<id>** <text>", its why on a line "*Pourquoi :* <why>"
@@ -151,9 +161,9 @@ function parseProtocol(doc) {
   const families = [];
   const byCategory = new Map();
   for (const g of (doc && Array.isArray(doc.groups) ? doc.groups : [])) {
-    const where = `products/teacher/build/instructions.yaml: group ${g && g.id}`;
+    const where = `instructions.yaml: group ${g && g.id}`;
     if (!g || typeof g.id !== 'string' || typeof g.title !== 'string' || typeof g.purpose !== 'string') {
-      fail(`${where} lacks an id, a title or a purpose (check-spec says more)`);
+      fail(`${where} lacks an id, a title or a purpose`);
     }
     let section;
     if (g.id === g.category) {
@@ -162,7 +172,7 @@ function parseProtocol(doc) {
       byCategory.set(g.category, section);
     } else {
       const family = byCategory.get(g.category);
-      if (!family) fail(`${where}: no family of category ${g.category} before it (check-spec says more)`);
+      if (!family) fail(`${where}: no family of category ${g.category} before it`);
       section = { kind: 'group', id: g.id, heading: `### ${g.title} (\`${g.id}\`)`, purpose: g.purpose, rules: [], family };
       family.groups.push(section);
     }
@@ -173,8 +183,8 @@ function parseProtocol(doc) {
   }
   return { families, byCategory };
 }
-const { families, byCategory: familyByCategory } = parseProtocol(parseYaml(path.join(MAJOR, 'products', 'teacher', 'build', 'instructions.yaml')));
-if (!families.length) fail(`${rel(MAJOR)}/products/teacher/build/instructions.yaml holds no rule family`);
+const { families, byCategory: familyByCategory } = parseProtocol(parseYaml(path.join(HERE, 'instructions.yaml')));
+if (!families.length) fail(`${rel(HERE)}/instructions.yaml holds no rule family`);
 const allRules = families.flatMap((f) => [...f.rules, ...f.groups.flatMap((g) => g.rules)]);
 const ruleBySlug = new Map(allRules.map((r) => [r.slug, r]));
 const groupById = new Map(families.flatMap((f) => f.groups).map((g) => [g.id, g]));
@@ -201,7 +211,7 @@ const ruleText = (r) => fill(r.text, `rule ${r.slug}`);
 const purposeText = (s) => fill(s.purpose, s.heading);
 const blocks = (list) => list.filter(Boolean).join('\n\n');
 
-// the permanent protocol: every rule no moment loads, in the order of products/teacher/build/instructions.yaml, each
+// the permanent protocol: every rule no moment loads, in the order of instructions.yaml, each
 // family and group with a rule left preceded by its heading and its purpose
 function permanentProtocol() {
   const out = [];
@@ -254,27 +264,45 @@ function posture() {
   if (!para.length) fail(`plan.md has no posture paragraph under « ${heading} »`);
   return para.join('\n');
 }
-const concepts = new Map((course.concepts || []).map((c) => [String(c.number), c]));
-const conceptTitle = (c) => slot(lex('phrases', 'concept_title'), { n: c.number, title: c.title });
+// the concepts as the parser reads them (number normalised, `annex` for an annex `A<n>`): a
+// numbered concept is titled in the words of `phrases.concept_title`, an annex as its concept.md
+// opens, `<block_kinds.annex> <id><block_kinds.separator><title>` (« Annexe A1 : Les méthodes »)
+const concepts = new Map(ctx.concepts.map((c) => [c.number, c]));
+const annexTitle = (c) => {
+  const word = ctx.word('block_kinds', 'annex');
+  const sep = ctx.word('block_kinds', 'separator');
+  if (!word || !sep) fail('course/lexicon.yaml has no block_kinds.annex or block_kinds.separator');
+  return `${word} ${c.number}${sep}${c.entry.title}`;
+};
+const conceptTitle = (c) => (c.annex ? annexTitle(c) : slot(lex('phrases', 'concept_title'), { n: c.number, title: c.entry.title }));
 const domainTitle = (d) => slot(lex('phrases', 'domain_title'), { n: d.number, title: d.title });
+// the course map: each domain, then its concepts; then the annexes, which no domain holds
 function courseMap() {
-  return (course.domains || []).map((d) => [
-    `- ${domainTitle(d)}`,
-    ...(d.concepts || []).map((n) => {
-      const c = concepts.get(String(n));
-      if (!c) fail(`course.yaml: domain ${d.number} names concept ${n}, which is not in concepts`);
-      return `  - ${conceptTitle(c)} (\`${c.dir}\`)`;
-    }),
-  ].join('\n')).join('\n');
+  return [
+    ...(course.domains || []).map((d) => [
+      `- ${domainTitle(d)}`,
+      ...(d.concepts || []).map((n) => {
+        const c = concepts.get(String(n));
+        if (!c) fail(`course.yaml: domain ${d.number} names concept ${n}, which is not in concepts`);
+        return `  - ${conceptTitle(c)} (\`${c.dir}\`)`;
+      }),
+    ].join('\n')),
+    ...ctx.concepts.filter((c) => c.annex).map((c) => `- ${conceptTitle(c)} (\`${c.dir}\`)`),
+  ].join('\n');
 }
+// the files of a concept folder the course has, each with what it holds
+const CONCEPT_FILES = [['concept.md', 'the matter'], ['sources.md', 'the sources']];
 function courseFiles() {
   return [
-    '- `course/course.yaml`: the course map in full (prerequisites, sub-concepts)',
+    '- `course/course.yaml`: the course map in full (domains, concepts, annexes, prerequisites)',
     '- `course/plan.md`: the posture, the target audience, the onboarding questions and the stances',
     `- \`course/${course.storyline}\`: the storyline`,
     `- \`course/${course.glossary}\`: the glossary, one term per notion`,
     ...(course.domains || []).map((d) => `- \`course/${d.file}\`: the domain file of ${domainTitle(d)}`),
-    ...(course.concepts || []).map((c) => `- \`course/${c.dir}/\`: ${conceptTitle(c)}, \`concept.md\` (the matter), \`teaching.md\` (the method), \`sources.md\` (the sources)`),
+    ...ctx.concepts.map((c) => {
+      const files = CONCEPT_FILES.filter(([f]) => ctx.exists(`${c.dir}/${f}`)).map(([f, what]) => `\`${f}\` (${what})`);
+      return `- \`course/${c.dir}/\`: ${conceptTitle(c)}${files.length ? `, ${files.join(', ')}` : ''}`;
+    }),
   ].join('\n');
 }
 

@@ -2,9 +2,9 @@
 # once, read by the site build; no engine file writes an address or a path word. An address is a
 # path relative to the base path of the site (`<base>`, which the build is given: `/feyn-site/next/<course id>/`
 # on the next channel), its path words in French, the language of the spec. The domain, domain map
-# and concept addresses are those the teacher build already gives the learner
-# (`products/teacher/build/render-parts`, which keeps its own copy until the teacher catches up): changing
-# one breaks the links the teacher gives.
+# and concept addresses are those the teacher build already gives the learner (the rendering of
+# the teacher implementation, outside the spec, which keeps its own copy until the teacher catches
+# up): changing one breaks the links the teacher gives.
 
 # The pages and their addresses. `home` is `<base>` itself.
 pages:

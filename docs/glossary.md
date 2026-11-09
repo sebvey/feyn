@@ -27,7 +27,7 @@ A key with nothing to say is left out, `means`, `en` and `fr` excepted. A reject
 ## Which designation applies where
 
 - `en` in the repository's English files: code, docs, skills, issues, decisions, and the English texts of a spec.
-- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `products/teacher/README.md`, `products/teacher/rules.yaml` of `product-lines/linear-fr/1/`, and the instructions of the teacher while they wait in `products/teacher/build/instructions.yaml`. A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
+- `fr` in a French text of a spec, which speaks the language of its courses (decision `language-policy`): `course/README.md`, `course/rules.yaml`, `course/lexicon.yaml`, `products/teacher/README.md`, `products/teacher/rules.yaml` of `product-lines/linear-fr/1/`, and the French texts of its teacher implementation, `teacher-builder/linear-fr/1/` (its instructions, its composition's texts, its learner templates). A heading or a value of a lexicon quoted in « » is a word of the course files, not the spec's word for a concept: « Non publié », the heading of a course changelog, names that section, not the property **unpublished**.
 - A course glossary in its course. Each course has its own [course glossary](#course-glossary), which belongs to the course, follows the course's language and applies in that course's files. A word may be reserved in both with two meanings (**epic**); a repository text that speaks of the course's meaning says so ("epic, in the course's sense"). French course files keep their French section headings and field labels (« L'essentiel », « Matière », « Se vérifier »…); the English terms here are how we talk about them in code, docs and issues.
 
 ## Adding or changing an entry
@@ -119,7 +119,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### teacher build
 
-- means: the build of the **teacher** from a course and its spec MAJOR, into the **classroom** it makes, in two halves: the spec MAJOR renders the parts of the **composition** as text, and the repository's teacher builder realises them in Claude Code. Rendering the parts as text is a step of the teacher build, not a build
+- means: the build of the **teacher** from a course and its spec MAJOR, into the **classroom** it makes, by the **teacher implementation** of that spec MAJOR alone, the spec holding no part of it: the implementation reads the spec and the course, renders the parts of the **composition** as text, and the repository's teacher builder realises them in Claude Code. Rendering the parts as text is a step of the teacher build, not a build
 - en: teacher build · rejected: "classroom build"
 - fr: « build du professeur » · rejected: « build de la classe »
 - not to confuse with: [build](#build), [site build](#site-build), [teacher](#teacher), [classroom](#classroom), [composition](#composition), [teacher implementation](#teacher-implementation)
@@ -969,7 +969,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### test scenario
 
-- means: one YAML file of the teacher tests of a spec MAJOR: the learner memory a fresh test starts from, the learner's messages in order, the acts expected of the teacher and the slugs of the rules they exercise
+- means: one YAML file of the teacher tests of a spec MAJOR: the learner memory a fresh test starts from, the learner's messages in order, the acts expected of the teacher and the slugs of the rules they exercise. Asleep: out of the spec, neither run nor rewritten until the fresh tests come back
 - en: test scenario · rejected: "test case", "script", "fixture"
 - fr: to settle
 - not to confuse with: [case](#case), [fresh test](#fresh-test)

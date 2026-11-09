@@ -38,8 +38,9 @@ course:
 
 # The products of the spec, each by its name, and their files, by role. The teacher declares
 # its README (what is expected of a teacher, how a protocol rule is written and classed), its
-# rule file, filled subject by subject by epic #757, and its lexicon; its build and its
-# composition leave the spec with the teacher implementation (epic #757).
+# rule file, filled subject by subject by epic #757, and its lexicon; its build, its composition
+# and its learner templates are the teacher implementation's, outside the spec (decision
+# teacher-implementation-folder).
 products:
   site:
     lexicon: products/site/lexicon.yaml
@@ -119,7 +120,7 @@ files:
       holds: "the check scripts of a course, `rules.js` (the checks, their category and their severity, from `course/rules.yaml`), their fixtures and `README.md` (how to run them); `product-lines/check-course <course-dir>` runs them"
       readers: [creator, verifier]
     parser:
-      holds: "the parser of a course: it loads a course folder and reads the tree and the parts of each `concept.md` and the fixed facts of `storyline.md`, for the checks and the site build"
+      holds: "the parser of a course: it loads a course folder and reads the tree and the parts of each `concept.md` and the fixed facts of `storyline.md`, for the checks, the site build and the teacher build"
       readers: [builder, verifier]
     refs:
       holds: "the reader of the references between concepts in the text of a course (`course/README.md` section 3.5): the words of the group `concept_refs` of the lexicon, then concept numbers or section and unit ids, for the checks and the site build"

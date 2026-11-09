@@ -5,8 +5,8 @@
 // method test, the blocking and the reporting ones), each of which must pass. Two courses: with
 // a diagram, and without (the `diagrams` key deleted, as the concept template says).
 //   mise exec -- product-lines/linear-fr/1/course/templates/smoke-test [--keep]
-// The learner templates (products/teacher/templates/learner/ of the MAJOR) have no check: they are only
-// scanned for unreplaced placeholders.
+// It reads the course templates of this folder only: the spec never reads the teacher
+// implementation, whose learner templates teacher-builder/test-build checks in a classroom.
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -15,7 +15,6 @@ const { spawnSync } = require('child_process');
 const here = __dirname;
 // here is product-lines/<name>/<MAJOR>/course/templates
 const spec = path.resolve(here, '..', '..');
-const teacher = path.join(spec, 'products', 'teacher', 'templates');
 
 // placeholder -> dummy value (the French words are course text)
 const DUMMY = {
@@ -131,13 +130,11 @@ const DUMMY = {
   'question label 2': 'Avant le cours',
   'question label': 'Rôle',
   'onboarding question 2': 'ce qu\'il connaît déjà du sujet',
-  'the first step: the concept to open with, its first message': 'Concept 0, premier message.',
 };
 // the instructions' placeholders that appear twice with different dummies per file are keyed above once
 const files = {
   yaml: ['course.yaml'],
   md: ['plan.md', 'glossary.md', 'storyline.md', 'CHANGELOG.md'],
-  learner: ['learner/apprenant.md', 'learner/observations.md', 'learner/parcours.md'],
 };
 
 // the logo of the course, which no template gives: a dummy one, square, one colour in currentColor
@@ -173,8 +170,7 @@ function build(withDiagram) {
     fs.mkdirSync(path.dirname(path.join(course, rel)), { recursive: true });
     fs.writeFileSync(path.join(course, rel), text);
   };
-  // the learner templates are the teacher's, read from products/teacher/templates/
-  const read = (n) => fs.readFileSync(path.join(files.learner.includes(n) ? teacher : here, n), 'utf8');
+  const read = (n) => fs.readFileSync(path.join(here, n), 'utf8');
   const out = (n) => fill(n, read(n));
   for (const n of [...files.yaml, ...files.md]) put(n, out(n), n);
   // the logo has no template (course/README.md section 1): the course gets a dummy one
@@ -186,7 +182,6 @@ function build(withDiagram) {
   if (withDiagram) put(dir + 'schema.svg', out('diagram.svg'), 'diagram.svg');
   else concept = concept.replace(/^diagrams:\n(  .*\n)+/m, '');
   put(dir + 'concept.md', concept, 'concept.md');
-  for (const n of files.learner) { const left = leftovers(n, out(n)); if (left.length) { console.log(`FAIL ${n}: unreplaced placeholder ${left[0]}`); bad++; } }
   return { tmp, course };
 }
 for (const withDiagram of [true, false]) {
@@ -201,7 +196,7 @@ for (const withDiagram of [true, false]) {
 }
 if (list) {
   const seen = new Set();
-  const scan = [...fs.readdirSync(here, { recursive: true }).map((n) => path.join(here, n)), ...files.learner.map((n) => path.join(teacher, n))];
+  const scan = fs.readdirSync(here, { recursive: true }).map((n) => path.join(here, n));
   for (const f of scan) if (/\.(md|yaml|svg)$/.test(f)) for (const m of fs.readFileSync(f, 'utf8').matchAll(/(?:<|&lt;)([^<>\n&]+?)(?:>|&gt;)/g)) seen.add(m[1]);
   console.log([...seen].filter((k) => !(k in DUMMY)).join('\n'));
 }
