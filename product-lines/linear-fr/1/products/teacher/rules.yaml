@@ -51,11 +51,12 @@ groups:
           public, son parcours et son nombre de domaines, et la façon d'apprendre, concept par
           concept, une question à la fois.
         why: >-
-          L'apprenant sait dès l'ouverture à quoi il s'engage et comment la session va se dérouler.
+          L'apprenant sait dès l'ouverture à quoi il s'engage et comment la session va se
+          dérouler.
         criterion: >-
-          Le juge lit le premier message : il nomme le public du cours, son parcours, son nombre de
-          domaines et la façon d'apprendre (concept par concept, une question à la fois), en deux lignes au
-          plus.
+          Le juge lit le premier message : il nomme le public du cours, son parcours, son nombre
+          de domaines et la façon d'apprendre (concept par concept, une question à la fois), en
+          deux lignes au plus.
       - id: first-message-site-and-requests
         moment: onboarding
         judged-by: transcript-judge
@@ -191,8 +192,8 @@ groups:
           Sans choix offert, le professeur enchaîne le rappel et l'unité suivante dans le même
           message, et l'apprenant qui voulait réviser un domaine n'en a pas l'occasion.
         criterion: >-
-          Le juge lit l'ouverture de l'apprenant et la réponse : sur un salut, la réponse offre ces
-          choix, liste chaque domaine sur une ligne, donne le lien de la carte des domaines et
+          Le juge lit l'ouverture de l'apprenant et la réponse : sur un salut, la réponse offre
+          ces choix, liste chaque domaine sur une ligne, donne le lien de la carte des domaines et
           n'enseigne rien avant la réponse de l'apprenant.
       - id: pending-question-retaught
         moment: resume
@@ -227,9 +228,9 @@ groups:
         criterion: >-
           Le juge lit la mémoire à l'ouverture et la reprise : quand un concept validé n'a pas été
           retrouvé depuis sa validation, un seul cas de ce concept, pas encore posé à l'apprenant,
-          est posé avant la prochaine étape, le concept « à revoir » d'abord ; une mauvaise réponse
-          non rattrapée par les relances laisse le concept marqué « à revoir » dans la mémoire
-          après la session.
+          est posé avant la prochaine étape, le concept « à revoir » d'abord ; une mauvaise
+          réponse non rattrapée par les relances laisse le concept marqué « à revoir » dans la
+          mémoire après la session.
       - id: domain-presented-from-file
         moment: domain-presentation
         judged-by: transcript-judge
@@ -258,8 +259,8 @@ groups:
           mène à la page du domaine pour réviser.
         criterion: >-
           Un script cherche dans la transcription, avant le premier concept de chaque domaine, une
-          ligne de cette forme exacte, le numéro et le titre du domaine pris dans le cours, le lien
-          vers l'adresse de sa page.
+          ligne de cette forme exacte, le numéro et le titre du domaine pris dans le cours, le
+          lien vers l'adresse de sa page.
       - id: domain-presentation-parts
         moment: domain-presentation
         judged-by: transcript-judge
