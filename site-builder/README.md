@@ -4,7 +4,7 @@ Builds the site of a course: the site engine (Astro), its command `build-site`, 
 
 ## The two halves
 
-The site build is cut in two, as the teacher build is (`teacher-builder/README.md`, "The two halves"):
+The site build is cut in two, as the teacher build was until its implementation left the spec (decision `teacher-implementation-folder`, which notes the asymmetry; the site's part of the spec is idea #759):
 - the half that depends on the spec MAJOR, `product-lines/<name>/<MAJOR>/products/site/build/`: its `render-site <course-dir>` reads the course through the parser of the spec MAJOR, the one its checks use (for `linear-fr@1`, `product-lines/linear-fr/1/course/parser.js`), and prints its published parts, the words, the URL scheme and the language of the site as one JSON document, whose shape the MAJOR's `site.schema.yaml` fixes (for `linear-fr@1`, `product-lines/linear-fr/1/products/site/build/README.md`);
 - the half that depends on the target only, here: `build-site` reads `spec: <name>@<MAJOR>` in the course's `course.yaml`, refuses (exit 2) a spec or a MAJOR with no `products/site/build/render-site`, runs it, validates its output against the MAJOR's `site.schema.yaml` (the `ajv` of the spec directives the MAJOR declares), then has Astro lay the document out and Pagefind index the pages.
 

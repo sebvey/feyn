@@ -1,147 +1,73 @@
-# linear-fr : le protocole
+# linear-fr : le professeur
 
 | Reader | Comes for | Opens |
 |---|---|---|
 | creator | nothing here: what a course is | [`../../course/README.md`](../../course/README.md), [`../../course/templates/README.md`](../../course/templates/README.md) |
-| builder | the composition of the teacher, the protocol to inject, learner memory, the keys | [Composition](#composition), [`composition.yaml`](composition.yaml), [`rules.yaml`](rules.yaml), [Clés et paramètres](#clés-et-paramètres), [`templates/learner/`](templates/learner/) |
-| verifier | the rules of the protocol as data, their method; what a teacher loads and when | [`rules.yaml`](rules.yaml), [`spec-directives/1/README.md`](../../../../../spec-directives/1/README.md#2-conformance) section 2, [Composition](#composition) |
-| spec writer | how a rule of the protocol is named and written | [Notation](#notation), [Règles d'écriture](#règles-décriture), [`rules.yaml`](rules.yaml), [`../../decisions/`](../../decisions/), [`../../CHANGELOG.md`](../../CHANGELOG.md) |
+| builder | what a teacher of this spec must do, what it needs and what it retains of the learner, which a teacher implementation makes hold | [Capacités](#capacités), [Mémoire de l'apprenant](#mémoire-de-lapprenant), [Comportements attendus](#comportements-attendus) |
+| verifier | how a protocol rule is judged | [Comportements attendus](#comportements-attendus) |
+| spec writer | how a protocol rule is written and classed | [Définitions](#définitions), [Comportements attendus](#comportements-attendus), [`../../decisions/`](../../decisions/), [`../../CHANGELOG.md`](../../CHANGELOG.md) |
 
 The readers are defined in [`spec-directives/README.md`](../../../../../spec-directives/README.md#the-readers).
 
-Le protocole pédagogique de `linear-fr`, la partie de la spec que le professeur exécute : des règles nommées par un slug, en familles, toutes dans [`rules.yaml`](rules.yaml), leur seule source. Ce fichier dit comment une règle s'écrit et n'en énonce aucune. Le protocole a la version de la spec (le `README.md` du MAJOR) ; ajouter ou changer une règle est un MINOR de la spec (`spec-directives/1/README.md` section 6). Le build du professeur place les règles de chaque partie là où le dit la [Composition](#composition) : les permanentes dans les instructions du professeur, celles d'un moment chargées à ce moment, à côté du modèle d'instructions, des deux lexiques et des paramètres.
+Ce que la spec `linear-fr` attend d'un professeur : ce qu'il fait, observable dans la conversation ou dans ce qu'il retient de l'apprenant, et ce dont il a besoin pour le faire. Le professeur est le produit que cette spec fixe sans nommer de cible : un professeur construit pour Claude Code, ou pour une autre cible, tient les mêmes comportements avec ses propres moyens, que son implémentation choisit et relie aux comportements qu'ils servent (décision `three-layers-of-a-product`). Le tamis entre la spec et l'implémentation : un professeur passé à l'échelle, sans mémoire locale ni skills, devrait-il encore le tenir ? Oui, c'est la spec ; non, c'est l'implémentation ; une chose qui mêle les deux est scindée.
 
-**Langue : le français, une exception bornée.** Les règles et ce fichier sont en français, la langue de la spec (`language: fr` dans `spec.yaml` ; décision `language-policy`, `docs/decisions/language-policy.md`) ; les clés, les ids et les slugs restent en anglais. Un professeur ou un cours d'une autre langue suit une autre spec, pas une traduction de celle-ci (décision `lexicon-not-language-pack`).
+**Langue : le français.** Ce fichier et les comportements attendus sont en français, la langue de la spec (`language: fr` dans `spec.yaml` ; décision `language-policy`) ; les clés, les ids et les slugs restent en anglais. Un professeur d'une autre langue suit une autre spec, pas une traduction de celle-ci (décision `lexicon-not-language-pack`).
 
-## Notation
+## Définitions
 
-- `{group.key}` (un point) : une clé de l'un des deux lexiques de la spec, `course/lexicon.yaml`, les mots des fichiers du cours (`course/README.md` section 7), ou `products/teacher/lexicon.yaml`, les mots que le professeur dit et écrit. Toute phrase littérale que l'apprenant voit, tout mot de l'apprenant auquel une règle réagit, tout titre et toute valeur écrits dans la mémoire de l'apprenant, la typographie. Le build du professeur la remplace par la valeur du lexique (une liste par ses éléments entre « », séparés par des virgules). Toutes les clés sont listées dans [Clés et paramètres](#clés-et-paramètres).
-- `{course.<name>}` : un paramètre du cours, tiré de `course.yaml` ; `{classroom.<name>}` : un paramètre de la classe, tiré de `course.lock`. Le build les remplace aussi.
-- `{n}`, `{title}`… (sans point) : un emplacement dans une valeur, que le professeur remplit quand il parle ou écrit.
-- `course/` est la copie du cours dans la classe, en lecture seule ; `learner/` est la mémoire de l'apprenant, les trois fichiers de `products/teacher/templates/learner/`.
-- Les règles sont dans [`rules.yaml`](rules.yaml), par groupes, dans l'ordre des familles. Un groupe a un `id` (son slug), un `title`, un `purpose` (ce à quoi sert le groupe), une `category` (sa famille), une `method` (`demonstration`, par les fresh tests) et ses `rules`. Une famille est un groupe dont l'`id` est sa catégorie : il porte les règles placées directement sous la famille, et les autres groupes de la famille le suivent.
-- Une règle a un `id` (son slug), un `level`, un `text`, et peut avoir un `why` (ce que fait le professeur sans la règle, là où une dérive a été vue dans un test ou une session). Chaque règle est testable.
-- Une règle est nommée par un slug, comme une décision (décision `rules-named-by-slug`) : deux à cinq mots, en minuscules, reliés par des tirets, qui nomment le comportement, en anglais quelle que soit la langue de la spec. Une autre règle la cite en code, « (règle `one-question-per-message`) », comme le font les tableaux, le `README.md` du MAJOR, `course/README.md` et les tests ; une décision ne cite aucun id de règle (décision `decision-format`). Une règle n'a pas de numéro : son ordre et sa famille peuvent changer, son slug non ; le slug d'une règle retirée n'est jamais réutilisé.
-- Le slug d'un groupe a la forme de celui d'une règle, à ceci près qu'un mot suffit, et partage leur espace de noms : aucun groupe et aucune règle n'ont le même slug (décision `rule-groups-replace-ranges`). Un groupe se cite en code après « groupe » ou « group » ; un ensemble de règles se cite par un groupe, jamais par une plage « X à Y ».
+Les mots que les comportements attendus emploient avec un sens fixé ici. Un comportement emploie le mot, il ne le redéfinit pas.
 
-## Règles d'écriture
+- **L'apprenant** : la personne qui suit le cours avec le professeur.
+- **Une session** : une conversation entre l'apprenant et le professeur, de son ouverture à son arrêt ou à sa coupure.
+- **Le parcours** : l'ordre des domaines, des concepts et des unités que le cours fixe ; une annexe est hors du parcours.
+- **Le concept en cours** : le concept du parcours que le professeur enseigne, ou qu'il reprendra à la prochaine session.
+- **La mémoire de l'apprenant** : ce que le professeur retient de l'apprenant d'une session à l'autre (section [Mémoire de l'apprenant](#mémoire-de-lapprenant)) ; son stockage est à l'implémentation.
 
-Décidées par le mainteneur le 2026-10-27 (débrief, issue #92) et le 2026-10-28 (issue #122) ; chaque rédacteur les tient.
+## Capacités
 
-- Une règle se suffit à elle-même : les tests la citent par son slug et la lisent seule. Elle nomme ce dont elle parle : aucun pronom dont le nom est dans une autre règle, aucun « ci-dessus ».
-- Une règle dit un comportement, qu'un test vérifie seul. Plusieurs clés, éléments ou branches d'un même acte, une borne écrite dans l'acte, une lecture nommée comme source de l'acte, ou une phrase ou une formule fixe dite avant le premier appel d'outil (la forme de la règle de la phrase d'attente) restent dans une règle. Deux actes qu'un test signalerait à part sont deux règles : à des moments différents, ou l'un dans le texte et l'autre dans les appels d'outil ou dans `learner/` ; un message entier envoyé sans appel d'outil est un comportement à côté de ce que dit le message. Une proposition qui rappelle un comportement qu'une autre règle porte peut rester ; les tests citent la règle qui le porte. Une règle scindée en deux reçoit deux slugs.
-- Le `text` et le `why` d'une règle tutoient le professeur ; ils ne parlent jamais de lui à la troisième personne.
+Ce dont un professeur a besoin pour tenir ses comportements, quelle que soit sa cible. Une implémentation fournit chacune par un moyen de son choix ; un comportement qui en dépend la suppose, il ne dit pas comment elle est fournie. Une capacité n'est ici que si un comportement attendu la suppose : la liste suit les comportements, et chaque sujet qui en écrit l'ajuste.
 
-## Composition
+- **Lire le cours** : les fichiers du cours, tels que la spec les fixe (`course/README.md`), dont la carte du cours et ses annexes, et le lexique des fichiers du cours de la spec, dont sa typographie.
+- **Retrouver et enregistrer ce qu'il sait de l'apprenant** : lire la mémoire de l'apprenant à l'ouverture d'une session, y écrire au fil de la session.
+- **Connaître les adresses du site** : l'adresse du site du cours, de la carte des domaines, et de la page de chaque domaine, de chaque concept et de chaque annexe.
+- **Chercher hors du cours, ou savoir qu'il ne le peut pas** : trouver une source quand l'apprenant demande ce que le cours ne couvre pas.
+- **Montrer un schéma, ou savoir qu'il ne le peut pas** : afficher un schéma du cours à l'apprenant, ou le savoir impossible et le dire.
+- **Connaître le cours d'un coup d'œil** : le titre et « L'essentiel » de chaque concept et de chaque annexe, à tout moment de la session.
 
-La composition du professeur est ce dont un professeur est fait, à côté de la façon dont il se comporte (le protocole) : cinq parties, chacune définie par le moment où elle se charge et par ce qu'elle tire de la spec, du cours, de la mémoire de l'apprenant et de la classe. C'est une donnée, dans [`composition.yaml`](composition.yaml), dont l'en-tête nomme les listes fermées de `loads` et de `from` ; cette section la décrit. Elle ne nomme aucun mécanisme d'une cible : la façon dont une partie se réalise appartient au build du professeur (`teacher-builder/`), si bien qu'une seconde cible se construit depuis la même composition.
+## Mémoire de l'apprenant
 
-| Partie | Se charge | Tire de |
+Ce que le professeur retient de l'apprenant d'une session à l'autre, et ce que chaque chose veut dire. Où et sous quelle forme elle est rangée (des fichiers, des titres, des lignes) est à l'implémentation. Une chose n'est ici que si un comportement attendu dit quand le professeur l'écrit et un autre quand il la lit (sujet `learner-memory` de `rules.yaml`).
+
+- **Le profil** : le surnom de l'apprenant et ses réponses d'accueil, avec ses mots.
+- **La prochaine étape** : le concept qui vient, ou l'entraînement en cours ; à l'arrêt, la question restée en attente (son cas, la question, ce que l'apprenant avait déjà juste).
+- **Le statut des concepts** : chaque concept en cours, validé, sauté ou à revoir ; un concept sans statut est à faire.
+- **Le cours fini** : que le dernier concept du parcours a été validé.
+- **Les cas déjà posés** : pour chaque concept, les cas que l'apprenant a déjà eus, et quand.
+- **Les mini-récaps** : quand le dernier a été fait.
+- **Les annexes vues** : celles que l'apprenant a suivies.
+- **Les leviers** : ce qui marche avec l'apprenant.
+- **Les vigilances** : les difficultés pas encore surmontées, rattachées à leur concept.
+- **Les acquis** : ce que l'apprenant a montré avoir compris, une vigilance surmontée.
+- **Les préférences** : ses demandes sur la forme du cours, avec le fait qui les a montrées.
+
+## Comportements attendus
+
+Les comportements attendus sont dans `rules.yaml`, la forme d'un fichier de règles des directives de spec (`spec-directives/1/README.md` section 2). Ce fichier dit comment un comportement s'écrit et se classe ; il n'en énonce aucun.
+
+**Un comportement** a :
+- un `id`, son slug : deux à cinq mots, en minuscules, reliés par des tirets, en anglais, qui nomment le comportement (décision `rules-named-by-slug`) ; le slug d'un comportement retiré n'est jamais réutilisé ;
+- un `text`, à la troisième personne : « Le professeur… ». Il dit ce que fait le professeur, jamais comment une implémentation l'y amène ; il se suffit à lui-même, sans pronom dont le nom est dans un autre comportement ;
+- un `why`, obligatoire ici, plus strict que les directives de spec : la raison pour laquelle il est attendu, qui peut porter une preuve (une dérive vue dans une session ou un test) ; un comportement sans raison à donner n'est pas attendu ;
+- sa façon d'être jugé : `method` `test` et un `check` pour un script qui lit la transcription, ou le cours avant et après la session (tant que le professeur n'a pas de scripts, un `criterion` dit ce que le script vérifiera), `method` `inspection` et un `criterion` pour un juge qui lit la transcription ou pour la lecture de la mémoire de l'apprenant après la session. Le `criterion` dit ce que le juge regarde et à partir de quoi le comportement est tenu ou non.
+
+Une permission n'est pas un comportement à part : elle devient la limite du comportement qu'elle assouplit, dans son `criterion`, là où le juge la lit. Les comportements n'ont pas de niveau. Une mise en place ou un aiguillage (« à ce moment, lis… ») se réécrit en comportement ; un résumé d'autres comportements n'en est pas un.
+
+**Leur classement**, que `spec.yaml` déclare sous `lists.classifications.teacher` avec le fichier `rules.yaml` :
+
+| Clé | Ce qu'elle dit | Valeurs |
 |---|---|---|
-| `permanent` | `every-message` | les règles du protocole avec le `purpose` de leurs familles et de leurs groupes (spec, `rules.yaml`), la posture (cours, `plan.md` sous `headings.onboarding`), la carte du cours et les noms des fichiers du cours (cours, `course.yaml`), les deux lexiques (spec, `lexicon.yaml` et `../course/lexicon.yaml`), les paramètres de la classe (classe, `course.lock`) |
-| `on-demand` | `at-a-moment` | à chacun de ses moments (accueil, reprise, un schéma demandé ou déclaré au sous-concept en cours, l'arrêt, une remise à zéro), les règles de ce moment (groupe `onboarding`, groupe `resume`, la famille `stop`, des règles du groupe `diagram-showing` ; aucune encore pour une remise à zéro) et ce que ce moment lit |
-| `course-reads` | `during-the-session` | le cours tel qu'il est copié, lu quand le protocole le dit : le fil rouge, le fichier de domaine, le `concept.md` du concept (la matière) et son `teaching.md` (la méthode), `sources.md` sur demande, le glossaire du cours |
-| `learner-memory` | `at-start-and-save-points` | les modèles de l'apprenant (spec, `templates/learner/`), les règles de la mémoire (la famille `learner-memory`), les trois fichiers de `learner/` ; rien du cours |
-| `permissions` | `always` | ce qu'un professeur écrit, `learner/` et ses commits, et ce qu'il n'écrit jamais, `course/` (une règle du groupe `learner-memory`) |
+| `subject` | le sujet du comportement, l'axe du fichier : un groupe par sujet | `session-flow` (le déroulé de la session), `teaching-a-unit` (enseigner une unité), `message-form` (la forme d'un message), `storyline` (le fil rouge), `sources-and-stances` (les sources et les postures), `learner-memory` (la mémoire de l'apprenant) |
+| `moment` | quand il s'applique | `session-start`, `onboarding`, `resume`, `domain-presentation`, `unit`, `stop`, `course-end`, `any` |
+| `judged-by` | ce que lit qui le juge | `transcript-script`, `transcript-judge`, `memory-reading`, `course-comparison` (le cours avant et après la session) |
 
-Deux lecteurs y viennent. Le builder, qui écrit le build du professeur : sa moitié qui dépend de ce MAJOR, [`build/render-parts`](build/README.md), lit `composition.yaml` et `rules.yaml` pour rendre chaque partie en texte, et la moitié à la racine (`teacher-builder/`) réalise les parties pour sa cible. Les fresh tests ([`tests/`](tests/README.md)) : ils jugent un professeur sur ce qu'il charge et quand, par le groupe `composition-loading`. `composition` (`check-spec`, `spec-directives/1/README.md` section 8) teste la forme du fichier, jamais son sens, quand le manifeste de la spec, `spec.yaml`, déclare le professeur, ce qu'il ne fait pas tant que le professeur est gelé.
-
-## Clés et paramètres
-
-Chaque clé et chaque paramètre que les règles emploient, en un seul endroit : les deux lexiques, `course/lexicon.yaml` et `products/teacher/lexicon.yaml`, s'écrivent depuis cette liste, et `lexicon-keys` (`check-spec`) vérifie que chaque clé existe dans l'un d'eux quand le manifeste de la spec, `spec.yaml`, déclare le professeur, ce qu'il ne fait pas tant que le professeur est gelé. Les valeurs sont données pour référence ; le lexique fait foi. Une valeur marquée *modèle* est un patron que le professeur suit, pas une chaîne fixe. La colonne « Used in » cite les règles de `rules.yaml` qui emploient la clé.
-
-**`course/lexicon.yaml`, le lexique des fichiers du cours (`course/README.md` section 7) : les clés employées ici**
-
-| Key | Value | Used in |
-|---|---|---|
-| `headings.onboarding` | « Accueil » (`plan.md` : la posture, puis les questions d'accueil) | `teacher-posture-from-plan`, `onboarding-questions-announced`, `onboarding-questions-order`, `onboarding-profile-written` |
-| `headings.unverified` | « Non vérifié » | `unverified-part-told` |
-| `headings.claims` | « Affirmations » | `origin-from-sources-file` |
-| `headings.references` | « Références » | `origin-from-sources-file` |
-| `headings.stances` | « Consensus et choix d'école » | `unverified-part-told` |
-| `headings.deepening` | « Approfondissement » | `deepening-read-in-aside` |
-| `typography.banned` | les caractères interdits (le tiret long, les flèches que liste `typography.banned`) | `course-language-typography` |
-| `typography.rules` | la typographie selon laquelle le professeur écrit : une espace avant « : », « ; », « ? », « ! » ; les guillemets « ». Elle ne répète pas l'interdit : `typography.banned` porte les caractères interdits (le tiret long, les flèches que liste `typography.banned`) | `course-language-typography` |
-
-**`products/teacher/lexicon.yaml`, le lexique du professeur : les groupes qu'ajoute le protocole**
-
-| Key | Value | Used in |
-|---|---|---|
-| `phrases.concept_title` | « Concept {n} : {title} » | `concept-title-link` |
-| `phrases.domain_title` | « Domaine {n} : {title} » | `domain-title-link` |
-| `phrases.site_link` | « le site web » | `first-message-site-and-requests`, `descriptive-site-links` |
-| `phrases.domains_map_link` | « la carte des domaines » | `resume-on-greeting`, `descriptive-site-links` |
-| `phrases.domains_one` | « son domaine » | `first-message-presents-course` |
-| `phrases.domains_many` | « ses {n} domaines » ({n} le nombre de domaines) | `first-message-presents-course` |
-| `phrases.concept_page_link` | « la page du concept {n} » | `validated-concept-page-link` |
-| `phrases.example_lead` | « Exemple : » | `example-question-quote-form`, `follow-up-quote-form` |
-| `phrases.question_lead` | « Question pour toi : » | `example-question-quote-form` |
-| `phrases.next_lead` | « La suite : » | `next-line-form` |
-| `phrases.continue_prompt` | « Des questions ? J'enchaîne ? » | `what-counts-as-one-question`, `next-line-form` |
-| `phrases.questions_announce` | « J'ai {count} questions pour toi, voici la première : » ({count} en lettres) | `several-questions-announced` |
-| `phrases.why` | « pourquoi ? » | `what-counts-as-one-question` |
-| `phrases.banned_question` | « as-tu compris ? » | `never-ask-if-understood` |
-| `phrases.reference_model` | *modèle* « {name}, au concept {n} » (« la DoD, au concept 11 ») | `concept-reference-form` |
-| `phrases.waiting_example` | *modèle* « Parfait {nickname}, je prépare le concept {n}. » | `waiting-sentence-first` |
-| `phrases.onboarding_setup` | « Je mets en place le cours. » | `onboarding-closing-sentence` |
-| `phrases.onboarding_ready` | « C'est prêt, on démarre. » | `onboarding-ready-message` |
-| `phrases.resume_opening` | « Je retrouve où on en était, un instant. » | `resume-opening-sentence` |
-| `phrases.stop_opening` | « Je sauvegarde ta progression, un instant. » | `stop-opening-sentence` |
-| `learner_says.faster` | « plus vite » | `first-message-site-and-requests`, `adapt-to-pace-requests` |
-| `learner_says.slower` | « plus lent » | `first-message-site-and-requests`, `adapt-to-pace-requests` |
-| `learner_says.example` | « exemple » | `first-message-site-and-requests`, `adapt-to-pace-requests` |
-| `learner_says.exercise` | « exercice » | `first-message-site-and-requests`, `adapt-to-pace-requests` |
-| `learner_says.continue` | liste, *modèle* : « on continue », « la suite » | `resume-on-continue` |
-| `learner_says.resume` | liste, *modèle* : « on reprend » | `resume-on-greeting` |
-| `learner_says.stop` | liste, *modèle* : « on s'arrête », « fin de session », « je dois y aller », « on reprendra » | `stop-opening-sentence` |
-| `learner_says.hurry` | liste, *modèle* : « je dois filer », « vite » | `hurried-departure` |
-| `memory_headings.next_step` | « Prochaine étape » | `resume-reads-progress-only`, `resume-recap-message`, `pending-question-retaught`, `practice-noted-in-next-step`, `practice-note-removed`, `course-path-offered-after-aside`, `untaught-notion-not-vigilance`, `save-next-step`, `earlier-concept-retrieved-at-resume` |
-| `memory_headings.concepts` | « Concepts » | `save-concept-statuses` |
-| `memory_headings.announced` | « Points annoncés pour plus tard » | `save-announced-ideas` |
-| `memory_headings.journal` | « Journal » | `save-journal-line`, `earlier-concept-retrieved-at-resume` |
-| `memory_headings.levers` | « Leviers » | `save-levers` |
-| `memory_headings.vigilances` | « Vigilances actives » | `save-vigilances` |
-| `memory_headings.acquired` | « Acquis » | `save-acquired` |
-| `memory_headings.preferences` | « Préférences » | `course-form-requests`, `save-preferences` |
-| `status.validated` | « validé » | `save-concept-statuses` |
-| `status.in_progress` | « en cours » | `save-concept-statuses` |
-| `status.skipped` | « sauté » | `skip-on-request`, `save-concept-statuses` |
-| `status.to_review` | « à revoir » | `save-concept-statuses` |
-| `memory.observation_line` | `date, [concept], fait : action` | `save-levers`, `save-vigilances` |
-| `memory.acquired_line` | `[concept] fait (date)` | `save-acquired` |
-| `memory.profile_line` | `- {label} : {answer}` (le libellé d'une question de « Accueil », la réponse de l'apprenant) | `onboarding-profile-written` |
-| `memory.journal_line` | « {date}, session {k} : {events}. » (date `YYYY-MM-DD`) | `save-journal-line` |
-| `memory.minirecap_entry` | « mini-récap {from}-{to} » | `save-journal-line` |
-| `memory.commit_message` | « {nickname} : {what} » | `commit-after-save-point` |
-| `memory.commit_validated` | « concept {n} validé » | `commit-after-save-point` |
-| `memory.commit_stop` | « arrêt » | `commit-after-save-point` |
-| `memory.onboarding` | « accueil » (le commit et la première ligne du journal) | `commit-after-save-point` |
-| `frozen_form.instructions` | « Consignes » | `follow-concept-instructions` |
-| `frozen_form.bank` | « Banque d'exemples » | `examples-from-bank` |
-| `frozen_form.drawing` | « Schéma » | `requested-diagram-shown` |
-| `frozen_form.storyline_facts` | « Faits du fil rouge utilisés » | `storyline-facts-section-unsaid` |
-| `frozen_form.usage` | « Usage » | `case-usage-respected` |
-| `frozen_form.explanation` | « Explication » | `explanation-from-case` |
-| `frozen_form.fallback` | « rechange » (un ancien qualificatif d'un cas supplémentaire, qu'aucun cas ne porte plus) | `follow-concept-instructions` |
-| `frozen_form.practice` | « entraînement » (un ancien qualificatif d'un cas supplémentaire, qu'aucun cas ne porte plus) | `practice-cases-chosen`, `earlier-concept-retrieved-at-resume` |
-| `frozen_form.aside` | « aparté » (un ancien qualificatif d'un cas supplémentaire, qu'aucun cas ne porte plus) | `asides-welcome` |
-
-Les titres, les statuts et les formats de ligne que portent les clés de `memory_headings`, de `status` et de `memory` sont ceux de `products/teacher/templates/learner/` : `products/teacher/lexicon.yaml` et les modèles de l'apprenant changent ensemble.
-
-**Paramètres du cours** (tirés de `course.yaml`, injectés par le build du professeur)
-
-| Parameter | Value | Used in |
-|---|---|---|
-| `course.title` | `title` | `teacher-posture-from-plan` |
-| `course.domain_count` | le nombre de `domains` | `first-message-presents-course` |
-| `course.storyline` | `storyline` (un chemin dans le dossier du cours) | `read-before-what-follows`, `examples-from-storyline` |
-| `course.glossary` | `glossary` (un chemin dans le dossier du cours) | `one-term-per-notion` |
-
-**Paramètres de la classe** (tirés de `course.lock`, injectés par le build du professeur)
-
-| Parameter | Value | Used in |
-|---|---|---|
-| `classroom.site_url` | l'URL du site du cours pour le canal de la classe | `first-message-site-and-requests`, `descriptive-site-links` |
-| `classroom.domains_url` | l'URL de la carte des domaines | `resume-on-greeting`, `descriptive-site-links` |
-| `classroom.domain_url` | l'URL de la page d'un domaine, avec l'emplacement `{n}` | `domain-title-link` |
-| `classroom.concept_url` | l'URL de la page d'un concept, avec l'emplacement `{nn}` : le numéro tel que l'écrit son `dir` (`09`, `A1`) | `validated-concept-page-link`, `concept-title-link` |
+Un groupe déclare son `subject` une fois pour ses comportements ; `moment` et `judged-by` se déclarent sur le comportement ou sur son groupe.

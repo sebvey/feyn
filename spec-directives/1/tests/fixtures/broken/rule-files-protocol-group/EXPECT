@@ -1,2 +1,0 @@
-check: rule-files
-message: group "onboarding" belongs to the family session-start, whose group does not come before it

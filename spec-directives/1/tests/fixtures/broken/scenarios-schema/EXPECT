@@ -1,2 +1,0 @@
-check: scenarios
-message: not valid against products/teacher/tests/scenario.schema.yaml: /turns/1/if

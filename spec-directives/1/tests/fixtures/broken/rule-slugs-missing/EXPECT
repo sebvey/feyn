@@ -1,2 +1,2 @@
 check: rule-slugs
-message: decisions/a-decision.md:8 cites rule "third-rule", which products/teacher/rules.yaml does not define
+message: cites rule "third-rule", which no rule file defines

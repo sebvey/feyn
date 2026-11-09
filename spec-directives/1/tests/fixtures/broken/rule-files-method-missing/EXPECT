@@ -1,0 +1,2 @@
+check: rule-files
+message: rule course-yaml-valid-against-schema: method is mandatory, on the rule or on its group

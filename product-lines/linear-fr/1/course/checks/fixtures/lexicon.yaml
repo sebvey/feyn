@@ -7,7 +7,7 @@ headings:
   stances: "Consensus et choix d'école"
   deepening: "Approfondissement"
   landmarks: "Se vérifier"
-  instruction: "Consigne au professeur"
+  teacher_note: "Consigne au professeur"
   foot: "Clôture"
   claims: "Affirmations"
   references: "Références"
@@ -42,7 +42,7 @@ unit_fields:
   misconceptions: "Idées fausses"
   root: "Racine"
   correction: "Correction"
-  instruction: "Consigne au professeur"
+  teacher_note: "Consigne au professeur"
 
 # The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`).
 unit_blocks:

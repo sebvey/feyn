@@ -1,23 +1,29 @@
 'use strict';
-// The manifest of a spec MAJOR, its spec.yaml (README.md section 8), read once for every test of
+// The manifest of a spec MAJOR, its spec.yaml (README.md section 1), read once for every test of
 // check-spec and for any program of the directives that needs the files or the lists of a spec:
 // none of them parses spec.yaml its own way. Its form is spec.schema.yaml, beside lib/: the
 // identity (name, major, directives, version, language), then `spec:` (the MAJOR's own files),
-// `course:` and `products:`, each role mapped to one path relative to the spec MAJOR, then
-// `lists:`, then `files:` (what each role holds and who reads it).
+// `course:` and `products:` (each product by its name), each role mapped to one path relative to
+// the spec MAJOR, then `lists:`, then `files:` (what each role holds and who reads it).
 //   read(text)      the manifest of a spec.yaml's text (null when the file is missing): a reader
 //                   that never throws; a manifest it cannot read declares nothing
-//   m.path(owner, role)   the path of a role, `spec`, `course` or a product (`site`, `teacher`) as
-//                         owner; null when the manifest does not declare it
+//   m.path(owner, role)   the path of a role, `spec`, `course` or a product's name as owner; null
+//                         when the manifest does not declare it
 //   m.roles()             every role declared, in the manifest's order: [{ owner, role, ref, path }],
 //                         `ref` its dotted key (`spec.readme`, `course.rules`, `products.site.build`)
-//   m.products()          the products declared, in the manifest's order
+//   m.products()          the products declared, by name, in the manifest's order
+//   m.owners()            `course`, then the products: the owners of a rule file or a lexicon
+//   m.owned(role)         the role of that name of each owner that declares it, in that order:
+//                         [{ owner, role, ref, path }] (`rules`: the rule files)
 //   m.entry(ref)          the entry of `files:` for a role's ref ({ holds, readers }), null when none
-//   m.list(name)          a list of `lists:` (`categories`, `families`), null when undeclared
+//   m.classifications(owner)  the classifications of `lists.classifications.<owner>`, the
+//                         rules of that owner's rule file: { key: [values] }, null when undeclared
+//   m.classified()        the owners `lists.classifications` names, in its order
 //   m.lexicon(owner)      the keys of `lists.lexicons.<owner>`, [[group, key, kind], ...], null
 //                         when undeclared
+//   m.lexiconOwners()     the owners `lists.lexicons` names, in its order
 //   m.nothing(...refs)    the result of a test that checks nothing for want of the declared roles
-//                         it names (`products.teacher.rules`): check-spec prints its reason
+//                         it names (`course.rules`): check-spec prints its reason
 //   m.line(key)           the source line of a top-level key, for what a line pattern reads
 //   m.validate()          the failures of the manifest against spec.schema.yaml: [{ line, message }],
 //                         each naming the key at fault, for spec-yaml
@@ -40,7 +46,10 @@ function describe(error) {
   const p = error.params || {};
   if (error.keyword === 'required') return `missing key ${key(p.missingProperty)}`;
   if (error.keyword === 'additionalProperties') return `unknown key ${key(p.additionalProperty)}`;
-  if (error.keyword === 'propertyNames') return `${key(p.propertyName)}: the key is not lowercase words joined by underscores`;
+  if (error.keyword === 'propertyNames') {
+    const names = error.parentSchema && error.parentSchema.propertyNames;
+    return `${key(p.propertyName)}: the key is not ${(names && names.description) || 'a slug'}`;
+  }
   const what = error.parentSchema && error.parentSchema.description;
   if (what && ['type', 'pattern', 'minimum', 'enum', 'const', 'minItems', 'uniqueItems'].includes(error.keyword)) {
     return `${at} ${JSON.stringify(error.data)} is not ${what}`;
@@ -73,7 +82,8 @@ function read(text) {
     const s = owner === 'course' || owner === 'spec' ? doc[owner] : (isMap(doc.products) ? doc.products[owner] : null);
     return isMap(s) ? s : null;
   };
-  const products = () => (doc && isMap(doc.products) ? Object.keys(doc.products).filter((p) => isMap(doc.products[p])) : []);
+  // a product named course or spec, which the schema refuses, is not one
+  const products = () => (doc && isMap(doc.products) ? Object.keys(doc.products).filter((p) => isMap(doc.products[p]) && p !== 'course' && p !== 'spec') : []);
   const lists = () => (doc && isMap(doc.lists) ? doc.lists : {});
   const ref = (owner, role) => (owner === 'course' || owner === 'spec' ? `${owner}.${role}` : `products.${owner}.${role}`);
   const path_ = (owner, role) => {
@@ -110,9 +120,23 @@ function read(text) {
       for (const k of r.split('.')) v = isMap(v) ? v[k] : null;
       return isMap(v) && typeof v.holds === 'string' && Array.isArray(v.readers) ? { holds: v.holds, readers: v.readers.slice() } : null;
     },
-    list(name) {
-      const v = lists()[name];
-      return Array.isArray(v) && v.every((x) => typeof x === 'string') ? v.slice() : null;
+    owners: () => ['course', ...products()],
+    owned(role) {
+      return ['course', ...products()].map((owner) => ({ owner, role, ref: ref(owner, role), path: path_(owner, role) })).filter((r) => r.path !== null);
+    },
+    classifications(owner) {
+      const all = lists().classifications;
+      const keys = isMap(all) ? all[owner] : null;
+      if (!isMap(keys)) return null;
+      const out = {};
+      for (const [key, values] of Object.entries(keys)) {
+        if (Array.isArray(values) && values.every((x) => typeof x === 'string')) out[key] = values.slice();
+      }
+      return out;
+    },
+    classified() {
+      const all = lists().classifications;
+      return isMap(all) ? Object.keys(all) : [];
     },
     lexicon(owner) {
       const all = lists().lexicons;
@@ -124,6 +148,10 @@ function read(text) {
         for (const [key, kind] of Object.entries(ks)) keys.push([group, key, kind === 'list' ? 'list' : 'string']);
       }
       return keys;
+    },
+    lexiconOwners() {
+      const all = lists().lexicons;
+      return isMap(all) ? Object.keys(all) : [];
     },
     ref,
     nothing(...refs) {

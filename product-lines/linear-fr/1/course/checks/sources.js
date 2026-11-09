@@ -23,7 +23,7 @@ const short = (s) => (s.length > 50 ? s.slice(0, 50) + '…' : s);
 const fixedKeys = (form) => (form ? [form.concept_file.head, ...form.concept_file.foot.blocks].filter((p) => p.published).map((p) => p.heading) : []);
 
 // the anchors of concept.md: the ids of its section and unit headings (its tree, course/parser.js),
-// and its published head and blocks of the foot by their lexicon value (the instruction is not
+// and its published head and blocks of the foot by their lexicon value (the teacher note is not
 // one: it is not published)
 function anchorsOf(ctx, c, H) {
   const cm = ctx.md(c.dir + '/concept.md');
@@ -198,7 +198,7 @@ function run(ctx) {
   return out;
 }
 
-// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 1),
 // the course through the parser
 const reads = ['course.form', 'course.lexicon', 'course.parser'];
 

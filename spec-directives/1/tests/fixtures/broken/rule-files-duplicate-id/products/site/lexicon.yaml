@@ -1,0 +1,5 @@
+# fixture: the lexicon of the site, with the keys the manifest lists
+nav:
+  domains: "Domaines"
+  storyline: "Fil rouge"
+  glossary: "Glossaire"

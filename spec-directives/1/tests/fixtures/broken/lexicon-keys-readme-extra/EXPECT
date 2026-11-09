@@ -1,2 +1,2 @@
 check: lexicon-keys
-message: course/README.md:15 key unit_blocks.summary of the table of the course lexicon is not in lists.lexicons.course (spec.yaml)
+message: key unit_blocks.summary of the table of the course lexicon is not in lists.lexicons.course (spec.yaml)

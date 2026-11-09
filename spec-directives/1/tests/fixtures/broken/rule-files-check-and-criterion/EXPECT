@@ -1,0 +1,2 @@
+check: rule-files
+message: rule leaf-has-a-case: check and criterion both

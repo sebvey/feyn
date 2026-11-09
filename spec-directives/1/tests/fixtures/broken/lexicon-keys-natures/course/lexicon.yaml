@@ -1,5 +1,6 @@
-# A lexicon with one defect: no natures group (natures.fact). Otherwise the course lexicon of the
-# spec fixture (valid/course/lexicon.yaml).
+# The lexicon of the course files of the spec fixture, tested by lexicon-keys (check-spec): the
+# groups of course/README.md section 7, with the values of the course fixtures' lexicon
+# (product-lines/linear-fr/1/course/checks/fixtures/lexicon.yaml).
 
 # Section titles of the course files.
 headings:
@@ -54,6 +55,7 @@ markers:
   consensus: "consensus"
   school: "école"
   course: "cours"
+
 
 # The words of a concept reference in reader text: « concept 4 », « concepts 5 et 7b »,
 # « annexe A2 » (course/README.md 3.5).

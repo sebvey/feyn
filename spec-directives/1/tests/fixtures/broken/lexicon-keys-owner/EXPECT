@@ -1,0 +1,2 @@
+check: lexicon-keys
+message: lists.lexicons.teacher lists keys of a lexicon the manifest does not declare (products.teacher.lexicon)

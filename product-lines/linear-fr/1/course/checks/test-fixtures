@@ -4,8 +4,8 @@
 // says whether every run gave the expected result (a real course is checked by
 // product-lines/check-course courses/<id>, not here; the tests of the spec's own files, check-spec,
 // are tested by spec-directives/<MAJOR>/tests/test-fixtures). The severity of each check follows
-// from its rules (spec-directives/1/README.md section 5): the test reads course/rules.yaml itself
-// and holds the exit codes to it.
+// from its rules (README.md section 3 of this MAJOR): the test reads course/rules.yaml itself, holds
+// the checks ./rules.js gives (the module check-course loads) and the exit codes to it.
 //   --list                         names every check with its category and
 //                                  its severity, as course/rules.yaml gives them; the check it
 //                                  does not run (taught-check) marked "not run here"
@@ -51,8 +51,8 @@ const notOk = (r) => checkLines(r).filter((l) => !l.endsWith(': ok')).join(' | '
 const failing = (r) => r.lines.filter((l) => l.includes(': fail: '));
 const ids = (r) => [...new Set(checkLines(r).map((l) => l.slice(0, l.indexOf(':'))))];
 
-// the severity of each check, read here from course/rules.yaml (spec-directives/1/README.md
-// section 5): it blocks when its rules are requirements verified by test, otherwise it reports
+// the severity of each check, read here from course/rules.yaml (README.md section 3 of this
+// MAJOR): it blocks when its rules are requirements verified by test, otherwise it reports
 const RULED = new Map(); // check -> { category, levels, methods }
 {
   const yaml = directives.lib('yaml-lines');
@@ -67,6 +67,16 @@ const RULED = new Map(); // check -> { category, levels, methods }
   }
 }
 const severityOf = (c) => ([...c.levels].join() === 'requirement' && [...c.methods].join() === 'test' ? 'blocks' : 'reports');
+
+// ./rules.js, the module check-course loads, gives each check of course/rules.yaml the category and
+// the severity read above
+{
+  const loaded = require('./rules').load(here).checks;
+  const wrong = loaded.filter((c) => !RULED.has(c.id) || RULED.get(c.id).category !== c.category || severityOf(RULED.get(c.id)) !== c.severity);
+  const missing = [...RULED.keys()].filter((id) => !loaded.some((c) => c.id === id));
+  report('rules.js gives every check of course/rules.yaml the category and the severity of its rules',
+    loaded.length > 0 && !wrong.length && !missing.length, `wrong: ${wrong.map((c) => `${c.id} ${c.category} ${c.severity}`).join(', ') || 'none'}; missing: ${missing.join(', ') || 'none'}`);
+}
 
 // --list: every check of course/rules.yaml, its category and its severity as they follow from its
 // rules; the checks of method test run here, and the tests of check-spec, which verify no rule,

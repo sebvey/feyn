@@ -1,0 +1,10 @@
+# fixture: the rules of a product, whose owner declares no classification; a group whose slug is a rule's
+groups:
+  - id: page-shows-the-title
+    purpose: What the site shows of a course.
+    method: inspection
+    rules:
+      - id: page-shows-the-title
+        text: The site shows the title of the course on every page.
+        why: A reader who lands on a page from a search knows which course it belongs to.
+        criterion: A reader finds the title of the course on each page.

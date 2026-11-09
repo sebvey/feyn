@@ -1,26 +1,30 @@
-# fixture: the manifest of a spec MAJOR in its alpha, which declares the files the fixture holds
+# fixture: the manifest of a spec MAJOR in its alpha, which declares the files the fixture holds; a role of the course the schema does not know
 name: fixture-fr
 major: 1
 directives: 1
 version: 1.0.0-alpha
 language: fr
 
+spec:
+  manifest: spec.yaml
+  readme: README.md
+  changelog: CHANGELOG.md
+  decisions: decisions
 course:
   readme: course/README.md
   rules: course/rules.yaml
   lexicon: course/lexicon.yaml
-  index: course/index.md
   schemas: course/schemas
+  index: course/README.md
 products:
-  teacher:
-    readme: products/teacher/README.md
-    rules: products/teacher/rules.yaml
-    lexicon: products/teacher/lexicon.yaml
-    composition: products/teacher/composition.yaml
-    tests: products/teacher/tests
+  site:
+    lexicon: products/site/lexicon.yaml
+    rules: products/site/rules.yaml
 lists:
-  categories: [structure, pedagogy, writing, sources, diagrams]
-  families: [session-start, domain-presentation, loop, message-form, storyline, stances-and-sources, practice-skip-asides, learner-memory, stop]
+  classifications:
+    course:
+      level: [requirement, recommendation, permission]
+      category: [structure, pedagogy, writing, sources, diagrams]
   lexicons:
     course:
       headings: {essentials: string, stances: string, deepening: string, landmarks: string, instruction: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
@@ -32,3 +36,20 @@ lists:
       concept_refs: {concept: string, concepts: string, and: string, annex: string}
       source_types: {primary: string, secondary: string, marketing: string}
       typography: {banned: list}
+    site:
+      nav: {domains: string, storyline: string, glossary: string}
+files:
+  spec:
+    manifest: {holds: "the manifest", readers: [builder, verifier, spec writer]}
+    readme: {holds: "the entry to the spec", readers: [creator, builder, verifier, spec writer]}
+    changelog: {holds: "the changes of the spec", readers: [spec writer]}
+    decisions: {holds: "the decisions of the spec", readers: [spec writer]}
+  course:
+    readme: {holds: "what a course is", readers: [creator, builder]}
+    rules: {holds: "the rules of a course", readers: [verifier, spec writer]}
+    lexicon: {holds: "the lexicon of the course files", readers: [creator, builder]}
+    schemas: {holds: "the schemas of a course", readers: [builder, verifier]}
+  products:
+    site:
+      lexicon: {holds: "the lexicon of the site", readers: [builder]}
+      rules: {holds: "the rules of the site", readers: [verifier, spec writer]}

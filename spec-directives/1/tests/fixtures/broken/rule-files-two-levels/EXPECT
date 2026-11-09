@@ -1,2 +1,2 @@
 check: rule-files
-message: check course-yaml verifies rules of two levels
+message: check course-yaml verifies rules of two values of level

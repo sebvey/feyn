@@ -1,0 +1,150 @@
+# The loading of the means of the teacher of linear-fr@1: the five parts a classroom's teacher is
+# made of, each by when it is loaded and what it draws from, as data, in the teacher
+# implementation of linear-fr@1 (decision teacher-implementation-folder). render-parts (this
+# folder) renders the parts as text, teacher-builder/build-teacher realises them; it is how the
+# means reach the teacher, not a means of its own (means.yaml). README.md (this folder) describes
+# how it is rendered. It names no mechanism of a target: how a part is realised is
+# build-teacher's.
+#
+# A part: `id`, `loads`, `draws`; the part `on-demand` adds `moments`.
+# `loads`, when the part is loaded, one of:
+#   every-message             present at every message of the teacher
+#   at-a-moment               loaded when one of its moments comes, and only then
+#   during-the-session        read by the teacher during a teaching session, when an instruction says
+#   at-start-and-save-points  read at the start of a teaching session, written at each save point
+#   always                    in force from the teacher build on, whatever the teacher does
+# `draws`, a list of entries, each `from`, `source` and `what`. `from`, where the source lives, one
+# of:
+#   spec            a file or folder of the spec MAJOR (product-lines/linear-fr/1/)
+#   implementation  a file or folder of this implementation folder (teacher-builder/linear-fr/1/),
+#                   which render-parts reads and renders; it is no path of the classroom
+#   course          a file of the course folder, copied as is into the classroom's course/
+#   learner         a file of learner memory, the classroom's learner/
+#   classroom       a file or folder the teacher build makes
+# `source`, the file or folder read, relative to its `from`: `{course.<name>}` is a course
+# parameter (those instructions.yaml cites), `<dir>` the `dir` of the concept at hand in
+# course.yaml, `<file>` the `file` of the domain at hand. `what`, what is drawn, in a few words, in
+# French, since the teacher reads it (decision language-policy); a key of the spec's lexicon of the
+# course files (`headings.onboarding`) names a heading of a course file.
+# A moment of `on-demand`: `id`, `when` (in French, as `what`: the teacher reads it to recognise
+# the moment), `groups` (the ids of the groups of instructions.yaml loaded whole at that moment,
+# empty while the moment has none) and `draws`, as a part's.
+parts:
+  - id: permanent
+    loads: every-message
+    draws:
+      - from: implementation
+        source: instructions.yaml
+        what: les instructions du professeur et le but de leurs groupes, sauf les groupes qu'un moment charge
+      - from: implementation
+        source: lexicon.yaml
+        what: les phrases et les mots du professeur que les instructions nomment par clé
+      - from: course
+        source: plan.md
+        what: la posture, le paragraphe sous headings.onboarding
+      - from: course
+        source: course.yaml
+        what: la carte du cours, ses domaines, ses concepts et ses annexes, leurs objectifs, leurs prérequis et leurs fichiers, et les autres fichiers du cours
+      - from: course
+        source: <dir>/concept.md
+        what: la section headings.essentials de chaque concept et de chaque annexe, dans la carte du cours
+      - from: spec
+        source: course/lexicon.yaml
+        what: les mots des fichiers du cours que les instructions nomment par clé
+      - from: classroom
+        source: course.lock
+        what: les paramètres de la classe, site_url et les adresses du site, le canal
+
+  - id: on-demand
+    loads: at-a-moment
+    draws:
+      - from: implementation
+        source: instructions.yaml
+        what: les groupes d'instructions de chaque moment ci-dessous
+    moments:
+      - id: onboarding
+        when: un nouvel apprenant, au premier message d'une session de cours
+        groups: [onboarding]
+        draws:
+          - from: course
+            source: plan.md
+            what: les questions d'accueil sous headings.onboarding
+      - id: resume
+        when: un apprenant qui revient, au premier message d'une session de cours
+        groups: [resume]
+        draws:
+          - from: learner
+            source: parcours.md
+            what: où en est l'apprenant, la prochaine étape et une question en attente
+      - id: diagram
+        when: l'apprenant demande un schéma, ou vient le message d'une unité pour laquelle concept.md déclare un schéma
+        groups: [diagram]
+        draws:
+          - from: course
+            source: <dir>/concept.md
+            what: les schémas que le concept déclare, leur titre, leur légende et l'unité qu'ils illustrent
+      - id: stop
+        when: l'apprenant dit que la session de cours s'arrête
+        groups: [stop]
+        draws:
+          - from: learner
+            source: parcours.md
+            what: la mémoire de l'apprenant relue comme le prochain professeur la lit
+      - id: reset
+        when: l'apprenant demande à reprendre le cours au début
+        groups: []
+        draws:
+          - from: implementation
+            source: templates/learner/
+            what: les modèles de l'apprenant, où revient la mémoire de l'apprenant
+
+  - id: course-reads
+    loads: during-the-session
+    draws:
+      - from: course
+        source: "{course.storyline}"
+        what: le fil rouge
+      - from: course
+        source: <file>
+        what: la fiche du domaine en cours
+      - from: course
+        source: <dir>/concept.md
+        what: la matière du concept en cours, ses unités, leurs cas et leurs consignes au professeur
+      - from: course
+        source: <dir>/sources.md
+        what: les sources du concept, à la demande
+      - from: course
+        source: "{course.glossary}"
+        what: les termes du cours, un par notion
+
+  - id: learner-memory
+    loads: at-start-and-save-points
+    draws:
+      - from: implementation
+        source: templates/learner/
+        what: les modèles de l'apprenant, la forme de la mémoire de l'apprenant
+      - from: implementation
+        source: instructions.yaml
+        what: les instructions de mémoire, le groupe learner-memory
+      - from: learner
+        source: apprenant.md
+        what: le profil et les préférences de l'apprenant
+      - from: learner
+        source: parcours.md
+        what: le parcours, le statut des concepts, les annexes vues et la prochaine étape
+      - from: learner
+        source: observations.md
+        what: les leviers, les vigilances et les acquis
+
+  - id: permissions
+    loads: always
+    draws:
+      - from: implementation
+        source: instructions.yaml
+        what: l'instruction write-only-in-learner
+      - from: classroom
+        source: learner/
+        what: peut s'écrire, se commite dans le git de la classe, ne se pousse jamais
+      - from: classroom
+        source: course/
+        what: en lecture seule, ne s'écrit jamais

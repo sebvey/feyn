@@ -17,4 +17,4 @@ Without this, an agent writing or re-cutting a concept would write its sections 
 ## Consequences
 
 - A concept is cut, and re-cut, in its `concept.md` only; `course.yaml` refuses a key for the tree on a concept entry.
-- The teacher build is frozen and still describes the course map as holding the tree of each concept, until the protocol is brought back up to date.
+- The teacher build's course map lists the domains, their concepts and the annexes, no tree: the teacher reads the cut of a concept in its `concept.md`.

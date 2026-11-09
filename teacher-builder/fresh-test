@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 'use strict';
 // fresh-test <course-dir> <scenario id> [--model <model>] [--keep]
-// Runs the teacher on a test scenario of the spec MAJOR the course declares (product-lines/<name>/
-// <MAJOR>/products/teacher/tests/<id>.yaml) and judges what it did (teacher-builder/README.md, "The fresh
-// tests"):
+// Asleep: neither run nor rewritten for now (decision teacher-yardstick-cafe-and-maintainer-session;
+// teacher-builder/README.md, "The fresh tests"). The test scenarios left the spec with the teacher
+// build (#779), git keeping them: until they come back, every scenario is unknown (exit 2).
+// Runs the teacher on a test scenario of the spec MAJOR the course declares (<id>.yaml, read from
+// the tests/ folder of the MAJOR's teacher folder, where the scenarios come back) and judges what it
+// did (teacher-builder/README.md, "The fresh tests"):
 //   1. a disposable classroom, build-teacher <course-dir> --channel preview --out <run>/classroom,
 //      with the scenario's learner memory written in learner/ and committed;
 //   2. the teacher: `claude -p` in the classroom, one call per learner message of the scenario, in
@@ -21,7 +24,7 @@
 //   5. the classroom removed, unless --keep.
 // Exit 0 when every slug of the scenario is observed, 1 otherwise (a slug not observed, a build
 // or a run that failed), 2 a usage error (an unknown scenario or option, a scenario not valid
-// against the MAJOR's products/teacher/tests/scenario.schema.yaml).
+// against the scenario.schema.yaml beside the scenarios).
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -43,7 +46,8 @@ const ENV_DROPPED = ['CLAUDE_CODE_SESSION_ID', 'CLAUDE_CODE_HOST_SESSION_ID', 'C
 function usage(code) {
   const out = code ? console.error : console.log;
   out('usage: fresh-test <course-dir> <scenario id> [--model <model>] [--keep]');
-  out('runs the teacher of <course-dir> on the test scenario <id> of its spec MAJOR (products/teacher/tests/<id>.yaml)');
+  out('runs the teacher of <course-dir> on the test scenario <id> of its spec MAJOR (<id>.yaml of the tests/ of its teacher folder);');
+  out('asleep: the scenarios left the spec (#779), so every scenario is unknown until they come back;');
   out('in a disposable classroom, judges the transcript and writes report.md in the run folder it prints;');
   out('--model: the teacher\'s model (default sonnet); --keep: keep the classroom in the run folder');
   process.exit(code);
@@ -103,8 +107,9 @@ try { scenario = yaml.parse(scenarioText); } catch (e) { refuse(`${path.relative
 const validate = new Ajv2020({ allErrors: true }).compile(yaml.parse(readOr(path.join(TESTS, 'scenario.schema.yaml'))));
 if (!validate(scenario)) refuse(`${path.relative(REPO, scenarioFile)} is not valid against scenario.schema.yaml: ${validate.errors.map((e) => `${e.instancePath || '/'} ${e.message}`).join('; ')}`);
 
-// the words the script part checks, from the lexicons of the course files and of the teacher
-const teacherLex = yaml.parse(readOr(path.join(SPEC, 'products', 'teacher', 'lexicon.yaml')));
+// the words the script part checks, from the lexicon of the course files and from the teacher
+// implementation's lexicon
+const teacherLex = yaml.parse(readOr(path.join(BUILDER, specMatch[1], specMatch[2], 'lexicon.yaml')));
 const courseLex = yaml.parse(readOr(path.join(SPEC, 'course', 'lexicon.yaml')));
 const PH = teacherLex.phrases;
 const STOP_WORDS = teacherLex.learner_says.stop.concat(teacherLex.learner_says.hurry);

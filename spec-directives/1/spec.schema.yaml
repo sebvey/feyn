@@ -1,4 +1,4 @@
-# The form of a spec MAJOR's manifest, its spec.yaml (README.md section 8): its identity, then
+# The form of a spec MAJOR's manifest, its spec.yaml (README.md section 1): its identity, then
 # its own files, the files of its course and of each of its products, each by role, then its own
 # lists, then `files:`, what each role holds and who reads it. A role maps to one path, relative to
 # the spec MAJOR, a file or a folder. lib/manifest.js reads the
@@ -12,7 +12,7 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: spec.yaml
 type: object
-required: [name, major, directives, version, language, course, lists]
+required: [name, major, directives, version, language, course]
 additionalProperties: false
 properties:
   name:
@@ -63,52 +63,44 @@ properties:
       templates: { $ref: '#/$defs/path', description: "a path, the folder of the course templates" }
       samples: { $ref: '#/$defs/path', description: "a path, the folder of the spec's sample courses" }
   products:
-    description: the products the spec defines, each with its files by role; none required
+    description: the products the spec defines, each by its name with its files by role, the roles each product's own; none required
+    type: object
+    minProperties: 1
+    propertyNames: { $ref: '#/$defs/name', not: { enum: [course, spec] }, description: "a slug, the name of a product, neither course nor spec" }
+    additionalProperties:
+      type: object
+      minProperties: 1
+      propertyNames: { $ref: '#/$defs/name', description: "a slug, a role" }
+      additionalProperties: { $ref: '#/$defs/path', description: "a path, a file or a folder of the product" }
+  lists:
+    description: the closed lists of the spec, which its tests hold its files to; optional
     type: object
     additionalProperties: false
     minProperties: 1
     properties:
-      site:
+      classifications:
+        description: the classifications of the rules, by the owner of the rule file, the course or a product, each key with its values
         type: object
-        additionalProperties: false
         minProperties: 1
-        properties:
-          lexicon: { $ref: '#/$defs/path', description: "a path, the lexicon of the site" }
-          url-scheme: { $ref: '#/$defs/path', description: "a path, the URL scheme of the site" }
-          build: { $ref: '#/$defs/path', description: "a path, the folder of the spec's half of the site build" }
-      teacher:
-        type: object
-        additionalProperties: false
-        minProperties: 1
-        properties:
-          readme: { $ref: '#/$defs/path', description: "a path, the description of the protocol" }
-          rules: { $ref: '#/$defs/path', description: "a path, the rules of the protocol" }
-          lexicon: { $ref: '#/$defs/path', description: "a path, the lexicon of the teacher" }
-          composition: { $ref: '#/$defs/path', description: "a path, the composition of the teacher" }
-          tests: { $ref: '#/$defs/path', description: "a path, the folder of the test scenarios of the teacher" }
-          build: { $ref: '#/$defs/path', description: "a path, the folder of the spec's half of the teacher build" }
-  lists:
-    description: the closed lists of the spec, which its tests hold its files to
-    type: object
-    required: [categories]
-    additionalProperties: false
-    properties:
-      categories:
-        description: a non-empty list of distinct slugs, the categories of the rules of a course
-        $ref: '#/$defs/slugs'
-      families:
-        description: a non-empty list of distinct slugs, the families of the protocol, in their order
-        $ref: '#/$defs/slugs'
+        propertyNames: { $ref: '#/$defs/name', description: "a slug, course or the name of a product" }
+        additionalProperties:
+          type: object
+          minProperties: 1
+          propertyNames:
+            description: a slug that is not a key of the rule model (rules.schema.yaml)
+            $ref: '#/$defs/name'
+            not: { enum: [id, title, purpose, rules, text, why, method, check, criterion] }
+          additionalProperties:
+            description: a non-empty list of distinct slugs, the values of a classification
+            $ref: '#/$defs/slugs'
       lexicons:
         description: the keys each lexicon holds, by its owner, the course or a product
         type: object
-        additionalProperties: false
         minProperties: 1
-        properties:
-          course: { $ref: '#/$defs/keys' }
-          site: { $ref: '#/$defs/keys' }
+        propertyNames: { $ref: '#/$defs/name', description: "a slug, course or the name of a product" }
+        additionalProperties: { $ref: '#/$defs/keys' }
   files:
-    description: the files of the spec MAJOR, what each role holds and who reads it, which section 2 of its README.md points to; optional; when present, the test spec-yaml requires an entry for every role declared and none for a role not declared
+    description: the files of the spec MAJOR, what each role holds and who reads it, which the README.md of the spec MAJOR points to; optional; when present, the test spec-yaml requires an entry for every role declared and none for a role not declared
     type: object
     additionalProperties: false
     minProperties: 1
@@ -117,20 +109,20 @@ properties:
       course: { $ref: '#/$defs/entries' }
       products:
         type: object
-        additionalProperties: false
         minProperties: 1
-        properties:
-          site: { $ref: '#/$defs/entries' }
-          teacher: { $ref: '#/$defs/entries' }
+        propertyNames: { $ref: '#/$defs/name', description: "a slug, the name of a product" }
+        additionalProperties: { $ref: '#/$defs/entries' }
       undeclared:
-        description: the products the manifest does not declare, each with one line saying why
+        description: the products the manifest does not declare, each by its name with one line saying why
         type: object
-        additionalProperties: false
         minProperties: 1
-        properties:
-          site: { $ref: '#/$defs/line' }
-          teacher: { $ref: '#/$defs/line' }
+        propertyNames: { $ref: '#/$defs/name', description: "a slug, the name of a product" }
+        additionalProperties: { $ref: '#/$defs/line' }
 $defs:
+  name:
+    description: a slug (lowercase words joined by hyphens)
+    type: string
+    pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
   line:
     description: a non-empty string on one line
     type: string
@@ -170,11 +162,11 @@ $defs:
     description: the groups of a lexicon, each a map of its keys to their kind
     type: object
     minProperties: 1
-    propertyNames: { pattern: '^[a-z_]+$' }
+    propertyNames: { pattern: '^[a-z_]+$', description: "lowercase words joined by underscores" }
     additionalProperties:
       type: object
       minProperties: 1
-      propertyNames: { pattern: '^[a-z_]+$' }
+      propertyNames: { pattern: '^[a-z_]+$', description: "lowercase words joined by underscores" }
       additionalProperties:
         description: a kind of key, string (a non-empty string) or list (a non-empty list of strings)
         enum: [string, list]

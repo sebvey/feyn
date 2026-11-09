@@ -1,0 +1,2 @@
+check: spec-yaml
+message: products.course: the key is not a slug, the name of a product, neither course nor spec

@@ -3,11 +3,12 @@
 # included, and those verified by inspection, the review; one group per section or sub-section
 # of course/README.md that points to rules, in its order (section 6 points to the groups of 6.1 and
 # 6.2; section 7 states no rule of a course). A course conforms when it holds every requirement of
-# this file, whatever its method (spec-directives/1/README.md section 2). The tables of fields are
+# this file, whatever its method (README.md section 3). The tables of fields are
 # the schemas of course/schemas/, each one rule here (decision field-tables-as-schemas).
 #
 # A group: title, purpose (what the group is for), category and method (declared once for its
-# rules; a rule may override them), rules. A rule: id (a slug), level, category, method, check
+# rules; a rule may override them), rules. A rule: id (a slug), level and category (the
+# classifications spec.yaml declares, lists.classifications.course), method, check
 # (the check that implements the method, when one exists), text, why (optional: what a competent
 # model does without the rule, as observed). The texts are French, the language of the spec
 # (decision language-policy).
@@ -358,12 +359,12 @@ groups:
         level: requirement
         text: >-
           Aucune unité ni aucun cas supplémentaire ne doit reposer sur « Approfondissement ».
-      - id: concept-instruction-content
+      - id: concept-teacher-note-content
         level: requirement
         text: >-
           « Consigne au professeur » du pied doit tenir ce que le professeur sait et ne dit pas
           dans le concept entier, ce qu'aucune unité ne dit pour elle seule, au critère de
-          `instruction-beyond-a-competent-teacher` ; l'ordre et le découpage du concept sont ses
+          `teacher-note-beyond-competent-teacher` ; l'ordre et le découpage du concept sont ses
           sections et ses unités, jamais une consigne.
 
   - title: L'unité (course/README.md section 3.3)
@@ -543,8 +544,8 @@ groups:
           bonne réponse avec ses nuances, la position du cours telle que la matière l'énonce ;
           « Idées fausses en jeu », les idées fausses de l'unité que la situation du cas rend
           tentantes, celles qu'une réponse fausse à sa question montrerait ; « Consigne au professeur », ce que le
-          professeur sait et ne dit pas dans l'unité (`instruction-beyond-a-competent-teacher`).
-      - id: instruction-beyond-a-competent-teacher
+          professeur sait et ne dit pas dans l'unité (`teacher-note-beyond-competent-teacher`).
+      - id: teacher-note-beyond-competent-teacher
         level: requirement
         method: inspection
         text: >-
@@ -559,7 +560,7 @@ groups:
           du cours et l'évident, et l'une ne tenait rien de propre à son unité : un modèle
           compétent fait l'évident, et plus une consigne tient de phrases, plus le professeur est
           rigide, plus elle contredit le protocole et s'éloigne de la matière (epic #710).
-      - id: course-question-in-instruction
+      - id: course-question-in-teacher-note
         level: requirement
         method: inspection
         text: >-
@@ -618,7 +619,7 @@ groups:
           Seul le cas qualifié pour être posé après une réponse fausse devait se suffire ; sans
           qualificatif, le professeur peut poser après une réponse fausse n'importe quel cas
           supplémentaire qui nomme l'idée fausse qu'elle montre (epic #710).
-      - id: instruction-contradicts-no-protocol
+      - id: teacher-note-contradicts-no-protocol
         level: requirement
         method: inspection
         text: >-

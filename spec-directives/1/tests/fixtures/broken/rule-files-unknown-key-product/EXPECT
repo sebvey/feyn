@@ -1,0 +1,2 @@
+check: rule-files
+message: rule page-shows-the-title: unknown key "level"

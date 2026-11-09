@@ -1,2 +1,2 @@
 check: rule-files
-message: rule first-rule: unknown key "origin"
+message: rule course-id-equals-folder: unknown key "origin"

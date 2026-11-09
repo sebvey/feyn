@@ -15,14 +15,14 @@ The spec, its checks and the agentic layer are worth what they bring to the prod
 
 ## The yardstick
 
-A change of `linear-fr` counts when the bench course, the spec's sample course `product-lines/linear-fr/1/course/samples/cafe/` (three concepts, two annexes), follows it in the same PR and its checks pass on it. The site is the product being built; the teacher is frozen until the brainstorm on the protocol rules (idea #597), and comes back after it (decision `teacher-frozen-until-the-protocol-brainstorm`). Small and proven over complete: a change proven on a short course that holds the whole form is worth more than a complete spec judged on paper.
+A change of `linear-fr` counts when the bench course, the spec's sample course `product-lines/linear-fr/1/course/samples/cafe/` (three concepts, two annexes), follows it in the same PR and its checks pass on it. A change of what is expected of the teacher counts when, in its PR, the teacher builds on the bench course and `teacher-builder/test-build` passes, and when, at the PR that lands it on `main`, the maintainer plays a teaching session on the bench course and says it is good; the fresh tests wait until the protocol is stable or a second teacher implementation must be compared (decision `teacher-yardstick-cafe-and-maintainer-session`). Small and proven over complete: a change proven on a short course that holds the whole form is worth more than a complete spec judged on paper.
 
 ## The lessons of parcours-po
 
 feyn was rebuilt from a first project that worked: `parcours-po`, a course of 18 concepts and 2 annexes taught in Claude Code, and its site `parcours-po-website`. Three of its couplings are what feyn is built against:
 - The site was a copy of the course rewritten by hand and kept in line by sha256 stamps: five re-alignments in two days.
 - The teacher was one `CLAUDE.md` of 257 lines, the generic protocol mixed with the course's specifics (its site address, its storyline, its file names): a second course would have copied it.
-- In feyn itself, concept 9 of `parcours-po` wrote the matter of one unit three times: the reader section of its `concept.md`, the « Explication » of its first case and its instruction (epic #475).
+- In feyn itself, concept 9 of `parcours-po` wrote the matter of one unit three times: the reader section of its `concept.md`, the « Explication » of its first case and its teacher note (epic #475).
 
 Hence three lessons:
 - **A thing is written once**, in the file of the reader who needs it first; every other reader is served from there (decision `products-built-from-one-course`).

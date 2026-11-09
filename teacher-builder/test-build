@@ -2,14 +2,25 @@
 'use strict';
 // test-build: builds cafe (product-lines/linear-fr/1/course/samples/cafe, the spec's sample
 // course) with teacher-builder/build-teacher into temporary folders and checks what a command
-// can check of the classroom: the files of each part of the composition, the course copy (diff -r), the learner templates, the permissions, the
-// skills of the moments, the built CLAUDE.md (no placeholder left, the rules verbatim but for their
-// placeholders, each rule of the protocol in CLAUDE.md or in one skill, once, each family and group
-// heading followed by its purpose; the protocol read from products/teacher/rules.yaml), the three spots of the filling (no doubled parenthesis, no
-// period after a phrase that ends with one, the plural of the domains), the teacher template (no
-// rule text), course.lock, the classroom's git (one commit, clean), the default folders of the
-// channels (under a temporary HOME), the refusal of a non-empty target and --force, --site-url, and
-// the dispatcher's refusal of a spec MAJOR with no products/teacher/build/ or of an unknown MAJOR.
+// can check of the classroom: the files of each part of composition.yaml, the course copy (diff
+// -r), the learner templates (without their header comment), the permissions, the skills of the
+// moments, the built CLAUDE.md (no placeholder left, no English word outside a slug, no list of the
+// skills nor « Moments », no import of course.yaml, the instructions verbatim but for their
+// placeholders, each instruction of linear-fr/1/instructions.yaml in CLAUDE.md or in one skill,
+// once, each group heading followed by its purpose), the course map carte-du-cours.md and its import
+// (each domain with its objective and file, each concept with its objective, prerequisites and
+// folder, the annexes as annexes, each « L'essentiel » of cafe, the other course files), the three
+// spots of the filling (no doubled parenthesis, no period after a phrase that ends with one, the
+// plural of the domains), the teacher template (the implementation's, no instruction), course.lock,
+// the classroom's git (one commit, clean), the default folders of the channels (under a temporary
+// HOME), the refusal of a non-empty target and --force, --site-url, and the dispatcher's refusal of
+// a spec MAJOR with no implementation folder, of one whose implementation folder has no teacher
+// template, or of an unknown MAJOR.
+// Then the link between the means and the protocol rules (linear-fr/1/means.yaml): every slug a
+// `serves` names is a protocol rule of the spec, every protocol rule is served by a means or
+// declared with no means, no means has an empty `serves`, each failure shown by a case that makes
+// it fail; it prints the rules declared with no means. And the form marks and titles of the
+// implementation's lexicon, the protocol rules' words, word for word.
 // Exit 0 when every check passes, 1 otherwise; one line per failure.
 const fs = require('fs');
 const os = require('os');
@@ -23,9 +34,10 @@ const BUILD = path.join(BUILDER, 'build-teacher');
 const SPEC = path.join(REPO, 'product-lines', 'linear-fr', '1');
 const COURSE = path.join(SPEC, 'course', 'samples', 'cafe');
 const COURSE_ARG = path.relative(REPO, COURSE); // the course as given to the build, from the repository's root
-const TEMPLATES = path.join(SPEC, 'products', 'teacher', 'templates', 'learner');
+const IMPL = path.join(BUILDER, 'linear-fr', '1'); // the implementation of the teacher of linear-fr@1
+const TEMPLATES = path.join(IMPL, 'templates', 'learner');
 const PLACEHOLDER = /\{[a-z_]+\.[a-z_]+\}/;
-const RULE_LINE = /^\*\*[a-z0-9-]+\*\* /;
+const INSTRUCTION_LINE = /^\*\*[a-z0-9-]+\*\* /;
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'feyn-test-build-'));
 const failures = [];
@@ -40,6 +52,10 @@ function build(args, env = {}) {
 }
 const read = (p) => { try { return fs.readFileSync(p, 'utf8'); } catch (e) { return null; } };
 const git = (dir, ...args) => spawnSync('git', ['-C', dir, ...args], { encoding: 'utf8' });
+// the yaml lib of the spec directives the MAJOR declares (spec.yaml, `directives: <MAJOR>`)
+const directivesLine = (read(path.join(SPEC, 'spec.yaml')) || '').split('\n').find((l) => /^directives\s*:/.test(l)) || '';
+const directives = directivesLine.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
+const yaml = createRequire(path.join(REPO, 'spec-directives', directives, 'package.json'))('./lib/yaml-lines');
 
 // ---- the build, with no --site-url
 const out = path.join(tmp, 'classroom');
@@ -49,26 +65,32 @@ if (!check(r.status === 0, `build exits ${r.status}, not 0: ${(r.stderr || '').t
   process.exit(1);
 }
 
-for (const f of ['CLAUDE.md', 'course.lock', '.claude/settings.json', 'learner/apprenant.md', 'learner/observations.md', 'learner/parcours.md']) {
+for (const f of ['CLAUDE.md', 'carte-du-cours.md', 'course.lock', '.claude/settings.json', 'learner/apprenant.md', 'learner/observations.md', 'learner/parcours.md']) {
   check(fs.existsSync(path.join(out, f)), `${f} is missing`);
 }
 const diff = spawnSync('diff', ['-r', COURSE, path.join(out, 'course')], { encoding: 'utf8' });
 check(diff.status === 0 && diff.stdout === '', `course/ is not a copy of ${COURSE_ARG}: ${diff.stdout.split('\n')[0]}`);
+// learner memory: each learner template without its header comment, which stays in the source as a
+// note for whoever edits it
 for (const f of ['apprenant.md', 'observations.md', 'parcours.md']) {
-  check(read(path.join(out, 'learner', f)) === read(path.join(TEMPLATES, f)), `learner/${f} is not the learner template`);
+  const source = read(path.join(TEMPLATES, f)) || '';
+  const written = read(path.join(out, 'learner', f)) || '';
+  check(source.startsWith('<!--'), `the learner template ${f} has no header comment`);
+  check(!written.includes('<!--'), `learner/${f} keeps a comment`);
+  check(written === source.replace(/^<!--[\s\S]*?-->\n/, ''), `learner/${f} is not the learner template without its header comment`);
 }
 check(fs.readdirSync(path.join(out, 'learner')).length === 3, 'learner/ holds other files than the three templates');
 
-// the skills: one per moment that has rules, named feyn-teacher-<moment>
+// the skills: one per moment that loads instructions, named feyn-teacher-<moment>
 const skills = ['onboarding', 'resume', 'diagram', 'stop'];
 const skillOf = (s) => `feyn-teacher-${s}`;
 for (const s of skills) check(fs.existsSync(path.join(out, '.claude', 'skills', skillOf(s), 'SKILL.md')), `skill ${skillOf(s)} is missing`);
-check(!fs.existsSync(path.join(out, '.claude', 'skills', skillOf('reset'))), 'skill feyn-teacher-reset exists, though the moment has no rule');
+check(!fs.existsSync(path.join(out, '.claude', 'skills', skillOf('reset'))), 'skill feyn-teacher-reset exists, though the moment loads no instruction');
 check(fs.readdirSync(path.join(out, '.claude', 'skills')).sort().join(',') === skills.map(skillOf).sort().join(','), 'the skills are not exactly feyn-teacher- onboarding, resume, diagram, stop');
 const WHEN = {
   onboarding: "un nouvel apprenant, au premier message d'une session de cours",
   resume: "un apprenant qui revient, au premier message d'une session de cours",
-  diagram: "l'apprenant demande un schéma, ou vient le message du sous-concept que nomme le subconcept d'un schéma déclaré par concept.md",
+  diagram: "l'apprenant demande un schéma, ou vient le message d'une unité pour laquelle concept.md déclare un schéma",
   stop: "l'apprenant dit que la session de cours s'arrête",
 };
 const skillText = {};
@@ -82,7 +104,7 @@ for (const s of skills) {
 }
 check(skillText.onboarding.includes('`course/plan.md`'), 'skill onboarding does not name course/plan.md as what it reads');
 // the onboarding questions of plan.md are given in the skill, so that the first message needs no
-// read (rule first-message-without-tools; the fresh test onboarding, #507)
+// read (instruction first-message-without-tools; the fresh test onboarding, #507)
 {
   const plan = (read(path.join(COURSE, 'plan.md')) || '').split('\n');
   const at = plan.findIndex((l) => l.trim() === '## Accueil');
@@ -90,33 +112,55 @@ check(skillText.onboarding.includes('`course/plan.md`'), 'skill onboarding does 
   check(at >= 0 && questions.length > 0 && questions.every((q) => skillText.onboarding.includes(q.trim())), 'skill onboarding does not give the onboarding questions of plan.md');
 }
 check(skillText.resume.includes('`learner/parcours.md`'), 'skill resume does not name learner/parcours.md as what it reads');
-check(skillText.diagram.includes('`course/<dir>/concept.md`') && skillText.diagram.includes('`course/<dir>/teaching.md`'), 'skill diagram does not name concept.md and teaching.md as what it reads');
+check(skillText.diagram.includes('`course/<dir>/concept.md`'), 'skill diagram does not name concept.md as what it reads');
+for (const s of skills) check(!skillText[s].includes('teaching.md'), `skill ${s} names teaching.md, which a course of linear-fr@1 has not`);
 check(skillText.stop.includes('`learner/parcours.md`'), 'skill stop does not name learner/parcours.md as what it reads');
 
 // the built CLAUDE.md
 const claude = read(path.join(out, 'CLAUDE.md')) || '';
 check(!PLACEHOLDER.test(claude), `CLAUDE.md keeps a placeholder: ${(PLACEHOLDER.exec(claude) || [])[0]}`);
-check(claude.split("Pars de la banque d'exemples").length - 1 === 1, "CLAUDE.md does not hold « Pars de la banque d'exemples » once");
 check(claude.includes('Posture : un barista patient, qui aide l\'apprenant à aider Cédric.'), 'CLAUDE.md lacks the posture of plan.md');
-// the course map: the domains and concepts under « Course map », the annex A1 where the build
-// renders it, in « Course files » (the map renders no line for an annex)
-check(claude.includes('- Domaine 1 : Ce qui fait la tasse\n') && claude.includes('- Domaine 2 : Réussir sa tasse\n')
-  && claude.includes("Concept 0 : L'extraction (`concepts/00-extraction`)")
-  && claude.includes('Concept 1 : Les réglages (`concepts/01-reglages`)')
-  && claude.includes('Concept 2 : Corriger une tasse (`concepts/02-corriger`)')
-  && claude.includes('`course/concepts/A1-methodes/`: Concept A1 : Les méthodes'), 'CLAUDE.md lacks the course map');
-for (const f of ['course/storyline.md', 'course/glossary.md', 'course/domains/1-tasse.md', 'course/domains/2-reussir.md',
-  'course/concepts/00-extraction/', 'course/concepts/01-reglages/', 'course/concepts/02-corriger/', 'course/concepts/A1-methodes/']) {
-  check(claude.includes('`' + f + '`'), `CLAUDE.md does not name the course file ${f}`);
+// the course map, the file carte-du-cours.md that CLAUDE.md imports: each domain with its objective
+// and file, then its concepts, each with its objective, prerequisites and folder; then both
+// annexes as annexes, under « Annexes » and their own title, as their concept.md opens (« Annexe A1
+// : … »), never as a concept; each « L'essentiel » of cafe verbatim; the other course files
+const map = read(path.join(out, 'carte-du-cours.md')) || '';
+check(claude.includes('\n@carte-du-cours.md\n'), 'CLAUDE.md does not import carte-du-cours.md');
+const courseYaml = yaml.parse(read(path.join(COURSE, 'course.yaml')) || '');
+const titleOf = (n) => (/^A\d+$/.test(String(n)) ? 'Annexe' : 'Concept') + ` ${n} : ${courseYaml.concepts.find((c) => String(c.number) === String(n)).title}`;
+const annexAt = map.indexOf('\n## Annexes\n');
+for (const d of courseYaml.domains) {
+  check(map.includes(`\n## Domaine ${d.number} : ${d.title}\n\n- Objectif : ${d.objective}\n- Fichier : \`course/${d.file}\`\n`), `carte-du-cours.md: domain ${d.number} lacks its title, objective or file`);
 }
+for (const c of courseYaml.concepts) {
+  const annex = /^A\d+$/.test(String(c.number));
+  const at = map.indexOf(`\n### ${titleOf(c.number)}\n`);
+  const prerequisites = c.prerequisites.length ? c.prerequisites.map(titleOf).join(' ; ') : 'aucun';
+  check(at >= 0 && map.slice(at).includes(`\n- Objectif : ${c.objective}\n- Prérequis : ${prerequisites}\n- Dossier : \`course/${c.dir}/\``), `carte-du-cours.md: ${titleOf(c.number)} lacks its objective, prerequisites or folder`);
+  check(annex ? annexAt >= 0 && at > annexAt : at >= 0 && (annexAt < 0 || at < annexAt), `carte-du-cours.md: ${titleOf(c.number)} is not ${annex ? 'under « Annexes »' : 'in its domain'}`);
+  const lines = (read(path.join(COURSE, c.dir, 'concept.md')) || '').split('\n');
+  const e = lines.indexOf("## L'essentiel");
+  const stop = lines.findIndex((l, i) => i > e && /^## /.test(l));
+  const essentials = lines.slice(e + 1, stop < 0 ? lines.length : stop).join('\n').trim();
+  check(e >= 0 && essentials !== '' && map.slice(at).includes(`\n#### L'essentiel\n\n${essentials}\n`), `carte-du-cours.md: ${titleOf(c.number)} lacks its « L'essentiel » verbatim`);
+}
+check(!/Concept A\d/.test(claude + map), 'CLAUDE.md or carte-du-cours.md titles an annex as a concept, « Concept A<n> »');
+for (const f of ['course/plan.md', 'course/storyline.md', 'course/glossary.md']) {
+  check(map.includes('\n- `' + f + '` : '), `carte-du-cours.md does not name the course file ${f}`);
+}
+check(!map.includes('teaching.md') && !claude.includes('teaching.md'), 'CLAUDE.md or carte-du-cours.md names teaching.md, which the course has not');
+check(!PLACEHOLDER.test(map), 'carte-du-cours.md keeps a placeholder');
 // the diagram of concept 0, which CLAUDE.md does not name, is copied with its concept
 check(fs.existsSync(path.join(out, 'course', 'concepts', '00-extraction', 'extraction-et-force.svg')), 'the diagram of concept 0 is not copied');
-check(claude.includes('channel\n`next`') || claude.includes('channel `next`'), 'CLAUDE.md does not state the channel next');
-check(claude.includes('\n@course/course.yaml\n'), 'CLAUDE.md does not import course/course.yaml');
+check(claude.includes('canal `next`'), 'CLAUDE.md does not state the channel next (« canal `next` »)');
+// one course map: no import of course.yaml, no « Course map » nor « Course files »; and no line
+// that repeats the skills, which Claude Code presents with their description
+check(!/@course\/course\.yaml|^## Course (map|files)|^## Moments|^- `\.claude\/skills\/`/m.test(claude), 'CLAUDE.md imports course.yaml, or holds « Course map », « Course files », « Moments » or a line .claude/skills/');
+for (const s of skills) check(!claude.includes(skillOf(s)), `CLAUDE.md names the skill ${skillOf(s)}`);
+// the frame is French: no English word outside an instruction's slug or a group heading
+const english = claude.split('\n').map((l, i) => [i + 1, l]).filter(([, l]) => /\b(the|you|and|of)\b/.test(l) && !/^(\*\*[a-z-]+\*\*|#+ .*\(`[a-z-]+`\))/.test(l));
+check(english.length === 0, `CLAUDE.md holds an English word outside a slug, line ${english.map(([n]) => n).join(', ')}`);
 check(claude.includes('(site non publié)') && !claude.includes('http'), 'CLAUDE.md: without --site-url, the site addresses are not « (site non publié) »');
-// the « Moments » list names each teacher skill
-for (const s of skills) check(claude.includes(`- \`${s}\` (skill \`${skillOf(s)}\`): `), `CLAUDE.md: the « Moments » list does not name the skill ${skillOf(s)}`);
-check(claude.includes('- `reset`: ') && !claude.includes(skillOf('reset')), 'CLAUDE.md: the « Moments » list names a skill for reset');
 
 // the three spots of the filling, in CLAUDE.md and in the skills
 for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
@@ -126,47 +170,40 @@ for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf
   check(!/ses \d+ domaines/.test(text), `${name}: the count of domains reads « ses <number> domaines » whatever the number`);
 }
 check(claude.includes('](site non publié)'), 'CLAUDE.md: a link does not read « (site non publié) » once');
-check(skillText.stop.includes('« Je sauvegarde ta progression, un instant. »\n') || skillText.stop.includes('« Je sauvegarde ta progression, un instant. » '), 'skill feyn-teacher-stop: the stop phrase is not followed by the rule\'s text without a second period');
+check(skillText.stop.includes('« Je sauvegarde ta progression, un instant. »\n') || skillText.stop.includes('« Je sauvegarde ta progression, un instant. » '), 'skill feyn-teacher-stop: the stop phrase is not followed by the instruction\'s text without a second period');
 
-// the protocol, products/teacher/rules.yaml, read with the yaml lib of the spec directives the MAJOR declares:
-// its groups (a family is a group whose id is its category), each rule as the build writes it,
-// `**<id>** <text>` and its why on a line `*Pourquoi :* <why>`
-const directivesLine = (read(path.join(SPEC, 'spec.yaml')) || '').split('\n').find((l) => /^directives\s*:/.test(l)) || '';
-const directives = directivesLine.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
-const yaml = createRequire(path.join(REPO, 'spec-directives', directives, 'package.json'))('./lib/yaml-lines');
-const protocol = yaml.parse(read(path.join(SPEC, 'products', 'teacher', 'rules.yaml')) || '');
-const groups = protocol.groups;
-const families = groups.filter((g) => g.id === g.category);
-const source = new Map(groups.flatMap((g) => g.rules).map((r) => [r.id, `**${r.id}** ${r.text}` + (r.why ? `\n*Pourquoi :* ${r.why}` : '')]));
+// the instructions, linear-fr/1/instructions.yaml, read with the yaml lib of the spec directives
+// the MAJOR declares (above): its groups, each instruction as the build writes it, `**<id>** <text>`
+// and its why on a line `*Pourquoi :* <why>`
+const instructionsDoc = yaml.parse(read(path.join(IMPL, 'instructions.yaml')) || '');
+const groups = instructionsDoc.groups;
+const source = new Map(groups.flatMap((g) => g.instructions).map((r) => [r.id, `**${r.id}** ${r.text}` + (r.why ? `\n*Pourquoi :* ${r.why}` : '')]));
 const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-// a text of the protocol as built: a placeholder as fill() treats it (« {k} » with the period after
-// it, ({k}) with its parentheses, a bare {k}) stands for its value
+// a text of the instructions as built: a placeholder as fill() treats it (« {k} » with the period
+// after it, ({k}) with its parentheses, a bare {k}) stands for its value
 const patternOf = (t) => new RegExp('^' + t.split(/« \{[a-z_]+\.[a-z_]+\} »\.?|\(\{[a-z_]+\.[a-z_]+\}\)|\{[a-z_]+\.[a-z_]+\}/).map(escape).join('[\\s\\S]+?') + '$');
 
-// every rule of the protocol, once, in CLAUDE.md or in the skill of its moment
+// every instruction, once, in CLAUDE.md or in the skill of its moment
 const slugsOf = (text) => text.split('\n').map((l) => /^\*\*([a-z0-9-]+)\*\* /.exec(l)).filter(Boolean).map((m) => m[1]);
 const all = [...source.keys()];
 const where = new Map(all.map((s) => [s, []]));
 for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
   for (const s of slugsOf(text)) {
-    if (!where.has(s)) check(false, `${name} holds a rule ${s} the protocol does not`);
+    if (!where.has(s)) check(false, `${name} holds an instruction ${s} that instructions.yaml has not`);
     else where.get(s).push(name);
   }
 }
-for (const [s, at] of where) check(at.length === 1, `rule ${s} is in ${at.length ? at.join(', ') : 'nothing'}, not in exactly one place`);
-const MOMENT_OF = { 'first-message-without-tools': 'onboarding', 'resume-opening-sentence': 'resume', 'requested-diagram-shown': 'diagram', 'diagram-not-displayable': 'diagram', 'stop-opening-sentence': 'stop', 'hurried-departure': 'stop' };
-for (const [s, m] of Object.entries(MOMENT_OF)) check((where.get(s) || [])[0] === skillOf(m), `rule ${s} is not in the skill ${skillOf(m)}`);
-// the diagram declared for a sub-concept is shown unasked: a permanent rule, so that the teacher knows
-// it at every message, the moment diagram loaded at that sub-concept too (its `when`, in the Moments
-// list of CLAUDE.md)
-check((where.get('declared-diagram-shown') || [])[0] === 'CLAUDE.md', 'rule declared-diagram-shown is not in CLAUDE.md');
-check(claude.includes(`- \`diagram\` (skill \`${skillOf('diagram')}\`): ${WHEN.diagram}.`), 'the Moments list of CLAUDE.md does not load the moment diagram at the sub-concept a diagram declares');
+for (const [s, at] of where) check(at.length === 1, `instruction ${s} is in ${at.length ? at.join(', ') : 'nothing'}, not in exactly one place`);
+const MOMENT_OF = { 'first-message-without-tools': 'onboarding', 'profile-written': 'onboarding', 'resume-opening-sentence': 'resume', 'diagram-shown-by-link': 'diagram', 'requested-diagram-shown': 'diagram', 'stop-opening-sentence': 'stop', 'hurried-departure': 'stop' };
+for (const [s, m] of Object.entries(MOMENT_OF)) check((where.get(s) || [])[0] === skillOf(m), `instruction ${s} is not in the skill ${skillOf(m)}`);
+// the diagram declared for a unit is shown unasked: a permanent instruction, so that the teacher
+// knows it at every message, the moment diagram loaded at that unit too (its `when`, in the
+// description of the skill feyn-teacher-diagram, checked above)
+check((where.get('declared-diagram-shown') || [])[0] === 'CLAUDE.md', 'instruction declared-diagram-shown is not in CLAUDE.md');
 const order = slugsOf(claude);
-check(order.join(',') === all.filter((s) => where.get(s)[0] === 'CLAUDE.md').join(','), 'the rules of CLAUDE.md are not in the order of products/teacher/rules.yaml');
-// every family and group heading kept is followed by its purpose: in CLAUDE.md, and in the skills
-// that hold a group or a family whole (the diagram rules of the moment sit under the heading of the
-// group `diagram-showing`, whose purpose stays in CLAUDE.md with declared-diagram-shown)
-const HEADING = /^(## \d+\. .+|##+ .+ \(`[a-z0-9-]+`\))$/;
+check(order.join(',') === all.filter((s) => where.get(s)[0] === 'CLAUDE.md').join(','), 'the instructions of CLAUDE.md are not in the order of linear-fr/1/instructions.yaml');
+// every group heading is followed by its purpose, in CLAUDE.md and in the skills, each group once
+const HEADING = /^## .+ \(`([a-z0-9-]+)`\)$/;
 const headingsOf = (text) => {
   const lines = text.split('\n');
   let fence = false;
@@ -177,25 +214,24 @@ const headingsOf = (text) => {
   });
   return { lines, found };
 };
-let headingCount = 0;
-for (const [name, text] of [['CLAUDE.md', claude], ['onboarding', skillText.onboarding], ['resume', skillText.resume], ['stop', skillText.stop]]) {
+const headed = [];
+for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
   const { lines, found } = headingsOf(text);
   for (const i of found) {
-    headingCount++;
+    const id = HEADING.exec(lines[i])[1];
+    headed.push(id);
     const next = lines.slice(i + 1).find((l) => l.trim() !== '') || '';
-    const grp = /\(`([a-z0-9-]+)`\)$/.exec(lines[i]);
-    const fam = /^## (\d+)\. /.exec(lines[i]);
-    const g = grp ? groups.find((x) => x.id === grp[1]) : fam ? families[Number(fam[1]) - 1] : null;
-    check(g && patternOf(g.purpose).test(next), `${name}: ${lines[i]} is not followed by its purpose`);
+    const g = groups.find((x) => x.id === id);
+    check(g && lines[i] === `## ${g.title} (\`${g.id}\`)` && patternOf(g.purpose).test(next), `${name}: ${lines[i]} is not a group heading followed by its purpose`);
   }
 }
-check(headingCount === groups.length, `${headingCount} family and group headings in CLAUDE.md and the skills, not the ${groups.length} of the protocol`);
+check(headed.length === groups.length && [...headed].sort().join(',') === groups.map((g) => g.id).sort().join(','), `${headed.length} group headings in CLAUDE.md and the skills, not the ${groups.length} groups of instructions.yaml once each`);
 
-// each rule as built is the protocol's text, verbatim but for its placeholders: a rule block of the
-// built text runs from its **slug** line to the next rule or heading; a placeholder stands for its
-// value, a period after its » included (dropped when the value ends with one), its parentheses
-// included (one pair kept when the value has its own)
-function ruleBlocks(text) {
+// each instruction as built is its text, verbatim but for its placeholders: an instruction block
+// of the built text runs from its **slug** line to the next instruction or heading; a placeholder
+// stands for its value, a period after its » included (dropped when the value ends with one), its
+// parentheses included (one pair kept when the value has its own)
+function instructionBlocks(text) {
   const blocks = new Map();
   let cur = null;
   let fence = false;
@@ -217,19 +253,22 @@ function ruleBlocks(text) {
 }
 let compared = 0;
 for (const [name, text] of [['CLAUDE.md', claude], ...skills.map((s) => [skillOf(s), skillText[s]])]) {
-  for (const [slug, built] of ruleBlocks(text)) {
+  for (const [slug, built] of instructionBlocks(text)) {
     if (!source.has(slug)) continue;
     compared++;
-    check(patternOf(source.get(slug)).test(built), `${name}: rule ${slug} is not the protocol's text with its placeholders filled`);
+    check(patternOf(source.get(slug)).test(built), `${name}: instruction ${slug} is not its text with its placeholders filled`);
   }
 }
-check(compared === all.length, `${compared} rules compared with the protocol, not ${all.length}`);
-check(!claude.includes('## 9. Arrêt') && !claude.includes('(`onboarding`)') && !claude.includes('(`resume`)'), 'CLAUDE.md holds a family or group a moment loads whole');
-check(claude.includes('\n**save-next-step** '), 'CLAUDE.md lacks the save-point rule save-next-step');
+check(compared === all.length, `${compared} instructions compared with instructions.yaml, not ${all.length}`);
+check(!['onboarding', 'resume', 'diagram', 'stop'].some((g) => claude.includes(`(\`${g}\`)`)), 'CLAUDE.md holds a group a moment loads');
+check(claude.includes('\n**save-next-step** '), 'CLAUDE.md lacks the save-point instruction save-next-step');
+check(!claude.includes('teaching.md') && !/\bserves\b/.test(claude), 'CLAUDE.md names teaching.md, or holds the serves of an instruction');
 
-// the teacher template: the harness only
-const template = read(path.join(BUILDER, 'CLAUDE.template.md')) || '';
-check(!template.split('\n').some((l) => RULE_LINE.test(l)), 'CLAUDE.template.md holds a rule line');
+// the teacher template: the implementation's, the only one, and the frame only
+const template = read(path.join(IMPL, 'CLAUDE.template.md')) || '';
+check(template !== '', 'linear-fr/1/CLAUDE.template.md is missing: the teacher template is the implementation\'s');
+check(!fs.existsSync(path.join(BUILDER, 'CLAUDE.template.md')), 'teacher-builder/CLAUDE.template.md exists: the teacher template is the implementation\'s, not the engine\'s');
+check(!template.split('\n').some((l) => INSTRUCTION_LINE.test(l)), 'linear-fr/1/CLAUDE.template.md holds an instruction line');
 
 // the permissions
 let settings = {};
@@ -262,7 +301,7 @@ const log = git(out, 'log', '--oneline');
 check(log.status === 0 && log.stdout.trim().split('\n').length === 1, 'the classroom has not exactly one commit');
 check(git(out, 'status', '--porcelain').stdout === '', 'the classroom has uncommitted files');
 const tracked = git(out, 'ls-files').stdout.split('\n');
-for (const f of ['CLAUDE.md', 'course.lock', '.claude/settings.json', 'learner/parcours.md', 'course/course.yaml']) {
+for (const f of ['CLAUDE.md', 'carte-du-cours.md', 'course.lock', '.claude/settings.json', 'learner/parcours.md', 'course/course.yaml']) {
   check(tracked.includes(f), `the commit does not hold ${f}`);
 }
 
@@ -294,8 +333,9 @@ check(prod.status === 0 && fs.existsSync(path.join(home, 'classrooms', 'cafe', '
 check((read(path.join(home, 'classrooms', 'cafe', 'course.lock')) || '').includes('channel: "prod"'), 'course.lock: channel is not prod');
 check(/channel prod is built from a course tag/.test(prod.stderr), '--channel prod from a branch builds without a warning');
 
-// the dispatcher: an unknown MAJOR, and a MAJOR with no products/teacher/build/ (a copy of the build in a
-// repository of its own, whose spec MAJOR holds spec.yaml alone), are refused, exit 2
+// the dispatcher: an unknown MAJOR, and a MAJOR with no implementation folder (a copy of the build in a
+// repository of its own, whose spec MAJOR holds spec.yaml and whose teacher-builder/ holds no
+// linear-fr/1/), are refused, exit 2
 const courseAt = (dir, spec) => {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'course.yaml'), `id: x\nspec: ${spec}\n`);
@@ -309,7 +349,101 @@ fs.mkdirSync(path.join(bare, 'product-lines', 'linear-fr', '1'), { recursive: tr
 fs.copyFileSync(BUILD, path.join(bare, 'teacher-builder', 'build-teacher'));
 fs.copyFileSync(path.join(SPEC, 'spec.yaml'), path.join(bare, 'product-lines', 'linear-fr', '1', 'spec.yaml'));
 const noBuild = spawnSync(process.execPath, [path.join(bare, 'teacher-builder', 'build-teacher'), courseAt(path.join(bare, 'course'), 'linear-fr@1'), '--out', path.join(tmp, 'out-bare')], { encoding: 'utf8' });
-check(noBuild.status === 2 && /has no products\/teacher\/build\/render-parts/.test(noBuild.stderr) && !fs.existsSync(path.join(tmp, 'out-bare')), `a MAJOR with no products/teacher/build/ is not refused with exit 2: ${noBuild.status} ${(noBuild.stderr || '').trim()}`);
+check(noBuild.status === 2 && /has no implementation folder teacher-builder\/linear-fr\/1\//.test(noBuild.stderr) && !fs.existsSync(path.join(tmp, 'out-bare')), `a MAJOR with no implementation folder is not refused with exit 2: ${noBuild.status} ${(noBuild.stderr || '').trim()}`);
+// a MAJOR whose implementation folder has its render-parts and its schema but no teacher template
+// is refused, exit 2, the message naming the missing file: a spec of another language writes its own
+fs.mkdirSync(path.join(bare, 'teacher-builder', 'linear-fr', '1'), { recursive: true });
+for (const f of ['render-parts', 'parts.schema.yaml']) fs.copyFileSync(path.join(IMPL, f), path.join(bare, 'teacher-builder', 'linear-fr', '1', f));
+const noTemplate = spawnSync(process.execPath, [path.join(bare, 'teacher-builder', 'build-teacher'), path.join(bare, 'course'), '--out', path.join(tmp, 'out-no-template')], { encoding: 'utf8' });
+check(noTemplate.status === 2 && /teacher-builder\/linear-fr\/1\/CLAUDE\.template\.md/.test(noTemplate.stderr) && !fs.existsSync(path.join(tmp, 'out-no-template')), `a MAJOR whose implementation folder has no teacher template is not refused with exit 2 naming the file: ${noTemplate.status} ${(noTemplate.stderr || '').trim()}`);
+
+// ---- the means and the protocol rules they serve, both ways (linear-fr/1/means.yaml): the
+// protocol rules are those of the rule file spec.yaml declares for the teacher
+const manifest = yaml.parse(read(path.join(SPEC, 'spec.yaml')) || '');
+const rulesFile = manifest.products && manifest.products.teacher && manifest.products.teacher.rules;
+const rulesDoc = rulesFile ? yaml.parse(read(path.join(SPEC, rulesFile)) || '') : null;
+const ruleIds = rulesDoc ? rulesDoc.groups.flatMap((g) => (g.rules || []).map((r) => r.id)) : [];
+check(ruleIds.length > 0, `no protocol rule read from ${rulesFile ? path.join('product-lines/linear-fr/1', rulesFile) : 'spec.yaml (no products.teacher.rules)'}`);
+const meansDoc = yaml.parse(read(path.join(IMPL, 'means.yaml')) || '') || {};
+const KINDS = ['template', 'permission', 'hook', 'script', 'build'];
+
+// the failures of the link, for the instructions, the means with no text and the declared rules
+// given; one message per failure, each starting with what it is: `unknown`, `unserved`, `empty`,
+// or `form`
+function linkFailures(instructionGroups, meansList, declaredList, rules) {
+  const out = [];
+  const known = new Set(rules);
+  const served = new Set();
+  const ids = new Set();
+  const all = [
+    ...instructionGroups.flatMap((g) => (g.instructions || []).map((r) => ({ where: `instruction ${r.id}`, id: r.id, serves: r.serves }))),
+    ...meansList.map((m) => ({ where: `means ${m.id}`, id: m.id, serves: m.serves, m })),
+  ];
+  for (const x of all) {
+    if (ids.has(x.id)) out.push(`form: ${x.where}: its id is taken by another instruction or means`);
+    ids.add(x.id);
+    if (x.m && (!KINDS.includes(x.m.kind) || typeof x.m.source !== 'string' || !x.m.source)) out.push(`form: ${x.where}: no kind among ${KINDS.join(', ')}, or no source`);
+    if (!Array.isArray(x.serves) || x.serves.length === 0) { out.push(`empty: ${x.where} serves no protocol rule`); continue; }
+    for (const slug of x.serves) {
+      if (!known.has(slug)) out.push(`unknown: ${x.where} serves ${slug}, which is no protocol rule of the spec`);
+      else served.add(slug);
+    }
+  }
+  const declared = new Set();
+  for (const d of declaredList) {
+    if (!d || !known.has(d.rule)) { out.push(`unknown: the declared rule ${d && d.rule} is no protocol rule of the spec`); continue; }
+    if (typeof d.reason !== 'string' || !d.reason.trim() || !d.decided || typeof d.decided.by !== 'string' || !/^\d{4}-\d\d-\d\d$/.test(String(d.decided.date))) {
+      out.push(`form: the declared rule ${d.rule} lacks its reason, who decided it or when`);
+    }
+    if (served.has(d.rule)) out.push(`form: the declared rule ${d.rule} is served by a means`);
+    declared.add(d.rule);
+  }
+  for (const r of rules) if (!served.has(r) && !declared.has(r)) out.push(`unserved: protocol rule ${r} is served by no means and is not declared in means.yaml`);
+  return out;
+}
+const meansList = Array.isArray(meansDoc.means) ? meansDoc.means : [];
+const declaredList = Array.isArray(meansDoc.declared) ? meansDoc.declared : [];
+const link = linkFailures(groups, meansList, declaredList, ruleIds);
+for (const f of link) check(false, `means.yaml: ${f}`);
+check(link.length === 0, `means.yaml: ${link.length} failures of the link between the means and the protocol rules`);
+
+// each of the three failures shown by a case that makes it fail: a copy of the instructions with
+// a slug that names no protocol rule, one where a rule loses every means, one with an empty serves
+const copy = (x) => JSON.parse(JSON.stringify(x));
+const failsWith = (kind, g, m, d) => linkFailures(g, m, d, ruleIds).some((f) => f.startsWith(`${kind}:`));
+{
+  const g = copy(groups);
+  g[0].instructions[0].serves = [...g[0].instructions[0].serves, 'no-such-protocol-rule'];
+  check(failsWith('unknown', g, meansList, declaredList), 'the link does not fail on a serves that names no protocol rule');
+}
+{
+  const target = ruleIds.find((r) => !declaredList.some((d) => d.rule === r));
+  const g = copy(groups).map((x) => ({ ...x, instructions: x.instructions.map((r) => ({ ...r, serves: r.serves.filter((s) => s !== target) })).filter((r) => r.serves.length) }));
+  const m = copy(meansList).map((x) => ({ ...x, serves: x.serves.filter((s) => s !== target) })).filter((x) => x.serves.length);
+  check(failsWith('unserved', g, m, declaredList) && !failsWith('unserved', groups, meansList, declaredList), `the link does not fail on a protocol rule served by no means (${target} taken from every means)`);
+}
+{
+  const g = copy(groups);
+  g[0].instructions[0].serves = [];
+  const m = copy(meansList);
+  if (m.length) m[0].serves = [];
+  check(failsWith('empty', g, meansList, declaredList) && (!m.length || failsWith('empty', groups, m, declaredList)), 'the link does not fail on an instruction or a means with an empty serves');
+}
+// the rules declared with no means, printed
+for (const d of declaredList) console.log(`test-build: declared with no means: ${d.rule} (${d.decided && d.decided.by}, ${d.decided && d.decided.date}): ${String(d.reason || '').replace(/\s+/g, ' ').trim()}`);
+
+// the form marks and the titles the protocol rules write word for word are the lexicon's words
+const implLexicon = yaml.parse(read(path.join(IMPL, 'lexicon.yaml')) || '') || {};
+const ph = implLexicon.phrases || {};
+const rulesText = rulesFile ? (read(path.join(SPEC, rulesFile)) || '').replace(/\s+/g, ' ') : '';
+const MARKS = [
+  [`« > **${ph.example_lead}** »`, 'example_lead'],
+  [`« > **${ph.question_lead}** »`, 'question_lead'],
+  [`« ${ph.next_lead} <ce qui vient>. ${ph.continue_prompt} »`, 'next_lead and continue_prompt'],
+  [`« ${String(ph.concept_title).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'concept_title'],
+  [`« ${String(ph.domain_title).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'domain_title'],
+];
+for (const [mark, key] of MARKS) check(rulesText.includes(mark), `lexicon.yaml: phrases.${key} is not the protocol rules' word for word: ${mark}`);
 
 fs.rmSync(tmp, { recursive: true, force: true });
 for (const f of failures) console.error(`test-build: ${f}`);

@@ -1,20 +1,23 @@
 #!/usr/bin/env node
 'use strict';
 // build-teacher <course-dir> [--out <dir>] [--channel next|prod|preview] [--site-url <base>] [--force]
-// Builds a classroom outside the repository from a course, in two halves (teacher-builder/README.md):
-//   1. the dispatcher: it reads `spec: <name>@<MAJOR>` in course.yaml and runs that MAJOR's
-//      product-lines/<name>/<MAJOR>/products/teacher/build/render-parts, which renders the five parts of its
-//      composition as text, one JSON document validated here against the MAJOR's parts.schema.yaml;
+// Builds a classroom outside the repository from a course (teacher-builder/README.md):
+//   1. the dispatcher: it reads `spec: <name>@<MAJOR>` in course.yaml and runs the implementation of
+//      that spec MAJOR's teacher, teacher-builder/<name>/<MAJOR>/render-parts, which reads the spec
+//      and the course and renders the five parts of its composition as text, one JSON document
+//      validated here against that folder's parts.schema.yaml;
 //   2. the Claude Code realisation of those parts, this file's own:
-//      permanent       CLAUDE.md, from CLAUDE.template.md
-//      on-demand       .claude/skills/feyn-teacher-<moment>/SKILL.md, one per moment that has rules
+//      permanent       CLAUDE.md, from the implementation folder's CLAUDE.template.md, and the
+//                      course map, a file of the classroom's root CLAUDE.md imports
+//      on-demand       .claude/skills/feyn-teacher-<moment>/SKILL.md, one per moment that loads instructions
 //      course-reads    course/, the course folder copied as is
-//      learner-memory  learner/, the learner templates
+//      learner-memory  learner/, the learner templates, each without its header comment
 //      permissions     .claude/settings.json
 //   then course.lock and the classroom's own git, one commit holding all of it.
-// The form of the protocol and of the composition is the MAJOR's: nothing here reads them.
+// The form of the instructions and of the composition is the implementation folder's: nothing here reads them.
 // Exit 0 built, 1 an input the build cannot read (render-parts failed, its output not valid),
-// 2 a usage error or a refused target (a spec or MAJOR with no products/teacher/build/render-parts).
+// 2 a usage error or a refused target (an unknown spec MAJOR, or one with no implementation folder,
+// or whose implementation folder has no teacher template).
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -72,7 +75,7 @@ const read = (p) => {
 };
 const rel = (p) => path.relative(REPO, p);
 
-// ---- the dispatcher: the spec MAJOR the course declares, and its render-parts
+// ---- the dispatcher: the spec MAJOR the course declares, and the implementation of its teacher
 const courseYamlText = read(path.join(courseDir, 'course.yaml'));
 const specLine = courseYamlText.split('\n').find((l) => /^spec\s*:/.test(l));
 const specRef = specLine && specLine.replace(/^spec\s*:\s*/, '').replace(/\s+#.*$/, '').trim().replace(/^(['"])(.*)\1$/, '$2');
@@ -80,10 +83,15 @@ const specMatch = specRef && /^([a-z0-9]+(?:-[a-z0-9]+)*)@(\d+)$/.exec(specRef);
 if (!specMatch) fail(`${courseDir}/course.yaml declares no spec (spec: <name>@<MAJOR>)`);
 const SPEC = path.join(REPO, 'product-lines', specMatch[1], specMatch[2]);
 if (!fs.existsSync(path.join(SPEC, 'spec.yaml'))) refuse(`unknown spec MAJOR ${specRef}: no ${rel(SPEC)}/spec.yaml`);
-const RENDER = path.join(SPEC, 'products', 'teacher', 'build', 'render-parts');
-const SCHEMA = path.join(SPEC, 'products', 'teacher', 'build', 'parts.schema.yaml');
-if (!fs.existsSync(RENDER)) refuse(`the spec MAJOR ${specRef} has no products/teacher/build/render-parts: no classroom is built from it`);
-if (!fs.existsSync(SCHEMA)) refuse(`the spec MAJOR ${specRef} has no products/teacher/build/parts.schema.yaml`);
+const IMPL = path.join(BUILDER, specMatch[1], specMatch[2]);
+const RENDER = path.join(IMPL, 'render-parts');
+const SCHEMA = path.join(IMPL, 'parts.schema.yaml');
+if (!fs.existsSync(RENDER)) refuse(`the spec MAJOR ${specRef} has no implementation folder ${rel(IMPL)}/ with its render-parts: no classroom is built from it`);
+if (!fs.existsSync(SCHEMA)) refuse(`the implementation folder ${rel(IMPL)}/ has no parts.schema.yaml`);
+// the teacher template is the implementation's, in the spec's language (decision language-policy):
+// a spec MAJOR whose folder has none builds no classroom, rather than a frame of another language
+const TEMPLATE = path.join(IMPL, 'CLAUDE.template.md');
+if (!fs.existsSync(TEMPLATE)) refuse(`the implementation folder ${rel(IMPL)}/ has no teacher template ${rel(TEMPLATE)}: no classroom is built from the spec MAJOR ${specRef}`);
 const dirLine = read(path.join(SPEC, 'spec.yaml')).split('\n').find((l) => /^directives\s*:/.test(l));
 const directives = dirLine && dirLine.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
 if (!/^\d+$/.test(directives || '')) fail(`${rel(SPEC)}/spec.yaml declares no directives MAJOR`);
@@ -91,9 +99,9 @@ const DIRECTIVES = path.join(REPO, 'spec-directives', directives);
 require(path.join(DIRECTIVES, 'lib', 'deps')).need();
 const yaml = require(path.join(DIRECTIVES, 'lib', 'yaml-lines'));
 const Ajv2020 = createRequire(path.join(DIRECTIVES, 'package.json'))('ajv/dist/2020').default;
-const template = read(path.join(BUILDER, 'CLAUDE.template.md'));
+const template = read(TEMPLATE);
 
-// ---- the parts, rendered by the MAJOR and validated against its schema
+// ---- the parts, rendered by the implementation folder and validated against its schema
 const renderArgs = [courseDir, '--channel', channel, ...(opts.siteUrl ? ['--site-url', opts.siteUrl] : [])];
 const rendered = spawnSync(process.execPath, [RENDER, ...renderArgs], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 if (rendered.error) fail(`cannot run ${rel(RENDER)}: ${rendered.error.message}`);
@@ -133,7 +141,7 @@ const tag = git(courseDir, 'describe', '--tags', '--exact-match', '--match', `${
 const branch = git(courseDir, 'rev-parse', '--abbrev-ref', 'HEAD');
 const ref = tag || (branch && branch !== 'HEAD' ? branch : git(courseDir, 'rev-parse', 'HEAD'));
 const courseSha = git(courseDir, 'log', '-1', '--format=%H', '--', '.');
-const toolingSha = git(REPO, 'log', '-1', '--format=%H', '--', path.relative(REPO, BUILDER), path.relative(REPO, path.dirname(RENDER)));
+const toolingSha = git(REPO, 'log', '-1', '--format=%H', '--', path.relative(REPO, BUILDER));
 if (!courseSha) fail(`${courseDir} is not in a git repository with a commit`);
 if (channel === 'prod' && !tag) {
   console.error(`build-teacher: channel prod is built from a course tag ${course.id}/v* (decision three-channels); this build reads ${ref}`);
@@ -144,12 +152,12 @@ if (git(courseDir, 'status', '--porcelain', '--', '.')) {
 let site = null;
 if (opts.siteUrl) site = opts.siteUrl.endsWith('/') ? opts.siteUrl : opts.siteUrl + '/';
 
-// ---- the skills of the moments: a moment with rules is a teacher skill, feyn-teacher-<moment>
+// ---- the skills of the moments: a moment with instructions is a teacher skill, feyn-teacher-<moment>
 // (the prefix keeps it apart from a skill of Claude Code itself, /resume)
 const skillName = (m) => `feyn-teacher-${m.id}`;
-const hasRules = (m) => m.rules.trim() !== '';
+const hasInstructions = (m) => m.instructions.trim() !== '';
 function skill(m) {
-  const description = `Load at this moment of a teaching session: ${m.when}. Holds the rules of the moment ${m.id}.`;
+  const description = `Load at this moment of a teaching session: ${m.when}. Holds the instructions of the moment ${m.id}.`;
   // a draw given as text (the section of a course file under a heading) is written out, so that
   // the moment needs no read of that file
   const reads = m.draws.map((d) => (d.text
@@ -164,43 +172,43 @@ function skill(m) {
     '',
     `# ${skillName(m)}`,
     '',
-    `The moment \`${m.id}\`: ${m.when}. Its rules below hold beside those of \`CLAUDE.md\`.`,
+    `The moment \`${m.id}\`: ${m.when}. Its instructions below hold beside those of \`CLAUDE.md\`.`,
     '',
     ...(reads.length ? ['What it reads:', '', ...reads, ...uses, ''] : []),
-    m.rules,
+    m.instructions,
     '',
   ].join('\n');
 }
-const withRules = parts.moments.filter(hasRules);
-const momentList = parts.moments.map((m) => (hasRules(m)
-  ? `- \`${m.id}\` (skill \`${skillName(m)}\`): ${m.when}.`
-  : `- \`${m.id}\`: ${m.when}; no rule yet, no skill.`)).join('\n');
+const withInstructions = parts.moments.filter(hasInstructions);
 
-// ---- CLAUDE.md
+// ---- CLAUDE.md: the template without its header comment, its slots filled; Claude Code presents
+// each teacher skill with its description, which says its moment, so CLAUDE.md does not list them
+const HEADER_COMMENT = /^<!--[\s\S]*?-->\n/;
 const claude = template
-  .replace(/^<!--[\s\S]*?-->\n/, '')
+  .replace(HEADER_COMMENT, '')
   .replace(/\{\{([a-z_]+)\}\}/g, (m, k) => {
     const v = {
       course_title: course.title,
       spec: specRef,
       channel,
       posture: parts.permanent.posture,
-      course_map: parts.permanent.course_map,
-      course_files: parts.permanent.course_files,
-      moments: momentList,
-      protocol: parts.permanent.protocol,
+      course_map_file: parts.permanent.course_map.file,
+      instructions: parts.permanent.instructions,
     }[k];
-    if (v === undefined) fail(`CLAUDE.template.md: unknown slot {{${k}}}`);
+    if (v === undefined) fail(`${rel(TEMPLATE)}: unknown slot {{${k}}}`);
     return v;
   });
 
 // ---- write the classroom
 fs.mkdirSync(out, { recursive: true });
 fs.writeFileSync(path.join(out, 'CLAUDE.md'), claude.replace(/\n*$/, '\n'));
+fs.writeFileSync(path.join(out, parts.permanent.course_map.file), parts.permanent.course_map.text.replace(/\n*$/, '\n'));
 fs.cpSync(courseDir, path.join(out, 'course'), { recursive: true });
+// learner memory starts from the learner templates, each without its header comment, a note for
+// whoever edits the template: what the teacher needs of it is an instruction of the implementation
 fs.mkdirSync(path.join(out, 'learner'));
-for (const t of parts.learner_templates) fs.writeFileSync(path.join(out, 'learner', t.name), t.text);
-for (const m of withRules) {
+for (const t of parts.learner_templates) fs.writeFileSync(path.join(out, 'learner', t.name), t.text.replace(HEADER_COMMENT, ''));
+for (const m of withInstructions) {
   fs.mkdirSync(path.join(out, '.claude', 'skills', skillName(m)), { recursive: true });
   fs.writeFileSync(path.join(out, '.claude', 'skills', skillName(m), 'SKILL.md'), skill(m));
 }
@@ -239,4 +247,4 @@ const run = (...args) => {
 run('init', '-q', '-b', 'main');
 run('add', '-A');
 run('commit', '-q', '-m', `classroom ${course.id}: built from ${ref} at ${courseSha.slice(0, 12)}`);
-console.log(`build-teacher: ${out} built (${course.id}, channel ${channel}, ${withRules.length} skills)`);
+console.log(`build-teacher: ${out} built (${course.id}, channel ${channel}, ${withInstructions.length} skills)`);

@@ -1,2 +1,2 @@
 check: rule-files
-message: group 1: purpose must be a non-empty string
+message: group 1: purpose "" is not a non-empty string

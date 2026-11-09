@@ -1,0 +1,79 @@
+# The lexicon of the teacher implementation of linear-fr@1: the words its instructions make the
+# teacher say and write (its phrases, what the learner says and the teacher reacts to, the
+# headings and the lines of learner memory, the concept statuses), named `{group.key}` in
+# instructions.yaml (this folder), which render-parts substitutes. It is not a means of its own:
+# its words are part of the instructions that cite them. The spec fixes none of these words but the
+# form marks and the titles, which its protocol rules write word for word
+# (product-lines/linear-fr/1/products/teacher/rules.yaml): the values of `concept_title`,
+# `domain_title`, `example_lead`, `question_lead`, `next_lead` and `continue_prompt` are those
+# words, which test-build holds them to. In French, the language of the spec (decision
+# language-policy). A value with a slot, `{n}`, `{title}`, is filled by whoever reads it.
+# Typography of these values: space before « : », « ; », « ? », « ! », quotes « »; no em-dash, no
+# arrow.
+
+# Literal phrases the teacher says.
+phrases:
+  concept_title: "Concept {n} : {title}"
+  domain_title: "Domaine {n} : {title}"
+  site_link: "le site web"
+  domains_map_link: "la carte des domaines"
+  domains_one: "son domaine"
+  domains_many: "ses {n} domaines"
+  concept_page_link: "la page du concept {n}"
+  example_lead: "Exemple :"
+  question_lead: "Question pour toi :"
+  next_lead: "La suite :"
+  continue_prompt: "Des questions ? J'enchaîne ?"
+  questions_announce: "J'ai {count} questions pour toi, voici la première :"  # {count} in words
+  why: "pourquoi ?"
+  banned_question: "as-tu compris ?"
+  reference_model: "{name}, au concept {n}"  # a model: « la DoD, au concept 11 »
+  waiting_example: "Parfait {nickname}, je prépare le concept {n}."  # a model
+  onboarding_setup: "Je mets en place le cours."
+  onboarding_ready: "C'est prêt, on démarre."
+  resume_opening: "Je retrouve où on en était, un instant."
+  stop_opening: "Je sauvegarde ta progression, un instant."
+
+# What the learner says and the teacher reacts to (lists: models, not fixed strings).
+learner_says:
+  faster: "plus vite"
+  slower: "plus lent"
+  example: "exemple"
+  exercise: "exercice"
+  continue: ["on continue", "la suite"]
+  resume: ["on reprend"]
+  stop: ["on s'arrête", "fin de session", "je dois y aller", "on reprendra"]
+  hurry: ["je dois filer", "vite"]
+
+# Headings of the learner memory files, those of the learner templates (templates/learner/).
+memory_headings:
+  profile: "Profil"
+  preferences: "Préférences"
+  next_step: "Prochaine étape"
+  concepts: "Concepts"
+  annexes: "Annexes vues"
+  journal: "Journal"
+  levers: "Leviers"
+  vigilances: "Vigilances actives"
+  acquired: "Acquis"
+
+# Concept statuses in `learner/parcours.md`.
+status:
+  validated: "validé"
+  in_progress: "en cours"
+  skipped: "sauté"
+  to_review: "à revoir"
+
+# Line formats written to learner memory and to the commit messages.
+memory:
+  observation_line: "date, [concept], fait : action"
+  acquired_line: "[concept] fait (date)"
+  profile_line: "- {label} : {answer}"
+  journal_line: "{date}, session {k} : {events}."  # date YYYY-MM-DD
+  case_entry: "concept {n} : {title}"  # {title} the title of the case
+  minirecap_entry: "mini-récap {from}-{to}"
+  course_done: "Cours fini."
+  commit_message: "{nickname} : {what}"
+  commit_validated: "concept {n} validé"
+  commit_stop: "arrêt"
+  onboarding: "accueil"

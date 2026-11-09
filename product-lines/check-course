@@ -8,7 +8,7 @@
 // (exit 2) when the dependencies of those directives are not installed (`npm ci` in
 // spec-directives/<MAJOR>/).
 // The MAJOR's check-course takes its checks, their category and their severity from its rule
-// files (spec-directives/1/README.md section 5); --category and its other options are passed
+// files (product-lines/<name>/<MAJOR>/README.md; linear-fr: section 3); --category and its other options are passed
 // through.
 const fs = require('fs');
 const path = require('path');

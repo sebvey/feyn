@@ -1,4 +1,4 @@
-# fixture: the rules of a course
+# fixture: the rules of a course; a key the rule model does not have
 groups:
   - title: course.yaml
     purpose: The map of the course.
@@ -10,10 +10,12 @@ groups:
         check: course-yaml
         text: "`course.yaml` shall be valid against `course/schemas/course.schema.yaml`."
       - id: course-id-equals-folder
+        origin: issue 12
         level: requirement
         check: course-yaml
         text: The course `id` shall equal the folder name.
-  - title: The cases
+  - id: cases
+    title: The cases
     purpose: The prepared questions of the loop.
     category: pedagogy
     rules:
@@ -26,6 +28,7 @@ groups:
         level: requirement
         method: inspection
         text: A case shall restate only the storyline facts.
+        criterion: Each fact a case states is a fact of the storyline.
       - id: case-asks-what-was-taught
         level: recommendation
         method: analysis

@@ -1,2 +1,2 @@
 check: rule-slugs
-message: products/teacher/README.md:10 cites rule "third-rule", which products/teacher/rules.yaml does not define
+message: course/README.md:8 cites rule "third-rule", which no rule file defines
