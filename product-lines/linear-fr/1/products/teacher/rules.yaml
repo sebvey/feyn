@@ -1038,14 +1038,15 @@ groups:
         method: inspection
         text: >-
           Le professeur, là où un schéma ne peut pas s'afficher, dit sa légende, dit qu'il ne peut
-          pas le montrer ici, et donne la page du concept où le voir.
+          pas le montrer ici, et donne le lien du schéma sur la page de son concept, qui ouvre la
+          page sur le schéma.
         why: >-
           L'apprenant garde ce que le schéma enseigne par sa légende, et sait où le voir plutôt
           que de croire qu'il n'existe pas.
         criterion: >-
           Le juge lit chaque endroit où un schéma devait être montré et ne l'a pas été : la
-          légende est dite, l'impossibilité de le montrer aussi, et le lien de la page du concept
-          est donné.
+          légende est dite, l'impossibilité de le montrer aussi, et le lien donné mène au schéma
+          sur la page de son concept, pas au haut de la page.
   - id: storyline
     title: Fil rouge
     subject: storyline

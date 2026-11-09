@@ -29,7 +29,7 @@ Ce dont un professeur a besoin pour tenir ses comportements, quelle que soit sa 
 
 - **Lire le cours** : les fichiers du cours, tels que la spec les fixe (`course/README.md`), dont la carte du cours et ses annexes, et le lexique des fichiers du cours de la spec, dont sa typographie.
 - **Retrouver et enregistrer ce qu'il sait de l'apprenant** : lire la mémoire de l'apprenant à l'ouverture d'une session, y écrire au fil de la session.
-- **Connaître les adresses du site** : l'adresse du site du cours, de la carte des domaines, et de la page de chaque domaine, de chaque concept et de chaque annexe.
+- **Connaître les adresses du site** : l'adresse du site du cours, de la carte des domaines, de la page de chaque domaine, de chaque concept et de chaque annexe, et de chaque schéma sur la page de son concept.
 - **Chercher hors du cours, ou savoir qu'il ne le peut pas** : trouver une source quand l'apprenant demande ce que le cours ne couvre pas.
 - **Montrer un schéma, ou savoir qu'il ne le peut pas** : afficher un schéma du cours à l'apprenant, ou le savoir impossible et le dire.
 - **Connaître le cours d'un coup d'œil** : le titre et « L'essentiel » de chaque concept et de chaque annexe, à tout moment de la session.

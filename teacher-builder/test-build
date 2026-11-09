@@ -313,6 +313,8 @@ check(forced.status === 0, `--force exits ${forced.status}: ${(forced.stderr || 
 const lock2 = read(path.join(out, 'course.lock')) || '';
 check(lock2.includes('site_url: "https://example.org/feyn/next/cafe/"'), 'course.lock: site_url is not the --site-url base');
 const claude2 = read(path.join(out, 'CLAUDE.md')) || '';
+const diagram2 = read(path.join(out, '.claude', 'skills', skillOf('diagram'), 'SKILL.md')) || '';
+check(diagram2.includes('](https://example.org/feyn/next/cafe/concepts/{nn}/#schema-{file})'), 'skill feyn-teacher-diagram: --site-url does not give the diagram address, its anchor on the concept page');
 // --force empties a classroom only: a non-empty folder with no course.lock is refused
 const notClassroom = path.join(tmp, 'not-a-classroom');
 fs.mkdirSync(notClassroom);

@@ -580,14 +580,16 @@ groups:
     title: Montrer un schéma
     purpose: >-
       Comment le professeur montre un schéma dans cette classe, où il ne peut pas s'afficher : sa
-      légende et la page du concept où le voir ; et ce qu'il fait d'une demande de schéma.
+      légende et le lien qui l'ouvre sur la page de son concept ; et ce qu'il fait d'une demande de schéma.
     instructions:
       - id: diagram-shown-by-link
         text: >-
           Ici, un schéma ne peut pas s'afficher dans la conversation. Pour en montrer un : nomme-le
           par son `title`, dis sa légende (`caption`), dis que tu ne peux pas le montrer ici, et
-          donne la page du concept où il s'affiche à son unité :
-          « [{phrases.concept_page_link}]({classroom.concept_url}) ».
+          donne le lien qui l'ouvre sur la page de son concept :
+          « [{phrases.concept_page_link}]({classroom.diagram_url}) », où `{nn}` est le numéro du
+          concept sur deux chiffres, comme son dossier l'écrit (`00`, `12` ; une annexe, son
+          identifiant : `A1`), et `{file}` le nom du fichier du schéma (`file`) sans `.svg`.
         serves: [declared-diagram-shown, requested-diagram-shown, diagram-not-displayable]
       - id: requested-diagram-shown
         text: >-

@@ -2,7 +2,7 @@
 # once, read by the site build; no engine file writes an address or a path word. An address is a
 # path relative to the base path of the site (`<base>`, which the build is given: `/feyn-site/next/<course id>/`
 # on the next channel), its path words in French, the language of the spec. The domain, domain map
-# and concept addresses are those the teacher build already gives the learner (the rendering of
+# and concept addresses and the diagram anchor are those the teacher build already gives the learner (the rendering of
 # the teacher implementation, outside the spec, which keeps its own copy until the teacher catches
 # up): changing one breaks the links the teacher gives.
 
@@ -18,7 +18,13 @@ pages:
   search: "recherche/"
   not_found: "404.html"       # the page of an address no page has
 
-# The placeholders of an address, filled by the build from `course.yaml`.
+# The anchors of a page, the part of an address after `#`. `diagram` is the id of a diagram on
+# its concept page: `concepts/{nn}/#schema-{file}`. Its prefix keeps clear of the anchors of the
+# units and misconceptions, which start with a digit or `A`.
+anchors:
+  diagram: "schema-{file}"
+
+# The placeholders of an address, filled by the build from `course.yaml`, `{file}` from the concept's frontmatter.
 placeholders:
   # {n}: the number of a domain (`domains[].number`), as course.yaml writes it: `1`, `2`.
   n:
@@ -29,3 +35,7 @@ placeholders:
     of: concept
     digits: 2
     annex: id
+  # {file}: the file name of a diagram (`diagrams[].file` of the concept's frontmatter) without
+  # `.svg`: `extraction-et-force.svg` gives `extraction-et-force`.
+  file:
+    of: diagram
