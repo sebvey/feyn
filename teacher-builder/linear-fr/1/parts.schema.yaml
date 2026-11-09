@@ -142,13 +142,15 @@ properties:
       classroom:
         description: the classroom parameters (those instructions.yaml cites), « (site non publié) » with no site address, and the channel
         type: object
-        required: [site_url, domains_url, domain_url, concept_url, channel]
+        required: [site_url, domains_url, storyline_url, domain_url, concept_url, diagram_url, channel]
         additionalProperties: false
         properties:
           site_url: { $ref: '#/$defs/text' }
           domains_url: { $ref: '#/$defs/text' }
+          storyline_url: { $ref: '#/$defs/text', description: "the storyline page, <base>fil-rouge/" }
           domain_url: { $ref: '#/$defs/text' }
           concept_url: { $ref: '#/$defs/text' }
+          diagram_url: { $ref: '#/$defs/text', description: "a diagram on its concept page, <base>concepts/{nn}/#schema-{file}, {file} its file name without .svg" }
           channel: { $ref: '#/$defs/text' }
 $defs:
   placeholder:

@@ -290,7 +290,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - en: anchor · rejected: "example", "situation", "storyline callout"
 - fr: « ancrage » · rejected: « exemple », « situation », « fil rouge » (the callout)
 - not to confuse with: [example](#example), [matter](#matter), [storyline](#storyline), [fixed fact](#fixed-fact)
-- why: an anchor does not only illustrate, it anchors the point in the world of the course; "example" names the illustration of a teacher message
+- why: an anchor does not only illustrate, it anchors the point in the world of the course; "example" names the illustration of a teacher message. "Storyline callout" (« fil rouge ») would name the anchor by the label a teacher message sets before a case, « Sur le fil rouge : » or « Hors du fil rouge : », which names where the situation happens, in the storyline or outside it, not the anchor
 
 ### lesson
 
@@ -357,7 +357,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### example
 
-- means: in a teacher message, the illustration that precedes the question (« Exemple : »); the anchor of a unit may serve as one
+- means: in a teacher message, the illustration that precedes the question, alone in a quote; the anchor of a unit may serve as one
 - en: example
 - fr: « exemple »
 - not to confuse with: [anchor](#anchor), [case](#case), [sample course](#sample-course)
@@ -510,7 +510,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### capability
 
-- means: what the teacher needs to honour its **protocol rules**, fixed by the spec with no target term: read the course, retrieve and record what it knows of the learner, know the addresses of the site (the course's site, the map of its domains, the page of each domain, concept and annex), search outside the course or know it cannot, show a diagram or know it cannot, know the title and « L'essentiel » of each concept and each annex. A **teacher implementation** provides each on its target
+- means: what the teacher needs to honour its **protocol rules**, fixed by the spec with no target term: read the course, retrieve and record what it knows of the learner, know the addresses of the site (the course's site, the map of its domains, the page of the storyline, the page of each domain, concept and annex, each diagram on its concept page), search outside the course or know it cannot, show a diagram or know it cannot, know the title and « L'essentiel » of each concept and each annex. A **teacher implementation** provides each on its target
 - en: capability
 - fr: to settle
 - not to confuse with: [protocol rule](#protocol-rule), [means](#means), [permission](#permission), [teacher implementation](#teacher-implementation)

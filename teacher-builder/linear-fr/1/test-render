@@ -7,8 +7,10 @@
 // moment per moment of composition.yaml, every instruction of instructions.yaml rendered once, in
 // the permanent instructions or in one moment, no `serves` rendered, the learner templates
 // verbatim, the course map (its file, the annexes as annexes, each « L'essentiel » of cafe), the
-// three spots of the filling (a value in parentheses inside a link, a phrase ending its sentence,
-// the plural of the domains).
+// storyline address (published and unpublished, the link of the storyline title), the diagram
+// address (its anchor on the concept page, the link of the diagram moment), the three spots of
+// the filling (a value in parentheses inside a link, a phrase ending its sentence, the plural of
+// the domains).
 // Exit 0 when every check passes, 1 otherwise; one line per failure.
 const fs = require('fs');
 const path = require('path');
@@ -96,6 +98,9 @@ check(doc.params.course.id === 'cafe' && doc.params.classroom.channel === 'next'
 check(doc.params.classroom.site_url === '(site non publié)', 'params: with no --site-url, site_url is not « (site non publié) »');
 check(published.params.classroom.site_url === 'https://example.org/feyn/next/cafe/' && published.params.classroom.channel === 'prod', 'params: --site-url or --channel is not used');
 check(published.permanent.instructions.includes('](https://example.org/feyn/next/cafe/concepts/{nn}/)'), 'with --site-url, a link does not give the concept address');
+check(published.params.classroom.storyline_url === 'https://example.org/feyn/next/cafe/fil-rouge/' && doc.params.classroom.storyline_url === '(site non publié)' && published.moments.some((m) => m.instructions.includes('](https://example.org/feyn/next/cafe/fil-rouge/)')), 'with --site-url, the storyline title does not link to the storyline page, or without it storyline_url is not « (site non publié) »');
+const diagramMoment = published.moments.find((m) => m.id === 'diagram');
+check(published.params.classroom.diagram_url === 'https://example.org/feyn/next/cafe/concepts/{nn}/#schema-{file}' && diagramMoment && diagramMoment.instructions.includes('](https://example.org/feyn/next/cafe/concepts/{nn}/#schema-{file})'), 'with --site-url, the diagram link does not land on the diagram anchor of its concept page');
 
 // the three spots of the filling
 const texts = (d) => [d.permanent.instructions, ...d.moments.map((m) => m.instructions)].join('\n');

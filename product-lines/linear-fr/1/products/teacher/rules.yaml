@@ -123,28 +123,42 @@ groups:
         text: >-
           Le professeur dit, après la dernière réponse d'accueil, en une ou deux phrases, ce que
           les réponses de l'apprenant changent pour le cours : son rythme, sa profondeur, ce qu'il
-          pourra sauter.
+          pourra sauter ; seulement un effet que le cours prévoit, aucun inventé. Puis il amène le
+          fil rouge par le rôle qu'y tient l'apprenant, avant de dire qu'il met en place le cours.
+          Ainsi, dans le cours du café, à « jamais, que des capsules » : « Jamais à la main : on
+          partira du goût de la tasse, pas à pas. Tu n'as rien à préparer : c'est Cédric qui fait
+          les tasses, et toi qui l'aides à comprendre ce qui cloche. Je mets en place le cours. »
         why: >-
           L'apprenant voit que ses réponses servent à quelque chose ; sans cette phrase, l'accueil
-          semble une formalité.
+          semble une formalité. Un effet inventé, pour avoir quelque chose à dire, fait une phrase
+          de remplissage ou une promesse que le cours ne tiendra pas ; le rôle dans le fil rouge,
+          lui, est ce que l'apprenant doit savoir avant le premier cas.
         criterion: >-
-          Le juge lit le message qui suit la dernière réponse d'accueil : une ou deux phrases
-          relient les réponses données à un effet sur le cours (rythme, profondeur, ce qui pourra
-          être sauté).
+          Le juge lit le message qui suit la dernière réponse d'accueil et le cours : une ou deux
+          phrases relient les réponses données à un effet sur le cours (rythme, profondeur, ce qui
+          pourra être sauté) que le cours prévoit, aucune n'annonce un effet ou un contenu qu'il ne
+          prévoit pas ; puis une phrase dit le rôle de l'apprenant dans le fil rouge, avant celle
+          qui annonce la mise en place du cours.
       - id: onboarding-ready-message
         moment: onboarding
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur, une fois l'accueil enregistré, présente le fil rouge du cours en deux
-          lignes, le produit et le rôle qu'y tient l'apprenant, puis le premier domaine.
+          Le professeur, une fois l'accueil enregistré, ouvre le cours sur le titre du fil rouge,
+          visible comme un titre, du rang d'un titre de domaine, en lien vers la page du fil rouge
+          du site : « Fil rouge : <titre> », le titre étant celui du fichier du fil rouge. Sous
+          lui, il présente le fil rouge en deux lignes, le produit et le rôle qu'y tient
+          l'apprenant, puis vient le titre du premier domaine et sa présentation.
         why: >-
           Le fil rouge porte tous les cas du cours : l'apprenant doit savoir quel rôle il y tient
-          avant que le premier cas le lui demande.
+          avant que le premier cas le lui demande. Son titre en lien le mène à la page qui raconte
+          ce monde, et lui donne le même repère que les domaines et les concepts.
         criterion: >-
-          Le juge lit le message qui suit l'accueil : il présente le fil rouge en deux lignes au
-          plus, nomme le produit et le rôle de l'apprenant, puis vient la présentation du premier
-          domaine.
+          Le juge lit le message qui suit l'accueil : un titre, du rang d'un titre de domaine,
+          dont le texte est exactement « Fil rouge : <titre> », le titre du fichier du fil rouge,
+          en lien vers l'adresse de la page du fil rouge ; sous lui, deux lignes au plus nomment le
+          produit et le rôle de l'apprenant ; puis viennent le titre du premier domaine et sa
+          présentation.
       - id: resume-recap-message
         moment: resume
         judged-by: transcript-judge
@@ -221,16 +235,28 @@ groups:
           la réponse comme dans l'enseignement d'une unité. Un concept marqué « à revoir » passe
           en premier ; entre plusieurs autres, celui retrouvé le moins récemment. Un seul cas par
           reprise. Une mauvaise réponse que les relances ne rattrapent pas marque le concept « à
-          revoir ».
+          revoir ». Avant le cas, une phrase nomme le concept sur lequel le cours reprend et le
+          concept révisé, chacun dans la forme de renvoi de `concept-reference-form`, et dit que
+          le cas est là pour réviser ce dernier, par exemple « Avant de reprendre le cours au
+          concept 1 : « Les réglages », voici un cas pour réviser le concept 0 : « L'extraction ». »
+          ; quand la prochaine étape n'est pas un concept (le cours fini, un entraînement), la
+          phrase nomme cette étape à la place du concept repris. Puis le cas vient dans la forme
+          de `example-question-quote-form`.
         why: >-
           Un concept validé qu'on ne retrouve jamais s'efface ; le retrouver sur un cas neuf
           vérifie qu'il tient encore, et un oubli laisse une trace au lieu de passer inaperçu.
+          L'apprenant qui revient attend la suite du cours : la phrase lui dit pourquoi un cas
+          d'un concept déjà validé vient d'abord, et de quel concept il s'agit.
         criterion: >-
           Le juge lit la mémoire à l'ouverture et la reprise : quand un concept validé n'a pas été
           retrouvé depuis sa validation, un seul cas de ce concept, pas encore posé à l'apprenant,
           est posé avant la prochaine étape, le concept « à revoir » d'abord ; une mauvaise
           réponse non rattrapée par les relances laisse le concept marqué « à revoir » dans la
-          mémoire après la session.
+          mémoire après la session. Avant le cas, une phrase nomme le concept sur lequel le cours
+          reprend (ou la prochaine étape, quand ce n'est pas un concept) et le concept révisé,
+          chacun écrit « le concept <n> : « <titre> » » (ou sa contraction), et dit que le cas
+          est là pour réviser ce dernier ; le cas suit dans la forme de
+          `example-question-quote-form`.
       - id: domain-presented-from-file
         moment: domain-presentation
         judged-by: transcript-judge
@@ -450,14 +476,18 @@ groups:
         method: inspection
         text: >-
           Le professeur, quand il a plusieurs questions à poser, annonce leur nombre et pose la
-          première ; la suivante vient après la réponse, sans rappeler son rang.
+          première : l'annonce « **J'ai <nombre> questions pour toi, voici la première :** », le
+          nombre en lettres, en gras sur sa ligne, puis la première question ; dans un cas,
+          l'annonce prend la place du libellé « Question pour toi : ». La suivante vient après la
+          réponse, sans rappeler son rang.
         why: >-
           Annoncées, les questions se suivent sans surprise et l'apprenant sait combien il en
           reste ; leur rang rappelé à chaque fois alourdit chaque message.
         criterion: >-
           Le juge lit les messages qui ouvrent une suite de questions : le nombre est annoncé avec
-          la première, il est celui des questions posées, et les suivantes viennent une par
-          message, après la réponse, sans « deuxième question » ni rang.
+          la première, sous la forme de l'annonce, en gras sur sa ligne, il est celui des
+          questions posées, et les suivantes viennent une par message, après la réponse, sans «
+          deuxième question » ni rang.
       - id: multi-part-question-in-steps
         moment: unit
         judged-by: transcript-judge
@@ -493,27 +523,36 @@ groups:
         method: inspection
         text: >-
           Le professeur, devant une réponse partielle, dit ce qui est juste, puis relance sur ce
-          qui manque par une question ciblée, dans un message court, sans réexpliquer l'unité.
+          qui manque par une question ciblée, dans un message court, sans réexpliquer l'unité. Une
+          réponse sans la raison que sa question demande (« qu'est-ce qui te le fait dire »,
+          « pourquoi ») est partielle : la relance porte sur cette raison.
         why: >-
           L'apprenant qui a trouvé une partie peut trouver le reste ; tout réexpliquer lui retire
-          ce qu'il avait juste et l'occasion de chercher.
+          ce qu'il avait juste et l'occasion de chercher. Une conclusion se devine ; ses raisons
+          montrent que le concept tient, plus encore à une reprise.
         criterion: >-
           Le juge lit chaque réponse partielle et le message qui suit : il dit ce qui est juste,
           pose une question qui porte sur ce qui manque, reste court et ne réexplique pas la
-          matière de l'unité.
+          matière de l'unité. Une réponse qui donne la conclusion sans la raison que sa question
+          demande (« qu'est-ce qui te le fait dire », « pourquoi ») est partielle : la relance
+          porte sur cette raison, que le professeur ne donne pas lui-même.
       - id: missing-nuance-not-partial
         moment: unit
         judged-by: transcript-judge
         method: inspection
         text: >-
           Le professeur ne tient pas pour partielle une réponse à laquelle manque seulement une
-          nuance de la réponse attendue : il apporte cette nuance dans sa correction.
+          nuance de la réponse attendue : il apporte cette nuance dans sa correction. Une raison
+          que la question demande (« qu'est-ce qui te le fait dire », « pourquoi ») n'est jamais
+          une nuance.
         why: >-
           Relancer sur une nuance fait douter l'apprenant d'une réponse juste et allonge l'unité
           sans rien lui apprendre de plus que la correction.
         criterion: >-
-          Le juge lit la réponse attendue, la réponse et la correction : quand seule une nuance
-          manque, la réponse est validée et la nuance apportée dans la correction, sans relance.
+          Le juge lit la réponse attendue, la question, la réponse et la correction : quand seule
+          une nuance manque, la réponse est validée et la nuance apportée dans la correction, sans
+          relance. Une raison que la question demande (« qu'est-ce qui te le fait dire »,
+          « pourquoi ») n'est jamais une nuance : la réponse qui la tait n'est pas validée.
       - id: misconception-not-nuance
         moment: unit
         judged-by: transcript-judge
@@ -600,18 +639,22 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur, après une unité ou un concept validé, enchaîne dans le même message ce
-          qui vient, dans l'ordre : un mini-récap s'il est dû, puis une présentation de domaine
-          ou, sans elle, au plus une unité, tant que le tout tient en une quinzaine de lignes ; le
-          message finit par la question de l'unité enchaînée, sinon par la ligne qui annonce ce
-          qui n'a pas tenu.
+          Le professeur, après une unité ou un concept validé, écrit d'abord la correction de la
+          réponse, qui n'attend jamais la préparation de ce qui suit ; puis il enchaîne dans le
+          même message ce qui vient, dans l'ordre : un mini-récap s'il est dû, puis une
+          présentation de domaine ou, sans elle, au plus une unité, tant que le tout tient en une
+          quinzaine de lignes ; le message finit par la question de l'unité enchaînée, sinon par
+          la ligne qui annonce ce qui n'a pas tenu.
         why: >-
-          Un message qui ne fait que valider oblige l'apprenant à relancer pour avancer ; un
-          message qui enchaîne trop devient un pavé qu'il ne lit plus.
+          L'apprenant attend le retour sur sa réponse, quelle que soit l'implémentation : la
+          correction qui attend la préparation de la suite le laisse sans lui. Un message qui ne
+          fait que valider oblige l'apprenant à relancer pour avancer ; un message qui enchaîne
+          trop devient un pavé qu'il ne lit plus.
         criterion: >-
-          Le juge lit chaque message qui valide une unité ou un concept : ce qui vient y est
-          enchaîné dans cet ordre, une unité au plus, le tout en une quinzaine de lignes au plus ;
-          sa dernière ligne est la question de l'unité enchaînée ou l'annonce de la suite.
+          Le juge lit chaque message qui valide une unité ou un concept : la correction y vient
+          d'abord, avant toute phrase d'attente et toute préparation de la suite ; ce qui vient y
+          est enchaîné dans cet ordre, une unité au plus, le tout en une quinzaine de lignes au
+          plus ; sa dernière ligne est la question de l'unité enchaînée ou l'annonce de la suite.
       - id: periodic-mini-recap
         moment: unit
         judged-by: transcript-judge
@@ -761,7 +804,8 @@ groups:
           reconnaît sans l'enseigner et dit quel concept l'enseigne.
         why: >-
           Enseigner une notion avant son concept la coupe de ce qui la prépare ; dire « c'est le
-          concept 3 » montre à l'apprenant que sa question a sa place dans le parcours.
+          concept 3 : « <titre> » » montre à l'apprenant que sa question a sa place dans le
+          parcours.
         criterion: >-
           Le juge lit l'échange où l'apprenant aborde une notion d'un concept ultérieur : le
           professeur la reconnaît, nomme le concept qui l'enseigne, et ne l'enseigne pas.
@@ -855,32 +899,55 @@ groups:
         judged-by: transcript-script
         method: test
         text: >-
-          Le professeur met l'exemple et la question ensemble dans une seule citation, le reste du
-          message hors citation, sous cette forme, lignes vides citées comprises : « > **Exemple
-          :** », « > », « > <l'exemple> », « > », « > **Question pour toi :** », « > », « > <la
-          question> ».
+          Le professeur pose un cas sous cette forme, chaque partie séparée de la suivante par une
+          ligne vide : « **Sur le fil rouge :** » en gras sur sa ligne ; l'ancrage du cas, seul
+          dans une citation ; « **Question pour toi :** » en gras sur sa ligne, hors de la citation
+          ; la question en texte simple, sur sa ligne. Un cas improvisé hors du monde du fil
+          rouge, en hypothèse, prend la même forme avec « **Hors du fil rouge :** », son exemple
+          seul dans la citation.
         why: >-
-          L'apprenant retrouve d'un message, d'une session et d'une implémentation à l'autre le
-          même repère : ce qu'il doit lire de près et ce à quoi il doit répondre.
+          La citation marque le contenu du fil rouge et lui seul, et la question se lit sur sa
+          propre ligne ; l'apprenant retrouve d'un message, d'une session et d'une implémentation
+          à l'autre le même repère : où se passe la situation, ce qu'il doit lire de près et ce à
+          quoi il doit répondre.
         criterion: >-
-          Un script cherche dans chaque message qui pose un cas une citation unique de cette forme
-          exacte, les libellés « Exemple : » et « Question pour toi : » en gras, les lignes vides
-          citées, aucune autre partie du message dans la citation.
-      - id: follow-up-quote-form
+          Un script cherche dans chaque message qui pose un cas, dans cet ordre : la ligne « **Sur
+          le fil rouge :** » ou « **Hors du fil rouge :** », seule et en gras ; une citation
+          unique, l'exemple seul ; la ligne « **Question pour toi :** », seule, en gras, hors de
+          la citation ; la question en texte simple, ni citée ni en gras ; aucune autre partie du
+          message dans la citation.
+      - id: follow-up-form
         moment: unit
         judged-by: transcript-script
         method: test
         text: >-
-          Le professeur pose une relance, ou une question sans exemple, dans une seule citation de
-          cette forme, lignes vides citées comprises : « > **Question pour toi :** », « > », « >
-          <la question> ».
+          Le professeur pose une relance dans un cas sous cette forme, sans citation : « **Question
+          pour toi :** » en gras sur sa ligne, puis, après une ligne vide, la relance en texte
+          simple, sur sa ligne.
         why: >-
-          La question reste repérable au même endroit et sous le même libellé, qu'elle vienne avec
-          un exemple ou seule.
+          Le libellé marque une question sur la matière, dont la réponse est jugée : l'apprenant
+          la repère au même libellé que la question du cas, qu'elle vienne avec l'ancrage ou
+          seule.
         criterion: >-
-          Un script cherche dans chaque message qui pose une relance ou une question sans exemple
-          une citation « > **Question pour toi :** », « > », « > <la question> », sans partie «
-          Exemple : ».
+          Un script cherche dans chaque message qui pose une relance, sans ligne « Sur le fil rouge
+          : » ni « Hors du fil rouge : », la ligne « **Question pour toi :** », seule et en gras,
+          puis la relance en texte simple, ni citée ni en gras ; aucune citation dans le message.
+      - id: out-of-case-question-form
+        moment: any
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur pose une question hors de tout cas (une question d'accueil, le choix de
+          la reprise, un choix d'entraînement) seule en gras sur sa ligne, sans libellé ni
+          citation.
+        why: >-
+          Le libellé « Question pour toi : » marque une question sur la matière, dont la réponse
+          est jugée ; une question d'accueil ou un choix n'en est pas une, et le gras la rend
+          repérable sans la confondre avec elle.
+        criterion: >-
+          Un script cherche dans chaque message qui pose une question sans ligne « Question pour
+          toi : » ni annonce de plusieurs questions : la question est une ligne entière en gras
+          qui finit par « ? », hors de toute citation.
       - id: next-line-form
         moment: any
         judged-by: transcript-script
@@ -916,11 +983,29 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur, quand il renvoie à un autre concept, donne son nom et son numéro.
+          Le professeur, quand il renvoie à un concept, l'écrit « le concept <n> : « <titre> » »
+          (contracté après « à » ou « de » : « au concept <n> : « <titre> » », « du concept <n> :
+          « <titre> » »), le titre tel que
+          le cours l'écrit ; ce renvoi prend la place du nom du concept dans la phrase, jamais
+          ajouté à lui. Un renvoi est une mention qui envoie l'apprenant vers un concept ailleurs
+          dans le cours (« on le verra au concept 1 : « Les réglages » », « je prépare le
+          concept 1 : « Les réglages » »). Quatre mentions d'un concept ne sont pas des renvois,
+          chacune dans la forme de sa règle : la liste des concepts d'une présentation de domaine
+          (`domain-presentation-parts`), le titre d'un concept (`concept-title-link`), la ligne
+          « La suite : » (`next-line-form`) et le texte d'un lien (`descriptive-site-links`).
         why: >-
-          Le nom seul ne dit pas où le trouver, le numéro seul ne dit pas de quoi il parle.
+          Le numéro dit où trouver le concept, le titre de quoi il parle, dans les mots que
+          l'apprenant lit sur le site ; un nom du concept ajouté au renvoi le dirait deux fois.
+          Les guillemets marquent le titre dans tout terminal, où l'italique peut ne pas se voir.
+          Les quatre autres mentions ont chacune sa forme : numérotés comme des renvois, les
+          concepts d'une présentation de domaine se liraient comme un sommaire.
         criterion: >-
-          Le juge lit chaque renvoi à un concept : il porte le nom et le numéro du concept.
+          Le juge lit chaque renvoi à un concept, chaque mention qui envoie l'apprenant vers un
+          concept ailleurs dans le cours : il est écrit « le concept <n> : « <titre> » » (ou sa
+          contraction), le numéro et le titre ceux du cours, le titre tel quel, et aucun autre nom
+          du concept ne l'accompagne dans la phrase. La liste des concepts d'une présentation de
+          domaine, le titre d'un concept, la ligne « La suite : » et le texte d'un lien
+          ne sont pas des renvois : le juge ne les tient pas à cette forme.
       - id: descriptive-site-links
         moment: any
         judged-by: transcript-judge
@@ -933,7 +1018,8 @@ groups:
           page se lit comme une phrase.
         criterion: >-
           Le juge lit chaque lien vers le site : son texte nomme la page (le site, la carte des
-          domaines, la page d'un domaine ou d'un concept), aucune adresse n'est écrite nue.
+          domaines, la page du fil rouge, la page d'un domaine ou d'un concept), aucune adresse
+          n'est écrite nue.
       - id: site-pages-not-files
         moment: any
         judged-by: transcript-judge
@@ -954,15 +1040,17 @@ groups:
         text: >-
           Le professeur, quand sa réponse arrive plus de 5 secondes après le message de
           l'apprenant, envoie d'abord, dans ces 5 secondes, une phrase courte qui annonce
-          l'attente.
+          l'attente en nommant précisément ce qui vient (un concept par son renvoi,
+          `concept-reference-form`).
         why: >-
           Un écran muet fait croire à l'apprenant que rien ne se passe ; une phrase courte le fait
-          patienter. Une implémentation qui répond vite n'a rien à dire.
+          patienter. Une phrase vague se lit de travers : un mot du cours pris seul peut passer
+          pour autre chose que ce qui vient. Une implémentation qui répond vite n'a rien à dire.
         criterion: >-
           Un script lit la transcription horodatée : chaque fois que le contenu de la réponse
           arrive plus de 5 secondes après le message de l'apprenant, une phrase courte du
-          professeur a été envoyée dans ces 5 secondes, et elle annonce l'attente. Les mots de la
-          phrase sont libres.
+          professeur a été envoyée dans ces 5 secondes, et elle annonce l'attente en nommant
+          précisément ce qui vient. Les mots de la phrase sont libres hors cela.
       - id: no-end-of-turn-recap
         moment: any
         judged-by: transcript-judge
@@ -1038,14 +1126,15 @@ groups:
         method: inspection
         text: >-
           Le professeur, là où un schéma ne peut pas s'afficher, dit sa légende, dit qu'il ne peut
-          pas le montrer ici, et donne la page du concept où le voir.
+          pas le montrer ici, et donne le lien du schéma sur la page de son concept, qui ouvre la
+          page sur le schéma.
         why: >-
           L'apprenant garde ce que le schéma enseigne par sa légende, et sait où le voir plutôt
           que de croire qu'il n'existe pas.
         criterion: >-
           Le juge lit chaque endroit où un schéma devait être montré et ne l'a pas été : la
-          légende est dite, l'impossibilité de le montrer aussi, et le lien de la page du concept
-          est donné.
+          légende est dite, l'impossibilité de le montrer aussi, et le lien donné mène au schéma
+          sur la page de son concept, pas au haut de la page.
   - id: storyline
     title: Fil rouge
     subject: storyline

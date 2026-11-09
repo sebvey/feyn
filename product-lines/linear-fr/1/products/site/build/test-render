@@ -3,7 +3,7 @@
 // test-render: runs render-site on cafe (course/samples/cafe, the spec's sample course) and
 // validates its JSON document against site.schema.yaml (ajv's Ajv2020, from the package of the
 // spec directives this MAJOR follows); then checks what the schema cannot say: the published parts
-// reach it, the misconceptions of every unit come after its cases, each with its name, its belief,
+// reach it, each diagram carries its anchor, the misconceptions of every unit come after its cases, each with its name, its belief,
 // its root and its correction, each case under the title of its heading, its expected answer and
 // its misconceptions in play inside what the reader reveals, each name linking to its misconception, no part the form leaves unpublished does (« Consigne au professeur », « Accueil »,
 // « Non vérifié », the free sections of plan.md, the introduction of glossary.md, « Non publié »
@@ -98,6 +98,11 @@ for (const [what, fragment] of published) check(holds(cafe, fragment), `${what} 
 const c0 = doc.concepts.find((c) => c.number === '0');
 const svg = fs.readFileSync(path.join(COURSE, 'concepts', '00-extraction', 'extraction-et-force.svg'), 'utf8');
 check(c0 && c0.diagrams && c0.diagrams[0].svg === svg, 'the SVG of concept 0\'s diagram is not in the document as written');
+// each diagram of cafe carries its anchor, `schema-` then its file name without .svg
+const diagrams = doc.concepts.flatMap((c) => c.diagrams || []);
+check(diagrams.length > 0, 'cafe has no diagram in the document');
+for (const d of diagrams) check(d.anchor === `schema-${d.file.replace(/\.svg$/, '')}`, `the diagram ${d.file} has the anchor ${d.anchor}, not schema-${d.file.replace(/\.svg$/, '')}`);
+check(c0 && c0.diagrams && c0.diagrams[0].anchor === 'schema-extraction-et-force', 'concept 0\'s diagram extraction-et-force.svg does not carry the anchor schema-extraction-et-force');
 const u = c0 && c0.sections && c0.sections[0].units.find((x) => x.id === '0a2');
 check(u && u.blocks.cases.length === 2 && !u.blocks.cases[0].supplementary && u.blocks.cases[1].supplementary, 'unit 0a2 does not hold its case, then its supplementary case');
 // each case under its heading: the titles of the document, concept by concept, are those of the

@@ -139,7 +139,7 @@ files:
         holds: "the lexicon of the site: the words and short texts the site shows for every course of the spec and no course file holds, each with the glossary entry it takes its word from"
         readers: [builder]
       url-scheme:
-        holds: "the URL scheme of the site: the address of each page, relative to the site's base path, its path words, and how the number of a domain and of a concept is written in it"
+        holds: "the URL scheme of the site: the address of each page, relative to the site's base path, its path words, the anchor of a diagram on its concept page, and how the number of a domain and of a concept and the file of a diagram are written in it"
         readers: [builder]
       build:
         holds: "the half of a site build that depends on this MAJOR: `render-site`, which gives the published parts of a course with the words, the URL scheme and the language of the site as one JSON document, run by `site-builder/`; `site.schema.yaml`, the shape of its output; `test-render`; `README.md`"
