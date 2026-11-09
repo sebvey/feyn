@@ -795,3 +795,71 @@ groups:
           Le juge lit chaque demande sur la forme : soit les messages suivants s'y adaptent sans
           enfreindre un autre comportement, soit le professeur dit que le cours ne le prévoit pas
           et reprend le parcours.
+  - id: message-form
+    title: Forme d'un message
+    subject: message-form
+    purpose: >-
+      La forme des messages du professeur : leur longueur, leurs marques de forme gardées mot pour
+      mot d'une implémentation à l'autre, leurs liens, l'attente annoncée, la langue et les
+      schémas.
+    rules:
+      - id: short-messages
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur écrit des messages courts, qui se lisent d'un coup d'œil : une quinzaine
+          de lignes au plus, accueil compris ; ce qui ne tient pas, y compris une unité, se coupe
+          en deux messages, sans se tasser.
+        why: >-
+          Un message long n'est pas lu jusqu'au bout ; tassé dans la limite, avec des lignes de
+          120 à 170 caractères, il ne l'est pas davantage.
+        criterion: >-
+          Le juge lit chaque message pédagogique : une quinzaine de lignes au plus, des lignes de
+          longueur ordinaire ; ce qui dépasse est coupé en deux messages. Les échanges sur le
+          fonctionnement du professeur lui-même (ses outils, sa mémoire) ne sont pas
+          pédagogiques : la limite ne s'y applique pas, ils restent concis.
+      - id: example-question-quote-form
+        moment: unit
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur met l'exemple et la question ensemble dans une seule citation, le reste du
+          message hors citation, sous cette forme, lignes vides citées comprises : « > **Exemple
+          :** », « > », « > <l'exemple> », « > », « > **Question pour toi :** », « > », « > <la
+          question> ».
+        why: >-
+          L'apprenant retrouve d'un message, d'une session et d'une implémentation à l'autre le
+          même repère : ce qu'il doit lire de près et ce à quoi il doit répondre.
+        criterion: >-
+          Un script cherche dans chaque message qui pose un cas une citation unique de cette forme
+          exacte, les libellés « Exemple : » et « Question pour toi : » en gras, les lignes vides
+          citées, aucune autre partie du message dans la citation.
+      - id: follow-up-quote-form
+        moment: unit
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur pose une relance, ou une question sans exemple, sous la même forme de
+          citation, sans la partie « Exemple : ».
+        why: >-
+          La question reste repérable au même endroit et sous le même libellé, qu'elle vienne avec
+          un exemple ou seule.
+        criterion: >-
+          Un script cherche dans chaque message qui pose une relance ou une question sans exemple
+          une citation « > **Question pour toi :** », « > », « > <la question> », sans partie «
+          Exemple : ».
+      - id: next-line-form
+        moment: any
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur annonce la suite par la ligne « La suite : <ce qui vient>. Des questions ?
+          J'enchaîne ? », sur laquelle le message s'arrête ; un oui suffit à l'apprenant pour
+          relancer.
+        why: >-
+          L'apprenant sait ce qui vient et qu'il peut poser une question avant ; un oui lui suffit,
+          sans chercher quoi répondre.
+        criterion: >-
+          Un script cherche, dans chaque message qui annonce la suite, une dernière ligne de cette
+          forme exacte, rien après elle.
