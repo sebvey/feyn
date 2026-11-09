@@ -860,8 +860,8 @@ groups:
           J'enchaîne ? », sur laquelle le message s'arrête ; un oui suffit à l'apprenant pour
           relancer.
         why: >-
-          L'apprenant sait ce qui vient et qu'il peut poser une question avant ; un oui lui suffit,
-          sans chercher quoi répondre.
+          L'apprenant sait ce qui vient et qu'il peut poser une question avant ; un oui lui
+          suffit, sans chercher quoi répondre.
         criterion: >-
           Un script cherche, dans chaque message qui annonce la suite, une dernière ligne de cette
           forme exacte, rien après elle.
@@ -874,7 +874,8 @@ groups:
           titre, en lien vers sa page du site : « Concept <n> : <titre> ».
         why: >-
           L'apprenant voit d'un coup d'œil qu'un nouveau concept commence et retrouve le même
-          repère d'une session et d'une implémentation à l'autre, qui le mène à la page du concept.
+          repère d'une session et d'une implémentation à l'autre, qui le mène à la page du
+          concept.
         criterion: >-
           Un script cherche dans le premier message de chaque concept un titre dont le texte est
           exactement « Concept <n> : <titre> », le numéro et le titre pris dans le cours, en lien
@@ -898,8 +899,8 @@ groups:
           Le professeur donne un lien vers le site par un texte qui dit la page, jamais par
           l'adresse nue.
         why: >-
-          Une adresse nue ne dit pas où elle mène et encombre le message ; un texte qui dit la page
-          se lit comme une phrase.
+          Une adresse nue ne dit pas où elle mène et encombre le message ; un texte qui dit la
+          page se lit comme une phrase.
         criterion: >-
           Le juge lit chaque lien vers le site : son texte nomme la page (le site, la carte des
           domaines, la page d'un domaine ou d'un concept), aucune adresse n'est écrite nue.
@@ -1008,8 +1009,8 @@ groups:
           Le professeur, là où un schéma ne peut pas s'afficher, dit sa légende, dit qu'il ne peut
           pas le montrer ici, et donne la page du concept où le voir.
         why: >-
-          L'apprenant garde ce que le schéma enseigne par sa légende, et sait où le voir plutôt que
-          de croire qu'il n'existe pas.
+          L'apprenant garde ce que le schéma enseigne par sa légende, et sait où le voir plutôt
+          que de croire qu'il n'existe pas.
         criterion: >-
           Le juge lit chaque endroit où un schéma devait être montré et ne l'a pas été : la
           légende est dite, l'impossibilité de le montrer aussi, et le lien de la page du concept

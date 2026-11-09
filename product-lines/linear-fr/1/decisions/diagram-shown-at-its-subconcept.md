@@ -22,3 +22,4 @@ The two fresh tests, scenario `declared-diagram` (a learner at the second sub-co
 ## Consequences
 
 - Amended 2026-11-06 (#630): a diagram is declared at a unit (its key `unit`, the id of a unit), no longer at any node of the concept's tree, and the image line leaves the body of `concept.md`: the builds place the diagram at its unit (decision `unit-is-the-content-unit`). The evidence above was observed on the form before units, where the diagram was declared at a sub-concept. The frozen protocol still names the diagram's `subconcept` until it is brought back up to date (decision `teacher-frozen-until-the-protocol-brainstorm`).
+- Amended 2026-11-09 (#773): the protocol rule is written at the unit (`products/teacher/rules.yaml`, subject message form); the fallback on a drawing instruction is gone with that instruction, and a diagram the course does not declare is not drawn on request (#476).
