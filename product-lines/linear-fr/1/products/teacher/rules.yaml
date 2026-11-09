@@ -987,15 +987,25 @@ groups:
           (contracté après « à » ou « de » : « au concept <n> : « <titre> » », « du concept <n> :
           « <titre> » »), le titre tel que
           le cours l'écrit ; ce renvoi prend la place du nom du concept dans la phrase, jamais
-          ajouté à lui.
+          ajouté à lui. Un renvoi est une mention qui envoie l'apprenant vers un concept ailleurs
+          dans le cours (« on le verra au concept 1 : « Les réglages » », « je prépare le
+          concept 1 : « Les réglages » »). Quatre mentions d'un concept ne sont pas des renvois,
+          chacune dans la forme de sa règle : la liste des concepts d'une présentation de domaine
+          (`domain-presentation-parts`), le titre d'un concept (`concept-title-link`), la ligne
+          « La suite : » (`next-line-form`) et le texte d'un lien (`descriptive-site-links`).
         why: >-
           Le numéro dit où trouver le concept, le titre de quoi il parle, dans les mots que
           l'apprenant lit sur le site ; un nom du concept ajouté au renvoi le dirait deux fois.
           Les guillemets marquent le titre dans tout terminal, où l'italique peut ne pas se voir.
+          Les quatre autres mentions ont chacune sa forme : numérotés comme des renvois, les
+          concepts d'une présentation de domaine se liraient comme un sommaire.
         criterion: >-
-          Le juge lit chaque renvoi à un concept : il est écrit « le concept <n> : « <titre> » »
-          (ou sa contraction), le numéro et le titre ceux du cours, le titre tel quel, et aucun
-          autre nom du concept ne l'accompagne dans la phrase.
+          Le juge lit chaque renvoi à un concept, chaque mention qui envoie l'apprenant vers un
+          concept ailleurs dans le cours : il est écrit « le concept <n> : « <titre> » » (ou sa
+          contraction), le numéro et le titre ceux du cours, le titre tel quel, et aucun autre nom
+          du concept ne l'accompagne dans la phrase. La liste des concepts d'une présentation de
+          domaine, le titre d'un concept, la ligne « La suite : » et le texte d'un lien
+          ne sont pas des renvois : le juge ne les tient pas à cette forme.
       - id: descriptive-site-links
         moment: any
         judged-by: transcript-judge
