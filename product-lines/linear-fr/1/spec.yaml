@@ -62,7 +62,7 @@ lists:
       category: [structure, pedagogy, writing, sources, diagrams]
     teacher:
       subject: [session-flow, teaching-a-unit, message-form, storyline, sources-and-stances, learner-memory]
-      moment: [session-start, onboarding, resume, domain-presentation, unit, stop, any]
+      moment: [session-start, onboarding, resume, domain-presentation, unit, stop, course-end, any]
       judged-by: [transcript-script, transcript-judge, memory-reading]
   lexicons:
     course:

@@ -51,7 +51,7 @@ Une permission n'est pas un comportement à part : elle devient la limite du com
 | Clé | Ce qu'elle dit | Valeurs |
 |---|---|---|
 | `subject` | le sujet du comportement, l'axe du fichier : un groupe par sujet | `session-flow` (le déroulé de la session), `teaching-a-unit` (enseigner une unité), `message-form` (la forme d'un message), `storyline` (le fil rouge), `sources-and-stances` (les sources et les postures), `learner-memory` (la mémoire de l'apprenant) |
-| `moment` | quand il s'applique | `session-start`, `onboarding`, `resume`, `domain-presentation`, `unit`, `stop`, `any` |
+| `moment` | quand il s'applique | `session-start`, `onboarding`, `resume`, `domain-presentation`, `unit`, `stop`, `course-end`, `any` |
 | `judged-by` | ce que lit qui le juge | `transcript-script`, `transcript-judge`, `memory-reading` |
 
 Un groupe déclare son `subject` une fois pour ses comportements ; `moment` et `judged-by` se déclarent sur le comportement ou sur son groupe.

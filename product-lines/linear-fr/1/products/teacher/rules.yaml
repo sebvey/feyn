@@ -321,6 +321,39 @@ groups:
         criterion: >-
           Le juge lit la demande d'arrêt pressée et la réponse : la réponse tient dans les deux
           lignes de l'arrêt, sans autre phrase.
+      - id: course-end
+        moment: course-end
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, quand le dernier concept du parcours est validé, dit que le cours est
+          fini et félicite l'apprenant, fait un court récap de ce qu'il a vu, puis, s'il reste des
+          annexes qu'il n'a pas suivies, les lui propose par leur titre, pour creuser quelques
+          notions, sans l'imposer.
+        why: >-
+          L'apprenant qui termine mérite de voir le chemin parcouru ; les annexes sont la suite
+          naturelle du cours, qu'il ne trouverait pas seul.
+        criterion: >-
+          Le juge lit la mémoire de l'apprenant et le message qui suit la validation du dernier
+          concept du parcours : il dit que le cours est fini, félicite, récapitule brièvement ce
+          qui a été vu, et propose par leur titre les annexes que la mémoire ne donne pas comme
+          vues, et seulement celles-là ; aucune annexe n'est proposée si toutes ont été vues.
+      - id: finished-course-resume
+        moment: resume
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, à l'ouverture d'une session d'un apprenant qui a fini le cours, dit que
+          le cours a été couvert et lui propose de réviser : s'entraîner sur un domaine ou un
+          concept, ou suivre une annexe qu'il n'a pas encore vue.
+        why: >-
+          Un apprenant qui revient après la fin du cours n'a pas de prochain concept : lui en
+          annoncer un, ou le rappel ordinaire, le perdrait ; la révision est ce que le cours peut
+          encore lui offrir.
+        criterion: >-
+          Le juge lit la mémoire à l'ouverture et le premier message : quand la mémoire dit le
+          cours fini, le message dit que le cours a été couvert, n'annonce aucun prochain concept,
+          et propose de réviser (un domaine, un concept, une annexe pas encore vue).
   - id: teaching-a-unit
     title: Enseigner une unité
     subject: teaching-a-unit
