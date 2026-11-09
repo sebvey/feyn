@@ -1029,8 +1029,8 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur fait se passer les cas dans le monde du fil rouge, avec ses acteurs ;
-          l'apprenant y tient le rôle que le fil rouge lui donne.
+          Le professeur fait se passer les cas du cours dans le monde du fil rouge, avec ses
+          acteurs ; l'apprenant y tient le rôle que le fil rouge lui donne.
         why: >-
           Un monde suivi d'un concept à l'autre donne aux cas un contexte que l'apprenant connaît
           déjà ; des acteurs jamais présentés l'obligent à tout reprendre à chaque cas.
@@ -1082,22 +1082,24 @@ groups:
           Un fait que l'apprenant décide devient un fait du monde que le cours ne connaît pas, et
           sa réponse ne peut plus être jugée contre la réponse attendue.
         criterion: >-
-          Le juge lit chaque question du professeur : aucune ne demande à l'apprenant ce qu'un
-          acteur a, fait ou veut dans le monde du fil rouge quand le fil rouge ou le cas le fixe
-          déjà, ou quand rien ne le fixe.
+          Le juge lit chaque question du professeur : aucune ne demande à l'apprenant d'établir ce
+          qu'un acteur a, fait ou veut dans le monde du fil rouge, que le fil rouge ou le cas le
+          fixe déjà ou que rien ne le fixe. Une question qui demande à l'apprenant de raisonner
+          sur ces faits, de juger ou de conseiller un acteur, comme la question d'un cas, est
+          permise.
       - id: fixed-facts-unsaid
-        moment: unit
+        moment: any
         judged-by: transcript-judge
         method: inspection
         text: >-
           Le professeur ne récite pas les faits fixés du fil rouge, ni tels quels ni en liste :
-          ils arrivent par la situation des cas.
+          ils arrivent par l'ancrage des cas.
         why: >-
           Récités avant le cas, les faits deviennent une liste à retenir au lieu d'une situation à
           comprendre.
         criterion: >-
           Le juge lit les faits fixés de `storyline.md` et la transcription : aucun message ne les
-          énumère ni ne les recopie ; un fait fixé n'apparaît que dans la situation d'un cas.
+          énumère ni ne les recopie ; un fait fixé n'apparaît que dans l'ancrage d'un cas.
   - id: sources-and-stances
     title: Consensus, école et sources
     subject: sources-and-stances
@@ -1145,13 +1147,13 @@ groups:
           qui en reste non vérifié ; quand le cours n'en donne aucune, il le dit.
         why: >-
           L'apprenant qui demande une source veut pouvoir la lire : la donner telle que le cours
-          l'a vérifiée, avec ce qui ne l'est pas, est honnête ; sans elle, le professeur n'ose pas
-          la nommer, ou la donne sans dire ce qui reste à vérifier.
+          l'a vérifiée, avec ce qui ne l'est pas, est honnête ; sans cela, le professeur n'ose pas
+          nommer une source documentée, ou la donne sans dire ce qui reste à vérifier.
         criterion: >-
-          Le juge lit les sources du concept (ses positions, `sources.md`) et la réponse : la
-          source donnée est celle que le cours associe à l'affirmation, décrite comme le cours la
-          décrit, avec l'entrée « Non vérifié » qui la concerne s'il y en a une ; sans source, la
-          réponse le dit.
+          Le juge lit les sources du concept (ses positions, ses voisins, `sources.md`) et la
+          réponse : la source donnée est celle que le cours associe à l'affirmation, décrite comme
+          le cours la décrit, avec l'entrée « Non vérifié » qui la concerne s'il y en a une ; sans
+          source, la réponse le dit.
       - id: unsourced-origin-from-memory
         moment: any
         judged-by: transcript-judge
