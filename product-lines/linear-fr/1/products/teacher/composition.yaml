@@ -31,7 +31,7 @@
 # The rules of the protocol are named by their file, products/teacher/rules.yaml, which
 # products/teacher/build/render-parts reads by family and group. spec-directives/1/tests/composition.js
 # (check-spec) verifies the form of this file when spec.yaml declares the teacher, which it does
-# not while the teacher is frozen, never its sense, which the fresh tests judge.
+# not until epic #757 brings the teacher up to date, never its sense, which the fresh tests judge.
 parts:
   - id: permanent
     loads: every-message

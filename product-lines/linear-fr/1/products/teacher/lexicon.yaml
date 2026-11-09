@@ -3,8 +3,8 @@
 # learner memory, the concept statuses), named `{group.key}` in products/teacher/rules.yaml (decision
 # `lexicon-not-language-pack`). The spec is French (`language: fr` in spec.yaml). The keys are
 # those the protocol uses, listed in products/teacher/README.md, « Clés et paramètres » (`lexicon-keys`, a
-# test of check-spec, verifies them when spec.yaml declares the teacher, which it does not while
-# the teacher is frozen). A value with a slot, `{n}`, `{title}`, is filled by whoever
+# test of check-spec, verifies them when spec.yaml declares the teacher, which it does not until
+# epic #757 brings the teacher up to date). A value with a slot, `{n}`, `{title}`, is filled by whoever
 # reads it. Typography of these values: space before « : », « ; », « ? », « ! », quotes « »; no
 # em-dash, no arrow.
 
@@ -72,11 +72,10 @@ memory:
   commit_stop: "arrêt"
   onboarding: "accueil"
 
-# The words of the course form the frozen protocol still cites, which course/lexicon.yaml no
-# longer holds: moved here with their values unchanged until the brainstorm on the protocol rules
-# (decision `teacher-frozen-until-the-protocol-brainstorm`); `fallback`, `practice` and `aside`, the
-# former qualifiers of a supplementary case, which no case of a course carries any more (#597
-# redoes the rules that cite them).
+# The words of the course form the protocol still cites, which course/lexicon.yaml no
+# longer holds: moved here with their values unchanged until epic #757 rewrites the rules that
+# cite them; `fallback`, `practice` and `aside`, the former qualifiers of a supplementary case,
+# which no case of a course carries any more.
 frozen_form:
   instructions: "Consignes"
   bank: "Banque d'exemples"

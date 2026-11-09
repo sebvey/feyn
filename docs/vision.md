@@ -15,7 +15,7 @@ The spec, its checks and the agentic layer are worth what they bring to the prod
 
 ## The yardstick
 
-A change of `linear-fr` counts when the bench course, the spec's sample course `product-lines/linear-fr/1/course/samples/cafe/` (three concepts, two annexes), follows it in the same PR and its checks pass on it. The site is the product being built; the teacher is frozen until the brainstorm on the protocol rules (idea #597), and comes back after it (decision `teacher-frozen-until-the-protocol-brainstorm`). Small and proven over complete: a change proven on a short course that holds the whole form is worth more than a complete spec judged on paper.
+A change of `linear-fr` counts when the bench course, the spec's sample course `product-lines/linear-fr/1/course/samples/cafe/` (three concepts, two annexes), follows it in the same PR and its checks pass on it. A change of what is expected of the teacher counts when, in its PR, the teacher builds on the bench course and `teacher-builder/test-build` passes, and when, at the PR that lands it on `main`, the maintainer plays a teaching session on the bench course and says it is good; the fresh tests wait until the protocol is stable or a second teacher implementation must be compared (decision `teacher-yardstick-cafe-and-maintainer-session`). Small and proven over complete: a change proven on a short course that holds the whole form is worth more than a complete spec judged on paper.
 
 ## The lessons of parcours-po
 

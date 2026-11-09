@@ -10,7 +10,7 @@
 # category (its family), method (demonstration, by the fresh tests), rules. A rule: id (its slug),
 # level, text, why (what the teacher does without the rule, where a drift was seen). check-spec
 # (rule-files, rule-slugs) verifies this file when spec.yaml declares the teacher, which it does
-# not while the teacher is frozen; products/teacher/build/render-parts renders it for a classroom.
+# not until epic #757 brings the teacher up to date; products/teacher/build/render-parts renders it for a classroom.
 groups:
   - id: session-start
     title: Démarrage de session
