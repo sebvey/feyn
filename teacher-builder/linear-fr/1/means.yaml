@@ -4,9 +4,9 @@
 # `serves`. teacher-builder/test-build reads both files and the spec's protocol rules
 # (product-lines/linear-fr/1/products/teacher/rules.yaml): every slug a `serves` names is a
 # protocol rule; every protocol rule is served by a means or listed under `declared`; no means has
-# an empty `serves`. The common frame, teacher-builder/CLAUDE.template.md, and the loading by
-# moment of composition.yaml are how the means reach the teacher, not means: they serve no rule of
-# their own.
+# an empty `serves`. The frame, the teacher template CLAUDE.template.md (this folder), and the
+# loading by moment of composition.yaml are how the means reach the teacher, not means: they serve
+# no rule of their own.
 #
 # A means: `id` (a slug, unique here and in instructions.yaml), `kind`, `source` (the file or the
 # setting), `serves` (never empty). `kind`, one of:
@@ -32,7 +32,7 @@ means:
     serves: [saved-at-the-latest]
   - id: learner-memory-at-start
     kind: build
-    source: "teacher-builder/CLAUDE.template.md: learner/apprenant.md and learner/observations.md imported at the start of every session"
+    source: "CLAUDE.template.md: learner/apprenant.md and learner/observations.md imported at the start of every session"
     serves: [new-or-returning-learner, profile-used, observations-used]
   - id: posture-given
     kind: build
@@ -40,8 +40,8 @@ means:
     serves: [teacher-posture-from-plan]
   - id: course-map-given
     kind: build
-    source: "render-parts, permanent.course_map and course_files, and course/course.yaml imported (CLAUDE.template.md): the domains, concepts and annexes, their titles, numbers, folders and prerequisites in CLAUDE.md"
-    serves: [domain-title-link, concept-title-link, concept-reference-form, resume-on-greeting, missing-prerequisite-told, annex-unit-offered, course-end]
+    source: "render-parts, permanent.course_map, written by build-teacher to carte-du-cours.md at the classroom's root and imported by @ in CLAUDE.md (CLAUDE.template.md): each domain, its title, objective and file, then its concepts; the annexes as annexes; each concept and annex with its title, number, objective, prerequisites, folder and files and its « L'essentiel »; the other course files"
+    serves: [domain-title-link, concept-title-link, concept-reference-form, resume-on-greeting, missing-prerequisite-told, later-concept-acknowledged, annex-unit-offered, course-end]
   - id: onboarding-questions-given
     kind: build
     source: "composition.yaml, moment onboarding: the onboarding questions of plan.md written into the skill feyn-teacher-onboarding"

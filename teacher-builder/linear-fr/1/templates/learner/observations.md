@@ -1,5 +1,5 @@
 <!--
-Template of a learner's observations (ported from the old course/templates/learner/observations.md). Learner memory, not course material; no check reads it. Replace every <placeholder>, delete this comment (from the opening to the closing mark, marks included).
+Template of a learner's observations (ported from the old course/templates/learner/observations.md). Learner memory, not course material; no check reads it. teacher-builder/build-teacher drops this comment when it writes learner/: the teacher never sees it. The teacher replaces every <placeholder> at the end of the onboarding (instruction onboarding-files-set-up of instructions.yaml).
 -->
 # Observations sur <nickname>
 

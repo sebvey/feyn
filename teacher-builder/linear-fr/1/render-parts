@@ -233,41 +233,86 @@ const annexTitle = (c) => {
 };
 const conceptTitle = (c) => (c.annex ? annexTitle(c) : slot(lex('phrases', 'concept_title'), { n: c.number, title: c.entry.title }));
 const domainTitle = (d) => slot(lex('phrases', 'domain_title'), { n: d.number, title: d.title });
-// the course map: each domain, then its concepts; then the annexes, which no domain holds
-function courseMap() {
-  return [
-    ...(course.domains || []).map((d) => [
-      `- ${domainTitle(d)}`,
-      ...(d.concepts || []).map((n) => {
-        const c = concepts.get(String(n));
-        if (!c) fail(`course.yaml: domain ${d.number} names concept ${n}, which is not in concepts`);
-        return `  - ${conceptTitle(c)} (\`${c.dir}\`)`;
-      }),
-    ].join('\n')),
-    ...ctx.concepts.filter((c) => c.annex).map((c) => `- ${conceptTitle(c)} (\`${c.dir}\`)`),
-  ].join('\n');
-}
+// The course map, the file of the classroom CLAUDE.md imports (decision of the maintainer,
+// 2026-11-09, #790): each domain in the order of the course, its title, objective and file, then
+// each of its concepts; then the annexes, which no domain holds, under a heading of their own; each
+// concept and annex with its title, objective, prerequisites, folder and files, and « L'essentiel »
+// verbatim, read through the spec's parser (the head of its concept.md); then the other course
+// files. Its words are French, the spec's language, as the template's (decision language-policy).
+const COURSE_MAP_FILE = 'carte-du-cours.md';
+const MAP = {
+  title: 'Carte du cours',
+  intro: 'Les domaines dans l\'ordre du parcours, chacun avec ses concepts dans leur ordre, puis les annexes, hors du parcours. Les chemins sont ceux de la classe ; tout ce qui est sous `course/` est en lecture seule. Ce fichier est construit avec la classe à partir du cours : il ne se modifie pas à la main.',
+  objective: 'Objectif',
+  prerequisites: 'Prérequis',
+  none: 'aucun',
+  file: 'Fichier',
+  folder: 'Dossier',
+  annexes: 'Annexes',
+  others: 'Autres fichiers du cours',
+};
 // the files of a concept folder the course has, each with what it holds
-const CONCEPT_FILES = [['concept.md', 'the matter'], ['sources.md', 'the sources']];
-function courseFiles() {
-  return [
-    '- `course/course.yaml`: the course map in full (domains, concepts, annexes, prerequisites)',
-    '- `course/plan.md`: the posture, the target audience, the onboarding questions and the stances',
-    `- \`course/${course.storyline}\`: the storyline`,
-    `- \`course/${course.glossary}\`: the glossary, one term per notion`,
-    ...(course.domains || []).map((d) => `- \`course/${d.file}\`: the domain file of ${domainTitle(d)}`),
-    ...ctx.concepts.map((c) => {
-      const files = CONCEPT_FILES.filter(([f]) => ctx.exists(`${c.dir}/${f}`)).map(([f, what]) => `\`${f}\` (${what})`);
-      return `- \`course/${c.dir}/\`: ${conceptTitle(c)}${files.length ? `, ${files.join(', ')}` : ''}`;
+const CONCEPT_FILES = [['concept.md', 'la matière'], ['sources.md', 'les sources']];
+// « L'essentiel » of a concept or an annex: the lines of the head of its concept.md (the form's
+// head, `headings.essentials`), as the parser reads them, verbatim
+function essentials(c) {
+  const head = ctx.parts(c).head;
+  const text = head ? head.lines.map((l) => l.t).join('\n').trim() : '';
+  if (!text) fail(`${c.dir}/concept.md has no « ${ctx.word('headings', 'essentials')} »`);
+  return text;
+}
+function conceptEntry(c) {
+  const prerequisites = (c.entry.prerequisites || []).map((n) => {
+    const p = concepts.get(String(n));
+    if (!p) fail(`course.yaml: concept ${c.number} names prerequisite ${n}, which is not in concepts`);
+    return conceptTitle(p);
+  });
+  const files = CONCEPT_FILES.filter(([f]) => ctx.exists(`${c.dir}/${f}`)).map(([f, what]) => `\`${f}\` (${what})`);
+  return blocks([
+    `### ${conceptTitle(c)}`,
+    [
+      `- ${MAP.objective} : ${c.entry.objective}`,
+      `- ${MAP.prerequisites} : ${prerequisites.length ? prerequisites.join(' ; ') : MAP.none}`,
+      `- ${MAP.folder} : \`course/${c.dir}/\`${files.length ? `, ${files.join(', ')}` : ''}`,
+    ].join('\n'),
+    `#### ${ctx.word('headings', 'essentials')}`,
+    essentials(c),
+  ]);
+}
+function courseMap() {
+  const domains = (course.domains || []).map((d) => blocks([
+    `## ${domainTitle(d)}`,
+    [`- ${MAP.objective} : ${d.objective}`, `- ${MAP.file} : \`course/${d.file}\``].join('\n'),
+    ...(d.concepts || []).map((n) => {
+      const c = concepts.get(String(n));
+      if (!c) fail(`course.yaml: domain ${d.number} names concept ${n}, which is not in concepts`);
+      return conceptEntry(c);
     }),
+  ]));
+  const annexes = ctx.concepts.filter((c) => c.annex);
+  const others = [
+    `- \`course/plan.md\` : la posture, le public cible, les questions d'accueil et les partis pris`,
+    `- \`course/${course.storyline}\` : le fil rouge`,
+    `- \`course/${course.glossary}\` : le glossaire, un terme par notion`,
   ].join('\n');
+  return {
+    file: COURSE_MAP_FILE,
+    text: blocks([
+      `# ${MAP.title} : ${course.title}`,
+      MAP.intro,
+      ...domains,
+      ...(annexes.length ? [`## ${MAP.annexes}`, ...annexes.map(conceptEntry)] : []),
+      `## ${MAP.others}`,
+      others,
+    ]) + '\n',
+  };
 }
 
 // ---- what a moment reads: its draws from the course and from learner memory, as paths in the
 // classroom (the course is copied into course/, learner memory is learner/: composition.yaml)
 const SLOTS = {
-  '<dir>': 'the `dir` of the concept at hand in `course/course.yaml`',
-  '<file>': 'the `file` of the domain at hand in `course/course.yaml`',
+  '<dir>': `the folder of the concept at hand, under \`course/\`, as the course map (\`${COURSE_MAP_FILE}\`) gives it`,
+  '<file>': `the file of the domain at hand, under \`course/\`, as the course map (\`${COURSE_MAP_FILE}\`) gives it`,
 };
 // A draw from a course file with no slot whose `what` names a heading (`headings.onboarding`) is
 // rendered with the section under that heading, `text`, so that the moment needs no read: the
@@ -319,7 +364,6 @@ const rendered = {
     instructions: permanentInstructions(),
     posture: posture(),
     course_map: courseMap(),
-    course_files: courseFiles(),
   },
   moments: moments.map((m) => {
     const reads = draws(m.draws);

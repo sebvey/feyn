@@ -34,6 +34,9 @@ parts:
     loads: every-message
     draws:
       - from: implementation
+        source: CLAUDE.template.md
+        what: le cadre de CLAUDE.md, la classe et ce qu'elle importe au démarrage
+      - from: implementation
         source: instructions.yaml
         what: les instructions du professeur et le but de leurs groupes, sauf les groupes qu'un moment charge
       - from: implementation
@@ -44,10 +47,10 @@ parts:
         what: la posture, le paragraphe sous headings.onboarding
       - from: course
         source: course.yaml
-        what: la carte du cours, une projection de ses domaines, de ses concepts et de ses annexes
+        what: la carte du cours, ses domaines, ses concepts et ses annexes, leurs objectifs, leurs prérequis et leurs fichiers, et les autres fichiers du cours
       - from: course
-        source: course.yaml
-        what: les noms des fichiers du cours (fil rouge, glossaire, fiches de domaine, dossiers de concept)
+        source: <dir>/concept.md
+        what: la section headings.essentials de chaque concept et de chaque annexe, dans la carte du cours
       - from: spec
         source: course/lexicon.yaml
         what: les mots des fichiers du cours que les instructions nomment par clé

@@ -16,7 +16,7 @@ properties:
   permanent:
     description: the part permanent, present at every message of the teacher
     type: object
-    required: [instructions, posture, course_map, course_files]
+    required: [instructions, posture, course_map]
     additionalProperties: false
     properties:
       instructions:
@@ -26,11 +26,18 @@ properties:
         description: the paragraph of the course's plan.md under its onboarding heading
         $ref: '#/$defs/text'
       course_map:
-        description: each domain, then its concepts, number, title and dir; then each annex under its own title and its dir (a Markdown list)
-        $ref: '#/$defs/text'
-      course_files:
-        description: the files of the course, as paths in the classroom's course/, each with what it holds (a Markdown list)
-        $ref: '#/$defs/text'
+        description: the course map, a file of the classroom's root that CLAUDE.md imports
+        type: object
+        required: [file, text]
+        additionalProperties: false
+        properties:
+          file:
+            description: its name at the classroom's root
+            type: string
+            pattern: '^[a-z0-9-]+\.md$'
+          text:
+            description: each domain, its title, objective and file, then its concepts; then the annexes under a heading of their own; each concept and annex with its title, objective, prerequisites, folder and files and its « L'essentiel » verbatim; then the other course files, as paths in the classroom's course/ (Markdown)
+            $ref: '#/$defs/text'
   moments:
     description: the part on-demand, one entry per moment of composition.yaml, in its order
     type: array
