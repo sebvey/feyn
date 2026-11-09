@@ -11,10 +11,10 @@ The readers are defined [below](#the-readers), and only here.
 
 ## The readers
 
-The spec is read by four makers, each of something that must agree with a course. The teacher and the site do not read the spec: they read a course, and what their build took from the spec; the protocol reaches the teacher verbatim through the teacher build.
+The spec is read by four makers, each of something that must agree with a course. The teacher and the site do not read the spec: they read a course, and what their build took from the spec; the teacher reads the means of its implementation, which make the protocol rules hold (decision `three-layers-of-a-product`).
 
 - **creator**: a human or an agent who makes a course; comes for what a course is, the templates, and how to verify a course.
-- **builder**: whoever writes the teacher build or the site build, a consumer of courses; comes for the shape of a course, of learner memory and the lexicons of the spec, and, for the classroom, the protocol to inject.
+- **builder**: whoever writes the teacher build or the site build, a consumer of courses; comes for the shape of a course, of learner memory and the lexicons of the spec, and, for the teacher, the protocol rules and capabilities its means make hold.
 - **verifier**: the checks, the reviewer and the fresh tests, which make a verdict; comes for the rules as data, the conformance clause and the fixtures.
 - **spec writer**: whoever writes a rule, a check or a decision of a spec, the maintainer at the tag included; comes for the directives, the decisions and the changelogs.
 

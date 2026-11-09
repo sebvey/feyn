@@ -626,7 +626,7 @@ The **spec directives** (`spec-directives/1/README.md`: the rule model) and, for
 
 ### requirement
 
-- means: a rule of the level requirement: "shall", "shall not" (« doit », « ne doit pas »); in the protocol, the imperative. The course, or a product, conforms when it holds every requirement of its own; a requirement verified by test has a **blocking check**
+- means: a rule of the level requirement: "shall", "shall not" (« doit », « ne doit pas »); never in the protocol, whose **protocol rules** have no level and no imperative. The course, or a product, conforms when it holds every requirement of its own; a requirement verified by test has a **blocking check**
 - en: requirement · rejected: "must" (ISO keeps it for external constraints)
 - fr: to settle
 - not to confuse with: [rule](#rule), [blocking check](#blocking-check), [prerequisites](#prerequisites)
@@ -639,7 +639,7 @@ The **spec directives** (`spec-directives/1/README.md`: the rule model) and, for
 
 ### permission
 
-- means: a rule of the level permission: "may", never in the negative (« peut »): an element that may be absent, or an act the teacher may do. Possibility and capability ("can", « peut ») are not a level
+- means: a rule of the level permission: "may", never in the negative (« peut »): an element that may be absent. Not a level of the protocol: what the teacher may do is the limit of the **protocol rule** it relaxes, in its criterion. Possibility and capability ("can", « peut ») are not a level
 - en: permission · rejected: "can" for a permission
 - fr: to settle
 - not to confuse with: [capability](#capability)
@@ -653,9 +653,9 @@ The **spec directives** (`spec-directives/1/README.md`: the rule model) and, for
 
 ### category
 
-- means: what a rule is about, a **classification** the spec declares, from a closed list, extended when needed: for a course, structure, pedagogy, writing, sources or diagrams; for a protocol rule, its family (the nine families of the protocol). A check's category is its rules', and checks are selected by it. The tests of the spec directives have none
+- means: what a rule is about, a **classification** the spec declares, from a closed list, extended when needed: for a course, structure, pedagogy, writing, sources or diagrams; a **protocol rule** has none, classed by its subject, its moment and how it is judged. A check's category is its rules', and checks are selected by it. The tests of the spec directives have none
 - en: category · rejected: "family" for a category of a course, "kind", "progression" for the category pedagogy
-- fr: « catégorie »; of a protocol rule, its « famille »
+- fr: « catégorie »
 - not to confuse with: [label](#label) (its kind), [group](#group), [progression](#progression), [classification](#classification)
 - why: "progression" was ruled out as the name of the category pedagogy: the contract of a case is pedagogical without being an order; « progression » stays the word of a section of a course's plan (see [progression](#progression))
 

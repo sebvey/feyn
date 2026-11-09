@@ -13,7 +13,7 @@ The spec of the product line of linear introductory courses in French, the contr
 
 Its files, what each holds and who reads it are described by its manifest, `spec.yaml` (section 2).
 
-This file holds no rule on a course or on the teacher: what a course is, is in `course/README.md`; what is expected of a teacher, in `products/teacher/README.md` and its rule file, `products/teacher/rules.yaml`, which the subjects of epic #757 fill. The form its tools read (the manifest, the rule model, the methods, the versions, the tests of these files) is the spec directives this MAJOR follows, `spec-directives/1/README.md`; the categories and the levels of the rules of a course, when a course conforms and the severity of a check are this spec's (section 3).
+This file holds no rule on a course or on the teacher: what a course is, is in `course/README.md`; what is expected of a teacher, in `products/teacher/README.md` and its rule file, `products/teacher/rules.yaml`, which the subjects of epic #757 wrote. The form its tools read (the manifest, the rule model, the methods, the versions, the tests of these files) is the spec directives this MAJOR follows, `spec-directives/1/README.md`; the categories and the levels of the rules of a course, when a course conforms and the severity of a check are this spec's (section 3).
 
 ## 1. Scope
 
@@ -23,7 +23,7 @@ Out of scope here: the teacher implementation, its means, the files of the learn
 
 The files of the spec are split by the course and by product (`spec-directives/1/README.md` section 1), plus this README (decision `spec-files-by-product`); what a rule file holds is the directives' (`spec-directives/1/README.md` section 2). `course/rules.yaml` holds every rule of a course, those the checks verify, taught-check included, and those verified by inspection (the review), one group per section of `course/README.md` that points to rules; `course/schemas/course.schema.yaml` holds the fields of `course.yaml`, and `course/schemas/concept-frontmatter.schema.yaml` the fields of the `concept.md` frontmatter (#329). `products/teacher/rules.yaml` holds the protocol rules of the teacher, filled subject by subject by epic #757, and `products/teacher/README.md` states none; the teacher implementation, outside the spec, holds the means that serve them.
 
-**Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language of its courses, of its lexicons and of the protocol rules of the teacher, a bounded exception to the language policy (`docs/decisions/language-policy.md`): the v1 protocol is a base inherited from the founding course, whose teacher was instructed and corrected in French. It changes by user story, its fresh tests come with the teacher. A teacher or a course of another language follows another spec, not a translation of this one (decision `lexicon-not-language-pack`).
+**Language.** The language of the spec is French (`language: fr` in `spec.yaml`), the language of its courses, of its lexicons and of the protocol rules of the teacher, by the language policy: a spec speaks the language of its courses (decision `language-policy`). A teacher or a course of another language follows another spec, not a translation of this one (decision `lexicon-not-language-pack`).
 
 ## 2. Files
 
@@ -55,7 +55,7 @@ The level is from ISO/IEC Directives Part 2, clause 7 (decision `levels-from-iso
 
 **Severity** (decision `severity-from-level-and-method`). The severity of a check's failure is not declared: it follows from the rules the check verifies. A check **blocks** when it verifies a requirement by test; in every other case it **reports**. A check verifies rules of one category and one level, or it is split; its category and level follow from its rules, and the check itself carries only its implementation (a script or an agent). `course/checks/rules.js` derives them from `course/rules.yaml` for `check-course` (section 5).
 
-The protocol rules of the teacher have no level: they are classed by `subject`, `moment` and `judged-by` (`products/teacher/README.md`), declared under `lists.classifications.teacher` with `products/teacher/rules.yaml`; a permission is the limit of the behaviour it relaxes. The current texts of the teacher, instructions in « tu » grouped by family, wait in the teacher implementation, outside the spec, as the raw material of its means.
+The protocol rules of the teacher have no level: they are classed by `subject`, `moment` and `judged-by` (`products/teacher/README.md`), declared under `lists.classifications.teacher` with `products/teacher/rules.yaml`; a permission is the limit of the behaviour it relaxes. The means that make them hold, the teacher's instructions among them, are the teacher implementation's, outside the spec (decision `teacher-implementation-folder`).
 
 ## 4. Normative references
 

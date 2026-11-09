@@ -11,7 +11,7 @@ The readers are defined in [`spec-directives/README.md`](../../../../../spec-dir
 
 Ce que la spec `linear-fr` attend d'un professeur : ce qu'il fait, observable dans la conversation ou dans ce qu'il retient de l'apprenant, et ce dont il a besoin pour le faire. Le professeur est le produit que cette spec fixe sans nommer de cible : un professeur construit pour Claude Code, ou pour une autre cible, tient les mêmes comportements avec ses propres moyens, que son implémentation choisit et relie aux comportements qu'ils servent (décision `three-layers-of-a-product`). Le tamis entre la spec et l'implémentation : un professeur passé à l'échelle, sans mémoire locale ni skills, devrait-il encore le tenir ? Oui, c'est la spec ; non, c'est l'implémentation ; une chose qui mêle les deux est scindée.
 
-**Langue : le français, une exception bornée.** Ce fichier et les comportements attendus sont en français, la langue de la spec (`language: fr` dans `spec.yaml` ; décision `language-policy`) ; les clés, les ids et les slugs restent en anglais. Un professeur d'une autre langue suit une autre spec, pas une traduction de celle-ci (décision `lexicon-not-language-pack`).
+**Langue : le français.** Ce fichier et les comportements attendus sont en français, la langue de la spec (`language: fr` dans `spec.yaml` ; décision `language-policy`) ; les clés, les ids et les slugs restent en anglais. Un professeur d'une autre langue suit une autre spec, pas une traduction de celle-ci (décision `lexicon-not-language-pack`).
 
 ## Définitions
 
