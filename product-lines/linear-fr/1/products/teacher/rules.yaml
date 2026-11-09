@@ -842,8 +842,9 @@ groups:
         judged-by: transcript-script
         method: test
         text: >-
-          Le professeur pose une relance, ou une question sans exemple, sous la même forme de
-          citation, sans la partie « Exemple : ».
+          Le professeur pose une relance, ou une question sans exemple, dans une seule citation de
+          cette forme, lignes vides citées comprises : « > **Question pour toi :** », « > », « >
+          <la question> ».
         why: >-
           La question reste repérable au même endroit et sous le même libellé, qu'elle vienne avec
           un exemple ou seule.
@@ -931,7 +932,8 @@ groups:
         criterion: >-
           Un script lit la transcription horodatée : chaque fois que le contenu de la réponse
           arrive plus de 5 secondes après le message de l'apprenant, une phrase courte du
-          professeur a été envoyée dans ces 5 secondes. Les mots de la phrase sont libres.
+          professeur a été envoyée dans ces 5 secondes, et elle annonce l'attente. Les mots de la
+          phrase sont libres.
       - id: no-end-of-turn-recap
         moment: any
         judged-by: transcript-judge
