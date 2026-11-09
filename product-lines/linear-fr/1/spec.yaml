@@ -37,8 +37,8 @@ course:
   samples: course/samples
 
 # The products of the spec, each by its name, and their files, by role. The teacher declares
-# its README (what is expected of a teacher, how a behaviour is written and classed) and its
-# lexicon; its rule file is declared by the first subject story of epic #757, its build and its
+# its README (what is expected of a teacher, how a protocol rule is written and classed), its
+# rule file, filled subject by subject by epic #757, and its lexicon; its build and its
 # composition leave the spec with the teacher implementation (epic #757).
 products:
   site:
@@ -47,11 +47,12 @@ products:
     build: products/site/build
   teacher:
     readme: products/teacher/README.md
+    rules: products/teacher/rules.yaml
     lexicon: products/teacher/lexicon.yaml
 
 # The lists of the spec, which the tests of check-spec hold its files to: the classifications of
-# the rules of a course, its levels and its categories (README.md section 3; those of the
-# teacher, products/teacher/README.md, come with its rule file), and the keys of the
+# the rules of a course, its levels and its categories (README.md section 3), those of the
+# protocol rules of the teacher (products/teacher/README.md), and the keys of the
 # lexicons, by owner, each with its kind, `string` or `list` (the course's: course/README.md
 # section 7).
 lists:
@@ -59,6 +60,10 @@ lists:
     course:
       level: [requirement, recommendation, permission]
       category: [structure, pedagogy, writing, sources, diagrams]
+    teacher:
+      subject: [session-flow, teaching-a-unit, message-form, storyline, sources-and-stances, learner-memory]
+      moment: [session-start, onboarding, resume, domain-presentation, unit, stop, any]
+      judged-by: [transcript-script, transcript-judge, memory-reading]
   lexicons:
     course:
       headings: {essentials: string, stances: string, deepening: string, landmarks: string, instruction: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
@@ -142,6 +147,9 @@ files:
     teacher:
       readme:
         holds: "what the spec expects of a teacher, in French: the definitions its protocol rules use, the capabilities a teacher needs, how a protocol rule is written and classed"
+        readers: [builder, verifier, spec writer]
+      rules:
+        holds: "the protocol rules of the teacher, in French: what any teacher of the spec does, each with its reason and how it is judged, grouped by subject"
         readers: [builder, verifier, spec writer]
       lexicon:
         holds: "the words the teacher says and writes, for every course of the spec, and the words of the old course form its instructions still cite, until epic #757 rewrites them"
