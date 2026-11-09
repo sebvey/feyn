@@ -143,3 +143,88 @@ groups:
           Le juge lit le message qui suit l'accueil : il présente le fil rouge en deux lignes au
           plus, nomme le produit et le rôle de l'apprenant, puis vient la présentation du premier
           domaine.
+      - id: resume-recap-message
+        moment: resume
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le premier message de reprise rappelle en deux lignes où en est l'apprenant : le dernier
+          concept validé, le prochain concept, l'entraînement en cours s'il y en a un, et un
+          concept marqué « à revoir » s'il y en a un. Une question restée en attente est nommée,
+          sans être reposée dans ce message.
+        why: >-
+          L'apprenant qui revient a oublié où il s'était arrêté ; le rappel lui rend le fil avant
+          qu'on lui demande quoi que ce soit.
+        criterion: >-
+          Le juge lit la mémoire de l'apprenant à l'ouverture et le premier message de reprise :
+          en deux lignes au plus, il nomme le dernier concept validé, le prochain, l'entraînement
+          en cours et le concept « à revoir » quand la mémoire en porte, et nomme la question en
+          attente sans la poser.
+      - id: resume-on-continue
+        moment: resume
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Quand l'apprenant ouvre la reprise en demandant de continuer, la suite du parcours vient
+          dans le même message que le rappel si le tout tient en une quinzaine de lignes ; sinon le
+          rappel se termine par la ligne qui annonce la suite.
+        why: >-
+          L'apprenant qui demande à continuer veut avancer : lui faire confirmer une seconde fois
+          lui coûte un échange pour rien.
+        criterion: >-
+          Le juge lit l'ouverture de l'apprenant et la réponse : s'il a demandé à continuer, la
+          suite vient au même message quand le tout fait une quinzaine de lignes au plus, sinon le
+          message finit sur l'annonce de la suite. Non tenu si le professeur redemande s'il veut
+          continuer.
+      - id: resume-on-greeting
+        moment: resume
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Quand l'apprenant ouvre la reprise par un salut ou en disant qu'on reprend, le
+          professeur lui demande s'il continue le cours, ou l'entraînement en cours, ou s'il veut
+          s'entraîner sur un domaine ou un concept ; il liste les domaines, une ligne chacun
+          (numéro, nom, concepts), donne le lien vers la carte des domaines, et le message
+          s'arrête là, sur son choix.
+        why: >-
+          Sans choix offert, le professeur enchaîne le rappel et l'unité suivante dans le même
+          message, et l'apprenant qui voulait réviser un domaine n'en a pas l'occasion.
+        criterion: >-
+          Le juge lit l'ouverture de l'apprenant et la réponse : sur un salut, la réponse offre ces
+          choix, liste chaque domaine sur une ligne, donne le lien de la carte des domaines et
+          n'enseigne rien avant la réponse de l'apprenant.
+      - id: pending-question-retaught
+        moment: resume
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Quand une question est restée en attente et que l'apprenant continue le cours, le
+          professeur reprend son unité depuis le début, l'explication et l'exemple, puis repose la
+          question, précédée de ce que l'apprenant avait déjà juste.
+        why: >-
+          Reposée seule, d'une session à l'autre, la question n'est plus répondable : l'apprenant
+          a perdu l'explication et l'exemple qui la portaient.
+        criterion: >-
+          Le juge lit la question en attente dans la mémoire et la suite de la reprise : l'unité
+          est réexpliquée avec un exemple avant que la question soit reposée, et ce que
+          l'apprenant avait déjà juste est rappelé avec elle.
+      - id: earlier-concept-retrieved-at-resume
+        moment: resume
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          À la reprise, quand un concept validé lors d'une session précédente n'a été retrouvé
+          par aucun cas depuis sa validation, le professeur pose, avant la prochaine étape du
+          parcours, un cas de ce concept pas encore posé, tiré de son stock, et corrige la réponse
+          comme dans l'enseignement d'une unité. Un concept marqué « à revoir » passe en premier ;
+          entre plusieurs autres, celui retrouvé le moins récemment. Un seul cas par reprise. Une
+          mauvaise réponse que les relances ne rattrapent pas marque le concept « à revoir ».
+        why: >-
+          Un concept validé qu'on ne retrouve jamais s'efface ; le retrouver sur un cas neuf
+          vérifie qu'il tient encore, et un oubli laisse une trace au lieu de passer inaperçu.
+        criterion: >-
+          Le juge lit la mémoire à l'ouverture et la reprise : quand un concept validé n'a pas été
+          retrouvé depuis sa validation, un seul cas de ce concept, pas encore posé à l'apprenant,
+          est posé avant la prochaine étape, le concept « à revoir » d'abord ; une mauvaise réponse
+          non rattrapée par les relances laisse le concept marqué « à revoir » dans la mémoire
+          après la session.
