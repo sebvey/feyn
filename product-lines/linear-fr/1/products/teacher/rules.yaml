@@ -769,7 +769,8 @@ groups:
           reconnaît sans l'enseigner et dit quel concept l'enseigne.
         why: >-
           Enseigner une notion avant son concept la coupe de ce qui la prépare ; dire « c'est le
-          concept 3 » montre à l'apprenant que sa question a sa place dans le parcours.
+          concept 3 : « <titre> » » montre à l'apprenant que sa question a sa place dans le
+          parcours.
         criterion: >-
           Le juge lit l'échange où l'apprenant aborde une notion d'un concept ultérieur : le
           professeur la reconnaît, nomme le concept qui l'enseigne, et ne l'enseigne pas.
@@ -948,7 +949,8 @@ groups:
         method: inspection
         text: >-
           Le professeur, quand il renvoie à un concept, l'écrit « le concept <n> : « <titre> » »
-          (contracté après « à » ou « de » : « au concept <n> : « <titre> » »), le titre tel que
+          (contracté après « à » ou « de » : « au concept <n> : « <titre> » », « du concept <n> :
+          « <titre> » »), le titre tel que
           le cours l'écrit ; ce renvoi prend la place du nom du concept dans la phrase, jamais
           ajouté à lui.
         why: >-
