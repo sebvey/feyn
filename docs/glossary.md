@@ -162,7 +162,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### learner memory
 
-- means: what the teacher keeps of a learner from one teaching session to the next: who they are, the **concept status** of each concept, what it observed of them; shaped by the **learner templates**, written and committed at each **save point**
+- means: what the teacher retains of a learner from one teaching session to the next, as the spec of the teacher names it: who they are, the **concept status** of each concept, the cases posed, what it observed of them; written at the latest at each **save point**; where and in what form it is stored is the **teacher implementation**'s
 - en: learner memory
 - fr: « mémoire de l'apprenant »
 - not to confuse with: [learner](#learner), [concept status](#concept-status), [save point](#save-point), [learner template](#learner-template)
@@ -565,14 +565,14 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### concept status
 
-- means: where a learner stands on a concept, in learner memory: validated, in progress, skipped, to review; a concept absent from the table is to do
+- means: where a learner stands on a concept, in learner memory: validated, in progress, skipped, to review; a concept with no status is to do
 - en: concept status · rejected: "state", "level"
 - fr: « statut »
 - not to confuse with: [Status](#status), the `status` key of a decision's frontmatter, [level](#level), [learner memory](#learner-memory)
 
 ### save point
 
-- means: a moment where the teacher writes and commits learner memory
+- means: a moment by which the teacher has saved the **learner memory** at the latest: the end of onboarding, a concept closed, the stop; an implementation may save more often, and how it saves (a commit, a write) is its own
 - en: save point · rejected: "checkpoint", "sync"
 - fr: « point de sauvegarde »
 - not to confuse with: [learner memory](#learner-memory)
@@ -1053,7 +1053,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 
 ### learner template
 
-- means: a model file of learner memory, part of a spec MAJOR, in French for now
+- means: a model file of learner memory, a means of the **teacher implementation** for Claude Code, in French for now; the spec names what the memory retains, not its files
 - en: learner template
 - fr: « modèle de l'apprenant »
 - not to confuse with: [template](#template), [learner memory](#learner-memory), [course template](#course-template)

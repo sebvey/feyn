@@ -62,8 +62,8 @@ lists:
       category: [structure, pedagogy, writing, sources, diagrams]
     teacher:
       subject: [session-flow, teaching-a-unit, message-form, storyline, sources-and-stances, learner-memory]
-      moment: [session-start, onboarding, resume, domain-presentation, unit, stop, any]
-      judged-by: [transcript-script, transcript-judge, memory-reading]
+      moment: [session-start, onboarding, resume, domain-presentation, unit, stop, course-end, any]
+      judged-by: [transcript-script, transcript-judge, memory-reading, course-comparison]
   lexicons:
     course:
       headings: {essentials: string, stances: string, deepening: string, landmarks: string, instruction: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
