@@ -221,16 +221,28 @@ groups:
           la réponse comme dans l'enseignement d'une unité. Un concept marqué « à revoir » passe
           en premier ; entre plusieurs autres, celui retrouvé le moins récemment. Un seul cas par
           reprise. Une mauvaise réponse que les relances ne rattrapent pas marque le concept « à
-          revoir ».
+          revoir ». Avant le cas, une phrase nomme le concept sur lequel le cours reprend et le
+          concept révisé, chacun dans la forme de renvoi de `concept-reference-form`, et dit que
+          le cas est là pour réviser ce dernier, par exemple « Avant de reprendre le cours au
+          concept 1 : « Les réglages », voici un cas pour réviser le concept 0 : « L'extraction ». »
+          ; quand la prochaine étape n'est pas un concept (le cours fini, un entraînement), la
+          phrase nomme cette étape à la place du concept repris. Puis le cas vient dans la forme
+          de `example-question-quote-form`.
         why: >-
           Un concept validé qu'on ne retrouve jamais s'efface ; le retrouver sur un cas neuf
           vérifie qu'il tient encore, et un oubli laisse une trace au lieu de passer inaperçu.
+          L'apprenant qui revient attend la suite du cours : la phrase lui dit pourquoi un cas
+          d'un concept déjà validé vient d'abord, et de quel concept il s'agit.
         criterion: >-
           Le juge lit la mémoire à l'ouverture et la reprise : quand un concept validé n'a pas été
           retrouvé depuis sa validation, un seul cas de ce concept, pas encore posé à l'apprenant,
           est posé avant la prochaine étape, le concept « à revoir » d'abord ; une mauvaise
           réponse non rattrapée par les relances laisse le concept marqué « à revoir » dans la
-          mémoire après la session.
+          mémoire après la session. Avant le cas, une phrase nomme le concept sur lequel le cours
+          reprend (ou la prochaine étape, quand ce n'est pas un concept) et le concept révisé,
+          chacun écrit « le concept <n> : « <titre> » » (ou sa contraction), et dit que le cas
+          est là pour réviser ce dernier ; le cas suit dans la forme de
+          `example-question-quote-form`.
       - id: domain-presented-from-file
         moment: domain-presentation
         judged-by: transcript-judge
