@@ -46,6 +46,9 @@ parts:
         source: course.yaml
         what: la carte du cours, ses domaines, ses concepts et ses annexes, leurs objectifs, leurs prérequis et leurs fichiers, et les autres fichiers du cours
       - from: course
+        source: "{course.storyline}"
+        what: le titre du fil rouge et le texte sous lui, le monde et le rôle de l'apprenant, en tête de la carte du cours
+      - from: course
         source: <dir>/concept.md
         what: la section headings.essentials de chaque concept et de chaque annexe, dans la carte du cours
       - from: spec

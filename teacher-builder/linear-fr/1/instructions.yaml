@@ -95,9 +95,14 @@ groups:
         text: >-
           À la dernière réponse d'accueil, avant tout appel d'outil : une ou deux phrases sur ce que
           ses réponses changent pour le cours (son rythme, sa profondeur, ce qu'il pourra sauter),
-          puis « {phrases.onboarding_setup} ». Puis le point de sauvegarde de l'accueil
-          (`onboarding-files-set-up`, `profile-written`).
+          seulement un effet que le cours prévoit, aucun inventé pour avoir quelque chose à dire ;
+          puis une phrase qui amène le fil rouge par le rôle qu'y tient l'apprenant, tel que la
+          carte du cours le donne sous son titre ; puis « {phrases.onboarding_setup} ». Puis le
+          point de sauvegarde de l'accueil (`onboarding-files-set-up`, `profile-written`).
         serves: [onboarding-closing-sentence, says-before-waiting]
+        why: >-
+          sans elle, faute d'effet à dire, tu écris une phrase de remplissage ou une promesse que le
+          cours ne tient pas, et rien du fil rouge.
       - id: onboarding-files-set-up
         text: >-
           À la fin de l'accueil, aucun `<…>` ne reste dans les trois fichiers de `learner/` :
@@ -116,10 +121,12 @@ groups:
         text: >-
           Après le point de sauvegarde de l'accueil, lis le fil rouge (`course/{course.storyline}`),
           le fichier du premier domaine et `concept.md` du premier concept. Le message qui suit ces
-          lectures s'ouvre sur « {phrases.onboarding_ready} », présente le fil rouge en deux lignes
-          (le produit, le rôle qu'y tient l'apprenant), puis le premier domaine
-          (`domain-presented-from-file`).
-        serves: [onboarding-ready-message]
+          lectures s'ouvre sur « {phrases.onboarding_ready} », puis le titre du fil rouge, de
+          niveau 1, en lien vers sa page : « # [{phrases.storyline_title}]({classroom.storyline_url}) »,
+          `{title}` le titre du fil rouge tel que la carte du cours le donne ; sous lui, le fil rouge
+          en deux lignes (le produit, le rôle qu'y tient l'apprenant), puis le premier domaine sous
+          son titre (`domain-title-link`, `domain-presented-from-file`).
+        serves: [onboarding-ready-message, descriptive-site-links]
   - id: resume
     title: Reprise
     purpose: >-
@@ -559,7 +566,8 @@ groups:
           Un lien vers le site est un lien Markdown dont le texte dit la page, jamais l'adresse
           nue : [{phrases.site_link}]({classroom.site_url}),
           [{phrases.domains_map_link}]({classroom.domains_url}), et les liens de
-          `domain-title-link`, `concept-title-link` et `validated-concept-page-link`.
+          `onboarding-ready-message`, `domain-title-link`, `concept-title-link` et
+          `validated-concept-page-link`.
         serves: [descriptive-site-links]
         why: sans elle, tu colles l'adresse nue du site au lieu d'un lien au texte descriptif.
       - id: site-pages-not-files

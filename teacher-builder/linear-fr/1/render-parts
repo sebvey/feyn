@@ -110,9 +110,10 @@ const PARAMS = {
   },
   classroom: {
     ...(site
-      // diagram_url: a diagram on its concept page, the anchor of the site's url-scheme.yaml (anchors.diagram)
-      ? { site_url: site, domains_url: `${site}domaines/`, domain_url: `${site}domaines/{n}/`, concept_url: `${site}concepts/{nn}/`, diagram_url: `${site}concepts/{nn}/#schema-{file}` }
-      : { site_url: UNPUBLISHED, domains_url: UNPUBLISHED, domain_url: UNPUBLISHED, concept_url: UNPUBLISHED, diagram_url: UNPUBLISHED }),
+      // diagram_url: a diagram on its concept page, the anchor of the site's url-scheme.yaml (anchors.diagram);
+      // storyline_url: the storyline page, pages.storyline of the same url-scheme.yaml
+      ? { site_url: site, domains_url: `${site}domaines/`, storyline_url: `${site}fil-rouge/`, domain_url: `${site}domaines/{n}/`, concept_url: `${site}concepts/{nn}/`, diagram_url: `${site}concepts/{nn}/#schema-{file}` }
+      : { site_url: UNPUBLISHED, domains_url: UNPUBLISHED, storyline_url: UNPUBLISHED, domain_url: UNPUBLISHED, concept_url: UNPUBLISHED, diagram_url: UNPUBLISHED }),
     channel,
   },
 };
@@ -239,11 +240,14 @@ const domainTitle = (d) => slot(lex('phrases', 'domain_title'), { n: d.number, t
 // each of its concepts; then the annexes, which no domain holds, under a heading of their own; each
 // concept and annex with its title, objective, prerequisites, folder and files, and « L'essentiel »
 // verbatim, read through the spec's parser (the head of its concept.md); then the other course
-// files. Its words are French, the spec's language, as the template's (decision language-policy).
+// files. It opens on the storyline, titled in the words of `phrases.storyline_title`, with its file
+// and the text under its H1 verbatim, the world and the learner's role in it, so that the teacher
+// knows them before any read (instruction onboarding-closing-sentence, #801). Its words are
+// French, the spec's language, as the template's (decision language-policy).
 const COURSE_MAP_FILE = 'carte-du-cours.md';
 const MAP = {
   title: 'Carte du cours',
-  intro: 'Les domaines dans l\'ordre du parcours, chacun avec ses concepts dans leur ordre, puis les annexes, hors du parcours. Les chemins sont ceux de la classe ; tout ce qui est sous `course/` est en lecture seule. Ce fichier est construit avec la classe à partir du cours : il ne se modifie pas à la main.',
+  intro: 'Le fil rouge, puis les domaines dans l\'ordre du parcours, chacun avec ses concepts dans leur ordre, puis les annexes, hors du parcours. Les chemins sont ceux de la classe ; tout ce qui est sous `course/` est en lecture seule. Ce fichier est construit avec la classe à partir du cours : il ne se modifie pas à la main.',
   objective: 'Objectif',
   prerequisites: 'Prérequis',
   none: 'aucun',
@@ -280,7 +284,19 @@ function conceptEntry(c) {
     essentials(c),
   ]);
 }
+// the storyline: its H1 and the text under it, up to its first ## section, verbatim
+function storylineOpening() {
+  const file = path.join(courseDir, course.storyline);
+  const lines = read(file).split('\n');
+  const at = lines.findIndex((l) => /^# /.test(l));
+  if (at < 0) fail(`${course.storyline} has no title « # <titre> »`);
+  const end = lines.findIndex((l, i) => i > at && /^#{1,2} /.test(l));
+  const text = lines.slice(at + 1, end < 0 ? lines.length : end).join('\n').trim();
+  if (!text) fail(`${course.storyline} has no text under its title`);
+  return { title: lines[at].replace(/^# /, '').trim(), text };
+}
 function courseMap() {
+  const storyline = storylineOpening();
   const domains = (course.domains || []).map((d) => blocks([
     `## ${domainTitle(d)}`,
     [`- ${MAP.objective} : ${d.objective}`, `- ${MAP.file} : \`course/${d.file}\``].join('\n'),
@@ -301,6 +317,9 @@ function courseMap() {
     text: blocks([
       `# ${MAP.title} : ${course.title}`,
       MAP.intro,
+      `## ${slot(lex('phrases', 'storyline_title'), { title: storyline.title })}`,
+      `- ${MAP.file} : \`course/${course.storyline}\``,
+      storyline.text,
       ...domains,
       ...(annexes.length ? [`## ${MAP.annexes}`, ...annexes.map(conceptEntry)] : []),
       `## ${MAP.others}`,

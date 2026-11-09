@@ -8,7 +8,7 @@
 // skills nor « Moments », no import of course.yaml, the instructions verbatim but for their
 // placeholders, each instruction of linear-fr/1/instructions.yaml in CLAUDE.md or in one skill,
 // once, each group heading followed by its purpose), the course map carte-du-cours.md and its import
-// (each domain with its objective and file, each concept with its objective, prerequisites and
+// (the storyline first, its title, file and the text under its H1, each domain with its objective and file, each concept with its objective, prerequisites and
 // folder, the annexes as annexes, each « L'essentiel » of cafe, the other course files), the three
 // spots of the filling (no doubled parenthesis, no period after a phrase that ends with one, the
 // plural of the domains), the teacher template (the implementation's, no instruction), course.lock,
@@ -120,7 +120,8 @@ check(skillText.stop.includes('`learner/parcours.md`'), 'skill stop does not nam
 const claude = read(path.join(out, 'CLAUDE.md')) || '';
 check(!PLACEHOLDER.test(claude), `CLAUDE.md keeps a placeholder: ${(PLACEHOLDER.exec(claude) || [])[0]}`);
 check(claude.includes('Posture : un barista patient, qui aide l\'apprenant à aider Cédric.'), 'CLAUDE.md lacks the posture of plan.md');
-// the course map, the file carte-du-cours.md that CLAUDE.md imports: each domain with its objective
+// the course map, the file carte-du-cours.md that CLAUDE.md imports: the storyline first, under its
+// title « Fil rouge : <titre> », its file and the text under its H1 verbatim; each domain with its objective
 // and file, then its concepts, each with its objective, prerequisites and folder; then both
 // annexes as annexes, under « Annexes » and their own title, as their concept.md opens (« Annexe A1
 // : … »), never as a concept; each « L'essentiel » of cafe verbatim; the other course files
@@ -129,6 +130,14 @@ check(claude.includes('\n@carte-du-cours.md\n'), 'CLAUDE.md does not import cart
 const courseYaml = yaml.parse(read(path.join(COURSE, 'course.yaml')) || '');
 const titleOf = (n) => (/^A\d+$/.test(String(n)) ? 'Annexe' : 'Concept') + ` ${n} : ${courseYaml.concepts.find((c) => String(c.number) === String(n)).title}`;
 const annexAt = map.indexOf('\n## Annexes\n');
+{
+  const lines = (read(path.join(COURSE, 'storyline.md')) || '').split('\n');
+  const h1 = lines.findIndex((l) => /^# /.test(l));
+  const stop = lines.findIndex((l, i) => i > h1 && /^#{1,2} /.test(l));
+  const opening = lines.slice(h1 + 1, stop < 0 ? lines.length : stop).join('\n').trim();
+  const at = map.indexOf(`\n## Fil rouge : ${h1 >= 0 ? lines[h1].slice(2).trim() : ''}\n\n- Fichier : \`course/storyline.md\`\n\n${opening}\n`);
+  check(h1 >= 0 && opening !== '' && at >= 0 && at < map.indexOf('\n## Domaine '), 'carte-du-cours.md does not open on the storyline, its title « Fil rouge : <titre> », its file and the text under its H1 verbatim');
+}
 for (const d of courseYaml.domains) {
   check(map.includes(`\n## Domaine ${d.number} : ${d.title}\n\n- Objectif : ${d.objective}\n- Fichier : \`course/${d.file}\`\n`), `carte-du-cours.md: domain ${d.number} lacks its title, objective or file`);
 }
@@ -446,6 +455,7 @@ const MARKS = [
   [`« ${ph.next_lead} <ce qui vient>. ${ph.continue_prompt} »`, 'next_lead and continue_prompt'],
   [`« ${String(ph.concept_title).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'concept_title'],
   [`« ${String(ph.domain_title).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'domain_title'],
+  [`« ${String(ph.storyline_title).replace('{title}', '<titre>')} »`, 'storyline_title'],
   [`« ${String(ph.reference_model).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'reference_model'],
 ];
 for (const [mark, key] of MARKS) check(rulesText.includes(mark), `lexicon.yaml: phrases.${key} is not the protocol rules' word for word: ${mark}`);

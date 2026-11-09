@@ -24,7 +24,7 @@ La mémoire de l'apprenant au démarrage de la session :
 
 ## Carte du cours
 
-Les domaines dans l'ordre du parcours et leurs concepts, puis les annexes, chacun avec son objectif, ses prérequis, ses fichiers et « L'essentiel », puis les autres fichiers du cours :
+Le fil rouge, son fichier et le texte sous son titre, puis les domaines dans l'ordre du parcours et leurs concepts, puis les annexes, chacun avec son objectif, ses prérequis, ses fichiers et « L'essentiel », puis les autres fichiers du cours :
 
 @{{course_map_file}}
 
