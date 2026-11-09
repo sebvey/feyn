@@ -439,8 +439,10 @@ const implLexicon = yaml.parse(read(path.join(IMPL, 'lexicon.yaml')) || '') || {
 const ph = implLexicon.phrases || {};
 const rulesText = rulesFile ? (read(path.join(SPEC, rulesFile)) || '').replace(/\s+/g, ' ') : '';
 const MARKS = [
-  [`« > **${ph.example_lead}** »`, 'example_lead'],
-  [`« > **${ph.question_lead}** »`, 'question_lead'],
+  [`« **${ph.storyline_lead}** »`, 'storyline_lead'],
+  [`« **${ph.off_storyline_lead}** »`, 'off_storyline_lead'],
+  [`« **${ph.question_lead}** »`, 'question_lead'],
+  [`« **${String(ph.questions_announce).replace('{count}', '<nombre>')}** »`, 'questions_announce'],
   [`« ${ph.next_lead} <ce qui vient>. ${ph.continue_prompt} »`, 'next_lead and continue_prompt'],
   [`« ${String(ph.concept_title).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'concept_title'],
   [`« ${String(ph.domain_title).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'domain_title'],

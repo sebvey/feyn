@@ -290,7 +290,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - en: anchor · rejected: "example", "situation", "storyline callout"
 - fr: « ancrage » · rejected: « exemple », « situation », « fil rouge » (the callout)
 - not to confuse with: [example](#example), [matter](#matter), [storyline](#storyline), [fixed fact](#fixed-fact)
-- why: an anchor does not only illustrate, it anchors the point in the world of the course; "example" names the illustration of a teacher message
+- why: an anchor does not only illustrate, it anchors the point in the world of the course; "example" names the illustration of a teacher message. "Storyline callout" (« fil rouge ») would name the anchor by the label a teacher message sets before a case, « Sur le fil rouge : » or « Hors du fil rouge : », which names where the situation happens, in the storyline or outside it, not the anchor
 
 ### lesson
 
@@ -357,7 +357,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### example
 
-- means: in a teacher message, the illustration that precedes the question (« Exemple : »); the anchor of a unit may serve as one
+- means: in a teacher message, the illustration that precedes the question, alone in a quote; the anchor of a unit may serve as one
 - en: example
 - fr: « exemple »
 - not to confuse with: [anchor](#anchor), [case](#case), [sample course](#sample-course)
