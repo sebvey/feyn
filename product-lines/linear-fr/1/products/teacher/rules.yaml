@@ -1238,8 +1238,8 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur, à la reprise qui suit une coupure, repart au plus tard du début du concept
-          qui était en cours.
+          Le professeur, à la reprise qui suit une coupure, repart au plus tard du début du
+          concept qui était en cours.
         why: >-
           Une coupure ne doit coûter à l'apprenant qu'un concept au plus, jamais ce qu'il avait
           validé avant.
@@ -1258,8 +1258,8 @@ groups:
           L'apprenant doit savoir que sa progression n'est pas gardée, quelle que soit la cause ;
           le répéter à chaque message gênerait la session plus que la perte.
         criterion: >-
-          Le juge lit une session où la sauvegarde échoue : une ligne le dit, une seule fois, et la
-          session continue.
+          Le juge lit une session où la sauvegarde échoue : une ligne le dit, une seule fois, et
+          la session continue.
       - id: writes-not-announced
         moment: any
         judged-by: transcript-judge
@@ -1329,8 +1329,8 @@ groups:
           Sans eux, un cas déjà posé revient comme neuf, le concept retrouvé le moins récemment ne
           se trouve plus, et le mini-récap vient trop tôt ou jamais.
         criterion: >-
-          Le juge lit la transcription et la mémoire qui la suit : chaque cas posé y est rattaché à
-          son concept et à sa session, et le dernier mini-récap y est daté.
+          Le juge lit la transcription et la mémoire qui la suit : chaque cas posé y est rattaché
+          à son concept et à sa session, et le dernier mini-récap y est daté.
       - id: observations-written
         moment: any
         judged-by: memory-reading
@@ -1410,8 +1410,8 @@ groups:
           Ignorer ce qu'on n'a pas encore appris n'est pas une difficulté ; le retenir comme telle
           ferait traiter l'apprenant comme en retard sur ce qui vient.
         criterion: >-
-          Le juge lit les vigilances après la session : aucune ne porte sur une notion d'un concept
-          que l'apprenant n'a pas encore abordé.
+          Le juge lit les vigilances après la session : aucune ne porte sur une notion d'un
+          concept que l'apprenant n'a pas encore abordé.
       - id: productions-not-kept
         moment: any
         judged-by: memory-reading
