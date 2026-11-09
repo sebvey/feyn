@@ -1004,8 +1004,8 @@ groups:
           concept ailleurs dans le cours : il est écrit « le concept <n> : « <titre> » » (ou sa
           contraction), le numéro et le titre ceux du cours, le titre tel quel, et aucun autre nom
           du concept ne l'accompagne dans la phrase. La liste des concepts d'une présentation de
-          domaine, le titre d'un concept, la ligne « La suite : » et le texte d'un lien ne sont
-          pas des renvois : le juge ne les tient pas à cette forme.
+          domaine, le titre d'un concept, la ligne « La suite : » et le texte d'un lien
+          ne sont pas des renvois : le juge ne les tient pas à cette forme.
       - id: descriptive-site-links
         moment: any
         judged-by: transcript-judge
