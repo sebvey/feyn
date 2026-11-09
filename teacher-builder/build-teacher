@@ -8,7 +8,7 @@
 //      validated here against that folder's parts.schema.yaml;
 //   2. the Claude Code realisation of those parts, this file's own:
 //      permanent       CLAUDE.md, from CLAUDE.template.md
-//      on-demand       .claude/skills/feyn-teacher-<moment>/SKILL.md, one per moment that has rules
+//      on-demand       .claude/skills/feyn-teacher-<moment>/SKILL.md, one per moment that loads instructions
 //      course-reads    course/, the course folder copied as is
 //      learner-memory  learner/, the learner templates
 //      permissions     .claude/settings.json
@@ -146,12 +146,12 @@ if (git(courseDir, 'status', '--porcelain', '--', '.')) {
 let site = null;
 if (opts.siteUrl) site = opts.siteUrl.endsWith('/') ? opts.siteUrl : opts.siteUrl + '/';
 
-// ---- the skills of the moments: a moment with rules is a teacher skill, feyn-teacher-<moment>
+// ---- the skills of the moments: a moment with instructions is a teacher skill, feyn-teacher-<moment>
 // (the prefix keeps it apart from a skill of Claude Code itself, /resume)
 const skillName = (m) => `feyn-teacher-${m.id}`;
-const hasRules = (m) => m.rules.trim() !== '';
+const hasInstructions = (m) => m.instructions.trim() !== '';
 function skill(m) {
-  const description = `Load at this moment of a teaching session: ${m.when}. Holds the rules of the moment ${m.id}.`;
+  const description = `Load at this moment of a teaching session: ${m.when}. Holds the instructions of the moment ${m.id}.`;
   // a draw given as text (the section of a course file under a heading) is written out, so that
   // the moment needs no read of that file
   const reads = m.draws.map((d) => (d.text
@@ -166,17 +166,17 @@ function skill(m) {
     '',
     `# ${skillName(m)}`,
     '',
-    `The moment \`${m.id}\`: ${m.when}. Its rules below hold beside those of \`CLAUDE.md\`.`,
+    `The moment \`${m.id}\`: ${m.when}. Its instructions below hold beside those of \`CLAUDE.md\`.`,
     '',
     ...(reads.length ? ['What it reads:', '', ...reads, ...uses, ''] : []),
-    m.rules,
+    m.instructions,
     '',
   ].join('\n');
 }
-const withRules = parts.moments.filter(hasRules);
-const momentList = parts.moments.map((m) => (hasRules(m)
+const withInstructions = parts.moments.filter(hasInstructions);
+const momentList = parts.moments.map((m) => (hasInstructions(m)
   ? `- \`${m.id}\` (skill \`${skillName(m)}\`): ${m.when}.`
-  : `- \`${m.id}\`: ${m.when}; no rule yet, no skill.`)).join('\n');
+  : `- \`${m.id}\`: ${m.when}; no instruction yet, no skill.`)).join('\n');
 
 // ---- CLAUDE.md
 const claude = template
@@ -190,7 +190,7 @@ const claude = template
       course_map: parts.permanent.course_map,
       course_files: parts.permanent.course_files,
       moments: momentList,
-      protocol: parts.permanent.protocol,
+      instructions: parts.permanent.instructions,
     }[k];
     if (v === undefined) fail(`CLAUDE.template.md: unknown slot {{${k}}}`);
     return v;
@@ -202,7 +202,7 @@ fs.writeFileSync(path.join(out, 'CLAUDE.md'), claude.replace(/\n*$/, '\n'));
 fs.cpSync(courseDir, path.join(out, 'course'), { recursive: true });
 fs.mkdirSync(path.join(out, 'learner'));
 for (const t of parts.learner_templates) fs.writeFileSync(path.join(out, 'learner', t.name), t.text);
-for (const m of withRules) {
+for (const m of withInstructions) {
   fs.mkdirSync(path.join(out, '.claude', 'skills', skillName(m)), { recursive: true });
   fs.writeFileSync(path.join(out, '.claude', 'skills', skillName(m), 'SKILL.md'), skill(m));
 }
@@ -241,4 +241,4 @@ const run = (...args) => {
 run('init', '-q', '-b', 'main');
 run('add', '-A');
 run('commit', '-q', '-m', `classroom ${course.id}: built from ${ref} at ${courseSha.slice(0, 12)}`);
-console.log(`build-teacher: ${out} built (${course.id}, channel ${channel}, ${withRules.length} skills)`);
+console.log(`build-teacher: ${out} built (${course.id}, channel ${channel}, ${withInstructions.length} skills)`);

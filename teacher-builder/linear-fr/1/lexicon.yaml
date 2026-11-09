@@ -1,13 +1,15 @@
-# The lexicon of the teacher of `linear-fr`: the words the instructions of the build say and
-# write (its literal phrases, what the learner says and the teacher reacts to, the lines and the
-# headings of learner memory, the concept statuses), named `{group.key}` in the instructions of
-# the teacher implementation, outside the spec, which reads this file (decision
-# `lexicon-not-language-pack`). The form marks
-# and the titles the spec fixes are written word for word in products/teacher/rules.yaml; the
-# other words are the teacher implementation's, held here until epic #757 moves them. The spec is
-# French (`language: fr` in spec.yaml). spec.yaml lists no keys for this lexicon. A value with a slot, `{n}`, `{title}`, is filled by whoever
-# reads it. Typography of these values: space before « : », « ; », « ? », « ! », quotes « »; no
-# em-dash, no arrow.
+# The lexicon of the teacher implementation of linear-fr@1: the words its instructions make the
+# teacher say and write (its phrases, what the learner says and the teacher reacts to, the
+# headings and the lines of learner memory, the concept statuses), named `{group.key}` in
+# instructions.yaml (this folder), which render-parts substitutes. It is not a means of its own:
+# its words are part of the instructions that cite them. The spec fixes none of these words but the
+# form marks and the titles, which its protocol rules write word for word
+# (product-lines/linear-fr/1/products/teacher/rules.yaml): the values of `concept_title`,
+# `domain_title`, `example_lead`, `question_lead`, `next_lead` and `continue_prompt` are those
+# words, which test-build holds them to. In French, the language of the spec (decision
+# language-policy). A value with a slot, `{n}`, `{title}`, is filled by whoever reads it.
+# Typography of these values: space before « : », « ; », « ? », « ! », quotes « »; no em-dash, no
+# arrow.
 
 # Literal phrases the teacher says.
 phrases:
@@ -43,16 +45,17 @@ learner_says:
   stop: ["on s'arrête", "fin de session", "je dois y aller", "on reprendra"]
   hurry: ["je dois filer", "vite"]
 
-# Headings of the learner memory files; those of the learner templates of the teacher implementation.
+# Headings of the learner memory files, those of the learner templates (templates/learner/).
 memory_headings:
+  profile: "Profil"
+  preferences: "Préférences"
   next_step: "Prochaine étape"
   concepts: "Concepts"
-  announced: "Points annoncés pour plus tard"
+  annexes: "Annexes vues"
   journal: "Journal"
   levers: "Leviers"
   vigilances: "Vigilances actives"
   acquired: "Acquis"
-  preferences: "Préférences"
 
 # Concept statuses in `learner/parcours.md`.
 status:
@@ -67,23 +70,10 @@ memory:
   acquired_line: "[concept] fait (date)"
   profile_line: "- {label} : {answer}"
   journal_line: "{date}, session {k} : {events}."  # date YYYY-MM-DD
+  case_entry: "concept {n} : {title}"  # {title} the title of the case
   minirecap_entry: "mini-récap {from}-{to}"
+  course_done: "Cours fini."
   commit_message: "{nickname} : {what}"
   commit_validated: "concept {n} validé"
   commit_stop: "arrêt"
   onboarding: "accueil"
-
-# The words of the course form the protocol still cites, which course/lexicon.yaml no
-# longer holds: moved here with their values unchanged until epic #757 rewrites the rules that
-# cite them; `fallback`, `practice` and `aside`, the former qualifiers of a supplementary case,
-# which no case of a course carries any more.
-frozen_form:
-  instructions: "Consignes"
-  bank: "Banque d'exemples"
-  drawing: "Schéma"
-  storyline_facts: "Faits du fil rouge utilisés"
-  usage: "Usage"
-  explanation: "Explication"
-  fallback: "rechange"
-  practice: "entraînement"
-  aside: "aparté"

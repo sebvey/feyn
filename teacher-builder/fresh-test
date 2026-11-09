@@ -107,8 +107,9 @@ try { scenario = yaml.parse(scenarioText); } catch (e) { refuse(`${path.relative
 const validate = new Ajv2020({ allErrors: true }).compile(yaml.parse(readOr(path.join(TESTS, 'scenario.schema.yaml'))));
 if (!validate(scenario)) refuse(`${path.relative(REPO, scenarioFile)} is not valid against scenario.schema.yaml: ${validate.errors.map((e) => `${e.instancePath || '/'} ${e.message}`).join('; ')}`);
 
-// the words the script part checks, from the lexicons of the course files and of the teacher
-const teacherLex = yaml.parse(readOr(path.join(SPEC, 'products', 'teacher', 'lexicon.yaml')));
+// the words the script part checks, from the lexicon of the course files and from the teacher
+// implementation's lexicon
+const teacherLex = yaml.parse(readOr(path.join(BUILDER, specMatch[1], specMatch[2], 'lexicon.yaml')));
 const courseLex = yaml.parse(readOr(path.join(SPEC, 'course', 'lexicon.yaml')));
 const PH = teacherLex.phrases;
 const STOP_WORDS = teacherLex.learner_says.stop.concat(teacherLex.learner_says.hurry);
