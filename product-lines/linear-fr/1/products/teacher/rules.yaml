@@ -252,15 +252,17 @@ groups:
         judged-by: transcript-script
         method: test
         text: >-
-          Le professeur ouvre la présentation d'un domaine sur son titre, de niveau 1, en lien
-          vers sa page du site : « # [Domaine <n> : <titre>](<adresse de la page du domaine>) ».
+          Le professeur ouvre la présentation d'un domaine sur son titre, visible comme un titre
+          et au-dessus des titres de ses concepts, en lien vers sa page du site : « Domaine <n> :
+          <titre> ».
         why: >-
           L'apprenant retrouve d'une session et d'un professeur à l'autre le même repère, qui le
           mène à la page du domaine pour réviser.
         criterion: >-
-          Un script cherche dans la transcription, avant le premier concept de chaque domaine, une
-          ligne de cette forme exacte, le numéro et le titre du domaine pris dans le cours, le
-          lien vers l'adresse de sa page.
+          Un script cherche dans la transcription, avant le premier concept de chaque domaine, un
+          titre dont le texte est exactement « Domaine <n> : <titre> », le numéro et le titre du
+          domaine pris dans le cours, en lien vers l'adresse de sa page. Le rang du titre est
+          celui que l'implémentation donne à un titre de domaine.
       - id: domain-presentation-parts
         moment: domain-presentation
         judged-by: transcript-judge
@@ -863,3 +865,54 @@ groups:
         criterion: >-
           Un script cherche, dans chaque message qui annonce la suite, une dernière ligne de cette
           forme exacte, rien après elle.
+      - id: concept-title-link
+        moment: unit
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur ouvre le premier message d'un concept sur son titre, visible comme un
+          titre, en lien vers sa page du site : « Concept <n> : <titre> ».
+        why: >-
+          L'apprenant voit d'un coup d'œil qu'un nouveau concept commence et retrouve le même
+          repère d'une session et d'une implémentation à l'autre, qui le mène à la page du concept.
+        criterion: >-
+          Un script cherche dans le premier message de chaque concept un titre dont le texte est
+          exactement « Concept <n> : <titre> », le numéro et le titre pris dans le cours, en lien
+          vers l'adresse de sa page. Le rang du titre est celui que l'implémentation donne à un
+          titre de concept, sous celui d'un domaine.
+      - id: concept-reference-form
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, quand il renvoie à un autre concept, donne son nom et son numéro.
+        why: >-
+          Le nom seul ne dit pas où le trouver, le numéro seul ne dit pas de quoi il parle.
+        criterion: >-
+          Le juge lit chaque renvoi à un concept : il porte le nom et le numéro du concept.
+      - id: descriptive-site-links
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur donne un lien vers le site par un texte qui dit la page, jamais par
+          l'adresse nue.
+        why: >-
+          Une adresse nue ne dit pas où elle mène et encombre le message ; un texte qui dit la page
+          se lit comme une phrase.
+        criterion: >-
+          Le juge lit chaque lien vers le site : son texte nomme la page (le site, la carte des
+          domaines, la page d'un domaine ou d'un concept), aucune adresse n'est écrite nue.
+      - id: site-pages-not-files
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur renvoie l'apprenant, pour relire ou réviser, aux pages du site, jamais aux
+          fichiers du cours.
+        why: >-
+          Les fichiers du cours sont écrits pour le professeur et pour le site, pas pour être lus
+          par l'apprenant ; le site les rend lisibles.
+        criterion: >-
+          Le juge lit chaque renvoi pour relire ou réviser : il mène à une page du site, jamais à
+          un fichier du cours.
