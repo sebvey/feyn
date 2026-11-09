@@ -6,8 +6,9 @@
 // package of the spec directives this MAJOR follows); then checks what the schema cannot say: one
 // moment per moment of composition.yaml, every instruction of instructions.yaml rendered once, in
 // the permanent instructions or in one moment, no `serves` rendered, the learner templates
-// verbatim, the three spots of the filling (a value in parentheses inside a link, a phrase ending
-// its sentence, the plural of the domains).
+// verbatim, the course map (its file, the annexes as annexes, each « L'essentiel » of cafe), the
+// three spots of the filling (a value in parentheses inside a link, a phrase ending its sentence,
+// the plural of the domains).
 // Exit 0 when every check passes, 1 otherwise; one line per failure.
 const fs = require('fs');
 const path = require('path');
@@ -75,11 +76,20 @@ for (const t of doc.learner_templates) {
   check(fs.existsSync(path.join(TEMPLATES, t.name)) && t.text === fs.readFileSync(path.join(TEMPLATES, t.name), 'utf8'), `learner template ${t.name} is not verbatim`);
 }
 
-// the course, read through the spec's parser: the annexes in the course map under their own title,
-// and the course files those the course has
-const map = doc.permanent.course_map;
-check(map.includes('- Annexe A1 : Les méthodes (`concepts/A1-methodes`)') && map.includes('- Annexe A2 : La fraîcheur du café (`concepts/A2-fraicheur`)') && !/Concept A\d/.test(map), 'the course map does not hold the annexes A1 and A2 under their own title');
-check(!doc.permanent.course_files.includes('teaching.md'), 'the course files name teaching.md, which a course of linear-fr@1 has not');
+// the course, read through the spec's parser: the course map, its file, the annexes under a
+// heading of their own and their own title, each « L'essentiel » verbatim, the files the course has
+const map = doc.permanent.course_map.text;
+check(doc.permanent.course_map.file === 'carte-du-cours.md', `the course map is written to ${doc.permanent.course_map.file}, not carte-du-cours.md`);
+const annexes = map.slice(map.indexOf('\n## Annexes\n'));
+check(map.includes('\n## Annexes\n') && annexes.includes('\n### Annexe A1 : Les méthodes\n') && annexes.includes('\n### Annexe A2 : La fraîcheur du café\n') && !/Concept A\d/.test(map), 'the course map does not hold the annexes A1 and A2 as annexes, under their own title');
+for (const dir of fs.readdirSync(path.join(COURSE, 'concepts'))) {
+  const lines = fs.readFileSync(path.join(COURSE, 'concepts', dir, 'concept.md'), 'utf8').split('\n');
+  const at = lines.indexOf("## L'essentiel");
+  const end = lines.findIndex((l, i) => i > at && /^## /.test(l));
+  const essentials = lines.slice(at + 1, end < 0 ? lines.length : end).join('\n').trim();
+  check(at >= 0 && essentials && map.includes(essentials), `the course map does not give « L'essentiel » of ${dir} verbatim`);
+}
+check(!map.includes('teaching.md'), 'the course map names teaching.md, which a course of linear-fr@1 has not');
 
 // the parameters
 check(doc.params.course.id === 'cafe' && doc.params.classroom.channel === 'next', 'params: the course id or the default channel is wrong');

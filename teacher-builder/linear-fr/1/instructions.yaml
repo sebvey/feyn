@@ -100,9 +100,10 @@ groups:
         serves: [onboarding-closing-sentence, says-before-waiting]
       - id: onboarding-files-set-up
         text: >-
-          À la fin de l'accueil, dans les trois fichiers de `learner/`, `<nickname>` devient son
-          surnom et le commentaire de modèle se retire ; « {memory_headings.next_step} » nomme le
-          premier concept, et le journal reçoit la ligne de la session.
+          À la fin de l'accueil, aucun `<…>` ne reste dans les trois fichiers de `learner/` :
+          `<nickname>` devient son surnom, la ligne de modèle de « {memory_headings.profile} » ses
+          réponses (`profile-written`), et « {memory_headings.next_step} » nomme le premier
+          concept ; le journal reçoit la ligne de la session.
         serves: [profile-written, saved-at-the-latest]
       - id: profile-written
         text: >-
@@ -133,8 +134,8 @@ groups:
       - id: resume-reads-progress-only
         text: >-
           Après la phrase d'ouverture, ne lis que `learner/parcours.md` (« {memory_headings.next_step} »,
-          les statuts des concepts, le journal) : `course/course.yaml`, `learner/apprenant.md` et
-          `learner/observations.md` sont fournis au démarrage. Puis le rappel
+          les statuts des concepts, le journal) : la carte du cours, `learner/apprenant.md` et
+          `learner/observations.md` sont déjà là, importés par `CLAUDE.md`. Puis le rappel
           (`resume-recap-message`).
         serves: [resume-recap-message, says-before-waiting]
       - id: resume-recap-message
@@ -208,10 +209,9 @@ groups:
       - id: domain-presented-from-file
         text: >-
           Avant le premier concept d'un domaine, dans le parcours comme à l'entraînement sur ce
-          domaine, y compris après le rappel de reprise, présente le domaine d'après son fichier
-          (`course/<file>`, `file` du domaine dans `course.yaml`), lu alors. La présentation peut
-          suivre, au même message, la correction qui clôt le domaine précédent, ou le rappel de
-          reprise, si le tout tient en une quinzaine de lignes ; sinon elle vient dans son propre
+          domaine, y compris après le rappel de reprise, présente le domaine d'après son fichier,
+          que la carte du cours donne, lu alors. La présentation peut suivre, au même message, la
+          correction qui clôt le domaine précédent, ou le rappel de reprise, si le tout tient en une quinzaine de lignes ; sinon elle vient dans son propre
           message.
         serves: [domain-presented-from-file]
       - id: domain-title-link
@@ -243,8 +243,8 @@ groups:
     instructions:
       - id: read-each-new-concept
         text: >-
-          Avant chaque nouveau concept, lis `course/<dir>/concept.md` (`dir` du concept dans
-          `course.yaml`), et reprends les vigilances de « {memory_headings.vigilances} » qui
+          Avant chaque nouveau concept, lis `concept.md` dans son dossier, que la carte du cours
+          donne, et reprends les vigilances de « {memory_headings.vigilances} » qui
           portent son numéro.
         serves: [explanation-from-lesson, observations-used]
       - id: one-unit-per-message
@@ -414,7 +414,7 @@ groups:
       - id: domain-practised-in-order
         text: >-
           À sa demande, à la reprise ou à tout moment, l'entraînement sur un domaine va concept par
-          concept, dans l'ordre de `course.yaml` ; un concept pas encore validé s'y enseigne unité
+          concept, dans l'ordre de la carte du cours ; un concept pas encore validé s'y enseigne unité
           par unité, comme dans le parcours.
         serves: [domain-practised-in-order]
       - id: validated-concept-practised
@@ -446,12 +446,12 @@ groups:
         text: >-
           L'apprenant peut demander à sauter un domaine ou un concept pas encore validé : note
           `{status.skipped}` à chaque concept sauté, puis passe au domaine ou au concept qui suit
-          dans l'ordre de `course.yaml`, sans enseigner ce qui est sauté.
+          dans l'ordre de la carte du cours, sans enseigner ce qui est sauté.
         serves: [skip-on-request]
       - id: missing-prerequisite-told
         text: >-
-          Avant un concept dont un prérequis (`prerequisites` de `course.yaml`) n'est pas validé,
-          dans le parcours comme à l'entraînement, dis-le en une ligne.
+          Avant un concept dont un prérequis (ses « Prérequis » dans la carte du cours) n'est pas
+          validé, dans le parcours comme à l'entraînement, dis-le en une ligne.
         serves: [missing-prerequisite-told]
       - id: later-concept-acknowledged
         text: >-
@@ -731,7 +731,7 @@ groups:
           Sous « {memory_headings.concepts} » de `learner/parcours.md`, écris le statut des
           concepts qui ont changé (`{status.in_progress}`, `{status.validated}`,
           `{status.skipped}`, `{status.to_review}`) : la ligne du concept, ajoutée dans l'ordre de
-          `course.yaml` à son premier changement. Sous « {memory_headings.annexes} », ajoute
+          la carte du cours à son premier changement. Sous « {memory_headings.annexes} », ajoute
           chaque annexe suivie.
         serves: [concept-status-written, annex-unit-offered]
       - id: save-journal-line

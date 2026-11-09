@@ -7,15 +7,17 @@
 //      and the course and renders the five parts of its composition as text, one JSON document
 //      validated here against that folder's parts.schema.yaml;
 //   2. the Claude Code realisation of those parts, this file's own:
-//      permanent       CLAUDE.md, from CLAUDE.template.md
+//      permanent       CLAUDE.md, from the implementation folder's CLAUDE.template.md, and the
+//                      course map, a file of the classroom's root CLAUDE.md imports
 //      on-demand       .claude/skills/feyn-teacher-<moment>/SKILL.md, one per moment that loads instructions
 //      course-reads    course/, the course folder copied as is
-//      learner-memory  learner/, the learner templates
+//      learner-memory  learner/, the learner templates, each without its header comment
 //      permissions     .claude/settings.json
 //   then course.lock and the classroom's own git, one commit holding all of it.
 // The form of the instructions and of the composition is the implementation folder's: nothing here reads them.
 // Exit 0 built, 1 an input the build cannot read (render-parts failed, its output not valid),
-// 2 a usage error or a refused target (an unknown spec MAJOR, or one with no implementation folder).
+// 2 a usage error or a refused target (an unknown spec MAJOR, or one with no implementation folder,
+// or whose implementation folder has no teacher template).
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -86,6 +88,10 @@ const RENDER = path.join(IMPL, 'render-parts');
 const SCHEMA = path.join(IMPL, 'parts.schema.yaml');
 if (!fs.existsSync(RENDER)) refuse(`the spec MAJOR ${specRef} has no implementation folder ${rel(IMPL)}/ with its render-parts: no classroom is built from it`);
 if (!fs.existsSync(SCHEMA)) refuse(`the implementation folder ${rel(IMPL)}/ has no parts.schema.yaml`);
+// the teacher template is the implementation's, in the spec's language (decision language-policy):
+// a spec MAJOR whose folder has none builds no classroom, rather than a frame of another language
+const TEMPLATE = path.join(IMPL, 'CLAUDE.template.md');
+if (!fs.existsSync(TEMPLATE)) refuse(`the implementation folder ${rel(IMPL)}/ has no teacher template ${rel(TEMPLATE)}: no classroom is built from the spec MAJOR ${specRef}`);
 const dirLine = read(path.join(SPEC, 'spec.yaml')).split('\n').find((l) => /^directives\s*:/.test(l));
 const directives = dirLine && dirLine.replace(/^directives\s*:\s*/, '').replace(/\s+#.*$/, '').trim();
 if (!/^\d+$/.test(directives || '')) fail(`${rel(SPEC)}/spec.yaml declares no directives MAJOR`);
@@ -93,7 +99,7 @@ const DIRECTIVES = path.join(REPO, 'spec-directives', directives);
 require(path.join(DIRECTIVES, 'lib', 'deps')).need();
 const yaml = require(path.join(DIRECTIVES, 'lib', 'yaml-lines'));
 const Ajv2020 = createRequire(path.join(DIRECTIVES, 'package.json'))('ajv/dist/2020').default;
-const template = read(path.join(BUILDER, 'CLAUDE.template.md'));
+const template = read(TEMPLATE);
 
 // ---- the parts, rendered by the implementation folder and validated against its schema
 const renderArgs = [courseDir, '--channel', channel, ...(opts.siteUrl ? ['--site-url', opts.siteUrl] : [])];
@@ -174,34 +180,34 @@ function skill(m) {
   ].join('\n');
 }
 const withInstructions = parts.moments.filter(hasInstructions);
-const momentList = parts.moments.map((m) => (hasInstructions(m)
-  ? `- \`${m.id}\` (skill \`${skillName(m)}\`): ${m.when}.`
-  : `- \`${m.id}\`: ${m.when}; no instruction yet, no skill.`)).join('\n');
 
-// ---- CLAUDE.md
+// ---- CLAUDE.md: the template without its header comment, its slots filled; Claude Code presents
+// each teacher skill with its description, which says its moment, so CLAUDE.md does not list them
+const HEADER_COMMENT = /^<!--[\s\S]*?-->\n/;
 const claude = template
-  .replace(/^<!--[\s\S]*?-->\n/, '')
+  .replace(HEADER_COMMENT, '')
   .replace(/\{\{([a-z_]+)\}\}/g, (m, k) => {
     const v = {
       course_title: course.title,
       spec: specRef,
       channel,
       posture: parts.permanent.posture,
-      course_map: parts.permanent.course_map,
-      course_files: parts.permanent.course_files,
-      moments: momentList,
+      course_map_file: parts.permanent.course_map.file,
       instructions: parts.permanent.instructions,
     }[k];
-    if (v === undefined) fail(`CLAUDE.template.md: unknown slot {{${k}}}`);
+    if (v === undefined) fail(`${rel(TEMPLATE)}: unknown slot {{${k}}}`);
     return v;
   });
 
 // ---- write the classroom
 fs.mkdirSync(out, { recursive: true });
 fs.writeFileSync(path.join(out, 'CLAUDE.md'), claude.replace(/\n*$/, '\n'));
+fs.writeFileSync(path.join(out, parts.permanent.course_map.file), parts.permanent.course_map.text.replace(/\n*$/, '\n'));
 fs.cpSync(courseDir, path.join(out, 'course'), { recursive: true });
+// learner memory starts from the learner templates, each without its header comment, a note for
+// whoever edits the template: what the teacher needs of it is an instruction of the implementation
 fs.mkdirSync(path.join(out, 'learner'));
-for (const t of parts.learner_templates) fs.writeFileSync(path.join(out, 'learner', t.name), t.text);
+for (const t of parts.learner_templates) fs.writeFileSync(path.join(out, 'learner', t.name), t.text.replace(HEADER_COMMENT, ''));
 for (const m of withInstructions) {
   fs.mkdirSync(path.join(out, '.claude', 'skills', skillName(m)), { recursive: true });
   fs.writeFileSync(path.join(out, '.claude', 'skills', skillName(m), 'SKILL.md'), skill(m));
