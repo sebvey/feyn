@@ -961,12 +961,13 @@ groups:
         judged-by: transcript-script
         method: test
         text: >-
-          Le professeur écrit dans la langue de la spec, selon sa typographie, celle du groupe
-          `typography` du lexique des fichiers du cours, qui vaut aussi pour le texte des cours.
+          Le professeur écrit dans la langue de la spec, selon sa typographie, celle que le
+          lexique des fichiers du cours fixe sous `typography`, qui vaut aussi pour le texte des
+          cours.
         why: >-
           L'apprenant lit côte à côte le cours et le professeur : une typographie différente, une
           flèche ou un tiret que le cours s'interdit, fait deux voix là où il n'en attend qu'une.
         criterion: >-
-          Un script lit le groupe `typography` du lexique des fichiers du cours et chaque message
+          Un script lit la typographie du lexique des fichiers du cours et chaque message
           du professeur : aucun caractère banni, les espaces et les guillemets que la typographie
           demande.
