@@ -8,7 +8,7 @@
 // skills nor « Moments », no import of course.yaml, the instructions verbatim but for their
 // placeholders, each instruction of linear-fr/1/instructions.yaml in CLAUDE.md or in one skill,
 // once, each group heading followed by its purpose), the course map carte-du-cours.md and its import
-// (each domain with its objective and file, each concept with its objective, prerequisites and
+// (the storyline first, its title, file and the text under its H1, each domain with its objective and file, each concept with its objective, prerequisites and
 // folder, the annexes as annexes, each « L'essentiel » of cafe, the other course files), the three
 // spots of the filling (no doubled parenthesis, no period after a phrase that ends with one, the
 // plural of the domains), the teacher template (the implementation's, no instruction), course.lock,
