@@ -1,5 +1,6 @@
-# A lexicon with one defect: no headings.landmarks (a key of course/README.md section 7). Otherwise
-# the course lexicon of the spec fixture (valid/course/lexicon.yaml).
+# The lexicon of the course files of the spec fixture, tested by lexicon-keys (check-spec): the
+# groups of course/README.md section 7, with the values of the course fixtures' lexicon
+# (product-lines/linear-fr/1/course/checks/fixtures/lexicon.yaml).
 
 # Section titles of the course files.
 headings:

@@ -1,2 +1,0 @@
-check: scenarios
-message: id "begin" is not the file name "start"

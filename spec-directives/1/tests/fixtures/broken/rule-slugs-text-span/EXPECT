@@ -1,2 +1,2 @@
 check: rule-slugs
-message: products/teacher/rules.yaml:21 cites rule "ghost-rule", which products/teacher/rules.yaml does not define
+message: course/rules.yaml:25 cites rule "ghost-rule", which no rule file defines

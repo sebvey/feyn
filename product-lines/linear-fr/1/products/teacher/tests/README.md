@@ -8,13 +8,13 @@
 
 The readers are defined in [`spec-directives/README.md`](../../../../../../spec-directives/README.md#the-readers).
 
-A **test scenario** is a fixed run of a teaching session: the learner memory it starts from, the learner's messages in order, the acts the teacher's replies are expected to show and the rules of the protocol (`../rules.yaml`) they exercise. A **fresh test** runs one: `mise exec -- teacher-builder/fresh-test <course-dir> <scenario id>` builds a disposable classroom from the course, runs the teacher in it turn by turn, and judges the transcript, a script for the form rules and a fresh agent for the others, slug by slug (`teacher-builder/README.md`, "The fresh tests"). It is the implementation of the method demonstration of the protocol's rules (`spec-directives/1/README.md` section 4). The scenarios live here, in the spec MAJOR, since they name its rules; the harness lives at the root, the same cut as the teacher build (`../build/`).
+A **test scenario** is a fixed run of a teaching session: the learner memory it starts from, the learner's messages in order, the acts the teacher's replies are expected to show and the rules of the protocol (`../rules.yaml`) they exercise. A **fresh test** runs one: `mise exec -- teacher-builder/fresh-test <course-dir> <scenario id>` builds a disposable classroom from the course, runs the teacher in it turn by turn, and judges the transcript, a script for the form rules and a fresh agent for the others, slug by slug (`teacher-builder/README.md`, "The fresh tests"). It is the implementation of the method demonstration of the protocol's rules (`spec-directives/1/README.md` section 2). The scenarios live here, in the spec MAJOR, since they name its rules; the harness lives at the root, the same cut as the teacher build (`../build/`).
 
 The scenarios are written for the spec's sample course `cafe` (`../../course/samples/cafe/`: its concepts, its actors, its cases); a second course gets its own when it is tested.
 
 ## The format
 
-One YAML file per scenario in this folder, named after its `id`; [`scenario.schema.yaml`](scenario.schema.yaml) fixes the form, and `check-spec` (`scenarios`, `spec-directives/1/README.md` section 8) validates every scenario against it and checks that every slug it names is a rule of the protocol, when `spec.yaml` declares the teacher, which it does not until epic #757 brings the teacher up to date.
+One YAML file per scenario in this folder, named after its `id`; [`scenario.schema.yaml`](scenario.schema.yaml) fixes the form; no test of `check-spec` validates the scenarios against it since the test `scenarios` left the spec directives with the form proper to the teacher (#765).
 
 | Key | Holds |
 |---|---|

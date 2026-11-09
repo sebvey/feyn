@@ -17,7 +17,7 @@ A spec is the contract of a **product line**: the form of its courses and what i
 
 ## A spec MAJOR
 
-One folder per MAJOR, `product-lines/<name>/<MAJOR>/` (`1/`, not `v1/`). Its manifest, `spec.yaml`, declares its files by role: its own (`README.md`, `CHANGELOG.md`, `decisions/`), those of its course, the input of the builds of the products, under `course/`, and those of each product under `products/<product>/`; then the lists of the spec, which the tests read, and, under `files:`, what each file holds and who reads it. Its identity gives its `name`, `major`, `version`, `language` (the language of the spec, its courses and its protocol: a course of another language follows another spec) and `directives`, the MAJOR of `spec-directives/` it follows, whose tests verify the spec's own files (`spec-directives/check-spec <MAJOR folder>`) and whose `lib/` and package its checks load (`spec-directives/1/README.md` section 8).
+One folder per MAJOR, `product-lines/<name>/<MAJOR>/` (`1/`, not `v1/`). Its manifest, `spec.yaml`, declares its files by role: its own (`README.md`, `CHANGELOG.md`, `decisions/`), those of its course, the input of the builds of the products, under `course/`, and those of each product under `products/<product>/`; then the lists of the spec, which the tests read, and, under `files:`, what each file holds and who reads it. Its identity gives its `name`, `major`, `version`, `language` (the language of the spec, its courses and its protocol: a course of another language follows another spec) and `directives`, the MAJOR of `spec-directives/` it follows, whose tests verify the spec's own files (`spec-directives/check-spec <MAJOR folder>`) and whose `lib/` and package its checks load (`spec-directives/1/README.md` section 4).
 
 Section 2 of a MAJOR's `README.md` points to its manifest, which describes the composition of the spec. For `linear-fr` 1: the manifest [`linear-fr/1/spec.yaml`](linear-fr/1/spec.yaml).
 
@@ -27,7 +27,7 @@ A course declares the MAJOR it follows in `course.yaml` (`spec: linear-fr@1`). `
 
 ## Versions
 
-A spec version is tagged `<name>/vX.Y.Z`. From the MAJOR's tag on, the bump of a spec change is written in the levels of the rules of a course (requirement, recommendation), as the spec directives write it (`spec-directives/1/README.md` sections 3 and 6):
+A spec version is tagged `<name>/vX.Y.Z`. From the MAJOR's tag on, the bump of a spec change follows the spec directives (`spec-directives/1/README.md` section 3), which a spec may write in its own words; `linear-fr` writes it in the levels of the rules of a course (requirement, recommendation), which its README defines (`linear-fr/1/README.md` section 3):
 
 | Bump | When |
 |---|---|

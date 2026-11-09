@@ -5,5 +5,5 @@ status: accepted
 area: spec:linear-fr
 ---
 
-Without this, a fixture would have no decision. Protocol rule `third-rule` settles it, beside
+Without this, a fixture would have no decision. The rule `third-rule` settles it, beside
 the decision `rules-named-by-slug`.

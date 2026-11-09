@@ -3,11 +3,12 @@
 # included, and those verified by inspection, the review; one group per section or sub-section
 # of course/README.md that points to rules, in its order (section 6 points to the groups of 6.1 and
 # 6.2; section 7 states no rule of a course). A course conforms when it holds every requirement of
-# this file, whatever its method (spec-directives/1/README.md section 2). The tables of fields are
+# this file, whatever its method (README.md section 3). The tables of fields are
 # the schemas of course/schemas/, each one rule here (decision field-tables-as-schemas).
 #
 # A group: title, purpose (what the group is for), category and method (declared once for its
-# rules; a rule may override them), rules. A rule: id (a slug), level, category, method, check
+# rules; a rule may override them), rules. A rule: id (a slug), level and category (the
+# classifications spec.yaml declares, lists.classifications.course), method, check
 # (the check that implements the method, when one exists), text, why (optional: what a competent
 # model does without the rule, as observed). The texts are French, the language of the spec
 # (decision language-policy).

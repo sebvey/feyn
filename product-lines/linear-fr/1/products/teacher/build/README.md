@@ -39,7 +39,7 @@ Exit 0 rendered, 1 an input it cannot read (a placeholder in neither lexicon, a 
 
 The part `course-reads` has no key: it is the course folder as it is, which a teacher build copies.
 
-A family is found by its category (the moment `stop`): in `products/teacher/rules.yaml`, a family is the group whose `id` is its category, and a group belongs to the family of its `category`, which comes before it. `render-parts` holds no list of the families; the test `rule-files` of `check-spec` reads them from `lists.families` of a manifest that declares the teacher, which `spec.yaml` does not until epic #757 brings the teacher up to date.
+A family is found by its category (the moment `stop`): in `products/teacher/rules.yaml`, a family is the group whose `id` is its category, and a group belongs to the family of its `category`, which comes before it. `render-parts` holds no list of the families: a family is the group whose `id` is its category.
 
 ## The filling
 

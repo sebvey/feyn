@@ -4,7 +4,7 @@
 // against course/schemas/course.schema.yaml through Ajv2020, a failure mapped from ajv's
 // instance path to its line (`lineOfError` of lib/yaml-lines.js); then what the schema does not
 // say: identifiers, order, partition into domains, annexes, prerequisites, paths that exist, no
-// unlisted concept folder (course/README.md section 2, spec-directives/1/README.md section 6); and
+// unlisted concept folder (course/README.md section 2, spec-directives/1/README.md section 3); and
 // the logo, logo.svg at the root of the course folder (`logo` of course/form.yaml): present, square,
 // one colour in currentColor, no script and no external resource (course/README.md section 1).
 // An unknown spec or MAJOR is refused by product-lines/check-course, before these checks run. A
@@ -205,7 +205,7 @@ function run(ctx) {
   return out;
 }
 
-// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 1),
 // the course through the parser
 const reads = ['course.form', 'course.lexicon', 'course.schemas', 'course.parser'];
 

@@ -5,5 +5,5 @@ status: accepted
 area: spec:linear-fr
 ---
 
-Without this, a fixture would have no decision. Protocol rule `second-rule` settles it, beside
+Without this, a fixture would have no decision. The rule `leaf-has-a-case` settles it, beside
 the decision `rules-named-by-slug`.

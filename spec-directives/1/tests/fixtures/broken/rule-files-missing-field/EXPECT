@@ -1,2 +1,2 @@
 check: rule-files
-message: rule course-id-equals-folder: level is mandatory
+message: rule course-id-equals-folder: level is mandatory, on the rule or on its group
