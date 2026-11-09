@@ -6,7 +6,7 @@
 // a diagram, and without (the `diagrams` key deleted, as the concept template says).
 //   mise exec -- product-lines/linear-fr/1/course/templates/smoke-test [--keep]
 // It reads the course templates of this folder only: the spec never reads the teacher
-// implementation, whose learner templates teacher-builder/test-build checks in a classroom.
+// implementation, whose learner templates the test of the teacher build checks in a classroom.
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
