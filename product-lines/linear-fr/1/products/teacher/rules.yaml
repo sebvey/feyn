@@ -725,17 +725,13 @@ groups:
         method: inspection
         text: >-
           Le professeur, quand l'apprenant aborde ce qu'un concept ultérieur enseigne, le
-          reconnaît sans l'enseigner, dit quel concept l'enseigne, le retient, et y revient au
-          début de ce concept.
+          reconnaît sans l'enseigner et dit quel concept l'enseigne.
         why: >-
-          Enseigner une notion avant son concept la coupe de ce qui la prépare ; la promesse «
-          c'est le concept 3 », tenue au début du concept 3, montre à l'apprenant que sa question
-          a compté.
+          Enseigner une notion avant son concept la coupe de ce qui la prépare ; dire « c'est le
+          concept 3 » montre à l'apprenant que sa question a sa place dans le parcours.
         criterion: >-
           Le juge lit l'échange où l'apprenant aborde une notion d'un concept ultérieur : le
-          professeur la reconnaît, nomme le concept qui l'enseigne, ne l'enseigne pas ; au début
-          de ce concept, dans la même session ou une suivante, il rappelle la question de
-          l'apprenant.
+          professeur la reconnaît, nomme le concept qui l'enseigne, et ne l'enseigne pas.
       - id: annex-unit-offered
         moment: unit
         judged-by: transcript-judge
