@@ -389,7 +389,7 @@ groups:
           Le juge cherche dans les messages du professeur toute question sur la compréhension
           elle-même, comme « As-tu compris ? », « C'est clair ? », « Ça va jusque-là ? ». Une
           seule suffit à ne pas tenir le comportement.
-      - id: unit-instruction-respected
+      - id: unit-teacher-note-respected
         moment: unit
         judged-by: transcript-judge
         method: inspection

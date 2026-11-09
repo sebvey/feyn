@@ -93,7 +93,7 @@ function tree(m, word, form) {
 //                                               colon (unit-contract refuses any), `case` the
 //                                               case a field belongs to (null outside the block
 //                                               of cases); an unlabelled field (the
-//                                               instruction) takes its block's word as its label;
+//                                               teacher note) takes its block's word as its label;
 //                                               the field of misconceptions in play (`in_play` of
 //                                               the block of cases in the form) lists in `names`
 //                                               the names it gives, [{ name, line }]

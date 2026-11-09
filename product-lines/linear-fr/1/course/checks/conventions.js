@@ -1,6 +1,6 @@
 'use strict';
 // The conventions of the text of concept.md (course/README.md section 3.5), read in the parts the
-// learner reads (course/form.yaml, readers; course/parser.js), the instruction left out: concept
+// learner reads (course/form.yaml, readers; course/parser.js), the teacher note left out: concept
 // references, stance markers; no image in concept.md (the build places a diagram at its unit). Plain
 // Markdown in every course file (section 1), a concept file's headings no deeper than #####, a case's.
 const directives = require('./directives');
@@ -35,7 +35,7 @@ function checkConcept(ctx, c, out) {
   for (const f of ['concept.md', 'sources.md']) plainMarkdown(ctx, dir + '/' + f, out, { depth: f === 'concept.md' });
   if (!cm) return;
   const parts = ctx.parts(c);
-  // what the learner reads (course/form.yaml, readers): the instruction is left out
+  // what the learner reads (course/form.yaml, readers): the teacher note is left out
   const heard = parts.heard;
   const markers = ['consensus', 'school', 'course'].map((k) => ctx.word('markers', k)).filter(Boolean);
 

@@ -242,7 +242,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### unit
 
-- means: the teaching unit, the unit of a course's content: one teacher message, one leaf of a concept's tree (`0a1`), written once as three blocks in the order of writing, each titled by its word alone: its **lesson** (its **matter**, what is true, then its **misconceptions**), its **cases** (« Cas du fil rouge »: the unit's case, then its supplementary cases, each under its own heading), its **instruction**. A unit always has its own heading, under its **section**
+- means: the teaching unit, the unit of a course's content: one teacher message, one leaf of a concept's tree (`0a1`), written once as three blocks in the order of writing, each titled by its word alone: its **lesson** (its **matter**, what is true, then its **misconceptions**), its **cases** (« Cas du fil rouge »: the unit's case, then its supplementary cases, each under its own heading), its **teacher note**. A unit always has its own heading, under its **section**
 - en: unit · rejected: "leaf sub-concept", "sub-concept", "leaf", "lesson" (its first block)
 - fr: « unité » · rejected: « sous-concept feuille », « sous-concept », « feuille »
 - not to confuse with: [section](#section), [concept](#concept), [case](#case), [head and foot](#head-and-foot), [lesson](#lesson)
@@ -258,7 +258,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### head and foot
 
-- means: the parts of a **concept file** around its sections, each under its own heading: the head, « L'essentiel », the one written summary of the concept, its text and no block, **published**; the foot, « Clôture », holds its landmarks (« Se vérifier »), its deepening (« Approfondissement ») and its instruction (« Consigne au professeur »), each optional, the last **unpublished**
+- means: the parts of a **concept file** around its sections, each under its own heading: the head, « L'essentiel », the one written summary of the concept, its text and no block, **published**; the foot, « Clôture », holds its landmarks (« Se vérifier »), its deepening (« Approfondissement ») and its teacher note (« Consigne au professeur »), each optional, the last **unpublished**
 - en: head and foot · rejected: "fixed sections"
 - fr: « tête » et « pied » · rejected: « sections fixes »
 - not to confuse with: [section](#section), [unit](#unit)
@@ -281,7 +281,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the field of a unit's **lesson** that says what is true, in the same words for the site reader and the teacher: the explanation the unit teaches; **published**
 - en: matter · rejected: "reader text", "explanation", "body", "content", "copy"
 - fr: « matière » · rejected: « texte lecteur », « explication »
-- not to confuse with: [anchor](#anchor), [instruction](#instruction), [landmark](#landmark), [misconception](#misconception)
+- not to confuse with: [anchor](#anchor), [teacher note](#teacher-note), [landmark](#landmark), [misconception](#misconception)
 - why: the reader text and a case's explanation were two writings of the same matter, one for the site, one for the teacher; one word for the one text
 
 ### anchor
@@ -323,12 +323,13 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - not to confuse with: [matter](#matter)
 - why: the quick test was one landmark among others, written three times; "lever" and "cue" name a teacher's means, not what the learner keeps; « Repères » hid that the block holds a question the learner asks themself, and named a field of a unit that no unit used
 
-### instruction
+### teacher note
 
-- means: the boundary of the **matter**, for the teacher alone: what the teacher knows and does not say in this unit, or in this concept for the foot's; a sentence stays only if a competent teacher reading the matter, the cases, the misconceptions, the protocol and the course plan would otherwise act differently, and only there: what holds for every unit is a **protocol rule**, what holds for the whole course a stance of the course plan, the obvious goes; the last block of a unit, « Consigne au professeur », in prose, and a block of the foot of the concept file under the same heading, **unpublished**; a question the course asks again and again goes there; the order and the split of a concept are its sections and units, never an instruction
-- en: instruction · rejected: "instructions", "teaching notes", "usage", "what works"
+- means: the boundary of the **matter**, for the teacher alone: what the teacher knows and does not say in this unit, or in this concept for the foot's; a sentence stays only if a competent teacher reading the matter, the cases, the misconceptions, the protocol and the course plan would otherwise act differently, and only there: what holds for every unit is a **protocol rule**, what holds for the whole course a stance of the course plan, the obvious goes; the last block of a unit, « Consigne au professeur », in prose, and a block of the foot of the concept file under the same heading, **unpublished**; a question the course asks again and again goes there; the order and the split of a concept are its sections and units, never a teacher note
+- en: teacher note · rejected: "instruction", "instructions", "teaching notes", "usage", "what works"
 - fr: « consigne » · rejected: « consignes », « usage », « ce qui marche »
-- not to confuse with: [protocol rule](#protocol-rule), [matter](#matter), [means](#means)
+- not to confuse with: [instruction](#instruction), [protocol rule](#protocol-rule), [matter](#matter), [means](#means)
+- why: "instruction", its former English term, is also the ordinary word of every text an agent or the teacher reads, the teacher implementation's among them: one word for two concepts; the course's block takes a term of its own, its French unchanged
 
 ### published
 
@@ -340,7 +341,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### unpublished
 
-- means: of a block or a part of a concept file, never rendered by the site, read by the teacher: the **instruction**, of a unit and of the foot; no heading says it
+- means: of a block or a part of a concept file, never rendered by the site, read by the teacher: the **teacher note**, of a unit and of the foot; no heading says it
 - en: unpublished · rejected: "teacher-only", "private" (it describes the repository)
 - fr: « non publié » · rejected: « professeur seul »
 - not to confuse with: [published](#published)
@@ -504,7 +505,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: a rule of the protocol, an expected behaviour of the teacher: what any teacher of the spec does, observable in the conversation or in what it records, written with no target term; it binds the teacher and belongs to a group, its subject. What makes it hold on a target is a **means** of the **teacher implementation**
 - en: protocol rule
 - fr: « règle du protocole », or « comportement attendu », its admitted synonym
-- not to confuse with: [rule](#rule), [protocol](#protocol), [instruction](#instruction), [means](#means), [capability](#capability)
+- not to confuse with: [rule](#rule), [protocol](#protocol), [teacher note](#teacher-note), [instruction](#instruction), [means](#means), [capability](#capability)
 - why: « comportement attendu », the words of the brainstorm that set what the spec writes of the teacher, is admitted beside « règle du protocole » rather than replacing it: a renaming would touch everything the spec, the spec directives and the tools call a protocol rule
 
 ### capability
@@ -519,7 +520,15 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: (singular and plural) what a **teacher implementation** uses to make a **protocol rule** hold on its target, chosen freely: a passage of the teacher's instructions, a skill, a hook that rereads a message before it is sent, a script, a preparation at build time; each is linked by slug to the protocol rules it serves. The spec fixes none
 - en: means
 - fr: to settle
-- not to confuse with: [protocol rule](#protocol-rule), [capability](#capability), [teacher implementation](#teacher-implementation), [instruction](#instruction)
+- not to confuse with: [protocol rule](#protocol-rule), [capability](#capability), [teacher implementation](#teacher-implementation), [instruction](#instruction), [teacher note](#teacher-note)
+
+### instruction
+
+- means: in its ordinary sense only, a text an agent or the teacher reads and acts on: the project instructions of the repository's agents, a passage of a prompt, and the **means** of a **teacher implementation** written as text, which its build gives the teacher; never the course's block « Consigne au professeur », which is a **teacher note**
+- en: instruction
+- fr: « instruction » · rejected: « consigne » (a **teacher note**)
+- not to confuse with: [teacher note](#teacher-note), [means](#means), [protocol rule](#protocol-rule)
+- why: the word is the standard one for a text an agent reads, as the repository's agentic files and the teacher implementation use it; it named the course's block too until that block took the term **teacher note**
 
 ### group
 

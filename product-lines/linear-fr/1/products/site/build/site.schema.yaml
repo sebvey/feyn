@@ -151,13 +151,13 @@ properties:
           headings:
             $ref: '#/$defs/words'
             type: object
-            propertyNames: { not: { enum: [instruction, onboarding, unverified, unreleased] } }
+            propertyNames: { not: { enum: [teacher_note, onboarding, unverified, unreleased] } }
           block_kinds: { $ref: '#/$defs/words' }
           unit_blocks: { $ref: '#/$defs/words' }
           unit_fields:
             $ref: '#/$defs/words'
             type: object
-            propertyNames: { not: { enum: [instruction] } }
+            propertyNames: { not: { enum: [teacher_note] } }
           markers: { $ref: '#/$defs/words' }
       site:
         description: products/site/lexicon.yaml, as written
@@ -307,7 +307,7 @@ $defs:
         description: >-
           its published blocks, by their key in course/form.yaml, in the order the site renders them:
           the lesson (its matter), the cases, then the misconceptions of the lesson; never the
-          instruction
+          teacher note
         type: object
         additionalProperties: false
         properties:

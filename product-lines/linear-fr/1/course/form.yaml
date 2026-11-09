@@ -99,7 +99,7 @@ concept_file:
         presence: optional
         published: true
         readers: [site, teacher, learner]
-      - heading: instruction
+      - heading: teacher_note
         presence: optional
         published: false
         readers: [teacher]
@@ -112,7 +112,7 @@ concept_file:
 #   labelled: true   its fields, `- **<label>** : <text>`, the label `unit_fields.<field>` and
 #                    nothing between it and the colon, in the order of `fields`, a field's
 #                    following lines indented two spaces; no line outside a field
-#   labelled: false  its one field, unlabelled: the instruction, prose
+#   labelled: false  its one field, unlabelled: the teacher note, prose
 #   misconceptions   in a block of labelled fields, the field `field` holds a list of
 #                    misconceptions on the lines below its label, nothing after its colon: each
 #                    `  - **<name>** : « <belief> »`, its name unique in its unit, then, indented
@@ -168,12 +168,12 @@ unit:
         # the fields the site shows hidden until the reader reveals them; the teacher says the
         # expected answer only once the learner has answered
         revealed: [expected_answer, misconceptions_in_play]
-    - block: instruction
+    - block: teacher_note
       presence: optional
       published: false
       readers: [teacher]
       labelled: false
-      fields: [instruction]
+      fields: [teacher_note]
   # the length of one teacher message: the text of these fields, the unit's case's and not those
   # of a supplementary case, the misconceptions left out, counted in lines of `line` characters (its
   # characters, label and indentation left out, divided by `line`); above `max`,
