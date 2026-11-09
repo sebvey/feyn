@@ -17,6 +17,6 @@ The **instruction** of a unit of `linear-fr` is the boundary of its matter: what
 
 ## Consequences
 
-- The sentences that said when to pose a supplementary case, or what to do with a later concept the learner raises, leave the instructions for the protocol rules; the teacher loses those triggers until epic #757 writes them as protocol rules.
+- The sentences that said when to pose a supplementary case, or what to do with a later concept the learner raises, leave the instructions for the protocol rules, which the subject « teaching a unit » of `products/teacher/rules.yaml` writes (#771); the teacher built from its former instructions lacks them until the teacher implementation of epic #757.
 - A stance of the course that an instruction stated moves to the course plan, written once.
 - Whether a sentence passes the criterion is a review, not a check: no script tells the obvious from the proper.

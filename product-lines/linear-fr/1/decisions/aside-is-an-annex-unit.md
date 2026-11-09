@@ -7,7 +7,7 @@ area: spec:linear-fr
 
 Without this, a creator meeting a question learners often ask outside the course path would write it as one more case of the unit where it comes up, with an expected answer that teaches facts the unit's matter does not state, so those facts would be published unsourced, with no misconception to meet, hidden behind the button that reveals an answer, and the concept file would teach two subjects under one unit.
 
-A question often asked outside the course path has its matter in a unit of an annex: the annex, a concept file of the same form, listed among the annexes of the course map, holds that unit's matter, sourced like any matter, its misconceptions and its cases. No unit and no annex writes a link to it: the teacher asks it when the learner raises its subject, and the reader of the site finds it among the annexes. A unit's cases ask only what its matter states. This replaces the case that carried such a question inside the unit where it came up.
+A question often asked outside the course path has its matter in a unit of an annex: the annex, a concept file of the same form, listed among the annexes of the course map, holds that unit's matter, sourced like any matter, its misconceptions and its cases. No unit and no annex writes a link to it: the teacher offers it when the learner raises its subject and teaches it if the learner accepts, and the reader of the site finds it among the annexes. A unit's cases ask only what its matter states. This replaces the case that carried such a question inside the unit where it came up.
 
 ## Options ruled out
 
