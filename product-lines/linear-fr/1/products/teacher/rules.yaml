@@ -1277,3 +1277,98 @@ groups:
           l'apprenant ; ce que la mémoire retient de lui n'est pas récité sans qu'il le demande ;
           quand il demande ce que le professeur sait de lui, la réponse le dit, conforme à la
           mémoire.
+      - id: memory-holds-the-resume
+        moment: stop
+        judged-by: memory-reading
+        method: inspection
+        text: >-
+          Le professeur laisse, après l'arrêt, une mémoire qui permet à un professeur neuf de
+          reprendre : le concept qui vient ou l'entraînement en cours, et la question restée en
+          attente avec son cas, la question mot pour mot et ce que l'apprenant avait déjà juste.
+        why: >-
+          Le professeur de la session suivante ne sait rien de celle-ci : ce qu'il ne trouve pas
+          dans la mémoire, il le refait ou le perd.
+        criterion: >-
+          Le juge lit la mémoire après l'arrêt comme un professeur neuf : il y trouve la prochaine
+          étape, l'entraînement en cours s'il y en a un, et la question en attente assez précise
+          pour la reposer telle quelle ; un entraînement fini n'y figure plus.
+      - id: profile-written
+        moment: onboarding
+        judged-by: memory-reading
+        method: inspection
+        text: >-
+          Le professeur retient, à la fin de l'accueil, le surnom de l'apprenant et ses réponses
+          d'accueil, avec ses mots.
+        why: >-
+          Le profil règle la profondeur et le rythme de toutes les sessions suivantes ; reformulé,
+          il perd ce que l'apprenant a voulu dire.
+        criterion: >-
+          Le juge lit l'accueil et la mémoire qui le suit : le surnom et chaque réponse d'accueil
+          y sont, avec les mots de l'apprenant.
+      - id: concept-status-written
+        moment: any
+        judged-by: memory-reading
+        method: inspection
+        text: >-
+          Le professeur retient le statut d'un concept quand il change, en cours, validé, sauté ou
+          à revoir, et que le cours est fini quand son dernier concept est validé.
+        why: >-
+          La reprise, le choix d'un concept à retrouver et l'avertissement d'un prérequis non
+          validé lisent ces statuts ; faux, ils trompent chacun de ces comportements.
+        criterion: >-
+          Le juge lit la transcription et la mémoire qui la suit : chaque concept dont le statut a
+          changé porte son nouveau statut, et la fin du cours est retenue quand elle a eu lieu.
+      - id: cases-and-recaps-written
+        moment: any
+        judged-by: memory-reading
+        method: inspection
+        text: >-
+          Le professeur retient les cas posés à l'apprenant, par concept et avec leur session, et
+          le dernier mini-récap fait.
+        why: >-
+          Sans eux, un cas déjà posé revient comme neuf, le concept retrouvé le moins récemment ne
+          se trouve plus, et le mini-récap vient trop tôt ou jamais.
+        criterion: >-
+          Le juge lit la transcription et la mémoire qui la suit : chaque cas posé y est rattaché à
+          son concept et à sa session, et le dernier mini-récap y est daté.
+      - id: observations-written
+        moment: any
+        judged-by: memory-reading
+        method: inspection
+        text: >-
+          Le professeur retient les leviers (ce qui marche avec l'apprenant), les vigilances (les
+          difficultés pas encore surmontées, rattachées à leur concept) et les acquis ; une
+          vigilance surmontée passe aux acquis.
+        why: >-
+          Le professeur suivant enseigne mieux s'il sait ce qui marche, ce qui accroche et ce qui
+          est acquis ; une vigilance surmontée laissée en place fait réexpliquer ce qui est su.
+        criterion: >-
+          Le juge lit la transcription et la mémoire qui la suit : une difficulté apparue et non
+          surmontée est retenue avec son concept, une difficulté surmontée est passée aux acquis,
+          et un levier vu à l'œuvre est retenu.
+      - id: observations-used
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, en enseignant, s'appuie sur les leviers retenus, ne réexplique pas un
+          acquis, et reprend au début d'un concept les vigilances qui le concernent.
+        why: >-
+          Une mémoire que personne ne relit ne sert à rien : ce qu'elle retient doit changer la
+          façon d'enseigner.
+        criterion: >-
+          Le juge lit la mémoire à l'ouverture et la transcription : au début d'un concept qui a
+          des vigilances, elles sont reprises ; un acquis n'est pas réexpliqué comme neuf ; un
+          levier retenu se voit dans la façon d'expliquer.
+      - id: preferences-written
+        moment: any
+        judged-by: memory-reading
+        method: inspection
+        text: >-
+          Le professeur retient une préférence de l'apprenant sur la forme du cours, avec le fait
+          qui l'a montrée, et la tient aux sessions suivantes.
+        why: >-
+          Une préférence qu'il faut redire à chaque session n'a pas été entendue.
+        criterion: >-
+          Le juge lit la transcription, la mémoire qui la suit et la session suivante : la
+          préférence est retenue avec son fait, et la session suivante la tient.
