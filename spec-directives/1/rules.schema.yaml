@@ -1,0 +1,68 @@
+# The form of a rule file (README.md section 2), common to the rules of a course and to those of a
+# product: a rule file the manifest declares, a role `rules` of `course:` or of a product, is held
+# to it by the test rule-files of check-spec, through ajv's Ajv2020 (decision
+# checks-use-ajv-and-yaml). The classifications are each spec's: rule-files adds to `group` and to
+# `rule` one property per key of `lists.classifications.<owner>` of the manifest, the owner of the
+# file, its values that list's, and requires each key on the rule or on its group, as it does for
+# `method` here; a file whose owner declares none takes no classification key. A description of a
+# scalar is what its value must be, for rule-files' failures.
+$schema: https://json-schema.org/draft/2020-12/schema
+title: a rule file
+type: object
+required: [groups]
+additionalProperties: false
+properties:
+  groups:
+    description: a non-empty list of groups
+    type: array
+    minItems: 1
+    items: { $ref: '#/$defs/group' }
+$defs:
+  text:
+    description: a non-empty string
+    type: string
+    pattern: '\S'
+  method:
+    description: one of "test", "analysis", "inspection", "demonstration" (ISO/IEC/IEEE 29148)
+    enum: [test, analysis, inspection, demonstration]
+  group:
+    description: a group of rules, what it is for, and what it declares once for its rules
+    type: object
+    required: [purpose, rules]
+    additionalProperties: false
+    properties:
+      id:
+        description: a slug of one to five lowercase words joined by hyphens
+        type: string
+        pattern: '^[a-z0-9]+(-[a-z0-9]+){0,4}$'
+      title: { $ref: '#/$defs/text' }
+      purpose: { $ref: '#/$defs/text' }
+      method: { $ref: '#/$defs/method' }
+      rules:
+        description: a non-empty list of rules
+        type: array
+        minItems: 1
+        items: { $ref: '#/$defs/rule' }
+    # the method on the rule or on its group
+    if: { not: { required: [method] } }
+    then: { properties: { rules: { items: { required: [method] } } } }
+  rule:
+    description: a rule, what the course holds or what a product does, and how one knows it holds
+    type: object
+    required: [id, text]
+    additionalProperties: false
+    properties:
+      id:
+        description: a slug of two to five lowercase words joined by hyphens
+        type: string
+        pattern: '^[a-z0-9]+(-[a-z0-9]+){1,4}$'
+      text: { $ref: '#/$defs/text' }
+      why: { $ref: '#/$defs/text' }
+      method: { $ref: '#/$defs/method' }
+      check:
+        description: the id of a check, lowercase words joined by hyphens
+        type: string
+        pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+      criterion: { $ref: '#/$defs/text' }
+    # at most one of check and criterion
+    not: { required: [check, criterion] }

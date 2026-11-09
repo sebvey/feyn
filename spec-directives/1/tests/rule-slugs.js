@@ -1,29 +1,26 @@
 'use strict';
-// Every rule and every group of rules of the protocol is named by a slug, defined once in one
-// namespace, and every rule or group cited in the rules of the protocol, the description of the
-// protocol, README.md, the description of the course and decisions/ (where a decision cites none:
-// decision decision-format) is cited by a slug that is defined (decisions rules-named-by-slug,
-// rule-groups-replace-ranges). The files are those the manifest, spec.yaml, declares:
-// `products.teacher.rules` (below, products/teacher/rules.yaml), `products.teacher.readme`
-// (products/teacher/README.md) and `course.readme` (course/README.md), beside the spec MAJOR's README.md and
-// decisions/. The slugs are defined by the rules of the protocol only: a manifest that does not
-// declare them checks nothing.
+// A test of the spec's own files, run by check-spec (README.md section 4): every rule and every
+// group of rules of the rule files the manifest, spec.yaml, declares (the role `rules` of the course
+// and of each product) is named by a slug, defined once across them, and every rule or group cited
+// in those rule files, in the descriptions the manifest declares (the role `readme` of the course
+// and of each product), in the spec MAJOR's README.md and in decisions/ (where a decision cites
+// none: decision decision-format) is cited by a slug that is defined (decisions
+// rules-named-by-slug, rule-groups-replace-ranges of linear-fr). A manifest that declares no rule
+// file checks nothing.
 //
-// Defined, in products/teacher/rules.yaml: a rule by its `id`, a group by its `id` (a family is a group whose
-// id is its category); each id once, across rules and groups.
+// Defined, in a rule file: a rule by its `id`, a group by its `id`; each id once, across rules and
+// groups and across the rule files.
 // Cited:
-//   - in the `text` and `why` of a rule of products/teacher/rules.yaml, every code span shaped like a rule
-//     slug, and those that follow « règle(s) » must be rules;
-//   - in a table of products/teacher/README.md, every code span of a "Used in" or "Rule" column;
-//   - in products/teacher/README.md, README.md, course/README.md and decisions/*.md, the code spans that
-//     follow « rule », « rules », « règle » or « règles », joined by commas, « and », « to », « et »,
-//     « à »: each must be a rule;
+//   - in a table of a description, every code span of a "Used in" or "Rule" column;
+//   - in the `text` and `why` of a rule, in the descriptions, README.md and decisions/*.md, the
+//     code spans that follow « rule », « rules », « règle » or « règles », joined by commas,
+//     « and », « to », « et », « à »: each must be a rule;
 //   - everywhere, the code spans that follow « group », « groups », « groupe » or « groupes »: each
 //     must be a group.
 // A rule named or cited by its old number (« règle 1.2 », « rules 1.1, 1.5 ») fails too, and so does
-// a range, « `a` à `b` » or « `a` to `b` », in products/teacher/rules.yaml, products/teacher/README.md, README.md or
-// course/README.md (decision rule-groups-replace-ranges). decisions/ are not read for ranges: a
-// decision cites no rule id (decision decision-format), so a citation there is a slip to catch.
+// a range, « `a` à `b` » or « `a` to `b` », in a rule file, a description or README.md.
+// decisions/ are not read for ranges: a decision cites no rule id (decision decision-format), so a
+// citation there is a slip to catch.
 const yaml = require('../lib/yaml-lines');
 const mdlib = require('../lib/md');
 const { fail } = require('../lib/common');
@@ -33,7 +30,7 @@ const GROUP_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+){0,4}$/;
 const NUMBER = /^\d+\.\d+[a-z]?$/;
 const RULE_WORD = /\b(?:[Rr]ules?|[Rr]ègles?)/;
 const GROUP_WORD = /\b(?:[Gg]roups?|[Gg]roupes?)/;
-// the spec MAJOR's README, read beside the description of the course (course.readme)
+// the spec MAJOR's README, read beside the descriptions the manifest declares
 const README = 'README.md';
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -52,7 +49,7 @@ function paragraphs(lines) {
     return { text, lineAt };
   });
 }
-// a text of products/teacher/rules.yaml as one paragraph, all at the line of its key
+// a text of a rule file as one paragraph, all at the line of its key
 const yamlParagraph = (text, line) => [{ text: text.replace(/\s+/g, ' ').trim(), lineAt: () => line }];
 
 // citations led by a word: [{ items, line }]
@@ -89,57 +86,54 @@ function rangeCitations(paras) {
 
 function run(ctx) {
   const m = ctx.manifest;
-  const RULES = m.path('teacher', 'rules');
-  if (RULES === null) return m.nothing(m.ref('teacher', 'rules'));
-  // read for the citations it makes only, as the descriptions are: no slug is defined there
-  const PROTOCOL = m.path('teacher', 'readme');
-  // the descriptions read beside the protocol: the spec MAJOR's README, and what a course is
-  const DESCRIPTIONS = [README, m.path('course', 'readme')].filter((f) => f !== null);
-  const raw = ctx.read(RULES);
-  if (raw === null) return [fail(RULES, 1, `${RULES} is missing`)];
-  let doc;
-  try { doc = yaml.parse(raw); } catch (e) { return [fail(RULES, e.line || 1, e.message)]; }
+  const FILES = m.owned('rules').map((r) => r.path);
+  if (!FILES.length) return m.nothing(`${m.ref('course', 'rules')} or products.<name>.rules`);
+  // the descriptions, read for the citations they make: the spec MAJOR's README, then the role
+  // `readme` of the course and of each product
+  const DESCRIPTIONS = [README, ...m.owned('readme').map((r) => r.path)];
   const out = [];
-  const defs = new Map(); // slug -> { line, kind: 'rule' | 'group' }
+  const defs = new Map(); // slug -> { line, kind: 'rule' | 'group', file }
   const cites = []; // { file, slug, line, kind: 'rule' | 'group' | 'any' }
   // the paragraphs read for citations led by a word, numbers and ranges: { file, paras, ranges }
   const prose = [];
 
-  const define = (name, line, kind) => {
-    if (typeof name !== 'string') return; // rule-files' failure
-    if (NUMBER.test(name)) out.push(fail(RULES, line, `rule named by its number "${name}": a rule is named by a slug`));
-    else if (kind === 'rule' && !SLUG.test(name)) out.push(fail(RULES, line, `"${name}" is not a slug (two to five lowercase words joined by hyphens)`));
-    else if (kind === 'group' && !GROUP_SLUG.test(name)) out.push(fail(RULES, line, `group "${name}" is not a slug (one to five lowercase words joined by hyphens)`));
-    else if (defs.has(name)) out.push(fail(RULES, line, `slug "${name}" is defined twice (first at line ${defs.get(name).line})`));
-    else defs.set(name, { line, kind });
-  };
-
-  // the definitions, and the texts and whys of the rules
-  const groups = isObj(doc) && Array.isArray(doc.groups) ? doc.groups : [];
-  const texts = [];
-  groups.forEach((g, gi) => {
-    if (!isObj(g)) return;
-    const gl = yaml.lineOf(groups, gi, 1);
-    define(g.id, yaml.lineOf(g, 'id', gl), 'group');
-    (Array.isArray(g.rules) ? g.rules : []).forEach((r, ri) => {
-      if (!isObj(r)) return;
-      const rl = yaml.lineOf(g.rules, ri, gl);
-      define(r.id, yaml.lineOf(r, 'id', rl), 'rule');
-      for (const k of ['text', 'why']) {
-        if (typeof r[k] !== 'string') continue;
-        const line = yaml.lineOf(r, k, rl);
-        texts.push(...yamlParagraph(r[k], line));
-        for (const c of codeSpans(r[k])) if (SLUG.test(c)) cites.push({ file: RULES, slug: c, line, kind: 'any' });
-      }
+  for (const RULES of FILES) {
+    const raw = ctx.read(RULES);
+    if (raw === null) { out.push(fail(RULES, 1, `${RULES} is missing`)); continue; }
+    let doc;
+    try { doc = yaml.parse(raw); } catch (e) { out.push(fail(RULES, e.line || 1, e.message)); continue; }
+    const define = (name, line, kind) => {
+      if (typeof name !== 'string') return; // rule-files' failure
+      if (NUMBER.test(name)) out.push(fail(RULES, line, `rule named by its number "${name}": a rule is named by a slug`));
+      else if (kind === 'rule' && !SLUG.test(name)) out.push(fail(RULES, line, `"${name}" is not a slug (two to five lowercase words joined by hyphens)`));
+      else if (kind === 'group' && !GROUP_SLUG.test(name)) out.push(fail(RULES, line, `group "${name}" is not a slug (one to five lowercase words joined by hyphens)`));
+      else if (defs.has(name)) out.push(fail(RULES, line, `slug "${name}" is defined twice (first at ${defs.get(name).file}:${defs.get(name).line})`));
+      else defs.set(name, { line, kind, file: RULES });
+    };
+    // the definitions, and the texts and whys of the rules
+    const groups = isObj(doc) && Array.isArray(doc.groups) ? doc.groups : [];
+    const texts = [];
+    groups.forEach((g, gi) => {
+      if (!isObj(g)) return;
+      const gl = yaml.lineOf(groups, gi, 1);
+      define(g.id, yaml.lineOf(g, 'id', gl), 'group');
+      (Array.isArray(g.rules) ? g.rules : []).forEach((r, ri) => {
+        if (!isObj(r)) return;
+        const rl = yaml.lineOf(g.rules, ri, gl);
+        define(r.id, yaml.lineOf(r, 'id', rl), 'rule');
+        for (const k of ['text', 'why']) {
+          if (typeof r[k] === 'string') texts.push(...yamlParagraph(r[k], yaml.lineOf(r, k, rl)));
+        }
+      });
     });
-  });
-  prose.push({ file: RULES, paras: texts, ranges: true });
+    prose.push({ file: RULES, paras: texts, ranges: true });
+  }
 
-  // products/teacher/README.md: its tables' "Used in" and "Rule" columns, and its prose
-  const readme = PROTOCOL === null ? '' : ctx.read(PROTOCOL);
-  if (PROTOCOL === null) { /* not declared: nothing to read */ } else if (readme === null) out.push(fail(PROTOCOL, 1, `${PROTOCOL} is missing`));
-  else {
-    const body = mdlib.split(readme).body;
+  // the descriptions: their tables' "Used in" and "Rule" columns, and their prose
+  for (const name of DESCRIPTIONS) {
+    const t = ctx.read(name);
+    if (t === null) { out.push(fail(name, 1, `${name} is missing`)); continue; }
+    const body = mdlib.split(t).body;
     for (const tb of mdlib.tables(body)) {
       const cols = tb.header.map((h, i) => (h === 'Used in' || h === 'Rule' ? i : -1)).filter((i) => i >= 0);
       for (const r of tb.rows) {
@@ -147,19 +141,12 @@ function run(ctx) {
           const cell = r.cells[i] || '';
           const spans = codeSpans(cell);
           const rest = cell.replace(/`[^`]+`/g, '').replace(/[,\s]/g, '');
-          if (rest || !spans.length) out.push(fail(PROTOCOL, r.line, `"${tb.header[i]}" cell "${cell}": rules are cited as code spans of their slugs, comma-separated`));
-          for (const c of spans) cites.push({ file: PROTOCOL, slug: c, line: r.line, kind: 'any' });
+          if (rest || !spans.length) out.push(fail(name, r.line, `"${tb.header[i]}" cell "${cell}": rules are cited as code spans of their slugs, comma-separated`));
+          for (const c of spans) cites.push({ file: name, slug: c, line: r.line, kind: 'any' });
         }
       }
     }
-    prose.push({ file: PROTOCOL, paras: paragraphs(body), ranges: true });
-  }
-
-  // README.md, course/README.md, decisions/*.md
-  for (const name of DESCRIPTIONS) {
-    const t = ctx.read(name);
-    if (t === null) out.push(fail(name, 1, `${name} is missing`));
-    else prose.push({ file: name, paras: paragraphs(mdlib.split(t).body), ranges: true });
+    prose.push({ file: name, paras: paragraphs(body), ranges: true });
   }
   for (const name of ctx.list('decisions').filter((n) => n.endsWith('.md')).sort()) {
     prose.push({ file: 'decisions/' + name, paras: paragraphs(mdlib.split(ctx.read('decisions/' + name) || '').body), ranges: false });
@@ -182,16 +169,16 @@ function run(ctx) {
   for (const c of seen.values()) {
     const d = defs.get(c.slug);
     if (c.kind === 'group') {
-      if (!d) out.push(fail(c.file, c.line, `cites group "${c.slug}", which ${RULES} does not define`));
+      if (!d) out.push(fail(c.file, c.line, `cites group "${c.slug}", which no rule file defines`));
       else if (d.kind !== 'group') out.push(fail(c.file, c.line, `cites group "${c.slug}", which is a rule`));
     } else if (d && d.kind === 'group' && c.kind === 'rule') out.push(fail(c.file, c.line, `cites rule "${c.slug}", which is a group: cite it after « groupe » or « group »`));
     else if (NUMBER.test(c.slug)) out.push(fail(c.file, c.line, `rule cited by its number "${c.slug}": cite its slug`));
     else if (!SLUG.test(c.slug)) out.push(fail(c.file, c.line, `rule cited as "${c.slug}", which is not a slug`));
-    else if (!d) out.push(fail(c.file, c.line, `cites rule "${c.slug}", which ${RULES} does not define`));
+    else if (!d) out.push(fail(c.file, c.line, `cites rule "${c.slug}", which no rule file defines`));
   }
   return out;
 }
 
-// the roles it reads, by their key in the manifest (README.md section 8)
-const reads = ['products.teacher.rules', 'products.teacher.readme', 'spec.readme', 'course.readme', 'spec.decisions'];
+// the roles it reads, by their key in the manifest (README.md section 4)
+const reads = ['course.rules', 'products.<name>.rules', 'spec.readme', 'course.readme', 'products.<name>.readme', 'spec.decisions'];
 module.exports = { id: 'rule-slugs', run, reads };

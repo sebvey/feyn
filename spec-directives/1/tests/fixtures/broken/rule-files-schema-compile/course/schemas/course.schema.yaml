@@ -1,4 +1,4 @@
-# fixture: a schema
+# fixture: a schema; a type that does not exist
 $schema: https://json-schema.org/draft/2020-12/schema
 type: object
 required: [id]

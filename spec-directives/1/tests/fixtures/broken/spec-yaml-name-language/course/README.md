@@ -1,7 +1,11 @@
 # fixture: the course
 
-A concept folder holds the teaching notes the teacher reads (`products/teacher/rules.yaml`, rule `second-rule`);
-the group `onboarding` reads the course plan. A check id in code is not a rule: `concept-folder`.
+A concept folder holds the cases (`course/rules.yaml`, rule `leaf-has-a-case`); the group `cases`
+holds them. A check id in code is not a rule: `concept-folder`.
+
+| Field | Used in |
+|---|---|
+| `id` | `course-id-equals-folder` |
 
 ## The lexicon of the course files
 

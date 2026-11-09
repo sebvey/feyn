@@ -1,2 +1,3 @@
 check: rule-files
 message: rule id "leaf-has-a-case" is not unique: also at course/rules.yaml
+also: rule-slugs

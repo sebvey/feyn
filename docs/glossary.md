@@ -67,7 +67,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### spec directives
 
-- means: what says how a spec is written and read: the rule model, levels, methods, severity, conformance clause, versions, their normative references, and the tests of a spec's files; one folder per MAJOR, versioned like a spec; a spec MAJOR declares the one it follows
+- means: the form of a spec that their tools read, each part as a schema a test holds the files to: the **manifest**, the rule model and its methods, the versions, their normative references, and the tests of a spec's files; one folder per MAJOR, versioned like a spec; a spec MAJOR declares the one it follows. The **classifications** of the rules, the levels, the conformance clause and the severity of a check are each spec's
 - en: spec directives · rejected: "frame" (the frame of the work is Kanban), "framework", "metamodel"
 - fr: « directives de spec »
 - not to confuse with: [spec](#spec)
@@ -599,21 +599,28 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ## Rules and checks
 
-The **spec directives** (`spec-directives/1/README.md`) and, for the categories and the checks of a spec, the `README.md` of its MAJOR (decisions `rules-with-level-and-method`, `levels-from-iso-directives`, `severity-from-level-and-method` and `conformity-of-the-course-and-products`).
+The **spec directives** (`spec-directives/1/README.md`: the rule model) and, for the classifications, the levels, the conformance clause, the severity and the checks of a spec, the `README.md` of its MAJOR (decisions `directives-hold-what-the-tools-read` and `rules-with-level-and-method` of the directives, `levels-from-iso-directives`, `severity-from-level-and-method` and `conformity-of-the-course-and-products` of `linear-fr`).
 
 ### rule
 
-- means: the unit of a spec, which binds the **course** or a **product** (today the teacher): one provision held as data in a rule file, apart from the prose that describes it, with an id (a slug), a **level**, a **category**, a **method**, the check that implements the method when one exists, a text and, where an observed counterfactual exists, a why; a rule of the protocol is a **protocol rule**. A rule file is cut into **groups**. The spec's own files are verified by the tests of the spec directives, which are not rules
+- means: the unit of a spec, which binds the **course** or a **product** (today the teacher): one provision held as data in a rule file, apart from the prose that describes it, with an id (a slug), a text, a **method**, then the check that implements the method or the criterion a judge or a reader applies, a why where one is known, and the **classifications** its spec declares for its rule file (for a rule of a course, a **level** and a **category**); a rule of the protocol is a **protocol rule**. A rule file is cut into **groups**. The spec's own files are verified by the tests of the spec directives, which are not rules
 - en: rule · rejected: "requirement" for a rule of any level, "constraint", "criterion"
 - fr: « règle »
 - not to confuse with: [requirement](#requirement), [check](#check), [policy](#policy), [protocol rule](#protocol-rule), [group](#group), [agentic rule](#agentic-rule)
 
+### classification
+
+- means: a class of the rules of one rule file, which its spec declares in its **manifest** with its closed list of values, beside the fields every rule has: each rule of that file carries one value of each classification, on the rule or on its group, and the rules a check implements share each value. The **level** and the **category** are the classifications of the rules of a course
+- en: classification · rejected: "attribute" for a classification (any field of a rule), "tag"
+- fr: to settle
+- not to confuse with: [level](#level), [category](#category), [label](#label), [rule](#rule)
+
 ### level
 
-- means: how binding a rule is: **requirement**, **recommendation** or **permission** (ISO/IEC Directives Part 2, clause 7); a field of the rule, never a word parsed from its text: the verb of a rule of the spec matches it, and the field is authoritative
+- means: how binding a rule is: **requirement**, **recommendation** or **permission** (ISO/IEC Directives Part 2, clause 7); a **classification** the spec declares, a field of the rule, never a word parsed from its text: the verb of a rule of the spec matches it, and the field is authoritative
 - en: level · rejected: "priority", "severity"
 - fr: « niveau » (the level of a heading is not this concept)
-- not to confuse with: [severity](#severity), [concept status](#concept-status)
+- not to confuse with: [severity](#severity), [concept status](#concept-status), [classification](#classification)
 
 ### requirement
 
@@ -644,10 +651,10 @@ The **spec directives** (`spec-directives/1/README.md`) and, for the categories 
 
 ### category
 
-- means: what a rule is about, from a closed list, extended when needed: for a course, structure, pedagogy, writing, sources or diagrams; for a protocol rule, its family (the nine families of the protocol). A check's category is its rules', and checks are selected by it. The tests of the spec directives have none
+- means: what a rule is about, a **classification** the spec declares, from a closed list, extended when needed: for a course, structure, pedagogy, writing, sources or diagrams; for a protocol rule, its family (the nine families of the protocol). A check's category is its rules', and checks are selected by it. The tests of the spec directives have none
 - en: category · rejected: "family" for a category of a course, "kind", "progression" for the category pedagogy
 - fr: « catégorie »; of a protocol rule, its « famille »
-- not to confuse with: [label](#label) (its kind), [group](#group), [progression](#progression)
+- not to confuse with: [label](#label) (its kind), [group](#group), [progression](#progression), [classification](#classification)
 - why: "progression" was ruled out as the name of the category pedagogy: the contract of a case is pedagogical without being an order; « progression » stays the word of a section of a course's plan (see [progression](#progression))
 
 ### severity
@@ -687,7 +694,7 @@ The **spec directives** (`spec-directives/1/README.md`) and, for the categories 
 
 ### conformity
 
-- means: the conformance clause of the spec directives: the course (its diagrams included) and each product a rule binds (today the teacher) conform, each when it holds every requirement of its own, whatever the method that verifies each one. The blocking checks are a necessary condition, not a sufficient one: the review and taught-check do the rest, and a course tag certifies the whole. The lexicons of a spec are neither the course nor a product
+- means: the conformance clause of a spec: the course (its diagrams included) and each product a rule binds (today the teacher) conform, each when it holds every requirement of its own, whatever the method that verifies each one. The blocking checks are a necessary condition, not a sufficient one: the review and taught-check do the rest, and a course tag certifies the whole. The lexicons of a spec are neither the course nor a product
 - en: conformity · rejected: "conforming" for a course that only passes the blocking checks, "compliance"
 - fr: « conformité »
 - why: "conformity" is ISO's word; the section that states it is the conformance clause, after the W3C QA Framework, whose idea ISO shares
@@ -768,7 +775,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 - means: always qualified: type (`type:bug`, `type:course`, `type:improvement`, `type:decision`), set on a work item, never on an idea; **area** (`area:<area>`); kind (`kind:epic`, `kind:story`: exactly one on a work item, none on an idea); `blocked:maintainer` (a maintainer decision is awaited; on the issue only); and `stale` (an idea or an option posed before the frame of 2026-11-03, re-read at its triage or option refinement, which removes it). No state label: where an issue stands is its **Status**
 - en: label
 - fr: to settle
-- not to confuse with: [Status](#status), [category](#category), [area](#area)
+- not to confuse with: [Status](#status), [category](#category), [area](#area), [classification](#classification)
 
 ### Project
 

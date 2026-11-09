@@ -1,2 +1,0 @@
-check: scenarios
-message: "no-such-rule" is not a rule of the protocol

@@ -131,7 +131,7 @@ function run(ctx) {
 }
 const normStr = (v) => String(v);
 
-// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 8),
+// the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 1),
 // the course through the parser
 const reads = ['course.parser'];
 

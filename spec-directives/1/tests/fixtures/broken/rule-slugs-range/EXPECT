@@ -1,2 +1,2 @@
 check: rule-slugs
-message: README.md:3 cites a range "`first-rule` to `save-points`"
+message: README.md:3 cites a range "`course-id-equals-folder` to `leaf-has-a-case`"

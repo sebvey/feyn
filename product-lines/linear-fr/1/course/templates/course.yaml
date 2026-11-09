@@ -12,7 +12,7 @@
 # points.
 # Identifiers (numbers, section and unit ids, titles of cases, dir and file names) are cited by
 # learner memory and site addresses: changing one is a course MAJOR (course/README.md section 3,
-# spec-directives/1/README.md section 6).
+# spec-directives/1/README.md section 3).
 id: <course-id>
 spec: linear-fr@1
 title: "<course title>"

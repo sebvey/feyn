@@ -1,14 +1,15 @@
 'use strict';
-// A test of the spec's own files, run by check-spec, which verifies no rule (decisions
-// conformity-of-the-course-and-products, alpha-version-until-tag): the manifest of the spec MAJOR,
-// spec.yaml, held to its schema and to its CHANGELOG.md.
+// A test of the spec's own files, run by check-spec (README.md section 4; decision
+// alpha-version-until-tag): the manifest of the spec MAJOR, spec.yaml, held to its schema and to
+// its CHANGELOG.md.
 //   - spec.yaml exists and is valid against spec-directives/1/spec.schema.yaml (through
 //     lib/manifest.js, under ajv's Ajv2020): its identity (`name` a slug, `major` and `directives`
 //     positive integers, `version` `MAJOR.MINOR.PATCH` with an optional `-alpha`, `language` an
-//     ISO 639-1 code), `spec:` (its own files, at their fixed paths), `course:` and `products:` (each
-//     role one of the schema's, mapped to a path), `lists:` (`categories`, and the optional
-//     `families` and `lexicons`), `files:` (each entry its `holds` and its `readers`), no other key;
-//     each failure names the key at fault;
+//     ISO 639-1 code), `spec:` (its own files, at their fixed paths), `course:` (each role one of
+//     the schema's, mapped to a path), `products:` (each product by its name, its roles its own,
+//     each mapped to a path), `lists:` (the optional `classifications` and `lexicons`, by owner),
+//     `files:` (each entry its `holds` and its `readers`), no other key; each failure names the
+//     key at fault;
 //   - then what the schema cannot say: `major` and `directives` are written as integers (not
 //     `1.0`), on a line of their own at the top level for `directives` and `language`, which the
 //     builds read by a line pattern; the MAJOR of `version` is `major`;
@@ -127,7 +128,7 @@ function run(ctx) {
   return out;
 }
 
-// the roles it reads, by their key in the manifest (README.md section 8)
+// the roles it reads, by their key in the manifest (README.md section 4)
 const reads = ['spec.manifest', 'spec.changelog'];
 
 module.exports = { id: 'spec-yaml', run, reads };

@@ -1,4 +1,4 @@
-# fixture: the rules of a course
+# fixture: the rules of a course; a rule slug defined twice
 groups:
   - title: course.yaml
     purpose: The map of the course.
@@ -13,7 +13,8 @@ groups:
         level: requirement
         check: course-yaml
         text: The course `id` shall equal the folder name.
-  - title: The cases
+  - id: cases
+    title: The cases
     purpose: The prepared questions of the loop.
     category: pedagogy
     rules:
@@ -26,7 +27,8 @@ groups:
         level: requirement
         method: inspection
         text: A case shall restate only the storyline facts.
-      - id: case-asks-what-was-taught
+        criterion: Each fact a case states is a fact of the storyline.
+      - id: leaf-has-a-case
         level: recommendation
         method: analysis
         check: taught-check

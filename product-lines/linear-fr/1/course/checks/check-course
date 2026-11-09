@@ -2,7 +2,7 @@
 'use strict';
 // check-course <course-dir> [--category <c>[,<c>...]] [--only <id>[,<id>...]] [--concept <number>] [--lexicon <file>]
 // check-course [--category <c>[,<c>...]] --list
-// The checks, their category and their severity come from course/rules.yaml (lib/rules.js; decision
+// The checks, their category and their severity come from course/rules.yaml (./rules.js; decision
 // `severity-from-level-and-method`): by default every check of method test that runs on a course, the
 // blocking ones first, then the reporting ones, each in the order of course/rules.yaml. A failure
 // of a blocking check sets exit code 1; a failure of a reporting check is printed and leaves 0.
@@ -11,7 +11,7 @@
 const path = require('path');
 const directives = require('./directives');
 const { load } = require('../parser')(directives.lib);
-const rules = directives.lib('rules');
+const rules = require('./rules');
 
 const QUALITY_GONE = '--quality is gone: the reporting checks run by default, and --category <c> selects checks by category (check-course --list)';
 // the lexicon of the course files of this MAJOR, unless --lexicon names another (the fixtures')

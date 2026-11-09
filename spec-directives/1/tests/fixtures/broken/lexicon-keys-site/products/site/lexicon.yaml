@@ -1,4 +1,4 @@
-# fixture: the lexicon of the site, without the key nav.glossary the manifest lists
+# fixture: the lexicon of the site, with the keys the manifest lists
 nav:
   domains: "Domaines"
   storyline: "Fil rouge"

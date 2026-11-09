@@ -1,0 +1,10 @@
+# fixture: the rules of a product, whose owner declares no classification; an id the rules of the course define
+groups:
+  - id: pages
+    purpose: What the site shows of a course.
+    method: inspection
+    rules:
+      - id: leaf-has-a-case
+        text: The site shows the title of the course on every page.
+        why: A reader who lands on a page from a search knows which course it belongs to.
+        criterion: A reader finds the title of the course on each page.

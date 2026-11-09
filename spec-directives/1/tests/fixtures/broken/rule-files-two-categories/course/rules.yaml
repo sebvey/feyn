@@ -1,4 +1,4 @@
-# fixture: the rules of a course
+# fixture: the rules of a course; a check over two categories
 groups:
   - title: course.yaml
     purpose: The map of the course.
@@ -13,24 +13,21 @@ groups:
         level: requirement
         check: course-yaml
         text: The course `id` shall equal the folder name.
-      - id: course-title-capitalised
-        level: requirement
-        category: writing
-        check: course-yaml
-        text: The course `title` shall open with a capital letter.
-  - title: The cases
+  - id: cases
+    title: The cases
     purpose: The prepared questions of the loop.
     category: pedagogy
     rules:
       - id: leaf-has-a-case
         level: requirement
         method: test
-        check: case-contract
+        check: course-yaml
         text: Every leaf sub-concept shall have at least one case.
       - id: case-restates-storyline-facts-only
         level: requirement
         method: inspection
         text: A case shall restate only the storyline facts.
+        criterion: Each fact a case states is a fact of the storyline.
       - id: case-asks-what-was-taught
         level: recommendation
         method: analysis

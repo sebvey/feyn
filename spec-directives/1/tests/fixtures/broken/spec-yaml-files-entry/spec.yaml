@@ -18,15 +18,12 @@ course:
 products:
   site:
     lexicon: products/site/lexicon.yaml
-  teacher:
-    readme: products/teacher/README.md
-    rules: products/teacher/rules.yaml
-    lexicon: products/teacher/lexicon.yaml
-    composition: products/teacher/composition.yaml
-    tests: products/teacher/tests
+    rules: products/site/rules.yaml
 lists:
-  categories: [structure, pedagogy, writing, sources, diagrams]
-  families: [session-start, domain-presentation, loop, message-form, storyline, stances-and-sources, practice-skip-asides, learner-memory, stop]
+  classifications:
+    course:
+      level: [requirement, recommendation, permission]
+      category: [structure, pedagogy, writing, sources, diagrams]
   lexicons:
     course:
       headings: {essentials: string, stances: string, deepening: string, landmarks: string, instruction: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
@@ -53,9 +50,4 @@ files:
   products:
     site:
       lexicon: {holds: "the lexicon of the site", readers: [builder]}
-    teacher:
-      readme: {holds: "the protocol, described", readers: [builder]}
-      rules: {holds: "the rules of the protocol", readers: [builder, verifier]}
-      lexicon: {holds: "the lexicon of the teacher", readers: [builder]}
-      composition: {holds: "the composition of the teacher", readers: [builder]}
-      tests: {holds: "the test scenarios of the teacher", readers: [verifier]}
+      rules: {holds: "the rules of the site", readers: [verifier, spec writer]}

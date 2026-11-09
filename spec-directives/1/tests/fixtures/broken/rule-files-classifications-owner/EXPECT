@@ -1,0 +1,2 @@
+check: rule-files
+message: lists.classifications.teacher: teacher declares no rule file

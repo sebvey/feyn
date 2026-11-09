@@ -1,0 +1,2 @@
+check: spec-yaml
+message: lists.classifications.course.method: the key is not a slug that is not a key of the rule model

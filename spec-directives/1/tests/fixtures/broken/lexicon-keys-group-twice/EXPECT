@@ -1,2 +1,0 @@
-check: lexicon-keys
-message: group "status" is also in course/lexicon.yaml

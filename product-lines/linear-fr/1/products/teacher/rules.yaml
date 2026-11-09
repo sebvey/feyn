@@ -1,7 +1,6 @@
 # The rules of the teacher of linear-fr (decisions rules-with-level-and-method and
 # spec-files-by-product), in French, the bounded exception of decision language-policy. A
-# teacher conforms when it holds every requirement of this file (spec-directives/1/README.md
-# section 2).
+# teacher conforms when it holds every requirement of this file (README.md section 3).
 #
 # This file holds every rule of the protocol, its one source: products/teacher/README.md describes how a
 # rule is written and states none. The families come in their order: for each family, a group

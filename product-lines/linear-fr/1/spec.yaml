@@ -1,4 +1,4 @@
-# The manifest of this spec MAJOR (spec-directives/1/README.md section 8), in the form of
+# The manifest of this spec MAJOR (spec-directives/1/README.md section 1), in the form of
 # spec-directives/1/spec.schema.yaml, which the test spec-yaml of check-spec holds it to; every
 # test of check-spec reads the files and the lists of the spec from it, through
 # spec-directives/1/lib/manifest.js.
@@ -36,20 +36,24 @@ course:
   templates: course/templates
   samples: course/samples
 
-# The products of the spec and their files, by role. The teacher is not declared: its files lag
-# the spec and the course until epic #757 brings them up to date and declares them; the tests of
-# its files check nothing and say so.
+# The products of the spec, each by its name, and their files, by role. The teacher is not
+# declared: its files lag the spec and the course until epic #757 brings them up to date and
+# declares them; no test of check-spec reads them.
 products:
   site:
     lexicon: products/site/lexicon.yaml
     url-scheme: products/site/url-scheme.yaml
     build: products/site/build
 
-# The lists of the spec, which the tests of check-spec hold its files to: the categories of the
-# rules of a course (README.md section 3), and the keys of the lexicons, by owner, each with its
-# kind, `string` or `list` (the course's: course/README.md section 7).
+# The lists of the spec, which the tests of check-spec hold its files to: the classifications of
+# the rules of a course, its levels and its categories (README.md section 3), and the keys of the
+# lexicons, by owner, each with its kind, `string` or `list` (the course's: course/README.md
+# section 7).
 lists:
-  categories: [structure, pedagogy, writing, sources, diagrams]
+  classifications:
+    course:
+      level: [requirement, recommendation, permission]
+      category: [structure, pedagogy, writing, sources, diagrams]
   lexicons:
     course:
       headings: {essentials: string, stances: string, deepening: string, landmarks: string, instruction: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
@@ -77,7 +81,7 @@ files:
       holds: "the manifest of this MAJOR: its identity, the MAJOR of the spec directives it follows, its files by role, the lists its tests hold them to, and what each file holds and who reads it"
       readers: [builder, verifier, spec writer]
     readme:
-      holds: "the entry to this MAJOR: its scope, its files (a pointer to this manifest), the categories, the normative references, the list of checks"
+      holds: "the entry to this MAJOR: its scope, its files (a pointer to this manifest), the categories and the levels of the rules of a course, the conformance clause of the course, the severity of a check, the normative references, the list of checks"
       readers: [creator, builder, verifier, spec writer]
     changelog:
       holds: "the changes of the spec, an « Unreleased » section until the tag"
@@ -102,7 +106,7 @@ files:
       holds: "the fields of `course.yaml` and of the `concept.md` frontmatter, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml`"
       readers: [builder, verifier, spec writer]
     checks:
-      holds: "the check scripts of a course, their fixtures and `README.md` (how to run them); `product-lines/check-course <course-dir>` runs them"
+      holds: "the check scripts of a course, `rules.js` (the checks, their category and their severity, from `course/rules.yaml`), their fixtures and `README.md` (how to run them); `product-lines/check-course <course-dir>` runs them"
       readers: [creator, verifier]
     parser:
       holds: "the parser of a course: it loads a course folder and reads the tree and the parts of each `concept.md` and the fixed facts of `storyline.md`, for the checks and the site build"
