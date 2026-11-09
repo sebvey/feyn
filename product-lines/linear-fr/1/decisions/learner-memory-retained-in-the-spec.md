@@ -17,3 +17,4 @@ The spec of the teacher names in prose what the learner memory retains and what 
 - Fixed save points: they impose on every implementation a cost of Claude Code.
 - Nothing on saving in the spec: what a cut loses would no longer be said.
 - The failure of git left to the implementation: the learner would not be told their progress is not kept.
+- The three headings of the templates no protocol rule used, settled before the protocol rules that would use them: no dead heading enters the spec, and the annexes seen came with the protocol rules on annex units.

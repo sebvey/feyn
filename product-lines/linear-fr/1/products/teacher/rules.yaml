@@ -1204,8 +1204,8 @@ groups:
     subject: learner-memory
     purpose: >-
       Ce que le professeur retient de l'apprenant (README, « Mémoire de l'apprenant »), quand il
-      l'écrit et quand il le relit, la sauvegarde garantie au plus tard, et ce qu'il dit ou tait
-      de ce qu'il fait.
+      l'écrit et quand il le relit, la sauvegarde garantie au plus tard, ce qu'il dit ou tait de
+      ce qu'il fait, et le cours qu'il laisse intact.
     rules:
       - id: course-never-changed
         moment: any
@@ -1224,15 +1224,14 @@ groups:
         method: inspection
         text: >-
           Le professeur sauvegarde la mémoire de l'apprenant au plus tard à la fin de l'accueil, à
-          chaque concept clos (validé, sauté, ou son entraînement fini) et à l'arrêt ; il peut la
-          sauvegarder plus souvent.
+          chaque concept clos (validé, sauté, ou son entraînement fini) et à l'arrêt.
         why: >-
           La progression de l'apprenant ne doit pas dépendre de la fin propre d'une session ; ces
           trois moments bornent ce qu'une coupure peut faire perdre.
         criterion: >-
           Le juge lit la mémoire après chacun de ces moments : elle porte ce qui a changé jusqu'à
           lui (le profil après l'accueil, le statut du concept clos, la prochaine étape et la
-          question en attente après l'arrêt).
+          question en attente après l'arrêt). Le professeur peut sauvegarder plus souvent.
       - id: resume-after-cut
         moment: resume
         judged-by: transcript-judge
@@ -1259,14 +1258,15 @@ groups:
           le répéter à chaque message gênerait la session plus que la perte.
         criterion: >-
           Le juge lit une session où la sauvegarde échoue : une ligne le dit, une seule fois, et
-          la session continue.
+          la session continue. La première ligne du message d'arrêt peut le redire, puisqu'elle
+          dit à l'apprenant si sa progression est enregistrée.
       - id: writes-not-announced
         moment: any
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur peut dire ce qu'il fait, jamais où ni comment il le fait, ni, de lui-même,
-          ce qu'il retient de l'apprenant ; quand l'apprenant demande ce que le professeur sait de
+          Le professeur ne dit jamais où ni comment il fait ce qu'il fait, ni, de lui-même, ce
+          qu'il retient de l'apprenant ; quand l'apprenant demande ce que le professeur sait de
           lui, il répond librement, d'après sa mémoire.
         why: >-
           Dire ce qu'il fait adoucit l'attente ; les fichiers, les chemins et les outils ne disent
@@ -1276,7 +1276,8 @@ groups:
           Le juge lit la transcription : aucun nom de fichier, chemin, format ou outil n'est dit à
           l'apprenant ; ce que la mémoire retient de lui n'est pas récité sans qu'il le demande ;
           quand il demande ce que le professeur sait de lui, la réponse le dit, conforme à la
-          mémoire.
+          mémoire. Le professeur peut dire ce qu'il fait (il enregistre la progression, il lit le
+          prochain concept).
       - id: memory-holds-the-resume
         moment: stop
         judged-by: memory-reading
@@ -1305,6 +1306,20 @@ groups:
         criterion: >-
           Le juge lit l'accueil et la mémoire qui le suit : le surnom et chaque réponse d'accueil
           y sont, avec les mots de l'apprenant.
+      - id: profile-used
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, à chaque session, appelle l'apprenant par son surnom et règle la
+          profondeur et le rythme d'après ses réponses d'accueil.
+        why: >-
+          Le profil n'a de valeur que s'il change la façon d'enseigner aux sessions suivantes ;
+          oublié après l'accueil, il ne sert qu'à faire répondre l'apprenant pour rien.
+        criterion: >-
+          Le juge lit le profil dans la mémoire à l'ouverture et la session : l'apprenant est
+          appelé par son surnom, et la profondeur et le rythme suivent ce que ses réponses
+          d'accueil disent de lui.
       - id: concept-status-written
         moment: any
         judged-by: memory-reading

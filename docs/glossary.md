@@ -565,7 +565,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### concept status
 
-- means: where a learner stands on a concept, in learner memory: validated, in progress, skipped, to review; a concept absent from the table is to do
+- means: where a learner stands on a concept, in learner memory: validated, in progress, skipped, to review; a concept with no status is to do
 - en: concept status · rejected: "state", "level"
 - fr: « statut »
 - not to confuse with: [Status](#status), the `status` key of a decision's frontmatter, [level](#level), [learner memory](#learner-memory)
