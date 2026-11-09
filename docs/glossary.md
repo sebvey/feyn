@@ -579,7 +579,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### composition
 
-- means: what a teacher is made of, beside how it behaves: five parts, each defined by when it loads and what it draws from the spec, the course, learner memory and the classroom; described by the spec with no Claude Code term: its realisation is the teacher build's
+- means: what a teacher is made of, beside how it behaves: five parts, each defined by when it loads and what it draws from the spec, the course, learner memory and the classroom; described by the **teacher implementation** with no Claude Code term: its realisation is the teacher build's
 - en: composition · rejected: "architecture", "the instructions"
 - fr: « composition »
 - not to confuse with: [protocol](#protocol), [teacher build](#teacher-build), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment)
