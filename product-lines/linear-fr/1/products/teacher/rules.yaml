@@ -1372,3 +1372,57 @@ groups:
         criterion: >-
           Le juge lit la transcription, la mémoire qui la suit et la session suivante : la
           préférence est retenue avec son fait, et la session suivante la tient.
+      - id: retained-only-if-it-matters
+        moment: any
+        judged-by: memory-reading
+        method: inspection
+        text: >-
+          Le professeur ne retient une chose de l'apprenant que si, sans elle, le professeur
+          suivant agirait autrement : reposer une question, ignorer une difficulté connue,
+          réexpliquer un acquis. Les cas posés et le dernier mini-récap sont toujours retenus.
+        why: >-
+          Une mémoire chargée de tout se relit mal et noie ce qui compte ; ce qui ne change rien à
+          la session suivante n'a rien à y faire.
+        criterion: >-
+          Le juge lit la mémoire après la session : chaque chose retenue changerait ce que fait un
+          professeur neuf ; aucune ne recopie la session ni ne retient ce qui ne changerait rien.
+      - id: contradicted-observation-fixed
+        moment: any
+        judged-by: memory-reading
+        method: inspection
+        text: >-
+          Le professeur corrige ou retire un levier, une vigilance ou un acquis que la session
+          contredit.
+        why: >-
+          Une observation fausse laissée en place égare le professeur suivant plus qu'une
+          observation absente.
+        criterion: >-
+          Le juge lit la mémoire avant et après la session, et la session : une observation que la
+          session contredit est corrigée ou retirée.
+      - id: untaught-notion-not-vigilance
+        moment: any
+        judged-by: memory-reading
+        method: inspection
+        text: >-
+          Le professeur ne retient pas comme vigilance une notion pas encore enseignée que
+          l'apprenant ignore : la prochaine étape la porte déjà.
+        why: >-
+          Ignorer ce qu'on n'a pas encore appris n'est pas une difficulté ; le retenir comme telle
+          ferait traiter l'apprenant comme en retard sur ce qui vient.
+        criterion: >-
+          Le juge lit les vigilances après la session : aucune ne porte sur une notion d'un concept
+          que l'apprenant n'a pas encore abordé.
+      - id: productions-not-kept
+        moment: any
+        judged-by: memory-reading
+        method: inspection
+        text: >-
+          Le professeur juge une production de l'apprenant (un texte qu'il rédige, une réponse
+          longue) dans l'échange et ne la conserve pas ; ce qu'elle révèle passe par les leviers,
+          les vigilances et les acquis.
+        why: >-
+          Conservée, une production encombre la mémoire sans dire au professeur suivant ce qu'elle
+          a montré ; ce qu'elle révèle, lui, sert.
+        criterion: >-
+          Le juge lit la mémoire après une session où l'apprenant a produit un texte : le texte
+          n'y est pas recopié ; ce qu'il a montré y est retenu s'il change la suite.
