@@ -561,10 +561,18 @@ groups:
         serves: [concept-title-link, descriptive-site-links]
       - id: concept-reference-form
         text: >-
-          Un renvoi à un concept s'écrit « {phrases.reference_model} » (contracté après « à » ou
-          « de »), son numéro et son titre tels que la carte du cours les donne : il prend la place
-          du nom du concept dans la phrase, jamais ajouté à lui.
+          Un renvoi à un concept, une mention qui envoie l'apprenant vers un concept ailleurs dans
+          le cours, s'écrit « {phrases.reference_model} » (contracté après « à » ou « de »), son
+          numéro et son titre tels que la carte du cours les donne : il prend la place du nom du
+          concept dans la phrase, jamais ajouté à lui. Quatre mentions d'un concept ne sont pas
+          des renvois, chacune dans sa forme : la liste des concepts d'une présentation de domaine
+          (`domain-presentation-parts`), le titre d'un concept (`concept-title-link`), la ligne
+          « {phrases.next_lead} » (`next-line-form`) et le texte d'un lien
+          (`descriptive-site-links`).
         serves: [concept-reference-form]
+        why: >-
+          sans elle, tu numérotes les concepts d'une présentation de domaine comme un sommaire,
+          ou tu écris un titre ou un lien dans la forme d'un renvoi.
       - id: descriptive-site-links
         text: >-
           Un lien vers le site est un lien Markdown dont le texte dit la page, jamais l'adresse
