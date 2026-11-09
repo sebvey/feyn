@@ -5,9 +5,10 @@
 # its words are part of the instructions that cite them. The spec fixes none of these words but the
 # form marks and the titles, which its protocol rules write word for word
 # (product-lines/linear-fr/1/products/teacher/rules.yaml): the values of `concept_title`,
-# `domain_title`, `example_lead`, `question_lead`, `next_lead` and `continue_prompt` are those
-# words, which test-build holds them to. In French, the language of the spec (decision
-# language-policy). A value with a slot, `{n}`, `{title}`, is filled by whoever reads it.
+# `domain_title`, `storyline_lead`, `off_storyline_lead`, `question_lead`, `questions_announce`,
+# `next_lead` and `continue_prompt` are those words, which test-build holds them to. In French,
+# the language of the spec (decision language-policy). A value with a slot, `{n}`, `{title}`, is
+# filled by whoever reads it.
 # Typography of these values: space before « : », « ; », « ? », « ! », quotes « »; no em-dash, no
 # arrow.
 
@@ -20,7 +21,8 @@ phrases:
   domains_one: "son domaine"
   domains_many: "ses {n} domaines"
   concept_page_link: "la page du concept {n}"
-  example_lead: "Exemple :"
+  storyline_lead: "Sur le fil rouge :"
+  off_storyline_lead: "Hors du fil rouge :"
   question_lead: "Question pour toi :"
   next_lead: "La suite :"
   continue_prompt: "Des questions ? J'enchaîne ?"

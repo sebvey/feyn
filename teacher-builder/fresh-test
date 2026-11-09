@@ -193,8 +193,19 @@ function runTurn(message, sessionId) {
   return turn;
 }
 
+// the marks of a question (rules example-question-quote-form, follow-up-form,
+// out-of-case-question-form, several-questions-announced): the label of a question on the matter,
+// phrases.question_lead, or in its place the announce of several questions,
+// phrases.questions_announce, its {count} any word; a question outside any case is a bold line
+// ending in « ? »
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const ANNOUNCE = new RegExp(escapeRe(PH.questions_announce).replace(escapeRe('{count}'), '\\S+'));
+const quotedLine = (l) => /^>/.test(l.trim());
+const boldInner = (l) => { const m = /^\*\*([^*].*?)\*\*$/.exec(l.trim()); return m ? m[1].trim() : null; };
+const isQuestionLabel = (l) => l.includes(PH.question_lead) || ANNOUNCE.test(l);
+const isBoldQuestion = (l) => !quotedLine(l) && /\?$/.test(boldInner(l) || '');
 const endsOnNextLine = (text) => text.includes(PH.continue_prompt);
-const asksQuestion = (text) => text.includes(PH.question_lead);
+const asksQuestion = (text) => isQuestionLabel(text) || text.split('\n').some(isBoldQuestion);
 const transcript = { scenario: scenarioId, course: courseId, model: opts.model, started: new Date(started).toISOString(), classroom: classroom, session_id: null, init: null, turns: [] };
 let sessionId = null;
 let previous = null;
@@ -243,41 +254,83 @@ const everyTurn = (f, okProof) => {
   return bad.length ? ko(bad.map(([n, p]) => `turn ${n}: ${p}`).join('; ')) : ok(okProof);
 };
 const displayLines = (text) => text.split('\n').filter((l) => l.trim()).reduce((n, l) => n + Math.max(1, Math.ceil(l.length / SCREEN_WIDTH)), 0);
-function quoteProblems(text) {
-  const lines = text.split('\n');
-  const qi = lines.findIndex((l) => l.includes(PH.question_lead));
-  if (qi < 0) return null;
-  const quoted = (l) => /^>/.test(l.trim());
+// the form of the question of a message, null when it asks none: a case opens on
+// phrases.storyline_lead or phrases.off_storyline_lead, a bold line of its own, then its example
+// alone in one quote, then the label of the question, a bold line of its own outside the quote,
+// then the question plain; a follow-up is the label then the question plain, no quote; a question
+// outside any case (no lead, no label) is a bold line of its own ending in « ? », not quoted
+const CASE_LEADS = [PH.storyline_lead, PH.off_storyline_lead];
+const asking = (l) => /\?$/.test(l.replace(/«[^»]*»/g, '').split(PH.continue_prompt).join('').replace(/\*+$/, '').trim());
+function questionForm(text) {
+  const lines = stripCode(text).split('\n').map((l) => l.trim());
+  const li = lines.findIndex((l) => CASE_LEADS.some((x) => l.includes(x)));
+  const qi = lines.findIndex(isQuestionLabel);
+  const quotes = lines.map((l, i) => (quotedLine(l) ? i : -1)).filter((i) => i >= 0);
   const problems = [];
-  if (!quoted(lines[qi]) || !lines[qi].includes(`**${PH.question_lead}**`)) problems.push(`« ${PH.question_lead} » is not a bold line of the quote`);
-  if (!(lines[qi + 1] !== undefined && lines[qi + 1].trim() === '>')) problems.push(`no quoted blank line after « ${PH.question_lead} »`);
-  const ei = lines.findIndex((l) => l.includes(PH.example_lead));
-  if (ei >= 0) {
-    if (ei > qi) problems.push(`« ${PH.example_lead} » comes after the question`);
-    else if (!lines.slice(ei, qi + 1).every(quoted)) problems.push('the example and the question are not in one quote');
-    else if (!lines[ei].includes(`**${PH.example_lead}**`)) problems.push(`« ${PH.example_lead} » is not bold`);
+  if (li < 0 && qi < 0) {
+    const asked = lines.filter(asking);
+    if (!lines.some(isBoldQuestion) && !asked.length) return null;
+    if (!lines.some(isBoldQuestion)) problems.push(`the question is not a bold line of its own: ${clip(asked[asked.length - 1], 80)}`);
+    if (asked.some(quotedLine)) problems.push('the question is quoted');
+    return { kind: 'out-of-case', problems };
   }
-  return { example: ei >= 0, problems };
+  if (qi >= 0) {
+    const inner = boldInner(lines[qi]);
+    if (quotedLine(lines[qi]) || !(inner === PH.question_lead || (ANNOUNCE.test(inner || '') && inner.replace(ANNOUNCE, '') === ''))) problems.push(`« ${PH.question_lead} » (or the announce) is not a bold line of its own outside a quote`);
+    let at = qi + 1;
+    while (at < lines.length && !lines[at]) at++;
+    if (at >= lines.length) problems.push('no question after its label');
+    else if (quotedLine(lines[at])) problems.push('the question is quoted');
+    else if (boldInner(lines[at]) !== null) problems.push('the question is in bold, not plain');
+  }
+  if (li < 0) {
+    if (quotes.length) problems.push('a quote in a follow-up');
+    return { kind: 'follow-up', problems };
+  }
+  const lead = CASE_LEADS.find((x) => lines[li].includes(x));
+  if (boldInner(lines[li]) !== lead || quotedLine(lines[li])) problems.push(`« ${lead} » is not a bold line of its own outside a quote`);
+  if (qi < 0) problems.push(`no « ${PH.question_lead} » line`);
+  else if (qi < li) problems.push(`« ${PH.question_lead} » comes before « ${lead} »`);
+  if (!quotes.length) problems.push('no quote holds the example');
+  else {
+    const [first, last] = [quotes[0], quotes[quotes.length - 1]];
+    if (quotes.length !== last - first + 1) problems.push('more than one quote');
+    if (first < li || (qi >= 0 && last > qi)) problems.push('a part of the message other than the example in the quote');
+    if (first > li && lines.slice(li + 1, first).some((l) => l)) problems.push(`a line between « ${lead} » and the quote, outside it`);
+    if (lines[last + 1] !== undefined && lines[last + 1] !== '') problems.push('no blank line after the quote');
+    else if (qi > last && lines.slice(last + 1, qi).some((l) => l)) problems.push(`a line between the quote and « ${PH.question_lead} »`);
+  }
+  return { kind: 'case', problems };
 }
-// the « ? » of a message: the question of the quote (from phrases.question_lead to the end of the
-// quote) counts as one, whatever its sentences (a question of the bank may hold two); the example
-// part, the « » quotations, phrases.why and phrases.continue_prompt count none
+// the « ? » of a message: the question after the label of a case or a follow-up (from
+// phrases.question_lead, or the announce, to the next blank line) counts as one, whatever its
+// sentences (a question of the bank may hold two); the example of a case (its quote), the « »
+// quotations, phrases.why and phrases.continue_prompt count none
 function questionCount(text) {
   const lines = text.split('\n');
-  const ei = lines.findIndex((l) => l.includes(PH.example_lead));
-  const qi = lines.findIndex((l) => l.includes(PH.question_lead));
+  const isCase = lines.some((l) => CASE_LEADS.some((x) => l.includes(x)));
+  const qi = lines.findIndex(isQuestionLabel);
   let kept = lines;
-  let quoted = 0;
-  if (qi >= 0 && /^>/.test(lines[qi].trim())) {
-    let end = qi + 1;
-    while (end < lines.length && /^>/.test(lines[end].trim())) end++;
-    if (lines.slice(qi + 1, end).join(' ').includes('?')) quoted = 1;
-    kept = [...lines.slice(0, ei >= 0 && ei < qi ? ei : qi), ...lines.slice(end)];
+  let counted = 0;
+  if (qi >= 0) {
+    let start = qi + 1;
+    while (start < lines.length && !lines[start].trim()) start++;
+    let end = start;
+    while (end < lines.length && lines[end].trim() && !quotedLine(lines[end])) end++;
+    if (lines.slice(start, end).join(' ').includes('?')) counted = 1;
+    kept = [...lines.slice(0, qi), ...lines.slice(end)];
   }
+  if (isCase) kept = kept.filter((l) => !quotedLine(l));
   let s = stripCode(kept.join('\n')).replace(/«[^»]*»/g, '');
   for (const p of [PH.continue_prompt, PH.why]) s = s.split(p).join('').split(p.charAt(0).toUpperCase() + p.slice(1)).join('');
-  return quoted + (s.match(/\?/g) || []).length;
+  return counted + (s.match(/\?/g) || []).length;
 }
+const formCheck = (kind, none, okProof) => {
+  const found = sent.map((t) => [t, questionForm(t.text)]).filter(([, q]) => q && q.kind === kind);
+  if (!found.length) return ko(none);
+  const bad = found.filter(([, q]) => q.problems.length);
+  return bad.length ? ko(bad.map(([t, q]) => `turn ${t.index}: ${q.problems.join(', ')}`).join('; ')) : ok(`turns ${found.map(([t]) => t.index).join(', ')}: ${okProof}`);
+};
 const SCRIPT = {
   'first-message-without-tools': () => {
     const t = sent[0];
@@ -289,18 +342,12 @@ const SCRIPT = {
   },
   'short-messages': () => everyTurn((t) => (displayLines(t.text) > MAX_LINES ? `${displayLines(t.text)} lines (a line of more than ${SCREEN_WIDTH} characters counts as several)` : null),
     `every message at most ${MAX_LINES} lines (longest: ${Math.max(0, ...sent.map((t) => displayLines(t.text)))})`),
-  'example-question-quote-form': () => {
-    const withEx = sent.map((t) => [t, quoteProblems(t.text)]).filter(([, q]) => q && q.example);
-    if (!withEx.length) return ko('no message holds an example and a question');
-    const bad = withEx.filter(([, q]) => q.problems.length);
-    return bad.length ? ko(bad.map(([t, q]) => `turn ${t.index}: ${q.problems.join(', ')}`).join('; ')) : ok(`turns ${withEx.map(([t]) => t.index).join(', ')}: the example and the question in one quote, in its form`);
-  },
-  'follow-up-quote-form': () => {
-    const noEx = sent.map((t) => [t, quoteProblems(t.text)]).filter(([, q]) => q && !q.example);
-    if (!noEx.length) return ko('no message holds a question without an example');
-    const bad = noEx.filter(([, q]) => q.problems.length);
-    return bad.length ? ko(bad.map(([t, q]) => `turn ${t.index}: ${q.problems.join(', ')}`).join('; ')) : ok(`turns ${noEx.map(([t]) => t.index).join(', ')}: the question in the quote form, without an example`);
-  },
+  'example-question-quote-form': () => formCheck('case', 'no message poses a case',
+    'the case in its form: its lead, its example alone in the quote, the label of the question outside it, the question plain'),
+  'follow-up-form': () => formCheck('follow-up', 'no message poses a follow-up',
+    'the follow-up in its form: the label of the question on its own line, the question plain, no quote'),
+  'out-of-case-question-form': () => formCheck('out-of-case', 'no message asks a question outside a case',
+    'the question alone in bold on its own line, no label, no quote'),
   'descriptive-site-links': () => everyTurn((t) => {
     const s = stripCode(t.text);
     const bare = s.replace(/\]\([^)]*\)/g, ']()').match(/https?:\/\/\S+/g);
@@ -312,8 +359,8 @@ const SCRIPT = {
     const found = BANNED.filter((c) => s.includes(c));
     return found.length ? `banned ${found.map((c) => `« ${c} »`).join(', ')}` : null;
   }, `none of the ${BANNED.length} banned characters of typography.banned`),
-  'one-question-per-message': () => everyTurn((t) => (questionCount(t.text) > 1 ? `${questionCount(t.text)} questions (the quoted question counts one; « ? » outside « », the example, « ${PH.why} » and « ${PH.continue_prompt} »)` : null),
-    'at most one question per message: the quoted question counts one, and no other « ? » outside « », the example and the two phrases that are not the question'),
+  'one-question-per-message': () => everyTurn((t) => (questionCount(t.text) > 1 ? `${questionCount(t.text)} questions (the question after its label counts one; « ? » outside « », the example's quote, « ${PH.why} » and « ${PH.continue_prompt} »)` : null),
+    'at most one question per message: the question after its label counts one, and no other « ? » outside « », the example\'s quote and the two phrases that are not the question'),
   'never-ask-if-understood': () => everyTurn((t) => (t.text.toLowerCase().includes(PH.banned_question.toLowerCase()) ? `« ${PH.banned_question} »` : null), `no « ${PH.banned_question} »`),
   'waiting-sentence-first': () => {
     const withTools = sent.filter((t) => realTools(t).length);

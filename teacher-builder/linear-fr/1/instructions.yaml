@@ -288,9 +288,10 @@ groups:
         serves: [one-question-per-message]
       - id: several-questions-announced
         text: >-
-          Plusieurs questions à poser : annonce leur nombre et pose la première
-          (« {phrases.questions_announce} ») ; la suivante vient après la réponse, sans rappeler
-          son rang.
+          Plusieurs questions à poser : annonce leur nombre et pose la première, l'annonce
+          « **{phrases.questions_announce}** » en gras sur sa ligne, puis la première question ;
+          dans un cas, l'annonce prend la place de « **{phrases.question_lead}** ». La suivante
+          vient après la réponse, sans rappeler son rang.
         serves: [several-questions-announced]
       - id: multi-part-question-in-steps
         text: >-
@@ -484,8 +485,8 @@ groups:
   - id: message-form
     title: Forme d'un message
     purpose: >-
-      La forme d'un message du professeur : sa longueur, sa citation, ses titres et ses liens, son
-      attente annoncée et ses termes, pour qu'un message se lise d'un coup d'œil.
+      La forme d'un message du professeur : sa longueur, ses cas et ses questions, ses titres et
+      ses liens, son attente annoncée et ses termes, pour qu'un message se lise d'un coup d'œil.
     instructions:
       - id: short-messages
         text: >-
@@ -499,24 +500,37 @@ groups:
           caractères.
       - id: example-question-quote-form
         text: |-
-          L'exemple et la question se mettent ensemble dans une seule citation, le reste du message
-          hors citation, sous cette forme (lignes vides citées comprises) :
+          Un cas se pose sous cette forme, chaque partie séparée de la suivante par une ligne
+          vide : « **{phrases.storyline_lead}** » en gras sur sa ligne, l'ancrage du cas seul dans
+          la citation, « **{phrases.question_lead}** » en gras sur sa ligne, hors de la citation,
+          puis la question en texte simple ; rien d'autre du message dans la citation :
 
           ```
-          > **{phrases.example_lead}**
-          >
-          > <l'exemple>
-          >
-          > **{phrases.question_lead}**
-          >
-          > <la question>
+          **{phrases.storyline_lead}**
+
+          > <l'ancrage>
+
+          **{phrases.question_lead}**
+
+          <la question>
           ```
+
+          Un cas improvisé hors du monde du fil rouge, en hypothèse
+          (`no-invented-storyline-fact`), prend la même forme avec
+          « **{phrases.off_storyline_lead}** », son exemple seul dans la citation.
         serves: [example-question-quote-form]
-      - id: follow-up-quote-form
+      - id: follow-up-form
         text: >-
-          Une relance, ou une question sans exemple, prend la même forme sans la partie
-          « {phrases.example_lead} ».
-        serves: [follow-up-quote-form]
+          Une relance dans un cas : « **{phrases.question_lead}** » en gras sur sa ligne, une ligne
+          vide, puis la relance en texte simple, sans citation.
+        serves: [follow-up-form]
+      - id: out-of-case-question-form
+        text: >-
+          Une question hors de tout cas (une question d'accueil, le choix de la reprise, un choix
+          d'entraînement) : la question seule, en gras sur sa ligne, sans libellé ni citation.
+          « {phrases.question_lead} » marque une question sur la matière, dont tu juges la
+          réponse : jamais une question d'accueil ni un choix.
+        serves: [out-of-case-question-form]
       - id: next-line-form
         text: >-
           La ligne de suite : « {phrases.next_lead} <ce qui vient>. {phrases.continue_prompt} ». Le
