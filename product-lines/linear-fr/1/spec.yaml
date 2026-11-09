@@ -36,17 +36,22 @@ course:
   templates: course/templates
   samples: course/samples
 
-# The products of the spec, each by its name, and their files, by role. The teacher is not
-# declared: its files lag the spec and the course until epic #757 brings them up to date and
-# declares them; no test of check-spec reads them.
+# The products of the spec, each by its name, and their files, by role. The teacher declares
+# its README (what is expected of a teacher, how a behaviour is written and classed) and its
+# lexicon; its rule file is declared by the first subject story of epic #757, its build and its
+# composition leave the spec with the teacher implementation (epic #757).
 products:
   site:
     lexicon: products/site/lexicon.yaml
     url-scheme: products/site/url-scheme.yaml
     build: products/site/build
+  teacher:
+    readme: products/teacher/README.md
+    lexicon: products/teacher/lexicon.yaml
 
 # The lists of the spec, which the tests of check-spec hold its files to: the classifications of
-# the rules of a course, its levels and its categories (README.md section 3), and the keys of the
+# the rules of a course, its levels and its categories (README.md section 3; those of the
+# teacher, products/teacher/README.md, come with its rule file), and the keys of the
 # lexicons, by owner, each with its kind, `string` or `list` (the course's: course/README.md
 # section 7).
 lists:
@@ -134,5 +139,10 @@ files:
       build:
         holds: "the half of a site build that depends on this MAJOR: `render-site`, which gives the published parts of a course with the words, the URL scheme and the language of the site as one JSON document, run by `site-builder/`; `site.schema.yaml`, the shape of its output; `test-render`; `README.md`"
         readers: [builder]
-  undeclared:
-    teacher: "not declared until epic #757 brings its files up to date with the spec and the course: the protocol, the composition, the lexicon, the build and the test scenarios of the teacher, and the templates of learner memory"
+    teacher:
+      readme:
+        holds: "what the spec expects of a teacher, in French: the definitions its protocol rules use, the capabilities a teacher needs, how a protocol rule is written and classed"
+        readers: [builder, verifier, spec writer]
+      lexicon:
+        holds: "the words the teacher says and writes, for every course of the spec, and the words of the old course form its instructions still cite, until epic #757 rewrites them"
+        readers: [builder, spec writer]

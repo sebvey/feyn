@@ -1,14 +1,14 @@
 # The lexicon of the teacher of `linear-fr`: the words the teacher says and writes (its
 # literal phrases, what the learner says and the teacher reacts to, the lines and the headings of
-# learner memory, the concept statuses), named `{group.key}` in products/teacher/rules.yaml (decision
+# learner memory, the concept statuses), named `{group.key}` in products/teacher/build/instructions.yaml (decision
 # `lexicon-not-language-pack`). The spec is French (`language: fr` in spec.yaml). The keys are
-# those the protocol uses, listed in products/teacher/README.md, « Clés et paramètres » (`lexicon-keys`, a
-# test of check-spec, holds a declared lexicon to the keys spec.yaml lists for it, which it does
-# not declare nor list for the teacher until epic #757 brings the teacher up to date). A value with a slot, `{n}`, `{title}`, is filled by whoever
+# those the instructions use (`lexicon-keys`, a test of check-spec, holds a declared lexicon to
+# the keys spec.yaml lists for it, which it lists for the teacher once epic #757 sets which of
+# these words the spec fixes, item 7). A value with a slot, `{n}`, `{title}`, is filled by whoever
 # reads it. Typography of these values: space before « : », « ; », « ? », « ! », quotes « »; no
 # em-dash, no arrow.
 
-# Literal phrases the teacher says (products/teacher/README.md, « Clés et paramètres »).
+# Literal phrases the teacher says.
 phrases:
   concept_title: "Concept {n} : {title}"
   domain_title: "Domaine {n} : {title}"

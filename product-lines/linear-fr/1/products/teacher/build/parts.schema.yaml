@@ -20,7 +20,7 @@ properties:
     additionalProperties: false
     properties:
       protocol:
-        description: every rule of the protocol no moment loads, in the order of products/teacher/rules.yaml, each family and group that keeps a rule preceded by its heading and its purpose (Markdown)
+        description: every rule of the protocol no moment loads, in the order of products/teacher/build/instructions.yaml, each family and group that keeps a rule preceded by its heading and its purpose (Markdown)
         $ref: '#/$defs/text'
       posture:
         description: the paragraph of the course's plan.md under its onboarding heading
@@ -122,7 +122,7 @@ properties:
     additionalProperties: false
     properties:
       course:
-        description: the course parameters, from course.yaml (products/teacher/README.md, « Clés et paramètres »), and the course id
+        description: the course parameters, from course.yaml (those products/teacher/build/instructions.yaml cites), and the course id
         type: object
         required: [id, title, domain_count, storyline, glossary]
         additionalProperties: false
@@ -133,7 +133,7 @@ properties:
           storyline: { $ref: '#/$defs/text' }
           glossary: { $ref: '#/$defs/text' }
       classroom:
-        description: the classroom parameters (products/teacher/README.md, « Clés et paramètres »), « (site non publié) » with no site address, and the channel
+        description: the classroom parameters (those products/teacher/build/instructions.yaml cites), « (site non publié) » with no site address, and the channel
         type: object
         required: [site_url, domains_url, domain_url, concept_url, channel]
         additionalProperties: false

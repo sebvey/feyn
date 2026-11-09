@@ -2,7 +2,7 @@
 # when it is loaded and what it draws from, as data (decision spec-files-by-product). The classroom
 # build reads it to know what goes into each part (products/teacher/build/render-parts renders the parts as
 # text, teacher-builder/ realises them); the fresh tests judge a teacher against it, on
-# what it loads and when. products/teacher/README.md, « Composition », describes it. It names no mechanism of
+# what it loads and when. products/teacher/build/README.md describes how it is rendered. It names no mechanism of
 # a target: how a part is realised is the teacher build's (teacher-builder/).
 #
 # A part: `id`, `loads`, `draws`; the part `on-demand` adds `moments`.
@@ -19,16 +19,16 @@
 #   learner    a file of learner memory, the classroom's learner/
 #   classroom  a file or folder the teacher build makes
 # `source`, the file or folder read, relative to its `from`: `{course.<name>}` is a course
-# parameter (products/teacher/README.md, « Clés et paramètres »), `<dir>` the `dir` of the concept at hand in
+# parameter (those products/teacher/build/instructions.yaml cites), `<dir>` the `dir` of the concept at hand in
 # course.yaml, `<file>` the `file` of the domain at hand. `what`, what is drawn, in a few words, in
 # French, since the teacher reads it (decision language-policy); a lexicon key
 # (`headings.onboarding`) names a heading of a course file.
 # A moment of `on-demand`: `id`, `when` (in French, as `what`: the teacher reads it to recognise
 # the moment), `rules` (the slugs of the groups, families or rules of the protocol loaded at that
-# moment, a family by its category in products/teacher/rules.yaml; empty while the protocol has none for it)
+# moment, a family by its category in products/teacher/build/instructions.yaml; empty while the protocol has none for it)
 # and `draws`, as a part's.
 #
-# The rules of the protocol are named by their file, products/teacher/rules.yaml, which
+# The rules of the protocol are named by their file, products/teacher/build/instructions.yaml, which
 # products/teacher/build/render-parts reads by family and group. No test of check-spec verifies the
 # form of this file since the test composition left the spec directives (#765); the fresh tests
 # judge its sense.
@@ -37,7 +37,7 @@ parts:
     loads: every-message
     draws:
       - from: spec
-        source: products/teacher/rules.yaml
+        source: products/teacher/build/instructions.yaml
         what: les règles du protocole et le but de leurs familles et de leurs groupes, sauf les règles qu'une autre partie charge
       - from: course
         source: plan.md
@@ -62,7 +62,7 @@ parts:
     loads: at-a-moment
     draws:
       - from: spec
-        source: products/teacher/rules.yaml
+        source: products/teacher/build/instructions.yaml
         what: les règles de chaque moment ci-dessous
     moments:
       - id: onboarding
@@ -133,7 +133,7 @@ parts:
         source: products/teacher/templates/learner/
         what: les modèles de l'apprenant, la forme de la mémoire de l'apprenant
       - from: spec
-        source: products/teacher/rules.yaml
+        source: products/teacher/build/instructions.yaml
         what: les règles de mémoire, la famille learner-memory
       - from: learner
         source: apprenant.md
@@ -149,7 +149,7 @@ parts:
     loads: always
     draws:
       - from: spec
-        source: products/teacher/rules.yaml
+        source: products/teacher/build/instructions.yaml
         what: la règle write-only-in-learner
       - from: classroom
         source: learner/

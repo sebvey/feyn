@@ -57,7 +57,7 @@ const ids = composition.parts.find((p) => p.id === 'on-demand').moments.map((m) 
 check(doc.moments.map((m) => m.id).join(',') === ids.join(','), `the moments are ${doc.moments.map((m) => m.id).join(', ')}, not ${ids.join(', ')}`);
 
 // every rule of the protocol once, in the permanent protocol or in one moment
-const protocol = yaml.parse(fs.readFileSync(path.join(MAJOR, 'products', 'teacher', 'rules.yaml'), 'utf8'));
+const protocol = yaml.parse(fs.readFileSync(path.join(MAJOR, 'products', 'teacher', 'build', 'instructions.yaml'), 'utf8'));
 const slugsOf = (text) => text.split('\n').map((l) => /^\*\*([a-z0-9-]+)\*\* /.exec(l)).filter(Boolean).map((m) => m[1]);
 const all = protocol.groups.flatMap((g) => g.rules.map((r) => r.id));
 const rendered = [doc.permanent.protocol, ...doc.moments.map((m) => m.rules)].flatMap(slugsOf);

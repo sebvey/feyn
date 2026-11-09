@@ -1,15 +1,12 @@
-# The rules of the teacher of linear-fr (decisions rules-with-level-and-method and
-# spec-files-by-product), in French, the bounded exception of decision language-policy. A
-# teacher conforms when it holds every requirement of this file (README.md section 3).
-#
-# This file holds every rule of the protocol, its one source: products/teacher/README.md describes how a
-# rule is written and states none. The families come in their order: for each family, a group
-# whose id is the family's category, holding the rules placed directly under the family; then each
-# group of that family, its slug as id. A group: id, title, purpose (what the group is for),
-# category (its family), method (demonstration, by the fresh tests), rules. A rule: id (its slug),
-# level, text, why (what the teacher does without the rule, where a drift was seen). check-spec
-# (rule-files, rule-slugs) verifies this file when spec.yaml declares the teacher, which it does
-# not until epic #757 brings the teacher up to date; products/teacher/build/render-parts renders it for a classroom.
+# The instructions of the teacher of linear-fr, in French (decision language-policy): the texts
+# of the former protocol, in « tu », which the build reads (products/teacher/build/render-parts
+# renders them for a classroom) until the teacher implementation of epic #757 takes them as its
+# raw material. They are not the spec's rules: what is expected of a teacher is in
+# products/teacher/README.md and products/teacher/rules.yaml; no test of check-spec reads this file.
+# The families come in their order: for each family, a group whose id is the family's category,
+# holding the instructions placed directly under the family; then each group of that family, its
+# slug as id. A group: id, title, purpose, category (its family), method, rules. An instruction:
+# id (its slug), level, text, why.
 groups:
   - id: session-start
     title: Démarrage de session
