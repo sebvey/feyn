@@ -1,7 +1,8 @@
 ---
 date: 2026-11-06
 issue: 599
-status: accepted
+status: superseded
+superseded-by: teacher-yardstick-cafe-and-maintainer-session
 area: repo
 ---
 

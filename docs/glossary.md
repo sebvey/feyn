@@ -122,8 +122,15 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the build of the **teacher** from a course and its spec MAJOR, into the **classroom** it makes, in two halves: the spec MAJOR renders the parts of the **composition** as text, and the repository's teacher builder realises them in Claude Code. Rendering the parts as text is a step of the teacher build, not a build
 - en: teacher build · rejected: "classroom build"
 - fr: « build du professeur » · rejected: « build de la classe »
-- not to confuse with: [build](#build), [site build](#site-build), [teacher](#teacher), [classroom](#classroom), [composition](#composition)
+- not to confuse with: [build](#build), [site build](#site-build), [teacher](#teacher), [classroom](#classroom), [composition](#composition), [teacher implementation](#teacher-implementation)
 - why: "classroom build" named the build after the folder it makes, not the product it builds, so the name changed between a product and its build, while the site build bears the name of its product; "classroom" names only that folder
+
+### teacher implementation
+
+- means: the **means** of the teacher of a spec MAJOR on one target, each linked to the **protocol rules** it serves: what the spec does not fix of the teacher, for Claude Code today. Two implementations of one spec MAJOR answer the same protocol rules and **capabilities**
+- en: teacher implementation
+- fr: to settle
+- not to confuse with: [teacher](#teacher), [teacher build](#teacher-build), [means](#means), [capability](#capability)
 
 ### site
 
@@ -137,7 +144,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the generic Claude Code agent that teaches, with the **teacher skills** of its moments, built from the **teacher template**, the protocol and the lexicons of its spec, as the **composition** of its spec says
 - en: teacher · rejected: "prof", "tutor", "coach", "agent" alone
 - fr: « professeur » · rejected: « prof »
-- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment), [product](#product), [teacher build](#teacher-build)
+- not to confuse with: [classroom](#classroom), [composition](#composition), [protocol](#protocol), [teacher skill](#teacher-skill), [teacher template](#teacher-template), [moment](#moment), [product](#product), [teacher build](#teacher-build), [teacher implementation](#teacher-implementation)
 
 ### classroom
 
@@ -321,7 +328,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the boundary of the **matter**, for the teacher alone: what the teacher knows and does not say in this unit, or in this concept for the foot's; a sentence stays only if a competent teacher reading the matter, the cases, the misconceptions, the protocol and the course plan would otherwise act differently, and only there: what holds for every unit is a **protocol rule**, what holds for the whole course a stance of the course plan, the obvious goes; the last block of a unit, « Consigne au professeur », in prose, and a block of the foot of the concept file under the same heading, **unpublished**; a question the course asks again and again goes there; the order and the split of a concept are its sections and units, never an instruction
 - en: instruction · rejected: "instructions", "teaching notes", "usage", "what works"
 - fr: « consigne » · rejected: « consignes », « usage », « ce qui marche »
-- not to confuse with: [protocol rule](#protocol-rule), [matter](#matter)
+- not to confuse with: [protocol rule](#protocol-rule), [matter](#matter), [means](#means)
 
 ### published
 
@@ -494,10 +501,25 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### protocol rule
 
-- means: a rule of the protocol: it binds the teacher and belongs to a family and a group
+- means: a rule of the protocol, an expected behaviour of the teacher: what any teacher of the spec does, observable in the conversation or in what it records, written with no target term; it binds the teacher and belongs to a family and a group. What makes it hold on a target is a **means** of the **teacher implementation**
 - en: protocol rule
-- fr: « règle du protocole »
-- not to confuse with: [rule](#rule), [protocol](#protocol), [instruction](#instruction)
+- fr: « règle du protocole », or « comportement attendu », its admitted synonym
+- not to confuse with: [rule](#rule), [protocol](#protocol), [instruction](#instruction), [means](#means), [capability](#capability)
+- why: « comportement attendu », the words of the brainstorm that set what the spec writes of the teacher, is admitted beside « règle du protocole » rather than replacing it: a renaming would touch everything the spec, the spec directives and the tools call a protocol rule
+
+### capability
+
+- means: what the teacher needs to honour its **protocol rules**, fixed by the spec with no target term: read the course, retrieve and record what it knows of the learner, know the site addresses, search outside the course, show a diagram or know it cannot, know the title and « L'essentiel » of each annex. A **teacher implementation** provides each on its target
+- en: capability
+- fr: to settle
+- not to confuse with: [protocol rule](#protocol-rule), [means](#means), [permission](#permission), [teacher implementation](#teacher-implementation)
+
+### means
+
+- means: (singular and plural) what a **teacher implementation** uses to make a **protocol rule** hold on its target, chosen freely: a passage of the teacher's instructions, a skill, a hook that rereads a message before it is sent, a script, a preparation at build time; each is linked by slug to the protocol rules it serves. The spec fixes none
+- en: means
+- fr: to settle
+- not to confuse with: [protocol rule](#protocol-rule), [capability](#capability), [teacher implementation](#teacher-implementation), [instruction](#instruction)
 
 ### group
 
@@ -611,6 +633,7 @@ The **spec directives** (`spec-directives/1/README.md`) and, for the categories 
 - means: a rule of the level permission: "may", never in the negative (« peut »): an element that may be absent, or an act the teacher may do. Possibility and capability ("can", « peut ») are not a level
 - en: permission · rejected: "can" for a permission
 - fr: to settle
+- not to confuse with: [capability](#capability)
 
 ### method
 

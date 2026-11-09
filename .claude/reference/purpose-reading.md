@@ -6,7 +6,7 @@ How an item is read against the purpose of feyn before it is presented to the ma
 
 Read [vision.md](../../docs/vision.md) (what feyn is for, the yardstick of a change, the lessons) and answer two questions from the item's body, each with the line it rests on:
 - which product it is for: the teacher, the site, the course-creator, or none (then which of them it serves, through what);
-- how it serves the purpose, measured by the yardstick (for a change of `linear-fr`: does the bench course `product-lines/linear-fr/1/course/samples/cafe/` follow it in the same PR, and do its checks pass on it; the teacher is frozen, decision `teacher-frozen-until-the-protocol-brainstorm`).
+- how it serves the purpose, measured by the yardstick (for a change of `linear-fr`: does the bench course `product-lines/linear-fr/1/course/samples/cafe/` follow it in the same PR, and do its checks pass on it; for a change of what is expected of the teacher: does the teacher build on it with `teacher-builder/test-build` passing, and is a teaching session on it played by the maintainer at the PR that lands on `main`, decision `teacher-yardstick-cafe-and-maintainer-session`).
 
 An item that names no product it serves says so; it is not refused here, the answer goes to the maintainer with the rest.
 

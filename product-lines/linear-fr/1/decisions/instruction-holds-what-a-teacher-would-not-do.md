@@ -17,6 +17,6 @@ The **instruction** of a unit of `linear-fr` is the boundary of its matter: what
 
 ## Consequences
 
-- The sentences that said when to pose a supplementary case, or what to do with a later concept the learner raises, leave the instructions for the protocol rules; the teacher being frozen (decision `teacher-frozen-until-the-protocol-brainstorm`), it loses those triggers until the brainstorm on the protocol rules writes them.
+- The sentences that said when to pose a supplementary case, or what to do with a later concept the learner raises, leave the instructions for the protocol rules; the teacher loses those triggers until epic #757 writes them as protocol rules.
 - A stance of the course that an instruction stated moves to the course plan, written once.
 - Whether a sentence passes the criterion is a review, not a check: no script tells the obvious from the proper.

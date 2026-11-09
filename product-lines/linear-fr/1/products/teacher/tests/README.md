@@ -14,7 +14,7 @@ The scenarios are written for the spec's sample course `cafe` (`../../course/sam
 
 ## The format
 
-One YAML file per scenario in this folder, named after its `id`; [`scenario.schema.yaml`](scenario.schema.yaml) fixes the form, and `check-spec` (`scenarios`, `spec-directives/1/README.md` section 8) validates every scenario against it and checks that every slug it names is a rule of the protocol, when `spec.yaml` declares the teacher, which it does not while the teacher is frozen.
+One YAML file per scenario in this folder, named after its `id`; [`scenario.schema.yaml`](scenario.schema.yaml) fixes the form, and `check-spec` (`scenarios`, `spec-directives/1/README.md` section 8) validates every scenario against it and checks that every slug it names is a rule of the protocol, when `spec.yaml` declares the teacher, which it does not until epic #757 brings the teacher up to date.
 
 | Key | Holds |
 |---|---|
