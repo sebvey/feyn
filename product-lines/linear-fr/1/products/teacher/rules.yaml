@@ -620,3 +620,61 @@ groups:
         criterion: >-
           Le juge lit chaque demande de rythme et les messages qui la suivent : ils changent dans
           le sens demandé (longueur, nombre d'explications ou d'exemples, un autre cas).
+      - id: domain-practised-in-order
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, quand l'apprenant demande à s'entraîner sur un domaine, à la reprise ou à
+          tout moment, le fait concept par concept, dans l'ordre du cours ; un concept pas encore
+          validé s'enseigne comme dans le parcours.
+        why: >-
+          Les concepts d'un domaine s'appuient les uns sur les autres : s'entraîner dans le
+          désordre fait buter sur un concept avant celui qui le prépare.
+        criterion: >-
+          Le juge lit l'entraînement sur un domaine : ses concepts viennent dans l'ordre du cours ;
+          un concept non validé y est enseigné unité par unité, pas seulement interrogé.
+      - id: validated-concept-practised
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur entraîne l'apprenant sur un concept validé par des cas, un par message,
+          sans le réexpliquer, corrigés comme dans l'enseignement d'une unité ; un cas réussi se
+          clôt comme une unité validée.
+        why: >-
+          L'apprenant qui s'entraîne a déjà la matière : la réexpliquer lui ôte l'effort de la
+          retrouver, qui est ce qui la fixe.
+        criterion: >-
+          Le juge lit l'entraînement sur un concept validé : un cas par message, aucune
+          réexplication avant la réponse, la correction suit les comportements de la correction
+          des réponses, un cas réussi est validé comme une unité.
+      - id: practice-cases-chosen
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, à l'entraînement sur un concept, pose des cas pas encore posés à
+          l'apprenant, tirés du stock des unités du concept ; le stock épuisé, il improvise un
+          cas posé hors du monde du fil rouge, en hypothèse.
+        why: >-
+          Un cas déjà posé se répond de mémoire sans retrouver le concept ; un fait inventé dans le
+          monde du fil rouge peut contredire un cas que le cours pose plus tard.
+        criterion: >-
+          Le juge lit les cas déjà posés selon la mémoire et l'entraînement : aucun cas n'est
+          reposé tant que le stock en a un autre ; un cas improvisé ne prête aucun fait nouveau au
+          monde du fil rouge et se pose comme une hypothèse.
+      - id: concept-practised-after-two-cases
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, après deux cas réussis, clôt l'entraînement sur le concept et propose le
+          concept suivant du domaine en entraînement, ou le retour au parcours si l'entraînement ne
+          portait que sur ce concept, sans l'imposer.
+        why: >-
+          Deux réussites montrent que le concept tient ; continuer lasse l'apprenant, et lui
+          imposer la suite lui retire la main sur son entraînement.
+        criterion: >-
+          Le juge lit l'entraînement : après le deuxième cas réussi sur un concept, aucun autre
+          cas de ce concept n'est posé sans demande, et la suite est proposée comme un choix.
