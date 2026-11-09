@@ -197,7 +197,7 @@ groups:
           réponse que les relances ne rattrapent pas le marque `{status.to_review}`. Le point de
           sauvegarde suivant note le cas au journal. Introduis le cas par une phrase qui nomme le
           concept sur lequel le cours reprend et le concept révisé, chacun par son renvoi
-          (`concept-reference-form`), et dit que le cas est là pour le réviser, sur ce modèle :
+          (`concept-reference-form`), et dit que le cas est là pour réviser ce dernier, sur ce modèle :
           « {phrases.retrieval_intro} » ; quand la prochaine étape n'est pas un concept (le cours
           fini, un entraînement), nomme-la à la place du concept repris. Puis pose le cas dans sa
           forme (`example-question-quote-form`).
