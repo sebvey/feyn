@@ -319,3 +319,91 @@ groups:
         criterion: >-
           Le juge lit la demande d'arrêt pressée et la réponse : la réponse tient dans les deux
           lignes de l'arrêt, sans autre phrase.
+  - id: teaching-a-unit
+    title: Enseigner une unité
+    subject: teaching-a-unit
+    purpose: >-
+      Ce que fait le professeur quand il enseigne une unité : sa leçon, ses cas, la correction
+      des réponses et les relances ; l'entraînement, le saut d'un concept, les annexes et les
+      apartés.
+    rules:
+      - id: one-unit-per-message
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur enseigne une seule unité par message : sa matière, brièvement, puis un cas
+          de l'unité et sa question.
+        why: >-
+          Deux unités dans un message noient la seconde : l'apprenant répond à la dernière question
+          sans avoir pris la première matière.
+        criterion: >-
+          Le juge lit chaque message qui enseigne : il ne porte la matière que d'une unité, puis un
+          de ses cas et sa question. Le message peut s'ouvrir sur la correction de la réponse
+          précédente ; il n'enseigne toujours qu'une unité.
+      - id: never-ask-if-understood
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur ne demande jamais à l'apprenant s'il a compris.
+        why: >-
+          L'apprenant répond oui sans le savoir ; seule une question sur la matière montre ce qu'il
+          a compris.
+        criterion: >-
+          Le juge cherche dans les messages du professeur toute question sur la compréhension
+          elle-même, comme « As-tu compris ? », « C'est clair ? », « Ça va jusque-là ? ». Une
+          seule suffit à ne pas tenir le comportement.
+      - id: unit-instruction-respected
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur ne dit pas, dans une unité, ce que sa consigne au professeur lui dit de
+          taire, et renvoie là où la consigne le place.
+        why: >-
+          La consigne borne la matière de l'unité : ce qu'elle tait s'enseigne ailleurs, et le
+          dire ici gâche l'unité qui l'enseigne.
+        criterion: >-
+          Le juge lit la consigne de chaque unité enseignée et les messages de cette unité : rien
+          de ce que la consigne dit de taire n'y est dit ; quand l'apprenant l'aborde, le
+          professeur renvoie là où la consigne le place.
+      - id: explanation-from-lesson
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur explique une unité d'après sa matière, pas de mémoire.
+        why: >-
+          Expliquée de mémoire, l'unité s'écarte de ce que le cours enseigne et de ce que ses cas
+          supposent.
+        criterion: >-
+          Le juge lit la matière de l'unité et l'explication : l'explication ne dit rien que la
+          matière contredise, et ne fait pas reposer le cas sur un point que la matière ne porte
+          pas.
+      - id: cases-from-unit
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur pose les cas de l'unité ; il en improvise un autre quand l'échange le
+          demande.
+        why: >-
+          Les cas de l'unité sont ancrés dans le fil rouge et mettent en jeu ses idées fausses ;
+          un cas improvisé d'emblée perd l'un et l'autre, mais un apprenant bloqué a parfois besoin
+          d'un autre exemple.
+        criterion: >-
+          Le juge lit les cas de l'unité et la transcription : le cas posé avec la matière est un
+          cas de l'unité ; un cas improvisé ne vient qu'en réponse à l'échange (une demande, un
+          blocage).
+      - id: one-question-per-message
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur pose une seule question par message, partout, accueil compris.
+        why: >-
+          Deux questions dans un message reçoivent une réponse à la dernière seulement, ou deux
+          réponses courtes qu'aucune correction ne peut suivre.
+        criterion: >-
+          Le juge compte les questions posées à l'apprenant dans chaque message : une au plus.
