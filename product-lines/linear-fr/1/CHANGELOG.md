@@ -2,7 +2,7 @@
 
 `linear-fr`, MAJOR 1. No version of it is tagged yet.
 
-The spec carries a version `MAJOR.MINOR.PATCH` (see `spec-directives/1/README.md`, section 3, and decision `alpha-version-until-tag` of the directives): `1.0.0-alpha` until the tag `linear-fr/v1.0.0`, when « Unreleased » becomes `1.0.0`. From the tag on, the bump table of `spec-directives/1/README.md` section 6 classes each change, and the entries are ranked by bump, as Changesets does.
+The spec carries a version `MAJOR.MINOR.PATCH` (see `spec-directives/1/README.md`, section 3, and decision `alpha-version-until-tag` of the directives): `1.0.0-alpha` until the tag `linear-fr/v1.0.0`, when « Unreleased » becomes `1.0.0`. From the tag on, the bump table of `spec-directives/1/README.md` section 3 classes each change, and the entries are ranked by bump, as Changesets does.
 
 One line per change: `- CLASS, file or area: what changes`. During the alpha, an entry carries no class: `- file or area: what changes`.
 
