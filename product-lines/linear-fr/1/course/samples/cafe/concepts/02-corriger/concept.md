@@ -90,7 +90,7 @@ Corriger une tasse ratée, c'est la goûter avec trois mots, l'**acidité**, l'*
 
 #### Consigne au professeur
 
-Ne donner aucun chiffre de pas (un cran, quelques degrés) comme une règle : le pas est petit, et c'est la tasse suivante qui dit s'il suffit. Ne parler d'aucune autre façon de faire le café que le filtre de Cédric : les autres sont l'annexe A1.
+Ne donner aucun chiffre de pas (un cran, quelques degrés) comme une règle : le pas est petit, et c'est la tasse suivante qui dit s'il suffit. Ne parler de soi-même d'aucune autre façon de faire le café que le filtre de Cédric : les autres sont l'annexe A1.
 
 ### Unité 2b2 : La tasse que l'on aime
 
