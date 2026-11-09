@@ -19,8 +19,8 @@ pages:
   not_found: "404.html"       # the page of an address no page has
 
 # The anchors of a page, the part of an address after `#`. `diagram` is the id of a diagram on
-# its concept page: `concepts/{nn}/#schema-{file}`. Its prefix keeps clear of the anchors of the
-# units and misconceptions, which start with a digit or `A`.
+# its concept page, after the `#` of the concept's address. Its prefix keeps clear of the anchors
+# of the units and misconceptions, which start with a digit or `A`.
 anchors:
   diagram: "schema-{file}"
 
