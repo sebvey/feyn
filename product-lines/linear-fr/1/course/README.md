@@ -54,7 +54,7 @@ Chaque titre de `concept.md` commence par son type, et un type est toujours au m
 
 **Identifiants.** Les numéros de concept, les ids de section et d'unité, les titres des cas (section 3.3), les numéros de domaine et leurs concepts, les noms `dir` des concepts et `file` des domaines sont les identifiants du cours : la mémoire de l'apprenant et les adresses du site les citent. En changer un est une MAJOR du cours (`spec-directives/1/README.md` section 3).
 
-La forme du dossier et du fichier de concept est la donnée de [`form.yaml`](form.yaml) ; ses règles sont le groupe « Le dossier de concept » de [`rules.yaml`](rules.yaml). Une annexe a le même fichier de concept, découpé en unités (`A1a`, `A1a1`). Une question fréquente hors du parcours a sa matière dans une unité d'annexe, sourcée comme toute matière, avec ses idées fausses et ses cas : aucune unité n'écrit de lien vers elle, et le professeur la pose quand l'apprenant en soulève le sujet.
+La forme du dossier et du fichier de concept est la donnée de [`form.yaml`](form.yaml) ; ses règles sont le groupe « Le dossier de concept » de [`rules.yaml`](rules.yaml). Une annexe a le même fichier de concept, découpé en unités (`A1a`, `A1a1`). Une question fréquente hors du parcours a sa matière dans une unité d'annexe, sourcée comme toute matière, avec ses idées fausses et ses cas : aucune unité n'écrit de lien vers elle, et le professeur la propose quand l'apprenant en soulève le sujet.
 
 ### 3.1 Le frontmatter de `concept.md`
 

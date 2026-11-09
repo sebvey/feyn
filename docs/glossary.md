@@ -363,7 +363,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### follow-up
 
-- means: the targeted re-question the teacher asks after a partial or wrong answer, on the **misconception** it answers; the teacher's own, no longer written in a concept file
+- means: the targeted re-question the teacher asks after a partial or wrong answer: after a partial one, on what is missing; after a wrong one, a single follow-up by a consequence, which makes the learner see a consequence of their answer and find the **misconception** alone, before its root and its correction are given; the teacher's own, no longer written in a concept file
 - en: follow-up · rejected: "retry", "hint", "probe"
 - fr: « relance »
 - not to confuse with: [misconception](#misconception)

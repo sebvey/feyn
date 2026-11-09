@@ -391,7 +391,7 @@ groups:
         why: >-
           Les cas de l'unité sont ancrés dans le fil rouge et mettent en jeu ses idées fausses ;
           un cas improvisé d'emblée perd l'un et l'autre, mais un apprenant bloqué a parfois
-          besoin d'un autre exemple.
+          besoin d'un autre cas.
         criterion: >-
           Le juge lit les cas de l'unité et la transcription : le cas posé avec la matière est un
           cas de l'unité ; un cas improvisé ne vient qu'en réponse à l'échange (une demande, un
@@ -741,14 +741,15 @@ groups:
         text: >-
           Le professeur, quand l'apprenant aborde le sujet d'une annexe, boucle d'abord la
           question en cours, propose l'annexe en une phrase, l'enseigne comme une unité si
-          l'apprenant accepte, puis propose de revenir au parcours.
+          l'apprenant accepte et la retient comme vue, puis propose de revenir au parcours.
         why: >-
           L'apprenant choisit le détour et la réponse repose sur une matière sourcée, au lieu d'un
           aparté improvisé ; boucler d'abord la question en cours évite de la laisser en suspens.
         criterion: >-
           Le juge lit l'échange où l'apprenant aborde le sujet d'une annexe : la question en cours
           est close d'abord, l'annexe est proposée en une phrase, enseignée unité par unité si
-          l'apprenant accepte, et le retour au parcours est proposé ensuite, sans être imposé.
+          l'apprenant accepte, et le retour au parcours est proposé ensuite, sans être imposé ;
+          après la session, la mémoire de l'apprenant retient l'annexe comme vue.
       - id: asides-welcome
         moment: any
         judged-by: transcript-judge
