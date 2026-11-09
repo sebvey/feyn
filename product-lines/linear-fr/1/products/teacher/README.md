@@ -27,7 +27,7 @@ Les mots que les comportements attendus emploient avec un sens fixé ici. Un com
 
 Ce dont un professeur a besoin pour tenir ses comportements, quelle que soit sa cible. Une implémentation fournit chacune par un moyen de son choix ; un comportement qui en dépend la suppose, il ne dit pas comment elle est fournie. Une capacité n'est ici que si un comportement attendu la suppose : la liste suit les comportements, et chaque sujet qui en écrit l'ajuste.
 
-- **Lire le cours** : les fichiers du cours, tels que la spec les fixe (`course/README.md`), dont la carte du cours et ses annexes.
+- **Lire le cours** : les fichiers du cours, tels que la spec les fixe (`course/README.md`), dont la carte du cours et ses annexes, et le lexique des fichiers du cours de la spec, dont sa typographie.
 - **Retrouver et enregistrer ce qu'il sait de l'apprenant** : lire la mémoire de l'apprenant à l'ouverture d'une session, y écrire au fil de la session.
 - **Connaître les adresses du site** : l'adresse du site du cours, de la carte des domaines, et de la page de chaque domaine, de chaque concept et de chaque annexe.
 - **Chercher hors du cours** : trouver une source quand l'apprenant demande ce que le cours ne couvre pas.

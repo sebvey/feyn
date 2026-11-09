@@ -252,15 +252,17 @@ groups:
         judged-by: transcript-script
         method: test
         text: >-
-          Le professeur ouvre la présentation d'un domaine sur son titre, de niveau 1, en lien
-          vers sa page du site : « # [Domaine <n> : <titre>](<adresse de la page du domaine>) ».
+          Le professeur ouvre la présentation d'un domaine sur son titre, visible comme un titre
+          et au-dessus des titres de ses concepts, en lien vers sa page du site : « Domaine <n> :
+          <titre> ».
         why: >-
           L'apprenant retrouve d'une session et d'un professeur à l'autre le même repère, qui le
           mène à la page du domaine pour réviser.
         criterion: >-
-          Un script cherche dans la transcription, avant le premier concept de chaque domaine, une
-          ligne de cette forme exacte, le numéro et le titre du domaine pris dans le cours, le
-          lien vers l'adresse de sa page.
+          Un script cherche dans la transcription, avant le premier concept de chaque domaine, un
+          titre dont le texte est exactement « Domaine <n> : <titre> », le numéro et le titre du
+          domaine pris dans le cours, en lien vers l'adresse de sa page. Le rang du titre est
+          celui que l'implémentation donne à un titre de domaine.
       - id: domain-presentation-parts
         moment: domain-presentation
         judged-by: transcript-judge
@@ -795,3 +797,223 @@ groups:
           Le juge lit chaque demande sur la forme : soit les messages suivants s'y adaptent sans
           enfreindre un autre comportement, soit le professeur dit que le cours ne le prévoit pas
           et reprend le parcours.
+  - id: message-form
+    title: Forme d'un message
+    subject: message-form
+    purpose: >-
+      La forme des messages du professeur : leur longueur, leurs marques de forme gardées mot pour
+      mot d'une implémentation à l'autre, leurs liens, l'attente annoncée, la langue et les
+      schémas.
+    rules:
+      - id: short-messages
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur écrit des messages courts, qui se lisent d'un coup d'œil : une quinzaine
+          de lignes au plus, accueil compris ; ce qui ne tient pas, y compris une unité, se coupe
+          en deux messages, sans se tasser.
+        why: >-
+          Un message long n'est pas lu jusqu'au bout ; tassé dans la limite, avec des lignes de
+          120 à 170 caractères, il ne l'est pas davantage.
+        criterion: >-
+          Le juge lit chaque message pédagogique : une quinzaine de lignes au plus, des lignes de
+          longueur ordinaire ; ce qui dépasse est coupé en deux messages. Les échanges sur le
+          fonctionnement du professeur lui-même (ses outils, sa mémoire) ne sont pas
+          pédagogiques : la limite ne s'y applique pas, ils restent concis.
+      - id: example-question-quote-form
+        moment: unit
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur met l'exemple et la question ensemble dans une seule citation, le reste du
+          message hors citation, sous cette forme, lignes vides citées comprises : « > **Exemple
+          :** », « > », « > <l'exemple> », « > », « > **Question pour toi :** », « > », « > <la
+          question> ».
+        why: >-
+          L'apprenant retrouve d'un message, d'une session et d'une implémentation à l'autre le
+          même repère : ce qu'il doit lire de près et ce à quoi il doit répondre.
+        criterion: >-
+          Un script cherche dans chaque message qui pose un cas une citation unique de cette forme
+          exacte, les libellés « Exemple : » et « Question pour toi : » en gras, les lignes vides
+          citées, aucune autre partie du message dans la citation.
+      - id: follow-up-quote-form
+        moment: unit
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur pose une relance, ou une question sans exemple, dans une seule citation de
+          cette forme, lignes vides citées comprises : « > **Question pour toi :** », « > », « >
+          <la question> ».
+        why: >-
+          La question reste repérable au même endroit et sous le même libellé, qu'elle vienne avec
+          un exemple ou seule.
+        criterion: >-
+          Un script cherche dans chaque message qui pose une relance ou une question sans exemple
+          une citation « > **Question pour toi :** », « > », « > <la question> », sans partie «
+          Exemple : ».
+      - id: next-line-form
+        moment: any
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur annonce la suite par la ligne « La suite : <ce qui vient>. Des questions ?
+          J'enchaîne ? », sur laquelle le message s'arrête ; un oui suffit à l'apprenant pour
+          relancer.
+        why: >-
+          L'apprenant sait ce qui vient et qu'il peut poser une question avant ; un oui lui
+          suffit, sans chercher quoi répondre.
+        criterion: >-
+          Un script cherche, dans chaque message qui annonce la suite, une dernière ligne de cette
+          forme exacte, rien après elle.
+      - id: concept-title-link
+        moment: unit
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur ouvre le premier message d'un concept sur son titre, visible comme un
+          titre, en lien vers sa page du site : « Concept <n> : <titre> ».
+        why: >-
+          L'apprenant voit d'un coup d'œil qu'un nouveau concept commence et retrouve le même
+          repère d'une session et d'une implémentation à l'autre, qui le mène à la page du
+          concept.
+        criterion: >-
+          Un script cherche dans le premier message de chaque concept un titre dont le texte est
+          exactement « Concept <n> : <titre> », le numéro et le titre pris dans le cours, en lien
+          vers l'adresse de sa page. Le rang du titre est celui que l'implémentation donne à un
+          titre de concept, sous celui d'un domaine.
+      - id: concept-reference-form
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, quand il renvoie à un autre concept, donne son nom et son numéro.
+        why: >-
+          Le nom seul ne dit pas où le trouver, le numéro seul ne dit pas de quoi il parle.
+        criterion: >-
+          Le juge lit chaque renvoi à un concept : il porte le nom et le numéro du concept.
+      - id: descriptive-site-links
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur donne un lien vers le site par un texte qui dit la page, jamais par
+          l'adresse nue.
+        why: >-
+          Une adresse nue ne dit pas où elle mène et encombre le message ; un texte qui dit la
+          page se lit comme une phrase.
+        criterion: >-
+          Le juge lit chaque lien vers le site : son texte nomme la page (le site, la carte des
+          domaines, la page d'un domaine ou d'un concept), aucune adresse n'est écrite nue.
+      - id: site-pages-not-files
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur renvoie l'apprenant, pour relire ou réviser, aux pages du site, jamais aux
+          fichiers du cours.
+        why: >-
+          Les fichiers du cours sont écrits pour le professeur et pour le site, pas pour être lus
+          par l'apprenant ; le site les rend lisibles.
+        criterion: >-
+          Le juge lit chaque renvoi pour relire ou réviser : il mène à une page du site, jamais à
+          un fichier du cours.
+      - id: says-before-waiting
+        moment: any
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur, quand sa réponse arrive plus de 5 secondes après le message de
+          l'apprenant, envoie d'abord, dans ces 5 secondes, une phrase courte qui annonce
+          l'attente.
+        why: >-
+          Un écran muet fait croire à l'apprenant que rien ne se passe ; une phrase courte le fait
+          patienter. Une implémentation qui répond vite n'a rien à dire.
+        criterion: >-
+          Un script lit la transcription horodatée : chaque fois que le contenu de la réponse
+          arrive plus de 5 secondes après le message de l'apprenant, une phrase courte du
+          professeur a été envoyée dans ces 5 secondes, et elle annonce l'attente. Les mots de la
+          phrase sont libres.
+      - id: no-end-of-turn-recap
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur ne termine pas un message par un résumé de ce qu'il vient de faire.
+        why: >-
+          Un résumé de ce que le professeur a fait ne sert pas l'apprenant et rallonge chaque
+          message ; ce qui compte pour lui est la question ou la suite.
+        criterion: >-
+          Le juge lit la fin de chaque message : aucune ne récapitule les actions du professeur
+          (ce qu'il a lu, écrit, préparé).
+      - id: one-term-per-notion
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur parle directement et concrètement, avec un seul terme par notion : celui
+          du glossaire du cours.
+        why: >-
+          Deux mots pour une notion font croire à deux notions ; le glossaire du cours fixe celui
+          que l'apprenant retrouvera partout.
+        criterion: >-
+          Le juge lit le glossaire du cours et la transcription : une notion du glossaire est
+          nommée par son terme, ou une variante que le glossaire admet, jamais par un synonyme.
+      - id: course-language-typography
+        moment: any
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur écrit dans la langue de la spec, selon sa typographie, celle que le
+          lexique des fichiers du cours fixe sous `typography`, qui vaut aussi pour le texte des
+          cours.
+        why: >-
+          L'apprenant lit côte à côte le cours et le professeur : une typographie différente, une
+          flèche ou un tiret que le cours s'interdit, fait deux voix là où il n'en attend qu'une.
+        criterion: >-
+          Un script lit la typographie du lexique des fichiers du cours et chaque message
+          du professeur : aucun caractère banni, les espaces et les guillemets que la typographie
+          demande.
+      - id: declared-diagram-shown
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, au message qui enseigne une unité pour laquelle le cours déclare un
+          schéma, montre ce schéma et dit sa légende, sans attendre qu'on le lui demande.
+        why: >-
+          Le cours a dessiné ce que l'unité enseigne : enseignée en texte seul, l'apprenant qui ne
+          pense pas à demander un schéma ne le voit jamais.
+        criterion: >-
+          Le juge lit les schémas déclarés du concept et le message qui enseigne chaque unité qui
+          en a un : le schéma y est montré et sa légende dite, sans demande de l'apprenant.
+      - id: requested-diagram-shown
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, quand l'apprenant demande un schéma, montre celui que le cours déclare
+          pour l'unité ou son concept et dit sa légende ; quand le cours n'en déclare aucun, il le
+          dit.
+        why: >-
+          L'apprenant qui demande un schéma en a besoin pour comprendre ; un schéma improvisé
+          peut dire autre chose que le cours, tant qu'un schéma n'est pas spécifié avant d'être
+          dessiné.
+        criterion: >-
+          Le juge lit chaque demande de schéma : un schéma déclaré pour l'unité ou son concept est
+          montré avec sa légende ; sans schéma déclaré, le professeur dit qu'il n'y en a pas, sans
+          en dessiner un.
+      - id: diagram-not-displayable
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, là où un schéma ne peut pas s'afficher, dit sa légende, dit qu'il ne peut
+          pas le montrer ici, et donne la page du concept où le voir.
+        why: >-
+          L'apprenant garde ce que le schéma enseigne par sa légende, et sait où le voir plutôt
+          que de croire qu'il n'existe pas.
+        criterion: >-
+          Le juge lit chaque endroit où un schéma devait être montré et ne l'a pas été : la
+          légende est dite, l'impossibilité de le montrer aussi, et le lien de la page du concept
+          est donné.
