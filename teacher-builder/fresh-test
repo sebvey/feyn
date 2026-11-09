@@ -296,7 +296,9 @@ function questionForm(text) {
     const [first, last] = [quotes[0], quotes[quotes.length - 1]];
     if (quotes.length !== last - first + 1) problems.push('more than one quote');
     if (first < li || (qi >= 0 && last > qi)) problems.push('a part of the message other than the example in the quote');
+    if (first > li && lines.slice(li + 1, first).some((l) => l)) problems.push(`a line between « ${lead} » and the quote, outside it`);
     if (lines[last + 1] !== undefined && lines[last + 1] !== '') problems.push('no blank line after the quote');
+    else if (qi > last && lines.slice(last + 1, qi).some((l) => l)) problems.push(`a line between the quote and « ${PH.question_lead} »`);
   }
   return { kind: 'case', problems };
 }
