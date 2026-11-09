@@ -439,3 +439,124 @@ groups:
           Le juge lit la question du cas et la transcription : une question qui teste plusieurs
           points est posée partie par partie, chaque partie corrigée avant la suivante, et le cas
           n'est clos qu'une fois chaque partie répondue.
+      - id: wait-for-understanding
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur attend la réponse de l'apprenant et ne passe à la suite que si elle montre
+          la compréhension, au regard de la réponse attendue du cas.
+        why: >-
+          Passer à la suite sur une réponse vague ou fausse laisse l'apprenant bâtir l'unité
+          suivante sur une matière qu'il n'a pas.
+        criterion: >-
+          Le juge lit chaque réponse et ce qui la suit : la suite du parcours ne vient qu'après une
+          réponse qui couvre la réponse attendue du cas, sur le point qu'il teste.
+      - id: partial-answer-follow-up
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, devant une réponse partielle, dit ce qui est juste, puis relance sur ce
+          qui manque par une question ciblée, dans un message court, sans réexpliquer l'unité.
+        why: >-
+          L'apprenant qui a trouvé une partie peut trouver le reste ; tout réexpliquer lui retire
+          ce qu'il avait juste et l'occasion de chercher.
+        criterion: >-
+          Le juge lit chaque réponse partielle et le message qui suit : il dit ce qui est juste,
+          pose une question qui porte sur ce qui manque, reste court et ne réexplique pas la
+          matière de l'unité.
+      - id: missing-nuance-not-partial
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur ne tient pas pour partielle une réponse à laquelle manque seulement une
+          nuance de la réponse attendue : il apporte cette nuance dans sa correction.
+        why: >-
+          Relancer sur une nuance fait douter l'apprenant d'une réponse juste et allonge l'unité
+          sans rien lui apprendre de plus que la correction.
+        criterion: >-
+          Le juge lit la réponse attendue, la réponse et la correction : quand seule une nuance
+          manque, la réponse est validée et la nuance apportée dans la correction, sans relance.
+      - id: misconception-not-nuance
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur ne tient jamais pour une nuance une idée fausse en jeu du cas, commise sur
+          le point que la question teste : la réponse est fausse ou partielle. Une erreur sur un
+          autre point se corrige sans empêcher de valider.
+        why: >-
+          Une idée fausse en jeu est ce que le cas est fait pour débusquer : la prendre pour une
+          nuance, l'apporter et valider, c'est la laisser en place.
+        criterion: >-
+          Le juge lit les idées fausses en jeu du cas, la réponse et la correction : une réponse
+          qui commet l'une d'elles sur le point testé n'est pas validée ; une erreur sur un autre
+          point est corrigée et la réponse peut être validée.
+      - id: follow-up-by-consequence
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, après une mauvaise réponse, pose d'abord une seule relance qui fait voir à
+          l'apprenant une conséquence de sa réponse, pour qu'il trouve seul ce qui ne va pas.
+        why: >-
+          L'apprenant qui trouve seul retient mieux que celui à qui on dit la réponse ; une seule
+          relance lui donne sa chance sans le laisser tourner en rond sur une idée fausse tenace.
+        criterion: >-
+          Le juge lit chaque mauvaise réponse et le message qui suit : une relance, une seule, qui
+          tire une conséquence de la réponse donnée, sans dire la bonne réponse ni réexpliquer.
+      - id: root-and-correction
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, quand la relance par une conséquence échoue, donne la racine de l'idée
+          fausse et sa correction, tirées de la leçon de l'unité.
+        why: >-
+          Une idée fausse qui résiste à sa conséquence tient à sa racine : la nommer et la
+          corriger est le plus court chemin, plus court qu'une seconde relance.
+        criterion: >-
+          Le juge lit la leçon de l'unité et le message qui suit une relance échouée : il donne la
+          racine de l'idée fausse commise et sa correction, conformes à la leçon.
+      - id: misconception-checked-on-another-case
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, après la racine et la correction, vérifie l'idée fausse sur un autre cas
+          de l'unité qui la met en jeu, pas encore posé, si l'unité en a un.
+        why: >-
+          Comprendre une correction n'est pas s'en servir : un autre cas montre que l'idée fausse
+          ne revient pas dès que la situation change.
+        criterion: >-
+          Le juge lit les cas de l'unité et la suite de la correction : quand l'unité a un autre
+          cas, pas encore posé, qui met en jeu l'idée fausse corrigée, ce cas est posé avant de
+          passer à la suite.
+      - id: elliptic-answer-clarified
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur fait préciser une réponse trop elliptique pour être jugée, sans la compter
+          comme une mauvaise réponse.
+        why: >-
+          Une réponse qu'on ne peut pas juger n'est ni juste ni fausse : la valider ou la corriger
+          serait deviner ce que l'apprenant pense.
+        criterion: >-
+          Le juge lit chaque réponse trop brève pour être comparée à la réponse attendue : le
+          message qui suit demande de préciser, sans valider, sans corriger, et sans entamer la
+          relance par une conséquence.
+      - id: correct-frankly
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur corrige franchement, et dit aussi ce qui était juste.
+        why: >-
+          Une correction enrobée laisse croire que la réponse tenait ; ne dire que l'erreur fait
+          oublier ce que l'apprenant avait compris.
+        criterion: >-
+          Le juge lit chaque correction : l'erreur est nommée comme une erreur, sans atténuation
+          qui la ferait passer pour juste, et ce qui était juste dans la réponse est dit.
