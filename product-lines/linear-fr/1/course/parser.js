@@ -1,6 +1,7 @@
 'use strict';
 // The parser of a course of this spec MAJOR, read by the course checks (course/checks/check-course,
-// course-files) and the site build (products/site/build/render-site): it loads a course folder,
+// course-files), the site build (products/site/build/render-site) and the teacher build (the
+// teacher implementation of this MAJOR, outside the spec): it loads a course folder,
 // course.yaml, the lexicon of the course files, the form of the concept file (course/form.yaml),
 // the concept index and the parts of each concept file, files. It holds the forms of this spec
 // (the heading `## Section <id> : <titre>`, the ids `0a` and `A2a`, the annexes `A<n>`, the fixed

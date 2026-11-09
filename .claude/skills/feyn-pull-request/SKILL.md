@@ -20,7 +20,7 @@ Its caller passes its variations as parameters and rewrites none of its steps (d
 2. **Checks.** Run the ones that exist for what the branch touches (`git diff --name-only origin/<base>...HEAD`):
    - a course `courses/<id>/`: the check runner of the spec it declares (`product-lines/check-course courses/<id>`);
    - a path under `product-lines/linear-fr/`: the bench course, `product-lines/check-course product-lines/linear-fr/1/course/samples/cafe` ([contributing](../../../docs/contributing.md), "Policies"), even when the change touches no file a course has;
-   - a path under `product-lines/linear-fr/1/products/teacher/`: also the spec's render test, `product-lines/linear-fr/1/products/teacher/build/test-render`, and the teacher build's test, `teacher-builder/test-build`;
+   - a path under `teacher-builder/` or `product-lines/linear-fr/1/products/teacher/`: also the render test of the teacher implementation, `teacher-builder/linear-fr/1/test-render`, and the teacher build's test, `teacher-builder/test-build`;
    - `site-builder/` or a course: `astro check` and the site build, from `site-builder/`;
    - a decision file (`decisions/`): `mise exec -- .claude/scripts/check-decisions <files>`;
    - the agentic rules (`.claude/reference/agentic-rules.yaml`): `mise exec -- .claude/scripts/check-agentic-rules`;

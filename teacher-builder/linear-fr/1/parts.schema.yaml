@@ -1,7 +1,7 @@
 # The shape of what render-parts prints (README.md, this folder): the five parts of
-# products/teacher/composition.yaml rendered as text for one course, the contract between this spec MAJOR
-# and a teacher build, which validates the document against this schema before it writes a
-# classroom. Every text is final: no {group.key}, {course.<name>} nor {classroom.<name>} is left;
+# composition.yaml (this folder) rendered as text for one course, the contract between the
+# rendering of the teacher implementation of linear-fr@1 and build-teacher, which validates the
+# document against this schema before it writes a classroom. Every text is final: no {group.key}, {course.<name>} nor {classroom.<name>} is left;
 # a slot without a dot ({n}, {title}) is the teacher's to fill and stays.
 $schema: https://json-schema.org/draft/2020-12/schema
 title: the rendered parts of the composition
@@ -20,13 +20,13 @@ properties:
     additionalProperties: false
     properties:
       protocol:
-        description: every rule of the protocol no moment loads, in the order of products/teacher/build/instructions.yaml, each family and group that keeps a rule preceded by its heading and its purpose (Markdown)
+        description: every rule of the protocol no moment loads, in the order of instructions.yaml, each family and group that keeps a rule preceded by its heading and its purpose (Markdown)
         $ref: '#/$defs/text'
       posture:
         description: the paragraph of the course's plan.md under its onboarding heading
         $ref: '#/$defs/text'
       course_map:
-        description: each domain, then its concepts, number, title and dir (a Markdown list)
+        description: each domain, then its concepts, number, title and dir; then each annex under its own title and its dir (a Markdown list)
         $ref: '#/$defs/text'
       course_files:
         description: the files of the course, as paths in the classroom's course/, each with what it holds (a Markdown list)
@@ -122,7 +122,7 @@ properties:
     additionalProperties: false
     properties:
       course:
-        description: the course parameters, from course.yaml (those products/teacher/build/instructions.yaml cites), and the course id
+        description: the course parameters, from course.yaml (those instructions.yaml cites), and the course id
         type: object
         required: [id, title, domain_count, storyline, glossary]
         additionalProperties: false
@@ -133,7 +133,7 @@ properties:
           storyline: { $ref: '#/$defs/text' }
           glossary: { $ref: '#/$defs/text' }
       classroom:
-        description: the classroom parameters (those products/teacher/build/instructions.yaml cites), « (site non publié) » with no site address, and the channel
+        description: the classroom parameters (those instructions.yaml cites), « (site non publié) » with no site address, and the channel
         type: object
         required: [site_url, domains_url, domain_url, concept_url, channel]
         additionalProperties: false

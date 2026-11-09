@@ -1,7 +1,8 @@
 # The lexicon of the teacher of `linear-fr`: the words the instructions of the build say and
 # write (its literal phrases, what the learner says and the teacher reacts to, the lines and the
-# headings of learner memory, the concept statuses), named `{group.key}` in
-# products/teacher/build/instructions.yaml (decision `lexicon-not-language-pack`). The form marks
+# headings of learner memory, the concept statuses), named `{group.key}` in the instructions of
+# the teacher implementation, outside the spec, which reads this file (decision
+# `lexicon-not-language-pack`). The form marks
 # and the titles the spec fixes are written word for word in products/teacher/rules.yaml; the
 # other words are the teacher implementation's, held here until epic #757 moves them. The spec is
 # French (`language: fr` in spec.yaml). spec.yaml lists no keys for this lexicon. A value with a slot, `{n}`, `{title}`, is filled by whoever
@@ -42,7 +43,7 @@ learner_says:
   stop: ["on s'arrête", "fin de session", "je dois y aller", "on reprendra"]
   hurry: ["je dois filer", "vite"]
 
-# Headings of the learner memory files; those of products/teacher/templates/learner/.
+# Headings of the learner memory files; those of the learner templates of the teacher implementation.
 memory_headings:
   next_step: "Prochaine étape"
   concepts: "Concepts"

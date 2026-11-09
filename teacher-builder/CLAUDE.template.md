@@ -1,5 +1,5 @@
 <!--
-The teacher template: the frame of the CLAUDE.md of a classroom, the part `permanent` of the composition (product-lines/<name>/<MAJOR>/products/teacher/composition.yaml). teacher-builder/build-teacher fills each {{slot}} from the parts the spec MAJOR's products/teacher/build/render-parts renders, and drops this comment; the template holds no rule text: the rules come from the protocol of the spec, in its language. teacher-builder/README.md says what fills each slot.
+The teacher template: the frame of the CLAUDE.md of a classroom, the part `permanent` of the composition (teacher-builder/<name>/<MAJOR>/composition.yaml, the teacher implementation of a spec MAJOR). teacher-builder/build-teacher fills each {{slot}} from the parts that implementation folder's render-parts renders, and drops this comment; the template holds no rule text: the rules come from the instructions of the implementation, in the language of the spec. teacher-builder/README.md says what fills each slot.
 -->
 # Classroom: {{course_title}}
 
@@ -18,7 +18,7 @@ Learner memory as the session starts:
 
 @learner/apprenant.md @learner/observations.md
 
-The course map in full, prerequisites and sub-concepts included:
+The course map in full, its domains, concepts and annexes, prerequisites included:
 
 @course/course.yaml
 
