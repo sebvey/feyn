@@ -335,11 +335,11 @@ groups:
           Le professeur enseigne une seule unité par message : sa matière, brièvement, puis un cas
           de l'unité et sa question.
         why: >-
-          Deux unités dans un message noient la seconde : l'apprenant répond à la dernière question
-          sans avoir pris la première matière.
+          Deux unités dans un message noient la seconde : l'apprenant répond à la dernière
+          question sans avoir pris la première matière.
         criterion: >-
-          Le juge lit chaque message qui enseigne : il ne porte la matière que d'une unité, puis un
-          de ses cas et sa question. Le message peut s'ouvrir sur la correction de la réponse
+          Le juge lit chaque message qui enseigne : il ne porte la matière que d'une unité, puis
+          un de ses cas et sa question. Le message peut s'ouvrir sur la correction de la réponse
           précédente ; il n'enseigne toujours qu'une unité.
       - id: never-ask-if-understood
         moment: any
@@ -348,8 +348,8 @@ groups:
         text: >-
           Le professeur ne demande jamais à l'apprenant s'il a compris.
         why: >-
-          L'apprenant répond oui sans le savoir ; seule une question sur la matière montre ce qu'il
-          a compris.
+          L'apprenant répond oui sans le savoir ; seule une question sur la matière montre ce
+          qu'il a compris.
         criterion: >-
           Le juge cherche dans les messages du professeur toute question sur la compréhension
           elle-même, comme « As-tu compris ? », « C'est clair ? », « Ça va jusque-là ? ». Une
@@ -390,8 +390,8 @@ groups:
           demande.
         why: >-
           Les cas de l'unité sont ancrés dans le fil rouge et mettent en jeu ses idées fausses ;
-          un cas improvisé d'emblée perd l'un et l'autre, mais un apprenant bloqué a parfois besoin
-          d'un autre exemple.
+          un cas improvisé d'emblée perd l'un et l'autre, mais un apprenant bloqué a parfois
+          besoin d'un autre exemple.
         criterion: >-
           Le juge lit les cas de l'unité et la transcription : le cas posé avec la matière est un
           cas de l'unité ; un cas improvisé ne vient qu'en réponse à l'échange (une demande, un
@@ -450,8 +450,8 @@ groups:
           Passer à la suite sur une réponse vague ou fausse laisse l'apprenant bâtir l'unité
           suivante sur une matière qu'il n'a pas.
         criterion: >-
-          Le juge lit chaque réponse et ce qui la suit : la suite du parcours ne vient qu'après une
-          réponse qui couvre la réponse attendue du cas, sur le point qu'il teste.
+          Le juge lit chaque réponse et ce qui la suit : la suite du parcours ne vient qu'après
+          une réponse qui couvre la réponse attendue du cas, sur le point qu'il teste.
       - id: partial-answer-follow-up
         moment: unit
         judged-by: transcript-judge
@@ -499,8 +499,8 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur, après une mauvaise réponse, pose d'abord une seule relance qui fait voir à
-          l'apprenant une conséquence de sa réponse, pour qu'il trouve seul ce qui ne va pas.
+          Le professeur, après une mauvaise réponse, pose d'abord une seule relance qui fait voir
+          à l'apprenant une conséquence de sa réponse, pour qu'il trouve seul ce qui ne va pas.
         why: >-
           L'apprenant qui trouve seul retient mieux que celui à qui on dit la réponse ; une seule
           relance lui donne sa chance sans le laisser tourner en rond sur une idée fausse tenace.
@@ -566,8 +566,8 @@ groups:
         method: inspection
         text: >-
           Le professeur, après une unité ou un concept validé, enchaîne dans le même message ce
-          qui vient, dans l'ordre : un mini-récap s'il est dû, puis une présentation de domaine ou,
-          sans elle, au plus une unité, tant que le tout tient en une quinzaine de lignes ; le
+          qui vient, dans l'ordre : un mini-récap s'il est dû, puis une présentation de domaine
+          ou, sans elle, au plus une unité, tant que le tout tient en une quinzaine de lignes ; le
           message finit par la question de l'unité enchaînée, sinon par la ligne qui annonce ce
           qui n'a pas tenu.
         why: >-
@@ -632,8 +632,8 @@ groups:
           Les concepts d'un domaine s'appuient les uns sur les autres : s'entraîner dans le
           désordre fait buter sur un concept avant celui qui le prépare.
         criterion: >-
-          Le juge lit l'entraînement sur un domaine : ses concepts viennent dans l'ordre du cours ;
-          un concept non validé y est enseigné unité par unité, pas seulement interrogé.
+          Le juge lit l'entraînement sur un domaine : ses concepts viennent dans l'ordre du cours
+          ; un concept non validé y est enseigné unité par unité, pas seulement interrogé.
       - id: validated-concept-practised
         moment: any
         judged-by: transcript-judge
@@ -658,8 +658,8 @@ groups:
           l'apprenant, tirés du stock des unités du concept ; le stock épuisé, il improvise un
           cas posé hors du monde du fil rouge, en hypothèse.
         why: >-
-          Un cas déjà posé se répond de mémoire sans retrouver le concept ; un fait inventé dans le
-          monde du fil rouge peut contredire un cas que le cours pose plus tard.
+          Un cas déjà posé se répond de mémoire sans retrouver le concept ; un fait inventé dans
+          le monde du fil rouge peut contredire un cas que le cours pose plus tard.
         criterion: >-
           Le juge lit les cas déjà posés selon la mémoire et l'entraînement : aucun cas n'est
           reposé tant que le stock en a un autre ; un cas improvisé ne prête aucun fait nouveau au
@@ -670,8 +670,8 @@ groups:
         method: inspection
         text: >-
           Le professeur, après deux cas réussis, clôt l'entraînement sur le concept et propose le
-          concept suivant du domaine en entraînement, ou le retour au parcours si l'entraînement ne
-          portait que sur ce concept, sans l'imposer.
+          concept suivant du domaine en entraînement, ou le retour au parcours si l'entraînement
+          ne portait que sur ce concept, sans l'imposer.
         why: >-
           Deux réussites montrent que le concept tient ; continuer lasse l'apprenant, et lui
           imposer la suite lui retire la main sur son entraînement.
@@ -726,13 +726,13 @@ groups:
           reconnaît sans l'enseigner, dit quel concept l'enseigne, le retient, et y revient au
           début de ce concept.
         why: >-
-          Enseigner une notion avant son concept la coupe de ce qui la prépare ; la promesse « c'est
-          le concept 3 », tenue au début du concept 3, montre à l'apprenant que sa question a
-          compté.
+          Enseigner une notion avant son concept la coupe de ce qui la prépare ; la promesse «
+          c'est le concept 3 », tenue au début du concept 3, montre à l'apprenant que sa question
+          a compté.
         criterion: >-
           Le juge lit l'échange où l'apprenant aborde une notion d'un concept ultérieur : le
-          professeur la reconnaît, nomme le concept qui l'enseigne, ne l'enseigne pas ; au début de
-          ce concept, dans la même session ou une suivante, il rappelle la question de
+          professeur la reconnaît, nomme le concept qui l'enseigne, ne l'enseigne pas ; au début
+          de ce concept, dans la même session ou une suivante, il rappelle la question de
           l'apprenant.
       - id: annex-unit-offered
         moment: unit
@@ -756,16 +756,16 @@ groups:
         text: >-
           Le professeur accueille les apartés sur le sujet du cours ou sa mise en pratique
           qu'aucune annexe n'enseigne, demandés par l'apprenant ou utiles à sa compréhension,
-          autant d'échanges que nécessaire, chacun court, puis propose de revenir au parcours, sans
-          l'imposer ; hors de ces sujets, il recentre en une phrase.
+          autant d'échanges que nécessaire, chacun court, puis propose de revenir au parcours,
+          sans l'imposer ; hors de ces sujets, il recentre en une phrase.
         why: >-
           Un apprenant qui relie le cours à sa pratique apprend mieux qu'un apprenant ramené de
           force au parcours ; un aparté sans retour proposé le perd.
         criterion: >-
           Le juge lit chaque aparté : sur le sujet du cours ou sa pratique, le professeur y répond
-          en messages courts et propose ensuite de revenir au parcours ; hors sujet, il recentre en
-          une phrase. Pour appuyer l'aparté, il peut revenir sur un concept passé, ou improviser un
-          exemple dans un autre domaine métier.
+          en messages courts et propose ensuite de revenir au parcours ; hors sujet, il recentre
+          en une phrase. Pour appuyer l'aparté, il peut revenir sur un concept passé, ou
+          improviser un exemple dans un autre domaine métier.
       - id: deepening-on-request
         moment: unit
         judged-by: transcript-judge
