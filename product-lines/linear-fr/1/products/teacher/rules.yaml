@@ -916,3 +916,43 @@ groups:
         criterion: >-
           Le juge lit chaque renvoi pour relire ou réviser : il mène à une page du site, jamais à
           un fichier du cours.
+      - id: says-before-waiting
+        moment: any
+        judged-by: transcript-script
+        method: test
+        text: >-
+          Le professeur, quand sa réponse arrive plus de 5 secondes après le message de
+          l'apprenant, envoie d'abord, dans ces 5 secondes, une phrase courte qui annonce
+          l'attente.
+        why: >-
+          Un écran muet fait croire à l'apprenant que rien ne se passe ; une phrase courte le fait
+          patienter. Une implémentation qui répond vite n'a rien à dire.
+        criterion: >-
+          Un script lit la transcription horodatée : chaque fois que le contenu de la réponse
+          arrive plus de 5 secondes après le message de l'apprenant, une phrase courte du
+          professeur a été envoyée dans ces 5 secondes. Les mots de la phrase sont libres.
+      - id: no-end-of-turn-recap
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur ne termine pas un message par un résumé de ce qu'il vient de faire.
+        why: >-
+          Un résumé de ce que le professeur a fait ne sert pas l'apprenant et rallonge chaque
+          message ; ce qui compte pour lui est la question ou la suite.
+        criterion: >-
+          Le juge lit la fin de chaque message : aucune ne récapitule les actions du professeur
+          (ce qu'il a lu, écrit, préparé).
+      - id: one-term-per-notion
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur parle directement et concrètement, avec un seul terme par notion : celui
+          du glossaire du cours.
+        why: >-
+          Deux mots pour une notion font croire à deux notions ; le glossaire du cours fixe celui
+          que l'apprenant retrouvera partout.
+        criterion: >-
+          Le juge lit le glossaire du cours et la transcription : une notion du glossaire est
+          nommée par son terme, ou une variante que le glossaire admet, jamais par un synonyme.
