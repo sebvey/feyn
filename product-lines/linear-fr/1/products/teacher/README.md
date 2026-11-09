@@ -3,7 +3,7 @@
 | Reader | Comes for | Opens |
 |---|---|---|
 | creator | nothing here: what a course is | [`../../course/README.md`](../../course/README.md), [`../../course/templates/README.md`](../../course/templates/README.md) |
-| builder | what a teacher of this spec must do and what it needs, which a teacher implementation makes hold | [Capacités](#capacités), [Comportements attendus](#comportements-attendus) |
+| builder | what a teacher of this spec must do, what it needs and what it retains of the learner, which a teacher implementation makes hold | [Capacités](#capacités), [Mémoire de l'apprenant](#mémoire-de-lapprenant), [Comportements attendus](#comportements-attendus) |
 | verifier | how a protocol rule is judged | [Comportements attendus](#comportements-attendus) |
 | spec writer | how a protocol rule is written and classed | [Définitions](#définitions), [Comportements attendus](#comportements-attendus), [`../../decisions/`](../../decisions/), [`../../CHANGELOG.md`](../../CHANGELOG.md) |
 
@@ -21,7 +21,7 @@ Les mots que les comportements attendus emploient avec un sens fixé ici. Un com
 - **Une session** : une conversation entre l'apprenant et le professeur, de son ouverture à son arrêt ou à sa coupure.
 - **Le parcours** : l'ordre des domaines, des concepts et des unités que le cours fixe ; une annexe est hors du parcours.
 - **Le concept en cours** : le concept du parcours que le professeur enseigne, ou qu'il reprendra à la prochaine session.
-- **La mémoire de l'apprenant** : ce que le professeur retient de l'apprenant d'une session à l'autre ; ce qu'elle retient est fixé par les comportements de son sujet, son stockage par l'implémentation.
+- **La mémoire de l'apprenant** : ce que le professeur retient de l'apprenant d'une session à l'autre (section [Mémoire de l'apprenant](#mémoire-de-lapprenant)) ; son stockage est à l'implémentation.
 
 ## Capacités
 
@@ -33,6 +33,22 @@ Ce dont un professeur a besoin pour tenir ses comportements, quelle que soit sa 
 - **Chercher hors du cours, ou savoir qu'il ne le peut pas** : trouver une source quand l'apprenant demande ce que le cours ne couvre pas.
 - **Montrer un schéma, ou savoir qu'il ne le peut pas** : afficher un schéma du cours à l'apprenant, ou le savoir impossible et le dire.
 - **Connaître le cours d'un coup d'œil** : le titre et « L'essentiel » de chaque concept et de chaque annexe, à tout moment de la session.
+
+## Mémoire de l'apprenant
+
+Ce que le professeur retient de l'apprenant d'une session à l'autre, et ce que chaque chose veut dire. Où et sous quelle forme elle est rangée (des fichiers, des titres, des lignes) est à l'implémentation. Une chose n'est ici que si un comportement attendu dit quand le professeur l'écrit et un autre quand il la lit (sujet `learner-memory` de `rules.yaml`).
+
+- **Le profil** : le surnom de l'apprenant et ses réponses d'accueil, avec ses mots.
+- **La prochaine étape** : le concept qui vient, ou l'entraînement en cours ; à l'arrêt, la question restée en attente (son cas, la question, ce que l'apprenant avait déjà juste).
+- **Le statut des concepts** : chaque concept en cours, validé, sauté ou à revoir ; un concept sans statut est à faire.
+- **Le cours fini** : que le dernier concept du parcours a été validé.
+- **Les cas déjà posés** : pour chaque concept, les cas que l'apprenant a déjà eus, et quand.
+- **Les mini-récaps** : quand le dernier a été fait.
+- **Les annexes vues** : celles que l'apprenant a suivies.
+- **Les leviers** : ce qui marche avec l'apprenant.
+- **Les vigilances** : les difficultés pas encore surmontées, rattachées à leur concept.
+- **Les acquis** : ce que l'apprenant a montré avoir compris, une vigilance surmontée.
+- **Les préférences** : ses demandes sur la forme du cours, avec le fait qui les a montrées.
 
 ## Comportements attendus
 
