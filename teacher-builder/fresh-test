@@ -362,11 +362,23 @@ const SCRIPT = {
   'one-question-per-message': () => everyTurn((t) => (questionCount(t.text) > 1 ? `${questionCount(t.text)} questions (the question after its label counts one; « ? » outside « », the example's quote, « ${PH.why} » and « ${PH.continue_prompt} »)` : null),
     'at most one question per message: the question after its label counts one, and no other « ? » outside « », the example\'s quote and the two phrases that are not the question'),
   'never-ask-if-understood': () => everyTurn((t) => (t.text.toLowerCase().includes(PH.banned_question.toLowerCase()) ? `« ${PH.banned_question} »` : null), `no « ${PH.banned_question} »`),
+  // the text before the first tool call holds the waiting sentence, after the correction in a
+  // reply to an answer (chain-after-validation): any text there holds it, its words the agent's
   'waiting-sentence-first': () => {
     const withTools = sent.filter((t) => realTools(t).length);
     if (!withTools.length) return ko('no reply reads or writes a file');
     const bad = withTools.filter((t) => !textBefore(t, realTools(t)[0]).trim());
     return bad.length ? ko(bad.map((t) => `turn ${t.index}: ${realTools(t)[0].name} before any sentence`).join('; ')) : ok(`turns ${withTools.map((t) => t.index).join(', ')}: a sentence before the first tool call`);
+  },
+  // a reply to an answer, a turn after a case or a follow-up, that calls a tool: the correction
+  // comes before its first tool call, so the text there holds more than the waiting sentence, at
+  // least two sentences; whether the first is the correction is the agent's to judge
+  'chain-after-validation': () => {
+    const answers = sent.filter((t, i) => i > 0 && realTools(t).length && ['case', 'follow-up'].includes((questionForm(sent[i - 1].text) || {}).kind));
+    if (!answers.length) return ko('no reply to an answer reads or writes a file');
+    const sentences = (s) => (stripCode(s).replace(/«[^»]*»/g, '«»').match(/[^.!?\n]+([.!?]+|\n|$)/g) || []).filter((x) => /\p{L}/u.test(x)).length;
+    const bad = answers.filter((t) => sentences(textBefore(t, realTools(t)[0])) < 2);
+    return bad.length ? ko(bad.map((t) => `turn ${t.index}: ${realTools(t)[0].name} before the correction (at most one sentence before it)`).join('; ')) : ok(`turns ${answers.map((t) => t.index).join(', ')}: the correction and a sentence before the first tool call`);
   },
   'resume-opening-sentence': () => {
     const t = sent[0];
