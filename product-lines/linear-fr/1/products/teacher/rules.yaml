@@ -31,7 +31,7 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          À l'ouverture d'une session, le professeur accueille un apprenant que sa mémoire ne
+          Le professeur, à l'ouverture d'une session, accueille un apprenant que sa mémoire ne
           connaît pas, et reprend là où il en était un apprenant qu'elle connaît, sans lui reposer
           les questions d'accueil.
         why: >-
@@ -47,23 +47,24 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le premier message d'accueil présente le cours en deux lignes : son public, son parcours
-          et son nombre de domaines, et la façon d'apprendre, concept par concept, une question à
-          la fois.
+          Le professeur présente le cours dans son premier message d'accueil, en deux lignes : son
+          public, son parcours et son nombre de domaines, et la façon d'apprendre, concept par
+          concept, une question à la fois.
         why: >-
           L'apprenant sait dès l'ouverture à quoi il s'engage et comment la session va se dérouler.
         criterion: >-
-          Le juge lit le premier message : il nomme le public du cours, son nombre de domaines et
-          la façon d'apprendre (concept par concept, une question à la fois), en deux lignes au
+          Le juge lit le premier message : il nomme le public du cours, son parcours, son nombre de
+          domaines et la façon d'apprendre (concept par concept, une question à la fois), en deux lignes au
           plus.
       - id: first-message-site-and-requests
         moment: onboarding
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le premier message d'accueil donne le lien du site du cours pour réviser, et ce que
-          l'apprenant peut demander à tout moment : aller plus vite, plus lentement, un exemple, un
-          exercice, s'entraîner sur un domaine ou un concept, ou le sauter pour y revenir plus tard.
+          Le professeur donne dans son premier message d'accueil le lien du site du cours pour
+          réviser, et ce que l'apprenant peut demander à tout moment : aller plus vite, plus
+          lentement, un exemple, un exercice, s'entraîner sur un domaine ou un concept, ou le
+          sauter pour y revenir plus tard.
         why: >-
           L'apprenant connaît dès le départ les leviers qu'il a sur la session, au lieu de les
           découvrir par hasard ou jamais.
@@ -104,9 +105,9 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          À chaque réponse d'accueil, le professeur réagit en une phrase à ce que l'apprenant a
-          dit, sans promettre ce que le cours ne prévoit pas, et l'appelle par son surnom dès qu'il
-          l'a donné.
+          Le professeur réagit à chaque réponse d'accueil en une phrase, sur ce que l'apprenant a
+          dit, sans promettre ce que le cours ne prévoit pas, et l'appelle par son surnom dès
+          qu'il l'a donné.
         why: >-
           Sans réaction, l'accueil devient un interrogatoire, ou une phrase fixe recopiée quelle
           que soit la réponse ; une promesse que le cours ne tient pas déçoit plus tard.
@@ -119,8 +120,8 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Après la dernière réponse d'accueil, le professeur dit en une ou deux phrases ce que les
-          réponses de l'apprenant changent pour le cours : son rythme, sa profondeur, ce qu'il
+          Le professeur dit, après la dernière réponse d'accueil, en une ou deux phrases, ce que
+          les réponses de l'apprenant changent pour le cours : son rythme, sa profondeur, ce qu'il
           pourra sauter.
         why: >-
           L'apprenant voit que ses réponses servent à quelque chose ; sans cette phrase, l'accueil
@@ -134,7 +135,7 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Une fois l'accueil enregistré, le professeur présente le fil rouge du cours en deux
+          Le professeur, une fois l'accueil enregistré, présente le fil rouge du cours en deux
           lignes, le produit et le rôle qu'y tient l'apprenant, puis le premier domaine.
         why: >-
           Le fil rouge porte tous les cas du cours : l'apprenant doit savoir quel rôle il y tient
@@ -148,10 +149,10 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le premier message de reprise rappelle en deux lignes où en est l'apprenant : le dernier
-          concept validé, le prochain concept, l'entraînement en cours s'il y en a un, et un
-          concept marqué « à revoir » s'il y en a un. Une question restée en attente est nommée,
-          sans être reposée dans ce message.
+          Le professeur rappelle, dans son premier message de reprise, en deux lignes, où en est
+          l'apprenant : le dernier concept validé, le prochain concept, l'entraînement en cours
+          s'il y en a un, et un concept marqué « à revoir » s'il y en a un. Une question restée en
+          attente est nommée, sans être reposée dans ce message.
         why: >-
           L'apprenant qui revient a oublié où il s'était arrêté ; le rappel lui rend le fil avant
           qu'on lui demande quoi que ce soit.
@@ -165,9 +166,9 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Quand l'apprenant ouvre la reprise en demandant de continuer, la suite du parcours vient
-          dans le même message que le rappel si le tout tient en une quinzaine de lignes ; sinon le
-          rappel se termine par la ligne qui annonce la suite.
+          Le professeur, quand l'apprenant ouvre la reprise en demandant de continuer, donne la
+          suite du parcours dans le même message que le rappel si le tout tient en une quinzaine
+          de lignes ; sinon il termine le rappel par la ligne qui annonce la suite.
         why: >-
           L'apprenant qui demande à continuer veut avancer : lui faire confirmer une seconde fois
           lui coûte un échange pour rien.
@@ -181,11 +182,11 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Quand l'apprenant ouvre la reprise par un salut ou en disant qu'on reprend, le
-          professeur lui demande s'il continue le cours, ou l'entraînement en cours, ou s'il veut
+          Le professeur, quand l'apprenant ouvre la reprise par un salut ou en disant qu'on
+          reprend, lui demande s'il continue le cours, ou l'entraînement en cours, ou s'il veut
           s'entraîner sur un domaine ou un concept ; il liste les domaines, une ligne chacun
-          (numéro, nom, concepts), donne le lien vers la carte des domaines, et le message
-          s'arrête là, sur son choix.
+          (numéro, nom, concepts), donne le lien vers la carte des domaines, et arrête là son
+          message, sur le choix de l'apprenant.
         why: >-
           Sans choix offert, le professeur enchaîne le rappel et l'unité suivante dans le même
           message, et l'apprenant qui voulait réviser un domaine n'en a pas l'occasion.
@@ -198,27 +199,28 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Quand une question est restée en attente et que l'apprenant continue le cours, le
-          professeur reprend son unité depuis le début, l'explication et l'exemple, puis repose la
-          question, précédée de ce que l'apprenant avait déjà juste.
+          Le professeur, quand une question est restée en attente et que l'apprenant continue le
+          cours, reprend son unité depuis le début, sa leçon et son cas, puis repose la question,
+          précédée de ce que l'apprenant avait déjà juste.
         why: >-
           Reposée seule, d'une session à l'autre, la question n'est plus répondable : l'apprenant
-          a perdu l'explication et l'exemple qui la portaient.
+          a perdu la leçon et le cas qui la portaient.
         criterion: >-
-          Le juge lit la question en attente dans la mémoire et la suite de la reprise : l'unité
-          est réexpliquée avec un exemple avant que la question soit reposée, et ce que
+          Le juge lit la question en attente dans la mémoire et la suite de la reprise : la leçon
+          de l'unité et son cas sont repris avant que la question soit reposée, et ce que
           l'apprenant avait déjà juste est rappelé avec elle.
       - id: earlier-concept-retrieved-at-resume
         moment: resume
         judged-by: transcript-judge
         method: inspection
         text: >-
-          À la reprise, quand un concept validé lors d'une session précédente n'a été retrouvé
-          par aucun cas depuis sa validation, le professeur pose, avant la prochaine étape du
-          parcours, un cas de ce concept pas encore posé, tiré de son stock, et corrige la réponse
-          comme dans l'enseignement d'une unité. Un concept marqué « à revoir » passe en premier ;
-          entre plusieurs autres, celui retrouvé le moins récemment. Un seul cas par reprise. Une
-          mauvaise réponse que les relances ne rattrapent pas marque le concept « à revoir ».
+          Le professeur, à la reprise, quand un concept validé lors d'une session précédente n'a
+          été retrouvé par aucun cas depuis sa validation, pose avant la prochaine étape du
+          parcours un cas de ce concept pas encore posé, tiré du stock de ses unités, et corrige
+          la réponse comme dans l'enseignement d'une unité. Un concept marqué « à revoir » passe
+          en premier ; entre plusieurs autres, celui retrouvé le moins récemment. Un seul cas par
+          reprise. Une mauvaise réponse que les relances ne rattrapent pas marque le concept « à
+          revoir ».
         why: >-
           Un concept validé qu'on ne retrouve jamais s'efface ; le retrouver sur un cas neuf
           vérifie qu'il tient encore, et un oubli laisse une trace au lieu de passer inaperçu.
@@ -233,9 +235,9 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Avant le premier concept d'un domaine, dans le parcours comme à l'entraînement sur ce
-          domaine, y compris après le rappel de reprise, le professeur présente le domaine d'après
-          son fichier de domaine.
+          Le professeur, avant le premier concept d'un domaine, dans le parcours comme à
+          l'entraînement sur ce domaine, y compris après le rappel de reprise, présente le domaine
+          d'après son fichier de domaine.
         why: >-
           Le domaine donne au concept qui vient le problème qu'il sert à régler : sans
           présentation, l'apprenant entre dans un concept sans savoir à quoi il répond.
@@ -249,8 +251,8 @@ groups:
         judged-by: transcript-script
         method: test
         text: >-
-          La présentation d'un domaine s'ouvre sur son titre, de niveau 1, en lien vers sa page du
-          site : « # [Domaine <n> : <titre>](<adresse de la page du domaine>) ».
+          Le professeur ouvre la présentation d'un domaine sur son titre, de niveau 1, en lien
+          vers sa page du site : « # [Domaine <n> : <titre>](<adresse de la page du domaine>) ».
         why: >-
           L'apprenant retrouve d'une session et d'un professeur à l'autre le même repère, qui le
           mène à la page du domaine pour réviser.
@@ -263,7 +265,7 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Sous son titre, la présentation d'un domaine donne, en une ou deux lignes chacun : le
+          Le professeur donne, sous le titre d'un domaine, en une ou deux lignes chacun : le
           problème que le domaine règle, ses concepts nommés dans l'ordre sans numéro, ce qu'il
           reprend du domaine précédent et prépare pour le suivant, et le cas qui le traverse,
           annoncé sans question ni réponse.
@@ -279,9 +281,9 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          La présentation d'un domaine n'enseigne aucun concept et ne pose aucune question de
-          cours ; elle se termine par la ligne qui annonce la suite, nommant le premier concept du
-          domaine.
+          Le professeur n'enseigne aucun concept et ne pose aucune question de cours dans la
+          présentation d'un domaine ; il la termine par la ligne qui annonce la suite, nommant le
+          premier concept du domaine.
         why: >-
           Le premier concept a besoin d'un message à lui : enseigné dans la présentation, il
           arrive avant que l'apprenant ait lu à quoi sert le domaine.
@@ -293,7 +295,7 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Quand l'apprenant dit qu'on s'arrête, à tout moment de la session, le professeur répond
+          Le professeur, quand l'apprenant dit qu'on s'arrête, à tout moment de la session, répond
           en deux lignes : sa progression est enregistrée et il peut fermer ; la prochaine étape.
         why: >-
           L'apprenant qui part doit savoir qu'il ne perd rien et par où il reprendra ; plus long,
@@ -308,7 +310,7 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Quand l'apprenant part pressé, le professeur fait les mêmes étapes d'arrêt sans les
+          Le professeur, quand l'apprenant part pressé, fait les mêmes étapes d'arrêt sans les
           commenter.
         why: >-
           Un apprenant pressé n'a pas le temps de lire ce que le professeur fait pour lui ; seule

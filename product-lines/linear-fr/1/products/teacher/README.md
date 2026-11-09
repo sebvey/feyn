@@ -29,7 +29,7 @@ Ce dont un professeur a besoin pour tenir ses comportements, quelle que soit sa 
 
 - **Lire le cours** : les fichiers du cours, tels que la spec les fixe (`course/README.md`), dont la carte du cours et ses annexes.
 - **Retrouver et enregistrer ce qu'il sait de l'apprenant** : lire la mémoire de l'apprenant à l'ouverture d'une session, y écrire au fil de la session.
-- **Connaître les adresses du site** : l'adresse de la page de chaque concept et de chaque annexe du cours.
+- **Connaître les adresses du site** : l'adresse du site du cours, de la carte des domaines, et de la page de chaque domaine, de chaque concept et de chaque annexe.
 - **Chercher hors du cours** : trouver une source quand l'apprenant demande ce que le cours ne couvre pas.
 - **Montrer un schéma, ou savoir qu'il ne le peut pas** : afficher un schéma du cours à l'apprenant, ou le savoir impossible et le dire.
 - **Connaître le cours d'un coup d'œil** : le titre et « L'essentiel » de chaque concept et de chaque annexe, à tout moment de la session.
@@ -42,7 +42,7 @@ Les comportements attendus sont dans `rules.yaml`, la forme d'un fichier de règ
 - un `id`, son slug : deux à cinq mots, en minuscules, reliés par des tirets, en anglais, qui nomment le comportement (décision `rules-named-by-slug`) ; le slug d'un comportement retiré n'est jamais réutilisé ;
 - un `text`, à la troisième personne : « Le professeur… ». Il dit ce que fait le professeur, jamais comment une implémentation l'y amène ; il se suffit à lui-même, sans pronom dont le nom est dans un autre comportement ;
 - un `why`, obligatoire ici, plus strict que les directives de spec : la raison pour laquelle il est attendu, qui peut porter une preuve (une dérive vue dans une session ou un test) ; un comportement sans raison à donner n'est pas attendu ;
-- sa façon d'être jugé : `method` `test` et un `check` pour un script qui lit la transcription, `method` `inspection` et un `criterion` pour un juge qui lit la transcription ou pour la lecture de la mémoire de l'apprenant après la session. Le `criterion` dit ce que le juge regarde et à partir de quoi le comportement est tenu ou non.
+- sa façon d'être jugé : `method` `test` et un `check` pour un script qui lit la transcription (tant que le professeur n'a pas de scripts, un `criterion` dit ce que le script vérifiera), `method` `inspection` et un `criterion` pour un juge qui lit la transcription ou pour la lecture de la mémoire de l'apprenant après la session. Le `criterion` dit ce que le juge regarde et à partir de quoi le comportement est tenu ou non.
 
 Une permission n'est pas un comportement à part : elle devient la limite du comportement qu'elle assouplit, dans son `criterion`, là où le juge la lit. Les comportements n'ont pas de niveau. Une mise en place ou un aiguillage (« à ce moment, lis… ») se réécrit en comportement ; un résumé d'autres comportements n'en est pas un.
 

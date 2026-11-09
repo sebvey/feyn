@@ -64,7 +64,7 @@ The standards a rule of this spec depends on, through its text, its check or a s
 | Standard | Edition | Groups |
 |---|---|---|
 | [ISO/IEC Directives Part 2](https://www.iso.org/sites/directives/current/part2/index.xhtml) | 9th edition (2021) | every group of `course/rules.yaml`: the levels of its rules (section 3) |
-| [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le dossier de concept », « Le frontmatter de concept.md », « Le corps de concept.md », « L'unité », « Le fichier sources.md », « Les conventions du texte », « Les ajouts d'une unité », « Les fichiers de domaine », « Les fichiers du cours » |
+| [CommonMark](https://spec.commonmark.org/0.31.2/) | 0.31.2 (2024-01-28) | « Le dossier du cours », « Le dossier de concept », « Le frontmatter de concept.md », « Le corps de concept.md », « L'unité », « Le fichier sources.md », « Les conventions du texte », « Les ajouts d'une unité », « Les fichiers de domaine », « Les fichiers du cours »; of `products/teacher/rules.yaml`: « Déroulé de la session » |
 | [GitHub Flavored Markdown, tables](https://github.github.com/gfm/#tables-extension-) | 0.29-gfm (2019-04-06) | « Le fichier sources.md », « Les fichiers du cours » |
 | [YAML](https://yaml.org/) | the directives' (`spec-directives/1/README.md` section 5) | « Le fichier course.yaml », « Le dossier de concept », « Le frontmatter de concept.md », « Les fichiers de domaine » |
 | [JSON Schema](https://json-schema.org/) | the directives' (`spec-directives/1/README.md` section 5) | « Le fichier course.yaml », « Le frontmatter de concept.md » |
