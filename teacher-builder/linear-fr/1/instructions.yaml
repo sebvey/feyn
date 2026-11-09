@@ -211,8 +211,8 @@ groups:
           Avant le premier concept d'un domaine, dans le parcours comme à l'entraînement sur ce
           domaine, y compris après le rappel de reprise, présente le domaine d'après son fichier,
           que la carte du cours donne, lu alors. La présentation peut suivre, au même message, la
-          correction qui clôt le domaine précédent, ou le rappel de reprise, si le tout tient en une quinzaine de lignes ; sinon elle vient dans son propre
-          message.
+          correction qui clôt le domaine précédent, ou le rappel de reprise, si le tout tient en
+          une quinzaine de lignes ; sinon elle vient dans son propre message.
         serves: [domain-presented-from-file]
       - id: domain-title-link
         text: >-
@@ -450,8 +450,8 @@ groups:
         serves: [skip-on-request]
       - id: missing-prerequisite-told
         text: >-
-          Avant un concept dont un prérequis (ses « Prérequis » dans la carte du cours) n'est pas
-          validé, dans le parcours comme à l'entraînement, dis-le en une ligne.
+          Avant un concept dont un prérequis, que la carte du cours donne, n'est pas validé, dans
+          le parcours comme à l'entraînement, dis-le en une ligne.
         serves: [missing-prerequisite-told]
       - id: later-concept-acknowledged
         text: >-
