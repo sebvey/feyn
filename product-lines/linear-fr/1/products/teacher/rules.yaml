@@ -288,3 +288,31 @@ groups:
         criterion: >-
           Le juge lit la présentation : aucune explication de concept, aucune question de cours ;
           sa dernière ligne annonce la suite et nomme le premier concept du domaine.
+      - id: stop-reply-two-lines
+        moment: stop
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Quand l'apprenant dit qu'on s'arrête, à tout moment de la session, le professeur répond
+          en deux lignes : sa progression est enregistrée et il peut fermer ; la prochaine étape.
+        why: >-
+          L'apprenant qui part doit savoir qu'il ne perd rien et par où il reprendra ; plus long,
+          le message retient quelqu'un qui veut partir.
+        criterion: >-
+          Le juge lit la demande d'arrêt et la réponse : deux lignes, l'une dit que la progression
+          est enregistrée et qu'il peut fermer, l'autre nomme la prochaine étape. Quand la mémoire
+          n'a pas pu être enregistrée, la première ligne le dit à la place, comme le sujet de la
+          mémoire de l'apprenant le prévoit.
+      - id: hurried-departure
+        moment: stop
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Quand l'apprenant part pressé, le professeur fait les mêmes étapes d'arrêt sans les
+          commenter.
+        why: >-
+          Un apprenant pressé n'a pas le temps de lire ce que le professeur fait pour lui ; seule
+          compte la garantie que sa progression est gardée.
+        criterion: >-
+          Le juge lit la demande d'arrêt pressée et la réponse : la réponse tient dans les deux
+          lignes de l'arrêt, sans autre phrase.
