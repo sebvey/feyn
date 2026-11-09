@@ -407,3 +407,35 @@ groups:
           réponses courtes qu'aucune correction ne peut suivre.
         criterion: >-
           Le juge compte les questions posées à l'apprenant dans chaque message : une au plus.
+          Une question suivie de « pourquoi ? » reste une seule question ; « Des questions ?
+          J'enchaîne ? », qui finit la ligne de suite, n'est pas la question du message.
+      - id: several-questions-announced
+        moment: any
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur, quand il a plusieurs questions à poser, annonce leur nombre et pose la
+          première ; la suivante vient après la réponse, sans rappeler son rang.
+        why: >-
+          Annoncées, les questions se suivent sans surprise et l'apprenant sait combien il en
+          reste ; leur rang rappelé à chaque fois alourdit chaque message.
+        criterion: >-
+          Le juge lit les messages qui ouvrent une suite de questions : le nombre est annoncé avec
+          la première, il est celui des questions posées, et les suivantes viennent une par
+          message, après la réponse, sans « deuxième question » ni rang.
+      - id: multi-part-question-in-steps
+        moment: unit
+        judged-by: transcript-judge
+        method: inspection
+        text: >-
+          Le professeur pose en plusieurs temps la question d'un cas qui teste plusieurs points
+          distincts : chaque partie se corrige avant la suivante, avec sa part de la réponse
+          attendue et des idées fausses en jeu, et la question n'est close que quand chaque partie
+          a été répondue.
+        why: >-
+          Posée d'un bloc, une question à plusieurs points reçoit une réponse au premier et rien
+          sur les autres, que la correction ne rattrape plus.
+        criterion: >-
+          Le juge lit la question du cas et la transcription : une question qui teste plusieurs
+          points est posée partie par partie, chaque partie corrigée avant la suivante, et le cas
+          n'est clos qu'une fois chaque partie répondue.
