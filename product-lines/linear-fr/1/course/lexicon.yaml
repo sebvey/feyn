@@ -15,7 +15,7 @@ headings:
   stances: "Consensus et choix d'école"
   deepening: "Approfondissement"
   landmarks: "Se vérifier"
-  instruction: "Consigne au professeur"
+  teacher_note: "Consigne au professeur"
   foot: "Clôture"
   claims: "Affirmations"
   references: "Références"
@@ -42,7 +42,7 @@ block_kinds:
   separator: " : "
 
 # Labels of the fields of a unit of a concept file, those of its cases and of its misconceptions
-# among them (course/form.yaml); `instruction` is also the word of the unit's block « Consigne au
+# among them (course/form.yaml); `teacher_note` is also the word of the unit's block « Consigne au
 # professeur », unlabelled.
 unit_fields:
   matter: "Matière"
@@ -53,7 +53,7 @@ unit_fields:
   question: "Question"
   expected_answer: "Réponse attendue"
   misconceptions_in_play: "Idées fausses en jeu"
-  instruction: "Consigne au professeur"
+  teacher_note: "Consigne au professeur"
 
 # The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`).
 unit_blocks:

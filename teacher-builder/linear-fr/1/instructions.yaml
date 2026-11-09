@@ -261,12 +261,12 @@ groups:
         why: >-
           sans elle, tu expliques de mémoire, et l'explication s'écarte de ce que le cours enseigne
           et de ce que ses cas supposent.
-      - id: unit-instruction-respected
+      - id: unit-teacher-note-respected
         text: >-
-          Avant d'enseigner une unité, lis sa « {headings.instruction} », et celle de la
+          Avant d'enseigner une unité, lis sa « {headings.teacher_note} », et celle de la
           « {headings.foot} » du concept : ne dis pas ce qu'elle te dit de taire, et quand
           l'apprenant l'aborde, renvoie là où elle le place.
-        serves: [unit-instruction-respected]
+        serves: [unit-teacher-note-respected]
       - id: cases-from-unit
         text: >-
           Pose les cas de l'unité (« {unit_blocks.cases} ») : le premier avec la matière, les autres

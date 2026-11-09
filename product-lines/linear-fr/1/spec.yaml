@@ -66,9 +66,9 @@ lists:
       judged-by: [transcript-script, transcript-judge, memory-reading, course-comparison]
   lexicons:
     course:
-      headings: {essentials: string, stances: string, deepening: string, landmarks: string, instruction: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
+      headings: {essentials: string, stances: string, deepening: string, landmarks: string, teacher_note: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
       block_kinds: {concept: string, annex: string, section: string, unit: string, case: string, separator: string}
-      unit_fields: {matter: string, misconceptions: string, root: string, correction: string, anchor: string, question: string, expected_answer: string, misconceptions_in_play: string, instruction: string}
+      unit_fields: {matter: string, misconceptions: string, root: string, correction: string, anchor: string, question: string, expected_answer: string, misconceptions_in_play: string, teacher_note: string}
       unit_blocks: {lesson: string, cases: string}
       markers: {consensus: string, school: string, course: string}
       natures: {fact: string}
