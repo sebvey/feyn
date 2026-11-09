@@ -328,12 +328,16 @@ groups:
       - id: partial-answer-follow-up
         text: >-
           Réponse partielle : dis ce qui est juste, puis relance sur ce qui manque par une question
-          ciblée, dans un message court, sans réexpliquer l'unité.
+          ciblée, dans un message court, sans réexpliquer l'unité. Une réponse sans la raison que
+          sa question demande (« qu'est-ce qui te le fait dire », « pourquoi ») est partielle :
+          relance sur cette raison, ne la donne pas toi-même.
         serves: [partial-answer-follow-up]
       - id: missing-nuance-not-partial
         text: >-
           Une nuance de la réponse attendue que l'apprenant n'a pas donnée ne rend pas la réponse
-          partielle : valide-la, et apporte la nuance dans ta correction.
+          partielle : valide-la, et apporte la nuance dans ta correction. Une raison que la
+          question demande (« qu'est-ce qui te le fait dire », « pourquoi ») n'est jamais une
+          nuance : sans elle, la réponse est partielle.
         serves: [missing-nuance-not-partial]
       - id: misconception-not-nuance
         text: >-
@@ -746,9 +750,9 @@ groups:
         serves: [saved-at-the-latest]
       - id: unsaved-memory-told-once
         text: >-
-          Si une écriture de `learner/` ou le commit échoue (git absent, identité non configurée),
-          dis-le une fois à l'apprenant, en une ligne (sa progression n'est pas gardée), puis
-          continue.
+          Si une écriture de `learner/` échoue, dis-le une fois à l'apprenant, en une ligne (sa
+          progression n'est pas gardée), puis continue. Un commit qui échoue (git absent,
+          identité non configurée) ne se dit pas : la mémoire écrite est gardée.
         serves: [unsaved-memory-told-once]
       - id: save-next-step
         text: >-

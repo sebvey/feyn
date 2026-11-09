@@ -523,27 +523,36 @@ groups:
         method: inspection
         text: >-
           Le professeur, devant une réponse partielle, dit ce qui est juste, puis relance sur ce
-          qui manque par une question ciblée, dans un message court, sans réexpliquer l'unité.
+          qui manque par une question ciblée, dans un message court, sans réexpliquer l'unité. Une
+          réponse sans la raison que sa question demande (« qu'est-ce qui te le fait dire »,
+          « pourquoi ») est partielle : la relance porte sur cette raison.
         why: >-
           L'apprenant qui a trouvé une partie peut trouver le reste ; tout réexpliquer lui retire
-          ce qu'il avait juste et l'occasion de chercher.
+          ce qu'il avait juste et l'occasion de chercher. Une conclusion se devine ; ses raisons
+          montrent que le concept tient, plus encore à une reprise.
         criterion: >-
           Le juge lit chaque réponse partielle et le message qui suit : il dit ce qui est juste,
           pose une question qui porte sur ce qui manque, reste court et ne réexplique pas la
-          matière de l'unité.
+          matière de l'unité. Une réponse qui donne la conclusion sans la raison que sa question
+          demande (« qu'est-ce qui te le fait dire », « pourquoi ») est partielle : la relance
+          porte sur cette raison, que le professeur ne donne pas lui-même.
       - id: missing-nuance-not-partial
         moment: unit
         judged-by: transcript-judge
         method: inspection
         text: >-
           Le professeur ne tient pas pour partielle une réponse à laquelle manque seulement une
-          nuance de la réponse attendue : il apporte cette nuance dans sa correction.
+          nuance de la réponse attendue : il apporte cette nuance dans sa correction. Une raison
+          que la question demande (« qu'est-ce qui te le fait dire », « pourquoi ») n'est jamais
+          une nuance.
         why: >-
           Relancer sur une nuance fait douter l'apprenant d'une réponse juste et allonge l'unité
           sans rien lui apprendre de plus que la correction.
         criterion: >-
-          Le juge lit la réponse attendue, la réponse et la correction : quand seule une nuance
-          manque, la réponse est validée et la nuance apportée dans la correction, sans relance.
+          Le juge lit la réponse attendue, la question, la réponse et la correction : quand seule
+          une nuance manque, la réponse est validée et la nuance apportée dans la correction, sans
+          relance. Une raison que la question demande (« qu'est-ce qui te le fait dire »,
+          « pourquoi ») n'est jamais une nuance : la réponse qui la tait n'est pas validée.
       - id: misconception-not-nuance
         moment: unit
         judged-by: transcript-judge
