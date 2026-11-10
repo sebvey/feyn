@@ -194,8 +194,9 @@ groups:
         level: requirement
         check: concept-file
         text: >-
-          Un dossier de concept doit tenir `concept.md`, `sources.md` et ses schémas `.svg`, et
-          rien d'autre (`folder` de `course/form.yaml`).
+          Un dossier de concept doit tenir `concept.md` et ses schémas `.svg`, et rien d'autre
+          (`folder` de `course/form.yaml`) : les sources du cours sont à sa racine, dans
+          `sources.yaml` (3.4).
       - id: concept-file-title
         level: requirement
         check: concept-file
@@ -240,9 +241,9 @@ groups:
 
   - title: Le frontmatter de concept.md (course/README.md section 3.1)
     purpose: >-
-      Ce que le concept déclare en tête de `concept.md` : ses positions et ses voisins, chacun
-      sourcé dans son propre élément, la preuve à côté de ce qu'elle prouve, et ses schémas,
-      chacun à son unité.
+      Ce que le concept déclare en tête de `concept.md` : ses métadonnées, ses schémas, chacun à son
+      unité, et rien qu'un lecteur doive lire comme de la matière ; un concept sans schéma n'a pas
+      de frontmatter.
     category: structure
     method: test
     rules:
@@ -250,53 +251,22 @@ groups:
         level: requirement
         check: concept-file
         text: >-
-          Le frontmatter de `concept.md` doit être valide selon
-          `course/schemas/concept-frontmatter.schema.yaml` : ses clés, un élément et une entrée de
-          schéma, leur présence et leur forme.
-      - id: item-text-inline-markdown
+          Le frontmatter de `concept.md`, quand il existe, doit être valide selon
+          `course/schemas/concept-frontmatter.schema.yaml` : ses clés, une entrée de schéma, leur
+          présence et leur forme.
+      - id: frontmatter-holds-metadata
         level: requirement
         check: concept-file
         text: >-
-          Le `text` d'un élément du frontmatter doit être du Markdown en ligne : gras et italique
-          seulement.
-      - id: stance-item-has-author
-        level: recommendation
-        category: sources
-        method: inspection
-        text: >-
-          Il convient qu'un élément de `stances.consensus` ou de `stances.school` ait un
-          `author` : le texte ou l'auteur à qui l'affirmation appartient.
-      - id: verified-parallel-to-refs
-        level: requirement
-        check: concept-file
-        text: >-
-          Le `verified` d'un élément doit être présent quand `refs` n'est pas vide et absent
-          sinon : une liste parallèle à `refs`, une entrée par référence, dans le même ordre.
-      - id: item-verified-quotes-source
-        level: requirement
-        category: sources
-        method: inspection
-        text: >-
-          Chaque entrée de `verified` doit être la plus courte citation qui établit l'élément,
-          entre « », puis sa place entre parenthèses, comme la cellule de vérification d'une ligne
-          de « Affirmations ».
-      - id: no-stances-section
-        level: requirement
-        check: concept-file
-        text: >-
-          Le corps de `concept.md` ne doit pas avoir de section de positions : `stances` et
-          `neighbors` sont le seul endroit des positions et des voisins du concept.
+          Le frontmatter de `concept.md` ne doit tenir que des métadonnées, ses schémas
+          (`diagrams`) : une affirmation se marque dans le texte publié (3.4), et une notion à ne
+          pas confondre avec le concept est de la matière, ou une idée fausse dont la racine dit
+          la confusion.
         why: >-
-          Sans elle, la migration écrivait les positions deux fois, dans le frontmatter et dans
-          une section du corps, et les deux copies divergeaient (prototype du concept 9 ; décision
-          stances-in-frontmatter-only).
-      - id: published-text-stance-markers
-        level: permission
-        category: writing
-        method: inspection
-        text: >-
-          Un champ publié peut marquer une affirmation d'un marqueur de position, en plus des
-          positions du frontmatter.
+          Avec des positions et des voisins dans le frontmatter, une affirmation était écrite
+          jusqu'à trois fois sans lien entre les copies, dans la matière, dans une position et dans
+          une ligne du fichier de sources du concept, et les voisins redisaient la matière ; le
+          site seul les lisait, pour montrer un doublon (décision claim-marked-in-the-text).
       - id: diagrams-declared-and-present
         level: requirement
         category: diagrams
@@ -634,28 +604,249 @@ groups:
           Il convient qu'une question, d'une unité ou d'un cas, ne demande que ce que l'apprenant a
           appris avant elle, dans le parcours.
 
-  - title: Le fichier sources.md (course/README.md section 3.4)
+  - title: Les affirmations et leurs sources (course/README.md section 3.4)
     purpose: >-
-      `sources.md` montre que le concept est fondé, et permet à chacun de remonter d'une
-      affirmation de ce que le site publie du concept à ce sur quoi elle repose. « Références » sert d'abord le lecteur
-      du site ; « Affirmations » sert l'audit (le relecteur, le mainteneur, le professeur sur
-      demande). La traçabilité vaut par sa re-vérification, pas par son volume.
+      Une affirmation écrite une fois, marquée dans le texte publié qui l'affirme, avec sa nature,
+      ses sources et son nom ; les sources du cours écrites une fois, dans `sources.yaml`, avec les
+      extraits qui prouvent chaque affirmation et la date à laquelle un humain les a vérifiés.
+      Sourcer reste au choix, la cohérence non : ce qui est écrit ne doit pas mentir, et une source
+      citée sans son extrait ne prouve rien. Le site construit « Consensus et choix d'école » et
+      les sources depuis les marques ; le professeur répond à « d'où ça vient ? » avec elles.
     category: sources
     method: test
     rules:
+      - id: claim-marked-in-text
+        level: recommendation
+        method: inspection
+        text: >-
+          Il convient qu'une affirmation d'un champ publié qui affirme (« L'essentiel »,
+          « Matière », les racines et les corrections des idées fausses, « Se vérifier »,
+          « Approfondissement ») soit marquée une fois, là où le texte l'affirme : un lien
+          `[le texte affirmé](nature:S1,S2 "nom")`, son texte exactement ce qu'elle affirme, sa
+          destination sa nature (`natures` du lexique) seule ou suivie de ses sources, son titre
+          son nom. Une phrase non marquée n'est pas un échec de check : la revue la lit.
+        why: >-
+          Écrite dans la matière, dans une position du frontmatter et dans une ligne de
+          « Affirmations », une affirmation avait trois copies sans lien, qui divergeaient ; un
+          marqueur après la phrase laissait son étendue à un jugement, quand un lien délimite
+          exactement ce qui est affirmé, vérifiable sans jugement. Marquer reste une
+          recommandation : une structure difficile à remplir n'est pas remplie (décision
+          claim-marked-in-the-text).
+      - id: claim-nature
+        level: requirement
+        method: inspection
+        text: >-
+          La nature d'une affirmation doit être celle de ce qu'elle affirme : `fait`
+          (`natures.fact`), ce qu'une source énonce sans que personne ait à le tenir ;
+          `consensus`, ce que tient le domaine ; `école`, ce que tient quelqu'un de nommé ;
+          `cours`, le choix ou la conclusion du cours, avec ou sans sources. Un fait n'est pas une
+          position : les positions sont les trois autres natures.
+      - id: mark-form
+        level: requirement
+        check: sources
+        text: >-
+          La destination d'une marque doit être un mot de `natures` du lexique seul, ou suivi de
+          « : » et d'ids de source `S<n>` séparés par des virgules, sans espace
+          (`consensus:S1,S2`) ; une destination qui commence par un mot de nature et n'a pas cette
+          forme est une marque mal écrite.
+        why: >-
+          Une marque mal écrite que personne ne lit comme une marque laisserait une affirmation
+          sans sa nature ni ses sources, et le site en ferait un lien cassé (décision
+          claim-marked-in-the-text).
+      - id: mark-is-inline-link
+        level: requirement
+        check: sources
+        text: >-
+          Une marque doit être un lien en ligne CommonMark, lu comme le site le lit : un lien de
+          référence (`[texte][étiquette]`) n'est pas une marque.
+        why: >-
+          Deux lecteurs lisent une marque différemment (un crochet échappé, un titre entre
+          guillemets) : un check passerait et le site montrerait autre chose ; la marque est
+          définie une fois et lue par un seul lecteur, celui du site (décision
+          marks-read-by-one-reader).
+      - id: mark-in-claim-fields
+        level: requirement
+        check: sources
+        text: >-
+          Une marque ne doit se trouver que dans les champs publiés qui affirment (`claims` de
+          `course/form.yaml`) : ni dans un cas, dont l'ancrage vient du fil rouge et la réponse
+          attendue redit la matière, ni dans la croyance d'une idée fausse, ni dans une consigne.
+        why: >-
+          Les cas d'une unité ne sont pas tracés : une affirmation qu'un cas seul ferait est une
+          lacune de la matière, ajoutée d'abord à un champ publié (décision
+          claim-marked-in-the-text, qui garde ce point de sources-trace-the-concept).
+      - id: mark-holds-no-concept-reference
+        level: requirement
+        check: sources
+        text: >-
+          Le texte d'une marque ne doit tenir aucune référence de concept (« concept 1 »,
+          « annexe A2 ») : la référence reste dans la phrase, hors de la marque.
+        why: >-
+          Une marque délimite exactement ce qui est affirmé, et une référence est la navigation du
+          cours, pas ce qu'une source ou une position affirme ; sur le site, une référence dans
+          une marque serait un lien dans un lien (décision claim-marked-in-the-text).
+      - id: sourced-nature-cites-a-source
+        level: requirement
+        check: sources
+        text: >-
+          Une affirmation `consensus`, `école` ou `fait` doit citer au moins une source dans sa
+          marque ; une affirmation `cours` en cite au choix.
+        why: >-
+          Un badge « fait » sans rien derrière dirait plus que la vérité : ce qui est écrit ne
+          doit pas mentir (décision sources-a-course-file).
+      - id: sourced-claim-named
+        level: requirement
+        check: sources
+        text: >-
+          Une affirmation qui cite une source doit avoir un nom, le titre de sa marque, fait de
+          minuscules sans accent, de chiffres et de tirets, unique dans son concept ; ailleurs
+          qu'à sa marque, elle est nommée `<numéro du concept>/<nom>` (`1/eau-90-96`).
+        why: >-
+          Sur un cours de banc, 35 des 79 paires (unité, source) citaient une source pour
+          plusieurs affirmations : sans nom, l'extrait ne dit pas laquelle il prouve, et une
+          affirmation sans preuve passerait (décision claim-marked-in-the-text).
+      - id: cited-source-exists
+        level: requirement
+        check: sources
+        text: Chaque id cité par une marque doit être une source de `sources.yaml`.
+        why: >-
+          Une marque qui cite une source absente renvoie le lecteur et le professeur à rien
+          (décision sources-a-course-file).
+      - id: pair-has-a-quote
+        level: requirement
+        check: sources
+        text: >-
+          Pour chaque source qu'une affirmation cite, `sources.yaml` doit tenir sous cette source
+          un extrait dont le `claim` nomme l'affirmation.
+        why: >-
+          Une source citée sans son extrait ne sert ni à la création ni à la maintenance, et
+          laisse un agent citer sans preuve (décision sources-a-course-file).
+      - id: quote-names-its-claim
+        level: requirement
+        check: sources
+        text: >-
+          Le `claim` d'un extrait doit nommer une affirmation marquée qui cite la source de
+          l'extrait.
+        why: >-
+          Un extrait qui nomme une affirmation qui ne cite pas sa source prouve ce que le texte
+          ne dit pas, et une affirmation retirée laisserait sa preuve derrière elle (décision
+          sources-a-course-file).
+      - id: quote-is-shortest-phrase
+        level: requirement
+        method: inspection
+        text: >-
+          Un extrait (`quotes`) doit être la plus courte phrase de la source qui prouve son
+          affirmation, mot pour mot, dans la langue de la source (`text`), avec sa place dans la
+          source (`place` : une section, une page, « résumé » quand le résumé seul a été lu).
+        why: >-
+          L'extrait est ce qu'un humain vérifie contre la source ; un raisonnement ou une
+          paraphrase ne se vérifient pas mot pour mot (décision sources-a-course-file).
+      - id: sources-yaml-valid-against-schema
+        level: requirement
+        check: sources
+        text: >-
+          `sources.yaml`, à la racine du dossier du cours, doit être valide selon
+          `course/schemas/sources.schema.yaml` : ses deux sections, `sources` et `claims`, leurs
+          clés, leurs types, les champs obligatoires, la forme des ids et des dates.
+        why: >-
+          Le fichier ne tient que des données qui se renvoient par des ids : en tableaux
+          Markdown, elles se coupaient cellule par cellule, sans que rien les valide (décision
+          sources-a-course-file).
+      - id: source-id-form
+        level: requirement
+        check: sources
+        text: >-
+          L'id d'une source doit être `S<n>`, sa clé sous `sources`, unique dans le cours.
+        why: >-
+          S pour source ; « référence » seul est la référence de concept du glossaire (décision
+          sources-a-course-file).
+      - id: source-described-once
+        level: requirement
+        check: sources
+        text: >-
+          Une source ne doit être décrite qu'une fois dans le cours, dans le seul `sources.yaml`
+          du cours : deux sources ne partagent ni leur `URL` ni leur `DOI`.
+        why: >-
+          Avec un fichier de sources par concept, un cours de banc tenait 33 entrées pour 22
+          sources distinctes, chacune décrite et vérifiée autant de fois qu'elle était citée
+          (décision sources-a-course-file).
+      - id: source-csl-fields
+        level: requirement
+        check: sources
+        text: >-
+          Une source doit être décrite par des champs CSL, en YAML comme Pandoc les écrit
+          (`title`, `author`, `container-title`, `issued`, `URL`, `accessed`…) ; seuls `title`,
+          et `URL` ou `author`, sont obligatoires ; le `type` CSL est au choix, tiré de `kind`
+          quand il manque (`csl_type` de `sources_file` de `course/form.yaml`).
+        why: >-
+          Une chaîne libre, illisible par un programme, était inégale d'une source à l'autre ;
+          CSL est le standard qu'exportent Zotero et les DOI, que le site formate, que le check
+          lit et qui déduplique (décision source-described-by-kind-control-independence).
+      - id: source-described-by-three-lists
+        level: requirement
+        check: sources
+        text: >-
+          Une source doit avoir un `kind`, sa forme, un `control`, la relecture qu'elle a passée,
+          et une `independence`, son indépendance de ce qu'elle dit, chacun une valeur de sa liste
+          du lexique (`source_kinds`, `source_controls`, `source_independence`) ; primaire,
+          secondaire et tertiaire ne se notent pas.
+        why: >-
+          Primaire et secondaire dépendent de l'affirmation qu'une source appuie, quand la
+          forme, la relecture et l'indépendance tiennent à la source ; un type primaire ou
+          secondaire ne pouvait pas dire qu'une source est faible (décision
+          source-described-by-kind-control-independence).
+      - id: checked-by-a-human
+        level: requirement
+        method: inspection
+        text: >-
+          Le `checked` d'une source ou d'un extrait, la date à laquelle un humain l'a vérifié, ne
+          doit être écrit que par l'humain qui l'a vérifié, jamais par un agent ; une modification
+          de la source ou de l'extrait le retire.
+        why: >-
+          Les cours seront écrits et maintenus par des agents, et un check vérifie la forme, pas
+          la vérité d'un extrait : une date écrite par un agent ou par une migration mentirait
+          (décision sources-a-course-file).
+      - id: school-claim-has-holder
+        level: requirement
+        check: sources
+        text: >-
+          Une affirmation `école` doit avoir son `holder`, qui tient cette position, sous son nom
+          dans `claims` de `sources.yaml` ; le `holder` n'est pas l'auteur de la source (« les
+          baristas sondés par la Barista Guild of America », rapporté par un article).
+        why: >-
+          Une affirmation « école » sans celui qui la tient ne veut rien dire, et un nom dans la
+          prose seule échappe au check ; tiré de l'auteur de la source, il serait faux quand les
+          deux diffèrent (décision claim-marked-in-the-text).
+      - id: holder-only-for-a-stance
+        level: requirement
+        check: sources
+        text: >-
+          Un `holder` ne doit nommer qu'une affirmation marquée `école` ou `consensus` : une
+          affirmation `fait` ou `cours` n'en a pas.
+        why: >-
+          Un fait n'est pas une position : personne n'a à le tenir ; une affirmation « cours » est
+          tenue par le cours (décision claim-marked-in-the-text).
+      - id: unverified-goes-to-its-place
+        level: requirement
+        method: inspection
+        text: >-
+          Ce qu'aucune source ne confirme ne doit pas être écrit à part, dans une liste ou dans une
+          note : une affirmation que le cours conclut de ses sources est `cours`, ces sources dans
+          sa marque ; une source faible se dit par son `kind`, son `control` et son
+          `independence` ; ce qui a été lu est la `place` de l'extrait ; un texte connu par une
+          autre source est cité par elle ; une source non lue n'est pas une source ; un garde-fou
+          va dans « Consigne au professeur » quand un professeur compétent agirait autrement sans
+          lui ; un mot que le cours choisit vraiment a sa propre marque `cours`, la phrase coupée.
+        why: >-
+          La liste de ce qu'aucune source ne confirmait nommait des ids dans la prose, qu'aucun
+          programme ne vérifie, et la plupart de ses entrées redisaient le texte (décisions
+          sources-a-course-file et no-id-in-prose).
       - id: claims-hold-no-device
         level: requirement
         method: inspection
         text: >-
-          Une ligne de « Affirmations » ne doit porter ni un fait du fil rouge (inventé, dans
-          `storyline.md`), ni un procédé d'enseignement (un exemple inventé, la déduction d'un
-          cas), ni une formulation du cours.
-      - id: stance-sourced-in-item
-        level: requirement
-        check: sources
-        text: >-
-          Une position ou un voisin doit être sourcé dans son élément du frontmatter, jamais par
-          une ligne de « Affirmations ».
+          Une marque ne doit porter ni un fait du fil rouge (inventé, dans `storyline.md`), ni un
+          procédé d'enseignement (un exemple inventé, la déduction d'un cas).
       - id: unpublished-states-nothing-new
         level: requirement
         method: inspection
@@ -663,158 +854,27 @@ groups:
           Un champ non publié ne doit rien affirmer que les champs publiés n'affirment pas : une
           affirmation qu'il serait seul à faire est une lacune de la matière, ajoutée d'abord à un
           champ publié, ou n'est pas une affirmation à sourcer.
-      - id: concept-file-cites-no-reference
-        level: requirement
-        check: sources
+      - id: sourced-claims-checked
+        level: recommendation
+        check: sources-coverage
         text: >-
-          `concept.md` ne doit citer aucune référence : les références vivent dans les `refs` du
-          frontmatter et dans `sources.md`.
-      - id: sources-no-introduction
-        level: requirement
-        check: sources
-        text: >-
-          `sources.md` ne doit pas avoir d'introduction : il s'ouvre sur « Affirmations ».
-      - id: sources-sections-in-order
-        level: requirement
-        check: sources
-        text: >-
-          Les sections de `sources.md` doivent être des titres `##` dont le texte est le titre du
-          lexique, « Affirmations », « Références », « Non vérifié », dans cet ordre, toutes
-          présentes, et aucune autre section `##` ne doit exister.
-      - id: sources-no-h1
-        level: requirement
-        check: sources
-        text: "`sources.md` ne doit pas avoir de H1 : le titre est dans `course.yaml`."
-      - id: sources-no-frontmatter
-        level: requirement
-        check: sources
-        text: >-
-          `sources.md` ne doit pas avoir de frontmatter : le Markdown d'un cours n'a de frontmatter
-          YAML que là où la spec le dit.
-      - id: sources-tables-five-columns
-        level: requirement
-        check: sources
-        text: >-
-          « Affirmations » et « Références » de `sources.md` doivent tenir chacune un tableau de
-          cinq colonnes, dans cet ordre : pour « Affirmations », affirmation, section, source,
-          vérifié, nature ; pour « Références », id, source, lien, type, consulté le.
-      - id: claim-states-claim
-        level: requirement
-        check: sources
-        text: Une ligne de « Affirmations » doit énoncer l'affirmation en quelques mots.
-      - id: claim-section-exists
-        level: requirement
-        check: sources
-        text: >-
-          La cellule section d'une affirmation doit tenir des ids de section ou d'unité et les
-          parties publiées de la tête et du pied par leur valeur du lexique (« L'essentiel »,
-          « Se vérifier », « Approfondissement »), séparés par des virgules, jamais le texte d'un
-          titre, chacun existant dans `concept.md`.
-      - id: claim-source-cell-form
-        level: requirement
-        check: sources
-        text: >-
-          La cellule source d'une affirmation doit tenir des ids de référence `[S1]`, séparés par
-          des virgules, ou le mot `markers.course` ; rien d'autre : pas de texte libre, pas de
-          chemin vers un autre concept.
+          Il convient que chaque affirmation sourcée soit vérifiée par un humain : chacune de ses
+          sources et chaque extrait qui la prouve ont un `checked`. Un concept qui en laisse une
+          non vérifiée est signalé, avec son compte d'affirmations marquées, sourcées et
+          vérifiées.
         why: >-
-          Sans elle, l'agent qui écrivait le concept 9 donnait du texte libre pour source,
-          « fil rouge » et « aucune » (décision where-a-claim-goes, remplacée par
-          sources-trace-the-concept).
-      - id: claim-verified-cell-filled
-        level: requirement
-        check: sources
+          Un cours écrit par des agents part sans aucune source vérifiée par un humain ; le
+          compte dit ce qui reste à vérifier sans bloquer l'écriture (décision
+          sources-a-course-file).
+      - id: source-cited
+        level: recommendation
+        check: sources-coverage
         text: >-
-          La cellule vérifié d'une affirmation ne doit être vide que pour une affirmation
-          « cours ».
-      - id: claim-verified-cell-form
-        level: requirement
-        method: inspection
-        text: >-
-          La cellule vérifié doit tenir, par référence de la cellule source et dans le même
-          ordre, la plus courte citation qui établit l'affirmation, entre « », puis sa place
-          entre parenthèses (section, page, titre) ; pour une absence, « absent de » et la place
-          cherchée ; pour une affirmation « cours », une ligne qui dit d'où elle découle, ou
-          rien ; aucun raisonnement, aucune mention de « Non vérifié » : ce qui ne peut être
-          cité va dans « Non vérifié ».
-      - id: claim-nature-closed
-        level: requirement
-        check: sources
-        text: >-
-          La nature d'une affirmation doit être `consensus`, `école`, `cours`
-          (`markers.consensus`, `markers.school`, `markers.course`) ou `fait` (`natures.fact`).
-      - id: claim-nature-matches-marker
-        level: requirement
-        method: inspection
-        text: >-
-          Une affirmation qu'un champ publié marque d'un marqueur de position doit avoir la
-          nature de ce marqueur ; une source « cours » doit avoir la nature `cours`.
-      - id: reference-id-form
-        level: requirement
-        check: sources
-        text: >-
-          L'id d'une référence doit être `S<n>`, suivi au choix d'une lettre minuscule, unique
-          dans le concept.
-      - id: reference-names-source
-        level: requirement
-        check: sources
-        text: La cellule source d'une référence doit nommer la source (auteur, titre, date).
-      - id: reference-description-copied
-        level: requirement
-        method: inspection
-        text: >-
-          La description d'une source reprise d'un autre concept doit être copiée à l'identique.
-      - id: reference-link-one-url
-        level: requirement
-        check: sources
-        text: >-
-          Le lien d'une référence doit être une URL ou vide : une seconde place est une seconde
-          référence.
-      - id: reference-type-from-lexicon
-        level: requirement
-        check: sources
-        text: >-
-          Le type d'une référence doit être un ou plusieurs de `primary`, `secondary`,
-          `marketing`, écrits comme les mots du lexique et séparés par des virgules, puis au
-          choix une remarque entre parenthèses.
-      - id: reference-consulted-date
-        level: requirement
-        check: sources
-        text: La cellule « consulté le » d'une référence doit commencer par `YYYY-MM-DD`.
-      - id: references-per-concept
-        level: requirement
-        method: inspection
-        text: >-
-          Les références doivent être propres au concept : chaque concept cite les siennes.
-      - id: unverified-entry-anchored
-        level: requirement
-        check: sources
-        text: >-
-          Chaque entrée de « Non vérifié » doit s'ouvrir sur sa section, sous les formes de la
-          colonne section ou `headings.stances`, puis « : ».
-      - id: unverified-entry-content
-        level: requirement
-        method: inspection
-        text: >-
-          « Non vérifié » doit être une liste, vide au besoin ; chaque entrée dit, après sa
-          section, ce qu'aucune source consultée ne confirme, pourquoi et, au besoin, la consigne
-          qui suit (« écrire X, pas Y »).
-      - id: unverified-keeps-no-removed
-        level: requirement
-        method: inspection
-        text: >-
-          « Non vérifié » ne doit garder aucune trace d'une affirmation retirée : l'historique git
-          en est la trace.
-      - id: cited-ids-exist
-        level: requirement
-        check: sources
-        text: >-
-          Chaque id cité (`refs` du frontmatter, colonne source) doit exister dans « Références ».
-      - id: every-reference-cited
-        level: requirement
-        check: sources
-        text: >-
-          Chaque référence doit être citée par une affirmation ou un élément du frontmatter.
+          Il convient que chaque source de `sources.yaml` soit citée par une marque : une source
+          qu'aucune affirmation ne cite est signalée, à retirer ou à citer là où elle prouve.
+        why: >-
+          Une source que rien ne cite a été lue pour une affirmation retirée ou jamais marquée
+          (décision sources-a-course-file).
 
   - title: Les conventions du texte (course/README.md section 3.5)
     purpose: >-
@@ -832,12 +892,6 @@ groups:
           Une référence de concept doit nommer un concept, une section ou une unité existant du
           cours ; une référence à une annexe, un numéro d'annexe ou l'id d'une section ou d'une
           unité d'annexe.
-      - id: stance-marker-plain-text
-        level: requirement
-        check: conventions
-        text: >-
-          Un marqueur de position doit être du texte simple juste après l'affirmation qu'il
-          qualifie ; aucune définition de référence de lien ne porte l'étiquette d'un marqueur.
       - id: no-image-in-concept-file
         level: requirement
         check: conventions
@@ -848,10 +902,11 @@ groups:
   - title: Les ajouts d'une unité (course/README.md section 3.6)
     purpose: >-
       Ce qu'écrire une unité ajoute hors du fichier de concept : un fait de son ancrage aux
-      « Faits fixés » de `storyline.md`, un terme qu'elle met en gras à `glossary.md`, et, une
-      fois les sources écrites, une affirmation d'un champ publié à « Affirmations » de
-      `sources.md`. `unit-additions` dit au créateur, au moment où il écrit l'unité, ce qu'un
-      programme peut dire (le gras) ; la revue lit le reste.
+      « Faits fixés » de `storyline.md`, un terme qu'elle met en gras à `glossary.md`, et, pour
+      une affirmation d'un champ publié marquée avec ses sources, ces sources et leurs extraits à
+      `sources.yaml` (3.4). `unit-additions` dit au créateur, au moment où il écrit l'unité, ce
+      qu'un programme peut dire (le gras) ; `sources` dit si les marques et `sources.yaml` sont
+      cohérents ; la revue lit le reste.
     category: pedagogy
     method: inspection
     rules:
@@ -872,15 +927,6 @@ groups:
           Un ancrage ne doit reprendre que des faits de `storyline.md` ; il ajoute le déroulé (qui
           dit quoi, quand), jamais un fait nouveau : un fait qui manque est d'abord ajouté à
           `storyline.md`, aux « Faits fixés » avec l'id de l'unité qui le fixe.
-      - id: published-claims-in-claims
-        level: requirement
-        category: sources
-        method: inspection
-        text: >-
-          Seuls les champs publiés de `concept.md` sont sourcés : « Affirmations » doit couvrir
-          les affirmations vérifiables de « Matière », de « L'essentiel », de « Se vérifier », de
-          « Approfondissement » et des racines et des corrections des idées fausses (une
-          définition, une date, un chiffre, une citation, ce qu'un guide dit ou ne dit pas).
 
   - title: Les fichiers de domaine (course/README.md section 4)
     purpose: >-

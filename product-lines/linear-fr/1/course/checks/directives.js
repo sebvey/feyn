@@ -1,8 +1,9 @@
 'use strict';
 // The spec directives this spec MAJOR follows: spec.yaml, at the MAJOR's root, declares their
-// MAJOR (`directives: <MAJOR>`), and the checks load lib/ and the packages (yaml, ajv) of
-// spec-directives/<MAJOR>/ through a createRequire on its package.json (decision
-// `checks-use-ajv-and-yaml`), so an archived spec MAJOR keeps the lib of its directives.
+// MAJOR (`directives: <MAJOR>`), and the checks load lib/ and the packages (yaml, ajv,
+// mdast-util-from-markdown) of spec-directives/<MAJOR>/ through a createRequire on its
+// package.json (decision `checks-use-ajv-and-yaml`), so an archived spec MAJOR keeps the lib of its
+// directives.
 // spec.yaml is read by a line scan, since the YAML reader is the directives' own package (as
 // product-lines/check-course reads course.yaml). A missing spec.yaml, no `directives` line, a
 // directives MAJOR with no folder or its dependencies not installed stop the run: exit 2, one line.

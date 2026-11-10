@@ -1,19 +1,7 @@
----
-stances:
-  consensus:
-    - author: "Le Scrum Guide 2020"
-      text: "Une affirmation acceptée."
-      refs: [S1]
-      verified: ["« le texte » (section 2)"]
-  school: []
-  course:
-    - text: "Un choix du cours."
-      refs: []
----
-
 ## L'essentiel
 
-Un rôle est ce que fait une personne sur une couche du produit ; voir le
+[Un rôle est ce que fait une personne sur une couche du
+produit](consensus:S1,S2 "role") ; voir le
 concept 1.
 
 ## Section 0a : Les deux rôles
@@ -22,7 +10,7 @@ concept 1.
 
 #### Leçon
 
-- **Matière** : Le premier **rôle** décide. Le concept 1 en dépend. [cours]
+- **Matière** : Le premier **rôle** [décide](cours). Le concept 1 en dépend.
 - **Idées fausses** :
   - **Tout le monde** : « Tout le monde décide »
     - **Racine** : la phrase se lit vite ainsi.
@@ -116,7 +104,7 @@ Une note sur la question.
 
 ### Approfondissement
 
-Une autre façon de nommer les rôles, pour qui veut aller plus loin.
+[Une autre façon de nommer les rôles](fait:S1 "autre-facon"), pour qui veut aller plus loin.
 
 ### Consigne au professeur
 

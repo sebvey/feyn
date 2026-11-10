@@ -1,205 +1,148 @@
 'use strict';
-// sources.md (course/README.md section 3.4) and the frontmatter refs (3.1): its form (no
-// frontmatter, no H1, its three sections in order, a table of five columns in « Affirmations » and
-// « Références »); no introduction; the five columns of « Affirmations » (section anchors that exist in concept.md among its published
-// parts, a source cell of reference ids or the markers.course word, a verification, a nature);
-// « Références » (ids, one URL or no link, types, dates); « Non vérifié » entries anchored; every id
-// cited exists, every reference is cited; concept.md cites no reference.
+// The claims of a course and their sources, their coherence (course/README.md section 3.4): the
+// marks of each concept.md, read by the reader of this MAJOR (course/claims.js) in the published
+// fields that state claims (`claims` of course/form.yaml), and `sources.yaml` at the root of the
+// course, validated against course/schemas/sources.schema.yaml through Ajv2020. It fails what is
+// incoherent: a malformed mark, a mark outside those fields, a concept reference in the text of a
+// mark; a consensus, school or fact mark with no source; a sourced claim with no name, or a name
+// twice in its concept; an unknown source id; a pair (claim, source) with no quote; a quote whose
+// claim cites not its source; a kind, a control or an independence off its lexicon list; a school
+// claim with no holder, a fact or course claim with one, a holder for no claim. What is missing
+// without being incoherent (a source never cited, what no human has checked) is sources-coverage's;
+// an unmarked sentence is the review's. Its messages are French, the language of the spec.
+const fs = require('fs');
+const path = require('path');
 const directives = require('./directives');
 const yaml = directives.lib('yaml-lines');
-const mdlib = directives.lib('md');
 const { fail } = directives.lib('common');
+// the marks and the concept references are read by the readers of this MAJOR, given the directives' lib
+const claims = require('../claims')(directives.lib);
+const { parser: refParser } = require('../refs')(directives.lib);
 
-const REF = /^S\d+[a-z]?$/;
-const CITED = /\bS\d+[a-z]?\b/g;
-const IDS = /^\[S\d+[a-z]?\](\s*,\s*\[S\d+[a-z]?\])*$/;
-const PATH = /(^|[\s`(])[^\s`(]*\/?sources\.md\b|concepts\/[^\s`;,\])]+/;
-const URL = /^https?:\/\/\S+$/;
+const MAJOR = path.resolve(__dirname, '..', '..');
+const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+const short = (s) => (s.length > 50 ? s.slice(0, 50) + '…' : s).replace(/\s+/g, ' ');
 
-const short = (s) => (s.length > 50 ? s.slice(0, 50) + '…' : s);
-
-// the published parts of the head and the foot of the form (course/form.yaml), by their key: the
-// head itself, the foot's blocks
-const fixedKeys = (form) => (form ? [form.concept_file.head, ...form.concept_file.foot.blocks].filter((p) => p.published).map((p) => p.heading) : []);
-
-// the anchors of concept.md: the ids of its section and unit headings (its tree, course/parser.js),
-// and its published head and blocks of the foot by their lexicon value (the teacher note is not
-// one: it is not published)
-function anchorsOf(ctx, c, H) {
-  const cm = ctx.md(c.dir + '/concept.md');
-  if (!cm) return null;
-  const set = new Set(c.subs.map((s) => s.id));
-  const parts = ctx.parts(c);
-  const fixed = new Set(fixedKeys(ctx.form));
-  if (parts.head && fixed.has(parts.head.key)) set.add(H(parts.head.key));
-  for (const b of (parts.foot ? parts.foot.blocks : [])) if (fixed.has(b.key)) set.add(H(b.key));
-  return set;
+// the schema of sources.yaml, compiled once; its path is the form's
+let validate = null;
+function schema(form) {
+  if (!validate) {
+    const Ajv2020 = directives.require('ajv/dist/2020').default;
+    const file = path.join(MAJOR, form.sources_file.schema);
+    validate = new Ajv2020({ allErrors: true, logger: false }).compile(yaml.parse(fs.readFileSync(file, 'utf8')));
+  }
+  return validate;
 }
 
-function checkConcept(ctx, c, out) {
-  const dir = c.dir;
-  if (!dir || !ctx.isDir(dir)) return;
-  const H = (k) => ctx.word('headings', k) || k;
-  const sf = dir + '/sources.md';
-  const sm = ctx.md(sf);
-  if (!sm) return;
-  const top = mdlib.sections(sm.body, 2);
-
-  // the form of the file: no frontmatter, no H1, « Affirmations », « Références », « Non vérifié »,
-  // in this order, all present and no other ## section; one table of five columns in each of the
-  // first two
-  if (sm.hasFront) out.push(fail(sf, 1, 'sources.md has no frontmatter'));
-  for (const h of mdlib.headings(sm.body)) if (h.level === 1) out.push(fail(sf, h.line, 'no H1: the title is in course.yaml'));
-  const order = ['claims', 'references', 'unverified'].map(H);
-  let k = 0;
-  for (const s of top.sections) {
-    if (k < order.length && s.title === order[k]) { k++; continue; }
-    out.push(fail(sf, s.line, k < order.length
-      ? `section "${s.title}" found where « ${order[k]} » is expected (« ${order.join(' », « ')} », in this order, and no other ## section)`
-      : `section "${s.title}" is no section of sources.md: « ${order.join(' », « ')} » only`));
-    k = -1;
-    break;
-  }
-  if (k >= 0 && k < order.length) out.push(fail(sf, 1, `missing section « ${order[k]} »`));
-  for (const [key, cols] of [['claims', 5], ['references', 5]]) {
-    const s = top.sections.find((x) => x.title === H(key));
-    if (!s) continue;
-    const tabs = mdlib.tables(s.lines);
-    if (tabs.length !== 1) out.push(fail(sf, s.line, `« ${H(key)} » holds one table, found ${tabs.length}`));
-    else if (tabs[0].header.length !== cols) out.push(fail(sf, tabs[0].line, `« ${H(key)} » table has ${tabs[0].header.length} columns, expected ${cols}`));
-    else for (const r of tabs[0].rows) if (r.cells.length !== cols) out.push(fail(sf, r.line, `« ${H(key)} » row has ${r.cells.length} cells, expected ${cols}`));
-  }
-
-  const secRefs = top.sections.find((s) => s.title === H('references'));
-  const secClaims = top.sections.find((s) => s.title === H('claims'));
-  const secUnv = top.sections.find((s) => s.title === H('unverified'));
-  const anchors = anchorsOf(ctx, c, H);
-  const fixedList = fixedKeys(ctx.form).map((k) => `« ${H(k)} »`).join(', ');
-  const courseWord = ctx.word('markers', 'course');
-  const natureWords = [...['consensus', 'school', 'course'].map((k) => ctx.word('markers', k)), ctx.word('natures', 'fact')].filter(Boolean);
-  const refs = new Map(); // id -> line
-  const cited = new Set();
-
-  // no introduction: the file opens on « Affirmations »
-  const intro = top.pre.find((l) => !l.code && l.t.trim() !== '');
-  if (intro) out.push(fail(sf, intro.n, `sources.md has no introduction: it opens on « ${H('claims')} »`));
-
-  if (secRefs) {
-    const t = mdlib.tables(secRefs.lines)[0];
-    if (t) for (const r of t.rows) {
-      if (r.cells.length !== 5) continue;
-      const [id, source, link, type, on] = r.cells;
-      if (!REF.test(id)) out.push(fail(sf, r.line, `reference id "${id}" must be S<n>, optionally followed by a lowercase letter`));
-      else if (refs.has(id)) out.push(fail(sf, r.line, `reference id ${id} is used twice (line ${refs.get(id)})`));
-      else refs.set(id, r.line);
-      if (source === '') out.push(fail(sf, r.line, `reference ${id}: the source column is empty`));
-      if (link !== '' && !URL.test(link)) out.push(fail(sf, r.line, `reference ${id}: the link "${short(link)}" must be one URL (http or https) or empty; a second place is a second reference`));
-      const words = type.replace(/\(.*$/, '').split(',').map((w) => w.trim()).filter(Boolean);
-      const allowed = Object.values((ctx.lexicon && ctx.lexicon.source_types) || {});
-      if (!words.length || words.some((w) => !allowed.includes(w))) out.push(fail(sf, r.line, `reference ${id}: type "${type}" must be one or more of ${allowed.join(', ')}, separated by commas`));
-      if (!/^\d{4}-\d{2}-\d{2}/.test(on)) out.push(fail(sf, r.line, `reference ${id}: "consulted on" must start with YYYY-MM-DD, found "${on}"`));
-    }
-  }
-
-  // one anchor list: a section cell, or the head of a « Non vérifié » entry
-  const checkAnchors = (cell, line, what, extra) => {
-    const list = cell.split(',').map((a) => a.trim());
-    if (cell.trim() === '' || list.some((a) => a === '')) {
-      out.push(fail(sf, line, `${what}: the section is empty (section or unit ids or published parts of concept.md, separated by commas)`));
-      return;
-    }
-    if (!anchors) return;
-    // one failure per cell or entry, naming its unknown pieces
-    const bad = list.filter((a) => !anchors.has(a) && !(extra && a === extra));
-    if (!bad.length) return;
-    if (!extra && bad.includes(H('stances'))) out.push(fail(sf, line, `${what}: section « ${H('stances')} »: a stance or neighbour is sourced in its frontmatter item (refs, verified), not in « ${H('claims')} »`));
-    const unknown = bad.filter((a) => extra || a !== H('stances'));
-    if (unknown.length) out.push(fail(sf, line, `${what}: unknown section ${unknown.map((a) => `"${a}"`).join(', ')}: a section or unit id or a published part (${fixedList}) that exists in concept.md${extra ? `, or « ${extra} » for a stance or neighbour` : ''}`));
-  };
-
-  if (secClaims) {
-    const t = mdlib.tables(secClaims.lines)[0];
-    if (t) for (const r of t.rows) {
-      // a row not in five cells (concept-file fails it) still cites its ids
-      if (r.cells.length !== 5) {
-        for (const id of r.cells.join(' ').match(CITED) || []) cited.add(id);
-        continue;
-      }
-      const [claim, section, source, verified, nature] = r.cells;
-      const what = `claim "${short(claim)}"`;
-      if (claim === '') out.push(fail(sf, r.line, 'a claim row has no claim'));
-      checkAnchors(section, r.line, what, null);
-      const isCourse = courseWord && source === courseWord;
-      if (source === '') out.push(fail(sf, r.line, `${what}: the source cell is empty (reference ids [S1], or « ${courseWord} »)`));
-      else if (PATH.test(source)) out.push(fail(sf, r.line, `${what}: the source cell names a path to another concept ("${short(source)}"): a concept cites its own references`));
-      else if (!isCourse && !IDS.test(source)) out.push(fail(sf, r.line, `${what}: free-text source cell "${short(source)}": reference ids [S1] separated by commas, or « ${courseWord} », nothing else`));
-      if (!isCourse) for (const id of source.match(CITED) || []) {
-        cited.add(id);
-        if (!refs.has(id)) out.push(fail(sf, r.line, `claim cites ${id}, which is not in « ${H('references')} »`));
-      }
-      if (verified === '' && !isCourse) out.push(fail(sf, r.line, `${what}: nothing says what was verified`));
-      if (nature === '') out.push(fail(sf, r.line, `${what}: the nature is empty: one of ${natureWords.join(', ')}`));
-      else if (!natureWords.includes(nature)) out.push(fail(sf, r.line, `${what}: unknown nature "${nature}": one of ${natureWords.join(', ')}`));
-    }
-  }
-
-  // « Non vérifié »: a list, possibly empty; each entry opens with its section, then « : »
-  if (secUnv) {
-    for (const l of secUnv.lines) {
-      if (l.code || l.t.trim() === '' || /^\s/.test(l.t)) continue;
-      const m = /^[-*+]\s+(.*)$/.exec(l.t);
-      const head = m && m[1].indexOf(':') > 0 ? m[1].slice(0, m[1].indexOf(':')) : null;
-      if (head === null) {
-        out.push(fail(sf, l.n, `« ${H('unverified')} » entry "${short(l.t.trim())}" does not open with its section: a list item "<sections> : <what and why>"`));
-        continue;
-      }
-      checkAnchors(head, l.n, `« ${H('unverified')} » entry`, H('stances'));
-    }
-  }
-
-  // frontmatter refs
-  const cm = ctx.md(dir + '/concept.md');
-  if (cm && cm.data && typeof cm.data === 'object') {
-    const lists = [];
-    const st = cm.data.stances;
-    if (st && typeof st === 'object') for (const k of ['consensus', 'school', 'course']) if (Array.isArray(st[k])) lists.push([st[k], `stances.${k}`]);
-    if (Array.isArray(cm.data.neighbors)) lists.push([cm.data.neighbors, 'neighbors']);
-    for (const [list, name] of lists) {
-      list.forEach((it, i) => {
-        if (!it || !Array.isArray(it.refs)) return;
-        it.refs.forEach((r, j) => {
-          cited.add(r);
-          const line = yaml.lineOf(it.refs, j, yaml.lineOf(list, i));
-          if (!refs.has(r)) out.push(fail(dir + '/concept.md', line, `${name}[${i}] cites ${r}, which is not in « ${H('references')} » of sources.md`));
-        });
-      });
-    }
-  }
-  for (const [id, line] of refs) if (!cited.has(id)) out.push(fail(sf, line, `reference ${id} is cited by no claim and no frontmatter item`));
-
-  // concept.md cites no reference
-  for (const f of ['concept.md']) {
-    const m = ctx.md(dir + '/' + f);
-    if (!m) continue;
-    m.body.forEach((l) => {
-      if (l.code) return;
-      const re = /\[(S\d+[a-z]?)\](?!\()/g;
-      let x;
-      while ((x = re.exec(l.t))) out.push(fail(dir + '/' + f, l.n, `${f} cites no reference: "${x[0]}" belongs in the frontmatter refs or in sources.md`));
-    });
-  }
-}
+// the closed lists of a source, by its key in sources.yaml, from the lexicon
+const LISTS = { kind: 'source_kinds', control: 'source_controls', independence: 'source_independence' };
 
 function run(ctx) {
   if (!ctx.usable) return [fail('course.yaml', ctx.cyError ? ctx.cyError.line : 1, 'course.yaml is unusable: see course-yaml')];
   if (!ctx.lexiconOk) return [fail(ctx.lexiconFile || 'course/lexicon.yaml', 1, 'the lexicon is unusable: see course/README.md section 7')];
+  if (!ctx.form || !ctx.form.claims || !ctx.form.sources_file) return [fail('course/form.yaml', 1, `tooling error, not a defect of the course: the spec's form is missing or unreadable (${ctx.formError || 'no claims or sources_file'})`)];
+  const read = claims.reader(ctx);
+  if (!read) return [fail(ctx.lexiconFile || 'course/lexicon.yaml', 1, 'the lexicon has no group natures (consensus, school, fact, course): see course/README.md section 7')];
+  const N = (k) => ctx.word('natures', k);
+  const H = (k) => ctx.word('headings', k) || ctx.word('unit_fields', k) || k;
+  const course = claims.ofCourse(ctx, read);
+  const sf = course.file;
+  const data = isObj(course.data) ? course.data : null;
+  const sources = data && isObj(data.sources) ? data.sources : {};
+  const holders = data && isObj(data.claims) ? data.claims : {};
+  const selected = new Set(ctx.selected().map((c) => c.number));
+  const refs = refParser(ctx);
   const out = [];
-  for (const c of ctx.selected()) checkConcept(ctx, c, out);
+  const places = [
+    ...(ctx.form.claims.head ? [ctx.form.concept_file.head.heading] : []),
+    ...(ctx.form.claims.unit_fields || []),
+    ...(ctx.form.claims.misconception_parts || []),
+    ...(ctx.form.claims.foot_blocks || []),
+  ].map((k) => `« ${H(k)} »`).join(', ');
+
+  // sources.yaml: readable, valid against its schema, its closed values from the lexicon
+  if (course.error) out.push(fail(sf, course.error.line, `${sf} n'est pas du YAML lisible : ${course.error.message}`));
+  else if (course.text !== null) {
+    const v = schema(ctx.form);
+    if (!v(course.data)) {
+      for (const e of v.errors) out.push(fail(sf, yaml.lineOfError(course.data, e), `${sf} n'est pas valide selon ${ctx.form.sources_file.schema} : ${e.instancePath || '/'} ${e.message}${e.params && e.params.additionalProperty ? ` (« ${e.params.additionalProperty} »)` : ''}`));
+    }
+    const seen = new Map(); // `URL <url>` or `DOI <doi>` -> source id
+    for (const [id, s] of Object.entries(sources)) {
+      if (!isObj(s)) continue;
+      for (const key of ['URL', 'DOI']) {
+        if (typeof s[key] !== 'string') continue;
+        const at = `${key} ${s[key].toLowerCase()}`;
+        if (seen.has(at)) out.push(fail(sf, yaml.lineOf(s, key, yaml.lineOf(sources, id, 1)), `source ${id} : même ${key} que ${seen.get(at)} ; une source est décrite une fois dans le cours`));
+        else seen.set(at, id);
+      }
+      for (const [key, group] of Object.entries(LISTS)) {
+        const allowed = Object.values((ctx.lexicon && ctx.lexicon[group]) || {});
+        if (typeof s[key] === 'string' && !allowed.includes(s[key])) out.push(fail(sf, yaml.lineOf(s, key, yaml.lineOf(sources, id, 1)), `source ${id} : ${key} « ${s[key]} » n'est pas dans sa liste : ${allowed.join(', ')}`));
+      }
+    }
+  }
+
+  // the marks of each concept: where they stand, their form, their sources, their names
+  const citing = new Map(); // source id -> Set of claim keys that cite it
+  const named = new Map(); // claim key -> mark
+  for (const { c, marks, outside, problems } of course.concepts) {
+    const mine = selected.has(c.number);
+    const cf = c.dir + '/concept.md';
+    for (const k of marks) {
+      if (k.key) {
+        if (named.has(k.key) && mine) out.push(fail(cf, k.line, `la marque « ${short(k.text)} » a le nom « ${k.name} », déjà pris dans le concept à la ligne ${named.get(k.key).line} : un nom est unique dans son concept`));
+        else if (!named.has(k.key)) named.set(k.key, k);
+        for (const id of k.sources) {
+          if (!citing.has(id)) citing.set(id, new Set());
+          citing.get(id).add(k.key);
+        }
+      }
+    }
+    if (!mine) continue;
+    for (const p of problems) out.push(fail(cf, p.line, p.message));
+    for (const k of outside) out.push(fail(cf, k.line, `la marque « ${short(k.text)} » n'est pas dans un champ publié qui affirme (${places}) : un cas, la croyance d'une idée fausse ou une consigne ne marquent aucune affirmation`));
+    for (const k of marks) {
+      const what = `la marque « ${short(k.text)} »`;
+      if (!k.sources.length && ['consensus', 'school', 'fact'].includes(k.nature)) out.push(fail(cf, k.line, `${what} est « ${k.word} » sans source : une affirmation « ${N('consensus')} », « ${N('school')} » ou « ${N('fact')} » cite au moins une source (« ${k.word}:S1 »)`));
+      if (k.sources.length && !k.name) out.push(fail(cf, k.line, `${what} cite ${k.sources.join(', ')} sans nom : une affirmation sourcée a un nom, le titre de sa marque (« [${short(k.text)}](${k.word}:${k.sources.join(',')} "un-nom") »)`));
+      if (k.name && !claims.NAME.test(k.name)) out.push(fail(cf, k.line, `${what} a le nom « ${k.name} » : un nom est fait de minuscules sans accent, de chiffres et de tirets (« eau-90-96 »)`));
+      if (refs) for (const r of refs(k.text)) out.push(fail(cf, k.line, `${what} tient la référence de concept « ${r.word} ${r.list} » : la référence reste dans la phrase, hors de la marque`));
+      for (const id of k.sources) {
+        if (!Object.prototype.hasOwnProperty.call(sources, id)) {
+          out.push(fail(cf, k.line, `${what} cite ${id}, qui n'est pas une source de ${sf}${course.text === null ? ` (le fichier n'existe pas)` : ''}`));
+          continue;
+        }
+        const s = sources[id];
+        const quotes = isObj(s) && Array.isArray(s.quotes) ? s.quotes : [];
+        if (k.key && !quotes.some((q) => isObj(q) && q.claim === k.key)) out.push(fail(cf, k.line, `${what} cite ${id}, et aucun extrait de ${id} dans ${sf} ne la prouve (« claim: ${k.key} »)`));
+      }
+      const h = k.key && isObj(holders[k.key]) ? holders[k.key] : null;
+      const hl = yaml.lineOf(holders, k.key, 1);
+      if (k.nature === 'school' && !h) out.push(fail(cf, k.line, `${what} est « ${N('school')} » : qui tient cette position est son « holder », sous « claims: ${k.key || '<concept>/<nom>'} » de ${sf}`));
+      if ((k.nature === 'fact' || k.nature === 'course') && h) out.push(fail(sf, hl, `l'affirmation ${k.key} est « ${k.word} » : elle n'a pas de « holder », qui ne se dit que d'une position « ${N('school')} » ou « ${N('consensus')} »`));
+    }
+  }
+
+  // the quotes and the holders of sources.yaml: each names a claim that cites its source
+  const inScope = (key) => !ctx.concept || selected.has(String(key).split('/')[0]);
+  for (const [id, s] of Object.entries(sources)) {
+    if (!isObj(s) || !Array.isArray(s.quotes)) continue;
+    s.quotes.forEach((q, i) => {
+      if (!isObj(q) || typeof q.claim !== 'string' || !inScope(q.claim)) return;
+      if (!(citing.get(id) || new Set()).has(q.claim)) {
+        out.push(fail(sf, yaml.lineOf(q, 'claim', yaml.lineOf(s.quotes, i, 1)), `source ${id}, extrait ${i + 1} : « claim: ${q.claim} » ne nomme aucune affirmation marquée qui cite ${id}`));
+      }
+    });
+  }
+  for (const key of Object.keys(holders)) {
+    if (inScope(key) && !named.has(key)) out.push(fail(sf, yaml.lineOf(holders, key, 1), `« claims: ${key} » ne nomme aucune affirmation marquée du cours`));
+  }
   return out;
 }
 
 // the roles of the spec it reads, by their key in spec.yaml (spec-directives/1/README.md section 1),
 // the course through the parser
-const reads = ['course.form', 'course.lexicon', 'course.parser'];
+const reads = ['course.form', 'course.lexicon', 'course.schemas', 'course.parser', 'course.refs', 'course.claims'];
 
 module.exports = { id: 'sources', run, reads };

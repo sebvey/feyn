@@ -1,0 +1,2 @@
+check: sources
+message: cite S1, et aucun extrait de S1 dans sources.yaml ne la prouve (« claim: 1/couches »)

@@ -1,0 +1,49 @@
+sources:
+  S1:
+    title: The Scrum Guide
+    author: [{family: Schwaber, given: Ken}, {family: Sutherland, given: Jeff}]
+    issued: 2020-11
+    URL: https://scrumguides.org/scrum-guide.html
+    accessed: 2026-10-22
+    kind: guide
+    control: éditorial
+    independence: indépendante
+    checked: 2026-10-23
+    quotes:
+      - claim: 0/role
+        text: "le texte"
+        place: section 2
+        checked: 2026-10-23
+      - claim: 0/autre-facon
+        text: "un autre texte"
+        place: section 3
+        checked: 2026-10-23
+      - claim: 1/couches
+        text: "le texte"
+        place: section 2
+  S2:
+    type: report
+    title: Un rapport sur les équipes
+    author: [{literal: Une association}]
+    issued: 2021
+    kind: enquête
+    control: aucun
+    independence: intéressée
+    checked: 2026-10-23
+    quotes:
+      - claim: 0/role
+        text: "a role is what a person does"
+        place: résumé
+        checked: 2026-10-23
+      - claim: 2/tranche
+        text: "a slice crosses every layer"
+        checked: 2026-10-23
+      - claim: A1/definition-courte
+        text: "one line per word"
+        place: p. 4
+        checked: 2026-10-23
+claims:
+  0/role:
+    holder: "Le Scrum Guide 2020"
+  2/tranche:
+    holder: "Un auteur"

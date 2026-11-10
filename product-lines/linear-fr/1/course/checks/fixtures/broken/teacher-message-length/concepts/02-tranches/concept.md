@@ -1,16 +1,3 @@
----
-stances:
-  consensus:
-    - author: "Le Scrum Guide 2020"
-      text: "Une affirmation acceptée."
-      refs: [S1]
-      verified: ["« le texte » (section 2)"]
-  school: []
-  course:
-    - text: "Un choix du cours."
-      refs: []
----
-
 # Concept 2 : Les tranches
 
 ## L'essentiel
@@ -23,7 +10,7 @@ Une tranche traverse toutes les couches.
 
 #### Leçon
 
-- **Matière** : Une tranche traverse toutes les couches (concept 1).
+- **Matière** : [Une tranche traverse toutes les couches](école:S2 "tranche") (concept 1).
 
   La tranche 1 traverse la couche de la collecte, la couche de la transformation et la couche de la restitution.
 

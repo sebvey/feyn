@@ -20,6 +20,7 @@ Chaque concept est une source, écrite une fois : un **fichier de concept**, `co
 courses/<id>/
   course.yaml          la carte : identité, domaines, concepts, couleur d'accent (section 2)
   logo.svg             le logo du cours : une couleur, carré, sans script ni ressource externe (ci-dessous)
+  sources.yaml         les sources du cours, chacune une fois, et leurs extraits (3.4)
   plan.md              prose : public, accueil, progression, partis pris, règles d'écriture (section 5)
   glossary.md          le glossaire du cours (section 5)
   storyline.md         le fil rouge : le monde, puis les faits fixés (section 5)
@@ -46,7 +47,6 @@ Ses champs sont décrits par le schéma JSON [`schemas/course.schema.yaml`](sche
 ```
 concepts/09-decoupage-vertical/
   concept.md         le fichier de concept : le site en construit les parties publiées, le professeur le lit entier
-  sources.md         publié : le site le construit, « Non vérifié » excepté (3.4)
   <stem>.svg         publié : un fichier par schéma (section 6)
 ```
 
@@ -60,7 +60,7 @@ La forme du dossier et du fichier de concept est la donnée de [`form.yaml`](for
 
 Ses champs sont décrits par le schéma JSON [`schemas/concept-frontmatter.schema.yaml`](schemas/concept-frontmatter.schema.yaml) ; ses règles sont le groupe « Le frontmatter de concept.md » de [`rules.yaml`](rules.yaml).
 
-Le site rend les positions et les voisins depuis le frontmatter, sous le titre `headings.stances`. `verified` est un matériau d'audit, comme « Affirmations » de `sources.md` : une re-vérification est un changement de `concept.md`. Un schéma déclaré dans `diagrams` nomme son unité (`unit`) : le build le place à cette unité, et le corps n'a pas de ligne d'image.
+Le frontmatter ne tient que des métadonnées : `diagrams`, ses schémas ; un concept sans schéma n'a pas de frontmatter. Une affirmation se marque dans le texte publié (3.4), et une notion à ne pas confondre avec le concept est de la matière, ou une idée fausse dont la racine dit la confusion. Un schéma déclaré dans `diagrams` nomme son unité (`unit`) : le build le place à cette unité, et le corps n'a pas de ligne d'image.
 
 ### 3.2 Le corps de `concept.md`
 
@@ -138,23 +138,57 @@ La forme d'un cas, sur l'unité 0a2 de `samples/cafe` :
 
 Les règles de l'unité sont le groupe « L'unité » de [`rules.yaml`](rules.yaml).
 
-### 3.4 `sources.md`
+### 3.4 Les affirmations et leurs sources
 
-`sources.md` trace les champs publiés de `concept.md` qui affirment (« Matière », les racines et les corrections des « Idées fausses », « L'essentiel », « Se vérifier », « Approfondissement »), pas les cas d'une unité, dont l'ancrage vient du fil rouge et la réponse attendue redit la matière : « Affirmations » relie chaque affirmation à ce qui l'établit, « Références » décrit les sources, « Non vérifié » dit ce qu'aucune source consultée ne confirme. Le site construit chaque ligne de « Affirmations » et de « Références » ; « Non vérifié » est la seule section qu'il ne construit pas, reconnue par son titre du lexique ; la classe copie le fichier entier. Ses sections, leur ordre et leur publication sont `sources` de [`form.yaml`](form.yaml).
+**La marque.** Une affirmation s'écrit une fois, dans le champ publié de `concept.md` qui l'affirme (« L'essentiel », « Matière », les racines et les corrections des « Idées fausses », « Se vérifier », « Approfondissement » : `claims` de [`form.yaml`](form.yaml)), et s'y marque : un lien en ligne CommonMark, `[le texte affirmé](nature:S2,S3 "nom")`, dont le texte délimite exactement ce qui est affirmé. Sa destination est sa **nature**, un mot de `natures` du lexique (section 7), seul ou suivi de « : » et de ses sources, des ids `S<n>` séparés par des virgules, sans espace ; son titre est son **nom**, de minuscules sans accent, de chiffres et de tirets, unique dans son concept ; ailleurs qu'à sa marque, l'affirmation est nommée `<numéro du concept>/<nom>` (`1/eau-90-96`). Les cas d'une unité ne sont pas tracés : leur ancrage vient du fil rouge et leur réponse attendue redit la matière ; une marque dans un cas, dans la croyance d'une idée fausse ou dans une consigne est un échec. Une référence de concept reste dans la phrase, hors de la marque. Une marque est toujours un lien en ligne : un lien de référence n'en est pas une.
 
-Les règles de `sources.md` sont le groupe « Le fichier sources.md » de [`rules.yaml`](rules.yaml).
+```
+La profession donne un repère, [une eau entre 90 et 96 °C](consensus:S4 "eau-90-96") : [un point de départ pour régler, pas une norme à atteindre](cours).
+```
+
+Une affirmation est un **fait** (`fait` : une source l'énonce, personne n'a à le tenir) ou l'une des trois positions : `consensus`, ce que tient le domaine ; `école`, ce que tient quelqu'un de nommé ; `cours`, le choix ou la conclusion du cours, avec ou sans sources. Une affirmation `consensus`, `école` ou `fait` cite au moins une source ; une affirmation qui cite une source a un nom. Un mot que le cours choisit vraiment a sa propre marque `cours`, la phrase coupée. Ce que le cours ne dit pas et que le professeur dirait sinon va dans « Consigne au professeur » (3.3).
+
+**`sources.yaml`.** Les sources du cours sont un seul fichier, à la racine du dossier du cours. Sous `sources`, chaque source une fois, par son id `S<n>` unique dans le cours, décrite par des champs CSL comme Pandoc les écrit en YAML (`title`, et `URL` ou `author`, obligatoires ; `author`, `container-title`, `issued`, `URL`, `DOI`, `accessed`… ; le `type` CSL au choix, tiré de `kind` quand il manque), puis par trois listes fermées du lexique : `kind`, sa forme ; `control`, la relecture qu'elle a passée ; `independence`, son indépendance de ce qu'elle dit. Ses **extraits**, `quotes`, prouvent chacun une affirmation qui la cite : `claim`, le nom de l'affirmation ; `text`, la plus courte phrase de la source qui la prouve, mot pour mot ; `place`, où elle se trouve (« résumé » quand le résumé seul a été lu). Une source et un extrait portent au choix `checked`, la date à laquelle un humain les a vérifiés, écrite par cet humain seul : absent, ils ont été posés sans qu'un humain les vérifie ; une modification les retire. Sous `claims`, qui tient la position d'une affirmation, son `holder`, par son nom : obligatoire pour une affirmation `école`, permis pour `consensus`, refusé pour `fait` et `cours` ; il n'est pas l'auteur de la source. Sa structure est le schéma JSON [`schemas/sources.schema.yaml`](schemas/sources.schema.yaml), que `sources_file` de [`form.yaml`](form.yaml) nomme.
+
+```yaml
+sources:
+  S4:
+    title: "SCA Standard 310-2021, Home Coffee Brewers: Specifications and Test Methods"
+    author: [{literal: Specialty Coffee Association}]
+    issued: 2021
+    URL: https://web.archive.org/web/20250108161720/https://sca.coffee/s/SCA_Standard_310-2021.pdf
+    accessed: 2026-11-06
+    kind: norme
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: 1/eau-90-96
+        text: "reach a temperature in the 90 to 96°C range"
+        place: 6.2 Brewing Temperature
+claims:
+  1/87-93-pareil:
+    holder: "Batali, Ristenpart et Guinard, UC Davis (2020)"
+```
+
+**La cohérence.** Sourcer est au choix, la cohérence non. `sources` échoue sur une marque mal écrite, une marque hors des champs qui affirment, une référence de concept dans une marque, un id de source inconnu, une affirmation sourcée sans nom ou un nom pris deux fois, une paire (affirmation, source) sans extrait, un extrait qui nomme une affirmation qui ne cite pas sa source, une valeur hors de sa liste, une affirmation `consensus`, `école` ou `fait` sans source, une affirmation `école` sans `holder`, une affirmation `fait` ou `cours` qui en a un, une source décrite deux fois. `sources-coverage` signale, sans échouer, ce qui reste à faire : par concept, son compte d'affirmations marquées, sourcées et vérifiées, quand une affirmation sourcée n'est pas vérifiée ; une source qu'aucune marque ne cite. Une phrase non marquée n'est pas un échec de check : la revue la lit.
+
+Ce qu'aucune source ne confirme ne s'écrit pas à part : une affirmation que le cours conclut de ses sources est `cours`, ces sources dans sa marque ; une source faible se dit par son `kind`, son `control` et son `independence` ; ce qui a été lu est la `place` de l'extrait ; un texte connu par une autre source est cité par elle ; une source non lue n'est pas une source.
+
+Le site construit « Consensus et choix d'école » (`headings.stances`) et la liste des sources depuis les marques et `sources.yaml` ; le professeur lit les marques comme elles sont écrites, et `sources.yaml` à la demande, quand on lui demande d'où vient une affirmation.
+
+Les règles des affirmations et de leurs sources sont le groupe « Les affirmations et leurs sources » de [`rules.yaml`](rules.yaml).
 
 ### 3.5 Les conventions du texte
 
 La structure de `concept.md` est du Markdown simple sous des conventions : le site fait de chacune son HTML et ses classes, le professeur les lit comme du Markdown ordinaire. Hors d'elles (gras, italique, listes, paragraphes, catalogues en gras), le texte est du Markdown ordinaire ; dans une unité, il convient que le gras marque un terme du glossaire (3.6). Elles valent dans ce que l'apprenant lit ou entend, la consigne exceptée (`readers` de [`form.yaml`](form.yaml)).
 
-Une **référence de concept** est du texte simple : le mot `concept_refs.concept` (au pluriel `concept_refs.concepts`, une liste jointe par `concept_refs.and`) puis des numéros de concept ou des ids de section ou d'unité, `concept 4`, `concept 8a2`, `(concept 17)`, `concepts 5 et 7b` ; vers une annexe, le mot `concept_refs.annex` puis un numéro d'annexe ou l'id d'une section ou d'une unité d'annexe, `annexe A2`, `annexe A2b`. Un id nu sans ce mot (`qu'en 9a`) est du texte simple, sans lien. Un **marqueur de position** est `[cours]`, `[école]` ou `[consensus]` (`markers.course`, `markers.school`, `markers.consensus`).
+Une **référence de concept** est du texte simple : le mot `concept_refs.concept` (au pluriel `concept_refs.concepts`, une liste jointe par `concept_refs.and`) puis des numéros de concept ou des ids de section ou d'unité, `concept 4`, `concept 8a2`, `(concept 17)`, `concepts 5 et 7b` ; vers une annexe, le mot `concept_refs.annex` puis un numéro d'annexe ou l'id d'une section ou d'une unité d'annexe, `annexe A2`, `annexe A2b`. Un id nu sans ce mot (`qu'en 9a`) est du texte simple, sans lien. Une **marque** d'affirmation est un lien en ligne dont la destination est une nature (`natures` du lexique), `[le texte affirmé](consensus:S1 "nom")` (3.4) : le site en fait le texte et un badge de sa nature, qui renvoie à ses sources ; le professeur la lit comme elle est écrite. Une référence de concept reste hors de la marque, dans la phrase.
 
 Les règles de ces conventions sont le groupe « Les conventions du texte » de [`rules.yaml`](rules.yaml).
 
 ### 3.6 Les ajouts d'une unité
 
-Écrire une unité ajoute hors du fichier de concept : ce sont ses **ajouts**. Un fait que son ancrage emploie entre aux « Faits fixés » de `storyline.md`, avec l'id de l'unité ; il convient qu'un passage qu'elle met en gras soit un terme de `glossary.md` : le gras d'emphase reste possible, et `unit-additions` signale un gras qui n'est pas un terme, au cas où le terme manquerait au glossaire ; une affirmation d'un champ publié a sa ligne dans « Affirmations » de `sources.md`, une fois les sources du concept écrites. Les étapes de la création d'un cours et les checks que chacune lance sont dans [`checks/README.md`](checks/README.md).
+Écrire une unité ajoute hors du fichier de concept : ce sont ses **ajouts**. Un fait que son ancrage emploie entre aux « Faits fixés » de `storyline.md`, avec l'id de l'unité ; il convient qu'un passage qu'elle met en gras soit un terme de `glossary.md` : le gras d'emphase reste possible, et `unit-additions` signale un gras qui n'est pas un terme, au cas où le terme manquerait au glossaire ; il convient qu'une affirmation d'un champ publié soit marquée là où elle est écrite (3.4), et une affirmation qui cite une source ajoute à `sources.yaml` la source, si le cours ne l'a pas encore, et l'extrait qui la prouve. Les étapes de la création d'un cours et les checks que chacune lance sont dans [`checks/README.md`](checks/README.md).
 
 Les règles des ajouts sont le groupe « Les ajouts d'une unité » de [`rules.yaml`](rules.yaml).
 
@@ -195,18 +229,19 @@ Les règles du style sont le groupe « Le style des schémas » de [`rules.yaml`
 
 ## 7. Le lexique des fichiers du cours
 
-Le lexique des fichiers du cours, `course/lexicon.yaml`, écrit une fois les mots qu'un programme reconnaît dans un fichier du cours (un titre, un mot de type, un champ ou un bloc d'unité, un marqueur, une nature, une référence de concept, un type de source, un caractère banni) et les nomme par clé : les checks, le build du professeur et le site les y lisent, par leur clé, et aucun ne les écrit à nouveau (décision `lexicon-not-language-pack`). Les marques de forme et les titres du professeur sont écrits mot pour mot dans ses règles du protocole, `products/teacher/rules.yaml`, ses autres mots dans son implémentation, hors de la spec ; les mots et les textes courts que le site montre pour tout cours de la spec, et qu'aucun fichier du cours ne tient, sont le lexique du site, `products/site/lexicon.yaml`.
+Le lexique des fichiers du cours, `course/lexicon.yaml`, écrit une fois les mots qu'un programme reconnaît dans un fichier du cours (un titre, un mot de type, un champ ou un bloc d'unité, une nature, une référence de concept, la forme, la relecture et l'indépendance d'une source, un caractère banni) et les nomme par clé : les checks, le build du professeur et le site les y lisent, par leur clé, et aucun ne les écrit à nouveau (décision `lexicon-not-language-pack`). Les marques de forme et les titres du professeur sont écrits mot pour mot dans ses règles du protocole, `products/teacher/rules.yaml`, ses autres mots dans son implémentation, hors de la spec ; les mots et les textes courts que le site montre pour tout cours de la spec, et qu'aucun fichier du cours ne tient, sont le lexique du site, `products/site/lexicon.yaml`.
 
 Cette section n'énonce aucune règle d'un cours : le lexique est un fichier de la spec. `course/lexicon.yaml` tient chaque clé ci-dessous ; le manifeste de la spec, `spec.yaml`, les liste aussi (`lists.lexicons.course`) ; `lexicon-keys`, un test de `check-spec`, vérifie que `course/lexicon.yaml` et le tableau ci-dessous tiennent les clés de cette liste, ni plus ni moins pour le tableau. Un `course/lexicon.yaml` absent ou illisible est une erreur d'outillage, ni un défaut du cours ni une règle : `course-yaml` échoue dessus (code de sortie 1), et `lexicon-keys` échoue dessus quand le manifeste le déclare (`course.lexicon`). Les valeurs :
 
 | Groupe | Clés et valeurs |
 |---|---|
-| `headings` | `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (le titre du site pour les positions du frontmatter, et la section qu'une entrée de « Non vérifié » de `sources.md` nomme pour une position ou un voisin : aucune section de `concept.md` ne l'a), `deepening` « Approfondissement », `landmarks` « Se vérifier », `teacher_note` « Consigne au professeur », `foot` « Clôture » ; `essentials` est aussi le titre de la tête de `concept.md` (3.2) ; `claims` « Affirmations », `references` « Références », `unverified` « Non vérifié » ; `problem` « Le problème », `crossing_case` « Un cas qui traverse le domaine » ; `audience` « Public cible », `onboarding` « Accueil », `progression` « Progression » ; `fixed_facts` « Faits fixés » ; `avoid` « Termes à éviter », `unreleased` « Non publié » |
+| `headings` | `essentials` « L'essentiel », `stances` « Consensus et choix d'école » (le titre du site pour les positions que disent les marques du concept, 3.4 : aucune section de `concept.md` ne l'a), `deepening` « Approfondissement », `landmarks` « Se vérifier », `teacher_note` « Consigne au professeur », `foot` « Clôture » ; `essentials` est aussi le titre de la tête de `concept.md` (3.2) ; `problem` « Le problème », `crossing_case` « Un cas qui traverse le domaine » ; `audience` « Public cible », `onboarding` « Accueil », `progression` « Progression » ; `fixed_facts` « Faits fixés » ; `avoid` « Termes à éviter », `unreleased` « Non publié » |
 | `block_kinds` | `concept` « Concept », `annex` « Annexe », `section` « Section », `unit` « Unité » : le mot qui ouvre le titre d'un concept, d'une annexe, d'une section et d'une unité dans `concept.md`, suivi de son id puis du séparateur et du titre ; `case` « Cas » : le mot qui ouvre le titre d'un cas, suivi du séparateur et du titre (3.3) ; `separator` « : », une espace avant et après, entre l'id, ou le mot d'un cas, et le titre (3) |
 | `unit_fields` | `matter` « Matière », `misconceptions` « Idées fausses », `root` « Racine », `correction` « Correction », `anchor` « Ancrage », `question` « Question », `expected_answer` « Réponse attendue », `misconceptions_in_play` « Idées fausses en jeu », `teacher_note` « Consigne au professeur » : les libellés des champs d'une unité, ceux de ses idées fausses et de ses cas compris ; `teacher_note` est aussi le mot du bloc « Consigne au professeur » d'une unité, où il n'a pas de libellé (3.3) |
 | `unit_blocks` | `lesson` « Leçon », `cases` « Cas du fil rouge » : les mots des deux blocs d'une unité qui tiennent des champs étiquetés (3.3) |
-| `markers` | `consensus` « consensus », `school` « école », `course` « cours » |
-| `natures` | `fact` « fait » : la nature d'une affirmation de `sources.md` qu'une source énonce sans position (3.4) ; les autres natures sont les marqueurs de position `consensus`, `school`, `course`. Seul `sources` la lit : ce n'est pas un marqueur du texte publié, que `conventions` vérifie |
+| `natures` | `consensus` « consensus », `school` « école », `fact` « fait », `course` « cours » : la nature d'une affirmation, la destination de sa marque (3.4) ; un fait, ou l'une des trois positions |
 | `concept_refs` | `concept` « concept », `concepts` « concepts », `and` « et », `annex` « annexe » : les mots d'une référence de concept (3.5) |
-| `source_types` | `primary` « primaire », `secondary` « secondaire », `marketing` « marketing » |
+| `source_kinds` | `study` « étude », `review` « revue de littérature », `standard` « norme », `survey` « enquête », `article` « article », `post` « billet », `guide` « guide », `dictionary` « dictionnaire », `sales_page` « page de vente » : la forme d'une source, son `kind` dans `sources.yaml` (3.4) |
+| `source_controls` | `peers` « pairs », `editorial` « éditorial », `none` « aucun » : la relecture qu'une source a passée, son `control` |
+| `source_independence` | `independent` « indépendante », `interested` « intéressée » : l'indépendance d'une source de ce qu'elle dit, son `independence` |
 | `typography` | `banned` : les caractères que le texte d'un cours n'emploie pas (le tiret cadratin, les flèches) |

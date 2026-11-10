@@ -214,7 +214,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### concept folder
 
-- means: the folder of a concept in its course, holding its **concept file**, `sources.md` and its diagrams
+- means: the folder of a concept in its course, holding its **concept file** and its diagrams
 - en: concept folder
 - fr: « dossier de concept » · rejected: « fiche »
 - not to confuse with: [concept](#concept), [concept file](#concept-file), [domain file](#domain-file)
@@ -333,11 +333,11 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### published
 
-- means: of a block or a part of a concept file, rendered by the site build: the **lesson** (its matter and its **misconceptions**, which the site shows after the cases), the **cases** (each with its anchor, its question and its expected answer, shown hidden until the reader reveals it), « L'essentiel », the landmarks, the deepening, the title and the headings of the sections and units, the **stances**, the **neighbors** and the **diagrams**; beside it, the claims and the references of its **sources**; a property the spec fixes for the block, never chosen by a course, and no heading says it. The build renders the published parts and nothing else
+- means: of a block or a part of a concept file, rendered by the site build: the **lesson** (its matter and its **misconceptions**, which the site shows after the cases), the **cases** (each with its anchor, its question and its expected answer, shown hidden until the reader reveals it), « L'essentiel », the landmarks, the deepening, the title and the headings of the sections and units, the **diagrams**, and the **marks** of its claims, from which the site builds its **stances**; beside it, the course's **sources**; a property the spec fixes for the block, never chosen by a course, and no heading says it. The build renders the published parts and nothing else
 - en: published · rejected: "reader-facing", "public" (it describes the repository)
 - fr: « publié » · rejected: « côté lecteur »
 - not to confuse with: [unpublished](#unpublished)
-- why: visibility was a property of a file, reader-facing or teacher-only; with one file per concept it is a property of a part of the file, which the form of the spec holds; a block of a unit no longer says its reader in its heading, a mark the site reader has no use for
+- why: visibility was a property of a file, reader-facing or teacher-only; with one file per concept it is a property of a part of the file, which the form of the spec holds; a block of a unit no longer says its reader in its heading, a sign the site reader has no use for
 
 ### unpublished
 
@@ -392,31 +392,63 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### additions
 
-- means: of a **unit**, what writing it adds outside its **concept file**: a fact its **anchor** uses, among the **fixed facts** of the **storyline**; a term it puts in bold, in the **course glossary**; a claim of one of its **published** fields, in the **sources** of its concept, once they are written
+- means: of a **unit**, what writing it adds outside its **concept file**: a fact its **anchor** uses, among the **fixed facts** of the **storyline**; a term it puts in bold, in the **course glossary**; for a claim of one of its **published** fields that cites a source, the source and the **quote** that proves it, in the course's **sources**
 - en: additions
 - fr: « ajouts »
-- not to confuse with: [fixed fact](#fixed-fact), [course glossary](#course-glossary), [sources](#sources)
+- not to confuse with: [fixed fact](#fixed-fact), [course glossary](#course-glossary), [sources](#sources), [mark](#mark)
 
 ### stances
 
-- means: the standing of each claim of a concept: consensus (an established reference or practice), school (short for school of thought: a named author's or current's choice), course (this course's own choice). A stance is also any stated position of a course (« une équipe en sprints »)
+- means: the three stances a claim of a course can take, its **nature** when it is no fact: consensus (what the field holds), school (short for school of thought: what someone named holds, its **holder**), course (this course's own choice or conclusion). A fact is no stance: a source states it and no one has to hold it. At the scale of the whole course, a stance of the course plan is a course stance held throughout. A stance is also any stated position of a course (« une équipe en sprints »)
 - en: stances · rejected: "schools", "opinions", "positions", "status"
-- fr: « positions » (« consensus », « choix d'école », « choix du cours »)
-- not to confuse with: [neighbors](#neighbors), [concept status](#concept-status)
+- fr: « positions » (« consensus », « choix d'école », « choix du cours ») ; « parti pris » for a stance of the course plan
+- not to confuse with: [nature](#nature), [holder](#holder), [concept status](#concept-status)
 
-### neighbors
+### nature
 
-- means: the neighbouring notions not to confuse with the concept, declared apart from its stances
-- en: neighbors · rejected: "related", "see also"
-- fr: « voisins », « notions voisines »
-- not to confuse with: [stances](#stances)
+- means: of a claim of a course, what it is: a fact, which a source states and no one has to hold, or one of the three **stances**, consensus, school or course; its **mark** carries it
+- en: nature · rejected: "type", "kind" (the form of a source), "status"
+- fr: « nature » (« fait », « consensus », « école », « cours »)
+- not to confuse with: [stances](#stances), [mark](#mark)
+- why: the brainstorm of the form had folded the fact and the three stances into one word; a holder makes sense for a stance only, so the nature names the four, and the stances three of them
+
+### mark
+
+- means: the sign put on a claim in the **published** text of a course, where the claim is written once: a link whose text is exactly what is claimed, whose destination carries its **nature** and its **sources**, and whose title is its name
+- en: mark · rejected: "marker" (the stance sign written after a sentence, whose extent was a judgment), "tag", "badge" (what the site shows of a mark)
+- fr: « marque » · rejected: « marqueur »
+- not to confuse with: [logo](#logo), [concept reference](#concept-reference), [nature](#nature)
+- why: the entry **logo** rejects "mark" for the logo because it reads as a sign put on a text: that is this sense; "marker" named the sign after a sentence that the mark replaces
+
+### holder
+
+- means: who holds the stance of a claim: required for a school, allowed for a consensus, none for a fact or a course claim; not the author of the source that reports it (the respondents of a survey, reported by an article)
+- en: holder · rejected: "author" (the source's), "owner"
+- fr: « qui tient la position »
+- not to confuse with: [stances](#stances), [sources](#sources)
 
 ### sources
 
-- means: the file `sources.md` of a concept, which traces its **published** fields that state claims, not the cases of its units: its claims (each with its section, its source, whether it was verified, and its nature: consensus, school, course, or fact, what a source states with no stance), its references, and what stays unverified. A stance or a neighbour is sourced where it is declared: its references, each with the quotation and its place
-- en: sources · rejected: "bibliography", "citations"
-- fr: « sources » (« affirmations », « références », « fait »)
-- not to confuse with: [concept reference](#concept-reference), [additions](#additions), [course](#course)
+- means: the sources of a course, one file at its root, `sources.yaml`: each source once, by its id, described by its citation fields, its kind, its control and its independence, with the **quotes** that prove the claims citing it, then the **holder** of each stance that has one; the claims they prove are **marked** in the **published** text
+- en: sources · rejected: "bibliography", "citations", "references" (a concept reference)
+- fr: « sources » · rejected: « références »
+- not to confuse with: [concept reference](#concept-reference), [additions](#additions), [course](#course), [quote](#quote), [mark](#mark)
+
+### quote
+
+- means: a phrase of a source, word for word, the shortest that proves one claim citing that source, with where it stands in the source; a source holds a quote for each claim that cites it, and a human who verifies a quote against its source dates it **checked**
+- en: quote · rejected: "verified", "evidence", "excerpt"
+- fr: « extrait » · rejected: « citation »
+- not to confuse with: [sources](#sources), [checked](#checked)
+- why: "verified" named a state, which **checked** carries; "evidence" says more than a phrase proves, "excerpt" was weighed and set aside for the shorter word; « citation » in French also names the quoting of a source as a whole
+
+### checked
+
+- means: of a source or a **quote**, the date a human verified it, written by that human only; absent, it was posed without a human verifying it; an edit of the source or the quote removes it
+- en: checked · rejected: "verified", "status", "reviewed"
+- fr: « vérifié »
+- not to confuse with: [quote](#quote), [review](#review)
+- why: courses are written by agents, and a check verifies the form of a quote, not its truth: only the date a human verified says the rest; a status written on everything would be filled badly
 
 ### diagram
 
@@ -460,7 +492,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: in the text of a course, the words that name a concept, a section, a unit or an annex: « concept 4 », « concepts 5 et 7b », « annexe A2 »
 - en: concept reference · rejected: "reference" alone
 - fr: « renvoi » (and nothing else: a pointer to a group or a file is a « lien »)
-- not to confuse with: [sources](#sources) (its references), [prerequisites](#prerequisites)
+- not to confuse with: [sources](#sources), [mark](#mark), [prerequisites](#prerequisites)
 
 ### course glossary
 
@@ -480,8 +512,8 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 - means: the drawing that stands for a course on its site, `logo.svg` at the root of the course: square, one colour in `currentColor`, which the site paints in the course's **accent colour**; the site's header shows it, and its favicon and share image are drawn from it
 - en: logo · rejected: "mark", "icon"
 - fr: « logo »
-- not to confuse with: [accent colour](#accent-colour), [diagram](#diagram)
-- why: "icon" names the small drawings of the site's buttons, which stand for an action, not for a course; "mark" says less than "logo" and reads as a sign put on a text
+- not to confuse with: [accent colour](#accent-colour), [diagram](#diagram), [mark](#mark)
+- why: "icon" names the small drawings of the site's buttons, which stand for an action, not for a course; "mark" says less than "logo" and reads as a sign put on a text, the sense of a **mark**
 
 ### accent colour
 
@@ -539,7 +571,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### lexicon
 
-- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the teacher build and the site; `products/site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds; and the lexicon of a **teacher implementation**, the words its **means** make the teacher say and write other than the form marks and titles its **protocol rules** fix. Not a translation file: the language is the spec's
+- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, natures, concept references, the kind, the control and the independence of a source, typography, the word lists of the checks), read by the checks, the teacher build and the site; `products/site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds; and the lexicon of a **teacher implementation**, the words its **means** make the teacher say and write other than the form marks and titles its **protocol rules** fix. Not a translation file: the language is the spec's
 - en: lexicon · rejected: "language pack", "i18n", "locale", "strings"
 - fr: « lexique »
 
@@ -981,6 +1013,7 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 - means: a reading of a change against the spec by an agent or a human
 - en: review · rejected: "audit", "QA"
 - fr: « revue »
+- not to confuse with: [checked](#checked)
 
 ### baseline
 
