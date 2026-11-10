@@ -23,6 +23,8 @@
 // is always inline; a link reference definition whose destination is a claim mark's is a problem.
 //   claims.ofConcept(ctx, c, read)   the claim marks of a concept, each in the part it stands in
 //   claims.ofCourse(ctx, read)       the claim marks of every concept and the course's sources.yaml, once
+//   claims.ofCourseFiles(ctx, read)  the claim marks of the course files other than a concept file
+//                                    (domain files, plan.md, storyline.md, glossary.md), where none belongs
 
 // the keys of the group `natures`, in the order the spec names them
 const NATURES = ['consensus', 'school', 'fact', 'course'];
@@ -149,11 +151,39 @@ function ofCourse(ctx, read) {
   return out;
 }
 
+// -> the course Markdown files other than a concept file that a claim mark could stand in, in the
+// order of course/README.md sections 4 and 5: the domain files of course.yaml, then plan.md,
+// storyline.md and glossary.md, their names from course/form.yaml; CHANGELOG.md is not one (its
+// entries are never rendered). Only the files that exist.
+function courseFiles(ctx) {
+  const form = ctx.form || {};
+  const domains = ctx.cy && Array.isArray(ctx.cy.domains) ? ctx.cy.domains : [];
+  const files = [
+    ...domains.map((d) => (d && typeof d.file === 'string' ? d.file : null)),
+    ...['plan', 'storyline', 'glossary'].map((k) => (form[k] && form[k].file) || null),
+  ];
+  return [...new Set(files.filter((f) => f && ctx.exists(f)))];
+}
+
+// -> the claim marks of the course files other than a concept file, read from each file's body in
+// one text so a claim mark keeps the line of the file: [{ file, marks, problems }], a file with no
+// body left out. None belongs there (rule claim-mark-in-claim-fields): the caller fails each.
+function ofCourseFiles(ctx, read) {
+  const out = [];
+  for (const file of courseFiles(ctx)) {
+    const m = ctx.md(file);
+    if (!m || !m.body || !m.body.length) continue;
+    const { marks, problems } = read(m.body.map((l) => l.t).join('\n'), { line: m.body[0].n });
+    out.push({ file, marks, problems });
+  }
+  return out;
+}
+
 let yaml = null;
 
 // lib(name): the module spec-directives/<MAJOR>/lib/<name>.js of the directives this MAJOR follows
 module.exports = function claims(lib) {
   const mdast = lib('mdast');
   yaml = lib('yaml-lines');
-  return { reader: (ctx) => reader(ctx, mdast), ofConcept, ofCourse, NATURES, SOURCE_ID, NAME };
+  return { reader: (ctx) => reader(ctx, mdast), ofConcept, ofCourse, ofCourseFiles, NATURES, SOURCE_ID, NAME };
 };

@@ -1,9 +1,11 @@
 'use strict';
 // The claims of a course and their sources, their coherence (course/README.md section 3.4): the
 // claim marks of each concept.md, read by the reader of this MAJOR (course/claims.js) in the published
-// fields that state claims (`claims` of course/form.yaml), and `sources.yaml` at the root of the
-// course, validated against course/schemas/sources.schema.yaml through Ajv2020. It fails what is
-// incoherent: a malformed claim mark, a claim mark outside those fields, a concept reference in the
+// fields that state claims (`claims` of course/form.yaml); the claim marks of the other course
+// Markdown files (the domain files, plan.md, storyline.md, glossary.md; not CHANGELOG.md), where
+// none belongs; and `sources.yaml` at the root of the course, validated against
+// course/schemas/sources.schema.yaml through Ajv2020. It fails what is incoherent: a malformed claim
+// mark, a claim mark outside those fields or in a course file other than a concept file, a concept reference in the
 // text of a claim mark; a consensus, school or fact claim mark with no source; a sourced claim with no name, or a name
 // twice in its concept; an unknown source id; a pair (claim, source) with no quote; a quote whose
 // claim cites not its source; a kind, a control or an independence off its lexicon list; a school
@@ -121,6 +123,14 @@ function run(ctx) {
       const hl = yaml.lineOf(holders, k.key, 1);
       if (k.nature === 'school' && !h) out.push(fail(cf, k.line, `${what} est « ${N('school')} » : qui tient cette position est son « holder », sous « claims: ${k.key || '<concept>/<nom>'} » de ${sf}`));
       if ((k.nature === 'fact' || k.nature === 'course') && h) out.push(fail(sf, hl, `l'affirmation ${k.key} est « ${k.word} » : elle n'a pas de « holder », qui ne se dit que d'une position « ${N('school')} » ou « ${N('consensus')} »`));
+    }
+  }
+
+  // the course files other than a concept file (domain files, plan.md, storyline.md, glossary.md):
+  // no claim mark stands there, checked on the whole course only (not with --concept)
+  if (!ctx.concept) {
+    for (const { file, marks } of claims.ofCourseFiles(ctx, read)) {
+      for (const k of marks) out.push(fail(file, k.line, `la marque d'affirmation « ${short(k.text)} » est dans ${file}, hors d'un fichier de concept : une marque d'affirmation ne se trouve que dans les champs publiés qui affirment d'un concept.md (${places})`));
     }
   }
 
