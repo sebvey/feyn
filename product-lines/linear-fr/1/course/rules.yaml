@@ -737,10 +737,16 @@ groups:
         text: >-
           Un extrait (`quotes`) doit être la plus courte phrase de la source qui prouve son
           affirmation, mot pour mot, dans la langue de la source (`text`), avec sa place dans la
-          source (`place` : une section, une page, « résumé » quand le résumé seul a été lu).
+          source (`place`), écrite selon le premier cas qui s'applique : 1. la source a des
+          titres : le titre le plus proche au-dessus de la phrase, recopié tel qu'il est écrit,
+          dans la langue de la source (« 6.2 Brewing Temperature ») ; 2. un document paginé sans
+          titre utile (un PDF) : la page (« p. 12 ») ; 3. le résumé seul a été lu : « résumé » ;
+          4. ni titre ni page (une page web courte, une page de vente) : « page entière ».
         why: >-
           L'extrait est ce qu'un humain vérifie contre la source ; un raisonnement ou une
-          paraphrase ne se vérifient pas mot pour mot (décision sources-a-course-file).
+          paraphrase ne se vérifient pas mot pour mot (décision sources-a-course-file). Sa place
+          est ce qui permet à cet humain de retrouver la phrase ; une place inventée, ou écrite
+          chaque fois autrement, l'égare.
       - id: sources-yaml-valid-against-schema
         level: requirement
         check: sources

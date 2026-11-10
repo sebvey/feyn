@@ -116,7 +116,7 @@ $defs:
   quote:
     description: a quote, the shortest phrase of the source that proves its claim
     type: object
-    required: [claim, text]
+    required: [claim, text, place]
     additionalProperties: false
     properties:
       claim: { $ref: '#/$defs/claim' }
@@ -124,7 +124,7 @@ $defs:
         description: the phrase, word for word, in the language of the source
         $ref: '#/$defs/text'
       place:
-        description: where it stands in the source (a section, a page, « résumé » when the abstract alone was read)
+        description: where it stands in the source, in one of the four forms the rule quote-is-shortest-phrase of course/rules.yaml gives
         $ref: '#/$defs/text'
       checked:
         description: the date a human verified the quote against the source; absent, it was not verified by a human. An edit of the quote removes it

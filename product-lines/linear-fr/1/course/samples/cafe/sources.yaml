@@ -12,22 +12,31 @@ sources:
     quotes:
       - claim: 0/extraction
         text: "Extraction is simply the method by which we dissolve flavours and other components from roasted and ground coffee"
+        place: What Is Extraction?
       - claim: 0/ordre-des-saveurs
         text: "Fruity and acidic notes are extracted first, followed by sweetness and balance, and then finally bitterness"
+        place: How Does Extraction Affect Taste?
       - claim: 0/sous-extraite
         text: "will have a sour taste"
+        place: How Does Extraction Affect Taste?
       - claim: 0/sur-extraite
         text: "An over-extracted brew will taste bitter"
+        place: How Does Extraction Affect Taste?
       - claim: 2/acidite-qui-pique
         text: "Under-extracted coffee won’t have the sweetness and slight bitterness needed for balance, and will have a sour taste"
+        place: How Does Extraction Affect Taste?
       - claim: 2/amertume
         text: "An over-extracted brew will taste bitter"
+        place: How Does Extraction Affect Taste?
       - claim: 2/sens-du-changement
         text: "Try a slower brew or finer grind"
+        place: How To Control Extraction
       - claim: 2/sens-du-changement
         text: "Try a larger grind to slow down extraction or brew for a shorter amount of time"
+        place: How To Control Extraction
       - claim: 2/se-refait
         text: "When you have a method that works for you, try to replicate the variables as closely as possible each time"
+        place: Bed Depth
       - claim: A1/piston-mouture-grosse
         text: "A French press is a longer brew, so it’s common to use a coarser grind to slow extraction and avoid bitterness"
         place: Variables That Influence Extraction
@@ -116,6 +125,7 @@ sources:
     quotes:
       - claim: 0/dissous-fait-le-gout
         text: "water dissolves a lot of coffee’s flavours"
+        place: Extraction is everything that the water takes from the coffee.
       - claim: 0/sous-extraite
         text: "It’s sour, lacking sweetness, weirdly salty and has a disappointingly quick finish"
         place: Under-extracted Coffee
@@ -124,13 +134,16 @@ sources:
         place: Over-extracted Coffee
       - claim: 0/equilibree
         text: "we always try to steer the coffee towards the middle; avoiding both over and under-extraction"
+        place: Extraction is everything that the water takes from the coffee.
       - claim: 0/fonce-amer
         text: "A darker style roast that has achieved dry distillation will have many more of these bitter chemicals"
         place: Over-extracted Coffee
       - claim: 1/moudre-surface
         text: "It crushes the beans into a powder, exponentially increasing their surface area and allowing the water to do its work"
+        place: Extraction is everything that the water takes from the coffee.
       - claim: 1/mouture-vitesse
         text: "we have to increase the surface area of the coffee beans"
+        place: Extraction is everything that the water takes from the coffee.
       - claim: 2/acidite-vivacite
         text: "Acidity is the umbrella under which lies all sour/juicy/bright/tart things"
         place: Sourness
@@ -152,14 +165,19 @@ sources:
     quotes:
       - claim: 0/meme-cafe
         text: "if you manipulate a coffee’s TDS and PE, you change its flavor in a predictable way"
+        place: page entière
       - claim: 0/force-concentration
         text: "These are different things: TDS is the amountof coffee solubles in water (how strong the coffee is)"
+        place: page entière
       - claim: 0/sucre-et-amer
         text: "coffee’s sweetness is maximized at low TDS and PE, while bitterness is maximized at high TDS and PE"
+        place: page entière
       - claim: 1/reglage
         text: "we adjust factors like dose, grind, and extraction level to optimize the flavor of a coffee brew"
+        place: page entière
       - claim: 2/meme-cafe
         text: "if you manipulate a coffee’s TDS and PE, you change its flavor in a predictable way"
+        place: page entière
   S5:
     title: "Towards a New Brewing Chart"
     author: [{family: Frost, given: Scott}, {family: Batali, given: Mackenzie}, {family: Guinard, given: Jean-Xavier}, {family: Ristenpart, given: William D.}]
@@ -174,8 +192,10 @@ sources:
     quotes:
       - claim: 0/sur-extraite
         text: "to the right at high extraction we have “bitter” flavors"
+        place: page entière
       - claim: 0/lockhart-1957
         text: "Lockhart made a seminal contribution to coffee science with a paper in 1957"
+        place: page entière
   S6:
     title: "Coffee Decoded: What Makes Coffee Bitter?"
     author: [{family: Giuliano, given: Peter}]
@@ -263,7 +283,7 @@ sources:
         place: résumé
       - claim: 2/deux-groupes
         text: "Department of Food Science and Technology, University of California, One Shields Avenue, Davis"
-        place: affiliation des auteurs, Europe PMC
+        place: résumé
   S10:
     type: standard
     title: "SCA Standard 310-2021, Home Coffee Brewers: Specifications and Test Methods"
@@ -309,6 +329,7 @@ sources:
         place: Amplitude, Fullness, p. 51
       - claim: 2/roue-des-aromes
         text: "The WCR Sensory Lexicon is the basis for a revised Coffee Flavor Taster's Wheel"
+        place: "The Coffee Taster's Flavor Wheel"
   S12:
     title: "How to Use the Coffee Taster’s Flavor Wheel in Eight Steps"
     author: [{literal: Specialty Coffee Association}]
@@ -335,8 +356,10 @@ sources:
     quotes:
       - claim: 2/roue-des-aromes
         text: "Originally published in 1995"
+        place: page entière
       - claim: 2/roue-des-aromes
         text: "In 2016, this valuable resource was updated in collaboration with World Coffee Research (WCR)"
+        place: page entière
   S14:
     title: "Making Coffee at Home: What’s The Best Beginner Brewing Method?"
     author: [{family: Guevara, given: Julio}]
@@ -350,10 +373,10 @@ sources:
     quotes:
       - claim: 2/un-reglage-a-la-fois
         text: "the key to improving your brewing is to play with one variable at a time"
-      - claim: 2/un-reglage-a-la-fois
-        text: "Then, taste the coffee and take notes on it"
+        place: Tips for Improving Your Brewing
       - claim: 2/plusieurs-a-la-fois
         text: "it is very important to change just one thing at a time! Not more! If you change too many things, you lose control"
+        place: Tips for Improving Your Brewing
   S15:
     title: "How Grind Size Can Help You Brew Better-Tasting Coffee"
     author: [{family: Guerra, given: Gisselle}]
@@ -367,6 +390,9 @@ sources:
     quotes:
       - claim: 2/un-reglage-a-la-fois
         text: "adjust the grind one setting at a time, keeping everything else the same"
+        place: Easy Ways to Improve Your Coffee Grinding
+      - claim: 2/un-reglage-a-la-fois
+        text: "Then, taste the coffee and take notes on it"
         place: Easy Ways to Improve Your Coffee Grinding
       - claim: 2/se-refait
         text: "Make sure to write down the recipe you’re using"
@@ -416,7 +442,7 @@ sources:
     quotes:
       - claim: A1/expresso
         text: "forced at 9–10 atmospheres of pressure, and where the grind of the coffee is such that the brew time is 20–30 seconds"
-        place: la définition historique de la SCAA, citée
+        place: page entière
       - claim: A1/expresso-type
         text: "The average shot of espresso starts with an 18–20 gram dose, has an output of 36.5 grams, is extracted in 25–30 seconds, at 9 bars of pressure"
         place: What Does This All Mean?
@@ -425,7 +451,7 @@ sources:
         place: What Does This All Mean?
       - claim: A1/expresso-temperature
         text: "clean water of 195°–205°F (90.5°–96.1°C)"
-        place: la définition historique de la SCAA, citée
+        place: page entière
       - claim: A1/expresso-temperature
         text: "most responses fell in the classic range of 195°–205°F"
         place: The Results
@@ -464,10 +490,13 @@ sources:
     quotes:
       - claim: A2/cafe-vieillit
         text: "whole bean coffee can reasonably be considered “fresh” within about three weeks of roasting"
+        place: page entière
       - claim: A2/duree-de-fraicheur
         text: "whole bean coffee can reasonably be considered “fresh” within about three weeks of roasting"
+        place: page entière
       - claim: A2/duree-de-fraicheur
         text: "it might be considered “fresh” for about an hour after grinding"
+        place: page entière
   S21:
     title: "What is the Shelf Life of Roasted Coffee? A Literature Review on Coffee Staling"
     author: [{family: Sage, given: Emma}]
@@ -496,20 +525,28 @@ sources:
     quotes:
       - claim: A2/humidite-et-odeurs
         text: "coffee absorbs and retains moisture"
+        place: Freezing coffee beans
       - claim: A2/humidite-et-odeurs
         text: "as well as odors and tastes"
+        place: Freezing coffee beans
       - claim: A2/humidite-et-odeurs
         text: "from the air around it"
+        place: Freezing coffee beans
       - claim: A2/humidite-et-odeurs
         text: "condensation can build up in the refrigerator"
+        place: Freezing coffee beans
       - claim: A2/garder-le-cafe
         text: "Using an airtight container for coffee storage will help it stay fresher, longer"
+        place: "Ideal coffee bean storage conditions: airtight and cool"
       - claim: A2/garder-le-cafe
         text: "Store it in opaque containers"
+        place: "Ideal coffee bean storage conditions: airtight and cool"
       - claim: A2/garder-le-cafe
         text: "Keep it in a dark and cool location"
+        place: "Ideal coffee bean storage conditions: airtight and cool"
       - claim: A2/garder-le-cafe
         text: "Try to buy smaller batches more frequently"
+        place: "Ideal coffee bean storage conditions: airtight and cool"
 claims:
   0/sous-extraite:
     holder: "Les praticiens et la SCA"

@@ -1,0 +1,2 @@
+check: sources
+message: sources.yaml n'est pas valide selon course/schemas/sources.schema.yaml : /sources/S2/quotes/1 must have required property 'place'
