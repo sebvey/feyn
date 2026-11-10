@@ -4,7 +4,7 @@
 // every use in a concept.md, in the parts of its body the learner reads (course/form.yaml, readers:
 // every field but the teacher note, the head and the foot but its teacher note) and in its
 // frontmatter (the titles and captions of its diagrams), before the defining concept fails, unless
-// its sentence carries a concept reference to that concept. The text of a claim's mark is read as
+// its sentence carries a concept reference to that concept. The text of a claim mark is read as
 // the rest of its sentence, its destination and its name left out. Each comma variant of the term cell is
 // matched, whole word, case ignored; a row whose term cell has a parenthesis (a sense
 // qualifier) is skipped.
@@ -20,7 +20,7 @@ const { fail } = directives.lib('common');
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 // A sentence ends at « . », « ? », « ! » or « … » (optionally followed by closing quotes,
-// brackets or emphasis marks) before a space or the end of its block; « : » and « ; » do not
+// brackets or emphasis delimiters) before a space or the end of its block; « : » and « ; » do not
 // end it. A sentence never crosses a block: a paragraph, a blockquote, a list item, a heading,
 // a table row (the last two are one line each).
 const END = /[.?!…](?:\s*[»"”)\]*_]+)?(?=\s|$)/gu;
@@ -29,7 +29,7 @@ const ONE_LINE = /^\s{0,3}(?:#|\|)/;
 const QUOTE = /^\s{0,3}>/;
 
 // what the reader does not read as words: inline code, an image (its title is read in the
-// frontmatter), a link target, a claim's mark's destination and name among them
+// frontmatter), a link target, a claim mark's destination and name among them
 const prep = (t) => mdlib.maskCode(t)
   .replace(/!\[[^\]]*\]\([^)]*\)/g, (m) => ' '.repeat(m.length))
   .replace(/\]\([^)]*\)/g, (m) => ']' + ' '.repeat(m.length - 1));

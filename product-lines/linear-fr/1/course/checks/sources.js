@@ -1,10 +1,10 @@
 'use strict';
 // The claims of a course and their sources, their coherence (course/README.md section 3.4): the
-// marks of each concept.md, read by the reader of this MAJOR (course/claims.js) in the published
+// claim marks of each concept.md, read by the reader of this MAJOR (course/claims.js) in the published
 // fields that state claims (`claims` of course/form.yaml), and `sources.yaml` at the root of the
 // course, validated against course/schemas/sources.schema.yaml through Ajv2020. It fails what is
-// incoherent: a malformed mark, a mark outside those fields, a concept reference in the text of a
-// mark; a consensus, school or fact mark with no source; a sourced claim with no name, or a name
+// incoherent: a malformed claim mark, a claim mark outside those fields, a concept reference in the
+// text of a claim mark; a consensus, school or fact claim mark with no source; a sourced claim with no name, or a name
 // twice in its concept; an unknown source id; a pair (claim, source) with no quote; a quote whose
 // claim cites not its source; a kind, a control or an independence off its lexicon list; a school
 // claim with no holder, a fact or course claim with one, a holder for no claim. What is missing
@@ -15,7 +15,7 @@ const path = require('path');
 const directives = require('./directives');
 const yaml = directives.lib('yaml-lines');
 const { fail } = directives.lib('common');
-// the marks and the concept references are read by the readers of this MAJOR, given the directives' lib
+// the claim marks and the concept references are read by the readers of this MAJOR, given the directives' lib
 const claims = require('../claims')(directives.lib);
 const { parser: refParser } = require('../refs')(directives.lib);
 
@@ -83,15 +83,15 @@ function run(ctx) {
     }
   }
 
-  // the marks of each concept: where they stand, their form, their sources, their names
+  // the claim marks of each concept: where they stand, their form, their sources, their names
   const citing = new Map(); // source id -> Set of claim keys that cite it
-  const named = new Map(); // claim key -> mark
+  const named = new Map(); // claim key -> claim mark
   for (const { c, marks, outside, problems } of course.concepts) {
     const mine = selected.has(c.number);
     const cf = c.dir + '/concept.md';
     for (const k of marks) {
       if (k.key) {
-        if (named.has(k.key) && mine) out.push(fail(cf, k.line, `la marque « ${short(k.text)} » a le nom « ${k.name} », déjà pris dans le concept à la ligne ${named.get(k.key).line} : un nom est unique dans son concept`));
+        if (named.has(k.key) && mine) out.push(fail(cf, k.line, `la marque d'affirmation « ${short(k.text)} » a le nom « ${k.name} », déjà pris dans le concept à la ligne ${named.get(k.key).line} : un nom est unique dans son concept`));
         else if (!named.has(k.key)) named.set(k.key, k);
         for (const id of k.sources) {
           if (!citing.has(id)) citing.set(id, new Set());
@@ -101,13 +101,13 @@ function run(ctx) {
     }
     if (!mine) continue;
     for (const p of problems) out.push(fail(cf, p.line, p.message));
-    for (const k of outside) out.push(fail(cf, k.line, `la marque « ${short(k.text)} » n'est pas dans un champ publié qui affirme (${places}) : un cas, la croyance d'une idée fausse ou une consigne ne marquent aucune affirmation`));
+    for (const k of outside) out.push(fail(cf, k.line, `la marque d'affirmation « ${short(k.text)} » n'est pas dans un champ publié qui affirme (${places}) : un cas, la croyance d'une idée fausse ou une consigne ne marquent aucune affirmation`));
     for (const k of marks) {
-      const what = `la marque « ${short(k.text)} »`;
+      const what = `la marque d'affirmation « ${short(k.text)} »`;
       if (!k.sources.length && ['consensus', 'school', 'fact'].includes(k.nature)) out.push(fail(cf, k.line, `${what} est « ${k.word} » sans source : une affirmation « ${N('consensus')} », « ${N('school')} » ou « ${N('fact')} » cite au moins une source (« ${k.word}:S1 »)`));
-      if (k.sources.length && !k.name) out.push(fail(cf, k.line, `${what} cite ${k.sources.join(', ')} sans nom : une affirmation sourcée a un nom, le titre de sa marque (« [${short(k.text)}](${k.word}:${k.sources.join(',')} "un-nom") »)`));
+      if (k.sources.length && !k.name) out.push(fail(cf, k.line, `${what} cite ${k.sources.join(', ')} sans nom : une affirmation sourcée a un nom, le titre de sa marque d'affirmation (« [${short(k.text)}](${k.word}:${k.sources.join(',')} "un-nom") »)`));
       if (k.name && !claims.NAME.test(k.name)) out.push(fail(cf, k.line, `${what} a le nom « ${k.name} » : un nom est fait de minuscules sans accent, de chiffres et de tirets (« eau-90-96 »)`));
-      if (refs) for (const r of refs(k.text)) out.push(fail(cf, k.line, `${what} tient la référence de concept « ${r.word} ${r.list} » : la référence reste dans la phrase, hors de la marque`));
+      if (refs) for (const r of refs(k.text)) out.push(fail(cf, k.line, `${what} tient la référence de concept « ${r.word} ${r.list} » : la référence reste dans la phrase, hors de la marque d'affirmation`));
       for (const id of k.sources) {
         if (!Object.prototype.hasOwnProperty.call(sources, id)) {
           out.push(fail(cf, k.line, `${what} cite ${id}, qui n'est pas une source de ${sf}${course.text === null ? ` (le fichier n'existe pas)` : ''}`));

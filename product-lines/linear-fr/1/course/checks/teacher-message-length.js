@@ -12,7 +12,7 @@ const directives = require('./directives');
 const { fail } = directives.lib('common');
 
 // the characters of a field: its text after the label, then each of its following lines, trimmed;
-// an inline link counts its text alone, so a claim's mark counts what the learner hears, not its
+// an inline link counts its text alone, so a claim mark counts what the learner hears, not its
 // nature, its sources and its name (course/README.md section 3.4)
 const LINK = /\[([^\]]*)\]\([^)]*\)/g;
 function chars(f) {

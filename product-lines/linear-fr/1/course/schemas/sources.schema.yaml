@@ -5,7 +5,7 @@
 # the required ones, the form of the ids and of the dates. The closed values of `kind`, `control`
 # and `independence` are words of the lexicon of the course files (`source_kinds`,
 # `source_controls`, `source_independence`), which the check `sources` reads there, as it reads
-# what joins a quote to the marks of the text. `sources` validates the file against it through
+# what joins a quote to the claim marks of the text. `sources` validates the file against it through
 # Ajv2020. The keys are English, the values course text.
 $schema: https://json-schema.org/draft/2020-12/schema
 title: sources.yaml
@@ -20,7 +20,7 @@ properties:
     additionalProperties:
       $ref: '#/$defs/source'
   claims:
-    description: "what a claim's mark has no room for, by the claim's name, `<concept>/<name>`: who holds its stance"
+    description: "what a claim mark has no room for, by the claim's name, `<concept>/<name>`: who holds its stance"
     type: object
     propertyNames:
       $ref: '#/$defs/claim'

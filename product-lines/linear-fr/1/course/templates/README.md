@@ -13,7 +13,7 @@ One template per file `course/README.md` defines, except `logo.svg`, which has n
 
 The templates of a learner's memory files are not the course's: they are the teacher implementation's, outside the spec, which the spec never reads; the smoke run reads the templates of this folder only.
 
-The headings and the natures of the marks in the templates are the words of the lexicon of the course files (`course/lexicon.yaml`), in French, the language of the spec. Each template shows one domain, one concept opening on its title, a section with two units, each with a supplementary case after its own case in « Cas du fil rouge », each case under its heading, then a section with a single unit, which keeps its `###` heading: repeat the block. Their parts are the form of `course/form.yaml`: `plan.md` its three sections, then the course's own; `domain.md` its two sections, no frontmatter; `storyline.md` the world, then « Faits fixés », each fact with the id of its unit.
+The headings and the natures of the claim marks in the templates are the words of the lexicon of the course files (`course/lexicon.yaml`), in French, the language of the spec. Each template shows one domain, one concept opening on its title, a section with two units, each with a supplementary case after its own case in « Cas du fil rouge », each case under its heading, then a section with a single unit, which keeps its `###` heading: repeat the block. Their parts are the form of `course/form.yaml`: `plan.md` its three sections, then the course's own; `domain.md` its two sections, no frontmatter; `storyline.md` the world, then « Faits fixés », each fact with the id of its unit.
 
 ## Smoke run
 
