@@ -699,7 +699,8 @@ groups:
           « {headings.essentials} » de la carte du cours, tels qu'ils sont écrits, par une marque
           d'affirmation : un lien `[<le texte affirmé>](<nature>:S1,S2 "<nom>")`, sa destination
           la nature de l'affirmation (`{natures.consensus}`, `{natures.school}`, `{natures.fact}`
-          ou `{natures.course}`) suivie des ids des sources qu'elle cite, son titre son nom. Lis-la
+          ou `{natures.course}`), seule (`[<le texte affirmé>]({natures.course})`) ou suivie des
+          ids des sources qu'elle cite, son titre, quand elle en a un, son nom. Lis-la
           pour savoir ce que le cours affirme, de quelle nature et d'après quelles sources, et pour
           répondre à « d'où ça vient ? ». Ne montre jamais sa syntaxe à l'apprenant (crochets,
           destination, titre, ids) : dis son texte, et sa nature en mots quand elle compte.
