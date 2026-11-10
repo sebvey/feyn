@@ -1,0 +1,131 @@
+# The structure of `sources.yaml`, at the root of the course folder, to which course/README.md
+# section 3.4 points: its two sections, `sources` (each source once, by its id `S<n>`, described by
+# CSL fields as Pandoc writes them in YAML, its kind, its control, its independence, its quotes) and
+# `claims` (who holds the stance of a claim, by its name `<concept>/<name>`); the keys, their types,
+# the required ones, the form of the ids and of the dates. The closed values of `kind`, `control`
+# and `independence` are words of the lexicon of the course files (`source_kinds`,
+# `source_controls`, `source_independence`), which the check `sources` reads there, as it reads
+# what joins a quote to the marks of the text. `sources` validates the file against it through
+# Ajv2020. The keys are English, the values course text.
+$schema: https://json-schema.org/draft/2020-12/schema
+title: sources.yaml
+type: object
+additionalProperties: false
+properties:
+  sources:
+    description: the sources of the course, each once, by its id, unique in the course
+    type: object
+    propertyNames:
+      pattern: '^S[1-9][0-9]*$'
+    additionalProperties:
+      $ref: '#/$defs/source'
+  claims:
+    description: "what a claim's mark has no room for, by the claim's name, `<concept>/<name>`: who holds its stance"
+    type: object
+    propertyNames:
+      $ref: '#/$defs/claim'
+    additionalProperties:
+      type: object
+      required: [holder]
+      additionalProperties: false
+      properties:
+        holder:
+          description: "who holds the stance, not the author of the source: required for a school claim, allowed for a consensus claim, refused for a fact or a course claim"
+          $ref: '#/$defs/text'
+$defs:
+  text:
+    type: string
+    pattern: '\S'
+  date:
+    description: an ISO 8601 calendar date, YYYY-MM-DD
+    type: string
+    pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'
+  claim:
+    description: "a claim's name with its concept, `<concept number>/<name>`: `1/eau-90-96`, `A2/froid-ralentit`"
+    type: string
+    pattern: '^(?:A?[0-9]+)/[a-z0-9]+(?:-[a-z0-9]+)*$'
+  name:
+    description: a CSL name, a person (family, given) or an organisation (literal)
+    type: object
+    additionalProperties: false
+    minProperties: 1
+    properties:
+      family: { $ref: '#/$defs/text' }
+      given: { $ref: '#/$defs/text' }
+      literal: { $ref: '#/$defs/text' }
+  names:
+    type: array
+    minItems: 1
+    items: { $ref: '#/$defs/name' }
+  source:
+    description: "a source: `title`, and `URL` or `author`, required; its kind, control and independence required; the CSL `type` optional, derived from `kind` when absent"
+    type: object
+    required: [title, kind, control, independence]
+    anyOf:
+      - required: [URL]
+      - required: [author]
+    additionalProperties: false
+    properties:
+      type:
+        description: the CSL item type (article-journal, standard, webpage…), when it differs from the one its kind gives
+        $ref: '#/$defs/text'
+      title: { $ref: '#/$defs/text' }
+      author: { $ref: '#/$defs/names' }
+      editor: { $ref: '#/$defs/names' }
+      container-title:
+        description: the journal, the magazine, the site or the book the source belongs to
+        $ref: '#/$defs/text'
+      publisher: { $ref: '#/$defs/text' }
+      volume: { type: [string, integer] }
+      issue: { type: [string, integer] }
+      page: { type: [string, integer] }
+      number: { type: [string, integer] }
+      version: { type: [string, integer] }
+      issued:
+        description: "the date of publication, as far as it is known: a year, YYYY-MM or YYYY-MM-DD"
+        oneOf:
+          - type: integer
+          - type: string
+            pattern: '^[0-9]{4}(?:-[0-9]{2}(?:-[0-9]{2})?)?$'
+      URL:
+        description: the one address where the source was read
+        type: string
+        pattern: '^https?://\S+$'
+      DOI:
+        type: string
+        pattern: '^10\.\S+$'
+      accessed:
+        description: the date the source was read
+        $ref: '#/$defs/date'
+      kind:
+        description: the form of the document, a value of the lexicon group source_kinds
+        $ref: '#/$defs/text'
+      control:
+        description: the review it went through before publication, a value of the lexicon group source_controls
+        $ref: '#/$defs/text'
+      independence:
+        description: its independence from what it says, a value of the lexicon group source_independence
+        $ref: '#/$defs/text'
+      checked:
+        description: the date a human verified the source; absent, it was not verified by a human. An edit of the source removes it
+        $ref: '#/$defs/date'
+      quotes:
+        description: the phrases quoted from the source, each proving one claim that cites it
+        type: array
+        items: { $ref: '#/$defs/quote' }
+  quote:
+    description: a quote, the shortest phrase of the source that proves its claim
+    type: object
+    required: [claim, text]
+    additionalProperties: false
+    properties:
+      claim: { $ref: '#/$defs/claim' }
+      text:
+        description: the phrase, word for word, in the language of the source
+        $ref: '#/$defs/text'
+      place:
+        description: where it stands in the source (a section, a page, « résumé » when the abstract alone was read)
+        $ref: '#/$defs/text'
+      checked:
+        description: the date a human verified the quote against the source; absent, it was not verified by a human. An edit of the quote removes it
+        $ref: '#/$defs/date'

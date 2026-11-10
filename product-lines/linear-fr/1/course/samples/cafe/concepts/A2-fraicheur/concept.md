@@ -1,17 +1,8 @@
----
-stances:
-  consensus: []
-  school: []
-  course:
-    - text: "La fraîcheur du café n'est pas un réglage : elle change le café lui-même, que les quatre réglages du concept 1 font ensuite infuser."
-      refs: []
----
-
 # Annexe A2 : La fraîcheur du café
 
 ## L'essentiel
 
-Le café torréfié vieillit : avec le temps, il perd sa **fraîcheur**, et plus vite une fois moulu. Moulu, il reste frais une heure environ ; en grains, trois semaines environ après la torréfaction. Le froid ralentit son vieillissement, mais le café y prend l'humidité et les odeurs. La fraîcheur n'est pas un réglage : elle change le café lui-même.
+Le café torréfié vieillit : avec le temps, il perd sa **fraîcheur**, et plus vite une fois moulu. Moulu, il reste frais une heure environ ; en grains, trois semaines environ après la torréfaction. Le froid ralentit son vieillissement, mais le café y prend l'humidité et les odeurs. [La fraîcheur n'est pas un réglage : elle change le café lui-même](cours).
 
 ## Section A2a : Garder le café frais
 
@@ -19,7 +10,7 @@ Le café torréfié vieillit : avec le temps, il perd sa **fraîcheur**, et plus
 
 #### Leçon
 
-- **Matière** : Le café torréfié vieillit : avec le temps, il perd sa **fraîcheur**, ses arômes. Moudre accélère ce vieillissement : moulu, le café ne reste frais qu'une heure environ, quand le grain le reste trois semaines environ après la torréfaction. Mieux vaut donc moudre juste avant l'infusion. Le froid ralentit le vieillissement du café, sans l'arrêter ; mais le café prend l'humidité, les odeurs et les goûts de l'air autour de lui, et la condensation se forme au réfrigérateur. Pour le garder : une boîte hermétique et opaque, dans un endroit frais et sombre, et de petites quantités, achetées plus souvent.
+- **Matière** : [Le café torréfié vieillit : avec le temps, il perd sa **fraîcheur**, ses arômes](fait:S20,S21 "cafe-vieillit"). Moudre accélère ce vieillissement : [moulu, le café ne reste frais qu'une heure environ, quand le grain le reste trois semaines environ après la torréfaction](fait:S20 "duree-de-fraicheur"). [Mieux vaut donc moudre juste avant l'infusion](cours). [Le froid ralentit le vieillissement du café](fait:S21 "froid-ralentit"), [sans l'arrêter](cours) ; mais [le café prend l'humidité, les odeurs et les goûts de l'air autour de lui, et la condensation se forme au réfrigérateur](fait:S22 "humidite-et-odeurs"). Pour le garder : [une boîte hermétique et opaque, dans un endroit frais et sombre, et de petites quantités, achetées plus souvent](fait:S22 "garder-le-cafe").
 - **Idées fausses** :
   - **Le froid qui fige** : « Au congélateur, le café ne vieillit plus »
     - **Racine** : on range au froid ce que l'on veut garder longtemps, et le café semble un aliment comme un autre.

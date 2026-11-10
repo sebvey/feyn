@@ -1,22 +1,3 @@
----
-stances:
-  consensus:
-    - author: "La SCA, norme 310-2021 des cafetières domestiques"
-      text: "Une eau entre 90 et 96 °C au contact du café moulu, et 55 g de café par kilo d'eau, environ 55 g par litre."
-      refs: [S4]
-      verified: ["« reach a temperature in the 90 to 96°C range » (6.2 Brewing Temperature) ; « a coffee/water ratio of 55 g/kg » (6.7 Operating Manuals and Other Instructional Materials)"]
-  school:
-    - author: "Batali, Ristenpart et Guinard, UC Davis (2020)"
-      text: "À force et extraction égales, la température de l'eau, entre 87 et 93 °C, ne change presque rien au goût : elle n'est qu'un des réglages qui font avancer l'extraction."
-      refs: [S3]
-      verified: ["« surprisingly the brew temperature had no appreciable impact » ; « only one of several parameters that affect the extraction dynamics » (résumé)"]
-  course:
-    - text: "Le cours retient quatre réglages : la mouture, le ratio, la température d'infusion et le temps de contact. L'eau elle-même n'en est pas un, et le cours ne l'enseigne pas ; la fraîcheur du café n'en est pas un non plus, et l'annexe A2 l'enseigne."
-      refs: []
-    - text: "Les repères de la profession, 90 à 96 °C et 55 g par litre, sont un point de départ, pas une norme : la tasse réussie est celle que l'on aime."
-      refs: []
----
-
 # Concept 1 : Les réglages
 
 ## L'essentiel
@@ -29,7 +10,7 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 
 #### Leçon
 
-- **Matière** : Un **réglage** est une variable que l'on choisit avant ou pendant l'infusion, et qui fait varier l'extraction ou la force de la tasse. Le cours en retient quatre. La **mouture** est la finesse du café moulu, choisie au moulin. Le **ratio** est la masse de café pour la masse d'eau. La **température d'infusion** est la température de l'eau quand elle touche le café moulu. Le **temps de contact** est la durée pendant laquelle l'eau et le café moulu restent ensemble. Un réglage que l'on ne choisit pas est réglé quand même : au hasard. [cours]
+- **Matière** : Un **réglage** est [une variable que l'on choisit avant ou pendant l'infusion, et qui fait varier l'extraction ou la force de la tasse](consensus:S4,S2 "reglage"). [Le cours en retient quatre](cours). La **mouture** est la finesse du café moulu, choisie au moulin. Le **ratio** est la masse de café pour la masse d'eau. La **température d'infusion** est la température de l'eau quand elle touche le café moulu. Le **temps de contact** est la durée pendant laquelle l'eau et le café moulu restent ensemble. [Un réglage que l'on ne choisit pas est réglé quand même : au hasard](cours).
 - **Idées fausses** :
   - **Pas mesuré, pas choisi** : « Ce que je ne mesure pas, je ne le choisis pas »
     - **Racine** : choisir semble demander une décision réfléchie, et trois cuillères ou une bouilloire qui coupe ne ressemblent pas à un choix.
@@ -53,7 +34,7 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 
 #### Leçon
 
-- **Matière** : L'eau ne prend au café que ce qu'elle atteint : moudre ouvre le grain et multiplie la surface que l'eau touche. Plus la **mouture** est fine, plus l'eau extrait vite ; plus elle est grosse, plus l'extraction est lente. Le **temps de contact** joue dans le même sens : plus l'eau reste longtemps avec le café moulu, plus elle en prend. Une mouture plus fine ou un contact plus long poussent donc l'extraction vers la sur-extraction ; une mouture plus grosse ou un contact plus court la retiennent du côté de la sous-extraction.
+- **Matière** : L'eau ne prend au café que ce qu'elle atteint : [moudre ouvre le grain et multiplie la surface que l'eau touche](fait:S3 "moudre-surface"). [Plus la **mouture** est fine, plus l'eau extrait vite ; plus elle est grosse, plus l'extraction est lente](cours:S3,S2 "mouture-vitesse"). Le **temps de contact** joue dans le même sens : [plus l'eau reste longtemps avec le café moulu, plus elle en prend](fait:S2 "contact-plus-long"). [Une mouture plus fine ou un contact plus long poussent donc l'extraction vers la sur-extraction ; une mouture plus grosse ou un contact plus court la retiennent du côté de la sous-extraction](cours).
 - **Idées fausses** :
   - **Plus fin, plus de goût** : « Plus la mouture est fine, meilleur est le goût »
     - **Racine** : une mouture plus fine fait bien extraire l'eau plus vite, et l'on prend « plus de goût » pour « meilleur goût ».
@@ -73,20 +54,20 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 
 #### Consigne au professeur
 
-Ne dire ni comment corriger la tasse de Cédric, ni quel réglage changer : c'est le concept 2.
+Ne dire ni comment corriger la tasse de Cédric, ni quel réglage changer : c'est le concept 2. Ne pas expliquer que la mouture plus fine a aussi ralenti le passage de l'eau : le cours donne les deux changements de Cédric comme deux faits, et ses sources ne le disent pas.
 
 ### Unité 1b2 : La chaleur de l'eau
 
 #### Leçon
 
-- **Matière** : La **température d'infusion** pousse l'extraction comme la mouture et le temps : plus l'eau est chaude quand elle touche le café moulu, plus elle extrait vite. La profession donne un repère, une eau entre 90 et 96 °C [consensus] : un point de départ pour régler, pas une norme à atteindre. Des chercheurs de UC Davis ont fait le même café à 87, 90 et 93 °C, en ajustant la mouture et le temps pour arriver à la même extraction et à la même force : les dégustateurs n'ont pas fait la différence [école]. Ce qui fait le goût, c'est où l'extraction arrive ; la chaleur de l'eau n'est qu'un des moyens d'y aller.
+- **Matière** : La **température d'infusion** pousse l'extraction comme la mouture et le temps : [plus l'eau est chaude quand elle touche le café moulu, plus elle extrait vite](consensus:S2 "chaude-plus-vite"). La profession donne un repère, [une eau entre 90 et 96 °C](consensus:S10 "eau-90-96") : [un point de départ pour régler, pas une norme à atteindre](cours). Des chercheurs de UC Davis ont fait le même café à 87, 90 et 93 °C, en ajustant la mouture et le temps pour arriver à la même extraction et à la même force : [les dégustateurs n'ont pas fait la différence](école:S2 "87-93-pareil"). [Ce qui fait le goût, c'est où l'extraction arrive ; la chaleur de l'eau n'est qu'un des moyens d'y aller](école:S2 "ou-arrive-l-extraction").
 - **Idées fausses** :
   - **Bouillante, c'est mieux** : « L'eau bouillante extrait mieux »
     - **Racine** : plus chaude, l'eau extrait bien plus vite, et une extraction plus rapide semble une meilleure extraction.
     - **Correction** : plus vite n'est pas mieux : ce qui fait le goût, c'est où l'extraction arrive, et la chaleur n'est qu'un des moyens d'y aller.
   - **Le café brûlé** : « L'eau bouillante brûle le café »
     - **Racine** : une tasse faite à l'eau bouillante sort parfois amère et sèche, un goût que l'on dit « brûlé ».
-    - **Correction** : l'eau bouillante fait avancer l'extraction plus vite ; si la tasse en sort amère et sèche, c'est qu'elle est sur-extraite.
+    - **Correction** : [l'eau bouillante fait avancer l'extraction plus vite](cours:S2 "bouillante-plus-vite") ; si la tasse en sort amère et sèche, c'est qu'elle est sur-extraite.
   - **Le repère pris pour une norme** : « Hors de 90 à 96 °C, la tasse est ratée »
     - **Racine** : le repère vient de la profession et se donne en chiffres, et un chiffre de la profession se lit comme une règle.
     - **Correction** : c'est un repère, un point de départ ; à extraction et force égales, des dégustateurs n'ont pas distingué une eau à 87 °C d'une eau à 93 °C.
@@ -104,7 +85,7 @@ Ne dire ni comment corriger la tasse de Cédric, ni quel réglage changer : c'es
 
 #### Leçon
 
-- **Matière** : Le **ratio** se pèse : tant de grammes de café pour tant de grammes d'eau. Il fait d'abord la force : pour une même extraction, plus de café pour la même eau donne une tasse plus forte, moins de café une tasse plus légère. La profession donne un repère, 55 g de café par kilo d'eau, soit environ 55 g par litre [consensus] : un point de départ, pas une norme. La tasse réussie est celle que l'on aime. [cours]
+- **Matière** : Le **ratio** se pèse : tant de grammes de café pour tant de grammes d'eau. [Il fait d'abord la force : pour une même extraction, plus de café pour la même eau donne une tasse plus forte, moins de café une tasse plus légère](cours:S2 "ratio-fait-la-force"). La profession donne un repère, [55 g de café par kilo d'eau](consensus:S10,S7 "55-g-par-kilo"), [soit environ 55 g par litre](cours) : [un point de départ, pas une norme](cours). [La tasse réussie est celle que l'on aime](cours).
 - **Idées fausses** :
   - **Plus de café, plus extrait** : « Plus de café, c'est plus d'extraction »
     - **Racine** : le café est ce que l'eau extrait, et plus il y en a, plus il semble y avoir à extraire.
@@ -126,4 +107,4 @@ Ne dire ni comment corriger la tasse de Cédric, ni quel réglage changer : c'es
 
 ### Consigne au professeur
 
-Le concept dit ce que fait chaque réglage, pas comment corriger une tasse ni lequel changer d'abord : c'est le concept 2. Il ne nomme aucune autre façon de faire le café que le filtre de Cédric : les autres sont l'annexe A1. Le cours n'enseigne pas l'eau elle-même, ce qu'elle contient : ce n'est pas un de ses réglages. Il n'enseigne pas non plus l'agitation (remuer le café moulu dans l'eau) : aucune source consultée ne la couvre.
+Le concept dit ce que fait chaque réglage, pas comment corriger une tasse ni lequel changer d'abord : c'est le concept 2. Il ne nomme aucune autre façon de faire le café que le filtre de Cédric : les autres sont l'annexe A1. Le cours n'enseigne pas l'eau elle-même, ce qu'elle contient : ce n'est pas un de ses réglages, et ses sources n'en donnent aucun chiffre sûr ; ne donner aucun chiffre de dureté. Il n'enseigne pas non plus l'agitation (remuer le café moulu dans l'eau) : aucune source consultée ne la couvre ; ni le choix d'un moulin : il n'en conseille aucun.

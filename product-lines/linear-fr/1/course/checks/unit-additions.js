@@ -5,9 +5,10 @@
 // (`**…**`), the labels left out (a misconception's name and the labels of its parts among them), is a term of glossary.md or one of its comma variants, its sense
 // qualifier in parentheses left out, case ignored (rule bold-term-in-glossary, a recommendation: bold
 // for emphasis stays possible, and a bold that is no term is reported in case the term is missing
-// from the glossary). That a fact an anchor uses is in storyline.md and that a claim of a published
-// field has its row in sources.md are rules by inspection of the same group; that a fixed fact or a
-// claim names a unit that exists is course-files' and sources'. Its fields are read as unit-contract
+// from the glossary); a passage in bold inside the text of a claim's mark is read as any other.
+// That a fact an anchor uses is in storyline.md and that a claim of a published field is marked
+// are rules by inspection of the same group; that a fixed fact names a unit that exists is
+// course-files', and that a mark is coherent with sources.yaml is sources'. Its fields are read as unit-contract
 // reads them (course/parser.js); a unit whose fields are unreadable is unit-contract's.
 const directives = require('./directives');
 const mdlib = directives.lib('md');

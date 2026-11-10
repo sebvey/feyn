@@ -1,14 +1,4 @@
 ---
-stances:
-  consensus:
-    - author: "Le Scrum Guide 2020"
-      text: "Une affirmation acceptée."
-      refs: [S1]
-      verified: ["« le texte » (section 2)"]
-  school: []
-  course:
-    - text: "Un choix du cours."
-      refs: []
 diagrams:
   - file: couches.svg
     title: "Trois couches empilées"
@@ -30,7 +20,7 @@ Un produit s'empile en couches, de la collecte à la restitution.
 
 #### Leçon
 
-- **Matière** : Les couches vont de la collecte à la restitution. Voir les concepts 0 et 1.
+- **Matière** : [Les couches vont de la collecte à la restitution](consensus:S1 "couches"). Voir les concepts 0 et 1.
 - **Idées fausses** :
   - **Un tableau** : « Un tableau »
     - **Racine** : la phrase se lit vite ainsi.

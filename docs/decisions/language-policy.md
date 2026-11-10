@@ -11,10 +11,10 @@ English everywhere, except what speaks to the learner, to the teacher or to the 
 
 | English | French (for a French spec) |
 |---|---|
-| code, skills, agent workflows, CI workflows, scripts | `concept.md`, `sources.md` |
+| code, skills, agent workflows, CI workflows, scripts | `concept.md`, the values of a course's `sources.yaml` (a quote in the language of its source) |
 | root `CLAUDE.md` | course glossary, storyline, the course's `plan.md` and `CHANGELOG.md` |
 | the spec directives, repository docs, decisions (the spec's `decisions/` included), issues, labels | diagram text, the site's labels |
-| the spec's `CHANGELOG.md`; file and folder names, `course.yaml` keys, the keys of the lexicons, the ids and slugs of the rule files, the keys of the teacher implementation's `composition.yaml` | what the teacher says, the words of the lexicons (`course/lexicon.yaml`, `products/site/lexicon.yaml`, and the teacher implementation's `lexicon.yaml`) |
+| the spec's `CHANGELOG.md`; file and folder names, `course.yaml` and `sources.yaml` keys, the keys of the lexicons, the ids and slugs of the rule files, the keys of the teacher implementation's `composition.yaml` | what the teacher says, the words of the lexicons (`course/lexicon.yaml`, `products/site/lexicon.yaml`, and the teacher implementation's `lexicon.yaml`) |
 | the checks' code, the schemas' structure | the spec's texts for the teacher and the author: `products/teacher/README.md` (what is expected of a teacher, how a protocol rule is written), `course/README.md`, the `text` and `why` of `course/rules.yaml` and `products/teacher/rules.yaml` (the protocol rules of the teacher) and the `purpose` of their groups, the descriptions of `course/schemas/`, the messages of `course/checks/`, the MAJOR's `README.md`; what the teacher reads of its implementation: its instructions, its lexicon, the `what` and `when` texts of its `composition.yaml`, the learner templates, the teacher template and the course map it builds for a classroom |
 
 An issue, a PR or a decision in English that quotes the course quotes it in French and never translates it. French text uses no em-dashes and no arrows. What the teacher says to the learner comes from the course, its protocol rules (its form marks and titles, word for word) and its implementation.

@@ -1,7 +1,8 @@
 ---
 date: 2026-10-28
 issue: 97
-status: accepted
+status: superseded
+superseded-by: claim-marked-in-the-text
 area: spec:linear-fr
 ---
 

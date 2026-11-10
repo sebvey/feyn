@@ -1,0 +1,2 @@
+check: sources
+message: source S2 : kind « rapport » n'est pas dans sa liste

@@ -1,2 +1,0 @@
-check: sources
-message: must be one URL (http or https) or empty

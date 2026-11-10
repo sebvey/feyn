@@ -165,7 +165,8 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
 }
 
 // the schemas of the spec (course/schemas/*.schema.yaml, JSON Schema 2020-12 read by Ajv2020):
-// valid's course.yaml and the frontmatter of each of its concept.md are valid against them
+// valid's course.yaml, the frontmatter of each of its concept.md that has one and its sources.yaml
+// are valid against them
 {
   const Ajv2020 = directives.require('ajv/dist/2020').default;
   const yaml = directives.lib('yaml-lines');
@@ -177,9 +178,13 @@ for (const name of fs.readdirSync(path.join(fx, 'broken')).sort()) {
   const cy = yaml.parse(fs.readFileSync(path.join(fx, 'valid', 'course.yaml'), 'utf8'));
   report('valid/course.yaml is valid against course/schemas/course.schema.yaml', course(cy), course.errors && errs(course));
   for (const c of cy.concepts) {
-    const data = md.split(fs.readFileSync(path.join(fx, 'valid', c.dir, 'concept.md'), 'utf8')).data;
-    report(`valid/${c.dir}/concept.md is valid against course/schemas/concept-frontmatter.schema.yaml`, front(data), front.errors && errs(front));
+    const split = md.split(fs.readFileSync(path.join(fx, 'valid', c.dir, 'concept.md'), 'utf8'));
+    if (!split.hasFront) continue;
+    report(`valid/${c.dir}/concept.md is valid against course/schemas/concept-frontmatter.schema.yaml`, front(split.data), front.errors && errs(front));
   }
+  const sources = schema('sources.schema.yaml');
+  const sy = yaml.parse(fs.readFileSync(path.join(fx, 'valid', 'sources.yaml'), 'utf8'));
+  report('valid/sources.yaml is valid against course/schemas/sources.schema.yaml', sources(sy), sources.errors && errs(sources));
 }
 
 // --concept looks at one concept only: an unlisted concept folder does not fail course-yaml

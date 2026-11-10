@@ -32,6 +32,7 @@ course:
   checks: course/checks
   parser: course/parser.js
   refs: course/refs.js
+  claims: course/claims.js
   glossary: course/glossary.js
   templates: course/templates
   samples: course/samples
@@ -66,14 +67,15 @@ lists:
       judged-by: [transcript-script, transcript-judge, memory-reading, course-comparison]
   lexicons:
     course:
-      headings: {essentials: string, stances: string, deepening: string, landmarks: string, teacher_note: string, foot: string, claims: string, references: string, unverified: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
+      headings: {essentials: string, stances: string, deepening: string, landmarks: string, teacher_note: string, foot: string, problem: string, crossing_case: string, audience: string, onboarding: string, progression: string, fixed_facts: string, avoid: string, unreleased: string}
       block_kinds: {concept: string, annex: string, section: string, unit: string, case: string, separator: string}
       unit_fields: {matter: string, misconceptions: string, root: string, correction: string, anchor: string, question: string, expected_answer: string, misconceptions_in_play: string, teacher_note: string}
       unit_blocks: {lesson: string, cases: string}
-      markers: {consensus: string, school: string, course: string}
-      natures: {fact: string}
+      natures: {consensus: string, school: string, fact: string, course: string}
       concept_refs: {concept: string, concepts: string, and: string, annex: string}
-      source_types: {primary: string, secondary: string, marketing: string}
+      source_kinds: {study: string, review: string, standard: string, survey: string, article: string, post: string, guide: string, dictionary: string, sales_page: string}
+      source_controls: {peers: string, editorial: string, none: string}
+      source_independence: {independent: string, interested: string}
       typography: {banned: list}
     site:
       nav: {domains: string, storyline: string, glossary: string}
@@ -113,7 +115,7 @@ files:
       holds: "the form of the files of a course as data: their parts, their order, their presence, published or not, their readers; it names the words by their key in `course/lexicon.yaml` and holds none"
       readers: [creator, builder, verifier, spec writer]
     schemas:
-      holds: "the fields of `course.yaml` and of the `concept.md` frontmatter, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml`"
+      holds: "the fields of `course.yaml`, of the `concept.md` frontmatter and of `sources.yaml`, as JSON Schema 2020-12 written in YAML, each one rule of `course/rules.yaml`"
       readers: [builder, verifier, spec writer]
     checks:
       holds: "the check scripts of a course, `rules.js` (the checks, their category and their severity, from `course/rules.yaml`), their fixtures and `README.md` (how to run them); `product-lines/check-course <course-dir>` runs them"
@@ -123,6 +125,9 @@ files:
       readers: [builder, verifier]
     refs:
       holds: "the reader of the references between concepts in the text of a course (`course/README.md` section 3.5): the words of the group `concept_refs` of the lexicon, then concept numbers or section and unit ids, for the checks and the site build"
+      readers: [builder, verifier]
+    claims:
+      holds: "the reader of the claim marks in the text of a course (`course/README.md` section 3.4): an inline link whose destination is a word of the group `natures` of the lexicon, alone or followed by source ids, its title the claim's name, read through the CommonMark reader of the spec directives, for the checks and the site build"
       readers: [builder, verifier]
     glossary:
       holds: "the reader of the course glossary (`course/README.md` section 5): the first table of `glossary.md`, its terms and their variants, the number of the concept that defines each, for the checks and the site build"

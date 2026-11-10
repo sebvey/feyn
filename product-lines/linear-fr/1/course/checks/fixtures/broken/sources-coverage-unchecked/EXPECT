@@ -1,0 +1,2 @@
+check: sources-coverage
+message: concept 1 : 1 affirmation marquée, 1 sourcée, 0 vérifiée par un humain

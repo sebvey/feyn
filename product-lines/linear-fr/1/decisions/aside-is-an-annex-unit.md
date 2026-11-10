@@ -17,5 +17,5 @@ A question often asked outside the course path has its matter in a unit of an an
 
 ## Consequences
 
-- The annex unit's matter is sourced in its own `sources.md`, as any concept's.
+- The annex unit's matter is marked and sourced as any concept's, its sources in the course's sources file.
 - A course stance that set such a subject aside says instead that an annex teaches it.

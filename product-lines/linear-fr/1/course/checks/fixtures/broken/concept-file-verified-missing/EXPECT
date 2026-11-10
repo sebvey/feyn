@@ -1,2 +1,0 @@
-check: concept-file
-message: verified must have one entry per reference of refs (1), found 0

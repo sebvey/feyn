@@ -3,16 +3,20 @@
 // the fields that `length` of `unit` in course/form.yaml names (« Matière », « Ancrage »,
 // « Question »), those of the unit's case, the first of « Cas du fil rouge », and none of a
 // supplementary case's, the misconceptions left out, counted in lines of `line` characters (the
-// characters of the text, label and indentation left out, divided by `line`), per unit; a unit
+// characters of the text, label and indentation left out, a link's destination and title too,
+// divided by `line`), per unit; a unit
 // above `max` is reported, a signal that it may not hold in one teacher message, not an error.
 // Its fields are read as unit-contract reads them (course/parser.js); a unit whose fields are
 // unreadable is unit-contract's.
 const directives = require('./directives');
 const { fail } = directives.lib('common');
 
-// the characters of a field: its text after the label, then each of its following lines, trimmed
+// the characters of a field: its text after the label, then each of its following lines, trimmed;
+// an inline link counts its text alone, so a claim's mark counts what the learner hears, not its
+// nature, its sources and its name (course/README.md section 3.4)
+const LINK = /\[([^\]]*)\]\([^)]*\)/g;
 function chars(f) {
-  return [f.text, ...f.lines.slice(1).map((l) => l.t.trim())].reduce((n, t) => n + [...t].length, 0);
+  return [f.text, ...f.lines.slice(1).map((l) => l.t.trim())].reduce((n, t) => n + [...t.replace(LINK, '$1')].length, 0);
 }
 
 // [{ unit, lines }] for each unit of a concept, lines rounded to one decimal
