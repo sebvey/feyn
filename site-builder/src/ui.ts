@@ -40,7 +40,13 @@ export const ui = {
   termOne: 'terme',
   termMany: 'termes',
   termOf: 'sur',
-  // the bottom band, the course's version: its number, or this while the course has none
+  // the bottom band: who answers for the course, its licence, its creation and its last update
+  // (« Maintenu par Sébastien Vey · licence CC-BY-SA-4.0 · créé le 6 novembre 2026 · mis à jour le
+  // 10 novembre 2026 »), then its version: its number, or this while the course has none
+  maintainedBy: 'Maintenu par',
+  license: 'licence',
+  created: 'créé le',
+  updated: 'mis à jour le',
   version: 'version',
   unreleased: 'version non publiée',
 } as const;

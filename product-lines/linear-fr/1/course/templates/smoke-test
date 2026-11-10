@@ -23,6 +23,8 @@ const DUMMY = {
   'course-id': 'smoke',
   'course title': 'Un cours de test',
   'one line under the title': 'Pour la fumée',
+  'maintainer name': 'Une Mainteneuse',
+  'SPDX licence identifier': 'CC-BY-SA-4.0',
   '#rrggbb': '#336699',
   'domain-slug': 'bases',
   'domain title': 'Les bases',

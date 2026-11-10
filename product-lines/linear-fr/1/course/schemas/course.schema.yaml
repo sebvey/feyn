@@ -2,14 +2,15 @@
 # course/form.yaml point: those of the course, of a domain entry and of a concept entry, their
 # presence and their form. course.yaml is the map, nothing below a concept: the tree of a concept
 # is the headings of its concept.md (section 3; decision course-map-and-concept-tree); nor whom
-# the course is for, which « Public cible » of plan.md says. course-yaml validates course.yaml
+# the course is for, which « Public cible » of plan.md says; nor its dates nor its version, which the
+# site build computes from git and CHANGELOG.md (decision course-metadata-from-git). course-yaml validates course.yaml
 # against this schema through Ajv2020. What the schema does not say (unique numbers, course order, the
-# partition into domains, paths that exist) is a rule of course/rules.yaml, verified by
-# course-yaml.
+# partition into domains, paths that exist, a licence on the SPDX list) is a rule of
+# course/rules.yaml, verified by course-yaml.
 $schema: https://json-schema.org/draft/2020-12/schema
 title: course.yaml
 type: object
-required: [id, spec, title, site, storyline, glossary, domains, concepts]
+required: [id, spec, title, maintainers, license, site, storyline, glossary, domains, concepts]
 additionalProperties: false
 properties:
   id:
@@ -25,6 +26,21 @@ properties:
   subtitle:
     description: one line under the title on the site
     $ref: '#/$defs/text'
+  maintainers:
+    description: >-
+      the names of the people who answer for the course, one or more; written by hand, since a name
+      derives from nothing
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items:
+      $ref: '#/$defs/text'
+  license:
+    description: >-
+      the licence the course is published under, one SPDX licence identifier (CC-BY-SA-4.0);
+      course-yaml checks it against the SPDX licence list, which the schema does not hold
+    type: string
+    pattern: '^[A-Za-z0-9][A-Za-z0-9.+-]*$'
   site:
     description: >-
       how the course looks on its site, never whether it has one: every course has a site; the

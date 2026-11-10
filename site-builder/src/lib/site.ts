@@ -68,6 +68,13 @@ export interface Doc {
   language: string;
   course: {
     id: string; title: string; subtitle?: string; annexes: string[];
+    /** The names of the people who answer for the course, as its course.yaml writes them. */
+    maintainers: string[];
+    /** The licence the course is published under, an SPDX licence identifier (`CC-BY-SA-4.0`). */
+    license: string;
+    /** The date the course was created and that of its last update, `YYYY-MM-DD`, from git; null when git cannot say. */
+    created: string | null;
+    updated: string | null;
     /** The text of the course's `logo.svg`: square, one colour in `currentColor`. */
     logo: string;
     /** The course's accent colour, `#rrggbb`, whose hue the site's accent family keeps (src/lib/look.ts). */

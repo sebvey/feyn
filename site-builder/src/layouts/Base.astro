@@ -2,8 +2,10 @@
 // The shell of every page, ported from the old site's src/layouts/Base.astro: the skip link, the
 // header (the course title as brand; the navigation, whose words come from the document; search;
 // the theme toggle), the main content, indexed by Pagefind unless `noindex`, and the footer
-// (the link to the about page, and the band with the course's version: its number, or « version non
-// publiée » while it has none; no band when the document does not give it). `nav` is the key of the URL scheme's page the header marks as current.
+// (the link to the about page; the band of the course: who answers for it, its licence, linked to
+// its page on the SPDX list, its creation and its last update, a date git could not give left out;
+// and its version: its number, or « version non publiée » while it has none, no version when the
+// document does not give it). `nav` is the key of the URL scheme's page the header marks as current.
 // The page's language is the document's (`language`, its spec MAJOR's): the engine writes none.
 // The look is the course's (src/lib/look.ts): its logo in the header, painted in the accent through
 // `currentColor`; the accent family and the focus as custom properties, per theme; the favicon and the
@@ -34,6 +36,11 @@ const items = [
   { key: 'glossary', label: words.site.nav.glossary },
 ].filter((i) => hasPage(i.key));
 const release = doc.release;
+// the band of the course: its maintainers as a list in the page's language, its dates written out
+const maintainers = new Intl.ListFormat(doc.language, { type: 'conjunction' }).format(course.maintainers);
+const day = (d: string | null) => (d ? new Intl.DateTimeFormat(doc.language, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${d}T00:00:00Z`)) : null);
+const created = day(course.created);
+const updated = day(course.updated);
 const headerLogo = logo({ width: '28', height: '28', 'aria-hidden': 'true', focusable: 'false' });
 const site = Astro.site;
 ---
@@ -140,6 +147,12 @@ const site = Astro.site;
     <footer class="site-footer">
       <div class="container-wide row">
         <p><a href={pageHref('about')} aria-current={nav === 'about' ? 'page' : undefined}>{ui.about}</a></p>
+        <p class="footer-meta course-meta" data-pagefind-ignore>
+          <span class="maintainers">{ui.maintainedBy} {maintainers}</span>
+          {' · '}<span class="license">{ui.license} <a href={`https://spdx.org/licenses/${course.license}.html`} rel="license">{course.license}</a></span>
+          {created && <>{' · '}<span class="created">{ui.created} <time datetime={course.created!}>{created}</time></span></>}
+          {updated && <>{' · '}<span class="updated">{ui.updated} <time datetime={course.updated!}>{updated}</time></span></>}
+        </p>
         {release !== undefined && (
           <p class="footer-meta version" data-pagefind-ignore>{release ? `${ui.version} ${release.version}` : ui.unreleased}</p>
         )}
