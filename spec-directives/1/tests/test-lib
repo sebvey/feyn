@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+'use strict';
+// Tests the readers of lib/ on texts written here, one case per line, and says whether every case
+// gave the expected result (the spec fixtures are tested by test-fixtures).
+//   lib/mdast.js   the links of a CommonMark text: their url, title, plain text and line, a link
+//                  in a code span being no link, the lines those of the file after a frontmatter
+require('../lib/deps').need();
+const mdast = require('../lib/mdast');
+const md = require('../lib/md');
+
+let bad = 0;
+
+function report(name, ok, detail) {
+  console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}${ok ? '' : ': ' + detail}`);
+  if (!ok) bad++;
+}
+// the case passes when the links of `text` are `expected`, each compared on the keys it gives
+function links(name, text, expected, opts) {
+  let got;
+  try {
+    got = mdast.links(mdast.parse(text, opts)).map(({ node, ...l }) => l);
+  } catch (e) {
+    return report(name, false, `threw ${e.message}`);
+  }
+  const pick = (l, e) => Object.fromEntries(Object.keys(e).map((k) => [k, l[k]]));
+  const shown = JSON.stringify(got.map((l, i) => (expected[i] ? pick(l, expected[i]) : l)));
+  report(name, got.length === expected.length && shown === JSON.stringify(expected), `expected ${JSON.stringify(expected)}, got ${shown}`);
+}
+
+// lib/mdast.js
+links('mdast: a link with a title', 'Le café [est torréfié](nature:S2,S3 "torrefaction").\n',
+  [{ url: 'nature:S2,S3', title: 'torrefaction', text: 'est torréfié', line: 1, column: 9 }]);
+links('mdast: a link without a title has a null title', 'Voir [la source](https://example.org).\n',
+  [{ url: 'https://example.org', title: null, text: 'la source' }]);
+links('mdast: a title holding quotes', 'Un [texte](nature:S1 "le \\"bon\\" grain") et [un autre](nature:S2 \'dit "moulu"\').\n',
+  [{ title: 'le "bon" grain', text: 'texte' }, { title: 'dit "moulu"', text: 'un autre' }]);
+links('mdast: an escaped bracket in a link\'s text', 'Un [texte \\[1\\] cité](nature:S1 "n").\n',
+  [{ url: 'nature:S1', text: 'texte [1] cité' }]);
+links('mdast: emphasis inside a link\'s text', 'Un [texte *très* **fort** et `code`](nature:S1).\n',
+  [{ url: 'nature:S1', text: 'texte très fort et code' }]);
+links('mdast: a link split over two lines', 'Avant [un texte\nsur deux lignes](nature:S1\n"nom") après.\n',
+  [{ url: 'nature:S1', title: 'nom', text: 'un texte\nsur deux lignes', line: 1, column: 7 }]);
+links('mdast: a link inside a code span is no link', 'Le code `[texte](nature:S1 "n")` et [un vrai](nature:S2).\n',
+  [{ url: 'nature:S2', text: 'un vrai' }]);
+links('mdast: a link inside a code block is no link', '```\n[texte](nature:S1)\n```\n\n    [indenté](nature:S3)\n',
+  []);
+links('mdast: links in document order, each on its line', '# Titre\n\nUn [premier](a:1).\n\n- un [deuxième](a:2)\n- et [troisième](a:3)\n',
+  [{ url: 'a:1', line: 3 }, { url: 'a:2', line: 5 }, { url: 'a:3', line: 6 }]);
+links('mdast: `line` shifts the lines to those of the file', 'Un\n[texte](nature:S1).\n',
+  [{ url: 'nature:S1', line: 11, column: 1 }], { line: 10 });
+{
+  const file = '---\nslug: cafe\ntitle: Le café\n---\n\n# Concept\n\nUn [texte](nature:S1 "n").\n';
+  const { body } = md.split(file);
+  links('mdast: the line of a link after a frontmatter is the line of the file', body.map((b) => b.t).join('\n'),
+    [{ url: 'nature:S1', line: 8 }], { line: body[0].n });
+}
+
+console.log(bad ? `${bad} unexpected result(s)` : 'all as expected');
+process.exit(bad ? 1 : 0);
