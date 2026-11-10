@@ -73,7 +73,7 @@ function run(ctx) {
       for (const key of ['URL', 'DOI']) {
         if (typeof s[key] !== 'string') continue;
         const at = `${key} ${s[key].toLowerCase()}`;
-        if (seen.has(at)) out.push(fail(sf, yaml.lineOf(s, key, yaml.lineOf(sources, id, 1)), `source ${id} : son ${key} est celui de ${seen.get(at)} ; une source est décrite une fois dans le cours`));
+        if (seen.has(at)) out.push(fail(sf, yaml.lineOf(s, key, yaml.lineOf(sources, id, 1)), `source ${id} : même ${key} que ${seen.get(at)} ; une source est décrite une fois dans le cours`));
         else seen.set(at, id);
       }
       for (const [key, group] of Object.entries(LISTS)) {

@@ -1,2 +1,2 @@
 check: sources
-message: source S2 : son URL est celui de S1 ; une source est décrite une fois dans le cours
+message: source S2 : même URL que S1 ; une source est décrite une fois dans le cours

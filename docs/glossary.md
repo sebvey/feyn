@@ -571,7 +571,7 @@ A PR adds or changes the entry and, in the same PR, replaces the rejected words 
 
 ### lexicon
 
-- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, markers, natures, concept references, source types, typography, the word lists of the checks), read by the checks, the teacher build and the site; `products/site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds; and the lexicon of a **teacher implementation**, the words its **means** make the teacher say and write other than the form marks and titles its **protocol rules** fix. Not a translation file: the language is the spec's
+- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, natures, concept references, the kind, the control and the independence of a source, typography, the word lists of the checks), read by the checks, the teacher build and the site; `products/site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds; and the lexicon of a **teacher implementation**, the words its **means** make the teacher say and write other than the form marks and titles its **protocol rules** fix. Not a translation file: the language is the spec's
 - en: lexicon · rejected: "language pack", "i18n", "locale", "strings"
 - fr: « lexique »
 
