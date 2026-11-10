@@ -159,16 +159,16 @@ for (const c of courseYaml.concepts) {
 // (instruction claim-marks-read-as-written); on cafe, those of annexes A1 and A2, of nature
 // `cours` with no source (course/README.md 3.4: the nature alone, or followed by its sources)
 {
-  const marks = [];
+  const claimMarks = [];
   for (const c of courseYaml.concepts) {
     const lines = (read(path.join(COURSE, c.dir, 'concept.md')) || '').split('\n');
     const e = lines.indexOf("## L'essentiel");
     const stop = lines.findIndex((l, i) => i > e && /^## /.test(l));
     const essentials = e < 0 ? '' : lines.slice(e + 1, stop < 0 ? lines.length : stop).join('\n');
-    marks.push(...(essentials.match(/\[[^\]\n]+\]\((?:consensus|école|fait|cours)(?::S\d+(?:,S\d+)*)?(?: "[a-z0-9-]+")?\)/gu) || []));
+    claimMarks.push(...(essentials.match(/\[[^\]\n]+\]\((?:consensus|école|fait|cours)(?::S\d+(?:,S\d+)*)?(?: "[a-z0-9-]+")?\)/gu) || []));
   }
-  check(marks.length > 0, 'no « L\'essentiel » of cafe holds a claim mark');
-  for (const m of marks) check(map.includes(m), `carte-du-cours.md does not keep the claim mark ${m} of a « L'essentiel » as written`);
+  check(claimMarks.length > 0, 'no « L\'essentiel » of cafe holds a claim mark');
+  for (const m of claimMarks) check(map.includes(m), `carte-du-cours.md does not keep the claim mark ${m} of a « L'essentiel » as written`);
 }
 // sources.yaml, one file at the course root, read on demand: the part course-reads of
 // composition.yaml draws it from the course, and the course map names it among the course files
@@ -472,7 +472,7 @@ for (const d of declaredList) console.log(`test-build: declared with no means: $
 const implLexicon = yaml.parse(read(path.join(IMPL, 'lexicon.yaml')) || '') || {};
 const ph = implLexicon.phrases || {};
 const rulesText = rulesFile ? (read(path.join(SPEC, rulesFile)) || '').replace(/\s+/g, ' ') : '';
-const MARKS = [
+const FORM_MARKS = [
   [`« **${ph.storyline_lead}** »`, 'storyline_lead'],
   [`« **${ph.off_storyline_lead}** »`, 'off_storyline_lead'],
   [`« **${ph.question_lead}** »`, 'question_lead'],
@@ -483,7 +483,7 @@ const MARKS = [
   [`« ${String(ph.storyline_title).replace('{title}', '<titre>')} »`, 'storyline_title'],
   [`« ${String(ph.reference_model).replace('{n}', '<n>').replace('{title}', '<titre>')} »`, 'reference_model'],
 ];
-for (const [mark, key] of MARKS) check(rulesText.includes(mark), `lexicon.yaml: phrases.${key} is not the protocol rules' word for word: ${mark}`);
+for (const [formMark, key] of FORM_MARKS) check(rulesText.includes(formMark), `lexicon.yaml: phrases.${key} is not the protocol rules' word for word: ${formMark}`);
 
 fs.rmSync(tmp, { recursive: true, force: true });
 for (const f of failures) console.error(`test-build: ${f}`);
