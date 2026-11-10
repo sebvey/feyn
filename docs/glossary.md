@@ -34,6 +34,8 @@ A key with nothing to say is left out, `means`, `en` and `fr` excepted. A reject
 
 A PR adds or changes the entry and, in the same PR, replaces the rejected words in use for that concept. The text that first writes a concept in French fills its `fr` in the same PR. An entry cites no rule id, of a rule or of a group (decision `decision-format`), and names no course. A meaning cites nothing: no decision, no document (decision `word-choices-in-the-glossary`). It names a file, a folder, a key, a command or a skill only when the concept is that thing, never to say where the concept is implemented, stored, read or written (decision `glossary-by-concept`). `/feyn-glossary-entry` reads, adds and changes an entry.
 
+A generic word likely to collide (too general, likely used in other domains or already used in the repository in another sense) gets a qualified term as soon as an entry reserves it, the bare word rejected, as **template** does (decision `generic-word-always-qualified`). The bare word's uses are searched in the whole repository before the entry is added, not only among the entries. When it is already an entry's term or used in another sense, the same PR qualifies both senses: that entry is renamed to its own qualified term, both entries reject the bare word with the same reason (too generic, names several concepts), cite each other, and keep the reason in their `why`. The prose (READMEs, decisions, rule texts, check messages) takes the qualified terms in the same PR. An identifier whose parent (file, module, key, folder) carries the qualifier counts as qualified; a flat one is renamed in the same PR when cheap, otherwise it stays, its entry's `why` says so, and a story is posed at once for its renaming.
+
 ## The things we build
 
 ### feyn
