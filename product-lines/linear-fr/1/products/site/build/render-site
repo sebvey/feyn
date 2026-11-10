@@ -10,12 +10,14 @@
 // never output), and prints them to stdout as one JSON document, whose shape site.schema.yaml
 // fixes and README.md (this folder) describes, with the words of products/site/lexicon.yaml, the headings
 // of course/lexicon.yaml the published parts carry, the URL scheme of products/site/url-scheme.yaml and the
-// language of spec.yaml, so that the site engine reads no course file and no spec file. It names
+// language of spec.yaml, and the dates of the course from git, so that the site engine reads no
+// course file, no spec file and no history. It names
 // no mechanism of a target and rewrites no course text. Writes nothing. Exit 0 rendered, 1 an
 // input it cannot read, 2 a usage error.
 const fs = require('fs');
 const path = require('path');
 const { createRequire } = require('module');
+const { spawnSync } = require('child_process');
 
 // here is product-lines/<name>/<MAJOR>/products/site/build
 const MAJOR = path.resolve(__dirname, '..', '..', '..');
@@ -147,6 +149,11 @@ if (!pub(form.logo) || typeof form.logo.file !== 'string') fail('course/form.yam
 const logo = read(path.join(courseDir, form.logo.file));
 const accentColor = cy.site && cy.site.accent_color;
 if (typeof accentColor !== 'string') fail(`${rel(courseDir)}/course.yaml has no site.accent_color (check-course says more)`);
+// who answers for the course and under which licence, as course.yaml writes them (check-course
+// holds their form and the licence to the SPDX list)
+const maintainers = Array.isArray(cy.maintainers) ? cy.maintainers : [];
+const license = cy.license;
+if (!maintainers.length || typeof license !== 'string') fail(`${rel(courseDir)}/course.yaml has no maintainers or no license (check-course says more)`);
 const domainOf = new Map();
 const domains = cy.domains.map((d) => {
   const concepts = (d.concepts || []).map(normNumber);
@@ -371,6 +378,26 @@ if (pub(ch.latest_release)) {
   }
 }
 
+// ---- the dates of the course, from git, never written by hand (decision course-metadata-from-git):
+// `created`, the date of the first commit of its course.yaml, followed across the moves of the
+// course folder, so that a course moved keeps the date it was created; `updated`, the date of the
+// last commit on the course folder. Both YYYY-MM-DD, the committer's date, the day a change landed.
+// Null when they cannot be known: a folder outside a git work tree or not committed yet, or a
+// shallow clone, whose oldest commit seems to create every file (the workflows that build the site
+// fetch the whole history).
+function gitDates() {
+  const git = (...args) => {
+    const r = spawnSync('git', ['-C', courseDir, ...args], { encoding: 'utf8' });
+    return r.status === 0 ? r.stdout.trim() : null;
+  };
+  const none = { created: null, updated: null };
+  if (git('rev-parse', '--is-inside-work-tree') !== 'true' || git('rev-parse', '--is-shallow-repository') !== 'false') return none;
+  const created = (git('log', '--follow', '--format=%cs', '--', 'course.yaml') || '').split('\n').filter(Boolean).pop();
+  const updated = git('log', '-1', '--format=%cs', '--', '.');
+  return created && updated ? { created, updated } : none;
+}
+const dates = gitDates();
+
 // ---- the words: products/site/lexicon.yaml whole, and of course/lexicon.yaml those the published parts
 // carry: the headings and the unit fields and blocks the form names `published: true`, the kind
 // words of the headings, a case's among them, the heading of the stances the site builds from the
@@ -424,7 +451,7 @@ const found = new Map();
 const doc = {
   spec: SPEC,
   language: LANGUAGE,
-  course: { id: cy.id, title: cy.title, subtitle: cy.subtitle, logo, accent_color: accentColor, annexes: (cy.annexes || []).map(normNumber) },
+  course: { id: cy.id, title: cy.title, subtitle: cy.subtitle, maintainers, license, created: dates.created, updated: dates.updated, logo, accent_color: accentColor, annexes: (cy.annexes || []).map(normNumber) },
   plan,
   domains,
   concepts,

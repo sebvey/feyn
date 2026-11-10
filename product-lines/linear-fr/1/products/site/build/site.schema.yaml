@@ -21,14 +21,31 @@ properties:
     type: string
     pattern: '^[a-z]{2}$'
   course:
-    description: the course, from course.yaml
+    description: the course, from course.yaml, its logo.svg and, for its dates, git
     type: object
-    required: [id, title, logo, accent_color, annexes]
+    required: [id, title, maintainers, license, created, updated, logo, accent_color, annexes]
     additionalProperties: false
     properties:
       id: { $ref: '#/$defs/slug' }
       title: { $ref: '#/$defs/line' }
       subtitle: { $ref: '#/$defs/line' }
+      maintainers:
+        description: the names of the people who answer for the course, `maintainers` of course.yaml, as written
+        type: array
+        minItems: 1
+        items: { $ref: '#/$defs/line' }
+      license:
+        description: the licence the course is published under, `license` of course.yaml, an SPDX licence identifier
+        type: string
+        pattern: '^[A-Za-z0-9][A-Za-z0-9.+-]*$'
+      created:
+        description: >-
+          the date the course was created, the first commit of its course.yaml, followed across the
+          moves of its folder; null when git cannot say (no history, a shallow clone)
+        oneOf: [{ type: 'null' }, { $ref: '#/$defs/date' }]
+      updated:
+        description: the date of the last commit on the course folder; null when git cannot say (no history, a shallow clone)
+        oneOf: [{ type: 'null' }, { $ref: '#/$defs/date' }]
       logo:
         description: the course's logo, the text of its logo.svg as written, one colour in currentColor
         type: string
@@ -188,6 +205,10 @@ properties:
       placeholders:
         type: object
 $defs:
+  date:
+    description: a date, YYYY-MM-DD
+    type: string
+    pattern: '^\d{4}-\d{2}-\d{2}$'
   slug:
     type: string
     pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'

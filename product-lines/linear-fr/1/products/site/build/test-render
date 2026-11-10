@@ -13,8 +13,10 @@
 // of course/form.yaml (--form): a part named `published: false`, a part named without
 // `published`, a part the form does not name (its claim marks with it), sources.yaml named
 // `published: false`, and a form that does not name the logo, which render-site refuses. A copy
-// of cafe whose source and quote carry `checked` gives neither. The logo and the accent colour are those cafe declares. Last, the latest
-// release of a CHANGELOG.md, on a copy of cafe given two releases. Exit 0 when every check
+// of cafe whose source and quote carry `checked` gives neither. The logo and the accent colour are those cafe declares,
+// and so are its maintainers and its licence; its creation and its last update are the dates git
+// gives, null on a copy outside git. Last, its version, the latest release of a CHANGELOG.md:
+// none for cafe, and the latest on a copy of cafe given two releases. Exit 0 when every check
 // passes, 1 otherwise; one line per failure.
 const fs = require('fs');
 const os = require('os');
@@ -171,7 +173,21 @@ check(doc.language === (fs.readFileSync(path.join(MAJOR, 'spec.yaml'), 'utf8').m
 // the look of the course, as the course declares it: its logo, logo.svg as written, and its accent colour
 check(doc.course.logo === fs.readFileSync(path.join(COURSE, 'logo.svg'), 'utf8'), 'the logo of cafe is not its logo.svg as written');
 check(doc.course.accent_color === cy.site.accent_color && /^#[0-9a-fA-F]{6}$/.test(doc.course.accent_color), `the accent colour is ${doc.course.accent_color}, not site.accent_color of course.yaml`);
-check(doc.release === null, 'cafe has no release, and release is not null');
+check(doc.release === null, 'cafe has no release, and release is not null: its version is none');
+// who answers for the course and its licence, as course.yaml writes them; its dates from git: its
+// creation, the first commit of its course.yaml across the moves of its folder, and its last
+// update, the last commit on its folder (null in a shallow clone, which cannot tell them)
+check(JSON.stringify(doc.course.maintainers) === JSON.stringify(cy.maintainers) && doc.course.maintainers.join() === 'Sébastien Vey', `the maintainers of cafe are ${JSON.stringify(doc.course.maintainers)}, not ["Sébastien Vey"] of course.yaml`);
+check(doc.course.license === cy.license && doc.course.license === 'CC-BY-SA-4.0', `the licence of cafe is ${doc.course.license}, not CC-BY-SA-4.0 of course.yaml`);
+{
+  const git = (...args) => spawnSync('git', ['-C', COURSE, ...args], { encoding: 'utf8' }).stdout.trim();
+  const shallow = git('rev-parse', '--is-shallow-repository') !== 'false';
+  const first = shallow ? null : git('log', '--follow', '--format=%cs', '--', 'course.yaml').split('\n').pop();
+  const last = shallow ? null : git('log', '-1', '--format=%cs', '--', '.');
+  check(doc.course.created === first && (shallow || /^\d{4}-\d{2}-\d{2}$/.test(first)), `the creation of cafe is ${doc.course.created}, not ${first}, the date of the first commit of its course.yaml`);
+  check(doc.course.updated === last && (shallow || /^\d{4}-\d{2}-\d{2}$/.test(last)), `the last update of cafe is ${doc.course.updated}, not ${last}, the date of the last commit on its folder`);
+  check(shallow || doc.course.created <= doc.course.updated, `cafe is created on ${doc.course.created}, after its last update on ${doc.course.updated}`);
+}
 check(doc.concepts.map((c) => c.path).join(',') === 'concepts/00/,concepts/01/,concepts/02/,concepts/A1/,concepts/A2/', `the concept paths are ${doc.concepts.map((c) => c.path).join(', ')}`);
 const ref = doc.concept_refs.find((r) => r.text === 'concept 0b');
 check(ref && ref.targets[0].concept === '0' && ref.targets[0].anchor === '0b' && ref.targets[0].path === 'concepts/00/', 'the concept reference « concept 0b » does not name section 0b of concept 0');
@@ -220,6 +236,8 @@ const log = path.join(copy, 'CHANGELOG.md');
 fs.writeFileSync(log, fs.readFileSync(log, 'utf8') + '\n## 1.1.0, 2026-12-01\n\n- MINOR, concept 0 : une unité de plus (#1).\n\n## 1.0.0, 2026-11-20\n\n- MAJOR, tout le cours : publié (#1).\n');
 const released = render(copy, [], 'cafe with two releases');
 if (released) check(released.text.includes('"S1"') && !holds(released, '2031-01-02') && !holds(released, '2031-01-03') && !holds(released, 'checked'), 'the checked date of a source or a quote reaches the document');
+// that copy has no git history: its dates are null, never the day of the build
+if (released) check(released.doc.course.created === null && released.doc.course.updated === null, `a course outside git gives the dates ${released.doc.course.created} and ${released.doc.course.updated}, not null`);
 if (released) check(released.doc.release && released.doc.release.version === '1.1.0' && released.doc.release.date === '2026-12-01' && !holds(released, '1.0.0') && !holds(released, 'une unité de plus'), 'the latest release is not the one in the document, or another part of CHANGELOG.md is');
 
 for (const f of failures) console.error(`test-render: ${f}`);

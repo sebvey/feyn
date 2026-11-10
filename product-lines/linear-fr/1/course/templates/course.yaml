@@ -17,6 +17,11 @@ id: <course-id>
 spec: linear-fr@1
 title: "<course title>"
 subtitle: "<one line under the title>"
+# who answers for the course, one name or more; and the licence it is published under, an SPDX
+# licence identifier as the SPDX list writes it (https://spdx.org/licenses/). Its dates and its
+# version are no keys: the site takes them from git and CHANGELOG.md (course/README.md section 2)
+maintainers: ["<maintainer name>"]
+license: <SPDX licence identifier>
 # the course's look on its site; its logo is the file logo.svg beside this one (course/README.md
 # section 1), named by no key
 site:

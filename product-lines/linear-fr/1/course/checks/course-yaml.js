@@ -4,7 +4,8 @@
 // against course/schemas/course.schema.yaml through Ajv2020, a failure mapped from ajv's
 // instance path to its line (`lineOfError` of lib/yaml-lines.js); then what the schema does not
 // say: identifiers, order, partition into domains, annexes, prerequisites, paths that exist, no
-// unlisted concept folder (course/README.md section 2, spec-directives/1/README.md section 3); and
+// unlisted concept folder, a licence on the SPDX licence list (the package spdx-license-ids of the
+// spec directives) (course/README.md section 2, spec-directives/1/README.md section 3); and
 // the logo, logo.svg at the root of the course folder (`logo` of course/form.yaml): present, square,
 // one colour in currentColor, no script and no external resource (course/README.md section 1).
 // An unknown spec or MAJOR is refused by product-lines/check-course, before these checks run. A
@@ -74,6 +75,10 @@ function logo(ctx) {
   return out;
 }
 
+// the SPDX licence list, its current identifiers (the deprecated ones left out), read once
+let spdxIds = null;
+const spdx = () => spdxIds || (spdxIds = new Set(directives.require('spdx-license-ids')));
+
 // the schema of course.yaml, the form's (course_map.schema), compiled once
 let validate = null;
 let schemaFile = null;
@@ -109,6 +114,7 @@ function run(ctx) {
 
   // what the schema does not say, on the values whose form it accepts
   if (isStr(cy.id) && ctx.SLUG.test(cy.id) && cy.id !== path.basename(ctx.root)) bad(cy, 'id', `id "${cy.id}" must equal the course folder name "${path.basename(ctx.root)}"`);
+  if (isStr(cy.license) && !spdx().has(cy.license)) bad(cy, 'license', `license "${cy.license}" is not an identifier of the SPDX licence list (CC-BY-SA-4.0, CC-BY-4.0, MIT...): https://spdx.org/licenses/`);
   out.push(...logo(ctx));
   for (const k of ['storyline', 'glossary']) if (isStr(cy[k]) && !ctx.exists(cy[k])) bad(cy, k, `${cy[k]} does not exist`);
   if (!ctx.usable) return out;

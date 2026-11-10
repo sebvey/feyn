@@ -18,7 +18,7 @@ Chaque concept est une source, écrite une fois : un **fichier de concept**, `co
 
 ```
 courses/<id>/
-  course.yaml          la carte : identité, domaines, concepts, couleur d'accent (section 2)
+  course.yaml          la carte : identité, mainteneurs, licence, domaines, concepts, couleur d'accent (section 2)
   logo.svg             le logo du cours : une couleur, carré, sans script ni ressource externe (ci-dessous)
   sources.yaml         les sources du cours, chacune une fois, et leurs extraits (3.4)
   plan.md              prose : public, accueil, progression, partis pris, règles d'écriture (section 5)
@@ -39,6 +39,8 @@ Les règles du dossier du cours sont le groupe « Le dossier du cours » de [`ru
 `course.yaml` est la carte du cours : son identité, ses domaines et ses concepts, rien sous le concept ; l'arbre d'un concept est dans son `concept.md` (section 3), et à qui le cours s'adresse, dans « Public cible » de `plan.md` (section 5). Le site, le build du professeur et les checks lisent `course.yaml` ; le site compose depuis lui l'enchaînement des concepts d'un domaine (section 4).
 
 **La couleur d'accent.** Le bloc `site` de `course.yaml` dit l'apparence du site du cours, jamais s'il est publié : chaque cours a un site, sur ses trois canaux. Il tient la couleur d'accent du cours, `site.accent_color`, obligatoire, une couleur `#rrggbb`. Le site en garde la teinte et en tire toute la famille de l'accent de chaque thème, avec sa propre luminosité, pour que le contraste reste le sien et non une règle de chaque cours ; il y peint le logo (section 1).
+
+**Les mainteneurs et la licence.** `maintainers`, obligatoire, nomme les mainteneurs du cours, les personnes qui en répondent, une liste d'au moins un nom ; `license`, obligatoire, la licence sous laquelle le cours est publié, un identifiant de la liste des licences SPDX (`CC-BY-SA-4.0`), que le check compare à cette liste. Un nom et une licence ne se tirent de rien : ils s'écrivent. La date de création du cours, celle de sa dernière modification et sa version, elles, ne s'écrivent pas : le site tire les deux dates de git, le premier et le dernier commit sur le dossier du cours, et la version de `CHANGELOG.md`, sa dernière version publiée (section 5) ; une date écrite à la main dériverait au premier oubli.
 
 Ses champs sont décrits par le schéma JSON [`schemas/course.schema.yaml`](schemas/course.schema.yaml), que `course_map` de [`form.yaml`](form.yaml) nomme avec ses lecteurs ; ses règles sont le groupe « Le fichier course.yaml » de [`rules.yaml`](rules.yaml).
 

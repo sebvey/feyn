@@ -1,0 +1,2 @@
+check: course-yaml
+message: license "CC-BY-SA" is not an identifier of the SPDX licence list

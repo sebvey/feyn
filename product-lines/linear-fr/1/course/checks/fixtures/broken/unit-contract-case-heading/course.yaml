@@ -49,5 +49,7 @@ concepts:
     prerequisites: []
     duration_min: 10
     dir: concepts/A1-lexique
+maintainers: ["Une Mainteneuse"]
+license: CC-BY-SA-4.0
 site:
   accent_color: "#336699"

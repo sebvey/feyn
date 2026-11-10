@@ -117,6 +117,22 @@ groups:
           `#rrggbb` ; le site en garde la teinte et en tire l'accent de chaque thème, avec sa
           propre luminosité. Le bloc `site` dit seulement l'apparence du site du cours, jamais
           s'il est publié : chaque cours a un site.
+      - id: course-maintainers-named
+        level: requirement
+        check: course-yaml
+        text: >-
+          `course.yaml` doit nommer les mainteneurs du cours, `maintainers`, une liste d'au moins
+          un nom, chacun une fois : les personnes qui répondent du cours. Un nom ne se tire de
+          rien, il s'écrit.
+      - id: course-license-spdx
+        level: requirement
+        check: course-yaml
+        text: >-
+          `course.yaml` doit donner la licence sous laquelle le cours est publié, `license`, un
+          identifiant de la liste des licences SPDX (`CC-BY-SA-4.0`), écrit comme la liste
+          l'écrit ; une licence en texte libre ne se vérifie pas. Les dates de création et de
+          dernière modification du cours et sa version ne s'écrivent pas dans `course.yaml` : le
+          site les tire de git et de `CHANGELOG.md`.
       - id: domain-file-named-by-number
         level: requirement
         check: course-yaml
