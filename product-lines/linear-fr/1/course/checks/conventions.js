@@ -1,15 +1,15 @@
 'use strict';
 // The conventions of the text of concept.md (course/README.md section 3.5), read in the parts the
 // learner reads (course/form.yaml, readers; course/parser.js), the teacher note left out: concept
-// references, stance markers; no image in concept.md (the build places a diagram at its unit). Plain
-// Markdown in every course file (section 1), a concept file's headings no deeper than #####, a case's.
+// references, read in the text of a claim mark as in the rest of the sentence; no image in
+// concept.md (the build places a diagram at its unit). Plain Markdown in every course file
+// (section 1), a concept file's headings no deeper than #####, a case's. A claim mark, its form,
+// where it stands and its sources are `sources`' (course/claims.js).
 const directives = require('./directives');
 const mdlib = directives.lib('md');
 const { fail } = directives.lib('common');
 // the concept references are read by the reader of this MAJOR (course/refs.js), given the directives' lib
 const { parser: refParser } = require('../refs')(directives.lib);
-
-const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 function plainMarkdown(ctx, file, out, opts = {}) {
   const m = ctx.md(file);
@@ -32,12 +32,11 @@ function checkConcept(ctx, c, out) {
   if (!dir || !ctx.isDir(dir)) return;
   const cf = dir + '/concept.md';
   const cm = ctx.md(cf);
-  for (const f of ['concept.md', 'sources.md']) plainMarkdown(ctx, dir + '/' + f, out, { depth: f === 'concept.md' });
+  plainMarkdown(ctx, cf, out, { depth: true });
   if (!cm) return;
   const parts = ctx.parts(c);
   // what the learner reads (course/form.yaml, readers): the teacher note is left out
   const heard = parts.heard;
-  const markers = ['consensus', 'school', 'course'].map((k) => ctx.word('markers', k)).filter(Boolean);
 
   // a #### heading is a block of a unit, inside a unit; a ##### heading a case, inside a unit (where
   // in the unit is unit-contract's)
@@ -69,15 +68,6 @@ function checkConcept(ctx, c, out) {
       if (!annexIds.has(r.list)) out.push(fail(cf, n, `concept reference "${r.word} ${r.list}": ${r.list} names no annex of the course, nor a section or unit of one`));
     }
   }
-
-  // stance markers
-  const defs = new RegExp(`^\\s{0,3}\\[(${markers.map(esc).join('|')})\\]:`, 'iu');
-  const linked = new RegExp(`\\[(${markers.map(esc).join('|')})\\](\\(|\\[)`, 'u');
-  heard.forEach((l) => {
-    if (l.code || !markers.length) return;
-    if (defs.test(l.t)) out.push(fail(cf, l.n, `stance marker: no link reference definition may carry the label of a marker ("${l.t.trim().slice(0, 30)}")`));
-    else if (linked.test(mdlib.maskCode(l.t))) out.push(fail(cf, l.n, 'stance marker: a marker is plain text, it is not a link'));
-  });
 
   // no image: the build places each declared diagram at its unit, from the frontmatter
   cm.body.forEach((l) => {

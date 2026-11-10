@@ -239,8 +239,9 @@ const domainTitle = (d) => slot(lex('phrases', 'domain_title'), { n: d.number, t
 // 2026-11-09, #790): each domain in the order of the course, its title, objective and file, then
 // each of its concepts; then the annexes, which no domain holds, under a heading of their own; each
 // concept and annex with its title, objective, prerequisites, folder and files, and « L'essentiel »
-// verbatim, read through the spec's parser (the head of its concept.md); then the other course
-// files. It opens on the storyline, titled in the words of `phrases.storyline_title`, with its file
+// verbatim, read through the spec's parser (the head of its concept.md), its claim marks as
+// written (instruction claim-marks-read-as-written); then the other course files, sources.yaml
+// among them when the course has one. It opens on the storyline, titled in the words of `phrases.storyline_title`, with its file
 // and the text under its H1 verbatim, the world and the learner's role in it, so that the teacher
 // knows them before any read (instruction onboarding-closing-sentence, #801). Its words are
 // French, the spec's language, as the template's (decision language-policy).
@@ -256,8 +257,10 @@ const MAP = {
   annexes: 'Annexes',
   others: 'Autres fichiers du cours',
 };
+// the sources of the course, one file at its root (the form's `sources_file`), read on demand
+const SOURCES_FILE = (ctx.form && ctx.form.sources_file && ctx.form.sources_file.file) || 'sources.yaml';
 // the files of a concept folder the course has, each with what it holds
-const CONCEPT_FILES = [['concept.md', 'la matière'], ['sources.md', 'les sources']];
+const CONCEPT_FILES = [['concept.md', 'la matière']];
 // « L'essentiel » of a concept or an annex: the lines of the head of its concept.md (the form's
 // head, `headings.essentials`), as the parser reads them, verbatim
 function essentials(c) {
@@ -311,6 +314,7 @@ function courseMap() {
     `- \`course/plan.md\` : la posture, le public cible, les questions d'accueil et les partis pris`,
     `- \`course/${course.storyline}\` : le fil rouge`,
     `- \`course/${course.glossary}\` : le glossaire, un terme par notion`,
+    ...(ctx.exists(SOURCES_FILE) ? [`- \`course/${SOURCES_FILE}\` : les sources du cours, leurs extraits et qui tient chaque position, lues à la demande`] : []),
   ].join('\n');
   return {
     file: COURSE_MAP_FILE,

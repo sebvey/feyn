@@ -1,12 +1,3 @@
----
-stances:
-  consensus: []
-  school: []
-  course:
-    - text: "Un choix du cours."
-      refs: []
----
-
 # Annexe A1 : Le lexique
 
 ## L'essentiel
@@ -19,7 +10,7 @@ Le lexique rassemble les mots du cours.
 
 #### Leçon
 
-- **Matière** : Chaque mot du cours -> une définition courte.
+- **Matière** : Chaque mot du cours -> [une définition courte](cours:S2 "definition-courte").
 - **Idées fausses** :
   - **Un tableau** : « Un tableau »
     - **Racine** : la phrase se lit vite ainsi.

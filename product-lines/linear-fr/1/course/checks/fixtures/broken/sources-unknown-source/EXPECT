@@ -1,0 +1,2 @@
+check: sources
+message: cite S9, qui n'est pas une source de sources.yaml

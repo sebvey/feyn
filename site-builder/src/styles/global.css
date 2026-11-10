@@ -243,6 +243,8 @@ h1, h2, h3, h4 {
 .pastille.ecole::before { transform: rotate(45deg) scale(0.9); }
 .pastille.cours { background: var(--p-cours-bg); color: var(--p-cours-fg); border-color: var(--p-cours-line); }
 .pastille.cours::before { border-radius: 1px; }
+.pastille.fait { background: var(--surface); color: var(--ink-soft); border-color: var(--rule); }
+.pastille.fait::before { border-radius: 50%; background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
 
 /* ---------- Page head (domain, concept) ---------- */
 .concept-head { padding-block: 3rem 1.5rem; }
@@ -324,27 +326,13 @@ a.pn-carte:hover { background: var(--surface-2); color: var(--ink); }
 .col li:first-child { border-top: 0; padding-top: 0; }
 .col .auteur { display: block; font-family: var(--font-ui); font-size: 0.8rem; font-weight: 650; letter-spacing: 0.02em; margin-bottom: 0.2rem; }
 .col .refs, .refs { font-family: var(--font-ui); font-size: 0.78rem; color: var(--ink-soft); }
-.voisines { margin-top: 2.5rem; padding: 1.2rem 1.4rem; background: var(--surface); border-radius: 6px; max-width: var(--measure); }
-.voisines h3 { margin: 0 0 0.5rem; font-size: 1.1rem; }
-.voisines p { margin: 0 0 0.6em; font-size: 0.98rem; }
 
 /* ---------- Sources ---------- */
-.sources h3 { font-size: 1.3rem; margin: 2.5rem 0 0.9rem; }
-.sources h3:first-child { margin-top: 0; }
-.sources .note { font-family: var(--font-ui); font-size: 0.88rem; color: var(--ink-soft); max-width: var(--measure); margin: 0 0 1rem; }
-.aff { list-style: none; margin: 0; padding: 0; }
-.aff > li { padding: 1rem 0; border-top: 1px solid var(--rule); max-width: 52rem; }
-.aff > li:last-child { border-bottom: 1px solid var(--rule); }
-.aff .claim { margin: 0 0 0.3rem; font-weight: 600; font-size: 1rem; line-height: 1.5; }
-.aff .check { margin: 0; font-size: 0.95rem; line-height: 1.55; color: var(--ink-soft); }
-.aff .refs { margin: 0.35rem 0 0; }
 .reflist { list-style: none; padding: 0; margin: 0; max-width: 52rem; }
 .reflist li { display: grid; grid-template-columns: 3rem minmax(0, 1fr); overflow-wrap: anywhere; gap: 0.25rem 0.75rem; padding: 0.85rem 0; border-top: 1px solid var(--rule); font-size: 0.97rem; line-height: 1.5; scroll-margin-top: 5rem; }
 .reflist li:target { background: var(--surface); }
 .reflist .id { font-family: var(--font-ui); font-weight: 700; color: var(--ink-soft); }
 .reflist .meta { display: block; font-family: var(--font-ui); font-size: 0.8rem; color: var(--ink-soft); margin-top: 0.2rem; }
-.nonverifie { max-width: 46rem; padding-left: 1.2em; }
-.nonverifie li { margin-bottom: 0.7em; font-size: 0.98rem; }
 
 /* ---------- Sticky table of contents, and the domain map ---------- */
 .avec-sommaire { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 2.5rem; margin-top: 1.5rem; }
@@ -679,10 +667,5 @@ div.cdep .soon { font-size: 0.78rem; margin-left: 0.4rem; }
 .figure svg .muted { color: var(--sch-text); }
 .figure figcaption strong { display: block; color: var(--ink); font-weight: 650; margin-bottom: 0.15rem; }
 
-/* The stances, the neighbours and the sources, in the text column */
+/* The stances and the sources, in the text column */
 @media (min-width: 62rem) { .ecoles { gap: 1.25rem; } }
-.voisines h3 { font-family: var(--font-text); }
-.aff .where { margin: 0 0 0.3rem; font-family: var(--font-ui); font-size: 0.8rem; color: var(--ink-soft); }
-.nature-fait { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 650; letter-spacing: 0.02em; color: var(--ink-soft); vertical-align: 0.08em; }
-.sources > h3:first-child { margin-top: 0; }
-.bloc .sources h3 { font-size: 1.2rem; }

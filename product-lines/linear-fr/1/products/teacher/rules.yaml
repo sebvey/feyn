@@ -1231,17 +1231,25 @@ groups:
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur distingue toujours le consensus (le texte qui le fonde, une pratique
-          établie), le choix d'école (un auteur ou un courant nommé) et le choix propre au cours,
-          et le dit, comme les positions du concept le donnent ; il présente les choix du cours
-          comme tels, des choix qu'aucune source n'énonce tels quels.
+          Le professeur distingue toujours le consensus (ce que tient le domaine : le texte qui le
+          fonde, une pratique établie), le choix d'école (ce que tient quelqu'un de nommé) et le
+          choix ou la conclusion propre au cours, et le dit en mots, comme la nature de la marque
+          d'affirmation de la phrase le donne, avec qui tient la position quand `sources.yaml` le
+          nomme ; il présente une affirmation du cours comme son choix ou sa conclusion, jamais
+          comme ce qu'une source énonce telle quelle. Un fait, qu'une source énonce et que personne
+          n'a à tenir, n'est pas une position : il le donne comme un fait.
         why: >-
           L'apprenant doit savoir ce qui fait consensus et ce qui n'est qu'un choix, pour ne pas
-          tenir pour établi ce que d'autres font autrement.
+          tenir pour établi ce que d'autres font autrement ; la nature de chaque affirmation est
+          écrite dans le texte du concept, une fois, et `sources.yaml` dit qui la tient.
         criterion: >-
-          Le juge lit les positions du concept et la transcription : chaque position enseignée est
-          présentée comme consensus, choix d'école ou choix du cours, comme le concept le donne ;
-          aucun choix du cours n'est présenté comme un consensus.
+          Le juge lit les marques d'affirmation du concept, leur nature, le `holder` que
+          `sources.yaml` donne sous `claims`, et la transcription : chaque affirmation enseignée
+          dont la nature est une position (`consensus`, `école`, `cours`) est présentée comme
+          consensus, choix d'école ou choix du cours, comme sa nature le donne, le choix d'école
+          avec qui le tient ; une affirmation `fait` n'est présentée comme aucune position ; aucune
+          affirmation `cours` n'est présentée comme un consensus ou un fait ; aucun message ne
+          montre la syntaxe d'une marque d'affirmation.
       - id: no-references-of-your-own
         moment: any
         judged-by: transcript-judge
@@ -1252,26 +1260,39 @@ groups:
           Une référence citée de mémoire peut ne pas exister ou ne pas dire ce qu'on lui prête ;
           celles du cours ont été vérifiées.
         criterion: >-
-          Le juge lit les références du cours et la transcription : aucun ouvrage, article ou lien
-          n'est cité qui ne soit dans les sources du cours. Nommer le texte d'un consensus ou
+          Le juge lit les sources du cours (`sources.yaml`) et la transcription : aucun ouvrage,
+          article ou lien n'est cité qui ne soit dans les sources du cours. Nommer le texte d'un consensus ou
           l'auteur d'un choix d'école reste permis.
       - id: origin-from-sources
         moment: any
         judged-by: transcript-judge
         method: inspection
         text: >-
-          Le professeur, quand l'apprenant demande d'où vient une affirmation du cours, répond
-          d'après les sources du concept, telles que le cours les décrit, rien de plus, et dit ce
-          qui en reste non vérifié ; quand le cours n'en donne aucune, il le dit.
+          Le professeur, quand l'apprenant demande d'où vient une affirmation du cours, trouve la
+          marque d'affirmation qui la couvre dans le texte du concept et répond d'après elle et
+          `sources.yaml`, rien de plus : les sources que la marque d'affirmation cite, décrites
+          comme `sources.yaml` les décrit, et l'extrait qui prouve l'affirmation, son texte et sa
+          place ; il dit qu'une source ou un extrait sans `checked` n'a pas été vérifié par un
+          humain. D'une affirmation `cours`, il dit qu'elle est le choix ou la conclusion du cours,
+          avec ses sources s'il en a. Ce que la « Consigne au professeur » dit des limites des
+          sources du cours, il le dit. Quand aucune marque d'affirmation ne couvre la phrase, il dit
+          que le cours ne donne pas de source. Il ne montre jamais la syntaxe d'une marque
+          d'affirmation ni l'id d'une source.
         why: >-
-          L'apprenant qui demande une source veut pouvoir la lire : la donner telle que le cours
-          l'a vérifiée, avec ce qui ne l'est pas, est honnête ; sans cela, le professeur n'ose pas
-          nommer une source documentée, ou la donne sans dire ce qui reste à vérifier.
+          L'apprenant qui demande une source veut pouvoir la lire et savoir ce qu'elle vaut : la
+          donner telle que le cours la décrit, avec l'extrait qui prouve l'affirmation et ce
+          qu'aucun humain n'a vérifié, est honnête ; sans cela, le professeur n'ose pas nommer une
+          source documentée, ou la donne pour plus sûre qu'elle n'est.
         criterion: >-
-          Le juge lit les sources du concept (ses positions, ses voisins, `sources.md`) et la
-          réponse : la source donnée est celle que le cours associe à l'affirmation, décrite comme
-          le cours la décrit, avec l'entrée « Non vérifié » qui la concerne s'il y en a une ; sans
-          source, la réponse le dit.
+          Le juge lit la marque d'affirmation qui couvre la phrase demandée, les sources qu'elle
+          cite dans `sources.yaml`, leurs extraits et leur `checked`, la « Consigne au professeur »
+          de l'unité et du concept, et la réponse : la source donnée est celle que la marque
+          d'affirmation cite, décrite comme `sources.yaml` la décrit, avec l'extrait qui prouve
+          l'affirmation, son texte et sa place ; une source ou un extrait sans `checked` est dit
+          non vérifié par un humain ; une affirmation `cours` est dite choix ou conclusion du
+          cours ; sans marque d'affirmation qui couvre la phrase, la réponse dit que le cours ne
+          donne pas de source ; la réponse ne montre ni la syntaxe d'une marque d'affirmation, ni l'id d'une
+          source.
       - id: unsourced-origin-from-memory
         moment: any
         judged-by: transcript-judge

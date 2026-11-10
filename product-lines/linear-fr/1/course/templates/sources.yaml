@@ -1,0 +1,63 @@
+# Template of courses/<id>/sources.yaml, the sources of the course, at the root of the course
+# folder (course/README.md section 3.4; its structure: course/schemas/sources.schema.yaml; its
+# rules: the group « Les affirmations et leurs sources » of course/rules.yaml). Published: the site
+# lists every source and builds « Consensus et choix d'école » from the claim marks of the text; the
+# teacher reads it on demand, when asked where a claim comes from. The keys are English, the values
+# course text; a quote stays in the language of its source. How to use: copy to the course folder,
+# replace every <placeholder>, delete this comment (every line that opens with « # »); the file is
+# optional while no claim cites a source.
+# - A claim is marked in the published text of concept.md, once: `[the text claimed](consensus:S1,S2 "name")`,
+#   its nature (consensus, école, fait, cours), its sources, its name (lowercase letters, digits,
+#   hyphens), unique in its concept; here it is named `<concept number>/<name>`. A consensus, école
+#   or fait claim cites one source at least; a cours claim may cite some.
+# - `sources`: each source once in the course, its id `S<n>`, described by CSL fields as Pandoc
+#   writes them in YAML (`title`, and `URL` or `author`, required; `type` optional, taken from
+#   `kind`); `kind` (étude, revue de littérature, norme, enquête, article, billet, guide,
+#   dictionnaire, page de vente), `control` (pairs, éditorial, aucun) and `independence`
+#   (indépendante, intéressée), the words of the lexicon. Two sources never share a URL or a DOI.
+# - `quotes`: for each claim that cites the source, one quote at least whose `claim` names it: the
+#   shortest phrase of the source that proves it, word for word (`text`), and where it stands
+#   (`place`, required, in one of the four forms the rule quote-is-shortest-phrase gives).
+# - `checked`: the date a human verified the source, or the quote, written by that human only. An
+#   agent never writes it: delete each `checked` line when no human has verified. An edit of the
+#   source or the quote removes it. sources-coverage reports what is left unchecked.
+# - `claims`: who holds the stance of a claim (`holder`), not the author of the source: required for
+#   an école claim, allowed for a consensus claim, refused for a fait or cours claim.
+# - What no source confirms is not written apart: a claim the course concludes from its sources is
+#   cours, those sources in its claim mark; a weak source is said by its kind, control and independence;
+#   a guardrail goes in « Consigne au professeur ».
+sources:
+  S1:
+    title: "<title of the source>"
+    author: [{family: "<family name>", given: "<given name>"}]
+    container-title: "<the journal, magazine or site it belongs to>"
+    issued: <YYYY-MM-DD>
+    URL: <URL>
+    accessed: <YYYY-MM-DD>
+    kind: <kind>
+    control: <control>
+    independence: <independence>
+    checked: <YYYY-MM-DD a human verified the source>
+    quotes:
+      - claim: <n>/<claim-name>
+        text: "<the shortest phrase of the source that proves the claim, word for word>"
+        place: "<where it stands in the source>"
+        checked: <YYYY-MM-DD a human verified the quote>
+  S2:
+    title: "<title of another source>"
+    author: [{literal: "<an organisation>"}]
+    issued: <YYYY-MM-DD>
+    URL: <another URL>
+    accessed: <YYYY-MM-DD>
+    kind: <kind>
+    control: <control>
+    independence: <independence>
+    checked: <YYYY-MM-DD a human verified the source>
+    quotes:
+      - claim: <n>/<school-claim-name>
+        text: "<the shortest phrase of the source that proves the claim, word for word>"
+        place: "<where it stands in the source>"
+        checked: <YYYY-MM-DD a human verified the quote>
+claims:
+  <n>/<school-claim-name>:
+    holder: "<who holds the stance, not the author of the source>"

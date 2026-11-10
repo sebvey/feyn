@@ -1,12 +1,14 @@
 # The form of the files of a course of `linear-fr`, as data (decision `unit-is-the-content-unit`):
 # the concept file (the files of a concept folder, the parts of `concept.md`, its frontmatter, its
 # title, its head, its sections and units, its foot, the blocks of a unit and their fields, its
-# cases, the length of a teacher message), `sources.md` beside it and the course files (`course.yaml` as the
-# map, `logo.svg`, `plan.md`, the domain file, `storyline.md`, `glossary.md`, `CHANGELOG.md`): their parts,
-# their order, their presence, published or not, their readers.
+# cases, the length of a teacher message, the fields where a claim is marked) and the course files
+# (`course.yaml` as the map, `logo.svg`, `sources.yaml`, `plan.md`, the domain file, `storyline.md`,
+# `glossary.md`, `CHANGELOG.md`): their parts, their order, their presence, published or not, their
+# readers.
 # course/README.md sections 1 to 5 describe it, the rules of course/rules.yaml state it, the
 # checks read it here (concept-file, unit-contract, teacher-message-length, and the text checks and
-# unit-additions for their scope; course-yaml and course-files for the course files), and the
+# unit-additions for their scope; sources and sources-coverage for the fields that state claims and
+# for `sources.yaml`; course-yaml and course-files for the course files), and the
 # spec half of the site build, products/site/build/render-site, reads `published` here (products/site/build/README.md).
 #
 # This file names words by their key in course/lexicon.yaml and holds none: `heading: essentials`
@@ -26,24 +28,16 @@
 
 # The files of a concept folder, and nothing else.
 folder:
-  files: [concept.md, sources.md]
+  files: [concept.md]
   diagrams: "*.svg"
 
 concept_file:
   file: concept.md
   # the frontmatter, its keys and their form: the schema, which concept-file validates it against
   frontmatter: course/schemas/concept-frontmatter.schema.yaml
-  # the keys of the frontmatter, each published whole, an item with its author, its refs and its
-  # verified: the stances, under the heading `headings.stances`; the neighbours; the diagrams, each
-  # entry with its SVG file
+  # the keys of the frontmatter, metadata only, each published whole: the diagrams, each entry
+  # with its SVG file. A concept with no diagram has no frontmatter.
   frontmatter_fields:
-    stances:
-      heading: stances
-      published: true
-      readers: [site, teacher, learner]
-    neighbors:
-      published: true
-      readers: [site, teacher, learner]
     diagrams:
       published: true
       readers: [site, teacher, learner]
@@ -183,24 +177,18 @@ unit:
     line: 100
     max: 12
 
-# sources.md, beside concept.md in each concept folder (course/README.md section 3.4): its three ##
-# sections, in this order, each holding a table but the last (the check `sources` holds the order).
-# The site builds every row of « Affirmations » and « Références », never « Non vérifié ».
-sources:
-  file: sources.md
-  sections:
-    - heading: claims
-      presence: mandatory
-      published: true
-      readers: [site, teacher, learner]
-    - heading: references
-      presence: mandatory
-      published: true
-      readers: [site, teacher, learner]
-    - heading: unverified
-      presence: mandatory
-      published: false
-      readers: [teacher]
+# The claims of a concept file (course/README.md section 3.4): a claim is marked in the published
+# fields that state claims, and only there: the head, these blocks of the foot, these fields of a
+# unit and these parts of its misconceptions. A claim mark elsewhere in concept.md (a case, a
+# misconception's belief, a teacher note) fails the check `sources`: the cases of a unit are not
+# traced, their anchor is the storyline's and their expected answer restates the matter. The site
+# builds « Consensus et choix d'école » (`headings.stances`) from the claim marks of the concept.
+claims:
+  head: true
+  foot_blocks: [landmarks, deepening]
+  unit_fields: [matter]
+  misconception_parts: [root, correction]
+  heading: stances
 
 # The course files, beside the concept file: what spans the course, and nothing a unit or the map
 # already says.
@@ -214,6 +202,31 @@ course_map:
   schema: course/schemas/course.schema.yaml
   published: true
   readers: [site, teacher]
+
+# sources.yaml, the sources of the course, at the root of the course folder, optional while no
+# claim cites a source: each source once, by its id `S<n>`, described by CSL fields, its kind, its
+# control and its independence, with the quotes that prove the claims citing it; then who holds
+# the stance of a claim. Its keys and their form: the schema, which `sources` validates it against.
+# `csl_type`: the CSL item type (CSL 1.0.2, appendix « Types ») a source takes from its kind when
+# it has no `type` of its own, for the site, which formats it. The site renders on a concept page
+# the sources its claim marks cite, and the holders, never a quote nor a `checked`; the teacher
+# reads the file on demand.
+sources_file:
+  file: sources.yaml
+  schema: course/schemas/sources.schema.yaml
+  presence: optional
+  published: true
+  readers: [site, teacher]
+  csl_type:
+    study: article-journal
+    review: article-journal
+    standard: standard
+    survey: report
+    article: article-magazine
+    post: post-weblog
+    guide: report
+    dictionary: entry-dictionary
+    sales_page: webpage
 
 # logo.svg, the logo of the course, at the root of the course folder, its name fixed here: one
 # colour, currentColor, square, self-contained (course/README.md section 1); course-yaml checks it.

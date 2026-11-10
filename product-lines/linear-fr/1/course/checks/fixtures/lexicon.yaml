@@ -9,9 +9,6 @@ headings:
   landmarks: "Se vérifier"
   teacher_note: "Consigne au professeur"
   foot: "Clôture"
-  claims: "Affirmations"
-  references: "Références"
-  unverified: "Non vérifié"
   problem: "Le problème"
   crossing_case: "Un cas qui traverse le domaine"
   audience: "Public cible"
@@ -22,7 +19,9 @@ headings:
   unreleased: "Non publié"
 
 # The kind words that open the headings of a concept file (course/form.yaml): `# Concept 4 : <titre>`,
-# `# Annexe A1 : <titre>`, `## Section 4a : <titre>`, `### Unité 4a1 : <titre>`.
+# `# Annexe A1 : <titre>`, `## Section 4a : <titre>`, `### Unité 4a1 : <titre>`, `##### Cas : <titre>`;
+# `separator` stands between the id and the title, or between the kind word of a case and its
+# title (French typography, a space before « : »).
 block_kinds:
   concept: "Concept"
   annex: "Annexe"
@@ -31,17 +30,18 @@ block_kinds:
   case: "Cas"
   separator: " : "
 
-# Labels of the fields of a unit of a concept file, those of its cases among them
-# (course/form.yaml).
+# Labels of the fields of a unit of a concept file, those of its cases and of its misconceptions
+# among them (course/form.yaml); `teacher_note` is also the word of the unit's block « Consigne au
+# professeur », unlabelled.
 unit_fields:
   matter: "Matière"
+  misconceptions: "Idées fausses"
+  root: "Racine"
+  correction: "Correction"
   anchor: "Ancrage"
   question: "Question"
   expected_answer: "Réponse attendue"
   misconceptions_in_play: "Idées fausses en jeu"
-  misconceptions: "Idées fausses"
-  root: "Racine"
-  correction: "Correction"
   teacher_note: "Consigne au professeur"
 
 # The words of the two blocks of a unit that hold labelled fields (course/form.yaml, `unit`).
@@ -49,19 +49,17 @@ unit_blocks:
   lesson: "Leçon"
   cases: "Cas du fil rouge"
 
-# The stance markers of the published text: `[cours]`, `[école]`, `[consensus]`.
-markers:
+# The natures of a claim, the words of the destination of its claim mark in the published text,
+# `[le texte affirmé](consensus:S1 "nom")` (course/README.md 3.4; course/claims.js): a fact, which
+# a source states and no one has to hold, or one of the three stances, the field's consensus, a
+# school (someone named) and the course's own choice or conclusion.
+natures:
   consensus: "consensus"
   school: "école"
+  fact: "fait"
   course: "cours"
 
-# The nature of a claim of `sources.md` that is not a stance marker: what a source says with no
-# stance (a tool's default, a date, a figure). The other natures are the markers consensus,
-# school, course (course/README.md 3.4). Read by `sources` only: never a marker of the reader text.
-natures:
-  fact: "fait"
-
-# The words of a concept reference in reader text: « concept 4 », « concepts 5 et 7b »,
+# The words of a concept reference in the text of a course: « concept 4 », « concepts 5 et 7b »,
 # « annexe A2 » (course/README.md 3.5).
 concept_refs:
   concept: "concept"
@@ -69,11 +67,26 @@ concept_refs:
   and: "et"
   annex: "annexe"
 
-# The types of a reference of `sources.md`.
-source_types:
-  primary: "primaire"
-  secondary: "secondaire"
-  marketing: "marketing"
+# What describes a source of `sources.yaml` (course/README.md 3.4), three closed lists: its kind,
+# the form of the document; its control, the review it went through before publication; its
+# independence from what it says.
+source_kinds:
+  study: "étude"
+  review: "revue de littérature"
+  standard: "norme"
+  survey: "enquête"
+  article: "article"
+  post: "billet"
+  guide: "guide"
+  dictionary: "dictionnaire"
+  sales_page: "page de vente"
+source_controls:
+  peers: "pairs"
+  editorial: "éditorial"
+  none: "aucun"
+source_independence:
+  independent: "indépendante"
+  interested: "intéressée"
 
 # `rules`: what the teacher does, as a clause of a sentence (no final period). `banned`: the
 # characters course text never uses, the em-dash and the arrows (the ASCII `->`, `<-` and `=>` included).

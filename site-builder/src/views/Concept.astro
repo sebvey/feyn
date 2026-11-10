@@ -4,19 +4,20 @@
 // concept and its domain, or the annex; the title; the objective after its label; the
 // prerequisites, each a link to its concept); the sticky table of contents beside a text column
 // aligned left; the head of concept.md; each section and each unit in place (the Sous component);
-// the foot (its `landmarks` block in the Reflexe box); the stances in three columns, then the
-// neighbours; the sources; the previous and next cards in the reading order (an annex is out of
-// it, so has none). Every word comes from the document or from src/ui.ts.
+// the foot (its `landmarks` block in the Reflexe box); « Consensus et choix d'école », the claim
+// marks of the three stances in three columns; the sources its claim marks cite; the previous and
+// next cards in the reading order (an annex is out of it, so has none). Every word comes from the
+// document or from src/ui.ts.
 import Base from '../layouts/Base.astro';
 import Sommaire from '../components/Sommaire.astro';
 import Sous from '../components/Sous.astro';
 import Figure from '../components/Figure.astro';
 import Reflexe from '../components/Reflexe.astro';
 import Ecoles from '../components/Ecoles.astro';
-import Voisins from '../components/Voisins.astro';
 import Sources from '../components/Sources.astro';
 import PrevNext from '../components/PrevNext.astro';
 import { doc, words, md, mdInline, href, labelled, conceptName, domainName, conceptByNumber, around } from '../lib/site';
+import type { Source } from '../lib/site';
 import type { Concept } from '../lib/site';
 import { ui } from '../ui';
 interface Props { number: string }
@@ -34,15 +35,20 @@ const inUnit = (id: string) => diagrams.filter((d) => d.unit === id);
 const inSection = (id: string) => diagrams.filter((d) => d.unit === id && !unitIds.has(id));
 const loose = diagrams.filter((d) => !unitIds.has(d.unit) && !sectionIds.has(d.unit));
 
+// « Consensus et choix d'école », when a claim mark of the concept is a stance (a fact is none);
+// the sources its claim marks cite, in the order of their ids, those the document gives.
+const stances = c.claim_marks.some((k) => ['consensus', 'school', 'course'].includes(k.nature));
+const stancesHeading = words.course.headings.stances ?? '';
+const cited = new Set(c.claim_marks.flatMap((k) => k.sources));
+const sources: Source[] = (doc.sources ?? []).filter((s) => cited.has(s.id));
+
 // The parts of the page, each with its anchor: the table of contents lists them.
-const neighborsAlone = !c.stances && (c.neighbors?.length ?? 0) > 0;
 const toc = [
   ...(c.head ? [{ id: c.head.key, title: c.head.heading }] : []),
   ...c.sections.map((s) => ({ id: s.id, n: s.id, title: s.title })),
   ...(c.foot ? [{ id: 'foot', title: c.foot.heading }] : []),
-  ...(c.stances ? [{ id: 'stances', title: c.stances.heading }] : []),
-  ...(neighborsAlone ? [{ id: 'neighbors-part', title: words.site.page_headings?.neighbors ?? '' }] : []),
-  ...(c.sources?.length ? [{ id: 'sources', title: words.site.page_headings?.sources ?? '' }] : []),
+  ...(stances ? [{ id: 'stances', title: stancesHeading }] : []),
+  ...(sources.length ? [{ id: 'sources', title: words.site.page_headings?.sources ?? '' }] : []),
 ];
 ---
 <Base title={`${labelled(conceptName(c))}${c.title}`} nav="domains">
@@ -91,23 +97,17 @@ const toc = [
           </section>
         )}
 
-        {c.stances && (
+        {stances && (
           <section class="bloc" id="stances" aria-labelledby="stances-t">
-            <h2 id="stances-t">{c.stances.heading}</h2>
-            <Ecoles consensus={c.stances.consensus} school={c.stances.school} course={c.stances.course} />
-            {c.neighbors && c.neighbors.length > 0 && <Voisins items={c.neighbors} />}
-          </section>
-        )}
-        {neighborsAlone && (
-          <section class="bloc" id="neighbors-part">
-            <Voisins items={c.neighbors!} />
+            <h2 id="stances-t">{stancesHeading}</h2>
+            <Ecoles marks={c.claim_marks} />
           </section>
         )}
 
-        {c.sources && c.sources.length > 0 && (
+        {sources.length > 0 && (
           <section class="bloc" id="sources" aria-labelledby="sources-t">
             <h2 id="sources-t">{words.site.page_headings?.sources}</h2>
-            <Sources sections={c.sources} />
+            <Sources sources={sources} />
           </section>
         )}
 

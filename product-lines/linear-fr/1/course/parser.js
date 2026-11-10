@@ -268,12 +268,12 @@ function conceptParts(m, subs, word, form) {
       const body = raw.filter((l) => !md.headings([l]).length);
       let name = h.text.trim();
       let b = blockForms.find((x) => blockWord(x) === name);
-      // a heading that carries more than its word, a mark in parentheses: named, then read as its block
+      // a heading that carries more than its word, a parenthesis after it: named, then read as its block
       if (!b) {
         const bm = /^(.*?)\s*\(([^()]*)\)\s*$/.exec(name);
         const marked = bm && blockForms.find((x) => blockWord(x) === bm[1].trim());
         if (marked) {
-          problem(h.line, `${where}: block "#### ${h.text}" carries a mark: a block's heading is its word alone, "#### ${blockWord(marked)}"`);
+          problem(h.line, `${where}: block "#### ${h.text}" carries a parenthesis: a block's heading is its word alone, "#### ${blockWord(marked)}"`);
           b = marked;
           name = bm[1].trim();
         }

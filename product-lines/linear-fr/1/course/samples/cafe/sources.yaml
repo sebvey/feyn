@@ -1,0 +1,574 @@
+sources:
+  S1:
+    title: "Coffee Extraction & How It Helps Create The Perfect Cup"
+    author: [{family: Boydell, given: Hazel}]
+    container-title: Perfect Daily Grind
+    issued: 2018-11-22
+    URL: https://perfectdailygrind.com/2018/11/understanding-coffee-extraction-for-your-perfect-cup
+    accessed: 2026-11-06
+    kind: article
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: 0/extraction
+        text: "Extraction is simply the method by which we dissolve flavours and other components from roasted and ground coffee"
+        place: What Is Extraction?
+      - claim: 0/ordre-des-saveurs
+        text: "Fruity and acidic notes are extracted first, followed by sweetness and balance, and then finally bitterness"
+        place: How Does Extraction Affect Taste?
+      - claim: 0/sous-extraite
+        text: "will have a sour taste"
+        place: How Does Extraction Affect Taste?
+      - claim: 0/sur-extraite
+        text: "An over-extracted brew will taste bitter"
+        place: How Does Extraction Affect Taste?
+      - claim: 2/acidite-qui-pique
+        text: "Under-extracted coffee won’t have the sweetness and slight bitterness needed for balance, and will have a sour taste"
+        place: How Does Extraction Affect Taste?
+      - claim: 2/amertume
+        text: "An over-extracted brew will taste bitter"
+        place: How Does Extraction Affect Taste?
+      - claim: 2/sens-du-changement
+        text: "Try a slower brew or finer grind"
+        place: How To Control Extraction
+      - claim: 2/sens-du-changement
+        text: "Try a larger grind to slow down extraction or brew for a shorter amount of time"
+        place: How To Control Extraction
+      - claim: 2/se-refait
+        text: "When you have a method that works for you, try to replicate the variables as closely as possible each time"
+        place: Bed Depth
+      - claim: A1/piston-mouture-grosse
+        text: "A French press is a longer brew, so it’s common to use a coarser grind to slow extraction and avoid bitterness"
+        place: Variables That Influence Extraction
+      - claim: A1/percolation
+        text: "Pour over and batch brewing methods involve pouring water through a coffee bed"
+        place: Bed Depth
+      - claim: A1/trop-loin-amere
+        text: "An over-extracted brew will taste bitter"
+        place: How Does Extraction Affect Taste?
+      - claim: A1/expresso
+        text: "An espresso has a short brew time and uses pressure to force water through densely packed coffee. It’s suited to a finer grind size"
+        place: Variables That Influence Extraction
+  S2:
+    title: "Brew temperature, at fixed brew strength and extraction, has little impact on the sensory profile of drip brew coffee"
+    author: [{family: Batali, given: Mackenzie E.}, {family: Ristenpart, given: William D.}, {family: Guinard, given: Jean-Xavier}]
+    container-title: Scientific Reports
+    volume: 10
+    page: 16450
+    issued: 2020
+    URL: https://www.nature.com/articles/s41598-020-73341-4
+    accessed: 2026-11-06
+    kind: étude
+    control: pairs
+    independence: indépendante
+    quotes:
+      - claim: 0/extraction
+        text: "the mass fraction of soluble solids removed from the coffee grounds"
+        place: Introduction
+      - claim: 0/force-concentration
+        text: "the “brew strength,” which is the mass fraction of soluble solids in the brew"
+        place: Introduction
+      - claim: 0/forte-plus-amere
+        text: "generally more bitter and sour at higher TDS"
+        place: Introduction
+      - claim: 0/lockhart-1957
+        text: "Seminal work by Lockhart in 1957 2 related the quality of brewed coffee to two key metrics"
+        place: Introduction
+      - claim: 0/golden-cup
+        text: "is identified as the Specialty Coffee Association’s “Golden Cup Standard”"
+        place: Introduction
+      - claim: 0/deux-groupes
+        text: "the “ideal” box within the classic control chart is not necessarily ideal for everyone"
+        place: Discussion
+      - claim: 1/reglage
+        text: "Brew time, flow rate, dose (i.e., amount of ground coffee), and grind size were systematically varied to control extraction"
+        place: Results
+      - claim: 1/mouture-vitesse
+        text: "grind size were systematically varied to control extraction"
+        place: Results
+      - claim: 1/contact-plus-long
+        text: "higher PE in general is achieved by longer residence time"
+        place: Discussion
+      - claim: 1/chaude-plus-vite
+        text: "it is accepted that temperature impacts the solubility, volatility, and extraction kinetics of various coffee components"
+        place: Introduction
+      - claim: 1/chaude-plus-vite
+        text: "hotter water predictably increased TDS and PE"
+        place: Introduction
+      - claim: 1/87-93-pareil
+        text: "coffees brewed at temperatures as low as 87 °C were indistinguishable from those brewed at 93 °C"
+        place: Discussion
+      - claim: 1/87-93-pareil
+        text: "surprisingly the brew temperature had no appreciable impact"
+        place: résumé
+      - claim: 1/ou-arrive-l-extraction
+        text: "brew temperature should be considered as only one of several parameters that affect the extraction dynamics"
+        place: résumé
+      - claim: 1/ou-arrive-l-extraction
+        text: "the sensory profile is governed by differences in TDS and PE rather than the brew temperature"
+        place: résumé
+      - claim: 1/bouillante-plus-vite
+        text: "hotter water predictably increased TDS and PE"
+        place: Introduction
+      - claim: 1/ratio-fait-la-force
+        text: "linked via conservation of mass to the brew ratio of water to coffee grounds"
+        place: Introduction
+  S3:
+    title: "Coffee Extraction and How to Taste It"
+    author: [{literal: Barista Hustle}]
+    issued: 2017-01-30
+    URL: https://web.archive.org/web/20250115001821/https://www.baristahustle.com/coffee-extraction-and-how-to-taste-it/
+    accessed: 2026-11-06
+    kind: billet
+    control: aucun
+    independence: indépendante
+    quotes:
+      - claim: 0/dissous-fait-le-gout
+        text: "water dissolves a lot of coffee’s flavours"
+        place: Extraction is everything that the water takes from the coffee.
+      - claim: 0/sous-extraite
+        text: "It’s sour, lacking sweetness, weirdly salty and has a disappointingly quick finish"
+        place: Under-extracted Coffee
+      - claim: 0/sur-extraite
+        text: "It’s bitter, drying and hollow"
+        place: Over-extracted Coffee
+      - claim: 0/equilibree
+        text: "we always try to steer the coffee towards the middle; avoiding both over and under-extraction"
+        place: Extraction is everything that the water takes from the coffee.
+      - claim: 0/fonce-amer
+        text: "A darker style roast that has achieved dry distillation will have many more of these bitter chemicals"
+        place: Over-extracted Coffee
+      - claim: 1/moudre-surface
+        text: "It crushes the beans into a powder, exponentially increasing their surface area and allowing the water to do its work"
+        place: Extraction is everything that the water takes from the coffee.
+      - claim: 1/mouture-vitesse
+        text: "we have to increase the surface area of the coffee beans"
+        place: Extraction is everything that the water takes from the coffee.
+      - claim: 2/acidite-vivacite
+        text: "Acidity is the umbrella under which lies all sour/juicy/bright/tart things"
+        place: Sourness
+      - claim: 2/acidite-qui-pique
+        text: "I always define sourness as being negative. A sour flavour hits you quickly and aggressively"
+        place: Sourness
+      - claim: 2/amertume
+        text: "It’s bitter, drying and hollow"
+        place: Over-extracted Coffee
+  S4:
+    title: "Coffee Decoded: The Science of “Dialing-In”"
+    author: [{family: Giuliano, given: Peter}]
+    container-title: Specialty Coffee Association
+    URL: https://sca.coffee/sca-news/coffee-decoded-14-dialling-in
+    accessed: 2026-11-06
+    kind: article
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: 0/meme-cafe
+        text: "if you manipulate a coffee’s TDS and PE, you change its flavor in a predictable way"
+        place: page entière
+      - claim: 0/force-concentration
+        text: "These are different things: TDS is the amountof coffee solubles in water (how strong the coffee is)"
+        place: page entière
+      - claim: 0/sucre-et-amer
+        text: "coffee’s sweetness is maximized at low TDS and PE, while bitterness is maximized at high TDS and PE"
+        place: page entière
+      - claim: 1/reglage
+        text: "we adjust factors like dose, grind, and extraction level to optimize the flavor of a coffee brew"
+        place: page entière
+      - claim: 2/meme-cafe
+        text: "if you manipulate a coffee’s TDS and PE, you change its flavor in a predictable way"
+        place: page entière
+  S5:
+    title: "Towards a New Brewing Chart"
+    author: [{family: Frost, given: Scott}, {family: Batali, given: Mackenzie}, {family: Guinard, given: Jean-Xavier}, {family: Ristenpart, given: William D.}]
+    container-title: "25"
+    issue: 13
+    publisher: Specialty Coffee Association
+    URL: https://sca.coffee/sca-news/25/issue-13/towards-a-new-brewing-chart-xpj8t
+    accessed: 2026-11-06
+    kind: article
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: 0/sur-extraite
+        text: "to the right at high extraction we have “bitter” flavors"
+        place: page entière
+      - claim: 0/lockhart-1957
+        text: "Lockhart made a seminal contribution to coffee science with a paper in 1957"
+        place: page entière
+  S6:
+    title: "Coffee Decoded: What Makes Coffee Bitter?"
+    author: [{family: Giuliano, given: Peter}]
+    container-title: Specialty Coffee Association
+    URL: https://sca.coffee/sca-news/coffee-decoded-18-bitterness-in-coffee
+    accessed: 2026-11-06
+    kind: article
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: 0/fonce-amer
+        text: "One of the most significant sources of bitterness in coffee is roasting"
+        place: Roasting
+      - claim: 0/forte-plus-amere
+        text: "Coffees with high TDS tend to taste more bitter than coffees with low TDS"
+        place: Brewing
+      - claim: 2/amertume
+        text: "One of the most significant sources of bitterness in coffee is roasting"
+        place: Roasting
+      - claim: 2/forte-plus-amere
+        text: "Coffees with high TDS tend to taste more bitter than coffees with low TDS"
+        place: Brewing
+  S7:
+    title: "Coffee Standards"
+    author: [{literal: Specialty Coffee Association}]
+    version: révision 2018
+    issued: 2018
+    URL: https://web.archive.org/web/20240927072426/https://sca.coffee/s/Coffee-Standards-compressed.pdf
+    accessed: 2026-11-06
+    kind: norme
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: 0/golden-cup
+        text: "a brew strength, measured in Total Dissolved Solids, of 11.5 to 13.5 grams per liter"
+        place: 5.1 Golden Cup Standard
+      - claim: 0/golden-cup
+        text: "resulting from a solubles extraction yield of 18 to 22 percent"
+        place: 5.1 Golden Cup Standard
+      - claim: 1/55-g-par-kilo
+        text: "0.055 g coffee per 1 ml water"
+        place: 3.1 Coffee to Water Ratio for Cupping
+  S8:
+    title: "A new Coffee Brewing Control Chart relating sensory properties and consumer liking to brew strength, extraction yield, and brew ratio"
+    author: [{family: Guinard, given: Jean-Xavier}, {family: Frost, given: Scott}, {family: Batali, given: Mackenzie}, {family: Cotter, given: Andrew}, {family: Lim, given: Lik X.}, {family: Ristenpart, given: William D.}]
+    container-title: Journal of Food Science
+    volume: 88
+    issue: 5
+    issued: 2023
+    DOI: 10.1111/1750-3841.16531
+    URL: https://doi.org/10.1111/1750-3841.16531
+    accessed: 2026-11-06
+    kind: étude
+    control: pairs
+    independence: indépendante
+    quotes:
+      - claim: 0/diagramme-refait
+        text: "to generate new versions of the BCC"
+        place: résumé
+      - claim: 0/diagramme-refait
+        text: "sensory attributes and consumer preferences actually follow much more complicated trends than those indicated by the classic BCC"
+        place: résumé
+  S9:
+    title: "Consumer preferences for black coffee are spread over a wide range of brew strengths and extraction yields"
+    author: [{family: Cotter, given: Andrew R.}, {family: Batali, given: Mackenzie E.}, {family: Ristenpart, given: William D.}, {family: Guinard, given: Jean-Xavier}]
+    container-title: Journal of Food Science
+    volume: 86
+    issue: 1
+    issued: 2021
+    DOI: 10.1111/1750-3841.15561
+    URL: https://doi.org/10.1111/1750-3841.15561
+    accessed: 2026-11-06
+    kind: étude
+    control: pairs
+    independence: indépendante
+    quotes:
+      - claim: 0/deux-groupes
+        text: "Cluster analysis revealed two consumer segments"
+        place: résumé
+      - claim: 2/tasse-que-l-on-aime
+        text: "The Coffee Brewing Control Chart's \"ideal\" coffee should therefore be reconsidered to reflect consumer preference segmentation"
+        place: résumé
+      - claim: 2/deux-groupes
+        text: "Cluster analysis revealed two consumer segments whose preferences varied most strongly with TDS"
+        place: résumé
+      - claim: 2/deux-groupes
+        text: "Department of Food Science and Technology, University of California, One Shields Avenue, Davis"
+        place: résumé
+  S10:
+    type: standard
+    title: "SCA Standard 310-2021, Home Coffee Brewers: Specifications and Test Methods"
+    author: [{literal: Specialty Coffee Association}]
+    issued: 2021
+    URL: https://web.archive.org/web/20250108161720/https://sca.coffee/s/SCA_Standard_310-2021.pdf
+    accessed: 2026-11-06
+    kind: norme
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: 1/eau-90-96
+        text: "reach a temperature in the 90 to 96°C range"
+        place: 6.2 Brewing Temperature
+      - claim: 1/55-g-par-kilo
+        text: "a coffee/water ratio of 55 g/kg"
+        place: 6.7 Operating Manuals and Other Instructional Materials
+      - claim: A1/percolation
+        text: "designed to brew coffee by spraying or dripping hot water over a bed of coffee grounds and filtering the resulting brew under atmospheric pressure conditions"
+        place: 4. Terms and Definitions, Home coffee brewer
+      - claim: A1/reperes-du-filtre
+        text: "reach a temperature in the 90 to 96°C range"
+        place: 6.2 Brewing Temperature
+      - claim: A1/reperes-du-filtre
+        text: "a coffee/water ratio of 55 g/kg"
+        place: 6.7 Operating Manuals and Other Instructional Materials
+  S11:
+    title: "Sensory Lexicon, Unabridged Definition and References"
+    author: [{literal: World Coffee Research}]
+    version: "2.0"
+    issued: 2017
+    URL: https://worldcoffeeresearch.org/resources/sensory-lexicon
+    accessed: 2026-11-06
+    kind: dictionnaire
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: 2/corps
+        text: "The thick feel of the beverage as you press your tongue through it"
+        place: Mouthfeel, Thickness, p. 53
+      - claim: 2/corps
+        text: "The perception of robust flavor that is rounded with body"
+        place: Amplitude, Fullness, p. 51
+      - claim: 2/roue-des-aromes
+        text: "The WCR Sensory Lexicon is the basis for a revised Coffee Flavor Taster's Wheel"
+        place: "The Coffee Taster's Flavor Wheel"
+  S12:
+    title: "How to Use the Coffee Taster’s Flavor Wheel in Eight Steps"
+    author: [{literal: Specialty Coffee Association}]
+    URL: https://sca.coffee/sca-news/how-to-use-the-flavor-wheel-in-eight-steps-ab2hy
+    accessed: 2026-11-06
+    kind: guide
+    control: éditorial
+    independence: intéressée
+    quotes:
+      - claim: 2/roue-des-aromes
+        text: "The most general taste descriptors are near the center, and they get more specific as the tiers work outward"
+        place: Step 3
+      - claim: 2/roue-des-aromes
+        text: "they form a foundational common language for coffee tasters"
+        place: Step 7
+  S13:
+    title: "The Coffee Taster's Flavor Wheel - English"
+    author: [{literal: Specialty Coffee Association}]
+    URL: https://sca.coffee/store/p/the-coffee-tasters-flavor-wheel-poster-english-dkx89
+    accessed: 2026-11-06
+    kind: page de vente
+    control: aucun
+    independence: intéressée
+    quotes:
+      - claim: 2/roue-des-aromes
+        text: "Originally published in 1995"
+        place: page entière
+      - claim: 2/roue-des-aromes
+        text: "In 2016, this valuable resource was updated in collaboration with World Coffee Research (WCR)"
+        place: page entière
+  S14:
+    title: "Making Coffee at Home: What’s The Best Beginner Brewing Method?"
+    author: [{family: Guevara, given: Julio}]
+    container-title: Perfect Daily Grind
+    issued: 2017-11-22
+    URL: https://perfectdailygrind.com/2017/11/making-coffee-at-home-whats-the-best-beginner-brewing-method/
+    accessed: 2026-11-06
+    kind: article
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: 2/un-reglage-a-la-fois
+        text: "the key to improving your brewing is to play with one variable at a time"
+        place: Tips for Improving Your Brewing
+      - claim: 2/plusieurs-a-la-fois
+        text: "it is very important to change just one thing at a time! Not more! If you change too many things, you lose control"
+        place: Tips for Improving Your Brewing
+  S15:
+    title: "How Grind Size Can Help You Brew Better-Tasting Coffee"
+    author: [{family: Guerra, given: Gisselle}]
+    container-title: Perfect Daily Grind
+    issued: 2018-06-15
+    URL: https://perfectdailygrind.com/2018/06/how-grind-size-can-help-you-brew-better-tasting-coffee/
+    accessed: 2026-11-06
+    kind: article
+    control: éditorial
+    independence: intéressée
+    quotes:
+      - claim: 2/un-reglage-a-la-fois
+        text: "adjust the grind one setting at a time, keeping everything else the same"
+        place: Easy Ways to Improve Your Coffee Grinding
+      - claim: 2/un-reglage-a-la-fois
+        text: "Then, taste the coffee and take notes on it"
+        place: Easy Ways to Improve Your Coffee Grinding
+      - claim: 2/se-refait
+        text: "Make sure to write down the recipe you’re using"
+        place: Easy Ways to Improve Your Coffee Grinding
+  S16:
+    title: "cafetière à piston"
+    author: [{literal: Office québécois de la langue française}]
+    container-title: Grand dictionnaire terminologique
+    issued: 2005
+    URL: https://vitrinelinguistique.oqlf.gouv.qc.ca/fiche-gdt/fiche/8352971/cafetiere-a-piston
+    accessed: 2026-11-06
+    kind: dictionnaire
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: A1/piston
+        text: "un filtre que l'on abaisse après l'infusion du café, afin de presser le marc au fond du récipient pour le séparer du liquide"
+        place: Définition
+  S17:
+    title: "cafetière à pression"
+    author: [{literal: Office québécois de la langue française}]
+    container-title: Grand dictionnaire terminologique
+    issued: 2006
+    URL: https://vitrinelinguistique.oqlf.gouv.qc.ca/fiche-gdt/fiche/8357659/cafetiere-a-pression
+    accessed: 2026-11-06
+    kind: dictionnaire
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: A1/moka
+        text: "la pression de la vapeur fait remonter l'eau très chaude de la bouilloire par un tube central pour qu'elle puisse traverser le filtre"
+        place: Définition
+      - claim: A1/moka-3-bars
+        text: "La pression d'une cafetière à pression ne dépasse pas 3 bars"
+        place: Notes
+  S18:
+    title: "Defining the Ever-Changing Espresso"
+    author: [{family: Fasman, given: David}]
+    container-title: "25"
+    issue: 3
+    publisher: Specialty Coffee Association
+    URL: https://sca.coffee/sca-news/25-magazine/issue-3/defining-ever-changing-espresso-25-magazine-issue-3-zyx36
+    accessed: 2026-11-06
+    kind: article
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: A1/expresso
+        text: "forced at 9–10 atmospheres of pressure, and where the grind of the coffee is such that the brew time is 20–30 seconds"
+        place: page entière
+      - claim: A1/expresso-type
+        text: "The average shot of espresso starts with an 18–20 gram dose, has an output of 36.5 grams, is extracted in 25–30 seconds, at 9 bars of pressure"
+        place: What Does This All Mean?
+      - claim: A1/expresso-type
+        text: "the average barista uses a 1:2 brew ratio when extracting espresso"
+        place: What Does This All Mean?
+      - claim: A1/expresso-temperature
+        text: "clean water of 195°–205°F (90.5°–96.1°C)"
+        place: page entière
+      - claim: A1/expresso-temperature
+        text: "most responses fell in the classic range of 195°–205°F"
+        place: The Results
+  S19:
+    title: "Cafetière à expresso : bien choisir sa machine à expresso"
+    author: [{family: Bedel, given: Anne-Sophie}]
+    container-title: UFC-Que Choisir
+    issued: 2021-09-14
+    URL: https://www.quechoisir.org/guide-d-achat-cafetiere-a-expressos-n5525
+    accessed: 2026-11-06
+    kind: guide
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: A1/expresso-type
+        text: "La pression généralement considérée comme optimale pour un expresso est en effet de 9 bars"
+        place: Et la pression dans tout ça ?
+      - claim: A1/machine-a-grains
+        text: "une machine permettant de réaliser des cafés expressos avec un broyeur à gains"
+        place: La cafetière à broyeur
+      - claim: A1/machine-a-grains
+        text: "la saveur ainsi que l’odeur du café fraîchement moulu"
+        place: La cafetière à broyeur
+      - claim: A1/capsules
+        text: "elles fonctionnent avec des capsules de café prédosées"
+        place: Les cafetières à capsules
+  S20:
+    title: "Coffee Decoded: What is “freshly roasted” coffee?"
+    author: [{family: Giuliano, given: Peter}]
+    container-title: Specialty Coffee Association
+    URL: https://sca.coffee/sca-news/coffee-decoded-9-fresh-coffee
+    accessed: 2026-11-06
+    kind: article
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: A2/cafe-vieillit
+        text: "whole bean coffee can reasonably be considered “fresh” within about three weeks of roasting"
+        place: page entière
+      - claim: A2/duree-de-fraicheur
+        text: "whole bean coffee can reasonably be considered “fresh” within about three weeks of roasting"
+        place: page entière
+      - claim: A2/duree-de-fraicheur
+        text: "it might be considered “fresh” for about an hour after grinding"
+        place: page entière
+  S21:
+    title: "What is the Shelf Life of Roasted Coffee? A Literature Review on Coffee Staling"
+    author: [{family: Sage, given: Emma}]
+    container-title: Specialty Coffee Association
+    issued: 2012-02-15
+    URL: https://sca.coffee/sca-news/2012/02/15/what-is-the-shelf-life-of-roasted-coffee-a-literature-review-on-coffee-staling-bjcx7
+    accessed: 2026-11-06
+    kind: revue de littérature
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: A2/cafe-vieillit
+        text: "found that it slowed the reactions known to be a part of staling"
+        place: Temperature
+      - claim: A2/froid-ralentit
+        text: "found that it slowed the reactions known to be a part of staling"
+        place: Temperature
+  S22:
+    title: "Storage and shelf life"
+    author: [{literal: National Coffee Association USA}]
+    URL: https://www.aboutcoffee.org/beans/storage-and-shelf-life/
+    accessed: 2026-11-07
+    kind: guide
+    control: éditorial
+    independence: indépendante
+    quotes:
+      - claim: A2/humidite-et-odeurs
+        text: "coffee absorbs and retains moisture"
+        place: Freezing coffee beans
+      - claim: A2/humidite-et-odeurs
+        text: "as well as odors and tastes"
+        place: Freezing coffee beans
+      - claim: A2/humidite-et-odeurs
+        text: "from the air around it"
+        place: Freezing coffee beans
+      - claim: A2/humidite-et-odeurs
+        text: "condensation can build up in the refrigerator"
+        place: Freezing coffee beans
+      - claim: A2/garder-le-cafe
+        text: "Using an airtight container for coffee storage will help it stay fresher, longer"
+        place: "Ideal coffee bean storage conditions: airtight and cool"
+      - claim: A2/garder-le-cafe
+        text: "Store it in opaque containers"
+        place: "Ideal coffee bean storage conditions: airtight and cool"
+      - claim: A2/garder-le-cafe
+        text: "Keep it in a dark and cool location"
+        place: "Ideal coffee bean storage conditions: airtight and cool"
+      - claim: A2/garder-le-cafe
+        text: "Try to buy smaller batches more frequently"
+        place: "Ideal coffee bean storage conditions: airtight and cool"
+claims:
+  0/sous-extraite:
+    holder: "Les praticiens et la SCA"
+  0/sur-extraite:
+    holder: "Les praticiens et la SCA"
+  0/golden-cup:
+    holder: "La SCA, Golden Cup Standard"
+  0/diagramme-refait:
+    holder: "Guinard et al., UC Davis (2023), après Lockhart (1957)"
+  1/eau-90-96:
+    holder: "La SCA, norme 310-2021 des cafetières domestiques"
+  1/55-g-par-kilo:
+    holder: "La SCA, norme 310-2021 des cafetières domestiques"
+  1/87-93-pareil:
+    holder: "Batali, Ristenpart et Guinard, UC Davis (2020)"
+  1/ou-arrive-l-extraction:
+    holder: "Batali, Ristenpart et Guinard, UC Davis (2020)"
+  2/un-reglage-a-la-fois:
+    holder: "Des praticiens, cités par Perfect Daily Grind"
+  2/roue-des-aromes:
+    holder: "La SCA et World Coffee Research, la roue des arômes (1995, refaite en 2016)"
+  A1/expresso-type:
+    holder: "Les baristas sondés par la Barista Guild of America (SCA, 2017)"
+  A1/expresso-temperature:
+    holder: "Les baristas sondés par la Barista Guild of America (SCA, 2017)"

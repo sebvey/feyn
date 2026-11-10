@@ -2,9 +2,10 @@
 # (course/form.yaml, `published: true`), with the words and the URL scheme of the site, the contract
 # between this spec MAJOR and the site engine, which validates the document against this schema
 # before it lays out a page. A text is the course's Markdown as written (`markdown` below): no
-# course text is rewritten, its stance markers and concept references stay in it as written,
-# `concept_refs` naming what each reference points to. A part the form does not publish has no key:
-# no key holds « Consigne au professeur », « Accueil » nor « Non vérifié ».
+# course text is rewritten, its claim marks and concept references stay in it as written, a
+# concept's `claim_marks` and `concept_refs` naming what each points to. A part the form does not
+# publish has no key: no key holds « Consigne au professeur » nor « Accueil », and no source its
+# quotes nor its `checked`.
 $schema: https://json-schema.org/draft/2020-12/schema
 title: the published parts of a course, for its site
 type: object
@@ -103,6 +104,14 @@ properties:
         properties:
           table: { $ref: '#/$defs/table' }
           sections: { $ref: '#/$defs/tableSections' }
+  sources:
+    description: >-
+      the sources of sources.yaml, in the order of their ids, each its CSL fields as written, its CSL
+      type (its own, else the one its kind gives, `sources_file.csl_type` of course/form.yaml), its
+      kind, its control and its independence, words of course/lexicon.yaml; never its quotes nor its
+      `checked`. Empty when the course has no sources.yaml; no key when the form does not publish it
+    type: array
+    items: { $ref: '#/$defs/source' }
   release:
     description: the latest release of the course's CHANGELOG.md, null while it has none (the site then writes its own « version non publiée »); no key when the form does not publish it
     oneOf:
@@ -145,7 +154,7 @@ properties:
       course:
         description: of course/lexicon.yaml, the words the published parts carry, by group and key
         type: object
-        required: [headings, block_kinds, unit_blocks, unit_fields, markers]
+        required: [headings, block_kinds, unit_blocks, unit_fields, natures]
         additionalProperties: false
         properties:
           headings:
@@ -158,7 +167,9 @@ properties:
             $ref: '#/$defs/words'
             type: object
             propertyNames: { not: { enum: [teacher_note] } }
-          markers: { $ref: '#/$defs/words' }
+          natures:
+            description: the nature words of a claim mark, by their key (consensus, school, fact, course)
+            $ref: '#/$defs/words'
       site:
         description: products/site/lexicon.yaml, as written
         type: object
@@ -249,22 +260,77 @@ $defs:
           items:
             type: array
             items: { type: string }
-  item:
-    description: an item of the frontmatter (course/schemas/concept-frontmatter.schema.yaml), as written
+  sourceId:
+    type: string
+    pattern: '^S[1-9][0-9]*$'
+  cslName:
     type: object
-    required: [text, refs]
+    additionalProperties: false
+    minProperties: 1
     properties:
-      text: { $ref: '#/$defs/markdown' }
-      author: { type: string }
-      refs:
-        type: array
-        items: { type: string }
-      verified:
-        type: array
-        items: { type: string }
-  items:
+      family: { type: string }
+      given: { type: string }
+      literal: { type: string }
+  cslNames:
     type: array
-    items: { $ref: '#/$defs/item' }
+    items: { $ref: '#/$defs/cslName' }
+  source:
+    description: a source of sources.yaml (course/schemas/sources.schema.yaml), by its id, without its quotes nor its `checked`
+    type: object
+    required: [id, title, kind, control, independence]
+    additionalProperties: false
+    properties:
+      id: { $ref: '#/$defs/sourceId' }
+      type:
+        description: the CSL item type
+        type: string
+      title: { $ref: '#/$defs/line' }
+      author: { $ref: '#/$defs/cslNames' }
+      editor: { $ref: '#/$defs/cslNames' }
+      container-title: { type: string }
+      publisher: { type: string }
+      volume: { oneOf: [{ type: string }, { type: integer }] }
+      issue: { oneOf: [{ type: string }, { type: integer }] }
+      page: { oneOf: [{ type: string }, { type: integer }] }
+      number: { oneOf: [{ type: string }, { type: integer }] }
+      version: { oneOf: [{ type: string }, { type: integer }] }
+      issued: { oneOf: [{ type: string }, { type: integer }] }
+      URL: { type: string }
+      DOI: { type: string }
+      accessed: { type: string }
+      kind: { $ref: '#/$defs/line' }
+      control: { $ref: '#/$defs/line' }
+      independence: { $ref: '#/$defs/line' }
+  claimMark:
+    description: >-
+      a claim mark of the concept's published text (course/claims.js), in the order of the text
+    type: object
+    required: [url, nature, sources, name, text, anchor]
+    additionalProperties: false
+    properties:
+      url:
+        description: the link's destination as written (`consensus:S1,S2`), the one the engine renders the link by
+        type: string
+      nature:
+        description: the key of its nature in the group `natures` of course/lexicon.yaml
+        enum: [consensus, school, fact, course]
+      sources:
+        description: the ids of its sources, in the order written
+        type: array
+        items: { $ref: '#/$defs/sourceId' }
+      name:
+        description: the claim's name, the link's title; null when it has none
+        oneOf: [{ type: 'null' }, { $ref: '#/$defs/slug' }]
+      holder:
+        description: who holds the stance, `claims.<concept>/<name>.holder` of sources.yaml, when it gives one
+        $ref: '#/$defs/line'
+      text:
+        description: the plain text claimed
+        $ref: '#/$defs/line'
+      anchor:
+        description: the id of its place on the concept page, the misconception, the unit or the part of the concept file it stands in
+        type: string
+        pattern: '^[A-Za-z0-9_-]+$'
   case:
     type: object
     required: [title, supplementary]
@@ -342,7 +408,7 @@ $defs:
                 correction: { $ref: '#/$defs/markdown' }
   concept:
     type: object
-    required: [number, annex, slug, title, objective, prerequisites, domain, path]
+    required: [number, annex, slug, title, objective, prerequisites, domain, path, claim_marks]
     additionalProperties: false
     properties:
       number: { $ref: '#/$defs/number' }
@@ -387,17 +453,10 @@ $defs:
         properties:
           heading: { $ref: '#/$defs/line' }
           blocks: { $ref: '#/$defs/sections' }
-      stances:
-        description: the frontmatter's stances, under their heading
-        type: object
-        required: [heading, consensus, school, course]
-        additionalProperties: false
-        properties:
-          heading: { $ref: '#/$defs/line' }
-          consensus: { $ref: '#/$defs/items' }
-          school: { $ref: '#/$defs/items' }
-          course: { $ref: '#/$defs/items' }
-      neighbors: { $ref: '#/$defs/items' }
+      claim_marks:
+        description: the claim marks of its published text, in the order of concept.md
+        type: array
+        items: { $ref: '#/$defs/claimMark' }
       diagrams:
         type: array
         items:
@@ -417,6 +476,3 @@ $defs:
               description: the SVG file, as written
               type: string
               pattern: '<svg[\s>]'
-      sources:
-        description: the published ## sections of sources.md, each its table
-        $ref: '#/$defs/tableSections'

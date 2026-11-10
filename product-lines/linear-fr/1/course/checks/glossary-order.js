@@ -3,8 +3,9 @@
 // glossary-term-after-defining-concept, course/README.md section 5):
 // every use in a concept.md, in the parts of its body the learner reads (course/form.yaml, readers:
 // every field but the teacher note, the head and the foot but its teacher note) and in its
-// frontmatter, before the defining concept fails, unless its sentence carries a concept reference
-// to that concept. Each comma variant of the term cell is
+// frontmatter (the titles and captions of its diagrams), before the defining concept fails, unless
+// its sentence carries a concept reference to that concept. The text of a claim mark is read as
+// the rest of its sentence, its destination and its name left out. Each comma variant of the term cell is
 // matched, whole word, case ignored; a row whose term cell has a parenthesis (a sense
 // qualifier) is skipped.
 const directives = require('./directives');
@@ -19,7 +20,7 @@ const { fail } = directives.lib('common');
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 // A sentence ends at « . », « ? », « ! » or « … » (optionally followed by closing quotes,
-// brackets or emphasis marks) before a space or the end of its block; « : » and « ; » do not
+// brackets or emphasis delimiters) before a space or the end of its block; « : » and « ; » do not
 // end it. A sentence never crosses a block: a paragraph, a blockquote, a list item, a heading,
 // a table row (the last two are one line each).
 const END = /[.?!…](?:\s*[»"”)\]*_]+)?(?=\s|$)/gu;
@@ -28,7 +29,7 @@ const ONE_LINE = /^\s{0,3}(?:#|\|)/;
 const QUOTE = /^\s{0,3}>/;
 
 // what the reader does not read as words: inline code, an image (its title is read in the
-// frontmatter), a link target
+// frontmatter), a link target, a claim mark's destination and name among them
 const prep = (t) => mdlib.maskCode(t)
   .replace(/!\[[^\]]*\]\([^)]*\)/g, (m) => ' '.repeat(m.length))
   .replace(/\]\([^)]*\)/g, (m) => ']' + ' '.repeat(m.length - 1));
@@ -74,8 +75,7 @@ function bodySentences(body) {
   return out;
 }
 
-// the sentences of the frontmatter strings the site shows: the stances' and neighbours' item
-// texts, the diagrams' titles and captions
+// the sentences of the frontmatter strings the site shows: the diagrams' titles and captions
 function frontSentences(data) {
   const out = [];
   if (!data || typeof data !== 'object') return out;
@@ -85,9 +85,6 @@ function frontSentences(data) {
     }
   };
   const items = (list) => (Array.isArray(list) ? list : []);
-  const st = data.stances && typeof data.stances === 'object' ? data.stances : {};
-  for (const k of ['consensus', 'school', 'course']) for (const it of items(st[k])) add(it, 'text');
-  for (const it of items(data.neighbors)) add(it, 'text');
   for (const d of items(data.diagrams)) { add(d, 'title'); add(d, 'caption'); }
   return out;
 }

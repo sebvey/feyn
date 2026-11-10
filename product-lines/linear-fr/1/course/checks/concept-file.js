@@ -1,16 +1,16 @@
 'use strict';
 // The concept file and its folder, their `structure` part (course/README.md sections 3, 3.1 and
-// 3.2), from the form of course/form.yaml: the files of the folder; the frontmatter of concept.md
-// against course/schemas/concept-frontmatter.schema.yaml through Ajv2020, a failure mapped from
-// ajv's instance path to its line (`lineOfError` of lib/yaml-lines.js), then what the schema does
-// not say (`verified` parallel to `refs`, an item's text in inline Markdown); the title of
+// 3.2), from the form of course/form.yaml: the files of the folder; the frontmatter of concept.md,
+// when it has one (a concept with no diagram has none), against
+// course/schemas/concept-frontmatter.schema.yaml through Ajv2020, a failure mapped from ajv's
+// instance path to its line (`lineOfError` of lib/yaml-lines.js); the title of
 // concept.md, its one # heading, first, `# Concept <n> : <title>` with the title of course.yaml; the
 // parts of concept.md in the order of the form (head, sections, foot) and no other ## heading, no
 // ### in the head, the ### blocks of the foot in their order; the tree of the concept in its headings
 // (section and unit ids: form, order, uniqueness, one unit at least and nine at most per section;
 // the kind word and a title around each id). The
-// blocks of a unit, their fields and its cases are `unit-contract`'s, a `pedagogy` check; the form
-// of sources.md is `sources`'.
+// blocks of a unit, their fields and its cases are `unit-contract`'s, a `pedagogy` check; the claims
+// marked in its text and the course's sources.yaml are `sources`'.
 const fs = require('fs');
 const path = require('path');
 const directives = require('./directives');
@@ -19,7 +19,6 @@ const mdlib = directives.lib('md');
 const { fail } = directives.lib('common');
 
 const MAJOR = path.resolve(__dirname, '..', '..');
-const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
 // the frontmatter schema, compiled once; its path is the form's
 let validate = null;
@@ -30,22 +29,6 @@ function schema(form) {
     validate = new Ajv2020({ allErrors: true, logger: false }).compile(yaml.parse(fs.readFileSync(file, 'utf8')));
   }
   return validate;
-}
-
-// what the schema does not say of an item: its text in inline Markdown, `verified` parallel to `refs`
-function checkItems(list, label, file, out) {
-  if (!Array.isArray(list)) return;
-  list.forEach((it, i) => {
-    if (!isObj(it)) return;
-    const l = yaml.lineOf(list, i, 1);
-    if (typeof it.text === 'string' && /\]\(|<\/?[A-Za-z]/.test(it.text)) out.push(fail(file, yaml.lineOf(it, 'text', l), `${label}[${i}]: text is inline Markdown, bold and italics only (no link, no HTML)`));
-    if (!Array.isArray(it.refs)) return;
-    const v = it.verified;
-    const vl = yaml.lineOf(it, 'verified', l);
-    if (v !== undefined && it.refs.length === 0) out.push(fail(file, vl, `${label}[${i}]: an item with no refs has no verified`));
-    else if (Array.isArray(v) && v.length !== it.refs.length) out.push(fail(file, vl, `${label}[${i}]: verified must have one entry per reference of refs (${it.refs.length}), found ${v.length}`));
-    else if (v === undefined && it.refs.length) out.push(fail(file, l, `${label}[${i}]: verified must have one entry per reference of refs (${it.refs.length}), found 0`));
-  });
 }
 
 // matches the headings of a part of a file (its ## parts, or the ### blocks of its head or foot)
@@ -86,16 +69,11 @@ function checkConcept(ctx, c, out) {
   const cm = ctx.md(cf);
   if (cm) {
     if (cm.error) out.push(fail(cf, cm.error.line, cm.error.message));
-    else if (!cm.hasFront) out.push(fail(cf, 1, 'concept.md has no frontmatter'));
-    else {
+    else if (cm.hasFront) {
       const d = cm.data;
       const v = schema(form);
       if (!v(d)) {
         for (const e of v.errors) out.push(fail(cf, yaml.lineOfError(d, e), `frontmatter not valid against ${form.concept_file.frontmatter}: ${e.instancePath || '/'} ${e.message}${e.params && e.params.additionalProperty ? ` ("${e.params.additionalProperty}")` : ''}`));
-      }
-      if (isObj(d)) {
-        if (isObj(d.stances)) for (const k of ['consensus', 'school', 'course']) checkItems(d.stances[k], `stances.${k}`, cf, out);
-        checkItems(d.neighbors, 'neighbors', cf, out);
       }
     }
     const K = (k) => ctx.word('block_kinds', k) || k;
@@ -121,12 +99,7 @@ function checkConcept(ctx, c, out) {
     }
 
     // the parts, in the order of the form: the head, the sections, the foot
-    const top = mdlib.sections(cm.body, 2).sections;
-    // the stances live in the frontmatter only: the old body section is named, then left out of the order
-    for (const s of top.filter((x) => x.title === H('stances'))) {
-      out.push(fail(cf, s.line, `section « ${H('stances')} » is not a \`concept.md\` section: the stances and neighbours live in the frontmatter stances and neighbors only`));
-    }
-    const secs = top.filter((x) => x.title !== H('stances'));
+    const secs = mdlib.sections(cm.body, 2).sections;
     const part = (p) => ({ text: H(p.heading), mandatory: p.presence === 'mandatory', match: (s) => s.title === H(p.heading) });
     const subs1 = c.subs.filter((x) => x.level === 1);
     const exp = [part(HEAD)];

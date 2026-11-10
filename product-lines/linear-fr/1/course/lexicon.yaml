@@ -1,6 +1,7 @@
 # The lexicon of the course files of `linear-fr`: the one source of the words a program must
-# recognise in a course file (headings, block kinds, unit fields, unit blocks, markers,
-# natures, concept references, source types, typography), read by the checks, the teacher build and the site,
+# recognise in a course file (headings, block kinds, unit fields, unit blocks, natures, concept
+# references, the kinds, controls and independence of a source, typography), read by the checks,
+# the teacher build and the site,
 # none of which writes them again (course/README.md section 7;
 # decision `lexicon-not-language-pack`). The spec is French (`language: fr` in spec.yaml): the
 # values are course text, in French. The keys are those `lists.lexicons.course` of spec.yaml
@@ -17,9 +18,6 @@ headings:
   landmarks: "Se vérifier"
   teacher_note: "Consigne au professeur"
   foot: "Clôture"
-  claims: "Affirmations"
-  references: "Références"
-  unverified: "Non vérifié"
   problem: "Le problème"
   crossing_case: "Un cas qui traverse le domaine"
   audience: "Public cible"
@@ -60,17 +58,15 @@ unit_blocks:
   lesson: "Leçon"
   cases: "Cas du fil rouge"
 
-# The stance markers of the published text: `[cours]`, `[école]`, `[consensus]`.
-markers:
+# The natures of a claim, the words of the destination of its claim mark in the published text,
+# `[le texte affirmé](consensus:S1 "nom")` (course/README.md 3.4; course/claims.js): a fact, which
+# a source states and no one has to hold, or one of the three stances, the field's consensus, a
+# school (someone named) and the course's own choice or conclusion.
+natures:
   consensus: "consensus"
   school: "école"
-  course: "cours"
-
-# The nature of a claim of `sources.md` that is not a stance marker: what a source says with no
-# stance (a tool's default, a date, a figure). The other natures are the markers consensus,
-# school, course (course/README.md 3.4). Read by `sources` only: never a marker of the published text.
-natures:
   fact: "fait"
+  course: "cours"
 
 # The words of a concept reference in the text of a course: « concept 4 », « concepts 5 et 7b »,
 # « annexe A2 » (course/README.md 3.5).
@@ -80,11 +76,26 @@ concept_refs:
   and: "et"
   annex: "annexe"
 
-# The types of a reference of `sources.md`.
-source_types:
-  primary: "primaire"
-  secondary: "secondaire"
-  marketing: "marketing"
+# What describes a source of `sources.yaml` (course/README.md 3.4), three closed lists: its kind,
+# the form of the document; its control, the review it went through before publication; its
+# independence from what it says.
+source_kinds:
+  study: "étude"
+  review: "revue de littérature"
+  standard: "norme"
+  survey: "enquête"
+  article: "article"
+  post: "billet"
+  guide: "guide"
+  dictionary: "dictionnaire"
+  sales_page: "page de vente"
+source_controls:
+  peers: "pairs"
+  editorial: "éditorial"
+  none: "aucun"
+source_independence:
+  independent: "indépendante"
+  interested: "intéressée"
 
 # `rules`: what the teacher does, as a clause of a sentence (no final period). `banned`: the
 # characters course text never uses, the em-dash and the arrows (the ASCII `->`, `<-` and `=>` included).

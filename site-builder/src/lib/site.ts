@@ -29,19 +29,33 @@ export interface Unit {
   blocks: { lesson?: { matter?: string }; cases?: Case[]; misconceptions?: Misconception[] };
 }
 export interface ConceptSection { id: string; title: string; units: Unit[] }
-export interface Item { text: string; author?: string; refs: string[]; verified?: string[] }
+/**
+ * A claim mark of a concept's published text, as render-site read it through its spec: `url` the
+ * link's destination as written, by which the engine renders the link; `nature` its key
+ * (`consensus`, `school`, `fact`, `course`); `holder` who holds its stance, when its sources give one;
+ * `text` the plain text claimed; `anchor` the id of its place on the page.
+ */
+export interface ClaimMark { url: string; nature: string; sources: string[]; name: string | null; holder?: string; text: string; anchor: string }
+/** A CSL name: a person (`family`, `given`) or an organisation (`literal`). */
+export interface CslName { family?: string; given?: string; literal?: string }
+/** A source of the course, by its id: its CSL fields, its CSL `type`, its kind, its control and its independence. */
+export interface Source {
+  id: string; type?: string; title: string; author?: CslName[]; editor?: CslName[];
+  'container-title'?: string; publisher?: string; volume?: string | number; issue?: string | number;
+  page?: string | number; number?: string | number; version?: string | number; issued?: string | number;
+  URL?: string; DOI?: string; accessed?: string;
+  kind: string; control: string; independence: string;
+}
 export interface Diagram { file: string; title: string; caption: string; unit: string; anchor: string; svg: string }
-export interface Table { key: string; heading: string; header: string[]; rows: string[][] }
 export interface Concept {
   number: string; annex: boolean; slug: string; title: string; objective: string;
   prerequisites: string[]; duration_min?: number; domain: number | null; path: string;
   head?: Section;
   sections: ConceptSection[];
   foot?: { heading: string; blocks: Section[] };
-  stances?: { heading: string; consensus: Item[]; school: Item[]; course: Item[] };
-  neighbors?: Item[];
   diagrams?: Diagram[];
-  sources?: Table[];
+  /** The claim marks of its published text, in the order of its concept file. */
+  claim_marks: ClaimMark[];
 }
 export interface ConceptRef { text: string; targets: { id: string; concept: string; path: string; anchor: string | null }[] }
 export interface Storyline {
@@ -64,6 +78,8 @@ export interface Doc {
   concepts: Concept[];
   storyline: Storyline | null;
   glossary: Glossary | null;
+  /** The sources of the course, in the order of their ids; absent when its spec does not publish them. */
+  sources?: Source[];
   /** The latest release of the course: null while it has none, absent when its spec does not publish it. */
   release?: { version: string; date: string } | null;
   concept_refs: ConceptRef[];
@@ -116,7 +132,7 @@ export const hasPage = (key: string) =>
   key in pages && (key === 'storyline' ? !!doc.storyline : key === 'glossary' ? !!doc.glossary : true);
 
 // ---- Markdown: CommonMark, rendered as written (no raw HTML), the concept references linked, the
-// stance markers as badges
+// claim marks rendered
 const refs = [...doc.concept_refs].sort((a, b) => b.text.length - a.text.length);
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const refPattern = refs.length
@@ -127,7 +143,7 @@ const refTarget = new Map(refs.map((r) => {
   return [r.text, t ? href(t.path) + (t.anchor ? `#${t.anchor}` : '') : null];
 }));
 
-interface MdNode { type: string; value?: string; url?: string; children?: MdNode[] }
+interface MdNode { type: string; value?: string; url?: string; children?: MdNode[]; data?: Record<string, unknown> }
 
 /** A remark plugin: each concept reference of a text (`concept_refs`) becomes a link to its page. */
 function remarkConceptRefs() {
@@ -156,29 +172,73 @@ function remarkConceptRefs() {
   };
 }
 
-const processor = unified().use(remarkParse).use(remarkConceptRefs).use(remarkRehype).use(rehypeStringify);
-
-// ---- the stance markers of a text (`[cours]`, the course lexicon's `markers`), as badges
-/** The class of a badge by its marker key, the old site's names (`.pastille.ecole`). */
-const badgeClass: Record<string, string> = { consensus: 'consensus', school: 'ecole', course: 'cours' };
-const markerKey = new Map(Object.entries(words.course.markers ?? {}).map(([k, w]) => [w, k]));
-const markerPattern = markerKey.size
-  ? new RegExp(`\\[(${[...markerKey.keys()].map(escapeRe).join('|')})\\]`, 'gu')
-  : null;
+// ---- the claim marks. The engine holds no grammar of a claim mark: render-site read them through
+// its spec and gives each concept's (`claim_marks`), each by its link's destination as written
+// (`url`); a link whose destination is one of them is rendered as a claim mark, any other link
+// stays a link.
+/** The class of a badge by its nature key, the old site's names (`.pastille.ecole`). */
+const badgeClass: Record<string, string> = { consensus: 'consensus', school: 'ecole', fact: 'fait', course: 'cours' };
 const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-/** The badge of a stance, by its marker key (`consensus`, `school`, `course`) and the word it shows; out of the search index. */
+/** The badge of a nature, by its key (`consensus`, `school`, `fact`, `course`) and the word it shows; out of the search index. */
 export const badge = (key: string, word: string) =>
   `<span class="pastille ${badgeClass[key] ?? key}" data-pagefind-ignore>${escapeHtml(word)}</span>`;
 
-/** The marker key of a word of the course lexicon's `markers` (« cours » is `course`), if it is one. */
-export const markerOf = (word: string) => markerKey.get(word);
+/** The word of a nature by its key, the course lexicon's `natures` (`school` is « école »). */
+export const natureWord = (key: string) => words.course.natures?.[key] ?? key;
 
-/** Each stance marker of an HTML text becomes its badge, the marker's word in it. */
-const badges = (html: string) => (markerPattern ? html.replace(markerPattern, (_m, w: string) => badge(markerKey.get(w)!, w)) : html);
+/** The sources of the course by their id; a claim mark links only to those the document gives. */
+export const sourceById = new Map((doc.sources ?? []).map((s) => [s.id, s]));
 
-/** A Markdown text of the course as HTML: its concept references linked, its stance markers as badges. */
-export const md = (text: string) => badges(String(processor.processSync(text)));
+/** The anchor of a source in the « Sources » of a concept page, which its claim marks link to. */
+export const sourceAnchor = (id: string) => `source-${id}`;
+
+/** The claim marks of the document by their link's destination, which says their nature and their sources. */
+const claimMarkByUrl = new Map(doc.concepts.flatMap((c) => c.claim_marks.map((k) => [k.url, k] as const)));
+
+/** An element of the page written as an mdast node, which remark-rehype turns into that element. */
+const element = (tagName: string, properties: Record<string, unknown>, children: MdNode[]): MdNode =>
+  ({ type: 'claimMarkPart', data: { hName: tagName, hProperties: properties }, children });
+
+/** The links of a claim mark to its sources ([S1] [S2]), each to its line of the page's « Sources »; out of the search index. */
+function sourceLinks(ids: string[]): MdNode[] {
+  const known = ids.filter((id) => sourceById.has(id));
+  if (!known.length) return [];
+  const links = known.flatMap((id, i): MdNode[] => [
+    ...(i > 0 ? [{ type: 'text', value: ' ' }] : []),
+    { type: 'link', url: `#${sourceAnchor(id)}`, children: [{ type: 'text', value: `[${id}]` }] },
+  ]);
+  return [{ type: 'text', value: ' ' }, element('span', { className: ['refs'], dataPagefindIgnore: '' }, links)];
+}
+
+/** A remark plugin: each claim mark becomes its text, the badge of its nature and its links to its sources. */
+function remarkClaimMarks() {
+  return (tree: MdNode) => {
+    const walk = (node: MdNode) => {
+      if (!node.children) return;
+      node.children = node.children.map((child): MdNode => {
+        const k = child.type === 'link' && child.url !== undefined ? claimMarkByUrl.get(child.url) : undefined;
+        if (!k) {
+          walk(child);
+          return child;
+        }
+        const cls = badgeClass[k.nature] ?? k.nature;
+        return element('span', { className: ['affirmation', cls] }, [
+          ...(child.children ?? []),
+          { type: 'text', value: ' ' },
+          element('span', { className: ['pastille', cls], dataPagefindIgnore: '' }, [{ type: 'text', value: natureWord(k.nature) }]),
+          ...sourceLinks(k.sources),
+        ]);
+      });
+    };
+    walk(tree);
+  };
+}
+
+const processor = unified().use(remarkParse).use(remarkClaimMarks).use(remarkConceptRefs).use(remarkRehype).use(rehypeStringify);
+
+/** A Markdown text of the course as HTML: its concept references linked, its claim marks rendered. */
+export const md = (text: string) => String(processor.processSync(text));
 
 /**
  * A Markdown text after its label (a case's question, its expected answer): the label goes into the

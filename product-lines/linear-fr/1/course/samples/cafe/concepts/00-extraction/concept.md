@@ -1,29 +1,4 @@
 ---
-stances:
-  consensus:
-    - author: "Les praticiens et la SCA"
-      text: "L'extraction fait le goût de la tasse : sous-extraite, elle est acide et courte en bouche ; sur-extraite, amère et sèche."
-      refs: [S2, S4]
-      verified: ["« It’s sour, lacking sweetness, weirdly salty and has a disappointingly quick finish » (Under-extracted Coffee) ; « It’s bitter, drying and hollow » (Over-extracted Coffee)", "« To the left at low extraction we have “under-developed” flavors (which are usually interpreted as sour or grassy), to the right at high extraction we have “bitter” flavors » (paragraphe sur le diagramme de Lockhart)"]
-    - author: "La SCA, Golden Cup Standard"
-      text: "La force de la tasse et son extraction sont deux mesures distinctes, et la profession vise une zone de chacune."
-      refs: [S1, S5]
-      verified: ["« a brew strength, measured in Total Dissolved Solids, of 11.5 to 13.5 grams per liter » ; « resulting from a solubles extraction yield of 18 to 22 percent » (5.1 Golden Cup Standard)", "« These are different things » (paragraphe sur Lockhart)"]
-  school:
-    - author: "Guinard et al., UC Davis (2023), après Lockhart (1957)"
-      text: "Le diagramme de Lockhart, des années 1950, place le goût d'une tasse selon sa force et son extraction ; l'équipe de UC Davis l'a refait à partir de dégustations, et y trouve des tendances plus complexes que ses zones."
-      refs: [S7, S4]
-      verified: ["« The classic Coffee Brewing Control Chart (BCC) was originally developed in the 1950s » ; « sensory attributes and consumer preferences actually follow much more complicated trends than those indicated by the classic BCC » (résumé)", "« Lockhart’s work culminated in the classic “Coffee Brewing Control Chart” » (paragraphe sur le diagramme de Lockhart)"]
-  course:
-    - text: "Le cours juge l'extraction au goût seulement : ni mesure de la force, ni réfractomètre, ni pourcentage d'extraction."
-      refs: []
-neighbors:
-  - text: "La **force** : la concentration de la tasse. Une tasse forte n'est pas pour autant sur-extraite."
-    refs: [S5]
-    verified: ["« TDS is the amountof coffee solubles in water (how strong the coffee is), and PE is the amount of coffee solubles extracted from a given amount of coffee grounds » (paragraphe sur Lockhart)"]
-  - text: "Le goût amer d'un café torréfié foncé : il vient de la torréfaction, pas de l'extraction."
-    refs: [S6]
-    verified: ["« One of the most significant sources of bitterness in coffee is roasting » (Roasting)"]
 diagrams:
   - file: extraction-et-force.svg
     title: "L'extraction et la force, deux axes de la tasse"
@@ -35,7 +10,7 @@ diagrams:
 
 ## L'essentiel
 
-L'**extraction** est ce que l'eau dissout du café moulu pendant l'infusion : c'est elle qui fait le goût de la tasse. Quand l'eau prend trop peu, la tasse est sous-extraite : acide, creuse, vite disparue. Quand elle prend trop, la tasse est sur-extraite : amère et sèche en bouche. La **force** est autre chose : la concentration de la tasse. Savoir dire, au goût, de quel côté penche une tasse ratée est le point de départ pour la corriger.
+L'**extraction** est ce que l'eau dissout du café moulu pendant l'infusion : c'est elle qui fait le goût de la tasse. Quand l'eau prend trop peu, la tasse est sous-extraite : acide, sans sucré, vite disparue. Quand elle prend trop, la tasse est sur-extraite : amère et sèche en bouche. La **force** est autre chose : la concentration de la tasse. Savoir dire, au goût, de quel côté penche une tasse ratée est le point de départ pour la corriger.
 
 ## Section 0a : Ce que l'eau prend au café
 
@@ -43,7 +18,7 @@ L'**extraction** est ce que l'eau dissout du café moulu pendant l'infusion : c'
 
 #### Leçon
 
-- **Matière** : Faire un café, c'est laisser l'eau dissoudre une partie du café moulu : c'est l'**extraction**, et ce que l'eau a dissous fait le goût de la tasse. Tout ne se dissout pas au même rythme : les notes fruitées et acides partent d'abord, puis le sucré, puis l'amer. Selon jusqu'où l'eau est allée, le même café donne donc des tasses de goûts différents.
+- **Matière** : Faire un café, c'est [laisser l'eau dissoudre une partie du café moulu](consensus:S1,S2 "extraction") : c'est l'**extraction**, et [ce que l'eau a dissous fait le goût de la tasse](consensus:S3 "dissous-fait-le-gout"). Tout ne se dissout pas au même rythme : [les notes fruitées et acides partent d'abord, puis le sucré, puis l'amer](fait:S1 "ordre-des-saveurs"). Selon jusqu'où l'eau est allée, [le même café donne donc des tasses de goûts différents](consensus:S4 "meme-cafe").
 - **Idées fausses** :
   - **Le café a changé** : « Si le goût change, c'est que le café a changé »
     - **Racine** : d'habitude, le goût d'une boisson vient de ce que l'on y met : changer de thé change le goût du thé, et le paquet est ce que l'on pense d'abord à accuser.
@@ -63,13 +38,13 @@ L'**extraction** est ce que l'eau dissout du café moulu pendant l'infusion : c'
 
 #### Consigne au professeur
 
-L'unité n'enseigne pas ce qui fait varier l'extraction (le moulin, l'eau, le temps) : c'est le concept 1. Ici, il suffit que quelque chose dans la façon de faire ait changé ce que l'eau a pris.
+L'unité n'enseigne pas ce qui fait varier l'extraction (le moulin, l'eau, le temps) : c'est le concept 1. Ici, il suffit que quelque chose dans la façon de faire ait changé ce que l'eau a pris. L'ordre des saveurs se dit « d'abord, puis » : aucune source du cours n'en donne une durée ni un chiffre.
 
 ### Unité 0a2 : Trop peu, ou trop
 
 #### Leçon
 
-- **Matière** : Quand l'eau a pris trop peu au café, c'est la **sous-extraction** : la tasse est acide, d'un acide qui pique, sans sucré, creuse, et sa finale est courte, le goût disparaît aussitôt avalé. Quand l'eau a pris trop, c'est la **sur-extraction** : la tasse est amère et sèche en bouche, comme un thé trop infusé, et creuse elle aussi. Entre les deux, la tasse est équilibrée. Un goût amer ne suffit pas à dire sur-extraite : un café torréfié foncé est amer même bien extrait.
+- **Matière** : Quand l'eau a pris trop peu au café, c'est la **sous-extraction** : [la tasse est acide, d'un acide qui pique, sans sucré, et sa finale est courte, le goût disparaît aussitôt avalé](consensus:S3,S1 "sous-extraite"). Quand l'eau a pris trop, c'est la **sur-extraction** : [la tasse est amère, sèche en bouche et creuse](consensus:S3,S1,S5 "sur-extraite"), comme un thé trop infusé. [Entre les deux, la tasse est équilibrée](consensus:S3 "equilibree"). Un goût amer ne suffit pas à dire sur-extraite : [un café torréfié foncé est amer même bien extrait](cours:S6,S3 "fonce-amer").
 - **Idées fausses** :
   - **Goût et force** : « Un goût marqué, piquant ou amer, dit une tasse trop forte »
     - **Racine** : une tasse plus concentrée a un goût plus marqué, et le piquant comme l'amer semblent « en trop ».
@@ -105,7 +80,7 @@ L'unité n'enseigne pas ce qui fait varier l'extraction (le moulin, l'eau, le te
 
 #### Leçon
 
-- **Matière** : La **force** d'une tasse est sa concentration : ce qu'elle a de café dissous pour son volume d'eau. Elle ne dit pas ce que l'eau a pris au café, qui est l'extraction : une tasse peut être forte et bien extraite, légère et sur-extraite. Plus une tasse est forte, plus l'amer et l'acide s'y goûtent. Allonger une tasse d'eau baisse sa force, pas son extraction : ce que l'eau a pris au café est déjà pris. Pour juger l'extraction, on cherche donc le genre de goût, acide et court ou amer et sec, plutôt que son intensité. [cours]
+- **Matière** : La **force** d'une tasse est [sa concentration : ce qu'elle a de café dissous pour son volume d'eau](consensus:S4,S2 "force-concentration"). Elle ne dit pas ce que l'eau a pris au café, qui est l'extraction : une tasse peut être forte et bien extraite, légère et sur-extraite. [Plus une tasse est forte, plus l'amer et l'acide s'y goûtent](fait:S6,S2 "forte-plus-amere"). [Allonger une tasse d'eau baisse sa force, pas son extraction](cours) : ce que l'eau a pris au café est déjà pris. Pour juger l'extraction, [on cherche donc le genre de goût, acide et court ou amer et sec, plutôt que son intensité](cours).
 - **Idées fausses** :
   - **Forte, donc trop extraite** : « Une tasse forte est une tasse sur-extraite »
     - **Racine** : une tasse forte et une tasse sur-extraite ont toutes deux un goût marqué, et l'amer se goûte davantage dans une tasse forte.
@@ -113,8 +88,8 @@ L'unité n'enseigne pas ce qui fait varier l'extraction (le moulin, l'eau, le te
   - **L'eau qui rattrape** : « Un peu d'eau chaude rattrape une tasse sur-extraite »
     - **Racine** : allonger une tasse adoucit bien son goût : moins forte, l'amer s'y goûte moins.
     - **Correction** : l'eau ajoutée baisse la force, pas l'extraction : ce que l'eau a pris au café est déjà pris ; l'amer et le sec restent, en plus léger.
-  - **Légère, donc creuse** : « Une tasse légère est une tasse sous-extraite »
-    - **Racine** : « légère » et « creuse » semblent dire la même chose : une tasse à qui il manque du café.
+  - **Légère, donc sous-extraite** : « Une tasse légère est une tasse sous-extraite »
+    - **Racine** : « légère » et « sous-extraite » semblent dire la même chose : une tasse à qui il manque du café.
     - **Correction** : la légèreté dit la force ; une tasse sous-extraite pique et ne laisse rien en bouche, quelle que soit sa force.
 
 #### Cas du fil rouge
@@ -128,10 +103,10 @@ L'unité n'enseigne pas ce qui fait varier l'extraction (le moulin, l'eau, le te
 
 ##### Cas : La tasse légère du Petit Noir
 
-- **Ancrage** : Au Petit Noir, Inès sert à Cédric une tasse claire et légère. Il t'écrit : « Presque de l'eau. Douce, ça ne pique pas, pas amère, et le goût reste un moment une fois avalée. Mais si légère, elle est forcément sous-extraite, non ? Inès m'a juste répondu que légère n'est pas creuse. »
+- **Ancrage** : Au Petit Noir, Inès sert à Cédric une tasse claire et légère. Il t'écrit : « Presque de l'eau. Douce, ça ne pique pas, pas amère, et le goût reste un moment une fois avalée. Mais si légère, elle est forcément sous-extraite, non ? Inès m'a juste répondu que légère n'est pas sous-extraite. »
 - **Question** : Cédric a-t-il raison ? Dis-lui de quel côté penche cette tasse, et ce que veut dire Inès.
-- **Réponse attendue** : non. Légère, c'est sa force qui est basse, pas son extraction. Pour l'extraction, on cherche le genre de goût : elle est douce, ne pique pas, n'est ni amère ni sèche, et son goût reste en bouche ; elle n'est ni sous-extraite (acide et courte) ni sur-extraite (amère et sèche) : elle est équilibrée. Inès dit qu'une tasse peut être légère sans être creuse : la force n'est pas l'extraction.
-- **Idées fausses en jeu** : Légère, donc creuse
+- **Réponse attendue** : non. Légère, c'est sa force qui est basse, pas son extraction. Pour l'extraction, on cherche le genre de goût : elle est douce, ne pique pas, n'est ni amère ni sèche, et son goût reste en bouche ; elle n'est ni sous-extraite (acide et courte) ni sur-extraite (amère et sèche) : elle est équilibrée. Inès dit qu'une tasse peut être légère sans être sous-extraite : la force n'est pas l'extraction.
+- **Idées fausses en jeu** : Légère, donc sous-extraite
 
 ## Clôture
 
@@ -141,4 +116,4 @@ Devant une tasse ratée : est-elle acide et courte, ou amère et sèche ? Et ce 
 
 ### Approfondissement
 
-La profession mesure ce que le cours goûte. En 1957, Ernest Lockhart propose de juger une tasse par deux mesures : sa force, la part de matière dissoute dans la tasse, et son extraction, la part du café moulu passée dans l'eau. Son diagramme les croise et y place une zone dite idéale, que la SCA reprend comme son Golden Cup Standard : une force de 11,5 à 13,5 grammes par litre, pour une extraction de 18 à 22 %. Les chercheurs de UC Davis l'ont refait en 2023 à partir de dégustations : le sucré y culmine dans les tasses légères et peu extraites, l'amer dans les tasses fortes et très extraites. Une de leurs études montre aussi que les buveurs de café noir ne s'accordent pas sur une seule zone : leurs préférences se répartissent en deux groupes, et la zone idéale n'est pas celle de tout le monde.
+[La profession mesure ce que le cours goûte](cours). En 1957, [Ernest Lockhart propose de juger une tasse par deux mesures](fait:S5,S2 "lockhart-1957") : sa force, la part de matière dissoute dans la tasse, et son extraction, la part du café moulu passée dans l'eau. Son diagramme les croise et y place une zone dite idéale, [que la SCA reprend comme son Golden Cup Standard : une force de 11,5 à 13,5 grammes par litre, pour une extraction de 18 à 22 %](consensus:S7,S2 "golden-cup"). [Les chercheurs de UC Davis l'ont refait en 2023 à partir de dégustations](école:S8 "diagramme-refait") : [le sucré y culmine dans les tasses légères et peu extraites, l'amer dans les tasses fortes et très extraites](fait:S4 "sucre-et-amer"). Une de leurs études montre aussi que [les buveurs de café noir ne s'accordent pas sur une seule zone : leurs préférences se répartissent en deux groupes, et la zone idéale n'est pas celle de tout le monde](fait:S9,S2 "deux-groupes").

@@ -5,7 +5,7 @@ Les termes du cours, chacun défini dans le concept qui l'enseigne.
 | Terme du cours | Anglais | Définition | Défini dans |
 |---|---|---|---|
 | Extraction | extraction | Ce que l'eau dissout du café moulu pendant l'infusion ; elle fait le goût de la tasse | 0 |
-| Sous-extraction, sous-extrait | under-extraction | Une extraction trop courte : la tasse est acide, creuse, sans fin en bouche | 0 |
+| Sous-extraction, sous-extrait | under-extraction | Une extraction trop courte : la tasse est acide, sans sucré, sans fin en bouche | 0 |
 | Sur-extraction, sur-extrait | over-extraction | Une extraction trop poussée : la tasse est amère et sèche en bouche | 0 |
 | Force | strength | La concentration de la tasse, ce qu'elle a de café pour son volume d'eau ; distincte de l'extraction | 0 |
 | Réglage | | Une variable que l'on choisit avant ou pendant l'infusion et qui fait varier l'extraction ou la force | 1 |

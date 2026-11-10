@@ -59,6 +59,7 @@ properties:
       checks: { $ref: '#/$defs/path', description: "a path, the folder of the checks of a course" }
       parser: { $ref: '#/$defs/path', description: "a path, the parser of the files of a course, which its checks and the builds of the products load" }
       refs: { $ref: '#/$defs/path', description: "a path, the reader of the references between concepts in the text of a course, which its checks and the builds of the products load" }
+      claims: { $ref: '#/$defs/path', description: "a path, the reader of the claim marks in the text of a course, which its checks and the builds of the products load" }
       glossary: { $ref: '#/$defs/path', description: "a path, the reader of the glossary of a course, which its checks and the builds of the products load" }
       templates: { $ref: '#/$defs/path', description: "a path, the folder of the course templates" }
       samples: { $ref: '#/$defs/path', description: "a path, the folder of the spec's sample courses" }

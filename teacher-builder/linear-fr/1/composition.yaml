@@ -114,8 +114,8 @@ parts:
         source: <dir>/concept.md
         what: la matière du concept en cours, ses unités, leurs cas et leurs consignes au professeur
       - from: course
-        source: <dir>/sources.md
-        what: les sources du concept, à la demande
+        source: sources.yaml
+        what: les sources du cours, leurs extraits et qui tient chaque position, à la demande, quand l'apprenant demande d'où vient une affirmation
       - from: course
         source: "{course.glossary}"
         what: les termes du cours, un par notion

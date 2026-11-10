@@ -1,0 +1,2 @@
+check: sources
+message: n'est pas lu comme une marque d'affirmation : la destination d'une marque d'affirmation n'a pas d'espace

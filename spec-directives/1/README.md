@@ -16,8 +16,8 @@ Version 1.0.0-alpha: binding from the tag `spec-directives/v1.0.0` (section 3). 
 - `decisions/`: the decisions of the directives.
 - `spec.schema.yaml`: the form of a spec MAJOR's manifest, its `spec.yaml` (section 1).
 - `rules.schema.yaml`: the form of a rule file, the rule model (section 2).
-- `tests/`: the tests of a spec's own files, their fixtures and their `test-fixtures` (section 4).
-- `lib/`, `package.json`, `package-lock.json`: the lib the checks of a spec and the tests share, its helpers (`lib/common.js`: a failure, a slug, a number, a release heading), the reader of the manifest (`lib/manifest.js`) among it, the parser of a course and the readers of its concept references and of its glossary being the spec MAJOR's (`course.parser`, `course.refs` and `course.glossary` of its `spec.yaml`), and its dependencies (`yaml`, `ajv`), loaded by the checks of a spec MAJOR that declares this MAJOR in its `spec.yaml`.
+- `tests/`: the tests of a spec's own files, their fixtures and their `test-fixtures`, and `test-lib`, the tests of the readers of `lib/` (section 4).
+- `lib/`, `package.json`, `package-lock.json`: the lib the checks of a spec and the tests share, its helpers (`lib/common.js`: a failure, a slug, a number, a release heading), the reader of the manifest (`lib/manifest.js`) and the reader of CommonMark, `lib/mdast.js` (decision `claim-marks-read-by-one-reader`), among it, the parser of a course and the readers of its concept references, of its claim marks and of its glossary being the spec MAJOR's (`course.parser`, `course.refs`, `course.claims` and `course.glossary` of its `spec.yaml`), and its dependencies (`yaml`, `ajv`, `mdast-util-from-markdown`), loaded by the checks of a spec MAJOR that declares this MAJOR in its `spec.yaml`.
 
 ## 1. The manifest
 
@@ -27,7 +27,7 @@ A spec MAJOR describes itself in its manifest, `spec.yaml`, which every test of 
 |---|---|---|
 | identity | `name` (a slug ending with `-<language>`), `major`, `directives`, `version`, `language` (ISO 639-1), each a top-level key on a line of its own, which the builds and the course checks read by a line pattern before they know which directives to load | all |
 | `spec` | `manifest`, `readme`, `changelog`, `decisions`, each at the path the directives fix (`spec.yaml`, `README.md`, `CHANGELOG.md`, `decisions`) | none |
-| `course` | `readme`, `rules`, `lexicon`, `form`, `schemas`, `checks`, `parser`, `refs`, `glossary`, `templates`, `samples` | `course`, its `readme` and `rules` |
+| `course` | `readme`, `rules`, `lexicon`, `form`, `schemas`, `checks`, `parser`, `refs`, `claims`, `glossary`, `templates`, `samples` | `course`, its `readme` and `rules` |
 | `products` | each product by its name (a slug, neither `course` nor `spec`), a map of its roles, each a slug, to their paths; the directives fix no role of a product | none |
 | `lists` | `classifications`, by the owner of a rule file, `course` or a product's name: each key with its values, a list of slugs (section 2); `lexicons`, by owner, `course` or a product's name: each group, each key with its kind, `string` or `list` | none |
 | `files` | keyed as the roles (`files.course.rules`, `files.products.site.build`, `files.spec.readme`): `holds`, one line on what the file or folder holds, and `readers`, among `creator`, `builder`, `verifier`, `spec writer` (`spec-directives/README.md`, « The readers »); `undeclared`, for a product the manifest does not declare, by its name, one line saying why | none; when present, an entry for every role declared |
@@ -130,6 +130,14 @@ mise exec -- spec-directives/1/tests/test-fixtures
 The test also runs `spec-directives/check-spec` on each spec MAJOR of `product-lines/` whose `spec.yaml` declares `directives: 1` (`linear-fr/1`), which must pass, and holds the enum of `readers` in `spec.schema.yaml` to the readers `spec-directives/README.md` defines (« The readers »), the bold name of each bullet.
 
 The fixtures are plain files: change `valid/` and the broken copies together, then run the test. A new test of the spec's own files adds a script, which exports the roles it reads (`reads`), its id in the list of `spec-directives/1/tests/check-spec`, a row in the table of this section, and a broken fixture under `spec-directives/1/tests/fixtures/broken/`; it verifies no rule.
+
+**The readers of `lib/`.**
+
+```
+mise exec -- spec-directives/1/tests/test-lib
+```
+
+`test-lib` tests the readers of `lib/` on texts it holds, one `ok` or `FAIL` line per case, `all as expected` at the end: `lib/mdast.js`, the links of a CommonMark text (their url, title, plain text and line; a link in a code span or a code block is no link; after a frontmatter, the line of the file). A reader added to `lib/` adds its cases there.
 
 ## 5. Normative references
 
