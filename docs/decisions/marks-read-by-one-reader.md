@@ -2,7 +2,7 @@
 date: 2026-11-10
 issue: 811
 status: accepted
-area: [spec-directives, spec:linear-fr, site]
+area: repo
 ---
 
 Without this, a contributor writing the check of a mark in the text of a course and one writing its rendering on the site would each read the mark with a reader of their own (a pattern in the check, remark in the site), so a mark with an escaped bracket or a title in quotes would pass the check and show otherwise on the site (#724).
