@@ -38,9 +38,11 @@ sources:
         checked: 2026-10-23
       - claim: 1/couches
         text: "a slice crosses every layer"
+        place: p. 7
         checked: 2026-10-23
       - claim: 2/tranche
         text: "a slice crosses every layer"
+        place: p. 7
         checked: 2026-10-23
       - claim: A1/definition-courte
         text: "one line per word"

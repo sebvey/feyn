@@ -17,7 +17,7 @@
 #   (indépendante, intéressée), the words of the lexicon. Two sources never share a URL or a DOI.
 # - `quotes`: for each claim that cites the source, one quote at least whose `claim` names it: the
 #   shortest phrase of the source that proves it, word for word (`text`), and where it stands
-#   (`place`; « résumé » when the abstract alone was read).
+#   (`place`, required, in one of the four forms the rule quote-is-shortest-phrase gives).
 # - `checked`: the date a human verified the source, or the quote, written by that human only. An
 #   agent never writes it: delete each `checked` line when no human has verified. An edit of the
 #   source or the quote removes it. sources-coverage reports what is left unchecked.
