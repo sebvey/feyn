@@ -9,7 +9,9 @@
 // placeholders, each instruction of linear-fr/1/instructions.yaml in CLAUDE.md or in one skill,
 // once, each group heading followed by its purpose), the course map carte-du-cours.md and its import
 // (the storyline first, its title, file and the text under its H1, each domain with its objective and file, each concept with its objective, prerequisites and
-// folder, the annexes as annexes, each « L'essentiel » of cafe, the other course files), the three
+// folder, the annexes as annexes, each « L'essentiel » of cafe, the claim marks of its « L'essentiel »
+// kept as written, the other course files, sources.yaml among them), sources.yaml
+// read on demand (the part course-reads of composition.yaml), the three
 // spots of the filling (no doubled parenthesis, no period after a phrase that ends with one, the
 // plural of the domains), the teacher template (the implementation's, no instruction), course.lock,
 // the classroom's git (one commit, clean), the default folders of the channels (under a temporary
@@ -152,6 +154,29 @@ for (const c of courseYaml.concepts) {
   const stop = lines.findIndex((l, i) => i > e && /^## /.test(l));
   const essentials = lines.slice(e + 1, stop < 0 ? lines.length : stop).join('\n').trim();
   check(e >= 0 && essentials !== '' && map.slice(at).includes(`\n#### L'essentiel\n\n${essentials}\n`), `carte-du-cours.md: ${titleOf(c.number)} lacks its « L'essentiel » verbatim`);
+}
+// the claim marks: the course map of cafe keeps those of its « L'essentiel » as written
+// (instruction claim-marks-read-as-written); on cafe, those of annexes A1 and A2, of nature
+// `cours` with no source (course/README.md 3.4: the nature alone, or followed by its sources)
+{
+  const marks = [];
+  for (const c of courseYaml.concepts) {
+    const lines = (read(path.join(COURSE, c.dir, 'concept.md')) || '').split('\n');
+    const e = lines.indexOf("## L'essentiel");
+    const stop = lines.findIndex((l, i) => i > e && /^## /.test(l));
+    const essentials = e < 0 ? '' : lines.slice(e + 1, stop < 0 ? lines.length : stop).join('\n');
+    marks.push(...(essentials.match(/\[[^\]\n]+\]\((?:consensus|école|fait|cours)(?::S\d+(?:,S\d+)*)?(?: "[a-z0-9-]+")?\)/gu) || []));
+  }
+  check(marks.length > 0, 'no « L\'essentiel » of cafe holds a claim mark');
+  for (const m of marks) check(map.includes(m), `carte-du-cours.md does not keep the claim mark ${m} of a « L'essentiel » as written`);
+}
+// sources.yaml, one file at the course root, read on demand: the part course-reads of
+// composition.yaml draws it from the course, and the course map names it among the course files
+{
+  const composition = yaml.parse(read(path.join(IMPL, 'composition.yaml')) || '') || {};
+  const reads = ((composition.parts || []).find((p) => p.id === 'course-reads') || {}).draws || [];
+  check(reads.some((d) => d.from === 'course' && d.source === 'sources.yaml' && /à la demande/.test(d.what || '')), 'composition.yaml: the part course-reads does not draw sources.yaml from the course, on demand');
+  check(fs.existsSync(path.join(out, 'course', 'sources.yaml')) && map.includes('\n- `course/sources.yaml` : '), 'carte-du-cours.md does not name course/sources.yaml, or the classroom has none');
 }
 check(!/Concept A\d/.test(claude + map), 'CLAUDE.md or carte-du-cours.md titles an annex as a concept, « Concept A<n> »');
 for (const f of ['course/plan.md', 'course/storyline.md', 'course/glossary.md']) {
