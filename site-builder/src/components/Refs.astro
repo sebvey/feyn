@@ -1,11 +1,13 @@
 ---
-// The references of an item ([S1], [S2]), each a link to its line of the references of the page
-// (`ref-<id>`, the Sources component); ported from the old site's Refs. Out of the search index.
+// The sources of a claim mark ([S1], [S2]) in « Consensus et choix d'école », each a link to its
+// line of the page's « Sources » (`source-<id>`, the Sources component), those the document gives;
+// ported from the old site's Refs. Out of the search index.
+import { sourceById, sourceAnchor } from '../lib/site';
 interface Props { refs: string[] }
-const { refs } = Astro.props;
+const refs = Astro.props.refs.filter((r) => sourceById.has(r));
 ---
 {refs.length > 0 && (
   <span class="refs" data-pagefind-ignore>
-    {refs.map((r, i) => (<>{i > 0 && ' '}<a href={`#ref-${r}`}>[{r}]</a></>))}
+    {refs.map((r, i) => (<>{i > 0 && ' '}<a href={`#${sourceAnchor(r)}`}>[{r}]</a></>))}
   </span>
 )}

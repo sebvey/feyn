@@ -207,9 +207,10 @@ course_map:
 # claim cites a source: each source once, by its id `S<n>`, described by CSL fields, its kind, its
 # control and its independence, with the quotes that prove the claims citing it; then who holds
 # the stance of a claim. Its keys and their form: the schema, which `sources` validates it against.
-# `csl_type`: the CSL item type a source takes from its kind when it has no `type` of its own,
-# for the site, which formats it. The site renders every source; the teacher reads the file on
-# demand.
+# `csl_type`: the CSL item type (CSL 1.0.2, appendix « Types ») a source takes from its kind when
+# it has no `type` of its own, for the site, which formats it. The site renders on a concept page
+# the sources its claim marks cite, and the holders, never a quote nor a `checked`; the teacher
+# reads the file on demand.
 sources_file:
   file: sources.yaml
   schema: course/schemas/sources.schema.yaml

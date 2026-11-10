@@ -1,73 +1,40 @@
 ---
-// The sources of a concept (the published sections of its sources.md, each its table), ported from
-// the old site's Sources. The section `claims`: each row as a claim (its columns in the spec's
-// order: the claim, where it is, its sources, what was verified, its nature), its nature as the
-// badge of its stance marker, or as the word itself (« fait »); its sources ([S1]) linked to the
-// references. The section `references`: each row (the id, the source, its link, its type, the date
-// it was consulted) under the anchor `ref-<id>`. A section of another key: its table as written.
-// The unpublished section is not in the document, so never here.
-import type { Table } from '../lib/site';
-import { words, mdInline, markerOf, badge } from '../lib/site';
-interface Props { sections: Table[] }
-const { sections } = Astro.props;
-const sep = words.course.block_kinds.separator;
-const refIds = new Set(sections.filter((s) => s.key === 'references').flatMap((s) => s.rows.map((r) => r[0])));
-const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const refPattern = refIds.size ? new RegExp(`\\[(${[...refIds].map(escapeRe).join('|')})\\]`, 'g') : null;
-/** A cell of the course, its references ([S1]) linked to their line. */
-const cell = (text: string) => {
-  const html = mdInline(text ?? '');
-  return refPattern ? html.replace(refPattern, (_m, id: string) => `<a href="#ref-${id}">[${id}]</a>`) : html;
-};
-const nature = (word: string) => {
-  const key = markerOf(word);
-  return key ? badge(key, word) : `<span class="nature-fait" data-pagefind-ignore>${mdInline(word)}</span>`;
-};
+// The « Sources » of a concept page: the sources its claim marks cite, in the order of their ids,
+// each under the anchor `source-<id>` its claim marks link to (`sourceAnchor`), formatted from its
+// CSL fields: its authors, its title (in quotes when its CSL type is a part of a container, an
+// article, a post, an entry; in italics otherwise), a link on its URL, its container, its date of
+// publication; then its kind, its control and its independence, words of the course lexicon, and
+// the date it was read, after the site lexicon's `labels.accessed`. Its quotes and its `checked`
+// are not in the document, so never here.
+import type { Source, CslName } from '../lib/site';
+import { sourceAnchor, words } from '../lib/site';
+interface Props { sources: Source[] }
+const { sources } = Astro.props;
+/** The CSL types of a work that stands alone, its title in italics; any other is a part of its container. */
+const whole = new Set(['book', 'report', 'standard', 'thesis', 'dataset', 'software', 'manuscript', 'pamphlet', 'document', 'map', 'patent', 'legislation', 'regulation']);
+const name = (n: CslName) => n.literal ?? [n.given, n.family].filter(Boolean).join(' ');
+const names = (list?: CslName[]) => (list ?? []).map(name).join(', ');
 ---
-<div class="sources">
-  {sections.map((s) => (
-    s.key === 'claims' ? (
-      <>
-        <h3 id={s.key}>{s.heading}</h3>
-        {words.site.intros?.claims && <p class="note">{words.site.intros.claims}</p>}
-        <ul class="aff">
-          {s.rows.map((r) => (
-            <li>
-              <p class="claim">{r[4] && <><Fragment set:html={nature(r[4])} />{' '}</>}<span set:html={cell(r[0])} /></p>
-              {r[1] && <p class="where">{s.header[1]}{sep}<span set:html={cell(r[1])} /></p>}
-              {r[3] && <p class="check" set:html={cell(r[3])} />}
-              {r[2] && <p class="refs" data-pagefind-ignore set:html={cell(r[2])} />}
-            </li>
-          ))}
-        </ul>
-      </>
-    ) : s.key === 'references' ? (
-      <>
-        <h3 id={s.key}>{s.heading}</h3>
-        <ol class="reflist">
-          {s.rows.map((r) => (
-            <li id={`ref-${r[0]}`}>
-              <span class="id">{r[0]}</span>{' '}
-              <span>
-                {r[2] && /^https?:\/\//.test(r[2])
-                  ? <a href={r[2]} rel="noopener"><span set:html={mdInline(r[1])} /></a>
-                  : <span set:html={mdInline(r[1])} />}
-                {(r[3] || r[4]) && <>{' '}<span class="meta">{r[3]}{r[3] && r[4] && ' · '}{r[4] && `${s.header[4]} ${r[4]}`}</span></>}
-              </span>
-            </li>
-          ))}
-        </ol>
-      </>
-    ) : (
-      <>
-        <h3 id={s.key}>{s.heading}</h3>
-        <div class="table-wrap">
-          <table>
-            <thead><tr>{s.header.map((h) => <th scope="col">{h}</th>)}</tr></thead>
-            <tbody>{s.rows.map((r) => <tr>{r.map((c) => <td set:html={cell(c)} />)}</tr>)}</tbody>
-          </table>
-        </div>
-      </>
-    )
-  ))}
-</div>
+<ol class="reflist sources">
+  {sources.map((s) => {
+    const authors = names(s.author);
+    const quoted = !whole.has(s.type ?? '');
+    const title = quoted ? `« ${s.title} »` : s.title;
+    const link = s.URL ?? (s.DOI ? `https://doi.org/${s.DOI}` : undefined);
+    const meta = [s.kind, s.control, s.independence].join(' · ');
+    return (
+      <li id={sourceAnchor(s.id)}>
+        <span class="id">{s.id}</span>
+        <span>
+          {authors && <>{authors}, </>}
+          {link
+            ? <a href={link} rel="noopener">{quoted ? title : <cite>{title}</cite>}</a>
+            : (quoted ? title : <cite>{title}</cite>)}
+          {s['container-title'] && <>, <cite>{s['container-title']}</cite></>}
+          {s.issued !== undefined && <>, {String(s.issued)}</>}
+          <span class="meta" data-pagefind-ignore>{meta}{s.accessed && ` · ${words.site.labels.accessed} ${s.accessed}`}</span>
+        </span>
+      </li>
+    );
+  })}
+</ol>
