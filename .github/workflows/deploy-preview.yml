@@ -1,5 +1,6 @@
-# Deploys the preview of a pull request (decision three-channels): on a pull request that touches
-# the site engine, the spec or the course, builds the site of its head with build-site under its
+# Deploys the preview of a pull request to main (decision three-channels): on a pull request to
+# main that touches the site engine, the spec or the course, builds the site of its head with
+# build-site under its
 # own base, verifies it with verify-site, pushes it into pr-<n>/<course id>/ of gh-pages of the
 # artifact repository, every other folder and file kept, and gives its address in a comment on the
 # pull request; when the pull request closes, removes pr-<n>/. A pull request from a fork, which
@@ -8,6 +9,8 @@ name: Deploy preview
 
 on:
   pull_request:
+    # main only: a story of an epic targets the epic's integration branch, and gets no preview.
+    branches: [main]
     types: [opened, synchronize, reopened, closed]
     paths:
       - 'site-builder/**'

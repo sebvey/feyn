@@ -79,7 +79,7 @@ Two CI workflows of `feyn` deploy the site of the course to the artifact reposit
 | CI workflow | Trigger | Address |
 |---|---|---|
 | `.github/workflows/deploy-next.yml`, the next channel | a push to `main` | `https://sebvey.github.io/feyn-site/next/cafe/` |
-| `.github/workflows/deploy-preview.yml`, a preview | a pull request opened, synchronised or reopened, to any base; removed when it closes | `https://sebvey.github.io/feyn-site/pr-<n>/cafe/` |
+| `.github/workflows/deploy-preview.yml`, a preview | a pull request to `main` opened, synchronised or reopened (a story of an epic, whose pull request targets the epic's integration branch, gets none); removed when it closes | `https://sebvey.github.io/feyn-site/pr-<n>/cafe/` |
 
 - **When they run.** Only when the change touches `site-builder/`, `product-lines/linear-fr/` or the course (their `paths:` filters); a pull request from a fork, which gets no secret, is skipped.
 - **The course.** `cafe` (`product-lines/linear-fr/1/course/samples/cafe`, course id `cafe`) until parcours-po is re-created (epic #520): its folder and its id are the workflows' configuration (their `env`, and their `paths:` filters), never the engine's.
