@@ -10,7 +10,7 @@ Un **réglage** est ce que l'on choisit en faisant sa tasse, et qui fait varier 
 
 #### Leçon
 
-- **Matière** : Un **réglage** est [une variable que l'on choisit avant ou pendant l'infusion, et qui fait varier l'extraction ou la force de la tasse](consensus:S4,S2 "reglage"). [Le cours en retient quatre](cours). La **mouture** est la finesse du café moulu, choisie au moulin. Le **ratio** est la masse de café pour la masse d'eau. La **température d'infusion** est la température de l'eau quand elle touche le café moulu. Le **temps de contact** est la durée pendant laquelle l'eau et le café moulu restent ensemble. [Un réglage que l'on ne choisit pas est réglé quand même : au hasard](cours).
+- **Matière** : Un **réglage** est [une variable que l'on choisit avant ou pendant l'infusion, et qui fait varier l'extraction ou la force de la tasse](consensus:S4,S2 "reglage"). [Le cours en retient quatre](cours). La **mouture** est la finesse du café moulu, choisie au moulin. Le **ratio** est la masse de café pour la masse d'eau. La **température d'infusion** est la température de l'eau quand elle touche le café moulu. Le **temps de contact** est la durée pendant laquelle l'eau et le café moulu restent ensemble. [L'eau elle-même, ce qu'elle contient, n'est pas un réglage du cours](cours). [Un réglage que l'on ne choisit pas est réglé quand même : au hasard](cours).
 - **Idées fausses** :
   - **Pas mesuré, pas choisi** : « Ce que je ne mesure pas, je ne le choisis pas »
     - **Racine** : choisir semble demander une décision réfléchie, et trois cuillères ou une bouilloire qui coupe ne ressemblent pas à un choix.

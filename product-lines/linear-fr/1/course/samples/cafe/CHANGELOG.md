@@ -22,3 +22,4 @@
 - PATCH, `storyline.md` : la dernière phrase de « La soutenance » annonce le jour où la promesse sera mise à l'épreuve, sans plus dire que son issue n'est pas encore écrite (#688).
 - PATCH, `course.yaml` : la spec déclarée prend son nouveau nom, `spec: linear-fr@1`, et le cours se trouve désormais dans `product-lines/linear-fr/1/course/samples/cafe/` ; rien d'autre ne change (#732).
 - PATCH, concept 2 : la consigne au professeur de 2b1 n'interdit plus que de parler de soi-même des autres façons de faire le café, l'annexe A1 restant nommée, pour que le professeur la propose quand l'apprenant en parle (#787).
+- PATCH, concept 1 : la matière de 1a1 redit, marquée comme une affirmation du cours, que l'eau elle-même n'est pas un réglage du cours ; la migration des affirmations ne l'avait laissé que dans la consigne au professeur de la clôture (#818).
