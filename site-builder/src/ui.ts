@@ -21,6 +21,8 @@ export const ui = {
   onThisPage: 'Dans cette page',
   linkTo: 'Lien vers',
   reveal: 'Voir la réponse',
+  // a source of the concept page's « Sources »: before the date it was read
+  accessed: 'consulté le',
   // the cards at the foot of a domain or concept page, in the reading order
   previous: 'Précédent',
   next: 'Suivant',

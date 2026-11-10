@@ -2,9 +2,10 @@
 'use strict';
 // render-site <course-dir> [--form <file>]
 // The half of a site build that depends on this spec MAJOR: it reads a course through the parser
-// of this MAJOR, course/parser.js, and its readers of the concept references and of the glossary,
-// course/refs.js and course/glossary.js, the ones the course checks use, given the lib of the spec
-// directives this MAJOR follows (with md.js of that lib), keeps the parts course/form.yaml names `published: true`
+// of this MAJOR, course/parser.js, and its readers of the concept references, of the claim marks and
+// of the glossary, course/refs.js, course/claims.js and course/glossary.js, the ones the course checks
+// use, given the lib of the spec directives this MAJOR follows (with md.js of that lib), keeps the
+// parts course/form.yaml names `published: true`
 // (closed by default: a part the form does not name, or names without `published: true`, is
 // never output), and prints them to stdout as one JSON document, whose shape site.schema.yaml
 // fixes and README.md (this folder) describes, with the words of products/site/lexicon.yaml, the headings
@@ -69,11 +70,12 @@ req('./lib/deps').need();
 const yaml = req('./lib/yaml-lines');
 const md = req('./lib/md');
 const { normNumber, RELEASE } = req('./lib/common');
-// the parser of a course and the readers of its concept references and of its glossary are this
-// MAJOR's, given the directives' lib
+// the parser of a course and the readers of its concept references, of its claim marks and of its
+// glossary are this MAJOR's, given the directives' lib
 const lib = (name) => req('./lib/' + name);
 const course = require(path.join(MAJOR, 'course', 'parser.js'))(lib);
 const refs = require(path.join(MAJOR, 'course', 'refs.js'))(lib);
+const claims = require(path.join(MAJOR, 'course', 'claims.js'))(lib);
 const glossary = require(path.join(MAJOR, 'course', 'glossary.js'))(lib);
 const SPEC = `${lineOf('name')}@${lineOf('major')}`;
 // the language of the MAJOR's courses and lexicons (ISO 639-1), given to the engine for the pages it writes
@@ -161,8 +163,17 @@ const domains = cy.domains.map((d) => {
   };
 });
 
+// ---- the claim marks of the course and its sources.yaml, through course/claims.js, read once: the
+// claim marks of each concept, in the parts that state claims, and who holds the stance of each
+const readClaims = claims.reader(ctx);
+if (!readClaims) fail('course/lexicon.yaml has no natures: no claim mark can be read');
+const courseClaims = claims.ofCourse(ctx, readClaims);
+if (courseClaims.error) fail(`${rel(path.join(courseDir, courseClaims.file))}, line ${courseClaims.error.line}: ${courseClaims.error.message}`);
+const sourcesData = courseClaims.data || {};
+const holders = (sourcesData.claims && typeof sourcesData.claims === 'object') ? sourcesData.claims : {};
+
 // ---- a concept: its concept.md through course/parser.js (its tree and its parts), its frontmatter,
-// its diagrams, its sources.md
+// its diagrams, its claim marks
 const cf = form.concept_file || {};
 const unitForm = form.unit || {};
 const blockForms = Array.isArray(unitForm.blocks) ? unitForm.blocks : [];
@@ -222,6 +233,40 @@ function unitOf(u) {
   if (misconceptions) blocks.misconceptions = misconceptions;
   return { id: u.sub.id, title: u.sub.title, blocks };
 }
+// the claim marks of a concept that stand in a published part, each { url, nature, sources, name,
+// holder, text, anchor }: `url` the link's destination as the reader read it, the key the engine
+// renders the link by; `holder` from `claims` of sources.yaml, when it names one; `text` the plain
+// text claimed; `anchor` the id of its place on the concept page: the misconception it stands in
+// (its root or its correction), else its unit (its matter), else the key of its part (the head, a
+// block of the foot). A claim mark in a part the form does not publish never reaches the document.
+function claimMarksOf(c, parts) {
+  const found = courseClaims.concepts.find((x) => x.c === c);
+  if (!found) return [];
+  const where = form.claims || {};
+  const anchorOf = new Map(); // line -> anchor
+  const put = (lines, anchor) => { for (const l of lines || []) anchorOf.set(l.n, anchor); };
+  if (pub(cf.head) && parts.head) put(parts.head.lines, parts.head.key);
+  if (pub(cf.foot) && parts.foot) {
+    for (const b of parts.foot.blocks) {
+      if ((where.foot_blocks || []).includes(b.key) && pub(((cf.foot || {}).blocks || []).find((x) => x.heading === b.key))) put(b.lines, b.key);
+    }
+  }
+  for (const u of parts.units) {
+    const ids = misconceptionIds(u);
+    for (const f of u.fields) {
+      if (f.case) continue;
+      if (!pub(blockForms.find((b) => (b.fields || []).includes(f.key)))) continue;
+      if ((where.unit_fields || []).includes(f.key)) put(f.lines, u.sub.id);
+      for (const m of f.items || []) {
+        for (const p of m.parts || []) if ((where.misconception_parts || []).includes(p.key) && ids.has(m.name)) put(p.lines, ids.get(m.name));
+      }
+    }
+  }
+  return found.marks.filter((k) => anchorOf.has(k.line)).map((k) => {
+    const held = k.key && holders[k.key] && typeof holders[k.key].holder === 'string' ? holders[k.key].holder : null;
+    return { url: k.node.url, nature: k.nature, sources: k.sources, name: k.name, ...(held ? { holder: held } : {}), text: k.text, anchor: anchorOf.get(k.line) };
+  });
+}
 function conceptOf(c) {
   const e = c.entry;
   const file = `${c.dir}/${cf.file || 'concept.md'}`;
@@ -253,15 +298,32 @@ function conceptOf(c) {
   }
   const fm = cf.frontmatter_fields || {};
   const data = m.data || {};
-  if (pub(fm.stances) && data.stances) out.stances = { heading: H(fm.stances.heading), ...data.stances };
-  if (pub(fm.neighbors) && data.neighbors) out.neighbors = data.neighbors;
   if (pub(fm.diagrams) && data.diagrams) out.diagrams = data.diagrams.map((d) => ({ ...d, anchor: diagramAnchor(d.file), svg: read(path.join(courseDir, c.dir, d.file)) }));
-  const sources = form.sources || {};
-  const sf = `${c.dir}/${sources.file || 'sources.md'}`;
-  if (ctx.exists(sf)) out.sources = sectionsOf(sf, sources.sections, true);
+  out.claim_marks = claimMarksOf(c, parts);
   return out;
 }
 const concepts = ctx.concepts.map(conceptOf);
+
+// ---- sources.yaml, published: each source in the order of its id, its CSL fields, its CSL `type`
+// (its own, else the one `sources_file.csl_type` of the form gives its kind), its kind, its control
+// and its independence, as written; never its quotes nor its `checked`, an audit material. No key
+// when the form does not publish it; an empty list when the course has no sources.yaml.
+const sf = form.sources_file || {};
+const CSL = ['type', 'title', 'author', 'editor', 'container-title', 'publisher', 'volume', 'issue', 'page', 'number', 'version', 'issued', 'URL', 'DOI', 'accessed'];
+const kindKey = new Map(Object.entries(ctx.lexicon.source_kinds || {}).map(([k, w]) => [w, k]));
+let sources;
+if (pub(sf)) {
+  const all = (sourcesData.sources && typeof sourcesData.sources === 'object') ? sourcesData.sources : {};
+  sources = Object.keys(all).filter((id) => claims.SOURCE_ID.test(id)).sort((a, b) => Number(a.slice(1)) - Number(b.slice(1))).map((id) => {
+    const s = all[id] || {};
+    const out = { id };
+    const type = s.type !== undefined ? s.type : (sf.csl_type || {})[kindKey.get(s.kind)];
+    if (typeof type === 'string') out.type = type;
+    for (const k of CSL) if (k !== 'type' && s[k] !== undefined) out[k] = s[k];
+    for (const k of ['kind', 'control', 'independence']) if (s[k] !== undefined) out[k] = s[k];
+    return out;
+  });
+}
 
 // ---- plan.md, its published sections
 const plan = form.plan ? sectionsOf(form.plan.file, form.plan.sections) : [];
@@ -311,8 +373,9 @@ if (pub(ch.latest_release)) {
 
 // ---- the words: products/site/lexicon.yaml whole, and of course/lexicon.yaml those the published parts
 // carry: the headings and the unit fields and blocks the form names `published: true`, the kind
-// words of the headings, a case's among them, the stance markers
-const words = { headings: {}, block_kinds: {}, unit_blocks: {}, unit_fields: {}, markers: {} };
+// words of the headings, a case's among them, the heading of the stances the site builds from the
+// claim marks (`claims.heading` of the form), the natures of a claim mark
+const words = { headings: {}, block_kinds: {}, unit_blocks: {}, unit_fields: {}, natures: {} };
 const take = (group, key) => {
   const w = ctx.word(group, key);
   if (w) words[group][key] = w;
@@ -333,7 +396,8 @@ const take = (group, key) => {
   for (const v of Object.values(node)) if (v && typeof v === 'object') walk(v);
 })(form);
 if (typeof cf.separator === 'string') take('block_kinds', cf.separator);
-for (const k of Object.keys(ctx.lexicon.markers || {})) take('markers', k);
+if (form.claims && typeof form.claims.heading === 'string') take('headings', form.claims.heading);
+for (const k of claims.NATURES) take('natures', k);
 
 // ---- the concept references of the published text (course/refs.js): each distinct reference, as the
 // text writes it, with the concepts it names, so that the engine links them without a grammar
@@ -354,7 +418,7 @@ const found = new Map();
       });
     }
   } else if (Array.isArray(node)) node.forEach(scan);
-  else if (node && typeof node === 'object') for (const [k, v] of Object.entries(node)) if (k !== 'svg') scan(v);
+  else if (node && typeof node === 'object') for (const [k, v] of Object.entries(node)) if (k !== 'svg' && k !== 'claim_marks') scan(v);
 })({ plan, domains, concepts, storyline, courseGlossary });
 
 const doc = {
@@ -367,6 +431,7 @@ const doc = {
   storyline,
   glossary: courseGlossary,
   ...(release !== undefined ? { release } : {}),
+  ...(sources !== undefined ? { sources } : {}),
   concept_refs: [...found.values()],
   words: { course: words, site: siteLexicon },
   url_scheme: urlScheme,

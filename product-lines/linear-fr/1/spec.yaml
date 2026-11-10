@@ -80,9 +80,9 @@ lists:
     site:
       nav: {domains: string, storyline: string, glossary: string}
       labels: {domain: string, objective: string, prerequisites: string}
-      page_headings: {neighbors: string, sources: string}
+      page_headings: {sources: string}
       stance_columns: {consensus: string, school: string, course: string}
-      intros: {consensus: string, school: string, course: string, claims: string}
+      intros: {consensus: string, school: string, course: string}
 
 # The files of this MAJOR: for each role above, what it holds and who reads it, among the four
 # readers of spec-directives/README.md (« The readers »); the test spec-yaml of check-spec requires

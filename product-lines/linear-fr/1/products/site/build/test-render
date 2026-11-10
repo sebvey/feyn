@@ -3,14 +3,17 @@
 // test-render: runs render-site on cafe (course/samples/cafe, the spec's sample course) and
 // validates its JSON document against site.schema.yaml (ajv's Ajv2020, from the package of the
 // spec directives this MAJOR follows); then checks what the schema cannot say: the published parts
-// reach it, each diagram carries its anchor, the misconceptions of every unit come after its cases, each with its name, its belief,
+// reach it, the claim marks of a concept with their nature, their sources, their holder and their
+// place, read through course/claims.js, the sources of sources.yaml with their CSL fields and no
+// quote nor `checked`, each diagram carries its anchor, the misconceptions of every unit come after its cases, each with its name, its belief,
 // its root and its correction, each case under the title of its heading, its expected answer and
 // its misconceptions in play inside what the reader reveals, each name linking to its misconception, no part the form leaves unpublished does (« Consigne au professeur », « Accueil »,
-// « Non vérifié », the free sections of plan.md, the introduction of glossary.md, « Non publié »
+// a quote of sources.yaml, the free sections of plan.md, the introduction of glossary.md, « Non publié »
 // of CHANGELOG.md), and the build is closed by default, one case each, render-site run with a copy
 // of course/form.yaml (--form): a part named `published: false`, a part named without
-// `published`, a part the form does not name, and a form that does not name the logo, which
-// render-site refuses. The logo and the accent colour are those cafe declares. Last, the latest
+// `published`, a part the form does not name (its claim marks with it), sources.yaml named
+// `published: false`, and a form that does not name the logo, which render-site refuses. A copy
+// of cafe whose source and quote carry `checked` gives neither. The logo and the accent colour are those cafe declares. Last, the latest
 // release of a CHANGELOG.md, on a copy of cafe given two releases. Exit 0 when every check
 // passes, 1 otherwise; one line per failure.
 const fs = require('fs');
@@ -76,26 +79,52 @@ const { doc } = cafe;
 const published = [
   ['a case title', 'La tasse qui pique'],
   ['an expected answer', 'Trop peu : elle est sous-extraite.'],
-  ['a matter', 'Faire un café, c\'est laisser l\'eau dissoudre une partie du café moulu'],
+  ['a matter', 'Faire un café, c\'est [laisser l\'eau dissoudre une partie du café moulu](consensus:S1,S2 "extraction")'],
   ['a misconception\'s belief', 'Si le goût change, c\'est que le café a changé'],
   ['a misconception\'s root', 'une tasse plus concentrée a un goût plus marqué'],
   ['« L\'essentiel »', 'c\'est elle qui fait le goût de la tasse'],
   ['« Se vérifier »', 'Devant une tasse ratée : est-elle acide et courte, ou amère et sèche ?'],
-  ['« Approfondissement »', 'La profession mesure ce que le cours goûte.'],
+  ['« Approfondissement »', '[La profession mesure ce que le cours goûte](cours)'],
   ['« Public cible »', 'Une personne qui boit du café sans jamais l\'avoir vraiment fait'],
   ['« Progression »', 'Le domaine 1, « Ce qui fait la tasse », part de rien'],
   ['« Le problème »', 'Chez lui, Cédric a tout ce qu\'il faut pour faire un café à la main'],
   ['the storyline\'s world', 'Inès tient le comptoir du Petit Noir'],
-  ['a row of « Affirmations »', 'Les notes fruitées et acides se dissolvent d\'abord, puis le sucré, puis l\'amer'],
-  ['a row of « Références »', 'Coffee Extraction and How to Taste It'],
   ['a term of the glossary', 'Sous-extraction, sous-extrait'],
   ['a row of « Termes à éviter »', 'brûlé (pour une tasse amère)'],
-  ['a stance', 'Le cours juge l\'extraction au goût seulement'],
-  ['a neighbour', 'Le goût amer d\'un café torréfié foncé'],
   ['a diagram\'s caption', 'De gauche à droite, la tasse va de sous-extraite'],
 ];
 for (const [what, fragment] of published) check(holds(cafe, fragment), `${what} does not reach the document: « ${fragment} »`);
 const c0 = doc.concepts.find((c) => c.number === '0');
+// the claim marks of a concept, through course/claims.js: one of cafe with its nature and its
+// sources, keyed by its link's destination as written, in the unit it stands in
+const marks0 = (c0 && c0.claim_marks) || [];
+const extraction = marks0.find((k) => k.name === 'extraction');
+check(extraction && extraction.url === 'consensus:S1,S2' && extraction.nature === 'consensus' && extraction.sources.join(',') === 'S1,S2' && extraction.text === 'laisser l\'eau dissoudre une partie du café moulu' && extraction.anchor === '0a1',
+  `the claim mark « laisser l'eau dissoudre… » of concept 0 does not reach the document with its destination consensus:S1,S2, its nature consensus, its sources S1, S2 and its unit 0a1: ${JSON.stringify(extraction)}`);
+const counts = doc.concepts.map((c) => `${c.number}:${(c.claim_marks || []).length}`).join(' ');
+check(counts === '0:18 1:19 2:19 A1:17 A2:8', `the claim marks per concept are ${counts}, not 0:18 1:19 2:19 A1:17 A2:8, the counts of check-course`);
+// « Consensus et choix d'école »: its heading, its three columns keyed by the stances (a fact is
+// none), and in concept 0 a claim mark of each stance, the school one with its holder, a fact
+// with none
+const columns = Object.keys(doc.words.site.stance_columns || {}).join(',');
+check(doc.words.course.headings.stances === 'Consensus et choix d\'école' && columns === 'consensus,school,course', `« Consensus et choix d'école » is not under headings.stances with the three columns consensus, school, course: ${columns}`);
+const refait = marks0.find((k) => k.name === 'diagramme-refait');
+check(['consensus', 'school', 'course'].every((n) => marks0.some((k) => k.nature === n)) && refait && refait.nature === 'school' && refait.holder === 'Guinard et al., UC Davis (2023), après Lockhart (1957)',
+  `concept 0 does not give a claim mark of each stance, its school claim « diagramme-refait » held by « Guinard et al., UC Davis (2023), après Lockhart (1957) »: ${JSON.stringify(refait)}`);
+const facts = doc.concepts.flatMap((c) => (c.claim_marks || []).filter((k) => k.nature === 'fact'));
+check(facts.length > 0 && facts.every((k) => !('holder' in k)) && !('fact' in (doc.words.site.stance_columns || {})), 'a fact claim mark carries a holder, or the stance columns hold the facts');
+check(doc.words.course.natures && doc.words.course.natures.school === 'école' && doc.words.course.natures.fact === 'fait', 'the nature words of a claim mark are not those of course/lexicon.yaml');
+// a source of sources.yaml with its CSL fields, its type from its kind, its kind, control and
+// independence, and neither its quotes nor its checked
+const s1 = (doc.sources || []).find((x) => x.id === 'S1');
+check(s1 && s1.title === 'Coffee Extraction & How It Helps Create The Perfect Cup' && s1.author[0].family === 'Boydell' && s1['container-title'] === 'Perfect Daily Grind'
+  && s1.issued === '2018-11-22' && s1.URL.startsWith('https://perfectdailygrind.com/') && s1.accessed === '2026-11-06' && s1.type === 'article-magazine'
+  && s1.kind === 'article' && s1.control === 'éditorial' && s1.independence === 'indépendante' && !('quotes' in s1) && !('checked' in s1),
+  `the source S1 does not reach the document with its CSL fields, its type article-magazine, its kind, control and independence, and no quote: ${JSON.stringify(s1)}`);
+check((doc.sources || []).map((x) => x.id).join(',') === Array.from({ length: 22 }, (_, i) => `S${i + 1}`).join(','), `the sources are ${(doc.sources || []).map((x) => x.id).join(',')}, not S1 to S22 in order`);
+const cited = new Set(doc.concepts.flatMap((c) => (c.claim_marks || []).flatMap((k) => k.sources)));
+const ids = new Set((doc.sources || []).map((x) => x.id));
+check(cited.size > 0 && [...cited].every((id) => ids.has(id)), `a claim mark cites a source the document does not give: ${[...cited].filter((id) => !ids.has(id)).join(', ')}`);
 const svg = fs.readFileSync(path.join(COURSE, 'concepts', '00-extraction', 'extraction-et-force.svg'), 'utf8');
 check(c0 && c0.diagrams && c0.diagrams[0].svg === svg, 'the SVG of concept 0\'s diagram is not in the document as written');
 // each diagram of cafe carries its anchor, `schema-` then its file name without .svg
@@ -121,8 +150,8 @@ const cases = allUnits.flatMap((x) => (x.blocks.cases || []).map((k) => ({ unit:
 check(cases.length > 0 && cases.every(({ k }) => k.revealed && k.revealed.expected_answer && (k.revealed.misconceptions_in_play || []).length > 0 && !('expected_answer' in k) && !('misconceptions_in_play' in k)), `a case does not give its expected answer and « Idées fausses en jeu » inside what the reader reveals: ${cases.filter(({ k }) => !(k.revealed && k.revealed.expected_answer && k.revealed.misconceptions_in_play)).map(({ k }) => k.title).join(', ')}`);
 const unlinked = cases.flatMap(({ unit, k }) => ((k.revealed || {}).misconceptions_in_play || []).filter((m) => !(unit.blocks.misconceptions || []).some((x) => x.id === m.id && x.name === m.name)).map((m) => `${k.title}: ${m.name}`));
 check(unlinked.length === 0, `a name in play does not link to the misconception of its unit of that name: ${unlinked.join('; ')}`);
-const ids = allUnits.flatMap((x) => (x.blocks.misconceptions || []).map((m) => m.id));
-check(ids.every(Boolean) && new Set(ids).size === ids.length, 'the misconceptions do not each have an id of their own');
+const misIds = allUnits.flatMap((x) => (x.blocks.misconceptions || []).map((m) => m.id));
+check(misIds.every(Boolean) && new Set(misIds).size === misIds.length, 'the misconceptions do not each have an id of their own');
 const pique = u && u.blocks.cases[0];
 check(pique && pique.title === 'La tasse qui pique' && pique.revealed.misconceptions_in_play.map((m) => m.id).join(',') === '0a2-gout-et-force,0a2-un-seul-defaut', 'the case « La tasse qui pique » of unit 0a2 does not name « Goût et force » and « Un seul défaut », linked to 0a2-gout-et-force and 0a2-un-seul-defaut');
 check(doc.words.course.unit_fields.misconceptions_in_play === 'Idées fausses en jeu', 'the label of the misconceptions in play is not « Idées fausses en jeu »');
@@ -154,7 +183,7 @@ const unpublished = [
   ['« Consigne au professeur » of a foot', 'le point de départ de la profession'],
   ['« Accueil » of plan.md', 'un barista patient'],
   ['a free section of plan.md', 'Règles d\'écriture du cours'],
-  ['« Non vérifié » of sources.md', 'S2 marque lui-même'],
+  ['a quote of sources.yaml', 'Extraction is simply the method by which we dissolve flavours'],
   ['a fact of « Faits fixés » of storyline.md', 'Aïmen moud tout son paquet de café le dimanche'],
   ['the heading « Faits fixés » of storyline.md', 'Faits fixés'],
   ['the introduction of glossary.md', 'Les termes du cours, chacun défini dans le concept qui l\'enseigne.'],
@@ -169,7 +198,9 @@ if (head) check(!holds(head, 'c\'est elle qui fait le goût de la tasse') && hea
 const audience = render(COURSE, formWith('audience-unset', (f) => { delete f.plan.sections.find((s) => s.heading === 'audience').published; }), 'a form with « Public cible » named without `published`');
 if (audience) check(!holds(audience, 'Une personne qui boit du café sans jamais') && !audience.doc.plan.some((s) => s.key === 'audience'), 'a part named without `published` (« Public cible ») reaches the document');
 const deepening = render(COURSE, formWith('deepening-unnamed', (f) => { f.concept_file.foot.blocks = f.concept_file.foot.blocks.filter((b) => b.heading !== 'deepening'); }), 'a form that does not name « Approfondissement »');
-if (deepening) check(!holds(deepening, 'La profession mesure ce que le cours goûte.') && holds(deepening, 'Devant une tasse ratée'), 'a part the form does not name (« Approfondissement ») reaches the document');
+if (deepening) check(!holds(deepening, 'La profession mesure ce que le cours goûte') && holds(deepening, 'Devant une tasse ratée') && !deepening.doc.concepts.some((c) => c.claim_marks.some((k) => k.anchor === 'deepening')), 'a part the form does not name (« Approfondissement ») reaches the document, or its claim marks do');
+const unsourced = render(COURSE, formWith('sources-false', (f) => { f.sources_file.published = false; }), 'a form with sources.yaml `published: false`');
+if (unsourced) check(!('sources' in unsourced.doc) && !holds(unsourced, 'Coffee Extraction & How It Helps Create The Perfect Cup'), 'sources.yaml named `published: false` reaches the document');
 const avoid = render(COURSE, formWith('glossary-unnamed', (f) => { delete f.glossary; }), 'a form that does not name glossary.md');
 if (avoid) check(!holds(avoid, 'Sous-extraction, sous-extrait') && !holds(avoid, 'brûlé (pour une tasse amère)'), 'a file the form does not name (glossary.md) reaches the document');
 // the logo, closed by default too: a form that does not name logo.svg leaves the site with no
@@ -182,9 +213,13 @@ if (avoid) check(!holds(avoid, 'Sous-extraction, sous-extrait') && !holds(avoid,
 // the latest release of CHANGELOG.md, on a copy of cafe given two
 const copy = path.join(TMP, 'cafe');
 fs.cpSync(COURSE, copy, { recursive: true });
+// on that copy too, a source and a quote that a human checked: neither date reaches the document
+const sy = path.join(copy, 'sources.yaml');
+fs.writeFileSync(sy, fs.readFileSync(sy, 'utf8').replace(/^  S1:\n/m, '  S1:\n    checked: 2031-01-02\n').replace(/^(      - claim: 0\/extraction\n)/m, '$1        checked: 2031-01-03\n'));
 const log = path.join(copy, 'CHANGELOG.md');
 fs.writeFileSync(log, fs.readFileSync(log, 'utf8') + '\n## 1.1.0, 2026-12-01\n\n- MINOR, concept 0 : une unité de plus (#1).\n\n## 1.0.0, 2026-11-20\n\n- MAJOR, tout le cours : publié (#1).\n');
 const released = render(copy, [], 'cafe with two releases');
+if (released) check(released.text.includes('"S1"') && !holds(released, '2031-01-02') && !holds(released, '2031-01-03') && !holds(released, 'checked'), 'the checked date of a source or a quote reaches the document');
 if (released) check(released.doc.release && released.doc.release.version === '1.1.0' && released.doc.release.date === '2026-12-01' && !holds(released, '1.0.0') && !holds(released, 'une unité de plus'), 'the latest release is not the one in the document, or another part of CHANGELOG.md is');
 
 for (const f of failures) console.error(`test-render: ${f}`);
