@@ -4,10 +4,10 @@
 // CSL fields: its authors, its title (in quotes when its CSL type is a part of a container, an
 // article, a post, an entry; in italics otherwise), a link on its URL, its container, its date of
 // publication; then its kind, its control and its independence, words of the course lexicon, and
-// the date it was read. Its quotes and its `checked` are not in the document, so never here.
+// the date it was read, after the site lexicon's `labels.accessed`. Its quotes and its `checked`
+// are not in the document, so never here.
 import type { Source, CslName } from '../lib/site';
-import { sourceAnchor } from '../lib/site';
-import { ui } from '../ui';
+import { sourceAnchor, words } from '../lib/site';
 interface Props { sources: Source[] }
 const { sources } = Astro.props;
 /** The CSL types of a work that stands alone, its title in italics; any other is a part of its container. */
@@ -32,7 +32,7 @@ const names = (list?: CslName[]) => (list ?? []).map(name).join(', ');
             : (quoted ? title : <cite>{title}</cite>)}
           {s['container-title'] && <>, <cite>{s['container-title']}</cite></>}
           {s.issued !== undefined && <>, {String(s.issued)}</>}
-          <span class="meta" data-pagefind-ignore>{meta}{s.accessed && ` · ${ui.accessed} ${s.accessed}`}</span>
+          <span class="meta" data-pagefind-ignore>{meta}{s.accessed && ` · ${words.site.labels.accessed} ${s.accessed}`}</span>
         </span>
       </li>
     );

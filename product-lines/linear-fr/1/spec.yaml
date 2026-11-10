@@ -79,7 +79,7 @@ lists:
       typography: {banned: list}
     site:
       nav: {domains: string, storyline: string, glossary: string}
-      labels: {domain: string, objective: string, prerequisites: string}
+      labels: {domain: string, objective: string, prerequisites: string, accessed: string}
       page_headings: {sources: string}
       stance_columns: {consensus: string, school: string, course: string}
       intros: {consensus: string, school: string, course: string}

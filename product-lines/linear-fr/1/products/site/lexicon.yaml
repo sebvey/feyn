@@ -22,6 +22,7 @@ labels:
   domain: "Domaine"          # glossary `domain`, fr « domaine »: the eyebrow of a concept page, « Concept 0 · Domaine 1 : <titre> »
   objective: "Objectif"      # glossary `objective`, fr « objectif »: « Objectif : » before the objective of a domain or a concept
   prerequisites: "Prérequis" # glossary `prerequisites`, fr « prérequis »: before the concept references of a concept's prerequisites
+  accessed: "consulté le"    # glossary `sources`, fr « sources »: before the date a source was read (its CSL `accessed`), in a concept page's « Sources »
 
 # The headings of a concept page that no course file holds.
 page_headings:
