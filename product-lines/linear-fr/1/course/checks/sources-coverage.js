@@ -2,8 +2,8 @@
 // What the sources of a course leave to do, without being incoherent (course/README.md section
 // 3.4): per concept, one line with its count of claims marked, sourced and checked by a human,
 // when one of its sourced claims is not checked; and one line per source of `sources.yaml` that no
-// mark cites. A sourced claim is checked when each of its sources and each quote that proves it
-// carries `checked`, the date a human verified it. The marks are read by the reader of this MAJOR
+// claim mark cites. A sourced claim is checked when each of its sources and each quote that proves it
+// carries `checked`, the date a human verified it. The claim marks are read by the reader of this MAJOR
 // (course/claims.js), as `sources` reads them; what is incoherent is `sources`'. A reporting check:
 // a course may leave claims unchecked (sourcing is optional, coherence is not). Its messages are
 // French, the language of the spec.
@@ -41,9 +41,9 @@ function run(ctx) {
       out.push(fail(c.dir + '/concept.md', 1, `${label} : ${plural(marks.length, 'affirmation marquée', 'affirmations marquées')}, ${plural(sourced.length, 'sourcée', 'sourcées')}, ${plural(checked.length, 'vérifiée', 'vérifiées')} par un humain (« checked » de chaque source et de chaque extrait qui la prouve)`));
     }
   }
-  // a source never cited: the marks of every concept are read, under --concept too
+  // a source never cited: the claim marks of every concept are read, under --concept too
   for (const id of Object.keys(sources)) {
-    if (!cited.has(id)) out.push(fail(course.file, yaml.lineOf(sources, id, 1), `source ${id} : aucune marque ne la cite ; une source qu'aucune affirmation ne cite est retirée, ou citée là où elle prouve`));
+    if (!cited.has(id)) out.push(fail(course.file, yaml.lineOf(sources, id, 1), `source ${id} : aucune marque d'affirmation ne la cite ; une source qu'aucune affirmation ne cite est retirée, ou citée là où elle prouve`));
   }
   return out;
 }

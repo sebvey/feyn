@@ -179,10 +179,10 @@ unit:
 
 # The claims of a concept file (course/README.md section 3.4): a claim is marked in the published
 # fields that state claims, and only there: the head, these blocks of the foot, these fields of a
-# unit and these parts of its misconceptions. A mark elsewhere in concept.md (a case, a
+# unit and these parts of its misconceptions. A claim mark elsewhere in concept.md (a case, a
 # misconception's belief, a teacher note) fails the check `sources`: the cases of a unit are not
 # traced, their anchor is the storyline's and their expected answer restates the matter. The site
-# builds « Consensus et choix d'école » (`headings.stances`) from the marks of the concept.
+# builds « Consensus et choix d'école » (`headings.stances`) from the claim marks of the concept.
 claims:
   head: true
   foot_blocks: [landmarks, deepening]

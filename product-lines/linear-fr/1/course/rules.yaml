@@ -370,7 +370,7 @@ groups:
         why: >-
           Le titre d'un bloc disait aussi son lecteur, entre parenthèses, pour que la publication
           ne se sache plus par cœur (idée #642, epic #647) ; elle est la donnée
-          de `course/form.yaml`, et un lecteur du site n'a que faire de la marque : le titre d'un
+          de `course/form.yaml`, et un lecteur du site n'a que faire de la parenthèse : le titre d'un
           bloc ne tient plus que son mot (epic #598).
       - id: unit-fields-labelled
         level: requirement
@@ -611,7 +611,7 @@ groups:
       extraits qui prouvent chaque affirmation et la date à laquelle un humain les a vérifiés.
       Sourcer reste au choix, la cohérence non : ce qui est écrit ne doit pas mentir, et une source
       citée sans son extrait ne prouve rien. Le site construit « Consensus et choix d'école » et
-      les sources depuis les marques ; le professeur répond à « d'où ça vient ? » avec elles.
+      les sources depuis les marques d'affirmation ; le professeur répond à « d'où ça vient ? » avec elles.
     category: sources
     method: test
     rules:
@@ -641,56 +641,56 @@ groups:
           `consensus`, ce que tient le domaine ; `école`, ce que tient quelqu'un de nommé ;
           `cours`, le choix ou la conclusion du cours, avec ou sans sources. Un fait n'est pas une
           position : les positions sont les trois autres natures.
-      - id: mark-form
+      - id: claim-mark-form
         level: requirement
         check: sources
         text: >-
-          La destination d'une marque doit être un mot de `natures` du lexique seul, ou suivi de
+          La destination d'une marque d'affirmation doit être un mot de `natures` du lexique seul, ou suivi de
           « : » et d'ids de source `S<n>` séparés par des virgules, sans espace
           (`consensus:S1,S2`) ; une destination qui commence par un mot de nature et n'a pas cette
-          forme est une marque mal écrite.
+          forme est une marque d'affirmation mal écrite.
         why: >-
-          Une marque mal écrite que personne ne lit comme une marque laisserait une affirmation
+          Une marque d'affirmation mal écrite que personne ne lit comme telle laisserait une affirmation
           sans sa nature ni ses sources, et le site en ferait un lien cassé (décision
           claim-marked-in-the-text).
-      - id: mark-is-inline-link
+      - id: claim-mark-is-inline-link
         level: requirement
         check: sources
         text: >-
-          Une marque doit être un lien en ligne CommonMark, lu comme le site le lit : un lien de
-          référence (`[texte][étiquette]`) n'est pas une marque.
+          Une marque d'affirmation doit être un lien en ligne CommonMark, lu comme le site le lit : un lien de
+          référence (`[texte][étiquette]`) n'est pas une marque d'affirmation.
         why: >-
-          Deux lecteurs lisent une marque différemment (un crochet échappé, un titre entre
-          guillemets) : un check passerait et le site montrerait autre chose ; la marque est
+          Deux lecteurs lisent une marque d'affirmation différemment (un crochet échappé, un titre entre
+          guillemets) : un check passerait et le site montrerait autre chose ; la marque d'affirmation est
           définie une fois et lue par un seul lecteur, celui du site (décision
-          marks-read-by-one-reader).
-      - id: mark-in-claim-fields
+          claim-marks-read-by-one-reader).
+      - id: claim-mark-in-claim-fields
         level: requirement
         check: sources
         text: >-
-          Une marque ne doit se trouver que dans les champs publiés qui affirment (`claims` de
+          Une marque d'affirmation ne doit se trouver que dans les champs publiés qui affirment (`claims` de
           `course/form.yaml`) : ni dans un cas, dont l'ancrage vient du fil rouge et la réponse
           attendue redit la matière, ni dans la croyance d'une idée fausse, ni dans une consigne.
         why: >-
           Les cas d'une unité ne sont pas tracés : une affirmation qu'un cas seul ferait est une
           lacune de la matière, ajoutée d'abord à un champ publié (décision
           claim-marked-in-the-text, qui garde ce point de sources-trace-the-concept).
-      - id: mark-holds-no-concept-reference
+      - id: claim-mark-no-concept-reference
         level: requirement
         check: sources
         text: >-
-          Le texte d'une marque ne doit tenir aucune référence de concept (« concept 1 »,
-          « annexe A2 ») : la référence reste dans la phrase, hors de la marque.
+          Le texte d'une marque d'affirmation ne doit tenir aucune référence de concept (« concept 1 »,
+          « annexe A2 ») : la référence reste dans la phrase, hors de la marque d'affirmation.
         why: >-
-          Une marque délimite exactement ce qui est affirmé, et une référence est la navigation du
+          Une marque d'affirmation délimite exactement ce qui est affirmé, et une référence est la navigation du
           cours, pas ce qu'une source ou une position affirme ; sur le site, une référence dans
-          une marque serait un lien dans un lien (décision claim-marked-in-the-text).
+          une marque d'affirmation serait un lien dans un lien (décision claim-marked-in-the-text).
       - id: sourced-nature-cites-a-source
         level: requirement
         check: sources
         text: >-
           Une affirmation `consensus`, `école` ou `fait` doit citer au moins une source dans sa
-          marque ; une affirmation `cours` en cite au choix.
+          marque d'affirmation ; une affirmation `cours` en cite au choix.
         why: >-
           Un badge « fait » sans rien derrière dirait plus que la vérité : ce qui est écrit ne
           doit pas mentir (décision sources-a-course-file).
@@ -698,9 +698,9 @@ groups:
         level: requirement
         check: sources
         text: >-
-          Une affirmation qui cite une source doit avoir un nom, le titre de sa marque, fait de
+          Une affirmation qui cite une source doit avoir un nom, le titre de sa marque d'affirmation, fait de
           minuscules sans accent, de chiffres et de tirets, unique dans son concept ; ailleurs
-          qu'à sa marque, elle est nommée `<numéro du concept>/<nom>` (`1/eau-90-96`).
+          qu'à sa marque d'affirmation, elle est nommée `<numéro du concept>/<nom>` (`1/eau-90-96`).
         why: >-
           Sur un cours de banc, 35 des 79 paires (unité, source) citaient une source pour
           plusieurs affirmations : sans nom, l'extrait ne dit pas laquelle il prouve, et une
@@ -708,9 +708,9 @@ groups:
       - id: cited-source-exists
         level: requirement
         check: sources
-        text: Chaque id cité par une marque doit être une source de `sources.yaml`.
+        text: Chaque id cité par une marque d'affirmation doit être une source de `sources.yaml`.
         why: >-
-          Une marque qui cite une source absente renvoie le lecteur et le professeur à rien
+          Une marque d'affirmation qui cite une source absente renvoie le lecteur et le professeur à rien
           (décision sources-a-course-file).
       - id: pair-has-a-quote
         level: requirement
@@ -832,11 +832,11 @@ groups:
         text: >-
           Ce qu'aucune source ne confirme ne doit pas être écrit à part, dans une liste ou dans une
           note : une affirmation que le cours conclut de ses sources est `cours`, ces sources dans
-          sa marque ; une source faible se dit par son `kind`, son `control` et son
+          sa marque d'affirmation ; une source faible se dit par son `kind`, son `control` et son
           `independence` ; ce qui a été lu est la `place` de l'extrait ; un texte connu par une
           autre source est cité par elle ; une source non lue n'est pas une source ; un garde-fou
           va dans « Consigne au professeur » quand un professeur compétent agirait autrement sans
-          lui ; un mot que le cours choisit vraiment a sa propre marque `cours`, la phrase coupée.
+          lui ; un mot que le cours choisit vraiment a sa propre marque d'affirmation `cours`, la phrase coupée.
         why: >-
           La liste de ce qu'aucune source ne confirmait nommait des ids dans la prose, qu'aucun
           programme ne vérifie, et la plupart de ses entrées redisaient le texte (décisions
@@ -845,7 +845,7 @@ groups:
         level: requirement
         method: inspection
         text: >-
-          Une marque ne doit porter ni un fait du fil rouge (inventé, dans `storyline.md`), ni un
+          Une marque d'affirmation ne doit porter ni un fait du fil rouge (inventé, dans `storyline.md`), ni un
           procédé d'enseignement (un exemple inventé, la déduction d'un cas).
       - id: unpublished-states-nothing-new
         level: requirement
@@ -870,7 +870,7 @@ groups:
         level: recommendation
         check: sources-coverage
         text: >-
-          Il convient que chaque source de `sources.yaml` soit citée par une marque : une source
+          Il convient que chaque source de `sources.yaml` soit citée par une marque d'affirmation : une source
           qu'aucune affirmation ne cite est signalée, à retirer ou à citer là où elle prouve.
         why: >-
           Une source que rien ne cite a été lue pour une affirmation retirée ou jamais marquée
@@ -905,7 +905,7 @@ groups:
       « Faits fixés » de `storyline.md`, un terme qu'elle met en gras à `glossary.md`, et, pour
       une affirmation d'un champ publié marquée avec ses sources, ces sources et leurs extraits à
       `sources.yaml` (3.4). `unit-additions` dit au créateur, au moment où il écrit l'unité, ce
-      qu'un programme peut dire (le gras) ; `sources` dit si les marques et `sources.yaml` sont
+      qu'un programme peut dire (le gras) ; `sources` dit si les marques d'affirmation et `sources.yaml` sont
       cohérents ; la revue lit le reste.
     category: pedagogy
     method: inspection

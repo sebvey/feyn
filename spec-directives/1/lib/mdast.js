@@ -1,6 +1,6 @@
 'use strict';
 // Markdown read as CommonMark through `mdast-util-from-markdown` (remark's core), into an mdast tree
-// (decision `marks-read-by-one-reader`). No GFM extension: the site build parses with `remark-parse`
+// (decision `claim-marks-read-by-one-reader`). No GFM extension: the site build parses with `remark-parse`
 // alone, and the two must read a text the same way. The readers of the forms of a spec read inline
 // Markdown here, the claim marks of a course first (`course/claims.js` of a spec MAJOR), and give
 // what they read to the checks and to the site build; md.js stays the line-by-line helper of the

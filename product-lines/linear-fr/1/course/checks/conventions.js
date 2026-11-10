@@ -1,9 +1,9 @@
 'use strict';
 // The conventions of the text of concept.md (course/README.md section 3.5), read in the parts the
 // learner reads (course/form.yaml, readers; course/parser.js), the teacher note left out: concept
-// references, read in the text of a claim's mark as in the rest of the sentence; no image in
+// references, read in the text of a claim mark as in the rest of the sentence; no image in
 // concept.md (the build places a diagram at its unit). Plain Markdown in every course file
-// (section 1), a concept file's headings no deeper than #####, a case's. A claim's mark, its form,
+// (section 1), a concept file's headings no deeper than #####, a case's. A claim mark, its form,
 // where it stands and its sources are `sources`' (course/claims.js).
 const directives = require('./directives');
 const mdlib = directives.lib('md');

@@ -58,7 +58,7 @@ unit_blocks:
   lesson: "Leçon"
   cases: "Cas du fil rouge"
 
-# The natures of a claim, the words of the destination of its mark in the published text,
+# The natures of a claim, the words of the destination of its claim mark in the published text,
 # `[le texte affirmé](consensus:S1 "nom")` (course/README.md 3.4; course/claims.js): a fact, which
 # a source states and no one has to hold, or one of the three stances, the field's consensus, a
 # school (someone named) and the course's own choice or conclusion.

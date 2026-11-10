@@ -697,7 +697,7 @@ groups:
         text: >-
           Distingue toujours le consensus (le texte qui le fonde, une pratique établie), le choix
           d'école (un auteur ou un courant nommé) et le choix propre au cours, et dis-le : le
-          frontmatter `stances` de `concept.md` et les marques `[{markers.consensus}]`,
+          frontmatter `stances` de `concept.md` et les marqueurs `[{markers.consensus}]`,
           `[{markers.school}]` et `[{markers.course}]` de son texte disent lequel. Présente les
           choix du cours comme tels : des choix du cours, qu'aucune source n'énonce tels quels.
         serves: [stances-told-apart]

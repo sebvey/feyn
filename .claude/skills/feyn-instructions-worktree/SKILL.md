@@ -5,7 +5,7 @@ description: "The rules and the Claude Code behaviours of an agent of feyn that 
 
 # Rules for an agent in a worktree
 
-Preloaded by every project subagent of `.claude/agents/`; they hold for the one that works in a worktree. A line ending with a mark is a Claude Code behaviour ([contributing](../../../docs/contributing.md), "Tool behaviours").
+Preloaded by every project subagent of `.claude/agents/`; they hold for the one that works in a worktree. A line ending with a behaviour mark is a Claude Code behaviour ([contributing](../../../docs/contributing.md), "Tool behaviours").
 
 ## Git and the tools
 

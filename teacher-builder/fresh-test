@@ -193,7 +193,7 @@ function runTurn(message, sessionId) {
   return turn;
 }
 
-// the marks of a question (rules example-question-quote-form, follow-up-form,
+// the form marks of a question (rules example-question-quote-form, follow-up-form,
 // out-of-case-question-form, several-questions-announced): the label of a question on the matter,
 // phrases.question_lead, or in its place the announce of several questions,
 // phrases.questions_announce, its {count} any word; a question outside any case is a bold line

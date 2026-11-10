@@ -2,27 +2,27 @@
 // The claim marks of the text of a course of this spec MAJOR (course/README.md section 3.4): a claim
 // is a CommonMark inline link, `[the text claimed](nature:S2,S3 "name")`, its destination a nature
 // word of the lexicon group `natures` alone or followed by `:` and source ids `S<n>` joined by `,`,
-// its title the claim's name. The mark is defined here once, read through the CommonMark reader of
-// the spec directives (lib/mdast.js; decision `marks-read-by-one-reader`), by the course checks
+// its title the claim's name. The claim mark is defined here once, read through the CommonMark reader of
+// the spec directives (lib/mdast.js; decision `claim-marks-read-by-one-reader`), by the course checks
 // (`sources`, `sources-coverage`) and by the site build (products/site/build/render-site), so that a
-// check and the site never read a mark two ways. It holds a form of this spec, so it lives in the
+// check and the site never read a claim mark two ways. It holds a form of this spec, so it lives in the
 // spec, beside course/refs.js; its callers give it the lib of the spec directives this MAJOR
 // follows, as they give the parser.
 //   const claims = require('<MAJOR>/course/claims')(lib);
 //   const read = claims.reader(ctx);            // null when the lexicon lacks the nature words
 //   const { marks, problems } = read(text, { line });
 // A link whose destination is a nature word alone, or a nature word, `:` and a list of source ids,
-// is a mark: { nature, word, sources, name, text, line, column, start, end, node }, `nature` the key
+// is a claim mark: { nature, word, sources, name, text, line, column, start, end, node }, `nature` the key
 // of the group `natures` (consensus, school, fact, course), `word` its value, `sources` the ids in
 // order, `name` the link title or null, `text` the plain text claimed, `line` and `column` where its
 // `[` stands, `start` and `end` the offsets of the link in `text`. A destination that starts with a
 // nature word followed by `:` but is no list of source ids (`consensus:X1`), and a nature word's
 // destination the reader did not take as a link (a space in it, `(consensus: S1)`), are problems:
-// { line, column, message }, the message in French. Any other link is no mark. A reference link
-// (`[text][label]`) is no mark: lib/mdast.js returns inline links only, and a mark is always inline;
-// a link reference definition whose destination is a mark's is a problem.
-//   claims.ofConcept(ctx, c, read)   the marks of a concept, each in the part it stands in
-//   claims.ofCourse(ctx, read)       the marks of every concept and the course's sources.yaml, once
+// { line, column, message }, the message in French. Any other link is no claim mark. A reference
+// link (`[text][label]`) is no claim mark: lib/mdast.js returns inline links only, and a claim mark
+// is always inline; a link reference definition whose destination is a claim mark's is a problem.
+//   claims.ofConcept(ctx, c, read)   the claim marks of a concept, each in the part it stands in
+//   claims.ofCourse(ctx, read)       the claim marks of every concept and the course's sources.yaml, once
 
 // the keys of the group `natures`, in the order the spec names them
 const NATURES = ['consensus', 'school', 'fact', 'course'];
@@ -57,16 +57,16 @@ function reader(ctx, mdast) {
     const problems = [];
     const spans = [];
     // the spans of the links and of the code the reader found: a raw `](nature` outside them is a
-    // mark the reader did not take
+    // claim mark the reader did not take
     const walk = (node) => {
       if (node.position && ['link', 'inlineCode', 'code', 'html'].includes(node.type)) spans.push([node.position.start.offset, node.position.end.offset]);
       if (node.children) node.children.forEach(walk);
     };
     walk(tree);
-    // a link reference definition whose destination is a mark's: a mark is always an inline link
+    // a link reference definition whose destination is a claim mark's: a claim mark is always an inline link
     const defs = (node) => {
       if (node.type === 'definition' && DEST.test(node.url || '') && node.position) {
-        problems.push({ line: node.position.start.line, column: node.position.start.column, message: `la définition « [${node.label}]: ${node.url} » donne à un lien de référence la destination d'une marque : une marque est un lien en ligne, « [le texte affirmé](${node.url}) »` });
+        problems.push({ line: node.position.start.line, column: node.position.start.column, message: `la définition « [${node.label}]: ${node.url} » donne à un lien de référence la destination d'une marque d'affirmation : une marque d'affirmation est un lien en ligne, « [le texte affirmé](${node.url}) »` });
       }
       if (node.children) node.children.forEach(defs);
     };
@@ -79,7 +79,7 @@ function reader(ctx, mdast) {
       const start = l.node.position.start.offset;
       const end = l.node.position.end.offset;
       if (list !== undefined && (list === '' || !list.split(',').every((id) => SOURCE_ID.test(id)))) {
-        problems.push({ line: l.line, column: l.column, message: `la marque « ${l.text} » a pour destination « ${l.url} » : un mot de nature seul, ou suivi de « : » et d'ids de source S<n> séparés par des virgules, sans espace (« ${word}:S1,S2 »)` });
+        problems.push({ line: l.line, column: l.column, message: `la marque d'affirmation « ${l.text} » a pour destination « ${l.url} » : un mot de nature seul, ou suivi de « : » et d'ids de source S<n> séparés par des virgules, sans espace (« ${word}:S1,S2 »)` });
         continue;
       }
       marks.push({ nature: words[word], word, sources: list === undefined ? [] : list.split(','), name: l.title, text: l.text, line: l.line, column: l.column, start, end, node: l.node });
@@ -90,18 +90,18 @@ function reader(ctx, mdast) {
       const at = r.index;
       if (spans.some(([s, e]) => at >= s && at < e)) continue;
       const w = where(text, at, line);
-      problems.push({ line: w.line, column: w.column, message: `« ${text.slice(at, at + 40).split('\n')[0]} » n'est pas lu comme une marque : la destination d'une marque n'a pas d'espace (« [le texte affirmé](consensus:S1,S2 "nom") »)` });
+      problems.push({ line: w.line, column: w.column, message: `« ${text.slice(at, at + 40).split('\n')[0]} » n'est pas lu comme une marque d'affirmation : la destination d'une marque d'affirmation n'a pas d'espace (« [le texte affirmé](consensus:S1,S2 "nom") »)` });
     }
     return { marks, problems };
   };
 }
 
-// -> the marks of a concept's concept.md, read from its body in one text so a mark keeps the line of
+// -> the claim marks of a concept's concept.md, read from its body in one text so a claim mark keeps the line of
 // the file, each placed in the part of the concept file it stands in (course/parser.js), against
 // `claims` of course/form.yaml, the published fields that state claims:
 // { marks: [{ ...mark, key, part }], outside: [mark], problems }, `key` `<concept number>/<name>`
-// when the mark has a name, `part` the lexicon key of its heading, field or misconception part
-// (`essentials`, `landmarks`, `deepening`, `matter`, `root`, `correction`); `outside` the marks that
+// when the claim mark has a name, `part` the lexicon key of its heading, field or misconception part
+// (`essentials`, `landmarks`, `deepening`, `matter`, `root`, `correction`); `outside` the claim marks that
 // stand anywhere else (a case, a misconception's belief, a teacher note, a heading). Null when the
 // concept has no concept.md.
 function ofConcept(ctx, c, read) {

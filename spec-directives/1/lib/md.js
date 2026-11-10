@@ -114,7 +114,7 @@ function maskCode(t) {
   return t.replace(/(`+)(.+?)\1/g, (m) => ' '.repeat(m.length));
 }
 
-// one-line text of a Markdown inline run: drops emphasis and code marks
+// one-line text of a Markdown inline run: drops emphasis and code delimiters
 function plain(t) {
   return t.replace(/[*_`]/g, '').replace(/\s+/g, ' ').trim();
 }

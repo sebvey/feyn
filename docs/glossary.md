@@ -335,7 +335,7 @@ A generic word likely to collide (too general, likely used in other domains or a
 
 ### published
 
-- means: of a block or a part of a concept file, rendered by the site build: the **lesson** (its matter and its **misconceptions**, which the site shows after the cases), the **cases** (each with its anchor, its question and its expected answer, shown hidden until the reader reveals it), « L'essentiel », the landmarks, the deepening, the title and the headings of the sections and units, the **diagrams**, and the **marks** of its claims, from which the site builds its **stances**; beside it, the course's **sources**; a property the spec fixes for the block, never chosen by a course, and no heading says it. The build renders the published parts and nothing else
+- means: of a block or a part of a concept file, rendered by the site build: the **lesson** (its matter and its **misconceptions**, which the site shows after the cases), the **cases** (each with its anchor, its question and its expected answer, shown hidden until the reader reveals it), « L'essentiel », the landmarks, the deepening, the title and the headings of the sections and units, the **diagrams**, and the **claim marks** of its claims, from which the site builds its **stances**; beside it, the course's **sources**; a property the spec fixes for the block, never chosen by a course, and no heading says it. The build renders the published parts and nothing else
 - en: published · rejected: "reader-facing", "public" (it describes the repository)
 - fr: « publié » · rejected: « côté lecteur »
 - not to confuse with: [unpublished](#unpublished)
@@ -397,7 +397,7 @@ A generic word likely to collide (too general, likely used in other domains or a
 - means: of a **unit**, what writing it adds outside its **concept file**: a fact its **anchor** uses, among the **fixed facts** of the **storyline**; a term it puts in bold, in the **course glossary**; for a claim of one of its **published** fields that cites a source, the source and the **quote** that proves it, in the course's **sources**
 - en: additions
 - fr: « ajouts »
-- not to confuse with: [fixed fact](#fixed-fact), [course glossary](#course-glossary), [sources](#sources), [mark](#mark)
+- not to confuse with: [fixed fact](#fixed-fact), [course glossary](#course-glossary), [sources](#sources), [claim mark](#claim-mark)
 
 ### stances
 
@@ -408,19 +408,19 @@ A generic word likely to collide (too general, likely used in other domains or a
 
 ### nature
 
-- means: of a claim of a course, what it is: a fact, which a source states and no one has to hold, or one of the three **stances**, consensus, school or course; its **mark** carries it
+- means: of a claim of a course, what it is: a fact, which a source states and no one has to hold, or one of the three **stances**, consensus, school or course; its **claim mark** carries it
 - en: nature · rejected: "type", "kind" (the form of a source), "status"
 - fr: « nature » (« fait », « consensus », « école », « cours »)
-- not to confuse with: [stances](#stances), [mark](#mark)
+- not to confuse with: [stances](#stances), [claim mark](#claim-mark)
 - why: the brainstorm of the form had folded the fact and the three stances into one word; a holder makes sense for a stance only, so the nature names the four, and the stances three of them
 
-### mark
+### claim mark
 
 - means: the sign put on a claim in the **published** text of a course, where the claim is written once: a link whose text is exactly what is claimed, whose destination carries its **nature** and its **sources**, and whose title is its name
-- en: mark · rejected: "marker" (the stance sign written after a sentence, whose extent was a judgment), "tag", "badge" (what the site shows of a mark)
-- fr: « marque » · rejected: « marqueur »
-- not to confuse with: [logo](#logo), [concept reference](#concept-reference), [nature](#nature)
-- why: the entry **logo** rejects "mark" for the logo because it reads as a sign put on a text: that is this sense; "marker" named the sign after a sentence that the mark replaces
+- en: claim mark · rejected: "mark" alone (too generic, names several concepts), "marker" (the stance sign written after a sentence, whose extent was a judgment), "tag", "badge" (what the site shows of a claim mark)
+- fr: « marque d'affirmation » · rejected: « marque » alone (too generic, names several concepts), « marqueur »
+- not to confuse with: [form mark](#form-mark), [behaviour mark](#behaviour-mark), [logo](#logo), [concept reference](#concept-reference), [nature](#nature)
+- why: "mark" alone is too generic and names several concepts: the sign of a claim, the **form marks** of the teacher, the **behaviour mark** of a line, a parenthesis in a heading; each takes its qualified term, and the bare word is never this entry's term again. The entry **logo** rejects "mark" for the logo because it reads as a sign put on a text: that is this sense; "marker" named the sign after a sentence that the claim mark replaces.
 
 ### holder
 
@@ -431,10 +431,10 @@ A generic word likely to collide (too general, likely used in other domains or a
 
 ### sources
 
-- means: the sources of a course, one file at its root, `sources.yaml`: each source once, by its id, described by its citation fields, its kind, its control and its independence, with the **quotes** that prove the claims citing it, then the **holder** of each stance that has one; the claims they prove are **marked** in the **published** text
+- means: the sources of a course, one file at its root, `sources.yaml`: each source once, by its id, described by its citation fields, its kind, its control and its independence, with the **quotes** that prove the claims citing it, then the **holder** of each stance that has one; the claims they prove carry a **claim mark** in the **published** text
 - en: sources · rejected: "bibliography", "citations", "references" (a concept reference)
 - fr: « sources » · rejected: « références »
-- not to confuse with: [concept reference](#concept-reference), [additions](#additions), [course](#course), [quote](#quote), [mark](#mark)
+- not to confuse with: [concept reference](#concept-reference), [additions](#additions), [course](#course), [quote](#quote), [claim mark](#claim-mark)
 
 ### quote
 
@@ -494,7 +494,7 @@ A generic word likely to collide (too general, likely used in other domains or a
 - means: in the text of a course, the words that name a concept, a section, a unit or an annex: « concept 4 », « concepts 5 et 7b », « annexe A2 »
 - en: concept reference · rejected: "reference" alone
 - fr: « renvoi » (and nothing else: a pointer to a group or a file is a « lien »)
-- not to confuse with: [sources](#sources), [mark](#mark), [prerequisites](#prerequisites)
+- not to confuse with: [sources](#sources), [claim mark](#claim-mark), [prerequisites](#prerequisites)
 
 ### course glossary
 
@@ -514,8 +514,8 @@ A generic word likely to collide (too general, likely used in other domains or a
 - means: the drawing that stands for a course on its site, `logo.svg` at the root of the course: square, one colour in `currentColor`, which the site paints in the course's **accent colour**; the site's header shows it, and its favicon and share image are drawn from it
 - en: logo · rejected: "mark", "icon"
 - fr: « logo »
-- not to confuse with: [accent colour](#accent-colour), [diagram](#diagram), [mark](#mark)
-- why: "icon" names the small drawings of the site's buttons, which stand for an action, not for a course; "mark" says less than "logo" and reads as a sign put on a text, the sense of a **mark**
+- not to confuse with: [accent colour](#accent-colour), [diagram](#diagram), [claim mark](#claim-mark)
+- why: "icon" names the small drawings of the site's buttons, which stand for an action, not for a course; "mark" says less than "logo" and reads as a sign put on a text, the sense of a **claim mark**
 
 ### accent colour
 
@@ -573,9 +573,18 @@ A generic word likely to collide (too general, likely used in other domains or a
 
 ### lexicon
 
-- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, natures, concept references, the kind, the control and the independence of a source, typography, the word lists of the checks), read by the checks, the teacher build and the site; `products/site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds; and the lexicon of a **teacher implementation**, the words its **means** make the teacher say and write other than the form marks and titles its **protocol rules** fix. Not a translation file: the language is the spec's
+- means: a file of the words of a spec, written once and read by key: `course/lexicon.yaml`, the words a program recognises in a course file (headings, the kind words of the headings, the words of the blocks and the labels of the fields of a unit, natures, concept references, the kind, the control and the independence of a source, typography, the word lists of the checks), read by the checks, the teacher build and the site; `products/site/lexicon.yaml`, the words and short texts the site shows for every course of the spec and no course file holds; and the lexicon of a **teacher implementation**, the words its **means** make the teacher say and write other than the **form marks** and titles its **protocol rules** fix. Not a translation file: the language is the spec's
 - en: lexicon · rejected: "language pack", "i18n", "locale", "strings"
 - fr: « lexique »
+- not to confuse with: [form mark](#form-mark)
+
+### form mark
+
+- means: the fixed words the teacher writes to mark the form of a message, word for word from one teacher implementation to another, as its **protocol rules** write them: the lead of a case on the storyline or off it, the label of a question on the matter, the announce of several questions, the line that says what comes next
+- en: form mark · rejected: "mark" alone (too generic, names several concepts)
+- fr: « marque de forme » · rejected: « marque » alone (too generic, names several concepts)
+- not to confuse with: [claim mark](#claim-mark), [behaviour mark](#behaviour-mark), [lexicon](#lexicon)
+- why: "mark" alone is too generic and names several concepts: the form marks of the teacher, the **claim mark** of a course, the **behaviour mark** of a line; the protocol rules already wrote « marques de forme », kept as the term
 
 ### teaching session
 
@@ -1024,6 +1033,14 @@ The frame of the work is Kanban, with ADR for the decisions and GitHub flow for 
 - fr: to settle
 - not to confuse with: [check](#check)
 - why: "expected output" would read as the target of the work, which is the statement's intent; the baseline is only where the work starts from
+
+### behaviour mark
+
+- means: the parenthesis that ends the line stating a behaviour of GitHub or Claude Code the flow relies on, `(<tool>, <status> <date>, #<n>)`: the tool, how the behaviour was found (tested, observed, inferred or documented), the date and the issue or PR that holds its proof
+- en: behaviour mark · rejected: "mark" alone (too generic, names several concepts)
+- fr: to settle
+- not to confuse with: [claim mark](#claim-mark), [form mark](#form-mark)
+- why: "mark" alone is too generic and names several concepts: the behaviour mark of a line, the **claim mark** of a course, the **form marks** of the teacher; "behaviour" is the word the files already use for what the line states (« Tool behaviours »)
 
 ### skill
 
